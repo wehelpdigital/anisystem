@@ -1,0 +1,264 @@
+{
+  "section": "pests",
+  "slug": "whitebacked-planthopper",
+  "sortOrder": 230,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Whitebacked Planthopper: Hopperburn and How to Prevent It",
+  "metaTitle": "Whitebacked Planthopper: Signs, Hopperburn and Control",
+  "metaDescription": "The whitebacked planthopper sucks sap and can cause hopperburn in palay. Learn how to spot it, tell it from the brown planthopper and control it safely.",
+  "focusKeyword": "whitebacked planthopper",
+  "keywords": [
+    "whitebacked planthopper",
+    "white backed planthopper",
+    "sogatella furcifera",
+    "hopperburn in rice",
+    "planthopper in rice"
+  ],
+  "excerpt": "The whitebacked planthopper is a small sap sucking insect found at the base of rice plants. Heavy numbers cause stunting and hopperburn, where patches of plants dry out. This page shows how to spot it and how to protect the spiders and bugs that keep it in check.",
+  "heroImage": {
+    "src": "/images/site/pests/whitebacked-planthopper.webp",
+    "thumb": "/images/site/pests/whitebacked-planthopper-480.webp",
+    "alt": "A whitebacked planthopper, Sogatella furcifera, a small pale hopper with clear wings",
+    "credit": "Gerard Chartier, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Whitebacked Planthopper?"
+    },
+    {
+      "type": "text",
+      "text": "The whitebacked planthopper (Sogatella furcifera) is a pest of rainfed and irrigated rice. It is only 2 to 3 millimeters long and pale brown, with a white stripe down the middle of the back. Females may have short or long wings, while males always have long wings.\n\nIt lives side by side with the [brown planthopper](/pests/brown-planthopper), and farmers often blame both for the same patches. In Asia it also carries the Southern rice black streaked dwarf virus. It matters in the Philippines because early insecticide sprays are known to trigger planthopper outbreaks."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Whitebacked planthopper"
+        ],
+        [
+          "Scientific name",
+          "Sogatella furcifera"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "The whole plant and stems and tillers"
+        ],
+        [
+          "When it strikes",
+          "Any time in the crop, in dense fields with heavy nitrogen, with migrating adults arriving from other fields."
+        ],
+        [
+          "Life cycle",
+          "Females lay eggs in stems and leaf midribs, nymphs pass five stages in 12 to 18 days, and long winged adults fly to new fields when numbers surge."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Whitebacked Planthopper"
+    },
+    {
+      "type": "text",
+      "text": "Part the hills and look at the base of the plants, near the water. Look for tiny pale brown insects with a white stripe on the back. If the stripe is missing and the insect is darker brown, you are likely looking at the brown planthopper instead. Both hop when disturbed. Check also for the green insects of the [green leafhopper](/pests/green-leafhopper), which are wedge shaped and green."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small pale brown insects with a white stripe on the back sit low on the plant.",
+        "Plants are stunted, with fewer tillers and lighter grain.",
+        "Patches of plants wilt, dry out and die, which is called hopperburn.",
+        "Eggs sit inside stems and along the midribs of the leaves.",
+        "Natural enemies such as the mirid bug are fewer than the hoppers."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "The brown planthopper is darker brown and lacks the white stripe. The [green leafhopper](/pests/green-leafhopper) is green and wedge shaped."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Whitebacked Planthopper Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Both nymphs and adults suck phloem sap. This causes stunting, fewer tillers and a loss of grain weight. In severe attacks, the plants wilt, dry and die, which is hopperburn.\n\nIRRI figures quoted in the Pacific Pests and Pathogens fact sheet say that 400 to 500 nymphs per plant, or 200 adults, can cause complete loss through hopperburn. The same source gives a nursery rule. Use a pesticide on the seedbed only if you find more than one planthopper per stem, or more planthoppers than natural enemies."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Whitebacked Planthopper"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant at the same time as your neighbors, within about three weeks, so crops do not overlap.",
+        "Use early maturing or tolerant varieties, and grow no more than two rice crops a year.",
+        "Split the nitrogen into doses. Too much nitrogen builds up planthoppers.",
+        "Drain the field for three to four days if the numbers are high.",
+        "Do not keep a ratoon crop, and plow the stubble in after harvest.",
+        "Watch the mirid bug Cyrtorhinus lividipennis and the egg wasps of the genus Anagrus. They are the main natural enemies, and broad spectrum sprays wipe them out."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice and IRRI advise no insecticide early in the crop, because early sprays kill spiders and wasps and cause planthopper outbreaks. Spray only when the count passes the nursery rule above or a technician confirms an outbreak. Choose selective products, and do not repeat the same product again and again."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Buprofezin",
+          "IRAC 16",
+          "found effective against brown planthopper in rice trials in India"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Synchronize planting across the area.",
+        "Use tolerant varieties and the right amount of nitrogen.",
+        "Skip sprays in the first 30 to 40 days after transplanting unless there is a true outbreak.",
+        "Plow in the stubble and avoid ratoon crops."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Whitebacked Planthopper"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is the whitebacked planthopper the same as the brown planthopper?",
+          "a": "No. It is a different species. Its color is paler, with a white stripe on the back, but it causes similar damage and hopperburn."
+        },
+        {
+          "q": "What is hopperburn?",
+          "a": "It is the wilting and drying of rice plants, in round patches, caused by heavy sap sucking by planthoppers."
+        },
+        {
+          "q": "Why do early sprays make planthoppers worse?",
+          "a": "Broad spectrum sprays kill the spiders, mirid bugs and wasps that feed on planthoppers, so the pests come back in larger numbers."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Whitebacked planthopper",
+          "url": "https://apps.lucidcentral.org/pppw_v12/text/web_full/entities/rice_whitebacked_planthopper_423.htm"
+        },
+        {
+          "label": "PhilRice: Major rice pest threats in early 2026",
+          "url": "https://www.philrice.gov.ph/philrice-warns-of-major-rice-pest-threats-in-early-2026/"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Rice whitebacked planthopper, full fact sheet",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/rice_whitebacked_planthopper_423.htm"
+        }
+      ]
+    }
+  ]
+}

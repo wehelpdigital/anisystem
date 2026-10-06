@@ -1,0 +1,249 @@
+{
+  "section": "pests",
+  "slug": "rice-birds",
+  "sortOrder": 270,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Rice Birds: How to Spot Maya in Your Palay and What Works",
+  "metaTitle": "Rice Birds (Maya): Damage and Control in the Philippines",
+  "metaDescription": "Rice birds, the maya, eat milky and ripe grain. See which four species do it, when they come, and what really keeps them off your palay.",
+  "focusKeyword": "rice birds",
+  "keywords": [
+    "rice birds",
+    "maya bird",
+    "mayang simbahan",
+    "birds eating palay",
+    "tree sparrow rice",
+    "how to stop birds from eating rice"
+  ],
+  "excerpt": "Rice birds, the small maya, feed on palay when the grain turns milky and ripe. Only four species out of dozens eat rice, so not every bird in your field is a pest. Here is how to tell them apart and what helps.",
+  "heroImage": {
+    "src": "/images/site/pests/rice-birds.webp",
+    "thumb": "/images/site/pests/rice-birds-480.webp",
+    "alt": "A scaly breasted munia, one of the maya birds that feed on ripening rice, perched on a grass seed head",
+    "credit": "Charles J. Sharp, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Birds?"
+    },
+    {
+      "type": "text",
+      "text": "In the Philippines maya means four small birds: the Eurasian tree sparrow, Passer montanus, and three munias, the chestnut, the scaly breasted and the white bellied munia, all of the genus Lonchura. The tree sparrow is also called mayang simbahan.\n\nIRRI counted over 50 bird species in its experimental rice fields, and only these four feed on rice. The rest eat insects, frogs or rats, and many of them help the farmer. So blaming every bird for empty panicles can be wrong."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice birds (maya)"
+        ],
+        [
+          "Scientific name",
+          "Lonchura spp., Passer montanus"
+        ],
+        [
+          "Kind",
+          "Bird"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "Maya is the name for all four species. Mayang simbahan is the tree sparrow."
+        ],
+        [
+          "Where it strikes",
+          "Panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "From the milky stage to the ripe grain, mostly in the early morning and late afternoon."
+        ],
+        [
+          "Life cycle",
+          "The birds are gregarious and do not migrate much. Their numbers rise when grain forms and ripens, and they gather in flocks around ripening fields and stores."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Birds"
+    },
+    {
+      "type": "text",
+      "text": "Maya are small, 10 to 30 grams, and they come in noisy flocks. They squeeze the milk from the developing grain or hull the soft grains straight from the panicle. IRRI notes that they are most active around 5:30 to 6:30 in the morning. Empty panicles can also come from the [rice bug](/pests/rice-bug) or from [rice field rats](/pests/rice-field-rats), so look for the flocks before you decide."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Flocks of small brown or chestnut birds land on the panicles at the milky stage.",
+        "Panicles show hulled or half eaten grain, and husks lie under the plants.",
+        "Damage grows from the field edge, near trees, roofs and tall grass where the birds roost.",
+        "The birds feed in the early morning and again from the afternoon to dusk.",
+        "Numbers rise as the grain ripens and fall after harvest."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "The damage looks like that of the rice bug. A rice bug leaves spotted grains inside the husk, while birds leave hulled or crushed grain. See the guide to [rice insects](/pests/rice-insects)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Birds Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "IRRI says that how much damage the birds really cause is unknown. No standard method of measuring it exists and the birds move around. A study in the Philippines found that the highest panicle damage came from one munia species. The biggest weight loss came from another, so the effect differs by species.\n\nAn adult eats about 30 percent of its body weight each day, as FAO notes. That is around 3 grams for a munia and 6 grams for a tree sparrow. A big flock can still take a real share of a small field. Weigh your own losses before you spend money on a defense."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Birds"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant at the same time as your neighbors. The ripening window is then short, and the flocks spread across many fields and not one.",
+        "Check first that birds are the cause. Watch the field at dawn and see whether the flock really feeds on the panicles, as IRRI advises.",
+        "Do not rely on flags, scarecrows or noise. IRRI reports that birds get used to them fast, and a flag only gives them a new perch.",
+        "Guard the field at dawn and dusk during the milky to ripe stage. Use a farmer or a helper who changes the method often.",
+        "Use netting over a small plot or a seedbed where the crop is worth it. IRRI says only netting or a closed cover fully protects the crop. It costs money and also keeps out helpful birds.",
+        "Keep the useful birds. Egrets, herons, harriers and owls eat insects, frogs and rats, so do not shoot or net them."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "This page names no chemical. FAO lists avicides only as a last resort that needs close supervision, and they harm other birds and wildlife. Ask the DA before you consider any such product."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant at the same time as your neighbors so the ripening window stays short.",
+        "Harvest on time and clean up spilled grain, which draws flocks to the field and the store.",
+        "Bird proof your grain stores, since the tree sparrow also lives in warehouses.",
+        "Cut tall weeds and bushes at the field edge where the birds roost."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Birds"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Which birds are the maya?",
+          "a": "IRRI names four: the tree sparrow Passer montanus and three munias, the chestnut, the scaly breasted and the white bellied munia."
+        },
+        {
+          "q": "Are all birds in my rice field pests?",
+          "a": "No. IRRI found over 50 species in its fields and only four eat rice. Egrets, herons, harriers and owls help by eating pests."
+        },
+        {
+          "q": "Do scarecrows work?",
+          "a": "Not for long. IRRI reports that birds quickly get used to flags, noise and scarecrows."
+        },
+        {
+          "q": "What is the surest protection?",
+          "a": "Netting or a cover gives complete protection, according to IRRI, but it costs money and also keeps out the helpful birds."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Today: Do not scare away the birds",
+          "url": "https://ricetoday.irri.org/dont-scare-away-the-birds/"
+        },
+        {
+          "label": "FAO: Birds as pests of grain stores",
+          "url": "https://www.fao.org/4/X5048E/x5048E0g.htm"
+        }
+      ]
+    }
+  ]
+}

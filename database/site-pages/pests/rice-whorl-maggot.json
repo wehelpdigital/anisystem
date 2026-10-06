@@ -1,0 +1,242 @@
+{
+  "section": "pests",
+  "slug": "rice-whorl-maggot",
+  "sortOrder": 235,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Rice Whorl Maggot: Why the Leaf Tips Look Torn and What to Do",
+  "metaTitle": "Rice Whorl Maggot: Symptoms, Damage and What to Do",
+  "metaDescription": "The rice whorl maggot leaves white patches and pinholes on young palay leaves. Learn why plants usually recover and when to take action.",
+  "focusKeyword": "rice whorl maggot",
+  "keywords": [
+    "rice whorl maggot",
+    "whorl maggot",
+    "hydrellia philippina",
+    "whorl maggot in rice",
+    "white patches on rice leaves"
+  ],
+  "excerpt": "The rice whorl maggot is a tiny fly whose larvae scrape the unopened leaves of young palay. The new leaves open with white patches, yellow spots and pinholes. This page shows how to spot it and why most fields recover without any spray.",
+  "heroImage": {
+    "src": "/images/site/pests/rice-whorl-maggot.webp",
+    "thumb": "/images/site/pests/rice-whorl-maggot-480.webp",
+    "alt": "A Hydrellia fly, the genus of the rice whorl maggot, resting on a green leaf",
+    "credit": "Steve Kerr, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Whorl Maggot?"
+    },
+    {
+      "type": "text",
+      "text": "The rice whorl maggot (Hydrellia philippina) is a small fly of rice fields with standing water. Its larvae use hardened mouth hooks to rasp the tissue of unopened leaves and the growing points of new ones. As the leaves open, the damage shows.\n\nIt favors transplanted rice in irrigated paddies, and it does not occur in upland or direct seeded fields. Farmers often worry when they see the torn leaves, but IRRI notes that the rice plant can compensate for the damage."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice whorl maggot"
+        ],
+        [
+          "Scientific name",
+          "Hydrellia philippina"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and seedlings"
+        ],
+        [
+          "When it strikes",
+          "From seedling to maximum tillering, mostly in transplanted, flooded fields."
+        ],
+        [
+          "Life cycle",
+          "Small flies rest on leaves near the water, lay eggs on the leaves, and the maggots feed inside the unopened leaf for 10 to 12 days before they pupate."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Whorl Maggot"
+    },
+    {
+      "type": "text",
+      "text": "Look at the youngest leaves of the hill. Yellow spots, white or transparent patches and pinholes on the inner margins of the leaves, with fragile tips that tear in the wind, point to the maggot. Dead central shoots are not the work of this pest. That is the work of the [rice stem borer](/pests/rice-stem-borer), which tunnels the stem."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Yellow spots or streaks appear on the inner edges of new leaves.",
+        "White or transparent patches show where the maggot scraped the tissue.",
+        "Pinholes line the leaf blade once it unfolds.",
+        "Damaged leaves are fragile and break easily in the wind.",
+        "The symptoms fade by the maximum tillering stage as new leaves grow clean."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Wind tears, thrips and the [rice hispa](/pests/rice-hispa) can all leave marks on the leaves. Whorl maggot marks are on the inner margins of unopened leaves and fade after tillering."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Whorl Maggot Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "IRRI says the rice plant can compensate for whorl maggot damage and the symptoms disappear during the maximum tillering stage. The IRRI fact sheet gives no percent yield loss, so we state none.\n\nBecause the plant recovers, a spray is rarely worth the cost. No action threshold was found in the sources we read."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Whorl Maggot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Check the youngest leaves in the first weeks after transplanting, and note how many hills show the patches.",
+        "Do not rush to spray. The plant usually grows out of the damage by maximum tillering.",
+        "Leave the natural enemies alone. Small wasps attack the eggs and maggots, dolichopodid flies feed on the eggs, and ephydrid flies and spiders feed on the adults.",
+        "Follow the growth stages of the lot, so you know when it reaches maximum tillering. The [growth stages](/features/growth-stages-and-weather) view shows it.",
+        "If a lot is badly hit, ask an agricultural technician before taking any action."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "The sources we read give no insecticide for this pest. IRRI says there is no cultural control, and the plants usually recover, so we do not list any ingredient. Early sprays also kill the spiders and wasps that protect the crop."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Expect some torn leaves in flooded transplanted fields, and do not treat them as an emergency.",
+        "Protect spiders and wasps by avoiding sprays in the first 30 to 40 days after transplanting.",
+        "Scout for pests as part of the [integrated pest management](/pests/integrated-pest-management) routine of the field."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Whorl Maggot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Will the rice whorl maggot ruin my crop?",
+          "a": "Usually not. IRRI says the plant can compensate and the symptoms disappear by the maximum tillering stage."
+        },
+        {
+          "q": "Does it attack direct seeded rice?",
+          "a": "IRRI says it does not occur in upland or direct seeded fields. It favors transplanted seedlings in standing water."
+        },
+        {
+          "q": "Should I spray the damaged hills?",
+          "a": "No, not on the strength of these leaf marks alone. Early sprays hurt the natural enemies, and the plant grows out of the damage."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice whorl maggot (Lucid key)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Rice_whorl_maggot.htm"
+        },
+        {
+          "label": "FAO AGRIS: Effect of rice whorl maggot damage on the yield of a modern cultivar, Philippines",
+          "url": "https://agris.fao.org/search/ru/records/6471d3a82a40512c710e7782"
+        }
+      ]
+    }
+  ]
+}

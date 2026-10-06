@@ -16,6 +16,8 @@
     $feat = $isFeature ? $S::feature($page) : null;
     // A weed of rice: its catalogue facts (App\Support\WeedCatalogue).
     $weed = $page->section === 'weeds' ? \App\Support\WeedCatalogue::get($page->slug) : null;
+    // A pest or a disease of the catalogue (App\Support\ProblemCatalogue).
+    $prob = in_array($page->section, ['pests', 'diseases'], true) ? \App\Support\ProblemCatalogue::get($page->section, $page->slug) : null;
     // A tall picture on a feature page is a phone screen: it stands in a
     // phone beside the words instead of being cropped into a banner.
     $portrait = false;
@@ -88,6 +90,8 @@
                             <span class="sp-fico"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $feat['icon'] }}"/></svg></span>
                             <span>{{ $feat['name'] }}</span>
                         </div>
+                    @elseif ($prob)
+                        <a href="{{ $S::url($page->section) }}?group={{ $prob['group'] }}#catalogue" class="sp-chip">{{ $page->category }}</a>
                     @elseif ($weed)
                         {{-- A weed's group opens the catalogue on that group. --}}
                         <a href="{{ $S::url('weeds') }}?group={{ $weed['group'] }}#catalogue" class="sp-chip">{{ $page->category }}</a>
@@ -105,6 +109,7 @@
                     @else
                     <div class="sp-meta mt-4">
                         @if ($weed && $weed['sci'] !== $weed['name'])<span class="italic">{{ $weed['sci'] }}</span>@endif
+                        @if ($prob)<span class="italic">{{ $prob['sci'] }}</span>@endif
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg>{{ $minutes }} min read</span>
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Updated {{ $updated->timezone('Asia/Manila')->format('F j, Y') }}</span>
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $isQuestion ? 'Answered by Anee, the anee.io smart farm technician' : 'By the anee.io agriculture team' }}</span>
@@ -167,6 +172,14 @@
                             <nav class="sp-toc" id="spToc">
                                 @foreach ($toc as $t)<a href="#{{ $t['id'] }}" data-to="{{ $t['id'] }}">{{ $t['text'] }}</a>@endforeach
                             </nav>
+                        </div>
+                    @endif
+                    @if ($prob)
+                        {{-- The finder, opened on this one's first crop. --}}
+                        <div class="sp-card sp-wcard">
+                            <h4>{{ $page->section === 'pests' ? 'What is attacking my crop?' : 'What is wrong with my crop?' }}</h4>
+                            <p>Not sure this is it? Pick your crop and what you see, and compare the {{ $page->section }} that match.</p>
+                            <a href="{{ $S::url($page->section) }}?crop={{ $prob['crops'][0] ?? 'rice' }}#finder" class="btn btn-outline btn-sm">Open the finder</a>
                         </div>
                     @endif
                     @if ($weed)

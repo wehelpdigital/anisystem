@@ -1,0 +1,261 @@
+{
+  "section": "diseases",
+  "slug": "black-rot",
+  "sortOrder": 330,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Black Rot of Cabbage: How to Spot It and Stop It in Your Crop",
+  "metaTitle": "Black Rot of Cabbage: Signs, Damage and Control",
+  "metaDescription": "Black rot makes yellow V shaped patches with black veins on cabbage leaves. Learn the signs, how seed spreads it and the steps that stop it.",
+  "focusKeyword": "black rot",
+  "keywords": [
+    "black rot",
+    "black rot of cabbage",
+    "black rot of crucifers",
+    "Xanthomonas campestris pv. campestris",
+    "cabbage leaf disease"
+  ],
+  "excerpt": "Black rot is a bacterial disease of cabbage and other crucifers that makes yellow, V shaped patches along the leaf edge. The veins turn black. It spreads fast in hot, wet weather, and it travels in the seed, so clean seed is your first defense.",
+  "heroImage": {
+    "src": "/images/site/diseases/black-rot.webp",
+    "thumb": "/images/site/diseases/black-rot-480.webp",
+    "alt": "A cabbage leaf with a yellow, V shaped black rot lesion and dark veins at its edge",
+    "credit": "David B. Langston, CC BY 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Black Rot?"
+    },
+    {
+      "type": "text",
+      "text": "The bacterium Xanthomonas campestris pv. campestris causes black rot. It attacks the cabbage family, including cabbage, cauliflower, broccoli, Chinese cabbage and radish. Pest guides treat it as the most serious disease of crucifer crops worldwide. It follows the warm, humid weather that Philippine growers know well.\n\nThe bacterium moves in seed and in seedlings from the nursery. So one dirty seed lot can seed a whole farm. Next, rain, overhead irrigation and tools carry it from plant to plant. Growers often confuse it with [diamondback moth](/pests/diamondback-moth) feeding damage and with [bacterial soft rot](/diseases/soft-rot), which follows black rot."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Black rot of cabbage"
+        ],
+        [
+          "Scientific name",
+          "Xanthomonas campestris pv. campestris"
+        ],
+        [
+          "Kind",
+          "Bacterium (a bacterial disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Cabbage, cauliflower, broccoli, Chinese cabbage and radish"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It is worst in hot, rainy weather, because the leaves must stay wet for a long time, and it can strike from the seedbed to harvest."
+        ],
+        [
+          "How it spreads",
+          "The bacterium rides on seed and seedlings, lives for months in crop debris and spreads by splashing rain, overhead water, tools and workers."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Black Rot"
+    },
+    {
+      "type": "text",
+      "text": "Look at the leaf edge first. The first sign is a yellow or brown V shaped area. Its wide end sits at the edge and its point toward the midrib. Pull a leaf and look at the veins inside the yellow patch. They turn black. Later the patch dries to tan or brown, the leaf yellows, wilts and drops."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Yellow to brown V shaped patches start at the leaf edge.",
+        "The veins inside the patch turn black.",
+        "The patch dries to tan or brown, and the leaf may wither and drop.",
+        "Severe attacks make leaves yellow, decay and collapse.",
+        "A secondary soft rot may follow and give a bad smell."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Growers often mistake black rot for a nutrient problem or for old leaf yellowing. The clear sign is the V shape with black veins. Soft rot gives a wet, smelly decay instead of dry V shaped patches."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Black Rot Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Black rot lowers the yield and the market quality of the head. You lose the outer leaves, and the head may rot in the field or in storage. How much you lose depends on the weather and on how many sick seedlings went into the field. I did not find a sourced loss figure for the Philippines, so I give none.\n\nThe bacterium can survive up to three years in seed, and for months in crop debris. So a single case can follow you for several seasons. That is why rotation matters, and why the disease belongs on your records. Our guide to [growing vegetables in the Philippines](/crops/vegetables-philippines) covers the rotation basics."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Black Rot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Buy certified seed that is free of black rot. The bacterium can live up to three years in seed, so never save seed from a sick crop.",
+        "If you are unsure about the seed, hot water treatment at 50 degrees Celsius for 25 minutes is advised for cabbage and Brussels sprouts. It lowers the risk, but it is not 100 percent effective and can lower germination.",
+        "Clean seedling trays and tools with diluted bleach, and throw out any seedling that shows a spot before you transplant.",
+        "Rotate with crops outside the cabbage family. Do not plant crucifers in the same field more often than every 2 years, and a 3 to 4 year gap is better.",
+        "Pull out weeds from the cabbage family, since they carry the bacterium, and plow under crop residue right after harvest.",
+        "Avoid sprinkler or overhead watering where you can, and do not work in the field while the leaves are wet."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Sprays do little once the disease is in the field. The Pacific pest sheet limits copper to preventive sprays in the nursery, and it does not recommend field sprays. Pests such as the diamondback moth make wounds that help the bacteria, so control them with integrated pest management."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Copper fungicides",
+          "FRAC M1",
+          "a preventive spray in the nursery only"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant certified seed and healthy seedlings every season.",
+        "Rotate away from crucifers for at least 2 years, and longer if you can.",
+        "Keep the field and its borders free of cabbage family weeds.",
+        "Choose resistant varieties where they are sold, since some cabbage varieties resist black rot. Radish shows good resistance, and broccoli and Brussels sprouts are less affected than cabbage.",
+        "Bury or remove crop residue straight after harvest."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Black Rot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes black rot in cabbage?",
+          "a": "The bacterium Xanthomonas campestris pv. campestris causes it. It travels in seed, seedlings, splashing water and crop debris."
+        },
+        {
+          "q": "Can I treat black rot with a spray?",
+          "a": "Not well. Copper helps only as a preventive spray in the nursery. The real control is clean seed, rotation and crop sanitation."
+        },
+        {
+          "q": "How long does black rot stay in the field?",
+          "a": "It survives for months in crop debris, and up to three years in seed. Bury the residue and rotate for at least 2 years."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Cabbage black rot",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/cabbage_black_rot_131.htm"
+        },
+        {
+          "label": "UC IPM: Black rot in cole crops",
+          "url": "https://ipm.ucanr.edu/agriculture/cole-crops/black-rot/"
+        }
+      ]
+    }
+  ]
+}

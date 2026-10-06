@@ -1,0 +1,253 @@
+{
+  "section": "diseases",
+  "slug": "soft-rot",
+  "sortOrder": 335,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Bacterial Soft Rot: How to Spot It and Stop It in Vegetables",
+  "metaTitle": "Bacterial Soft Rot: Signs, Damage and Control",
+  "metaDescription": "Bacterial soft rot turns vegetables into wet, mushy, smelly tissue. Learn the signs, why wounds and wet soil start it and how to lower the risk.",
+  "focusKeyword": "bacterial soft rot",
+  "keywords": [
+    "bacterial soft rot",
+    "soft rot of vegetables",
+    "Pectobacterium carotovorum",
+    "Erwinia soft rot",
+    "cabbage rot"
+  ],
+  "excerpt": "Bacterial soft rot turns the stems, heads and fruits of vegetables into a wet, mushy and smelly mess. It enters through wounds and thrives in wet weather, so your best defense is drainage, clean tools and careful handling.",
+  "heroImage": {
+    "src": "/images/site/diseases/soft-rot.webp",
+    "thumb": "/images/site/diseases/soft-rot-480.webp",
+    "alt": "An onion cut in half, its inner layers soft and rotting from bacterial soft rot",
+    "credit": "Scot Nelson, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Bacterial Soft Rot?"
+    },
+    {
+      "type": "text",
+      "text": "Bacterial soft rot is a group of diseases. The main one in the Philippines is Pectobacterium carotovorum, which older papers call Erwinia carotovora. A Philippine survey of 518 vegetable specimens from 14 provinces in Luzon, 5 in the Visayas and 8 in Mindanao found that 82.5 percent of the harmful isolates belonged to this bacterium.\n\nIt attacks cabbage, lettuce, potato, carrot, tomato and many other vegetables. It often follows [black rot](/diseases/black-rot), the [diamondback moth](/pests/diamondback-moth) or any injury that opens the plant. DOST PCAARRD notes that no effective control strategy for soft rot of vegetables exists in the Philippines at present, which is why prevention carries so much weight."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Bacterial soft rot"
+        ],
+        [
+          "Scientific name",
+          "Pectobacterium carotovorum (formerly Erwinia carotovora)"
+        ],
+        [
+          "Kind",
+          "Bacterium (a bacterial disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Cabbage, Chinese cabbage, lettuce, tomato, potato, carrot and other vegetables"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, stems and tillers, fruits, pods and nuts and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It strikes in wet, warm weather and in waterlogged soil, and it is worst after harvest wounds, insect bites or heavy rain, in the field and in storage."
+        ],
+        [
+          "How it spreads",
+          "The bacteria live in the soil and in crop debris. They enter plants through wounds from tools, insects and weather, then spread by water, tools and insects."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Bacterial Soft Rot"
+    },
+    {
+      "type": "text",
+      "text": "Start with a water soaked spot on an outer leaf, stem, head or fruit. It grows, sinks and turns soft. Inside, the tissue becomes mushy and cream colored to dark, and it often leaks fluid. The smell is strong and unpleasant, and that smell separates soft rot from dry rots. In lettuce and cabbage, the rot moves from the outer leaves toward the center until the stem collapses."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Water soaked spots appear on outer leaves, stems, heads or fruit, then grow and sink.",
+        "The inside of the tissue turns soft, mushy and cream colored to dark.",
+        "Slimy fluid often leaks from the rotting part.",
+        "A strong, unpleasant smell comes from the rot.",
+        "The stem collapses and the plant falls over, or the head rots in storage."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Soft rot is often mistaken for black rot. Soft rot is wet, mushy and smelly, while [black rot](/diseases/black-rot) draws dry V shaped patches with black veins first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Bacterial Soft Rot Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Extension sources describe bacterial soft rot as one of the biggest causes of crop loss from bacterial disease in many countries. It attacks fleshy parts of plants such as fruit, stems, heads and bulbs. In the Philippines, the damage shows in the field and again after harvest, since a bruised head can rot on the truck. I did not find a sourced loss figure for Philippine vegetables, so I give none.\n\nThe weather matters. Wet soil, water on the leaves and warm days all help the bacteria. Good drainage is the cheapest protection you have. Our guide to [growing vegetables in the Philippines](/crops/vegetables-philippines) covers raised beds and spacing."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Bacterial Soft Rot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant on raised beds with good drainage, so water does not stand around the stems and roots.",
+        "Give plants enough room, so the leaves dry quickly after rain or watering.",
+        "Mulch the soil to reduce splash from the soil onto leaves and fruit.",
+        "Use drip or furrow watering instead of overhead watering when you can.",
+        "Control insects such as the [diamondback moth](/pests/diamondback-moth) and cutworms, and handle plants gently, since every wound lets the bacteria in.",
+        "Pull out and destroy sick plants at once. Do not compost them, and clean knives and tools with bleach or alcohol between plants."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Sprays do not stop soft rot. The bacteria live in the soil and inside the plant, so the Pacific pest sheet calls pesticides generally ineffective, except where soil insects add to the problem. For that reason I list no active ingredient. DOST PCAARRD and UPLB are testing bacteriophages, which are viruses that attack bacteria, but they are still in research."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Rotate with crops outside the host list for 2 to 3 years.",
+        "Keep soil well drained and avoid waterlogging.",
+        "Harvest in dry weather, avoid bruising, and keep harvested produce cool and dry.",
+        "Disinfect tools and crates between fields.",
+        "Keep calcium in balance, since plants short of calcium get worse rot."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Bacterial Soft Rot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why does my cabbage head rot and smell?",
+          "a": "Bacterial soft rot is a common cause. The bacteria break down the tissue inside the head, and the smell is a strong sign."
+        },
+        {
+          "q": "Can I save a plant with soft rot?",
+          "a": "No. Pull it out, bag it and throw it away from the field, and do not compost it."
+        },
+        {
+          "q": "Is there a spray for soft rot?",
+          "a": "No effective control exists in the Philippines at present, according to DOST PCAARRD. Drainage, wound care and clean tools are the best protection."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DOST PCAARRD: Viruses against soft rot causing bacteria",
+          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/dost-pcaarrd-initiative-to-use-viruses-against-soft-rot-causing-bacteria"
+        },
+        {
+          "label": "WorldVeg (the vegetable research center): Vegetable soft rot bacteria in the Philippines",
+          "url": "https://worldveg.tind.io/record/3764"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Lettuce soft rot",
+          "url": "https://apps.lucidcentral.org/pppw_v10/text/web_full/entities/lettuce_soft_rot_289.htm"
+        },
+        {
+          "label": "University of Wisconsin Extension: Bacterial soft rot",
+          "url": "https://hort.extension.wisc.edu/articles/bacterial-soft-rot/"
+        }
+      ]
+    }
+  ]
+}

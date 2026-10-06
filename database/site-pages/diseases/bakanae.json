@@ -1,0 +1,282 @@
+{
+  "section": "diseases",
+  "slug": "bakanae",
+  "sortOrder": 255,
+  "lang": "en",
+  "category": "Rice diseases",
+  "profile": true,
+  "title": "Bakanae: How to Spot the Tall Sick Seedlings and Stop It",
+  "metaTitle": "Bakanae: Signs, Damage and Control in Rice Seedlings",
+  "metaDescription": "Bakanae makes rice seedlings grow tall, thin and pale, then die or give empty grain. Learn the signs and the seed steps that keep it out of your palay.",
+  "focusKeyword": "bakanae",
+  "keywords": [
+    "bakanae",
+    "bakanae disease of rice",
+    "foolish seedling disease",
+    "Fusarium fujikuroi",
+    "rice seedling disease",
+    "tall rice seedlings"
+  ],
+  "excerpt": "Bakanae is a seed borne fungal disease of rice that makes some seedlings shoot up tall, thin and yellowish while their neighbors stay normal. The name is Japanese for foolish seedling, and it is easy to miss until you see those tall plants arching over the rest of the palay.",
+  "heroImage": {
+    "src": "/images/site/diseases/bakanae.webp",
+    "thumb": "/images/site/diseases/bakanae-480.webp",
+    "alt": "Colonies of Fusarium fujikuroi, the fungus behind bakanae, growing in two lab dishes",
+    "credit": "Jie Hao Ou, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Bakanae?"
+    },
+    {
+      "type": "text",
+      "text": "Bakanae is caused by the fungus Fusarium fujikuroi. It attacks rice, and it can come in with the seed you plant. The fungus makes a plant hormone called gibberellin, and that hormone is what stretches infected seedlings so tall and thin. IRRI reports crop losses of up to 20 percent in outbreaks in South and Southeast Asia, and the loss is higher in some countries.\n\nThe disease matters because it often starts from your own seed lot. An infected plant can carry the fungus into the grain, so seed saved from a field with tall, pale plants brings the problem back next season. Check our guide to [rice diseases](/diseases/rice-diseases) to see where bakanae sits among the other palay diseases, and read about [rice varieties in the Philippines](/crops/rice-varieties-philippines) before you pick seed."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Bakanae"
+        ],
+        [
+          "Scientific name",
+          "Fusarium fujikuroi"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Seedlings, stems and tillers, panicles and ears and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "Bakanae shows in the seedbed and in the first month after transplanting, but the tall plants that survive can still stand in the field until heading, where they carry empty grain."
+        ],
+        [
+          "How it spreads",
+          "The fungus rides on and inside the seed. It also lives in soil and old straw for about a year, and its spores move by wind and water from infected tillers to the flowers of healthy plants."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Bakanae"
+    },
+    {
+      "type": "text",
+      "text": "Walk the seedbed and the first weeks of the main field. Look for seedlings that are clearly taller than the rest, with thin, pale or yellowish green leaves and fewer tillers. Pull one up and check the base. Lower nodes may grow extra roots, and a pinkish white fungal growth can show at soil level. Plants that stay alive until heading carry empty or unfilled grain."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Seedlings several inches taller than their neighbors, thin and arching over the healthy plants.",
+        "Yellowish green leaves and fewer tillers on the tall plants.",
+        "Extra roots growing from the lower nodes above the soil line.",
+        "A pinkish white fungal growth at the base of the plant, sometimes with a pink purple tint under the leaf sheath.",
+        "Dead seedlings in the seedbed, or plants that wilt and die in the first month.",
+        "Tall plants at heading that carry empty or unfilled grain."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Tall pale seedlings can look like a nitrogen deficiency or a young [tungro](/diseases/rice-tungro) attack. Tungro stunts the plant and turns the leaves yellow orange, while bakanae makes the plant taller than normal."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Bakanae Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "IRRI reports crop losses of up to 20 percent in outbreaks in South and Southeast Asia. Reports from other countries range from about 4 percent in India and 15 percent in Thailand to 20 to 50 percent in Japan, so the loss depends on how many seeds carry the fungus. Research in other regions has also recorded losses above 70 percent in severe infections.\n\nThere is no spray threshold, because the damage is decided before and just after planting. The count of tall plants in your seedbed tells you how bad the seed lot is. If you see them, act on the seed first and the field second. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) also helps, since a healthy, evenly fed crop hides fewer problems."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Bakanae"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Buy certified, clean seed and do not save seed from a field that had tall, pale plants.",
+        "Rogue the sick plants early. Pull the tall seedlings out of the seedbed and the field and bury or burn them away from the paddy.",
+        "Treat the seed before sowing. Hot water soaking at 55 to 57 degrees Celsius worked best in one trial, but it fails on heavily infected seed, so treat only seed you already trust.",
+        "Burn or plow in the straw and stubble right after harvest, because the fungus survives there.",
+        "Rotate the field to a crop that is not a rice relative for two years if a bad outbreak happened.",
+        "Use a seed treatment fungicide only on seed lots you cannot trust, and follow the label."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Fungicides work best as a seed treatment before sowing, and not as a spray on the standing crop. TNAU and the Pacific Pests and Pathogens fact sheet name the ingredients below for seed. Follow the FPA registered label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Thiram",
+          "FRAC M3",
+          "seed treatment, named by TNAU and the Pacific Pests fact sheet"
+        ],
+        [
+          "Carbendazim",
+          "FRAC 1",
+          "seed treatment, named by TNAU"
+        ],
+        [
+          "Thiophanate methyl",
+          "FRAC 1",
+          "seed treatment, often paired with thiram"
+        ],
+        [
+          "Captan",
+          "FRAC M4",
+          "seed treatment, named by TNAU"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant certified seed from a source you trust every season.",
+        "Inspect the seedbed each week for tall, thin seedlings and pull them at once.",
+        "Clear straw and stubble after harvest and keep weeds off the bunds.",
+        "Write down which lots had bakanae, so you can change the seed source next season.",
+        "Keep a season record so your seed source and any outbreak stay on the page."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Bakanae"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does bakanae mean?",
+          "a": "Bakanae is Japanese for foolish seedling. It names the way infected rice seedlings grow too tall and thin."
+        },
+        {
+          "q": "Can I save seed from a field with bakanae?",
+          "a": "It is risky. The fungus rides on and inside the seed and stays alive in it for one to two years. Buy certified seed instead, and treat any seed you are unsure about."
+        },
+        {
+          "q": "Is bakanae the same as rice blast?",
+          "a": "No. Bakanae stretches and yellows seedlings and comes from Fusarium. [Rice blast](/diseases/rice-blast) makes diamond shaped leaf spots and rots the neck of the panicle."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice diseases",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "Rice blast",
+          "url": "/diseases/rice-blast"
+        },
+        {
+          "label": "Bacterial leaf blight",
+          "url": "/diseases/bacterial-leaf-blight"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Brown spot of rice",
+          "url": "/diseases/rice-brown-spot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Rice bakanae disease",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/rice_bakanae_disease_429.htm"
+        },
+        {
+          "label": "TNAU Agritech Portal: Rice bakanae",
+          "url": "https://agritech.tnau.ac.in/crop_protection/rice_diseases/rice_9.html"
+        },
+        {
+          "label": "UC IPM: Bakanae in rice",
+          "url": "https://ipm.ucanr.edu/agriculture/rice/bakanae"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "section": "diseases",
+  "slug": "northern-corn-leaf-blight",
+  "sortOrder": 275,
+  "lang": "en",
+  "category": "Corn diseases",
+  "profile": true,
+  "title": "Northern Corn Leaf Blight: How to Spot It and Stop It in Mais",
+  "metaTitle": "Northern Corn Leaf Blight: Signs, Damage and Control",
+  "metaDescription": "Northern corn leaf blight makes long, tan, cigar shaped lesions on mais leaves in wet weather. Learn the signs and the steps that protect your corn yield.",
+  "focusKeyword": "northern corn leaf blight",
+  "keywords": [
+    "northern corn leaf blight",
+    "corn leaf blight",
+    "Exserohilum turcicum",
+    "turcicum leaf blight",
+    "cigar shaped lesions on corn",
+    "mais leaf blight"
+  ],
+  "excerpt": "Northern corn leaf blight is a fungal disease that leaves long, tan, cigar shaped lesions on mais leaves. It is found wherever corn is grown, and it cuts yield when it reaches the upper leaves early.",
+  "heroImage": {
+    "src": "/images/site/diseases/northern-corn-leaf-blight.webp",
+    "thumb": "/images/site/diseases/northern-corn-leaf-blight-480.webp",
+    "alt": "A corn leaf with the long gray tan lesion of northern corn leaf blight",
+    "credit": "Jerzy Opioła, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Northern Corn Leaf Blight?"
+    },
+    {
+      "type": "text",
+      "text": "The fungus Exserohilum turcicum, also called Setosphaeria turcica, causes this disease. The Pacific Pests and Pathogens database says it is found wherever maize is grown. It grows best when leaves stay wet for 6 to 18 hours. It also likes temperatures between 18 and 27 degrees Celsius.\n\nThe disease matters because it shrinks the green leaf area that fills the ear. Lesions can also open the plant to stalk rot and lodging. Resistance is the first defense, so see our guide to [corn seeds](/crops/corn-seeds) for choosing a variety. For planting well, see our page on [pagtatanim ng mais](/crops/pagtatanim-ng-mais)."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Northern corn leaf blight"
+        ],
+        [
+          "Scientific name",
+          "Exserohilum turcicum (Setosphaeria turcica)"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Corn"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves"
+        ],
+        [
+          "When it strikes",
+          "It develops in moderate, wet and humid weather, and it hurts most when the lesions reach the ear leaf before or around tasseling."
+        ],
+        [
+          "How it spreads",
+          "The fungus survives on corn residue, and on volunteer plants, for up to two years. Spores splash or blow from the residue to the new crop, and each lesion makes many more spores."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Northern Corn Leaf Blight"
+    },
+    {
+      "type": "text",
+      "text": "Start on the lower leaves. Early lesions are long, narrow and tan, running parallel to the leaf edge. Older lesions are long, oval or cigar shaped, grayish green to tan, with dark margins. They measure from about 2.5 to 15 centimeters. In humid weather they turn dark and dirty looking with olive green to black spores. Several lesions can join and kill big parts of the leaf."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Long, narrow tan lesions along the leaf edge on the lower leaves, the first sign.",
+        "Cigar shaped, grayish tan lesions with dark margins as the disease grows.",
+        "A dark or dirty look on the lesions in humid weather, from olive green to black spores.",
+        "Many lesions joining so that large parts of the leaf dry out.",
+        "Lesions climbing to the ear leaf and above, and sometimes on the husks and leaf sheaths."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Purdue says farmers can confuse the lesions with Diplodia leaf streak, southern corn leaf blight and bacterial wilts. Northern blight lesions are long and cigar shaped, and the lesions on resistant hybrids stay small and yellow. For corn diseases that start on young plants, see [corn downy mildew](/diseases/corn-downy-mildew)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Northern Corn Leaf Blight Hurts Your Corn"
+    },
+    {
+      "type": "text",
+      "text": "Purdue Extension says hybrid corn yield could drop as much as 30 percent if lesions are present before or at tasseling. The loss is smaller if the lesions come late. Losses can be larger in sweet corn or specialty corn. There is no clear link between leaf cover and yield loss. So Purdue gives no simple rule for it.\n\nPurdue also notes that no threshold exists specially for this disease. Instead, the goal is to protect the ear leaf and the leaves above it as the plant goes into tasseling. Scout weekly, mostly after long, wet weather, and compare what you see with our guide to [corn rust](/diseases/corn-rust)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Northern Corn Leaf Blight"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant a resistant hybrid. Resistance has been bred into most hybrids, and it is the best control according to the Pacific Pests fact sheet.",
+        "Bury or burn corn residue after harvest, because the fungus survives on it for up to two years.",
+        "Rotate with a crop that is not a grass, and clear volunteer corn and grassy weeds.",
+        "Feed in balance. Give enough phosphorus and potassium, and do not oversupply nitrogen.",
+        "Scout from the V14 stage until tasseling, and note how far up the plant the lesions have climbed.",
+        "Consider a fungicide only on a susceptible hybrid when lesions are on or above the ear leaf at tasseling and the weather stays wet."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "The Pacific Pests fact sheet says fungicides rarely give an economic return on this disease. Purdue says a spray at tasseling to early silking has the best chance of paying off. That holds for a susceptible hybrid in a wet year. Follow the FPA registered label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Mancozeb",
+          "FRAC M3",
+          "protectant, named by the Pacific Pests fact sheet"
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M5",
+          "protectant, named by the Pacific Pests fact sheet"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose a hybrid with good resistance to this blight.",
+        "Do not leave corn residue lying on the surface after harvest.",
+        "Rotate away from corn when you can, since continuous corn builds up the fungus.",
+        "Keep records of the fields that had blight and plant a tolerant hybrid there first."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Northern Corn Leaf Blight"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does northern corn leaf blight look like?",
+          "a": "It makes long, narrow, cigar shaped lesions, tan to gray, with dark edges. They begin on lower leaves and, in wet weather, climb to the upper ones."
+        },
+        {
+          "q": "How much yield can it cost?",
+          "a": "Purdue Extension says hybrid corn yield could fall by up to 30 percent. That happens when lesions are present before or at tasseling. Later infections cost less."
+        },
+        {
+          "q": "Does it need a fungicide?",
+          "a": "Seldom. Resistant hybrids, rotation and burying residue come first, since fungicides rarely pay according to the Pacific Pests fact sheet."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More corn diseases",
+      "items": [
+        {
+          "label": "Corn downy mildew",
+          "url": "/diseases/corn-downy-mildew"
+        },
+        {
+          "label": "Corn rust",
+          "url": "/diseases/corn-rust"
+        },
+        {
+          "label": "Banded leaf and sheath blight",
+          "url": "/diseases/banded-leaf-and-sheath-blight"
+        },
+        {
+          "label": "Corn stalk rot",
+          "url": "/diseases/corn-stalk-rot"
+        },
+        {
+          "label": "Corn ear rot",
+          "url": "/diseases/corn-ear-rot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Maize northern leaf blight",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/maize_northern_leaf_blight_226.htm"
+        },
+        {
+          "label": "Purdue Extension: Northern Corn Leaf Blight",
+          "url": "https://www.extension.purdue.edu/extmedia/bp/bp-84-w.pdf"
+        },
+        {
+          "label": "South Dakota State University Extension: Northern corn leaf blight",
+          "url": "https://extension.sdstate.edu/northern-corn-leaf-blight-developing-corn"
+        }
+      ]
+    }
+  ]
+}

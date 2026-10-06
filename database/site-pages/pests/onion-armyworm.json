@@ -1,0 +1,278 @@
+{
+  "section": "pests",
+  "slug": "onion-armyworm",
+  "sortOrder": 320,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Onion Armyworm: How to Spot It and Stop It in Your Onions",
+  "metaTitle": "Onion Armyworm: Signs, Damage and Control",
+  "metaDescription": "The onion armyworm skeletonizes onion leaves and can strike hundreds of hectares in a season. Learn the signs and the control steps used in the Philippines.",
+  "focusKeyword": "onion armyworm",
+  "keywords": [
+    "onion armyworm",
+    "armyworm in onion",
+    "spodoptera exigua",
+    "beet armyworm",
+    "onion pests in Nueva Ecija"
+  ],
+  "excerpt": "The onion armyworm, Spodoptera exigua, is a caterpillar that scrapes and eats onion leaves, and it moves like an army. It caused a huge outbreak in Nueva Ecija in 2016. This page shows the signs, the traps and the steps that work.",
+  "heroImage": {
+    "src": "/images/site/pests/onion-armyworm.webp",
+    "thumb": "/images/site/pests/onion-armyworm-480.webp",
+    "alt": "A green onion armyworm caterpillar, Spodoptera exigua, close up",
+    "credit": "portioid, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Onion Armyworm?"
+    },
+    {
+      "type": "text",
+      "text": "The onion armyworm is a moth caterpillar found in all the major onion areas of the Philippines. It also eats pepper, squash, bitter melon, cowpea, corn and many weeds, so it is hard to starve out. The BPI says it is a destructive pest that gets its name from its army like movement.\n\nIn 2016 an outbreak hit fourteen municipalities of Nueva Ecija, covering 5,330 hectares and 4,089 farmers, with an estimated loss above 1.6 billion pesos from February to April. Researchers linked it to a long distance migration, possibly triggered by El Nino. A later DA report found 366 hectares affected out of 10,217 hectares planted in Nueva Ecija and Tarlac."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Onion armyworm"
+        ],
+        [
+          "Scientific name",
+          "Spodoptera exigua"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Onion, shallot, and many other vegetables"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves"
+        ],
+        [
+          "When it strikes",
+          "At every stage of the onion crop, with outbreaks in the dry season, most often between February and April in Nueva Ecija."
+        ],
+        [
+          "Life cycle",
+          "Females lay cotton like egg masses of 20 to over 100 eggs, and one female lays 300 to 1,000 eggs. The life cycle takes about 3 weeks, and the moths can fly long distances."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Onion Armyworm"
+    },
+    {
+      "type": "text",
+      "text": "Look on the leaves for egg masses covered with white, hair like scales that look like cotton. The caterpillar is about 30 millimeters when full grown, with wavy, light stripes along its sides. The moth is small, gray and mottled. Young larvae feed together on the leaf, and the leaf tubes of the onion hide them. A [diamondback moth](/pests/diamondback-moth) larva is much smaller and wriggles when touched."
+    },
+    {
+      "type": "list",
+      "items": [
+        "White, cotton like egg masses sit on the leaves.",
+        "Young larvae scrape the leaf surface and leave pale, papery patches.",
+        "Bigger larvae make irregular holes and eat the leaves down, even to the bulb.",
+        "Caterpillars crawl across the field in groups when food runs short.",
+        "Frass and chewed leaves collect inside the leaf tubes."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "The fall armyworm and the common cutworm also feed on leaves. The onion armyworm is the one with white cotton like egg masses on onion leaves. See [cutworm](/pests/cutworm) and [fall armyworm](/pests/fall-armyworm)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Onion Armyworm Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The larvae skeletonize the leaves, and the feeding reaches down to the bulbs, so yield falls. In 2016 the loss in Nueva Ecija was estimated at more than 1.6 billion pesos. In the 2024 DA report, 6.9 hectares were a total loss and 359.1 hectares had partial damage.\n\nBecause the pest has many other host plants and its moths migrate, one farmer cannot manage it alone. Scouting and joint action with neighbors count."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Onion Armyworm"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Scout often. Look for egg masses and groups of young larvae, and crush them by hand when numbers are low. Handpicking is the first control measure.",
+        "Use sex pheromone traps to detect the first moths, so you can time your control. The BPI and DA gave out pheromone lures in Nueva Ecija.",
+        "Remove weeds and crop residue, and rest the field from onion and other hosts for one or two seasons, so the pupae in the soil do not infest a new crop.",
+        "Use light traps for mass trapping, or grow shallots under a net on small plots.",
+        "Protect natural enemies such as earwigs, spiders and predatory wasps, which the DA lists as the biological control.",
+        "Use neem oil, a botanical spray, or Bacillus thuringiensis on young larvae before any synthetic spray."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Chemical control comes last and works best on young larvae. Rotate groups to slow resistance, use only FPA registered products for onion, and follow the label. Pyrethroids also kill the natural enemies."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Spinosad",
+          "IRAC 5",
+          "a biopesticide listed in the Pacific Pests and Pathogens fact sheet"
+        ],
+        [
+          "Bacillus thuringiensis var kurstaki",
+          "IRAC 11A",
+          "listed in the same fact sheet, best on young larvae"
+        ],
+        [
+          "Azadirachtin (neem)",
+          "IRAC UN",
+          "neem oil sprays were given to Nueva Ecija onion growers by the DA"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Set pheromone traps early in the dry season and read them every few days.",
+        "Rotate onion with crops that are not hosts and clean the field of weeds.",
+        "Plant at the same time as your neighbors.",
+        "Check fields at the first warning from the BPI or your municipal agriculture office."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Onion Armyworm"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why is it called armyworm?",
+          "a": "Because the caterpillars move in large groups across the field, like an army, when food runs out."
+        },
+        {
+          "q": "How big was the 2016 outbreak?",
+          "a": "It hit 14 municipalities of Nueva Ecija, 5,330 hectares and 4,089 farmers, with an estimated loss above 1.6 billion pesos."
+        },
+        {
+          "q": "Do pheromone traps help?",
+          "a": "Yes. Research notes that sex pheromone traps detect the early arrival of the moths and help time the control."
+        },
+        {
+          "q": "How many eggs does one moth lay?",
+          "a": "Sources give 300 to 1,000 eggs per female, in masses of 20 to over 100 eggs."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Diamondback moth",
+          "url": "/pests/diamondback-moth"
+        },
+        {
+          "label": "Cabbage webworm",
+          "url": "/pests/cabbage-webworm"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "Eggplant leafhopper",
+          "url": "/pests/eggplant-leafhopper"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Department of Agriculture: Onion armyworm infestation report",
+          "url": "https://da.gov.ph/?p=76435"
+        },
+        {
+          "label": "UPLB: Onion armyworm outbreak in Nueva Ecija",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4066"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Shallot Spodoptera army worm",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/shallot_spodoptera_army_worm_178.htm"
+        }
+      ]
+    }
+  ]
+}

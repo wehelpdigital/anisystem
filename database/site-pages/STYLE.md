@@ -77,8 +77,8 @@ cover, reveal, supports.
 - Meta description: 120 to 156 characters, contains the keyphrase, says why
   to click.
 - Length: crop, pest, disease, weed guide and blog pages 900 to 1600 words;
-  weed profiles (the catalogue) 650 to 1700 words, tables included; feature
-  pages 600 to 1000 words.
+  weed, pest and disease profiles (the catalogues) 650 to 1700 words, tables
+  included; feature pages 600 to 1000 words.
 - Headings: H2 for sections, H3 inside them; never skip levels; a heading at
   least every 300 words.
 - Paragraphs: 150 words at most, usually 2 to 4 sentences.
@@ -249,14 +249,52 @@ Crops:
 /crops/coconut-fertilizer, /crops/banana-farming-philippines,
 /crops/pagtatanim-ng-puno
 
-Pests:
-/pests/rice-bug, /pests/rice-black-bug, /pests/brown-planthopper,
-/pests/rice-insects, /pests/rice-leaffolder, /pests/thrips,
-/pests/fall-armyworm, /pests/asian-corn-borer, /pests/cutworm,
-/pests/hanip-mites-and-aphids
+Pests (guides):
+/pests/rice-insects, /pests/hanip-mites-and-aphids,
+/pests/crop-pests-philippines, /pests/integrated-pest-management
 
-Diseases:
-/diseases/anthracnose, /diseases/fusarium-wilt, /diseases/sheath-blight
+Pests (the catalogue, one profile per pest):
+/pests/asian-corn-borer, /pests/banana-aphid, /pests/banana-weevil,
+/pests/bean-fly, /pests/brown-planthopper, /pests/cabbage-webworm,
+/pests/cacao-pod-borer, /pests/cocolisap, /pests/coconut-leaf-beetle,
+/pests/coconut-rhinoceros-beetle, /pests/coffee-berry-borer,
+/pests/corn-earworm, /pests/corn-planthopper, /pests/cutworm,
+/pests/diamondback-moth, /pests/eggplant-fruit-and-shoot-borer,
+/pests/eggplant-leafhopper, /pests/fall-armyworm,
+/pests/golden-apple-snail, /pests/green-leafhopper, /pests/leafminer,
+/pests/legume-pod-borer, /pests/mango-cecid-fly, /pests/mango-leafhopper,
+/pests/mango-pulp-weevil, /pests/mealybug, /pests/melon-fly,
+/pests/mole-cricket, /pests/onion-armyworm, /pests/oriental-fruit-fly,
+/pests/red-palm-weevil, /pests/rice-armyworm, /pests/rice-birds,
+/pests/rice-black-bug, /pests/rice-bug, /pests/rice-caseworm,
+/pests/rice-field-rats, /pests/rice-hispa,
+/pests/rice-leaffolder, /pests/rice-stem-borer, /pests/rice-whorl-maggot,
+/pests/squash-beetle, /pests/thrips, /pests/white-grub,
+/pests/whitebacked-planthopper, /pests/whitefly
+
+Diseases (guides):
+/diseases/plant-diseases-philippines, /diseases/rice-diseases
+
+Diseases (the catalogue, one profile per disease):
+/diseases/anthracnose, /diseases/bacterial-leaf-blight,
+/diseases/bacterial-leaf-streak, /diseases/bacterial-wilt,
+/diseases/bakanae, /diseases/banana-bunchy-top,
+/diseases/banded-leaf-and-sheath-blight, /diseases/black-rot,
+/diseases/black-sigatoka, /diseases/cacao-black-pod,
+/diseases/cadang-cadang, /diseases/cercospora-leaf-spot,
+/diseases/citrus-greening, /diseases/clubroot, /diseases/coconut-bud-rot,
+/diseases/coffee-leaf-rust, /diseases/corn-downy-mildew,
+/diseases/corn-ear-rot, /diseases/corn-rust, /diseases/corn-stalk-rot,
+/diseases/damping-off, /diseases/downy-mildew, /diseases/early-blight,
+/diseases/fusarium-wilt, /diseases/late-blight, /diseases/moko-disease,
+/diseases/narrow-brown-leaf-spot, /diseases/northern-corn-leaf-blight,
+/diseases/papaya-ringspot, /diseases/powdery-mildew,
+/diseases/purple-blotch, /diseases/rice-blast, /diseases/rice-brown-spot,
+/diseases/rice-false-smut, /diseases/rice-grassy-stunt,
+/diseases/rice-ragged-stunt, /diseases/rice-sheath-rot,
+/diseases/rice-stem-rot, /diseases/rice-tungro,
+/diseases/root-knot-nematode, /diseases/sheath-blight,
+/diseases/soft-rot, /diseases/tomato-leaf-curl
 
 Weeds (guides):
 /weeds/weed-management-in-rice, /weeds/herbicides-for-rice-weeds,

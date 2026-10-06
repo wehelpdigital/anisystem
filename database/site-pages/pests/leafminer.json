@@ -1,0 +1,276 @@
+{
+  "section": "pests",
+  "slug": "leafminer",
+  "sortOrder": 340,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Leafminer in Vegetables: How to Spot the Tunnels and Stop Them",
+  "metaTitle": "Leafminer in Vegetables: Signs, Damage and Control",
+  "metaDescription": "Leafminer maggots draw white winding tunnels on bean, tomato and onion leaves. Learn the signs and how to control it while protecting the wasps that help.",
+  "focusKeyword": "leafminer",
+  "keywords": [
+    "leafminer",
+    "leaf miner in vegetables",
+    "Liriomyza",
+    "white tunnels on leaves",
+    "leafminer in onion",
+    "leafminer control"
+  ],
+  "excerpt": "Leafminer is a tiny fly whose maggots eat tunnels inside vegetable leaves. The white winding lines look like scribbles, and a heavy attack can strip a crop of its leaves. This page shows how to spot leafminer early and how to control it without killing its natural enemies.",
+  "heroImage": {
+    "src": "/images/site/pests/leafminer.webp",
+    "thumb": "/images/site/pests/leafminer-480.webp",
+    "alt": "A small black and yellow leafminer fly, Liriomyza, resting on a young leaf",
+    "credit": "Federico Figueroa Cabezas, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Leafminer?"
+    },
+    {
+      "type": "text",
+      "text": "Leafminers are small flies of the genus Liriomyza. Two of them matter in Philippine vegetables: the vegetable leafminer (Liriomyza sativae) and the potato leafminer (Liriomyza huidobrensis). A third, the American serpentine leafminer (Liriomyza trifolii), attacks onion in Nueva Ecija, Nueva Vizcaya and Pangasinan, according to a UPLB study.\n\nThey feed on many crops. L. sativae prefers the legume, daisy and potato families, but it is also recorded on capsicum, carrot, cucumber, lettuce, melon, onion, tomato and zucchini. Heavy attacks cause leaf loss, so the fruits are exposed to sunscald and the plant tires."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Leafminer"
+        ],
+        [
+          "Scientific name",
+          "Liriomyza sativae, Liriomyza huidobrensis"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Beans, tomato, cucumber, melon, squash, onion, potato, lettuce and other vegetables"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves"
+        ],
+        [
+          "When it strikes",
+          "It can attack from the seedling stage to harvest, and it spreads fastest in warm, dry weather and where sprays have killed its natural enemies."
+        ],
+        [
+          "Life cycle",
+          "The female punctures the leaf to feed and lays eggs inside it. The eggs hatch in 2 to 4 days, and the larvae tunnel between the leaf surfaces. Then they drop to the soil to pupate. The cycle takes about 2 weeks in warm weather."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Leafminer"
+    },
+    {
+      "type": "text",
+      "text": "Hold a leaf to the light. The larva is a tiny pale maggot inside the leaf, and its path shows as a white, irregular or coiled tunnel, with a thin black line of droppings inside. Small white puncture dots on the leaf are the feeding and egg laying marks of the adult fly. The adult is a small black and yellow fly, about 1.7 mm for a female. Disease spots on leaves do not form winding tunnels, so a tunnel means leafminer."
+    },
+    {
+      "type": "list",
+      "items": [
+        "White, winding or coiled tunnels on the leaves, with a thin black line inside.",
+        "Many tiny white puncture dots on the leaf surface.",
+        "Mined leaves that dry, turn brown and fall off.",
+        "Fruits that burn in the sun after the leaves are lost.",
+        "Young plants that stop growing or die in a heavy attack."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Leaf spots from fungus or bacteria are round or angular, not winding. Damage from a [thrips](/pests/thrips) attack looks silvery, with no tunnel. Winding white tunnels always mean leafminer larvae."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Leafminer Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The Pacific Pests fact sheet says a heavy attack causes plant stress, water loss, leaf drop, sunscald on the fruit, and even the death of young plants. Mined produce can also be rejected by buyers.\n\nA UPLB study on onion in Nueva Ecija and Nueva Vizcaya showed why careless spraying backfires. Where farmers sprayed less, up to 41 percent of the larvae were parasitized by wasps, against up to 18.6 percent where they sprayed more. So the natural enemies already work for you, and strong sprays kill them. I found no Philippine action threshold in the sources I read."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Leafminer"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Inspect seedlings and the first true leaves for tunnels before you plant. Do not transplant mined seedlings.",
+        "Control weeds and plow the soil before planting, so the pupae in the soil are exposed. Avoid planting leafminer hosts one after another in the same plot.",
+        "Handpick mined leaves, or crush the larva inside the tunnel, when the attack is light.",
+        "After harvest, collect the crop remains and burn them or bury them deep. Mulch the soil in high value crops, as Pacific Pests advises.",
+        "Spare the parasitic wasps. Pacific Pests names Chrysocharis, Neochrysocharis and Diglyphus as helpful ones, and the UPLB onion study found wasps parasitized up to 41 percent of the larvae. See the [integrated pest management guide](/pests/integrated-pest-management).",
+        "Use yellow sticky traps to watch the adult flies. Rotate with a crop that the fly does not like, such as corn."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Choose a spray only when the tunnels keep spreading. Avoid broad spectrum insecticides such as pyrethroids, carbamates and organophosphates, because they kill the wasps and the leafminer comes back worse. Follow the FPA registered label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Abamectin",
+          "IRAC 6",
+          "named by Pacific Pests as the most effective option"
+        ],
+        [
+          "Cyromazine",
+          "IRAC 17",
+          "a growth regulator that works on the larvae, not the adults"
+        ],
+        [
+          "Spinosad",
+          "IRAC 5",
+          "listed by Pacific Pests for leafminer"
+        ],
+        [
+          "Neem (azadirachtin)",
+          "IRAC UN",
+          "a plant based option with lower risk to helpers"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Check seedlings before transplanting.",
+        "Plow the soil and clear weeds before planting.",
+        "Keep sprays to the minimum so the parasitic wasps survive.",
+        "Destroy crop remains right after harvest, and avoid leaving old crops next to new ones."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Leafminer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can plants recover from leafminer?",
+          "a": "Mined leaves do not heal, but a plant with a light attack keeps growing. Remove the worst leaves, protect the new growth and keep the natural enemies alive."
+        },
+        {
+          "q": "Why does leafminer come back after I spray?",
+          "a": "Broad spectrum sprays kill the parasitic wasps that keep the flies down, while the larvae inside the leaf escape. The UPLB onion study found more parasitism where farmers sprayed less."
+        },
+        {
+          "q": "Which vegetables do leafminers attack?",
+          "a": "Many, including beans, tomato, cucumber, melon, onion, lettuce, carrot and potato. It is one of the pests listed in the [crop pests guide](/pests/crop-pests-philippines)."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Diamondback moth",
+          "url": "/pests/diamondback-moth"
+        },
+        {
+          "label": "Cabbage webworm",
+          "url": "/pests/cabbage-webworm"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Vegetable leafminer",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/zucchini_vegetable_leafminer_262.htm"
+        },
+        {
+          "label": "UPLB: Parasitism of the American serpentine leafminer in onion",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4779"
+        }
+      ]
+    }
+  ]
+}

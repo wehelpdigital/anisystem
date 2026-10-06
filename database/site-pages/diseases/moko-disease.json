@@ -1,0 +1,250 @@
+{
+  "section": "diseases",
+  "slug": "moko-disease",
+  "sortOrder": 380,
+  "lang": "en",
+  "category": "Fruit and plantation diseases",
+  "profile": true,
+  "title": "Moko Disease and Bugtok: How to Spot Them and Protect Your Banana",
+  "metaTitle": "Moko Disease and Bugtok of Banana: Signs and Control",
+  "metaDescription": "Moko disease and bugtok come from one bacterium that wilts Cavendish and rots saba and cardaba fruit. Learn the signs and the steps that protect your mats.",
+  "focusKeyword": "moko disease",
+  "keywords": [
+    "moko disease",
+    "bugtok disease",
+    "banana moko",
+    "bacterial wilt of banana",
+    "saba bugtok",
+    "Ralstonia banana"
+  ],
+  "excerpt": "Moko disease is a bacterial wilt of banana, and bugtok is the same bacterium rotting the fruit of cooking bananas such as saba and cardaba. Both are hard to cure once they are in the field, so the work is to keep the bacterium out. This guide shows you the signs and the steps.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-banana-farming-philippines.webp",
+    "thumb": "/images/site/guides/crops-banana-farming-philippines-480.webp",
+    "alt": "Banana plants with bagged bunches on both sides of a farm road in Panabo City, Davao del Norte",
+    "credit": "Shubert Ciencia, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Moko Disease?"
+    },
+    {
+      "type": "text",
+      "text": "Moko and bugtok both come from the bacterium Ralstonia solanacearum. A UPLB lecture on the two diseases explains that the name depends on what the bacterium does to the plant. Moko wilts Cavendish and other dessert bananas. Bugtok discolors the fruit pulp of cooking bananas such as saba and cardaba. The Pacific Pests and Pathogens fact sheet says that bugtok was first described in the southern Philippines. It later spread to the central Philippines and parts of the north.\n\nWhen first described in the 1960s, bugtok was of minor importance. Since then it has become a major problem. In many areas farmers have abandoned the popular saba and cardaba crops. If you grow [banana in the Philippines](/crops/banana-farming-philippines), your best defense is clean planting material and clean tools."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Moko disease and bugtok of banana"
+        ],
+        [
+          "Scientific name",
+          "Ralstonia solanacearum (banana strains)"
+        ],
+        [
+          "Kind",
+          "Bacterium (a bacterial disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Banana, including Cavendish, saba and cardaba, and Heliconia"
+        ],
+        [
+          "Local names",
+          "Bugtok is also called tapurok, in saba and cardaba."
+        ],
+        [
+          "Where it strikes",
+          "The whole plant, fruits, pods and nuts and leaves"
+        ],
+        [
+          "When it strikes",
+          "It can strike at any stage, but flowering is a key danger time because insects visiting the flowers can carry the bacterium to healthy plants."
+        ],
+        [
+          "How it spreads",
+          "The bacterium lives in the soil and in weeds, and it moves through infected suckers, contaminated knives, irrigation or flood water, and insects that visit the male flowers."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Moko Disease"
+    },
+    {
+      "type": "text",
+      "text": "On a moko plant, the leaves turn yellow and wilt. A cut through the stem shows brown streaks, most of all in the middle core. Cut tissue can ooze a creamy bacterial slime. On bugtok plants the plant stays green and does not wilt, and fruit does not ripen early. Look for blackened, distorted fruit stalks and male flower bracts that do not drop. Inside the fruit the pulp turns brown to reddish and hard. Do not mistake the yellow leaves for the bunched leaves of [banana bunchy top](/diseases/banana-bunchy-top)."
+    },
+    {
+      "type": "list",
+      "items": [
+        "On Cavendish and other dessert bananas, leaves turn yellow and then wilt.",
+        "A cut stem shows brown streaks and stains, most of all in the central core, and a creamy ooze may come out.",
+        "Male flower parts turn black, and the male bud and its bracts may stay on the stalk.",
+        "On saba and cardaba, the plant stays green, but the fruit stalk is blackened and distorted.",
+        "Fruit pulp is brown or reddish and firm inside, with grey or brown rot, even when the skin looks fine."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Other wilt diseases of banana also yellow and wilt leaves. A laboratory test is the sure way to tell which one you have."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Moko Disease Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "For a smallholder, the loss is large. The Pacific Pests and Pathogens fact sheet notes that bugtok made farmers in many areas of the Philippines abandon their crops of saba and cardaba. These varieties give the high starch cooking banana that many Filipino dishes and snack products depend on.\n\nIn UPLB inoculation tests, Cavendish showed a high rate of wilt within two to three weeks. Cardaba moved more slowly but ended with nearly full infection. The sources we read give no national loss figure, so treat any single number you hear with care."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Moko Disease"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant only healthy planting material. Use tissue cultured plantlets, and never take suckers from a farm that has moko or bugtok.",
+        "Walk the farm often. Find sick plants early and remove them with the whole mat. UPLB advises burning standing infected plants so the bacterium does not enter the soil.",
+        "Disinfect cutting tools between plants when you desucker and prune. The Pacific fact sheet suggests a dilute bleach, with 3 percent sodium hypochlorite named for moko.",
+        "For bugtok, protect the flowers. Bag the emerging flower bud, and remove the male bud early with a forked stick, so insects cannot carry the bacterium.",
+        "Remove weeds that host the bacterium, since some carry it without showing signs.",
+        "After a sick crop, leave the field fallow or plant a legume cover crop for at least 12 months before banana returns."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Chemical control is not recommended for moko, and no spray cures a sick plant. The only chemical you need is a disinfectant such as dilute bleach for your tools. Real control comes from clean material, sanitation and flower protection."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Buy planting material only from nurseries that sell tissue cultured plantlets, and keep records of the source.",
+        "Clean boots, tools and machines before you move from a sick field to a clean one.",
+        "Keep diseased material out of drains and irrigation channels. Water from an infected block can carry the bacterium to another.",
+        "Isolate a sick mat with a trench or fence, and do not share suckers or fruit with neighbors from affected farms.",
+        "Learn about another banana disease, which strikes the leaves, in our [black sigatoka guide](/diseases/black-sigatoka)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Moko Disease"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Are moko and bugtok the same disease?",
+          "a": "They are the same bacterium. According to the UPLB lecture, moko is the name when the bacterium wilts Cavendish and other dessert bananas. Bugtok is the name when it discolors the fruit of cooking bananas like saba and cardaba."
+        },
+        {
+          "q": "Can sick fruit and suckers spread the disease?",
+          "a": "Yes. The Pacific fact sheet says infected suckers and fruit exchanged between farmers carry moko over long distances. So never sell or trade suckers from a sick farm, and burn sick plants where they stand."
+        },
+        {
+          "q": "How do I stop insects from spreading bugtok?",
+          "a": "Bag the young flower bud and remove the male bud early with a forked stick. This keeps flower visiting insects from picking up the bacterium and carrying it to healthy plants."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation diseases",
+      "items": [
+        {
+          "label": "Anthracnose",
+          "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Banana bunchy top",
+          "url": "/diseases/banana-bunchy-top"
+        },
+        {
+          "label": "Black sigatoka",
+          "url": "/diseases/black-sigatoka"
+        },
+        {
+          "label": "Papaya ringspot",
+          "url": "/diseases/papaya-ringspot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Banana bugtok disease",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/banana_bugtok_disease_524.htm"
+        },
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Banana moko disease",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/banana_moko_disease_525.htm"
+        },
+        {
+          "label": "UPLB Knowledge Repository: Sustainable management of moko and bugtok diseases of banana",
+          "url": "https://www.ukdr.uplb.edu.ph/professorial_lectures/930"
+        }
+      ]
+    }
+  ]
+}

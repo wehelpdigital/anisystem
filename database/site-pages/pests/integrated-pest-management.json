@@ -1,0 +1,457 @@
+{
+  "section": "pests",
+  "slug": "integrated-pest-management",
+  "sortOrder": 2,
+  "lang": "en",
+  "category": "Pest guides",
+  "title": "Integrated Pest Management: A Field Guide for Filipino Farmers",
+  "metaTitle": "Integrated Pest Management for Filipino Farmers",
+  "metaDescription": "Integrated pest management for Filipino farmers: scout weekly, act on real thresholds, spare natural enemies, rotate insecticide groups, use FPA products.",
+  "focusKeyword": "integrated pest management",
+  "keywords": [
+    "integrated pest management",
+    "insecticide",
+    "fertilizer and pesticide authority",
+    "action threshold",
+    "natural enemies"
+  ],
+  "excerpt": "Integrated pest management, or IPM, means you count pests before you spray. You keep their natural enemies alive, and you use an insecticide only when the numbers say it pays. This guide shows how to scout, which thresholds PhilRice and IRRI give, and how to rotate and handle sprays safely.",
+  "heroImage": {
+    "src": "/images/site/guides/pests-integrated-pest-management.webp",
+    "thumb": "/images/site/guides/pests-integrated-pest-management-480.webp",
+    "alt": "A farmer in a straw hat checks the base of young rice plants in a flooded paddy, the first step of integrated pest management",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What integrated pest management means"
+    },
+    {
+      "type": "text",
+      "text": "FAO describes IPM as weighing every way to control a pest and combining the right ones. Biological, cultural, physical and chemical tools all count. The goal is a healthy crop with as little pesticide as possible, because heavy spraying bred outbreaks and resistance.\n\nIn the Philippines, Memorandum Order 126 of 1993 launched KASAKALIKASAN, the national integrated pest management program for rice, corn and vegetables. It taught farmers in season long Farmer Field Schools."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Scouting: count before you spray"
+    },
+    {
+      "type": "text",
+      "text": "Scouting means walking your field on a schedule and counting. IRRI says to check for planthoppers weekly in the field and daily in the seedbed. For the [rice bug](/pests/rice-bug), scout daily from just before flowering to the hard dough stage. IRRI checks 10 to 20 hills, and PhilRice counts 10. Corn has its own walk, shown on the [fall armyworm](/pests/fall-armyworm) page."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Walk a diagonal",
+          "text": "Cross the field corner to corner, not just along the path."
+        },
+        {
+          "title": "Tap the base",
+          "text": "At each hill, bend the plants a little and tap three times. Planthoppers drop onto the water, where you can count them."
+        },
+        {
+          "title": "Count the friends too",
+          "text": "Count spiders and other natural enemies as well, since IRRI weighs the two numbers together."
+        },
+        {
+          "title": "Write it down",
+          "text": "Note the date, crop age and counts. Photograph any insect you cannot name."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, put scouting on the [cropping calendar](/features/cropping-calendar) as a weekly task, dated from each lot's own day zero. Keep counts and photos in [notes](/features/notes-photos-and-voice). And if an insect puzzles you, ask [Anee](/features/ai-agricultural-technician), the smart farm technician in anee.io."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Action thresholds: the count that calls for action"
+    },
+    {
+      "type": "text",
+      "text": "An action threshold is the pest count at which control costs less than the harvest it saves. Below it, a spray loses money and kills the enemies of the pest. So use thresholds from research only."
+    },
+    {
+      "type": "table",
+      "caption": "Published action thresholds",
+      "rows": [
+        [
+          "Pest and crop",
+          "How to count",
+          "Act when",
+          "Source"
+        ],
+        [
+          "[Brown planthopper](/pests/brown-planthopper), rice field",
+          "Adults and nymphs on 10 hills, tapped",
+          "1 or more per tiller, or 30 per hill",
+          "PhilRice"
+        ],
+        [
+          "Rice bug, flowering to hard dough",
+          "20 hills on a diagonal, early or late in the day",
+          "More than 10 bugs in 20 hills",
+          "IRRI"
+        ],
+        [
+          "[Banana weevil](/pests/banana-weevil)",
+          "50 cut stem discs per hectare, checked after 5 days",
+          "4 weevils per disc on average",
+          "Pacific Pests"
+        ],
+        [
+          "[Coconut rhinoceros beetle](/pests/coconut-rhinoceros-beetle)",
+          "Beetles per hectare",
+          "3 to 5 in palms up to 2 years old, 15 to 20 after that",
+          "Pacific Pests"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "IRRI adds a rule that saves many sprays. If natural enemies outnumber the planthoppers, do not spray, even where some hopperburn shows. Each page in our [pest catalogue](/pests) gives a count when a source has one."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "When to stop counting planthoppers",
+      "text": "IRRI says there is no need to scout for brown or whitebacked planthoppers beyond the milk stage."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Natural enemies, and why early sprays backfire"
+    },
+    {
+      "type": "text",
+      "text": "In rice, spraying does the most harm in the first 30 to 40 days. IRRI does not recommend it from 0 to 40 days after planting, because the crop recovers from most early damage. Leaffolders, whorl maggots and armyworms look bad then, yet they rarely cut yield. PhilRice gives the same rule: no insecticide in the first 30 days after transplanting or 40 days after sowing.\n\nThe planthopper shows why. IRRI says its outbreaks come from pesticides that kill natural enemies. Then its eggs hatch unchecked and the survivors build up fast. In other words, an early spray against leaf eaters can buy you a planthopper problem later."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Friends you can count on"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Spiders, mirid bugs and water striders** eat planthoppers at the base of rice hills.",
+        "**Small wasps** lay their eggs inside pest eggs, and IRRI lists them among the enemies of the brown planthopper.",
+        "**Earwigs.** In UPLB trials, earwigs released against the [Asian corn borer](/pests/asian-corn-borer) gave green corn 45 percent more yield than untreated plots.",
+        "**Lady beetles** are on IRRI's list of enemies of the [rice black bug](/pests/rice-black-bug).",
+        "**Ducks** eat young [golden apple snails](/pests/golden-apple-snail) once rice is 30 to 35 days past transplanting.",
+        "**Flowers on the bunds.** IRRI says yellow and white flowers draw natural enemies in."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Integrated pest management works on Philippine farms"
+    },
+    {
+      "type": "text",
+      "text": "In Atok, Benguet, cabbage farmers released the Diadegma wasp against the [diamondback moth](/pests/diamondback-moth). A UPLB paper reports that their sprays fell from 32 to 8 in the dry season. In Palawan, a mango IPM program cut sprays from 24 to 7. Fruit hit by the [mango pulp weevil](/pests/mango-pulp-weevil) fell from 40 percent to zero. And against the [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), a 2004 study got the most healthy fruit from weekly removal of damaged shoots and fruit."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Cultural and mechanical tools"
+    },
+    {
+      "type": "text",
+      "text": "Most of IPM happens before any spray. IRRI gives these habits."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Plant with your neighbors,** within a two week window, to cut insect, disease, bird and rat pressure.",
+        "**Choose resistant, short duration varieties,** so pests fit fewer generations into the crop.",
+        "**Go easy on nitrogen,** because too much favors planthoppers.",
+        "**Clean up after harvest.** Plow the stubble under and skip ratooning.",
+        "**Use water.** Flood the seedbed for a day against planthoppers. Keep young rice under 2 cm of water against snails.",
+        "**Use light traps** for the rice black bug, from 5 days before to 5 days after the full moon.",
+        "**Work together on rats** from before planting to three weeks after, and keep bunds under 30 cm wide so [rice field rats](/pests/rice-field-rats) cannot burrow."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Insecticide groups and why you rotate them"
+    },
+    {
+      "type": "text",
+      "text": "Every insecticide belongs to a mode of action group, numbered by IRAC, the Insecticide Resistance Action Committee. If a label lacks the group, look up its active ingredient in the IRAC list. Products in one group hit the insect the same way, so two brands from one group are one tool.\n\nSpray one group over and over, and the survivors breed a resistant population. IRAC's rule is simple: do not treat back to back generations of a pest with the same group."
+    },
+    {
+      "type": "table",
+      "caption": "Common IRAC groups and example active ingredients",
+      "rows": [
+        [
+          "IRAC group",
+          "Chemical class",
+          "Example active ingredients"
+        ],
+        [
+          "1A",
+          "Carbamates",
+          "Fenobucarb (BPMC), methomyl"
+        ],
+        [
+          "1B",
+          "Organophosphates",
+          "Chlorpyrifos, malathion, profenofos"
+        ],
+        [
+          "3A",
+          "Pyrethroids",
+          "Lambda cyhalothrin, cypermethrin, deltamethrin"
+        ],
+        [
+          "4A",
+          "Neonicotinoids",
+          "Imidacloprid, thiamethoxam, dinotefuran"
+        ],
+        [
+          "5",
+          "Spinosyns",
+          "Spinosad, spinetoram"
+        ],
+        [
+          "6",
+          "Avermectins",
+          "Abamectin, emamectin benzoate"
+        ],
+        [
+          "9B",
+          "Pyridine azomethines",
+          "Pymetrozine"
+        ],
+        [
+          "11A",
+          "Bacillus thuringiensis",
+          "Bt kurstaki, Bt aizawai"
+        ],
+        [
+          "15",
+          "Benzoylureas",
+          "Lufenuron, teflubenzuron"
+        ],
+        [
+          "16",
+          "Chitin synthesis inhibitors",
+          "Buprofezin"
+        ],
+        [
+          "28",
+          "Diamides",
+          "Chlorantraniliprole, flubendiamide"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Group choice also protects natural enemies. The Benguet farmers paired the wasp with selective sprays, Bt from group 11A and teflubenzuron from group 15. Against the brown planthopper, PhilRice advises a contact or stomach poison for adults and an insect growth regulator for nymphs.\n\nIn anee.io, the [farm inventory](/features/farm-inventory-and-expenses) records what every activity used, so you can see which groups already went on a lot."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "A lesson from Cebu cabbage"
+    },
+    {
+      "type": "text",
+      "text": "In 2010, the diamondback moth in Cebu showed lower sensitivity to the diamides, group 28. The IRAC Philippines working group then surveyed 100 cabbage growers there. It found up to 12 sprays a season, mostly diamides, and frequent overdosing. Farmers rotated brands but seldom groups, and switching brand inside one group is not rotation."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Safe use and the Fertilizer and Pesticide Authority"
+    },
+    {
+      "type": "text",
+      "text": "Presidential Decree 1144 created the Fertilizer and Pesticide Authority (FPA) on May 30, 1977. Under that law, no pesticide may be sold or used unless the FPA has registered it. Its website lists registered products, licensed handlers, and banned and restricted pesticides. Our [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) guide explains more."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy only FPA registered products from licensed dealers, with your crop and pest on the label.",
+        "Follow the label for rate, timing and the days to wait before harvest.",
+        "Wear protective gear when you mix and spray, as PhilRice advises.",
+        "Keep rat poison in covered bait stations, away from children, pets and livestock.",
+        "Use molluscicides only on rice under 30 days old, and only on low spots and canalettes.",
+        "Check the [weather forecast](/features/farm-weather-forecast) in anee.io before you set a spray day."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Active ingredients, never a borrowed rate",
+      "text": "We name active ingredients, never doses. Use only FPA registered products and take the rate from the label."
+    },
+    {
+      "type": "cta",
+      "title": "Put integrated pest management on your calendar",
+      "text": "anee.io dates scouting from each lot's own day zero, and Anee reads a photo of the pest you found.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about integrated pest management"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is integrated pest management in simple words?",
+          "a": "Count the pests and their natural enemies often, and spray only when the loss would cost more than the spray."
+        },
+        {
+          "q": "How often should I check my rice for pests?",
+          "a": "Weekly in the field and daily in the seedbed, says IRRI. For the rice bug, check daily from just before flowering to hard dough."
+        },
+        {
+          "q": "Why should I not spray rice in the first 30 days?",
+          "a": "Young rice recovers from most leaf damage, and early sprays kill the spiders and wasps that keep planthoppers down."
+        },
+        {
+          "q": "Is switching insecticide brands enough to stop resistance?",
+          "a": "No. Brands with the same IRAC group work the same way, so switch groups."
+        },
+        {
+          "q": "How do I know if a pesticide is registered with the FPA?",
+          "a": "Check the registered products list on the Fertilizer and Pesticide Authority website, or ask your municipal agriculturist."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More pest guides",
+      "items": [
+        {
+          "label": "Crop pests in the Philippines",
+          "url": "/pests/crop-pests-philippines"
+        },
+        {
+          "label": "Rice insects",
+          "url": "/pests/rice-insects"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Hanip, mites and aphids",
+          "url": "/pests/hanip-mites-and-aphids"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FAO: Integrated Pest Management",
+          "url": "https://www.fao.org/pest-and-pesticide-management/ipm/integrated-pest-management/en/"
+        },
+        {
+          "label": "Memorandum Order No. 126, s. 1993: KASAKALIKASAN, the National Integrated Pest Management Program (Lawphil)",
+          "url": "https://www.lawphil.net/executive/mo/mo1993/mo_126_1993.html"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: How to manage pests and diseases",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Insects",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases/insects"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Planthopper",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice bug",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Black bug",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/black-bug"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Golden apple snail",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases/golden-apple-snails"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Rats",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases/rats-in-pest-and-diseases"
+        },
+        {
+          "label": "PhilRice: Young rice plants can take care of themselves (2012)",
+          "url": "https://www.philrice.gov.ph/young-rice-plants-can-take-care-of-themselves/"
+        },
+        {
+          "label": "PhilRice: Check population to determine counter action against BPH (2021)",
+          "url": "https://www.philrice.gov.ph/check-population-to-determine-counter-action-against-bph-rice-pest-expert/"
+        },
+        {
+          "label": "Cardona and others (1996): Field releases of Diadegma semiclausum in Benguet and Mountain Province, UPLB repository",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5970/"
+        },
+        {
+          "label": "Medina and others (2005): An IPM program for mango in Palawan, UPLB repository",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2919/"
+        },
+        {
+          "label": "Duca and others (2004): Management of the eggplant fruit and shoot borer, UPLB repository",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5621/"
+        },
+        {
+          "label": "UPLB repository: Predatory earwigs against the Asian corn borer",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2834/"
+        },
+        {
+          "label": "IRAC: Mode of action classification online",
+          "url": "https://irac-online.org/mode-of-action/classification-online/"
+        },
+        {
+          "label": "IRAC: Mode of action brochure",
+          "url": "https://irac-online.org/documents/moa-brochure"
+        },
+        {
+          "label": "IRAC Philippines Diamide Working Group (2011): Diamide resistance updates and learnings from the Philippines",
+          "url": "https://irac-online.org/documents/dbm-workshop-philippines-lessons"
+        },
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Banana weevil",
+          "url": "https://apps.lucidcentral.org/pppw_v12/text/web_full/entities/banana_weevil_109.htm"
+        },
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Coconut rhinoceros beetle",
+          "url": "https://apps.lucidcentral.org/pppw_v12/text/web_full/entities/coconut_rhinoceros_beetle__oryctes_108.htm"
+        },
+        {
+          "label": "FPA: Frequently asked questions",
+          "url": "https://fpa.da.gov.ph/faqs/"
+        },
+        {
+          "label": "FPA: History and mandate",
+          "url": "https://fpa.da.gov.ph/about-us/history/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "section": "diseases",
+  "slug": "cercospora-leaf-spot",
+  "sortOrder": 345,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Cercospora Leaf Spot: How to Spot It and Stop It in Vegetables",
+  "metaTitle": "Cercospora Leaf Spot: Signs and Control in Vegetables",
+  "metaDescription": "Cercospora leaf spot makes round spots with dark edges and pale centers on vegetable leaves. Learn the signs, causes and steps that lower the risk.",
+  "focusKeyword": "cercospora leaf spot",
+  "keywords": [
+    "cercospora leaf spot",
+    "cercospora leaf spot of vegetables",
+    "Cercospora beticola",
+    "Cercospora citrullina",
+    "leaf spot in vegetables"
+  ],
+  "excerpt": "Cercospora leaf spot is a fungal disease that makes small round spots, with dark edges and pale centers, on the older leaves of vegetables. Left alone, the spots join, the leaves yellow and drop, and the crop yields less.",
+  "heroImage": {
+    "src": "/images/site/diseases/cercospora-leaf-spot.webp",
+    "thumb": "/images/site/diseases/cercospora-leaf-spot-480.webp",
+    "alt": "A leaf with many small round spots with pale centers, the signs of Cercospora leaf spot",
+    "credit": "Plant pests and diseases, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Cercospora Leaf Spot?"
+    },
+    {
+      "type": "text",
+      "text": "Cercospora leaf spot is a name for a group of related fungi in the genus Cercospora. Each one prefers its own crop. Cercospora citrullina attacks melons, watermelon and other cucurbits, and Cercospora beticola attacks beet, spinach and Swiss chard.\n\nI found no Philippine extension sheet that ranks this disease for local vegetables, so the advice here comes from university extension services that study the same fungi. The habits are the same in warm, humid weather. Leaf spots on vegetables are often confused with [anthracnose](/diseases/anthracnose) or [early blight](/diseases/early-blight), so it helps to check the shape of the spot."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Cercospora leaf spot"
+        ],
+        [
+          "Scientific name",
+          "Cercospora spp. (for example C. citrullina on cucurbits and C. beticola on beet and spinach)"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Cucurbits (melon, watermelon, cucumber), beet, spinach and other vegetables"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves"
+        ],
+        [
+          "When it strikes",
+          "It builds in warm weather with long leaf wetness, and it starts on the older leaves before it climbs the plant, usually once the crop has a full canopy."
+        ],
+        [
+          "How it spreads",
+          "The fungus survives in crop residue, seed and weeds. Rain splash, wind, tools and workers carry its spores from the old residue to the leaves, and each new spot makes more spores."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Cercospora Leaf Spot"
+    },
+    {
+      "type": "text",
+      "text": "Start with the older leaves. The first sign is a small, round, light colored spot that grows and gets a dark margin, which can be red to purple on beet. The center turns white, tan or gray, and it may fall out and leave a hole. A yellow halo may circle the spot as it grows. In wet weather, the stems and leaf stalks can also be hit. Tiny black dots in the center of the spot are the structures that make spores."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small, round spots appear on the older leaves first.",
+        "Each spot has a dark, reddish or purple edge, and a white, tan or gray center.",
+        "The center may drop out and leave a hole in the leaf.",
+        "A yellow halo may surround the spots, and many spots join into dead areas.",
+        "Heavily hit leaves yellow and drop, and the stem or leaf stalk may be spotted in humid weather."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Round spots with a pale center can look like [anthracnose](/diseases/anthracnose) on some crops. Cercospora spots start small and round on the older leaves, with a dark margin and a pale center."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Cercospora Leaf Spot Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Cercospora leaf spot lowers the yield by killing the leaves that feed the crop, and it can spoil the look of leafy vegetables that you sell by the bundle. How much you lose depends on the crop, the variety and how long the leaves stay wet. I did not find a sourced loss figure for vegetables in the Philippines, so I give none.\n\nThe fungus survives in plant residue and in soil for up to 3 years, according to Cornell. So the spots you see this season often come from last season's leaves. Good sanitation costs little, and it works better than any spray. See our guide to [growing vegetables in the Philippines](/crops/vegetables-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Cercospora Leaf Spot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Space plants so the air moves through the canopy and the leaves dry fast after rain or watering.",
+        "Use drip or furrow irrigation, and avoid overhead watering when you can, since wet leaves are what the fungus needs.",
+        "Remove and destroy diseased leaves early in the season, and carry them out of the field.",
+        "Rotate with crops that are not hosts, for at least 2 years, and for 3 or more years where beet or spinach is the host.",
+        "Pull out weeds that act as hosts, such as lambsquarters and pigweed, which carry the beet fungus.",
+        "After harvest, destroy the crop residue by deep plowing so that the old leaves are buried and cannot send spores to the next crop."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Fungicides help best when they protect the leaves before the disease builds up. Extension services advise a protectant spray from the time the vines touch, and earlier in fields with a history of the disease. Some Cercospora fungi have become resistant to strobilurin fungicides in New York, so do not rely on that class alone. Follow the label of an FPA registered product, and rotate groups."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Copper (as copper octanoate)",
+          "FRAC M1",
+          "named by Cornell as an organic option, with a Bacillus based product"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Rotate away from the host crop for at least 2 years.",
+        "Use clean seed, and treated seed where it is sold.",
+        "Keep the field free of hosts, such as weeds in the same family.",
+        "Bury or remove crop residue straight after harvest.",
+        "Scout older leaves every week once the canopy closes, and start protection early if the field had the disease."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Cercospora Leaf Spot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does Cercospora leaf spot look like?",
+          "a": "It makes small, round spots with a dark margin and a white, tan or gray center. A yellow halo may circle them, and the center can fall out."
+        },
+        {
+          "q": "Where does the fungus come from?",
+          "a": "It survives in crop residue, seed and weeds. Cornell says it can stay in soil and plant residue for up to 3 years on beet crops."
+        },
+        {
+          "q": "Do I need to spray every season?",
+          "a": "Not always. Spacing, drip irrigation, rotation and residue control come first. Spray only when the field has a history of the disease or the weather is wet and warm."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "University of Kentucky: Cercospora leaf spot of cucurbits",
+          "url": "https://veggiescout.mgcafe.uky.edu/cercospora-leaf-spot"
+        },
+        {
+          "label": "Cornell University: Cercospora leaf spot of table beet",
+          "url": "https://vegetables.cornell.edu/pest-management/disease-factsheets/cercospora-leaf-spot-of-table-beet"
+        },
+        {
+          "label": "Texas AgriLife Extension: Cercospora leaf spot of watermelon",
+          "url": "https://aggie-horticulture.tamu.edu/vegetable/problem-solvers/cucurbit-problem-solver/leaf-disorders/cercospora-leaf-spot"
+        }
+      ]
+    }
+  ]
+}

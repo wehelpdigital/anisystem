@@ -1,0 +1,281 @@
+{
+  "section": "pests",
+  "slug": "whitefly",
+  "sortOrder": 335,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Whitefly in Vegetables: How to Spot It and Stop It",
+  "metaTitle": "Whitefly in Vegetables: Signs, Damage and Control",
+  "metaDescription": "Whitefly sucks sap, leaves sticky honeydew and spreads viruses in tomato, eggplant and squash. Learn the signs and how to control it in your farm.",
+  "focusKeyword": "whitefly",
+  "keywords": [
+    "whitefly",
+    "Bemisia tabaci",
+    "whitefly in tomato",
+    "whitefly control",
+    "sticky honeydew on leaves",
+    "sooty mold"
+  ],
+  "excerpt": "Whitefly is a tiny white insect that feeds on the underside of vegetable leaves. It weakens the plant, leaves a sticky honeydew and carries plant viruses. This page shows how to spot whitefly early and how to keep it under control without wiping out its natural enemies.",
+  "heroImage": {
+    "src": "/images/site/pests/whitefly.webp",
+    "thumb": "/images/site/pests/whitefly-480.webp",
+    "alt": "Two adult whiteflies, small white insects with powdery wings, on a green leaf",
+    "credit": "Mike Bowie, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Whitefly?"
+    },
+    {
+      "type": "text",
+      "text": "The whitefly Bemisia tabaci is a small sap sucking insect with a very wide host range. It carries many plant viruses, including those of tomato, cucurbits and cotton. It also feeds on eggplant, root crops, legumes, onion and tobacco.\n\nA UPLB study found that B. tabaci is not one thing but a group of at least 41 biotypes, which differ in host choice, in their resistance to insecticides and in how well they carry viruses. In the Philippines, researchers found the B biotype on cotton, eggplant, squash and tomato, and also Asia biotypes on eggplant. That mix is one reason sprays often fail."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Whitefly"
+        ],
+        [
+          "Scientific name",
+          "Bemisia tabaci"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Tomato, eggplant, squash and other cucurbits, beans, onion and cotton"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It attacks from the seedling stage through harvest, and it builds up fast in hot, dry weather and where crops overlap."
+        ],
+        [
+          "Life cycle",
+          "Females lay eggs on the underside of leaves. The eggs hatch into mobile crawlers, which settle and turn into scale like nymphs, and then into winged adults. Adults fly in from weeds, old crops and neighboring fields."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Whitefly"
+    },
+    {
+      "type": "text",
+      "text": "Shake a plant gently, or turn over a young leaf. Adults are tiny, about 1.5 mm, with yellowish bodies and white wings, and they fly up in a small cloud. On the underside you will see the pale, flat, scale like nymphs that do not move. Leaves may be yellow, curled or covered with a sticky shine and black sooty mold. Aphids and [thrips](/pests/thrips) also make leaves sticky or silvery, but they do not fly up as a white cloud."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small white flying insects that rise from the leaves when you shake the plant.",
+        "Pale, flat, scale like nymphs on the underside of the leaves.",
+        "Yellow and curled leaves, and plants that grow slowly.",
+        "A sticky honeydew on the leaves and a black sooty mold on top of it.",
+        "Fruits that ripen unevenly in tomato.",
+        "Plants with virus symptoms, such as curled, yellow, stunted leaves, near the whitefly colonies."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Aphids and thrips also leave sticky or silvery leaves. Only whitefly lifts off as a small white cloud when you shake the plant."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Whitefly Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The direct damage comes from sap loss and from the honeydew, which feeds sooty mold. But the bigger loss usually comes from the viruses the whitefly carries. In tomato these include the begomoviruses behind [tomato leaf curl](/diseases/tomato-leaf-curl). A virus cannot be cured, so one early infestation can ruin a planting.\n\nUC IPM uses a treatment threshold of about 4 adults per leaf for sweetpotato whitefly in tomato in California. That number comes from another climate and another crop, so treat it as a guide only. Because a virus cannot be cured, act on young plants as soon as you see adults."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Whitefly"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Use clean seedlings from a nursery covered with a fine net, and inspect the seedlings for nymphs and eggs before transplanting.",
+        "Install yellow sticky traps at planting, around the field, to catch adults that fly in from other crops. Use them also to monitor the numbers.",
+        "Plant a barrier of maize around the field or a trap crop of cucurbits to hold the adults off the main crop, as the Pacific Pests fact sheet advises.",
+        "Remove weeds, old crop remains and neighboring volunteer plants that harbor whitefly. Avoid planting new crops right next to old ones, so the generations do not overlap.",
+        "Use reflective silver mulch where you can. UC IPM reports it can delay the build up in tomato by 4 to 6 weeks.",
+        "Protect the natural enemies, such as parasitic wasps, lacewings and lady beetles. The fungus Verticillium lecanii is also used against the nymphs. See the [integrated pest management guide](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Pacific Pests warns that strong insecticides lead to resistant strains and advises soap, oils and plant products first. If you still need to spray, use the underside of the leaves and rotate groups. Follow the FPA registered label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Insecticidal soap",
+          "no IRAC group",
+          "a soap and oil spray that suffocates nymphs, used in vegetables and listed by Pacific Pests"
+        ],
+        [
+          "Neem (azadirachtin)",
+          "IRAC UN",
+          "a plant based option listed by Pacific Pests and UC IPM"
+        ],
+        [
+          "Buprofezin",
+          "IRAC 16",
+          "a growth regulator for the nymph stages, listed by UC IPM"
+        ],
+        [
+          "Spirotetramat",
+          "IRAC 23",
+          "listed by UC IPM for use during the growing season"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant on the same dates as your neighbors, and avoid planting next to old crops that are full of whitefly.",
+        "Keep nursery seedlings under a fine net until transplanting.",
+        "Clear weeds and old crop remains right after harvest.",
+        "Choose varieties that tolerate virus where they are sold for your area."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Whitefly"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How do I tell whitefly from aphids?",
+          "a": "Whitefly adults are small and winged, with white wings, and they fly up when you disturb the plant. Aphids are soft, mostly wingless and stay in clusters on young shoots."
+        },
+        {
+          "q": "Why does my spray not kill the whitefly?",
+          "a": "Many nymphs sit on the underside of the leaf, and some biotypes resist insecticides. A UPLB study counted at least 41 biotypes worldwide. Rotate groups and combine sprays with traps and clean seedlings."
+        },
+        {
+          "q": "Can whitefly give my tomato a virus?",
+          "a": "Yes. It is the main carrier of the viruses behind [tomato leaf curl](/diseases/tomato-leaf-curl). There is no cure for a sick plant, so protect the seedlings from the start."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Diamondback moth",
+          "url": "/pests/diamondback-moth"
+        },
+        {
+          "label": "Cabbage webworm",
+          "url": "/pests/cabbage-webworm"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Sweetpotato whitefly",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_mini/entities/sweetpotato_whitefly_284.htm"
+        },
+        {
+          "label": "UPLB: Molecular identification of whitefly Bemisia tabaci in the Philippines",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4699"
+        },
+        {
+          "label": "UC IPM: Whiteflies in tomato",
+          "url": "https://ipm.ucanr.edu/agriculture/tomato/whiteflies/"
+        }
+      ]
+    }
+  ]
+}

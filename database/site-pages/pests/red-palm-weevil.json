@@ -1,0 +1,261 @@
+{
+  "section": "pests",
+  "slug": "red-palm-weevil",
+  "sortOrder": 390,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Red Palm Weevil: Hidden Damage in Coconut and How to Stop It",
+  "metaTitle": "Red Palm Weevil: Signs, Damage and Control",
+  "metaDescription": "The red palm weevil grubs hollow out coconut trunks from inside. Learn the early warning signs, wound care and traps that protect your palms.",
+  "focusKeyword": "red palm weevil",
+  "keywords": [
+    "red palm weevil",
+    "Rhynchophorus ferrugineus",
+    "palm weevil coconut",
+    "coconut trunk borer",
+    "sago palm weevil"
+  ],
+  "excerpt": "The red palm weevil, Rhynchophorus ferrugineus, is a large reddish weevil whose grubs tunnel inside the trunk and crown of the palm. The damage stays hidden for a long time, and a hollowed palm can collapse. This page shows the early signs and the farm practices that keep it out.",
+  "heroImage": {
+    "src": "/images/site/pests/red-palm-weevil.webp",
+    "thumb": "/images/site/pests/red-palm-weevil-480.webp",
+    "alt": "A red palm weevil, Rhynchophorus ferrugineus, orange red with dark spots and a long snout",
+    "credit": "Diego González Dopico, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Red Palm Weevil?"
+    },
+    {
+      "type": "text",
+      "text": "The red palm weevil is a large beetle with a long snout. Its grubs are legless, white with a brown head, and grow up to 50 mm long. They bore through the inside of the palm and make tunnels up to a meter long. The Philippines is part of its native range.\n\nThe weevil attacks coconut, betel nut, oil palm, sago palm, date palm and many ornamental palms. Palms can stand a lot of damage inside before any sign shows. So by the time the crown wilts, the trunk may already be hollow."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Red palm weevil"
+        ],
+        [
+          "Scientific name",
+          "Rhynchophorus ferrugineus"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Coconut"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Stems and tillers and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It attacks palms at any time of the year, and it enters through wounds from pruning, harvesting and other cuts in the trunk and the leaf bases."
+        ],
+        [
+          "Life cycle",
+          "The female lays 200 to 300 eggs in holes in the trunk or in the leaf stalks. The grubs tunnel inside the palm for 1 to 3 months, and the full life cycle takes about 4 months."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Red Palm Weevil"
+    },
+    {
+      "type": "text",
+      "text": "Look closely at the trunk, the base of the fronds and the crown. Tunnel holes with frass, a brown chewed paste, point to the weevil. Leaves with straight, cut looking edges instead of pointed tips are another sign. This weevil works inside the trunk. The [coconut rhinoceros beetle](/pests/coconut-rhinoceros-beetle) bores into the crown and leaves V shaped cuts in the leaves, so that is how you tell them apart."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Holes appear at the base of the fronds or in the trunk.",
+        "Frass sits at the entrance of the tunnels.",
+        "Leaflets show straight edges instead of pointed tips.",
+        "Leaves wilt and die, especially in the crown.",
+        "A badly attacked palm collapses because the inside is hollow."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Wilting crowns can come from [coconut bud rot](/diseases/coconut-bud-rot) or from the rhinoceros beetle. Frass and tunnels in the trunk or the leaf bases point to the weevil."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Red Palm Weevil Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The damage is inside, so farmers often see it late. Larvae can excavate tunnels up to 1 meter long, which weakens the palm until it dies. A pest that hides this well is cheaper to prevent than to cure.\n\nA female lays 200 to 300 eggs, and the cycle takes only about 4 months. Numbers can build up fast inside one grove. Fresh wounds are the main door, so how you prune and harvest matters a lot."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Red Palm Weevil"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Remove and bury or destroy infested palms and trunks so the grubs cannot finish their life cycle.",
+        "Cut leaves at the leaflet base during harvest and pruning, so wounds are small and do not draw the weevils.",
+        "Treat fresh wounds on the trunk and leaf stalks at once, because the female lays eggs in wounds.",
+        "Use pheromone lures, such as Ferrolure, in bucket traps baited with sugarcane to catch the adults and to monitor them.",
+        "Leave the natural enemies alone. The assassin bug and earwigs eat the eggs and grubs.",
+        "Check palms often, because early treatment works better than late treatment."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Trunk injection with fipronil or imidacloprid has been tried, but the Pacific fact sheet calls it uneconomical for coconut. Use a chemical only as advised by the PCA or a technician, and follow the label and the FPA registration."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Fipronil",
+          "IRAC 2B",
+          "trunk injection, uneconomical for coconut per the Pacific fact sheet"
+        ],
+        [
+          "Imidacloprid",
+          "IRAC 4A",
+          "trunk injection, uneconomical for coconut per the Pacific fact sheet"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Prune with care and keep the cuts small and clean.",
+        "Treat every wound on the trunk right away.",
+        "Remove dying palms promptly so they do not become a breeding place.",
+        "Walk the grove often and look for frass and wilting crowns."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Red Palm Weevil"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do I see no damage until the palm collapses?",
+          "a": "The grubs live and feed inside the palm. Palms can stand a lot of internal damage before symptoms show."
+        },
+        {
+          "q": "How does the weevil get into the palm?",
+          "a": "The female lays eggs in wounds and in holes in the trunk or the leaf stalks. Pruning and harvesting cuts are common entry points."
+        },
+        {
+          "q": "What can I do for a badly infested palm?",
+          "a": "Remove and bury or destroy it, so the grubs cannot emerge and attack the next palm."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Coconut red palm weevil",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/coconut_red_palm_weevil_180.htm"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "section": "diseases",
+  "slug": "early-blight",
+  "sortOrder": 305,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Early Blight: How to Spot It and Stop It in Tomato and Potato",
+  "metaTitle": "Early Blight of Tomato: Signs, Damage and Control",
+  "metaDescription": "Early blight puts target rings on old tomato and potato leaves, then strips the plant from the bottom. Learn the signs and how to stop it.",
+  "focusKeyword": "early blight",
+  "keywords": [
+    "early blight",
+    "early blight of tomato",
+    "Alternaria solani",
+    "early blight on potato",
+    "target spot on tomato leaves",
+    "tomato blight control"
+  ],
+  "excerpt": "Early blight is a fungal disease of tomato, potato, eggplant and pepper caused by Alternaria solani. It starts as small brown spots with target rings on the oldest leaves, then strips the plant from the bottom up. This page shows how to spot it, how much harm it does and how to control it.",
+  "heroImage": {
+    "src": "/images/site/diseases/early-blight.webp",
+    "thumb": "/images/site/diseases/early-blight-480.webp",
+    "alt": "A tomato leaf with a dark brown early blight spot showing rings like a target",
+    "credit": "Clemson University USDA Cooperative Extension Slide Series, CC BY 3.0 US, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Early Blight?"
+    },
+    {
+      "type": "text",
+      "text": "Early blight comes from the fungus Alternaria solani. NC State Extension now calls the tomato fungus Alternaria linariae, its newer name. It attacks tomato (kamatis), potato, eggplant (talong), pepper (sili) and wild plants of the same family. Also, it hits every part of the plant: leaves, stems and fruit.\n\nIn the Philippines, the DA Cagayan Valley tomato guide lists early and late blight among the most common tomato diseases. DOST PCAARRD reports that growers in parts of Laguna and Quezon have found it. It warns that early blight can cause serious crop loss in tomato and eggplant, mostly in the wet season. So it matters to anyone who grows kamatis or talong for the market. Its cousin, [late blight](/diseases/late-blight), is a different and faster killer."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Early blight"
+        ],
+        [
+          "Scientific name",
+          "Alternaria solani (on tomato also named Alternaria linariae)"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Tomato, potato, eggplant and pepper"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, stems and tillers, fruits, pods and nuts and seedlings"
+        ],
+        [
+          "When it strikes",
+          "It can strike from the seedbed to harvest, starts on the oldest leaves, and is worst in warm, humid weeks with heavy dew or rain."
+        ],
+        [
+          "How it spreads",
+          "The fungus survives in old crop debris and on seed. Its spores then move from plant to plant with the wind, rain splash and overhead water."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Early Blight"
+    },
+    {
+      "type": "text",
+      "text": "Check the oldest, lowest leaves first. Early blight makes brown spots, from a pinpoint to about 6 mm, round or angular and edged with yellow. As they grow, dark rings form inside each spot, like a target. Stem spots are darker and longer. On seedlings, a dark canker can circle the stem near the soil, a problem called collar rot. On fruit, look near the stem end for dark, sunken, leathery spots with rings and a sooty black spore mass. Late blight looks different, because its patches start at the leaf tips and edges, spread fast and show white growth underneath in wet weather."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small brown spots with yellow edges appear first on the oldest, lowest leaves.",
+        "Each spot grows dark rings inside it, like a target.",
+        "The spots join, the leaves turn yellow and drop, and the plant loses its leaves from the bottom up.",
+        "Dark, long spots show on the stems, and young plants may rot at the soil line.",
+        "Fruit gets dark brown to black sunken spots near the stem end, often with a black spore mass.",
+        "Fruit left bare by the falling leaves burns in the sun."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Late blight and Cercospora leaf spot are the usual mixups. Early blight spots are small, ringed like a target and start on old leaves, while late blight makes large, fast spreading patches with white growth underneath."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Early Blight Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Early blight rarely kills a plant outright. Instead, it strips the leaves, so the plant sets fewer and smaller fruit, and bare fruit burn in the sun. The Pacific Pests and Pathogens fact sheet says the yield loss is hard to measure but is probably at least 5 percent. Losses climb in warm, humid weather with heavy dew or rain. NC State Extension notes that the disease favors temperatures above about 27 degrees Celsius with moderate to heavy rain.\n\nNo spray threshold is set for small farms. So walk the field every week and turn over the lower leaves. Act when target spots start to climb the plant. Since the fungus also lives in old crop debris and on seed, one bad season can carry over to the next crop on the same ground."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Early Blight"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Start clean. Use disease free seed and check every seedling before transplanting, because the fungus rides on seed and can rot young stems in the seedbed.",
+        "Give the plants air. Space them 60 to 90 cm apart, stake or trellis them, and prune the lowest leaves and branches so the canopy dries fast.",
+        "Keep water off the leaves. Water at the base of the plant instead of overhead, and lay mulch so rain does not splash soil onto the leaves.",
+        "Keep the plants strong with enough fertilizer, as NC State Extension advises. Then pick off badly spotted lower leaves early and carry them out of the field.",
+        "For biological control, NC State lists Bacillus biofungicides for organic growers, and DOST PCAARRD has a project to develop a local biofungicide for tomato and eggplant. Use them early, before the spots spread. Our [fungicides guide](/blog/fungicides) explains the other options."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A spray makes sense when target spots keep climbing the plant in wet, humid weather, and it works best as protection before the spots spread. Rotate between FRAC groups, use only FPA registered products, and follow the label for the rate and the interval."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Mancozeb",
+          "FRAC M3",
+          "protectant, coats the leaf before the spores land"
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M5",
+          "protectant, named by NC State and the Pacific Pests sheet"
+        ],
+        [
+          "Difenoconazole",
+          "FRAC 3",
+          "systemic triazole, rotate it with a protectant"
+        ],
+        [
+          "Azoxystrobin",
+          "FRAC 11",
+          "systemic strobilurin, NC State reports resistance, so never use it alone or back to back"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Rotate for 2 to 3 years away from tomato, potato, eggplant and pepper.",
+        "After harvest, burn or bury the old plants deeply, since the fungus survives in crop debris.",
+        "Pull volunteer tomato plants and weeds of the tomato family that carry the fungus between crops.",
+        "Do not plant a new tomato crop next to an older one that already has the disease.",
+        "Ask your Municipal Agriculture Office about tolerant varieties. NC State lists tolerant tomatoes, but no fully resistant ones."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Early Blight"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes early blight in tomato?",
+          "a": "The fungus Alternaria solani, also named Alternaria linariae on tomato. It survives in old crop debris and on seed, and its spores spread by wind, rain splash and overhead watering. Warm, humid weather with heavy dew helps it most."
+        },
+        {
+          "q": "What is the difference between early blight and late blight?",
+          "a": "Early blight makes small brown spots with target rings on the oldest leaves, and it moves slowly. [Late blight](/diseases/late-blight) is a water mold. It makes large patches from the leaf tips and edges, with white growth underneath, and it can destroy a planting within days in cool, wet weather."
+        },
+        {
+          "q": "Can I save a tomato plant with early blight?",
+          "a": "You cannot heal the spots already there, but you can slow the spread. Prune the spotted lower leaves, keep water off the foliage and protect new growth with a registered fungicide. After harvest, burn the debris and rotate the field."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "Downy mildew of cucurbits",
+          "url": "/diseases/downy-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Tomato early blight",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/tomato_early_blight_211.htm"
+        },
+        {
+          "label": "NC State Extension: Early blight of tomato",
+          "url": "https://content.ces.ncsu.edu/early-blight-of-tomato"
+        },
+        {
+          "label": "DOST PCAARRD: Biofungicide for tomato and eggplant project set in motion",
+          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/biofungicide-for-tomato-and-eggplant-project-set-in-motion"
+        },
+        {
+          "label": "DA Regional Field Office 2: Tomato production guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
+        }
+      ]
+    }
+  ]
+}

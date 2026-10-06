@@ -1,0 +1,272 @@
+{
+  "section": "pests",
+  "slug": "squash-beetle",
+  "sortOrder": 350,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Squash Beetle: How to Spot It and Protect Your Cucurbits",
+  "metaTitle": "Squash Beetle: Signs, Damage and Control",
+  "metaDescription": "The squash beetle chews holes in leaves and kills young squash, cucumber and melon plants. Learn the signs and how to control the adults and the grubs.",
+  "focusKeyword": "squash beetle",
+  "keywords": [
+    "squash beetle",
+    "pumpkin beetle",
+    "cucurbit beetle",
+    "Aulacophora",
+    "beetle in squash",
+    "holes in squash leaves"
+  ],
+  "excerpt": "The squash beetle is a bright orange beetle that chews holes in the leaves of squash, cucumber, melon and other cucurbits. Its grubs also eat the roots below the soil. This page shows how to spot the squash beetle early and how to protect young plants.",
+  "heroImage": {
+    "src": "/images/site/pests/squash-beetle.webp",
+    "thumb": "/images/site/pests/squash-beetle-480.webp",
+    "alt": "An orange squash beetle, Aulacophora indica, on a cucurbit leaf it has chewed",
+    "credit": "donwerth chikamatsu, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Squash Beetle?"
+    },
+    {
+      "type": "text",
+      "text": "The squash beetle, also called the pumpkin beetle or cucurbit beetle, is a leaf beetle of the genus Aulacophora. Aulacophora similis is an old name that many now treat as Aulacophora indica. The University of Guam notes that the species look very alike and are often confused, but their biology and control are largely the same.\n\nIt lives across Asia and the Pacific, including the Philippines. It attacks pumpkin, squash, cucumber, melon, bottle gourd, bitter gourd, ridge gourd and watermelon. Young plants suffer the most, and heavy early damage can delay or stop the crop."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Squash beetle"
+        ],
+        [
+          "Scientific name",
+          "Aulacophora similis (now often treated as Aulacophora indica)"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Squash, pumpkin, cucumber, melon, watermelon, ampalaya and upo"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, fruits, pods and nuts, roots and base and seedlings"
+        ],
+        [
+          "When it strikes",
+          "Damage is worst on seedlings and young plants, mostly in warm, dry weather, and the adult beetles keep returning through the season."
+        ],
+        [
+          "Life cycle",
+          "Adults feed on the leaves, flowers and fruit. Females lay eggs in the soil near the base of the plant, and the grubs feed on the roots. A female can lay up to 500 eggs, and several generations overlap each year."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Squash Beetle"
+    },
+    {
+      "type": "text",
+      "text": "Adults are small to medium beetles, bright orange red to reddish brown, and they fly off fast when you touch the plant. The grubs are creamy white, soft and elongate, and they live in the soil. Look at the leaf edges first. The beetles chew round holes between the veins, cut circular discs and sometimes eat only the green tissue, leaving the veins behind. The [melon fly](/pests/melon-fly) damages the fruit from inside, but the squash beetle damages leaves and the skin."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Round or irregular holes in the leaves, often starting at the leaf margins.",
+        "Leaves that are skeletonized, with only the veins left.",
+        "Bright orange beetles feeding on leaves and flowers, especially in the morning and evening.",
+        "Scars and blemishes on the skin of fruit that rests on the soil.",
+        "Seedlings and young plants that wilt, grow slowly or die.",
+        "Wilting vines in older plants where grubs have fed on the roots."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Several Aulacophora beetles look alike, and the ladybird beetle does not eat plants. Check the beetle on the leaf. Orange beetles that chew holes are the squash beetle. Ladybird beetles, which are rounded and spotted, do not."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Squash Beetle Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The University of Guam says adult beetles can kill young plants when they are present in large numbers. The grubs feed on the roots and stems, and they can kill vines before the fruits mature. They also scar fruit that rests on the soil, and that lowers the price.\n\nThe same fact sheet quotes a rule of thumb from US research. Check three adjacent plants. If you find 6 or more adults before flowering, or 11 or more after flowering, take action. That threshold comes from another country, so treat it as a guide and keep watching your own fields. Because the grubs feed underground, the damage often stays hidden until it is severe, so scout the adults while the plants are young."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Squash Beetle"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Scout the seedlings every day or two in the first weeks after emergence, and check again after flowering.",
+        "Handpick the beetles early in the morning or in the evening, when they are slow, and drop them in soapy water.",
+        "Plant a few extra seeds, because the beetles tend to settle on certain plants, and avoid planting new cucurbits next to old, infested ones.",
+        "Feed and water the crop well. Fast growing plants outgrow the damage, as both Pacific Pests and the University of Guam note.",
+        "Remove wild cucurbit vines, such as sponge gourd, from the area before planting.",
+        "After harvest, collect and destroy the crop remains, and plow or till the field to expose the pupae. Wait 1 to 2 months before replanting cucurbits in the same spot. See the [integrated pest management guide](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Use a spray only when the counts are high. Pacific Pests lists plant based sprays first, such as neem, derris and pyrethrum with soap. Synthetic pyrethroids also work but they kill the helpful insects. The University of Guam suggests spraying alternate rows, because the strong flying adults then touch the spray while natural enemies survive in the unsprayed rows. Follow the FPA registered label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Neem (azadirachtin)",
+          "IRAC UN",
+          "a plant based spray listed by Pacific Pests"
+        ],
+        [
+          "Carbaryl",
+          "IRAC 1A",
+          "named by the University of Guam when beetle numbers stay high"
+        ],
+        [
+          "Pyrethrum",
+          "IRAC 3A",
+          "a plant based option listed with soap by Pacific Pests"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plow or till the field after harvest, to kill the pupae.",
+        "Keep the field free of wild cucurbit vines.",
+        "Avoid planting new cucurbits next to old ones.",
+        "Choose a fast growing variety and give it enough nutrients and water from the start."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Squash Beetle"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do my squash seedlings have holes and then die?",
+          "a": "The squash beetle probably chewed them. Young plants cannot afford to lose much leaf area, so a heavy early attack can kill them. Check the leaf edges and the undersides at sunrise."
+        },
+        {
+          "q": "What do the squash beetle grubs do?",
+          "a": "They live in the soil and feed on the roots, and on the part of the fruit that rests on the ground. This can wilt the vine and scar the fruit."
+        },
+        {
+          "q": "Should I spray the whole field?",
+          "a": "Not always. The University of Guam suggests spraying alternate rows, which still hits the beetles and keeps natural enemies alive. Handpicking works on small plots."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Diamondback moth",
+          "url": "/pests/diamondback-moth"
+        },
+        {
+          "label": "Cabbage webworm",
+          "url": "/pests/cabbage-webworm"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "University of Guam Land Grant: Pumpkin beetle, Aulacophora indica",
+          "url": "https://www.uog.edu/_resources/files/extension/publications/2026-3-28-uog-land-grant-fact-sheet-pumpkin-beetle.pdf"
+        },
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Pumpkin beetle",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/pumpkin_beetle_040.htm"
+        }
+      ]
+    }
+  ]
+}

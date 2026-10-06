@@ -1,0 +1,275 @@
+{
+  "section": "diseases",
+  "slug": "rice-stem-rot",
+  "sortOrder": 260,
+  "lang": "en",
+  "category": "Rice diseases",
+  "profile": true,
+  "title": "Rice Stem Rot: How to Spot It and Protect Your Palay",
+  "metaTitle": "Rice Stem Rot: Signs, Damage and Control in Palay",
+  "metaDescription": "Rice stem rot starts as black spots at the waterline and ends in lodged plants and chalky grain. See the signs and the steps that cut it in your palay.",
+  "focusKeyword": "rice stem rot",
+  "keywords": [
+    "rice stem rot",
+    "stem rot of rice",
+    "Sclerotium oryzae",
+    "rice lodging",
+    "black spots on rice stem",
+    "sclerotia in rice"
+  ],
+  "excerpt": "Rice stem rot is a fungal disease that starts as small black spots on the leaf sheath at the waterline. It then rots the stem from inside. Rotted stems fall over, and the panicles that survive carry chalky or unfilled grain.",
+  "heroImage": {
+    "src": "/images/site/palay.jpg",
+    "thumb": "/images/site/palay-480.webp",
+    "alt": "Rice panicles ripening among green leaves",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Stem Rot?"
+    },
+    {
+      "type": "text",
+      "text": "The fungus Sclerotium oryzae causes rice stem rot. It is also written Nakataea oryzae and, in older books, Magnaporthe salvinii. IRRI reports heavy losses in many rice countries, including India, Japan, the Philippines and Vietnam. The damage comes from decayed leaf sheaths, lodging and poor grain filling.\n\nThe fungus lives on what you leave behind. Its black sclerotia sit in the soil, the straw and the stubble. So a field that had stem rot last season is a risky field this season. Many farmers burn or plow in stubble in different ways. So the way you handle it after harvest is your best first defense. Our guide to [rice diseases](/diseases/rice-diseases) shows the other diseases to watch for in the same weeks."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice stem rot"
+        ],
+        [
+          "Scientific name",
+          "Sclerotium oryzae (Nakataea oryzae)"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Stems and tillers and panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "Rice stem rot shows first on the leaf sheaths at water level around heading and grain filling, though new infections can start through the whole season."
+        ],
+        [
+          "How it spreads",
+          "The fungus survives as hard black sclerotia in soil, straw and stubble. When you flood and prepare the field, the sclerotia float up in the water and infect the plant at the waterline."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Stem Rot"
+    },
+    {
+      "type": "text",
+      "text": "Check the bases of the tillers around early heading. The first sign is a small black, irregular spot on the outer leaf sheath just above the water. Peel the sheath or split a stem. Rotted tissue and tiny white then black sclerotia inside the hollow stem point to stem rot. Plants that lean or lie flat with chalky grain are the late stage."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small, irregular black spots on the outer leaf sheath at the waterline.",
+        "Spots that grow, spread up the sheath and reach the stem.",
+        "Rotted tissue inside the stem, with many tiny hard sclerotia that start white and turn black.",
+        "Tillers that die, or whole plants that lodge before harvest.",
+        "Chalky grain and unfilled panicles on the affected tillers."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Farmers often mix up stem rot with [sheath blight](/diseases/sheath-blight) and sheath rot. Sheath blight leaves oval gray lesions with brown borders that climb the sheath. Stem rot leaves black spots at the waterline and sclerotia inside the stem."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Stem Rot Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "IRRI names stem rot as a cause of heavy losses in India, Japan, the Philippines and Vietnam. It reduces yield through dead tillers, poor grain filling and lodging before harvest. In California, where researchers measured the disease in field work, documented yield losses ran from 6 to 24 percent. Philippine loss figures vary by field and season, so no single number applies here.\n\nThere is no spray threshold in the sources I found, and sprays are often not worth the cost. Instead, the field history decides the plan. If last season had stem rot, treat the stubble and the fertilizer plan before you transplant. Stem borers and planthoppers also open the stem to the fungus, so read about the [rice stem borer](/pests/rice-stem-borer) and the [brown planthopper](/pests/brown-planthopper) too."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Stem Rot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Destroy the sclerotia after harvest. Burn the straw and stubble where it is allowed, or plow it deep so it decomposes, and let the field dry.",
+        "Plow the field often before planting. TNAU and the Pacific Pests fact sheet also advise lime, and TNAU adds that split doses of potash help.",
+        "Balance your fertilizer. Too much nitrogen with too little potassium raises the disease, and potash lowers it on soils short of potassium. See [fertilizer for rice](/blog/fertilizer-for-rice) and our note on [potash fertilizer](/blog/potash-fertilizer).",
+        "Drain the field now and then during the crop, because wet flooding spreads the floating sclerotia.",
+        "Control the insects that wound the stem, such as planthoppers and armyworms.",
+        "Rotate with a legume or forage crop when you can, because no rice variety is highly resistant."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Sprays are often not worth the cost, and they do not replace field sanitation. When a field has a clear history of stem rot, a fungicide at the start of the disease can help. Your technician and the FPA registered label set the timing."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Thiophanate methyl",
+          "FRAC 1",
+          "named for stem rot at disease onset by TNAU and the Pacific Pests fact sheet"
+        ],
+        [
+          "Validamycin A",
+          "FRAC U18",
+          "named by TNAU for stem rot"
+        ],
+        [
+          "Azoxystrobin",
+          "FRAC 11",
+          "applied at early heading, cut severity by about 20 to 30 percent in University of California trials"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Clear or bury straw and stubble right after harvest.",
+        "Keep nitrogen in balance with potassium, using the leaf color chart to time each dose.",
+        "Control stem borers and planthoppers before they wound the stems.",
+        "Keep a field record, so you know which lots had stem rot and can treat them first next season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Stem Rot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes rice stem rot?",
+          "a": "A fungus called Sclerotium oryzae. It survives as hard black sclerotia in soil, straw and stubble. Flood water floats them to the plant at the waterline."
+        },
+        {
+          "q": "Why do my rice plants fall over before harvest?",
+          "a": "Stem rot is one cause. The fungus rots the base of the stem, so the plant lodges. Split a few stems and look for black sclerotia inside."
+        },
+        {
+          "q": "Is rice stem rot the same as sheath blight?",
+          "a": "No. [Sheath blight](/diseases/sheath-blight) makes oval gray lesions on the sheath, while stem rot makes black spots at the waterline and rots the stem from inside."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice diseases",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "Rice blast",
+          "url": "/diseases/rice-blast"
+        },
+        {
+          "label": "Bacterial leaf blight",
+          "url": "/diseases/bacterial-leaf-blight"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Brown spot of rice",
+          "url": "/diseases/rice-brown-spot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Rice stem rot",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/rice_stem_rot_430.htm"
+        },
+        {
+          "label": "TNAU Agritech Portal: Rice stem rot",
+          "url": "https://agritech.tnau.ac.in/expert_system/paddy/cpdisstemrot.html"
+        },
+        {
+          "label": "UC IPM: Stem rot of rice",
+          "url": "https://ipm.ucanr.edu/agriculture/rice/stem-rot-of-rice"
+        }
+      ]
+    }
+  ]
+}

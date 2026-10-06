@@ -1,0 +1,280 @@
+{
+  "section": "diseases",
+  "slug": "banded-leaf-and-sheath-blight",
+  "sortOrder": 280,
+  "lang": "en",
+  "category": "Corn diseases",
+  "profile": true,
+  "title": "Banded Leaf and Sheath Blight: Spot It and Stop It in Mais",
+  "metaTitle": "Banded Leaf and Sheath Blight: Signs and Control in Corn",
+  "metaDescription": "Banded leaf and sheath blight draws brown bands on mais sheaths and leaves, then climbs to the ear. Learn the signs and the steps that slow it in your corn.",
+  "focusKeyword": "banded leaf and sheath blight",
+  "keywords": [
+    "banded leaf and sheath blight",
+    "BLSB of corn",
+    "Rhizoctonia solani maize",
+    "corn sheath blight",
+    "banded blight of mais",
+    "sheath blight of corn"
+  ],
+  "excerpt": "Banded leaf and sheath blight is a fungal disease of corn that paints brown and tan bands on the lower sheaths. Then it climbs the plant. A 2016 review calls it one of the most widespread and destructive diseases of maize in Southeast Asia. So it matters for any mais grower in the Philippines.",
+  "heroImage": {
+    "src": "/images/site/diseases/banded-leaf-and-sheath-blight.webp",
+    "thumb": "/images/site/diseases/banded-leaf-and-sheath-blight-480.webp",
+    "alt": "Plant stems with bleached, banded lesions from Rhizoctonia solani, the fungus behind banded leaf and sheath blight",
+    "credit": "Eugene Popov, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Banded Leaf and Sheath Blight?"
+    },
+    {
+      "type": "text",
+      "text": "Often shortened to BLSB, this disease comes from the fungus Rhizoctonia solani, in its form called sasakii. The same fungus causes [sheath blight of rice](/diseases/sheath-blight). It attacks corn, and it also occurs on sorghum and barley.\n\nThe review in the FAO AGRIS database says it can cause yield loss up to 100 percent. It is hard to manage because the fungus stays in the soil a long time and attacks many plant families. So no single step works alone. You need clean fields, wider spacing, early scouting and, in a bad year, a fungicide. Read our guide to [planting corn](/crops/pagtatanim-ng-mais) for spacing and timing."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Banded leaf and sheath blight"
+        ],
+        [
+          "Scientific name",
+          "Rhizoctonia solani (Thanatephorus sasakii)"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Corn"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, stems and tillers and panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "It usually shows before flowering, in plants about 40 to 50 days old, and it grows fastest in warm, very humid weather."
+        ],
+        [
+          "How it spreads",
+          "The fungus lives in the soil, in crop debris and on grass weeds as hard sclerotia. Irrigation water, flooding and soil on tools move it, and it climbs from the lower sheaths up to the leaves and the ear."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Banded Leaf and Sheath Blight"
+    },
+    {
+      "type": "text",
+      "text": "Check the first and second leaf sheaths above the ground in plants about 40 to 50 days old. Look for water soaked, discolored bands and rings in brown, tan or gray, in a pattern of bands. A light brown cottony growth and small round black specks, the sclerotia, form on the infected tissue. The lesions then climb the stalk, and later reach the ear husk and the cob."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Water soaked, discolored bands and rings on the leaf sheaths, brown, tan or gray.",
+        "Bands that spread to the leaf blade, with a banded look across the leaf.",
+        "A light brown cottony growth on the infected tissue.",
+        "Small, round, black specks, the sclerotia, on the sheaths and the husk.",
+        "Lesions that climb to the ear, so the husk and cob rot and the cob is damaged early."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Early lesions look like sheath blight of rice, which is the same fungus on a different crop. They also look like leaf blights. Banded blight shows the concentric bands and the black sclerotia on the sheaths. Also check [corn stalk rot](/diseases/corn-stalk-rot) when the lower stalk is soft."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Banded Leaf and Sheath Blight Hurts Your Corn"
+    },
+    {
+      "type": "text",
+      "text": "The 2016 review in the FAO AGRIS database reports yield loss of up to 100 percent in severe cases. The loss depends on how early the disease starts and how high it climbs before the grain fills. A plant that has the ear infected loses grain directly.\n\nThere is no spray threshold in the sources I found. Scout the lower sheaths from about 40 days, and act if bands appear on many plants in warm, humid weather. Our guide to [crop pests in the Philippines](/pests/crop-pests-philippines) helps you check other problems at the same time."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Banded Leaf and Sheath Blight"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant a tolerant variety, and ask your seed supplier or local agriculture office which hybrids hold up in your area.",
+        "Use a wider spacing and avoid dense planting, because dense stands hold humidity.",
+        "Remove infected leaves and sheaths from the lower plant. Research in India found that stripping the lower leaves slowed the lesion from climbing.",
+        "Clear grass weeds and burn or bury crop debris after harvest, since the fungus lives there.",
+        "Rotate with a crop that is not a grass or a cereal, and keep irrigation or flood water from running from an infected field to a clean one.",
+        "Treat the seed with a biological agent such as Trichoderma or Bacillus subtilis, as a Plantix library entry suggests, before using a chemical spray."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A spray works best when you start early, as soon as bands show on the lower sheaths. Combine it with the cultural steps. Lab tests in India found these ingredients stopped the fungus completely, but field results vary. So follow the FPA registered label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Propiconazole",
+          "FRAC 3",
+          "triazole, full growth stop in lab tests of maize and rice isolates"
+        ],
+        [
+          "Hexaconazole",
+          "FRAC 3",
+          "triazole, full growth stop in lab tests"
+        ],
+        [
+          "Validamycin",
+          "FRAC U18",
+          "antibiotic, completely stopped radial growth of most isolates in lab tests"
+        ],
+        [
+          "Carbendazim",
+          "FRAC 1",
+          "full growth stop in lab tests, rotate with another group"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose a tolerant variety and plant at the spacing your supplier advises.",
+        "Remove grass weeds from the field and the bunds all season.",
+        "Bury or burn corn debris after harvest.",
+        "Keep notes on the lots that had banded blight and change the crop on them next season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Banded Leaf and Sheath Blight"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is BLSB in corn?",
+          "a": "It is a fungal disease of corn caused by Rhizoctonia solani. It makes brown, tan or gray bands on the sheaths and leaves, and then climbs to the ear."
+        },
+        {
+          "q": "Is it the same as rice sheath blight?",
+          "a": "The same fungus causes both. Isolates from rice and maize reacted in the same way to fungicides in one study. Read about [sheath blight in rice](/diseases/sheath-blight)."
+        },
+        {
+          "q": "Which weeds keep the fungus alive?",
+          "a": "Grass weeds and crop debris carry it between crops. So clean the field and the bunds, and bury or burn debris after harvest."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More corn diseases",
+      "items": [
+        {
+          "label": "Corn downy mildew",
+          "url": "/diseases/corn-downy-mildew"
+        },
+        {
+          "label": "Corn rust",
+          "url": "/diseases/corn-rust"
+        },
+        {
+          "label": "Northern corn leaf blight",
+          "url": "/diseases/northern-corn-leaf-blight"
+        },
+        {
+          "label": "Corn stalk rot",
+          "url": "/diseases/corn-stalk-rot"
+        },
+        {
+          "label": "Corn ear rot",
+          "url": "/diseases/corn-ear-rot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FAO AGRIS: Banded leaf and sheath blight, a menacing disease of maize and its management",
+          "url": "https://agris.fao.org/search/fr/records/6474732ba4e07c0bc4c00d26"
+        },
+        {
+          "label": "Indian Journal of Biological Sciences and Management: Studies on banded leaf and sheath blight of maize",
+          "url": "https://ojs.pphouse.org/index.php/IJBSM/article/view/3665"
+        },
+        {
+          "label": "Plantix library: Banded leaf and sheath blight",
+          "url": "https://plantix.net/en/library/plant-diseases/100283/banded-leaf-and-sheath-blight/"
+        }
+      ]
+    }
+  ]
+}

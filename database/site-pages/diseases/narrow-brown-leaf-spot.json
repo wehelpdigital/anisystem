@@ -1,0 +1,265 @@
+{
+  "section": "diseases",
+  "slug": "narrow-brown-leaf-spot",
+  "sortOrder": 240,
+  "lang": "en",
+  "category": "Rice diseases",
+  "profile": true,
+  "title": "Narrow Brown Leaf Spot: How to Spot It and Stop It in Palay",
+  "metaTitle": "Narrow Brown Leaf Spot: Signs and Control in Rice",
+  "metaDescription": "Narrow brown leaf spot draws short brown lines along the veins of palay leaves late in the crop. Learn the signs, the risk and how to prevent it.",
+  "focusKeyword": "narrow brown leaf spot",
+  "keywords": [
+    "narrow brown leaf spot",
+    "narrow brown spot rice",
+    "Cercospora janseana",
+    "rice Cercospora leaf spot",
+    "net blotch rice sheath"
+  ],
+  "excerpt": "Narrow brown leaf spot is a fungal disease that draws short, thin brown lines along the veins of rice leaves. It shows up late, around heading, and it is a sign to check your potassium.",
+  "heroImage": {
+    "src": "/images/site/photos/palay-heads.jpg",
+    "thumb": "/images/site/photos/palay-heads-480.webp",
+    "alt": "Palay heads turning golden and bending over in a rice field",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Narrow Brown Leaf Spot?"
+    },
+    {
+      "type": "text",
+      "text": "Narrow brown leaf spot is caused by the fungus Cercospora janseana, which scientists now also name Sphaerulina oryzina. IRRI also calls it narrow brown spot or rice Cercospora leaf spot. It lives in the rice growing regions of the tropics and subtropics, including the Philippines, and it can infect leaves, leaf sheaths and panicles.\n\nMost seasons it is a minor problem. IRRI says only occasional severe epidemics are known, and that it usually has no great economic importance. Even so, a bad attack can lower the market value of the grain and the milling recovery, so it pays to know the signs. Our guide to [rice diseases](/diseases/rice-diseases) shows where it fits among the other leaf problems."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Narrow brown leaf spot"
+        ],
+        [
+          "Scientific name",
+          "Cercospora janseana (Sphaerulina oryzina)"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, stems and tillers and panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "It builds late in the crop, from heading onward, and it is common on soils short of potassium in warm weather of about 25 to 28 degrees Celsius."
+        ],
+        [
+          "How it spreads",
+          "The fungus survives on infected crop residue and seed, and its spores travel on the wind and in splashing rain. It then infects leaves, sheaths and panicles as the plant ages."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Narrow Brown Leaf Spot"
+    },
+    {
+      "type": "text",
+      "text": "Look at the older leaves and the flag leaf from heading. The lesions are narrow, light to dark brown, and they run straight along the veins. Each one is about 2 to 10 millimeters long and 1 to 1.5 millimeters wide. On a very susceptible variety they grow wider and join into larger dead areas. On the leaf sheath, brown and yellowish patches make a net pattern, called net blotch."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Thin, straight brown lines run parallel to the veins on the leaf and the upper sheath.",
+        "Each line is short, about 2 to 10 millimeters long, and light to dark brown.",
+        "On a susceptible variety the lines widen and join into bigger dead patches with a pale center.",
+        "The leaf sheath shows a brown and yellowish net pattern.",
+        "Leaves and sheaths die early, and the grain may ripen early in a bad attack."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "The narrow brown lines look like [bacterial leaf streak](/diseases/bacterial-leaf-streak), but the streak is water soaked and oozes yellow droplets. Brown spot has rounder lesions with a yellow halo, as in [rice brown spot](/diseases/rice-brown-spot)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Narrow Brown Leaf Spot Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "IRRI reports that severe narrow brown spot kills leaves and sheaths early, makes the grain ripen too soon, and in a severe case can cause the plants to lodge. It also lowers the market value of the grain and the milling recovery. In terms of yield, IRRI says only occasional severe epidemics are known, so for most farmers the loss is small. Where the disease is bad, the main loss is in grain quality.\n\nThe disease is linked to soils short of potassium and appears late in the crop, from heading. So the signs on your leaves can also warn you about the soil. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) explains how potash and nitrogen fit together. I found no official action threshold for spraying in the Philippines."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Narrow Brown Leaf Spot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Test or review your soil, and correct a potassium shortage with potash. IRRI links the disease to potassium deficient soils.",
+        "Use certified, disease free seed paddy, and choose varieties that show less of the disease. Resistant varieties show much lower damage in trials.",
+        "Follow the recommended nitrogen rate, or use the leaf color chart so you do not overfeed the crop.",
+        "Keep the field free of weeds, since weeds hold the disease and crowd the crop.",
+        "Add organic fertilizer to build up the soil, so the crop stays healthy to the end.",
+        "After harvest, do not return diseased straw to the soil, and clear stubble from the field."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A fungicide is rarely needed, because the disease is usually minor. Trials in the United States found that a spray at panicle initiation or early boot worked well on a susceptible variety, but I found no Philippine recommendation. Check with your local agriculture office first and follow the product label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Propiconazole",
+          "FRAC 3",
+          "used in United States trials at panicle initiation or early boot, not a Philippine recommendation"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Keep potassium in balance with your nitrogen every season.",
+        "Plant certified seed of a variety that holds up in your area.",
+        "Control weeds on the bunds and in the field.",
+        "Plant at the best time for your area, since earlier planted fields had less disease in trials.",
+        "Remove infected straw and stubble after harvest."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Narrow Brown Leaf Spot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is narrow brown leaf spot dangerous to my palay?",
+          "a": "Usually not. IRRI says only occasional severe epidemics are known. Still, a bad attack lowers grain value and milling recovery, so keep your potassium in balance."
+        },
+        {
+          "q": "Why does it show up so late in the crop?",
+          "a": "The disease builds as the plant ages, and it often begins at heading. Soils short of potassium make it worse."
+        },
+        {
+          "q": "Do I need a fungicide for it?",
+          "a": "Seldom. Soil care, clean seed and good nitrogen timing come first. Ask your local agriculture office before you spray."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice diseases",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "Rice blast",
+          "url": "/diseases/rice-blast"
+        },
+        {
+          "label": "Bacterial leaf blight",
+          "url": "/diseases/bacterial-leaf-blight"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Brown spot of rice",
+          "url": "/diseases/rice-brown-spot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Narrow brown spot",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/narrow-brown-spot"
+        },
+        {
+          "label": "Department of Agriculture, Sri Lanka: Narrow brown leaf spot in rice",
+          "url": "https://doa.gov.lk/?p=25430"
+        },
+        {
+          "label": "University of Arkansas and LSU AgCenter: One pathogen, two diseases",
+          "url": "https://www.lsuagcenter.com/articles/page1732640012604"
+        }
+      ]
+    }
+  ]
+}

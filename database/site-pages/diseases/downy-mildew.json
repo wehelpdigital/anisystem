@@ -1,0 +1,284 @@
+{
+  "section": "diseases",
+  "slug": "downy-mildew",
+  "sortOrder": 320,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Downy Mildew: How to Spot It and Stop It in Ampalaya and Cucurbits",
+  "metaTitle": "Downy Mildew of Cucurbits: Signs, Damage and Control",
+  "metaDescription": "Downy mildew is the most common disease of ampalaya and hits cucumber, squash and melon too. Learn the signs and how to stop it before it spreads.",
+  "focusKeyword": "downy mildew",
+  "keywords": [
+    "downy mildew",
+    "downy mildew of cucurbits",
+    "downy mildew in ampalaya",
+    "Pseudoperonospora cubensis",
+    "cucumber downy mildew",
+    "yellow spots on ampalaya leaves"
+  ],
+  "excerpt": "Downy mildew is a leaf disease of ampalaya, cucumber, squash, melon and the other cucurbits. It makes yellow, angular spots on top of the leaf and a gray fuzz underneath, and in wet weather it can kill the vines. This page shows how to spot it early and how to stop it.",
+  "heroImage": {
+    "src": "/images/site/diseases/downy-mildew.webp",
+    "thumb": "/images/site/diseases/downy-mildew-480.webp",
+    "alt": "A cucurbit leaf with yellow, angular patches between the veins from downy mildew",
+    "credit": "Nathan T. Jones, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Downy Mildew?"
+    },
+    {
+      "type": "text",
+      "text": "Downy mildew of cucurbits comes from Pseudoperonospora cubensis. This is not a true fungus but a water mold, so it behaves differently and needs different sprays. The disease attacks cucumber, gourds, melon, pumpkin, squash (kalabasa), watermelon and zucchini. Because it cannot live on dead plants, it survives between crops on volunteer cucurbits and cucurbit weeds.\n\nIn the Philippines, the DA Cagayan Valley ampalaya guide calls downy mildew the most common disease of ampalaya. The same guide lists several ampalaya varieties sold as tolerant or resistant to it. So if you grow ampalaya, pipino or kalabasa in the rainy months, expect to meet it. Do not mix it up with [powdery mildew](/diseases/powdery-mildew) or with [corn downy mildew](/diseases/corn-downy-mildew), a different disease of mais."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Downy mildew of cucurbits"
+        ],
+        [
+          "Scientific name",
+          "Pseudoperonospora cubensis"
+        ],
+        [
+          "Kind",
+          "Water mold (an oomycete)"
+        ],
+        [
+          "Crops it attacks",
+          "Ampalaya, cucumber, squash, melon, watermelon and gourds"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It can strike from the vine stage to harvest, and it moves fastest in warm, wet weeks with fog, heavy dew or long hours of wet leaves."
+        ],
+        [
+          "How it spreads",
+          "It lives only on living cucurbits and their weeds, never on dead leaves. Its spores travel in wind and rain splash, and far on humid air currents."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Downy Mildew"
+    },
+    {
+      "type": "text",
+      "text": "Turn over an older leaf. Downy mildew makes yellow spots on the upper side that are round at first, then angular, because the leaf veins box them in. Later the spots dry and turn brown. In humid weather, the underside of each spot carries a purple gray, felt like fuzz where the spores form, and a 20X hand lens shows it well. On watermelon and melon the spots may not look angular, so check the underside. Powdery mildew is different: its white powder sits on the leaf surface, often on top."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Yellow spots appear on older leaves, round at first, then angular between the veins.",
+        "A purple gray, downy fuzz grows on the underside of the spots in wet or humid weather.",
+        "The spots dry and turn brown, and whole leaves collapse and die.",
+        "Spots start on the older leaves and climb the vine while the weather stays wet.",
+        "Fruit stay healthy looking but small, and they may fail to ripen or get sunscald."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Powdery mildew and angular leaf spots from other causes are the usual mixups. Downy mildew spots are yellow and boxed in by the veins, with a purple gray fuzz only underneath, while powdery mildew is a white powder that wipes off."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Downy Mildew Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Downy mildew does not attack the fruit itself. Instead, it destroys the leaves, so the fruit stay small and may not ripen, and bare fruit burn in the sun. NC State Extension warns that severe attacks can cut yield or kill the plant. The Pacific Pests and Pathogens sheet says it develops quickly in warm, wet weather of about 18 to 23 degrees Celsius, and fog or heavy dew make it worse.\n\nNo fixed threshold is set, because the disease moves too fast. NC State notes that leaves wet for 6 to 12 hours are ideal for infection. So treat the rainy weeks as high risk, and scout the older leaves often. Once you find the first angular spots, act the same day."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Downy Mildew"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant tolerant or resistant varieties first. The DA Cagayan Valley ampalaya guide lists several that resist or tolerate downy mildew, so ask your seed dealer.",
+        "Keep the leaves dry. Avoid overhead watering, or water early in the morning so the leaves dry fast.",
+        "Give the vines air. Space the plants well, run the rows along the usual wind, and keep the trellis open.",
+        "Scout often, remove the infected leaves as soon as you see them, and pull badly sick plants.",
+        "Time your planting to avoid the wettest weeks where you can, since cool, wet nights and heavy dew drive the disease."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Spray when the weather turns wet and before the disease spreads, because these products protect better than they cure. This water mold builds resistance fast, so alternate FRAC groups and tank mix with a protectant. Use only FPA registered products and follow the label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Mancozeb",
+          "FRAC M3",
+          "the base of most programs, protects the leaf"
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M5",
+          "protectant, apply before infection"
+        ],
+        [
+          "Copper oxychloride",
+          "FRAC M1",
+          "allowed in organic farming, protects only"
+        ],
+        [
+          "Cyazofamid",
+          "FRAC 21",
+          "targets water molds, alternate it with other groups"
+        ],
+        [
+          "Mandipropamid",
+          "FRAC 40",
+          "targets water molds, alternate it with other groups"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Pull volunteer cucurbits and cucurbit weeds around the field, since the water mold survives only on living plants.",
+        "Do not plant a new cucurbit crop next to an older one that already has the disease.",
+        "Avoid relying on metalaxyl alone, because the Pacific Pests sheet notes resistance to it. Our [fungicides guide](/blog/fungicides) explains how to rotate groups.",
+        "Plan the crop so the young vines do not meet the wettest, foggiest weeks."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Downy Mildew"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes downy mildew in ampalaya?",
+          "a": "A water mold called Pseudoperonospora cubensis. It survives on living cucurbits and weeds, and its spores spread in wind and rain splash. Warm, wet weather with fog or heavy dew helps it most."
+        },
+        {
+          "q": "How do I tell downy mildew from powdery mildew?",
+          "a": "Look under the leaf. Downy mildew shows yellow angular spots on top and a purple gray fuzz below. [Powdery mildew](/diseases/powdery-mildew) is a white powder, often on top of the leaf, and it likes drier weather."
+        },
+        {
+          "q": "Which fungicide works on downy mildew of cucurbits?",
+          "a": "Protectants like mancozeb and chlorothalonil are the base. Products that target water molds, such as cyazofamid and mandipropamid, are added in rotation. Always alternate groups, use FPA registered products and follow the label."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA Regional Field Office 2: Ampalaya production guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Ampalaya.pdf"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Cucumber downy mildew",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/cucumber_downy_mildew_143.htm"
+        },
+        {
+          "label": "NC State Extension: Cucurbit downy mildew",
+          "url": "https://content.ces.ncsu.edu/cucurbit-downy-mildew"
+        }
+      ]
+    }
+  ]
+}

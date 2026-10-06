@@ -1,0 +1,244 @@
+{
+  "section": "pests",
+  "slug": "green-leafhopper",
+  "sortOrder": 225,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Green Leafhopper: The Small Insect That Spreads Tungro",
+  "metaTitle": "Green Leafhopper in Rice: Tungro Spread and Control",
+  "metaDescription": "The green leafhopper sucks sap and spreads tungro in palay. Learn how to spot it, when a spray does not help and which habits keep it down.",
+  "focusKeyword": "green leafhopper",
+  "keywords": [
+    "green leafhopper",
+    "green rice leafhopper",
+    "nephotettix virescens",
+    "tungro vector",
+    "leafhopper in rice"
+  ],
+  "excerpt": "The green leafhopper is a small, wedge shaped insect that lives on rice leaves. Its sap feeding hurts the plant a little, but its real danger is tungro virus. This page shows how to spot it and why spraying often fails to stop the disease.",
+  "heroImage": {
+    "src": "/images/site/pests/green-leafhopper.webp",
+    "thumb": "/images/site/pests/green-leafhopper-480.webp",
+    "alt": "A green leafhopper, Nephotettix virescens, bright green with black tips on its wings",
+    "credit": "Sagnik Dutta Roy, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Green Leafhopper?"
+    },
+    {
+      "type": "text",
+      "text": "Green leafhoppers are the most common leafhoppers in rice fields. Adults are 3 to 5 millimeters long, bright green with variable black marks, and they move sideways in a quick diagonal run. The nymphs are soft bodied and yellowish white. Two species spread tungro, Nephotettix malayanus and Nephotettix virescens, and N. virescens is the most efficient carrier.\n\nPhilRice counts the green leafhopper among the five major rice insect pests of the country. The sap feeding alone rarely ruins a crop. The virus it carries does the worse harm."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Green leafhopper"
+        ],
+        [
+          "Scientific name",
+          "Nephotettix virescens"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "In the vegetative stage, most of all in fields next to a tungro source."
+        ],
+        [
+          "Life cycle",
+          "Females lay pale eggs inside the leaf sheaths and midribs, the nymphs feed on the sap, and the adults fly to new fields and carry tungro with them."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Green Leafhopper"
+    },
+    {
+      "type": "text",
+      "text": "Tap the hills or sweep the canopy with a net. A small green insect that jumps or runs sideways is probably a green leafhopper. Check the base of the leaf sheath too, where the pale eggs sit. If the plants are yellow and stunted, do not blame the insect alone. Tungro, nitrogen shortage and iron toxicity can look the same, so compare with our page on [rice tungro](/diseases/rice-tungro)."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small green wedge shaped insects jump or run sideways when you disturb the hills.",
+        "Plants are stunted and lack vigor, and tillers are fewer than they should be.",
+        "Leaves yellow or orange and may wither in heavy attacks, and the plant can dry out.",
+        "Pale, white to yellow eggs sit inside the leaf sheaths or along the midrib.",
+        "Insects crowd under a light trap at night, which is how technicians monitor them."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "It is often mixed up with the [whitebacked planthopper](/pests/whitebacked-planthopper) and the brown planthopper. Leafhoppers are green and wedge shaped, while planthoppers are brown or white backed and sit at the base of the hill."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Green Leafhopper Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Both nymphs and adults pull sap out of the plant with needle like mouthparts. This reduces vigor and the number of productive tillers. In heavy cases the plant withers or dries completely.\n\nThe bigger loss comes from tungro. The sources we read give no percent loss and no numeric threshold for the insect, so we state none. What they do say is important: in an area without a tungro source, insecticides are not needed. Even where tungro is present, a spray often cannot prevent or reduce the infection."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Green Leafhopper"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant resistant varieties. IRRI lists leafhopper and tungro resistance as the first line of defense.",
+        "Synchronize planting with your neighbors and avoid planting at the peak of leafhopper activity shown by past records.",
+        "Reduce the number of rice crops per year, and rotate with a non rice crop where you can.",
+        "Transplant older seedlings, more than three weeks old, and plant early.",
+        "Use the right amount of nitrogen. Too much invites outbreaks, so follow the leaf color chart.",
+        "Remove weeds, and use a light trap to watch the numbers. Spiders, dragonflies and mirid bugs feed on the insects, so spare them. The [brown planthopper](/pests/brown-planthopper) page explains why."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "IRRI advises against spraying in areas without a tungro source. Where tungro is present, an insecticide often cannot prevent infection. Leave the natural enemies alone and ask a technician before you decide."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose tungro resistant varieties for areas with a history of the disease.",
+        "Plant at the same time across the barangay.",
+        "Destroy stubble and volunteer rice after harvest so the virus has no bridge between crops.",
+        "Use the right nitrogen rate, and avoid early insecticide sprays."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Green Leafhopper"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Does the green leafhopper kill palay by itself?",
+          "a": "Seldom. It can stunt plants and reduce tillers, but the main danger is tungro virus."
+        },
+        {
+          "q": "Will spraying stop tungro?",
+          "a": "Often not. IRRI says insecticides are often unable to prevent or reduce tungro infection. Resistant varieties and synchronous planting work better."
+        },
+        {
+          "q": "How do I tell it from a planthopper?",
+          "a": "The green leafhopper is bright green and moves sideways in a diagonal run. Planthoppers are brown or have a white stripe on the back and gather low on the plant."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Green leafhopper fact sheet (Lucid key)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Green_leafhopper.htm"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Rice green leafhopper",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/rice_green_leafhopper_417.htm"
+        }
+      ]
+    }
+  ]
+}

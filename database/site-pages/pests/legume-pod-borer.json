@@ -1,0 +1,277 @@
+{
+  "section": "pests",
+  "slug": "legume-pod-borer",
+  "sortOrder": 355,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Legume Pod Borer: How to Spot It and Protect Your Sitaw and Beans",
+  "metaTitle": "Legume Pod Borer: Signs, Damage and Control",
+  "metaDescription": "The legume pod borer eats the flowers and seeds of sitaw, cowpea and mungbean from the inside. Learn the signs and how to control it step by step.",
+  "focusKeyword": "legume pod borer",
+  "keywords": [
+    "legume pod borer",
+    "Maruca vitrata",
+    "bean pod borer",
+    "pod borer in sitaw",
+    "pod borer in mungbean",
+    "worms in beans"
+  ],
+  "excerpt": "The legume pod borer is a moth caterpillar that webs flowers together and bores into the pods of sitaw, cowpea, pigeon pea and mungbean. It eats the seeds from the inside, where sprays hardly reach. This page shows how to spot the legume pod borer early and how to cut the loss.",
+  "heroImage": {
+    "src": "/images/site/pests/legume-pod-borer.webp",
+    "thumb": "/images/site/pests/legume-pod-borer-480.webp",
+    "alt": "An adult legume pod borer moth, Maruca vitrata, brown with white patches on its wings",
+    "credit": "Kai Squires, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Legume Pod Borer?"
+    },
+    {
+      "type": "text",
+      "text": "The legume pod borer (Maruca vitrata) is also called the bean pod borer. It lives in the tropics worldwide, including Asia. Many legumes host it, such as French bean, cowpea, pigeon pea, yardlong bean and mungbean.\n\nThe Pacific Pests fact sheet calls it a major pest. The caterpillars bore into the pods and eat the seeds, so the pods you harvest are empty or ruined. Because they hide inside flowers and pods, the damage often shows only when it is too late for a spray to help."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Legume pod borer"
+        ],
+        [
+          "Scientific name",
+          "Maruca vitrata"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Sitaw (yardlong bean), string bean, cowpea, pigeon pea, mungbean and other legumes"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It attacks from flowering to pod filling, and the young caterpillars hide in the flowers before they move into the pods."
+        ],
+        [
+          "Life cycle",
+          "The moth lays pale eggs one by one on stems, young leaves, flowers and pods. The caterpillars feed inside the flowers for about a week, then bore into the pods. When they reach 18 mm, they leave the pod and pupate in the soil."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Legume Pod Borer"
+    },
+    {
+      "type": "text",
+      "text": "Look at the flowers first. Damaged flowers, and leaves, buds and pods tied together with fine webbing, are the early sign. Then check the pods for small entry holes with frass, which is the chewed remains and droppings, around them. Open a pod and you will find a caterpillar of up to 18 mm. The adult moth has brown front wings with white patches and mostly white hind wings edged with brown. A related pest, the [bean fly](/pests/bean-fly), attacks only seedlings, not the pods."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Flowers that are chewed, webbed together or dropping.",
+        "Leaves, buds and pods tied together with fine silk.",
+        "Small entry holes in the pods with frass around them.",
+        "Seeds eaten out and pods that rot inside.",
+        "Caterpillars up to 18 mm long inside flowers and pods.",
+        "Frass, the chewed remains and droppings, around the entry holes and on the pods."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "The [bean fly](/pests/bean-fly) also attacks legumes, but it hits seedlings in the first 3 to 4 weeks. This pest attacks the flowers and pods."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Legume Pod Borer Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The caterpillars cause the main loss by eating the seeds, according to the Pacific Pests fact sheet. The webbing damage on buds, flowers and leaves is minor next to the pod damage.\n\nI found no Philippine yield loss figure or action threshold in the sources I could open. The sheet does say that sprays often disappoint, because the caterpillars hide, the cost is high, the natural enemies die and resistance builds up. So the best plan is to check the flowers every few days and remove infested parts early."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Legume Pod Borer"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Check the flowers and the young pods every two or three days once the plants begin to flower. Look for webbing and for caterpillars inside the flowers.",
+        "Handpick the caterpillars and the webbed flowers early, when the infestation is still small, and destroy them.",
+        "Do not plant sitaw or beans next to a field that is already infested. Avoid planting legume after legume in the same plot.",
+        "Plant the beans in rows between rows of maize or sorghum. The Pacific Pests fact sheet says this intercropping works in Africa, so test it on a small part of your field first.",
+        "After harvest, destroy all crop remains, so the pupae and the remaining caterpillars do not feed the next generation.",
+        "Plant tolerant varieties when they are sold for your area, and keep the broad spectrum sprays away from the field, so the natural enemies stay. See the [integrated pest management guide](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Pacific Pests discourages routine spraying, because the caterpillars hide, sprays kill natural enemies and resistance builds up. If you must spray, use plant based or biological products first. Time the spray at flowering, when the young caterpillars still feed in the flowers, and follow the FPA registered label and the waiting time before harvest."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Spinosad",
+          "IRAC 5",
+          "a bioinsecticide listed by Pacific Pests"
+        ],
+        [
+          "Bacillus thuringiensis",
+          "IRAC 11",
+          "a bacterial insecticide listed by Pacific Pests"
+        ],
+        [
+          "Neem (azadirachtin)",
+          "IRAC UN",
+          "a plant based option listed by Pacific Pests"
+        ],
+        [
+          "Pyrethrum",
+          "IRAC 3A",
+          "a plant based option listed by Pacific Pests"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Avoid planting legumes next to old, infested legumes.",
+        "Remove all crop remains after harvest.",
+        "Check the flowers on a regular schedule from the first bloom.",
+        "Try intercropping with maize on a small plot before you use it on the whole farm."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Legume Pod Borer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why are my sitaw pods rotten and empty inside?",
+          "a": "The legume pod borer is a likely cause. The caterpillar bores into the pod and eats the seeds. Open a few pods and look for the caterpillar and its frass."
+        },
+        {
+          "q": "When should I check for the legume pod borer?",
+          "a": "Begin when the first flowers open. The young caterpillars feed in the flowers for about a week before they move into the pods, so this is the best time to find and remove them."
+        },
+        {
+          "q": "Why does spraying not stop the damage?",
+          "a": "The caterpillars feed inside flowers and pods where the spray cannot reach. Sprays can also kill the natural enemies. That is why removing infested parts and cleaning the field matter more."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Diamondback moth",
+          "url": "/pests/diamondback-moth"
+        },
+        {
+          "label": "Cabbage webworm",
+          "url": "/pests/cabbage-webworm"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Bean pod borer",
+          "url": "https://apps.lucidcentral.org/pppw_v12/text/web_full/entities/bean_pod_borer_037.htm"
+        },
+        {
+          "label": "USDA ID Tools: Maruca vitrata fact sheet",
+          "url": "https://idtools.org/lepintercept/files/vitrata.pdf"
+        }
+      ]
+    }
+  ]
+}

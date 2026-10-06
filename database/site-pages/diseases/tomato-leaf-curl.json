@@ -1,0 +1,249 @@
+{
+  "section": "diseases",
+  "slug": "tomato-leaf-curl",
+  "sortOrder": 340,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Tomato Leaf Curl: How to Spot It and Protect Your Crop",
+  "metaTitle": "Tomato Leaf Curl: Signs, Damage and Control",
+  "metaDescription": "Tomato leaf curl rolls and yellows the leaves, stunts the plant and cuts fruit set. Learn the signs, the whitefly link and how to protect seedlings.",
+  "focusKeyword": "tomato leaf curl",
+  "keywords": [
+    "tomato leaf curl",
+    "tomato leaf curl virus",
+    "tomato yellow leaf curl",
+    "begomovirus tomato",
+    "whitefly virus tomato"
+  ],
+  "excerpt": "Tomato leaf curl is a virus disease that rolls and puckers tomato leaves, stunts the plant and cuts the number of fruits. There is no cure, so you protect the crop by keeping whiteflies off the seedlings and starting with healthy plants.",
+  "heroImage": {
+    "src": "/images/site/diseases/tomato-leaf-curl.webp",
+    "thumb": "/images/site/diseases/tomato-leaf-curl-480.webp",
+    "alt": "Chili plants with the yellow, curled top leaves of a leaf curl virus, a close relative of the tomato leaf curl viruses",
+    "credit": "Kembangraps, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Tomato Leaf Curl?"
+    },
+    {
+      "type": "text",
+      "text": "Tomato leaf curl is caused by viruses in the begomovirus group. The whitefly, Bemisia tabaci, carries them. DOST PCAARRD calls it the most destructive disease of tomato in the Philippines. Research in the country has found begomoviruses on tomato and squash alike.\n\nThe virus has no cure, and a sick plant stays sick. So the plan is to stop the first infection. Raise seedlings in a clean place, keep the [whitefly](/pests/whitefly) down, and pull out infected plants early. Plants infected before flowering lose the most."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Tomato leaf curl"
+        ],
+        [
+          "Scientific name",
+          "Tomato leaf curl viruses (begomoviruses)"
+        ],
+        [
+          "Kind",
+          "Virus (spread by insects)"
+        ],
+        [
+          "Crops it attacks",
+          "Tomato (squash and other vegetables have their own begomoviruses)"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It can strike at any stage, but a plant infected young suffers most, so the seedbed and the first weeks decide the crop."
+        ],
+        [
+          "How it spreads",
+          "Whiteflies carry the virus from plant to plant as they feed. The virus does not spread any other way, so no whitefly means no spread."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Tomato Leaf Curl"
+    },
+    {
+      "type": "text",
+      "text": "Look at the youngest leaves. The edges curl upward and inward. The leaflets are small, puckered and yellow between the veins, and the plant looks bushy and short. Older leaves can turn leathery, then yellow and brown. Plants infected young are severely stunted, with upright, bushy shoots. Look under the leaves for tiny white insects that fly up when you shake the plant."
+    },
+    {
+      "type": "list",
+      "items": [
+        "The leaf edges curl upward and inward, and the leaflets are small and puckered.",
+        "Leaflets turn yellow between the veins.",
+        "The plant is stunted and bushy, with short, upright shoots.",
+        "Older leaves become leathery, then yellow, brown and dry.",
+        "Few flowers set fruit, and the fruits that form are small."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Look for whiteflies and for the combination of curled, yellow leaflets and a short, bushy plant. Leaf curl from a virus comes with both, and the signs spread from plant to plant with the whitefly."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Tomato Leaf Curl Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Reports on the related tomato yellow leaf curl virus say that it cuts fruit set considerably. The loss is greatest when infection happens before flowering. A crop infected young can lose up to all of its yield. That is a worst case from a research summary. Your own loss depends on the variety, the age of the plants and the whitefly pressure.\n\nIn the Philippines, a DOST PCAARRD program in Ilocos named leaf curl as the most destructive tomato disease. Its work covers healthy seedling technology and a seaweed based product called carrageenan."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Tomato Leaf Curl"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Raise seedlings in a screened nursery or net house, so whiteflies cannot reach them. Healthy seedling technology is a core part of the PCAARRD program.",
+        "Check seedlings for whiteflies and curling before transplanting. Throw away any sick seedling, and never plant it.",
+        "Scout the underside of the leaves for whiteflies every week, and keep field borders clear of weeds.",
+        "Pull out and bury the first sick plants as soon as you see them. Then whiteflies cannot feed on them and spread the virus.",
+        "Leave a gap of a few weeks with no tomato in the field, when you can. A tomato free period cuts the virus and the whiteflies before the next crop.",
+        "Choose a tolerant or resistant variety where one is sold. The WorldVeg (the vegetable research center) has bred tropical tomatoes with resistance to several begomoviruses."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why No Spray Cures It"
+    },
+    {
+      "type": "text",
+      "text": "No spray can cure the virus in a plant that has it. A spray can only target the whitefly. Research advises you to rotate insecticide groups. It also says to avoid spraying weeds on field borders, because that kills the natural enemies of the whitefly. I found no whitefly active ingredient that a Philippine authority names for tomato, so I list none. Ask your local agriculture office what is registered with the FPA."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Start with clean seedlings from a screened nursery.",
+        "Keep your field and borders free of weeds that host whiteflies.",
+        "Do not plant a new crop next to an old tomato crop that has leaf curl.",
+        "Plan a break between tomato crops.",
+        "Choose varieties with resistance, and ask your agriculture office for the current list."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Tomato Leaf Curl"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a cure for tomato leaf curl?",
+          "a": "No. A virus cannot be cured. You protect the crop by controlling whiteflies and using healthy seedlings."
+        },
+        {
+          "q": "How does the virus spread?",
+          "a": "Whiteflies spread it as they feed. The virus does not move in any other way, according to a plant health reference."
+        },
+        {
+          "q": "Which plants get infected most?",
+          "a": "Plants infected at a young stage suffer most. Protect the seedbed and the first weeks after transplanting."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DOST PCAARRD: Program to increase productivity of fresh and processing tomato",
+          "url": "https://pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/pcaarrd-funded-program-to-increase-productivity-of-fresh-and-processing-tomato"
+        },
+        {
+          "label": "Philippine Journal of Science: Molecular detection of whitefly transmissible geminiviruses in the Philippines",
+          "url": "https://animorepository.dlsu.edu.ph/faculty_research/11557"
+        },
+        {
+          "label": "CABI PlantwisePlus Knowledge Bank: Tomato yellow leaf curl virus",
+          "url": "https://plantwiseplusknowledgebank.org/doi/full/10.1079/pwkb.species.55402"
+        }
+      ]
+    }
+  ]
+}

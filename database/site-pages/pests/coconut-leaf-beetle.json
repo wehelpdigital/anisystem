@@ -1,0 +1,274 @@
+{
+  "section": "pests",
+  "slug": "coconut-leaf-beetle",
+  "sortOrder": 385,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Coconut Leaf Beetle (Brontispa): Signs, Damage and Control",
+  "metaTitle": "Coconut Leaf Beetle: Brontispa Damage and Control",
+  "metaDescription": "The coconut leaf beetle, Brontispa, chews the young spear leaf and leaves brown streaks. Learn the signs and the wasps and fungi that control it.",
+  "focusKeyword": "coconut leaf beetle",
+  "keywords": [
+    "coconut leaf beetle",
+    "Brontispa",
+    "Brontispa longissima",
+    "coconut pest Philippines",
+    "Asecodes hispinarum",
+    "coconut hispine beetle"
+  ],
+  "excerpt": "The coconut leaf beetle, Brontispa longissima, hides in the unopened spear leaf and chews it into brown streaks. As the leaf opens, the damage turns into grey and scorched blotches. This page shows how to recognize it and why natural enemies work better than repeated spraying.",
+  "heroImage": {
+    "src": "/images/site/pests/coconut-leaf-beetle.webp",
+    "thumb": "/images/site/pests/coconut-leaf-beetle-480.webp",
+    "alt": "A coconut leaf beetle, Brontispa longissima, with an orange head and a long dark body, a museum specimen",
+    "credit": "Cameron Brumley, DAFWA, CC BY 3.0 AU, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Coconut Leaf Beetle?"
+    },
+    {
+      "type": "text",
+      "text": "Brontispa is a small, narrow beetle, only 8 to 10 mm long. The adults and the larvae both feed on the soft tissue of the youngest leaf, still folded in the center of the palm. Coconut is the main host. It also attacks betel nut, sago palm, oil palm and many ornamental palms.\n\nThe beetle came into the Philippines on shipments of ornamental plants. It was first seen around 2005. From August 2007 to March 2011, PCARRD reports, it affected more than three million coconut palms. Since coconut supports about 3.5 million farmers, the beetle is a serious worry."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Coconut leaf beetle (Brontispa)"
+        ],
+        [
+          "Scientific name",
+          "Brontispa longissima"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Coconut"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves"
+        ],
+        [
+          "When it strikes",
+          "It attacks palms of all ages, and the damage to nursery seedlings and newly planted palms is often severe. Dry periods favor it."
+        ],
+        [
+          "Life cycle",
+          "The whole life cycle happens inside the unopened spear leaf. Eggs hatch in 4 to 5 days, the larvae feed for about 4 weeks, and adults live about 7 months. Long distance spread follows the movement of palms and plants by people."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Coconut Leaf Beetle"
+    },
+    {
+      "type": "text",
+      "text": "Open a young spear leaf and look at the folded surfaces. You will find narrow flat beetles and flat, pale larvae feeding side by side. The leaflets show narrow red brown streaks along the midrib. When the leaf opens, the streaks join into grey, scorched blotches. Wind or drought damage does not come with live insects inside the spear."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Narrow red brown streaks run along the leaflets of the unopened spear leaf.",
+        "As the leaf opens, the streaks grow into grey, scorched blotches.",
+        "The youngest fronds look burned, while the older fronds stay green.",
+        "Flat, narrow beetles and larvae hide inside the folded spear leaf.",
+        "Seedlings in the nursery and young palms show the worst damage."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Brontispa damage can resemble the scorched look of [cocolisap](/pests/cocolisap) and of drought. Cocolisap shows scales on the underside of open leaflets. Brontispa shows live beetles and larvae inside the unopened spear."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Coconut Leaf Beetle Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "A severe attack can kill the palm. Palms that survive are weaker against drought and disease, and the yield of bearing palms drops a lot. In Cambodia, an outbreak attacked about 58 percent of the palms and killed 16 percent, according to an APPPC report. In the Philippines, more than three million palms were affected between August 2007 and March 2011.\n\nSpraying gave only short relief. The beetle came back as soon as the spray wore off. That is why the PCA moved to integrated pest management, with biological control at the center."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Coconut Leaf Beetle"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Inspect nursery seedlings and young palms often. Open the spear leaf and look for beetles and larvae.",
+        "Remove and destroy badly damaged young leaves and seedlings that are full of larvae, so they stop feeding the next generation.",
+        "Use the larval parasitoid wasp Asecodes hispinarum. The PCA and research teams are testing and releasing it in the Philippines.",
+        "Use the pupal parasitoid Tetrastichus brontispae where it is available. It was introduced successfully in the Solomon Islands and Samoa.",
+        "Ask your PCA office about the fungi Metarhizium anisopliae and Beauveria bassiana, which infect the larvae and adults.",
+        "Plant more resistant types where you can. In the Solomon Islands, Local Tall coconut was more resistant than some dwarf types."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Chemicals are best kept for young palms and nurseries, and only when natural enemies cannot keep up. Synthetic pyrethroids probably work but also kill the natural enemies. Follow the label and the FPA registration."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Pyrethrum",
+          "IRAC 3A",
+          "plant derived, for young palms and nurseries only"
+        ],
+        [
+          "Rotenone (from derris)",
+          "IRAC 21B",
+          "plant derived, for young palms and nurseries only"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Check every new palm and ornamental palm that enters the farm.",
+        "Do not move palms or fronds out of an infested district.",
+        "Keep nursery seedlings well watered, because dry periods favor the beetle.",
+        "Protect the wasps and fungi that live in your grove by avoiding broad spray campaigns."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Coconut Leaf Beetle"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How do I know it is Brontispa and not drought?",
+          "a": "Open the young spear leaf. Brontispa damage comes with beetles and larvae inside, and it starts in the newest leaves. Drought scorch does not."
+        },
+        {
+          "q": "Does spraying stop it?",
+          "a": "Only for a short time. PCARRD reports that the beetle returned after sprays wore off, and this is why the PCA now promotes integrated pest management."
+        },
+        {
+          "q": "Which natural enemies work?",
+          "a": "The wasps Asecodes hispinarum, which attacks larvae, and Tetrastichus brontispae, which attacks pupae, plus the fungi Metarhizium anisopliae and Beauveria bassiana."
+        },
+        {
+          "q": "Who is hit hardest?",
+          "a": "Seedlings in nurseries and young palms after planting. Older palms are attacked too, and lose yield."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Red palm weevil",
+          "url": "/pests/red-palm-weevil"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Coconut hispine beetle",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/coconut_hispine_beetle_059.htm"
+        },
+        {
+          "label": "PCARRD: The battle against Brontispa continues",
+          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/the-battle-against-brontispa-continues"
+        },
+        {
+          "label": "FAO APPPC: Report on coconut beetle outbreaks",
+          "url": "https://www.fao.org/4/ad522e/ad522e04.htm"
+        }
+      ]
+    }
+  ]
+}

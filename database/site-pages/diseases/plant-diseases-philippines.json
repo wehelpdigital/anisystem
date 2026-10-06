@@ -1,0 +1,415 @@
+{
+  "section": "diseases",
+  "slug": "plant-diseases-philippines",
+  "sortOrder": 1,
+  "lang": "en",
+  "category": "Disease guides",
+  "title": "Plant Diseases in the Philippines: Causes, Signs and Prevention",
+  "metaTitle": "Plant Diseases in the Philippines: Signs, Causes, Control",
+  "metaDescription": "Plant diseases in the Philippines come from fungi, water molds, bacteria, viruses and nematodes. Learn the signs, how they spread and how to stop them.",
+  "focusKeyword": "plant diseases",
+  "keywords": [
+    "plant diseases",
+    "plant disease",
+    "diseased in tagalog",
+    "sakit ng halaman",
+    "mildew in tagalog",
+    "fungicide",
+    "FRAC"
+  ],
+  "excerpt": "Plant diseases in the Philippines come from four living causes: fungi and water molds, bacteria, viruses and viroids, and nematodes. Each leaves its own marks on a leaf, a stem or a root. This guide shows how to read those marks and how each cause spreads. It names the worst diseases of rice, corn, vegetables, banana, coconut and mango, and explains why prevention beats any spray.",
+  "heroImage": {
+    "src": "/images/site/guides/diseases-plant-diseases-philippines.webp",
+    "thumb": "/images/site/guides/diseases-plant-diseases-philippines-480.webp",
+    "alt": "A farmer stands in a green rice field and checks her crop on her phone, watching for the first signs of plant diseases",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What a plant disease is, in English and Tagalog"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice defines a disease as any disturbance of a plant's normal structure, function or economic value. So a stunted tiller, a rotting fruit and a spotted leaf all count. Not every disease comes from a germ, though. Zinc deficiency or a herbicide burn can make a plant sick too, but it never spreads.\n\nDiseased in Tagalog is may sakit, and a sick plant is halamang may sakit. Sakit means illness or disease, so farmers call plant diseases sakit ng halaman. Mildew in Tagalog is amag, the same word for mold on bread. Rice blast, for example, is mata mata in Bisaya and agupaw in Waray."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The four causes of plant diseases and how each looks"
+    },
+    {
+      "type": "text",
+      "text": "Fungi cause many of the worst crop diseases, and their spores travel by wind, water, insects, seed, soil and tools, says PhilRice. Water molds, or oomycetes, look like fungi but form a separate group that thrives in wet weather. Bacteria are single cells that enter through wounds and natural openings. Viruses and viroids multiply only inside living cells, and insects carry many of them. Finally, nematodes are tiny soil worms that feed on roots."
+    },
+    {
+      "type": "table",
+      "caption": "Reading the signs of plant diseases in the field",
+      "rows": [
+        [
+          "What you see",
+          "Likely cause",
+          "Examples"
+        ],
+        [
+          "Spots with a dark border or rings, powdery or cottony growth, black resting bodies",
+          "Fungus",
+          "[Rice blast](/diseases/rice-blast), [anthracnose](/diseases/anthracnose), [powdery mildew](/diseases/powdery-mildew), [Fusarium wilt](/diseases/fusarium-wilt)"
+        ],
+        [
+          "Pale streaks with white, downy growth in humid weather, bud or fruit rot after long rains",
+          "Water mold",
+          "[Corn downy mildew](/diseases/corn-downy-mildew), [downy mildew](/diseases/downy-mildew), [late blight](/diseases/late-blight), [coconut bud rot](/diseases/coconut-bud-rot)"
+        ],
+        [
+          "Water soaked spots or stripes, milky ooze, sudden wilting, soft rot with a foul smell",
+          "Bacterium",
+          "[Bacterial leaf blight](/diseases/bacterial-leaf-blight), [bacterial wilt](/diseases/bacterial-wilt), [moko](/diseases/moko-disease), [soft rot](/diseases/soft-rot)"
+        ],
+        [
+          "Mottled, yellow, curled or bunched leaves, stunting, the insect carrier nearby",
+          "Virus or viroid",
+          "[Tungro](/diseases/rice-tungro), [banana bunchy top](/diseases/banana-bunchy-top), [tomato leaf curl](/diseases/tomato-leaf-curl), [cadang cadang](/diseases/cadang-cadang)"
+        ],
+        [
+          "Patches of stunted plants that wilt in the heat, knots on the roots",
+          "Nematode",
+          "[Root knot nematode](/diseases/root-knot-nematode)"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A symptom is how the plant reacts, such as yellowing. A sign is the germ itself: fungal growth, sclerotia or bacterial ooze. For example, IRRI's test for bacterial leaf blight is to stand a cut lesion in clear water and watch for cloudy streams."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How plant diseases spread"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Seed.** [Bakanae](/diseases/bakanae) and [brown spot](/diseases/rice-brown-spot) ride on rice seed. IRRI says the brown spot fungus survives in seed for more than four years.",
+        "**Soil.** [Fusarium wilt](/diseases/fusarium-wilt), [clubroot](/diseases/clubroot) and root knot nematodes wait in the soil for the next crop.",
+        "**Water.** Irrigation water spreads [bacterial leaf streak](/diseases/bacterial-leaf-streak), and the resting bodies of [sheath blight](/diseases/sheath-blight) float from hill to hill.",
+        "**Wind and rain.** Blast spores travel far in the air, and rain splashes bacterial leaf blight around.",
+        "**Insects.** The [green leafhopper](/pests/green-leafhopper) carries tungro, and the [brown planthopper](/pests/brown-planthopper) carries grassy and ragged stunt. The [banana aphid](/pests/banana-aphid) spreads bunchy top, and the [whitefly](/pests/whitefly) spreads tomato yellow leaf curl.",
+        "**Tools and planting material.** Bacteria survive on tools, and a sick sucker or seedling brings the disease along."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The worst diseases by crop"
+    },
+    {
+      "type": "table",
+      "caption": "Main plant diseases of Philippine crops",
+      "rows": [
+        [
+          "Crop",
+          "Diseases to know",
+          "Worth remembering"
+        ],
+        [
+          "Rice (palay)",
+          "[Blast](/diseases/rice-blast), [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro), [sheath blight](/diseases/sheath-blight)",
+          "PhilRice says all four rise in the rainy season."
+        ],
+        [
+          "Corn (mais)",
+          "[Downy mildew](/diseases/corn-downy-mildew), [banded leaf and sheath blight](/diseases/banded-leaf-and-sheath-blight), [stalk rot](/diseases/corn-stalk-rot), [rust](/diseases/corn-rust)",
+          "Downy mildew, here since at least 1916, can cut yield by 40 to 60 percent."
+        ],
+        [
+          "Vegetables",
+          "[Bacterial wilt](/diseases/bacterial-wilt), [early blight](/diseases/early-blight), [late blight](/diseases/late-blight), [tomato leaf curl](/diseases/tomato-leaf-curl), [clubroot](/diseases/clubroot)",
+          "Under heavy whitefly attack, tomato yellow leaf curl can take 50 to 100 percent of the crop."
+        ],
+        [
+          "Banana",
+          "[Fusarium wilt TR4](/diseases/fusarium-wilt), [bunchy top](/diseases/banana-bunchy-top), [moko](/diseases/moko-disease), [black sigatoka](/diseases/black-sigatoka)",
+          "Bunchy top can cut yield by up to 75 percent, says PCAARRD."
+        ],
+        [
+          "Coconut",
+          "[Cadang cadang](/diseases/cadang-cadang), [bud rot](/diseases/coconut-bud-rot)",
+          "No coconut cultivar resists cadang cadang."
+        ],
+        [
+          "Mango",
+          "[Anthracnose](/diseases/anthracnose), blossom blight, scab, stem end rot",
+          "PCAARRD lists all four."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For rice, see our [rice diseases](/diseases/rice-diseases) guide. Against corn downy mildew, the DA advises resistant varieties, early and synchronous planting, and no corn near sugarcane, sorghum or talahib grass."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Disease, pest or hunger? Tell them apart"
+    },
+    {
+      "type": "text",
+      "text": "Pests leave evidence: the insect, its eggs, chewed holes or droppings. Diseases leave symptoms and often signs, and they spread to neighboring plants over days. Nutrient problems and chemical burns do not spread, and PhilRice notes they often hit a large area at once.\n\nSome look alikes fool even old hands. Rice with tungro turns yellow and stunted, like rice short of nitrogen or zinc. Kresek, the seedling form of bacterial leaf blight, looks like stem borer damage. Yet a kresek plant does not pull out easily. Ask these questions, adapted from the PhilRice field guide, before you buy anything."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "**Where is it?** A whole field at once points to nutrients, water or chemicals. Growing clusters point to a disease.",
+        "**Is it spreading?** Mark sick plants and look again in a few days.",
+        "**What stage is the crop?** Many diseases strike at one stage, like tungro on young rice.",
+        "**What else is there?** Look for insects, eggs and spray drift.",
+        "**What did you do?** Recall the fertilizer, water, variety and last season's problems."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Still not sure? Take a clear photo in daylight and ask Anee, the [smart farm technician](/features/ai-agricultural-technician) in anee.io. She answers in Tagalog or English, and she reads your lot's growth stage first. Treat her answer as a first opinion, and call your municipal agriculturist for a serious outbreak."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Prevention first"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice teaches that a disease needs three things at once: a virulent germ, a susceptible plant and favorable weather. Take away any one and the disease stalls. That is why prevention beats any spray."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Plant resistant varieties.** PhilRice calls resistance the most widely used control. Ask your DA office which ones resist the diseases your farm had before.",
+        "**Use clean seed and planting material.** Certified seed, inspection and quarantine keep germs off new land.",
+        "**Plant with your neighbors.** Planting within a month of the usual local date keeps insect borne viruses like tungro low.",
+        "**Feed in balance.** Too much nitrogen raises blast, sheath blight and bacterial leaf blight. A lack of potassium invites brown spot.",
+        "**Give plants air.** Wider spacing and good drainage keep leaves drier, and moisture helps spores sprout.",
+        "**Clean up and rotate.** Plow under sick stubble and remove sick plants early. UC IPM finds rotation with non host crops works well against root knot nematodes."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Timing is half of prevention. The anee.io [cropping calendar](/features/cropping-calendar) dates your scouting days from each lot's own day zero. Its [growth stages](/features/growth-stages-and-weather) view lists what to watch for on any date."
+    },
+    {
+      "type": "cta",
+      "title": "Know which disease to watch this week",
+      "text": "anee.io shows each lot's stage and what to watch for, and Anee reads photos of sick leaves.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fungicide groups (FRAC) and why you rotate them"
+    },
+    {
+      "type": "text",
+      "text": "A fungicide is made for fungi and water molds. It does not cure a virus, and PhilRice says chemicals against bacterial leaf blight are neither economical nor effective. Contact fungicides protect the leaf surface, while systemic ones move into the plant.\n\nFRAC, the Fungicide Resistance Action Committee, gives every active ingredient a group code meant for the label. The group tells you how it works and how fast fungi learn to beat it."
+    },
+    {
+      "type": "table",
+      "caption": "Common fungicide groups, from the FRAC Code List 2025",
+      "rows": [
+        [
+          "FRAC group",
+          "Active ingredients (examples)",
+          "Resistance risk"
+        ],
+        [
+          "M01, M03, M05 (multi site, contact)",
+          "copper, mancozeb, chlorothalonil",
+          "Low"
+        ],
+        [
+          "1 (MBC)",
+          "carbendazim, benomyl, thiophanate methyl",
+          "High, resistance common"
+        ],
+        [
+          "3 (DMI, triazoles)",
+          "difenoconazole, propiconazole, hexaconazole, tebuconazole",
+          "Medium"
+        ],
+        [
+          "4 (phenylamides, for water molds)",
+          "metalaxyl, metalaxyl M",
+          "High"
+        ],
+        [
+          "11 (QoI, strobilurins)",
+          "azoxystrobin, trifloxystrobin",
+          "High"
+        ],
+        [
+          "40 (CAA, for water molds)",
+          "dimethomorph, mandipropamid",
+          "Low to medium"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Fungi adapt. If a fungus resists one member of a group, FRAC warns, it will most likely resist the others too. So two brands with the same group number count as one spray. Switch groups for the next application, and lean on the low risk M groups. IRRI, for example, warns that repeated benomyl seed treatment lets the bakanae fungus build resistance. Our [fungicide guide](/blog/fungicides) explains more."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "FPA registered, label followed",
+      "text": "Use only fungicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) for your crop and disease. Follow the label for rate, timing and safety. Spray when scouting and weather call for it, not on a fixed schedule."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about plant diseases"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is diseased in Tagalog?",
+          "a": "May sakit. A diseased plant is halamang may sakit, and plant diseases in general are sakit ng halaman."
+        },
+        {
+          "q": "What is mildew in Tagalog?",
+          "a": "Amag, the same word as mold. Powdery mildew is a fungus, while downy mildew is a water mold."
+        },
+        {
+          "q": "Can a fungicide cure a virus or a bacterial disease?",
+          "a": "No. Nothing cures a virus, so remove sick plants and manage the insect that carries it. For bacteria, PhilRice says chemicals against bacterial leaf blight are not economical or effective."
+        },
+        {
+          "q": "Why did my fungicide stop working?",
+          "a": "The fungus may have built resistance. Check the FRAC group on each label and switch groups between sprays."
+        },
+        {
+          "q": "Is it a disease or just a lack of fertilizer?",
+          "a": "A nutrient problem usually covers a large area at once and does not spread. A disease starts in clusters and moves to nearby plants."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More guides",
+      "items": [
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Rice diseases",
+          "url": "/diseases/rice-diseases"
+        },
+        {
+          "label": "Crop pests",
+          "url": "/pests/crop-pests-philippines"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        },
+        {
+          "label": "Fungicide guide",
+          "url": "/blog/fungicides"
+        },
+        {
+          "label": "Farm words in Tagalog",
+          "url": "/blog/farm-words-in-tagalog"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice (2021), Field Guide: Major Disorders of the Rice Plant, Diseases and Nutritional Deficiencies",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Major-Disorders-of-the-rice-plant-Diseases-and-Nutritional-Deficiencies.pdf"
+        },
+        {
+          "label": "PhilRice, Major diseases of the rice plant in the Philippines",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Major-diseases-of-the-rice-plant-in-the-Philippines.pdf"
+        },
+        {
+          "label": "PhilRice (2016), Preventing rice pests and diseases during the rainy season",
+          "url": "https://www.philrice.gov.ph/preventing-rice-pests-diseases-rainy-season/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Bacterial blight",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Brown spot",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/brown-spot"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Bakanae",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bakanae"
+        },
+        {
+          "label": "DA Regional Field Office 2, Corn Production Techno Guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
+        },
+        {
+          "label": "DA Regional Field Office 2, Tomato Production Guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
+        },
+        {
+          "label": "Purdue University CAPS datasheet: Peronosclerospora philippinensis, Philippine downy mildew of corn",
+          "url": "https://caps.ceris.purdue.edu/wp-content/uploads/2025/07/Peronosclerospora-philippinensis-corn-manual-datasheet.pdf"
+        },
+        {
+          "label": "PCAARRD (2012), IPB UPLB rallies against banana disease (bunchy top)",
+          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/ipb-uplb-rallies-against-banana-disease-gets-pcaarrd-support"
+        },
+        {
+          "label": "PCAARRD (2017), Management approaches against Fusarium wilt of Cavendish in Mindanao",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/s-t-management-approaches-against-fusarium-wilt-of-cavendish-in-mindanao-developed"
+        },
+        {
+          "label": "PCAARRD (2023), Projects to mitigate coconut cadang cadang disease launched",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/projects-to-mitigate-coconut-cadang-cadang-disease-launched"
+        },
+        {
+          "label": "PCAARRD (2016), Best practices address decline in mango production and quality",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/best-practices-address-decline-in-mango-production-and-quality"
+        },
+        {
+          "label": "PCAARRD (2023), LAMP based detection kit for tomato yellow leaf curl virus, Philippine strains",
+          "url": "https://ispweb.pcaarrd.dost.gov.ph/?p=14225"
+        },
+        {
+          "label": "Roettger, Verzola and Ramirez (1983), Plasmodiophora brassicae affecting crucifers in Benguet, Philippine Phytopathology",
+          "url": "https://agris.fao.org/search/ar/records/6471bd2077fd37171a6e02a9"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Coconut bud rot",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/coconut_bud_rot_140.htm"
+        },
+        {
+          "label": "UC IPM: Root knot nematode on tomato",
+          "url": "https://ipm.ucanr.edu/PMG/r783200111.html"
+        },
+        {
+          "label": "FRAC Code List 2025, Fungicide Resistance Action Committee",
+          "url": "https://www.frac.info/media/ljsi3qrv/frac-code-list-2025.pdf"
+        },
+        {
+          "label": "Tagalog.com dictionary: sakit",
+          "url": "https://www.tagalog.com/dictionary/sakit"
+        },
+        {
+          "label": "Tagalog.com dictionary: amag",
+          "url": "https://www.tagalog.com/dictionary/amag"
+        }
+      ]
+    }
+  ]
+}

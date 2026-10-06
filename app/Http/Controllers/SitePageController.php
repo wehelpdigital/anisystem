@@ -33,6 +33,15 @@ class SitePageController extends Controller
                 'control' => \App\Support\WeedControl::TABLE,
             ]);
         }
+        // Pests and diseases: catalogues like the weeds (2026-10-07), with a
+        // finder in place of the weed control helper.
+        if ($section === 'pests' || $section === 'diseases') {
+            return view('public.site.catalogue-hub', [
+                'section' => $section,
+                'meta' => SitePages::SECTIONS[$section],
+                'pages' => SitePages::inSection($section),
+            ]);
+        }
         // /problems: the door to pests, diseases and weeds.
         if ($section === 'problems') {
             return view('public.site.problems-hub', [

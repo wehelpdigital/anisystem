@@ -1,0 +1,445 @@
+{
+  "section": "pests",
+  "slug": "crop-pests-philippines",
+  "sortOrder": 1,
+  "lang": "en",
+  "category": "Pest guides",
+  "title": "Crop Pests in the Philippines: Name Them by the Damage They Leave",
+  "metaTitle": "Crop Pests in the Philippines: Kinds, Damage and Control",
+  "metaDescription": "Crop pests in the Philippines by kind and by crop. Read the damage, name the pest, spare the insects that help you, and spray only when it truly pays.",
+  "focusKeyword": "crop pests",
+  "keywords": [
+    "crop pests",
+    "crop pests in the philippines",
+    "philippines insects",
+    "pest in tagalog",
+    "bugs in tagalog",
+    "rice insects"
+  ],
+  "excerpt": "Crop pests in the Philippines are not only insects. Golden apple snails, rats, birds and mites take their share of the harvest too. This guide sorts them by kind and shows how to name a pest from the damage it leaves. It also lists the worst ones for rice, corn, vegetables, coconut, banana and mango, and says when a spray pays.",
+  "heroImage": {
+    "src": "/images/site/guides/pests-crop-pests-philippines.webp",
+    "thumb": "/images/site/guides/pests-crop-pests-philippines-480.webp",
+    "alt": "A farmer kneels among ripening palay with his phone, the way you scout a field for crop pests",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pest in Tagalog, and why the name comes first"
+    },
+    {
+      "type": "text",
+      "text": "The word for pest in Tagalog is peste, borrowed from Spanish. It covers any insect or small animal that destroys a crop. Bugs in Tagalog are kulisap or insekto, the words for insects, especially small ones. So the atangya among the [rice insects](/pests/rice-insects) is a kulisap, but the kuhol and the daga are peste too.\n\nIn the Philippines, insects still make up the biggest group. IRRI counts more than 100 insect pests of rice across the globe, yet only about 20 cause serious losses. Together, pests and diseases take an average of 37 percent of the rice crop every year, IRRI estimates. So name the pest before you buy anything."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The seven kinds of crop pests"
+    },
+    {
+      "type": "text",
+      "text": "Each kind of crop pest leaves its own mark and needs its own answer. So sort what you find first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Chewing insects.** Caterpillars, beetles and grasshoppers bite off plant tissue and leave holes, ragged edges and droppings. Think of the [fall armyworm](/pests/fall-armyworm), the [diamondback moth](/pests/diamondback-moth) and the [coconut leaf beetle](/pests/coconut-leaf-beetle).",
+        "**Sucking insects.** Planthoppers, aphids, whiteflies, mealybugs, scale insects and bugs drink sap, so leaves yellow, curl or blacken with sooty mold. Some also carry viruses. The [brown planthopper](/pests/brown-planthopper) spreads [grassy stunt](/diseases/rice-grassy-stunt), and the [green leafhopper](/pests/green-leafhopper) spreads [tungro](/diseases/rice-tungro).",
+        "**Borers.** These larvae feed inside stems, fruit or corms. Look for entry holes, droppings like sawdust and dead shoot tips, as with the [rice stem borer](/pests/rice-stem-borer) and the [banana weevil](/pests/banana-weevil).",
+        "**Mites.** Mites are not insects. They have eight legs, like spiders, and leave fine pale dots and webbing, mostly in hot, dusty weather. See [hanip, mites and aphids](/pests/hanip-mites-and-aphids).",
+        "**Snails.** The [golden apple snail](/pests/golden-apple-snail), or kuhol, came from South America in the 1980s. It cuts young rice at the base until the plants reach 30 to 40 days, says IRRI.",
+        "**Rats.** IRRI says rats take 5 to 10 percent of rice yield in Asia each year. See [rice field rats](/pests/rice-field-rats).",
+        "**Birds.** IRRI says only five bird species in the Philippines eat rice, among them the munias and the tree sparrow that farmers call maya. See [rice birds](/pests/rice-birds)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Read the damage: a key to crop pests"
+    },
+    {
+      "type": "text",
+      "text": "You often see the damage before the pest. Match it with this table, then open the pest's page to confirm. Turn the leaves over too, because many pests hide underneath."
+    },
+    {
+      "type": "table",
+      "caption": "Common damage and the likely crop pest",
+      "rows": [
+        [
+          "What you see",
+          "Likely pest",
+          "Its page"
+        ],
+        [
+          "Dead center shoot, or white, empty rice panicles",
+          "Stem borer",
+          "[Rice stem borer](/pests/rice-stem-borer)"
+        ],
+        [
+          "Yellow, drying patches and sooty mold at the base of rice hills",
+          "Brown planthopper",
+          "[Brown planthopper](/pests/brown-planthopper)"
+        ],
+        [
+          "Empty or spotted rice grains after flowering",
+          "Rice bug (atangya)",
+          "[Rice bug](/pests/rice-bug)"
+        ],
+        [
+          "Missing rice hills, bright pink egg masses",
+          "Golden apple snail",
+          "[Golden apple snail](/pests/golden-apple-snail)"
+        ],
+        [
+          "Tillers cut at a slant near the base, fresh holes in the bunds",
+          "Rats",
+          "[Rice field rats](/pests/rice-field-rats)"
+        ],
+        [
+          "Ragged corn whorl leaves with wet droppings like sawdust",
+          "Fall armyworm",
+          "[Fall armyworm](/pests/fall-armyworm)"
+        ],
+        [
+          "Wilted eggplant shoot tips, holes in the fruit",
+          "Eggplant fruit and shoot borer",
+          "[Eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer)"
+        ],
+        [
+          "Curled, sticky leaves with black sooty mold",
+          "Aphids, whiteflies or mealybugs",
+          "[Whitefly](/pests/whitefly), [mealybug](/pests/mealybug)"
+        ],
+        [
+          "Fine pale dots and webbing under the leaves",
+          "Spider mites",
+          "[Hanip, mites and aphids](/pests/hanip-mites-and-aphids)"
+        ],
+        [
+          "Yellowing coconut leaves covered in tiny waxy scales",
+          "Coconut scale insect (cocolisap)",
+          "[Cocolisap](/pests/cocolisap)"
+        ],
+        [
+          "V shaped cuts in coconut fronds",
+          "Coconut rhinoceros beetle",
+          "[Rhinoceros beetle](/pests/coconut-rhinoceros-beetle)"
+        ],
+        [
+          "Brown, scabby spots on young mango fruit",
+          "Mango cecid fly (kurikong)",
+          "[Mango cecid fly](/pests/mango-cecid-fly)"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Stem borer or birds?",
+      "text": "Pull a white panicle. If it slides out easily and every grain is empty, a stem borer did it. If only some grains are empty, birds fed on it, says IRRI."
+    },
+    {
+      "type": "text",
+      "text": "Some damage is not a pest at all. [Sheath blight](/diseases/sheath-blight), other [crop diseases](/diseases) and a lack of nutrients can look like insect work. If you are not sure, take a photo and ask [Anee](/features/ai-agricultural-technician), the smart farm technician in anee.io. She answers in Tagalog or English, and she reads your lot's growth stage first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The worst crop pests by crop"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice"
+    },
+    {
+      "type": "text",
+      "text": "Rice has the longest list. Stem borers, the brown planthopper, the [rice black bug](/pests/rice-black-bug) and the rice bug lead it. IRRI says the rice bug alone can cut yield by as much as 30 percent. Our rice insects guide covers each pest by crop stage."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Corn"
+    },
+    {
+      "type": "text",
+      "text": "UPLB researchers call the [Asian corn borer](/pests/asian-corn-borer) the most destructive corn pest in the Philippines. Then the fall armyworm arrived. It was first reported in Piat, Cagayan in June 2019 and had reached 15 regions by October. Also watch for the [cutworm](/pests/cutworm) on seedlings."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables"
+    },
+    {
+      "type": "text",
+      "text": "UPLB calls the diamondback moth a very destructive pest of cabbage. It also names the eggplant fruit and shoot borer the worst insect of eggplant. Fruit flies such as the [melon fly](/pests/melon-fly) attack ampalaya, while [thrips](/pests/thrips) and [leafminers](/pests/leafminer) hit many [vegetables in the Philippines](/crops/vegetables-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Coconut"
+    },
+    {
+      "type": "text",
+      "text": "Cocolisap, the coconut scale insect, was first found in Batangas in 2009. It yellows the fronds and thins the nut meat. A UPLB paper says a palm can die in six months or less. The rhinoceros beetle bores into the crown and cuts V shapes in the fronds. Its wounds invite the [red palm weevil](/pests/red-palm-weevil). Finally, the coconut leaf beetle eats young, unopened fronds. PCAARRD says it hit more than three million trees from 2007 to 2011."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Banana"
+    },
+    {
+      "type": "text",
+      "text": "Banana weevil grubs tunnel through the corm, so plants weaken, blow over and bear small bunches. The [banana aphid](/pests/banana-aphid) carries [bunchy top](/diseases/banana-bunchy-top). PCAARRD calls it the most destructive virus disease of banana in the Philippines, with no known cure."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Mango"
+    },
+    {
+      "type": "text",
+      "text": "The cecid fly, or kurikong, lays its eggs on young leaves and fruit and leaves brown, scabby spots. The DA says it can ruin up to 80 percent of the fruit. In Palawan, the [mango pulp weevil](/pests/mango-pulp-weevil) infests the fruit itself. See the [mango leafhopper](/pests/mango-leafhopper) and [oriental fruit fly](/pests/oriental-fruit-fly) pages too."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Friends in the field"
+    },
+    {
+      "type": "text",
+      "text": "Many insects in your field eat crop pests for free."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Spiders** hunt hoppers at the base of rice hills, and IRRI lists them among the natural enemies of the brown planthopper.",
+        "**Wasps.** Tiny wasps lay their eggs inside pest eggs or caterpillars. In Benguet, the Diadegma wasp let cabbage farmers cut their sprays sharply.",
+        "**Ladybird beetles**, or lady beetles, eat aphids, and IRRI lists them among the enemies of the rice black bug.",
+        "**Earwigs, ants and ducks.** Earwigs prey on the Asian corn borer, red ants eat snail eggs, and ducks eat young snails."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Early sprays kill these friends first. So IRRI advises no insecticide on rice in the first 40 days after planting. PhilRice says the first 30 days after transplanting or 40 days after sowing. Our guide to [integrated pest management](/pests/integrated-pest-management) shows how to work with them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When a spray is the answer, and when it is not"
+    },
+    {
+      "type": "text",
+      "text": "A spray is a tool for a named pest at a damaging number. Consider one only when all of these are true."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "You have named the pest, not just the damage.",
+        "Your count passes its threshold. IRRI, for example, says to act on the rice bug at more than 10 bugs in 20 hills.",
+        "Natural enemies do not outnumber the pest. If they do, IRRI says not to spray for planthoppers.",
+        "A registered product lists that pest on that crop."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Skip the spray when the rice is young, the pest has gone or the cause is a disease. Rats, snails and birds need other tools too. IRRI points to community rat campaigns, handpicking snails, low water and bird scarers. For the rhinoceros beetle, a Pacific pest guide calls insecticides uneconomical and says to clear breeding sites."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "FPA registered, label followed",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) and follow the label. Rotate insecticides by their IRAC group number, not by brand."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Let anee.io keep watch for crop pests"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, the [cropping calendar](/features/cropping-calendar) can date a weekly scouting task from each lot's own day zero. Then the [growth stages](/features/growth-stages-and-weather) view shows what to watch for on any date you pick."
+    },
+    {
+      "type": "cta",
+      "title": "Know which pest to expect this week",
+      "text": "anee.io shows each lot's growth stage and what to watch for. Anee also reads a photo of the pest you found.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about crop pests"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is pest in Tagalog?",
+          "a": "Peste, a word borrowed from Spanish. Bugs in Tagalog are kulisap or insekto."
+        },
+        {
+          "q": "What are the most common crop pests in the Philippines?",
+          "a": "Rice has stem borers, planthoppers and the rice bug. Corn has the Asian corn borer and fall armyworm, and coconut has cocolisap and the rhinoceros beetle."
+        },
+        {
+          "q": "Are all insects in my field pests?",
+          "a": "No. IRRI counts more than 100 insect pests of rice, but only about 20 cause serious losses. Spiders, wasps and lady beetles eat pests."
+        },
+        {
+          "q": "How do I know which pest is damaging my crop?",
+          "a": "Match the damage with the table above, then find the insect, its eggs or its droppings. Or photograph it and ask [Anee](/features/ai-agricultural-technician) in anee.io."
+        },
+        {
+          "q": "Is a mite an insect?",
+          "a": "No. Mites have eight legs, like spiders. Before you spray, check that the product label lists mites."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More pest guides",
+      "items": [
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        },
+        {
+          "label": "Rice insects",
+          "url": "/pests/rice-insects"
+        },
+        {
+          "label": "Hanip, mites and aphids",
+          "url": "/pests/hanip-mites-and-aphids"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        },
+        {
+          "label": "All crop problem guides",
+          "url": "/features/crop-problem-guides"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: How to manage pests and diseases",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Insects",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases/insects"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Planthopper",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice bug",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Black bug",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/black-bug"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Golden apple snail",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases/golden-apple-snails"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Rat fact sheet",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/rats/item/rats-fact-sheet"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Birds",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases/birds"
+        },
+        {
+          "label": "PhilRice: Young rice plants can take care of themselves (2012)",
+          "url": "https://www.philrice.gov.ph/young-rice-plants-can-take-care-of-themselves/"
+        },
+        {
+          "label": "Watson and others: Aspidiotus rigidus, a devastating pest of coconut in the Philippines, UPLB repository",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/1920/"
+        },
+        {
+          "label": "PCAARRD: The battle against Brontispa continues (2011)",
+          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/the-battle-against-brontispa-continues"
+        },
+        {
+          "label": "PCAARRD: New study to test BBTV resistant Lakatan (2013)",
+          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/new-study-to-test-bbtv-resistant-lakatan-"
+        },
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Coconut rhinoceros beetle",
+          "url": "https://apps.lucidcentral.org/pppw_v12/text/web_full/entities/coconut_rhinoceros_beetle__oryctes_108.htm"
+        },
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Banana weevil",
+          "url": "https://apps.lucidcentral.org/pppw_v12/text/web_full/entities/banana_weevil_109.htm"
+        },
+        {
+          "label": "DA: DA seeks US biotech firm's help vs cecid flies in mangoes (2024)",
+          "url": "https://da.gov.ph/?p=77329"
+        },
+        {
+          "label": "GMA News: Kurikong disease threatens Philippine mango export",
+          "url": "https://www.gmanetwork.com/news/money/economy/727007/kurikong-disease-threatens-philippine-mango-export/story/"
+        },
+        {
+          "label": "Medina and others (2005): An IPM program for mango in Palawan, UPLB repository",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2919/"
+        },
+        {
+          "label": "IPPC: First detection of fall armyworm in the Philippines (2019)",
+          "url": "https://www.ippc.int/en/countries/philippines/pestreports/2019/10/report-of-first-detection-of-fall-army-worm-faw-in-the-republic-of-the-philippines/"
+        },
+        {
+          "label": "UPLB repository: Predatory earwigs against the Asian corn borer",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2834/"
+        },
+        {
+          "label": "Javier and others (2016): Non chemical control of the eggplant fruit and shoot borer, UPLB repository",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4451/"
+        },
+        {
+          "label": "Morallo Rejesus (2003): Diadegma and Cotesia against the diamondback moth, UPLB repository",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5690/"
+        },
+        {
+          "label": "Cardona and others (1996): Field releases of Diadegma semiclausum in Benguet and Mountain Province, UPLB repository",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5970/"
+        },
+        {
+          "label": "UC IPM Pest Notes: Spider mites",
+          "url": "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7405.html"
+        },
+        {
+          "label": "UC IPM Pest Notes: Aphids",
+          "url": "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7404.html"
+        },
+        {
+          "label": "Wiktionary: peste (Tagalog)",
+          "url": "https://en.wiktionary.org/wiki/peste"
+        },
+        {
+          "label": "Wiktionary: kulisap (Tagalog)",
+          "url": "https://en.wiktionary.org/wiki/kulisap"
+        }
+      ]
+    }
+  ]
+}

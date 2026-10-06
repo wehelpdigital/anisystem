@@ -1,0 +1,247 @@
+{
+  "section": "pests",
+  "slug": "mango-pulp-weevil",
+  "sortOrder": 410,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Mango Pulp Weevil: The Quarantine Pest of Palawan",
+  "metaTitle": "Mango Pulp Weevil: Damage, Quarantine and Control",
+  "metaDescription": "The mango pulp weevil is a quarantine pest found in Palawan that tunnels in the fruit. Learn the damage, the movement ban and why it matters for exports.",
+  "focusKeyword": "mango pulp weevil",
+  "keywords": [
+    "mango pulp weevil",
+    "Sternochetus frigidus",
+    "mango weevil Palawan",
+    "mango quarantine pest",
+    "mango export pest"
+  ],
+  "excerpt": "The mango pulp weevil, Sternochetus frigidus, is a small dark weevil whose grubs eat the pulp of mango fruit from inside. In the Philippines it is found in the Palawan island group, and the BPI keeps the rest of the country protected by quarantine. This page explains the damage and what a mango farmer should do.",
+  "heroImage": {
+    "src": "/images/site/pests/mango-pulp-weevil.webp",
+    "thumb": "/images/site/pests/mango-pulp-weevil-480.webp",
+    "alt": "A mango seed weevil, a close relative of the mango pulp weevil, on the yellow flesh of a cut mango",
+    "credit": "PJeganathan, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Mango Pulp Weevil?"
+    },
+    {
+      "type": "text",
+      "text": "The adult is a dark brown, small, stout weevil with paler patches and a small head. Scales cover the body. A female lays single eggs on young fruit, and the grub bores into the pulp. The grub is the most destructive stage, because it feeds and develops in the pulp.\n\nIt feeds only on mango, whatever the variety. It was first found in the Philippines in 1987, probably brought from Borneo to southern Palawan. The BPI declared it a dangerous pest and placed the Palawan island group under quarantine. As the rest of the country is free of it, most mango farmers never see it, and they must help to keep it out."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Mango pulp weevil"
+        ],
+        [
+          "Scientific name",
+          "Sternochetus frigidus"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Mango"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It attacks developing fruit, and the damage stays hidden until the fruit is cut open at harvest."
+        ],
+        [
+          "Life cycle",
+          "The female lays single eggs on young fruit and covers each with a plug. An egg hatches in about 9 days, the grub grows over about 20 days, and the new adult stays inside the fruit for about 37 days more."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Mango Pulp Weevil"
+    },
+    {
+      "type": "text",
+      "text": "You cannot see the damage on the outside before harvest. Cut the fruit open and look for darkened tunnels in the pulp, grubs and adult weevils inside. The [mango cecid fly](/pests/mango-cecid-fly) leaves spots on the skin, while the pulp weevil works inside. If you find a weevil in a fruit outside Palawan, report it to the BPI or the provincial agriculture office."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Tunnels in the pulp darken the flesh after the grub feeds.",
+        "Grubs and adult weevils are found inside the cut fruit.",
+        "The outside of the fruit looks normal until harvest.",
+        "Adults feed on the mango flowers during bloom.",
+        "The fruit comes from or passed through Palawan."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Fruit rot and tunnels from other insects can look similar inside. The [oriental fruit fly](/pests/oriental-fruit-fly) leaves maggots in the pulp, while the pulp weevil leaves a hard bodied grub and adult weevils."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Mango Pulp Weevil Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The weevil is a quarantine pest, and it stopped the export of Philippine mangoes to some countries. Mangoes from Guimaras Island are certified pest free and have an exemption. A study at UPLB found that irradiation above 75 Gy sterilized insects treated in the early stages and above 100 Gy sterilized the adults. Irradiation is now a post harvest treatment for export fruit.\n\nThe BPI reports that no eradication measure is available. So the main aim is to stop its spread. The quarantine bans the movement of mango plants, fruit and parts out of Palawan. A farm outside Palawan that breaks this rule risks both its own fruit and the whole country's export market."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Mango Pulp Weevil"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Follow the movement ban. Do not carry mango plants, fruits or parts out of the Palawan island group.",
+        "Buy planting material only from registered nurseries and never from an infested area.",
+        "In Palawan, pick up and destroy fallen fruit so the grubs and the new adults do not escape.",
+        "Check cut fruit for tunnels and grubs at harvest, and report any find outside Palawan to the BPI.",
+        "Ask the BPI about the approved export treatment, which is irradiation, if you grow mango for the export market."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "No spray is recommended in the sources we read. The control is the quarantine and post harvest irradiation for export fruit, not an insecticide in the orchard."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Never bring mango fruit or seedlings out of Palawan.",
+        "Report any weevil or tunneled pulp you find outside Palawan.",
+        "Use only registered nurseries and certified material.",
+        "Cooperate with BPI inspectors at quarantine checkpoints."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Mango Pulp Weevil"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Where is the mango pulp weevil in the Philippines?",
+          "a": "In certain areas of the Palawan island group. The BPI declared the pest dangerous and placed Palawan under quarantine."
+        },
+        {
+          "q": "Can I take mangoes out of Palawan?",
+          "a": "No. The quarantine bans the movement of mango plants, fruits or parts out of the Palawan island group."
+        },
+        {
+          "q": "Why does it block exports?",
+          "a": "It is a quarantine pest for countries with strict import rules. Guimaras mangoes are certified pest free, and irradiation is also used on export fruit."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IPPC: Declaring mango pulp weevil a dangerous pest and placing Palawan under quarantine",
+          "url": "https://www.ippc.int/ar/countries/philippines/pestreports/2016/09/declaring-mango-pulp-weevil-sternochetus-frigidus-fabr-a-dangerous-pest-and-injurious-to-mangoes-and-placing-the-palawan-island-group-under-quarantine-to-prevent-its-spread/"
+        },
+        {
+          "label": "International Pest Control: Mango pulp weevil Sternochetus frigidus",
+          "url": "https://international-pest-control.com/wordpress/mango-pulp-weevil-sternochetus-frigidus/"
+        },
+        {
+          "label": "UPLB: Irradiation of the mango pulp weevil",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/6440"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+{
+  "section": "pests",
+  "slug": "mango-cecid-fly",
+  "sortOrder": 415,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Mango Cecid Fly (Kurikong): Signs, Damage and Control",
+  "metaTitle": "Mango Cecid Fly: Kurikong Signs and Control",
+  "metaDescription": "The mango cecid fly, called kurikong, leaves scab like spots on mango fruit. Learn when it strikes, why bagging works and how to protect your crop.",
+  "focusKeyword": "mango cecid fly",
+  "keywords": [
+    "mango cecid fly",
+    "kurikong",
+    "mango midge",
+    "mango leaf gall",
+    "mango fruit spots",
+    "mango pest Philippines"
+  ],
+  "excerpt": "The mango cecid fly, known to farmers as kurikong, is a tiny mosquito like fly whose larvae bore into young mango fruit. It leaves circular brown, scab like spots, and bad outbreaks have cost growers most of the crop. This page shows when it strikes and what to do before the fruit sets.",
+  "heroImage": {
+    "src": "/images/site/pests/mango-cecid-fly.webp",
+    "thumb": "/images/site/pests/mango-cecid-fly-480.webp",
+    "alt": "Mango leaves covered in the small dark galls of the mango cecid fly",
+    "credit": "Gutam2000, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Mango Cecid Fly?"
+    },
+    {
+      "type": "text",
+      "text": "Kurikong is a small fly of the family Cecidomyiidae, and it looks like a mosquito. Three species affect Philippine mango. Procontarinia pustulata and Procontarinia robusta make galls on the leaves, and Procontarinia frugivora feeds on the fruit. The fly lays eggs on the fruit skin and on young leaves.\n\nThe pest was first documented in 1987, and it spread nationwide in 2010. It has come back in Central Luzon since then. PCARRD reports that farmers have seen losses of 70 to 100 percent of the yield in bad outbreaks. So timing is everything, and the care starts at flower induction."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Mango cecid fly (kurikong)"
+        ],
+        [
+          "Scientific name",
+          "Procontarinia spp."
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Mango"
+        ],
+        [
+          "Local names",
+          "Farmers call the scab like spots on the fruit kurikong, and other names in use are buti, armalite and saksak walis."
+        ],
+        [
+          "Where it strikes",
+          "Leaves and fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It attacks young fruit from about 32 days after flower induction, and the risky period runs to about 70 days."
+        ],
+        [
+          "Life cycle",
+          "The female lays eggs on the fruit skin and young leaves. The larva bores in and feeds for 4 to 5 days, then drops out to pupate in the soil. A full cycle takes only 10 to 12 days."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Mango Cecid Fly"
+    },
+    {
+      "type": "text",
+      "text": "Look at the fruit skin from about a month after flower induction. Kurikong shows as circular, brown to black, scab like spots scattered over the fruit. Early attacks make young fruit fall and rot. On the leaves, look for small galls or blisters. The spots are small and round, not the large sunken patches of anthracnose, and cutting the young fruit shows a tiny larva under the spot."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Circular brown to black scab like spots are scattered over the fruit skin.",
+        "Small holes show where the larvae bored into young fruit.",
+        "Young fruit fall and rot after an early attack.",
+        "Galls or blisters form on young mango leaves.",
+        "A mosquito like fly sits on the young fruit and the new leaves."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Spots from [anthracnose](/diseases/anthracnose) are larger and sunken. Kurikong makes small, round, scab like spots, and a larva sits under each."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Mango Cecid Fly Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "A UPLB study found that the fly infests fruit from 32 days after flower induction. The loss depends on how many fruits are marked. PCARRD reports that farmers saw 70 to 100 percent loss in bad outbreaks, and a mark on the skin also hurts the sale price.\n\nThe same study found that pruning and clearing the undergrowth alone did not stop the infestation. So sanitation helps, but it is not enough alone. Plan the bagging and the spray calendar around the days after flower induction, and talk to your neighbors. A mango farm also faces the [mango leafhopper](/pests/mango-leafhopper) at flowering."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Mango Cecid Fly"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Prune crowded branches after every harvest and keep the orchard clean, as PCARRD advises.",
+        "Mark the day of flower induction on your calendar. Count 32 days from that day, because the attack begins then.",
+        "Bag the fruit early. PCARRD advises 45 to 55 days after flower induction.",
+        "Check the fruit and young leaves each week for the first spots, and for adult flies.",
+        "Remove and destroy badly marked and fallen fruit.",
+        "Work with the neighbors in your area. PCARRD and the DA stress that a united effort is needed, or the fly keeps coming back."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "If the first damage appears, a spray can help, but only as part of the whole plan. PCARRD named insecticide groups for kurikong. Always read the label and observe the pre harvest interval."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Cartap",
+          "IRAC 14",
+          "named by a PCARRD entomologist for kurikong"
+        ],
+        [
+          "Pyrethroids",
+          "IRAC 3A",
+          "named by a PCARRD entomologist for kurikong"
+        ],
+        [
+          "Carbamates",
+          "IRAC 1A",
+          "named by a PCARRD entomologist for kurikong"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Prune after every harvest to open the canopy.",
+        "Bag the fruit on time.",
+        "Keep a record of each flower induction date for each tree.",
+        "Join community clean up and spray schedules."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Mango Cecid Fly"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does kurikong mean?",
+          "a": "It is the common name for the scab like spots left by the mango cecid fly on the fruit. Buti, armalite and saksak walis are also used."
+        },
+        {
+          "q": "When should I bag my mango fruit?",
+          "a": "PCARRD says 45 to 55 days after flower induction. The fly starts at 32 days, so do not wait."
+        },
+        {
+          "q": "Does pruning alone stop it?",
+          "a": "No. A UPLB study found pruning and clearing the undergrowth were not enough on their own."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PCARRD: PCARRD leads fight against kurikong infestation",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/pcaarrd-leads-fight-against-kurikong-infestation"
+        },
+        {
+          "label": "UPLB: Notes on the bioecology of the cecid fly Procontarinia mangivora",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4814"
+        },
+        {
+          "label": "Department of Agriculture: Cecid fly, kurikong, on mango",
+          "url": "https://da.gov.ph/?p=56323"
+        }
+      ]
+    }
+  ]
+}

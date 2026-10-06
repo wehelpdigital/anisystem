@@ -1,0 +1,289 @@
+{
+  "section": "pests",
+  "slug": "corn-earworm",
+  "sortOrder": 290,
+  "lang": "en",
+  "category": "Corn pests",
+  "profile": true,
+  "title": "Corn Earworm: How to Spot It and Stop It in Your Mais",
+  "metaTitle": "Corn Earworm: Damage and Control in the Philippines",
+  "metaDescription": "The corn earworm bores into ears and fruits where sprays cannot reach. Learn the signs, the early steps that work and when a spray makes sense.",
+  "focusKeyword": "corn earworm",
+  "keywords": [
+    "corn earworm",
+    "corn earworm in the Philippines",
+    "helicoverpa armigera",
+    "fruitworm",
+    "gram pod borer",
+    "worm in corn ear"
+  ],
+  "excerpt": "The corn earworm, Helicoverpa armigera, is a caterpillar that eats the silks and then the kernels of mais. It also hollows out tomato and bean fruits. Once it is inside the ear it is hard to kill, so the timing of your control matters most.",
+  "heroImage": {
+    "src": "/images/site/pests/corn-earworm.webp",
+    "thumb": "/images/site/pests/corn-earworm-480.webp",
+    "alt": "An adult corn earworm moth, Helicoverpa armigera, pale tan with darker bands on its wings",
+    "credit": "SteveM4560, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Corn Earworm?"
+    },
+    {
+      "type": "text",
+      "text": "The corn earworm is also called the gram pod borer or fruitworm. It is one of four major insect pests of corn in the Philippines. The others are the corn seedling maggot, the root grub and the Asian corn borer. Philippine research notes that the corn borer does the most harm and the earworm causes occasional, uneven damage.\n\nIt also attacks cucurbits, tomato and other solanaceous crops, legumes, cotton, tobacco and onion. Farmers care because the larva feeds on the part that is sold, the ear or the fruit, and it hides inside."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Corn earworm"
+        ],
+        [
+          "Scientific name",
+          "Helicoverpa armigera"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Corn, tomato, legumes and other vegetables"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Panicles and ears and fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "At silking and the milk stage in corn, and at flowering and fruiting in vegetables."
+        ],
+        [
+          "Life cycle",
+          "Moths lay eggs on the silks and on flowers and fruits. The young larvae feed on the silk, then bore into the ear or fruit as they grow."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Corn Earworm"
+    },
+    {
+      "type": "text",
+      "text": "Open the ear tip. You find a fat caterpillar, with frass at the entry hole, feeding on the silks and then the kernels. The [Asian corn borer](/pests/asian-corn-borer) is far more common in corn. It attacks the stalk and the tassel as well, while the earworm stays at the ear."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Silks are chewed and frass lies at the ear tip.",
+        "Kernels at the ear tip are eaten and the damage runs down the ear.",
+        "A hole with frass beside it shows where a larva entered a tomato, a bean pod or another fruit.",
+        "Fruits are hollow inside, because the larva eats the flesh.",
+        "Eaten ears and fruits rot more easily afterwards."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "In vegetables the [fall armyworm](/pests/fall-armyworm) and the [legume pod borer](/pests/legume-pod-borer) also eat holes in fruits and pods. In corn the fall armyworm also feeds in the whorl, which the earworm does not."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Corn Earworm Hurts Your Corn"
+    },
+    {
+      "type": "text",
+      "text": "Philippine research ranks it among four major insect pests in corn, with sporadic damage compared with the corn borer. We found no sourced national yield loss figure, so we give none. In vegetables, a single larva can ruin each fruit it enters.\n\nA Philippine field study on Mindoro tested the IPM methods built for the corn borer against the earworm. Scout at silking and check the ear tips, since the larvae are small and easy to kill before they go in."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Corn Earworm"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Monitor the field at silking. Look at the silks and the ear tips for eggs and young larvae, and note the dates on the lot.",
+        "Remove weeds and volunteer plants, and till the soil after harvest. East West Seed also lists plastic mulch to stop pupation in vegetables.",
+        "Pick the larvae by hand when the area is small, and destroy damaged fruits and ears.",
+        "Release Trichogramma wasps. A Philippine study found that Trichogramma chilonis, at 50 cards per hectare, reduced earworm damage. Natural enemies such as lady beetles and spiders helped.",
+        "Use a trap crop such as sunflower, taro or castor around vegetables, as East West Seed lists. Spare the natural enemies.",
+        "Use Bacillus thuringiensis, neem extract or the fungi Beauveria bassiana and Metarhizium before a synthetic spray."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Once larvae are inside the ear, insecticides work poorly. So spray only early, while the larvae are small and exposed on the silks. Choose an FPA registered product for this use and follow the label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "listed for fruitworm control in vegetables by a Philippine seed company"
+        ],
+        [
+          "Tebufenozide",
+          "IRAC 18A",
+          "listed in the same source"
+        ],
+        [
+          "Fipronil",
+          "IRAC 2B",
+          "listed in the same source"
+        ],
+        [
+          "Cypermethrin",
+          "IRAC 3A",
+          "named in a Philippine review of corn pests and their management"
+        ],
+        [
+          "Deltamethrin",
+          "IRAC 3A",
+          "named in the same Philippine review"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant corn early and plant at the same time as your neighbors, so the silking window is short.",
+        "Clean the field of weeds and crop residue after harvest.",
+        "Check the ear tips every week from silking.",
+        "Keep weeds down around the field, so moths have fewer places to lay eggs."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Corn Earworm"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is the corn earworm the same as the corn borer?",
+          "a": "No. The Asian corn borer, Ostrinia furnacalis, is the main corn pest in the Philippines and tunnels in the stalk. The earworm feeds on silks and kernels."
+        },
+        {
+          "q": "Why is it hard to kill?",
+          "a": "After the third stage the larva bores into the ear, where a spray does not reach it."
+        },
+        {
+          "q": "Can wasps control it?",
+          "a": "Yes, in part. A Philippine study found that Trichogramma chilonis released in the field reduced earworm damage."
+        },
+        {
+          "q": "What else does it eat?",
+          "a": "Tomato, other vegetables, legumes, cotton, tobacco and onion, as East West Seed lists."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More corn pests",
+      "items": [
+        {
+          "label": "Asian corn borer",
+          "url": "/pests/asian-corn-borer"
+        },
+        {
+          "label": "Cutworm",
+          "url": "/pests/cutworm"
+        },
+        {
+          "label": "Fall armyworm",
+          "url": "/pests/fall-armyworm"
+        },
+        {
+          "label": "Corn planthopper",
+          "url": "/pests/corn-planthopper"
+        },
+        {
+          "label": "White grub",
+          "url": "/pests/white-grub"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FAO AGRIS: Current insect pest problems in corn and their management in the Philippines",
+          "url": "https://agris.fao.org/search/ar/records/6471c83a2a40512c710e3eed"
+        },
+        {
+          "label": "East West Seed Plant Doctor: Helicoverpa armigera (fruitworm)",
+          "url": "https://plantdoctor.eastwestseed.com/node/550"
+        },
+        {
+          "label": "Philippine Journal of Science: On farm verification of IPM technologies against the corn earworm",
+          "url": "https://philjournalsci.dost.gov.ph/home-1/21-vol-134-no-1-march-2005/302-on-farm-verification-of-ipm-technologies-developed-for-asian-corn-borer-against-the-corn-earworm-helicoverpa-armigera-hubner-in-san-jose-occidental-mindoro"
+        }
+      ]
+    }
+  ]
+}

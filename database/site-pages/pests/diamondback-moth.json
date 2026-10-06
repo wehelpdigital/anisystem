@@ -1,0 +1,285 @@
+{
+  "section": "pests",
+  "slug": "diamondback-moth",
+  "sortOrder": 310,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Diamondback Moth: How to Spot It and Stop It in Your Cabbage",
+  "metaTitle": "Diamondback Moth: Damage and Control in Cabbage",
+  "metaDescription": "The diamondback moth caterpillar window panes cabbage leaves and resists many sprays. Learn the signs and the parasitoid first control used here.",
+  "focusKeyword": "diamondback moth",
+  "keywords": [
+    "diamondback moth",
+    "diamondback moth in cabbage",
+    "plutella xylostella",
+    "DBM in the Philippines",
+    "cabbage worm",
+    "window paning on cabbage"
+  ],
+  "excerpt": "The diamondback moth, Plutella xylostella, is a small caterpillar that scrapes and holes the leaves of cabbage and other crucifers. It has become resistant to many insecticides, so smart control starts with natural enemies. This page shows the signs and the order of steps.",
+  "heroImage": {
+    "src": "/images/site/pests/diamondback-moth.webp",
+    "thumb": "/images/site/pests/diamondback-moth-480.webp",
+    "alt": "A green diamondback moth caterpillar, Plutella xylostella, on a leaf it has eaten thin",
+    "credit": "Peter de Lange, CC0, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Diamondback Moth?"
+    },
+    {
+      "type": "text",
+      "text": "The diamondback moth attacks cabbage, cauliflower, Chinese cabbage, mustard and other crucifers. In the Philippines it is the key pest in highland and lowland vegetable areas. Before biological control, cabbage farmers used only synthetic pesticides, and the moth became resistant to nearly every potent one.\n\nIn 1989 and 1990 the country brought in two parasitic wasps, Diadegma semiclausum for the highlands above 800 meters and Cotesia plutellae for the lowlands. UPLB reports that releases cut larvae from 4 to 10 per plant down to 0.4 to 2.8 per plant."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Diamondback moth"
+        ],
+        [
+          "Scientific name",
+          "Plutella xylostella"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Cabbage and other crucifers"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves"
+        ],
+        [
+          "When it strikes",
+          "Through the whole crop, but the worst damage is on young plants, before and during head formation, and in warm weather."
+        ],
+        [
+          "Life cycle",
+          "Larvae mature in 10 to 14 days in warm weather, then pupate in a loose cocoon on the leaf or stem. The whole life cycle takes about 3 weeks when it is warm, so generations overlap fast."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Diamondback Moth"
+    },
+    {
+      "type": "text",
+      "text": "The larva is small, up to 0.3 inch long, wider in the middle, with a V shaped rear end. Young larvae scrape the underside of the leaf and leave a clear thin skin, called window paning. Older larvae chew holes. Moths are small and flutter up when you touch the plants. Holes in the heart of the plant can also come from the [cabbage webworm](/pests/cabbage-webworm), which feeds at the growing point and leaves silk."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Window pane spots, where the upper leaf skin stays and turns clear, show on the leaves.",
+        "Small holes and ragged leaves appear as the larvae grow.",
+        "Larvae wriggle backward when you touch them and drop on silk threads.",
+        "Larvae feed at the growing point of young plants and stunt them.",
+        "Loose cocoons sit on the leaves and stems."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "The cabbage webworm and the cabbage looper also chew crucifers, and the [onion armyworm](/pests/onion-armyworm) belongs to a different family of caterpillars. Window paning and the V shaped rear end point to the diamondback moth."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Diamondback Moth Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The most serious damage comes when caterpillars attack the crown or growing point of young plants, which can stunt them. UPLB reports that the parasitoid approach raised yields by up to 75 percent in Philippine trials, cut production costs by 41 percent and cut pesticide sprays by 80 percent.\n\nThe moth has developed resistance to many insecticides. Even so, the Philippine populations tested still had a low level of resistance to Bacillus thuringiensis. We found no single national loss figure, so we give none."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Diamondback Moth"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Protect and use the parasitoids. Diadegma semiclausum suits the highlands above 800 meters and Cotesia plutellae the lowlands, and spiders, ground beetles and syrphid fly larvae also help.",
+        "Plant all the crucifers in a field at the same time, instead of staggering ages, and rotate cole crops to a different field each season.",
+        "Scout twice a week from transplanting, and check the underside of leaves and the growing point.",
+        "Use Bacillus thuringiensis first. Philippine farmers were trained to replace synthetic insecticides with it, and it spares the wasps.",
+        "Remove old crop residue and crucifer weeds after harvest, since the pupae stay there.",
+        "Spray a synthetic insecticide last, and rotate the mode of action with every generation."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "The diamondback moth has become resistant to nearly every new mode of action, so rotation is the key. Change the IRAC group each generation, about every 2.5 to 4 weeks, depending on heat. Always choose an FPA registered product for crucifers and follow the label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Bacillus thuringiensis",
+          "IRAC 11A",
+          "the first choice, most effective on young larvae, and accepted in organic farming"
+        ],
+        [
+          "Spinosad",
+          "IRAC 5",
+          "listed in the University of California guide, with resistance reported where it is overused"
+        ],
+        [
+          "Emamectin benzoate",
+          "IRAC 6",
+          "listed in the same guide"
+        ],
+        [
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "listed in the same guide"
+        ],
+        [
+          "Indoxacarb",
+          "IRAC 22A",
+          "listed in the same guide"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Do not spray on a calendar. Spray only when scouting shows a need.",
+        "Keep the wasps alive by avoiding broad spectrum sprays.",
+        "Rotate crucifers with a crop from another family.",
+        "Destroy crop residue and crucifer weeds right after harvest."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Diamondback Moth"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do sprays stop working on it?",
+          "a": "The moth has become resistant to nearly every insecticide, as the University of California guide says. Rotate modes of action and use natural enemies."
+        },
+        {
+          "q": "What helped Philippine cabbage farmers most?",
+          "a": "The parasitoids Diadegma semiclausum and Cotesia plutellae. UPLB reports lower larva counts, higher yields and far fewer sprays."
+        },
+        {
+          "q": "Does Bt work?",
+          "a": "Philippine populations tested from Benguet and Laguna still showed a very low level of resistance to Bacillus thuringiensis var kurstaki."
+        },
+        {
+          "q": "When is it worst?",
+          "a": "On young plants, when larvae feed at the crown, and in warm weather, when a generation takes only about 3 weeks."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Cabbage webworm",
+          "url": "/pests/cabbage-webworm"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "Eggplant leafhopper",
+          "url": "/pests/eggplant-leafhopper"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "UPLB: Diamondback moth biological control in the Philippines",
+          "url": "https://www.ukdr.uplb.edu.ph/professorial_lectures/931"
+        },
+        {
+          "label": "University of California IPM: Diamondback moth on cole crops",
+          "url": "https://ipm.ucanr.edu/agriculture/cole-crops/diamondback-moth/"
+        }
+      ]
+    }
+  ]
+}

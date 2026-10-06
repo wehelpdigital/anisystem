@@ -1,0 +1,253 @@
+{
+  "section": "diseases",
+  "slug": "rice-grassy-stunt",
+  "sortOrder": 245,
+  "lang": "en",
+  "category": "Rice diseases",
+  "profile": true,
+  "title": "Rice Grassy Stunt: How to Spot It and Protect Your Palay",
+  "metaTitle": "Rice Grassy Stunt: Signs, Damage and Control",
+  "metaDescription": "Rice grassy stunt makes palay plants short, grassy and yellow, with no panicles. Learn the signs, the planthopper link and the steps that protect you.",
+  "focusKeyword": "rice grassy stunt",
+  "keywords": [
+    "rice grassy stunt",
+    "grassy stunt virus",
+    "RGSV",
+    "grassy stunt of palay",
+    "brown planthopper virus disease"
+  ],
+  "excerpt": "Rice grassy stunt is a virus disease that turns palay plants into short, yellowish, grass like clumps that rarely make a panicle. There is no cure, so the whole game is stopping the brown planthopper that carries it.",
+  "heroImage": {
+    "src": "/images/site/diseases/rice-grassy-stunt.webp",
+    "thumb": "/images/site/diseases/rice-grassy-stunt-480.webp",
+    "alt": "A brown planthopper on a rice leaf. This insect spreads rice grassy stunt from plant to plant",
+    "credit": "portioid, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Grassy Stunt?"
+    },
+    {
+      "type": "text",
+      "text": "Rice grassy stunt comes from the Rice grassy stunt virus. The [brown planthopper](/pests/brown-planthopper) spreads it, both as a young nymph and as an adult. IRRI says the disease is found where rice is grown continuously through the year, because that keeps both the virus and the insect alive in the field.\n\nThe virus cuts yield by stopping the plant from making panicles. Researchers in the Philippines also found a strain of the virus that causes tungro like symptoms and can attack varieties that carry resistance genes. So farmers should watch for the signs along with the planthoppers. A related planthopper virus is [rice ragged stunt](/diseases/rice-ragged-stunt)."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice grassy stunt"
+        ],
+        [
+          "Scientific name",
+          "Rice grassy stunt virus (RGSV)"
+        ],
+        [
+          "Kind",
+          "Virus (spread by insects)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "The whole plant and leaves"
+        ],
+        [
+          "When it strikes",
+          "It can strike at any growth stage but hurts most at tillering, and it is worst where rice grows all year round and brown planthoppers never run out."
+        ],
+        [
+          "How it spreads",
+          "Brown planthoppers carry the virus. They must feed on a sick plant for at least 30 minutes to pick it up, and signs show 10 to 12 days after infection."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Grassy Stunt"
+    },
+    {
+      "type": "text",
+      "text": "Look for plants that stand upright, look short and grow many thin tillers, like a clump of grass. The leaves are yellowish green, shorter and narrower than normal, and they carry many small rusty spots that join into patches. A plant hit in the seedling stage rarely reaches maturity. A plant hit later may survive but makes no panicle. The signs can resemble tungro, so look for planthoppers at the base of the plants to help tell them apart."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plants are severely stunted, with many thin tillers and a grassy, rosette look.",
+        "Growth is very upright.",
+        "Leaves are yellowish green, shorter and narrower than normal.",
+        "Small rusty spots or patches cover the leaves and join into blotches.",
+        "Plants fail to make panicles, or make very few."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Grassy stunt looks like [rice tungro](/diseases/rice-tungro) and like rice yellow dwarf, because all of them stunt the plant and turn leaves yellow. Grassy stunt is the one with the grassy, rosette growth and rusty spots. Tungro is carried by green leafhoppers, not by brown planthoppers."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Grassy Stunt Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "IRRI says grassy stunt reduces yield by stopping panicle production, so a hit plant gives almost no grain. A plant infected at the seedling stage seldom reaches maturity. The tillering stage is the most open to infection. I did not find a sourced yield loss percentage for the Philippines, so I give none here.\n\nThe virus has no cure. A sick plant stays sick, and the planthoppers that fed on it carry the virus on to the next plant. Because of that, the fight begins with the insect. In 2017 the brown planthopper resurged across 18 provinces, and SEARCA reported that the two viruses it carries, ragged stunt and grassy stunt, have no cure."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Grassy Stunt"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant a variety that resists the brown planthopper. IRRI sources say resistant varieties are the most reliable tool against planthoppers in the tropics.",
+        "Plant at the same time as your neighbors, so the insect does not move from older fields to young ones. IRRI lists synchronized crop establishment as a control.",
+        "Avoid close planting, and leave a wider gap in the field every few meters so you can scout and so air can move.",
+        "Natural enemies keep planthoppers in check, such as spiders, mirid bugs, water striders and egg parasite wasps. Protect them by skipping early insecticide sprays.",
+        "Pull out and bury sick plants early, and plow under infected stubble after harvest, because the virus lives on in stubble and volunteer rice.",
+        "Drain and flood the seedbed for a day when planthoppers are present, so that the insects drown."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why No Spray Cures It"
+    },
+    {
+      "type": "text",
+      "text": "No spray can treat the virus in a sick plant. Insecticides target only the planthopper that carries it. IRRI and PhilRice advise against spraying in the first 30 to 40 days after transplanting unless a pest is truly at outbreak level, because early sprays kill the spiders and wasps and cause planthopper outbreaks. If an outbreak is real, ask your local agriculture office which FPA registered product to use, and follow the label."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose planthopper resistant varieties and plant them together with your neighbors.",
+        "Leave no gap between crops where volunteer rice and stubble can keep the virus alive.",
+        "Scout the base of the plants every week from the seedbed through tillering.",
+        "Protect spiders and wasps by not spraying early.",
+        "Keep your field notes, so you know which lots had the disease last season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Grassy Stunt"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a cure for rice grassy stunt?",
+          "a": "No. IRRI says the disease cannot be cured. You can only control the brown planthopper, use resistant varieties and remove sick plants early."
+        },
+        {
+          "q": "How soon do the signs show after infection?",
+          "a": "IRRI says symptoms appear about 10 to 12 days after infection."
+        },
+        {
+          "q": "Should I spray right after transplanting?",
+          "a": "No. Early sprays kill the spiders and wasps that keep planthoppers down. Spray only at a true outbreak and with advice from your agriculture office."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice diseases",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "Rice blast",
+          "url": "/diseases/rice-blast"
+        },
+        {
+          "label": "Bacterial leaf blight",
+          "url": "/diseases/bacterial-leaf-blight"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Brown spot of rice",
+          "url": "/diseases/rice-brown-spot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice grassy stunt",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/rice-grassy-stunt"
+        },
+        {
+          "label": "Rice diseases key: Grassy stunt (Rice Grassy Stunt Virus)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Grassy_stunt_(Rice_Grassy_Stunt_Virus).htm"
+        },
+        {
+          "label": "SEARCA: Destructive rice pest reemerges in the Philippines",
+          "url": "https://www.searca.org/press/destructive-rice-pest-reemerges-in-philippines"
+        },
+        {
+          "label": "JIRCAS: Rice grassy stunt virus",
+          "url": "https://www.jircas.go.jp/en/publication/tars/19/165"
+        }
+      ]
+    }
+  ]
+}

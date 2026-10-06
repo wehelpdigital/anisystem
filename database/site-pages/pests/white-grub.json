@@ -1,0 +1,251 @@
+{
+  "section": "pests",
+  "slug": "white-grub",
+  "sortOrder": 300,
+  "lang": "en",
+  "category": "Corn pests",
+  "profile": true,
+  "title": "White Grub: How to Spot It and Stop It in Your Mais and Palay",
+  "metaTitle": "White Grub: Root Damage and Control in the Philippines",
+  "metaDescription": "The white grub eats roots and leaves corn and sugarcane yellow and wilted. Learn its signs, its season and the control steps that work.",
+  "focusKeyword": "white grub",
+  "keywords": [
+    "white grub",
+    "root grub",
+    "leucopholis irrorata",
+    "white grub in corn",
+    "white grub in sugarcane"
+  ],
+  "excerpt": "The white grub, Leucopholis irrorata, is the fat, curled larva of a chafer beetle that eats roots underground. You see yellow, wilting and dying plants, and you find the grubs when you dig. This page shows the signs and the steps that cut the number of beetles and grubs.",
+  "heroImage": {
+    "src": "/images/site/pests/white-grub.webp",
+    "thumb": "/images/site/pests/white-grub-480.webp",
+    "alt": "An adult Leucopholis irrorata beetle, the parent of the white grubs that eat corn and sugarcane roots",
+    "credit": "Forest Botial Jarvis, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is White Grub?"
+    },
+    {
+      "type": "text",
+      "text": "The white grub is also called the root grub. In the Philippines it is one of the four major insect pests of corn, and a UPLB review calls it the most dominant and most destructive insect pest of sugarcane. It also attacks rice.\n\nThe beetle feeds on leaves at night. Its grubs stay in the soil near moisture and eat the roots. Farmers care because the plants die in patches, and the damage can look like a fertilizer problem."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "White grub"
+        ],
+        [
+          "Scientific name",
+          "Leucopholis irrorata"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Corn, rice and sugarcane"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Roots and base and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "At the start of the rains, when the beetles fly and lay eggs, and again when the grubs feed on the roots of young plants."
+        ],
+        [
+          "Life cycle",
+          "The adult beetles are nocturnal and come out after heavy rains. Females burrow into moist soil to lay creamy white eggs, and the grubs feed on roots for one to two years."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify White Grub"
+    },
+    {
+      "type": "text",
+      "text": "Dig around a wilting plant and look for fat, creamy white, C shaped grubs with brown heads. The adult is a chafer beetle that comes to lights at night. The symptoms are orange yellow leaves, wilting and stunting, and they can resemble nutrient trouble or [mealybug](/pests/mealybug) damage, so check the roots before you act."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Leaves turn orange yellow, and plants wilt and stunt in patches.",
+        "Roots are chewed or missing, and the plant lifts easily from the soil.",
+        "Fat white grubs lie in the soil near the roots.",
+        "Beetles gather at lights at night after heavy rains.",
+        "Plants dry and die when the root system is gone."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Nutrient trouble and [mole cricket](/pests/mole-cricket) damage can look like it. Dig up the roots, because only the white grub leaves fat C shaped larvae near them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How White Grub Hurts Your Corn"
+    },
+    {
+      "type": "text",
+      "text": "Root feeding cuts the plant off from water and food, so damaged plants dry and die. UPLB lists the grub among the major pests of sugarcane and corn in the Philippines. We found no sourced yield loss figure, so we give none.\n\nThe grubs live one to two years in the soil, so a bad field can stay bad. Mark the patches on your lot map and compare the root counts each season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control White Grub"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Collect the beetles by hand and with lights for about three weeks, starting from the first beetle flight. UPLB says community campaigns do this best, since beetles fly from field to field.",
+        "Collect and destroy the grubs when you plow, and cultivate the soil well. This exposes the grubs to birds, earwigs and fire ants.",
+        "Use natural enemies. Scoliid wasps parasitize the grubs, and carabid beetles, birds, toads and fungal diseases attack them. Metarhizium anisopliae, a fungus, is studied as a biological control.",
+        "Time planting and cultivation with the beetle season, and check roots of a few wilting plants before you decide.",
+        "Where grubs are abundant, UPLB advises a granular insecticide along the furrow at planting or in June, to meet the young grubs."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A soil insecticide comes last, and its timing must match the young grubs, since older grubs are harder to kill. The sources we used do not name an active ingredient, so ask the DA for an FPA registered product and follow the label."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Join the community beetle collection every year at the first beetle flight.",
+        "Plow and cultivate the soil well after harvest.",
+        "Keep light traps in the area during the beetle flight.",
+        "Watch fields that had grubs last year, since the grubs live one to two years."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About White Grub"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does a white grub look like?",
+          "a": "A fat, creamy white, C shaped larva with a brown head that lives in the soil near the roots. It turns into a chafer beetle."
+        },
+        {
+          "q": "When do the beetles fly?",
+          "a": "After heavy rains, at dusk and at night, and they come to lights."
+        },
+        {
+          "q": "Why do the plants wilt?",
+          "a": "The grubs eat the roots, so the plant cannot take up water."
+        },
+        {
+          "q": "How long does one grub live in the soil?",
+          "a": "Larval development can take one to two years."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More corn pests",
+      "items": [
+        {
+          "label": "Asian corn borer",
+          "url": "/pests/asian-corn-borer"
+        },
+        {
+          "label": "Cutworm",
+          "url": "/pests/cutworm"
+        },
+        {
+          "label": "Fall armyworm",
+          "url": "/pests/fall-armyworm"
+        },
+        {
+          "label": "Corn earworm",
+          "url": "/pests/corn-earworm"
+        },
+        {
+          "label": "Corn planthopper",
+          "url": "/pests/corn-planthopper"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "UPLB: Recommendations for the management of major arthropod pests of sugarcane and corn",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5812"
+        },
+        {
+          "label": "Rice pest key: Root grubs",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Root_grubs.htm"
+        },
+        {
+          "label": "FAO AGRIS: Current insect pest problems in corn and their management in the Philippines",
+          "url": "https://agris.fao.org/search/ar/records/6471c83a2a40512c710e3eed"
+        }
+      ]
+    }
+  ]
+}

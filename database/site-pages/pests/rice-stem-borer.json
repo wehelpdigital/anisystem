@@ -1,0 +1,271 @@
+{
+  "section": "pests",
+  "slug": "rice-stem-borer",
+  "sortOrder": 220,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Rice Stem Borer: Deadhearts, Whiteheads and How to Stop Them",
+  "metaTitle": "Rice Stem Borer: Deadhearts, Whiteheads and Control",
+  "metaDescription": "The rice stem borer kills tillers as deadhearts and empty panicles as whiteheads. Learn the signs, the natural enemies and a safe order of control.",
+  "focusKeyword": "rice stem borer",
+  "keywords": [
+    "rice stem borer",
+    "stemborer",
+    "yellow stem borer",
+    "deadheart in rice",
+    "whitehead in rice",
+    "stem borer control in rice"
+  ],
+  "excerpt": "The rice stem borer is a group of moths whose larvae tunnel inside the stem of palay. They cause deadhearts before flowering and whiteheads after it. This page shows the signs, the damage and what to do first, long before any spray.",
+  "heroImage": {
+    "src": "/images/site/pests/rice-stem-borer.webp",
+    "thumb": "/images/site/pests/rice-stem-borer-480.webp",
+    "alt": "A yellow stem borer moth, Scirpophaga incertulas, with the small black dot on each pale yellow wing",
+    "credit": "Sabarni Sarker, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Stem Borer?"
+    },
+    {
+      "type": "text",
+      "text": "Six stem borer species attack rice in Asia. The yellow stem borer (Scirpophaga incertulas) and the white stem borer (Scirpophaga innotata) are the best known. The striped stem borer (Chilo suppressalis), the gold fringed, the dark headed and the pink stem borer complete the list. All of them are moth larvae that live and feed inside the stem.\n\nPhilRice names stem borers among the five major rice insect pests of the country. Its 2026 warning expected heavy attacks in Bicol, Central Luzon and Northern Mindanao in the early months of that year. So every palay farmer should know the signs, because a borer can hurt the crop from seedling to maturity."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice stem borer"
+        ],
+        [
+          "Scientific name",
+          "Scirpophaga incertulas, Scirpophaga innotata, Chilo suppressalis"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Stems and tillers and panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "From seedling to maturity, with deadhearts before flowering and whiteheads after it."
+        ],
+        [
+          "Life cycle",
+          "Moths lay egg masses on the leaves, the young larvae bore into the stem, and the pest can survive in stubble and volunteer rice between crops."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Stem Borer"
+    },
+    {
+      "type": "text",
+      "text": "Pull the central shoot of a suspect tiller. If it comes out easily and the base is rotten or bored, you have a deadheart. Split the stem and look for the larva, tiny holes and frass, which is the powdery waste it leaves inside. Later, a panicle that is white and empty while the leaves are still green is a whitehead. Do not mix it up with the rice bug or with the rice whorl maggot, which only scrapes the leaves and does not tunnel the stem."
+    },
+    {
+      "type": "list",
+      "items": [
+        "The central shoot dries up and pulls out easily, which is a deadheart.",
+        "A panicle turns white or pale and carries no filled grain, which is a whitehead.",
+        "Tiny holes appear on the stem, with frass inside the tissue.",
+        "Egg masses sit on the leaves of the seedbed and the young plants.",
+        "Larvae in small tubes made of leaf wrappings float on the water and attach themselves to tillers."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Deadhearts can look like damage from the [rice whorl maggot](/pests/rice-whorl-maggot) or from the [rice black bug](/pests/rice-black-bug). Only the stem borer leaves a bored stem with frass and a larva inside."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Stem Borer Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Stem borers can destroy rice at any growth stage, from seedling to maturity. Deadhearts take away tillers that would have carried grain. Whiteheads take away the panicle itself, so the grain is lost completely.\n\nThe sources we read give no percent yield loss and no action threshold for the Philippines, so we do not state one. Check your own fields instead. Count the deadhearts and whiteheads in each lot every week, write them in your notes and compare season with season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Stem Borer"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Prepare the land well. Plow and flood the field, and remove stubble and volunteer rice so the larvae have nowhere to wait.",
+        "Plant at the same time as your neighbors. Synchronous planting with the right timing breaks the supply of tillers for the moths.",
+        "Cut the leaf tops of the seedlings before transplanting. This removes eggs, so fewer of them reach the main field.",
+        "Handpick and destroy egg masses in the seedbed and at transplanting. Raise the irrigation water now and then to drown eggs laid on the lower part of the plant.",
+        "Split the nitrogen fertilizer into doses as recommended, and harvest at ground level so less stubble remains.",
+        "Protect the natural enemies. Many wasps, lady beetles, ground beetles, earwigs, spiders and dragonflies feed on eggs and larvae, so avoid early spraying. See our guide on [integrated pest management](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Rice stem borers are best held down by resistant varieties and the steps above. If a spray is truly needed, ask your agricultural technician first, use only a product registered for rice, and never spray in the first 30 to 40 days after transplanting unless the pest is at outbreak level. Early sprays kill spiders and wasps and invite planthopper outbreaks."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "tested against yellow stem borer in rice trials in India"
+        ],
+        [
+          "Cartap hydrochloride",
+          "IRAC 14",
+          "tested against stem borers in rice trials in Asia"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Use resistant varieties where your technician can supply them.",
+        "Clear stubble, ratoon and volunteer rice right after harvest.",
+        "Plant the whole area in the same weeks, and keep a fallow gap between crops.",
+        "Scout the seedbed for egg masses before every transplanting.",
+        "Keep records of deadhearts and whiteheads by lot, so you see early which fields are repeat targets."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Stem Borer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the difference between a deadheart and a whitehead?",
+          "a": "A deadheart is a dried central tiller before flowering. A whitehead is a white, empty panicle after flowering. Both come from a larva feeding inside the stem."
+        },
+        {
+          "q": "Can I see the borer from outside the stem?",
+          "a": "Not usually. Look for tiny holes, then split the stem to find the larva and the frass. The egg masses on the leaves are easier to spot."
+        },
+        {
+          "q": "Should I spray as soon as I see deadhearts?",
+          "a": "No. Spraying early kills the spiders and wasps that feed on borers. Handpick egg masses, manage the water, and ask a technician before you spray."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Green leafhopper",
+          "url": "/pests/green-leafhopper"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Stem borer fact sheet (Lucid key)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Stem_borer.htm"
+        },
+        {
+          "label": "PhilRice: Major rice pest threats in early 2026",
+          "url": "https://www.philrice.gov.ph/philrice-warns-of-major-rice-pest-threats-in-early-2026/"
+        },
+        {
+          "label": "Indian Journal of Plant Protection: Chlorantraniliprole against major pests of rice",
+          "url": "https://epubs.icar.org.in/index.php/IJPP/article/view/106796"
+        }
+      ]
+    }
+  ]
+}

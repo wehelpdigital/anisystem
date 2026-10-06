@@ -1,0 +1,245 @@
+{
+  "section": "diseases",
+  "slug": "bacterial-leaf-streak",
+  "sortOrder": 230,
+  "lang": "en",
+  "category": "Rice diseases",
+  "profile": true,
+  "title": "Bacterial Leaf Streak: How to Spot It and Stop It in Your Palay",
+  "metaTitle": "Bacterial Leaf Streak: Signs and Control in Rice",
+  "metaDescription": "Bacterial leaf streak draws thin brown lines between the veins of palay leaves. Learn the signs, how it differs from leaf blight and what to do.",
+  "focusKeyword": "bacterial leaf streak",
+  "keywords": [
+    "bacterial leaf streak",
+    "bacterial leaf streak of rice",
+    "Xanthomonas oryzae pv. oryzicola",
+    "rice leaf streak",
+    "leaf streak in palay"
+  ],
+  "excerpt": "Bacterial leaf streak is a bacterial disease that draws narrow, brownish yellow lines between the veins of rice leaves. It looks a lot like bacterial leaf blight, so many farmers miss it until whole leaves turn yellow and dry.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-palayan-nueva-ecija.webp",
+    "thumb": "/images/site/guides/blog-palayan-nueva-ecija-480.webp",
+    "alt": "Green rice fields in Jaen, Nueva Ecija, where farmers scout the leaves for streaks",
+    "credit": "Patrickroque01, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Bacterial Leaf Streak?"
+    },
+    {
+      "type": "text",
+      "text": "Bacterial leaf streak comes from the bacterium Xanthomonas oryzae pv. oryzicola. It is a close relative of the bacterium behind [bacterial leaf blight](/diseases/bacterial-leaf-blight), but it attacks the leaf tissue between the veins instead of entering through the leaf tip and edges. It affects rice in the Philippines, and the plant is most open to it from tillering to panicle initiation.\n\nThe disease is easy to confuse with other leaf problems. That is why farmers should learn the signs early, since no spray cures a bacterial disease once the leaf is dead. The best protection is clean seed, balanced nutrition and a field kept free of weeds that carry the bacterium."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Bacterial leaf streak"
+        ],
+        [
+          "Scientific name",
+          "Xanthomonas oryzae pv. oryzicola"
+        ],
+        [
+          "Kind",
+          "Bacterium (a bacterial disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves"
+        ],
+        [
+          "When it strikes",
+          "It shows from tillering to panicle initiation, and it spreads fastest in warm, humid, rainy weather."
+        ],
+        [
+          "How it spreads",
+          "The bacterium lives in infected seed, stubble and weeds. Rain splash and wind carry it into the leaf through the stomata and small wounds, then it moves between the veins."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Bacterial Leaf Streak"
+    },
+    {
+      "type": "text",
+      "text": "Look at the leaf against the light. Young lesions are thin, water soaked streaks between the veins, about 0.5 to 5 millimeters wide, and they turn brownish yellow and translucent. Under humid weather, small yellow beads of bacterial ooze sit on the streaks. As the streaks join, they form dirty white patches, and in a bad attack the whole leaf turns yellow. A quick test confirms it. Cut a leaf at the edge of a streak and place it in clear water, then watch for a cloudy stream of bacteria after a few minutes."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Narrow, water soaked streaks run between the veins of the leaf, with straight sides.",
+        "The streaks turn brownish yellow and look translucent when you hold the leaf to the light.",
+        "Tiny yellow droplets of ooze appear on the streaks in humid weather, and they dry into bead shaped specks.",
+        "Many streaks join into large dirty white or light brown patches on the leaf.",
+        "A yellow ring may circle the lesion on a susceptible variety, and the whole leaf may later turn yellow."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "The streak is often taken for bacterial leaf blight, but leaf blight starts at the tip and the edges and moves down. Leaf streak stays between the veins and begins in the middle of the blade. It also looks like [narrow brown leaf spot](/diseases/narrow-brown-leaf-spot), which has narrow brown lines but shows no yellow ooze."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Bacterial Leaf Streak Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Bacterial leaf streak browns and dries the leaves, and IRRI says a severe attack can lower grain weight. IRRI also says that mature plants often recover with little yield loss, so the worry is greatest in young, heavily hit crops. The loss depends on the variety and on how early and how wet the attack is. I did not find an official action threshold for the Philippines, so the safest plan is to prevent it. A field that had streak last season, and a variety known to be susceptible, both call for extra scouting during tillering.\n\nBalanced feeding matters here. Too much nitrogen softens the leaves and helps the bacteria. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to split the dose. If the same field also loses leaves to [rice brown spot](/diseases/rice-brown-spot), the combined damage can be heavy."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Bacterial Leaf Streak"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Sow healthy seed from a source you trust, and never save seed from a field that had the disease.",
+        "Pull out weeds around the field and in the bunds, because the bacterium lives on them between crops.",
+        "Pull out and destroy plants that show symptoms early, and do it according to the advice of your local agriculture office.",
+        "Split your nitrogen into small doses, and add potash so the leaves stay firm. Kerala Agricultural University advises an extra amount of potash in split doses.",
+        "Drain the field and let it dry briefly when the weather is wet and warm, and do not move water from sick fields to healthy ones.",
+        "After harvest, plow under or remove stubble so the bacteria have less to live on."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "No product cures bacterial leaf streak, and sprays on a field that is already sick give little help. The sources I opened name a seed soak and sprays of antibiotics only for severe cases, and I found no Philippine recommendation for them, so I list no ingredient. Ask your local agriculture office what is registered with the FPA for your area."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Use clean seed and a variety that holds up in your area, and ask your agriculture office for the current list.",
+        "Keep the field and its bunds free of grass weeds all season.",
+        "Feed in split doses, and avoid heavy nitrogen near heading.",
+        "Rotate the field with another crop when you can, so infected stubble breaks down.",
+        "Scout during tillering in wet weeks, and write down which lots had the streaks."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Bacterial Leaf Streak"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How do I tell bacterial leaf streak from bacterial leaf blight?",
+          "a": "Bacterial leaf blight starts at the leaf tip and edges, and the lesion runs down the sides. Bacterial leaf streak draws thin lines between the veins, from the middle of the leaf. Both can ooze yellow droplets."
+        },
+        {
+          "q": "Can the disease spread from one field to another?",
+          "a": "Yes. Rain, wind, irrigation water and infected seed all carry it, and weeds hold it over between seasons."
+        },
+        {
+          "q": "Will a spray save a sick crop?",
+          "a": "Usually not. The best steps are clean seed, weed control and balanced nitrogen and potash, so put your effort there first."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice diseases",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "Rice blast",
+          "url": "/diseases/rice-blast"
+        },
+        {
+          "label": "Bacterial leaf blight",
+          "url": "/diseases/bacterial-leaf-blight"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Brown spot of rice",
+          "url": "/diseases/rice-brown-spot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Bacterial leaf streak",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-leaf-streak"
+        },
+        {
+          "label": "Kerala Agricultural University: Bacterial leaf streak of rice",
+          "url": "https://celkau.in/crops/cereals/rice/leafstreak.php"
+        }
+      ]
+    }
+  ]
+}

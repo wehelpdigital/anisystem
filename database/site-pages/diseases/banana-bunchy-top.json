@@ -1,0 +1,270 @@
+{
+  "section": "diseases",
+  "slug": "banana-bunchy-top",
+  "sortOrder": 370,
+  "lang": "en",
+  "category": "Fruit and plantation diseases",
+  "profile": true,
+  "title": "Banana Bunchy Top: How to Spot It and Protect Your Banana Farm",
+  "metaTitle": "Banana Bunchy Top: Signs, Spread and Control",
+  "metaDescription": "Banana bunchy top has no cure, but you can slow it. Learn the Morse code signs, the aphid that spreads it and how to keep your banana farm clean.",
+  "focusKeyword": "banana bunchy top",
+  "keywords": [
+    "banana bunchy top",
+    "banana bunchy top virus",
+    "BBTV",
+    "banana aphid",
+    "bunchy top of abaca"
+  ],
+  "excerpt": "Banana bunchy top is a virus disease that leaves banana plants short, stiff and bunched at the top, with narrow leaves and little or no fruit. It has no cure, so the work is to catch it early, remove sick plants and keep the aphids down. This guide shows you how.",
+  "heroImage": {
+    "src": "/images/site/diseases/banana-bunchy-top.webp",
+    "thumb": "/images/site/diseases/banana-bunchy-top-480.webp",
+    "alt": "A banana plant with short, narrow leaves bunched at the top, the sign of bunchy top",
+    "credit": "Plant pests and diseases, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Banana Bunchy Top?"
+    },
+    {
+      "type": "text",
+      "text": "Banana bunchy top is caused by the banana bunchy top virus, known as BBTV. The Philippine Council for Agriculture, Aquatic and Natural Resources Research and Development calls it the most destructive virus disease of banana in the country. It has no known cure. It has hit Lakatan, the most popular dessert banana, and it also attacks abaca. For years it has devastated abaca plantations in the Bicol Region.\n\nThe virus lives only in banana and its relatives. It reaches new plants through the banana aphid, so a farm with sick plants and many aphids can lose plants fast. If you grow [banana in the Philippines](/crops/banana-farming-philippines), learn the signs now. A plant caught early costs far less than a mat that has already passed the virus on."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Banana bunchy top"
+        ],
+        [
+          "Scientific name",
+          "Banana bunchy top virus (BBTV)"
+        ],
+        [
+          "Kind",
+          "Virus (spread by insects)"
+        ],
+        [
+          "Crops it attacks",
+          "Banana, especially Lakatan, and abaca"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It can strike at any stage and in any season, and plants infected when young almost never bear a bunch."
+        ],
+        [
+          "How it spreads",
+          "A tiny black banana aphid carries the virus from sick plants to healthy ones as it feeds. The virus also travels in suckers and plantlets taken from sick mats, so planting material moves it over long distances."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Banana Bunchy Top"
+    },
+    {
+      "type": "text",
+      "text": "Look at the youngest leaves first. On a sick plant they come out narrow and shorter and shorter. They crowd together at the top so the plant looks bunched. The leaf edges roll upward and turn yellow. The best sign is on the minor veins. Look for short dark green dots and dashes, like Morse code. Hooks curve down near the edge of the midrib. Mineral shortage can also yellow leaves, but it does not make the dots and dashes. Wilt diseases such as [moko disease](/diseases/moko-disease) change the whole plant color and ooze when cut, which bunchy top does not."
+    },
+    {
+      "type": "list",
+      "items": [
+        "New leaves come out narrow, short and stiff, and they crowd together at the top of the plant.",
+        "Leaf edges roll upward and turn yellow.",
+        "Dark green dots and dashes follow the small veins in a Morse code pattern, best seen when you hold the leaf to the light.",
+        "Plants infected when young stay stunted and rarely make a bunch.",
+        "Plants infected later may make a short, twisted bunch with poor fruit.",
+        "Banana aphids feeding on the plants nearby point to a farm at risk."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Nutrient shortage, herbicide drift and other viruses can also stunt or yellow banana leaves. Only the dark green dots and dashes along the small veins confirm bunchy top."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Banana Bunchy Top Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "A young plant that catches the virus rarely bears a fruit bunch, so each sick mat is a lost harvest. Later infections give distorted bunches. The Pacific Pests and Pathogens fact sheet describes one Pacific case. Poor choice of planting material led to 20 percent of plants with the disease in the first year. Major losses followed within two to three years.\n\nThere is no cure for a plant once it is infected. The control targets are the next plants, so every sick mat you remove early protects its neighbors."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Banana Bunchy Top"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant only clean material. Buy tissue cultured plantlets tested for BBTV. Never take suckers from a mat that looks bunched or comes from a sick farm.",
+        "Walk the farm often and look at the youngest leaves. Mark any plant with Morse code dots or bunched leaves right away.",
+        "Kill the aphids on a sick plant before you remove it. The Pacific fact sheet suggests spraying with soap, oil or kerosene first, so aphids do not fly off to healthy plants.",
+        "Then destroy the whole plant and its suckers. In the Philippines, farmers use a bamboo stick dipped in herbicide, or dig the mat out.",
+        "Watch young plantings closely, because a plant infected when young never bears a bunch.",
+        "Ask your agriculturist about resistant lines. Philippine researchers are testing BBTV resistant Lakatan, but at this time every common banana variety can catch the virus."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why No Spray Cures It"
+    },
+    {
+      "type": "text",
+      "text": "No spray cures a sick plant. Aphids pass the virus on in a few hours of feeding, so spraying alone does not stop the spread. Home gardens use soap or white oil on the aphids. Commercial growers in some countries have used the insecticides below. Use varies by country, so check the FPA registration and the label first."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Dimethoate",
+          "IRAC 1B",
+          "listed in the Pacific Pests and Pathogens fact sheet for aphid control, use depends on the country"
+        ],
+        [
+          "Acephate",
+          "IRAC 1B",
+          "listed in the same fact sheet, use depends on the country"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Use only virus tested tissue cultured plantlets.",
+        "Do not buy or trade suckers from farms where bunchy top has been seen.",
+        "Scout every week or two, and remove sick plants the same day you find them.",
+        "Learn how to manage the aphid that spreads the virus in our [integrated pest management guide](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Banana Bunchy Top"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can banana bunchy top be cured?",
+          "a": "No. The PCAARRD says it has no known cure. You can only remove sick plants, keep aphids low and plant clean material."
+        },
+        {
+          "q": "How does banana bunchy top spread?",
+          "a": "The banana aphid, Pentalonia nigronervosa, carries it. The Pacific fact sheet says an aphid needs over four hours on a sick plant to pick up the virus. Then it can pass the virus on until it dies. It also spreads in suckers taken from sick mats."
+        },
+        {
+          "q": "Should I just cut the sick plant down?",
+          "a": "Not before you kill the aphids on it, or they will move to healthy plants. Then destroy the mat, either by digging it out or by using a herbicide on the stem. Read about other [banana problems](/diseases/black-sigatoka) too, so you can tell which one you face."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation diseases",
+      "items": [
+        {
+          "label": "Anthracnose",
+          "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Black sigatoka",
+          "url": "/diseases/black-sigatoka"
+        },
+        {
+          "label": "Moko disease and bugtok of banana",
+          "url": "/diseases/moko-disease"
+        },
+        {
+          "label": "Papaya ringspot",
+          "url": "/diseases/papaya-ringspot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Banana bunchy top",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/banana_bunchy_top_121.htm"
+        },
+        {
+          "label": "DOST PCAARRD: New study to test BBTV resistant Lakatan",
+          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/new-study-to-test-bbtv-resistant-lakatan-"
+        },
+        {
+          "label": "UPLB Knowledge Repository: Saving abaca from the onslaught of the bunchy top disease",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5929"
+        }
+      ]
+    }
+  ]
+}

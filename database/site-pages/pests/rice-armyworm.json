@@ -1,0 +1,244 @@
+{
+  "section": "pests",
+  "slug": "rice-armyworm",
+  "sortOrder": 250,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Rice Armyworm: Chewed Leaves, Cut Panicles and Control",
+  "metaTitle": "Rice Armyworm: Signs, Damage and How to Control It",
+  "metaDescription": "The rice armyworm eats leaves down to the midrib and cuts panicles at the base. Learn how to find it, flood the seedbed and spray only as a last resort.",
+  "focusKeyword": "rice armyworm",
+  "keywords": [
+    "rice armyworm",
+    "armyworm in rice",
+    "mythimna separata",
+    "ear cutting caterpillar",
+    "rice swarming caterpillar"
+  ],
+  "excerpt": "The rice armyworm is a night feeding caterpillar that strips rice leaves and cuts young seedlings and panicles. A field can look chewed in a few days. This page shows how to find rice armyworm, how to stop it with cultural steps and when a spray is the last resort.",
+  "heroImage": {
+    "src": "/images/site/pests/rice-armyworm.webp",
+    "thumb": "/images/site/pests/rice-armyworm-480.webp",
+    "alt": "An adult rice armyworm moth, Mythimna separata, plain brown with pointed wings",
+    "credit": "Tom, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Armyworm?"
+    },
+    {
+      "type": "text",
+      "text": "At least three armyworm species attack rice in Asia. The rice ear cutting caterpillar (Mythimna separata), the rice swarming caterpillar (Spodoptera mauritia) and the common cutworm (Spodoptera litura) are the ones named in the sources. They also attack corn, sorghum and sugarcane. Our [fall armyworm](/pests/fall-armyworm) page covers the corn pest, which is a different insect.\n\nThe caterpillars are nocturnal. They hide at the base of the plants or in cracks in the soil by day. They are active on cloudy days or at night in the upper canopy. So a farmer may see only the damage, not the pest."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice armyworm"
+        ],
+        [
+          "Scientific name",
+          "Mythimna separata, Spodoptera mauritia"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Rice, corn"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, panicles and ears and seedlings"
+        ],
+        [
+          "When it strikes",
+          "From the seedbed to grain filling, often after a dry spell followed by heavy rain."
+        ],
+        [
+          "Life cycle",
+          "Moths lay eggs in rows on the leaf blades, and the caterpillars hide at the base of the plants by day and feed at night or on cloudy days."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Armyworm"
+    },
+    {
+      "type": "text",
+      "text": "Look for leaves eaten down to the midrib, leaving only the veins. Check the base of the hills and the soil cracks at dawn, where the caterpillars hide. Mature larvae reach about 40 millimeters and carry a narrow, yellowish white stripe along the back. Panicles that bend over or collapse, cut at the base, point to the ear cutting caterpillar. Do not confuse it with the [rice leaffolder](/pests/rice-leaffolder), which folds the leaf and stays inside."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Leaves are chewed away, often including the veins, leaving only the midribs.",
+        "Young seedlings are cut off at the base of the plant.",
+        "Panicles are cut at the base, so they bend over or collapse at grain filling.",
+        "Rows of eggs sit on the leaf blades.",
+        "Fat caterpillars with a pale stripe hide at the base of the hills or in soil cracks by day."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Cutworms also cut seedlings at the base. Look at the [cutworm](/pests/cutworm) page. The armyworm also eats the panicle, while the rice leaffolder stays inside a folded leaf."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Armyworm Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Armyworms feed on the leaves and the panicle, so a heavy attack can strip a field fast. The sources we read give no percent yield loss and no action threshold, so we state none. Periods of drought followed by heavy rain, and many alternate host plants, help the pest build up.\n\nCheck the field each week during the seedbed and grain filling stages. Write down how many hills show fresh cut leaves, and compare with the weather in the [growth stages and weather](/features/growth-stages-and-weather) view."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Armyworm"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Set up the seedbed far from weedy areas, and plow fallow land.",
+        "Remove weeds in and around the field, especially grasses.",
+        "Flood the seedbed. IRRI calls flooding the seedbed the best defense.",
+        "Put ashes in trenches to stop the caterpillars from moving, and set branches around the field so you can hand collect them.",
+        "Spare the natural enemies. Wasps, tachinid flies, spiders and birds feed on armyworms, so do not kill them with early sprays.",
+        "Plow the field after harvest and keep a weekly check, so you see the first caterpillars while they are small."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "IRRI advises sprays only at outbreak level, and calls insecticide the last resort for armyworm. The Pacific Pests fact sheet says synthetic pyrethroids are likely to be effective, but they also kill natural enemies. No source we opened names one ingredient for the Philippines, so ask your agriculture office which registered product to use. Never spray in the first 30 to 40 days after transplanting unless the outbreak is true."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Keep fields and bunds free of grassy weeds.",
+        "Plow fallow land before the next crop.",
+        "Check the seedbed often, and flood it when caterpillars appear.",
+        "Watch the weather. A heavy rain after a dry spell is a signal to scout."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Armyworm"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do I never see the caterpillars?",
+          "a": "They feed at night or on cloudy days, and they hide at the base of the plants or in the soil by day. Check at dawn."
+        },
+        {
+          "q": "What is the best defense in the seedbed?",
+          "a": "IRRI says flooding the seedbed is the best defense."
+        },
+        {
+          "q": "Should I spray right away?",
+          "a": "No. IRRI says insecticide is the last resort. Try the cultural steps first, and spray young caterpillars only if the attack keeps growing."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Armyworm (Lucid key)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Armyworm.htm"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Rice and maize armyworm",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/rice_maize_armyworm_331.htm"
+        }
+      ]
+    }
+  ]
+}

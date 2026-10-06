@@ -1,0 +1,289 @@
+{
+  "section": "diseases",
+  "slug": "late-blight",
+  "sortOrder": 310,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Late Blight: How to Spot It and Stop It in Potato and Tomato",
+  "metaTitle": "Late Blight of Potato and Tomato: Signs and Control",
+  "metaDescription": "Late blight can wipe out a potato or tomato field within days in cool, wet weather. Learn the signs, the resistant varieties and how to stop it.",
+  "focusKeyword": "late blight",
+  "keywords": [
+    "late blight",
+    "late blight of potato",
+    "Phytophthora infestans",
+    "late blight of tomato",
+    "blight resistant potato varieties",
+    "potato blight in Benguet"
+  ],
+  "excerpt": "Late blight is the most feared disease of potato in the highlands, and it attacks tomato too. A water mold called Phytophthora infestans causes it, and in cool, wet weather it can turn a green field black within days. This page shows how to spot it early and how to keep it in check.",
+  "heroImage": {
+    "src": "/images/site/diseases/late-blight.webp",
+    "thumb": "/images/site/diseases/late-blight-480.webp",
+    "alt": "A tomato fruit with the large greasy brown patch of late blight",
+    "credit": "Igor Shelpiakov, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Late Blight?"
+    },
+    {
+      "type": "text",
+      "text": "Late blight comes from Phytophthora infestans. It is not a true fungus but a water mold, a relative of the algae. It attacks potato, tomato and wild plants of the same family, such as nightshade. The International Potato Center estimates that it takes about 15 percent of potato production in developing countries every year.\n\nIn Benguet, a DA technical brief calls late blight the most devastating potato disease. Farmers in Buguias spray fungicide twice a week in the wet season, and that spraying adds up to about 50 percent of their total production cost. The DA Cagayan Valley tomato guide also lists early and late blight among the most common tomato diseases. So whether you grow patatas in the mountains or kamatis in the lowlands, it pays to know it. Do not confuse it with [early blight](/diseases/early-blight), a slower fungus."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Late blight"
+        ],
+        [
+          "Scientific name",
+          "Phytophthora infestans"
+        ],
+        [
+          "Kind",
+          "Water mold (an oomycete)"
+        ],
+        [
+          "Crops it attacks",
+          "Potato and tomato"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, stems and tillers, fruits, pods and nuts, roots and base and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It can hit potato and tomato at any age, and it explodes in cool nights followed by misty, rainy days, which is why Benguet growers fear the wet season."
+        ],
+        [
+          "How it spreads",
+          "Spores ride wind and rain up to 15 to 20 km, and infected seed tubers carry it over long distances. Between crops it survives in tubers, cull piles and volunteer plants."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Late Blight"
+    },
+    {
+      "type": "text",
+      "text": "Look at the leaf tips and edges. Late blight starts as brown or black patches of no set shape that grow fast and are not stopped by the veins. Within a few days the whole leaf turns yellow, shrivels and dies. In damp mornings, turn the leaf over: a white, cottony growth rings the edge of each patch, and that is where the spores form. Stems get brown or black spots too. On tomato fruit, the rot is dark brown and firm. On potato, the tubers show brownish red rot under the skin. Early blight is slower and makes small spots with target rings instead."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Brown or black patches start at the leaf tips and edges and spread fast across the veins.",
+        "A white, cottony growth shows on the underside of the patches in humid weather.",
+        "Whole leaves yellow, shrivel and die within a few days, and the field looks burned.",
+        "Stems carry brown or black spots and may collapse.",
+        "Tomato fruit get firm, dark brown rotten areas.",
+        "Potato tubers show a brownish red rot that can keep spreading in storage."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Early blight is the usual mixup. Late blight patches are large, fast and start at the leaf edge with white growth underneath, while early blight makes small spots with target rings on the oldest leaves."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Late Blight Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Late blight is one of the worst plant diseases anywhere. The Pacific Pests and Pathogens sheet says spores can travel 15 to 20 km on the wind, and a tomato planting can be destroyed within days. On potato, the spores also wash into the soil and rot the tubers, so losses continue after harvest. Tubers that look clean at harvest can rot later in storage.\n\nThe cost is not only the lost crop. In Buguias, Benguet, the DA brief found that blight spraying ate about half of the production cost. That same brief compared the blight tolerant variety with the traditional one: farmers averaged about 18,900 kg per hectare against about 16,300 kg. No spray threshold applies, since the disease moves too fast. Instead, protect the crop before the cool, rainy weeks arrive."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Late Blight"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant resistant varieties first. In Buguias, farmers use Igorota (LBR PO3), which is moderately resistant to late blight and leaf miner, and Solibao (LBR PO4), which showed only about 1 percent infection in trials. Both helped growers cut their spraying.",
+        "Use certified, disease free seed tubers and healthy tomato seedlings, because infected tubers carry the disease into a new field.",
+        "Plant on ridges with good drainage and enough spacing for air. Water at the base instead of overhead, and go easy on nitrogen.",
+        "Walk the field often in cool, wet weather. Pull and destroy the first infected plants, and if the leaves are badly hit, kill the vines before harvest so spores do not reach the tubers.",
+        "Keep potato and tomato apart, and do not plant a new crop next to an older, infected one. If the [leafminer](/pests/leafminer) is also a problem, Igorota helps with both."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "In the wet season a protectant spray before the disease shows is often needed on susceptible varieties. Alternate the systemic fungicides with protectants, because this water mold builds resistance fast. Use only FPA registered products and follow the label for the rate and the interval."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Mancozeb",
+          "FRAC M3",
+          "protectant, the usual partner for the systemic products"
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M5",
+          "protectant, apply before infection"
+        ],
+        [
+          "Cymoxanil",
+          "FRAC 27",
+          "works inside the leaf, usually sold mixed with mancozeb"
+        ],
+        [
+          "Dimethomorph",
+          "FRAC 40",
+          "systemic, pair it with a protectant"
+        ],
+        [
+          "Metalaxyl",
+          "FRAC 4",
+          "resistance is common, so never use it alone"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Grow late blight resistant potato varieties such as Igorota and Solibao in the highlands, especially in the wet season.",
+        "Rotate for 2 to 3 years away from potato and tomato.",
+        "Clear volunteer potato plants and haul away cull piles, since the water mold survives in old tubers.",
+        "Harvest in dry weather, and sort out every rotten tuber before storage. Our [fungicides guide](/blog/fungicides) explains how to rotate groups next season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Late Blight"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes late blight in potato and tomato?",
+          "a": "A water mold called Phytophthora infestans. It survives in infected tubers, cull piles and volunteer plants. Then its spores spread by wind and rain, mostly when cool nights are followed by misty, rainy days."
+        },
+        {
+          "q": "Which potato varieties resist late blight in the Philippines?",
+          "a": "The DA lists Igorota (LBR PO3), moderately resistant to late blight and leaf miner, and Solibao (LBR PO4), which showed only about 1 percent infection. Farmers in Buguias, Benguet use them in high elevation areas, especially in the rainy season."
+        },
+        {
+          "q": "Can a field with late blight still be saved?",
+          "a": "Only if you act at the first patches. Pull the sick plants, protect the rest with a registered fungicide and keep the canopy dry. If the leaves are badly hit, kill the vines before harvest so the tubers stay clean, and compare it with [early blight](/diseases/early-blight) to be sure."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "Downy mildew of cucurbits",
+          "url": "/diseases/downy-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA AMIA: Use of blight tolerant potato varieties, Benguet technical brief",
+          "url": "https://amia.da.gov.ph/wp-content/uploads/2025/02/CRA-Technical-Brief_Benguet_CAR_Blight-Tolerant-Potato.pdf"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Potato late blight",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/potato_late_blight_265.htm"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Tomato late blight",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/tomato_late_blight_261.htm"
+        },
+        {
+          "label": "DA Regional Field Office 2: Tomato production guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
+        }
+      ]
+    }
+  ]
+}

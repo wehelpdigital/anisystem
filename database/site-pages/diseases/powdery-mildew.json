@@ -1,0 +1,284 @@
+{
+  "section": "diseases",
+  "slug": "powdery-mildew",
+  "sortOrder": 315,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Powdery Mildew: How to Spot It and Stop It on Your Vegetables",
+  "metaTitle": "Powdery Mildew on Vegetables: Signs and Control",
+  "metaDescription": "Powdery mildew coats squash, ampalaya, sitao and pepper leaves in white powder and shrinks the harvest. Learn the signs and how to stop it early.",
+  "focusKeyword": "powdery mildew",
+  "keywords": [
+    "powdery mildew",
+    "powdery mildew on squash",
+    "powdery mildew on ampalaya",
+    "white powder on leaves",
+    "Podosphaera xanthii",
+    "sulfur for powdery mildew"
+  ],
+  "excerpt": "Powdery mildew is a fungal disease that dusts the leaves of squash, ampalaya, cucumber, sitao, pepper and tomato with a white powder. The leaves then yellow and die early, so the fruit come smaller and fewer. This page shows how to spot it early and how to keep it down.",
+  "heroImage": {
+    "src": "/images/site/diseases/powdery-mildew.webp",
+    "thumb": "/images/site/diseases/powdery-mildew-480.webp",
+    "alt": "A leaf dusted with the white powder of powdery mildew",
+    "credit": "Stephen James McWilliam, CC0, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Powdery Mildew?"
+    },
+    {
+      "type": "text",
+      "text": "Powdery mildew is not one fungus but a group of them. On cucurbits like squash (kalabasa), ampalaya, cucumber and melon, the main one is Podosphaera xanthii. On pepper, tomato and eggplant, it is Leveillula taurica, which Cornell says can infect over 1,000 plant species. Several Erysiphe species complete the group.\n\nIn the Philippines, the DA Cagayan Valley squash guide calls powdery mildew a common disease of squash. Its sitao guide lists it among the common diseases of pole sitao too. Also, the same squash guide lists a variety that is highly tolerant of it. This is a dry weather disease, unlike its cousin [downy mildew](/diseases/downy-mildew), which needs wet leaves."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Powdery mildew"
+        ],
+        [
+          "Scientific name",
+          "Podosphaera xanthii, Erysiphe spp., Leveillula taurica"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Squash, ampalaya, cucumber, melon, sitao, pepper, tomato and eggplant"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and stems and tillers"
+        ],
+        [
+          "When it strikes",
+          "On cucurbits it usually starts around the first fruits, and it spreads fastest in warm, humid but dry spells with little rain."
+        ],
+        [
+          "How it spreads",
+          "It lives only on living plants. Its spores blow in the wind from crop to crop, and new spots appear 3 to 5 days after infection."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Powdery Mildew"
+    },
+    {
+      "type": "text",
+      "text": "Look for round, white, powdery spots on the leaves, the leaf stalks and the stems. On cucurbits they show first on the upper side of older, shaded leaves, and you can rub the powder off with a finger. Later the leaves turn yellow, then brown, and dry out. Pepper and tomato are different. There you see pale yellow blotches on top of the leaf, while the white growth forms only underneath, because Leveillula grows inside the leaf. Downy mildew, by contrast, makes angular yellow spots bound by the veins and a purple gray fuzz underneath."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Round white spots, like flour, appear on the leaves, the leaf stalks and the stems.",
+        "The spots spread until whole leaves look dusted with powder on top and below.",
+        "Infected leaves turn yellow, then brown, dry out and die early.",
+        "On pepper and tomato, pale yellow blotches show on top while white powder grows only underneath.",
+        "Pepper leaves with the disease tend to drop off the plant.",
+        "Fruit left bare by the dying leaves get sunburned and ripen too early."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Downy mildew is the usual mixup on cucurbits. Powdery mildew is white and powdery, often on the top of the leaf, while downy mildew shows angular yellow spots with a purple gray fuzz only underneath."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Powdery Mildew Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Powdery mildew seldom kills a plant, but it steals the leaves that feed the fruit. The Pacific Pests and Pathogens sheet says it cuts growth and yield. Then early leaf death causes fruit sunburn, early ripening, poor storage and poor flavor. Also, sick plants catch other diseases more easily, gummy stem blight in particular.\n\nCornell University gives a clear action threshold for cucurbits. Start checking when the first fruits form. Then begin a fungicide program when you find one leaf with symptoms out of 50 older leaves, looking at both sides. Waiting past that point weakens control and helps the fungus build resistance."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Powdery Mildew"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant tolerant or resistant varieties first. Resistant types exist for cucumber, melon, squash and pumpkin, and the DA Cagayan Valley squash guide lists a variety highly tolerant of powdery mildew.",
+        "Choose a sunny spot with good air flow, and do not crowd the plants, because dense, humid canopies speed up the disease.",
+        "Remove the weeds in and around the field, since they can carry the fungus. Do not plant next to an older crop that already has white spots.",
+        "Scout from the first fruits. Check 50 older leaves on both sides, and act when one shows white spots.",
+        "For organic growers, the Pacific Pests sheet lists horticultural oil, potassium bicarbonate and wettable sulfur. Oil can treat spots already there, while bicarbonate and sulfur work best before the disease shows. Never spray sulfur within two weeks of an oil spray, or the leaves will burn."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Start sprays at the threshold, not after the leaves turn white. Pair a mobile fungicide that reaches the leaf underside with a contact one, and switch FRAC groups every spray. Use only FPA registered products and follow the label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Sulfur",
+          "FRAC M2",
+          "contact protectant, spray in the cool morning or evening"
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M5",
+          "contact protectant, a good partner for the mobile products"
+        ],
+        [
+          "Difenoconazole",
+          "FRAC 3",
+          "triazole that moves into the leaf, Cornell rates the FRAC 3 group a good choice for the first spray"
+        ],
+        [
+          "Potassium bicarbonate",
+          "FRAC NC",
+          "contact, organic option, works best before spots appear"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Rotate your crops, and do not plant cucurbits right after cucurbits in the same field.",
+        "After harvest, collect and burn the old vines and leaves.",
+        "Avoid strobilurin fungicides (FRAC 11) on cucurbits, because Cornell found the fungus widely resistant to them. Our [fungicides guide](/blog/fungicides) explains the groups.",
+        "Space the rows so the wind can move through the crop, and keep the field free of weeds."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Powdery Mildew"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes powdery mildew on squash and ampalaya?",
+          "a": "Fungi, mainly Podosphaera xanthii on the cucurbits. It lives only on living plants and spreads by spores in the wind. Warm, humid weather with little rain and crowded plants help it most, while heavy rain actually slows it."
+        },
+        {
+          "q": "Is powdery mildew the same as downy mildew?",
+          "a": "No. Powdery mildew is a true fungus that makes a white powder, often on top of the leaf. [Downy mildew](/diseases/downy-mildew) is a water mold that makes angular yellow spots and a gray fuzz underneath, and it needs wet leaves."
+        },
+        {
+          "q": "Can I use sulfur for powdery mildew?",
+          "a": "Yes. Wettable sulfur is one of the oldest fixes and is allowed in organic farming. Spray it in the cool morning or evening, use only an FPA registered product, and do not spray it within two weeks of an oil spray."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Downy mildew of cucurbits",
+          "url": "/diseases/downy-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Cucumber powdery mildew",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/cucumber_powdery_mildew_063.htm"
+        },
+        {
+          "label": "Cornell University: Guidelines on managing cucurbit powdery mildew",
+          "url": "https://blogs.cornell.edu/livegpath/research/cucurbit-powdery-mildew-research/guidelines-on-managing-cucurbit-powdery-mildew-in-2022-based-on-recent-research"
+        },
+        {
+          "label": "Cornell Vegetables: Powdery mildew of pepper",
+          "url": "https://www.vegetables.cornell.edu/pest-management/disease-factsheets/powdery-mildew-of-pepper"
+        },
+        {
+          "label": "DA Regional Field Office 2: Squash production guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "section": "pests",
+  "slug": "banana-aphid",
+  "sortOrder": 400,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Banana Aphid: The Small Insect That Carries Bunchy Top",
+  "metaTitle": "Banana Aphid: Signs, Bunchy Top Link and Control",
+  "metaDescription": "The banana aphid spreads banana bunchy top virus after 18 hours of feeding. Learn how to spot it and how to cut the risk in your banana farm.",
+  "focusKeyword": "banana aphid",
+  "keywords": [
+    "banana aphid",
+    "Pentalonia nigronervosa",
+    "banana bunchy top vector",
+    "aphid on banana",
+    "abaca bunchy top"
+  ],
+  "excerpt": "The banana aphid, Pentalonia nigronervosa, is a tiny dark insect that lives in colonies on banana and abaca. Its feeding is bad enough, but the real danger is the virus it carries. This page shows how to spot it and how to cut its numbers.",
+  "heroImage": {
+    "src": "/images/site/pests/banana-aphid.webp",
+    "thumb": "/images/site/pests/banana-aphid-480.webp",
+    "alt": "A colony of dark brown banana aphids, Pentalonia nigronervosa, on a pale banana stem",
+    "credit": "Plant pests and diseases, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Banana Aphid?"
+    },
+    {
+      "type": "text",
+      "text": "The banana aphid is shiny red brown to almost black, and an adult is up to 1.5 mm long. Most adults have no wings. The colonies sit on the underside of leaves, on leaf sheaths, on fruit and near the soil.\n\nBanana and other Musa plants are the main hosts. It also lives on heliconia, canna, ginger, taro and related plants. In the Philippines, researchers found it in every banana plantation they visited, and it spreads bunchy top in abaca too. So it is the vector, the insect that carries a disease, that makes it a serious pest."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Banana aphid"
+        ],
+        [
+          "Scientific name",
+          "Pentalonia nigronervosa"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Banana and abaca"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It is most abundant in the wet season, and it prefers young growth such as new suckers and the heart of the plant."
+        ],
+        [
+          "Life cycle",
+          "Females give birth to live young without mating, two to four each day. A winged adult appears after 7 to 10 generations and starts new colonies."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Banana Aphid"
+    },
+    {
+      "type": "text",
+      "text": "Part the leaf sheaths at the heart of the plant, and check the leaf undersides near the midrib. You will see dark, soft bodied insects in clusters. Plants with aphids may show stunted, yellowing leaves with pale margins, and upright leaves bunched together. Dark and light dots and dashes along the veins, and veins that bend down like a hook, point to the disease they carry."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Dark red brown aphids sit in colonies on leaf undersides, sheaths and young suckers.",
+        "Leaves turn yellow with pale margins and the plant looks stunted.",
+        "Leaves stand upright and bunch up in the throat of the plant.",
+        "Dark and light dots and dashes appear along the veins on the underside.",
+        "Colonies also sit on fruit and near the soil at the base of the plant."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Banana aphids are small and dark. They are not [mealybugs](/pests/mealybug), which are covered in white wax. Yellow and stunted plants can also come from weak soil, so look for the aphids and for the dots and dashes on the veins."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Banana Aphid Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Aphids damage the plant by taking sap, by leaving honeydew that grows sooty mold, and by spreading viruses. The aphid picks up banana bunchy top virus after about 18 hours of feeding on an infected plant and keeps it for 15 to 20 days. Nymphs spread the virus best, and winged adults start new infections in new fields.\n\nA plant with the virus ends up with a bunched top and bears no fruit. Read the page on [banana bunchy top](/diseases/banana-bunchy-top) for the disease itself. There is no cure for the virus, so keeping the aphid down and removing sick plants is how you protect the farm."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Banana Aphid"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Remove and destroy plants that show bunchy top. A sick plant is a source for new infections.",
+        "Control weeds and remove other host plants, such as heliconia and canna, around the banana.",
+        "Prune unwanted suckers, because the aphids prefer young growth.",
+        "Plant clean, disease free material, such as tissue cultured plants.",
+        "Protect natural enemies. Ladybird beetles, braconid wasps, lacewings and syrphid fly larvae eat the aphids, and a Philippine study found 28 spider species on infested plants.",
+        "Use soaps, horticultural oils or plant based sprays on small colonies before you think of anything stronger."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Gentle options come first. The Pacific fact sheet lists derris, pyrethrum, soaps and horticultural oils, and synthetic pyrethroids as well. Strong sprays also kill the natural enemies, so use them only when needed. Follow the label and the FPA registration."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Pyrethrum",
+          "IRAC 3A",
+          "plant derived, for small colonies"
+        ],
+        [
+          "Rotenone (from derris)",
+          "IRAC 21B",
+          "plant derived, for small colonies"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Buy clean, disease free planting material only.",
+        "Keep weeds and wild gingers and heliconias out of the farm.",
+        "Check the heart of the plant and the new suckers each week in the wet season.",
+        "Rogue out sick plants early, before the aphids move the virus."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Banana Aphid"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How long does the aphid take to pick up the virus?",
+          "a": "About 18 hours of feeding on an infected banana plant. It then keeps the virus for 15 to 20 days."
+        },
+        {
+          "q": "When are banana aphids most common?",
+          "a": "In the wet season, according to the Pacific fact sheet."
+        },
+        {
+          "q": "Can I cure a plant with bunchy top?",
+          "a": "No. Remove it and keep the aphids down so that the virus does not move to healthy plants."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Banana aphid",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/banana_aphid_103.htm"
+        },
+        {
+          "label": "UPLB: Natural enemies of Pentalonia nigronervosa, the vector of abaca and banana bunchy top virus",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5450"
+        }
+      ]
+    }
+  ]
+}

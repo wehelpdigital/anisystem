@@ -1,0 +1,252 @@
+{
+  "section": "pests",
+  "slug": "cacao-pod-borer",
+  "sortOrder": 420,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Cacao Pod Borer: Signs, Damage and How to Protect Your Pods",
+  "metaTitle": "Cacao Pod Borer: Pod Damage and Control",
+  "metaDescription": "The cacao pod borer tunnels inside the pod and leaves flat, clumped beans. Learn the signs, the weekly harvest and the sleeving that protect your yield.",
+  "focusKeyword": "cacao pod borer",
+  "keywords": [
+    "cacao pod borer",
+    "cocoa pod borer",
+    "Conopomorpha cramerella",
+    "cacao pest Philippines",
+    "cacao pod damage"
+  ],
+  "excerpt": "The cacao pod borer, Conopomorpha cramerella, is a small moth whose larvae tunnel through the husk into the bean pulp. Pods ripen early and the beans come out small, flat and stuck together. This page shows how to recognize the damage and the farm practices that cut it.",
+  "heroImage": {
+    "src": "/images/site/pests/cacao-pod-borer.webp",
+    "thumb": "/images/site/pests/cacao-pod-borer-480.webp",
+    "alt": "An adult cacao pod borer moth, Conopomorpha cramerella, a slender moth with very long antennae",
+    "credit": "Tiouraren (Y. C. Tsai), CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Cacao Pod Borer?"
+    },
+    {
+      "type": "text",
+      "text": "The adult is a brown moth about 5 to 7 mm long with bright yellow patches at the tips of the forewings and long antennae. It rests under branches in the day and flies at night. The female lays eggs on the pod surface, and the larvae tunnel through the husk into the pulp.\n\nIt is one of the major insect pests of cacao in the Philippines. Studies report annual losses of up to 50 percent or even more where it is not managed, and infestation of 60 to 80 percent was recorded in Davao in 1990. It also lives on rambutan and some other trees, which can carry it between farms."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Cacao pod borer"
+        ],
+        [
+          "Scientific name",
+          "Conopomorpha cramerella"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Cacao"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It attacks pods that are starting to turn yellow, and it hits hardest in the main harvest seasons."
+        ],
+        [
+          "Life cycle",
+          "The moth lays eggs on the pod surface. The eggs hatch in about 3 days, and the larvae tunnel into the pod for 14 to 18 days. Then they drop to the leaves to pupate, and a full cycle takes 27 to 33 days."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Cacao Pod Borer"
+    },
+    {
+      "type": "text",
+      "text": "Look at the pods that are turning yellow. Pods with the borer ripen early, and you may see small exit holes and larval waste on the husk. Open a suspect pod. You will find tunnels in the husk, and beans that are small, flat and clumped together in dried pulp, and hard to take out. Black pod rot gives rotting pods with white growth, not tunnels, so check for [cacao black pod](/diseases/cacao-black-pod) too."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Pods ripen early and turn yellow unevenly.",
+        "Small exit holes and larval waste show on the outside of the pod.",
+        "Tunnels run through the husk and the pulp inside.",
+        "Beans are small and flat and stick together in dried pulp.",
+        "Beans are hard to extract from the pod."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Pod rot from black pod disease looks different. The borer leaves tunnels, exit holes and flat clumped beans without a white mold."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Cacao Pod Borer Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The grubs eat the pulp that surrounds the beans, so the beans fail to fill. Smallholder losses are estimated at 20 to 50 percent, and more in severe cases, in the Pacific fact sheet. In East New Britain in Papua New Guinea, production fell by about 80 percent between 2008 and 2012.\n\nIn the Philippines, the pest has cut cacao output and left local processors short of raw material, so they had to import. For a farm with only a few trees, the loss is felt directly at the next harvest."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Cacao Pod Borer"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Harvest completely, frequently and regularly. Pick all pods as soon as they turn yellow, and do it every 7 days, so you break the moth cycle.",
+        "Bury infested pods at once or destroy them, so the larvae cannot leave.",
+        "Prune the trees every 6 months to keep an open canopy, with a height of about 3 meters, which makes harvest and checking easier.",
+        "Sleeve young pods with plastic bags where the labor is available. It works but costs time and money.",
+        "Protect natural enemies such as the weaver ant Oecophylla smaragdina and the lynx spider Oxyopes javanus. Fungi and bacteria such as Beauveria bassiana and Bacillus thuringiensis are under study.",
+        "Work with neighbors on the same schedule, because the moth moves between farms."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "The Pacific fact sheet does not recommend insecticides for smallholders. They are costly and risky for people and the environment, and the evidence of benefit is thin. Talk to your PCARRD or DA technician before you consider any."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Harvest every 7 days in the peak season.",
+        "Never leave pods or husks on the ground.",
+        "Keep trees pruned and open.",
+        "Do not move pods and leaves from an infested farm to a clean one."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Cacao Pod Borer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How often should I harvest to fight the borer?",
+          "a": "Every 7 days, picking all pods as soon as they turn yellow. This breaks the life cycle of the moth."
+        },
+        {
+          "q": "Does bagging the pods work?",
+          "a": "Yes, sleeving with plastic protects pods, but PCARRD notes it is labor intensive and costly."
+        },
+        {
+          "q": "How much can I lose?",
+          "a": "Up to 50 percent a year or more without management, according to a Philippine study."
+        },
+        {
+          "q": "Which trees carry the moth besides cacao?",
+          "a": "Rambutan, Pacific lychee and cola, per the Pacific fact sheet."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Cocoa pod borer",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/cocoa_pod_borer_175.htm"
+        },
+        {
+          "label": "Frontiers in Agronomy: Cacao pod borer pheromone trapping in the Philippines",
+          "url": "https://www.frontiersin.org/journals/agronomy/articles/10.3389/fagro.2023.1165299/full"
+        },
+        {
+          "label": "PCARRD: Cacao pod borer",
+          "url": "https://ispweb.pcaarrd.dost.gov.ph/?p=15857"
+        }
+      ]
+    }
+  ]
+}

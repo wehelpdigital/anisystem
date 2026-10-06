@@ -1,0 +1,281 @@
+{
+  "section": "diseases",
+  "slug": "root-knot-nematode",
+  "sortOrder": 355,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Root Knot Nematode: How to Spot the Galls and Protect Your Crop",
+  "metaTitle": "Root Knot Nematode: Signs, Losses and Control",
+  "metaDescription": "Root knot nematode swells roots into galls and stunts tomato, onion and other crops. Learn to check the roots, cut the losses and plan a cleaner season.",
+  "focusKeyword": "root knot nematode",
+  "keywords": [
+    "root knot nematode",
+    "Meloidogyne",
+    "root galls",
+    "nematode in tomato",
+    "rice root knot nematode",
+    "nematode control"
+  ],
+  "excerpt": "Root knot nematode is a tiny soil worm. It turns the roots of tomato, eggplant, beans, onion and many other crops into knots, or galls. The plants above ground stay small, turn yellow and wilt even in moist soil. This guide shows you how to confirm it, what it costs and how to bring the numbers down.",
+  "heroImage": {
+    "src": "/images/site/diseases/root-knot-nematode.webp",
+    "thumb": "/images/site/diseases/root-knot-nematode-480.webp",
+    "alt": "A plant root swollen with the knobby galls of root knot nematodes",
+    "credit": "Jeffrey W. Lotz, Florida Department of Agriculture and Consumer Services, CC BY 3.0 US, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Root Knot Nematode?"
+    },
+    {
+      "type": "text",
+      "text": "Root knot nematodes are microscopic roundworms of the genus Meloidogyne. The young worms are only about 0.5 mm long, so you need a microscope to see them. They feed inside the roots of many [vegetables in the Philippines](/crops/vegetables-philippines). Examples are tomato, eggplant, pepper, beans, carrot, cucumber, lettuce and sweet potato. Banana, papaya and pineapple are hosts as well, while grasses usually suffer less.\n\nIn Central Luzon, many farmers in San Jose and Bongabon, Nueva Ecija, plant onion right after rice. There, the rice root knot nematode (Meloidogyne graminicola) attacks both crops. So PhilRice and VISCA scientists tested ways to manage it in the rice and onion system. Plants with galled roots also fall more easily to [bacterial wilt](/diseases/bacterial-wilt) and other soil diseases."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Root knot nematode"
+        ],
+        [
+          "Scientific name",
+          "Meloidogyne spp. (Meloidogyne incognita, Meloidogyne graminicola and others)"
+        ],
+        [
+          "Kind",
+          "Nematode (a tiny soil worm)"
+        ],
+        [
+          "Crops it attacks",
+          "Tomato, eggplant, pepper, beans, onion and other vegetables, rice, banana and papaya"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Roots and base and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It attacks from the seedling stage to harvest in any season, and the damage is worst in sandy soil and where host crops follow each other, such as onion after rice."
+        ],
+        [
+          "How it spreads",
+          "Young worms hatch from eggs laid on the roots, swim through soil water to new roots, and grow into adults in about 30 days, each female laying more than 1,000 eggs. Over longer distances they ride in infected seedlings and planting material, in rainwater, and in soil stuck to tools, machines and boots."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Root Knot Nematode"
+    },
+    {
+      "type": "text",
+      "text": "Above ground, look for patches of plants that grow poorly, turn yellow and wilt in the heat. This happens even when the soil has enough water and fertilizer. Then pull a few plants and wash the roots. Infected roots carry knots or swellings of many sizes, and badly hit roots rot. On beans and other legumes, do not mistake the nitrogen fixing nodules for galls. Instead, break a swelling open. A gall holds swollen females that you can just see with the naked eye or a hand lens. On rice, also look for swollen, hooked root tips."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plants stay stunted and uneven across the field, often in patches.",
+        "Leaves turn yellow, and plants wilt easily even when the soil is moist.",
+        "Roots carry knots or galls of many sizes, and badly hit roots rot.",
+        "A galled plant has a much smaller root mass than a healthy plant beside it.",
+        "In onion, the bulbs come out smaller and lighter.",
+        "In rice, root tips swell and hook, leaves yellow, and tillers and filled grains drop."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Yellowing and wilting can also come from wilt diseases, drought or poor nutrition. Only the knots on the roots confirm root knot nematode, so always pull a plant and look before you treat."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Root Knot Nematode Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Reports on food legumes from many countries put losses from root knot nematodes at up to 60 percent or more. Root crops lose twice, because galls and distortions also lower the price of tubers such as yam and sweet potato.\n\nThe local numbers are just as harsh. In pot trials with Yellow Granex onion, the rice root knot nematode cut bulb weight by 7 to 82 percent. The loss depended on how many worms were in the soil. In the field, bulbs were 16, 32 and 35 percent lighter. That came with galls on 10, 50 and 100 percent of the roots. On upland rice, reported yield losses range from 2.6 to 32 percent. To judge your own risk, send soil samples to a laboratory. Or pull plants at random and score how much of each root system carries galls."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Root Knot Nematode"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Start clean. Raise seedlings in pasteurized soil or a soil free potting mix, and never plant seedlings with knotted roots.",
+        "Solarize the beds before planting. Wet the soil and cover it with clear plastic for 4 to 6 weeks, and the heat kills nematodes in the top 30 cm, along with many weed seeds and soil diseases.",
+        "Starve them out. Leave the field bare for 4 to 6 months with frequent plowing and no weeds, or rotate to poor hosts, since corn and peanut are poor hosts of the common Meloidogyne incognita.",
+        "In rice and onion fields, grow Crotalaria or marigold (Tagetes) during the fallow. In PhilRice pot trials, these plants left no galls and cut the nematodes in the soil by 73 to 96 percent, and onions planted after them carried far fewer galls.",
+        "Feed the soil with compost or manure, mulch, and water deeply so plants can outgrow the damage. After harvest, collect the old roots and crop debris and burn them.",
+        "Use resistant varieties where you can find them, since nematode resistant types exist for tomato, beans and sweet potato. For biological control, ask your agriculturist if a product with the fungus Paecilomyces lilacinus is registered in your area."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A nematicide makes sense only after a soil test or a root check shows heavy galling. Use it only on a crop worth the cost. Many older nematicides are highly toxic and are now restricted or banned. So use only products registered with the FPA for your crop and follow the label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Fluopyram",
+          "IRAC N3",
+          "listed by the University of Florida among nematicides registered for vegetable crops"
+        ],
+        [
+          "Fluensulfone",
+          "IRAC N UN",
+          "a newer nematicide listed by the University of Florida for vegetable crops"
+        ],
+        [
+          "Oxamyl",
+          "IRAC N1A",
+          "an older carbamate, very toxic and restricted in many countries"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Buy seedlings from nurseries that use clean or pasteurized soil, and look at the roots before you plant.",
+        "Wash soil off tools, tillers and boots before you move from an infested field to a clean one.",
+        "Do not follow one susceptible vegetable with another in the same bed. Break the run with a poor host, a bare fallow or a marigold crop.",
+        "Keep weeds down during the fallow, because many weeds also feed the nematode.",
+        "Pull a few plants at every harvest and check the roots, so you know which beds need work before the next season. Our [integrated pest management guide](/pests/integrated-pest-management) shows how to plan these steps together."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Root Knot Nematode"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How do I know if my plants have root knot nematode?",
+          "a": "Pull a few weak plants and wash the roots. Knots or swellings on the roots, on plants that stay small and wilt even in moist soil, point to root knot nematode. For a sure answer, take several soil samples at 15 to 25 cm deep across the field. Send them to a laboratory. Keep the samples cool and moist, out of the sun."
+        },
+        {
+          "q": "Does burning rice hull on the field kill nematodes?",
+          "a": "In a PhilRice study in Nueva Ecija, burning a thick layer of rice hull killed the nematodes down to 15 cm. Onion yield came out almost three times higher. But the authors warn that the smoke pollutes the air and that burning may change the soil structure and nutrients. So treat it as a last resort, and favor cover crops such as Crotalaria and marigold."
+        },
+        {
+          "q": "Can I get rid of root knot nematodes for good?",
+          "a": "Not with one treatment. The worms live in the soil and feed on many crops and weeds. So the goal is to keep their numbers low season after season. Combine clean seedlings, solarization or fallow, poor host crops and resistant varieties. Also watch for [fusarium wilt](/diseases/fusarium-wilt), which can strike the same weakened plants."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Root knot nematodes (fact sheet 127)",
+          "url": "https://apps.lucidcentral.org/ppp_v9/pdf/web_full/root_knot_nematodes_127.pdf"
+        },
+        {
+          "label": "NAST Transactions (PhilRice and VISCA): Alternative management strategies against the rice root knot nematode in a rice onion system",
+          "url": "https://nast.dost.gov.ph/images/pdf%20files/Publications/NAST%20Transactions/NAST%201998%20Transactions%20Volume%2020/AS%205%20Alternative%20Management%20Strategies%20Against%20The%20Rice%20Root-Knot%20Menatode%201998.pdf"
+        },
+        {
+          "label": "UPLB Knowledge Repository: Effect of rice root knot nematode on growth and yield of Yellow Granex onion",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/3166"
+        },
+        {
+          "label": "University of Florida IFAS: Non fumigant nematicides registered for vegetable crop use",
+          "url": "https://ask.ifas.ufl.edu/publication/NG033"
+        }
+      ]
+    }
+  ]
+}

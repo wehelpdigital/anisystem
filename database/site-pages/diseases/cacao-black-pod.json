@@ -1,0 +1,265 @@
+{
+  "section": "diseases",
+  "slug": "cacao-black-pod",
+  "sortOrder": 405,
+  "lang": "en",
+  "category": "Fruit and plantation diseases",
+  "profile": true,
+  "title": "Cacao Black Pod: How to Spot It and Save Your Pods",
+  "metaTitle": "Cacao Black Pod: Signs, Losses and Control",
+  "metaDescription": "Cacao black pod turns pods brown, then black, within days. Learn the signs, the harvest and sanitation habits that cut losses and when copper helps.",
+  "focusKeyword": "cacao black pod",
+  "keywords": [
+    "cacao black pod",
+    "black pod disease",
+    "cacao pod rot",
+    "Phytophthora palmivora cacao",
+    "cacao disease Philippines"
+  ],
+  "excerpt": "Cacao black pod is a rot that turns healthy pods brown and then black in days, and in wet weather it can take a large share of the crop. This guide shows you the signs, the sanitation steps that work and when a spray makes sense.",
+  "heroImage": {
+    "src": "/images/site/diseases/cacao-black-pod.webp",
+    "thumb": "/images/site/diseases/cacao-black-pod-480.webp",
+    "alt": "Cacao pods on the tree, one of them black and covered in mold from black pod",
+    "credit": "Scot Nelson, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Cacao Black Pod?"
+    },
+    {
+      "type": "text",
+      "text": "Black pod is caused by Phytophthora palmivora. It is not a true fungus but a water mold, a relative of algae. The Pacific Pests and Pathogens fact sheet says it can attack the whole tree, including pods, stems, shoots, leaves and roots. It is a major disease of cacao in many countries.\n\nA 2023 study in Cagayan Province collected 14 isolates from infected pods on five farms. It found the same disease on seedlings, flowers and pods. The wet months are when pods suffer. If you are starting [cacao and other trees](/crops/pagtatanim-ng-puno), plan your spacing, shade and drainage with black pod in mind. The same water mold also causes [coconut bud rot](/diseases/coconut-bud-rot)."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Black pod of cacao"
+        ],
+        [
+          "Scientific name",
+          "Phytophthora palmivora"
+        ],
+        [
+          "Kind",
+          "Water mold (an oomycete)"
+        ],
+        [
+          "Crops it attacks",
+          "Cacao"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Fruits, pods and nuts, leaves and stems and tillers"
+        ],
+        [
+          "When it strikes",
+          "It strikes in wet weather and in humid, shaded, poorly drained plantings, and ripe pods are more at risk than unripe ones."
+        ],
+        [
+          "How it spreads",
+          "The water mold lives in the soil. Rain splash, wind, heavy dew, ants, rats, beetles and dirty pruning tools carry its spores to the pods."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Cacao Black Pod"
+    },
+    {
+      "type": "text",
+      "text": "On a pod, look for small brown spots that spread and take on an oily brown look. Then they darken until the pod is black. White, leathery spore masses form on the surface. The pod dries into a mummy that hangs on the tree. On young leaves the disease starts at the tip and follows the veins. Cankers on the trunk and branches show red under the bark. Check for the oily spots and the white spores before you decide a pod is sick."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small brown, oily spots appear on the pod and spread quickly.",
+        "The whole pod turns black, often within about ten days.",
+        "White, leathery spore growth forms on the black surface.",
+        "Pods dry into hard black mummies that stay on the tree.",
+        "Young leaves brown from the tip along the veins, and trunk cankers show red under the bark."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Other pod rots and plain overripe pods can darken too. The oily brown spot that spreads fast and the white spore growth are the clues for black pod."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Cacao Black Pod Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The Pacific Pests and Pathogens fact sheet says black pod causes yearly losses of 20 to 30 percent of pods. It also kills about 10 percent of trees by stem canker. Where rain is heavy and little fungicide is used, pod losses often pass 40 percent. Those numbers come from many countries, so your own loss will vary with weather, shade and sanitation.\n\nIn the Cagayan study, ripe pods were more easily infected than unripe ones. Symptoms came in 4 to 14 days. So pods you leave on the tree too long are at the highest risk."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Cacao Black Pod"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Open the canopy. Use light shade, space cacao at least 3 meters apart and prune water shoots so air moves and pods dry faster.",
+        "Drain the field. Avoid heavy clay and wet spots, since the water mold loves standing water.",
+        "Harvest ripe pods on time, and remove diseased pods every two to four weeks, more often in the main season.",
+        "Take the shells away. Bury or burn diseased pods and empty shells away from the trees, instead of leaving them on the ground.",
+        "Control rats, which chew infected pods and then healthy ones, and clean pruning tools between trees.",
+        "Plant more tolerant types where you can. The fact sheet notes that Amelonado shows more resistance than Trinitario, so ask your agriculturist or DA what suits your area."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Sprays come after sanitation, not before. The fact sheet suggests copper sprays on the pods every two weeks in the wet season. It also suggests phosphorous acid injected into the trunk once or twice a year. Use only products registered for cacao by the FPA and follow the label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Copper compounds",
+          "FRAC M1",
+          "protectant sprays on pods in the wet season, according to the Pacific fact sheet"
+        ],
+        [
+          "Phosphorous acid (potassium phosphonate)",
+          "FRAC P07",
+          "trunk injection once or twice a year, according to the same fact sheet"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Prune and thin shade so sun and wind reach the pods.",
+        "Remove diseased pods, empty shells and water shoots every week or two.",
+        "Keep rats down, since they carry the water mold from pod to pod.",
+        "Disinfect pruning tools, and check your trees after every spell of rain. Our [plant diseases guide](/diseases/plant-diseases-philippines) shows other water mold diseases to watch."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Cacao Black Pod"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How fast does cacao black pod spread?",
+          "a": "Very fast in wet weather. The fact sheet says an infected pod can turn black and die within ten days or less. In the Cagayan study, symptoms came 4 to 14 days after infection."
+        },
+        {
+          "q": "Should I leave the diseased pods on the tree?",
+          "a": "No. Remove them often and bury or burn the shells. The white spore growth on them infects healthy pods by rain splash."
+        },
+        {
+          "q": "Is cacao black pod the same as coconut bud rot?",
+          "a": "They share the same water mold, Phytophthora palmivora, but they attack different crops. See [coconut bud rot](/diseases/coconut-bud-rot) for the palm disease."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation diseases",
+      "items": [
+        {
+          "label": "Anthracnose",
+          "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Banana bunchy top",
+          "url": "/diseases/banana-bunchy-top"
+        },
+        {
+          "label": "Black sigatoka",
+          "url": "/diseases/black-sigatoka"
+        },
+        {
+          "label": "Moko disease and bugtok of banana",
+          "url": "/diseases/moko-disease"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Cocoa black pod",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/cocoa_black_pod_006.htm"
+        },
+        {
+          "label": "Journal of Biodiversity and Environmental Sciences: Phytophthora pod rot of cacao in Cagayan Province (Zenodo record)",
+          "url": "https://zenodo.org/records/10431902"
+        }
+      ]
+    }
+  ]
+}

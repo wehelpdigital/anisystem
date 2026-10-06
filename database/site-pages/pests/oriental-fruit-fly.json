@@ -1,0 +1,267 @@
+{
+  "section": "pests",
+  "slug": "oriental-fruit-fly",
+  "sortOrder": 370,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Oriental Fruit Fly: How to Spot It and Protect Your Mango and Papaya",
+  "metaTitle": "Oriental Fruit Fly: Signs, Damage and Control",
+  "metaDescription": "The oriental fruit fly lays eggs in mango, papaya and guava, and the maggots rot the fruit from inside. Learn the signs and how to control it step by step.",
+  "focusKeyword": "oriental fruit fly",
+  "keywords": [
+    "oriental fruit fly",
+    "Bactrocera dorsalis",
+    "fruit fly in mango",
+    "fruit fly in papaya",
+    "maggots in fruit",
+    "methyl eugenol trap"
+  ],
+  "excerpt": "The oriental fruit fly is a small fly whose maggots rot mango, papaya, guava and many other fruits from the inside. The fruit looks fine at first, then it drops or turns soft. This page shows how to spot the oriental fruit fly and how to keep it out of your harvest.",
+  "heroImage": {
+    "src": "/images/site/pests/oriental-fruit-fly.webp",
+    "thumb": "/images/site/pests/oriental-fruit-fly-480.webp",
+    "alt": "An oriental fruit fly, Bactrocera dorsalis, yellow and dark brown, on a green leaf",
+    "credit": "Doreen, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Oriental Fruit Fly?"
+    },
+    {
+      "type": "text",
+      "text": "The oriental fruit fly (Bactrocera dorsalis) is native to Asia and is also called the papaya fruit fly. The Pacific Pests sheet calls it highly destructive, and UF reports that it attacks 478 kinds of fruits and vegetables, with avocado, mango and papaya most at risk. It also hits banana, citrus, capsicum, grapes and tomato, and wild plants such as Ficus and Terminalia.\n\nThe female also puts bacteria into the fruit when she lays eggs, and these bacteria rot the flesh. The fruit then drops early. A single female may lay 1,200 to 1,500 eggs in the field, according to UF. That is why a few flies can ruin a whole harvest. See also the [melon fly](/pests/melon-fly), a close relative that attacks gourds."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Oriental fruit fly"
+        ],
+        [
+          "Scientific name",
+          "Bactrocera dorsalis"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Mango, papaya, guava, avocado, banana, citrus and some vegetables such as tomato and pepper"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It attacks as the fruit nears ripening, and most flies arrive during the fruiting season of mango, guava and papaya."
+        ],
+        [
+          "Life cycle",
+          "The female pierces ripe or ripening fruit and lays eggs inside. The eggs hatch in about a day, and the maggots feed for about 2 weeks. Then they drop to the soil to pupate. Egg to adult takes about 16 days in good conditions."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Oriental Fruit Fly"
+    },
+    {
+      "type": "text",
+      "text": "Look for small egg laying marks, called stings, on the fruit skin. Cut a fruit that has begun to soften and you will find creamy white maggots, about 10 mm when full grown. The adult fly is about 7 mm long. It has a black thorax with two yellow stripes, a brown to yellow abdomen with a T shaped mark, and clear wings with a brown band along the front edge. The [mango cecid fly](/pests/mango-cecid-fly) and the [mango pulp weevil](/pests/mango-pulp-weevil) damage mango too, so check what you find inside the fruit."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small sting marks on the fruit skin where the female laid eggs.",
+        "Fruit that softens, rots or drops before it is ripe.",
+        "Creamy white maggots inside the flesh.",
+        "Fruit that ripens too early or goes soft where the eggs were laid.",
+        "Many flies on fallen fruit under the tree.",
+        "Fruit that looks sound at first but rots from the inside within days."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "The [melon fly](/pests/melon-fly) is similar, but it stings gourds such as ampalaya and upo. Several other fruit flies also look alike, so for a sure name, bring a few flies to your agricultural technician."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Oriental Fruit Fly Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The Pacific Pests sheet describes premature fruit drop within days of egg laying, and heavy yield losses in mango and guava in Thailand. When the fly entered Australia in 1995, it took 4 years and 33 million dollars to wipe it out. The fly can also close export markets, because its presence can limit export opportunities.\n\nI found no Philippine action threshold in the sources I read. The usual rule is to trap and watch from the time the fruit is half grown, and to act as soon as the traps catch flies."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Oriental Fruit Fly"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Hang traps with methyl eugenol in the shade of the trees to watch the males. The lure only monitors and draws the males, so it does not protect the fruit by itself.",
+        "Pick up and destroy every fallen and overripe fruit each few days. Bury it deep or seal it in a plastic bag in the sun, so the maggots cannot pupate in the soil.",
+        "Bag the fruit at least 6 weeks before harvest, as the Pacific Pests sheet suggests, so the females cannot reach it.",
+        "Harvest at the mature green stage when your buyer allows it. The flies prefer ripe fruit.",
+        "Prune the canopy to improve air flow, and keep wild host plants such as guava and Ficus away from the orchard edge.",
+        "Work with your neighbors, because the flies travel from tree to tree. See the [integrated pest management guide](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Pacific Pests prefers protein bait sprays to broad cover sprays. The bait draws the flies, and the insecticide in it kills them. Apply it 5 to 8 weeks before harvest to a few spots of the canopy, not to the fruit. Follow the FPA registered label and the waiting time. Older sprays such as malathion and pyrethroids caused resistance and harmed the environment."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Spinosad",
+          "IRAC 5",
+          "mixed with a protein bait, as the Pacific Pests sheet advises"
+        ],
+        [
+          "Spinetoram",
+          "IRAC 5",
+          "mixed with a protein bait, as the Pacific Pests sheet advises"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Keep the orchard floor clean of fallen fruit all through the season.",
+        "Bag the fruit well before harvest.",
+        "Use traps from half grown fruit on, so you act before the fly builds up.",
+        "Plan your planting and harvest dates with neighbors to break the fly's food supply."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Oriental Fruit Fly"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do my mangoes rot from inside even though the skin looks fine?",
+          "a": "The oriental fruit fly may have laid eggs under the skin. The maggots rot the flesh while the skin still looks fine. Cut a soft fruit open and look for maggots."
+        },
+        {
+          "q": "Does a methyl eugenol trap protect my fruit?",
+          "a": "Not by itself. It draws and catches the males and tells you when flies are around. Bagging, removing fallen fruit and bait sprays protect the fruit."
+        },
+        {
+          "q": "When should I put out the bait spray?",
+          "a": "Pacific Pests says 5 to 8 weeks before harvest. Mix the protein bait with the insecticide and spray it on part of the canopy."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "Red palm weevil",
+          "url": "/pests/red-palm-weevil"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Oriental fruit fly",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/oriental_fruit_fly_563.htm"
+        },
+        {
+          "label": "University of Florida IFAS: Oriental fruit fly, Bactrocera dorsalis",
+          "url": "https://ask.ifas.ufl.edu/publication/IN240"
+        }
+      ]
+    }
+  ]
+}

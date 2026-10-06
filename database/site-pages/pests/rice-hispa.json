@@ -1,0 +1,243 @@
+{
+  "section": "pests",
+  "slug": "rice-hispa",
+  "sortOrder": 245,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Rice Hispa: White Streaks, Burnt Looking Fields and Control",
+  "metaTitle": "Rice Hispa: White Leaf Streaks, Damage and Control",
+  "metaDescription": "Rice hispa beetles scrape rice leaves into white streaks and the grubs mine them. Learn the signs, how to tell it apart and how to manage it.",
+  "focusKeyword": "rice hispa",
+  "keywords": [
+    "rice hispa",
+    "hispa",
+    "dicladispa armigera",
+    "white streaks on rice leaves",
+    "rice beetle"
+  ],
+  "excerpt": "Rice hispa is a small spiny beetle that scrapes the green tissue of rice leaves. The leaves show white streaks and turn papery, and heavy attacks make a field look burnt. This page shows how to spot rice hispa and how to keep it low without wasteful spraying.",
+  "heroImage": {
+    "src": "/images/site/pests/rice-hispa.webp",
+    "thumb": "/images/site/pests/rice-hispa-480.webp",
+    "alt": "A spiny hispine leaf beetle from Java, the same group of beetles as the rice hispa, on a green leaf",
+    "credit": "gbohne from Berlin, Germany, CC BY SA 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Hispa?"
+    },
+    {
+      "type": "text",
+      "text": "Rice hispa (Dicladispa armigera) is a leaf beetle. The adults scrape the upper surface of the leaf blade and leave only the lower skin. The grubs tunnel between the two skins of the leaf and make irregular, translucent patches.\n\nEPPO lists the beetle as present in the Philippines, without details on how common it is. It is also listed in many other rice countries in Asia. So it is worth knowing, because a bad attack looks like a burnt field."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice hispa"
+        ],
+        [
+          "Scientific name",
+          "Dicladispa armigera"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves"
+        ],
+        [
+          "When it strikes",
+          "In the vegetative stage, more in the rainy season and in crowded, heavily fertilized fields."
+        ],
+        [
+          "Life cycle",
+          "Adult beetles scrape the leaf surface, and the grubs mine inside the leaf between its two skins."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Hispa"
+    },
+    {
+      "type": "text",
+      "text": "Hold up a damaged leaf to the light. White streaks running parallel to the midrib are the adult feeding. Irregular, translucent white patches that follow the leaf veins are the grub mines. Look for the small spiny beetles on the leaves. White patches on the inner leaf margins of unopened leaves point to the [rice whorl maggot](/pests/rice-whorl-maggot) instead."
+    },
+    {
+      "type": "list",
+      "items": [
+        "White streaks run along the leaf, parallel to the midrib.",
+        "Irregular translucent patches follow the leaf veins where grubs mined.",
+        "Damaged leaves turn whitish and papery, and wither.",
+        "Heavy attacks make whole patches of the field look burnt.",
+        "Plants are less vigorous when the damage is severe."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Wind tears, the [rice leaffolder](/pests/rice-leaffolder) and the whorl maggot all leave pale marks. Hispa leaves streaks along the leaf and spiny beetles on it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Hispa Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "IRRI says that when damage is severe, plants become less vigorous. The sources we read give no percent yield loss and no action threshold, so we state none. The best guide is your own field. Check the leaves each week in the vegetative stage and note how many hills show fresh streaks."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Hispa"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Avoid over fertilizing, because heavily fertilized fields favor the beetle.",
+        "Do not plant too close. Wide spacing keeps the leaf density low, and dense leaves favor hispa.",
+        "Remove grassy weeds in the field and along the bunds, because they are alternate hosts.",
+        "Walk the field in the vegetative stage and look for the beetles and the white streaks.",
+        "Protect the natural enemies. Small wasps attack the eggs and grubs, reduviid bugs attack the adults, and three fungi infect them. See the guide on [rice insects](/pests/rice-insects)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "The sources we read name no insecticide for rice hispa in the Philippines, so we list no ingredient. EPPO gives no detail on how common the beetle is here. Ask a PhilRice or DA technician before you spray anything. Early sprays also kill the spiders and wasps that protect the crop."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Keep the bunds and canals free of grassy weeds.",
+        "Use the recommended spacing and fertilizer rate.",
+        "Avoid sprays in the first 30 to 40 days after transplanting unless there is a true outbreak.",
+        "Report an unusual outbreak to your municipal agriculture office."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Hispa"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is rice hispa common in the Philippines?",
+          "a": "EPPO lists it as present in the Philippines, but gives no detail on how common it is here."
+        },
+        {
+          "q": "What does hispa damage look like?",
+          "a": "White streaks along the leaf from the adults, and translucent patches from the grubs. Severe damage makes the field look burnt."
+        },
+        {
+          "q": "How do I keep it away?",
+          "a": "Avoid over fertilizing and close spacing, and remove grassy weeds. These are the steps IRRI lists."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice hispa (Lucid key)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Hispa.htm"
+        },
+        {
+          "label": "EPPO Global Database: Dicladispa armigera distribution",
+          "url": "https://gd.eppo.int/taxon/HISPAR/distribution"
+        }
+      ]
+    }
+  ]
+}

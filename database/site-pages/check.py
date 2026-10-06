@@ -221,7 +221,7 @@ def check(path, urls, focus_seen):
     all_words = sum(len(words(t)) for t in body)
     # A weed in the catalogue is a profile, not a long guide, though its
     # ingredient table by rice age adds about 250 words (2026-10-06).
-    profile = sec == "weeds" and page.get("category") in ("Grasses", "Sedges", "Broadleaves")
+    profile = (sec == "weeds" and page.get("category") in ("Grasses", "Sedges", "Broadleaves")) or (sec in ("pests", "diseases") and page.get("profile"))
     lo, hi = (600, 1100) if sec == "features" else (650, 1700) if profile else (900, 1800)
     if all_words < lo:
         errs.append("only %d words (at least %d)" % (all_words, lo))

@@ -1,0 +1,248 @@
+{
+  "section": "pests",
+  "slug": "mole-cricket",
+  "sortOrder": 265,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Mole Cricket: How to Spot It and Stop It in Your Palay",
+  "metaTitle": "Mole Cricket: Damage and Control in Rice Seedbeds",
+  "metaDescription": "The mole cricket cuts seedlings at the base and leaves bare patches in the seedbed. Learn the signs and the control steps that work in rice.",
+  "focusKeyword": "mole cricket",
+  "keywords": [
+    "mole cricket",
+    "mole cricket in rice",
+    "oriental mole cricket",
+    "mole cricket control",
+    "cut seedlings in seedbed"
+  ],
+  "excerpt": "The mole cricket, Gryllotalpa orientalis, is a plump, brown, digging insect that cuts seeds, roots and seedlings from below the soil. It strikes at night, so farmers often see only the bare patches. This page shows the signs and the steps that keep it down.",
+  "heroImage": {
+    "src": "/images/site/pests/mole-cricket.webp",
+    "thumb": "/images/site/pests/mole-cricket-480.webp",
+    "alt": "A mole cricket, Gryllotalpa orientalis, brown with shovel shaped front legs for digging",
+    "credit": "Alexander A. Fomichev, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Mole Cricket?"
+    },
+    {
+      "type": "text",
+      "text": "The mole cricket lives in all rice environments, but it prefers upland and non flooded ground. In a flooded paddy it swims in the water or stays in permanent burrows along the levees and field borders.\n\nFarmers care because it attacks the crop when it is smallest. It feeds on sown seeds, roots and young tillers, so a patch of seedlings can vanish and the stand loses plants. The risk is highest from seedling to tillering."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Mole cricket"
+        ],
+        [
+          "Scientific name",
+          "Gryllotalpa orientalis"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Seedlings and roots and base"
+        ],
+        [
+          "When it strikes",
+          "From sowing to tillering, mostly at night, and most often in seedbeds and fields that are still dry before flooding."
+        ],
+        [
+          "Life cycle",
+          "Adults and nymphs live in burrows marked by soil heaps, mostly in moist, non flooded ground and along levees. Females lay shiny gray eggs in holes in the soil, and the nymphs feed on seeds and roots."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Mole Cricket"
+    },
+    {
+      "type": "text",
+      "text": "Look for small mounds of loose soil and burrows near the roots, and for tan nymphs in tunnels. The adult is a brownish, plump insect, about 25 to 40 millimeters long. It has short antennae and wide front legs that dig like a mole. The damage looks like ant damage. It can also resemble a [white grub](/pests/white-grub) problem, but white grubs only eat roots and do not cut the stem at the base."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Seedlings are cut at the base and bare patches show in the seedbed or field.",
+        "Seeds are eaten after sowing, so the stand comes up thin.",
+        "Roots are chewed, and young plants grow poorly or die.",
+        "Burrows and small heaps of soil appear near the roots and along the levees.",
+        "Damage grows at night and the insects hide in the soil by day."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Ant damage and [cutworm](/pests/cutworm) damage also cut seedlings. Look for the burrows with soil heaps and for the digging insect itself to be sure."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Mole Cricket Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "The mole cricket causes loss of plant stand, cut seedlings and root damage, as the IRRI based rice pest key describes. The damage comes in patches, not across the whole field. Even so, a thin stand costs seed, labor for replanting and time.\n\nWe found no sourced yield loss figure for the Philippines, so we give none. Check your seedbed every few days, and mark the patches in your notes so you can compare them next season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Mole Cricket"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Flood the field for 3 to 4 days. Standing water drives the insects out of the soil and removes the eggs. Keep water in the field where you can.",
+        "Level the field well. A level field holds water evenly and stops dry pockets where the insects stay.",
+        "Shave the bunds and plaster them with fresh wet soil. This kills the eggs laid in the levees.",
+        "Collect the nymphs and adults by hand during land preparation, and avoid raised nurseries, since dry raised beds invite damage.",
+        "Protect natural enemies. Sphecid wasps, carabid beetles, nematodes and fungi attack the mole cricket, and the crickets also eat each other.",
+        "If damage continues, use a bait on the bunds at night. Mix moistened rice bran with an insecticide and place it where the insects feed."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Use an insecticide only as a last resort, and only as a bait on the bunds. It corrects a problem and does not prevent one. The sources we used do not name an active ingredient. Ask your local DA office which FPA registered product to use, and follow its label."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Level the field and keep water control good from the start.",
+        "Shave and plaster the bunds before every season.",
+        "Flood the field for a few days before sowing where you can.",
+        "Check the seedbed at dusk and early morning for burrows and cut seedlings."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Mole Cricket"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What kind of mole cricket attacks rice?",
+          "a": "It is the oriental mole cricket, Gryllotalpa orientalis, which lives in all rice environments."
+        },
+        {
+          "q": "When does the mole cricket attack rice?",
+          "a": "From seedling to tillering. Young, newly planted seedlings are most at risk early in the season, before the field is flooded."
+        },
+        {
+          "q": "Does flooding stop it?",
+          "a": "Standing water helps a lot. Flooding for 3 to 4 days and keeping water in the field are recommended, but the insects can still live in the levees."
+        },
+        {
+          "q": "Do I need to spray?",
+          "a": "Usually not. Cultural and natural control come first. A bait is the last step and must follow a registered product label."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Rice pest key: Crickets (mole crickets)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Crickets_(Mole_crickets).htm"
+        },
+        {
+          "label": "Tamil Nadu Agricultural University: Mole cricket in paddy",
+          "url": "https://agritech.tnau.ac.in/expert_system/paddy/cppests_molecricket.html"
+        }
+      ]
+    }
+  ]
+}

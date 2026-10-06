@@ -1,0 +1,265 @@
+{
+  "section": "pests",
+  "slug": "mango-leafhopper",
+  "sortOrder": 405,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Mango Leafhopper: How to Spot It and Protect the Flowers",
+  "metaTitle": "Mango Leafhopper: Flower Damage and Control",
+  "metaDescription": "The mango leafhopper sucks sap from mango flowers and leaves honeydew that turns black. Learn the signs, the 4 to 5 hopper threshold and the control.",
+  "focusKeyword": "mango leafhopper",
+  "keywords": [
+    "mango leafhopper",
+    "mango hoppers",
+    "Idioscopus clypealis",
+    "mango flowering pest",
+    "sooty mold mango"
+  ],
+  "excerpt": "The mango leafhopper, Idioscopus clypealis, is a wedge shaped insect that sucks sap from mango flowers. Flowers turn brown and dry, and fruit set drops. This page shows how to count the hoppers and how to protect the crop at flowering.",
+  "heroImage": {
+    "src": "/images/site/pests/mango-leafhopper.webp",
+    "thumb": "/images/site/pests/mango-leafhopper-480.webp",
+    "alt": "A mango leafhopper, wedge shaped with a yellow head and dark wings, on a stem",
+    "credit": "arian.suresh from Chennai, India, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Mango Leafhopper?"
+    },
+    {
+      "type": "text",
+      "text": "Adults are golden or dark brown, about 4 to 5 mm long, with a broad rounded head. The nymphs are yellow brown with red eyes. They move fast, and when you shake a branch they jump and fly off with a clicking sound.\n\nMango is the only host. In the Philippines, three leafhopper species have been found on mango at the UPLB campus, including Idioscopus clypealis. It was long seen as one of the most destructive mango insects. It is the flowering period that matters, because high numbers of adults and nymphs show up in the flowers."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Mango leafhopper"
+        ],
+        [
+          "Scientific name",
+          "Idioscopus clypealis"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Mango"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, panicles and ears and fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It builds up when the mango flowers, since Idioscopus clypealis breeds only in the flowers."
+        ],
+        [
+          "Life cycle",
+          "A female lays 100 to 200 eggs singly in the midrib on the underside of the leaves or in the flowers. Adults spread a short way by flying, and farther on nursery plants."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Mango Leafhopper"
+    },
+    {
+      "type": "text",
+      "text": "Tap a flowering branch over a sheet of paper, or shake it gently. Small wedge shaped insects jump and fly with a clicking sound. Look at the flowers for brown, dry spots, and look at leaves and fruit for sticky honeydew and black sooty mold. Flowers dried by disease do not come with live hoppers jumping around."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Wedge shaped hoppers jump and fly with a clicking sound when you shake a flowering branch.",
+        "Flowers turn brown and dry and fall before they set fruit.",
+        "Leaves and fruit are sticky with honeydew.",
+        "Black sooty mold grows on the honeydew and covers the leaves.",
+        "Fruit set is poor on branches with many hoppers."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Brown dry flowers can also come from [powdery mildew](/diseases/powdery-mildew) or from [anthracnose](/diseases/anthracnose). The hoppers jumping off a shaken branch, and sticky honeydew, tell you it is the insect."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Mango Leafhopper Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Hoppers suck sap and drop honeydew. The flowers dry up, so fruit set and yield fall. Sooty mold grows on the honeydew, blackens the leaves and cuts photosynthesis. The Pacific fact sheet puts crop losses as high as 50 percent in bad cases.\n\nThe Pacific fact sheet says economic injury occurs at 4 to 5 adult insects per flower branch while the fruit is still small. That holds for India and the Philippines. That count is a useful action threshold. Compare it with the [mango pulp weevil](/pests/mango-pulp-weevil) and the [mango cecid fly](/pests/mango-cecid-fly), which attack the fruit later in the season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Mango Leafhopper"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Prune the tree after harvest to open the canopy. Hoppers do well in shade and high humidity, so airy trees get fewer.",
+        "Start scouting before flowering. Shake a few flowering branches each week and count the adults per flower branch.",
+        "Compare your count with the threshold of 4 to 5 adults per flower branch while the fruit is still small.",
+        "Use the fungi Beauveria bassiana or Metarhizium anisopliae, applied in an oil based spray, to cut the hopper numbers.",
+        "Protect natural enemies. Spiders, ladybird beetles, lacewing larvae and chalcid wasps feed on the hoppers. In the Philippines, two parasitoids from the insect group Strepsiptera attack them at a low rate.",
+        "Do not move infested nursery plants to a clean orchard, because longer distance spread is on nursery plants."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "If your count passes the threshold, spray before the flowers open, because sprays at full bloom can harm the pollinators. In Australia the advice is two sprays 7 days apart before flowering begins. Follow the label and the FPA registration."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Dimethoate",
+          "IRAC 1B",
+          "systemic, listed by the Pacific fact sheet, can be sprayed or trunk injected"
+        ],
+        [
+          "Synthetic pyrethroids",
+          "IRAC 3A",
+          "listed by the Pacific fact sheet, also kill natural enemies"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Prune each year after harvest so the canopy stays open.",
+        "Keep trees well spaced and the orchard clean.",
+        "Check new nursery plants before you bring them into the orchard.",
+        "Scout every season from the first flower buds."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Mango Leafhopper"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "When do mango leafhoppers attack?",
+          "a": "During flowering. Idioscopus clypealis breeds only in the flowers, and the high numbers of adults and nymphs come then."
+        },
+        {
+          "q": "How many hoppers are too many?",
+          "a": "The Pacific fact sheet gives 4 to 5 adults per flower branch while the fruit is still small, in India and the Philippines."
+        },
+        {
+          "q": "Why are my mango leaves black?",
+          "a": "Honeydew from the hoppers grows sooty mold, which blackens the leaves and cuts photosynthesis."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Mango leafhoppers",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/mango_leafhoppers_263.htm"
+        },
+        {
+          "label": "UPLB: Mango leafhoppers and their parasitoids",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4499"
+        }
+      ]
+    }
+  ]
+}

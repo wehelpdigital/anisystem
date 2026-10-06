@@ -1,0 +1,280 @@
+{
+  "section": "diseases",
+  "slug": "rice-tungro",
+  "sortOrder": 215,
+  "lang": "en",
+  "category": "Rice diseases",
+  "profile": true,
+  "title": "Rice Tungro: How to Spot the Yellowing Virus and Stop It",
+  "metaTitle": "Rice Tungro: Signs, Leafhopper Vector and Prevention",
+  "metaDescription": "Rice tungro turns palay yellow orange and stunted, and no spray cures it. Learn the signs, the leafhopper that spreads it and how to plant around it.",
+  "focusKeyword": "rice tungro",
+  "keywords": [
+    "rice tungro",
+    "tungro virus",
+    "tungro disease of rice",
+    "green leafhopper and tungro",
+    "rice tungro bacilliform virus",
+    "yellowing of palay"
+  ],
+  "excerpt": "Rice tungro is a virus disease that turns palay leaves yellow to orange, stunts the plants and leaves the panicles small and half empty. Two viruses cause it together, and the green leafhopper carries them from field to field. Once a plant has tungro it cannot be cured, so the fight happens before and during planting.",
+  "heroImage": {
+    "src": "/images/site/diseases/rice-tungro.webp",
+    "thumb": "/images/site/diseases/rice-tungro-480.webp",
+    "alt": "Rice plants with the orange and yellow leaves of tungro",
+    "credit": "Nozaki Michio (JIRCAS Photo Archive), CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Tungro?"
+    },
+    {
+      "type": "text",
+      "text": "Tungro comes from two viruses working together: rice tungro bacilliform virus and rice tungro spherical virus. PhilRice notes that the leafhopper cannot pass on the bacilliform virus unless the spherical virus is also present. Besides cultivated rice, the viruses infect some wild rice relatives and grassy weeds in and around the paddy.\n\nIRRI counts tungro among the most damaging diseases of rice in South and Southeast Asia, and PhilRice lists it among the major diseases to watch in the rainy season. It moves fast in young fields, because the [green leafhopper](/pests/green-leafhopper) prefers young plants and picks up the viruses more easily from them. So a field planted weeks after its neighbors is the one most at risk."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice tungro"
+        ],
+        [
+          "Scientific name",
+          "Rice tungro bacilliform virus and rice tungro spherical virus"
+        ],
+        [
+          "Kind",
+          "Virus (spread by insects)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, the whole plant and panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "Tungro can infect rice at any stage, but it shows most in the vegetative phase, and young plants at tillering are the most vulnerable, above all in late or staggered plantings."
+        ],
+        [
+          "How it spreads",
+          "The green leafhopper picks up the two viruses in a short feed on a sick plant and passes them on within 5 to 7 days, then loses them unless it feeds on a sick plant again. Between crops the viruses wait in stubble, ratoons, volunteer rice, grassy weeds and nearby infected fields."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Tungro"
+    },
+    {
+      "type": "text",
+      "text": "Check the leaves and the insects together. Infected plants turn yellow or orange yellow, starting at the leaf tip and moving down the blade. Young leaves look mottled or striped, and some show rust colored spots. The plants stay short with fewer tillers, so infected hills sit lower than their neighbors. Then look for green leafhoppers on the leaves. Where a laboratory is near, a serological test such as ELISA gives the final answer."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Leaves that turn yellow or orange yellow, starting at the tip and spreading down the blade.",
+        "Mottled or striped young leaves, sometimes with rust colored spots.",
+        "Stunted hills with fewer tillers than the healthy plants nearby.",
+        "Late flowering, with small panicles that do not fully come out of the sheath.",
+        "Many sterile or partly filled grains covered with dark brown blotches.",
+        "Green leafhoppers feeding on the young plants around the yellow hills."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Tungro yellowing can pass for nitrogen or zinc deficiency, water stress, planthopper, stem borer or rat damage, grassy stunt or orange leaf. Look for yellow to orange color that starts at the leaf tips, mottled young leaves and green leafhoppers in the field."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Tungro Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "In severe cases, IRRI says susceptible varieties infected early can lose up to 100 percent of their yield. The disease builds quickly in young fields. Late planted fields suffer most, and they also carry the disease into the early plantings of the next season.\n\nThere is no leafhopper count that tells you when to spray. IRRI warns that insecticides often fail against tungro, because leafhoppers keep moving in from nearby fields and spread the viruses in very short feeds. So the real action point is the first sick plant. PhilRice advises pulling infected plants out as soon as you find them, then watching the field closely for new ones."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Tungro"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant a tungro resistant or leafhopper resistant variety. IRRI calls this the most economical defense, and PhilRice names NSIC Rc120 for tungro.",
+        "Plant at the same time as the farms around you. Late or staggered planting gives the leafhoppers and the viruses a steady supply of young rice.",
+        "Leave a fallow of at least one month between crops, as PhilRice advises, to cut the food supply of the leafhoppers.",
+        "Walk the field often to look for leafhoppers and sick plants, and pull infected plants out as soon as you see them.",
+        "Plow under the stubble right after harvest to remove virus sources and destroy leafhopper eggs and breeding sites.",
+        "Avoid seedbeds near tungro hit fields and long nursery periods, since IRRI links nurseries of 5 to 6 weeks in tungro areas to more infection."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why No Spray Cures It"
+    },
+    {
+      "type": "text",
+      "text": "No chemical cures a plant with tungro. An insecticide against the green leafhopper helps only where tungro is already in the area and hoppers are many, and even then IRRI warns it often fails. PhilRice also advises no pesticide for 30 to 40 days after planting, because early sprays kill the spiders and wasps that keep pests down. Follow the FPA label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Pymetrozine",
+          "IRAC 9B",
+          "registered in the Philippines for green leafhopper on rice"
+        ],
+        [
+          "Buprofezin",
+          "IRAC 16",
+          "a growth regulator that works on the nymphs, registered for green leafhopper on rice"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose a tungro or leafhopper resistant variety each season, with help from our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines).",
+        "Agree on one planting window with your neighbors, and avoid planting late.",
+        "Keep a fallow of at least a month between crops.",
+        "Plow under stubble and clear volunteer rice and grassy weeds right after harvest.",
+        "Raise seedlings away from tungro hit fields, and keep the nursery period short."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Tungro"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can a rice plant recover from tungro?",
+          "a": "No. Once a plant has tungro it cannot be cured. In varieties with some resistance, the yellowing may stay mild and fade as the plant matures. Even so, PhilRice advises pulling infected plants early."
+        },
+        {
+          "q": "What insect spreads rice tungro?",
+          "a": "The green leafhopper is the most efficient vector. It picks up the viruses after a short feed on a sick plant and passes them on within 5 to 7 days."
+        },
+        {
+          "q": "Is my yellow, stunted rice tungro or grassy stunt?",
+          "a": "Both yellow and stunt the crop. Tungro yellowing starts at the leaf tips and turns orange, with fewer tillers. [Rice grassy stunt](/diseases/rice-grassy-stunt) instead makes many upright tillers that look like a clump of grass."
+        },
+        {
+          "q": "Should I spray insecticide to stop tungro?",
+          "a": "Only on advice, and only where tungro is already in the area. IRRI says insecticides against leafhoppers often fail, because the hoppers keep moving in from nearby fields. Resistant varieties and synchronous planting do far more."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice diseases",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "Rice blast",
+          "url": "/diseases/rice-blast"
+        },
+        {
+          "label": "Bacterial leaf blight",
+          "url": "/diseases/bacterial-leaf-blight"
+        },
+        {
+          "label": "Brown spot of rice",
+          "url": "/diseases/rice-brown-spot"
+        },
+        {
+          "label": "False smut",
+          "url": "/diseases/rice-false-smut"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Tungro",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
+        },
+        {
+          "label": "PhilRice: Diseases of the rice plant in the Philippines, flash cards",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Diseases-of-the-rice-plant-in-the-Philippines-flash-cards.pdf"
+        },
+        {
+          "label": "PhilRice: Preventing rice pests, diseases during rainy season",
+          "url": "https://www.philrice.gov.ph/preventing-rice-pests-diseases-rainy-season/"
+        },
+        {
+          "label": "FPA: Registered pesticide products (list as of August 31, 2026)",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

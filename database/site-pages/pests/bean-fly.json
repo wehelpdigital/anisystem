@@ -1,0 +1,277 @@
+{
+  "section": "pests",
+  "slug": "bean-fly",
+  "sortOrder": 360,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Bean Fly: How to Spot It and Protect Your Bean Seedlings",
+  "metaTitle": "Bean Fly: Signs, Damage and Control in Beans",
+  "metaDescription": "The bean fly maggots tunnel into bean and mungbean seedlings and make them wilt and die. Learn the signs and how to protect the first weeks of your crop.",
+  "focusKeyword": "bean fly",
+  "keywords": [
+    "bean fly",
+    "Ophiomyia phaseoli",
+    "beanfly in mungbean",
+    "wilting bean seedlings",
+    "stem maggot in beans",
+    "bean fly control"
+  ],
+  "excerpt": "The bean fly is a tiny shiny black fly whose maggots tunnel into the stems of bean, mungbean and cowpea seedlings. Young plants wilt, stop growing or die. This page shows how to spot the bean fly early and how to protect the crop in its first four weeks.",
+  "heroImage": {
+    "src": "/images/site/pests/bean-fly.webp",
+    "thumb": "/images/site/pests/bean-fly-480.webp",
+    "alt": "An adult bean fly, Ophiomyia phaseoli, a tiny dark fly, shown close up in a museum collection",
+    "credit": "Lonsdale O, Murphy ST, Scheffer SJ, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Bean Fly?"
+    },
+    {
+      "type": "text",
+      "text": "The bean fly (Ophiomyia phaseoli) is found across tropical and subtropical Asia. It attacks navy bean, adzuki bean, cowpea, mungbean and other legumes. The Pacific Pests fact sheet says soybean is not an important host. A wild weed, the phasey bean, is also a host.\n\nBoth the adults and the maggots do harm, mostly on seedlings in the first 3 to 4 weeks after emergence. Older plants usually grow past it, but the young plants may not. So a field that loses its seedlings early loses its stand, and the farmer replants or accepts thin rows."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Bean fly"
+        ],
+        [
+          "Scientific name",
+          "Ophiomyia phaseoli"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Mungbean, cowpea, sitaw, string bean and other beans"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Seedlings and stems and tillers"
+        ],
+        [
+          "When it strikes",
+          "It matters in the first 3 to 4 weeks after the seedlings come up, and older plants usually outgrow it."
+        ],
+        [
+          "Life cycle",
+          "The adult fly lays white eggs near the leaf stalks. The tiny maggots tunnel down the leaf and the stem to the base, where they pupate at the stem and root junction. The maggot stage lasts about 10 days, and the pupa 10 to 12 days, depending on temperature."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Bean Fly"
+    },
+    {
+      "type": "text",
+      "text": "Look at the seedlings during the first weeks. The adult fly is tiny, about 2 mm, shiny black, with clear wings. It makes small holes in the leaves where it feeds and lays eggs. The maggot is white, about 3 mm long and hides inside the stem, so you must cut the main stem open just above the soil to find the tunnel. Older plants may be yellow and stunted. The [legume pod borer](/pests/legume-pod-borer) is different, because it attacks the flowers and pods, not the seedlings."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small feeding holes in the young leaves.",
+        "Seedlings that wilt in the heat of the day, then die.",
+        "Weak, yellow and stunted plants.",
+        "A swelling at the base of the stem, near the roots.",
+        "White maggots, about 3 mm long, in a tunnel when you cut the stem open.",
+        "Pupae at the stem and root junction when you pull up a dead seedling."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Seedling wilt can also come from damping off or from dry soil. Cut the stem open. The bean fly leaves a tunnel with a white maggot or a pupa. See [damping off](/diseases/damping-off) if you find no maggot."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Bean Fly Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The Pacific Pests fact sheet says the flies and maggots cause weak growth, wilting and, in the worst cases, the death of the plant from swelling at the stem and root junction. The damage comes early, so the effect on the crop is a thin and uneven stand.\n\nI found no Philippine yield loss figure or action threshold in the sources I could open. The advice is the same everywhere. Protect the seedlings through the first 3 to 4 weeks, and the crop usually grows past the problem."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Bean Fly"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Before planting, remove volunteer legumes and weeds in the legume family, and keep the new crop away from existing bean fields.",
+        "Plant on time with a vigorous seed, and give the seedlings enough water and fertilizer so they grow fast through the first weeks.",
+        "Hill up the soil around the plants at 2 to 3 weeks and put mulch around them. This helps the plant make new roots above the damaged part, according to Pacific Pests.",
+        "Check seedlings 3 to 4 days after they emerge, then every few days, and cut a few stems open to look for maggots.",
+        "In mungbean trials in Thailand, a spray of neem seed kernel extract at 5 percent worked as well as an insecticide against two bean fly species. The same study says to apply it no more than 4 times, to avoid harm to the plants.",
+        "After harvest, collect the crop remains and burn or bury them. See the [integrated pest management guide](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A spray makes sense only on seedlings, within the first 3 to 4 weeks. Pacific Pests suggests treating 3 to 4 days after emergence and repeating at 7 and 14 days if needed. Follow the FPA registered label, check that the product is registered for beans, and keep to the waiting time before harvest."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Dimethoate",
+          "IRAC 1B",
+          "a systemic spray for seedlings, listed by Pacific Pests"
+        ],
+        [
+          "Diazinon",
+          "IRAC 1B",
+          "listed by Pacific Pests for seedlings"
+        ],
+        [
+          "Methomyl",
+          "IRAC 1A",
+          "listed by Pacific Pests for seedlings"
+        ],
+        [
+          "Imidacloprid",
+          "IRAC 4A",
+          "as a seed dressing, which Pacific Pests calls promising"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Clear volunteer beans and wild legumes before planting.",
+        "Keep new plantings away from old bean fields.",
+        "Hill up the young plants and mulch them.",
+        "Remove the crop remains after harvest."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Bean Fly"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do my bean seedlings wilt and die in the first weeks?",
+          "a": "The bean fly maggots may be tunneling in the stem. Cut a wilted stem open just above the soil. If you see a white maggot or a tunnel, the cause is the bean fly. If not, check for damping off or dry soil."
+        },
+        {
+          "q": "Do older bean plants suffer the same damage?",
+          "a": "Usually less. Pacific Pests says the damage is mostly in the first 3 to 4 weeks. After that, hilling up and good care help the plant grow past the attack."
+        },
+        {
+          "q": "Can I use neem for the bean fly?",
+          "a": "In a Thai mungbean study, a neem seed kernel extract at 5 percent worked well against two bean fly species, about as well as a chemical insecticide. The study advised no more than 4 sprays."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Diamondback moth",
+          "url": "/pests/diamondback-moth"
+        },
+        {
+          "label": "Cabbage webworm",
+          "url": "/pests/cabbage-webworm"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Bean fly",
+          "url": "https://apps.lucidcentral.org/pppw_v12/text/web_full/entities/bean_cowpea_fly_291.htm"
+        },
+        {
+          "label": "Thai Agricultural Research Journal: Control of beanflies on mungbean using neem seed applications",
+          "url": "https://li01.tci-thaijo.org/index.php/thaiagriculturalresearch/article/view/228907"
+        }
+      ]
+    }
+  ]
+}

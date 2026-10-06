@@ -1,0 +1,284 @@
+{
+  "section": "pests",
+  "slug": "eggplant-fruit-and-shoot-borer",
+  "sortOrder": 325,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Eggplant Fruit and Shoot Borer: How to Spot It and Stop It in Your Talong",
+  "metaTitle": "Eggplant Fruit and Shoot Borer: Signs and Control",
+  "metaDescription": "The eggplant fruit and shoot borer wilts shoots and fills talong fruits with frass. Learn the signs and how to control it without spraying every week.",
+  "focusKeyword": "eggplant fruit and shoot borer",
+  "keywords": [
+    "eggplant fruit and shoot borer",
+    "talong pest",
+    "eggplant borer",
+    "wilted eggplant shoots",
+    "holes in eggplant fruit",
+    "Leucinodes orbonalis"
+  ],
+  "excerpt": "The eggplant fruit and shoot borer is a small moth caterpillar that tunnels into the shoots and fruits of talong. It is the main reason many eggplant growers spray so often. This page shows how to spot it early and how to cut the damage with clean fields, traps and careful sprays.",
+  "heroImage": {
+    "src": "/images/site/pests/eggplant-fruit-and-shoot-borer.webp",
+    "thumb": "/images/site/pests/eggplant-fruit-and-shoot-borer-480.webp",
+    "alt": "An adult eggplant fruit and shoot borer moth, Leucinodes orbonalis, white with brown and pink patches",
+    "credit": "Donald Hobern, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Eggplant Fruit and Shoot Borer?"
+    },
+    {
+      "type": "text",
+      "text": "This borer (Leucinodes orbonalis) attacks eggplant, known as brinjal in South Asia. AVRDC calls it the pest behind the heavy misuse of pesticides in eggplant. The [eggplant leafhopper](/pests/eggplant-leafhopper) is the other big pest of the crop.\n\nThe caterpillar hurts your income twice. First it kills the growing tips, so the plant makes fewer fruits. Then it tunnels into the fruits that do form, and they cannot be sold. One larva can damage four to six fruits before it is fully grown, according to an Indian field study."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Eggplant fruit and shoot borer"
+        ],
+        [
+          "Scientific name",
+          "Leucinodes orbonalis"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Eggplant (talong)"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Stems and tillers and fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It attacks from the young plant stage to the last harvest. It is worst in warm weather when the plants keep making new shoots and fruits."
+        ],
+        [
+          "Life cycle",
+          "The moth lays eggs one by one on leaves, stems, flower buds and fruit bases. The caterpillar bores into a shoot or a fruit, then drops to the soil to pupate. Several generations overlap in warm climates, and the pest survives in dried stubble between crops."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Eggplant Fruit and Shoot Borer"
+    },
+    {
+      "type": "text",
+      "text": "Look at the shoots and the fruits together. A shoot that wilts and dries at the tip, while the older leaves stay green, usually has a larva inside. On the fruit, the first sign is a small hole just below the calyx, the green cap. Cut the fruit open and you will find a tunnel full of frass. The full grown larva is dull white turning light pink, and 15 to 18 mm long. Plain wilting from bacterial wilt starts with the whole plant, not with one shoot, so check the stem before you decide."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Shoot tips that wilt and dry while the lower leaves stay green.",
+        "A tiny entry hole just below the calyx of the fruit.",
+        "Fruits that are filled with frass and rot inside.",
+        "Larvae of 15 to 18 mm, dull white to light pink, inside shoots and fruits.",
+        "Exit holes in the shoot or the fruit where the larva left to pupate.",
+        "White moths with a pink or bluish tinge resting under the leaves in the day."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Wilted shoots can also come from bacterial wilt or from stem damage. For a [bacterial wilt](/diseases/bacterial-wilt) plant, the whole plant wilts, and a cut stem in water gives off milky threads. In borer damage, one shoot dies and a larva is inside."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Eggplant Fruit and Shoot Borer Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "AVRDC describes the damage as wilted shoots, holes under the calyx and fruits packed with frass. Because the larva feeds inside, a spray often misses it. That is why growers spray again and again, and why costs climb.\n\nI found no Philippine action threshold in the sources I read. So the working rule is simple. Check the field every week, and act on the first wilted shoots. In UPLB trials from 2010 to 2012, eggplant lines that carry the Bt Cry1Ac gene cut shoot damage by 98.6 to 100 percent and fruit damage by 98.1 to 99.7 percent. That shows how heavy the borer pressure is, and how much a clean crop is worth."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Eggplant Fruit and Shoot Borer"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Walk the field every week and clip off wilted shoots and damaged fruits. Put them in a sealed bag or bury them deep. Do not throw them on the ground. Sanitation was one part of the UPLB non chemical program that matched methomyl.",
+        "Set up pheromone traps to watch for the moths and to trap males. Change the lure on the schedule on the pack. Traps work best as a warning, together with weekly clipping.",
+        "After the last harvest, pull out the plants and destroy the stubble. AVRDC says the pest survives in partly dried stubble between crops.",
+        "Rotate with a crop that is not in the eggplant family, such as corn or beans. Avoid planting new talong next to old talong. This breaks the cycle.",
+        "Protect the natural enemies. A UPLB trial in 2015 released the earwig Euborellia annulata and sprayed langkauas plus oregano extract. Together they cut fruit damage as well as methomyl did. The trial also used Trichogramma wasps and sanitation. Early sprays of broad spectrum insecticides kill these helpers.",
+        "Look at the [integrated pest management guide](/pests/integrated-pest-management) to plan these steps together."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Spray only after you have clipped the damaged shoots and fruits, because a spray cannot reach a larva inside. Rotate groups so the borer does not learn to survive them. Follow the FPA registered label, the waiting time before harvest and the protective clothing."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Spinosad",
+          "IRAC 5",
+          "gave strong control of the shoot and fruit borer in an Indian field trial"
+        ],
+        [
+          "Emamectin benzoate",
+          "IRAC 6",
+          "ranked next to chlorantraniliprole and spinosad in the same trial"
+        ],
+        [
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "the most effective of the products in that trial"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean seedlings, and check the nursery for wilted shoots before you transplant.",
+        "Clear old eggplant stubble and wild nightshade weeds around the field.",
+        "Keep a break of at least one crop that is not in the eggplant family.",
+        "Ask your agricultural technician about eggplant varieties with better resistance to the borer."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Eggplant Fruit and Shoot Borer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do my eggplant fruits have holes under the cap?",
+          "a": "That small hole under the calyx is the entry point of the borer larva. Cut the fruit open. If you find a tunnel with frass, this borer is the cause."
+        },
+        {
+          "q": "Can I eat a fruit that has a few borer tunnels?",
+          "a": "Most buyers will not accept it, and the tunnels let rot in. Throw the damaged fruits into a sealed bag away from the field, instead of eating them or leaving them on the ground."
+        },
+        {
+          "q": "Do pheromone traps stop the borer by themselves?",
+          "a": "No. They catch the male moths and warn you early. Clipping damaged shoots and fruits every week and clearing the stubble do most of the work."
+        },
+        {
+          "q": "Is it the same pest as the one that makes my eggplant leaves curl?",
+          "a": "No. Curling and yellowing leaves usually come from the [eggplant leafhopper](/pests/eggplant-leafhopper) or from whitefly. The borer attacks the shoots and fruits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Diamondback moth",
+          "url": "/pests/diamondback-moth"
+        },
+        {
+          "label": "Cabbage webworm",
+          "url": "/pests/cabbage-webworm"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
+          "label": "Eggplant leafhopper",
+          "url": "/pests/eggplant-leafhopper"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "WorldVeg (AVRDC): Insect pests of eggplant pictorial guide",
+          "url": "https://assets.publishing.service.gov.uk/media/57a08d16ed915d3cfd0017e6/ipm_eggplant_insects.pdf"
+        },
+        {
+          "label": "UPLB: Field performance of Bt eggplant against the fruit and shoot borer",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/1599"
+        },
+        {
+          "label": "UPLB: Non chemical methods for controlling the eggplant fruit and shoot borer",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4451"
+        },
+        {
+          "label": "Journal of Pharmacognosy and Phytochemistry: Bio efficacy of insecticides against shoot and fruit borer in brinjal",
+          "url": "https://phytojournal.com/archives/2018/vol7issue6/PartAD/7-6-69-346.pdf"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "section": "pests",
+  "slug": "rice-caseworm",
+  "sortOrder": 240,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Rice Caseworm: Cut Leaves, Floating Cases and What to Do",
+  "metaTitle": "Rice Caseworm: Floating Cases, Damage and Control",
+  "metaDescription": "The rice caseworm cuts leaf tips and floats in little cases on the paddy water. Learn how to spot it and why draining the field is the first answer.",
+  "focusKeyword": "rice caseworm",
+  "keywords": [
+    "rice caseworm",
+    "caseworm",
+    "parapoynx stagnalis",
+    "caseworm in rice"
+  ],
+  "excerpt": "The rice caseworm is a caterpillar that lives in a tube made from cut rice leaves, and floats on the water of the paddy. Its damage looks as if scissors cut the leaf tips. This page shows how to spot it and why draining the field comes first.",
+  "heroImage": {
+    "src": "/images/site/pests/rice-caseworm.webp",
+    "thumb": "/images/site/pests/rice-caseworm-480.webp",
+    "alt": "An adult rice caseworm moth, Parapoynx stagnalis, white with fine brown marks on its wings",
+    "credit": "Robert Taylor, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Caseworm?"
+    },
+    {
+      "type": "text",
+      "text": "The rice caseworm is a moth larva found in rice fields with standing water, in both wetland and irrigated rice. The larva cuts off leaf tips to make a case. It hides in the case and floats on the water surface during the day, and feeds on the leaves. The adult moths are nocturnal and come to lights.\n\nIt is mostly a problem in ill drained fields. The damage looks bad, but its pattern is easy to recognize once you have seen the cases."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice caseworm"
+        ],
+        [
+          "Scientific name",
+          "Parapoynx stagnalis (also Nymphula depunctalis)"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and seedlings"
+        ],
+        [
+          "When it strikes",
+          "In the seedbed and the young crop, in fields with standing water."
+        ],
+        [
+          "Life cycle",
+          "Moths are active at night and come to light. The larvae live in cases made of leaf tips, float on the water by day and feed on the leaves."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Caseworm"
+    },
+    {
+      "type": "text",
+      "text": "Look at the water between the hills. Small tubes of rolled leaf that float or cling to the leaves are the cases. Leaves cut off cleanly at right angles, as with a pair of scissors, are a sure sign. Feeding leaves a papery upper skin and a ladder like pattern of hard fibers. The [rice leaffolder](/pests/rice-leaffolder) also rolls leaves, but it stays on the leaf and does not float."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Leaf tips are cut at right angles, as if with scissors.",
+        "Small leaf cases float on the water or cling to the plants.",
+        "Fed on leaves have a papery upper skin.",
+        "Skeletonized leaf tissue shows a ladder like pattern.",
+        "Moths appear at lights at night."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Cut leaf tips can also come from the [rice leaffolder](/pests/rice-leaffolder) or from wind. Only the caseworm leaves floating cases on the water."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Caseworm Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "The caseworm removes leaf area, so heavy attacks slow the young plant. The sources we read give no yield loss figure and no action threshold, so we do not state any. Look at how much leaf area is gone before you decide on any action."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Caseworm"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Drain the field. IRRI lists this first among the cultural answers, and the pest is most likely in ill drained fields.",
+        "Plant early and use wider spacing. Sparse planting also reduces the damage.",
+        "Transplant older seedlings, as IRRI advises.",
+        "Apply fertilizer correctly, as recommended for your variety.",
+        "Encourage the natural enemies. Snails feed on the eggs, water beetles feed on the larvae, and spiders, dragonflies and birds feed on the adults. Our guide on [rice insects](/pests/rice-insects) lists more."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "IRRI advises foliar sprays of carbamate insecticides and says to avoid pyrethroids, because the pest has become tolerant to them. Draining the field usually does the job first. The sources we read name no single carbamate for the Philippines, so ask a technician which registered product to use. Do not spray early in the crop without a true outbreak."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Fix drainage so water does not stand in the field for long.",
+        "Plant at the same time as your neighbors.",
+        "Keep the bunds and the canals clean of weeds.",
+        "Check the seedbed and the first weeks of the crop for floating cases."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Caseworm"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why are there cut leaves floating on my paddy?",
+          "a": "They are probably the cases of the caseworm. The larva cuts a leaf tip, rolls it into a tube and floats inside it."
+        },
+        {
+          "q": "Does draining really help?",
+          "a": "Yes. IRRI lists draining the field as a cultural control, and the pest is most likely in fields with standing water."
+        },
+        {
+          "q": "Can I use any insecticide?",
+          "a": "IRRI says carbamates work and pyrethroids should be avoided. Ask a technician about a registered product, and follow the label."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Caseworm (Lucid key)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Caseworm.htm"
+        },
+        {
+          "label": "Plantix: Rice case worm",
+          "url": "https://plantix.net/en/library/plant-diseases/600109/rice-case-worm"
+        }
+      ]
+    }
+  ]
+}

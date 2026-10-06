@@ -1,0 +1,270 @@
+{
+  "section": "diseases",
+  "slug": "coconut-bud-rot",
+  "sortOrder": 395,
+  "lang": "en",
+  "category": "Fruit and plantation diseases",
+  "profile": true,
+  "title": "Coconut Bud Rot: How to Spot It and Save Young Palms",
+  "metaTitle": "Coconut Bud Rot: Signs, Spread and Control",
+  "metaDescription": "Coconut bud rot kills the spear leaf and crown of young palms in wet weather. Learn the early signs, the drainage and spacing steps and when to treat.",
+  "focusKeyword": "coconut bud rot",
+  "keywords": [
+    "coconut bud rot",
+    "bud rot of coconut",
+    "Phytophthora palmivora coconut",
+    "coconut seedling disease",
+    "coconut spear leaf wilt"
+  ],
+  "excerpt": "Coconut bud rot is a disease of the growing point that makes the spear leaf droop and the crown rot with a bad smell. Young palms and nursery seedlings suffer most. This guide shows you the signs and the steps that keep your palms dry and clean.",
+  "heroImage": {
+    "src": "/images/site/diseases/coconut-bud-rot.webp",
+    "thumb": "/images/site/diseases/coconut-bud-rot-480.webp",
+    "alt": "A young coconut with the dark rot of Phytophthora palmivora, the water mold behind coconut bud rot",
+    "credit": "Swarochi Tathagath, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Coconut Bud Rot?"
+    },
+    {
+      "type": "text",
+      "text": "Phytophthora palmivora causes coconut bud rot. It is not a true fungus but a water mold, which is why it loves wet places. The Pacific Pests and Pathogens fact sheet says it attacks coconut and other palms, such as betel nut and oil palm. The same organism also causes [black pod of cacao](/diseases/cacao-black-pod) and infects papaya.\n\nMost hits are on palms under five years old, and seedling nurseries can be hit too, the fact sheet notes. It is a serious problem in Indonesia and Ivory Coast. We found no Philippine loss figures, so ask your PCA field office whether bud rot has been reported in your area. If you plant [coconut](/crops/coconut-fertilizer), a young palm lost to bud rot is years of growth gone."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Coconut bud rot"
+        ],
+        [
+          "Scientific name",
+          "Phytophthora palmivora"
+        ],
+        [
+          "Kind",
+          "Water mold (an oomycete)"
+        ],
+        [
+          "Crops it attacks",
+          "Coconut, and other palms such as betel nut and oil palm"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, the whole plant and fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It strikes mostly young palms under five years old and seedlings, and it is worst in wet, humid weather and in low, badly drained plantings."
+        ],
+        [
+          "How it spreads",
+          "The water mold lives in the soil and in plant debris as thick walled spores. Wind, wind driven rain and perhaps insects carry the spores to the palm crown."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Coconut Bud Rot"
+    },
+    {
+      "type": "text",
+      "text": "By the time the signs show, the disease is far along. The first sign is a wilt or bend of the spear leaf, often with a light green color. Then the outer leaves yellow from the tips of the fronds down and turn brown, and yellow brown sunken patches appear on the leaf stalks. The center of the crown rots and gives off a foul smell. Cadang cadang also yellows leaves, but a rotten, bad smelling bud points to bud rot instead. See [cadang cadang](/diseases/cadang-cadang) to compare."
+    },
+    {
+      "type": "list",
+      "items": [
+        "The spear leaf wilts or bends over, and may turn light green.",
+        "Outer leaves yellow from the tip down and then turn brown.",
+        "Yellow to light brown sunken patches appear on the leaf stalks.",
+        "The bud and inner leaves rot and smell bad, and the central leaves fall.",
+        "Seedlings are killed, and nuts can fall early when the infection reaches the flower stalk."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Other problems can also wilt a spear leaf. A rotten crown with a foul smell points to bud rot."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Coconut Bud Rot Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The rot destroys the bud and inner leaves, and the outer leaves later dry and drop. The Pacific Pests and Pathogens fact sheet says the disease is rare in Pacific islands but causes major problems in Indonesia and the Ivory Coast, and that seedling nursery outbreaks have occurred in Vanuatu. Because it takes young palms, the loss is in the years you waited, not only in the nuts.\n\nWe did not find a Philippine loss figure in the sources we read. Treat any number you hear with care."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Coconut Bud Rot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Drain the planting. Standing water and wet, humid air help the disease, so open drains in low areas.",
+        "Space palms well. The fact sheet suggests at least 10 meters apart, so air moves through the crowns and leaves dry faster.",
+        "Remove and burn palms that have bud rot as soon as you find them, so spores do not spread.",
+        "Keep nurseries clean and drained, and do not crowd seedlings. Pull out sick seedlings and burn them.",
+        "Choose tolerant types. Polynesian Tall and Rennell Tall show good tolerance, and hybrids are less susceptible than pure dwarf types. Ask the PCA which planting material suits your area.",
+        "If a palm is valuable, ask an agriculturist about the protective treatments in the next section."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Treatment comes last and works best before the bud is badly rotted. The fact sheet suggests removing infected fronds and then coating the crown, or giving trunk injections. Use only products registered for coconut by the FPA, and follow the label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Copper (Bordeaux paste)",
+          "FRAC M1",
+          "applied to the crown after removing infected fronds, according to the Pacific fact sheet"
+        ],
+        [
+          "Phosphorous acid",
+          "FRAC P07",
+          "given by injection, recommended in the Pacific fact sheet"
+        ],
+        [
+          "Metalaxyl",
+          "FRAC 4",
+          "given by injection, listed in the same fact sheet"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant on well drained land, and keep the planting open to wind and sun.",
+        "Raise seedlings in a clean, well drained nursery, and look at them every week.",
+        "Do not plant palms too close, and clear plant debris around young palms, since the water mold survives there.",
+        "Check young palms after heavy rain, since wet weather is when bud rot begins. Our [plant diseases guide](/diseases/plant-diseases-philippines) lists other diseases to watch."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Coconut Bud Rot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do the youngest palms die of bud rot?",
+          "a": "The fact sheet says the disease mostly affects palms under five years old. It also says wet weather and humid, badly drained plantings favor the water mold."
+        },
+        {
+          "q": "Can I save a palm with bud rot?",
+          "a": "By the time signs appear, the disease has advanced, the fact sheet says. Remove and burn the palm if the bud has rotted, and protect the palms around it."
+        },
+        {
+          "q": "Is coconut bud rot the same as cadang cadang?",
+          "a": "No. Bud rot is a water mold that rots the crown with a foul smell. [Cadang cadang](/diseases/cadang-cadang) is a viroid that yellows leaves and kills the palm slowly."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation diseases",
+      "items": [
+        {
+          "label": "Anthracnose",
+          "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Banana bunchy top",
+          "url": "/diseases/banana-bunchy-top"
+        },
+        {
+          "label": "Black sigatoka",
+          "url": "/diseases/black-sigatoka"
+        },
+        {
+          "label": "Moko disease and bugtok of banana",
+          "url": "/diseases/moko-disease"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Coconut bud rot",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/coconut_bud_rot_140.htm"
+        },
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Cocoa black pod (same Phytophthora palmivora)",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/cocoa_black_pod_006.htm"
+        }
+      ]
+    }
+  ]
+}

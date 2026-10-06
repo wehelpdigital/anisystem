@@ -1,0 +1,285 @@
+{
+  "section": "diseases",
+  "slug": "rice-blast",
+  "sortOrder": 205,
+  "lang": "en",
+  "category": "Rice diseases",
+  "profile": true,
+  "title": "Rice Blast: How to Spot It and Stop It in Your Palay",
+  "metaTitle": "Rice Blast: Signs, Damage and Control in the Philippines",
+  "metaDescription": "Rice blast, or mata mata, can kill young palay and empty whole panicles. Learn to read leaf, node and neck blast and stop it before heading.",
+  "focusKeyword": "rice blast",
+  "keywords": [
+    "rice blast",
+    "mata mata",
+    "leaf blast",
+    "neck blast",
+    "blast disease of rice",
+    "Pyricularia oryzae"
+  ],
+  "excerpt": "Rice blast is the fungal disease many farmers call mata mata. IRRI ranks it among the most destructive diseases of palay (rice still in the husk). It spots the leaves, blackens the nodes and rots the neck of the panicle. A bad attack can leave few or no grains.",
+  "heroImage": {
+    "src": "/images/site/diseases/rice-blast.webp",
+    "thumb": "/images/site/diseases/rice-blast-480.webp",
+    "alt": "A rice leaf with a gray centered, spindle shaped blast lesion with a brown border",
+    "credit": "Unknown author, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Blast?"
+    },
+    {
+      "type": "text",
+      "text": "Rice blast comes from the fungus Pyricularia oryzae, also called Magnaporthe oryzae. It can attack every part of the plant above the ground. That runs from the leaf and collar to the node, the neck and the panicle. PhilRice says it strikes where irrigation runs short and in upland fields. It does so most of all when the sky stays cloudy and rain keeps falling.\n\nPhilRice handouts call it mata mata, the word for its spots on the leaf. A PhilRice disease poster also lists agupaw in Waray and taya taya in Cebuano areas of Mindanao. Blast hits twice. Early on it can kill seedlings and young plants. Later, neck blast cuts the panicle off right when the grain should fill. So the first defense is the seed you buy, and our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) can help you choose."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice blast"
+        ],
+        [
+          "Scientific name",
+          "Pyricularia oryzae (Magnaporthe oryzae)"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "Mata mata (Tagalog and Bisaya), agupaw (Waray), taya taya (Cebuano in Mindanao)"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, stems and tillers, panicles and ears and seedlings"
+        ],
+        [
+          "When it strikes",
+          "Blast can strike at any stage, but leaf blast hurts most from the seedbed to tillering, while node and neck blast hit as the panicles come out and fill, mostly in cloudy, rainy weeks."
+        ],
+        [
+          "How it spreads",
+          "The fungus survives on infected straw and stubble, and its spores travel through the air. When a spore lands on a wet leaf, it sprouts, enters the leaf and makes a spot that soon releases new spores."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Blast"
+    },
+    {
+      "type": "text",
+      "text": "Start with the leaves. Young spots are white to gray green with dark green borders. Older spots turn spindle or diamond shaped, wide in the middle and pointed at both ends. They have a gray center and a reddish brown border. Next, check the collar where the flag leaf meets the sheath, then the nodes and the neck below the panicle. A blackened node or a grayish brown rot at the neck means the fungus has moved up the plant."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Spindle or diamond shaped leaf spots with gray centers and reddish brown borders.",
+        "Whole leaves that dry out after many spots grow together.",
+        "A lesion at the base of the flag leaf, the collar, that makes the flag leaf dry up.",
+        "Nodes that rot and turn black, so the stem breaks and everything above it dies.",
+        "A grayish brown rot at the base of the panicle, so the neck snaps or the panicle turns white.",
+        "Discolored grains, or few to no filled grains when the neck was hit before the milky stage."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Brown spot is the usual mix up. Blast spots are long and pointed at both ends, while brown spot lesions are rounder, brown and ringed with yellow. White panicles from neck blast also look like stem borer whiteheads. But a stem hit by a borer pulls out easily and a blast hit stem does not."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Blast Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "IRRI calls blast one of the most destructive diseases of rice. Leaf blast can kill seedlings or plants up to tillering. On older plants, a severe attack shrinks the green leaf area that fills the grain. Neck and node blast hurt even more, because they hit the panicle directly. If the neck is infected before the milky stage, no grain forms at all.\n\nThere is no simple count that tells you when to spray. Instead, IRRI advises a fungicide at heading only where the risk of yield loss is high. PhilRice also warns that the disease keeps building as long as blast spores stay in the air. So a field that had neck blast last season needs a plan before booting, and nitrogen is a big part of it. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to split it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Blast"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant a resistant variety first. PhilRice lists PSB Rc10, NSIC Rc122, Rc242 and Rc300 among varieties that hold up against blast, and your local agriculture office knows which suit your area.",
+        "Sow clean, healthy seed early, soon after the rains begin. PhilRice prefers transplanting to broadcasting, and seedlings raised in a wet bed.",
+        "Split your nitrogen into two or more applications and never pile it on. PhilRice adds that nitrate nitrogen raises the risk more than ammonium nitrogen.",
+        "Keep water on the field. IRRI advises flooding as often as you can, and PhilRice says irrigation cuts the attack, most of all in rainfed areas.",
+        "Avoid close planting, and stay out of the field while the leaves are wet, since walking through a wet crop spreads the disease.",
+        "On soils short of silicon, IRRI suggests calcium silicate, or straw from high silicon rice that is free of blast."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A fungicide makes sense only when a susceptible variety meets wet, cloudy weather near heading. It also makes sense when the field had neck blast before. For neck blast, PhilRice advises two sprays: one as the panicles start to come out and another when about half have emerged. Follow the FPA registered label for the rate."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Tricyclazole",
+          "FRAC 16.1",
+          "named by PhilRice for blast, protects the leaves and the neck"
+        ],
+        [
+          "Benomyl",
+          "FRAC 1",
+          "named by PhilRice for blast, rotate it with another group"
+        ],
+        [
+          "Azoxystrobin plus difenoconazole",
+          "FRAC 11 plus FRAC 3",
+          "a strobilurin with a triazole, the two classes IRRI names for blast, at heading"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose a blast resistant variety, and ask your local agriculture office for the current list.",
+        "Use clean, healthy seed, as PhilRice advises.",
+        "Destroy or plow under infected straw and stubble after harvest, since spores survive there.",
+        "Rotate the field with mungo, pakwan, talong or mais when you can, as PhilRice suggests.",
+        "Feed the crop in split doses and keep the field flooded, instead of letting the soil dry out."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Blast"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is mata mata in rice?",
+          "a": "Mata mata is a local name for rice blast, the fungal disease caused by Pyricularia oryzae. PhilRice uses it in its Tagalog handouts and lists it as the Bisaya name too. In Waray the same disease is agupaw."
+        },
+        {
+          "q": "How do I tell neck blast from stem borer damage?",
+          "a": "Both leave white panicles, so tug the stem. A stem hit by the [rice stem borer](/pests/rice-stem-borer) breaks away where the larva bored in, but a blast hit stem stays attached."
+        },
+        {
+          "q": "When should I spray a fungicide for rice blast?",
+          "a": "Only when the risk is high: a susceptible variety, a history of blast and wet, cloudy weather. IRRI says a spray at heading can work, and PhilRice suggests two sprays for neck blast."
+        },
+        {
+          "q": "Are my round brown spots blast too?",
+          "a": "Probably not. Blast spots are pointed at both ends with gray centers. Round brown spots with a yellow halo point to [brown spot](/diseases/rice-brown-spot), which is common in poor, unflooded soil."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice diseases",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "Bacterial leaf blight",
+          "url": "/diseases/bacterial-leaf-blight"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Brown spot of rice",
+          "url": "/diseases/rice-brown-spot"
+        },
+        {
+          "label": "False smut",
+          "url": "/diseases/rice-false-smut"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Blast (leaf and collar)",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Blast (node and neck)",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-node-neck"
+        },
+        {
+          "label": "PhilRice: Pamamahala ng mata mata (Rice handout 2023)",
+          "url": "https://www.philrice.gov.ph/pamamahala-ng-mata-mata"
+        },
+        {
+          "label": "PhilRice: Major diseases of the rice plant in the Philippines",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Major-diseases-of-the-rice-plant-in-the-Philippines.pdf"
+        }
+      ]
+    }
+  ]
+}

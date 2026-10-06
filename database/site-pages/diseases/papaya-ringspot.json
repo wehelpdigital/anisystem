@@ -1,0 +1,245 @@
+{
+  "section": "diseases",
+  "slug": "papaya-ringspot",
+  "sortOrder": 385,
+  "lang": "en",
+  "category": "Fruit and plantation diseases",
+  "profile": true,
+  "title": "Papaya Ringspot: How to Spot It and Keep Your Trees Producing",
+  "metaTitle": "Papaya Ringspot: Signs, Spread and Control",
+  "metaDescription": "Papaya ringspot virus mottles leaves and ruins fruit with ring marks. Learn the signs, how aphids spread it and the field steps that slow it down.",
+  "focusKeyword": "papaya ringspot",
+  "keywords": [
+    "papaya ringspot",
+    "papaya ringspot virus",
+    "PRSV",
+    "papaya virus disease",
+    "ringspot on papaya fruit"
+  ],
+  "excerpt": "Papaya ringspot is a virus disease that mottles papaya leaves in yellow and green and marks the fruit with dark rings. Aphids spread it fast, and no spray cures it. This guide shows you the signs and the steps that protect your orchard.",
+  "heroImage": {
+    "src": "/images/site/diseases/papaya-ringspot.webp",
+    "thumb": "/images/site/diseases/papaya-ringspot-480.webp",
+    "alt": "A green papaya fruit with the faint rings of papaya ringspot on its skin",
+    "credit": "Plant pests and diseases, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Papaya Ringspot?"
+    },
+    {
+      "type": "text",
+      "text": "Papaya ringspot is caused by the papaya ringspot virus, type P, or PRSV P. It infects papaya and cucurbits such as cucumber, melon, squash and pumpkin. A related strain, PRSV W, infects only cucurbits. The Pacific Pests and Pathogens fact sheet says PRSV P has devastated papaya production in Brazil, Hawaii, the Philippines and Taiwan. That went on until resistant varieties became available.\n\nFor a Filipino farmer, the danger is speed. The fact sheet says that once the virus is in a planting, it can reach all trees within three to seven months. Growing papaya near cucurbit vegetables can also keep the virus close to your trees. Our [vegetables in the Philippines](/crops/vegetables-philippines) guide lists them."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Papaya ringspot"
+        ],
+        [
+          "Scientific name",
+          "Papaya ringspot virus (PRSV P)"
+        ],
+        [
+          "Kind",
+          "Virus (spread by insects)"
+        ],
+        [
+          "Crops it attacks",
+          "Papaya, and cucurbits such as cucumber, melon, squash and pumpkin"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, fruits, pods and nuts and stems and tillers"
+        ],
+        [
+          "When it strikes",
+          "It can infect papaya at any age, and the earlier a tree is infected, the worse the loss. In an infected area, all trees can catch it within three to seven months."
+        ],
+        [
+          "How it spreads",
+          "Aphids carry the virus from sick trees to healthy ones within a minute or so of feeding, and the virus also moves in infected seedlings from a nursery. Pruning tools can also pass it."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Papaya Ringspot"
+    },
+    {
+      "type": "text",
+      "text": "Look at the top leaves of the tree first. They turn mottled with a pattern of bright yellow and green, called mosaic, and may twist and stay small. Older leaf stalks carry dark green streaks. The fruit shows the best sign: dark ring shaped spots, from which the disease takes its name. Ring marks on the fruit are the clearest clue. Other causes of yellow leaves do not mark the fruit that way."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Leaves turn mottled with bright yellow and green patches, called a mosaic.",
+        "Leaves are twisted or distorted, and the tree grows poorly.",
+        "Dark green streaks appear on the leaf stalks of older leaves.",
+        "Rings and spots mark the fruit, and the flavor changes.",
+        "Fruit set is low, and trees infected young may never make fruit you can sell."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Other viruses and nutrient problems can also yellow papaya leaves. Dark ring marks on the fruit are the best clue for papaya ringspot, and a laboratory test confirms it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Papaya Ringspot Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "A tree that catches the virus early may never produce fruit that you can sell. Ringspots on the fruit also make the papaya less acceptable to buyers. The Pacific Pests and Pathogens fact sheet adds that moving papaya growing to a clean area only buys time. The disease eventually catches up.\n\nA study in Bay, Laguna looked at the insects in papaya fields. It confirmed that only aphids were vectors of the virus. Aphid numbers were low in June and peaked in August. Farmers might time planting to avoid the high aphid months."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Papaya Ringspot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Buy seedlings only from nurseries you trust, and look at every seedling for mosaic before planting. The virus moves in infected nursery stock.",
+        "Plant when aphids are fewer. In the Laguna study, aphids peaked in August and stayed low in June.",
+        "Walk the orchard often. Remove sick trees as soon as the first signs appear, and remove volunteer papaya seedlings that came up by themselves.",
+        "Take out badly hit blocks, since an infected block is a source of virus and aphids for the rest.",
+        "Wash pruning tools between trees, and keep papaya away from cucumber, melon and squash fields, which host the virus too.",
+        "Ask your agriculturist about resistant or tolerant varieties. Breeding and gene modified resistance have been used, and mild strain protection has also been tried in other countries."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why No Spray Cures It"
+    },
+    {
+      "type": "text",
+      "text": "Spraying insecticide is not a good control for this disease. The fact sheet explains that aphids pick up the virus and pass it on to healthy trees. They do it before an insecticide can kill them. So money spent on sprays rarely saves the trees."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Use only seed and seedlings from a trusted source, and never move seedlings in from an infected area.",
+        "Inspect every tree each week during the first months, when infection hurts most.",
+        "Do not plant papaya next to old papaya or cucurbit fields.",
+        "Remove volunteer papaya and sick trees as soon as you see them.",
+        "Check our [plant diseases guide](/diseases/plant-diseases-philippines) for other virus diseases that spread by aphids, such as [banana bunchy top](/diseases/banana-bunchy-top)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Papaya Ringspot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I cure a papaya tree with ringspot?",
+          "a": "No. No spray cures the virus. You can remove sick trees, plant clean seedlings and use resistant varieties where they are available."
+        },
+        {
+          "q": "Will insecticide stop papaya ringspot?",
+          "a": "Not well. Aphids pick up the virus and pass it on in a minute or so. That is faster than an insecticide acts. Control comes from clean seedlings, removing sick trees and good timing."
+        },
+        {
+          "q": "Can papaya ringspot spread to my vegetables?",
+          "a": "PRSV P also infects cucurbits such as cucumber, melon, squash and pumpkin. Keep them away from papaya, and look at both crops for mosaic."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation diseases",
+      "items": [
+        {
+          "label": "Anthracnose",
+          "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Banana bunchy top",
+          "url": "/diseases/banana-bunchy-top"
+        },
+        {
+          "label": "Black sigatoka",
+          "url": "/diseases/black-sigatoka"
+        },
+        {
+          "label": "Moko disease and bugtok of banana",
+          "url": "/diseases/moko-disease"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Papaya ringspot (virus P)",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/papaya_ringspot_virusp_194.htm"
+        },
+        {
+          "label": "FAO AGRIS: Monitoring of potential insect vectors of papaya ringspot virus in two areas in Bay, Laguna, Philippines",
+          "url": "https://agris.fao.org/search/en/records/64723453e17b74d2224ea562"
+        }
+      ]
+    }
+  ]
+}

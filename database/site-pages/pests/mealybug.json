@@ -1,0 +1,271 @@
+{
+  "section": "pests",
+  "slug": "mealybug",
+  "sortOrder": 365,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Mealybug: How to Spot the White Cotton and Stop It",
+  "metaTitle": "Mealybug: Signs, Damage and Control in Fruit and Crops",
+  "metaDescription": "Mealybug covers papaya, citrus and vegetable plants in white wax and sucks their sap. Learn the signs, the damage and how to control it.",
+  "focusKeyword": "mealybug",
+  "keywords": [
+    "mealybug",
+    "papaya mealybug",
+    "citrus mealybug",
+    "Paracoccus marginatus",
+    "white cotton on plants",
+    "mealybug control"
+  ],
+  "excerpt": "Mealybug is a small, soft, sap sucking insect that hides under a coat of white wax on leaves, stems and fruit. The plant turns yellow, stunts and drops its fruit. This page shows how to spot mealybug early and how to control it with clean farming and natural enemies.",
+  "heroImage": {
+    "src": "/images/site/pests/mealybug.webp",
+    "thumb": "/images/site/pests/mealybug-480.webp",
+    "alt": "A mealybug covered in white wax with short waxy threads around its edge, on a leaf",
+    "credit": "bob080247, CC0, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Mealybug?"
+    },
+    {
+      "type": "text",
+      "text": "Mealybugs belong to the family Pseudococcidae. Two species matter here. The papaya mealybug (Paracoccus marginatus) attacks more than 55 plants in over 25 genera. Among them are papaya, citrus, mango, tomato, eggplant, pepper, beans, sweet potato and cassava. Citrus mealybug (Planococcus citri) mostly attacks citrus. But people have collected it from at least 27 plant families, including pineapple, mango and banana.\n\nThe University of Florida says the papaya mealybug is hard to kill. It also hides and wears a waxy coat. PestNet adds that in Thailand natural enemies brought the papaya mealybug down to low levels by 2012. So helpers may already work in your area."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Mealybug"
+        ],
+        [
+          "Scientific name",
+          "Paracoccus marginatus, Planococcus citri"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Papaya, citrus, mango, banana, pineapple, eggplant, cassava and many ornamentals"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, stems and tillers and fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It can attack at any stage, and colonies build up on new growth and fruit, especially in dry weather when natural enemies are few."
+        ],
+        [
+          "Life cycle",
+          "Females lay eggs in a cottony or waxy sac. The crawlers hatch in about 10 days and move onto new growth. A female papaya mealybug matures in about a month, and a citrus mealybug in 6 to 10 weeks."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Mealybug"
+    },
+    {
+      "type": "text",
+      "text": "Look for white, waxy, cottony masses on the underside of leaves and on stems. Next check leaf joints and the area under the fruit stalk. The female papaya mealybug is yellow, about 2.2 mm long. It also has a white waxy coat and short waxy filaments around the edge. The citrus mealybug is 3 to 4.5 mm long and white to light brown. Then it lays eggs in white cotton like sacs. Ants running up the plant often point to mealybugs, because the ants feed on the honeydew. Scale insects look like hard bumps, not like white cotton."
+    },
+    {
+      "type": "list",
+      "items": [
+        "White, waxy or cottony masses on leaves, stems, fruit stalks and fruit.",
+        "Yellow, wilted and distorted leaves, and stunted growth.",
+        "Sticky honeydew on the plant, with black sooty mold on it.",
+        "Ants moving up and down the stem.",
+        "Early leaf and fruit drop.",
+        "Fruits covered with wax, which cannot be sold."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Scale insects are hard, flat or domed bumps, while mealybugs are soft and covered with white wax. For other waxy pests, see [cocolisap](/pests/cocolisap) on coconut and the [banana aphid](/pests/banana-aphid)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Mealybug Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "UF reports that the papaya mealybug injects a toxic substance. It causes yellowing, stunting, leaf deformation and early drop of leaves and fruit. Heavy colonies leave a waxy build up that can make fruit unsellable. The citrus mealybug causes similar yellowing and leaf drop, and its honeydew feeds sooty mold. Feeding under fruit buttons causes crop loss.\n\nI found no Philippine action threshold in the sources I read. In practice, treat the first colonies as soon as you see them. A few females grow into hundreds of crawlers quickly. UF reports that one female papaya mealybug lays 100 to 600 eggs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Mealybug"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Inspect the plants every week, especially the new growth, the leaf joints and the fruit stalks. Cut off and destroy infested shoots and fruits in a sealed bag.",
+        "Wash small infestations off with a strong spray of water. UF says high pressure water is moderately effective against the citrus mealybug.",
+        "Use clean planting material. Check the seedlings and cuttings before you bring them to the farm, and clean tools and shoes after working in an infested block.",
+        "Keep ants down, because they guard the mealybugs from predators. Keep weeds, which also host mealybugs, off the farm.",
+        "Protect the natural enemies. Wasps such as Acerophagus papayae brought the papaya mealybug down by 97 to 99.7 percent in trials in Puerto Rico and the Dominican Republic. Lady beetles and lacewings also feed on mealybugs.",
+        "Keep sprays to a minimum once helpers are working, because the wasps are easy to kill. See the [integrated pest management guide](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Sprays work poorly, because the waxy coat and the hiding places shield the insects. Use them only on heavy infestations, and aim at the new growth and the underside of the leaves. Follow the FPA registered label and the waiting time. Spraying also harms the wasps and the predators that do most of the work."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Mineral oil",
+          "IRAC UN",
+          "listed by UF for papaya mealybug, with limited effect"
+        ],
+        [
+          "Malathion",
+          "IRAC 1B",
+          "listed by UF among the registered options in Florida, with limited effect"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Buy clean seedlings and cuttings, and check them for white cotton before planting.",
+        "Clean tools, shoes and baskets when you move between blocks.",
+        "Control ants and weeds around the trees and plants.",
+        "Avoid broad spectrum sprays so the natural enemies keep working."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Mealybug"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why is there white cotton on my papaya?",
+          "a": "It is probably a mealybug colony. The white wax protects the soft insects underneath. Look closely and you will see small, soft, oval insects."
+        },
+        {
+          "q": "Why do ants climb my fruit trees?",
+          "a": "Ants feed on the sweet honeydew that mealybugs leave. In return they guard the mealybugs from predators, so controlling the ants helps control the mealybugs."
+        },
+        {
+          "q": "Do sprays work on mealybugs?",
+          "a": "Not well. UF notes that the papaya mealybug is hard to kill with sprays because it hides and has a waxy coat. Natural enemies, clean planting material and removal of infested parts do more."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "Red palm weevil",
+          "url": "/pests/red-palm-weevil"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "University of Florida IFAS: Papaya mealybug, Paracoccus marginatus",
+          "url": "https://ask.ifas.ufl.edu/publication/IN579"
+        },
+        {
+          "label": "University of Florida IFAS: Citrus mealybug, Planococcus citri",
+          "url": "https://ask.ifas.ufl.edu/in947"
+        },
+        {
+          "label": "PestNet: Paracoccus marginatus, natural controls",
+          "url": "https://www.pestnet.org/?p=6394"
+        }
+      ]
+    }
+  ]
+}

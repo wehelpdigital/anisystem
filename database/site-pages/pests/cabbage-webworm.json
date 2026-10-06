@@ -1,0 +1,248 @@
+{
+  "section": "pests",
+  "slug": "cabbage-webworm",
+  "sortOrder": 315,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Cabbage Webworm: How to Spot It and Stop It in Your Crucifers",
+  "metaTitle": "Cabbage Webworm: Signs, Damage and Control",
+  "metaDescription": "The cabbage webworm eats the growing point of young cabbage and leaves silk and frass. Learn the signs and how to protect your seedlings.",
+  "focusKeyword": "cabbage webworm",
+  "keywords": [
+    "cabbage webworm",
+    "hellula undalis",
+    "webworm in cabbage",
+    "cabbage heart worm",
+    "cabbage pests in the Philippines"
+  ],
+  "excerpt": "The cabbage webworm, Hellula undalis, is a small striped caterpillar that eats the growing point of young cabbage. It leaves silk webbing and frass, and a damaged plant may not make a head. Here is how to spot it early and keep your seedlings safe.",
+  "heroImage": {
+    "src": "/images/site/pests/cabbage-webworm.webp",
+    "thumb": "/images/site/pests/cabbage-webworm-480.webp",
+    "alt": "An adult cabbage webworm moth, Hellula undalis, brown with wavy pale lines",
+    "credit": "Joey Bom, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Cabbage Webworm?"
+    },
+    {
+      "type": "text",
+      "text": "The cabbage webworm attacks cabbage, cauliflower and broccoli first, and also Chinese cabbage, mustard, daikon and radish. It affects members of the cabbage family in tropical areas. A Philippine review of cabbage pest control lists Hellula species. They showed up once the diamondback moth was under control.\n\nFarmers care because it attacks the growing point. Early in the season, damage on a young plant can be as good as losing the plant."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Cabbage webworm"
+        ],
+        [
+          "Scientific name",
+          "Hellula undalis"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Cabbage, cauliflower, broccoli, Chinese cabbage and radish"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and stems and tillers"
+        ],
+        [
+          "When it strikes",
+          "From transplanting to heading, when young plants have a soft growing point."
+        ],
+        [
+          "Life cycle",
+          "Females lay about 175 eggs in their short life, and the eggs hatch in 2 to 3 days. The larvae feed for 11 to 19 days, then pupate in silk cocoons for about 8 days."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Cabbage Webworm"
+    },
+    {
+      "type": "text",
+      "text": "The moth is grayish brown with a wingspan of about 3/4 to 1 inch. The caterpillar is grayish yellow with five broad, irregular reddish brown bands along its body and reaches about 1/2 inch. Open the heart of a young plant and look for silk and frass. The [diamondback moth](/pests/diamondback-moth) leaves window panes on the leaf and does not web the center."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Silk webbing and frass sit in the heart of young plants.",
+        "The growing point is eaten, so the plant is stunted or deformed.",
+        "Plants make several small heads or none at all.",
+        "Larvae tunnel into the leaf stalks and the main stem of older plants.",
+        "Damage is worst between transplanting and heading."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "The diamondback moth and the cabbage looper also eat cabbage. Silk and frass in the heart of the plant point to the webworm."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Cabbage Webworm Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Young plants suffer the most. Feeding at the growing point and the developing leaves causes stunting and deformity. The plant may form many growing points and weak heads. Extension sources note that early season damage can equal a lost plant for each plant infested.\n\nOne extension source suggests tolerating no more than 0.1 to 0.3 larvae per plant for crucifer caterpillars in general. It suggests a lower number for the webworm when many moths arrive early. We found no Philippine threshold, so check your own seedlings often."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Cabbage Webworm"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Screen the seedbed with a fine net. Keep it clean of weeds and old crop residue, so moths cannot lay eggs on the seedlings.",
+        "Transplant strong, healthy seedlings about 5 to 6 inches tall, since they can outgrow early damage.",
+        "Inspect the heart of each seedling at transplanting and for the next two weeks, and look for silk and frass.",
+        "Pick out and crush larvae and cut off damaged tips on small plots.",
+        "Encourage natural enemies. The wasp Chelonus blackburni attacks the eggs and the larvae, although its field value is uncertain.",
+        "Use the same steps you use against the diamondback moth, and favor products that spare the wasps."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Choose a product with the whole cabbage pest complex in mind. The diamondback moth and other worms attack at the same time. The sources we used name no active ingredient for the webworm. Ask your DA technician for an FPA registered product and follow its label."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Raise your seedlings under a fine net.",
+        "Clean the field and the seedbed of weeds and old cabbage stalks.",
+        "Check the hearts of new transplants twice a week.",
+        "Plant the whole field at the same time."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Cabbage Webworm"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why is the webworm so harmful?",
+          "a": "It feeds at the growing point, so one larva can stunt or ruin a young plant."
+        },
+        {
+          "q": "Which plants does it attack?",
+          "a": "Cabbage, cauliflower and broccoli mostly, and also Chinese cabbage, mustard, daikon and radish."
+        },
+        {
+          "q": "When do I look for it?",
+          "a": "From transplanting to heading, and especially in the first weeks after transplanting."
+        },
+        {
+          "q": "How long does one generation last?",
+          "a": "The life cycle takes 17 to 52 days, depending on the temperature."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Diamondback moth",
+          "url": "/pests/diamondback-moth"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "Eggplant leafhopper",
+          "url": "/pests/eggplant-leafhopper"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "University of Hawaii CTAHR: Hellula undalis, imported cabbage webworm",
+          "url": "https://cms.ctahr.hawaii.edu/ckm/Home/Insects-and-Other-Pests/Caterpillars/Hellula-undalis"
+        },
+        {
+          "label": "UPLB: Diamondback moth biological control in the Philippines",
+          "url": "https://www.ukdr.uplb.edu.ph/professorial_lectures/931"
+        }
+      ]
+    }
+  ]
+}

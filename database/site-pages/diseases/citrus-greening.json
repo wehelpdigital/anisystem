@@ -1,0 +1,270 @@
+{
+  "section": "diseases",
+  "slug": "citrus-greening",
+  "sortOrder": 400,
+  "lang": "en",
+  "category": "Fruit and plantation diseases",
+  "profile": true,
+  "title": "Citrus Greening: How to Spot It and Protect Your Calamansi and Citrus",
+  "metaTitle": "Citrus Greening: Signs, Psyllid Spread and Control",
+  "metaDescription": "Citrus greening has no cure. Learn the blotchy leaf and lopsided fruit signs, the psyllid that spreads it and how clean seedlings protect your trees.",
+  "focusKeyword": "citrus greening",
+  "keywords": [
+    "citrus greening",
+    "huanglongbing",
+    "HLB citrus",
+    "calamansi disease",
+    "citrus psyllid",
+    "Diaphorina citri"
+  ],
+  "excerpt": "Citrus greening, also called huanglongbing or HLB, is a bacterial disease that blotches the leaves and spoils the fruit of calamansi, mandarin and other citrus. It has no cure. This guide shows the signs, the insect that spreads it and the steps that keep your orchard productive longer.",
+  "heroImage": {
+    "src": "/images/site/diseases/citrus-greening.webp",
+    "thumb": "/images/site/diseases/citrus-greening-480.webp",
+    "alt": "Oranges on a tree with citrus greening, small and still green at one end",
+    "credit": "USDAgov, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Citrus Greening?"
+    },
+    {
+      "type": "text",
+      "text": "The phloem bacterium Candidatus Liberibacter asiaticus causes citrus greening. The University of Florida describes it as a yellow dragon disease that affects citrus, including mandarins and calamansi. It is spread by the Asian citrus psyllid, Diaphorina citri.\n\nPCAARRD reports that Huanglongbing and citrus tristeza virus are the main causes of low citrus production in the country. Government projects now test mother trees, geotag the infected ones and supply clean planting material. BPI also issued a Special Quarantine Order in 2013 on the movement of citrus plants. If you grow [fruit trees in the Philippines](/crops/pagtatanim-ng-puno), clean seedlings matter more than anything you can spray later."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Citrus greening"
+        ],
+        [
+          "Scientific name",
+          "Candidatus Liberibacter asiaticus (huanglongbing, HLB)"
+        ],
+        [
+          "Kind",
+          "Bacterium (a bacterial disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Calamansi, mandarin, pomelo, orange and other citrus"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, fruits, pods and nuts and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It can infect citrus at any age, and young flushes of new leaves are when the psyllid insect feeds and spreads it."
+        ],
+        [
+          "How it spreads",
+          "A small insect called the Asian citrus psyllid carries the bacterium from sick trees to healthy ones. The bacterium also moves in infected budwood and grafted planting material."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Citrus Greening"
+    },
+    {
+      "type": "text",
+      "text": "Look at the leaves first. The most telling sign is blotchy mottle, where the leaf shows yellow patches in an uneven pattern. Leaves may be small and upright, and some branches yellow before others. On the fruit, look for small, lopsided and misshapen fruit, and fruit that colors from the stem downward, opposite to healthy fruit. Inside, seeds may abort, the central core may curve, and a yellow stain may show under the stem button. Mineral shortages such as zinc, iron or manganese can look similar, so a laboratory test confirms the disease."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Leaves show a blotchy mottle, with yellow and green patches in an uneven pattern.",
+        "Some branches turn yellow first, and leaves can be small and upright.",
+        "Fruit is small, lopsided and misshapen.",
+        "Fruit colors from the stem end down, which is the opposite of healthy fruit.",
+        "Cut fruit shows aborted seeds, a curved central core and a yellow stain under the stem button."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Zinc, iron and manganese shortages yellow citrus leaves too, but HLB blotches are uneven and the fruit also shows signs, so ask a laboratory to test a leaf."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Citrus Greening Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Once a tree is infected, there is no cure, and fertilizer will not cure it, though good nutrition can improve the productivity of an affected tree. PCAARRD names huanglongbing as a main cause of low citrus production in the Philippines.\n\nThe sources we read give no single national loss figure. For your own farm, count the trees with signs each season. A tree that shows signs gives poorer fruit, and it also feeds the psyllids that infect your healthy trees."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Citrus Greening"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Start with healthy seedlings. Buy only certified, disease indexed planting material from a protected nursery, such as those supported by BPI and PCAARRD projects.",
+        "Never take budwood or cuttings from a tree that shows signs. Grafting infected budwood is a main way the disease reaches new trees.",
+        "Scout often and remove infected trees. The University of Florida and the FFTC both list eradication of infected trees with healthy planting material and vector control as the core of management.",
+        "Watch the new flushes for psyllids, which prefer tender new growth, and control them.",
+        "Feed and water trees well. Good nutrition does not cure the disease, but it helps the productivity of affected trees.",
+        "Follow the BPI rules on moving citrus plants and planting material, and do not carry them across areas without the right papers."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Spraying cannot cure a sick tree. A spray is only to cut the psyllids that spread the bacterium, mostly on young trees and nursery stock, and only as part of the steps above. Use only products registered for citrus by the FPA and follow the label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Imidacloprid",
+          "IRAC 4A",
+          "a neonicotinoid used by the University of Florida on young trees for psyllid control"
+        ],
+        [
+          "Thiamethoxam",
+          "IRAC 4A",
+          "a neonicotinoid used for psyllid control on young citrus"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant only certified, disease indexed seedlings, and ask for the BPI tag on mother trees.",
+        "Inspect new seedlings and new flushes every week for psyllids.",
+        "Remove sick trees quickly, so they are not a source for the psyllids.",
+        "Keep records of where each tree came from. For other tree diseases and pests, see our [crop pests guide](/pests/crop-pests-philippines) and [plant diseases guide](/diseases/plant-diseases-philippines)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Citrus Greening"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can citrus greening be cured?",
+          "a": "No. The University of Florida says that once a tree is infected there is no cure, and fertilizer will not cure it. You can remove sick trees, control the psyllid and plant clean seedlings."
+        },
+        {
+          "q": "How does citrus greening spread?",
+          "a": "The Asian citrus psyllid carries it from tree to tree, and grafting with infected budwood spreads it in nurseries. That is why PCAARRD and BPI stress clean, indexed planting material."
+        },
+        {
+          "q": "Is calamansi affected?",
+          "a": "Yes. The University of Florida lists mandarins and calamansi among the citrus that the disease affects."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation diseases",
+      "items": [
+        {
+          "label": "Anthracnose",
+          "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Banana bunchy top",
+          "url": "/diseases/banana-bunchy-top"
+        },
+        {
+          "label": "Black sigatoka",
+          "url": "/diseases/black-sigatoka"
+        },
+        {
+          "label": "Moko disease and bugtok of banana",
+          "url": "/diseases/moko-disease"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "University of Florida IFAS: Citrus huanglongbing (HLB)",
+          "url": "https://ask.ifas.ufl.edu/publication/PP328/pdf"
+        },
+        {
+          "label": "DOST PCAARRD: Quality planting materials for citrus established in Nueva Vizcaya",
+          "url": "https://pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/quality-planting-materials-for-citrus-established-in-nueva-vizcaya"
+        },
+        {
+          "label": "University of Florida IFAS: Asian citrus psyllid, Florida Citrus Production Guide",
+          "url": "https://ask.ifas.ufl.edu/publication/CG104/pdf"
+        }
+      ]
+    }
+  ]
+}

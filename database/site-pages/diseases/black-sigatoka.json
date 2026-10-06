@@ -1,0 +1,276 @@
+{
+  "section": "diseases",
+  "slug": "black-sigatoka",
+  "sortOrder": 375,
+  "lang": "en",
+  "category": "Fruit and plantation diseases",
+  "profile": true,
+  "title": "Black Sigatoka: How to Spot It and Save Your Banana Leaves",
+  "metaTitle": "Black Sigatoka: Signs, Yield Loss and Control",
+  "metaDescription": "Black sigatoka kills banana leaves, cuts yield and ripens fruit too early. Learn the signs, the field steps that slow it and when a spray makes sense.",
+  "focusKeyword": "black sigatoka",
+  "keywords": [
+    "black sigatoka",
+    "black leaf streak",
+    "banana leaf spot",
+    "Pseudocercospora fijiensis",
+    "banana leaf disease",
+    "sigatoka control"
+  ],
+  "excerpt": "Black sigatoka is a fungal leaf disease that streaks banana leaves with brown and black and kills them before the bunch is full. Fewer green leaves mean smaller fruit and early ripening. This guide shows you how to recognize it and how to hold it back.",
+  "heroImage": {
+    "src": "/images/site/diseases/black-sigatoka.webp",
+    "thumb": "/images/site/diseases/black-sigatoka-480.webp",
+    "alt": "A banana leaf with dark streaks and dead brown patches from black sigatoka",
+    "credit": "Plant pests and diseases, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Black Sigatoka?"
+    },
+    {
+      "type": "text",
+      "text": "Black sigatoka is caused by the fungus Pseudocercospora fijiensis. A paper on the disease in the Philippines notes that it is one of the important diseases of banana here. Researchers collected 164 isolates of the fungus from ten banana growing provinces in Luzon. They found most of the genetic variety inside each province and each variety. The fungus is mixed and adaptable.\n\nThe disease kills leaf area, and a banana plant needs its leaves to fill the bunch. It matters to Cavendish exporters, but also to anyone who grows [banana in the Philippines](/crops/banana-farming-philippines) for the local market. A fungus that rests on old leaves in your own field is hard to clear. The work is steady care, not a single fix."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Black sigatoka"
+        ],
+        [
+          "Scientific name",
+          "Pseudocercospora fijiensis"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Banana, including Cavendish and cooking bananas"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves"
+        ],
+        [
+          "When it strikes",
+          "It strikes banana of any age and is worst in warm, wet weather, when leaves stay wet for long hours."
+        ],
+        [
+          "How it spreads",
+          "The fungus makes airborne spores that wind carries several kilometers, and other spores that move over short distances between leaves."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Black Sigatoka"
+    },
+    {
+      "type": "text",
+      "text": "On a young leaf, look for tiny reddish brown flecks on the underside. They grow into narrow streaks along the veins, then into dark brown to black lesions with a thin yellow halo. Many spots close together kill large patches, and the leaf collapses. Fruit from badly hit plants fills poorly and may ripen too soon. Do not confuse it with the yellow, bunched leaves of [banana bunchy top](/diseases/banana-bunchy-top) or with wilt diseases. Black sigatoka shows as streaks on the leaf blade."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small reddish brown flecks appear first on the underside of young leaves.",
+        "The flecks grow into narrow streaks that run along the leaf veins.",
+        "Streaks turn into dark brown to black lesions with a thin yellow halo, and many spots together kill large areas of the leaf.",
+        "Leaves collapse early, so the plant carries few green leaves.",
+        "Bunches fill poorly, and the fruit can ripen too early."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Other banana leaf spots look similar at first. Black sigatoka begins with flecks on the underside of young leaves. Ask a field expert or a laboratory to confirm which spot you have."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Black Sigatoka Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The disease cuts the leaf area that feeds the bunch. A review in PMC says yield losses can pass 50 percent when nothing is done. On large export farms, growers spray up to 70 times a year. In Costa Rica the sprays can take 10 to 15 percent of total production cost. Those figures come from large plantations abroad, so your own loss and cost will vary with weather and variety.\n\nFor a smallholder, each leaf you save is fruit weight. When a plant has only a few green leaves left at flowering, expect a light, early ripening bunch."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Black Sigatoka"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant disease free tissue cultured plantlets in fertile, well drained soil, so plants grow strong and fast.",
+        "Prune and remove badly diseased leaves, and do it often in the rainy months so the fungus has less leaf to feed on.",
+        "Space plants so air and sunlight dry the leaves, and keep weeds and extra suckers under control.",
+        "Where you can, grow banana in light partial shade. The PMC review reports that partial shade can raise marketable yield by 50 percent.",
+        "Try the resistant types. Breeders have made black sigatoka resistant dessert bananas, cooking bananas and plantains, but resistance can break down, so ask your agriculturist what is tested near you.",
+        "Spray only after the cultural steps, and rotate fungicide groups so the fungus does not become immune."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Large plantations depend on fungicides, but resistance builds up when the same group is used again and again. A smallholder should spray only if leaves keep dying even after leaf removal and spacing. Rotate groups, and follow the product label and the FPA registration."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Mancozeb",
+          "FRAC M3",
+          "a multi site protectant, helps against resistance when mixed or rotated"
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M5",
+          "a multi site protectant used on banana leaves"
+        ],
+        [
+          "Thiophanate methyl",
+          "FRAC 1",
+          "a benzimidazole, listed among products used for pre harvest control"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Start each planting from clean, tissue cultured material.",
+        "Remove dead and dying leaves on a fixed schedule, especially after heavy rain.",
+        "Keep drainage open and spacing wide, so leaves dry quickly after rain.",
+        "Feed plants well. Fertile soil gives stronger plants, which hold their leaves longer.",
+        "Read our [plant diseases guide](/diseases/plant-diseases-philippines) to learn the other banana diseases to watch, such as [moko disease](/diseases/moko-disease)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Black Sigatoka"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I stop black sigatoka with fungicide alone?",
+          "a": "Not for long. The fungus can develop resistance to sprays used again and again. Combine leaf removal, spacing, drainage and rotating fungicide groups."
+        },
+        {
+          "q": "How far does black sigatoka spread?",
+          "a": "Wind carries the sexual spores, called ascospores, several kilometers. The other spores, called conidia, move over short distances between leaves. So a clean farm can still get it from far away."
+        },
+        {
+          "q": "Does black sigatoka kill the banana plant?",
+          "a": "It kills the leaves, not the plant right away. But a plant with few leaves makes a small bunch, so the loss is in the harvest."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation diseases",
+      "items": [
+        {
+          "label": "Anthracnose",
+          "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Banana bunchy top",
+          "url": "/diseases/banana-bunchy-top"
+        },
+        {
+          "label": "Moko disease and bugtok of banana",
+          "url": "/diseases/moko-disease"
+        },
+        {
+          "label": "Papaya ringspot",
+          "url": "/diseases/papaya-ringspot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Queensland Government: Black sigatoka of banana",
+          "url": "https://www.business.qld.gov.au/industries/farms-fishing-forestry/agriculture/biosecurity/plants/priority-pest-disease/black-sigatoka-banana"
+        },
+        {
+          "label": "PMC: Genetic characteristics and metabolic interactions between Pseudocercospora fijiensis and banana, progress toward controlling black sigatoka",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9002641/"
+        },
+        {
+          "label": "UPLB Knowledge Repository: Population structure of Pseudocercospora fijiensis in the Philippines",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/640"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+{
+  "section": "pests",
+  "slug": "melon-fly",
+  "sortOrder": 345,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Melon Fly: How to Spot It and Save Your Ampalaya and Squash",
+  "metaTitle": "Melon Fly: Signs, Damage and Control in Cucurbits",
+  "metaDescription": "The melon fly lays eggs in young ampalaya, upo, cucumber and squash, and the maggots rot the fruit. Learn the signs and how to stop it with bagging.",
+  "focusKeyword": "melon fly",
+  "keywords": [
+    "melon fly",
+    "Zeugodacus cucurbitae",
+    "fruit fly in ampalaya",
+    "fruit fly in cucumber",
+    "bagging fruit for fruit fly",
+    "maggots in squash"
+  ],
+  "excerpt": "The melon fly is the fruit fly that ruins ampalaya, upo, cucumber, squash and melon from the inside. The female stings the young fruit, and the maggots turn the flesh to rot. This page shows how to spot the melon fly early and how to stop it with bagging, clean fields and bait.",
+  "heroImage": {
+    "src": "/images/site/pests/melon-fly.webp",
+    "thumb": "/images/site/pests/melon-fly-480.webp",
+    "alt": "A melon fly, Zeugodacus cucurbitae, orange brown with yellow marks, on a leaf",
+    "credit": "Scott Bauer, USDA Agricultural Research Service, Bugwood.org, CC BY 3.0 US, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Melon Fly?"
+    },
+    {
+      "type": "text",
+      "text": "The melon fly (Zeugodacus cucurbitae) is a fruit fly that attacks mostly cucurbits, such as bitter gourd, cucumber, melon, pumpkin, watermelon, wax gourd and luffa. It also stings tomato, chili, capsicum and beans, though these are secondary hosts.\n\nThe Pacific Pests fact sheet reports melon losses of 5 to 40 percent in the Philippines. It also lists much higher losses in other countries, such as 95 percent of bitter gourd in Papua New Guinea. That is why many growers lose a whole picking when they miss the first stung fruits."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Melon fly"
+        ],
+        [
+          "Scientific name",
+          "Zeugodacus cucurbitae"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Ampalaya (bitter gourd), upo, patola, cucumber, squash, melon and watermelon"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It attacks from flowering and fruit set until harvest. So it is a problem every season where cucurbits are planted one after another."
+        ],
+        [
+          "Life cycle",
+          "The female stings young fruit and lays eggs inside, and the maggots feed within. The mature maggots drop into the soil to pupate. A life cycle takes 3 to 5 weeks in good conditions, and a female can lay about 1,000 eggs."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Melon Fly"
+    },
+    {
+      "type": "text",
+      "text": "Look at young fruit for small puncture marks, called stings, where the female laid eggs. The fruit may ripen too early at that spot, or look water soaked. Cut a stung fruit and you will see white maggots, 7.5 to 9 mm long. The adult fly is orange brown and 6 to 8 mm long. It has smoky brown blobs at the wing tips and a T shaped mark on the abdomen. The [oriental fruit fly](/pests/oriental-fruit-fly) looks similar but it stings tree fruits like mango rather than gourds."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small sting marks on young fruit where the female laid her eggs.",
+        "Fruit that ripens or yellows too early where the eggs were laid.",
+        "Young fruit that falls off the vine.",
+        "Water soaked or soft patches on mature fruit.",
+        "White maggots inside the cut fruit, and soft, rotting flesh.",
+        "Orange brown flies with a T shaped mark resting on the leaves or the fruit."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Other fruit flies sting vegetables and fruit trees too. The [oriental fruit fly](/pests/oriental-fruit-fly) prefers tree fruits such as mango and papaya. Gourd rot can also come from fungus, so look for the sting mark and maggots to be sure."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Melon Fly Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The female also puts bacteria into the fruit with her eggs. These bacteria rot the flesh and feed the larvae. Young fruits often drop, and mature fruits go soft. That damage cannot be undone, and an infested fruit cannot be sold.\n\nThe Pacific Pests sheet reports losses of 5 to 40 percent in melon in Luzon. A University of Hawaii extension paper puts melon fly losses at 30 to 100 percent of the crop in unprotected cucurbits worldwide. It gives no Philippine action threshold. So the safe rule is to monitor twice a week from flowering, and to act as soon as you find stings."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Melon Fly"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Check the plants twice a week from flowering. Look for stings and for flies on the leaves and fruits.",
+        "Bag the young fruit as soon as it forms. The fact sheet suggests a fine mesh with a weave of about 2 mm by 1 mm around each fruit.",
+        "Remove and destroy all stung and fallen fruit every few days. Bury it deep, burn it, or seal it in a plastic bag in the sun. Do not leave it on the field, because the maggots will pupate in the soil.",
+        "Rotate. Do not plant cucurbits after cucurbits, and avoid planting new crops next to old ones.",
+        "Use a cue lure trap to catch males and to monitor the numbers. Add protein bait to attract the females, as the Pacific Pests sheet and the University of Hawaii advise.",
+        "Put the bait on the plants where the flies rest. In Hawaii trials the flies roosted most on border plants such as castor bean, bamboo, mango and cassava. So treat those borders first.",
+        "Destroy the crop remains after the last harvest. See the [integrated pest management guide](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Use a spray only as a bait spray. Mix a protein bait such as yeast autolysate with an insecticide. Then spray it on the underside of the leaves where the flies rest, not on the fruit. Pacific Pests says to apply it weekly from fruit set to harvest. Follow the FPA registered label and the waiting time."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Spinosad",
+          "IRAC 5",
+          "mixed with a protein bait"
+        ],
+        [
+          "Spinetoram",
+          "IRAC 5",
+          "mixed with a protein bait"
+        ],
+        [
+          "Malathion",
+          "IRAC 1B",
+          "an older option listed in the Pacific Pests sheet"
+        ],
+        [
+          "Fipronil",
+          "IRAC 2B",
+          "used in bait stations in the University of Hawaii trial, where damage fell from 80 percent to under 5 percent in two months"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Bag every young fruit before the flies find it.",
+        "Pick up and destroy fallen fruit all through the season.",
+        "Plow or turn the soil after harvest, to expose the pupae.",
+        "Plant at the same time as your neighbors, so the flies do not move from one crop to the next."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Melon Fly"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do my ampalaya fruits rot while they are still small?",
+          "a": "The melon fly may have stung them. The eggs hatch inside, and the maggots and bacteria rot the flesh. Cut an affected fruit open to check for white maggots."
+        },
+        {
+          "q": "Does bagging really work?",
+          "a": "Yes. The Pacific Pests fact sheet lists bagging, field sanitation, protein baits and cue lure traps as the main ways to manage the melon fly. Bag the fruit while it is still small."
+        },
+        {
+          "q": "Can I spray the fruit to kill the maggots?",
+          "a": "No, a spray cannot reach the maggots inside. Spray a protein bait mix on the leaves to kill the flies. Also bag the fruit and clean the field to stop the eggs."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Diamondback moth",
+          "url": "/pests/diamondback-moth"
+        },
+        {
+          "label": "Cabbage webworm",
+          "url": "/pests/cabbage-webworm"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Melon fly",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/melon_fly_505.htm"
+        },
+        {
+          "label": "University of Hawaii CTAHR: Fruit fly bait stations and roosting host plants for melon fruit fly on zucchini",
+          "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/IP-54.pdf"
+        }
+      ]
+    }
+  ]
+}

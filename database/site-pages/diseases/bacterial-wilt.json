@@ -1,0 +1,246 @@
+{
+  "section": "diseases",
+  "slug": "bacterial-wilt",
+  "sortOrder": 295,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Bacterial Wilt: How to Spot It and Protect Your Vegetables",
+  "metaTitle": "Bacterial Wilt: Signs, Damage and Control in Vegetables",
+  "metaDescription": "Bacterial wilt makes green tomato, talong and potato plants wilt and die fast, and no spray cures it. Learn the signs, the water test and the real controls.",
+  "focusKeyword": "bacterial wilt",
+  "keywords": [
+    "bacterial wilt",
+    "bacterial wilt of tomato",
+    "bacterial wilt of eggplant",
+    "Ralstonia solanacearum",
+    "sudden wilting of vegetables",
+    "talong wilt"
+  ],
+  "excerpt": "Bacterial wilt is a soil borne disease that makes a healthy, green tomato or eggplant plant wilt suddenly and die. It has no spray that cures it, so the real work is clean seedlings, raised beds, resistant varieties and rotation.",
+  "heroImage": {
+    "src": "/images/site/diseases/bacterial-wilt.webp",
+    "thumb": "/images/site/diseases/bacterial-wilt-480.webp",
+    "alt": "A stem cut open along its length, showing the brown, rotting core that Ralstonia solanacearum leaves behind",
+    "credit": "Clemson University USDA Cooperative Extension Slide Series, Bugwood.org, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Bacterial Wilt?"
+    },
+    {
+      "type": "text",
+      "text": "Bacterial wilt is caused by the Ralstonia solanacearum species complex. Research in the Philippines found that two species of Ralstonia cause it in production areas, R. pseudosolanacearum and R. solanacearum. The disease attacks tomato, eggplant, potato and pepper, and the bacteria infect more than 200 plant species in over 30 families.\n\nAn open access research paper calls it one of the most economically important diseases of tomato and eggplant in the tropics, with losses that can reach 100 percent. Because chemical sprays do not work, prevention decides the harvest. See our guide to [vegetables in the Philippines](/crops/vegetables-philippines) for choosing crops, and read about the similar [fusarium wilt](/diseases/fusarium-wilt)."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Bacterial wilt"
+        ],
+        [
+          "Scientific name",
+          "Ralstonia solanacearum species complex (Ralstonia pseudosolanacearum)"
+        ],
+        [
+          "Kind",
+          "Bacterium (a bacterial disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Tomato, eggplant (talong), potato, pepper and other vegetables"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "The whole plant and roots and base"
+        ],
+        [
+          "When it strikes",
+          "Bacterial wilt can strike from the seedling stage to fruiting, but it is fastest in hot, wet weather, when plants wilt suddenly and die within days."
+        ],
+        [
+          "How it spreads",
+          "The bacteria live in the soil for about nine months without a host. They enter the root through wounds and natural openings, then clog the water vessels, and they spread by soil on tools and boots, by water and by infected seedlings."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Bacterial Wilt"
+    },
+    {
+      "type": "text",
+      "text": "Watch for a plant that wilts while the leaves are still green, often in the heat of the day, and then does not recover at night. In cooler weather, the plant may instead stunt, yellow on the lower leaves and grow roots from the stem. Do the water test. Cut a stem near the base, hang it in a clear glass of water for 3 to 5 minutes, and look for white streaks of slime flowing from the cut. That is a strong sign of bacterial wilt."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Sudden wilting of the whole plant while the leaves are still green.",
+        "Wilting in the heat of the day that does not recover at night, then plant death within days.",
+        "In cooler weather, stunting and yellow lower leaves, with small roots growing from the stem.",
+        "A brown stained inside of the stem when you cut it near the base.",
+        "White streaks of bacterial slime flowing from a cut stem placed in water for 3 to 5 minutes."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Fusarium wilt and root knot nematode also cause wilting. With [fusarium wilt](/diseases/fusarium-wilt) the water test shows no slime, and with nematodes you find galls on the roots. Bacterial wilt shows the white slime in the water test."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Bacterial Wilt Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "An open access research paper says bacterial wilt can cause up to 100 percent economic losses. The bacteria stay alive in soil for about nine months without a host, so a field that had it in one season stays risky for the next crop. The Philippine strains studied on Luzon eggplant were all in one group, phylotype I.\n\nThere is no spray threshold. The rule is simple. The first wilted plant is a warning. Remove it, mark the spot and do not move water or soil from that spot to other beds. For other soil diseases that look similar, read about [root knot nematode](/diseases/root-knot-nematode)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Bacterial Wilt"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant a resistant variety. Resistant tomato, chili and eggplant lines are available through the vegetable research center known as WorldVeg.",
+        "Graft susceptible tomato onto a resistant eggplant rootstock when you have access to it. Eggplant rootstocks resist bacterial wilt better and also tolerate flooding.",
+        "Use healthy seedlings only, and raise them in clean, sterilized media. Infected nursery plants are a main way the disease spreads.",
+        "Plant on raised beds or ridges so water drains away from the roots.",
+        "Pull out wilted plants at once with the soil around the roots, and bury them or burn them away from the field.",
+        "Rotate for about four years with crops that do not host the bacteria, and clean tools and boots between fields."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Chemical control is ineffective, because the bacteria sit inside the water vessels of the plant, out of reach of a spray. The Pacific Pests fact sheet says only soil fumigation helps. Do not buy sprays that promise a cure."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose resistant varieties or grafted seedlings.",
+        "Buy seedlings only from a clean nursery, or raise your own in sterilized media.",
+        "Use raised beds, good drainage and rotation, and do not plant after a wilt outbreak without a break.",
+        "Clean boots, tools and wheelbarrows after you work in an infected spot.",
+        "Keep records of the beds that had wilt, so you plant a safe crop there next season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Bacterial Wilt"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I save a plant with bacterial wilt?",
+          "a": "No. The bacteria block the water vessels from inside the plant, and no spray reaches them. Remove the plant and protect the others."
+        },
+        {
+          "q": "How do I test for bacterial wilt?",
+          "a": "Cut a stem near the base and hold it in a glass of clear water for 3 to 5 minutes. White streaks of slime flowing from the cut is a strong sign of bacterial wilt."
+        },
+        {
+          "q": "How long does the bacteria stay in the soil?",
+          "a": "The Pacific Pests fact sheet says about nine months without a host plant. That is why rotation, raised beds and resistant varieties matter."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "Downy mildew of cucurbits",
+          "url": "/diseases/downy-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Tomato bacterial wilt",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/tomato_bacterial_wilt_146.htm"
+        },
+        {
+          "label": "PMC: Bacterial wilt of tomato and eggplant, grafting on resistant rootstocks",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7824428"
+        }
+      ]
+    }
+  ]
+}

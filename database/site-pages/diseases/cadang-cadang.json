@@ -1,0 +1,248 @@
+{
+  "section": "diseases",
+  "slug": "cadang-cadang",
+  "sortOrder": 390,
+  "lang": "en",
+  "category": "Fruit and plantation diseases",
+  "profile": true,
+  "title": "Cadang Cadang: How to Spot Coconut's Slow Killer and Protect Your Palms",
+  "metaTitle": "Cadang Cadang: Signs, Spread and Control in Coconut",
+  "metaDescription": "Cadang cadang is a viroid with no cure that slowly kills coconut palms. Learn the early signs, how it spreads and what the PCA says to do in your farm.",
+  "focusKeyword": "cadang cadang",
+  "keywords": [
+    "cadang cadang",
+    "coconut cadang cadang",
+    "cadang cadang disease",
+    "cadang cadang viroid",
+    "coconut disease Bicol"
+  ],
+  "excerpt": "Cadang cadang is a deadly disease of coconut caused by a tiny viroid, and it has no cure. Palms turn yellow, make small scarred nuts and slowly die. This guide shows you the signs, how it spreads and the steps that protect your farm.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-coconut-fertilizer.webp",
+    "thumb": "/images/site/guides/crops-coconut-fertilizer-480.webp",
+    "alt": "Tall coconut palms over a grassy field in Sipocot, Camarines Sur",
+    "credit": "Biag arnel, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Cadang Cadang?"
+    },
+    {
+      "type": "text",
+      "text": "Cadang cadang is caused by the coconut cadang cadang viroid, a very small piece of genetic material that infects palm cells. The name comes from the Bicol word gadan gadan, which means dead or dying. It causes a premature decline and death of coconut palms. Anahaw, buri and African oil palm can also catch it.\n\nThe disease is a major threat to the Philippine coconut industry. The industry gives a living to over 2.5 million farmers. A survey in 2012 and 2013 counted 691,068 infected palms. PCAARRD says it spreads at about 0.1 to 1.0 percent a year. Without action the loss could reach 300 million US dollars. If you grow [coconut](/crops/coconut-fertilizer) in or near Bicol, learn the signs now."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Coconut cadang cadang"
+        ],
+        [
+          "Scientific name",
+          "Coconut cadang cadang viroid (CCCVd)"
+        ],
+        [
+          "Kind",
+          "Viroid (smaller than a virus)"
+        ],
+        [
+          "Crops it attacks",
+          "Coconut, and also anahaw, buri and oil palm"
+        ],
+        [
+          "Local names",
+          "In Bicol the disease is called gadan gadan, which means dead or dying."
+        ],
+        [
+          "Where it strikes",
+          "Leaves, fruits, pods and nuts and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It shows up slowly in mature palms, and a palm can decline for years before it dies. The disease is established in Bicol, and it is a threat wherever palms are moved."
+        ],
+        [
+          "How it spreads",
+          "The viroid is not carried by a known insect. Pollen from sick palms and contaminated harvesting tools are reported ways it moves, and the natural way it infects in the field is still not known."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Cadang Cadang"
+    },
+    {
+      "type": "text",
+      "text": "Look at the crown. Early signs are yellow spots on the leaves, and nuts that turn round and scarred, in a smaller size. Later the flower stalks stay small and sterile, the fronds become few and short, and the crown shrinks. The signs look like those of other causes, such as drought, poor nutrition or other pests. So diagnosis is not easy. Because [coconut bud rot](/diseases/coconut-bud-rot) also yellows the crown, ask the PCA or an agriculturist to test the palm. Do that before you decide to cut it."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Yellow, or chlorotic, spots appear on the leaves.",
+        "New nuts turn rounded, and the surface of the nut is scarred.",
+        "Flower stalks, or inflorescences, are small and sterile, so the palm makes few nuts.",
+        "Fronds are fewer and shorter, and the crown gets smaller.",
+        "The palm declines slowly and finally dies."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "The signs resemble those from other biotic and non living causes. Look for insects such as [cocolisap](/pests/cocolisap) on the leaflets before you blame the viroid."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Cadang Cadang Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "A 2012 and 2013 survey found 691,068 infected palms. PCAARRD projects that 3 million palms or more could be at risk by 2032. The agency estimates the same spread of about 0.1 to 1.0 percent a year. Without action the loss could reach 300 million US dollars, counted at 100 US dollars per bearing palm.\n\nOn your own farm, a sick palm stops making nuts and then dies. No coconut variety has been found resistant to the viroid, so every palm in an infected area is at risk."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Cadang Cadang"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Get the diagnosis first. Ask the PCA or the DA to test a palm that you think is sick, since many things can cause the same yellowing.",
+        "Cut and burn palms that the PCA confirms are infected, so they are not a source of the viroid.",
+        "Disinfect harvesting tools such as bolos, scythes and knives between palms. A report on the disease says contaminated tools are a way it can spread.",
+        "Replant the cleared area or the whole plantation, as recommended by the PCA, so you keep nut production going.",
+        "Do not move seedlings, nuts or palm material from areas that have cadang cadang to clean areas. Follow the quarantine checkpoints.",
+        "Keep the farm clean and in good care. Sanitation helps, but only removal of sick palms stops the source."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why No Spray Cures It"
+    },
+    {
+      "type": "text",
+      "text": "There is no chemical against a viroid, and no spray or injection cures a sick palm. The control is the removal of infected palms, tool sanitation and quarantine."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Follow the quarantine rules at the borders of an infected zone, and do not carry coconut planting material from one province to another without the PCA clearance.",
+        "Wash and disinfect knives, bolos and climbing gear between palms.",
+        "Look over your palms every few months for yellow spots and scarred nuts, and report them to the PCA.",
+        "Replant with healthy seedlings after removing sick palms. See the [crop pests guide](/pests/crop-pests-philippines) for other threats to a young coconut farm."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Cadang Cadang"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can cadang cadang be cured?",
+          "a": "No. PCAARRD says the available options are cutting and burning sick palms, farm sanitation and strict quarantine. Research on tolerance and resistance is still going on."
+        },
+        {
+          "q": "How does cadang cadang spread?",
+          "a": "A report says tools used for harvesting, such as bolos and knives, can carry it. Pollen from sick palms may too. No insect carrier has been found, and the natural way it moves in the field is not yet known."
+        },
+        {
+          "q": "Which palms can catch cadang cadang?",
+          "a": "Coconut is the main host. Anahaw, buri and African oil palm can also catch it. No coconut variety has been found resistant."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation diseases",
+      "items": [
+        {
+          "label": "Anthracnose",
+          "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Banana bunchy top",
+          "url": "/diseases/banana-bunchy-top"
+        },
+        {
+          "label": "Black sigatoka",
+          "url": "/diseases/black-sigatoka"
+        },
+        {
+          "label": "Moko disease and bugtok of banana",
+          "url": "/diseases/moko-disease"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DOST PCAARRD: Projects to mitigate coconut cadang cadang disease launched",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/projects-to-mitigate-coconut-cadang-cadang-disease-launched"
+        },
+        {
+          "label": "DOST PCAARRD: DOST and PCA push forward the research on coconut cadang cadang disease",
+          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/dost-pca-push-forward-the-research-on-coconut-cadang-cadang-disease"
+        },
+        {
+          "label": "Philstar: Cadang cadang virus threatens coco trees",
+          "url": "https://www.philstar.com/cebu-news/2006/02/03/319889/cadang-cadang-virus-threatens-coco-trees/amp/"
+        }
+      ]
+    }
+  ]
+}

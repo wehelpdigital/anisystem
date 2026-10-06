@@ -1,0 +1,272 @@
+{
+  "section": "pests",
+  "slug": "banana-weevil",
+  "sortOrder": 395,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Banana Weevil: How to Spot the Corm Borer and Stop It",
+  "metaTitle": "Banana Weevil: Corm Damage, Traps and Control",
+  "metaDescription": "The banana weevil grub tunnels inside the corm and weakens the plant. Learn the signs, pseudostem traps and clean planting steps that cut losses.",
+  "focusKeyword": "banana weevil",
+  "keywords": [
+    "banana weevil",
+    "banana corm borer",
+    "Cosmopolites sordidus",
+    "banana pest Philippines",
+    "banana weevil control",
+    "pseudostem trap"
+  ],
+  "excerpt": "The banana weevil, Cosmopolites sordidus, is a small black beetle whose grubs tunnel in the corm at the base of the banana plant. Tunnels weaken the plant, cut the bunch size and can topple it. This page shows the signs, the traps and the planting steps that keep it low.",
+  "heroImage": {
+    "src": "/images/site/pests/banana-weevil.webp",
+    "thumb": "/images/site/pests/banana-weevil-480.webp",
+    "alt": "A banana weevil, Cosmopolites sordidus, a black beetle with a long snout",
+    "credit": "Navapol Komanasin, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Banana Weevil?"
+    },
+    {
+      "type": "text",
+      "text": "The adult is reddish brown at first and later black, about 12 mm long, with a typical weevil snout. Its larvae are creamy white with reddish brown heads and have no legs. The adults hide in soil and plant debris in the day, and they move short distances at night.\n\nThe weevil attacks all banana varieties and also abaca, Manila hemp. It is the most important insect pest of banana and plantain in many countries. Farmers often blame the poor plant on a lack of fertilizer or on nematodes, so the true cause goes unnoticed."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Banana weevil"
+        ],
+        [
+          "Scientific name",
+          "Cosmopolites sordidus"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Banana"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Roots and base and stems and tillers"
+        ],
+        [
+          "When it strikes",
+          "It attacks at all growth stages, and the damage is worst in new plantings and in old mats that were not cleaned after harvest."
+        ],
+        [
+          "Life cycle",
+          "It spreads mostly in infested planting material, since the adults rarely fly. A full cycle takes about 50 days, and adults can live up to 2 years."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Banana Weevil"
+    },
+    {
+      "type": "text",
+      "text": "Cut a weak plant at the base or split an old corm. Tunnels inside the corm and cream colored grubs with brown heads show the weevil. Look also for tunneling at the base of the outer leaf sheath. Banana roots rotting from nematodes show no tunnels."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Tunnels run through the corm and the base of the pseudostem.",
+        "Roots rot and the plant takes up less food, so leaves die early.",
+        "The plant looks weak and can lodge, or fall over.",
+        "Suckers die back and bunches come out small.",
+        "New plantings fail when many weevils are in the planting material."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Weak, yellow banana plants can come from low nutrients or from nematodes. Split the corm. Tunnels and grubs mean banana weevil."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Banana Weevil Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Larvae tunnel in the corm, which cuts the uptake of nutrients and weakens the plant. In a new planting, the attack can cause crop failure. In an established field, it lowers bunch weight, kills mats and shortens the life of the stand.\n\nBecause the damage looks like nutrient or nematode trouble, many farmers apply more fertilizer and lose money. Check the corm before you spend. A similar banana problem is the [banana aphid](/pests/banana-aphid), which spreads a virus instead of boring."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Banana Weevil"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Use clean planting material. Tissue cultured plants are best, and you should inspect every sucker for larvae before planting.",
+        "After removing old mats, leave the land fallow for at least 3 months before you replant.",
+        "Keep the field clean. Chop old pseudostems and corm remains into pieces so they dry out and cannot feed grubs.",
+        "Set pseudostem or corm traps. Split pieces placed on the soil near the mat attract adults, and you collect and destroy them. Replace the traps often until the weevils are under control.",
+        "Protect natural enemies, such as the predatory beetles Plaesius javanus and Plaesius laevigatus and the ant Tetramorium bicarinatum, which help in some places.",
+        "Use the aggregation pheromone sordidin for monitoring and mass trapping where it is available."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Chemicals come last. Several active ingredients are registered for banana weevil in some countries, so check what is registered for banana in the Philippines through the FPA before you buy. Follow the label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Chlorpyrifos",
+          "IRAC 1B",
+          "listed in the Pacific fact sheet, check the FPA registration first"
+        ],
+        [
+          "Fipronil",
+          "IRAC 2B",
+          "listed in the Pacific fact sheet, check the FPA registration first"
+        ],
+        [
+          "Bifenthrin",
+          "IRAC 3A",
+          "listed in the Pacific fact sheet, check the FPA registration first"
+        ],
+        [
+          "Imidacloprid",
+          "IRAC 4A",
+          "listed in the Pacific fact sheet, check the FPA registration first"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Buy tissue cultured plants or inspected suckers only.",
+        "Never plant suckers taken from a field with weak, tunneled mats.",
+        "Chop and dry harvested pseudostems.",
+        "Rest the land for at least 3 months after you remove old corms."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Banana Weevil"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How does the banana weevil spread?",
+          "a": "Mostly in infested planting material. The adults rarely fly, so they only move short distances on their own at night."
+        },
+        {
+          "q": "How do I trap banana weevils?",
+          "a": "Split pseudostem or corm pieces and lay them on the soil near the mat. The adults hide under them, and you collect and destroy them. Replace the traps often."
+        },
+        {
+          "q": "How long should I rest the land?",
+          "a": "At least 3 months of fallow after you remove old corms, according to the Pacific fact sheet."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Banana weevil",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/banana_weevil_109.htm"
+        }
+      ]
+    }
+  ]
+}

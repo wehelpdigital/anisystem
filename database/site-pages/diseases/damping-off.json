@@ -1,0 +1,266 @@
+{
+  "section": "diseases",
+  "slug": "damping-off",
+  "sortOrder": 300,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Damping Off: How to Spot It and Save Your Seedlings",
+  "metaTitle": "Damping Off: Signs, Causes and Control in Seedbeds",
+  "metaDescription": "Damping off makes seeds rot and seedlings collapse at the soil line in wet seedbeds. Learn the signs and the clean seedbed steps that stop it.",
+  "focusKeyword": "damping off",
+  "keywords": [
+    "damping off",
+    "damping off of seedlings",
+    "seedling rot",
+    "Pythium damping off",
+    "seedbed disease",
+    "wire stem"
+  ],
+  "excerpt": "Damping off is the disease that makes seeds rot before they sprout and seedlings fall over at the soil line. It is the most common reason a seedbed of tomato, talong or pechay suddenly thins out.",
+  "heroImage": {
+    "src": "/images/site/diseases/damping-off.webp",
+    "thumb": "/images/site/diseases/damping-off-480.webp",
+    "alt": "A young seedling with a thin, pinched stem near the root, the sign of damping off",
+    "credit": "INAKAvillage211, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Damping Off?"
+    },
+    {
+      "type": "text",
+      "text": "Damping off is a group of diseases, caused mostly by Pythium and Rhizoctonia, with Phytophthora and Fusarium also involved. The Pacific Pests and Pathogens database says these organisms occur widely in soil. They survive on organic matter and plant roots. They are everywhere, which is the bad news. The good news is that they only strike weak, wet or overcrowded seedlings.\n\nThe damage is quick, so the seedbed is where you win or lose. A few days of waterlogged soil can wipe out many seedlings, and a bad seedbed wastes your seed money. Read our guide to [vegetables in the Philippines](/crops/vegetables-philippines) for seedbed basics. See also how a similar soil problem, [bacterial wilt](/diseases/bacterial-wilt), kills older plants."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Damping off"
+        ],
+        [
+          "Scientific name",
+          "Pythium spp., Rhizoctonia solani, Fusarium spp."
+        ],
+        [
+          "Kind",
+          "Water mold (an oomycete)"
+        ],
+        [
+          "Crops it attacks",
+          "Vegetable seedlings (tomato, eggplant, pepper, cabbage and others), also other crops raised from seed"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Seedlings and roots and base"
+        ],
+        [
+          "When it strikes",
+          "Damping off hits seeds in the soil and seedlings in their first two weeks, and it is worst in cold or waterlogged, wet seedbeds."
+        ],
+        [
+          "How it spreads",
+          "The fungi and water molds live in the soil and in organic matter. They move by water splash, contaminated tools, infected potting media and roots."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Damping Off"
+    },
+    {
+      "type": "text",
+      "text": "Look at the seedbed in the first two weeks. Pre emergence damping off leaves gaps in the row, because the seeds rot before they sprout. Post emergence damping off leaves seedlings that fall over, with a thin, water soaked, discolored stem at the soil line. Pull one up. The stem may be thin, twisted and brown, called wire stem. Patches often spread outward from one spot."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Gaps in the seedbed because seeds rotted before they sprouted.",
+        "Seedlings that fall over at the soil line, with a water soaked, thin stem.",
+        "Brown, mushy or thin, twisted stems, called wire stem.",
+        "Roots that are brown and rotted, or few and weak.",
+        "Patches of dead seedlings that spread outward from one spot in a wet tray or bed."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Cutworms also cut seedlings at the soil line. But they leave a clean cut stem and a caterpillar in the soil nearby. Damping off leaves a thin, water soaked, rotten stem and brown roots."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Damping Off Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "The sources I found give no single loss figure for the Philippines. University extension services say that within days, hundreds or thousands of seedlings can die. They add that the loss costs you the planting date as well as the seed. Waterlogged soil and poor temperatures make seedlings more open to the disease.\n\nThere is no spray threshold. The best action is to prevent it before sowing. Pull out any infected seedlings the day you see them. For pests that attack the same seedlings, see our page on [cutworms](/pests/cutworm)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Damping Off"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Sterilize the seedbed soil or tray media before sowing. The Pacific Pests fact sheet suggests heat, such as an earth oven for more than an hour, or boiling water.",
+        "Use clean, well drained containers or raised beds, and use clean tools. One percent sodium hypochlorite (bleach) disinfects equipment, according to the Pacific Pests fact sheet.",
+        "Water with clean water, such as rainwater, not pond or stream water, and do not overwater.",
+        "Sow shallowly and thinly, and do not stack filled trays, since crowded, wet seedlings rot first.",
+        "Mix well rotted compost or coconut coir into the media, as the Pacific Pests fact sheet advises.",
+        "Remove sick seedlings and the soil around them at once. Treat the seed with Trichoderma, a biological control tested in several studies, before you reach for a fungicide."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Fungicides help only when the cultural steps fail. Seedlings can be sensitive to them, so use them on seed and seedbeds with care. The Pacific Pests fact sheet names the ingredients below. Follow the FPA registered label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Mancozeb",
+          "FRAC M3",
+          "seed and seedbed treatment named by the Pacific Pests fact sheet"
+        ],
+        [
+          "Thiram",
+          "FRAC M3",
+          "seed treatment named by the Pacific Pests fact sheet"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Start every season with sterilized seedbed media and clean trays.",
+        "Keep the bed well drained and water only as much as the seedlings need.",
+        "Use fresh, healthy seed and do not sow too thickly.",
+        "Write down which beds lost seedlings, and move the nursery to a new spot next time."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Damping Off"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes damping off?",
+          "a": "Soil living organisms, mostly Pythium and Rhizoctonia, along with Phytophthora and Fusarium. They are common in soil and strike in wet, poorly drained seedbeds."
+        },
+        {
+          "q": "Can I save seedlings that have fallen over?",
+          "a": "No, a collapsed seedling will not recover. Remove it with the soil around it and fix the wetness and the drainage."
+        },
+        {
+          "q": "What is the best way to prevent damping off?",
+          "a": "Start with sterilized media, good drainage, clean water and shallow sowing. Use a seed treatment only when cultural steps are not enough."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "Downy mildew of cucurbits",
+          "url": "/diseases/downy-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Damping off",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/dampingoff_047.htm"
+        },
+        {
+          "label": "University of Maine Cooperative Extension: Damping off of vegetables",
+          "url": "https://extension.umaine.edu/ipm/?p=18777"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "section": "pests",
+  "slug": "rice-field-rats",
+  "sortOrder": 260,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Rice Field Rats: How to Spot Them and Stop Them in Your Palay",
+  "metaTitle": "Rice Field Rats: Damage and Control in the Philippines",
+  "metaDescription": "Rice field rats cut tillers and eat the grain. See the signs, how fast they breed, and the community steps PhilRice advises before any poison.",
+  "focusKeyword": "rice field rats",
+  "keywords": [
+    "rice field rats",
+    "rats in rice field",
+    "rat control in palay",
+    "community trap barrier system",
+    "daga sa palayan",
+    "rat damage rice"
+  ],
+  "excerpt": "Rice field rats, mainly Rattus tanezumi, cut tillers and eat grain from the nursery to the harvest. They breed fast, so one neglected field feeds a whole colony. Here are the signs and the steps that actually lower their number.",
+  "heroImage": {
+    "src": "/images/site/pests/rice-field-rats.webp",
+    "thumb": "/images/site/pests/rice-field-rats-480.webp",
+    "alt": "A rice field rat, Rattus tanezumi, with brown fur and a long tail, on the ground",
+    "credit": "Ankur Nandi, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Rice Field Rats?"
+    },
+    {
+      "type": "text",
+      "text": "Rice field rats are the most damaging vertebrate pests of palay. In Philippine fields the common species is Rattus tanezumi, and the field rat Rattus argentiventer also lives in rice. They shelter in pilapil, canals, weedy edges and houses nearby.\n\nFarmers care because rats multiply quickly when food is plentiful. PhilRice reports damage of 10 percent or more in infested fields, and an average yield loss of about 2.5 percent. A single bad season can change that quickly, so the work starts before planting."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Rice field rats"
+        ],
+        [
+          "Scientific name",
+          "Rattus tanezumi"
+        ],
+        [
+          "Kind",
+          "Rodent"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Stems and tillers and panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "Through the whole crop, but the worst cutting comes from booting to ripening, and numbers jump after harvest when grain is spilled."
+        ],
+        [
+          "Life cycle",
+          "A female can produce about 120 pups in one cropping season, because the pregnancy lasts about 21 days and she mates again right after birth. Rats nest in thick pilapil, so wide banks help them."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Rice Field Rats"
+    },
+    {
+      "type": "text",
+      "text": "Rats cut the tillers at an angle near the base and leave the stems lying in the water. They also gnaw the grain from the panicles and leave husks and tracks along the pilapil. Burrows with fresh soil sit in the banks. Cut tillers can also come from the [golden apple snail](/pests/golden-apple-snail), but the snail leaves cut seedlings floating and does not chew panicles."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Tillers are cut at an angle and lie in the water, often in patches or in lines along the pilapil.",
+        "Grain is chewed from the panicles and empty husks are scattered around.",
+        "Fresh burrows with loose soil appear in the pilapil and in dry corners.",
+        "Runways and footprints cross the paddy and run along the banks.",
+        "Damage grows near houses, grain stores, canals and thick weeds."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Birds also cause empty panicles, but they leave the stems standing. Cut stems lying in the water point to rats. The [rice birds](/pests/rice-birds) page shows the difference."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Rice Field Rats Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice reports damage levels of 10 percent or more in infested rice fields, with an average yield loss of about 2.5 percent. The loss depends on the stage. Damage at booting and ripening costs most, because rats eat or cut the tillers that carry the grain.\n\nRats also breed through the season. PhilRice notes that a female can produce about 120 pups in one cropping season. The community trap barrier system pays off when damage reaches 10 percent or more."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Rice Field Rats"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Clean up grain spills at harvest and keep the surroundings free of weeds and rubbish. PhilRice calls field sanitation the most recommended and the longest lasting step.",
+        "Keep the pilapil and irrigation banks narrower than 20 centimeters, so rats cannot dig their nests there.",
+        "Plant together. PhilRice advises neighbors on about 10 hectares to plant at the same time, so the crop ripens together and rats have less time to feed.",
+        "Build a community trap barrier system, a 20 by 20 meter plot of rice planted 2 to 3 weeks earlier than the rest, fenced with plastic and with traps set along the fence. PhilRice puts the cost at about 2,700 pesos, and it pays off when damage is 10 percent or more.",
+        "Hunt rats at night, destroy burrows and use traps along the pilapil. Do this as a group, since one farmer cannot clear a whole area alone.",
+        "Protect natural enemies such as owls and snakes where you can, since they eat rats, and keep the surroundings open so rats have no cover."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice does not recommend rodenticides in rice, because poison does little once the rats have multiplied, and it is dangerous to people, pets and other animals. That is why this page names no poison. Ask your local DA office before you use any bait."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Clean the field and the pilapil right after harvest, and pick up spilled grain.",
+        "Plant at the same time as your neighbors and keep the cropping window short.",
+        "Cut the weeds along banks and canals before the crop starts to boot.",
+        "Join the neighbors to set up a community trap barrier system, each season, on the same spot."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Rice Field Rats"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How fast do rice field rats multiply?",
+          "a": "PhilRice says a female can produce about 120 pups in a cropping season. Pregnancy lasts about 21 days and she mates again right after giving birth."
+        },
+        {
+          "q": "Is poison the best answer?",
+          "a": "No. PhilRice says poison does little when the rat numbers are already high, and it can kill people, pets and wildlife. Sanitation, trap barriers and group action work better."
+        },
+        {
+          "q": "What is the community trap barrier system?",
+          "a": "It is a plastic fence around a 20 by 20 meter plot of early planted rice, with traps set in the fence. Rats follow the fence and get caught. It costs about 2,700 pesos and pays off at 10 percent damage or more."
+        },
+        {
+          "q": "When should I start?",
+          "a": "Start at land preparation and before planting, and clean the field right after harvest. See also the guide to [integrated pest management](/pests/integrated-pest-management)."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Rat facts and ecologically based rat management",
+          "url": "https://www.philrice.gov.ph/?p=664"
+        },
+        {
+          "label": "PhilRice: Clean up grain spills to shoo away rats",
+          "url": "https://www.philrice.gov.ph/clean-up-grain-spills-to-shoo-away-rats/"
+        }
+      ]
+    }
+  ]
+}

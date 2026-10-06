@@ -1,0 +1,276 @@
+{
+  "section": "diseases",
+  "slug": "purple-blotch",
+  "sortOrder": 350,
+  "lang": "en",
+  "category": "Vegetable diseases",
+  "profile": true,
+  "title": "Purple Blotch of Onion: How to Spot It and Stop It",
+  "metaTitle": "Purple Blotch of Onion: Signs, Damage and Control",
+  "metaDescription": "Purple blotch makes large brown to purple patches with rings on onion leaves and can rot the bulb neck. Learn the signs, causes and how to control it.",
+  "focusKeyword": "purple blotch",
+  "keywords": [
+    "purple blotch",
+    "purple blotch of onion",
+    "Alternaria porri",
+    "onion leaf disease",
+    "onion blight Philippines"
+  ],
+  "excerpt": "Purple blotch is the fungal disease that makes large brown to purple patches, with rings, on onion leaves. It killed so much red onion in some Philippine areas in 2016 that planting was cut in half.",
+  "heroImage": {
+    "src": "/images/site/diseases/purple-blotch.webp",
+    "thumb": "/images/site/diseases/purple-blotch-480.webp",
+    "alt": "An onion family leaf with dark purple brown blotches from Alternaria porri",
+    "credit": "Landcare Research New Zealand, CC BY 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Purple Blotch?"
+    },
+    {
+      "type": "text",
+      "text": "The fungus Alternaria porri causes purple blotch. It attacks onion, shallot, garlic and leek, and it occurs worldwide. The Pacific pest fact sheet notes that in 2016 the red onion area in parts of the Philippines fell to half. Purple blotch caused that drop.\n\nThe disease and the [thrips](/pests/thrips) go together. Older leaves that thrips have scarred are the easiest for the fungus to enter. Their feeding also helps the spread. So an onion grower should manage both together."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Purple blotch of onion"
+        ],
+        [
+          "Scientific name",
+          "Alternaria porri"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Onion, shallot, garlic and leek"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It builds in humid, wet weather and on older leaves, and it jumps when thrips have already scarred the leaves."
+        ],
+        [
+          "How it spreads",
+          "The fungus survives on crop debris, and spores move by wind, rain splash and possibly insects. The spores need about 8 hours of wet leaf to infect."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Purple Blotch"
+    },
+    {
+      "type": "text",
+      "text": "Look at the leaves and the flower stalk. Spots begin small and sunken with a white center. Then they grow quickly into oval, brown to purple blotches that can reach several centimeters. Pale and dark rings appear inside each blotch, like a target. When blotches circle the leaf, the part above them wilts, collapses and dies. At harvest, the bulb can rot from the neck, with a watery yellow to red decay."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small, sunken spots with a white center appear on the leaves.",
+        "The spots grow into oval, brown to purple blotches, several centimeters long.",
+        "Light and dark rings show inside the blotches.",
+        "A blotch that circles the leaf makes the top wilt and die, and leaf tips turn black.",
+        "At harvest, the bulb neck rots, with a watery yellow to red decay."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Purple blotch is easy to confuse with the scars left by [thrips](/pests/thrips). But only the disease makes large brown to purple blotches with light and dark rings."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Purple Blotch Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Purple blotch can cause serious loss, mostly in the tropics. The Pacific pest fact sheet reports losses above 40 percent in Samoa. In 2016 the red onion area in parts of the Philippines fell to half. The loss comes from dead leaves, smaller bulbs and rot in storage.\n\nI found no official action threshold for the Philippines. Humidity, long hours of leaf wetness and thrips damage all raise the risk. So the best time to act is before the first blotches. Our guide to [growing vegetables in the Philippines](/crops/vegetables-philippines) covers spacing and watering."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Purple Blotch"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Use certified, disease free seed and sets, and plant healthy seedlings.",
+        "Check the nursery and remove any seedling that shows leaf spots before you transplant.",
+        "Use drip irrigation instead of overhead watering, so the leaves do not stay wet for long.",
+        "Control thrips. The fungus enters older leaves scarred by thrips, so see our page on [thrips](/pests/thrips).",
+        "Rotate for 3 years with crops outside the onion family, and bury or remove crop residue after harvest.",
+        "Check the bulb necks at harvest, since the fungus can infect the neck and cause a watery rot."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Onion growers where the disease is common use protectant sprays, along with systemic triazole fungicides. Mancozeb and chlorothalonil are the most common choices. Start protection before the disease builds, then rotate groups. Follow the FPA registered label for the rate and the waiting time before harvest."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Mancozeb",
+          "FRAC M3",
+          "a protectant spray, common where the disease is bad"
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M5",
+          "a protectant spray, common where the disease is bad"
+        ],
+        [
+          "Copper fungicides",
+          "FRAC M1",
+          "a protectant spray"
+        ],
+        [
+          "Triazole fungicides",
+          "FRAC 3",
+          "a systemic option, rotate with the protectants"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Start each crop with clean seed or sets.",
+        "Rotate with other crops for 3 years.",
+        "Keep thrips down all season.",
+        "Water by drip so the leaves do not stay wet.",
+        "Choose varieties that show resistance where they are sold, since resistance has been found in onion and garlic."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Purple Blotch"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes purple blotch on onion?",
+          "a": "The fungus Alternaria porri causes it. Spores need about 8 hours of leaf wetness to infect, and thrips scars make it easier."
+        },
+        {
+          "q": "Can purple blotch rot the bulb?",
+          "a": "Yes. The disease can infect the bulb at harvest, usually at the neck, where a watery yellow to red rot develops."
+        },
+        {
+          "q": "How do I keep it from coming back?",
+          "a": "Rotate for 3 years, use clean seed, water by drip, control thrips and remove crop residue."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable diseases",
+      "items": [
+        {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
+          "label": "Early blight",
+          "url": "/diseases/early-blight"
+        },
+        {
+          "label": "Late blight",
+          "url": "/diseases/late-blight"
+        },
+        {
+          "label": "Powdery mildew",
+          "url": "/diseases/powdery-mildew"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Onion purple blotch",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/onion_purple_blotch_151.htm"
+        },
+        {
+          "label": "Journal of Pharmacognosy and Phytochemistry: Purple blotch disease in onion management through biological agents",
+          "url": "https://phytojournal.com/archives/2020.v9.i3.11541/purple-blotch-disease-in-onion-management-through-biological-agents"
+        }
+      ]
+    }
+  ]
+}

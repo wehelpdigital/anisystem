@@ -1,0 +1,249 @@
+{
+  "section": "pests",
+  "slug": "coconut-rhinoceros-beetle",
+  "sortOrder": 380,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Coconut Rhinoceros Beetle: Signs, Damage and How to Control It",
+  "metaTitle": "Coconut Rhinoceros Beetle: Damage and Control",
+  "metaDescription": "The coconut rhinoceros beetle bores into the crown and leaves V cut leaves. Learn its breeding sites, traps and the Metarhizium fungus that fights it.",
+  "focusKeyword": "coconut rhinoceros beetle",
+  "keywords": [
+    "coconut rhinoceros beetle",
+    "rhinoceros beetle",
+    "Oryctes rhinoceros",
+    "rhinoceros beetle control",
+    "coconut pest",
+    "Metarhizium coconut"
+  ],
+  "excerpt": "The coconut rhinoceros beetle, Oryctes rhinoceros, is a jet black beetle with a horn that bores into the crown of coconut palms. It cuts the growing point, leaves V shaped cuts in the leaves and can kill young palms. This page covers how to spot it, where it breeds and how to control it without chemicals.",
+  "heroImage": {
+    "src": "/images/site/pests/coconut-rhinoceros-beetle.webp",
+    "thumb": "/images/site/pests/coconut-rhinoceros-beetle-480.webp",
+    "alt": "A coconut rhinoceros beetle, Oryctes rhinoceros, shiny black with a short horn, on the ground",
+    "credit": "AnnLazaro, CC BY SA, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Coconut Rhinoceros Beetle?"
+    },
+    {
+      "type": "text",
+      "text": "The adult is jet black, up to 40 mm long, with a clear horn. A female has a shorter horn than the male. Adults fly to the palm at night, bore into the crown and feed on the sap. The grubs do no harm to living palms, because they grow in rotting organic matter.\n\nThe beetle is one of the main pests of coconut, and it also attacks oil palm and other palms across Asia and the Pacific. Because the grubs live in dead trunks and heaps of compost, the farm itself makes the breeding ground. That is why cleaning the farm is the first control."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Coconut rhinoceros beetle"
+        ],
+        [
+          "Scientific name",
+          "Oryctes rhinoceros"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Coconut"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It attacks all year, and numbers rise wherever dead palms, rotting trunks and compost heaps are left in the farm."
+        ],
+        [
+          "Life cycle",
+          "Adults feed in the crown and breed in dead and rotting plant material. An egg takes 8 to 12 days to hatch, the grub stage lasts 80 to 200 days, and the pupa needs 25 to 40 days."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Coconut Rhinoceros Beetle"
+    },
+    {
+      "type": "text",
+      "text": "Look at the leaves as they open. The beetle chews into the folded leaf, so the open leaflets show V shaped or wedge shaped cuts. Fresh chewed fiber may stick out of a hole at the base of a frond. Cut a rotting log or open a compost heap, and you may find fat, curled, cream colored grubs. Do not confuse the cuts with typhoon damage, which tears leaflets in ragged strips and not in neat wedges."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Leaflets show V shaped or wedge shaped cuts when the frond opens.",
+        "A hole with chewed fiber sits at the base of a frond or in the crown.",
+        "Young palms stop making new leaves when the growing point is damaged.",
+        "Fat curled grubs live in rotting trunks, sawdust, manure and compost.",
+        "Heavily attacked palms look thin and may die."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Typhoon damage tears the leaflets in ragged strips. The beetle leaves neat V shaped cuts. The [red palm weevil](/pests/red-palm-weevil) tunnels inside the trunk, and the beetle only bores into the crown."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Coconut Rhinoceros Beetle Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Adults bore into the crown. When they cut the growing point, the palm cannot make new leaves, and it can die. Young palms suffer most. Damaged leaves also give a way in for other problems, such as [coconut bud rot](/diseases/coconut-bud-rot).\n\nA female lives about 9 months and lays roughly 50 eggs, so numbers climb fast where breeding sites are plentiful. Over the last decade the PCA has reported success with the virus and the fungus used together with pheromone traps and clean farm practice. Even so, a newer biotype of the beetle in the Pacific has resisted the virus, so the Philippines needs steady monitoring."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Coconut Rhinoceros Beetle"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Remove and destroy breeding sites first. Cut up and remove fallen palms and dead standing palms, and clear rotting stumps and sawdust.",
+        "Cover heaps of compost, manure or rotting plant material with a fine net so the beetles cannot lay eggs in them.",
+        "Check the pile before you throw anything away. Collect the grubs, pupae and adults by hand and destroy them.",
+        "Hang pheromone traps. Space them about 1 to 2 km apart for monitoring and pick up the catch often.",
+        "Use the Metarhizium anisopliae fungus, developed by the PCA from Philippine isolates. Apply it to breeding sites or to beetles, so the infection spreads inside the pile.",
+        "Ask your PCA office about the Oryctes nudivirus, a virus that infects grubs and adults and has been used as a biological control agent."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Spraying is not recommended on coconut, because the crown is high and the cost is too great for the return. A Pacific fact sheet says synthetic pyrethroids may be used on young palms if nothing else works. Follow the label and the FPA registration."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Never leave dead standing palms, cut trunks or stumps to rot in the grove.",
+        "Cover or turn compost heaps and manure piles often.",
+        "Walk the farm each month and check the crown of young palms for fresh cuts.",
+        "Work with neighbors, because beetles fly between farms."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Coconut Rhinoceros Beetle"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Where does the coconut rhinoceros beetle breed?",
+          "a": "In moist rotting material such as dead standing palms, fallen trunks, sawdust, manure and compost."
+        },
+        {
+          "q": "What does its damage look like?",
+          "a": "Leaves open with V shaped or wedge shaped cuts. Heavy attacks on the crown stop new leaves from forming."
+        },
+        {
+          "q": "Does the Metarhizium fungus really help?",
+          "a": "The PCA reports success with Metarhizium, the virus, traps and clean farming over the last 10 years. The fungus works best when you also remove breeding sites."
+        },
+        {
+          "q": "Should I spray the palms?",
+          "a": "Usually no. Sanitation, traps and the biological agents come first. Ask your PCA office before you consider any chemical."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "Red palm weevil",
+          "url": "/pests/red-palm-weevil"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Coconut rhinoceros beetle",
+          "url": "https://apps.lucidcentral.org/pppw_v12/text/web_full/entities/coconut_rhinoceros_beetle__oryctes_108.htm"
+        },
+        {
+          "label": "PlantwisePlus Blog: From discovery to eradication, the coconut rhinoceros beetle on Guam",
+          "url": "https://blog.plantwise.org/?p=1989"
+        }
+      ]
+    }
+  ]
+}

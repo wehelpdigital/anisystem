@@ -1,0 +1,269 @@
+{
+  "section": "diseases",
+  "slug": "coffee-leaf-rust",
+  "sortOrder": 410,
+  "lang": "en",
+  "category": "Fruit and plantation diseases",
+  "profile": true,
+  "title": "Coffee Leaf Rust: How to Spot It and Protect Your Coffee Trees",
+  "metaTitle": "Coffee Leaf Rust: Signs, Losses and Control",
+  "metaDescription": "Coffee leaf rust covers leaves with orange powder, drops them and cuts the crop. Learn the signs, the shade and variety steps and when to spray.",
+  "focusKeyword": "coffee leaf rust",
+  "keywords": [
+    "coffee leaf rust",
+    "coffee rust",
+    "Hemileia vastatrix",
+    "coffee disease Philippines",
+    "coffee leaf disease"
+  ],
+  "excerpt": "Coffee leaf rust is a fungus that makes yellow orange powdery spots on the underside of coffee leaves, and then the leaves fall. A tree with few leaves gives a poor crop and can die back. This guide shows how to spot it and how to protect your farm.",
+  "heroImage": {
+    "src": "/images/site/diseases/coffee-leaf-rust.webp",
+    "thumb": "/images/site/diseases/coffee-leaf-rust-480.webp",
+    "alt": "A coffee leaf with yellow orange patches of coffee leaf rust",
+    "credit": "Juanito Escamilla, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Coffee Leaf Rust?"
+    },
+    {
+      "type": "text",
+      "text": "Coffee leaf rust is caused by the fungus Hemileia vastatrix. It attacks both arabica and robusta coffee. It is the most serious constraint on arabica production in many countries, according to a global variety trial reported in PMC. DOST PCAARRD says it causes wilting and defoliation, and a loss of production of up to 50 percent. It is one of the major challenges for Philippine coffee, along with the coffee white stem borer.\n\nThe good news is that resistance exists. A UP Diliman team led by Dr. Ernelea Cao found local Philippine coffee varieties with resistance to the rust. If you farm [coffee and other perennial crops](/crops/pagtatanim-ng-puno), choosing the right variety, shade and spacing is your first defense."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Coffee leaf rust"
+        ],
+        [
+          "Scientific name",
+          "Hemileia vastatrix"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Coffee, both arabica and robusta"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves"
+        ],
+        [
+          "When it strikes",
+          "It builds up in the wet season, because the spores need water to germinate, and it hurts most on heavy bearing trees."
+        ],
+        [
+          "How it spreads",
+          "Spores blow in the wind and can also ride on insects, and they need water on the leaf to germinate. It is a fungus that feeds only on living coffee tissue."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Coffee Leaf Rust"
+    },
+    {
+      "type": "text",
+      "text": "Turn a leaf over. The underside has yellow orange powdery blotches, which start as small spots of about 2 to 3 mm and grow to about 15 mm. On the upper side, the same spots show as pale yellow patches that turn brown. Many spots join, and the leaf yellows and falls. Look at the lower, older leaves first. The orange powder is the sign that tells it apart from other leaf spots that do not make powder on the underside."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small spots of about 2 to 3 mm appear and grow to about 15 mm.",
+        "The underside of the leaf has yellow orange powdery blotches.",
+        "The top of the leaf shows spots with yellow halos that turn brown.",
+        "Badly hit leaves fall early, and shoots can die back.",
+        "Berries stay small, and branches and trees can die in bad cases."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Other leaf spots and nutrient yellowing can also mark coffee leaves, but only rust makes the orange powder on the underside."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Coffee Leaf Rust Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "DOST PCAARRD says coffee leaf rust causes wilting and defoliation that result in up to 50 percent loss in production. The Pacific Pests and Pathogens fact sheet adds that it causes defoliation, smaller berries, and branch and tree death. On high yielding trees, a heavy crop uses up the tree's reserves, so rust can cause stem dieback.\n\nThe loss depends on the variety, the weather and the shade, so your own farm may see less. Scout before the rainy season starts, so you know your risk before the leaves start falling."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Coffee Leaf Rust"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant resistant or tolerant varieties. The Pacific fact sheet names Catimor as a resistant type, and Philippine researchers have found local varieties with resistance. Ask your agriculturist what is available near you.",
+        "Space trees so air moves through the rows, and prune so leaves dry quickly after rain.",
+        "Use the right shade. The fact sheet lists spacing, soil nutrition and shade as the critical cultural factors.",
+        "Feed the trees well, because a strong tree with enough nutrients holds its leaves and bears a heavy crop with less damage.",
+        "Keep the farm clean and well weeded, so leaves dry faster after rain.",
+        "Use clean seedlings, and follow the DA and BPI quarantine rules when you move coffee planting material."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Fungicide comes after the steps above. The Pacific fact sheet says copper is a protectant that you apply before infection, and triazoles are systemic. The same fact sheet says treatment is usually not needed above 1,700 meters. Use only products registered for coffee by the FPA and follow the label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Copper compounds",
+          "FRAC M1",
+          "a protectant, applied before infection"
+        ],
+        [
+          "Triazole fungicides",
+          "FRAC 3",
+          "systemic, so ask an agriculturist for a registered active ingredient and do not repeat the same group every time"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose resistant or tolerant planting material when you replant.",
+        "Keep spacing and shade right, and prune each year.",
+        "Scout the lower leaves of a few trees often in the rainy season.",
+        "Keep soil fertility up, since weak trees suffer more. See our [plant diseases guide](/diseases/plant-diseases-philippines) for other leaf diseases to watch."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Coffee Leaf Rust"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How much crop can coffee leaf rust take?",
+          "a": "DOST PCAARRD says up to 50 percent of production in the Philippines. The loss depends on the variety, weather and care, so the figure is a ceiling, not a rule for every farm."
+        },
+        {
+          "q": "Are there rust resistant coffee varieties in the Philippines?",
+          "a": "Yes, there is research on it. A UP Diliman team found local varieties with resistance to coffee leaf rust, using a DNA test developed with PCAARRD funding. Catimor is another resistant type named in the Pacific fact sheet."
+        },
+        {
+          "q": "Do I need to spray every year?",
+          "a": "Not always. Resistant varieties, shade, spacing and feeding come first. The fact sheet says fungicide is usually not needed at high elevation, above about 1,700 meters. Read our [guide to fungicides](/blog/fungicides) before you buy."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation diseases",
+      "items": [
+        {
+          "label": "Anthracnose",
+          "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Banana bunchy top",
+          "url": "/diseases/banana-bunchy-top"
+        },
+        {
+          "label": "Black sigatoka",
+          "url": "/diseases/black-sigatoka"
+        },
+        {
+          "label": "Moko disease and bugtok of banana",
+          "url": "/diseases/moko-disease"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DOST PCAARRD: Early detection of resistance to coffee white stem borer and leaf rust in Philippine coffee varieties",
+          "url": "https://pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/early-detection-of-resistance-to-coffee-white-stem-borer-and-leaf-rust-in-philippine-coffee-varieties-made-possible-via-lamp-technology"
+        },
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Coffee rust",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_mini/entities/coffee_rust_141.htm"
+        },
+        {
+          "label": "PMC: Global Coffea arabica variety trials reveal genotype by environment interactions in resistance to coffee leaf rust",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12202487"
+        }
+      ]
+    }
+  ]
+}

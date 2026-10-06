@@ -1,0 +1,275 @@
+{
+  "section": "diseases",
+  "slug": "corn-rust",
+  "sortOrder": 270,
+  "lang": "en",
+  "category": "Corn diseases",
+  "profile": true,
+  "title": "Corn Rust: How to Spot It and Protect Your Mais",
+  "metaTitle": "Corn Rust: Signs, Damage and Control in Mais",
+  "metaDescription": "Corn rust makes powdery brown pustules on mais leaves in warm, wet weather. Learn to tell common from southern rust and when a spray is worth it.",
+  "focusKeyword": "corn rust",
+  "keywords": [
+    "corn rust",
+    "southern corn rust",
+    "common rust of corn",
+    "Puccinia polysora",
+    "Puccinia sorghi",
+    "mais rust"
+  ],
+  "excerpt": "Corn rust is a fungal disease that covers mais leaves with small, powdery, rusty pustules. Two fungi cause it, Puccinia sorghi and Puccinia polysora, and the second one is more common in the tropics.",
+  "heroImage": {
+    "src": "/images/site/diseases/corn-rust.webp",
+    "thumb": "/images/site/diseases/corn-rust-480.webp",
+    "alt": "A corn leaf covered with small orange brown rust pustules",
+    "credit": "Daren Mueller, Iowa State University, Bugwood.org, CC BY 3.0 US, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Corn Rust?"
+    },
+    {
+      "type": "text",
+      "text": "Corn rust comes in two kinds. Common rust is caused by Puccinia sorghi, and southern rust, also called American corn rust, is caused by Puccinia polysora. The Pacific Pests and Pathogens database says both are widespread across tropical and subtropical regions, and that southern rust is more common in the tropics, especially at low altitude.\n\nFor most Philippine corn growers, rust is a late season problem. It usually shows after the tassel opens, when the grain has already started to form. That is why the Pacific Pests fact sheet calls it usually of minor importance. Even so, a heavy attack in a susceptible hybrid can cut yield, so scout your field and read our [pagtatanim ng mais](/crops/pagtatanim-ng-mais) guide to time planting well."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Corn rust"
+        ],
+        [
+          "Scientific name",
+          "Puccinia polysora, Puccinia sorghi"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Corn"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and stems and tillers"
+        ],
+        [
+          "When it strikes",
+          "Corn rust shows up late in the crop, around and after tasseling, and it spreads fastest in warm, wet weather."
+        ],
+        [
+          "How it spreads",
+          "The spores are powdery and the wind carries them from field to field. A pustule makes thousands of spores, and the fungus survives on crop debris and volunteer corn."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Corn Rust"
+    },
+    {
+      "type": "text",
+      "text": "Look at both sides of the leaf. Common rust pustules are circular to elongate, powdery, and brown to brick red, scattered over both leaf surfaces. Southern rust pustules are round to oval, light cinnamon brown to orange, and packed in dense groups mostly on the upper surface. Rub a pustule with your finger. If it leaves rusty brown powder, it is rust."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small, round to oval pustules on the leaves, brown, orange or brick red.",
+        "Powdery spores that rub off as rusty dust on your fingers or clothes.",
+        "Common rust pustules scattered on both sides of the leaf.",
+        "Southern rust pustules in dense clusters on the upper side of the leaf.",
+        "Pustules turning brown black as the plant ages, with leaves that dry early on bad attacks."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Rust pustules are often mistaken for [corn downy mildew](/diseases/corn-downy-mildew) or [northern corn leaf blight](/diseases/northern-corn-leaf-blight). Rust leaves powder on your finger, blight makes long tan cigar shaped lesions, and downy mildew shows pale stripes and white fuzz on young plants."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Corn Rust Hurts Your Corn"
+    },
+    {
+      "type": "text",
+      "text": "Common rust is minor on most modern corn hybrids, and the Pacific Pests fact sheet says it is a bigger worry for sweet corn. Southern rust is the more aggressive one. University of Nebraska extension reports losses of up to 45 percent in severe cases in the United States, and about 6 percent loss for each 10 percent of leaf area infected by common rust. Those are US figures, so Philippine losses will differ by variety and season.\n\nA spray threshold from the Pacific Pests fact sheet is an average of six pustules per leaf on susceptible crops. Because the damage grows with warm, wet days, scouting every week from tasseling is the key. For a wider look at what attacks mais, see our guide to [crop pests in the Philippines](/pests/crop-pests-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Corn Rust"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant a resistant variety. The Pacific Pests fact sheet calls resistant varieties the best way to manage rust, and many hybrids carry it.",
+        "Plant in the drier season where you can, and avoid planting next to an infected field.",
+        "Destroy volunteer corn and bury or burn crop debris after harvest.",
+        "Remove Oxalis weeds near the field, because they can host common rust.",
+        "Plant early or use shorter season varieties so the crop matures before the disease peaks, as University of Nebraska extension advises.",
+        "Scout weekly from tasseling and decide on a spray only if the pustules are heavy and the weather stays wet."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A spray rarely pays on a field corn crop, because rust arrives late and the effect on yield is often minor. It can make sense on susceptible sweet corn or in a bad year. Rotate the fungicide group, because repeated use of one group can lead to resistant rust. Follow the FPA registered label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Mancozeb",
+          "FRAC M3",
+          "protectant, named by the Pacific Pests fact sheet, start at about six pustules per leaf"
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M5",
+          "protectant, named by the Pacific Pests fact sheet"
+        ],
+        [
+          "Propiconazole",
+          "FRAC 3",
+          "tested against southern rust in research trials"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose a rust tolerant hybrid and check the seed label or ask your supplier.",
+        "Keep the field clean of volunteer corn and weeds that carry the fungus.",
+        "Plant on time with your neighbors, so the crop avoids the warm, wet peak.",
+        "Record the weeks rust appeared, then change your planting date next season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Corn Rust"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the difference between common rust and southern rust?",
+          "a": "Common rust (Puccinia sorghi) has brick red to brown pustules on both sides of the leaf and prefers cooler weather. Southern rust (Puccinia polysora) has orange to cinnamon pustules in dense groups on the upper side and likes warm weather."
+        },
+        {
+          "q": "Do I need to spray for corn rust?",
+          "a": "Usually not on field corn, since rust arrives late and often costs little yield. Spray only on a susceptible crop with heavy pustules, using the label and rotating groups."
+        },
+        {
+          "q": "Can corn rust spread from one field to another?",
+          "a": "Yes. The spores are powdery and the wind carries them far. That is why planting date and clearing volunteer corn matter. See our page on [corn seeds](/crops/corn-seeds) for choosing a variety."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More corn diseases",
+      "items": [
+        {
+          "label": "Corn downy mildew",
+          "url": "/diseases/corn-downy-mildew"
+        },
+        {
+          "label": "Northern corn leaf blight",
+          "url": "/diseases/northern-corn-leaf-blight"
+        },
+        {
+          "label": "Banded leaf and sheath blight",
+          "url": "/diseases/banded-leaf-and-sheath-blight"
+        },
+        {
+          "label": "Corn stalk rot",
+          "url": "/diseases/corn-stalk-rot"
+        },
+        {
+          "label": "Corn ear rot",
+          "url": "/diseases/corn-ear-rot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Maize common rust",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/maize_common_rust_225.htm"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: American corn rust",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/maize_american_corn_rust_042.htm"
+        },
+        {
+          "label": "University of Nebraska Extension: Corn rust diseases",
+          "url": "https://extensionpubs.unl.edu/publication/g1680/na/html/view"
+        }
+      ]
+    }
+  ]
+}

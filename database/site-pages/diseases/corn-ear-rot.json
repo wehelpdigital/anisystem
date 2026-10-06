@@ -1,0 +1,286 @@
+{
+  "section": "diseases",
+  "slug": "corn-ear-rot",
+  "sortOrder": 290,
+  "lang": "en",
+  "category": "Corn diseases",
+  "profile": true,
+  "title": "Corn Ear Rot: How to Spot It and Protect Your Harvested Mais",
+  "metaTitle": "Corn Ear Rot: Signs, Mycotoxin Risk and Control",
+  "metaDescription": "Corn ear rot shows as pink white or green mold on mais cobs and can leave toxins in the grain. Learn the signs, the risks and how to keep your corn safe.",
+  "focusKeyword": "corn ear rot",
+  "keywords": [
+    "corn ear rot",
+    "ear rot of maize",
+    "Fusarium ear rot",
+    "Aspergillus ear rot",
+    "aflatoxin in corn",
+    "fumonisin in corn",
+    "moldy corn cob"
+  ],
+  "excerpt": "Corn ear rot is a group of fungal diseases. They grow as pink white, greenish or powdery mold on the cob and rot the kernels. The harm goes beyond lost yield. Some of the fungi leave toxins in the grain that hurt animals and people.",
+  "heroImage": {
+    "src": "/images/site/diseases/corn-ear-rot.webp",
+    "thumb": "/images/site/diseases/corn-ear-rot-480.webp",
+    "alt": "A corn ear with pale fungal growth spreading over the kernels, a sign of Fusarium ear rot",
+    "credit": "Clemson University USDA Cooperative Extension Slide Series, Bugwood.org, CC BY 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Corn Ear Rot?"
+    },
+    {
+      "type": "text",
+      "text": "Two fungi stand behind most ear rots. Fusarium verticillioides causes Fusarium ear and kernel rot and makes fumonisin. Aspergillus flavus causes Aspergillus ear rot and makes aflatoxin. A UPLB study of 300 fungal isolates found F. verticillioides was the main fumonisin producing Fusarium in Philippine corn areas.\n\nFor a farmer, the cob is the money. A moldy cob is lower in grade, and a toxic one can be unfit for feed or food. The Pacific Pests and Pathogens database notes that contaminated maize made horses sick in New Caledonia. In 1981 five of 45 sick animals died. So drying and storing the grain well matter as much as field care. See our guide to [corn seeds](/crops/corn-seeds) when choosing what to plant."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Corn ear rot"
+        ],
+        [
+          "Scientific name",
+          "Fusarium verticillioides, Aspergillus flavus"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Corn"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "Corn ear rot starts at silking, when spores enter through the silks, and it grows during grain filling, in wet weather for Fusarium, and in hot, dry stress and after harvest storage for Aspergillus."
+        ],
+        [
+          "How it spreads",
+          "The fungi live in soil, corn residue and air. Spores land on the silks and enter the ear, and insects that chew the ear open more doors for them."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Corn Ear Rot"
+    },
+    {
+      "type": "text",
+      "text": "Peel back the husk. Fusarium shows as a pinkish white, cottony, sometimes powdery growth on the cob, with reddish brown kernels. It often scatters through the ear or starts at the tip. Aspergillus is a greenish yellow powdery mold, usually at the tip or on kernels damaged by insects. On the plant, Fusarium can also leave irregular white spots with dark borders on leaf sheaths. Colors alone do not prove a toxin, so treat any moldy grain as unsafe."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Pinkish white, cottony or powdery growth on the cob and between kernels, the sign of Fusarium.",
+        "Reddish brown kernels or streaked kernels, often at or near the ear tip.",
+        "Greenish yellow powdery mold on kernels, usually where an insect or bird damaged the husk, the sign of Aspergillus.",
+        "Ears with open or loose husks, or with chewed tips, that let the spores in.",
+        "Moldy, musty smelling grain after drying and storage."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Sooty or black growth on the husk can be [corn rust](/diseases/corn-rust) spores or other leaf fungi. Ear rot molds grow between the kernels on the cob itself, and they are pink white or greenish yellow."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Corn Ear Rot Hurts Your Corn"
+    },
+    {
+      "type": "text",
+      "text": "The yield loss from ear rot is usually less serious than the toxin risk. Fumonisin from Fusarium and aflatoxin from Aspergillus can contaminate the grain. The Pacific Pests database notes that aflatoxin is a serious risk to livestock and people. The Aspergillus mold grows most in hot, dry years, in plants stressed by drought and insect damage. It also grows in stored grain that is not dry enough.\n\nThere is no field threshold. Because you cannot see a toxin, set a rule: any moldy ear goes aside, and animals never eat it. Insect damage opens the ear. So control the pests that chew on it, such as the [corn earworm](/pests/corn-earworm) and the [Asian corn borer](/pests/asian-corn-borer)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Corn Ear Rot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant a tolerant variety. No fully resistant hybrids exist, but some are tolerant.",
+        "Control ear chewing insects that open the husk. Scout for the corn earworm and the Asian corn borer.",
+        "Give enough nitrogen. Aspergillus infection is worse in nitrogen deficient, drought stressed corn.",
+        "Harvest as soon as the ears are mature and dry. The Pacific Pests fact sheet advises cobs below 18 percent moisture, and seed corn at 13 to 15 percent.",
+        "Dry the grain fast, to 13 to 15 percent moisture within about 48 hours as the Pacific Pests fact sheet advises, and clean the storage and equipment first. Throw out moldy ears before storing, so they do not contaminate the rest.",
+        "Rotate away from corn when you can, and bury or remove residue, which hosts the fungi."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "There is no cure for ear rot once it is on the cob. Field trials in other countries showed that sprays reduce contamination only partly. A mixture of fungicide groups works better than a single group. Follow the FPA registered label and ask your technician first."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Prothioconazole",
+          "FRAC 3",
+          "triazole, stopped all ear rot fungi in the lab, cut contamination by about half in the field"
+        ],
+        [
+          "Prochloraz",
+          "FRAC 3",
+          "imidazole, stopped all ear rot fungi in the lab"
+        ],
+        [
+          "Boscalid",
+          "FRAC 7",
+          "reduced Aspergillus flavus contamination in field trials"
+        ],
+        [
+          "Carboxin plus thiram",
+          "FRAC 7 plus FRAC M3",
+          "seed treatment named by the Pacific Pests fact sheet for Fusarium"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose a tolerant variety.",
+        "Control corn borers and earworms before silking.",
+        "Harvest on time and dry the grain quickly.",
+        "Clean your store and keep grain dry, cool and off the ground.",
+        "Write down which fields had moldy ears and plan the insect control there first."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Corn Ear Rot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is moldy corn safe to feed to animals?",
+          "a": "No. Some ear rot fungi make toxins, fumonisin from Fusarium and aflatoxin from Aspergillus, that can sicken animals and people. Throw moldy ears away."
+        },
+        {
+          "q": "What is the difference between Fusarium and Aspergillus ear rot?",
+          "a": "Fusarium makes pinkish white cottony mold and fumonisin. Aspergillus makes greenish yellow powdery mold and aflatoxin, and it likes hot, dry stress years."
+        },
+        {
+          "q": "How do I stop ear rot after harvest?",
+          "a": "Harvest when the ears are mature, dry them fast, clean the store and reject moldy ears. The Pacific Pests fact sheet says cobs should be below 18 percent moisture."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More corn diseases",
+      "items": [
+        {
+          "label": "Corn downy mildew",
+          "url": "/diseases/corn-downy-mildew"
+        },
+        {
+          "label": "Corn rust",
+          "url": "/diseases/corn-rust"
+        },
+        {
+          "label": "Northern corn leaf blight",
+          "url": "/diseases/northern-corn-leaf-blight"
+        },
+        {
+          "label": "Banded leaf and sheath blight",
+          "url": "/diseases/banded-leaf-and-sheath-blight"
+        },
+        {
+          "label": "Corn stalk rot",
+          "url": "/diseases/corn-stalk-rot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Maize Fusarium kernel rot",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/maize_fusarium_kernel_rot_224.htm"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Aspergillus mould (Aspergillus flavus)",
+          "url": "https://apps.lucidcentral.org/pppw_v12/text/web_full/entities/coconut_aspergillus_mould_233.htm"
+        },
+        {
+          "label": "UPLB: Fumonisin producing Fusarium species causing ear rot of corn in the Philippines",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4209"
+        },
+        {
+          "label": "PMC: In vitro and in field response of fungicides against Aspergillus flavus and Fusarium species causing ear rot of maize",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6357132/"
+        }
+      ]
+    }
+  ]
+}

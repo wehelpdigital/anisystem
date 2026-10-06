@@ -1,0 +1,280 @@
+{
+  "section": "diseases",
+  "slug": "corn-downy-mildew",
+  "sortOrder": 265,
+  "lang": "en",
+  "category": "Corn diseases",
+  "profile": true,
+  "title": "Corn Downy Mildew: How to Spot It and Protect Your Mais",
+  "metaTitle": "Corn Downy Mildew: Signs, Damage and Control in Mais",
+  "metaDescription": "Corn downy mildew shows as pale stripes and white fuzz on young mais, and it can wipe out a stand. Learn the signs and the steps that protect your corn.",
+  "focusKeyword": "corn downy mildew",
+  "keywords": [
+    "corn downy mildew",
+    "Philippine downy mildew",
+    "downy mildew of corn",
+    "Peronosclerospora philippinensis",
+    "mais downy mildew",
+    "corn seedling disease"
+  ],
+  "excerpt": "Corn downy mildew is the disease behind pale, striped, stunted mais seedlings with white fuzz on the leaves. In the Philippines, Peronosclerospora philippinensis causes it. It is one of the main diseases that can destroy a young corn stand.",
+  "heroImage": {
+    "src": "/images/site/diseases/corn-downy-mildew.webp",
+    "thumb": "/images/site/diseases/corn-downy-mildew-480.webp",
+    "alt": "A young corn leaf with the pale yellow and white stripes of downy mildew",
+    "credit": "Kembangraps, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Corn Downy Mildew?"
+    },
+    {
+      "type": "text",
+      "text": "Peronosclerospora philippinensis, a water mold that behaves like a fungus, causes corn downy mildew. It attacks corn, and the disease is most common in warm, humid regions and in fields that flood. Researchers at the University of the Philippines Los Baños test corn lines against it. Breeding for resistance has been hard.\n\nIt matters because young plants are the most open to attack. A field can lose plants before it forms a crop. In severe cases, research papers report yield loss up to total loss. Our guide to [corn seeds](/crops/corn-seeds) and the page on [planting corn](/crops/pagtatanim-ng-mais) help you choose seed and plan around wet weeks."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Corn downy mildew"
+        ],
+        [
+          "Scientific name",
+          "Peronosclerospora philippinensis"
+        ],
+        [
+          "Kind",
+          "Water mold (an oomycete)"
+        ],
+        [
+          "Crops it attacks",
+          "Corn"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, the whole plant and panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "Corn downy mildew hits young corn most, in the first weeks after emergence, and it grows fastest in warm, humid weather and in fields that flood."
+        ],
+        [
+          "How it spreads",
+          "The fungus like organism makes spores on the leaf at night in humid air, and wind carries them to nearby corn. The Philippine species spreads from plant to plant by these spores and has no insect vector."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Corn Downy Mildew"
+    },
+    {
+      "type": "text",
+      "text": "Look at the first true leaves of seedlings. The first sign is chlorotic stripes or a general yellowing. Early in the morning, check the underside of the leaf for a grayish white downy growth. Older infected plants have narrow, stiff, upright leaves, and their tassels come out malformed. Note that maize streak virus can hide the mildew symptoms. So check the leaf underside in the early morning, when the downy growth is easiest to see."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Pale or yellow stripes on the first true leaves of young seedlings.",
+        "A grayish white, downy growth on both sides of the leaf, easiest to see in the early morning.",
+        "Narrow, stiff and upright leaves that look dried out on older plants.",
+        "Stunted plants in patches, often in low areas that hold water.",
+        "Malformed tassels, little pollen, and ears that do not form or hold sterile seed."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Early stripes look like a nutrient problem or maize streak virus. A true downy mildew also shows grayish white fuzz on the leaf underside in the early morning. The plant stands stiff and narrow leaved."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Corn Downy Mildew Hurts Your Corn"
+    },
+    {
+      "type": "text",
+      "text": "Researchers rate Peronosclerospora downy mildews a major constraint on corn production. Research papers report yield loss up to 100 percent in severe attacks. How bad it gets depends on the variety, the weather and how early infection strikes the plant. Plants hit at the seedling stage seldom give any ear.\n\nThere is no set spray threshold. Because the damage begins in the first weeks, the plan must be in place before sowing. Pick a tolerant variety, treat the seed and avoid low, wet ground. Planting corn again in the same field after a wet season? Check our guide on [crop pests in the Philippines](/pests/crop-pests-philippines). See our overview of [plant diseases in the Philippines](/diseases/plant-diseases-philippines) too."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Corn Downy Mildew"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant a resistant or tolerant variety where one is sold. UPLB trials found some inbred lines with a high level of resistance, and your seed supplier or local agriculture office can say what suits your area.",
+        "Avoid fields that flood or hold water, and improve drainage before planting.",
+        "Walk the field in the first weeks, early in the morning, and pull and destroy infected seedlings right away.",
+        "Plant on time with your neighbors so that young corn does not stand beside older infected corn.",
+        "Clear grassy weeds and volunteer corn from the field and the bunds.",
+        "Treat the seed with a fungicide when the variety is not resistant, as the East West Seed plant doctor page advises."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Seed treatment is the usual first step against downy mildew. Researchers report that the Philippine pathogen can develop resistance to metalaxyl. So growers often use a mixture. Follow the FPA registered label."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Metalaxyl plus mancozeb",
+          "FRAC 4 plus FRAC M3",
+          "seed or foliar treatment, resistance to metalaxyl alone has been reported"
+        ],
+        [
+          "Dimethomorph plus mancozeb",
+          "FRAC 40 plus FRAC M3",
+          "named by East West Seed for downy mildew"
+        ],
+        [
+          "Propineb",
+          "FRAC M3",
+          "named by East West Seed, protectant"
+        ],
+        [
+          "Maneb",
+          "FRAC M3",
+          "named by East West Seed, protectant"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose a downy mildew tolerant variety first, and ask your supplier for the latest list.",
+        "Treat seed before sowing in fields with a history of the disease.",
+        "Do not plant corn in low, flood prone spots during the wet season.",
+        "Keep records of which lots had the disease and move your corn away from them if you can."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Corn Downy Mildew"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does corn downy mildew look like?",
+          "a": "Young plants show pale stripes or yellowing on the first true leaves. Then a grayish white downy growth appears on the leaf. Later the leaves turn narrow and upright and the tassels come out malformed."
+        },
+        {
+          "q": "Can corn downy mildew kill my whole field?",
+          "a": "In a severe attack it can, and research papers report losses up to 100 percent. Plants infected as seedlings seldom make an ear, so protect the crop in the first weeks."
+        },
+        {
+          "q": "Does metalaxyl still work against it?",
+          "a": "Not always. Researchers report that Philippine downy mildew can develop resistance to metalaxyl. So growers often use a mixture and a resistant variety. Read more on [corn rust](/diseases/corn-rust) and other corn diseases too."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More corn diseases",
+      "items": [
+        {
+          "label": "Corn rust",
+          "url": "/diseases/corn-rust"
+        },
+        {
+          "label": "Northern corn leaf blight",
+          "url": "/diseases/northern-corn-leaf-blight"
+        },
+        {
+          "label": "Banded leaf and sheath blight",
+          "url": "/diseases/banded-leaf-and-sheath-blight"
+        },
+        {
+          "label": "Corn stalk rot",
+          "url": "/diseases/corn-stalk-rot"
+        },
+        {
+          "label": "Corn ear rot",
+          "url": "/diseases/corn-ear-rot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "East West Seed Plant Doctor: Philippine downy mildew of corn",
+          "url": "https://plantdoctor.eastwestseed.com/node/463"
+        },
+        {
+          "label": "UPLB: Host resistance and pathogen conidial characteristics of Philippine corn downy mildew",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2922"
+        },
+        {
+          "label": "Purdue CERIS: Philippine downy mildew",
+          "url": "https://approvedmethods.ceris.purdue.edu/sheet/2042"
+        }
+      ]
+    }
+  ]
+}

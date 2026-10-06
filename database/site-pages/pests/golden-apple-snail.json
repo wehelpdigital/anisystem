@@ -1,0 +1,274 @@
+{
+  "section": "pests",
+  "slug": "golden-apple-snail",
+  "sortOrder": 255,
+  "lang": "en",
+  "category": "Rice pests",
+  "profile": true,
+  "title": "Golden Apple Snail: How to Spot It and Stop It in Your Palay",
+  "metaTitle": "Golden Apple Snail: Damage and Control in Rice",
+  "metaDescription": "The golden apple snail cuts young palay at the base overnight. Learn the signs, the critical days and the control steps PhilRice recommends.",
+  "focusKeyword": "golden apple snail",
+  "keywords": [
+    "golden apple snail",
+    "golden apple snail control",
+    "pink snail eggs in rice",
+    "kuhol in rice field",
+    "snail damage in palay",
+    "how to kill golden snail"
+  ],
+  "excerpt": "The golden apple snail, Pomacea canaliculata, is the pink egged snail that eats newly planted palay from the base. It can wipe out a paddy in a night, so the first weeks after planting decide your stand. This page shows the signs, the damage and the steps that work.",
+  "heroImage": {
+    "src": "/images/site/pests/golden-apple-snail.webp",
+    "thumb": "/images/site/pests/golden-apple-snail-480.webp",
+    "alt": "A golden apple snail, Pomacea canaliculata, crawling through shallow muddy water",
+    "credit": "Michael Bakker Paiva, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Golden Apple Snail?"
+    },
+    {
+      "type": "text",
+      "text": "The golden apple snail is a freshwater snail from South America. Private farmers brought it to the Philippines in the early 1980s, hoping to export it as food. It escaped into rice fields and canals. Today it is a major pest of lowland rice, both transplanted and wet seeded.\n\nFarmers care because the snail eats young plants from the base, and a cut seedling does not grow back. PhilRice says it can reduce yield by up to 40 percent. Older rice is safe, because plants about 30 days old are thick enough to resist it. That is why the early days matter most."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Golden apple snail"
+        ],
+        [
+          "Scientific name",
+          "Pomacea canaliculata"
+        ],
+        [
+          "Kind",
+          "Snail (a mollusk)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "Kuhol"
+        ],
+        [
+          "Where it strikes",
+          "Seedlings and leaves"
+        ],
+        [
+          "When it strikes",
+          "From land preparation until the rice is about 30 days old. The worst damage comes in the first 10 to 15 days after transplanting and the first 21 days after wet seeding."
+        ],
+        [
+          "Life cycle",
+          "Females lay bright pink egg masses on stems and pilapil above the water line, up to 500 eggs a week. The eggs hatch in 7 to 14 days. The snails move through irrigation water and flooded fields."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Golden Apple Snail"
+    },
+    {
+      "type": "text",
+      "text": "Look for a round, brownish snail the size of a small fist in the water. Look also for bright pink egg masses stuck on stems, pilapil and posts just above the water. Missing hills in rows, with cut leaves floating, point to the snail. Damage from [rice whorl maggot](/pests/rice-whorl-maggot) leaves the seedling standing, while the snail removes it."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Seedlings are cut at the base and the leaves float on the water.",
+        "Rows of hills are missing, often starting near the irrigation inlet and the edges of the paddy.",
+        "Bright pinkish red egg masses cling to rice stems, pilapil, canal walls and posts.",
+        "Snails of different sizes sit in the water and in the mud, mostly in the early morning and late afternoon.",
+        "Damage stops once the rice is about 30 days old, because the stems have grown thick."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Weather damage and rats can also cut seedlings, so look for the snail or its pink eggs before you act. See [rice field rats](/pests/rice-field-rats)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Golden Apple Snail Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice reports that the snail can cut yield by up to 40 percent. It can eat a whole young paddy overnight. A PhilRice study found that one snail can damage up to 19 percent of the young plants in a square meter. The first 15 days after transplanting are the most dangerous.\n\nReplanting costs seed, labor and time, and a late stand misses the best weather. That is why prevention is cheaper than repair. Count the snails and egg masses in the paddy before you transplant, and write the numbers in a note for the lot."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Golden Apple Snail"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Prepare the land well and remove snails by hand in the morning and late afternoon. Hand picking works best for large adults, which ducks do not eat.",
+        "Dig small, deep strips or canals along the paddy. Place leaves of gabi, papaya or banana, or gugo, sambong, calamansi or makabuhay, so snails gather there for collection.",
+        "Scrape off the pink egg masses from stems and pilapil and crush them, since they hatch in 7 to 14 days. PhilRice also lists screen tapping and staking among the physical methods.",
+        "Keep the water shallow, about 2 to 3 centimeters, starting 3 days after transplanting. Drain the field from time to time. PhilRice found that a saturated field, with no standing water, gave 99 percent seedling survival in transplanted rice. Snails cannot swim there.",
+        "Herd ducks into the fields after harvest and until final land preparation. Ducks eat the young snails and the flesh of broken ones. Red ants and long horned grasshoppers also eat the eggs.",
+        "Level the field well, so the water stays even and no deep pockets of water hold snails."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A molluscicide comes last, after hand picking and water control. PhilRice notes that controlled irrigation costs less than the P400 to P500 per hectare that farmers spend on synthetic molluscicide. If you still need one, use only a product registered with the FPA. Follow the label and the safety advice, since these chemicals can harm fish and ducks."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Niclosamide",
+          "Molluscicide",
+          "listed among the registered molluscicides in the PhilRice guide to snail management"
+        ],
+        [
+          "Metaldehyde",
+          "Molluscicide",
+          "listed among the registered molluscicides in the same guide, sold as pellets and as a flowable"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Remove egg masses and snails from canals and pilapil before you flood and plant.",
+        "Level the paddy well, so no deep pockets stay flooded after you drain.",
+        "Keep the water shallow from 3 days after transplanting and drain now and then.",
+        "Herd ducks into the field after harvest and until final land preparation."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Golden Apple Snail"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How long does the golden apple snail threaten my rice?",
+          "a": "PhilRice says plants about 30 days old can resist it. The worst damage comes in the first 10 to 15 days after transplanting and in the first 21 days after wet seeding."
+        },
+        {
+          "q": "Does shallow water really stop the snail?",
+          "a": "It limits the snail. PhilRice advises 2 to 3 centimeters of water from 3 days after transplanting and a draining now and then. In a 2017 PhilRice study, saturated fields kept 99 percent of transplanted seedlings alive."
+        },
+        {
+          "q": "Should I spray a molluscicide first?",
+          "a": "No. Hand picking, egg removal, ducks and water control come first. A molluscicide is the last step, and it must be FPA registered and used by the label."
+        },
+        {
+          "q": "Can I use the snails for something?",
+          "a": "Ducks eat the young snails. Farmers also collect the large ones by hand, which lowers the number in the field."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice pests",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/pests/rice-leaffolder"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Golden apple snail management options",
+          "url": "https://applesnail.net/pestalert/management_guide/pest_management.htm"
+        },
+        {
+          "label": "PhilRice: Saturated soil keeps golden apple snails from rice",
+          "url": "https://www.philrice.gov.ph/?p=9934"
+        },
+        {
+          "label": "PhilRice: Golden apple snail facts",
+          "url": "https://www.philrice.gov.ph/?p=1199"
+        }
+      ]
+    }
+  ]
+}

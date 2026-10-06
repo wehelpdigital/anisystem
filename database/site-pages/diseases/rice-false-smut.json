@@ -1,0 +1,267 @@
+{
+  "section": "diseases",
+  "slug": "rice-false-smut",
+  "sortOrder": 225,
+  "lang": "en",
+  "category": "Rice diseases",
+  "profile": true,
+  "title": "False Smut: How to Spot It and Stop It in Your Palay",
+  "metaTitle": "False Smut: Signs, Damage and Control in Rice",
+  "metaDescription": "False smut turns single palay grains into orange then green black spore balls. Learn how to spot it and which steps lower the risk next season.",
+  "focusKeyword": "false smut",
+  "keywords": [
+    "false smut",
+    "rice false smut",
+    "false smut of rice",
+    "Ustilaginoidea virens",
+    "smut balls in rice",
+    "false smut control"
+  ],
+  "excerpt": "False smut is a fungal disease of rice that turns a few grains on a panicle into velvety balls. They start orange and later turn greenish black. It is not a true smut, but it can cost grain weight and quality, mostly in humid and rainy seasons.",
+  "heroImage": {
+    "src": "/images/site/diseases/rice-false-smut.webp",
+    "thumb": "/images/site/diseases/rice-false-smut-480.webp",
+    "alt": "A rice panicle with a yellow orange false smut ball in place of a grain",
+    "credit": "Ong Jyh Seng, CC BY SA, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is False Smut?"
+    },
+    {
+      "type": "text",
+      "text": "False smut comes from the fungus Ustilaginoidea virens. The name misleads, because it is not a true smut. It belongs to a different group of fungi, the Ascomycota. It attacks rice in Asia, Africa, the Americas and Europe. Filipino farmers meet it on palay (rice still in the husk) when the weather turns cloudy and wet around flowering.\n\nThe disease is usually minor, but it can flare up. A Pacific pest fact sheet reports that outbreaks in south and southeast Asia have caused losses of up to 75 percent. The loss comes from lighter grain and poorer quality. So a field with a history of false smut deserves a plan before the next flowering. Our guide to [rice diseases](/diseases/rice-diseases) shows how it compares with the other problems of the crop."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "False smut"
+        ],
+        [
+          "Scientific name",
+          "Ustilaginoidea virens"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "It shows after the panicles come out, because the fungus infects the flowers at flowering, most of all in cloudy, humid, rainy weeks."
+        ],
+        [
+          "How it spreads",
+          "The fungus survives as hard resting bodies and spores in the field and on the seed. Wind carries the spores to the flowers, where they infect single grains and turn them into a ball of spores."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify False Smut"
+    },
+    {
+      "type": "text",
+      "text": "Walk the field after the panicles have come out and look at the grains. Only a few grains on a panicle carry the disease, so you may need to scan closely. A diseased grain swells to more than twice its normal size and becomes a velvety ball. The ball is orange at first, then turns greenish black as the spores mature. The disease cannot be seen before heading, even though infection happens at flowering."
+    },
+    {
+      "type": "list",
+      "items": [
+        "A few grains on a panicle swell into balls that are over twice the size of a normal grain.",
+        "Young balls are orange or yellow and have a velvety surface.",
+        "Older balls turn greenish black and release a powdery cloud of spores when you touch them.",
+        "Grains next to a diseased one often stay empty, even if the fungus did not touch them.",
+        "The smut balls only show after the panicle comes out, so scouting before heading finds nothing."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "False smut balls look like a spore mass, but a diseased grain only changes one grain at a time. Compare it with [rice blast](/diseases/rice-blast), which rots the neck of the panicle and gives white, empty heads instead of balls."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How False Smut Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Most seasons, false smut costs little, because only a few grains per panicle are infected. In bad years the damage grows. Pacific pest fact sheets report losses of up to 75 percent in outbreaks in south and southeast Asia. Lighter grain and lower quality cause that loss. The loss varies with the variety, the weather and the nitrogen you apply. So treat that figure as the worst case and not as the normal one.\n\nI found no official action threshold for false smut. Humid weather above 90 percent, cloudy skies at flowering and heavy nitrogen all raise the risk. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) explains how to split nitrogen so it feeds the crop without feeding the fungus."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control False Smut"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Use certified, clean seed. If you are unsure about the seed, treat it with hot water at 52 degrees Celsius for 10 minutes before sowing.",
+        "Choose a resistant variety when one is available, and ask your local agriculture office which ones suit your area.",
+        "Keep nitrogen at a moderate rate and split it into doses. Heavy nitrogen makes the crop more attractive to the fungus.",
+        "Cut humidity inside the crop by avoiding close planting. Where you can, alternate flooding and drying instead of keeping the soil wet all the time.",
+        "Pick off the smut balls as soon as you see them, before they turn greenish black and shed spores. Put them in a bag and carry them out of the field.",
+        "After harvest, collect straw and stubble. Burn it, or plow it under, since spores survive in the debris."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A spray makes sense only when your field had false smut before and the weather is humid and cloudy. Apply it at booting, before the panicles come out, because a spray after the balls appear is too late. Some authorities question whether fungicide pays, so weigh the cost first."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Propiconazole",
+          "FRAC 3",
+          "an azole fungicide sprayed at booting"
+        ],
+        [
+          "Copper fungicides",
+          "FRAC M1",
+          "a protectant sprayed at booting"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed every season.",
+        "Choose varieties that your local agriculture office reports as less affected.",
+        "Split your nitrogen and avoid heavy doses before heading.",
+        "Remove straw and stubble from fields that had false smut.",
+        "Check the weather outlook before flowering, and scout the field a week after heading in wet seasons."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About False Smut"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes false smut in rice?",
+          "a": "The fungus Ustilaginoidea virens causes it. It infects the flowers at flowering and turns single grains into balls of spores."
+        },
+        {
+          "q": "Can I still save the crop after I see the smut balls?",
+          "a": "The infected grains are already lost. Pick off the balls so spores do not spread. Plan the next season with cleaner seed and moderate nitrogen."
+        },
+        {
+          "q": "Does false smut make the grain poisonous?",
+          "a": "I did not find a source that gives a safe or unsafe level for palay in the Philippines. Keep smut balls out of the harvested grain. Ask your local agriculture office about the grain you sell or eat."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice diseases",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "Rice blast",
+          "url": "/diseases/rice-blast"
+        },
+        {
+          "label": "Bacterial leaf blight",
+          "url": "/diseases/bacterial-leaf-blight"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Brown spot of rice",
+          "url": "/diseases/rice-brown-spot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Rice false smut",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/rice_false_smut_428.htm"
+        },
+        {
+          "label": "Rice diseases key: False smut (summarizing the IRRI Rice Knowledge Bank)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/False_smut.htm"
+        }
+      ]
+    }
+  ]
+}

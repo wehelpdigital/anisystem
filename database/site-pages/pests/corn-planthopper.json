@@ -1,0 +1,249 @@
+{
+  "section": "pests",
+  "slug": "corn-planthopper",
+  "sortOrder": 295,
+  "lang": "en",
+  "category": "Corn pests",
+  "profile": true,
+  "title": "Corn Planthopper: How to Spot It and Stop It in Your Mais",
+  "metaTitle": "Corn Planthopper: Signs, Virus Risk and Control",
+  "metaDescription": "The corn planthopper sucks sap and spreads maize mosaic and stripe viruses. Learn how to spot it and the steps that protect your corn crop.",
+  "focusKeyword": "corn planthopper",
+  "keywords": [
+    "corn planthopper",
+    "peregrinus maidis",
+    "maize mosaic virus",
+    "maize stripe virus",
+    "planthopper in corn",
+    "stunted corn with yellow stripes"
+  ],
+  "excerpt": "The corn planthopper, Peregrinus maidis, is a small sap sucking insect that lives in the corn whorl. It does harm by feeding, and it does more harm by carrying viruses from plant to plant. This page shows how to spot it and what to do.",
+  "heroImage": {
+    "src": "/images/site/pests/corn-planthopper.webp",
+    "thumb": "/images/site/pests/corn-planthopper-480.webp",
+    "alt": "A corn planthopper, Peregrinus maidis, with clear, dark veined wings on a green leaf",
+    "credit": "Mark Richman, CC BY, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Corn Planthopper?"
+    },
+    {
+      "type": "text",
+      "text": "The corn planthopper belongs to the family Delphacidae. It feeds on corn, sweet corn and sorghum, and it breeds in the whorl or throat of the maize plant. The grass called itch grass, and also barnyard grass and goosegrass, can keep it alive between crops.\n\nIt matters because it spreads maize mosaic virus and maize stripe virus. The hoppers pick up the virus while feeding, the virus multiplies inside them, and after a few days they pass it to healthy plants. The virus does not travel on seed."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Corn planthopper"
+        ],
+        [
+          "Scientific name",
+          "Peregrinus maidis"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Corn"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "Through the whole corn crop, with the virus risk highest on young plants, and the hoppers crowd at the field edges."
+        ],
+        [
+          "Life cycle",
+          "Females lay curved, banana shaped white eggs in slits in the leaf midrib. The nymphs, with red eyes, grow into adults in about 20 to 30 days, and several overlapping generations occur in a season."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Corn Planthopper"
+    },
+    {
+      "type": "text",
+      "text": "Adult hoppers are greenish or brownish yellow with darker tips on the wings, and the abdomen is smoky with yellow stripes on the sides. Nymphs are whitish, then yellowish, with red eyes. Sooty mold on the leaves shows heavy feeding. Look for stripes on the leaves too. A [corn downy mildew](/diseases/corn-downy-mildew) plant shows pale stripes as well, but it also has a white growth on the underside of the leaf."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small greenish brown hoppers sit in the whorl and on the leaves, and jump when disturbed.",
+        "Honeydew and black sooty mold coat the leaves where they feed.",
+        "Light green to yellow stripes run along the leaves, either thin or 1 to 2 centimeters wide.",
+        "Infected plants are stunted.",
+        "Ears do not form, or they are deformed with few seeds."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Stripes can also come from nutrient trouble or from downy mildew. Check for hoppers and for sooty mold to be sure. See the guide to [plant diseases in the Philippines](/diseases/plant-diseases-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Corn Planthopper Hurts Your Corn"
+    },
+    {
+      "type": "text",
+      "text": "Feeding takes sap and leaves honeydew that grows sooty mold, which blocks light and lowers the sugars the plant needs for grain fill. The bigger threat is the viruses. Plants infected young stay stunted, and the cobs stay small or do not form.\n\nA virus fact sheet from the Pacific notes that infection rates often stay low, at about 1 to 2 percent of plants. That is why spraying the whole field does not pay. We found no sourced yield loss figure for the Philippines."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Corn Planthopper"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Pull out plants with stripes and stunting as soon as you see them. Grasp the young leaves together so the hoppers cannot escape, put the plant in a sack and burn it.",
+        "Weed the field and the edges. Remove itch grass, barnyard grass and goosegrass, which host the hopper and the virus.",
+        "Sample the field edges, where the hoppers gather, and check the whorls of young plants every week.",
+        "Rotate corn with a crop that is not a host, so the hoppers lose their food between seasons.",
+        "Plant resistant varieties where they are sold. Imported maize seed has often come from breeding programs that selected for resistance.",
+        "Protect natural enemies, which help to hold the hoppers down."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A virus has no cure, so the control is the vector and clean plants. Extension sources say that insecticides are not economical for this disease, since the infection rate is usually low. If hopper numbers are very high on young plants, ask the DA about an FPA registered product. We name no active ingredient here, because our sources named none."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Keep the field and its borders free of itch grass and other grass weeds.",
+        "Rogue out sick plants early, in the first weeks.",
+        "Plant the same variety at the same time as your neighbors where you can.",
+        "Use virus resistant seed when you can get it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Corn Planthopper"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What viruses does the corn planthopper carry?",
+          "a": "Maize mosaic virus and maize stripe virus, according to the Pacific Pests and Pathogens fact sheet. They cause yellow stripes, stunting and poor ears."
+        },
+        {
+          "q": "Can the virus come with the seed?",
+          "a": "No. The fact sheet says maize mosaic is not seedborne. The hoppers carry it from sick plants to healthy ones."
+        },
+        {
+          "q": "Should I spray the whole field?",
+          "a": "Usually not. Infection often stays at 1 to 2 percent, so pulling sick plants and weeding works better."
+        },
+        {
+          "q": "What weeds keep it alive?",
+          "a": "Itch grass, barnyard grass and goosegrass, as the University of Florida notes."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More corn pests",
+      "items": [
+        {
+          "label": "Asian corn borer",
+          "url": "/pests/asian-corn-borer"
+        },
+        {
+          "label": "Cutworm",
+          "url": "/pests/cutworm"
+        },
+        {
+          "label": "Fall armyworm",
+          "url": "/pests/fall-armyworm"
+        },
+        {
+          "label": "Corn earworm",
+          "url": "/pests/corn-earworm"
+        },
+        {
+          "label": "White grub",
+          "url": "/pests/white-grub"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Maize mosaic",
+          "url": "https://apps.lucidcentral.org/pppw_v10/text/web_full/entities/maize_mosaic_074.htm"
+        },
+        {
+          "label": "University of Florida: Corn delphacid, Peregrinus maidis",
+          "url": "https://entnemdept.ufl.edu/projex/gallery/dl/vegetable_pests_ii/text/corn_delphacid.htm"
+        }
+      ]
+    }
+  ]
+}

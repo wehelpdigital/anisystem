@@ -1,0 +1,245 @@
+{
+  "section": "diseases",
+  "slug": "corn-stalk-rot",
+  "sortOrder": 285,
+  "lang": "en",
+  "category": "Corn diseases",
+  "profile": true,
+  "title": "Corn Stalk Rot: How to Spot It and Keep Your Mais Standing",
+  "metaTitle": "Corn Stalk Rot: Signs, Damage and Control in Mais",
+  "metaDescription": "Corn stalk rot hollows and softens the stalk so mais falls before harvest. Learn the push test, the signs and the steps that keep your corn standing.",
+  "focusKeyword": "corn stalk rot",
+  "keywords": [
+    "corn stalk rot",
+    "stalk rot of corn",
+    "bacterial stalk rot of maize",
+    "lodged corn plants",
+    "Fusarium stalk rot",
+    "mais stalk rot"
+  ],
+  "excerpt": "Corn stalk rot is a group of fungal and bacterial diseases that rot the inside of the stalk. The plant looks fine until the grain fills, and then it wilts, turns gray and falls over, so the ears are hard to harvest.",
+  "heroImage": {
+    "src": "/images/site/diseases/corn-stalk-rot.webp",
+    "thumb": "/images/site/diseases/corn-stalk-rot-480.webp",
+    "alt": "A corn stalk with long tan, rotting lesions from bacterial stalk rot",
+    "credit": "Howard F. Schwartz, Colorado State University, Bugwood.org, CC BY 3.0 US, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Corn Stalk Rot?"
+    },
+    {
+      "type": "text",
+      "text": "Corn stalk rot is not one disease. Fungi such as Fusarium and Pythium cause some forms, and the bacterium Dickeya zeae causes bacterial stalk rot. University of Nebraska extension lists six common stalk rots in its state, and several of them often occur together in one field. In warm, wet tropical weather the bacterial form is the one to watch.\n\nThe rot matters because it robs the ear before it robs the plant. A weak stalk means lodging, and lodging means lost ears. Nebraska extension says stalk rots reduce yield by about 5 percent in an average year and by 10 to 20 percent in the worst years. Those are US figures. See our guide to [corn seeds](/crops/corn-seeds) for choosing a sturdy variety."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Corn stalk rot"
+        ],
+        [
+          "Scientific name",
+          "Fusarium spp., Pythium aphanidermatum, Dickeya zeae"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Corn"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Stems and tillers and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "Corn stalk rot shows during and after grain filling, when plants are under stress, and it causes the most harm in the weeks before harvest when stalks lodge."
+        ],
+        [
+          "How it spreads",
+          "Fusarium and the other fungi live in the soil and in corn residue. The bacterial form, caused by Dickeya zeae, rides in irrigation water and rain splash, and it survives in stalk residue for no more than a year."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Corn Stalk Rot"
+    },
+    {
+      "type": "text",
+      "text": "Look at plants after the grain fills. Affected plants wilt, and the leaves turn gray or brown. Split a stalk lengthwise. A rotted stalk is hollow, soft and discolored inside. The bacterial form also has a foul smell, a slimy rot at the nodes and a top that pulls away easily. To test the field, push the stalks and pinch the lower internodes, as described below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plants that wilt or turn gray and brown while the grain is filling.",
+        "Stalks that are hollow and weak at the base and fall over before harvest.",
+        "Discolored, mushy tissue inside a split stalk.",
+        "A slimy, foul smelling rot at the nodes, with a top that pulls out easily, the sign of bacterial stalk rot.",
+        "Lodged plants with ears lying on the ground."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Lodging can also come from wind, from insect boring or from [banded leaf and sheath blight](/diseases/banded-leaf-and-sheath-blight). Split the stalk. If it is hollow and rotted inside, it is stalk rot."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Corn Stalk Rot Hurts Your Corn"
+    },
+    {
+      "type": "text",
+      "text": "University of Nebraska extension reports that stalk rot diseases reduce yield by about 5 percent each year on average, and by 10 to 20 percent at worst. The loss comes from poorer grain fill and from ears lost at harvest. These are US numbers, and Philippine losses vary with the variety and the weather.\n\nA simple field check helps. Push or pinch at least 100 plants chosen at random. In the Nebraska method, you tilt the plants about 30 degrees, and plants that do not snap back are weak. If more than 10 percent of the sample is weak, harvest that field first. Read our guide to [corn rust](/diseases/corn-rust) too, because leaf diseases add to the stress that lets stalk rot in."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Corn Stalk Rot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Keep nitrogen and potassium in balance. Too much nitrogen with too little potassium raises stalk rot, and extra potassium in split doses reduces the bacterial form.",
+        "Do not overcrowd the field. Dense stands compete for light, water and food, and weak stalks follow.",
+        "Control stem boring insects, which open the stalk to the rot. See the [Asian corn borer](/pests/asian-corn-borer).",
+        "Provide drainage, and avoid irrigation water that keeps leaves wet for long, since the bacterial form spreads in water.",
+        "Choose a variety with good stalk strength and ask your supplier about its stalk rot rating.",
+        "Do the push test before harvest, and harvest the weakest fields first, before they lodge."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Nebraska extension says no fungicides are labeled for the treatment of stalk rots. The control is nutrition, spacing, drainage, insect control and a well timed harvest."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Choose a variety with strong stalks and resistance to the common leaf diseases.",
+        "Bury or remove corn residue after harvest, because the bacteria and fungi live in it.",
+        "Rotate with a crop that is not a grass, and keep potassium in balance.",
+        "Keep a record of the fields that lodged and change the crop, spacing or fertilizer plan there."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Corn Stalk Rot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do my corn plants fall over before harvest?",
+          "a": "Often the stalk has rotted inside. Stress during grain filling, such as low potassium, crowding, leaf disease or insect boring, lets the rot take hold."
+        },
+        {
+          "q": "Is there a spray for stalk rot?",
+          "a": "No. University of Nebraska extension says no fungicides are labeled for stalk rots. Good fertility, spacing and timely harvest are the controls."
+        },
+        {
+          "q": "What is the push test?",
+          "a": "You tilt random plants about 30 degrees. Plants that do not spring back have weak stalks. If more than 10 percent fail, harvest that field first."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More corn diseases",
+      "items": [
+        {
+          "label": "Corn downy mildew",
+          "url": "/diseases/corn-downy-mildew"
+        },
+        {
+          "label": "Corn rust",
+          "url": "/diseases/corn-rust"
+        },
+        {
+          "label": "Northern corn leaf blight",
+          "url": "/diseases/northern-corn-leaf-blight"
+        },
+        {
+          "label": "Banded leaf and sheath blight",
+          "url": "/diseases/banded-leaf-and-sheath-blight"
+        },
+        {
+          "label": "Corn ear rot",
+          "url": "/diseases/corn-ear-rot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "University of Nebraska CropWatch: Corn stalk rots",
+          "url": "https://cropwatch.unl.edu/cw-9-25-09-corn-stalk-rots"
+        },
+        {
+          "label": "Plantix library: Bacterial stalk rot of maize",
+          "url": "https://plantix.net/en/library/plant-diseases/300035/bacterial-stalk-rot-of-maize/"
+        }
+      ]
+    }
+  ]
+}

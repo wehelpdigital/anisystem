@@ -1,0 +1,260 @@
+{
+  "section": "pests",
+  "slug": "coffee-berry-borer",
+  "sortOrder": 425,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Coffee Berry Borer: How to Spot It and Protect Your Beans",
+  "metaTitle": "Coffee Berry Borer: Signs, Damage and Control",
+  "metaDescription": "The coffee berry borer breeds inside coffee beans and spoils quality. Learn the signs and the picking, stripping and Beauveria steps that cut its numbers.",
+  "focusKeyword": "coffee berry borer",
+  "keywords": [
+    "coffee berry borer",
+    "Hypothenemus hampei",
+    "coffee pest Philippines",
+    "coffee bean borer",
+    "coffee berry damage"
+  ],
+  "excerpt": "The coffee berry borer, Hypothenemus hampei, is a tiny black beetle that bores into coffee berries and breeds inside the bean. Even a light attack lowers the quality and the price of your coffee. This page shows how to spot it and how to break its life cycle.",
+  "heroImage": {
+    "src": "/images/site/pests/coffee-berry-borer.webp",
+    "thumb": "/images/site/pests/coffee-berry-borer-480.webp",
+    "alt": "Tiny shiny black Hypothenemus beetles, the genus of the coffee berry borer, on a berry they have bored into",
+    "credit": "L. Shyamal, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Coffee Berry Borer?"
+    },
+    {
+      "type": "text",
+      "text": "The adult is only about 1.5 mm long and black, covered in short stiff hairs. A female flies to ripening berries and bores a hole in one. Males have reduced wings and stay inside the berry. The females far outnumber the males, about 10 to 1.\n\nThe beetle lives worldwide, in Asia, Africa, the Americas and Oceania. Because it breeds inside the bean, spray does not reach it easily. Cultural work at harvest is the main tool for the Filipino coffee farmer."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Coffee berry borer"
+        ],
+        [
+          "Scientific name",
+          "Hypothenemus hampei"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Coffee"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Fruits, pods and nuts"
+        ],
+        [
+          "When it strikes",
+          "It attacks ripening berries, and it survives between seasons in old berries left on the tree and on the ground."
+        ],
+        [
+          "Life cycle",
+          "The fertilized female bores into a ripening berry and lays 30 to 50 eggs inside the bean over 2 to 7 weeks. The cycle takes about 4 weeks, and females fly to new berries, sometimes carried far by air currents."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Coffee Berry Borer"
+    },
+    {
+      "type": "text",
+      "text": "Look at the berries for a small round hole with brown frass around it. Cut open some berries and look for the tiny black beetles, white grubs or damaged beans. Check the fallen and dried berries on the ground too, because that is where the beetles wait for the next crop. Berry drop from other causes shows no entry hole."
+    },
+    {
+      "type": "list",
+      "items": [
+        "A small round entry hole shows on the berry, with brown frass over it.",
+        "Berries drop early after decay organisms enter the hole.",
+        "Beans inside are partly or fully eaten.",
+        "Tiny black beetles and white grubs live inside the bean.",
+        "Dried berries left on the tree or on the ground hold live beetles."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Berries that drop from drought or from [anthracnose](/diseases/anthracnose) show no entry hole. A round hole with brown frass points to the borer."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Coffee Berry Borer Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Even a small attack lowers bean quality and makes the coffee harder to sell. The beetle can attack up to all of the berries in a badly infested field. The damage plus the decay organisms cause early berry drop.\n\nBecause one beetle starts a colony inside the bean, it takes only a few weeks for the numbers to rise. Compare it with the pests of other trees, such as the [cacao pod borer](/pests/cacao-pod-borer), which also hides inside the fruit. Clean and frequent harvest mostly controls it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Coffee Berry Borer"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Pick the berries as they ripen. In affected areas, harvest early in the season every 2 to 3 weeks.",
+        "Collect fallen and blackened berries from the ground and destroy them, so the beetles have nowhere to wait.",
+        "After the main harvest, strip every berry from the tree for about 3 months to break the life cycle. Leave no old berries on the tree.",
+        "Keep the trees healthy with proper fertilizing and pruning, since a healthy tree gives clean berries.",
+        "Use the fungus Beauveria bassiana, which killed about 80 percent of adults in high humidity places.",
+        "Protect or release the parasitoid wasps Prorops nasuta, Phymastichus coffea and Cephalonomia stephanoderis where they are available, but their effect is limited."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "The Pacific fact sheet recommends a spray only when monitoring shows more than 2 percent of berries infested. It must go on early. Once the female enters the bean, a spray does little. Follow the label and the FPA registration."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Pirimiphos methyl",
+          "IRAC 1B",
+          "when monitoring shows more than 2 percent infested berries, applied early"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Strip and clean the trees fully after harvest.",
+        "Remove all fallen and dried berries from the ground.",
+        "Keep trees pruned and well fed.",
+        "Sample berries every few weeks from the start of ripening."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Coffee Berry Borer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How big is the coffee berry borer?",
+          "a": "About 1.5 mm long and black. You need a close look to see it."
+        },
+        {
+          "q": "When do I spray?",
+          "a": "Only when monitoring shows more than 2 percent of berries infested. Spray early, before the females go deep into the bean."
+        },
+        {
+          "q": "What is stripping?",
+          "a": "Taking every berry off the tree after harvest, and collecting the fallen ones. That leaves no berries to carry the beetles over."
+        },
+        {
+          "q": "Does Beauveria help?",
+          "a": "It killed about 80 percent of adults in countries with high humidity. It works best when combined with clean harvests."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut scale insect",
+          "url": "/pests/cocolisap"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Pacific Pests and Pathogens: Coffee berry borer",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/coffee_berry_borer_118.htm"
+        }
+      ]
+    }
+  ]
+}

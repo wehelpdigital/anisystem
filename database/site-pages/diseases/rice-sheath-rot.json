@@ -1,0 +1,275 @@
+{
+  "section": "diseases",
+  "slug": "rice-sheath-rot",
+  "sortOrder": 235,
+  "lang": "en",
+  "category": "Rice diseases",
+  "profile": true,
+  "title": "Sheath Rot: How to Spot It and Stop It in Your Palay",
+  "metaTitle": "Sheath Rot: Signs, Damage and Control in Rice",
+  "metaDescription": "Sheath rot rots the top leaf sheath and traps the young panicle, leaving chaffy grain. Learn the signs, the causes and how to prevent it in palay.",
+  "focusKeyword": "sheath rot",
+  "keywords": [
+    "sheath rot",
+    "sheath rot of rice",
+    "Sarocladium oryzae",
+    "rice sheath rot disease",
+    "panicle rot in palay"
+  ],
+  "excerpt": "Sheath rot is a fungal disease that rots the uppermost leaf sheath of rice, the one that wraps the young panicle. The panicle then comes out only in part, or not at all, and the grains turn chaffy or discolored.",
+  "heroImage": {
+    "src": "/images/site/diseases/rice-sheath-rot.webp",
+    "thumb": "/images/site/diseases/rice-sheath-rot-480.webp",
+    "alt": "A rice panicle that only partly emerged from its sheath, with dark, discolored grains from sheath rot",
+    "credit": "Donald Groth, Louisiana State University AgCenter, Bugwood.org, CC BY 3.0 US, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Sheath Rot?"
+    },
+    {
+      "type": "text",
+      "text": "Sheath rot is caused by the fungus Sarocladium oryzae, and the related species Sarocladium attenuatum can cause it too. IRRI says it occurs in most rice growing countries, most of all in rainfed rice, and that it is worse in the wet season than in the dry season.\n\nThe disease hits at the worst time, just as the panicle forms. Because the sheath wraps the panicle, rot in the sheath chokes the panicle inside. That is why farmers should watch the crop from panicle initiation, and why stem borer control matters, since borer holes let the fungus in. See our page on the [rice stem borer](/pests/rice-stem-borer)."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Sheath rot"
+        ],
+        [
+          "Scientific name",
+          "Sarocladium oryzae"
+        ],
+        [
+          "Kind",
+          "Fungus (a fungal disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Stems and tillers and panicles and ears"
+        ],
+        [
+          "When it strikes",
+          "It strikes from panicle initiation to heading, mostly in the wet season and in rainfed fields, when the humidity is high and the weather is 20 to 28 degrees Celsius."
+        ],
+        [
+          "How it spreads",
+          "The fungus lives on infected seed, stubble and crop residue. It enters the top leaf sheath, often through wounds made by insects such as stem borers."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Sheath Rot"
+    },
+    {
+      "type": "text",
+      "text": "Look at the top leaf sheath, the one that wraps the young panicle, just before and during heading. The lesion is oblong or irregular, with a dark reddish brown edge and a gray or brownish gray center. As spots join, they cover most of the sheath. Open a sheath that looks sick, and you often find a whitish, powdery fungal growth inside, with a rotting panicle."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Oblong or irregular spots form on the top leaf sheath, with dark reddish brown edges and gray centers.",
+        "Spots join and cover most of the sheath.",
+        "The panicle stays trapped in the sheath, or comes out only in part.",
+        "A whitish, powdery growth shows inside the sheath, and the young panicle rots.",
+        "Grains are unfilled, sterile or discolored."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Sheath rot is often confused with [sheath blight](/diseases/sheath-blight), which has larger, grayish green lesions with brown borders on the lower sheaths and no whitish powdery growth inside the top sheath. A trapped panicle can also come from stem borer injury or from neck blast."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Sheath Rot Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "IRRI says sheath rot cuts yield by slowing or stopping the panicle from coming out, and by leaving unfilled grains and sterile panicles. It also lowers grain quality, because the panicles rot and the grains discolor. Research papers from India report yield losses of 20 to 85 percent in bad attacks, but the figure depends on the variety, the weather and the year, so use it only as a sign of how bad it can get.\n\nThe risk rises with close planting and with heavy nitrogen. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to split nitrogen safely. I found no official action threshold for the Philippines."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Sheath Rot"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Use healthy seed that comes from a field free of the disease, and never save seed from a sick crop.",
+        "Do not plant too close. IRRI notes that incidence goes up with planting density.",
+        "Apply nitrogen in split doses, and add potash instead of piling on more nitrogen.",
+        "Control stem borers and other insects, because their holes give the fungus a way in. Also read our page on the [rice stem borer](/pests/rice-stem-borer) for how to scout it, and remember that early insecticide sprays in the first 30 to 40 days after transplanting kill the spiders and wasps that protect the crop.",
+        "Remove infected stubble and crop residue after harvest, and plow it under.",
+        "Treat the seed with a fungicide before sowing if the field had sheath rot in the past."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A spray makes sense only where sheath rot was bad before. Once the panicle is stuck inside the sheath, a spray cannot free it. IRRI says seed can be treated, and that foliar sprays are an option. Follow the label of an FPA registered product, and rotate groups."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "Use"
+        ],
+        [
+          "Carbendazim",
+          "FRAC 1",
+          "seed treatment, as listed by IRRI"
+        ],
+        [
+          "Mancozeb",
+          "FRAC M3",
+          "seed treatment, as listed by IRRI"
+        ],
+        [
+          "Copper oxychloride",
+          "FRAC M1",
+          "a foliar spray, as listed by IRRI"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean seed, and treat it before sowing in fields with a history of the disease.",
+        "Keep your spacing wide enough for air to flow through the crop.",
+        "Split nitrogen, and keep potash in balance.",
+        "Scout for stem borers and other insects during panicle initiation.",
+        "Clear straw and stubble from the field after harvest."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Sheath Rot"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why does my panicle stay inside the sheath?",
+          "a": "Sheath rot is a common cause. The fungus rots the top leaf sheath and blocks the panicle from coming out, so the grain stays unfilled."
+        },
+        {
+          "q": "Is sheath rot the same as sheath blight?",
+          "a": "No. They are different fungi. Sheath blight attacks the lower sheaths and leaves, while sheath rot attacks the top sheath around the panicle."
+        },
+        {
+          "q": "Can I stop sheath rot by controlling insects?",
+          "a": "Insect control helps a lot, because wounds from stem borers let the fungus in. It does not stop the disease alone, so use clean seed and balanced fertilizer as well."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice diseases",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "Rice blast",
+          "url": "/diseases/rice-blast"
+        },
+        {
+          "label": "Bacterial leaf blight",
+          "url": "/diseases/bacterial-leaf-blight"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Brown spot of rice",
+          "url": "/diseases/rice-brown-spot"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Sheath rot",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-rot"
+        },
+        {
+          "label": "Rice diseases key: Sheath rot (summarizing the IRRI Rice Knowledge Bank)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Sheath_rot.htm"
+        },
+        {
+          "label": "University of Agricultural Sciences Bangalore: sheath rot management trial",
+          "url": "https://www.uasbangalore.edu.in/wp-content/uploads/2026/06/4.-Bharathi.pdf"
+        }
+      ]
+    }
+  ]
+}

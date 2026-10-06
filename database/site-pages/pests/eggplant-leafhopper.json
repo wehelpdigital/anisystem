@@ -1,0 +1,269 @@
+{
+  "section": "pests",
+  "slug": "eggplant-leafhopper",
+  "sortOrder": 330,
+  "lang": "en",
+  "category": "Vegetable pests",
+  "profile": true,
+  "title": "Eggplant Leafhopper: How to Spot It and Stop the Hopperburn",
+  "metaTitle": "Eggplant Leafhopper: Signs, Damage and Control",
+  "metaDescription": "The eggplant leafhopper curls and burns talong leaves from the edges. Learn the signs, how to scout the leaf undersides and how to control it step by step.",
+  "focusKeyword": "eggplant leafhopper",
+  "keywords": [
+    "eggplant leafhopper",
+    "hopperburn",
+    "talong leaves curling",
+    "Amrasca biguttula",
+    "leafhopper in eggplant",
+    "eggplant pests"
+  ],
+  "excerpt": "The eggplant leafhopper is a tiny green insect that sucks sap from the underside of talong leaves. Its feeding curls the leaf edges and burns them yellow and brown, a damage called hopperburn. This page shows how to spot it early and how to control it with the least spraying.",
+  "heroImage": {
+    "src": "/images/site/pests/eggplant-leafhopper.webp",
+    "thumb": "/images/site/pests/eggplant-leafhopper-480.webp",
+    "alt": "A pale green eggplant leafhopper nymph, Amrasca biguttula, on the underside of a leaf",
+    "credit": "Yu Shiwen (余世文), CC0, via iNaturalist"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Eggplant Leafhopper?"
+    },
+    {
+      "type": "text",
+      "text": "The eggplant leafhopper (Amrasca biguttula biguttula) is found in the Philippines, India, Pakistan, Sri Lanka and Taiwan. It feeds on eggplant and on other crops, including okra. PCAARRD names it, together with the [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), as a main reason that a large share of eggplant production cost goes to pesticides in the Philippines.\n\nBoth the adults and the nymphs feed on the underside of the leaves. They damage the phloem, and the leaf then shows burn like symptoms that can pass for a disease. Because the insects hop away fast when you disturb them, many farmers see the damage first and the pest later."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Eggplant leafhopper"
+        ],
+        [
+          "Scientific name",
+          "Amrasca biguttula biguttula"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Eggplant (talong), also okra and other crops"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It breeds almost all year but is more common in dry periods, and it attacks eggplant from the young plant stage through fruiting."
+        ],
+        [
+          "Life cycle",
+          "Females lay minute eggs inside the leaf tissue on the underside of the leaf. The nymphs feed there, then become adults. The whole life cycle lasts 5 to 7 weeks, and generations overlap through the season."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Eggplant Leafhopper"
+    },
+    {
+      "type": "text",
+      "text": "Turn the leaves over, especially the lower and middle ones. The adults are 1 to 3 mm long, greenish yellow, slender and tapered, with two black spots toward the end of the wings. They run sideways and hop when disturbed. On the plant, look for leaf edges that curl upward and turn yellow, then brown. Do not confuse this with whitefly, which is a white, powdery looking insect that flies up in a cloud when you shake the plant."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Leaf margins that curl upward and look yellowish or burned.",
+        "Brown, dead patches at the leaf edge with a yellow halo around them.",
+        "Small leaves with a mosaic pattern of yellowing.",
+        "Very low fruit set on plants with heavy damage.",
+        "Greenish yellow insects, 1 to 3 mm long, hopping sideways off the underside of the leaf."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Hopperburn can look like a nutrient problem or a leaf disease. The test is the underside of the leaf. If you find the small hopping insects there, it is the leafhopper. Whitefly and [thrips](/pests/thrips) also leave yellow or silvery leaves, but they look different under a hand lens."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Eggplant Leafhopper Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "AVRDC lists curled and burned leaves, small leaves and very low fruit set as the damage from this leafhopper. A heavy infestation weakens the plant, so it makes fewer and smaller fruits.\n\nI found no Philippine action threshold in the sources I read. So the practical rule is to scout once a week from transplanting. Check the undersides of 10 leaves on 10 plants, and act when the insects keep building up and the first leaf edges curl."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Eggplant Leafhopper"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Scout every week. Turn over leaves from the lower and middle part of the plant and count the nymphs and adults.",
+        "Use mulch. In a UPLB trial, plastic mulch and fipronil gave the best return on investment, at 38.87 percent and 44.41 percent, while rice straw mulch gave 15.36 percent.",
+        "Choose varieties that resist the leafhopper where they are sold for your area. PCAARRD supports UPLB breeding of eggplant that resists the leafhopper and the borer.",
+        "Try botanical sprays first, especially in organic plots. In a UPLB study, weekly sprays of a 5 percent extract of chili pepper (Capsicum frutescens) or kakawate (Gliricidia sepium), starting 21 days after transplanting, gave the greatest drop in leafhopper numbers and higher marketable yield.",
+        "Do not rely on the fungus Metarhizium anisopliae. A UPLB trial found its isolates killed only about 10 percent of the insects.",
+        "Keep weeds and old okra or eggplant plants away from the field, so the hoppers do not move in from them. See the [integrated pest management guide](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "A spray makes sense only when scouting shows the numbers keep rising and the leaf edges are already curling. Spray the underside of the leaves, where the insects sit. Follow the FPA registered label and the waiting time before harvest, and rotate groups."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Fipronil",
+          "IRAC 2B",
+          "gave the highest drop in leafhopper numbers and the highest yield in a UPLB eggplant trial, though the gap was not statistically proven"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant on plastic or other mulch to make the field less friendly to the hoppers.",
+        "Pick a resistant variety when one is available for your area.",
+        "Clear weeds and crop remains after harvest.",
+        "Plant a different crop after eggplant, and do not put okra next to a young eggplant block."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Eggplant Leafhopper"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why are my eggplant leaves curling and turning brown at the edges?",
+          "a": "That is the typical hopperburn of the eggplant leafhopper. Turn the leaves over and look for tiny greenish yellow insects that hop sideways."
+        },
+        {
+          "q": "Does the leafhopper spread a virus in eggplant?",
+          "a": "The sources I read describe the damage as direct feeding injury that burns the leaf, not a virus. For virus problems in vegetables, the usual vector is the [whitefly](/pests/whitefly)."
+        },
+        {
+          "q": "Can I control it without synthetic insecticide?",
+          "a": "Yes, to a point. Plastic mulch and weekly sprays of botanical extracts such as chili or kakawate helped in UPLB studies. Check the fields weekly so you can add a spray only if the numbers keep rising."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More vegetable pests",
+      "items": [
+        {
+          "label": "Thrips",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Diamondback moth",
+          "url": "/pests/diamondback-moth"
+        },
+        {
+          "label": "Cabbage webworm",
+          "url": "/pests/cabbage-webworm"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "WorldVeg (AVRDC): Insect pests of eggplant pictorial guide",
+          "url": "https://assets.publishing.service.gov.uk/media/57a08d16ed915d3cfd0017e6/ipm_eggplant_insects.pdf"
+        },
+        {
+          "label": "UPLB: Management practices against the eggplant leafhopper",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5627"
+        },
+        {
+          "label": "UPLB: Efficacy of plant extracts and oil against leafhopper in organic eggplant",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4812"
+        },
+        {
+          "label": "PCAARRD: Eggplant varieties with increased resistance against insect pests",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/eggplant-varieties-with-increased-resistance-against-insect-pests-being-developed"
+        }
+      ]
+    }
+  ]
+}

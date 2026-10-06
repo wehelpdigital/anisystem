@@ -1,0 +1,269 @@
+{
+  "section": "pests",
+  "slug": "cocolisap",
+  "sortOrder": 375,
+  "lang": "en",
+  "category": "Fruit and plantation pests",
+  "profile": true,
+  "title": "Cocolisap: How to Spot It and Stop It on Your Coconut Palms",
+  "metaTitle": "Cocolisap: Signs, Damage and Control in Coconut",
+  "metaDescription": "Cocolisap, the coconut scale insect, yellows fronds and can kill a palm in months. Learn the signs, the Comperiella wasp and what really works.",
+  "focusKeyword": "cocolisap",
+  "keywords": [
+    "cocolisap",
+    "coconut scale insect",
+    "cocolisap control",
+    "Comperiella",
+    "coconut pest Philippines",
+    "yellow coconut leaves"
+  ],
+  "excerpt": "Cocolisap, the coconut scale insect Aspidiotus rigidus, sucks sap from the underside of coconut leaflets. Heavy attacks turn fronds yellow and dry, and a palm can die in 6 months or less. This page shows how to recognize it, how the Comperiella wasp helps, and when a trunk injection is the last option.",
+  "heroImage": {
+    "src": "/images/site/pests/cocolisap.webp",
+    "thumb": "/images/site/pests/cocolisap-480.webp",
+    "alt": "Coconut scale insects, Aspidiotus destructor, a close relative of the cocolisap, crowding the underside of a leaf",
+    "credit": "Mike Bowie, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Cocolisap?"
+    },
+    {
+      "type": "text",
+      "text": "Cocolisap is a small armored scale insect. It sits on the underside of the leaflets under a tough, rigid cover, so many farmers first notice the yellow fronds and not the insect. The outbreak began in 2009 in Batangas on Luzon and reached devastating levels from 2010 to 2014. A second outbreak hit the Zamboanga Peninsula in Mindanao from 2017 to 2020.\n\nCoconut is the main host, and the insect also turns up on mangosteen seedlings. The Philippine Coconut Authority (PCA) reported that millions of palms were lost nationwide. Because coconut supports many farm families, a cocolisap outbreak in one barangay is a problem for the whole district."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Coconut scale insect (cocolisap)"
+        ],
+        [
+          "Scientific name",
+          "Aspidiotus rigidus"
+        ],
+        [
+          "Kind",
+          "Insect"
+        ],
+        [
+          "Crops it attacks",
+          "Coconut"
+        ],
+        [
+          "Local names",
+          "None recorded"
+        ],
+        [
+          "Where it strikes",
+          "Leaves and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "It can attack coconut at any age and any season, and it builds up fast once an outbreak starts in a district."
+        ],
+        [
+          "Life cycle",
+          "Crawlers, the tiny young scales, move a short way on their own, and the wind carries them between palms. A full life cycle takes about 45 to 55 days."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Cocolisap"
+    },
+    {
+      "type": "text",
+      "text": "Turn a leaflet over and look at the underside. Cocolisap shows as small, flat, tough scales stuck close to the leaf, often in crowded patches. The scale cover is more rigid than the cover of the related Aspidiotus destructor, and the egg skins lie in a crescent under half of the scale. Mealy white insects or sooty black mold point to other pests, so check the scale cover first."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small flat scales crowd the underside of the leaflets.",
+        "Leaves turn yellow, then wilt and dry out, starting with the older fronds.",
+        "Nuts have less meat and the milk tastes sour.",
+        "Seedlings and young palms can die when the attack is heavy.",
+        "Whole stands of palms look scorched and thin when the outbreak is strong."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Cocolisap is often confused with other scale insects and with the [coconut leaf beetle](/pests/coconut-leaf-beetle). The beetle chews the young spear leaf and leaves scorched streaks, while cocolisap sucks from the underside of open leaflets."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Cocolisap Hurts Your Crop"
+    },
+    {
+      "type": "text",
+      "text": "Feeding on the underside of the leaflets cuts photosynthesis and transpiration. Researchers in the Philippines report that a palm can die in 6 months or less. A Pacific fact sheet says a moderate attack can cut copra yield by 25 to 50 percent.\n\nThe outbreak around Batangas wiped out stands in the early 2010s. Since then the native wasp Comperiella calauanica has pushed cocolisap back to a minor pest in CALABARZON, Romblon, Bicol, the Zamboanga Peninsula and Basilan, according to PCARRD. So the news is better now, but new areas can still be invaded."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Cocolisap"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Report the first yellow palms to the PCA or your municipal agriculturist right away. Early reports let the agency bring in the biological control before the outbreak spreads.",
+        "Cut and remove the badly infested lower fronds and dispose of them away from the grove. Inspect every seedling before you plant it, because infested planting material moves the insect.",
+        "Protect the parasitoid wasp Comperiella calauanica. This native wasp reached up to 96.5 percent parasitism in field surveys, and the PCA mass rears it for new outbreak areas. Ask your PCA office about releases.",
+        "Do not spray broad spectrum insecticides on palms where the wasp is working, because they kill it too.",
+        "Keep palms well fed and well watered, since a healthy palm survives an attack better than a weak one.",
+        "As the last step, PCA emergency work used trunk injection of a systemic insecticide. Only trained PCA staff should do this."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "Spraying tall palms is hard and kills the wasps that do the real work, so chemicals come last. During the first outbreak the emergency response used trunk injection of dinotefuran. Follow the label and the FPA registration, and ask the PCA first."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Use"
+        ],
+        [
+          "Dinotefuran",
+          "IRAC 4A",
+          "trunk injection, used in the emergency response in Batangas"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different insecticide group next time, so the pest does not learn to survive it. Our [guide to integrated pest management](/pests/integrated-pest-management) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Buy seedlings only from nurseries that inspect for scale insects, and check every one on arrival.",
+        "Look at the underside of the leaflets once a month, especially after strong winds.",
+        "Keep ornamental palms and mangosteen seedlings near the grove clean too.",
+        "Avoid moving fronds, seedlings or cut palm material from an infested district."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the insect, the damage and the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Catch it early this season",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Cocolisap"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is cocolisap?",
+          "a": "Cocolisap is the coconut scale insect, Aspidiotus rigidus. It sucks sap from the underside of coconut leaflets and can kill a palm in 6 months or less."
+        },
+        {
+          "q": "Which wasp controls cocolisap?",
+          "a": "Comperiella calauanica, a native parasitoid. Field surveys found up to 96.5 percent parasitism, and the PCA mass rears it for new outbreak areas."
+        },
+        {
+          "q": "Can I spray cocolisap myself?",
+          "a": "Spraying tall palms is hard and also kills the wasps. The PCA used trunk injection of dinotefuran in the emergency, and that work is done by trained staff. Ask your PCA office first."
+        },
+        {
+          "q": "How does cocolisap move to other farms?",
+          "a": "Crawlers move a short way, and the wind carries them further. Infested seedlings and plant material also move it between districts."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More fruit and plantation pests",
+      "items": [
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
+          "label": "Oriental fruit fly",
+          "url": "/pests/oriental-fruit-fly"
+        },
+        {
+          "label": "Coconut rhinoceros beetle",
+          "url": "/pests/coconut-rhinoceros-beetle"
+        },
+        {
+          "label": "Coconut leaf beetle",
+          "url": "/pests/coconut-leaf-beetle"
+        },
+        {
+          "label": "Red palm weevil",
+          "url": "/pests/red-palm-weevil"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PMC: Biological control of the invasive coconut scale insect Aspidiotus rigidus in the Philippines",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7692039/"
+        },
+        {
+          "label": "PCARRD: Biological control of coconut scale insects",
+          "url": "https://ispweb.pcaarrd.dost.gov.ph/biological-control-of-coconut-scale-insects-csi/"
+        },
+        {
+          "label": "Pacific Pests and Pathogens: Coconut (false) scale",
+          "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/coconut_false_scale_348.htm"
+        }
+      ]
+    }
+  ]
+}

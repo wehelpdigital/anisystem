@@ -1,0 +1,258 @@
+{
+  "section": "diseases",
+  "slug": "bacterial-leaf-blight",
+  "sortOrder": 210,
+  "lang": "en",
+  "category": "Rice diseases",
+  "profile": true,
+  "title": "Bacterial Leaf Blight in Rice: Signs, Kresek and Control",
+  "metaTitle": "Bacterial Leaf Blight of Rice: Kresek, Signs and Control",
+  "metaDescription": "Bacterial leaf blight dries palay leaves from the tip and wilts young plants as kresek. Learn the ooze test and the steps that keep it out.",
+  "focusKeyword": "bacterial leaf blight",
+  "keywords": [
+    "bacterial leaf blight",
+    "BLB in rice",
+    "kresek",
+    "bacterial blight of rice",
+    "Xanthomonas oryzae",
+    "leaf blight of palay"
+  ],
+  "excerpt": "Bacterial leaf blight, caused by the bacterium Xanthomonas oryzae pv. oryzae, is one of the most serious diseases of rice and a top threat in the Philippines. It turns leaves yellow and straw colored from the tips down. In young plants it causes kresek, a wilt that can kill the whole plant. No spray cures it well, so prevention is the real control.",
+  "heroImage": {
+    "src": "/images/site/diseases/bacterial-leaf-blight.webp",
+    "thumb": "/images/site/diseases/bacterial-leaf-blight-480.webp",
+    "alt": "Rice plants with yellow and white dried leaf edges from bacterial leaf blight",
+    "credit": "Donald Groth, Louisiana State University AgCenter, Bugwood.org, CC BY 3.0 US, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Bacterial Leaf Blight?"
+    },
+    {
+      "type": "text",
+      "text": "Bacterial leaf blight, often shortened to BLB, attacks rice in irrigated and rainfed lowlands. IRRI calls it one of the most serious diseases of rice. It thrives at 25 to 34 degrees Celsius with relative humidity above 70 percent. It spreads fast when strong winds and continuous heavy rains hit. That is why PhilRice lists it among the major diseases to watch in the rainy season.\n\nIt is also a national problem. Bureau of Plant Industry data from 2021 to 2025 put BLB among the top five threats to rice. PhilRice expected it to spread in Central Luzon and Bicol early in 2026. Regional names include nauga nga dahon in Cebuano, nadurot nga tanum in Waray and naggapula in Ilonggo. Its cousin, [bacterial leaf streak](/diseases/bacterial-leaf-streak), looks the same at first."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts",
+      "rows": [
+        [
+          "Fact",
+          "Details"
+        ],
+        [
+          "Name",
+          "Bacterial leaf blight"
+        ],
+        [
+          "Scientific name",
+          "Xanthomonas oryzae pv. oryzae"
+        ],
+        [
+          "Kind",
+          "Bacterium (a bacterial disease)"
+        ],
+        [
+          "Crops it attacks",
+          "Rice"
+        ],
+        [
+          "Local names",
+          "Nauga nga dahon and natala nga tanum (Cebuano), nadurot nga tanum (Waray), naggapula (Ilonggo), and kresek for the seedling wilt"
+        ],
+        [
+          "Where it strikes",
+          "Leaves, seedlings and the whole plant"
+        ],
+        [
+          "When it strikes",
+          "Kresek strikes at the seedling stage. The leaf blight shows from tillering to heading, mostly in the wet season, when wind and rain spread the bacteria."
+        ],
+        [
+          "How it spreads",
+          "The bacteria survive in infected stubble, straw, ratoons, volunteer seedlings and weeds. They ooze from fresh lesions in droplets. Wind and rain carry them to other leaves, and they enter easily through wounds on roots and leaves."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Bacterial Leaf Blight"
+    },
+    {
+      "type": "text",
+      "text": "Look at the leaf tips and edges first. Lesions start as water soaked stripes that turn yellow to orange and run down the leaf with a wavy margin, later turning grayish white. Early in the morning, fresh lesions may carry a milky drop of ooze that dries into small yellow beads. To confirm, cut a young lesion, stand it in a clear glass of water and hold it to the light. After a few minutes, a cloudy stream flows from the cut end."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Yellow to orange stripes that start at the leaf tip or edge and move down with a wavy margin.",
+        "Milky drops of ooze on young lesions in the early morning, later dried into yellow beads.",
+        "Old lesions that turn grayish white, often dotted black by molds growing on the dead tissue.",
+        "Seedlings whose leaves roll up, turn grayish green to yellow and wilt until the plant dies, called kresek.",
+        "A cloudy liquid streaming from a cut lesion placed in a glass of clear water."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Do not confuse it with",
+      "text": "Kresek can pass for early stem borer damage. Squeeze the base of a wilted seedling: kresek shows yellowish ooze from the cut end, and the plant does not pull out easily. Early on, bacterial leaf streak looks much the same, so watch how the lesions grow."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Bacterial Leaf Blight Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "IRRI puts the loss at up to 70 percent when susceptible varieties grow in weather that favors the disease. The earlier it starts, the bigger the loss. If infection comes only at booting, the yield holds, but grain quality drops and more kernels break at milling. Besides that, heavy nitrogen on a susceptible variety makes it severe.\n\nThere is no spray threshold to watch for. PhilRice says chemical control of BLB is neither economical nor effective. So your real decisions happen before planting and in how you handle water and fertilizer. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to keep nitrogen balanced. PhilRice also warns that excess nitrogen and too little phosphorus and potassium raise infection."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Bacterial Leaf Blight"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant a resistant variety. IRRI calls it the most efficient, reliable and cheapest control, and PhilRice names NSIC Rc242 among varieties resistant to BLB.",
+        "Use clean seed or seed from healthy plants, and handle seedlings gently, since wounds from pulling and transplanting let the bacteria in.",
+        "Keep beds and fields from flooding. PhilRice advises a shallow water level of 2 to 3 cm, and IRRI stresses good drainage in seedbeds and fields.",
+        "Apply fertilizer at proper rates and avoid excess nitrogen, which feeds the disease.",
+        "Weed regularly, and remove weed hosts on the bunds along with ratoons and volunteer seedlings.",
+        "After harvest, plow under the stubble and straw, then leave the field fallow and let it dry."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a Spray Makes Sense"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice says chemicals to control bacterial leaf blight are neither economical nor effective, so no active ingredient is recommended here. Put the money into resistant seed, water control and balanced fertilizer instead, and ask your local agriculture office before you buy any product sold for it."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and the protective clothing. Switch to a different fungicide group next time, so the disease does not learn to survive it. Our [guide to plant diseases](/diseases/plant-diseases-philippines) explains how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep It Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant a BLB resistant variety, and ask your local agriculture office which ones hold up in your area.",
+        "Avoid heavy nitrogen and keep phosphorus and potassium up.",
+        "Keep seedbeds and fields from flooding, since a continuously flooded field favors the disease.",
+        "Clear stubble, straw, ratoons, volunteer rice and weeds that keep the bacteria alive between crops.",
+        "Let the field dry during the fallow, which suppresses the bacteria in the soil and the residue."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure What You Are Seeing?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the spots or the damage up close, then the whole plant, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you what it most likely is and what to do at the age of your crop. You can also put your scouting days on the [cropping calendar](/features/cropping-calendar), so the team knows when to walk the field."
+    },
+    {
+      "type": "cta",
+      "title": "Stop it before it spreads",
+      "text": "anee.io keeps your scouting, spraying and harvest on one calendar, and Anee answers when something looks wrong.\nScouting days dated from each lot's own planting day\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Bacterial Leaf Blight"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is kresek in rice?",
+          "a": "Kresek is the seedling wilt form of bacterial leaf blight. Infected leaves turn grayish green and roll up, then turn yellow to straw colored until the whole seedling dries and dies."
+        },
+        {
+          "q": "Is there a spray that cures bacterial leaf blight?",
+          "a": "No reliable one. PhilRice says chemicals for BLB are neither economical nor effective. So resistant varieties, clean seed, water control and balanced fertilizer carry the load instead."
+        },
+        {
+          "q": "How do I tell kresek from stem borer damage?",
+          "a": "Pull gently. A young shoot killed by the [rice stem borer](/pests/rice-stem-borer) slips out easily, but a kresek plant stays rooted. Kresek also shows yellowish ooze when you squeeze the cut base."
+        },
+        {
+          "q": "Which variety resists bacterial leaf blight?",
+          "a": "PhilRice names NSIC Rc242 as resistant to BLB. Still, ask your local agriculture office for the current list for your area, and see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines)."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More rice diseases",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "Rice blast",
+          "url": "/diseases/rice-blast"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Brown spot of rice",
+          "url": "/diseases/rice-brown-spot"
+        },
+        {
+          "label": "False smut",
+          "url": "/diseases/rice-false-smut"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Bacterial blight",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight"
+        },
+        {
+          "label": "PhilRice: Major diseases of the rice plant in the Philippines",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Major-diseases-of-the-rice-plant-in-the-Philippines.pdf"
+        },
+        {
+          "label": "PhilRice: Preventing rice pests, diseases during rainy season",
+          "url": "https://www.philrice.gov.ph/preventing-rice-pests-diseases-rainy-season/"
+        },
+        {
+          "label": "PhilRice: PhilRice warns of major rice pest threats in early 2026",
+          "url": "https://www.philrice.gov.ph/philrice-warns-of-major-rice-pest-threats-in-early-2026/"
+        }
+      ]
+    }
+  ]
+}
