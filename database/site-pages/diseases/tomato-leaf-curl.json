@@ -71,7 +71,7 @@
         ],
         [
           "How it spreads",
-          "Whiteflies carry the virus from plant to plant as they feed. The virus does not spread any other way, so no whitefly means no spread."
+          "Whiteflies carry the virus from plant to plant as they feed. This is the main way it spreads, so a clean seedbed and few whiteflies protect the crop. One DOST PCAARRD page also lists seed as a possible route, so buy seed from a source you trust."
         ]
       ]
     },
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "Reports on the related tomato yellow leaf curl virus say that it cuts fruit set considerably. The loss is greatest when infection happens before flowering. A crop infected young can lose up to all of its yield. That is a worst case from a research summary. Your own loss depends on the variety, the age of the plants and the whitefly pressure.\n\nIn the Philippines, a DOST PCAARRD program in Ilocos named leaf curl as the most destructive tomato disease. Its work covers healthy seedling technology and a seaweed based product called carrageenan."
+      "text": "An Indian review of tomato yellow leaf curl virus says that plants infected early do not bear fruit and stay severely stunted, and that losses in India can reach 100 percent. A DOST PCAARRD page puts the loss at 50 to 100 percent under high disease pressure. These are worst cases from research summaries. Your own loss depends on the variety, the age of the plants and the whitefly pressure.\n\nIn the Philippines, a DOST PCAARRD program in Ilocos named leaf curl as the most destructive tomato disease. Its work covers healthy seedling technology and a seaweed based product called carrageenan."
     },
     {
       "type": "heading",
@@ -121,9 +121,9 @@
         "Raise seedlings in a screened nursery or net house, so whiteflies cannot reach them. Healthy seedling technology is a core part of the PCAARRD program.",
         "Check seedlings for whiteflies and curling before transplanting. Throw away any sick seedling, and never plant it.",
         "Scout the underside of the leaves for whiteflies every week, and keep field borders clear of weeds.",
-        "Pull out and bury the first sick plants as soon as you see them. Then whiteflies cannot feed on them and spread the virus.",
+        "Pull out the first sick plants as soon as you see them, and bag them at once before you carry them out. Then whiteflies cannot feed on them and spread the virus. After harvest, destroy the crop residue.",
         "Leave a gap of a few weeks with no tomato in the field, when you can. A tomato free period cuts the virus and the whiteflies before the next crop.",
-        "Choose a tolerant or resistant variety where one is sold. The WorldVeg (the vegetable research center) has bred tropical tomatoes with resistance to several begomoviruses."
+        "Choose a tolerant or resistant variety where one is sold. An ICAR review calls resistant varieties the most practical answer, because whiteflies have grown resistant to many insecticides."
       ]
     },
     {
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "No spray can cure the virus in a plant that has it. A spray can only target the whitefly. Research advises you to rotate insecticide groups. It also says to avoid spraying weeds on field borders, because that kills the natural enemies of the whitefly. I found no whitefly active ingredient that a Philippine authority names for tomato, so I list none. Ask your local agriculture office what is registered with the FPA."
+      "text": "No spray can cure the virus in a plant that has it. A spray can only target the whitefly. An Indian review says foliar systemic sprays every 2 to 3 weeks can hold the whitefly down, but ICAR authors warn that whiteflies have grown resistant to many insecticides, so rotate groups. It also says to avoid spraying weeds on field borders, because that kills the natural enemies of the whitefly. I found no whitefly active ingredient that a Philippine authority names for tomato, so I list none. Ask your local agriculture office what is registered with the FPA."
     },
     {
       "type": "callout",
@@ -186,7 +186,7 @@
         },
         {
           "q": "How does the virus spread?",
-          "a": "Whiteflies spread it as they feed. The virus does not move in any other way, according to a plant health reference."
+          "a": "Whiteflies spread it as they feed, and this is the main route. One DOST PCAARRD page also says seed may carry it, so use seed from a trusted source."
         },
         {
           "q": "Which plants get infected most?",
@@ -240,8 +240,16 @@
           "url": "https://animorepository.dlsu.edu.ph/faculty_research/11557"
         },
         {
-          "label": "CABI PlantwisePlus Knowledge Bank: Tomato yellow leaf curl virus",
-          "url": "https://plantwiseplusknowledgebank.org/doi/full/10.1079/pwkb.species.55402"
+          "label": "DOST PCAARRD Information Service Portal: Tomato yellow leaf curl virus in the Philippines",
+          "url": "https://ispweb.pcaarrd.dost.gov.ph/?p=14225"
+        },
+        {
+          "label": "Vegetos (India): Current scenario of tomato yellow leaf curl virus and its possible management",
+          "url": "https://vegetosindia.org/article/current-scenario-of-tomato-yellow-leaf-curl-virus-tylcv-and-its-possible-management-a-review"
+        },
+        {
+          "label": "Indian Journal of Horticulture (ICAR): Breeding strategies for management of tomato leaf curl virus",
+          "url": "https://epubs.icar.org.in/index.php/IndHort/article/view/101931"
         }
       ]
     }

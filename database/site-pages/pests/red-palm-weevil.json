@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "The red palm weevil is a large beetle with a long snout. Its grubs are legless, white with a brown head, and grow up to 50 mm long. They bore through the inside of the palm and make tunnels up to a meter long. The Philippines is part of its native range.\n\nThe weevil attacks coconut, betel nut, oil palm, sago palm, date palm and many ornamental palms. Palms can stand a lot of damage inside before any sign shows. So by the time the crown wilts, the trunk may already be hollow."
+      "text": "The red palm weevil is a large beetle with a long snout. Its grubs are legless, white with a brown head, and grow up to 50 mm long. They bore through the inside of the palm and make tunnels up to a meter long. It is native to southern Asia and Melanesia, and the Philippines is among the countries where it lives.\n\nThe weevil attacks coconut, betel nut, oil palm, sago palm, date palm and many ornamental palms. Palms can stand a lot of damage inside before any sign shows, and young palms under about 20 to 25 years are the most open to attack. So by the time the crown wilts, the trunk may already be hollow."
     },
     {
       "type": "table",
@@ -71,7 +71,7 @@
         ],
         [
           "Life cycle",
-          "The female lays 200 to 300 eggs in holes in the trunk or in the leaf stalks. The grubs tunnel inside the palm for 1 to 3 months, and the full life cycle takes about 4 months."
+          "The female lays 200 to 300 eggs in holes in the trunk or in the leaf stalks. The eggs hatch in a few days, and the grubs tunnel inside the palm for about 36 to 78 days. The full life cycle takes about 4 months."
         ]
       ]
     },
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "The damage is inside, so farmers often see it late. Larvae can excavate tunnels up to 1 meter long, which weakens the palm until it dies. A pest that hides this well is cheaper to prevent than to cure.\n\nA female lays 200 to 300 eggs, and the cycle takes only about 4 months. Numbers can build up fast inside one grove. Fresh wounds are the main door, so how you prune and harvest matters a lot."
+      "text": "The damage is inside, so farmers often see it late. Larvae can excavate tunnels up to 1 meter long, which weakens the palm until it dies. A pest that hides this well is cheaper to prevent than to cure.\n\nA female lays 200 to 300 eggs, and the cycle takes only about 4 months. Numbers can build up fast inside one grove. Fresh wounds are the main door, so how you prune and harvest matters a lot.\n\nThe damage is not even everywhere. In India, CPCRI says it is serious only in certain pockets, mainly where the water table is high or where leaf rot and bud rot already weaken the palms. For large plantations, an Indian review of area wide programs assumes about 1 percent infested palms as the point to start action, and in small gardens farmers act on a single infested palm."
     },
     {
       "type": "heading",
@@ -118,12 +118,12 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Remove and bury or destroy infested palms and trunks so the grubs cannot finish their life cycle.",
-        "Cut leaves at the leaflet base during harvest and pruning, so wounds are small and do not draw the weevils.",
-        "Treat fresh wounds on the trunk and leaf stalks at once, because the female lays eggs in wounds.",
-        "Use pheromone lures, such as Ferrolure, in bucket traps baited with sugarcane to catch the adults and to monitor them.",
-        "Leave the natural enemies alone. The assassin bug and earwigs eat the eggs and grubs.",
-        "Check palms often, because early treatment works better than late treatment."
+        "Remove and bury or destroy infested palms and trunks so the grubs cannot finish their life cycle. Cut and burn dead palms that still hold the pest.",
+        "Avoid cuts and injuries on the palm. When you cut green leaves, cut them about 120 cm from the base, and do not cut steps in the trunk for climbing, because the female lays eggs in cut and damaged tissue.",
+        "Clean the crown now and then so that rotting debris does not collect in the leaf axils.",
+        "Trap the adults. A coconut log split lengthwise, with fermented toddy on the cut face, attracts the weevils, and you collect and kill them each morning. A pheromone lure in a bucket trap baited with sugarcane also catches adults and tells you how many are around.",
+        "Treat palms with bud rot or leaf rot early, because weakened palms attract the weevil. Leave the natural enemies alone, since the assassin bug and earwigs eat the eggs and grubs.",
+        "Check palms often, because early treatment works better than late treatment, and one method alone seldom works when neighbors do nothing."
       ]
     },
     {
@@ -171,9 +171,9 @@
       "type": "list",
       "items": [
         "Prune with care and keep the cuts small and clean.",
-        "Treat every wound on the trunk right away.",
+        "Do not cut steps in the trunk for climbing.",
         "Remove dying palms promptly so they do not become a breeding place.",
-        "Walk the grove often and look for frass and wilting crowns."
+        "Walk the grove often and look for frass, brown fluid at the holes and wilting crowns."
       ]
     },
     {
@@ -206,7 +206,7 @@
         },
         {
           "q": "How does the weevil get into the palm?",
-          "a": "The female lays eggs in wounds and in holes in the trunk or the leaf stalks. Pruning and harvesting cuts are common entry points."
+          "a": "The female lays eggs in wounds and in holes in the trunk or the leaf stalks. Pruning cuts, harvesting cuts and steps cut in the trunk for climbing are common entry points."
         },
         {
           "q": "What can I do for a badly infested palm?",
@@ -254,6 +254,18 @@
         {
           "label": "Pacific Pests and Pathogens: Coconut red palm weevil",
           "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/coconut_red_palm_weevil_180.htm"
+        },
+        {
+          "label": "CPCRI (ICAR, India) Extension Folder 13: Red palm weevil, the hidden enemy of the coconut palm",
+          "url": "https://cpcri.gov.in/filemgr/webfs/publication/ext13.pdf"
+        },
+        {
+          "label": "Defra (UK) Plant Pest Factsheet: Red palm weevil",
+          "url": "https://planthealthportal.defra.gov.uk/assets/factsheets/Red_Palm_Weevil_Factsheet_2024.pdf"
+        },
+        {
+          "label": "J. R. Faleiro: Biology and management of the red palm weevil in India (UC Riverside CISR)",
+          "url": "https://cisr.ucr.edu/media/2941/download"
         }
       ]
     }

@@ -212,6 +212,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Corn earworm",
+          "url": "/pests/corn-earworm"
+        },
+        {
+          "label": "Corn planthopper",
+          "url": "/pests/corn-planthopper"
+        },
+        {
+          "label": "Corn stalk rot",
+          "url": "/diseases/corn-stalk-rot"
+        },
+        {
           "label": "Fall armyworm",
           "url": "/pests/fall-armyworm"
         },
@@ -230,6 +242,10 @@
         {
           "label": "Growth stages and weather on anee.io",
           "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
         }
       ]
     },

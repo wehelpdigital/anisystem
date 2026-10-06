@@ -249,6 +249,22 @@
       "title": "Pest pages",
       "items": [
         {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "Green leafhopper",
+          "url": "/pests/green-leafhopper"
+        },
+        {
+          "label": "Whitebacked planthopper",
+          "url": "/pests/whitebacked-planthopper"
+        },
+        {
+          "label": "Rice whorl maggot",
+          "url": "/pests/rice-whorl-maggot"
+        },
+        {
           "label": "Rice bug (atangya)",
           "url": "/pests/rice-bug"
         },
@@ -271,6 +287,10 @@
         {
           "label": "Sheath blight",
           "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
         }
       ]
     },

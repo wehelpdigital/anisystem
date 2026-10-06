@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "Cercospora leaf spot is a name for a group of related fungi in the genus Cercospora. Each one prefers its own crop. Cercospora citrullina attacks melons, watermelon and other cucurbits, and Cercospora beticola attacks beet, spinach and Swiss chard.\n\nI found no Philippine extension sheet that ranks this disease for local vegetables, so the advice here comes from university extension services that study the same fungi. The habits are the same in warm, humid weather. Leaf spots on vegetables are often confused with [anthracnose](/diseases/anthracnose) or [early blight](/diseases/early-blight), so it helps to check the shape of the spot."
+      "text": "Cercospora leaf spot is a name for a group of related fungi in the genus Cercospora. Each one prefers its own crop. Cercospora citrullina attacks melons, watermelon and other cucurbits, and Cercospora beticola attacks beet, spinach and Swiss chard.\n\nCercospora fungi also live in the Philippines. Researchers at the University of the Philippines Los Baños recorded a Cercospora fungus on red Basella (alugbati) leaves in Laguna. I found no Philippine extension sheet that ranks the disease for local vegetables. So most advice here comes from university extension services that study the same fungi. The habits are the same in warm, humid weather. A tropical fact sheet on the pepper form shows the same pattern. Leaf spots on vegetables are often confused with [anthracnose](/diseases/anthracnose) or [early blight](/diseases/early-blight), so it helps to check the shape of the spot."
     },
     {
       "type": "table",
@@ -71,7 +71,7 @@
         ],
         [
           "How it spreads",
-          "The fungus survives in crop residue, seed and weeds. Rain splash, wind, tools and workers carry its spores from the old residue to the leaves, and each new spot makes more spores."
+          "The fungus survives in crop residue, seed and weeds. Rain splash, wind, tools and workers carry its spores from the old residue to the leaves, and each new spot makes more spores. On pepper, the Pacific fact sheet adds that the fungus can ride on the seed."
         ]
       ]
     },
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "Cercospora leaf spot lowers the yield by killing the leaves that feed the crop, and it can spoil the look of leafy vegetables that you sell by the bundle. How much you lose depends on the crop, the variety and how long the leaves stay wet. I did not find a sourced loss figure for vegetables in the Philippines, so I give none.\n\nThe fungus survives in plant residue and in soil for up to 3 years, according to Cornell. So the spots you see this season often come from last season's leaves. Good sanitation costs little, and it works better than any spray. See our guide to [growing vegetables in the Philippines](/crops/vegetables-philippines)."
+      "text": "Cercospora leaf spot lowers the yield by killing the leaves that feed the crop, and it can spoil the look of leafy vegetables that you sell by the bundle. How much you lose depends on the crop, the variety and how long the leaves stay wet. I did not find a sourced loss figure for vegetables in the Philippines, so I give none. A tropical fact sheet on the pepper form says severe attacks join the spots and drop the leaves. It adds that fruit yield falls and that warm wet weather favors the disease.\n\nThe fungus survives in plant residue and in soil for up to 3 years, according to Cornell. So the spots you see this season often come from last season's leaves. Good sanitation costs little, and it works better than any spray. See our guide to [growing vegetables in the Philippines](/crops/vegetables-philippines)."
     },
     {
       "type": "heading",
@@ -121,7 +121,7 @@
         "Space plants so the air moves through the canopy and the leaves dry fast after rain or watering.",
         "Use drip or furrow irrigation, and avoid overhead watering when you can, since wet leaves are what the fungus needs.",
         "Remove and destroy diseased leaves early in the season, and carry them out of the field.",
-        "Rotate with crops that are not hosts, for at least 2 years, and for 3 or more years where beet or spinach is the host.",
+        "Rotate with crops that are not hosts, for at least 2 years, for 3 or more years where beet or spinach is the host, and for at least 3 years after the disease has hit pepper.",
         "Pull out weeds that act as hosts, such as lambsquarters and pigweed, which carry the beet fungus.",
         "After harvest, destroy the crop residue by deep plowing so that the old leaves are buried and cannot send spores to the next crop."
       ]
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "Fungicides help best when they protect the leaves before the disease builds up. Extension services advise a protectant spray from the time the vines touch, and earlier in fields with a history of the disease. Some Cercospora fungi have become resistant to strobilurin fungicides in New York, so do not rely on that class alone. Follow the label of an FPA registered product, and rotate groups."
+      "text": "Fungicides help best when they protect the leaves before the disease builds up. Extension services advise a protectant spray from the time the vines touch, and earlier in fields with a history of the disease. Some Cercospora fungi have become resistant to strobilurin fungicides in New York, so do not rely on that class alone. Follow the label of an FPA registered product, and rotate groups. Tamil Nadu Agricultural University lists copper oxychloride for the eggplant form. The Pacific fact sheet lists chlorothalonil, copper oxychloride and mancozeb for pepper."
     },
     {
       "type": "table",
@@ -148,6 +148,21 @@
           "Copper (as copper octanoate)",
           "FRAC M1",
           "named by Cornell as an organic option, with a Bacillus based product"
+        ],
+        [
+          "Copper oxychloride",
+          "FRAC M1",
+          "listed for the pepper form by the Pacific fact sheet and for the eggplant form by TNAU"
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M5",
+          "listed for the pepper form by the Pacific fact sheet"
+        ],
+        [
+          "Mancozeb",
+          "FRAC M3",
+          "listed for the pepper form by the Pacific fact sheet"
         ]
       ]
     },
@@ -258,6 +273,18 @@
         {
           "label": "Texas AgriLife Extension: Cercospora leaf spot of watermelon",
           "url": "https://aggie-horticulture.tamu.edu/vegetable/problem-solvers/cucurbit-problem-solver/leaf-disorders/cercospora-leaf-spot"
+        },
+        {
+          "label": "Begum and Cumagun, University of the Philippines Los Baños: First record of Cercospora basellae albae from the Philippines",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2445"
+        },
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Capsicum frogeye spot (Cercospora capsici)",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/capsicum_frogeye_spot_092.htm"
+        },
+        {
+          "label": "TNAU Agritech Portal: Cercospora leaf spot of brinjal",
+          "url": "https://agritech.tnau.ac.in/crop_protection/brinjal_diseases_2.html"
         }
       ]
     }

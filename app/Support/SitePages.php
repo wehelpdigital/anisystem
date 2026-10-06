@@ -45,9 +45,9 @@ class SitePages
             'label' => 'Crop Pests',
             'crumb' => 'Crop pests',
             'hubTitle' => 'Crop Pests in the Philippines',
-            'metaTitle' => 'Crop Pests in the Philippines: Insects of Rice and Corn',
-            'metaDescription' => 'Spot and stop the insect pests of Philippine farms: rice bug, black bug, brown planthopper, leaffolder, fall armyworm, corn borer, thrips and mites.',
-            'intro' => 'Know which insect is on your crop before you buy a spray. Each guide shows the signs, the damage, the right time to act and the ways to manage it.',
+            'metaTitle' => 'Crop Pests in the Philippines: Signs, Damage and Control',
+            'metaDescription' => 'Photos, local names and control steps for the pests of palay, mais, gulay and fruit crops, from stem borer and kuhol to cocolisap and fruit flies.',
+            'intro' => 'Know which pest is on your crop before you buy a spray. Each page shows the signs, the damage, the right time to act and the ways to manage it.',
             'kicker' => 'Crop pests',
         ],
         'diseases' => [
@@ -55,8 +55,8 @@ class SitePages
             'crumb' => 'Crop diseases',
             'hubTitle' => 'Crop Diseases in the Philippines',
             'metaTitle' => 'Crop Diseases in the Philippines: Signs and Control',
-            'metaDescription' => 'Learn the signs of common crop diseases in the Philippines, like sheath blight, anthracnose and fusarium wilt, and how to manage them before they spread.',
-            'intro' => 'A spot on a leaf can be a fungus, a bacterium or just the weather. These guides show the signs of each disease, why it comes and what to do before it spreads.',
+            'metaDescription' => 'Photos, local names and control steps for the diseases of palay, mais, gulay and fruit crops, from blast and tungro to bunchy top and coffee rust.',
+            'intro' => 'A spot on a leaf can be a fungus, a bacterium, a virus or just the weather. Each page shows the signs of one disease, why it comes and what to do before it spreads.',
             'kicker' => 'Crop diseases',
         ],
         'weeds' => [

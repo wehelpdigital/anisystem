@@ -187,6 +187,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Banded leaf and sheath blight",
+          "url": "/diseases/banded-leaf-and-sheath-blight"
+        },
+        {
+          "label": "Sheath rot",
+          "url": "/diseases/rice-sheath-rot"
+        },
+        {
+          "label": "Rice blast",
+          "url": "/diseases/rice-blast"
+        },
+        {
           "label": "Fungicides guide",
           "url": "/blog/fungicides"
         },
@@ -209,6 +221,10 @@
         {
           "label": "Growth stages and weather",
           "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
         }
       ]
     },

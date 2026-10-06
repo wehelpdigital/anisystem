@@ -203,6 +203,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Whitefly",
+          "url": "/pests/whitefly"
+        },
+        {
+          "label": "Eggplant leafhopper",
+          "url": "/pests/eggplant-leafhopper"
+        },
+        {
+          "label": "Leafminer",
+          "url": "/pests/leafminer"
+        },
+        {
           "label": "Rice insects in the Philippines",
           "url": "/pests/rice-insects"
         },
@@ -221,6 +233,10 @@
         {
           "label": "Anthracnose",
           "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
         }
       ]
     },

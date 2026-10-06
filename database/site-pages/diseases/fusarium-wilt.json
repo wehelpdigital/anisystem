@@ -196,6 +196,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Bacterial wilt",
+          "url": "/diseases/bacterial-wilt"
+        },
+        {
+          "label": "Moko disease and bugtok of banana",
+          "url": "/diseases/moko-disease"
+        },
+        {
+          "label": "Damping off",
+          "url": "/diseases/damping-off"
+        },
+        {
           "label": "Banana farming in the Philippines",
           "url": "/crops/banana-farming-philippines"
         },
@@ -214,6 +226,10 @@
         {
           "label": "Farm maps on anee.io",
           "url": "/features/farm-maps"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
         }
       ]
     },

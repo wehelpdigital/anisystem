@@ -216,6 +216,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Whitebacked planthopper",
+          "url": "/pests/whitebacked-planthopper"
+        },
+        {
+          "label": "Rice grassy stunt",
+          "url": "/diseases/rice-grassy-stunt"
+        },
+        {
+          "label": "Rice ragged stunt",
+          "url": "/diseases/rice-ragged-stunt"
+        },
+        {
           "label": "Rice black bug",
           "url": "/pests/rice-black-bug"
         },
@@ -238,6 +250,10 @@
         {
           "label": "Growth stages and weather",
           "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
         }
       ]
     },

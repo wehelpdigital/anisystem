@@ -171,6 +171,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "White grub",
+          "url": "/pests/white-grub"
+        },
+        {
+          "label": "Mole cricket",
+          "url": "/pests/mole-cricket"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
           "label": "Fall armyworm",
           "url": "/pests/fall-armyworm"
         },
@@ -189,6 +201,10 @@
         {
           "label": "Hanip, mites and aphids",
           "url": "/pests/hanip-mites-and-aphids"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
         }
       ]
     },

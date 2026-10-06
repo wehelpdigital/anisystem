@@ -242,6 +242,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Banana aphid",
+          "url": "/pests/banana-aphid"
+        },
+        {
+          "label": "Whitefly",
+          "url": "/pests/whitefly"
+        },
+        {
+          "label": "Mealybug",
+          "url": "/pests/mealybug"
+        },
+        {
           "label": "Thrips on rice, onion, chili and mango",
           "url": "/pests/thrips"
         },
@@ -264,6 +276,10 @@
         {
           "label": "Karate, Cymbush and Selecron insecticides",
           "url": "/blog/karate-cymbush-selecron-insecticides"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
         }
       ]
     },

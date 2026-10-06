@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "The caterpillars cause the main loss by eating the seeds, according to the Pacific Pests fact sheet. The webbing damage on buds, flowers and leaves is minor next to the pod damage.\n\nI found no Philippine yield loss figure or action threshold in the sources I could open. The sheet does say that sprays often disappoint, because the caterpillars hide, the cost is high, the natural enemies die and resistance builds up. So the best plan is to check the flowers every few days and remove infested parts early."
+      "text": "The caterpillars cause the main loss by eating the seeds, according to the Pacific Pests fact sheet. The webbing damage on buds, flowers and leaves is minor next to the pod damage.\n\nI found no Philippine yield loss figure or action threshold in the sources I could open. The sheet does say that sprays often disappoint, because the caterpillars hide, the cost is high, the natural enemies die and resistance builds up. So the best plan is to check the flowers every few days and remove infested parts early.\n\nIn one cowpea trial in India, a sequence of three sprays from 50 percent flowering, at 10 day intervals, cut pod damage to about 12 percent and gave about 66 percent protection over the untreated plots. That is one trial, so your result may differ. A study in Burkina Faso found that the larvae prefer the reproductive parts of the flowers, which is why early checks at flowering matter."
     },
     {
       "type": "heading",
@@ -120,7 +120,7 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Check the flowers and the young pods every two or three days once the plants begin to flower. Look for webbing and for caterpillars inside the flowers.",
+        "Check the flowers and the young pods every two or three days once the plants begin to flower. Look for webbing and for caterpillars inside the flowers, which are where the larvae feed first.",
         "Handpick the caterpillars and the webbed flowers early, when the infestation is still small, and destroy them.",
         "Do not plant sitaw or beans next to a field that is already infested. Avoid planting legume after legume in the same plot.",
         "Plant the beans in rows between rows of maize or sorghum. The Pacific Pests fact sheet says this intercropping works in Africa, so test it on a small part of your field first.",
@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "Pacific Pests discourages routine spraying, because the caterpillars hide, sprays kill natural enemies and resistance builds up. If you must spray, use plant based or biological products first. Time the spray at flowering, when the young caterpillars still feed in the flowers, and follow the FPA registered label and the waiting time before harvest."
+      "text": "Pacific Pests discourages routine spraying, because the caterpillars hide, sprays kill natural enemies and resistance builds up. If you must spray, use plant based or biological products first. Time the spray at flowering, when the young caterpillars still feed in the flowers, and follow the FPA registered label and the waiting time before harvest. An Indian trial rotated three different groups at 10 day intervals from half flowering, which also helps slow resistance."
     },
     {
       "type": "table",
@@ -165,6 +165,16 @@
           "Pyrethrum",
           "IRAC 3A",
           "a plant based option listed by Pacific Pests"
+        ],
+        [
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "used in an Indian cowpea trial, in a sequence with a plant based and a biological product"
+        ],
+        [
+          "Emamectin benzoate",
+          "IRAC 6",
+          "used in the same Indian cowpea trial, check the FPA registration first"
         ]
       ]
     },
@@ -270,6 +280,14 @@
         {
           "label": "USDA ID Tools: Maruca vitrata fact sheet",
           "url": "https://idtools.org/lepintercept/files/vitrata.pdf"
+        },
+        {
+          "label": "Indian Journal of Agricultural Sciences (ICAR): Management of legume pod borer in cowpea",
+          "url": "https://epubs.icar.org.in/index.php/IJAgS/article/view/154786"
+        },
+        {
+          "label": "International Journal of Tropical Insect Science: Feeding preferences of Maruca vitrata larvae on cowpea flowers",
+          "url": "https://www.cambridge.org/core/product/EF8B82ABABEE4C83A378B03F99E0365A"
         }
       ]
     }

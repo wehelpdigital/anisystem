@@ -227,6 +227,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "Green leafhopper",
+          "url": "/pests/green-leafhopper"
+        },
+        {
+          "label": "Rice birds",
+          "url": "/pests/rice-birds"
+        },
+        {
           "label": "Rice black bug",
           "url": "/pests/rice-black-bug"
         },
@@ -249,6 +261,10 @@
         {
           "label": "Growth stages and weather",
           "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
         }
       ]
     },

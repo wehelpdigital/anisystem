@@ -225,6 +225,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Corn earworm",
+          "url": "/pests/corn-earworm"
+        },
+        {
+          "label": "Rice armyworm",
+          "url": "/pests/rice-armyworm"
+        },
+        {
+          "label": "Onion armyworm",
+          "url": "/pests/onion-armyworm"
+        },
+        {
           "label": "Asian corn borer",
           "url": "/pests/asian-corn-borer"
         },
@@ -243,6 +255,10 @@
         {
           "label": "Anee, the AI agricultural technician",
           "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
         }
       ]
     },

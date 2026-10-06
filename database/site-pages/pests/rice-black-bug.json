@@ -242,6 +242,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "Rice field rats",
+          "url": "/pests/rice-field-rats"
+        },
+        {
+          "label": "Golden apple snail",
+          "url": "/pests/golden-apple-snail"
+        },
+        {
           "label": "Rice bug (atangya)",
           "url": "/pests/rice-bug"
         },
@@ -264,6 +276,10 @@
         {
           "label": "Cropping calendar",
           "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
         }
       ]
     },

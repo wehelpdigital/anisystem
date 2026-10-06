@@ -72,7 +72,7 @@
         ],
         [
           "Life cycle",
-          "It spreads mostly in infested planting material, since the adults rarely fly. A full cycle takes about 50 days, and adults can live up to 2 years."
+          "It spreads mostly in infested planting material, since the adults rarely fly and usually move less than 10 meters in a month. A full cycle takes about 6 weeks in warm tropical places and up to 6 months in cool weather. Adults can live up to 2 years."
         ]
       ]
     },
@@ -119,12 +119,12 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Use clean planting material. Tissue cultured plants are best, and you should inspect every sucker for larvae before planting.",
-        "After removing old mats, leave the land fallow for at least 3 months before you replant.",
-        "Keep the field clean. Chop old pseudostems and corm remains into pieces so they dry out and cannot feed grubs.",
-        "Set pseudostem or corm traps. Split pieces placed on the soil near the mat attract adults, and you collect and destroy them. Replace the traps often until the weevils are under control.",
+        "Use clean planting material. Tissue cultured plants are free of weevils, so they are best, and you should inspect and trim every sucker for larvae before planting.",
+        "After removing old mats, rest the land before you replant. The Pacific fact sheet says at least 3 months, but a University of Pretoria review of African and Australian work says at least 1 year, and prefers 18 months to 2 years. Rest it as long as you can.",
+        "Keep the field clean. Cut old pseudostems and corm remains below ground level and chop them into pieces so they dry out and cannot feed grubs.",
+        "Set pseudostem or corm traps. A pseudostem split lengthwise and laid cut side down on the soil near the mat attracts adults, and you collect and destroy them. Replace the traps often until the weevils are under control.",
         "Protect natural enemies, such as the predatory beetles Plaesius javanus and Plaesius laevigatus and the ant Tetramorium bicarinatum, which help in some places.",
-        "Use the aggregation pheromone sordidin for monitoring and mass trapping where it is available."
+        "Use the aggregation pheromone sordidin for monitoring and mass trapping where it is available. A trial in Mexico found that four pheromone and corm traps per hectare gave partial control, with young plants benefiting after 6 months and mature plants after 13 months."
       ]
     },
     {
@@ -134,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "Chemicals come last. Several active ingredients are registered for banana weevil in some countries, so check what is registered for banana in the Philippines through the FPA before you buy. Follow the label."
+      "text": "Chemicals come last. The Pacific fact sheet lists several active ingredients for banana weevil, and the University of Pretoria review says chemicals work mainly against the adults and are mostly non systemic. Check what is registered for banana in the Philippines through the FPA before you buy. Follow the label."
     },
     {
       "type": "table",
@@ -184,7 +184,7 @@
         "Buy tissue cultured plants or inspected suckers only.",
         "Never plant suckers taken from a field with weak, tunneled mats.",
         "Chop and dry harvested pseudostems.",
-        "Rest the land for at least 3 months after you remove old corms."
+        "Rest the land after you remove old corms, for at least 3 months and longer if you can."
       ]
     },
     {
@@ -213,7 +213,7 @@
       "items": [
         {
           "q": "How does the banana weevil spread?",
-          "a": "Mostly in infested planting material. The adults rarely fly, so they only move short distances on their own at night."
+          "a": "Mostly in infested planting material. The adults rarely fly, so they only move short distances on their own at night, usually less than 10 meters in a month."
         },
         {
           "q": "How do I trap banana weevils?",
@@ -221,7 +221,7 @@
         },
         {
           "q": "How long should I rest the land?",
-          "a": "At least 3 months of fallow after you remove old corms, according to the Pacific fact sheet."
+          "a": "The Pacific fact sheet says at least 3 months. A University of Pretoria review says at least 1 year, and prefers 18 months to 2 years. Rest it as long as you can."
         }
       ]
     },
@@ -265,6 +265,18 @@
         {
           "label": "Pacific Pests and Pathogens: Banana weevil",
           "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/banana_weevil_109.htm"
+        },
+        {
+          "label": "University of Pretoria repository: thesis reviewing the biology and control of Cosmopolites sordidus",
+          "url": "https://repository.up.ac.za/bitstreams/d7049876-6c12-4993-93c5-a8b8dd78d5c3/download"
+        },
+        {
+          "label": "TNAU Agritech Portal (Tamil Nadu Agricultural University): Banana pests, rhizome weevil",
+          "url": "https://agritech.tnau.ac.in/crop_protection/crop_prot_crop_insectpest%20_-Banana_pest&disease.html"
+        },
+        {
+          "label": "Osorio and others 2016: Reducing Cosmopolites sordidus with traps baited with pheromone and plantain corm (UJAT, Mexico)",
+          "url": "https://ri.ujat.mx/items/69c07f45-a51a-4479-9d0c-23136c6a6551/full"
         }
       ]
     }

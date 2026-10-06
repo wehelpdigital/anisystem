@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "The adult is only about 1.5 mm long and black, covered in short stiff hairs. A female flies to ripening berries and bores a hole in one. Males have reduced wings and stay inside the berry. The females far outnumber the males, about 10 to 1.\n\nThe beetle lives worldwide, in Asia, Africa, the Americas and Oceania. Because it breeds inside the bean, spray does not reach it easily. Cultural work at harvest is the main tool for the Filipino coffee farmer."
+      "text": "The adult female is only about 1.5 to 1.9 mm long and black, covered in short stiff hairs. A female flies to ripening berries and bores a hole in one. Males have reduced wings and stay inside the berry. Females far outnumber males, and studies give ratios from 5 to 1 up to hundreds to 1.\n\nThe beetle lives worldwide, in Asia, Africa, the Americas and Oceania. Because it breeds inside the bean, spray does not reach it easily. Cultural work at harvest is the main tool for the Filipino coffee farmer. DOST PCAARRD names the berry borer, with coffee leaf rust, as the problem that has hampered coffee production the most in the country."
     },
     {
       "type": "table",
@@ -71,7 +71,7 @@
         ],
         [
           "Life cycle",
-          "The fertilized female bores into a ripening berry and lays 30 to 50 eggs inside the bean over 2 to 7 weeks. The cycle takes about 4 weeks, and females fly to new berries, sometimes carried far by air currents."
+          "The fertilized female bores into a ripening berry and lays eggs inside the bean over several weeks. Pacific Pests gives 30 to 50 eggs, and a review of the global pest says a female can lay more than 100. Development takes about 4 weeks, and females fly to new berries, sometimes carried far by air currents."
         ]
       ]
     },
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "Even a small attack lowers bean quality and makes the coffee harder to sell. The beetle can attack up to all of the berries in a badly infested field. The damage plus the decay organisms cause early berry drop.\n\nBecause one beetle starts a colony inside the bean, it takes only a few weeks for the numbers to rise. Compare it with the pests of other trees, such as the [cacao pod borer](/pests/cacao-pod-borer), which also hides inside the fruit. Clean and frequent harvest mostly controls it."
+      "text": "Even a small attack lowers bean quality and makes the coffee harder to sell. The beetle can attack up to all of the berries in a badly infested field. Damage plus decay organisms cause early berry drop.\n\nBecause one beetle starts a colony inside the bean, it takes only a few weeks for the numbers to rise. Compare it with the pests of other trees, such as the [cacao pod borer](/pests/cacao-pod-borer), which also hides inside the fruit. Clean and frequent harvest mostly controls it. Kerala Agricultural University says heavy attacks on robusta affected 30 to 80 percent of the berries."
     },
     {
       "type": "heading",
@@ -120,10 +120,11 @@
       "items": [
         "Pick the berries as they ripen. In affected areas, harvest early in the season every 2 to 3 weeks.",
         "Collect fallen and blackened berries from the ground and destroy them, so the beetles have nowhere to wait.",
-        "After the main harvest, strip every berry from the tree for about 3 months to break the life cycle. Leave no old berries on the tree.",
+        "After the main harvest, strip every berry from the tree, green, ripe, over ripe and dried, for about 3 months to break the life cycle. A review of the global pest calls strip picking the most important part of integrated management. Leave no old berries on the tree.",
         "Keep the trees healthy with proper fertilizing and pruning, since a healthy tree gives clean berries.",
-        "Use the fungus Beauveria bassiana, which killed about 80 percent of adults in high humidity places.",
-        "Protect or release the parasitoid wasps Prorops nasuta, Phymastichus coffea and Cephalonomia stephanoderis where they are available, but their effect is limited."
+        "Use the fungus Beauveria bassiana, but expect a mixed result. The Pacific fact sheet reports about 80 percent of adults killed in high humidity places, while a global review gives field results from under 1 percent to about 70 percent. It works best early in the season when females are boring in.",
+        "Protect or release the parasitoid wasps Prorops nasuta, Phymastichus coffea and Cephalonomia stephanoderis where they are available, but their effect is limited, and Prorops needed many releases in one review.",
+        "Trap the adults. A study in Atok, Benguet caught the most beetles with 4 lure traps per 50 coffee trees, set during the months when few berries are on the trees."
       ]
     },
     {
@@ -133,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "The Pacific fact sheet recommends a spray only when monitoring shows more than 2 percent of berries infested. It must go on early. Once the female enters the bean, a spray does little. Follow the label and the FPA registration."
+      "text": "The Pacific fact sheet recommends a spray only when monitoring shows more than 2 percent of berries infested. The global review suggests a threshold between 1.5 and 2.5 percent. It must go on early. Once the female enters the bean, a spray does little. Follow the label and the FPA registration."
     },
     {
       "type": "table",
@@ -209,7 +210,7 @@
         },
         {
           "q": "Does Beauveria help?",
-          "a": "It killed about 80 percent of adults in countries with high humidity. It works best when combined with clean harvests."
+          "a": "Results vary. Reports run from under 1 percent to about 80 percent of adults killed, and it works best early in the season and with clean harvests."
         }
       ]
     },
@@ -253,6 +254,22 @@
         {
           "label": "Pacific Pests and Pathogens: Coffee berry borer",
           "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/coffee_berry_borer_118.htm"
+        },
+        {
+          "label": "Benguet State University: Coffee berry borer management study in Atok, Benguet",
+          "url": "https://journals.bsu.edu.ph/mjsir/article/view/159"
+        },
+        {
+          "label": "Coffee berry borer, a global pest of coffee (review, PubMed Central)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7763606/"
+        },
+        {
+          "label": "DOST PCAARRD: Project to detect pest and disease resistance of coffee varieties",
+          "url": "https://pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/dost-pcaarrd-upd-launch-project-to-detect-pest-and-disease-resistance-of-coffee-varieties"
+        },
+        {
+          "label": "Kerala Agricultural University (celkau.in): Coffee berry borer",
+          "url": "https://celkau.in/crops/plantation/coffee/berryborer.php"
         }
       ]
     }

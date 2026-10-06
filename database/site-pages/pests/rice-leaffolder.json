@@ -188,6 +188,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Rice caseworm",
+          "url": "/pests/rice-caseworm"
+        },
+        {
+          "label": "Rice armyworm",
+          "url": "/pests/rice-armyworm"
+        },
+        {
+          "label": "Rice hispa",
+          "url": "/pests/rice-hispa"
+        },
+        {
           "label": "Rice insects in the Philippines",
           "url": "/pests/rice-insects"
         },
@@ -210,6 +222,10 @@
         {
           "label": "Fertilizer for rice",
           "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "All crop pests",
+          "url": "/pests"
         }
       ]
     },

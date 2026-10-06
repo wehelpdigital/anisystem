@@ -235,6 +235,18 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Mango cecid fly",
+          "url": "/pests/mango-cecid-fly"
+        },
+        {
+          "label": "Cercospora leaf spot",
+          "url": "/diseases/cercospora-leaf-spot"
+        },
+        {
+          "label": "Black pod of cacao",
+          "url": "/diseases/cacao-black-pod"
+        },
+        {
           "label": "Fungicides used in the Philippines",
           "url": "/blog/fungicides"
         },
@@ -253,6 +265,10 @@
         {
           "label": "Pagtatanim ng puno",
           "url": "/crops/pagtatanim-ng-puno"
+        },
+        {
+          "label": "All crop diseases",
+          "url": "/diseases"
         }
       ]
     },
