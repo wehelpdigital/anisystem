@@ -1176,6 +1176,85 @@
                 </div>
             </div>
 
+            {{-- Typhoon watch (2026-10-06): a live satellite map of the
+                 Philippines in the manner of Zoom Earth, the clouds drifting,
+                 a typhoon turning along its forecast path inside its cone,
+                 your farm pinned with how close the storm passes, and a day
+                 by day timeline; beside it, Anee's plan for every lot. The
+                 storm rides the SVG (SMIL), so it scales with the map; the
+                 timeline reads the SVG's clock. NOT BUILT IN THE APP YET: the
+                 owner's call is to show it as a feature (see the memory note
+                 on satellite maps); match this when it is built. --}}
+            <div class="hp-storm on-dark">
+                <div class="hp-storm-copy reveal">
+                    <p class="hp-kick">Typhoon watch</p>
+                    <h3 class="hp-sky-h">See the Typhoon Coming, <em>and Know What to Do Before It Lands.</em></h3>
+                    <p class="hp-sky-p">
+                        Follow every storm on a live satellite map: the clouds, the rain and the forecast path, with your own farm
+                        pinned on it. Then Anee, your smart farm technician, reads the path against each lot, its growth stage and
+                        the week's work, and tells you what to decide while there is still time.
+                    </p>
+                    <div class="hp-sky-stats">
+                        <div><b>Live clouds and rain</b><small>Satellite views of the whole country</small></div>
+                        <div><b>The path, near you</b><small>How close the storm passes your farm, and when</small></div>
+                        <div><b>Anee's plan</b><small>Harvest, drain, hold the fertilizer, protect the seedbed</small></div>
+                    </div>
+                </div>
+
+                <div class="hp-storm-map reveal" aria-hidden="true">
+                    <img class="hp-storm-base" src="{{ asset('images/site/storm/ph-satellite.webp') }}"
+                         srcset="{{ asset('images/site/storm/ph-satellite-760.webp') }} 760w, {{ asset('images/site/storm/ph-satellite.webp') }} 1280w"
+                         sizes="(min-width: 1024px) 40rem, 92vw" alt="" width="1280" height="1000" loading="lazy">
+                    <span class="hp-storm-clouds"></span>
+                    <svg class="hp-storm-svg" viewBox="0 0 1280 1000" data-storm>
+                        <defs>
+                            <path id="hpStormPath" d="M1210 760 C 1100 700, 1050 660, 990 630 S 860 560, 760 500 S 610 400, 520 350 S 380 270, 300 240 S 150 180, 80 160"/>
+                        </defs>
+                        <path class="hp-storm-cone" d="M1210 760 L1005 604 L785 457 L555 290 L345 163 L135 65 Q 60 150 25 255 L255 317 L485 410 L735 543 L975 656 Z"/>
+                        <use class="hp-storm-track" href="#hpStormPath"/>
+                        @foreach ([[1210, 760, 'Mon'], [990, 630, 'Tue'], [760, 500, 'Wed'], [520, 350, 'Thu'], [300, 240, 'Fri'], [80, 160, 'Sat']] as [$dx, $dy, $dn])
+                            <g class="hp-storm-day"><circle cx="{{ $dx }}" cy="{{ $dy }}" r="9"/><text x="{{ $dx }}" y="{{ $dy - 22 }}">{{ $dn }}</text></g>
+                        @endforeach
+                        <path class="hp-storm-gap" d="M330 405 L 352 266"/>
+                        <text class="hp-storm-km" x="356" y="350">110 km</text>
+                        <g class="hp-storm-eye">
+                            <animateMotion dur="16s" repeatCount="indefinite" rotate="0"><mpath href="#hpStormPath"/></animateMotion>
+                            <g>
+                                <image href="{{ asset('images/site/storm/typhoon.webp') }}" x="-170" y="-170" width="340" height="340"/>
+                                <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="7s" repeatCount="indefinite"/>
+                            </g>
+                            <text class="hp-storm-name" x="0" y="-186">Typhoon · 185 km/h</text>
+                        </g>
+                    </svg>
+                    <span class="hp-storm-farm"><i></i><b>Your farm</b></span>
+                    <span class="hp-storm-top"><i class="hp-live"></i>Typhoon watch<small>Satellite, updated 2:00 PM</small></span>
+                    <span class="hp-storm-layers"><b class="is-on">Satellite</b><b>Wind</b><b>Rain</b></span>
+                    <div class="hp-storm-time">
+                        <span class="hp-storm-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
+                        <div class="hp-storm-bar">
+                            <span class="hp-storm-days">@foreach (['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $dn)<i>{{ $dn }}</i>@endforeach</span>
+                            <span class="hp-storm-rail"><i data-storm-fill></i><b data-storm-head></b></span>
+                        </div>
+                        <span class="hp-storm-now" data-storm-now>Mon 8 AM</span>
+                    </div>
+                </div>
+
+                <div class="hp-storm-plan reveal">
+                    <div class="hp-storm-plan-hd">
+                        <img src="{{ $face }}" alt="">
+                        <span><b>Anee's typhoon plan</b><small>Lot 1 and Lot 2, wet season palay</small></span>
+                    </div>
+                    <p class="hp-storm-say">The typhoon crosses the east coast on Thursday night and passes about 110 km north of your farm. Expect strong wind and heavy rain from Wednesday night.</p>
+                    <ol class="hp-storm-steps">
+                        <li style="--k: 0"><b>Tuesday</b>Harvest Lot 1. It is 30 days after heading and ready, so the grain is safer in sacks than in the field.</li>
+                        <li style="--k: 1"><b>Wednesday</b>Clear the canals and open the drains, so the water has somewhere to go.</li>
+                        <li style="--k: 2"><b>Wednesday</b>Move the seedbed trays to higher ground and tie down the shed roof.</li>
+                        <li style="--k: 3"><b>Friday</b>Hold the urea on Lot 2 until the rain stops. Heavy rain would wash it away.</li>
+                    </ol>
+                    <p class="hp-storm-done">{!! $tick !!}Added to your season calendar</p>
+                </div>
+            </div>
+
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and bring your team in {!! $arrow !!}</a>
@@ -2512,6 +2591,86 @@
         .hp-sat-legend { font-size: .62rem; gap: .5rem; }
     }
 
+    /* ---- typhoon watch: a Zoom Earth style map, the plan beside it ---- */
+    .hp-storm { margin-top: 1.5rem; display: grid; gap: 1.6rem; padding: 1.5rem; border-radius: 2rem; color: #e2e8f0;
+        background: radial-gradient(70% 80% at 10% 0%, #2a2f5c 0%, transparent 60%), linear-gradient(160deg, #0b1324 0%, #101a30 60%, #1a1630 100%);
+        box-shadow: 0 50px 100px -60px rgb(11 19 36 / .9); }
+    .hp-storm > * { min-width: 0; }
+    /* The words across the top, then the map and Anee's plan side by side. */
+    @media (min-width: 1024px) {
+        .hp-storm { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); grid-template-areas: "copy copy" "map plan"; padding: 2.4rem; gap: 2rem 2.2rem; align-items: center; }
+        .hp-storm-map { grid-area: map; }
+        .hp-storm-copy { grid-area: copy; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: .4rem 2.6rem; align-items: end; }
+        .hp-storm-copy .hp-kick, .hp-storm-copy .hp-sky-h { grid-column: 1; }
+        .hp-storm-copy .hp-sky-p { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
+        .hp-storm-copy .hp-sky-stats { grid-column: 1 / -1; }
+        .hp-storm-plan { grid-area: plan; }
+    }
+    @media (max-width: 559.98px) { .hp-storm .hp-sky-stats { grid-template-columns: 1fr; } }
+    .hp-storm-map { position: relative; aspect-ratio: 1280 / 1000; border-radius: 1.4rem; overflow: hidden; background: #0a1222;
+        box-shadow: 0 0 0 1px rgb(255 255 255 / .1), 0 40px 80px -40px rgb(0 0 0 / .8); container-type: inline-size; }
+    .hp-storm-base { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .hp-storm-clouds { position: absolute; inset: -6% -12%; background: url('{{ asset('images/site/storm/clouds.webp') }}') center / cover no-repeat; opacity: .5;
+        animation: hpStormDrift 46s ease-in-out infinite alternate; pointer-events: none; }
+    @keyframes hpStormDrift { from { transform: translate(4%, 2%); } to { transform: translate(-6%, -2%); } }
+    .hp-storm-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .hp-storm-cone { fill: rgb(255 255 255 / .1); stroke: rgb(255 255 255 / .35); stroke-width: 2; stroke-dasharray: 8 8; }
+    .hp-storm-track { fill: none; stroke: #f5c518; stroke-width: 5; stroke-dasharray: 2 16; stroke-linecap: round; }
+    .hp-storm-day circle { fill: #0b1324; stroke: #f5c518; stroke-width: 4; }
+    .hp-storm-day text { fill: #fff; font: 800 26px var(--font-heading, sans-serif); text-anchor: middle; paint-order: stroke; stroke: rgb(11 19 36 / .75); stroke-width: 6px; }
+    .hp-storm-gap { stroke: #fff; stroke-width: 3; stroke-dasharray: 6 8; }
+    .hp-storm-km { fill: #fff; font: 800 24px var(--font-heading, sans-serif); paint-order: stroke; stroke: rgb(11 19 36 / .8); stroke-width: 6px; }
+    .hp-storm-name { fill: #fff; font: 800 26px var(--font-heading, sans-serif); text-anchor: middle; paint-order: stroke; stroke: rgb(185 28 28 / .9); stroke-width: 10px; }
+    .hp-storm-farm { position: absolute; left: 25.78%; top: 40.5%; width: 0; height: 0; }
+    .hp-storm-farm i { position: absolute; left: -.55rem; top: -.55rem; width: 1.1rem; height: 1.1rem; border-radius: 999px; background: #f5c518; box-shadow: 0 0 0 3px #0b1324; }
+    .hp-storm-farm i::after { content: ''; position: absolute; inset: -3px; border-radius: inherit; animation: hpAkPulse 2s ease-out infinite; }
+    .hp-storm-farm b { position: absolute; left: .9rem; top: -.75rem; white-space: nowrap; padding: .2rem .55rem; border-radius: .5rem; font-size: .7rem; font-weight: 800;
+        color: #0b1324; background: #f5c518; box-shadow: 0 8px 18px -8px rgb(0 0 0 / .6); }
+    .hp-storm-top { position: absolute; left: .7rem; top: .7rem; display: inline-flex; align-items: center; gap: .1rem .45rem; flex-wrap: wrap; max-width: 60%;
+        padding: .35rem .7rem; border-radius: .7rem; font-size: .74rem; font-weight: 800; color: #fff; background: rgb(11 19 36 / .72); backdrop-filter: blur(6px); }
+    .hp-storm-top small { flex-basis: 100%; padding-left: .85rem; font-size: .64rem; font-weight: 700; color: #94a3b8; }
+    .hp-storm-layers { position: absolute; right: .7rem; top: .7rem; display: flex; gap: .2rem; padding: .2rem; border-radius: .7rem; background: rgb(11 19 36 / .72); backdrop-filter: blur(6px); }
+    .hp-storm-layers b { padding: .25rem .5rem; border-radius: .5rem; font-size: .66rem; font-weight: 800; color: #cbd5e1; }
+    .hp-storm-layers b.is-on { color: #0b1324; background: #fff; }
+    .hp-storm-time { position: absolute; left: .7rem; right: .7rem; bottom: .7rem; display: flex; align-items: center; gap: .6rem; padding: .45rem .6rem;
+        border-radius: .9rem; background: rgb(11 19 36 / .78); backdrop-filter: blur(6px); }
+    .hp-storm-play { flex: none; width: 1.8rem; height: 1.8rem; border-radius: 999px; display: grid; place-items: center; color: #0b1324; background: #f5c518; }
+    .hp-storm-play svg { width: .9rem; height: .9rem; margin-left: 2px; }
+    .hp-storm-bar { flex: 1; min-width: 0; }
+    .hp-storm-days { display: flex; justify-content: space-between; font-size: .6rem; font-weight: 800; color: #94a3b8; }
+    .hp-storm-days i { font-style: normal; }
+    .hp-storm-rail { position: relative; display: block; margin-top: .3rem; height: 4px; border-radius: 4px; background: rgb(255 255 255 / .18); }
+    .hp-storm-rail i { position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--p, 0) * 100%); border-radius: inherit; background: #f5c518; }
+    .hp-storm-rail b { position: absolute; top: 50%; left: calc(var(--p, 0) * 100%); width: .8rem; height: .8rem; margin: -.4rem 0 0 -.4rem; border-radius: 999px;
+        background: #fff; box-shadow: 0 0 0 3px rgb(245 197 24 / .5); }
+    .hp-storm-now { flex: none; min-width: 4.6rem; text-align: right; font-size: .72rem; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+    @container (max-width: 420px) {
+        .hp-storm-top small, .hp-storm-layers b:not(.is-on) { display: none; }
+        .hp-storm-farm b { font-size: .62rem; }
+    }
+    .hp-storm-plan { padding: 1.1rem 1.15rem 1.2rem; border-radius: 1.3rem; color: #374151; background: #fff; box-shadow: 0 30px 60px -36px rgb(0 0 0 / .8); }
+    .hp-storm-plan-hd { display: flex; align-items: center; gap: .6rem; }
+    .hp-storm-plan-hd img { width: 2.6rem; height: 2.6rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 3px #fde68a; }
+    .hp-storm-plan-hd b { display: block; font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: var(--hp-ink); }
+    .hp-storm-plan-hd small { display: block; font-size: .74rem; color: #6b7280; }
+    .hp-storm-say { margin-top: .8rem; padding: .6rem .75rem; border-radius: .8rem; font-size: .86rem; line-height: 1.55; background: #fff8e1; box-shadow: inset 0 0 0 1px #f6e3a0; }
+    .hp-storm-steps { margin-top: .75rem; display: grid; gap: .45rem; counter-reset: st; }
+    .hp-storm-steps li { position: relative; padding: .5rem .6rem .5rem 2.4rem; border-radius: .8rem; font-size: .84rem; line-height: 1.5; background: #f6f8f3; counter-increment: st;
+        opacity: 0; translate: 0 8px; }
+    .hp-storm-steps li::before { content: counter(st); position: absolute; left: .6rem; top: .55rem; width: 1.3rem; height: 1.3rem; border-radius: 999px; display: grid;
+        place-items: center; font-size: .7rem; font-weight: 800; color: #fff; background: var(--hp-green); }
+    .hp-storm-steps b { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #6b7f5a; }
+    .hp-storm-plan.is-visible .hp-storm-steps li { animation: hpRoomIn .5s var(--hp-ease) calc(.3s + var(--k) * .35s) forwards; }
+    .hp-storm-done { margin-top: .75rem; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 999px; font-size: .74rem; font-weight: 800;
+        color: #166534; background: #dcfce7; opacity: 0; transition: opacity .4s var(--hp-ease) 1.9s; }
+    .hp-storm-done svg { width: .85rem; height: .85rem; }
+    .hp-storm-plan.is-visible .hp-storm-done { opacity: 1; }
+    html:not(.js) .hp-storm-steps li, html:not(.js) .hp-storm-done { opacity: 1; translate: none; }
+    @media (prefers-reduced-motion: reduce) {
+        .hp-storm-clouds, .hp-storm-farm i::after, .hp-storm-steps li { animation: none !important; }
+        .hp-storm-steps li, .hp-storm-done { opacity: 1; translate: none; transition: none; }
+    }
+
     /* ---- the community ---- */
     .hp-comm { background: radial-gradient(70% 60% at 10% 0%, #fdf6dc 0%, transparent 60%), linear-gradient(180deg, #fbfcf7 0%, #f1f7ea 100%); }
     .hp-comm-grid { margin-top: 3rem; display: grid; gap: 2rem; }
@@ -3300,6 +3459,36 @@
     const think = document.querySelector('[data-ak-think]');
     if (think && !reduce) {
         seen(think, (on) => { if (on) { const p = think.play(); if (p && p.catch) p.catch(() => {}); } else think.pause(); }, { threshold: 0.2 });
+    }
+
+    /* Typhoon watch: the storm (SMIL in the SVG) runs only while the map is
+       on screen; the timeline under it reads the SVG's own clock, so the
+       playhead, the day and the storm never drift apart. A visitor who asked
+       for less motion gets Wednesday, held still. */
+    const storm = document.querySelector('[data-storm]');
+    if (storm && storm.pauseAnimations) {
+        const DUR = 16, HOURS = 120;
+        const fill = document.querySelector('[data-storm-fill]');
+        const now = document.querySelector('[data-storm-now]');
+        const rail = fill && fill.parentElement;
+        const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        let raf = 0;
+        const paint = () => {
+            const p = (storm.getCurrentTime() % DUR) / DUR;
+            if (rail) rail.style.setProperty('--p', p.toFixed(4));
+            const h = 8 + Math.floor(p * HOURS);
+            const hr = h % 24, d = DAYS[Math.min(5, Math.floor(h / 24))];
+            if (now) now.textContent = d + ' ' + ((hr % 12) || 12) + (hr < 12 ? ' AM' : ' PM');
+        };
+        const loop = () => { paint(); raf = requestAnimationFrame(loop); };
+        storm.pauseAnimations();
+        if (reduce) { storm.setCurrentTime(DUR * .45); paint(); }
+        else {
+            seen(storm, (on) => {
+                cancelAnimationFrame(raf);
+                if (on) { storm.unpauseAnimations(); loop(); } else storm.pauseAnimations();
+            }, { threshold: 0.2 });
+        }
     }
 
     /* The community plays as one loop while on screen: the post gathers
