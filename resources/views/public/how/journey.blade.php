@@ -919,7 +919,7 @@
     .hw-film-x { position: absolute; top: .8rem; right: .8rem; z-index: 2; width: 2.4rem; height: 2.4rem; border-radius: .8rem; display: grid; place-items: center;
         background: rgb(255 255 255 / .1); color: #fff; transition: background .28s var(--ease); }
     .hw-film-x:hover { background: rgb(255 255 255 / .18); }
-    .hw-film-x:focus-visible, .hw-film-nav button:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+    .hw-film-x:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
     .hw-film-x svg { width: 1.1rem; height: 1.1rem; }
     .hw-film-phone { width: min(13.5rem, 56vw); margin: .3rem auto 0; padding: .45rem; border-radius: 2.2rem; background: linear-gradient(160deg, #262d22, #0a0d08 70%);
         box-shadow: 0 40px 70px -40px rgb(0 0 0 / .9), 0 0 0 1px rgb(255 255 255 / .1) inset, 0 0 0 6px rgb(168 204 126 / .07), 0 0 50px -12px rgb(168 204 126 / .35); }
@@ -942,12 +942,6 @@
     .hw-film-head em[hidden] { display: none; }
     .hw-film-body { margin-top: 1rem; }
     .hw-film-body p { font-size: .95rem; line-height: 1.6; color: #d9e5cd; }
-    .hw-film-nav { display: flex; justify-content: space-between; gap: .6rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgb(255 255 255 / .08); }
-    .hw-film-nav button { display: inline-flex; align-items: center; gap: .35rem; padding: .55rem .9rem; border-radius: .8rem; font-size: .85rem; font-weight: 800; color: #fff;
-        background: rgb(255 255 255 / .07); transition: background .28s var(--ease), opacity .28s var(--ease); }
-    .hw-film-nav button:hover:not(:disabled) { background: rgb(255 255 255 / .14); }
-    .hw-film-nav button:disabled { opacity: .3; cursor: default; }
-    .hw-film-nav svg { width: 1rem; height: 1rem; }
     .hw-film.is-swap .hw-film-copy, .hw-film.is-swap .hw-film-phone { animation: hwSwap .45s var(--ease); }
     @keyframes hwSwap { from { opacity: .15; transform: translateY(10px); } to { opacity: 1; transform: none; } }
     @media (min-width: 768px) {
@@ -1327,10 +1321,6 @@
                     <div><b></b><small></small><em hidden><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">With Anee</em></div>
                 </div>
                 <div class="hw-film-body"></div>
-                <div class="hw-film-nav">
-                    <button type="button" data-film-step="-1"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Previous</button>
-                    <button type="button" data-film-step="1">Next<svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
-                </div>
             </div>
         </div>
     </div>
@@ -2011,8 +2001,6 @@
                 return;
             }
             if (e.target.closest('[data-film-close]')) { closeFilm(); return; }
-            const step = e.target.closest('[data-film-step]');
-            if (step) { stepFilm(Number(step.dataset.filmStep)); return; }
             const chip = e.target.closest('.hw-chip');
             if (chip) openFilm(chip.closest('.hw-item'));
         });
@@ -2051,9 +2039,6 @@
             v.removeAttribute('poster');
             v.load();
         }
-        const all = [...root.querySelectorAll('.hw-steps .hw-item')], i = all.indexOf(item);
-        film.querySelector('[data-film-step="-1"]').disabled = i <= 0;
-        film.querySelector('[data-film-step="1"]').disabled = i >= all.length - 1;
         if (filmFrom && filmFrom !== item) toggle(filmFrom, false);
         filmFrom = item;
         toggle(item, true);
@@ -2066,12 +2051,6 @@
             film.classList.remove('is-swap'); void film.offsetWidth; film.classList.add('is-swap');
             film.querySelector('.hw-film-card').scrollTop = 0;
         }
-    }
-    function stepFilm(d) {
-        if (!filmFrom) return;
-        const all = [...filmFrom.closest('[data-hw]').querySelectorAll('.hw-steps .hw-item')];
-        const next = all[all.indexOf(filmFrom) + d];
-        if (next) openFilm(next);
     }
     function closeFilm() {
         const item = filmFrom, film = item && item.closest('[data-hw]').querySelector('.hw-film');
@@ -2090,12 +2069,10 @@
         }, still() ? 0 : 360);
     }
     // Escape closes the film first (caught before the dashboard's modal hears
-    // it); the arrow keys walk the tools.
+    // it). One tool at a time: no previous and next (the owner's call, 2026-10-07).
     window.addEventListener('keydown', (e) => {
         if (!filmFrom) return;
         if (e.key === 'Escape') { e.stopPropagation(); closeFilm(); }
-        else if (e.key === 'ArrowRight') stepFilm(1);
-        else if (e.key === 'ArrowLeft') stepFilm(-1);
     }, true);
 
     function toggle(item, on) {
