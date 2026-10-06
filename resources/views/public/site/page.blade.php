@@ -21,6 +21,19 @@
         $size = @getimagesize(public_path(ltrim((string) $hero['src'], '/')));
         $portrait = $size && $size[1] > $size[0] * 1.15;
     }
+    // A feature page whose tool has a film plays it in the phone instead of
+    // a still (2026-10-06): the same phone recording the How It Works
+    // modal and the homepage play.
+    $film = null;
+    if ($isFeature) {
+        $filmKey = array_search($page->slug, \App\Support\HowItWorks::PAGES, true);
+        // The one feature page no single tool owns: the reports, shown by the profit report's film.
+        $filmKey = $filmKey !== false ? $filmKey : (['farm-reports' => 'profit'][$page->slug] ?? false);
+        $film = $filmKey !== false ? \App\Support\HowItWorks::video($filmKey) : null;
+        if ($film) {
+            $portrait = true;
+        }
+    }
 @endphp
 
 @section('title_full', $seoTitle . ' | anee.io')
@@ -92,7 +105,13 @@
                     </div>
                     @endif
                 </div>
-                @if ($heroSrc && $portrait)
+                @if ($film)
+                    <figure class="sp-phone is-film">
+                        <video src="{{ $film[0] }}" @if ($film[1]) poster="{{ $film[1] }}" @endif muted playsinline loop autoplay preload="metadata"
+                               aria-label="{{ $feat['name'] ?? $page->title }} in the anee.io app, recorded on a phone" data-sp-film></video>
+                        <figcaption class="sp-phone-tag"><i></i>Recorded in the real app</figcaption>
+                    </figure>
+                @elseif ($heroSrc && $portrait)
                     <figure class="sp-phone">
                         <img src="{{ $heroSrc }}" alt="{{ $hero['alt'] ?? $page->title }}" fetchpriority="high">
                     </figure>
@@ -200,6 +219,21 @@
     @endif
 @endsection
 
+@push('scripts')
+<script>
+    /* The feature's film plays only while it is on screen (it saves a
+       farmer's data), and never for a visitor who asked for less motion. */
+    (() => {
+        const v = document.querySelector('[data-sp-film]');
+        if (!v) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); return; }
+        if (!('IntersectionObserver' in window)) return;
+        new IntersectionObserver((es) => es.forEach((e) => {
+            if (e.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } else v.pause();
+        }), { threshold: 0.25 }).observe(v);
+    })();
+</script>
+@endpush
 @push('scripts')
 <script>
 (() => {

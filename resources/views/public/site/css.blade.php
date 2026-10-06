@@ -51,6 +51,14 @@
         transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .sp-phone:hover { transform: rotate(0); }
     .sp-phone img { display: block; width: 100%; max-height: 32rem; object-fit: cover; object-position: top; border-radius: 1.8rem; }
+    /* A feature's film plays in the phone (2026-10-06). The phone keeps a
+       real phone's shape; the tilt stays off so the screen reads straight. */
+    .sp-phone.is-film { position: relative; width: min(100%, 16.5rem); transform: none; margin-bottom: 2.8rem; }
+    .sp-phone video { display: block; width: 100%; aspect-ratio: 390 / 844; object-fit: cover; border-radius: 1.8rem; background: #eef2ea; }
+    .sp-phone-tag { position: absolute; left: 50%; bottom: -2.6rem; translate: -50% 0; display: inline-flex; align-items: center; gap: .4rem; white-space: nowrap;
+        padding: .35rem .8rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: #14210c; background: #f5c518;
+        box-shadow: 0 10px 22px -12px rgb(0 0 0 / .5); }
+    .sp-phone-tag i { width: .45rem; height: .45rem; border-radius: 999px; background: #2f5219; }
     @media (prefers-reduced-motion: reduce) { .sp-phone { transform: none; transition: none; } }
     .sp-figure.is-product img { aspect-ratio: 16 / 8.5; border-radius: 1.05rem; box-shadow: none; object-position: top center; }
     .sp-figure img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; border-radius: 1.25rem; box-shadow: 0 24px 48px -30px rgb(20 33 12 / .5); }
