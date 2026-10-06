@@ -685,7 +685,7 @@
                     <blockquote>
                         We are farmers too. The guessing, the rising costs and the notebook that never adds up are our problems
                         as well, every season. So we built anee.io for our own farms, and we run them on it every day. Every tool
-                        in it is there because we needed it first.
+                        in it is there because we needed it first, and that's why we know you need it too.
                     </blockquote>
                     <figcaption>
                         <img src="{{ asset('images/site/photos/powered-by.jpg') }}" alt="The farmers behind anee.io in their own rice field" title="The farmers behind anee.io" loading="lazy" decoding="async">
