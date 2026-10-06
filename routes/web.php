@@ -131,6 +131,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
         // -- booleans only, never the token. A signup that verified on the live
         // site and never reached Acumbamail is either this or a refusal in
         // the logs, and this answers the first without a dashboard visit.
+        // The free tools' email check: whether the Reoon key reached this env.
+        'reoon' => ['configured' => app(\App\Services\EmailVerifier::class)->configured()],
         'acumbamail' => [
             'configured' => app(\App\Services\AcumbamailService::class)->configured(),
             'listId' => (int) config('acumbamail.list_id'),
@@ -259,6 +261,9 @@ Route::post('/ask-anee/answer/{token}/start', [App\Http\Controllers\AskAneeContr
 Route::get('/ask-anee/answer/{token}/job', [App\Http\Controllers\AskAneeController::class, 'job'])->where('token', '[A-Za-z0-9]{40}')->name('ask.job');
 Route::get('/questions', [App\Http\Controllers\AskAneeController::class, 'questions'])->defaults('face', 'ph')->name('site.questions');
 Route::get('/question/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'questions')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.questions.show');
+// The email gate in front of the free tools on /weeds, /pests and /diseases
+// (2026-10-07): Reoon checks the email, a good one joins the Acumbamail list.
+Route::post('/tools/open', [App\Http\Controllers\ToolGateController::class, 'open'])->name('tools.open');
 Route::get('/sitemap.xml', [App\Http\Controllers\SitePageController::class, 'sitemap'])->name('site.sitemap');
 // The mother app's builder preview: signed, never indexed, drafts included.
 Route::get('/site-preview/{id}', [App\Http\Controllers\SitePageController::class, 'preview'])->whereNumber('id')->name('site.preview');

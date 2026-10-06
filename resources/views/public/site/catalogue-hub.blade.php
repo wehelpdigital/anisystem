@@ -226,8 +226,11 @@
                     </div>
                 </div>
                 <div class="wc-out" aria-live="polite">
-                    <div class="wc-card" id="fdCard">
-                        <noscript><div class="wc-body"><p>Turn on JavaScript to use the finder, or browse the <a href="#catalogue">catalogue</a>.</p></div></noscript>
+                    <div class="tg" data-tool-gate="{{ $section }}">
+                        <div class="wc-card" id="fdCard">
+                            <noscript><div class="wc-body"><p>Turn on JavaScript to use the finder, or browse the <a href="#catalogue">catalogue</a>.</p></div></noscript>
+                        </div>
+                        @include('public.site.tool-gate', ['tool' => $section])
                     </div>
                     <p class="wc-fine">
                         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>

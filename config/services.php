@@ -91,4 +91,11 @@ return [
         'secret' => env('LIVEKIT_API_SECRET'),
     ],
 
+    // Reoon Email Verifier: checks the email a visitor gives to open the
+    // free tools on /weeds, /pests and /diseases before it joins the list.
+    // Blank key = no check (the address is only checked for its form).
+    'reoon' => [
+        'key' => (string) env('REOON', ''),
+    ],
+
 ];

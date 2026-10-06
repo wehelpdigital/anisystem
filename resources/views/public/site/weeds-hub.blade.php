@@ -219,8 +219,11 @@
                     </div>
                 </div>
                 <div class="wc-out" aria-live="polite">
-                    <div class="wc-card" id="wcCard">
-                        <noscript><div class="wc-body"><p>Turn on JavaScript to use the helper, or read the <a href="{{ $S::url('weeds', 'herbicides-for-rice-weeds') }}">tables in our herbicide guide</a>.</p></div></noscript>
+                    <div class="tg" data-tool-gate="weeds">
+                        <div class="wc-card" id="wcCard">
+                            <noscript><div class="wc-body"><p>Turn on JavaScript to use the helper, or read the <a href="{{ $S::url('weeds', 'herbicides-for-rice-weeds') }}">tables in our herbicide guide</a>.</p></div></noscript>
+                        </div>
+                        @include('public.site.tool-gate', ['tool' => 'weeds'])
                     </div>
                     <p class="wc-fine">
                         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>

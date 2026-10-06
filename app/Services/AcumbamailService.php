@@ -120,6 +120,53 @@ class AcumbamailService
         return true;
     }
 
+    /**
+     * A lead who is added only when the list does not have them yet (the
+     * free tools' email gate, 2026-10-07). Anyone already on the list stays
+     * exactly as they are: a member keeps Plan = free-users, and someone who
+     * unsubscribed is not signed back up. When the search itself fails, the
+     * add still goes out with update_subscriber off, so Acumbamail refuses an
+     * address it already holds instead of rewriting it.
+     *
+     * @param  array<string, string>  $extra  merge field name => value
+     * @return string  'added', 'exists', 'failed' or 'off'
+     */
+    public function addLeadIfNew(string $email, array $extra = []): string
+    {
+        if (! $this->configured()) {
+            return 'off';
+        }
+        $listId = (int) config('acumbamail.list_id');
+        $found = $this->findSubscriber($email);
+        if (is_array($found)) {
+            foreach ($found as $row) {
+                if (is_array($row) && (int) ($row['list_id'] ?? 0) === $listId) {
+                    return 'exists';
+                }
+            }
+        }
+
+        $f = config('acumbamail.fields');
+        $merge = [$f['email'] => $email] + array_filter($extra, fn ($v) => (string) $v !== '');
+        $planField = (string) config('acumbamail.plan_field');
+        if ($planField !== '') {
+            $merge[$planField] = (string) config('acumbamail.lead_value', 'lead');
+        }
+        $res = $this->call('addSubscriber', [
+            'list_id' => $listId,
+            'merge_fields' => $merge,
+            'double_optin' => 0,
+            'update_subscriber' => 0,
+            'complete_json' => 1,
+        ]);
+        if ($res === null) {
+            return 'failed';
+        }
+        Log::info('Acumbamail: added tool lead '.$email.' to list '.$listId);
+
+        return 'added';
+    }
+
     /** The lists this token can see — used to check the configured id is real. */
     public function lists(): ?array
     {
