@@ -55,11 +55,26 @@
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
     @include('public.site.catalogue-css')
     <style>
-        /* The finder's answer: the matching pages, each a row with its picture. */
-        .fd-res { display: grid; gap: .55rem; margin-top: .7rem; }
-        .fd-item { --g: 98; display: flex; gap: .8rem; align-items: center; padding: .55rem; border-radius: 1rem; background: #f6f8f3; border: 1px solid #e5ebdf;
-            text-decoration: none; transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
-        .fd-item:hover { border-color: hsl(var(--g) 40% 70%); background: #fff; transform: translateX(3px); }
+        /* The finder's answer: each matching pest or disease, its picture and
+           its page on top, and under it what to spray (the active ingredients
+           and their IRAC or FRAC group), or why no spray helps. */
+        .fd-res { display: grid; gap: .65rem; margin-top: .7rem; }
+        .fd-card { --g: 98; border-radius: 1rem; background: #f6f8f3; border: 1px solid #e5ebdf; overflow: hidden;
+            transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+        .fd-card:hover { border-color: hsl(var(--g) 40% 70%); background: #fff; }
+        .fd-item { display: flex; gap: .8rem; align-items: center; padding: .55rem; text-decoration: none; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .fd-item:hover { transform: translateX(3px); }
+        .fd-spray { display: grid; gap: .45rem; padding: .1rem .7rem .7rem; }
+        .fd-spray-h { display: inline-flex; align-items: center; gap: .35rem; font-size: .66rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
+        .fd-spray-h svg { width: .95rem; height: .95rem; }
+        .fd-ais { display: flex; flex-wrap: wrap; gap: .35rem; }
+        .fd-ais li { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .35rem .3rem .6rem; border-radius: .7rem; background: #fff; border: 1px solid #e1e9d7;
+            font-size: .82rem; font-weight: 700; color: #14210c; line-height: 1.3; }
+        .fd-ais li i { font-style: normal; font-size: .64rem; font-weight: 800; padding: .12rem .42rem; border-radius: 999px; color: #2d5016; background: #e4efd4; white-space: nowrap; }
+        .fd-ais li.is-plain { padding-right: .6rem; }
+        .fd-no { display: flex; gap: .45rem; align-items: flex-start; font-size: .82rem; line-height: 1.5; color: #6b4a00; }
+        .fd-no svg { flex: none; width: 1rem; height: 1rem; margin-top: .12rem; color: #c79e00; }
+        .fd-wait { margin-top: .7rem; }
         .fd-item img, .fd-item .none { flex: none; width: 4.6rem; height: 3.6rem; border-radius: .7rem; object-fit: cover; background: hsl(var(--g) 35% 88%); }
         .fd-item .none { display: grid; place-items: center; color: hsl(var(--g) 40% 45%); }
         .fd-item .none svg { width: 1.6rem; height: 1.6rem; }
@@ -76,7 +91,7 @@
         .wk-group p.ex { font-size: .86rem; line-height: 1.5; color: #4b5563; }
         .wk-group p.ex b { color: #14210c; }
         .wk-tag.is-kind { left: auto; right: .55rem; }
-        @media (prefers-reduced-motion: reduce) { .fd-item { transition: none; } .wc-card.is-swap .fd-res > * { animation: none; } }
+        @media (prefers-reduced-motion: reduce) { .fd-item, .fd-card { transition: none; } .wc-card.is-swap .fd-res > * { animation: none; } }
     </style>
 @endpush
 
@@ -98,15 +113,6 @@
                         <a href="#finder"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 9a2.5 2.5 0 115 0c0 1.5-2.5 2-2.5 3.5m0 3h.01M12 21a9 9 0 110-18 9 9 0 010 18z"/></svg>{{ $words['finder'] }}</a>
                         @if ($guides->count())<a href="#guides"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2m0-13c1.5-1.5 4-2 8-2v13c-4 0-6.5.5-8 2m0-13v13"/></svg>Read the guides</a>@endif
                     </div>
-                    <div class="mt-5">
-                        <div class="sp-tabs">
-                            <a href="{{ $S::url('crops') }}">Crop guides</a>
-                            <a href="{{ $S::url('pests') }}" class="{{ $section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
-                            <a href="{{ $S::url('diseases') }}" class="{{ $section === 'diseases' ? 'is-on' : '' }}">Crop diseases</a>
-                            <a href="{{ $S::url('weeds') }}">Weeds and grasses</a>
-                            <a href="{{ $S::url('blog') }}">Latest in Agriculture</a>
-                        </div>
-                    </div>
                 </div>
                 @if ($faces->count() === 3)
                     <div class="wk-mosaic" aria-hidden="true">
@@ -118,6 +124,16 @@
                         @endforeach
                     </div>
                 @endif
+            </div>
+            {{-- The sections, one row under the whole hero (it wrapped in the text column). --}}
+            <div class="mt-8">
+                <div class="sp-tabs">
+                    <a href="{{ $S::url('crops') }}">Crop guides</a>
+                    <a href="{{ $S::url('pests') }}" class="{{ $section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
+                    <a href="{{ $S::url('diseases') }}" class="{{ $section === 'diseases' ? 'is-on' : '' }}">Crop diseases</a>
+                    <a href="{{ $S::url('weeds') }}">Weeds and grasses</a>
+                    <a href="{{ $S::url('blog') }}">Latest in Agriculture</a>
+                </div>
             </div>
         </div>
     </section>
@@ -275,7 +291,7 @@
     <script type="application/json" id="fdData">{!! json_encode([
         'items' => $items->map(fn ($w) => ['name' => $w['name'], 'sci' => $w['sci'], 'kind' => $w['kind'], 'crops' => $w['crops'],
             'where' => $isPests ? $w['parts'] : $w['signs'], 'hint' => $w['hint'], 'url' => $w['url'], 'thumb' => $w['thumb'],
-            'hue' => $kindHue[$w['kind']] ?? 98])->values(),
+            'hue' => $kindHue[$w['kind']] ?? 98, 'ai' => $w['ai'] ?? [], 'no' => $w['no'] ?? ''])->values(),
         'crops' => collect($crops)->map(fn ($c) => $c[1]),
         'where' => $askOpts,
         'noun' => $words['noun'], 'nouns' => $words['nouns'], 'pests' => $isPests,
@@ -330,8 +346,20 @@
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const arrow = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>';
     const leaf = '<svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg>';
+    const drop = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linejoin="round" d="M12 3.5s6 6.4 6 10.6a6 6 0 01-12 0c0-4.2 6-10.6 6-10.6z"/></svg>';
+    const warn = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>';
+    // What to spray against one pest or disease: its active ingredients with
+    // their group, or the one line that says why no spray helps.
+    const spray = (i) => (i.ai && i.ai.length)
+        ? '<div class="fd-spray"><span class="fd-spray-h">' + drop + 'What to spray</span><ul class="fd-ais">'
+            + i.ai.map(([n, g]) => '<li' + (g ? '' : ' class="is-plain"') + '>' + esc(n) + (g ? '<i>' + esc(g) + '</i>' : '') + '</li>').join('') + '</ul></div>'
+        : (i.no ? '<div class="fd-spray"><p class="fd-no">' + warn + '<span>' + esc(i.no) + '</span></p></div>' : '');
     const render = (swap) => {
         const forCrop = D.items.filter((i) => i.crops.includes(st.crop));
+        // IRRI and PhilRice: no insecticide on young palay unless a pest is at outbreak level.
+        const early = D.pests && st.crop === 'rice'
+            ? '<p class="wc-note">Palay younger than 30 to 40 days after transplanting: hold the insecticide unless a pest is at outbreak level. Early sprays kill the spiders and wasps that protect your crop.</p>'
+            : '';
         cropBox.querySelectorAll('button').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.crop === st.crop)));
         whereBox.querySelectorAll('button').forEach((b) => {
             const has = forCrop.some((i) => i.where.includes(b.dataset.where));
@@ -345,9 +373,12 @@
             + '<small>' + hits.length + ' ' + (hits.length === 1 ? D.noun : D.nouns) + (st.where ? '' : '. Pick what you see to narrow it down.') + '</small></div>'
             + '<div class="wc-body">'
             + (hits.length
-                ? '<div class="fd-res">' + hits.map((i) => '<a class="fd-item" style="--g: ' + i.hue + '" href="' + esc(i.url) + '">'
+                ? early + '<div class="fd-res' + (early ? ' fd-wait' : '') + '">' + hits.map((i) => '<div class="fd-card" style="--g: ' + i.hue + '"><a class="fd-item" href="' + esc(i.url) + '">'
                     + (i.thumb ? '<img src="' + esc(i.thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : '<span class="none">' + leaf + '</span>')
-                    + '<span><b>' + esc(i.name) + '</b><small><em>' + esc(i.kind) + '</em>' + esc(i.hint) + '</small></span>' + arrow + '</a>').join('') + '</div>'
+                    + '<span><b>' + esc(i.name) + '</b><small><em>' + esc(i.kind) + '</em>' + esc(i.hint) + '</small></span>' + arrow + '</a>'
+                    + spray(i) + '</div>').join('') + '</div>'
+                    + '<p class="wc-legend">' + (D.pests ? 'The IRAC group tells how an insecticide kills.' : 'The FRAC group tells how a fungicide works.')
+                    + ' Switch to a different group next time, so the ' + D.noun + ' does not learn to survive it. Open a ' + D.noun + ' for when to spray and the steps to take first.</p>'
                 : '<p class="wc-note ok">Nothing in our catalogue matches that yet. Send a photo to Anee, the smart farm technician, and she will tell you what it most likely is.</p>')
             + '</div>';
         if (swap) { card.classList.remove('is-swap'); void card.offsetWidth; card.classList.add('is-swap'); }

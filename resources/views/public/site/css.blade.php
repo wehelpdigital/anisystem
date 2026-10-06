@@ -178,8 +178,12 @@
     .sp-tile b { font-family: var(--font-heading); font-size: 1.05rem; line-height: 1.3; color: #14210c; }
     .sp-tile p { font-size: .88rem; line-height: 1.55; color: #4b5563; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .sp-tile .go { margin-top: auto; padding-top: .4rem; font-size: .82rem; font-weight: 800; color: #3d6823; }
-    .sp-tabs { display: inline-flex; flex-wrap: wrap; gap: .35rem; padding: .3rem; border-radius: 999px; background: #fff; border: 1px solid #e4efd4; }
-    .sp-tabs a { padding: .45rem .95rem; border-radius: 999px; font-size: .88rem; font-weight: 700; color: #3d6823; text-decoration: none;
+    /* One row always (owner, 2026-10-07): on a narrow screen it slides sideways, the active tab brought into view. */
+    .sp-tabs { display: inline-flex; flex-wrap: nowrap; max-width: 100%; overflow-x: auto; scrollbar-width: none; gap: .35rem; padding: .3rem; border-radius: 999px; background: #fff; border: 1px solid #e4efd4; }
+    .sp-tabs::-webkit-scrollbar { display: none; }
+    .sp-tabs.is-scroll { -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); mask-image: linear-gradient(90deg, #000 82%, transparent); }
+    .sp-tabs.is-scroll.is-end { -webkit-mask-image: linear-gradient(270deg, #000 82%, transparent); mask-image: linear-gradient(270deg, #000 82%, transparent); }
+    .sp-tabs a { flex: none; white-space: nowrap; padding: .45rem .95rem; border-radius: 999px; font-size: .88rem; font-weight: 700; color: #3d6823; text-decoration: none;
         transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
     .sp-tabs a.is-on { background: #4a7c2a; color: #fff; }
     .sp-tabs a:not(.is-on):hover { background: #f3f8ec; }
@@ -195,5 +199,21 @@
         .sp-tile.is-in { animation: none; }
     }
 </style>
+<script>
+    /* The section tabs: when the row is wider than the screen, the active tab
+       is scrolled into view and the open edge fades. */
+    document.addEventListener('DOMContentLoaded', () => document.querySelectorAll('.sp-tabs').forEach((t) => {
+        const fit = () => {
+            const over = t.scrollWidth > t.clientWidth + 2;
+            t.classList.toggle('is-scroll', over);
+            t.classList.toggle('is-end', over && t.scrollLeft + t.clientWidth >= t.scrollWidth - 4);
+        };
+        const on = t.querySelector('.is-on');
+        if (on && t.scrollWidth > t.clientWidth) t.scrollLeft = on.offsetLeft - (t.clientWidth - on.offsetWidth) / 2;
+        fit();
+        t.addEventListener('scroll', fit, { passive: true });
+        window.addEventListener('resize', fit);
+    }));
+</script>
 @endpush
 @endonce

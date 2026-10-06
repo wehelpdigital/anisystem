@@ -13,9 +13,9 @@
 --}}
 @php
     $gateWords = [
-        'weeds' => ['See What to Do at This Age', 'Type your name and email to open the plan and the active ingredients for your rice.'],
-        'pests' => ['See the Pests That Match', 'Type your name and email to open the list of pests that fit what you see.'],
-        'diseases' => ['See the Diseases That Match', 'Type your name and email to open the list of diseases that fit what you see.'],
+        'weeds' => ['See What to Spray at This Age', 'Type your name and email to see what to do first and the active ingredients to spray at this age of your rice.'],
+        'pests' => ['See What to Spray', 'Type your name and email to see the pests that fit what you see, and the active ingredients to spray against each one.'],
+        'diseases' => ['See What to Spray', 'Type your name and email to see the diseases that fit what you see, and the active ingredients to spray against each one.'],
     ][$tool];
     $gateId = 'tg' . ucfirst($tool);
 @endphp

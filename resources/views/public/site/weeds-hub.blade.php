@@ -71,15 +71,6 @@
                         <a href="#control"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Control by rice age</a>
                         <a href="#guides"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2m0-13c1.5-1.5 4-2 8-2v13c-4 0-6.5.5-8 2m0-13v13"/></svg>Read the guides</a>
                     </div>
-                    <div class="mt-5">
-                        <div class="sp-tabs">
-                            <a href="{{ $S::url('crops') }}">Crop guides</a>
-                            <a href="{{ $S::url('pests') }}">Crop pests</a>
-                            <a href="{{ $S::url('diseases') }}">Crop diseases</a>
-                            <a href="{{ $S::url('weeds') }}" class="is-on">Weeds and grasses</a>
-                            <a href="{{ $S::url('blog') }}">Latest in Agriculture</a>
-                        </div>
-                    </div>
                 </div>
                 @if ($faces->count() === 3)
                     <div class="wk-mosaic" aria-hidden="true">
@@ -91,6 +82,16 @@
                         @endforeach
                     </div>
                 @endif
+            </div>
+            {{-- The sections, one row under the whole hero (it wrapped in the text column). --}}
+            <div class="mt-8">
+                <div class="sp-tabs">
+                    <a href="{{ $S::url('crops') }}">Crop guides</a>
+                    <a href="{{ $S::url('pests') }}">Crop pests</a>
+                    <a href="{{ $S::url('diseases') }}">Crop diseases</a>
+                    <a href="{{ $S::url('weeds') }}" class="is-on">Weeds and grasses</a>
+                    <a href="{{ $S::url('blog') }}">Latest in Agriculture</a>
+                </div>
             </div>
         </div>
     </section>
