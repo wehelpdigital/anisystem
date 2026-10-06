@@ -1704,33 +1704,36 @@
         <img src="{{ asset('images/site/photos/team-thumbs.jpg') }}" alt="Two farmers giving a thumbs up beside their rice field" class="hp-final-bg" loading="lazy">
         <div class="hp-final-shade" aria-hidden="true"></div>
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
-            {{-- Think about it (2026-10-07): the same season told twice, row by
-                 row, the way it goes without Anee and the way it goes with her. --}}
+            {{-- Where you are now, and where you could be (2026-10-07): five
+                 parts of a farmer's season as they are today, each with where
+                 anee.io takes it, an arrow between the two. --}}
             <p class="hp-kick">Think about it</p>
-            <h2 class="hp-h2">Picture Your Next Season. <em>Now Picture It With Anee.</em></h2>
-            <p class="hp-p">Same field, same hands, same rain. The only thing that changes is who is helping you decide.</p>
+            <h2 class="hp-h2">Think About Where Your Farm Is Now. <em>Then Where It Could Be With anee.io.</em></h2>
+            <p class="hp-p">Same field, same hands, same rain. Here is the distance between the season you have now and the one anee.io helps you run.</p>
             @php
                 $ws = [
-                    ['You guess the day to fertilize, and the bag goes on a week late.', 'Every task is dated from your own planting day, and Anee reminds you that morning.'],
-                    ['A yellow leaf means days of waiting for a technician, or a guess at the store.', 'You send Anee a photo and know what it is and what to do, in seconds.'],
-                    ['Rain washes off the spray you just paid for.', 'You see the weather for every lot, and Anee tells you when to spray.'],
-                    ['At harvest, you are not sure the season made money.', 'Every peso is on record, and the profit report shows what each lot earned.'],
-                    ['Next season starts from memory again.', 'Your best lot\'s season becomes next season\'s plan.'],
+                    ['Your season lives in your memory and a notebook.', 'Every task sits on a calendar dated from your own planting day.'],
+                    ['A sick leaf means days of waiting, or a guess at the store.', 'You send Anee a photo and know what to do in seconds.'],
+                    ['You find out about the rain after the spray is on.', 'You see the weather for every lot before you spend a peso.'],
+                    ['At harvest, you are not sure the season made money.', 'You know what every lot cost and earned, to the peso.'],
+                    ['Every season starts from scratch.', 'Your best season becomes the plan for the next one.'],
                 ];
             @endphp
-            <div class="hp-ws" aria-label="Your season without Anee and with Anee">
+            <div class="hp-ws" aria-label="Where your farm is now, and where it could be with anee.io">
                 <div class="hp-ws-head" aria-hidden="true">
-                    <span class="is-no">Without Anee</span>
-                    <span class="is-yes"><img src="{{ $face }}" alt="">With Anee</span>
+                    <span class="is-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0113 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Where you are now</span>
+                    <span></span>
+                    <span class="is-yes"><img src="{{ $face }}" alt="">Where you could be with anee.io</span>
                 </div>
                 @foreach ($ws as $i => [$no, $yes])
                     <div class="hp-ws-row" style="--k: {{ $i }}">
-                        <div class="hp-ws-no"><span class="sr-only">Without Anee: </span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></svg></i><p>{{ $no }}</p></div>
-                        <div class="hp-ws-yes"><span class="sr-only">With Anee: </span><i aria-hidden="true">{!! $tick !!}</i><p>{{ $yes }}</p></div>
+                        <div class="hp-ws-no"><span class="sr-only">Now: </span><p>{{ $no }}</p></div>
+                        <span class="hp-ws-to" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-5-5l5 5-5 5"/></svg></span>
+                        <div class="hp-ws-yes"><span class="sr-only">With anee.io: </span><i aria-hidden="true">{!! $tick !!}</i><p>{{ $yes }}</p></div>
                     </div>
                 @endforeach
             </div>
-            <p class="hp-ws-close">Your best season starts with <b>a free account.</b></p>
+            <p class="hp-ws-close">The distance between the two is <b>one free account.</b></p>
             <div class="hp-cta">
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
@@ -3174,14 +3177,23 @@
        Anee (dim, crossed) and with her (lit, ticked). The rows arrive one by
        one, the "with" half a beat after its "without". */
     .hp-ws { margin: 2.4rem auto 0; max-width: 56rem; text-align: left; display: grid; gap: .6rem; }
-    .hp-ws-head { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; padding: 0 .2rem; }
+    .hp-ws-head { display: grid; grid-template-columns: minmax(0, 1fr) 2.6rem minmax(0, 1fr); gap: .6rem; padding: 0 .2rem; }
     .hp-ws-head span { display: inline-flex; align-items: center; gap: .5rem; font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
     .hp-ws-head .is-no { color: #a7b39c; }
     .hp-ws-head .is-yes { color: var(--hp-sun); }
     .hp-ws-head img { width: 1.7rem; height: 1.7rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px var(--hp-sun); }
-    .hp-ws-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+    .hp-ws-head svg { width: 1.2rem; height: 1.2rem; }
+    .hp-ws-row { display: grid; grid-template-columns: minmax(0, 1fr) 2.6rem minmax(0, 1fr); gap: .6rem; align-items: stretch; }
+    /* The arrow from now to then: a line that fills in as the row lands. */
+    .hp-ws-to { position: relative; display: grid; place-items: center; color: var(--hp-sun); }
+    .hp-ws-to::before { content: ''; position: absolute; left: -.3rem; right: -.3rem; top: 50%; height: 2px; border-radius: 2px; background: rgb(245 197 24 / .35);
+        transform-origin: left; transform: scaleX(0); }
+    .hp-ws-to svg { position: relative; width: 1.9rem; height: 1.9rem; padding: .4rem; border-radius: 999px; background: #1c3010; box-shadow: 0 0 0 1px rgb(245 197 24 / .45); opacity: 0; }
+    .reveal.is-visible .hp-ws-to::before { animation: hpWsLine .45s var(--hp-ease) calc(.45s + var(--k) * .45s) forwards; }
+    .reveal.is-visible .hp-ws-to svg { animation: hpWsIn .35s var(--hp-ease) calc(.6s + var(--k) * .45s) forwards; }
+    @keyframes hpWsLine { to { transform: scaleX(1); } }
     .hp-ws-no, .hp-ws-yes { display: flex; align-items: flex-start; gap: .7rem; padding: .9rem 1rem; border-radius: 1.1rem; }
-    .hp-ws-no { background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); }
+    .hp-ws-no { align-items: center; background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); }
     .hp-ws-no p { font-size: .95rem; line-height: 1.55; color: #b9c4ae; }
     .hp-ws-yes { background: linear-gradient(135deg, rgb(245 197 24 / .16), rgb(245 197 24 / .06)); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35), 0 18px 36px -26px rgb(0 0 0 / .8); }
     .hp-ws-yes p { font-size: .97rem; line-height: 1.55; font-weight: 600; color: #fff; }
@@ -3193,9 +3205,12 @@
     .hp-ws-close b { color: var(--hp-sun); }
     @media (max-width: 639.98px) {
         .hp-ws-head { display: none; }
-        .hp-ws-row { grid-template-columns: 1fr; gap: .35rem; }
-        .hp-ws-row + .hp-ws-row { margin-top: .5rem; }
+        .hp-ws-row { grid-template-columns: 1fr; gap: .2rem; }
+        .hp-ws-row + .hp-ws-row { margin-top: .7rem; }
         .hp-ws-no { padding: .7rem .85rem; }
+        .hp-ws-to { height: 1.6rem; rotate: 90deg; }
+        .hp-ws-to::before { display: none; }
+        .hp-ws-to svg { width: 1.6rem; height: 1.6rem; padding: .32rem; }
     }
     html.js .hp-ws-no, html.js .hp-ws-yes { opacity: 0; transform: translateY(10px); }
     html.js .hp-ws-yes { transform: translateX(14px); }
@@ -3206,7 +3221,9 @@
     @keyframes hpWsTick { from { transform: scale(.4); } 60% { transform: scale(1.15); } to { transform: scale(1); } }
     @media (prefers-reduced-motion: reduce) {
         html.js .hp-ws-no, html.js .hp-ws-yes { opacity: 1; transform: none; }
-        .reveal.is-visible .hp-ws-no, .reveal.is-visible .hp-ws-yes, .reveal.is-visible .hp-ws-yes i { animation: none; }
+        .reveal.is-visible .hp-ws-no, .reveal.is-visible .hp-ws-yes, .reveal.is-visible .hp-ws-yes i, .reveal.is-visible .hp-ws-to::before, .reveal.is-visible .hp-ws-to svg { animation: none; }
+        .hp-ws-to::before { transform: none; }
+        .hp-ws-to svg { opacity: 1; }
     }
     .hp-sticky { position: fixed; left: .75rem; right: .75rem; bottom: calc(.75rem + env(safe-area-inset-bottom, 0px)); z-index: 38;
         display: flex; gap: .6rem; align-items: center; padding: .55rem; border-radius: 1.3rem; background: rgb(16 22 12 / .92);
