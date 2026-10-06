@@ -777,7 +777,8 @@
                 <p class="hp-p">
                     Your workers carry the farm in their pocket. They tick each job as it gets done, snap photos, record short
                     videos and leave voice notes, even at the far lot with no signal. You see every update from wherever you
-                    are, plan with them on maps and drawings, and talk it through in the Collab Room. <b>It feels like you are
+                    are, plan with them on maps and drawings, and talk it through in the Collab Room, where they have their own
+                    accounts, share cameras and locations, call as a team and tick off their tasks. <b>It feels like you are
                     standing in your field, even when you are far away.</b>
                 </p>
             </div>
@@ -856,6 +857,125 @@
                 </div>
             </div>
 
+            {{-- The Collab Room, in a window of its own (2026-10-06): its seven
+                 tools as tabs that take turns on a loop, each with a small
+                 moving picture of what it does. Every tool here is in the
+                 app's room (sm/collab: chat, call, cameras, where we are,
+                 activities, drawing) or the team logins. --}}
+            @php
+                $rooms = [
+                    ['accounts', 'Worker accounts', 'Each worker gets a login and sees only what you allow.', 'M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z'],
+                    ['chat', 'Group chat', 'One chat per season, with photos, videos and voice notes.', 'M8 12h.01M12 12h.01M16 12h.01M21 12a8 8 0 01-11.6 7.1L3 20l1-5.5A8 8 0 1121 12z'],
+                    ['call', 'Group call', 'Call the whole team at once, right from the room.', 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'],
+                    ['cameras', 'Camera sharing', 'A worker points the phone, and you see the field live.', 'M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'],
+                    ['location', 'Location sharing', 'See who is near which lot, live on one map.', 'M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z'],
+                    ['tasks', 'Team tasks', 'Give each job to a worker and watch it get ticked done.', 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4'],
+                    ['board', 'Whiteboard', 'Draw the plan together, on a blank board or a photo.', 'M15.232 5.232l3.536 3.536M9 11l6-6 3 3-6 6H9v-3zM4 20h16'],
+                ];
+            @endphp
+            <div class="hp-room reveal" data-room>
+                <div class="hp-room-copy">
+                    <p class="hp-kick">The Collab Room</p>
+                    <h3 class="hp-room-h">Your Whole Team <em>in One Room.</em></h3>
+                    <p class="hp-room-p">
+                        Every season gets its own room. Your workers sign in with their own accounts, and the team talks,
+                        calls, shares cameras and locations, and runs the day's tasks in one place. Anee sits in the room
+                        too, so anyone can ask her while the work goes on.
+                    </p>
+                    <div class="hp-room-tabs" role="tablist" aria-label="What the Collab Room does">
+                        @foreach ($rooms as $i => [$rk, $rt, $rd, $ri])
+                            <button type="button" role="tab" class="hp-room-tab{{ $i === 0 ? ' is-on' : '' }}" data-room-tab="{{ $rk }}"
+                                    aria-selected="{{ $i === 0 ? 'true' : 'false' }}" aria-controls="hpRoom-{{ $rk }}">
+                                <span class="hp-room-ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $ri }}"/></svg></span>
+                                <span><b>{{ $rt }}</b><small>{{ $rd }}</small></span>
+                                <i class="hp-room-bar" aria-hidden="true"></i>
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- The room itself: a window with a pane per tool. --}}
+                <div class="hp-room-win" aria-hidden="true">
+                    <div class="hp-room-top">
+                        <span class="hp-room-dots"><i></i><i></i><i></i></span>
+                        <b>Collab Room</b><small>Wet season palay 2026</small>
+                        <span class="hp-room-on"><i class="hp-live"></i>4 online</span>
+                    </div>
+                    <div class="hp-room-panes">
+                        {{-- Worker accounts --}}
+                        <div class="hp-room-pane is-on" id="hpRoom-accounts" data-room-pane="accounts">
+                            <p class="hp-room-ph">Team logins</p>
+                            @foreach ([['JD', 205, 'Juan', 'Foreman', ['Activities' => 'Edit', 'Inventory' => 'View']], ['MS', 330, 'Maria', 'Worker', ['Activities' => 'Edit', 'Reports' => 'None']], ['PR', 30, 'Pedro', 'Worker', ['Activities' => 'View', 'Notes' => 'Edit']]] as $k => [$ia, $ih, $in, $ir, $perm])
+                                <div class="hp-acc" style="--k: {{ $k }}">
+                                    <span class="hp-feed-av" style="--h: {{ $ih }}">{{ $ia }}</span>
+                                    <span class="hp-acc-who"><b>{{ $in }}</b><small>{{ $ir }}</small></span>
+                                    <span class="hp-acc-perms">@foreach ($perm as $pm => $pv)<i class="is-{{ strtolower($pv) }}">{{ $pm }}: {{ $pv }}</i>@endforeach</span>
+                                </div>
+                            @endforeach
+                        </div>
+                        {{-- Group chat --}}
+                        <div class="hp-room-pane" id="hpRoom-chat" data-room-pane="chat">
+                            <div class="hp-rc is-them" style="--k: 0"><span class="hp-feed-av" style="--h: 330">MS</span><p>Good morning po. The water in Lot 2 is low near the gate.</p></div>
+                            <div class="hp-rc is-me" style="--k: 1"><p>Thanks Maria. I will open the canal at 7.</p></div>
+                            <div class="hp-rc is-them" style="--k: 2"><span class="hp-feed-av" style="--h: 30">PR</span><p class="hp-rc-voice">{!! '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>' !!}<span class="hp-feed-wave">@for ($w = 0; $w < 12; $w++)<i style="--w: {{ [6, 11, 8, 14, 9, 12, 5, 13, 7, 10, 6, 9][$w] }}; --d: {{ $w * 0.08 }}s"></i>@endfor</span><b>0:12</b></p></div>
+                            <div class="hp-rc is-them is-anee" style="--k: 3"><img class="hp-feed-av" src="{{ $face }}" alt=""><p>Rain comes after 3 PM. Spray Lot 1 this morning.</p></div>
+                        </div>
+                        {{-- Group call --}}
+                        <div class="hp-room-pane" id="hpRoom-call" data-room-pane="call">
+                            <div class="hp-call">
+                                @foreach ([['You', 120, 'ME'], ['Juan', 205, 'JD'], ['Maria', 330, 'MS'], ['Pedro', 30, 'PR']] as $k => [$cn, $ch, $ci])
+                                    <div class="hp-call-tile{{ $k === 2 ? ' is-talking' : '' }}" style="--h: {{ $ch }}">
+                                        <span class="hp-call-av">{{ $ci }}</span><small>{{ $cn }}</small>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="hp-call-bar"><span><i class="hp-live"></i>Team call</span><b data-call-clock>00:42</b><span class="hp-call-end">End</span></div>
+                        </div>
+                        {{-- Camera sharing --}}
+                        <div class="hp-room-pane" id="hpRoom-cameras" data-room-pane="cameras">
+                            <div class="hp-cams">
+                                <figure class="hp-cam"><img src="{{ asset('images/site/home-team/cam-1.webp') }}" alt="" width="480" height="360" loading="lazy"><figcaption><i></i>LIVE · Pedro at Lot 2</figcaption></figure>
+                                <figure class="hp-cam"><img src="{{ asset('images/site/home-team/cam-2.webp') }}" alt="" width="480" height="360" loading="lazy"><figcaption><i></i>LIVE · Maria at Lot 1</figcaption></figure>
+                            </div>
+                        </div>
+                        {{-- Location sharing --}}
+                        <div class="hp-room-pane" id="hpRoom-location" data-room-pane="location">
+                            <div class="hp-loc">
+                                @for ($c = 0; $c < 12; $c++)<i class="hp-loc-lot"></i>@endfor
+                                <span class="hp-loc-pin is-a" style="--h: 205">JD</span>
+                                <span class="hp-loc-pin is-b" style="--h: 330">MS</span>
+                                <span class="hp-loc-pin is-c" style="--h: 30">PR</span>
+                            </div>
+                            <p class="hp-loc-say"><i class="hp-live"></i>Pedro is near the gate of Lot 2</p>
+                        </div>
+                        {{-- Team tasks --}}
+                        <div class="hp-room-pane" id="hpRoom-tasks" data-room-pane="tasks">
+                            <p class="hp-room-ph">Today, Lot 1 and Lot 2</p>
+                            @foreach ([['Top dress urea, Lot 2', 'JD', 205], ['Hand weeding, Lot 1', 'MS', 330], ['Check the canal gate', 'PR', 30], ['Scout for rice bug', 'JD', 205]] as $k => [$tt, $ta, $th])
+                                <div class="hp-task" style="--k: {{ $k }}">
+                                    <span class="hp-task-box">{!! $tick !!}</span>
+                                    <span class="hp-task-t">{{ $tt }}</span>
+                                    <span class="hp-feed-av" style="--h: {{ $th }}">{{ $ta }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                        {{-- Whiteboard --}}
+                        <div class="hp-room-pane" id="hpRoom-board" data-room-pane="board">
+                            <svg class="hp-wb" viewBox="0 0 300 200">
+                                <rect class="hp-wb-lot" x="20" y="24" width="120" height="70" rx="6"/>
+                                <rect class="hp-wb-lot" x="160" y="24" width="120" height="70" rx="6"/>
+                                <rect class="hp-wb-lot" x="20" y="110" width="260" height="66" rx="6"/>
+                                <path class="hp-wb-ink is-a" d="M30 100 C 80 96, 120 104, 170 100 S 250 96, 276 102" pathLength="1"/>
+                                <path class="hp-wb-ink is-b" d="M212 60 L 238 86 M238 86 L 222 84 M238 86 L 236 70" pathLength="1"/>
+                                <circle class="hp-wb-ink is-c" cx="80" cy="143" r="16" pathLength="1"/>
+                                <text x="34" y="50">Lot 1</text><text x="174" y="50">Lot 2</text><text x="104" y="148">Seedbed here</text>
+                            </svg>
+                            <span class="hp-wb-note">Water goes in from the east canal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {{-- Field health maps from space. --}}
             <div class="hp-sky on-dark">
                 <div class="hp-sky-copy reveal">
@@ -907,7 +1027,6 @@
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and bring your team in {!! $arrow !!}</a>
-                    <a href="{{ $toolUrl($tools['collab']) }}" class="hp-alt">See the Collab Room</a>
                 </div>
                 <p class="hp-cta-note">Workers and offline mode come with Solo Farmer. Worker logins and the Collab Room come with Farm Owner.</p>
             </div>
@@ -1866,6 +1985,145 @@
     .hp-team-card h3 { font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: var(--hp-ink); line-height: 1.25; }
     .hp-team-card p { margin-top: .25rem; font-size: .86rem; line-height: 1.5; color: #4b5563; }
 
+    /* The Collab Room window: its tools take turns on a loop. */
+    .hp-room { margin-top: 4.5rem; display: grid; gap: 2rem; padding: 1.4rem; border-radius: 2rem;
+        background: linear-gradient(150deg, #f4f9ee 0%, #ffffff 55%, #fbf7e6 100%); border: 1px solid #e1ead6; box-shadow: 0 40px 80px -60px rgb(20 33 12 / .6); }
+    .hp-room { grid-template-columns: minmax(0, 1fr); }
+    .hp-room > * { min-width: 0; }
+    @media (min-width: 1024px) { .hp-room { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); padding: 2.4rem; gap: 3rem; align-items: center; } }
+    .hp-room-h { margin-top: .6rem; font-family: var(--font-heading); font-size: clamp(1.55rem, 3.2vw, 2.2rem); font-weight: 800; line-height: 1.12;
+        letter-spacing: -.01em; color: var(--hp-ink); text-wrap: balance; }
+    .hp-room-h em { font-style: normal; color: var(--hp-green); }
+    .hp-room-p { margin-top: .8rem; color: #4b5563; line-height: 1.7; text-wrap: pretty; }
+    .hp-room-tabs { margin-top: 1.3rem; display: grid; gap: .45rem; grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr)); }
+    /* Under 1024 the tools are one swipeable row, so the room stays right under them. */
+    @media (max-width: 1023.98px) {
+        .hp-room-tabs { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-left: -.4rem; margin-right: -.4rem;
+            padding: .2rem .4rem .5rem; }
+        .hp-room-tabs::-webkit-scrollbar { display: none; }
+        .hp-room-tab { flex: none; width: 15rem; scroll-snap-align: start; }
+    }
+    @media (max-width: 479.98px) { .hp-room-top small { display: none; } }
+    .hp-room-tab { position: relative; overflow: hidden; display: flex; align-items: center; gap: .65rem; padding: .6rem .75rem; border-radius: 1rem; text-align: left;
+        cursor: pointer; background: #fff; border: 1px solid #e4ecdb;
+        transition: border-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease), background-color .28s var(--hp-ease); }
+    .hp-room-tab:hover { border-color: #b9d69a; }
+    .hp-room-tab.is-on { border-color: var(--hp-green); background: #fbfdf8; box-shadow: 0 12px 24px -18px rgb(47 82 25 / .7); }
+    .hp-room-ti { flex: none; width: 2.2rem; height: 2.2rem; border-radius: .75rem; display: grid; place-items: center; color: var(--hp-green); background: #eef5e5;
+        transition: color .28s var(--hp-ease), background-color .28s var(--hp-ease); }
+    .hp-room-tab.is-on .hp-room-ti { color: #fff; background: var(--hp-green); }
+    .hp-room-ti svg { width: 1.15rem; height: 1.15rem; }
+    .hp-room-tab b { display: block; font-size: .86rem; font-weight: 800; color: var(--hp-ink); line-height: 1.25; }
+    .hp-room-tab small { display: block; margin-top: .08rem; font-size: .75rem; line-height: 1.35; color: #6b7f5a; }
+    .hp-room-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; transform-origin: left; transform: scaleX(0); background: var(--hp-green); }
+    .hp-room-tab.is-on.is-timing .hp-room-bar { animation: hpBar var(--room-dwell, 4.5s) linear forwards; }
+
+    .hp-room-win { border-radius: 1.4rem; overflow: hidden; background: linear-gradient(180deg, #2f5219 50%, #f6f8f3 50%);
+        box-shadow: 0 40px 80px -46px rgb(20 33 12 / .7), 0 1px 3px rgb(20 33 12 / .08); }
+    .hp-room-top { display: flex; align-items: center; gap: .55rem; padding: .8rem 1rem; color: #fff; background: linear-gradient(135deg, #2f5219, #4a7c2a); }
+    .hp-room-dots { display: inline-flex; gap: .3rem; margin-right: .2rem; }
+    .hp-room-dots i { width: .55rem; height: .55rem; border-radius: 999px; background: rgb(255 255 255 / .35); }
+    .hp-room-top b { font-size: .92rem; }
+    .hp-room-top small { font-size: .74rem; color: #dceccb; }
+    .hp-room-on { margin-left: auto; display: inline-flex; align-items: center; padding: .22rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; background: rgb(255 255 255 / .16); }
+    .hp-room-panes { display: grid; height: 22rem; overflow: hidden; background: #f6f8f3; }
+    .hp-room-pane { grid-area: 1 / 1; padding: 1rem; opacity: 0; visibility: hidden; translate: 0 8px;
+        transition: opacity .4s var(--hp-ease), translate .4s var(--hp-ease), visibility .4s; }
+    .hp-room-pane.is-on { opacity: 1; visibility: visible; translate: none; }
+    .hp-room-ph { font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6b7f5a; margin-bottom: .55rem; }
+    /* Items inside a pane come in one after another each time it opens. */
+    .hp-acc, .hp-rc, .hp-task { opacity: 0; translate: 0 8px; }
+    .hp-room-pane.is-on .hp-acc, .hp-room-pane.is-on .hp-rc, .hp-room-pane.is-on .hp-task { animation: hpRoomIn .45s var(--hp-ease) calc(.15s + var(--k) * .35s) forwards; }
+    @keyframes hpRoomIn { to { opacity: 1; translate: none; } }
+
+    .hp-acc { display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem; border-radius: .9rem; background: #fff; box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5); }
+    .hp-acc + .hp-acc { margin-top: .5rem; }
+    .hp-acc-who b { display: block; font-size: .84rem; color: var(--hp-ink); }
+    .hp-acc-who small { display: block; font-size: .72rem; color: #6b7280; }
+    .hp-acc-perms { margin-left: auto; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .25rem; }
+    .hp-acc-perms i { font-style: normal; font-size: .66rem; font-weight: 800; padding: .15rem .45rem; border-radius: 999px; }
+    .hp-acc-perms .is-edit { color: var(--hp-deep); background: #e1eed2; }
+    .hp-acc-perms .is-view { color: #1e40af; background: #dbeafe; }
+    .hp-acc-perms .is-none { color: #6b7280; background: #f3f4f6; }
+
+    .hp-rc { display: flex; align-items: flex-end; gap: .45rem; }
+    .hp-rc + .hp-rc { margin-top: .55rem; }
+    .hp-rc p { max-width: 80%; padding: .55rem .75rem; border-radius: 1rem; font-size: .82rem; line-height: 1.45; background: #fff; color: #374151;
+        box-shadow: 0 6px 14px -12px rgb(0 0 0 / .5); border-bottom-left-radius: .3rem; }
+    .hp-rc.is-me { justify-content: flex-end; }
+    .hp-rc.is-me p { color: #fff; background: var(--hp-green); border-bottom-left-radius: 1rem; border-bottom-right-radius: .3rem; }
+    .hp-rc.is-anee p { background: #fffbea; box-shadow: inset 0 0 0 1px #f6e3a0; }
+    .hp-rc .hp-feed-av { width: 1.8rem; height: 1.8rem; font-size: .62rem; }
+    .hp-rc-voice { display: inline-flex !important; align-items: center; gap: .45rem; color: #fff !important; background: var(--hp-green) !important; }
+    .hp-rc-voice > svg { width: 1rem; height: 1rem; }
+    .hp-rc-voice b { font-size: .7rem; }
+    .hp-room-pane.is-on .hp-rc-voice .hp-feed-wave i { animation: hpWave 1.1s ease-in-out var(--d) infinite; }
+
+    .hp-call { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+    .hp-call-tile { position: relative; display: grid; place-items: center; gap: .3rem; padding: 1.1rem .5rem .8rem; border-radius: 1rem;
+        background: linear-gradient(160deg, hsl(var(--h) 35% 22%), hsl(var(--h) 30% 14%)); color: #fff; }
+    .hp-call-av { width: 3rem; height: 3rem; border-radius: 999px; display: grid; place-items: center; font-weight: 800; font-size: .9rem;
+        background: hsl(var(--h) 45% 45%); box-shadow: 0 0 0 0 rgb(74 222 128 / .7); }
+    .hp-call-tile small { font-size: .74rem; font-weight: 700; color: #e2e8f0; }
+    .hp-room-pane.is-on .hp-call-tile.is-talking .hp-call-av { animation: hpTalk 1.4s ease-out infinite; }
+    @keyframes hpTalk { 0% { box-shadow: 0 0 0 0 rgb(74 222 128 / .75); } 70%, 100% { box-shadow: 0 0 0 .7rem rgb(74 222 128 / 0); } }
+    .hp-call-bar { margin-top: .7rem; display: flex; align-items: center; gap: .6rem; padding: .55rem .75rem; border-radius: .9rem; background: #fff;
+        font-size: .8rem; font-weight: 800; color: var(--hp-ink); box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5); }
+    .hp-call-bar b { font-variant-numeric: tabular-nums; color: var(--hp-green); }
+    .hp-call-end { margin-left: auto; padding: .25rem .7rem; border-radius: 999px; color: #fff; background: #dc2626; font-size: .72rem; }
+
+    .hp-cams { display: grid; gap: .55rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hp-cam { position: relative; margin: 0; overflow: hidden; border-radius: 1rem; aspect-ratio: 3 / 4; background: #1f2937; }
+    .hp-cam img { width: 100%; height: 100%; object-fit: cover; }
+    .hp-room-pane.is-on .hp-cam img { animation: hpCamPan 9s ease-in-out infinite alternate; }
+    @keyframes hpCamPan { from { scale: 1.02; translate: 0 0; } to { scale: 1.12; translate: -3% -2%; } }
+    .hp-cam figcaption { position: absolute; left: .6rem; top: .6rem; display: inline-flex; align-items: center; gap: .35rem; padding: .2rem .55rem; border-radius: 999px;
+        font-size: .68rem; font-weight: 800; color: #fff; background: rgb(0 0 0 / .55); }
+    .hp-cam figcaption i { width: .45rem; height: .45rem; border-radius: 999px; background: #ef4444; animation: hpLive 1.6s ease-out infinite; box-shadow: 0 0 0 0 rgb(239 68 68 / .6); }
+
+    .hp-loc { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 4px; padding: 4px;
+        height: 16.5rem; border-radius: 1rem; background: #2c3b20; overflow: hidden; }
+    .hp-loc-lot { border-radius: 4px; background: #4f7a36; }
+    .hp-loc-lot:nth-child(3n) { background: #5f8c40; }
+    .hp-loc-lot:nth-child(4n+1) { background: #6a9a48; }
+    .hp-loc-pin { position: absolute; width: 1.9rem; height: 1.9rem; margin: -.95rem 0 0 -.95rem; border-radius: 999px; display: grid; place-items: center;
+        font-size: .6rem; font-weight: 800; color: #fff; background: hsl(var(--h) 50% 42%); box-shadow: 0 0 0 3px #fff, 0 8px 16px -6px rgb(0 0 0 / .6); }
+    .hp-loc-pin.is-a { left: 22%; top: 30%; }
+    .hp-loc-pin.is-b { left: 70%; top: 72%; }
+    .hp-loc-pin.is-c { left: 55%; top: 34%; }
+    .hp-room-pane.is-on .hp-loc-pin.is-a { animation: hpPinA 7s ease-in-out infinite alternate; }
+    .hp-room-pane.is-on .hp-loc-pin.is-b { animation: hpPinB 8s ease-in-out infinite alternate; }
+    .hp-room-pane.is-on .hp-loc-pin.is-c { animation: hpPinC 6s ease-in-out infinite alternate; }
+    @keyframes hpPinA { to { left: 38%; top: 58%; } }
+    @keyframes hpPinB { to { left: 82%; top: 40%; } }
+    @keyframes hpPinC { to { left: 62%; top: 22%; } }
+    .hp-loc-say { margin-top: .6rem; display: inline-flex; align-items: center; padding: .35rem .7rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
+        color: var(--hp-deep); background: #fff; box-shadow: 0 6px 14px -12px rgb(0 0 0 / .5); }
+
+    .hp-task { display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem; border-radius: .9rem; background: #fff; box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5); }
+    .hp-task + .hp-task { margin-top: .45rem; }
+    .hp-task-box { flex: none; width: 1.3rem; height: 1.3rem; border-radius: .4rem; display: grid; place-items: center; color: transparent; border: 2px solid #cfdcc0;
+        transition: background-color .3s var(--hp-ease), border-color .3s var(--hp-ease), color .3s var(--hp-ease); transition-delay: calc(.7s + var(--k) * .55s); }
+    .hp-task-box svg { width: 11px; height: 11px; stroke-width: 3.4; }
+    .hp-task-t { flex: 1; font-size: .84rem; font-weight: 700; color: #374151; transition: color .3s var(--hp-ease); transition-delay: calc(.7s + var(--k) * .55s); }
+    .hp-task .hp-feed-av { width: 1.7rem; height: 1.7rem; font-size: .6rem; }
+    .hp-room-pane.is-on .hp-task:not(:last-child) .hp-task-box { color: #fff; background: var(--hp-green); border-color: var(--hp-green); }
+    .hp-room-pane.is-on .hp-task:not(:last-child) .hp-task-t { color: #9ca3af; text-decoration: line-through; }
+
+    .hp-wb { display: block; width: 100%; height: auto; border-radius: 1rem; background: #fff; box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5); }
+    .hp-wb-lot { fill: #eef5e5; stroke: #b9d69a; stroke-width: 1.5; }
+    .hp-wb text { font-size: 11px; font-weight: 800; fill: #4a7c2a; font-family: inherit; }
+    .hp-wb-ink { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+    .hp-wb-ink.is-a { stroke: #2563eb; }
+    .hp-wb-ink.is-b { stroke: #dc2626; }
+    .hp-wb-ink.is-c { stroke: #e9a80b; }
+    .hp-room-pane.is-on .hp-wb-ink { animation: hpWbDraw 1.1s cubic-bezier(.65,0,.35,1) forwards; }
+    .hp-room-pane.is-on .hp-wb-ink.is-b { animation-delay: .9s; }
+    .hp-room-pane.is-on .hp-wb-ink.is-c { animation-delay: 1.7s; }
+    @keyframes hpWbDraw { to { stroke-dashoffset: 0; } }
+    .hp-wb-note { display: inline-block; margin-top: .6rem; padding: .45rem .7rem; border-radius: .6rem; font-size: .76rem; font-weight: 800; color: #713f12;
+        background: #fef3c7; rotate: -2deg; box-shadow: 0 6px 14px -10px rgb(0 0 0 / .45); }
+
     /* The band from space. */
     .hp-sky { margin-top: 4.5rem; display: grid; gap: 2rem; padding: 1.5rem; border-radius: 2rem; color: #e2e8f0;
         background: radial-gradient(80% 90% at 85% 10%, #1f3b63 0%, transparent 60%), linear-gradient(160deg, #0b1324 0%, #0f1c33 55%, #13291c 100%);
@@ -2136,6 +2394,10 @@
         .hp-anee-reads li, .hp-anee-ri, .hp-anee-out { transition: none !important; }
         .hp-heart svg, .hp-heart::after { animation: none !important; }
         .hp-feed-item, .hp-feed-sync i, .hp-team-card { transition: none !important; }
+        .hp-room-pane, .hp-room-tab, .hp-task-box, .hp-task-t { transition: none !important; }
+        .hp-acc, .hp-rc, .hp-task, .hp-loc-pin, .hp-cam img, .hp-call-av, .hp-wb-ink, .hp-room-bar { animation: none !important; }
+        .hp-acc, .hp-rc, .hp-task { opacity: 1; translate: none; }
+        .hp-wb-ink { stroke-dashoffset: 0; }
         .hp-feed-wave i, .hp-sat-stars, .hp-sat-craft, .hp-sat-blink, .hp-sat-beam, .hp-sat-wave, .hp-sat-cloud, .hp-sat-grid.is-health, .hp-sat-scan { animation: none !important; }
         .hp-sat-grid.is-health { -webkit-clip-path: none; clip-path: none; }
         .hp-sat-wave { opacity: .5; scale: .9; }
@@ -2432,6 +2694,44 @@
         };
         if (reduce) items.forEach((it) => it.classList.add('is-in'));
         else seen(feed, (v) => { on = v; clearTimeout(t); if (v) { reset(); step(); } }, { threshold: 0.3 });
+    }
+
+    /* The Collab Room's tools take turns while it is on screen, until the
+       visitor picks one. The call's clock runs while its pane is open. */
+    const room = document.querySelector('[data-room]');
+    if (room) {
+        const tabs = [...room.querySelectorAll('[data-room-tab]')];
+        const panes = [...room.querySelectorAll('[data-room-pane]')];
+        const clock = room.querySelector('[data-call-clock]');
+        const DWELL = 4500;
+        let at = 0, timer = null, live = false, held = false, secs = 42, tick = null;
+        const show = (i) => {
+            at = (i + tabs.length) % tabs.length;
+            const key = tabs[at].dataset.roomTab;
+            tabs.forEach((t, k) => { const on = k === at; t.classList.toggle('is-on', on); t.classList.remove('is-timing'); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+            panes.forEach((p) => p.classList.toggle('is-on', p.dataset.roomPane === key));
+            const strip = tabs[at].parentElement;
+            if (strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: tabs[at].offsetLeft - 8, behavior: reduce ? 'auto' : 'smooth' });
+            clearInterval(tick);
+            if (key === 'call' && clock && !reduce) {
+                tick = setInterval(() => { secs++; clock.textContent = String(Math.floor(secs / 60)).padStart(2, '0') + ':' + String(secs % 60).padStart(2, '0'); }, 1000);
+            }
+            schedule();
+        };
+        const schedule = () => {
+            clearTimeout(timer);
+            if (held || !live || reduce) return;
+            void tabs[at].offsetWidth;
+            tabs[at].style.setProperty('--room-dwell', DWELL + 'ms');
+            tabs[at].classList.add('is-timing');
+            timer = setTimeout(() => show(at + 1), DWELL);
+        };
+        tabs.forEach((t, i) => t.addEventListener('click', () => { held = true; show(i); }));
+        seen(room, (on) => {
+            live = on;
+            if (on) schedule();
+            else { clearTimeout(timer); clearInterval(tick); tabs[at].classList.remove('is-timing'); }
+        }, { threshold: 0.3 });
     }
 
     /* On a phone, the way in stays one tap away once the hero has gone by,
