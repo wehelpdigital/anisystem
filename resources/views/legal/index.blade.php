@@ -15,6 +15,21 @@
         'about' => 'M12 21c-4-3-7-6.5-7-10.5a7 7 0 0114 0C19 14.5 16 18 12 21zM12 7v4M12 14h.01',
     ];
     $lgDoc = 'M8 3h6l5 5v11a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2zM14 3v5h5';
+    // A card's line ends on a whole sentence (or at least a whole word), never
+    // "...we never sell it. Yo…", and drops the page's own "The short
+    // version." label, which the card is already being.
+    $lgLine = function ($body) {
+        $t = preg_replace('/^The short version\.\s*/iu', '', \App\Support\CommunityText::plain($body));
+        if (mb_strlen($t) <= 180) {
+            return $t;
+        }
+        $head = mb_substr($t, 0, 180);
+        if (preg_match('/^.{60,}[.!?](?=\s)/us', $head, $m)) {
+            return $m[0];
+        }
+
+        return rtrim(preg_replace('/\s+\S*$/u', '', $head), ' ,;:') . '…';
+    };
 @endphp
 
 @push('head')
@@ -67,7 +82,7 @@
                 <a href="{{ route('legal.show', ['slug' => $p->slug]) }}" class="lgi-card">
                     <span class="lgi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $lgIcons[$p->slug] ?? $lgDoc }}"/></svg></span>
                     <h2 class="lgi-card-h">{{ $p->title }}</h2>
-                    <span class="lgi-card-p">{{ \App\Support\CommunityText::plain($p->body, 150) }}</span>
+                    <span class="lgi-card-p">{{ $lgLine($p->body) }}</span>
                     <span class="lgi-card-f">
                         @if ($p->updated_at)<span>Updated {{ $p->updated_at->format('F j, Y') }}</span>@else<span></span>@endif
                         <span class="lgi-go">Read <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 7l5 5-5 5M6 12h12"/></svg></span>

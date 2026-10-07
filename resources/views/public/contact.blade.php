@@ -11,6 +11,11 @@
     $ask = route('ask.page');
     $face = asset('images/anee/avatar-160.jpg');
     $faceLg = asset('images/anee/avatar-512.jpg');
+    // What the quick answers say about paying is read from the same shelf
+    // the checkout reads, so the two never disagree.
+    $payCfg = \App\Support\ManualPay::settings();
+    $reviewHours = (int) $payCfg['reviewHours'];
+    $aneePrice = \App\Support\Region::priceTag(\App\Support\Region::tierPrice('libreAnee', 'month'));
     $arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>';
 @endphp
 
@@ -23,7 +28,11 @@
      on. An email address gives them all three. Around it: the fastest door
      for each kind of question (Anee for a crop question, the app's own Help
      and Support for members, the tutorial for how things work), quick
-     answers to what people ask most, and a way to start. --}}
+     answers to what people ask most, and a way to start. The two fastest
+     doors (Anee, and Help and Support for members) also sit in the hero as
+     small routes (2026-10-07 audit): on a phone the door cards are three
+     screens down, under the email card, and a crop question should not
+     have to read past an email address to learn Anee answers in minutes. --}}
 @section('content')
 
     {{-- ================= HERO ================= --}}
@@ -40,6 +49,18 @@
                 Questions about plans, {{ $pay }} payments or setting up your season? Write to us. A real person reads
                 every message and answers, usually within a business day.
             </p>
+            <div class="ct2-routes animate-fade-up" style="animation-delay:.18s" role="group" aria-label="Faster ways to get help">
+                <a href="{{ $ask }}" class="ct2-route">
+                    <img src="{{ $face }}" alt="" class="ct2-route-face">
+                    <span><b>A crop question?</b> Ask Anee, free</span>
+                    {!! $arrow !!}
+                </a>
+                <a href="{{ route('support.index') }}" class="ct2-route">
+                    <span class="ct2-route-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 14v-2a8 8 0 0116 0v2M4 14a2 2 0 002 2h1v-5H6a2 2 0 00-2 2zm16 0a2 2 0 01-2 2h-1v-5h1a2 2 0 012 2zm-3 2v1a3 3 0 01-3 3h-2"/></svg></span>
+                    <span><b>A member?</b> Help and Support</span>
+                    {!! $arrow !!}
+                </a>
+            </div>
         </div>
     </section>
 
@@ -69,7 +90,7 @@
             <div class="ct2-facts">
                 <div class="ct2-fact reveal" style="--reveal-delay:.06s">
                     <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
-                    <div><b>When we answer</b><small>Monday to Saturday, usually the same day.</small></div>
+                    <div><b>When we answer</b><small>Monday to Saturday, usually within a business day.</small></div>
                 </div>
                 <div class="ct2-fact reveal" style="--reveal-delay:.12s">
                     <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
@@ -127,11 +148,16 @@
     {{-- ================= QUICK ANSWERS ================= --}}
     @php
         $quick = [
-            ['Is anee.io free?', 'Yes. The Libre plan is free forever, with one active season. You can upgrade inside the app when your farm needs more.'],
-            ['How do I pay for a plan?', 'Choose a plan inside the app and pay with ' . $pay . '. Send the receipt from the same screen, and your plan turns on once our team checks the payment.'],
-            ['Can I ask Anee without an account?', 'Yes. Anyone can ask Anee one free question a week on the Try and Ask Anee page. To use her inside your season, she comes with the Libre + Anee plan and up.'],
+            ['Is anee.io free?', 'Yes. The Libre plan is free forever, with one active season. Anee, your smart farm technician, comes with Libre + Anee for ' . $aneePrice . ' a month, and you can upgrade inside the app whenever your farm needs more.'],
+            ['How do I pay for a plan?', $ph
+                ? 'Open My Subscription in the app, pick a plan and pay with GCash or a bank transfer, then send a screenshot of the receipt on the same screen. '
+                    . ($payCfg['aiAutoApprove']
+                        ? 'Anee checks a GCash receipt in about a minute and your plan starts right away. Other payments are checked by a person, usually within ' . $reviewHours . ' hours.'
+                        : 'A person checks it, usually within ' . $reviewHours . ' hours, and your plan turns on by itself.')
+                : 'Open My Subscription in the app, pick a plan and pay with ' . $pay . ', then send the receipt on the same screen. A person checks it, usually within ' . $reviewHours . ' hours, and your plan turns on by itself.'],
+            ['Can I ask Anee without an account?', 'Yes. If you do not have an account yet, you can ask Anee one free question a week on the Try and Ask Anee page. Members ask her inside the app, where she comes with Libre + Anee and every plan above it.'],
             ['I forgot my password. What do I do?', 'Use "Forgot password" on the login page and we will email you a link to set a new one. If the email does not come, write to us.'],
-            ['Can my workers use anee.io?', 'Yes. Every morning they can get the day\'s plan by email, and on the Farm Owner plan each worker can have their own login.'],
+            ['Can my workers use anee.io?', 'Yes, on the Solo Farmer plan and up. Add them in Workers and turn on the daily schedule email in the season\'s Settings: every morning at 6 AM, each worker with an email gets their own tasks. On the Farm Owner plan each worker can also have their own login.'],
         ];
     @endphp
     <section class="hp-sec bg-white">
@@ -209,7 +235,8 @@
         animation: ct2Ken 24s ease-in-out infinite alternate; }
     @keyframes ct2Ken { from { transform: scale(1.05); } to { transform: scale(1.12) translate3d(-1.5%, -1%, 0); } }
     .ct2-hero-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(10 18 6 / .7), rgb(16 28 10 / .88)); }
-    .ct2-hero-in { padding-top: 5.5rem; padding-bottom: 9rem; }
+    .ct2-hero-in { padding-top: 4.75rem; padding-bottom: 9rem; }
+    @media (min-width: 640px) { .ct2-hero-in { padding-top: 5.5rem; } }
     @media (min-width: 1024px) { .ct2-hero-in { padding-top: 7rem; padding-bottom: 10rem; } }
     .ct2-chip { display: inline-flex; align-items: center; padding: .4rem 1rem; border-radius: 999px; font-size: .78rem; font-weight: 800;
         letter-spacing: .1em; text-transform: uppercase; color: #f4d778; background: rgb(255 255 255 / .1);
@@ -217,6 +244,20 @@
     .ct2-h1 { margin-top: 1.4rem; font-family: var(--font-heading); font-weight: 800; letter-spacing: -.02em; line-height: 1.04;
         font-size: clamp(2.5rem, 6.6vw, 4.4rem); text-wrap: balance; }
     .ct2-lede { margin: 1.6rem auto 0; max-width: 38rem; font-size: clamp(1.02rem, 1.7vw, 1.18rem); line-height: 1.7; color: #dde6d4; text-wrap: pretty; }
+
+    /* The two fastest doors, small and glassy under the lede. */
+    .ct2-routes { margin-top: 1.6rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; }
+    .ct2-route { display: inline-flex; align-items: center; gap: .6rem; min-height: 3rem; padding: .45rem 1rem .45rem .45rem; border-radius: 999px;
+        font-size: .95rem; font-weight: 700; color: #fff; text-decoration: none; text-align: left;
+        background: rgb(255 255 255 / .1); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .3); backdrop-filter: blur(8px);
+        transition: background-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease), transform .28s var(--hp-ease); }
+    .ct2-route:hover { background: rgb(255 255 255 / .18); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .6); transform: translateY(-2px); }
+    .ct2-route b { color: var(--hp-sun); font-weight: 800; }
+    .ct2-route > svg { flex: none; width: 1rem; height: 1rem; transition: transform .28s var(--hp-ease); }
+    .ct2-route:hover > svg { transform: translateX(3px); }
+    .ct2-route-face { flex: none; width: 2.1rem; height: 2.1rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px rgb(245 197 24 / .85); }
+    .ct2-route-ico { flex: none; width: 2.1rem; height: 2.1rem; border-radius: 999px; display: grid; place-items: center; color: var(--hp-ink); background: var(--hp-sun); }
+    .ct2-route-ico svg { width: 1.15rem; height: 1.15rem; }
 
     /* The address card rides up over the hero's lower edge. */
     .ct2-mail-wrap { position: relative; z-index: 2; margin-top: -6rem; padding-bottom: 4.5rem; }
@@ -265,8 +306,10 @@
     .is-anee .ct2-door-k { color: var(--hp-sun); }
     .ct2-door h3 { margin-top: .35rem; font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--hp-ink); }
     .is-anee h3 { color: #fff; }
-    .ct2-door > p { margin-top: .5rem; font-size: .95rem; line-height: 1.6; color: #4b5563; flex: 1 1 auto; }
-    .is-anee > p { color: #e4f0d6; }
+    /* :not(), or this rule outranks the kicker above and paints it grey,
+       big and stretched like a paragraph. */
+    .ct2-door > p:not(.ct2-door-k) { margin-top: .5rem; font-size: .95rem; line-height: 1.6; color: #4b5563; flex: 1 1 auto; }
+    .is-anee > p:not(.ct2-door-k) { color: #e4f0d6; }
     .ct2-door-go { margin-top: 1.1rem; display: inline-flex; align-items: center; gap: .35rem; font-weight: 800; color: var(--hp-green); }
     .is-anee .ct2-door-go { color: var(--hp-sun); }
     .ct2-door-go svg { width: 1.05rem; height: 1.05rem; transition: transform .28s var(--hp-ease); }
@@ -290,7 +333,7 @@
 
     @media (prefers-reduced-motion: reduce) {
         .ct2-hero-bg, .ct2-mail-ico, .ct2-final-face { animation: none !important; }
-        .ct2-mail-addr, .ct2-fact, .ct2-door, .ct2-door-go svg, .ct2-q, .ct2-q-btn svg, .ct2-q-body { transition: none !important; }
+        .ct2-mail-addr, .ct2-fact, .ct2-door, .ct2-door-go svg, .ct2-q, .ct2-q-btn svg, .ct2-q-body, .ct2-route, .ct2-route > svg { transition: none !important; }
     }
 </style>
 @endpush

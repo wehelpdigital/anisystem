@@ -28,7 +28,7 @@
     /* Back link + the switcher between the footer pages. */
     .lgl-top { display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
     @media (min-width: 768px) { .lgl-top { margin-bottom: 1.5rem; } }
-    .lgl-back { display: inline-flex; align-items: center; gap: .3rem; flex-shrink: 0; font-size: .85rem; font-weight: 700;
+    .lgl-back { display: inline-flex; align-items: center; gap: .3rem; flex-shrink: 0; min-height: 2.5rem; font-size: .85rem; font-weight: 700;
         color: var(--color-gray-600); padding: .45rem .7rem .45rem .5rem; border-radius: 999px;
         transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
     .lgl-back:hover { background: var(--color-gray-100); color: var(--color-gray-900); }
@@ -36,7 +36,8 @@
     .lgl-switch { display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
         padding: .15rem .1rem; margin-left: auto; }
     .lgl-switch::-webkit-scrollbar { display: none; }
-    .lgl-chip { flex-shrink: 0; font-size: .8rem; font-weight: 700; line-height: 1; padding: .55rem .85rem; border-radius: 999px;
+    /* At least 38px tall: these are the page's main way around on a phone. */
+    .lgl-chip { flex-shrink: 0; display: inline-flex; align-items: center; min-height: 2.4rem; font-size: .8rem; font-weight: 700; line-height: 1; padding: .55rem .85rem; border-radius: 999px;
         border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-700);
         transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .lgl-chip:hover { border-color: var(--color-brand-300); color: var(--color-brand-700); }
@@ -48,6 +49,13 @@
         .lgl-back { padding: .45rem .5rem .45rem .3rem; }
         .lgl-switch { gap: .3rem; }
         .lgl-chip { padding: .52rem .68rem; font-size: .78rem; }
+    }
+    /* Under 390px the four chips only fit beside the arrow alone, so the
+       word Back goes (it stays for screen readers) rather than the last
+       chip being cut off at the edge with nothing to say it scrolls. */
+    @media (max-width: 389.98px) {
+        .lgl-back { min-width: 2.5rem; justify-content: center; padding: .45rem; }
+        .lgl-back-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     }
 
     /* Contents beside the page on a wide screen; folded above it on a phone. */
@@ -100,6 +108,8 @@
     .lgl-fold-in .lgl-toc { padding: 0 .5rem .6rem; opacity: 0; transform: translateY(-4px);
         transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .lgl-fold.is-open .lgl-fold-in .lgl-toc { opacity: 1; transform: none; }
+    /* Thumb sized rows in the phone fold (the wide screen list stays tight). */
+    .lgl-fold-in .lgl-toc a { padding-top: .62rem; padding-bottom: .62rem; }
 
     /* ---- the words ----------------------------------------------------- */
     .legal-body { margin-top: 1.5rem; font-size: .98rem; line-height: 1.72; color: var(--color-gray-700); overflow-wrap: break-word; }
@@ -137,7 +147,7 @@
         font-size: .85rem; color: var(--color-gray-500); }
     .lgl-foot a { color: var(--color-brand-700); font-weight: 700; }
     .lgl-foot nav { display: flex; flex-wrap: wrap; gap: .35rem 1rem; }
-    .lgl-foot nav a { color: var(--color-gray-600); font-weight: 600; transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .lgl-foot nav a { display: inline-flex; align-items: center; min-height: 2.25rem; color: var(--color-gray-600); font-weight: 600; transition: color .28s cubic-bezier(.22,1,.36,1); }
     .lgl-foot nav a:hover, .lgl-foot nav a[aria-current] { color: var(--color-brand-700); }
 
     /* Back to the top, for the long ones on a phone. */
@@ -180,7 +190,7 @@
         <div class="lgl-top">
             <a href="{{ $back }}" class="lgl-back">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-                Back
+                <span class="lgl-back-t">Back</span>
             </a>
             @if ($pages->count() > 1)
                 <nav class="lgl-switch" aria-label="Legal and info pages">

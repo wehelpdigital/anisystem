@@ -5,7 +5,10 @@
 @include('public.partials.site-css')
 @include('public.site.css')
 
-@php $S = \App\Support\SitePages::class; @endphp
+@php
+    $S = \App\Support\SitePages::class;
+    $aneePrice = \App\Support\Region::priceTag(\App\Support\Region::tierPrice('libreAnee', 'month'));
+@endphp
 
 @section('title_full', $meta['metaTitle'] . ' | anee.io')
 @section('meta_description', $meta['metaDescription'])
@@ -40,7 +43,11 @@
     @keyframes qaSpin { to { transform: rotate(360deg); } }
     .sp-tile.is-new { animation: qaIn .36s cubic-bezier(.22,1,.36,1) both; }
     @keyframes qaIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-    @media (prefers-reduced-motion: reduce) { .qa-spin, .sp-tile.is-new { animation: none; } }
+    /* A page that did not come: one tap tries it again. */
+    .qa-retry { display: inline-flex; align-items: center; gap: .45rem; min-height: 2.75rem; padding: .55rem 1.1rem; border-radius: 999px; font-weight: 800; font-size: .92rem;
+        color: #2f5219; background: #fff; border: 1.5px solid #cfe3b8; transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .qa-retry:hover { background: #f3f8ec; border-color: #9fc47a; }
+    @media (prefers-reduced-motion: reduce) { .qa-spin, .sp-tile.is-new { animation: none; } .qa-retry { transition: none; } }
 </style>
 
 <section class="sp-hero">
@@ -59,7 +66,7 @@
             <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="Anee">
             <div class="min-w-0">
                 <b>Have a farming question?</b>
-                <p>Ask Anee one question for free. The answer comes to your email.</p>
+                <p>Ask Anee one question a week, free and with no account. The answer comes to your email.</p>
             </div>
             <a href="{{ url('/ask-anee') }}" class="btn btn-accent">Ask Anee</a>
         </div>
@@ -94,6 +101,7 @@
         <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance">Your whole season in one app</h2>
         <p class="mt-4 text-[#cdd8c0] leading-relaxed max-w-2xl mx-auto">
             A cropping calendar that dates every task, a record of your fertilizer and costs, and Anee, the smart farm technician who answers in Tagalog or English.
+            The app is free to start, and Anee joins your farm with Libre + Anee for {{ $aneePrice }} a month.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
             <a href="{{ route('signup') }}?utm_source=questions" class="btn btn-accent btn-lg">Try it for free</a>
@@ -110,11 +118,14 @@
     const grid = document.getElementById('qaGrid'), more = document.getElementById('qaMore');
     if (!grid || !more || !more.dataset.next || !('IntersectionObserver' in window)) return;
     let loading = false;
-    const io = new IntersectionObserver(async (entries) => {
-        if (!entries.some((e) => e.isIntersecting) || loading || !more.dataset.next) return;
+    const spinner = more.innerHTML;
+    const load = async () => {
+        if (loading || !more.dataset.next) return;
         loading = true;
+        more.innerHTML = spinner;
         try {
             const res = await fetch(`{{ url('/questions') }}?rows=1&page=${more.dataset.next}`, { headers: { Accept: 'application/json' } });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
             const d = (await res.json()).data;
             const tmp = document.createElement('div');
             tmp.innerHTML = d.html;
@@ -122,11 +133,15 @@
             more.dataset.next = d.hasMore ? d.next : '';
             if (!d.hasMore) { more.innerHTML = ''; io.disconnect(); }
         } catch (_) {
-            // A dropped page is tried again when the reader scrolls back down.
+            // A dropped page used to leave the spinner turning for good: say
+            // so, and let one tap (or the next scroll past) try it again.
+            more.innerHTML = '<button type="button" class="qa-retry">Could not load more. Tap to try again</button>';
+            more.querySelector('button').addEventListener('click', load);
         } finally {
             loading = false;
         }
-    }, { rootMargin: '600px 0px' });
+    };
+    const io = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting)) load(); }, { rootMargin: '600px 0px' });
     io.observe(more);
 })();
 </script>

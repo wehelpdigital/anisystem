@@ -19,10 +19,13 @@
     : 'anee.io takes its name from ani, the Filipino word for harvest. A farm app built by agronomists to plan every cropping season, from sowing to the last sack.')
 
 {{-- ABOUT (rebuilt 2026-10-06 in the homepage's look, hp- styles from
-     public.partials.hp-base): who we are, where the name comes from, the
-     mission, how the app came out of our own field work, why it is built
-     for Philippine farms, what it does, what we stand for, and a way to
-     start under every section. Plain words, no dashes, no invented numbers. --}}
+     public.partials.hp-base): who we are, then the story in the order a
+     reader asks it (2026-10-07 audit): how the app came out of our own
+     field work (the hero promises it, so it comes first), where the name
+     comes from, the mission, why it is built for Philippine farms, what it
+     does, what we stand for, and a way to start under every section, never
+     the same button twice in a row. Plain words, no dashes, no invented
+     numbers. --}}
 @section('content')
 
     {{-- ================= HERO ================= --}}
@@ -44,9 +47,44 @@
                 <a href="{{ route('how') }}" class="hp-alt is-glass">See how it works</a>
             </div>
         </div>
-        <a href="#ab-name" class="ab-down" aria-label="Scroll to read more">
+        <a href="#ab-story" class="ab-down" aria-label="Scroll to read more">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
         </a>
+    </section>
+
+    {{-- ================= FROM OUR FIELDS TO YOURS ================= --}}
+    <section class="hp-sec bg-brand-mesh bg-drift" id="ab-story">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="hp-head reveal">
+                <p class="hp-kick">Our story</p>
+                <h2 class="hp-h2">From Our Fields <em>to Yours.</em></h2>
+                <p class="hp-p">anee.io was not made in an office. It grew out of years of work on real farms.</p>
+            </div>
+            <ol class="ab-path">
+                @foreach ([
+                    ['Years in the field', 'Our team has helped farmers grow bigger harvests of ' . \App\Support\Region::t('rice') . ', ' . \App\Support\Region::t('corn') . ' and more through research, technician support, fertilization and farm management, with results recognized here and abroad.', 'images/icons/soil-restoration.png'],
+                    ['The system behind the results', 'To run client farms well, our technicians built a cropping schedule manager: every task counted from day zero, every cost written down, every season kept on record.', 'images/icons/calendar.png'],
+                    ['Now in your hands', 'anee.io puts that same system on your phone, with Anee, the smart farm technician, to answer when a technician cannot be there.', 'images/icons/technician-support.png'],
+                ] as $i => [$t, $p, $img])
+                    <li class="ab-step reveal" style="--reveal-delay: {{ $i * 0.12 }}s">
+                        <span class="ab-step-n">{{ $i + 1 }}</span>
+                        <div class="ab-step-card">
+                            <img src="{{ asset($img) }}" alt="" loading="lazy">
+                            <div>
+                                <h3>{{ $t }}</h3>
+                                <p>{{ $p }}</p>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+            </ol>
+            {{-- The hero right above already offers "See how it works". --}}
+            <div class="hp-cta reveal">
+                <div class="hp-cta-row">
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Use the same system, free {!! $arrow !!}</a>
+                </div>
+            </div>
+        </div>
     </section>
 
     {{-- ================= THE NAME ================= --}}
@@ -63,7 +101,7 @@
                 </div>
             </div>
             <div class="reveal">
-                <p class="hp-kick">Our story</p>
+                <p class="hp-kick">Our name</p>
                 <h2 class="hp-h2">Our Name Comes From <em>Ani, the Harvest.</em></h2>
                 <p class="hp-p">
                     <b>Ani</b> means harvest. It is the whole point of a season, and the one score every farmer keeps.
@@ -73,7 +111,7 @@
                     @endif
                 </p>
                 <p class="hp-p">
-                    Ani also gives its name to the technician inside the app. Ask <b>Anee</b> about your crop, send a photo
+                    Ani also gives its name to the smart farm technician inside the app. Ask <b>Anee</b> about your crop, send a photo
                     of a leaf, and she answers{{ $ph ? ' in Filipino or English' : '' }}, any time.
                 </p>
                 <div class="hp-cta is-left">
@@ -116,41 +154,6 @@
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and grow more {!! $arrow !!}</a>
                 </div>
                 <p class="hp-cta-note">Free forever on Libre. No card needed.</p>
-            </div>
-        </div>
-    </section>
-
-    {{-- ================= FROM OUR FIELDS TO YOURS ================= --}}
-    <section class="hp-sec bg-brand-mesh bg-drift">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="hp-head reveal">
-                <p class="hp-kick">How anee.io began</p>
-                <h2 class="hp-h2">From Our Fields <em>to Yours.</em></h2>
-                <p class="hp-p">anee.io was not made in an office. It grew out of years of work on real farms.</p>
-            </div>
-            <ol class="ab-path">
-                @foreach ([
-                    ['Years in the field', 'Our team has helped farmers grow bigger harvests of ' . \App\Support\Region::t('rice') . ', ' . \App\Support\Region::t('corn') . ' and more through research, technician support, fertilization and farm management, with results recognized here and abroad.', 'images/icons/soil-restoration.png'],
-                    ['The system behind the results', 'To run client farms well, our technicians built a cropping schedule manager: every task counted from day zero, every cost written down, every season kept on record.', 'images/icons/calendar.png'],
-                    ['Now in your hands', 'anee.io puts that same system on your phone, with Anee, the smart farm technician, to answer when a technician cannot be there.', 'images/icons/technician-support.png'],
-                ] as $i => [$t, $p, $img])
-                    <li class="ab-step reveal" style="--reveal-delay: {{ $i * 0.12 }}s">
-                        <span class="ab-step-n">{{ $i + 1 }}</span>
-                        <div class="ab-step-card">
-                            <img src="{{ asset($img) }}" alt="" loading="lazy">
-                            <div>
-                                <h3>{{ $t }}</h3>
-                                <p>{{ $p }}</p>
-                            </div>
-                        </div>
-                    </li>
-                @endforeach
-            </ol>
-            <div class="hp-cta reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Use the same system, free {!! $arrow !!}</a>
-                    <a href="{{ route('how') }}" class="hp-alt">See how it works</a>
-                </div>
             </div>
         </div>
     </section>
@@ -263,11 +266,13 @@
                     </div>
                 @endforeach
             </div>
+            {{-- The last call right under this one carries the sign up, so
+                 this section's door is the people behind the values. --}}
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
                     <a href="{{ route('contact') }}" class="hp-alt">Talk to us</a>
                 </div>
+                <p class="hp-cta-note">A real person on our team reads every message.</p>
             </div>
         </div>
     </section>

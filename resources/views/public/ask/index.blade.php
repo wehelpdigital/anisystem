@@ -21,6 +21,7 @@
 @endpush
 
 @section('content')
+@php $aneePrice = \App\Support\Region::priceTag(\App\Support\Region::tierPrice('libreAnee', 'month')); @endphp
 <style>
     /* Everything here wears the house easing and stands still for reduced motion. */
     .ak-hero { position: relative; overflow: hidden; background: radial-gradient(60rem 30rem at 85% -10%, rgb(245 197 24 / .16), transparent 60%),
@@ -56,6 +57,12 @@
     @media (min-width: 640px) { .ak-card { padding: 1.8rem; } }
     .ak-card h2 { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #14210c; }
     .ak-card .ak-why { margin-top: .25rem; font-size: .88rem; color: #6b7280; }
+    /* The limit, said before anything is typed. */
+    .ak-limit { display: flex; align-items: flex-start; gap: .6rem; margin-top: .9rem; padding: .7rem .85rem; border-radius: .9rem;
+        background: #f3f8ec; border: 1px solid #dbe8cc; font-size: .86rem; line-height: 1.5; color: #2f4a1c; }
+    .ak-limit svg { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .1rem; color: #4a7c2a; }
+    .ak-limit b { color: #14210c; }
+    .ak-limit a { font-weight: 800; color: #3d6823; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
     .ak-grid { display: grid; gap: .9rem; margin-top: 1.1rem; }
     @media (min-width: 640px) { .ak-grid { grid-template-columns: 1fr 1fr; } .ak-grid .full { grid-column: 1 / -1; } }
     .ak-lbl { display: block; font-size: .78rem; font-weight: 800; color: #374151; margin-bottom: .35rem; }
@@ -79,10 +86,12 @@
     .ak-tag .chev { margin-left: auto; flex: none; width: 1rem; height: 1rem; color: #7ea35a; }
     .ak-two { display: grid; gap: .5rem; grid-template-columns: 1fr 1fr; }
     @media (max-width: 380px) { .ak-two { grid-template-columns: 1fr; } }
-    .ak-abroad { margin-top: .45rem; font-size: .76rem; font-weight: 700; color: #4a7c2a; text-decoration: underline; }
+    /* A real tap target, not a 16px line of underlined text. */
+    .ak-abroad { display: inline-flex; align-items: center; min-height: 2.5rem; margin-top: .2rem; padding: 0 .1rem; font-size: .84rem; font-weight: 700; color: #4a7c2a; text-decoration: underline; text-underline-offset: 2px; }
     .ak-err { margin-top: .8rem; padding: .6rem .8rem; border-radius: .8rem; background: #fef2f2; font-size: .86rem; font-weight: 700; color: #b91c1c; }
     .ak-go { margin-top: 1.2rem; width: 100%; justify-content: center; }
-    .ak-small { margin-top: .7rem; font-size: .74rem; color: #9ca3af; line-height: 1.5; text-align: center; }
+    /* The consent words are read, so they get the body grey, not a faint one. */
+    .ak-small { margin-top: .8rem; font-size: .78rem; color: #6b7280; line-height: 1.55; text-align: center; }
     .ak-small a { text-decoration: underline; }
     .grecaptcha-badge { visibility: hidden !important; }
 
@@ -269,9 +278,9 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <div class="ak-top">
             <div class="ak-face"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="Anee, the anee.io smart farm technician"></div>
-            <div><span class="ak-kicker">Free for everyone</span></div>
+            <div><span class="ak-kicker">Free, no account needed</span></div>
             <h1 class="ak-h1">Try and <span>Ask Anee</span></h1>
-            <p class="ak-lead">Ask Anee, the anee.io smart farm technician, one farming question. She looks at it together with your farm and sends you a full answer by email.</p>
+            <p class="ak-lead">Ask Anee, the anee.io smart farm technician, one farming question a week, free. She looks at it together with your farm and sends you a full answer by email.</p>
         </div>
 
         <div class="ak-steps" aria-hidden="true">
@@ -284,6 +293,10 @@
                 <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
                 <h2>First, tell Anee about you and your farm</h2>
                 <p class="ak-why">She uses these to fit the answer to your farm. Your answer is sent to your email.</p>
+                <p class="ak-limit">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18"/></svg>
+                    <span><b>One free question a week</b>, for farmers without an anee.io account. Already a member? <a href="{{ route('login') }}">Log in</a> and ask Anee in the app.</span>
+                </p>
                 <div class="ak-grid">
                     <div>
                         <label class="ak-lbl" for="akName">Your name</label>
@@ -375,7 +388,7 @@
                 </div>
                 <div class="ak-more">
                     <b>Want Anee on your farm every day?</b>
-                    <p>Plan your whole season, see the growth stage and the weather for every lot, and ask Anee anytime, even with a photo of a sick plant.</p>
+                    <p>Plan your whole season, see the growth stage and the weather for every lot, and ask Anee anytime, even with a photo of a sick plant. Start free on Libre, and add Anee for {{ $aneePrice }} a month.</p>
                     <div class="btns">
                         <a class="btn btn-accent" href="{{ route('signup') }}?utm_source=ask-anee&utm_medium=page">Try it for free</a>
                         <a class="ak-ghost" href="{{ url('/questions') }}">Read other answers</a>
@@ -423,7 +436,8 @@
         <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance">Have Anee on your farm every day</h2>
         <p class="mt-4 text-[#cdd8c0] leading-relaxed max-w-2xl mx-auto">
             anee.io plans your whole season day by day, shows the growth stage and the weather for every lot,
-            and lets you ask Anee anytime, even with a photo of a sick plant.
+            and lets you ask Anee anytime, even with a photo of a sick plant. The app is free to start, and Anee
+            joins your farm with Libre + Anee for {{ $aneePrice }} a month.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
             <a href="{{ route('signup') }}?utm_source=ask-anee&utm_medium=page" class="btn btn-accent btn-lg">Try it for free</a>
@@ -559,7 +573,16 @@
         flag($('akCrop'), !!state.crop, 'the crop');
         flag(abroad ? $('akProvTxt') : $('akProv'), !!province, 'the province');
         flag(abroad ? $('akTownTxt') : $('akTown'), !!town, 'the town');
-        if (bad.length) { err.textContent = 'Please add ' + bad.join(', ') + '.'; err.hidden = false; return; }
+        if (bad.length) {
+            const list = bad.length > 1 ? bad.slice(0, -1).join(', ') + ' and ' + bad[bad.length - 1] : bad[0];
+            err.textContent = 'Please add ' + list + '.';
+            err.hidden = false;
+            // The first field to fix, brought into view when it sits above the
+            // screen (the message is down by the button, the field may not be).
+            const first = farmForm.querySelector('.is-bad');
+            if (first && first.getBoundingClientRect().top < 90) first.scrollIntoView({ block: 'center', behavior: reduce() ? 'auto' : 'smooth' });
+            return;
+        }
         err.hidden = true;
         busy = true; go.disabled = true; go.textContent = 'One moment…';
         try {
@@ -701,7 +724,7 @@
     const WHY = {
         member: {
             ic: '👋', t: 'You are already a member',
-            p: (m) => `<b>${esc(m)}</b> already has an anee.io account. Log in and ask Anee inside the app.`,
+            p: (m) => `<b>${esc(m)}</b> already has an anee.io account. Log in and ask Anee inside the app, where she comes with Libre + Anee and every plan above it.`,
             go: ['Log in to anee.io', LOGIN],
         },
         week: {
