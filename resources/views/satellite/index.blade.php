@@ -208,6 +208,75 @@
     .sat-srow span { min-width: 0; flex: 1 1 auto; }
     .sat-srow b { display: block; font-size: .88rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .sat-srow small { font-size: .74rem; color: var(--color-gray-500); }
+
+    /* ---- the phone, redrawn (2026-10-07) ----------------------------------
+       Short hero, the step's number, Back and Next held above the tab bar,
+       a drawing map that fills the screen; in the report a compact head,
+       tabs that stick under the bar and a map that takes what is left.
+       Google's logo and terms stay clear at the bottom of every map. */
+    .sat-hero .sat-more { display: inline; }
+    @media (max-width: 639.98px) {
+        .sat-hero { padding: .95rem 1rem; margin-bottom: .8rem; }
+        .sat-hero h2 { font-size: 1.02rem; padding-right: 2.5rem; }
+        .sat-hero .sat-more, .sat-hero .sat-chips { display: none; }
+        .sat-tabs { margin-bottom: .8rem; }
+        .sat-tab { padding: .55rem; font-size: .86rem; }
+        .sat-quote { font-size: .8rem; margin-bottom: .8rem; }
+        .sat-wiz.card { padding: 1rem; }
+    }
+    .sat-wiz { scroll-margin-top: calc(var(--app-head, 4rem) + .75rem); }
+    .sat-stepno { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .45rem; font-size: .7rem; font-weight: 800;
+        letter-spacing: .08em; text-transform: uppercase; color: var(--color-brand-600); }
+    .sat-stepno span:last-child { color: var(--color-gray-400); letter-spacing: .02em; text-transform: none; font-weight: 700; }
+    @media (max-width: 1023.98px) {
+        .sat-nav { position: sticky; bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px) + .6rem); z-index: 6; margin: 1rem -.45rem -.45rem; padding: .45rem;
+            border-radius: 1.1rem; background: rgb(255 255 255 / .86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 14px 30px -18px rgb(0 0 0 / .55), inset 0 0 0 1px var(--color-gray-200); }
+        html.dark .sat-nav { background: rgb(21 27 18 / .88); }
+        .sat-nav .btn { min-height: 2.9rem; }
+    }
+    .sat-draw-area { left: 50%; bottom: 1.9rem; transform: translateX(-50%); white-space: nowrap; box-shadow: 0 10px 24px -12px rgb(0 0 0 / .8); }
+    @media (max-width: 1023.98px) {
+        .sat-draw { margin: 0 -.45rem; }
+        .sat-draw-map { height: max(20rem, calc(100svh - var(--app-head, 3.6rem) - 3.5rem - 10.5rem - env(safe-area-inset-bottom, 0px))); }
+    }
+
+    .sat-view { --sat-bar-h: 3.4rem; }
+    .sat-rtabs { top: var(--sat-bar-h); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1.5rem), transparent);
+        mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1.5rem), transparent); }
+    .sat-rtabs::after { content: ''; flex: none; width: .6rem; }
+    .sat-top { grid-template-columns: auto minmax(0, 1fr); row-gap: .6rem; }
+    .sat-top .sat-when { grid-column: 2; margin-top: -.3rem; }
+    @media (max-width: 639.98px) {
+        .sat-body { padding-top: .75rem; }
+        .sat-top { gap: .85rem; padding: .9rem; border-radius: 1.1rem; }
+        .sat-ring { width: 4.9rem; height: 4.9rem; }
+        .sat-ring::before { inset: .42rem; }
+        .sat-ring b { font-size: 1.45rem; }
+        .sat-ring small { font-size: .58rem; }
+        .sat-top h2 { font-size: 1rem; }
+        .sat-top p { margin-top: .2rem; font-size: .76rem; }
+        .sat-top .sat-when { grid-column: 1 / -1; margin-top: 0; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -.9rem; padding: 0 .9rem; }
+        .sat-when::-webkit-scrollbar { display: none; }
+        .sat-when span { flex: none; }
+        .sat-stats { gap: .5rem; }
+        .sat-stat { padding: .65rem .7rem; }
+        .sat-stat b { font-size: 1.1rem; }
+        .sat-card { padding: .9rem; }
+    }
+    .sat-map { height: min(68vh, 36rem); }
+    @media (max-width: 1023.98px) {
+        .sat-pane[data-p="map"] .sat-map-wrap { margin: 0 -1rem; border-radius: 0; border-left: 0; border-right: 0; }
+        .sat-map { height: max(22rem, calc(100svh - var(--sat-bar-h) - 3.4rem - env(safe-area-inset-bottom, 0px))); }
+        .sat-pane[data-p="map"] .sat-note { padding: 0 .1rem; }
+    }
+    .sat-layers { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; right: 0; padding-right: .6rem; }
+    .sat-layers::-webkit-scrollbar { display: none; }
+    .sat-layers button { flex: none; }
+    .sat-opacity { position: absolute; right: .6rem; bottom: 1.9rem; z-index: 2; }
+    .sat-opacity input { width: 5.5rem; }
+    .sat-legend { bottom: 1.9rem; }
+    @media (max-width: 379.98px) { .sat-legend i { width: 6.5rem; } .sat-opacity input { width: 4.2rem; } }
     @media (prefers-reduced-motion: reduce) {
         .sat-orbit i, .sat-step.is-on, .sat-pane.is-on, .sat-bar span i { animation: none; }
         .sat-view, .sat-tab, .sat-pill, .sat-run, .sat-srow, .sat-rail i::after { transition: none; }
@@ -219,7 +288,7 @@
     <div class="sat-hero">
         <span class="sat-orbit" aria-hidden="true"><i></i></span>
         <h2>See your field from space, then ask Anee what it means</h2>
-        <p>Draw your field and Anee reads the newest Sentinel-2 picture (crop greenness, NDVI) and Sentinel-1 radar, which sees through typhoon clouds. Then she weighs the weather, ENSO, the climate and the soil of your area.</p>
+        <p>Draw your field and Anee reads the newest satellite picture and radar<span class="sat-more"> (Sentinel-2 crop greenness, and Sentinel-1, which sees through typhoon clouds), then weighs the weather, ENSO, the climate and the soil of your area</span>.</p>
         <div class="sat-chips"><span>Sentinel-2 · 10 m</span><span>Sentinel-1 radar</span><span>Last 5 to 10 days</span><span>Philippine time</span></div>
     </div>
 
@@ -230,7 +299,8 @@
 
     <div id="satGen">
         <div class="sat-quote" id="satQuote" hidden></div>
-        <div class="card p-5 sat-wiz">
+        <div class="card p-5 sat-wiz" id="satWiz">
+            <div class="sat-stepno"><span id="satStepNo">Step 1 of 7</span><span id="satStepName">The place</span></div>
             <div class="sat-rail" id="satRail" aria-hidden="true"></div>
 
             <section class="sat-step is-on" data-step="0">
@@ -390,9 +460,17 @@
         [...rail.children].forEach((i, k) => { i.classList.toggle('is-done', k < n); i.classList.toggle('is-on', k === n); });
         $('satBack').disabled = n === 0;
         $('satNext').hidden = n === STEPS - 1;
+        $('satStepNo').textContent = 'Step ' + (n + 1) + ' of ' + STEPS;
+        $('satStepName').textContent = ['The place', 'The crop', 'Planting', 'Ground and water', 'Your worries', 'Draw the field', 'Review'][n] || '';
         if (n === 5) initDraw();
         if (n === 6) review();
+        // A step starts at its title: on a phone the last one may have left the page scrolled down.
+        const wiz = $('satWiz');
+        if (booted && wiz.getBoundingClientRect().top < (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--app-head')) || 60)) {
+            wiz.scrollIntoView({ block: 'start', behavior: reduce() ? 'auto' : 'smooth' });
+        }
     };
+    let booted = false;
     const pills = (box, items, { multi = false, get, set }) => {
         box.innerHTML = Object.entries(items).map(([k, v]) => '<button type="button" class="sat-pill" data-k="' + esc(k) + '" aria-pressed="false">' + esc(v) + '</button>').join('');
         const paint = () => box.querySelectorAll('.sat-pill').forEach((b) => b.setAttribute('aria-pressed', String(multi ? get().includes(b.dataset.k) : get() === b.dataset.k)));
@@ -645,7 +723,7 @@
                 + card('Stand and spacing', p(SP.reading) + p(SP.density) + '<p class="sat-note mt-2">' + esc(SP.note || '') + '</p>', ICON.leaf),
             map: '<div class="sat-map-wrap"><div class="sat-map" id="satRMap"></div>'
                 + '<div class="sat-layers"><button type="button" data-l="rgb">True color</button><button type="button" data-l="ndvi" class="is-on">NDVI heatmap</button><button type="button" data-l="sar">Radar</button><button type="button" data-l="none">Map only</button>'
-                + '<label class="sat-opacity">Layer <input type="range" id="satOp" min="0" max="100" value="80" aria-label="Layer opacity"></label></div>'
+                + '</div><label class="sat-opacity">Layer <input type="range" id="satOp" min="0" max="100" value="80" aria-label="Layer opacity"></label>'
                 + '<div class="sat-legend" id="satLegend">NDVI<i></i><span><em>0 bare</em><em>0.9 lush</em></span></div></div>'
                 + '<p class="sat-note">Heatmaps from Google Earth Engine. NDVI red is bare or stressed, deep green is a full, healthy canopy. Radar colors: green and yellow are dense canopy, blue and dark are water or bare soil.</p>',
             health: card('Crop health', p(H.reading) + p(H.ndviMeaning) + p(H.uniformity), ICON.leaf)
@@ -671,7 +749,7 @@
         };
         $('satViewTitle').textContent = d.title || 'Satellite analysis';
         $('satReport').innerHTML = '<div class="sat-top"><div class="sat-ring" style="--v:' + score + ';--c:' + ringColor + '"><div><b>' + score + '</b><small>' + esc(a.healthWord || '') + '</small></div></div>'
-            + '<div><h2>' + esc(a.headline || '') + '</h2><p>' + esc(d.at ? 'Read ' + d.at : '') + '</p><div class="sat-when">' + when.join('') + '</div></div></div>'
+            + '<div><h2>' + esc(a.headline || '') + '</h2><p>' + esc(d.at ? 'Read ' + d.at : '') + '</p></div><div class="sat-when">' + when.join('') + '</div></div>'
             + '<div class="sat-rtabs" role="tablist">' + tabs.map(([k, l], i) => '<button type="button" class="sat-rtab' + (i ? '' : ' is-on') + '" data-t="' + k + '" role="tab">' + esc(l) + '</button>').join('') + '</div>'
             + tabs.map(([k], i) => '<div class="sat-pane' + (i ? '' : ' is-on') + '" data-p="' + k + '">' + panes[k] + '</div>').join('');
         rmap = null;
@@ -681,6 +759,7 @@
         void view.offsetWidth;
         view.classList.add('is-on');
         view.scrollTop = 0;
+        view.style.setProperty('--sat-bar-h', view.querySelector('.sat-view-bar').offsetHeight + 'px');
     };
     $('satReport').addEventListener('click', (e) => {
         const t = e.target.closest('.sat-rtab');
@@ -689,6 +768,10 @@
             document.querySelectorAll('.sat-pane').forEach((p) => p.classList.toggle('is-on', p.dataset.p === t.dataset.t));
             if (t.dataset.t === 'map') drawReportMap();
             t.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce() ? 'auto' : 'smooth' });
+            // The new tab starts at the tabs; the map takes the whole screen under them.
+            const view = $('satView'), tabsEl = t.parentElement;
+            const stuckAt = tabsEl.offsetTop - (view.querySelector('.sat-view-bar').offsetHeight || 0) - 4;
+            if (view.scrollTop > stuckAt || (t.dataset.t === 'map' && innerWidth < 1024)) view.scrollTo({ top: Math.max(0, stuckAt), behavior: reduce() ? 'auto' : 'smooth' });
         }
         const l = e.target.closest('.sat-layers button');
         if (l && !l.disabled) setLayer(l.dataset.l);
@@ -777,6 +860,7 @@
             pills($('satConcerns'), OPT.concerns, { multi: true, get: () => st.concerns, set: (v) => { st.concerns = v.includes('none') && !st.concerns.includes('none') ? ['none'] : v.filter((x) => x !== 'none' || v.length === 1); } });
             $('satPlanted').max = OPT.today;
             show(0);
+            booted = true;
             const open = new URLSearchParams(location.search).get('open');
             if (open) { const o = await window.api(U.one(open)); openReport(o.data); }
         } catch (err) { window.toast?.(err.message || 'Could not load the page.', 'error'); }

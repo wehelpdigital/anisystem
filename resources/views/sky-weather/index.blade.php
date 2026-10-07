@@ -6,75 +6,103 @@
 
 @section('content')
 <style>
-    /* ---- SATELLITE WEATHER (2026-10-07) ----------------------------------
+    /* ---- SATELLITE WEATHER (2026-10-07, redrawn the same day) -------------
        The sky over the farm, played back and fast forwarded; storms drawn
-       with their cone; Anee's reading against a lot. House curve throughout,
-       held still under reduced motion. */
+       with their cone; Anee's reading against a lot. On a phone the map is
+       the whole screen between the top bar and the tab bar, every control
+       sits on it in one glass layer, and Google's own marks stay clear at
+       the bottom. House curve throughout, held still under reduced motion. */
     :root { --sk-ease: cubic-bezier(.22,1,.36,1); }
-    .sk-wrap { max-width: 64rem; margin: 0 auto; }
-    .sk-stage { position: relative; border-radius: 1.3rem; overflow: hidden; background: #0b1220; border: 1px solid #1e293b;
+    .sk-wrap { max-width: 72rem; margin: 0 auto; }
+    .sk-stage { position: relative; isolation: isolate; border-radius: 1.4rem; overflow: hidden; background: #0b1220; border: 1px solid #1e293b;
         box-shadow: 0 30px 60px -40px rgb(0 0 0 / .9); }
-    .sk-map { height: clamp(26rem, 68vh, 44rem); }
-    .sk-top { position: absolute; left: .7rem; right: .7rem; top: .7rem; z-index: 3; display: flex; gap: .45rem; align-items: flex-start; pointer-events: none; }
+    .sk-map { height: clamp(30rem, 74vh, 48rem); }
+    @media (max-width: 1023.98px) {
+        .sk-stage { margin: -1rem -1rem 0; border-radius: 0; border: 0; box-shadow: none; }
+        .sk-map { height: max(30rem, calc(100svh - var(--app-head, 3.6rem) - 3.5rem - env(safe-area-inset-bottom, 0px))); }
+    }
+    @media (min-width: 640px) and (max-width: 1023.98px) { .sk-stage { margin: -1rem -1.5rem 0; } }
+    .sk-glass { color: #e2e8f0; background: rgb(12 18 32 / .8); backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3);
+        box-shadow: 0 10px 26px -14px rgb(0 0 0 / .9), inset 0 0 0 1px rgb(255 255 255 / .07); }
+
+    /* The top: where, and whether a storm is near. */
+    .sk-top { position: absolute; left: .65rem; right: .65rem; top: .65rem; z-index: 3; display: flex; gap: .45rem; align-items: center; pointer-events: none; }
     .sk-top > * { pointer-events: auto; }
-    .sk-place { display: inline-flex; align-items: center; gap: .45rem; max-width: 60%; padding: .5rem .8rem; border-radius: 999px; border: 0; cursor: pointer;
-        font-size: .82rem; font-weight: 800; color: #fff; background: rgb(15 23 42 / .82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-        box-shadow: 0 8px 20px -10px rgb(0 0 0 / .8); }
-    .sk-place span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sk-place { display: inline-flex; align-items: center; gap: .45rem; min-width: 0; flex: 0 1 auto; padding: .55rem .85rem; border-radius: 999px; border: 0; cursor: pointer;
+        font-size: .82rem; font-weight: 800; transition: transform .28s var(--sk-ease); }
+    .sk-place:active { transform: scale(.97); }
+    .sk-place span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .sk-place svg { flex: none; width: 1rem; height: 1rem; color: #f5c518; }
-    .sk-badge { margin-left: auto; display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .8rem; border-radius: 999px; font-size: .78rem; font-weight: 800;
-        color: #dcfce7; background: rgb(21 128 61 / .85); box-shadow: 0 8px 20px -10px rgb(0 0 0 / .8); transition: background-color .28s var(--sk-ease); }
-    .sk-badge i { width: .55rem; height: .55rem; border-radius: 999px; background: currentColor; }
-    .sk-badge.is-warn { color: #fff; background: rgb(220 38 38 / .92); animation: skPulse 1.6s ease-in-out infinite; }
-    .sk-badge.is-watch { color: #1a1a1a; background: rgb(245 197 24 / .95); }
+    .sk-place .sk-caret { width: .8rem; height: .8rem; color: #94a3b8; transition: transform .28s var(--sk-ease); }
+    .sk-place[aria-expanded="true"] .sk-caret { transform: rotate(180deg); }
+    .sk-badge { margin-left: auto; flex: 0 1 auto; min-width: 0; display: inline-flex; align-items: center; gap: .4rem; padding: .55rem .8rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
+        color: #dcfce7; background: rgb(21 128 61 / .88); box-shadow: 0 8px 20px -10px rgb(0 0 0 / .8); transition: background-color .28s var(--sk-ease), color .28s var(--sk-ease); }
+    .sk-badge span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sk-badge i { flex: none; width: .5rem; height: .5rem; border-radius: 999px; background: currentColor; }
+    .sk-badge.is-warn { color: #fff; background: rgb(220 38 38 / .94); animation: skPulse 1.6s ease-in-out infinite; }
+    .sk-badge.is-watch { color: #1a1a1a; background: rgb(245 197 24 / .96); }
     @keyframes skPulse { 50% { box-shadow: 0 0 0 .5rem rgb(220 38 38 / .25), 0 8px 20px -10px rgb(0 0 0 / .8); } }
-    .sk-side { position: absolute; left: .7rem; top: 3.6rem; z-index: 3; display: grid; gap: .3rem; }
-    .sk-lay { display: flex; align-items: center; gap: .45rem; padding: .42rem .65rem .42rem .45rem; border-radius: .8rem; border: 0; cursor: pointer; text-align: left;
-        font-size: .74rem; font-weight: 800; color: #cbd5e1; background: rgb(15 23 42 / .78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-        transition: background-color .28s var(--sk-ease), color .28s var(--sk-ease); }
-    .sk-lay b { display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: .55rem; background: rgb(255 255 255 / .08); }
-    .sk-lay svg { width: .95rem; height: .95rem; }
+    @media (max-width: 479.98px) { .sk-place, .sk-badge { font-size: .74rem; padding: .5rem .7rem; } .sk-badge { max-width: 48%; } }
+
+    /* The layers: one row of chips, swiped on a phone. The two that play
+       (clouds, radar) come first; the live overlays and the storms after. */
+    .sk-chips { position: absolute; left: 0; right: 0; top: 3.35rem; z-index: 3; display: flex; align-items: center; gap: .35rem; padding: 0 .65rem; overflow-x: auto;
+        scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 1.6rem), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 1.6rem), transparent); }
+    .sk-chips::-webkit-scrollbar { display: none; }
+    .sk-chips::after { content: ''; flex: none; width: 1rem; }
+    .sk-lay { flex: none; display: inline-flex; align-items: center; gap: .35rem; padding: .38rem .7rem .38rem .45rem; border-radius: 999px; border: 0; cursor: pointer;
+        font-size: .74rem; font-weight: 800; color: #cbd5e1; transition: background-color .28s var(--sk-ease), color .28s var(--sk-ease), transform .28s var(--sk-ease); }
+    .sk-lay b { display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 999px; background: rgb(255 255 255 / .1); transition: background-color .28s var(--sk-ease); }
+    .sk-lay svg { width: .85rem; height: .85rem; }
+    .sk-lay:active { transform: scale(.96); }
     .sk-lay.is-on { color: #0f172a; background: #f5c518; }
-    .sk-lay.is-on b { background: rgb(15 23 42 / .12); }
-    .sk-lay:disabled { opacity: .45; cursor: default; }
-    @media (max-width: 639.98px) { .sk-lay span { display: none; } .sk-lay { padding: .4rem; } .sk-side { top: 3.4rem; } }
-    .sk-bottom { position: absolute; left: .7rem; right: .7rem; bottom: .7rem; z-index: 3; display: grid; gap: .45rem; }
-    .sk-bar { display: flex; align-items: center; gap: .55rem; padding: .5rem .65rem; border-radius: 1rem; color: #e2e8f0;
-        background: rgb(15 23 42 / .86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 12px 28px -14px rgb(0 0 0 / .9); }
-    .sk-play { flex: none; display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 999px; border: 0; cursor: pointer; background: #f5c518; color: #0f172a;
-        transition: transform .28s var(--sk-ease); }
+    .sk-lay.is-on b { background: rgb(15 23 42 / .14); }
+    .sk-lay:disabled { opacity: .4; cursor: default; }
+    .sk-sep { flex: none; width: 1px; height: 1.3rem; margin: 0 .15rem; background: rgb(255 255 255 / .35); }
+
+    /* The bottom: time, the mode and the layer's strength, in one panel.
+       It stands clear of Google's logo and terms underneath it. */
+    .sk-bottom { position: absolute; left: .65rem; right: .65rem; bottom: 1.85rem; z-index: 3; display: grid; gap: .45rem; pointer-events: none; }
+    .sk-bottom > * { pointer-events: auto; }
+    .sk-bar { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "play time" "two two"; gap: .55rem .65rem; align-items: center;
+        padding: .6rem .7rem; border-radius: 1.1rem; }
+    @media (min-width: 640px) { .sk-bar { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "play time two"; padding: .55rem .7rem; } }
+    .sk-play { grid-area: play; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 999px; border: 0; cursor: pointer; background: #f5c518; color: #0f172a;
+        box-shadow: 0 6px 16px -6px rgb(245 197 24 / .7); transition: transform .28s var(--sk-ease); }
     .sk-play:hover { transform: scale(1.06); }
-    .sk-play svg { width: 1rem; height: 1rem; }
+    .sk-play svg { width: 1.05rem; height: 1.05rem; }
     .sk-play .i-pause, .sk-bar.is-playing .sk-play .i-play { display: none; }
     .sk-bar.is-playing .sk-play .i-pause { display: block; }
+    .sk-time { grid-area: time; min-width: 0; display: grid; gap: .3rem; }
+    .sk-time b { font-size: .8rem; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sk-time input, .sk-op input { width: 100%; height: 1.2rem; margin: 0; accent-color: #f5c518; cursor: pointer; }
+    .sk-two { grid-area: two; display: flex; align-items: center; gap: .7rem; min-width: 0; }
     .sk-modes { flex: none; display: flex; gap: .2rem; padding: .2rem; border-radius: 999px; background: rgb(255 255 255 / .08); }
-    .sk-modes button { padding: .3rem .6rem; border-radius: 999px; border: 0; cursor: pointer; font-size: .7rem; font-weight: 800; color: #cbd5e1; background: transparent;
+    .sk-modes button { padding: .38rem .75rem; border-radius: 999px; border: 0; cursor: pointer; font-size: .72rem; font-weight: 800; color: #cbd5e1; background: transparent;
         transition: background-color .28s var(--sk-ease), color .28s var(--sk-ease); }
     .sk-modes button.is-on { background: #e2e8f0; color: #0f172a; }
-    .sk-time { flex: 1 1 auto; min-width: 0; display: grid; gap: .25rem; }
-    .sk-time b { font-size: .78rem; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .sk-time input { width: 100%; accent-color: #f5c518; margin: 0; }
-    .sk-op { display: none; align-items: center; gap: .35rem; flex: none; font-size: .68rem; font-weight: 800; color: #94a3b8; }
-    .sk-op input { width: 5.5rem; accent-color: #f5c518; }
-    @media (min-width: 640px) { .sk-op { display: inline-flex; } }
-    .sk-op-m { display: flex; align-items: center; gap: .45rem; font-size: .68rem; font-weight: 800; color: #94a3b8; padding: 0 .3rem; }
-    .sk-op-m input { flex: 1 1 auto; accent-color: #f5c518; }
-    @media (min-width: 640px) { .sk-op-m { display: none; } }
-    .sk-read { display: none; gap: .4rem; flex-wrap: wrap; }
-    .sk-read.is-on { display: flex; }
-    .sk-read span { padding: .3rem .55rem; border-radius: 999px; font-size: .7rem; font-weight: 800; color: #e2e8f0; background: rgb(15 23 42 / .82); }
+    .sk-op { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: .45rem; font-size: .68rem; font-weight: 800; color: #94a3b8; }
+    .sk-op svg { flex: none; width: .95rem; height: .95rem; }
+    @media (min-width: 640px) { .sk-op { flex: none; width: 8.5rem; } }
+    .sk-read { display: flex; gap: .35rem; flex-wrap: wrap; opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .28s var(--sk-ease), transform .28s var(--sk-ease); }
+    .sk-read.is-on { opacity: 1; transform: none; }
+    .sk-read span { padding: .32rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; }
     .sk-read span b { color: #f5c518; }
-    .sk-panel { position: absolute; left: .7rem; top: 3.6rem; z-index: 4; width: min(22rem, calc(100% - 1.4rem)); padding: .8rem; border-radius: 1rem; background: var(--color-white);
-        border: 1px solid var(--color-gray-200); box-shadow: 0 24px 50px -24px rgb(0 0 0 / .8); opacity: 0; transform: translateY(-6px); pointer-events: none;
-        transition: opacity .28s var(--sk-ease), transform .28s var(--sk-ease); }
+
+    /* The farm picker, dropped from the place pill. */
+    .sk-panel { position: absolute; left: .65rem; top: 3.35rem; z-index: 5; width: min(23rem, calc(100% - 1.3rem)); max-height: calc(100% - 4.6rem); overflow-y: auto; padding: .85rem;
+        border-radius: 1.1rem; background: var(--color-white); border: 1px solid var(--color-gray-200); box-shadow: 0 24px 50px -24px rgb(0 0 0 / .8);
+        opacity: 0; transform: translateY(-8px) scale(.98); transform-origin: top left; pointer-events: none; transition: opacity .28s var(--sk-ease), transform .28s var(--sk-ease); }
     .sk-panel.is-on { opacity: 1; transform: none; pointer-events: auto; }
-    .sk-panel h4 { font-size: .78rem; font-weight: 800; color: var(--color-gray-500); text-transform: uppercase; letter-spacing: .05em; margin: .5rem 0 .35rem; }
+    .sk-panel h4 { font-size: .72rem; font-weight: 800; color: var(--color-gray-500); text-transform: uppercase; letter-spacing: .06em; margin: .7rem 0 .4rem; }
     .sk-panel h4:first-child { margin-top: 0; }
-    .sk-opt { display: flex; gap: .55rem; align-items: center; width: 100%; padding: .55rem .6rem; border-radius: .7rem; border: 1px solid var(--color-gray-200); background: var(--color-white);
-        text-align: left; font-size: .82rem; color: var(--color-gray-800); cursor: pointer; margin-bottom: .3rem; transition: border-color .28s var(--sk-ease); }
+    .sk-opt { display: flex; gap: .6rem; align-items: center; width: 100%; padding: .6rem .65rem; border-radius: .8rem; border: 1px solid var(--color-gray-200); background: var(--color-white);
+        text-align: left; font-size: .84rem; font-weight: 700; color: var(--color-gray-800); cursor: pointer; margin-bottom: .35rem; transition: border-color .28s var(--sk-ease), background-color .28s var(--sk-ease); }
     .sk-opt:hover { border-color: var(--color-brand-600); }
-    .sk-opt small { display: block; font-size: .72rem; color: var(--color-gray-500); }
-    .sk-lots { max-height: 12rem; overflow-y: auto; }
+    .sk-opt svg { flex: none; color: var(--color-brand-600); }
+    .sk-opt small { display: block; font-size: .72rem; font-weight: 500; color: var(--color-gray-500); }
+    .sk-lots { max-height: 13rem; overflow-y: auto; }
+
     .sk-eye { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 999px; background: radial-gradient(circle, #fff 0 20%, #ef4444 22% 55%, transparent 57%);
         pointer-events: none; }
     .sk-eye::before, .sk-eye::after { content: ''; position: absolute; inset: -10px; border-radius: 999px; border: 2px solid rgb(239 68 68 / .8); animation: skRing 2s ease-out infinite; }
@@ -82,121 +110,150 @@
     @keyframes skRing { from { transform: scale(.4); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
     .sk-eye-label { position: absolute; transform: translate(14px, -50%); white-space: nowrap; padding: .2rem .45rem; border-radius: .45rem; font-size: .7rem; font-weight: 800;
         color: #fff; background: rgb(127 29 29 / .9); pointer-events: none; }
+    .sk-credit { margin-top: .5rem; font-size: .7rem; line-height: 1.5; color: var(--color-gray-400); }
+    @media (max-width: 1023.98px) { .sk-credit { padding: 0 .1rem; } }
 
-    .sk-grid { display: grid; gap: 1rem; margin-top: 1rem; grid-template-columns: minmax(0, 1fr); }
-    @media (min-width: 900px) { .sk-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); } }
-    .sk-card { border-radius: 1.1rem; background: var(--color-white); border: 1px solid var(--color-gray-200); padding: 1rem 1.05rem; min-width: 0; }
-    .sk-card h3 { display: flex; align-items: center; gap: .45rem; font-family: var(--font-heading); font-weight: 800; font-size: 1rem; color: var(--color-gray-900); }
-    .sk-card h3 svg { width: 1.1rem; height: 1.1rem; color: var(--color-brand-600); }
+    /* Below the map. */
+    .sk-grid { display: grid; gap: 1rem; margin-top: 1rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
+    @media (min-width: 1024px) { .sk-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); } .sk-ask { position: sticky; top: calc(var(--app-head, 4rem) + 1rem); } }
+    .sk-col { display: grid; gap: 1rem; min-width: 0; }
+    .sk-card { border-radius: 1.2rem; background: var(--color-white); border: 1px solid var(--color-gray-200); padding: 1rem 1.05rem; min-width: 0; }
+    .sk-card h3 { display: flex; align-items: center; gap: .5rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.02rem; color: var(--color-gray-900); }
+    .sk-card h3 svg { flex: none; width: 1.15rem; height: 1.15rem; color: var(--color-brand-600); }
     .sk-sub { margin-top: .25rem; font-size: .82rem; color: var(--color-gray-500); line-height: 1.5; }
-    .sk-storm { margin-top: .6rem; padding: .7rem .8rem; border-radius: .9rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .sk-storm { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .2rem .8rem; align-items: start; margin-top: .65rem; padding: .75rem .85rem; border-radius: 1rem;
+        background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
     html.dark .sk-storm { background: #121a0d; border-color: #2b3a1c; }
+    .sk-storm.is-calm { grid-template-columns: auto minmax(0, 1fr); align-items: center; }
+    .sk-storm.is-calm > i { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 999px; background: #dcfce7; color: #15803d; }
+    html.dark .sk-storm.is-calm > i { background: #14321d; color: #86efac; }
+    .sk-storm.is-calm > i svg { width: 1.2rem; height: 1.2rem; }
     .sk-storm b { font-size: .92rem; color: var(--color-gray-900); }
-    .sk-storm p { margin-top: .2rem; font-size: .8rem; color: var(--color-gray-600); line-height: 1.5; }
-    .sk-km { float: right; font-family: var(--font-heading); font-weight: 800; font-size: 1.05rem; color: var(--color-gray-900); }
+    .sk-storm p { font-size: .8rem; color: var(--color-gray-600); line-height: 1.5; }
+    .sk-km { grid-row: span 3; text-align: right; font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; line-height: 1.1; color: var(--color-gray-900); }
+    .sk-km small { display: block; font-family: var(--font-body, inherit); font-size: .66rem; font-weight: 700; color: var(--color-gray-500); }
     .sk-km.is-near { color: #dc2626; }
-    .sk-days { display: grid; grid-template-columns: repeat(10, minmax(2.8rem, 1fr)); gap: .3rem; margin-top: .7rem; overflow-x: auto; padding-bottom: .2rem; }
-    .sk-days div { border-radius: .75rem; padding: .45rem .2rem; text-align: center; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); font-size: .66rem; color: var(--color-gray-600); }
-    html.dark .sk-days div { background: #121a0d; border-color: #2b3a1c; }
-    .sk-days b { display: block; font-size: .72rem; color: var(--color-gray-900); }
-    .sk-days i { display: block; margin: .3rem auto .2rem; width: .5rem; border-radius: 999px; background: #4c8ed9; min-height: 2px; }
-    .sk-days em { display: block; font-style: normal; font-size: .62rem; color: #b45309; }
-    .sk-ask select { margin-top: .6rem; }
-    .sk-run { margin-top: .8rem; width: 100%; display: flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 1rem; border-radius: .95rem; border: 0;
-        font-weight: 800; color: #1a1a1a; background: linear-gradient(135deg, #f7d23a, #f5c518); cursor: pointer; transition: transform .28s var(--sk-ease); }
+    .sk-days { display: flex; gap: .45rem; margin: .75rem -1.05rem 0; padding: .1rem 1.05rem .35rem; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; }
+    .sk-day { flex: 0 0 4.6rem; scroll-snap-align: start; display: grid; justify-items: center; gap: .15rem; padding: .6rem .3rem .55rem; border-radius: 1rem; text-align: center;
+        background: var(--color-gray-50); border: 1px solid var(--color-gray-100); font-size: .7rem; color: var(--color-gray-600); animation: skUp .4s var(--sk-ease) both; animation-delay: calc(var(--i) * 35ms); }
+    html.dark .sk-day { background: #121a0d; border-color: #2b3a1c; }
+    .sk-day.is-today { border-color: var(--color-brand-600); background: #f3f8ec; }
+    html.dark .sk-day.is-today { background: #1c2c10; }
+    @keyframes skUp { from { opacity: 0; transform: translateY(8px); } }
+    .sk-day b { font-size: .78rem; color: var(--color-gray-900); }
+    .sk-day svg { width: 1.7rem; height: 1.7rem; margin: .1rem 0; }
+    .sk-day .t { font-size: .82rem; font-weight: 800; color: var(--color-gray-900); }
+    .sk-day .t small { font-weight: 600; color: var(--color-gray-500); }
+    .sk-day .r { display: block; width: 100%; height: .3rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; margin-top: .2rem; }
+    .sk-day .r i { display: block; height: 100%; border-radius: 999px; background: #4c8ed9; }
+    .sk-day em { font-style: normal; font-size: .64rem; font-weight: 800; color: #2563eb; }
+    html.dark .sk-day em { color: #93c5fd; }
+    .sk-day .g { font-size: .6rem; font-weight: 800; color: #b45309; }
+    .sk-ask select { margin-top: .7rem; }
+    .sk-run { margin-top: .8rem; width: 100%; display: flex; align-items: center; justify-content: center; gap: .5rem; padding: .9rem 1rem; border-radius: 1rem; border: 0;
+        font-weight: 800; color: #1a1a1a; background: linear-gradient(135deg, #f7d23a, #f5c518); box-shadow: 0 14px 30px -18px rgb(201 158 0 / .9); cursor: pointer; transition: transform .28s var(--sk-ease); }
+    .sk-run img { width: 1.6rem; height: 1.6rem; border-radius: 999px; }
     .sk-run:hover { transform: translateY(-1px); }
     .sk-run:disabled { opacity: .55; transform: none; cursor: default; }
     .sk-fine { margin-top: .45rem; font-size: .74rem; color: var(--color-gray-500); text-align: center; }
-    .sk-rep { margin-top: 1rem; }
+    .sk-rep { margin-top: 1rem; scroll-margin-top: calc(var(--app-head, 4rem) + .5rem); }
     .sk-rep[hidden] { display: none; }
-    .sk-rhead { border-radius: 1.1rem; padding: 1rem 1.1rem; color: #e2e8f0; background: radial-gradient(120% 140% at 100% 0%, #1e3a8a 0%, #0f172a 60%); }
+    .sk-rhead { border-radius: 1.2rem; padding: 1.05rem 1.1rem; color: #e2e8f0; background: radial-gradient(120% 140% at 100% 0%, #1e3a8a 0%, #0f172a 60%); animation: skUp .4s var(--sk-ease) both; }
     .sk-rhead.r-high, .sk-rhead.r-severe { background: radial-gradient(120% 140% at 100% 0%, #b91c1c 0%, #450a0a 65%); }
     .sk-rhead.r-moderate { background: radial-gradient(120% 140% at 100% 0%, #b45309 0%, #422006 65%); }
     .sk-rhead.r-low { background: radial-gradient(120% 140% at 100% 0%, #15803d 0%, #052e16 65%); }
     .sk-rhead small { font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; opacity: .85; }
-    .sk-rhead h3 { margin-top: .2rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; color: #fff; line-height: 1.3; }
-    .sk-rhead p { margin-top: .35rem; font-size: .84rem; line-height: 1.55; opacity: .9; }
+    .sk-rhead h3 { margin-top: .25rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; color: #fff; line-height: 1.3; }
     .sk-rtabs { display: flex; gap: .3rem; margin-top: .8rem; overflow-x: auto; scrollbar-width: none; }
     .sk-rtabs::-webkit-scrollbar { display: none; }
-    .sk-rtab { flex: none; padding: .42rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--color-gray-600); background: var(--color-white);
-        border: 1px solid var(--color-gray-200); cursor: pointer; transition: background-color .28s var(--sk-ease), color .28s var(--sk-ease); }
+    .sk-rtab { flex: none; padding: .45rem .85rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--color-gray-600); background: var(--color-white);
+        border: 1px solid var(--color-gray-200); cursor: pointer; transition: background-color .28s var(--sk-ease), color .28s var(--sk-ease), border-color .28s var(--sk-ease); }
     .sk-rtab.is-on { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
     .sk-pane { display: none; margin-top: .7rem; }
-    .sk-pane.is-on { display: block; animation: skFade .34s var(--sk-ease) both; }
-    @keyframes skFade { from { opacity: 0; transform: translateY(6px); } }
+    .sk-pane.is-on { display: block; animation: skUp .34s var(--sk-ease) both; }
     .sk-pane p, .sk-pane li { font-size: .86rem; line-height: 1.6; color: var(--color-gray-700); }
     .sk-pane p + p { margin-top: .5rem; }
-    .sk-acts li { display: flex; gap: .6rem; padding: .55rem 0; border-bottom: 1px dashed var(--color-gray-200); }
+    .sk-acts li { display: flex; gap: .6rem; padding: .6rem 0; border-bottom: 1px dashed var(--color-gray-200); }
+    .sk-acts li:last-child { border-bottom: 0; }
     .sk-acts em { flex: none; height: fit-content; font-style: normal; font-size: .66rem; font-weight: 800; text-transform: uppercase; padding: .2rem .5rem; border-radius: 999px; background: #fff1c2; color: #8a5a00; }
     .sk-saved { display: grid; gap: .45rem; margin-top: .6rem; }
-    .sk-srow { display: flex; gap: .6rem; align-items: center; width: 100%; padding: .6rem .7rem; border-radius: .85rem; border: 1px solid var(--color-gray-200); background: var(--color-white);
-        text-align: left; cursor: pointer; font-size: .82rem; color: var(--color-gray-800); }
+    .sk-srow { display: flex; gap: .6rem; align-items: center; width: 100%; padding: .65rem .75rem; border-radius: .9rem; border: 1px solid var(--color-gray-200); background: var(--color-white);
+        text-align: left; cursor: pointer; font-size: .82rem; color: var(--color-gray-800); transition: transform .28s var(--sk-ease), border-color .28s var(--sk-ease); }
+    .sk-srow:hover { transform: translateY(-1px); border-color: var(--color-brand-600); }
     .sk-srow i { flex: none; width: .65rem; height: .65rem; border-radius: 999px; background: #22c55e; }
     .sk-srow i.r-moderate { background: #f59e0b; } .sk-srow i.r-high, .sk-srow i.r-severe { background: #ef4444; }
-    .sk-srow span { min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sk-srow span { min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
     .sk-srow small { flex: none; color: var(--color-gray-500); }
     @media (prefers-reduced-motion: reduce) {
-        .sk-badge.is-warn, .sk-eye::before, .sk-eye::after, .sk-pane.is-on { animation: none; }
-        .sk-panel, .sk-lay, .sk-run, .sk-play { transition: none; }
+        .sk-badge.is-warn, .sk-eye::before, .sk-eye::after, .sk-pane.is-on, .sk-day, .sk-rhead { animation: none; }
+        .sk-panel, .sk-lay, .sk-run, .sk-play, .sk-read, .sk-place, .sk-srow { transition: none; }
     }
-    html.sm-still .sk-badge.is-warn, html.sm-still .sk-eye::before, html.sm-still .sk-eye::after { animation: none; }
+    html.sm-still .sk-badge.is-warn, html.sm-still .sk-eye::before, html.sm-still .sk-eye::after, html.sm-still .sk-day { animation: none; }
 </style>
 
 <div class="sk-wrap">
     <div class="sk-stage">
         <div class="sk-map" id="skMap"></div>
         <div class="sk-top">
-            <button type="button" class="sk-place" id="skPlaceBtn" aria-expanded="false">
+            <button type="button" class="sk-place sk-glass" id="skPlaceBtn" aria-expanded="false" aria-controls="skPanel">
                 <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
                 <span id="skPlaceName">Choose your farm</span>
+                <svg class="sk-caret" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>
-            <span class="sk-badge" id="skBadge"><i></i><span id="skBadgeText">Checking for storms…</span></span>
+            <span class="sk-badge" id="skBadge" role="status"><i></i><span id="skBadgeText">Checking for storms…</span></span>
         </div>
-        <div class="sk-side" id="skLayers">
-            <button type="button" class="sk-lay is-on" data-anim="clouds"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 18a4 4 0 01-.6-8A6 6 0 0118 8.5 4.5 4.5 0 0117.5 18H7z"/></svg></b><span>Satellite clouds</span></button>
-            <button type="button" class="sk-lay" data-anim="radar"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 12l6-6M4.9 19.1a10 10 0 010-14.2M19.1 4.9a10 10 0 010 14.2M8 16a5.6 5.6 0 010-8M16 8a5.6 5.6 0 010 8"/></svg></b><span>Rain radar</span></button>
-            <button type="button" class="sk-lay" data-owm="clouds_new"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg></b><span>Cloud cover now</span></button>
-            <button type="button" class="sk-lay" data-owm="precipitation_new"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M8 19l-1 2M12 19l-1 2M16 19l-1 2M7 15a4 4 0 01-.6-8A6 6 0 0118 5.5 4.5 4.5 0 0117.5 15H7z"/></svg></b><span>Rain now</span></button>
-            <button type="button" class="sk-lay" data-owm="wind_new"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 8h11a3 3 0 10-3-3M3 12h16a3 3 0 11-3 3M3 16h8"/></svg></b><span>Wind</span></button>
-            <button type="button" class="sk-lay is-on" data-storms><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg></b><span>Typhoons</span></button>
+        <div class="sk-chips" id="skLayers" role="toolbar" aria-label="Map layers">
+            <button type="button" class="sk-lay sk-glass is-on" data-anim="clouds" title="Satellite clouds, the last three hours"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 18a4 4 0 01-.6-8A6 6 0 0118 8.5 4.5 4.5 0 0117.5 18H7z"/></svg></b><span>Clouds</span></button>
+            <button type="button" class="sk-lay sk-glass" data-anim="radar" title="Rain radar, the last hours"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 12l6-6M4.9 19.1a10 10 0 010-14.2M19.1 4.9a10 10 0 010 14.2M8 16a5.6 5.6 0 010-8M16 8a5.6 5.6 0 010 8"/></svg></b><span>Rain radar</span></button>
+            <i class="sk-sep" aria-hidden="true"></i>
+            <button type="button" class="sk-lay sk-glass is-on" data-storms title="Typhoon tracks and cones"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg></b><span>Typhoons</span></button>
+            <button type="button" class="sk-lay sk-glass" data-owm="precipitation_new" title="Rain falling now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M8 19l-1 2M12 19l-1 2M16 19l-1 2M7 15a4 4 0 01-.6-8A6 6 0 0118 5.5 4.5 4.5 0 0117.5 15H7z"/></svg></b><span>Rain now</span></button>
+            <button type="button" class="sk-lay sk-glass" data-owm="clouds_new" title="Cloud cover now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg></b><span>Cloud cover</span></button>
+            <button type="button" class="sk-lay sk-glass" data-owm="wind_new" title="Wind now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 8h11a3 3 0 10-3-3M3 12h16a3 3 0 11-3 3M3 16h8"/></svg></b><span>Wind</span></button>
         </div>
         <div class="sk-panel" id="skPanel">
             <h4>Where is your farm?</h4>
             <button type="button" class="sk-opt" id="skHere"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg><span>Use my current location<small>From this phone's GPS</small></span></button>
-            <div class="flex gap-2"><input type="text" id="skQ" class="form-input flex-1" placeholder="Town or province" autocomplete="off"><button type="button" class="btn btn-white" id="skFind">Find</button></div>
+            <div class="flex gap-2"><input type="text" id="skQ" class="form-input flex-1 min-w-0" placeholder="Town or province" autocomplete="off" enterkeyhint="search"><button type="button" class="btn btn-white" id="skFind">Find</button></div>
             <div id="skFound" class="mt-2"></div>
             <h4>Or one of your lots</h4>
             <div class="sk-lots" id="skLots"></div>
         </div>
         <div class="sk-bottom">
-            <div class="sk-read" id="skRead"></div>
-            <div class="sk-bar" id="skBar">
+            <div class="sk-read" id="skRead" aria-live="polite"></div>
+            <div class="sk-bar sk-glass" id="skBar">
                 <button type="button" class="sk-play" id="skPlay" aria-label="Play">
                     <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
                     <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
                 </button>
                 <div class="sk-time"><b id="skTimeLabel">Loading the sky…</b><input type="range" id="skSlider" min="0" max="17" value="17" aria-label="Move through time"></div>
-                <div class="sk-modes" role="tablist"><button type="button" class="is-on" data-mode="past">Past 3 h</button><button type="button" data-mode="future">Forecast</button></div>
-                <label class="sk-op">Layer <input type="range" id="skOp" min="10" max="100" value="65" aria-label="Layer opacity"></label>
+                <div class="sk-two">
+                    <div class="sk-modes" role="tablist" aria-label="Past or forecast"><button type="button" class="is-on" data-mode="past">Past 3 h</button><button type="button" data-mode="future">Forecast</button></div>
+                    <label class="sk-op" title="How strong the layer shows"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 010 16z" fill="currentColor"/></svg><input type="range" id="skOp" min="10" max="100" value="65" aria-label="Layer opacity"></label>
+                </div>
             </div>
-            <label class="sk-op-m">Layer opacity <input type="range" id="skOpM" min="10" max="100" value="65" aria-label="Layer opacity"></label>
         </div>
     </div>
-    <p class="text-xs text-gray-400 mt-2">Clouds: Himawari-9 infrared from NASA GIBS. Rain radar: RainViewer. Live layers: OpenWeatherMap. Typhoon tracks: GDACS. Forecast: Open-Meteo. Times are Philippine time.</p>
+    <p class="sk-credit">Clouds: Himawari-9 infrared from NASA GIBS. Rain radar: RainViewer. Live layers: OpenWeatherMap. Typhoon tracks: GDACS. Forecast: Open-Meteo. Times are Philippine time.</p>
 
     <div class="sk-grid">
-        <div class="sk-card">
-            <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg>Typhoons near your farm</h3>
-            <p class="sk-sub">Distance from the eye to your farm, measured on the map. Inside 300 km is a direct threat.</p>
-            <div id="skStorms"></div>
-            <h3 class="mt-4"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 18a4 4 0 01-.6-8A6 6 0 0118 8.5 4.5 4.5 0 0117.5 18H7z"/></svg>The next 10 days at your farm</h3>
-            <div class="sk-days" id="skDays"></div>
+        <div class="sk-col">
+            <div class="sk-card">
+                <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg>Typhoons near your farm</h3>
+                <p class="sk-sub">Distance from the eye to your farm, measured on the map. Inside 300 km is a direct threat.</p>
+                <div id="skStorms"></div>
+            </div>
+            <div class="sk-card">
+                <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>The next 10 days at your farm</h3>
+                <p class="sk-sub">High and low, the rain expected and its chance. Swipe for more days.</p>
+                <div class="sk-days" id="skDays"><p class="sk-sub">Choose your farm to see its forecast.</p></div>
+            </div>
         </div>
         <div class="sk-card sk-ask">
             <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Ask Anee what it means for your crop</h3>
             <p class="sk-sub">Anee reads the storms, the forecast, ENSO and the past five years, then checks them against one of your lots: its crop, age and stage.</p>
             <select id="skLot" class="form-select"><option value="">No lot, my farm in general</option></select>
-            <button type="button" class="sk-run" id="skRun"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg><span id="skRunSays">Ask Anee</span></button>
+            <button type="button" class="sk-run" id="skRun"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""><span id="skRunSays">Ask Anee</span></button>
             <p class="sk-fine" id="skFine"></p>
             <div class="mt-4">
                 <b class="text-sm text-gray-700">Saved readings</b>
@@ -225,6 +282,27 @@
     let mode = 'past', anim = 'clouds', owm = null, frameIdx = 17, playing = null, opacity = 0.65;
     const animLayers = { clouds: [], radar: [] };
     let owmLayer = null, stormShapes = [], eyeOverlays = [], movingEye = null;
+
+    /* A day's sky by its WMO weather code (Open-Meteo), as a small picture and a word. */
+    const WX = {
+        sun: '<svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="#fde68a"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+        part: '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3.2" fill="#fde68a" stroke="#f59e0b"/><path d="M8 2.5v1.2M2.5 8h1.2M4.1 4.1l.9.9M11.9 4.1l-.9.9" stroke="#f59e0b"/><path d="M8.5 19a3.5 3.5 0 01-.4-7 5 5 0 019.6 1.2A3 3 0 0117.5 19h-9z" fill="#e2e8f0" stroke="#94a3b8"/></svg>',
+        cloud: '<svg viewBox="0 0 24 24" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.8" stroke-linejoin="round"><path d="M7 18a4 4 0 01-.6-8A6 6 0 0118 8.5 4.5 4.5 0 0117.5 18H7z"/></svg>',
+        rain: '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15a4 4 0 01-.6-8A6 6 0 0118 5.5 4.5 4.5 0 0117.5 15H7z" fill="#cbd5e1" stroke="#64748b"/><path d="M8 18l-1 2.5M12 18l-1 2.5M16 18l-1 2.5" stroke="#3b82f6" stroke-width="2"/></svg>',
+        storm: '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15a4 4 0 01-.6-8A6 6 0 0118 5.5 4.5 4.5 0 0117.5 15H7z" fill="#94a3b8" stroke="#475569"/><path d="M12.5 14l-2.5 4h3l-2 4" stroke="#f59e0b" stroke-width="2"/></svg>',
+        fog: '<svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"><path d="M4 9h16M3 13h18M5 17h14"/></svg>',
+    };
+    const wxKind = (code, rain) => {
+        const c = Number(code);
+        if (c >= 95) return 'storm';
+        if ((c >= 51 && c <= 67) || (c >= 80 && c <= 82) || rain >= 2) return 'rain';
+        if (c === 45 || c === 48) return 'fog';
+        if (c === 3) return 'cloud';
+        if (c === 1 || c === 2) return 'part';
+        return Number.isFinite(c) ? 'sun' : (rain >= 0.5 ? 'rain' : 'part');
+    };
+    const wxIcon = (code, rain) => WX[wxKind(code, rain)];
+    const wxWord = (code, rain) => ({ sun: 'Clear', part: 'Partly cloudy', cloud: 'Cloudy', rain: 'Rain', storm: 'Thunderstorms', fog: 'Fog' })[wxKind(code, rain)];
 
     /* Haversine, the great circle distance in kilometres. */
     const km = (a, b) => {
@@ -297,6 +375,7 @@
     };
     const panel = (on) => { $('skPanel').classList.toggle('is-on', on); $('skPlaceBtn').setAttribute('aria-expanded', String(on)); };
     $('skPlaceBtn').addEventListener('click', () => panel(!$('skPanel').classList.contains('is-on')));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && $('skPanel').classList.contains('is-on')) panel(false); });
     $('skHere').addEventListener('click', () => {
         if (!navigator.geolocation) return window.toast?.('This phone cannot share its location.', 'error');
         navigator.geolocation.getCurrentPosition((pos) => setFarm({ lat: pos.coords.latitude, lng: pos.coords.longitude, label: 'My location' }),
@@ -319,12 +398,11 @@
     /* ---- layers ---- */
     const setOpacity = (o) => {
         opacity = o;
-        $('skOp').value = $('skOpM').value = Math.round(o * 100);
+        $('skOp').value = Math.round(o * 100);
         if (owmLayer) owmLayer.setOpacity(o);
         paintFrame();
     };
     $('skOp').addEventListener('input', (e) => setOpacity(e.target.value / 100));
-    $('skOpM').addEventListener('input', (e) => setOpacity(e.target.value / 100));
     const ensureAnim = (kind) => {
         if (animLayers[kind].length || !FR[kind].length) return;
         animLayers[kind] = FR[kind].map((f) => { const l = new ScaledTiles(f.url, kind === 'clouds' ? 6 : 7); map.overlayMapTypes.push(l); return l; });
@@ -490,11 +568,11 @@
         $('skStorms').innerHTML = STORMS.length ? STORMS.map((s) => {
             const d = farm && s.eye ? km(farm, s.eye) : null;
             const close = farm ? (s.points || []).filter((p) => p.forecast).map((p) => ({ p, d: km(farm, p) })).sort((a, b) => a.d - b.d)[0] : null;
-            return '<div class="sk-storm">' + (d != null ? '<span class="sk-km' + (d <= 300 ? ' is-near' : '') + '">' + Math.round(d).toLocaleString() + ' km</span>' : '')
-                + '<b>' + esc(s.name) + '</b><p>' + (s.current ? 'Active now' : 'Ended') + (s.alert ? ' · ' + esc(s.alert) + ' alert' : '') + (s.maxWindKmh ? ' · up to ' + Math.round(s.maxWindKmh) + ' km/h' : '') + '</p>'
+            return '<div class="sk-storm"><b>' + esc(s.name) + '</b>' + (d != null ? '<span class="sk-km' + (d <= 300 ? ' is-near' : '') + '">' + Math.round(d).toLocaleString() + ' km<small>from your farm</small></span>' : '<span></span>')
+                + '<p>' + (s.current ? 'Active now' : 'Ended') + (s.alert ? ' · ' + esc(s.alert) + ' alert' : '') + (s.maxWindKmh ? ' · up to ' + Math.round(s.maxWindKmh) + ' km/h' : '') + '</p>'
                 + (close && close.p.ph ? '<p>Closest forecast point: <b>' + Math.round(close.d) + ' km</b> on ' + esc(new Date(close.p.ph).toLocaleString('en-PH', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric' })) + '</p>' : '')
                 + '</div>';
-        }).join('') : '<div class="sk-storm"><b>No active typhoon on the GDACS list</b><p>The tracks of any storm that forms will show on the map here.</p></div>';
+        }).join('') : '<div class="sk-storm is-calm"><i><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></i><span><b>No typhoon near the Philippines</b><p>The track and cone of any storm that forms will show on the map, with its distance to your farm.</p></span></div>';
     };
     const loadStorms = async () => {
         try {
@@ -513,9 +591,18 @@
     const loadForecast = async () => {
         if (!farm) return;
         try { const r = await window.api(U.forecast + '?lat=' + farm.lat + '&lng=' + farm.lng); FC = r.data || FC; } catch (_) {}
-        const maxR = Math.max(1, ...FC.days.map((d) => Number(d.rain) || 0));
-        $('skDays').innerHTML = FC.days.map((d) => '<div><b>' + esc(new Date(d.date + 'T00:00:00').toLocaleDateString('en-PH', { weekday: 'short' })) + '</b>' + esc(Math.round(d.tmax)) + '°'
-            + '<i style="height:' + Math.max(2, (Number(d.rain) || 0) / maxR * 44) + 'px"></i>' + esc(d.rain) + ' mm' + ((d.gust || 0) >= 60 ? '<em>' + Math.round(d.gust) + ' km/h</em>' : '') + '</div>').join('');
+        const maxR = Math.max(10, ...FC.days.map((d) => Number(d.rain) || 0));
+        const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Manila' });
+        $('skDays').innerHTML = FC.days.length ? FC.days.map((d, i) => {
+            const day = new Date(d.date + 'T00:00:00');
+            const rain = Number(d.rain) || 0;
+            return '<div class="sk-day' + (d.date === today ? ' is-today' : '') + '" style="--i:' + i + '" title="' + esc(wxWord(d.code, rain)) + '"><b>' + esc(d.date === today ? 'Today' : day.toLocaleDateString('en-PH', { weekday: 'short' }))
+                + '</b><span>' + esc(day.toLocaleDateString('en-PH', { month: 'short', day: 'numeric' })) + '</span>' + wxIcon(d.code, rain)
+                + '<span class="t">' + esc(Math.round(d.tmax)) + '°' + (d.tmin != null ? ' <small>' + esc(Math.round(d.tmin)) + '°</small>' : '') + '</span>'
+                + '<em>' + esc(rain >= 10 ? Math.round(rain) : rain) + ' mm' + (d.pop != null ? ' · ' + esc(Math.round(d.pop)) + '%' : '') + '</em>'
+                + '<span class="r"><i style="width:' + Math.min(100, rain / maxR * 100) + '%"></i></span>'
+                + ((d.gust || 0) >= 50 ? '<span class="g">Gusts ' + Math.round(d.gust) + ' km/h</span>' : '') + '</div>';
+        }).join('') : '<p class="sk-sub">The forecast did not load. Try again in a moment.</p>';
         if (mode === 'future') future(Number($('skSlider').value));
     };
 
