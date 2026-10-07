@@ -169,6 +169,29 @@ class LandingPage
                 ['icon' => '📍', 'title' => 'The right place', 'text' => 'Every lot keeps its own plan, its own forecast and its own map, with pins where the trouble is.'],
             ],
         ],
+        // Try it (2026-10-07): the visitor picks a crop and a planting day
+        // and watches a sample season land on its days. The tasks are the
+        // view's own (common practice); these are the words around them.
+        'demo' => [
+            'kicker' => 'Try it now',
+            'headline' => 'Your season, *planned in ten seconds*',
+            'sub' => 'Pick your crop and the day you plant. This is a sample of the calendar anee.io builds for every lot: each task on its own day, counted from planting.',
+            'cta' => 'Get my full season plan free',
+            'note' => 'A sample from common practice. Your own plan follows your variety, your field and your weather, and moves when they do.',
+        ],
+        // New this season (2026-10-07): the tools that watch the farm from
+        // space and from the label, each with its real screen.
+        'space' => [
+            'kicker' => 'New this season',
+            'headline' => 'See the trouble *before it reaches your field*',
+            'sub' => 'Four new tools watch over your farm: what the satellites see in your field, the typhoon on its way, every nutrient in your fertilizer, and the pest behind the damage.',
+            'items' => [
+                ['title' => 'Satellite Analysis', 'text' => 'Draw your field and see its health from space: greenness, the weak corner to walk first, and radar that sees through typhoon clouds.', 'image' => 'satellite'],
+                ['title' => 'Satellite Weather', 'text' => 'Clouds and rain over your farm, played back and fast forwarded, with every typhoon\'s path and a warning when one comes within 300 km.', 'image' => 'sky'],
+                ['title' => 'NPK Plus', 'text' => 'Tap the fertilizers you plan to use and see every nutrient, short, right or too much for your crop, before you buy a single sack. Free.', 'image' => 'npk'],
+                ['title' => 'Pest and disease finders', 'text' => 'From the damage you see to the active ingredient that works, with its group, so the next spray still works too. Free.', 'image' => 'finder'],
+            ],
+        ],
         'pillars' => [
             [
                 'kicker' => 'Precision timing',
@@ -214,7 +237,11 @@ class LandingPage
                 ['group' => 'Plan', 'icon' => '🌱', 'title' => 'Growth stages', 'text' => 'What the crop needs now, and what comes next.'],
                 ['group' => 'Plan', 'icon' => '📋', 'title' => 'Protocol Builder', 'text' => 'Write your crop program once, use it every season.'],
                 ['group' => 'Plan', 'icon' => '🧭', 'title' => 'When and what to plant', 'text' => 'Analyses of the window, the crop and the variety.'],
+                ['group' => 'Plan', 'icon' => '🧪', 'title' => 'NPK Plus', 'text' => 'Every nutrient in your fertilizer plan, checked against your crop.'],
                 ['group' => 'Grow', 'icon' => '🌦️', 'title' => 'Weather', 'text' => 'The forecast for each lot, by the day and the hour.'],
+                ['group' => 'Grow', 'icon' => '🛰️', 'title' => 'Satellite Analysis', 'text' => 'Your field\'s health from space, even through clouds.'],
+                ['group' => 'Grow', 'icon' => '🌀', 'title' => 'Satellite Weather', 'text' => 'Clouds, rain and typhoon paths over your farm.'],
+                ['group' => 'Grow', 'icon' => '🐛', 'title' => 'Pest and disease finders', 'text' => 'What it is, and the active ingredient to spray.'],
                 ['group' => 'Grow', 'icon' => '💬', 'title' => 'Chat Anee', 'text' => 'Photo checks and answers, in your own language.'],
                 ['group' => 'Grow', 'icon' => '🗺️', 'title' => 'Maps and drawing', 'text' => 'Draw each lot and pin where the trouble is.'],
                 ['group' => 'Grow', 'icon' => '📝', 'title' => 'Notes, photos and voice', 'text' => 'Everything you saw, on the day you saw it.'],
@@ -227,6 +254,7 @@ class LandingPage
                 ['group' => 'Measure', 'icon' => '⚖️', 'title' => 'Compare seasons', 'text' => 'Two seasons side by side, lot by lot.'],
                 ['group' => 'Measure', 'icon' => '📴', 'title' => 'Works without signal', 'text' => 'Keep recording in the field; it syncs when you are back.'],
                 ['group' => 'Measure', 'icon' => '👥', 'title' => 'A farmers community', 'text' => 'Ask other farmers, and share what worked.'],
+                ['group' => 'Measure', 'icon' => '📚', 'title' => 'The Stash', 'text' => 'Magazines and guides shared by our partners, like PhilRice.'],
             ],
         ],
         'testimonials' => [

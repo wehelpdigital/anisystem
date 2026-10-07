@@ -42,6 +42,65 @@
 @include('partials.ad-tags')
 <style>
     /* ---- the landing page's own dress (site-css holds the shared pieces) ---- */
+    /* Try it (2026-10-07): the crop and the day on the left, the season
+       landing task by task on the right; each row slides in on the house
+       curve and the line between them fills as they come. */
+    .lp-demo { background: linear-gradient(180deg, #fff, #f6faf1); }
+    .lpd { display: grid; gap: 1.2rem; align-items: start; }
+    @media (min-width: 900px) { .lpd { grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: 1.6rem; } .lpd-ask { position: sticky; top: 1.5rem; } }
+    .lpd-ask { padding: 1.2rem; border-radius: 1.3rem; background: #fff; border: 1px solid #e1edd3; box-shadow: 0 20px 40px -34px rgb(20 33 12 / .6); }
+    .lpd-q { display: flex; align-items: center; gap: .5rem; margin: .2rem 0 .6rem; font-family: var(--font-heading); font-weight: 800; color: #14210c; }
+    .lpd-q + .lpd-crops + .lpd-q { margin-top: 1.1rem; }
+    .lpd-q i { font-style: normal; width: 1.5rem; height: 1.5rem; border-radius: 999px; display: grid; place-items: center; font-size: .76rem; color: #fff; background: #4a7c2a; }
+    .lpd-crops { display: grid; gap: .4rem; }
+    .lpd-crops button { display: flex; align-items: center; gap: .45rem; padding: .6rem .8rem; border-radius: .9rem; text-align: left; font-weight: 800; color: #374151; background: #f6f8f3;
+        border: 1px solid #e5ebdf; cursor: pointer; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .lpd-crops button small { margin-left: auto; font-size: .72rem; font-weight: 600; opacity: .75; }
+    .lpd-crops button[aria-checked="true"] { background: #2d5016; border-color: #2d5016; color: #fff; }
+    .lpd-out { border-radius: 1.3rem; overflow: hidden; background: #fff; border: 1px solid #e1edd3; box-shadow: 0 24px 48px -36px rgb(20 33 12 / .65); }
+    .lpd-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .3rem .8rem; padding: .95rem 1.15rem; color: #e8efe1; background: linear-gradient(135deg, #3d6823, #24400f 80%); }
+    .lpd-head b { font-family: var(--font-heading); font-size: 1.1rem; color: #fff; }
+    .lpd-head span { font-size: .8rem; color: #cfe0bd; }
+    .lpd-list { position: relative; display: grid; gap: .1rem; padding: .8rem 1rem 1rem 2.6rem; }
+    .lpd-list::before { content: ''; position: absolute; left: 1.45rem; top: 1.3rem; bottom: 1.3rem; width: 2px; background: #e4efd4; }
+    .lpd-list::after { content: ''; position: absolute; left: 1.45rem; top: 1.3rem; width: 2px; height: var(--fill, 0%); max-height: calc(100% - 2.6rem); background: #4a7c2a; transition: height 1.2s cubic-bezier(.22,1,.36,1); }
+    .lpd-row { position: relative; display: grid; grid-template-columns: 5.6rem minmax(0, 1fr); gap: .2rem .8rem; align-items: baseline; padding: .55rem 0; border-bottom: 1px dashed #eef2ea;
+        opacity: 0; transform: translateX(10px); transition: opacity .4s cubic-bezier(.22,1,.36,1), transform .4s cubic-bezier(.22,1,.36,1); }
+    .lpd-row.is-in { opacity: 1; transform: none; }
+    .lpd-row:last-child { border-bottom: 0; }
+    .lpd-row::before { content: ''; position: absolute; left: -1.43rem; top: .9rem; width: .7rem; height: .7rem; border-radius: 999px; background: #fff; border: 2px solid #4a7c2a; }
+    .lpd-row.is-key::before { background: #f5c518; border-color: #c79e00; }
+    .lpd-when b { display: block; font-size: .86rem; color: #14210c; }
+    .lpd-when small { font-size: .7rem; font-weight: 800; color: #4a7c2a; }
+    .lpd-what b { font-size: .92rem; color: #1f2937; }
+    .lpd-what small { display: block; margin-top: .1rem; font-size: .78rem; line-height: 1.45; color: #6b7280; }
+    .lpd-what em { display: inline-block; margin-top: .25rem; padding: .1rem .5rem; border-radius: 999px; font-style: normal; font-size: .68rem; font-weight: 800; color: #075985; background: #e0f2fe; }
+    .lpd-note { margin-top: 1rem; text-align: center; font-size: .8rem; color: #6b7280; }
+    .lp-demo .fx-h em, .lp-demo .fx-h strong { font-style: normal; color: #4a7c2a; }
+    /* New this season, on a dark band: four real screens. */
+    .lp-space { position: relative; isolation: isolate; overflow: hidden; color: #e8efe1; background: radial-gradient(60rem 30rem at 80% 0%, #2c4f17 0%, transparent 60%), #0d1609; }
+    .lp-space::before { content: ''; position: absolute; inset: 0; z-index: -1; background-image: radial-gradient(rgb(255 255 255 / .1) 1px, transparent 1.5px); background-size: 22px 22px; opacity: .6; }
+    .lp-space-kick { display: inline-block; padding: .3rem .8rem; border-radius: 999px; font-size: .76rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #1f1500; background: #f5c518; }
+    .lp-space-h { margin: .8rem auto 0; max-width: 46rem; font-family: var(--font-heading); font-weight: 800; color: #fff; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15; }
+    .lp-space-h em, .lp-space-h strong { font-style: normal; color: #f5c518; }
+    .lp-space-p { margin: .9rem auto 0; max-width: 42rem; color: #b9caa8; line-height: 1.65; }
+    .lp-space-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr)); }
+    .lp-space-card { overflow: hidden; border-radius: 1.3rem; background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .1);
+        transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .lp-space-card:hover { transform: translateY(-5px); border-color: rgb(245 197 24 / .5); }
+    .lp-space-shot { position: relative; display: block; height: 15rem; overflow: hidden; background: linear-gradient(160deg, #1f3512, #0d1609); }
+    .lp-space-shot img { position: absolute; left: 50%; top: 1.1rem; width: 70%; transform: translateX(-50%); border-radius: 1.1rem 1.1rem 0 0; box-shadow: 0 18px 34px -16px rgb(0 0 0 / .9);
+        transition: transform .5s cubic-bezier(.22,1,.36,1); }
+    .lp-space-card:hover .lp-space-shot img { transform: translateX(-50%) translateY(-8px); }
+    .lp-space-tx { padding: 1rem 1.1rem 1.2rem; }
+    .lp-space-tx h3 { font-family: var(--font-heading); font-weight: 800; font-size: 1.08rem; color: #fff; }
+    .lp-space-tx p { margin-top: .35rem; font-size: .88rem; line-height: 1.55; color: #b9caa8; }
+    @media (prefers-reduced-motion: reduce) {
+        .lpd-row { opacity: 1; transform: none; transition: none; }
+        .lpd-list::after { transition: none; }
+        .lpd-crops button, .lp-space-card, .lp-space-shot img { transition: none; }
+    }
+
     .lp-hero { position: relative; isolation: isolate; overflow: hidden;
         background: radial-gradient(1200px 520px at 85% -10%, #e4efd4 0%, transparent 60%),
                     radial-gradient(900px 480px at -10% 110%, #fdf3c7 0%, transparent 55%), #fbfdf8; }
@@ -427,6 +486,65 @@
         </div>
     </section>
 
+    {{-- ================= Try it: a season in ten seconds (2026-10-07) =================
+         The visitor picks a crop and a planting day and watches a sample
+         season land on its days, counted the way anee.io counts them.
+         The tasks are common practice, said as a sample under the list. --}}
+    @if (! empty($lp['demo']['headline']))
+    <section class="lp-demo" id="lpDemo">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+            <div class="text-center reveal">
+                <span class="fx-kicker">{{ $lp['demo']['kicker'] }}</span>
+                <h2 class="fx-h mx-auto max-w-3xl text-balance">{!! $mark($lp['demo']['headline']) !!}</h2>
+                @if (trim($lp['demo']['sub']) !== '')<p class="fx-p mx-auto max-w-2xl">{{ $lp['demo']['sub'] }}</p>@endif
+            </div>
+            <div class="lpd mt-9 reveal">
+                <div class="lpd-ask">
+                    <p class="lpd-q"><i>1</i>Your crop</p>
+                    <div class="lpd-crops" role="radiogroup" aria-label="Your crop">
+                        <button type="button" role="radio" aria-checked="true" data-crop="rice">🌾 {{ \App\Support\Region::ph() ? 'Palay' : 'Rice' }}<small>transplanted</small></button>
+                        <button type="button" role="radio" aria-checked="false" data-crop="corn">🌽 {{ \App\Support\Region::ph() ? 'Mais' : 'Corn' }}<small>yellow corn</small></button>
+                        <button type="button" role="radio" aria-checked="false" data-crop="veg">🍆 {{ \App\Support\Region::ph() ? 'Talong' : 'Eggplant' }}<small>transplanted</small></button>
+                    </div>
+                    <p class="lpd-q"><i>2</i>The day you plant</p>
+                    <input type="date" id="lpdDate" class="form-input w-full" aria-label="The day you plant">
+                    <a href="{{ $signup }}" class="btn btn-primary btn-lg w-full mt-5 lpd-go">{{ $lp['demo']['cta'] }} {!! $arrow !!}</a>
+                </div>
+                <div class="lpd-out" aria-live="polite">
+                    <div class="lpd-head"><b id="lpdTitle">Your season</b><span id="lpdSpan"></span></div>
+                    <ol class="lpd-list" id="lpdList"></ol>
+                </div>
+            </div>
+            @if (trim($lp['demo']['note'] ?? '') !== '')<p class="lpd-note reveal">{{ $lp['demo']['note'] }}</p>@endif
+        </div>
+    </section>
+    @endif
+
+    {{-- ================= New this season: from space and from the label (2026-10-07) ================= --}}
+    @if (! empty($lp['space']['items']))
+    <section class="lp-space">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+            <div class="text-center reveal">
+                <span class="lp-space-kick">{{ $lp['space']['kicker'] }}</span>
+                <h2 class="lp-space-h text-balance">{!! $mark($lp['space']['headline']) !!}</h2>
+                @if (trim($lp['space']['sub']) !== '')<p class="lp-space-p">{{ $lp['space']['sub'] }}</p>@endif
+            </div>
+            <div class="lp-space-grid mt-10">
+                @foreach ($lp['space']['items'] as $i => $t)
+                    @php $img = in_array($t['image'] ?? '', ['satellite', 'sky', 'npk', 'finder', 'stash'], true) ? $t['image'] : 'sky'; @endphp
+                    <div class="lp-space-card reveal" style="--reveal-delay: {{ ($i % 4) * 0.07 }}s">
+                        <span class="lp-space-shot"><img src="{{ asset('images/site/app/' . $img . '.webp') }}" alt="{{ $t['title'] }} in anee.io" width="780" height="1520" loading="lazy"></span>
+                        <div class="lp-space-tx"><h3>{{ $t['title'] }}</h3><p>{{ $t['text'] }}</p></div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mt-10 text-center reveal">
+                <a href="{{ $signup }}" class="btn btn-accent btn-lg">{{ $lp['hero']['cta'] }} {!! $arrow !!}</a>
+            </div>
+        </div>
+    </section>
+    @endif
+
     {{-- ================= 4. FEATURES AS BENEFITS (zigzag) ================= --}}
     <section class="py-16 sm:py-24 bg-gradient-to-b from-brand-50/60 to-white overflow-x-clip">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-20 sm:space-y-28">
@@ -624,6 +742,84 @@
         new IntersectionObserver(([e]) => { heroGone = !e.isIntersecting && e.boundingClientRect.top < 0; paint(); }).observe(hero);
         new IntersectionObserver(([e]) => { closerIn = e.isIntersecting; paint(); }, { threshold: .15 }).observe(closer);
     }
+})();
+</script>
+
+<script>
+(() => {
+    /* Try it: a sample season, counted the way anee.io counts it. Common
+       practice only; the note under the list says so. */
+    const box = document.getElementById('lpDemo');
+    if (!box) return;
+    const ph = @json(\App\Support\Region::ph());
+    const SEASONS = {
+        rice: { name: ph ? 'Palay, transplanted' : 'Rice, transplanted', unit: 'DAT', len: 105, tasks: [
+            [-21, 'Prepare the seedbed', 'Soak and sow the seed for the seedlings.', 0, 'DAS 0'],
+            [-14, 'Plow and flood the field', 'First plowing, then let the stubble rot under water.'],
+            [-2, 'Final harrowing and leveling', 'A level field keeps the water even and the weeds down.'],
+            [0, 'Transplant, with basal fertilizer', 'Complete and ammonium phosphate, worked into the mud.', 1],
+            [3, 'Pre-emergence herbicide', 'On standing water, three days after transplanting.', 0, '', 'Checks the forecast first'],
+            [14, 'First top-dress', 'Urea at early tillering, on a thin sheet of water.', 1],
+            [35, 'Second top-dress', 'Urea and potash at panicle initiation.', 1],
+            [45, 'Scout for stem borer and leaffolder', 'Spray only past the threshold.', 0, '', 'Checks the forecast first'],
+            [60, 'Flowering: keep 5 cm of water', 'The stage that decides the grain.'],
+            [85, 'Drain the field', 'Two weeks before harvest.'],
+            [100, 'Harvest window', 'When 85 percent of the grains are golden.', 1],
+        ] },
+        corn: { name: ph ? 'Mais, yellow corn' : 'Yellow corn', unit: 'DAP', len: 110, tasks: [
+            [-14, 'Plow and harrow', 'Two passes, then furrows 75 cm apart.'],
+            [0, 'Plant, with basal fertilizer', 'Seeds in the furrow, complete fertilizer beside them.', 1],
+            [3, 'Pre-emergence herbicide', 'On moist soil, before the weeds come up.', 0, '', 'Checks the forecast first'],
+            [14, 'First side-dress and off-barring', 'Urea beside the row, soil pulled away from the plants.', 1],
+            [21, 'Scout for fall armyworm', 'Look into the whorl; spray only when needed.', 0, '', 'Checks the forecast first'],
+            [30, 'Second side-dress and hilling up', 'Urea, then soil back against the stalks.', 1],
+            [55, 'Tasseling and silking', 'Water now if the soil is dry.'],
+            [100, 'Harvest window', 'When the husks are dry and the black layer shows.', 1],
+        ] },
+        veg: { name: ph ? 'Talong, transplanted' : 'Eggplant, transplanted', unit: 'DAT', len: 120, tasks: [
+            [-30, 'Sow the seedlings', 'In trays or a seedbed, under a light shade.', 0, 'DAS 0'],
+            [-7, 'Prepare raised beds', 'Beds 1 m wide with mulch, and organic fertilizer worked in.'],
+            [0, 'Transplant, with basal fertilizer', 'In the late afternoon, then water.', 1],
+            [7, 'Replant the missing hills', 'Keep the stand even.'],
+            [14, 'First side-dress', 'Complete fertilizer beside each plant.', 1],
+            [25, 'Stake the plants', 'Before the first fruits weigh them down.'],
+            [30, 'Scout for fruit and shoot borer', 'Cut and bury the wilted tips each week.', 0, '', 'Checks the forecast first'],
+            [50, 'First harvest', 'Then every three to four days.', 1],
+            [110, 'Last harvest and clearing', 'Pull the old plants to break the pest cycle.'],
+        ] },
+    };
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const still = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let crop = 'rice', timers = [];
+    const d0 = new Date(); d0.setDate(d0.getDate() + 14);
+    $('lpdDate').value = d0.toISOString().slice(0, 10);
+    const fmt = (d) => d.toLocaleDateString(ph ? 'en-PH' : undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    const draw = () => {
+        timers.forEach(clearTimeout); timers = [];
+        const S = SEASONS[crop];
+        const base = new Date(($('lpdDate').value || d0.toISOString().slice(0, 10)) + 'T00:00:00');
+        const at = (n) => { const d = new Date(base); d.setDate(d.getDate() + n); return d; };
+        $('lpdTitle').textContent = S.name;
+        $('lpdSpan').textContent = fmt(at(S.tasks[0][0])) + ' to ' + fmt(at(S.tasks[S.tasks.length - 1][0])) + ' · ' + S.tasks.length + ' tasks';
+        const list = $('lpdList');
+        list.style.setProperty('--fill', '0%');
+        list.innerHTML = S.tasks.map(([n, t, sub, key, label, wx]) => '<li class="lpd-row' + (key ? ' is-key' : '') + '"><span class="lpd-when"><b>' + esc(fmt(at(n))) + '</b><small>'
+            + esc(label || (n < 0 ? Math.abs(n) + ' days before' : S.unit + ' ' + n)) + '</small></span><span class="lpd-what"><b>' + esc(t) + '</b><small>' + esc(sub) + '</small>'
+            + (wx ? '<em>' + esc(wx) + '</em>' : '') + '</span></li>').join('');
+        const rows = [...list.children];
+        if (still()) { rows.forEach((r) => r.classList.add('is-in')); list.style.setProperty('--fill', '100%'); return; }
+        rows.forEach((r, i) => timers.push(setTimeout(() => { r.classList.add('is-in'); list.style.setProperty('--fill', Math.round((i + 1) / rows.length * 100) + '%'); }, 120 + i * 140)));
+    };
+    box.querySelectorAll('[data-crop]').forEach((b) => b.addEventListener('click', () => {
+        crop = b.dataset.crop;
+        box.querySelectorAll('[data-crop]').forEach((x) => x.setAttribute('aria-checked', String(x === b)));
+        draw();
+    }));
+    $('lpdDate').addEventListener('change', draw);
+    // It plays the first time it comes into view.
+    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); draw(); } }, { rootMargin: '0px 0px -25% 0px' });
+    io.observe(box);
 })();
 </script>
 @endpush
