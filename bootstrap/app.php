@@ -78,13 +78,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('digests:send')->hourly();
         // The farm news roundup asks every morning; it writes only every few
         // days and only when the feeds have new stories (App\Services\NewsRoundup).
-        $schedule->call(function () {
-            $news = app(\App\Services\NewsRoundup::class);
-            [$run] = $news->open('schedule', false);
-            if ($run) {
-                $news->work($run);
-            }
-        })->name('news-roundup')->dailyAt('07:00')->timezone('Asia/Manila');
+        // In the background, so a slow AI answer never holds the next minute.
+        $schedule->command('news:roundup')->dailyAt('07:00')->timezone('Asia/Manila')
+            ->withoutOverlapping(180)->runInBackground();
+        // Proof the scheduler runs (Laravel Cloud's toggle, 2026-10-07):
+        // /deploy-check shows the last tick, written to the shared settings.
+        $schedule->call(fn () => \App\Models\AsSiteSetting::put('scheduler.tick', now()->toIso8601String()))
+            ->name('scheduler-heartbeat')->everyFiveMinutes();
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // An expired/stale CSRF token (page left open past the session

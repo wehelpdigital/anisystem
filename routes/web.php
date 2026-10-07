@@ -131,6 +131,13 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
         // -- booleans only, never the token. A signup that verified on the live
         // site and never reached Acumbamail is either this or a refusal in
         // the logs, and this answers the first without a dashboard visit.
+        // Whether the scheduler is running: it writes a tick every five minutes.
+        'scheduler' => (function () {
+            $tick = \App\Models\AsSiteSetting::get('scheduler.tick');
+            $at = $tick ? \Carbon\Carbon::parse($tick) : null;
+
+            return ['lastTick' => $tick, 'minutesAgo' => $at ? (int) $at->diffInMinutes(now()) : null, 'running' => $at !== null && $at->diffInMinutes(now()) <= 11];
+        })(),
         // The free tools' email check: whether the Reoon key reached this env.
         'reoon' => ['configured' => app(\App\Services\EmailVerifier::class)->configured()],
         'acumbamail' => [
