@@ -216,15 +216,15 @@
         .te-mark { flex: none; width: 1rem; height: 1rem; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
         .te-fine { margin-top: .6rem; font-size: .74rem; color: #6b7280; }
         @media (prefers-reduced-motion: reduce) { .te-list li { transition: none; } }
-        @media (min-width: 768px) { .ft-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 3rem; } }
-        .ft-side { display: grid; gap: 1.6rem; align-content: start; }
-        .ft-h { margin-bottom: .7rem; font-weight: 700; color: #fff; }
-        .ft-list { display: grid; gap: .45rem; font-size: .86rem; color: #9ca3af; }
-        .ft-list a { color: #9ca3af; text-decoration: none; transition: color .28s cubic-bezier(.22,1,.36,1); }
-        .ft-list a:hover { color: #f5c518; }
-        .ft-two { display: grid; gap: 1.6rem; }
-        @media (min-width: 480px) { .ft-two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; } }
-        .ft-note { font-size: .72rem; line-height: 1.5; color: #6b7280; }
+        @media (min-width: 768px) { .fo-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 3rem; } }
+        .fo-side { display: grid; gap: 1.6rem; align-content: start; }
+        .fo-h { margin-bottom: .7rem; font-weight: 700; color: #fff; }
+        .fo-list { display: grid; gap: .45rem; font-size: .86rem; color: #9ca3af; }
+        .fo-list a { color: #9ca3af; text-decoration: none; transition: color .28s cubic-bezier(.22,1,.36,1); }
+        .fo-list a:hover { color: #f5c518; }
+        .fo-two { display: grid; gap: 1.6rem; }
+        @media (min-width: 480px) { .fo-two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; } }
+        .fo-note { font-size: .72rem; line-height: 1.5; color: #6b7280; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-white">
@@ -456,7 +456,7 @@
     </section>
 
     <footer class="bg-gray-900 text-gray-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid gap-8 items-start ft-grid">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid gap-8 items-start fo-grid">
             <div class="max-w-xl">
                 {{-- Its own shape at any width: a squeezed column used to
                      stretch the wordmark sideways. --}}
@@ -534,30 +534,30 @@
                     ['BusinessWorld', 'https://www.bworldonline.com'],
                 ];
             @endphp
-            <div class="ft-side">
+            <div class="fo-side">
                 <div>
-                    <h2 class="ft-h">Contact</h2>
-                    <ul class="ft-list">
+                    <h2 class="fo-h">Contact</h2>
+                    <ul class="fo-list">
                         <li><a href="mailto:support@anee.io">support@anee.io</a></li>
                         <li>Philippines</li>
                     </ul>
                 </div>
                 @if (\App\Support\Region::ph())
-                    <div class="ft-two">
+                    <div class="fo-two">
                         <div>
-                            <h2 class="ft-h">Government and research</h2>
-                            <ul class="ft-list">
+                            <h2 class="fo-h">Government and research</h2>
+                            <ul class="fo-list">
                                 @foreach ($ftGov as [$ftName, $ftUrl])<li><a href="{{ $ftUrl }}" target="_blank" rel="noopener">{{ $ftName }}</a></li>@endforeach
                             </ul>
                         </div>
                         <div>
-                            <h2 class="ft-h">Our news sources</h2>
-                            <ul class="ft-list">
+                            <h2 class="fo-h">Our news sources</h2>
+                            <ul class="fo-list">
                                 @foreach ($ftNews as [$ftName, $ftUrl])<li><a href="{{ $ftUrl }}" target="_blank" rel="noopener">{{ $ftName }}</a></li>@endforeach
                             </ul>
                         </div>
                     </div>
-                    <p class="ft-note">Links to the agencies and newsrooms anee.io reads. They are not partners and do not endorse anee.io.</p>
+                    <p class="fo-note">Links to the agencies and newsrooms anee.io reads. They are not partners and do not endorse anee.io.</p>
                 @endif
             </div>
         </div>

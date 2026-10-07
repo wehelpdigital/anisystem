@@ -1,0 +1,195 @@
+{
+  "section": "features",
+  "slug": "npk-plus-calculator",
+  "sortOrder": 420,
+  "lang": "en",
+  "category": "Planning",
+  "title": "NPK Plus: A Free Fertilizer Calculator for Every Nutrient in Your Plan",
+  "metaTitle": "Fertilizer Calculator: NPK Plus Adds Up Every Nutrient",
+  "metaDescription": "A free fertilizer calculator for Filipino farmers. Pick your crop and products, and NPK Plus adds up N, P2O5 and K2O per hectare against the usual rate.",
+  "focusKeyword": "fertilizer calculator",
+  "keywords": [
+    "fertilizer calculator",
+    "NPK calculator",
+    "fertilizer calculation",
+    "urea fertilizer",
+    "complete fertilizer 14 14 14",
+    "soil test",
+    "fertilizer for rice"
+  ],
+  "excerpt": "NPK Plus is the free fertilizer calculator in anee.io. Pick your crop and the products you plan to use, and it adds up every nutrient they carry, per hectare and for the whole area. Then it holds the total against the usual rate for your crop, so you see what is short and what is too much before you buy a single bag.",
+  "heroImage": {
+    "src": "/images/site/app/npk.webp",
+    "alt": "NPK Plus fertilizer calculator on a phone showing 97 kg nitrogen, 28 kg P2O5 and 58 kg K2O per hectare, with bars against the usual rate for transplanted rice",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How the fertilizer calculator works"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Crop and area",
+          "text": "Find your crop and type the area in hectares or square meters. Palay, mais, vegetables, legumes, fruit trees, coconut, coffee and cacao are on the list."
+        },
+        {
+          "title": "Your fertilizers",
+          "text": "Tap products from the shelf, then type how much you will use for the whole area, in kilograms, bags, grams or liters. The shelf holds 46 common products, from urea and ammosul to lime, zinc, manure and inoculants."
+        },
+        {
+          "title": "A product not on the list",
+          "text": "Add it from its label: the name, the form and the percent of each nutrient as printed. It stays under My products for next time."
+        },
+        {
+          "title": "Your soil test, if you have one",
+          "text": "Type the pH, organic matter, N, P, K, zinc, boron and sulfur from the test. The result decides if your soil needs the low or the high end of the usual rate."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What NPK Plus tells you"
+    },
+    {
+      "type": "text",
+      "text": "The answer opens with three big numbers: N, P2O5 and K2O in kg per hectare. Under them, a table gives each nutrient for the whole area and per hectare, as the element and as the oxide. Calcium, magnesium, sulfur and the micronutrients join the table only when a product in your plan carries them.\n\nNext come bars against the usual rate for your crop, taken from DA, PhilRice and state university guides. Each nutrient reads Short, Right or Too much. So if your mix of urea and [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14) leaves the phosphorus short, you see it before the season starts."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The harvest the fertilizer alone can feed"
+    },
+    {
+      "type": "text",
+      "text": "NPK Plus also says how much harvest the fertilizer by itself can feed, and which nutrient runs out first. It counts only the share a crop takes up in its first season. When a source gives no figure, it assumes 40 percent of the nitrogen, 20 percent of the phosphorus and 50 percent of the potassium. Your soil adds its own share on top, often most of the harvest. So read this line as a check on balance, not as your expected yield. Every number comes with its source."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Analyze further with Anee"
+    },
+    {
+      "type": "text",
+      "text": "Save the calculation, then ask Anee, your smart farm technician. Tell her where the field is, the soil, the water and the planting date. Say how you will apply it: all at planting, in two splits, or in three or more. She looks up the DA, BSWM or PhilRice recommendation for your crop and province, and the soils and rain of your area. Then she says what to keep, cut, add or split, and when each product should go on. She names products by grade, never by brand."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Price the plan before you buy",
+      "text": "Once the balance looks right, compare the [urea fertilizer](/blog/urea-fertilizer) price at your dealer with the FPA weekly prices. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows the same arithmetic by hand."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "NPK Plus on the Activities board"
+    },
+    {
+      "type": "text",
+      "text": "Your season already holds a fertilizer plan, in the materials of each task on your [cropping calendar](/features/cropping-calendar). The NPK Plus button on the Activities board runs the same fertilizer calculator over them, lot by lot. It splits what is already applied, meaning the tasks you ticked done, from what is still planned, per hectare and against the usual rate.\n\nA task with no lot named counts for every lot, shared out by lot size. NPK Plus also reads names the way farmers write them, like Urea 46 0 0, Ammosul or ipot ng manok (chicken manure). A fertilizer name it cannot read goes under Not counted, so nothing drops out quietly. This part is free.\n\nWith Anee on your plan, ask her to read up to eight lots at a time. She weighs each lot's stage, its place, its rain and ENSO, then says what to apply next and when. Each lot she reads uses credits."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "In the Protocol Builder too"
+    },
+    {
+      "type": "text",
+      "text": "A protocol in the [Protocol Builder](/features/protocol-builder) is the season written ahead of time. Its NPK Plus button adds up the fertilizer task by task on its day count, with a running total. The amounts count for the area you name, one hectare unless you say otherwise. After that, Anee can review the plan by growth stage and say which split to move or add."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Free, with Anee when you want her",
+      "text": "The calculator and its totals on the board and in the protocol are free on every plan, Libre included. Anee's readings come with Libre plus Anee, Solo Farmer and Farm Owner, and each one shows its price before you start."
+    },
+    {
+      "type": "cta",
+      "title": "Check your fertilizer plan free",
+      "text": "Sign up free and run NPK Plus as many times as you like.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the fertilizer calculator"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is NPK Plus free?",
+          "a": "Yes. The calculator has no AI in it and no limit. Only Anee's readings use credits."
+        },
+        {
+          "q": "Why does it show both P2O5 and P?",
+          "a": "Fertilizer labels give phosphorus as P2O5 and potassium as K2O, the oxides. Many soil guides use the elements instead. NPK Plus shows both, so you can match a label or a recommendation either way."
+        },
+        {
+          "q": "Can I add a fertilizer that is not on the list?",
+          "a": "Yes. Type it in from its label, with the percent of each nutrient, and it stays under My products."
+        },
+        {
+          "q": "Does it count organic fertilizer and inoculants?",
+          "a": "Yes. Chicken and carabao manure, vermicompost and commercial organic fertilizer are on the shelf. Inoculants like Azospirillum count as a field trial estimate per hectare, and those values vary a lot."
+        },
+        {
+          "q": "Is the yield line my expected harvest?",
+          "a": "No. It is what the fertilizer alone can feed. Your soil gives its own share, and the weather, the variety and the timing still decide the harvest. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) covers the timing."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        },
+        {
+          "label": "Urea fertilizer",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Protocol Builder",
+          "url": "/features/protocol-builder"
+        },
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Inventory and expenses",
+          "url": "/features/farm-inventory-and-expenses"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "FPA: Weekly fertilizer prices",
+          "url": "https://fpa.da.gov.ph/weekly-prices/"
+        }
+      ]
+    }
+  ]
+}

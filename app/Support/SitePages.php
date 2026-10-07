@@ -107,7 +107,7 @@ class SitePages
             'crumb' => "Farmers' questions",
             'hubTitle' => "Farmers' Questions, Answered by Anee",
             'metaTitle' => 'Farming Questions Answered: Palay, Mais, Pests, Fertilizer',
-            'metaDescription' => 'Real questions from Filipino farmers about palay, mais, vegetables, pests and fertilizer, each answered in full by Anee, the anee.io AI technician.',
+            'metaDescription' => 'Real questions from Filipino farmers about palay, mais, vegetables, pests and fertilizer, each answered in full by Anee, the anee.io smart farm technician.',
             'intro' => 'Real questions from farmers, each answered in full: what to do, when, and how much. Ask your own and the answer comes to your email.',
             'kicker' => 'Ask Anee',
         ],
@@ -129,7 +129,7 @@ class SitePages
      */
     public const FEATURES = [
         'cropping-calendar' => ['Cropping Calendar', 'M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 10l2 2 4-4', 'Plan the whole season by DAS, DAT or DAP, from land preparation to harvest. Every lot keeps its own day zero.', 100],
-        'ai-agricultural-technician' => ['Anee, the AI Technician', 'M8 10h8M8 14h5m8-2a8 8 0 01-11.6 7.1L4 20l1-4.2A8 8 0 1121 12z', 'Ask about pests, fertilizer or a sick plant in Tagalog or English, and show her a photo of it.', 150],
+        'ai-agricultural-technician' => ['Anee, Your Smart Farm Technician', 'M8 10h8M8 14h5m8-2a8 8 0 01-11.6 7.1L4 20l1-4.2A8 8 0 1121 12z', 'Ask about pests, fertilizer or a sick plant in Tagalog or English, and show her a photo of it.', 150],
         'growth-stages-and-weather' => ['Growth Stages and Weather', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 'See the crop growth stage of every lot on any date, with the weather forecast for your farm.', 88],
         'farm-workers-and-payroll' => ['Workers and Payroll', 'M17 20h5v-2a4 4 0 00-5-3.9M9 20H2v-2a4 4 0 015-3.9m6-4.1a4 4 0 11-8 0 4 4 0 018 0zm6 2a3 3 0 11-6 0 3 3 0 016 0z', 'Keep your workers, their daily rates and attendance, and let the labor cost add itself up.', 32],
         'farm-inventory-and-expenses' => ['Inventory and Expenses', 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4', 'Know what fertilizer, seeds and chemicals sit in the shed, and what each bag really cost you.', 24],
@@ -166,6 +166,11 @@ class SitePages
         'profit-report' => ['Profit Report', 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6', 'What the harvest earned against everything the season spent, lot by lot.', 130],
         'anee-season-report' => ['Anee Season Report', 'M11.5 3.4l2.6 5.3 5.9.9-4.3 4.1 1 5.9-5.2-2.8-5.3 2.8 1-5.9L3 9.6l5.9-.9z', 'Anee reads your finished season and says what went well, what went wrong and what to change.', 50],
         'compare-reports' => ['Compare Reports', 'M12 3v18M5 7h14M5 7l-3 7a4 4 0 006 0L5 7zm14 0l-3 7a4 4 0 006 0l-3-7z', 'Two reports side by side, the difference line by line, and Anee on what changed.', 260],
+        'satellite-analysis' => ['Satellite Analysis', 'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1M5.6 18.4l2.1-2.1m8.6-8.6l2.1-2.1M12 9a3 3 0 100 6 3 3 0 000-6z', 'Draw your field and see its health from space: greenness, weak spots, and radar that sees through clouds.', 160],
+        'satellite-weather' => ['Satellite Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', 'Clouds and rain over your farm, played back and forward, with every typhoon\'s path and its distance to you.', 210],
+        'npk-plus-calculator' => ['NPK Plus Calculator', 'M6 7h12l-1 13H7L6 7zm3 0V5a3 3 0 016 0v2', 'Every nutrient in your fertilizer plan, checked against what your crop needs. Free.', 35],
+        'pest-and-disease-finders' => ['Pest and Disease Finders', 'M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z', 'From the damage you see to the active ingredient to spray, with its group, and weed control by the age of your rice.', 0],
+        'the-stash' => ['The Stash', 'M4 7h16M4 7l1 12h14l1-12M4 7l2-3h12l2 3M9 11h6', 'Magazines and guides shared by anee.io\'s partners, starting with every PhilRice Magazine issue.', 45],
         'view-as-protocol' => ['View as Protocol', 'M9 5h11M9 12h11M9 19h11M4.5 5h.01M4.5 12h.01M4.5 19h.01', 'Your best lot\'s finished season as a step by step recipe for the next one.', 150],
     ];
 

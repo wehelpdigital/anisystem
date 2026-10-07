@@ -29,9 +29,7 @@
     $ask = route('ask.page');
     $stages = $HW::stages();
     $tools = collect($stages)->flatMap(fn ($s) => $s['items'])->keyBy('key');
-    // A tool's "Read more": its feature page, or for the two with none, where a visitor can see them.
-    $toolUrl = fn ($it) => (! empty($it['page']) && $ph) ? \App\Support\SitePages::url('features', $it['page'])
-        : (['finders' => url('/pests') . '#finder', 'stash' => route('features') . '#resources'][$it['key']] ?? route('how'));
+    $toolUrl = fn ($it) => (! empty($it['page']) && $ph) ? \App\Support\SitePages::url('features', $it['page']) : route('how');
     $filmOf = function (string $key, ?string $name = null) use ($HW, $tools) {
         $v = $HW::video($key);
         return $v ? ['key' => $key, 'src' => $v[0], 'poster' => $v[1], 'name' => $name ?? ($tools[$key]['name'] ?? '')] : null;

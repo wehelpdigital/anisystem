@@ -1,0 +1,177 @@
+{
+  "section": "features",
+  "slug": "the-stash",
+  "sortOrder": 440,
+  "lang": "en",
+  "category": "Resources",
+  "title": "The Stash: Every PhilRice Magazine Issue, Read Inside anee.io",
+  "metaTitle": "PhilRice Magazine: Every Issue in The Stash on anee.io",
+  "metaDescription": "Read every PhilRice Magazine issue inside anee.io. The Stash shelves resources shared by partners, with search by title, topic and year. Free to read.",
+  "focusKeyword": "PhilRice magazine",
+  "keywords": [
+    "PhilRice magazine",
+    "PhilRice",
+    "Philippine Rice Research Institute",
+    "PalayCheck",
+    "rice varieties in the Philippines",
+    "pagtatanim ng palay"
+  ],
+  "excerpt": "The Stash is the shelf in anee.io for resources our partners share with farmers, and it starts with every PhilRice Magazine issue. PhilRice, the Philippine Rice Research Institute, publishes the magazine in English and Filipino. In the Stash you can search more than 70 issues, posted since 2015, and read them on your phone without leaving the app.",
+  "heroImage": {
+    "src": "/images/site/app/stash.webp",
+    "alt": "The PhilRice Magazine shelf in the anee.io Stash on a phone, with a search box, year chips and the covers of the Mas Handa, Mas Matatag and Standing Strong issues",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is in the Stash"
+    },
+    {
+      "type": "text",
+      "text": "The Stash sits on your dashboard as a card that folds open. Each partner gets its own row, with its shelves under it. The first partner is PhilRice, the Department of Agriculture agency that breeds rice varieties and wrote PalayCheck, the rice crop management system. Its shelf holds PhilRice Magazine, every issue it has posted online.\n\nEverything on a shelf belongs to the partner that shared it. The anee.io team did not write it. We keep it in one place, so you can find it fast and read it in the field."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Every PhilRice Magazine issue on one shelf"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice Magazine carries farmer stories, new varieties and the research behind better harvests, in English and Filipino. Recent issues include Mas Handa, Mas Matatag from September 2026, on farmers who keep planting through harsher heat and heavier rain. Before it came Standing Strong from July 2026, on farmers who adapt as costs rise.\n\nThe shelf is built for a phone:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The cover of every issue, with the month it was posted and its file size",
+        "A search box for titles and topics, in English or Filipino words",
+        "Year chips from 2015 onward, and a switch for newest or oldest first",
+        "More issues as you scroll, 18 at a time"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So if you want what PhilRice wrote about seed before you buy, type binhi (seed) and the matching issues come up. Pair what you read with our list of [rice varieties in the Philippines](/crops/rice-varieties-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Read it like a magazine, on your phone"
+    },
+    {
+      "type": "text",
+      "text": "Tap a cover and the issue opens in the app's own reader. Pages draw as you scroll toward them, so a big issue opens at page one without waiting for the whole file. Jump to a page by its number, zoom in for the small print, or fit the page to your screen. A download button saves the PDF to your phone. Under the pages, a link takes you to the issue's original page on the PhilRice site."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Save an issue before you head out",
+      "text": "The far lot may have no signal. Download the issue you want while you still have data, then read it later from your phone's files."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How the PhilRice magazine helps your season"
+    },
+    {
+      "type": "text",
+      "text": "The magazine is research made readable, and it works best beside your own records. Read about a practice, then put its dates on your [cropping calendar](/features/cropping-calendar). After that, follow each lot's stage on [growth stages and weather](/features/growth-stages-and-weather), so the advice lands at the right time.\n\nFor the whole palay season in plain steps, start with our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay). When an article does not fit your field, ask [Anee, your smart farm technician](/features/ai-agricultural-technician), how it applies to your lots. She answers in Tagalog or English."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Free on every plan",
+      "text": "The Stash comes with every anee.io account, Libre included. Reading costs no credits."
+    },
+    {
+      "type": "cta",
+      "title": "Open the Stash",
+      "text": "Sign up free and read every PhilRice Magazine issue on your phone.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the PhilRice magazine shelf"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Did anee.io write these magazines?",
+          "a": "No. PhilRice Magazine belongs to the Philippine Rice Research Institute. The Stash shelves resources that partners share with anee.io farmers, and each issue links back to its original page."
+        },
+        {
+          "q": "Is the Stash free?",
+          "a": "Yes, with any anee.io account, Libre included. Reading uses no credits."
+        },
+        {
+          "q": "Which issues are on the shelf?",
+          "a": "The PhilRice Magazine issues the institute has posted online, more than 70 of them, posted since 2015."
+        },
+        {
+          "q": "Can I read an issue without signal?",
+          "a": "Download it first. The download button saves the PDF, and your phone opens it without a connection."
+        },
+        {
+          "q": "Are the magazines in Filipino?",
+          "a": "The magazine comes in English and Filipino, so you will find articles in both. Search works with words in either language."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Palay",
+          "url": "/crops/palay"
+        },
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Anee, your smart farm technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Farm tip of the day",
+          "url": "/features/farm-tip-of-the-day"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Philippine Rice Research Institute (PhilRice)",
+          "url": "https://www.philrice.gov.ph/"
+        },
+        {
+          "label": "PhilRice Magazine: Mas Handa, Mas Matatag (September 2026)",
+          "url": "https://www.philrice.gov.ph/mas-handa-mas-matatag/"
+        },
+        {
+          "label": "PhilRice Magazine: Standing Strong (July 2026)",
+          "url": "https://www.philrice.gov.ph/standing-strong/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        }
+      ]
+    }
+  ]
+}

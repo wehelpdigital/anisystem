@@ -11,29 +11,72 @@
     $R = \App\Support\Region::class;
     $ph = $R::ph();
     $tick = '<svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
-    // The sections, in order: anchor, chip word.
-    $fxNav = [['plan', 'Plan'], ['space', 'From space'], ['fertilizer', 'Fertilizer'], ['crop-care', 'Crop care'], ['people', 'People'], ['records', 'Records'],
-        ['agronomy', 'Agronomy'], ['money', 'Money'], ['community', 'Community'], ['resources', 'Resources'], ['anee', 'Anee']];
-    $fxMarquee = ['Cropping calendar', 'Day counts per lot', 'Satellite Analysis', 'Satellite Weather', 'Typhoon watch', 'NPK Plus', 'Pest Finder', 'Disease Finder',
-        'Weed Control Helper', 'Spray direction', 'Protocol Builder', 'When to Plant', 'What to Plant', 'Variety Research', 'Crop Protocol Analysis', 'Realign by Anee',
-        'Growth stages', 'Farm maps', 'Draw', 'Offline mode', 'Workers and payroll', 'Team logins', 'Collab Room', 'Morning plan email', 'Quick Voice',
-        'Season gallery', 'Inventory', 'Labor Report', 'Expenses Report', 'Profit Report', 'Compare Reports', 'Anee Season Report', 'The Stash', 'Contact List',
-        'Farmer community', 'Tags', 'Undo that survives', 'Logs'];
-    $fxNew = [
-        ['space', 'Satellite Analysis', 'Your field read from space: greenness, weak spots, radar through clouds.', 'satellite'],
-        ['space', 'Satellite Weather', 'Clouds, rain and every typhoon, with its path and how far it is.', 'storm'],
-        ['fertilizer', 'NPK Plus', 'Every nutrient in your fertilizer plan, and the yield it can feed.', 'npk'],
-        ['crop-care', 'Pest and disease finders', 'From what you see in the field to the active ingredient to spray.', 'pest'],
-        ['resources', 'The Stash', 'Magazines and guides shared by anee.io\'s partners, free to read.', 'stash'],
+    $fCount = $featurePages->count();
+    $fNew = ['satellite-analysis', 'satellite-weather', 'npk-plus-calculator', 'pest-and-disease-finders', 'the-stash'];
+    // The filter's order; only the categories the pages use are shown.
+    $fCats = collect(['Planning', 'Agronomy', 'Weather', 'Crop care', 'Anee', 'Workers', 'Records', 'Money', 'Community', 'Resources'])
+        ->filter(fn ($c) => $featurePages->contains('category', $c))->values();
+    // The tour, part by part: anchor, chip, kicker, new?, title, words, the
+    // list, the screens (app shot, alt), the guide it opens.
+    $fTour = [
+        ['plan', 'Plan', 'Plan', false, 'The activities board: your season, day by day',
+            'Build the whole calendar from land prep to harvest. Every task is dated from each lot\'s own day zero, so the timing stays right even when lots were sown a week apart.',
+            ['Tasks, irrigation, hired services, payroll days and reminder checklists', 'Drag to reschedule, drafts for plans not yet decided, versions to try other plans',
+             'Each spray task says where the spray goes: under the leaves, over the canopy, at the base', 'Undo that still works after you log out, because it is saved on the server'],
+            [['images/site/app/board.png', 'The activities board of the anee.io cropping calendar']], 'cropping-calendar'],
+        ['space', 'From space', 'From space', true, 'Your field and your sky, seen from space',
+            'Satellite Analysis reads the field you draw from the newest Sentinel 2 picture and Sentinel 1 radar, which sees through typhoon clouds, and Anee tells you what it means. Satellite Weather plays back the clouds and rain over your farm, fast forwards the forecast and follows every typhoon.',
+            ['Crop health score, greenness (NDVI) heatmap and the weak spots to walk first', 'Radar readings when clouds hide the field, the last 90 days as a line',
+             'Typhoon paths with their cone, and a warning when one comes within 300 km', 'Anee reads it against your lot: its crop, its stage, the soil and ENSO'],
+            [['images/site/app/satellite.webp', 'Satellite Analysis report with a crop health score of a corn field'], ['images/site/app/sky.webp', 'Satellite Weather showing clouds over Luzon and a typhoon ring around the farm']], 'satellite-analysis'],
+        ['fertilizer', 'Fertilizer', 'Fertilizer', true, 'NPK Plus: every nutrient in your fertilizer plan',
+            'Tap the fertilizers you plan to use, from urea and complete to manure and inoculants, or add your own from its label. NPK Plus adds up every nutrient as the element and the oxide, checks it against what your crop needs and shows the yield it can feed. Free, and as often as you like.',
+            ['Nitrogen, phosphorus, potassium, and the micronutrients only when you use them', 'Biofertilizers like Azospirillum counted from field trial estimates',
+             'Your soil test moves the target, low or high', 'On the board and in the Protocol Builder: what each lot has had and what is still planned'],
+            [['images/site/app/npk.webp', 'NPK Plus showing nitrogen, phosphorus and potassium per hectare against the usual rate for rice']], 'npk-plus-calculator'],
+        ['crop-care', 'Crop care', 'Crop care', true, 'From what you see to what to spray',
+            'Pick the crop and what you see in the field. The Pest Finder and the Disease Finder name what fits, with the active ingredients that work and their groups, so you can switch groups and keep them working. The Weed Control Helper says what to do at the age of your rice.',
+            [($ph ? 'Pests and diseases of palay, mais, gulay and fruit trees' : 'Pests and diseases of the main crops'), 'IRAC and FRAC groups, active ingredients only, never brands',
+             'When not to spray at all, said plainly', 'Send Anee a photo when you are not sure'],
+            [['images/site/app/finder.webp', 'The Pest Finder listing rice pests with the active ingredients to spray and their IRAC groups']], 'pest-and-disease-finders'],
+        ['people', 'People', 'People', false, 'Workers, payroll and permissions that fit a real farm',
+            'Keep a list of your workers with their rates and skills, assign them to activities, and watch the labor cost add up as you plan. Give a worker their own login and decide, part by part, what they can see and what they can change.',
+            ['None, view or edit, for each part of the app and each worker', 'Payroll days with each worker\'s own rate, for half or whole days',
+             'Your bell rings when a worker finishes a task, adds a photo or records a voice note', 'The morning email tells the whole team today\'s plan at 6 AM'],
+            [['images/site/app/how/workers.webp', 'Workers and payroll in the anee.io app']], 'farm-workers-and-payroll'],
+        ['records', 'Records', 'Records', false, 'Notes, photos, videos and your own voice',
+            'The fastest record is the one you can make standing in the mud. Take a photo, film it, or just say it. Quick Voice saves a spoken note in seconds, and everything lands in a gallery you can search.',
+            ['Notes for each season and each day, plus Global Notes for everything else', 'Voice notes play right on the card in notes, activities and chat',
+             'A drawing pad for sketching over field photos', 'Works without signal, and syncs when it comes back'],
+            [['images/site/app/notes.png', 'Notes with photos and voice recordings']], 'notes-photos-and-voice'],
+        ['agronomy', 'Agronomy', 'Agronomy', false, 'Growth stages and weather that read your fields',
+            'anee.io knows ' . ($ph ? '85 Philippine crops' : 'nearly a hundred crops') . '. Pick any date and it says where every lot stands: the growth stage, what it needs and what to watch for, with the week\'s forecast beside it.',
+            [($ph ? 'Palay, mais, gulay and fruit trees' : 'Rice, corn, vegetables and fruit trees') . ', annuals and perennials both', 'Realign by Anee when a crop runs ahead of or behind the calendar',
+             'Maps: draw and measure your lots, drop pins, save team maps'],
+            [['images/site/app/growth.png', 'Growth stages of each lot']], 'growth-stages-and-weather'],
+        ['money', 'Money', 'Money', false, 'Inventory, expenses and reports that agree to the ' . ($ph ? 'peso' : 'cent'),
+            'The shed keeps your stock, and every move in or out is recorded with a name. Labor, expenses and profit reports are worked out straight from the plan, and Anee can write a full report of the season on top.',
+            ['Inventory items and moves, with an audit trail of who did what', 'Labor, expenses and profit, computed and never guessed',
+             'Post harvest observations with yields, buyers and prices', 'Compare any two reports side by side'],
+            [['images/site/app/dashboard.png', 'The dashboard with money and season summaries']], 'farm-reports'],
+        ['community', 'Community', 'Community', false, 'Cofarmers, discussions and a ladder worth climbing',
+            'A news feed for wins and warnings, focused discussion rooms, direct messages with photos, clips and voice notes, and a ladder of 100 levels that turns helping into a game.',
+            ['Public, password and approval rooms for private groups', 'A team Collab Room per season: chat, whiteboard and calls', 'The latest farm news, with what it means for your farm'],
+            [['images/site/app/community.png', 'The farmer community feed']], 'farmer-community'],
+        ['resources', 'Resources', 'Resources', true, 'The Stash: resources shared by anee.io\'s partners',
+            'Magazines, guides and studies from the institutions that work beside Filipino farmers, kept in one shelf inside the app. Search by title or year and read them in anee.io\'s own reader, free for every member.',
+            ['A shelf per partner and type, growing as partners join', 'Opens at page one even on a slow signal'],
+            [['images/site/app/stash.webp', 'The Stash shelf of PhilRice e-magazines']], 'the-stash'],
     ];
 @endphp
 
 @push('head')
 <style>
     /* ---- FEATURES (redrawn 2026-10-07) ------------------------------------
-       A hero that moves, a band of every feature sliding past, a sticky
-       chip bar that follows the reader, what is new up front, then each part
-       of the farm in turn. The house curve throughout; still when asked. */
+       A hero that moves, a band of every feature sliding past (each one
+       opens its guide), every feature as a card with a filter, a sticky chip
+       bar, then the tour: a phone that changes screen as each part of the
+       farm scrolls past it. The house curve throughout; still when asked. */
     .fz-hero { position: relative; isolation: isolate; overflow: hidden; color: #eef4e6; background: radial-gradient(70rem 40rem at 85% -10%, #4a7c2a 0%, transparent 60%), linear-gradient(160deg, #1d3310, #0d1609 70%); }
     .fz-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background-image: radial-gradient(rgb(255 255 255 / .1) 1px, transparent 1.5px); background-size: 22px 22px;
         -webkit-mask-image: linear-gradient(180deg, #000, transparent 85%); mask-image: linear-gradient(180deg, #000, transparent 85%); }
@@ -69,11 +112,14 @@
     /* Every feature, sliding past. */
     .fz-band { position: relative; overflow: hidden; padding: 1rem 0; background: #0d1609; border-top: 1px solid rgb(255 255 255 / .06); border-bottom: 1px solid rgb(255 255 255 / .06);
         -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-    .fz-track { display: flex; gap: .55rem; width: max-content; animation: fzSlide 70s linear infinite; }
-    .fz-track.rev { animation-direction: reverse; animation-duration: 80s; margin-top: .55rem; }
-    .fz-band:hover .fz-track { animation-play-state: paused; }
-    .fz-track span { flex: none; padding: .5rem .95rem; border-radius: 999px; font-size: .85rem; font-weight: 800; color: #dbe7cf; background: rgb(255 255 255 / .06); border: 1px solid rgb(255 255 255 / .1); white-space: nowrap; }
-    .fz-track span.is-new { color: #1f1500; background: #f5c518; border-color: #f5c518; }
+    .fz-track { display: flex; gap: .55rem; width: max-content; animation: fzSlide 190s linear infinite; }
+    .fz-track.rev { animation-direction: reverse; animation-duration: 220s; margin-top: .55rem; }
+    .fz-band:hover .fz-track, .fz-band:focus-within .fz-track { animation-play-state: paused; }
+    .fz-track a { flex: none; text-decoration: none; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .fz-track a:hover, .fz-track a:focus-visible { color: #fff; background: rgb(255 255 255 / .14); border-color: rgb(255 255 255 / .3); }
+    .fz-track a.is-new:hover, .fz-track a.is-new:focus-visible { color: #1f1500; background: #ffd84a; }
+    .fz-track a { flex: none; padding: .5rem .95rem; border-radius: 999px; font-size: .85rem; font-weight: 800; color: #dbe7cf; background: rgb(255 255 255 / .06); border: 1px solid rgb(255 255 255 / .1); white-space: nowrap; }
+    .fz-track a.is-new { color: #1f1500; background: #f5c518; border-color: #f5c518; }
     @keyframes fzSlide { to { transform: translateX(-50%); } }
 
     /* The chip bar that follows the reader. */
@@ -86,29 +132,60 @@
     .fz-nav a:hover { background: #f3f8ec; color: #2d5016; }
     .fz-nav a.is-on { background: #2d5016; color: #fff; }
 
-    /* What is new, up front. */
-    .fz-new { display: grid; gap: .9rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
-    .fz-new a { position: relative; display: flex; flex-direction: column; gap: .5rem; padding: 1.1rem; border-radius: 1.2rem; text-decoration: none; background: #fff; border: 1px solid #e4efd4;
-        box-shadow: 0 20px 40px -34px rgb(20 33 12 / .6); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
-    .fz-new a:hover { transform: translateY(-4px); border-color: #a8cc7e; box-shadow: 0 26px 44px -30px rgb(20 33 12 / .7); }
-    .fz-new img { width: 2.6rem; height: 2.6rem; }
-    .fz-new b { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #14210c; }
-    .fz-new p { font-size: .88rem; line-height: 1.55; color: #4b5563; }
-    .fz-new em { position: absolute; top: .9rem; right: .9rem; padding: .18rem .55rem; border-radius: 999px; font-style: normal; font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #1f1500; background: #f5c518; }
-
-    /* Each part of the farm. */
+    /* Every feature, filtered by part of the farm. */
     .fz-sec { scroll-margin-top: 9rem; }
-    .fz-sec .fx-kicker { display: inline-flex; align-items: center; gap: .45rem; }
-    .fz-sec .fx-kicker i { font-style: normal; padding: .12rem .5rem; border-radius: 999px; font-size: .64rem; letter-spacing: .08em; color: #1f1500; background: #f5c518; }
-    html.js .fz-sec.reveal .fx-list li { opacity: 0; transform: translateX(-8px); transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1); }
-    html.js .fz-sec.reveal.is-visible .fx-list li { opacity: 1; transform: none; }
-    html.js .fz-sec.reveal.is-visible .fx-list li:nth-child(2) { transition-delay: .08s; }
-    html.js .fz-sec.reveal.is-visible .fx-list li:nth-child(3) { transition-delay: .16s; }
-    html.js .fz-sec.reveal.is-visible .fx-list li:nth-child(4) { transition-delay: .24s; }
-    html.js .fz-sec.reveal.is-visible .fx-list li:nth-child(5) { transition-delay: .32s; }
-    .fz-duo { position: relative; display: flex; justify-content: center; gap: 0; }
-    .fz-duo .ph-frame { width: min(230px, 42vw); }
-    .fz-duo .ph-frame + .ph-frame { margin-left: -2.5rem; margin-top: 3rem; }
+    .fz-cats { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.6rem; }
+    .fz-cats button { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .9rem; border-radius: 999px; border: 1px solid #e1ead6; background: #fff; cursor: pointer;
+        font-size: .86rem; font-weight: 800; color: #374151; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .fz-cats button:hover { border-color: #a8cc7e; transform: translateY(-1px); }
+    .fz-cats button b { min-width: 1.4rem; padding: .05rem .4rem; border-radius: 999px; font-size: .72rem; text-align: center; background: #eef6e6; color: #2f5219; }
+    .fz-cats button[aria-pressed="true"] { background: #2d5016; border-color: #2d5016; color: #fff; }
+    .fz-cats button[aria-pressed="true"] b { background: #f5c518; color: #1f1500; }
+
+    /* The tour: a phone that stays while the parts scroll past it. */
+    .ft { position: relative; display: grid; gap: 3rem; }
+    @media (min-width: 1024px) { .ft { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 4.5rem; align-items: start; } }
+    .ft-stage { display: none; }
+    @media (min-width: 1024px) {
+        .ft-stage { display: grid; place-items: center; position: sticky; top: calc(var(--fz-top, 8rem) + 1.5rem); height: min(40rem, calc(100vh - var(--fz-top, 8rem) - 3rem)); }
+    }
+    .ft-halo { position: absolute; inset: 8% 6%; border-radius: 999px; filter: blur(30px); opacity: .55; transition: background .6s cubic-bezier(.22,1,.36,1);
+        background: radial-gradient(closest-side, hsl(var(--ft-h, 100) 60% 70% / .7), transparent); }
+    .ft-phone { position: relative; width: min(290px, 100%); aspect-ratio: 780 / 1520; max-height: 100%; border-radius: 2.4rem; padding: .55rem; background: #14210c;
+        box-shadow: 0 0 0 1px rgb(255 255 255 / .06) inset, 0 40px 80px -40px rgb(20 33 12 / .8); }
+    .ft-screen { position: relative; width: 100%; height: 100%; border-radius: 1.9rem; overflow: hidden; background: #f6f8f3; }
+    .ft-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transform: scale(1.04) translateY(10px);
+        transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+    .ft-screen img.is-on { opacity: 1; transform: none; }
+    .ft-dots { position: absolute; right: -1.6rem; top: 50%; translate: 0 -50%; display: grid; gap: .45rem; }
+    .ft-dots i { width: .45rem; height: .45rem; border-radius: 999px; background: #cfdcc2; transition: height .4s cubic-bezier(.22,1,.36,1), background-color .4s cubic-bezier(.22,1,.36,1); }
+    .ft-dots i.is-on { height: 1.4rem; background: #3d6823; }
+    .ft-steps { display: grid; gap: 1.5rem; }
+    @media (min-width: 1024px) { .ft-steps { gap: 0; } .ft-step { min-height: 78vh; display: flex; flex-direction: column; justify-content: center; } }
+    .ft-step { scroll-margin-top: 9rem; }
+    .ft-card { position: relative; padding: 1.6rem 1.5rem; border-radius: 1.6rem; background: #fff; border: 1px solid #e8efe0; box-shadow: 0 30px 60px -50px rgb(20 33 12 / .6);
+        transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s cubic-bezier(.22,1,.36,1), border-color .5s cubic-bezier(.22,1,.36,1); }
+    @media (min-width: 1024px) {
+        html.js .ft-step:not(.is-on) .ft-card { opacity: .38; transform: scale(.97); }
+        .ft-step.is-on .ft-card { border-color: hsl(var(--ft-h, 100) 45% 78%); box-shadow: 0 40px 70px -46px hsl(var(--ft-h, 100) 40% 20% / .55); }
+    }
+    .ft-k { display: inline-flex; align-items: center; gap: .5rem; font-size: .78rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #3d6823; }
+    .ft-k span { display: grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: .6rem; font-size: .8rem; color: #fff; background: #3d6823; }
+    .ft-k i { font-style: normal; padding: .12rem .5rem; border-radius: 999px; font-size: .62rem; letter-spacing: .08em; color: #1f1500; background: #f5c518; }
+    .ft-h { margin-top: .7rem; font-family: var(--font-heading); font-size: clamp(1.45rem, 2.6vw, 2rem); font-weight: 800; line-height: 1.15; color: #14210c; text-wrap: balance; }
+    .ft-p { margin-top: .8rem; color: #4b5563; line-height: 1.7; }
+    .ft-list { margin-top: 1rem; display: grid; gap: .55rem; }
+    .ft-list li { display: flex; gap: .6rem; align-items: flex-start; color: #374151; font-size: .94rem; line-height: 1.55; opacity: 0; transform: translateX(-8px);
+        transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1); transition-delay: calc(var(--n) * 70ms + .1s); }
+    .ft-step.is-seen .ft-list li, html:not(.js) .ft-list li { opacity: 1; transform: none; }
+    .ft-list li svg { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .15rem; color: #4a7c2a; }
+    .ft-go { display: inline-flex; align-items: center; gap: .35rem; margin-top: 1.2rem; font-weight: 800; color: #3d6823; text-decoration: none; }
+    .ft-go svg { width: 1rem; height: 1rem; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .ft-go:hover svg { transform: translateX(3px); }
+    /* On a phone, each part carries its own screen. */
+    .ft-inline { display: flex; justify-content: center; gap: .8rem; margin: 0 0 1.2rem; }
+    .ft-inline img { width: min(46%, 11rem); border-radius: 1.2rem; box-shadow: 0 0 0 5px #14210c, 0 24px 40px -24px rgb(20 33 12 / .6); }
+    @media (min-width: 1024px) { .ft-inline { display: none; } }
     .fz-partner { display: inline-flex; align-items: center; gap: .7rem; margin-top: 1rem; padding: .6rem .9rem .6rem .6rem; border-radius: 1rem; background: #f6faf1; border: 1px solid #e1edd3; }
     .fz-partner img { width: 3rem; height: 3rem; border-radius: .7rem; }
     .fz-partner b { display: block; font-size: .92rem; color: #14210c; }
@@ -120,8 +197,8 @@
         .fz-orb, .fz-kick i, .fz-h1 em, .fz-phones .ph-frame, .fz-track { animation: none !important; }
         .fz-track { flex-wrap: wrap; width: auto; justify-content: center; }
         .fz-track.rev { display: none; }
-        html.js .fz-sec.reveal .fx-list li { opacity: 1; transform: none; transition: none; }
-        .fz-new a, .fz-nav a { transition: none; }
+        .fz-nav a, .fz-cats button, .ft-card, .ft-screen img, .ft-list li, .ft-dots i, .ft-halo { transition: none !important; }
+        .ft-list li { opacity: 1; transform: none; }
     }
 </style>
 @endpush
@@ -140,13 +217,13 @@
                     your workers and every {{ $ph ? 'peso' : 'dollar' }}, with Anee, your smart farm technician, beside you. Every screen below is the real thing.
                 </p>
                 <div class="fz-stats">
-                    <div><b data-count="50">50</b><small>features and counting</small></div>
+                    <div><b>{{ $fCount }}</b><small>features, each with its own guide</small></div>
                     <div><b>{{ $ph ? '85' : '100' }}</b><small>crops it knows by stage</small></div>
                     <div><b>2</b><small>satellites over your field</small></div>
                 </div>
                 <div class="fz-cta">
                     <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free</a>
-                    <a href="#new" class="btn btn-lg btn-on-dark">See what is new</a>
+                    <a href="#all" class="btn btn-lg btn-on-dark">See every feature</a>
                 </div>
             </div>
             <div class="fz-phones" aria-hidden="true">
@@ -155,237 +232,95 @@
                 <span class="ph-frame p1"><img src="{{ asset('images/site/app/sky.webp') }}" alt="" width="780" height="1520"></span>
             </div>
         </div>
-        <div class="fz-band" aria-label="Every feature">
+        {{-- Every feature, sliding past slowly; each chip opens its guide. --}}
+        <nav class="fz-band" aria-label="Every feature">
             <div class="fz-track">
-                @foreach (array_merge($fxMarquee, $fxMarquee) as $i => $m)
-                    <span class="{{ in_array($m, ['Satellite Analysis', 'Satellite Weather', 'NPK Plus', 'Pest Finder', 'Disease Finder', 'The Stash', 'Spray direction'], true) ? 'is-new' : '' }}" @if ($i >= count($fxMarquee)) aria-hidden="true" @endif>{{ $m }}</span>
+                @foreach ($featurePages->concat($featurePages) as $i => $fp)
+                    <a href="{{ \App\Support\SitePages::pageUrl($fp) }}" class="{{ in_array($fp->slug, $fNew, true) ? 'is-new' : '' }}" @if ($i >= $fCount) aria-hidden="true" tabindex="-1" @endif>{{ \App\Support\SitePages::feature($fp)['name'] }}</a>
                 @endforeach
             </div>
             <div class="fz-track rev" aria-hidden="true">
-                @foreach (array_merge(array_reverse($fxMarquee), array_reverse($fxMarquee)) as $m)
-                    <span>{{ $m }}</span>
+                @foreach ($featurePages->reverse()->concat($featurePages->reverse()) as $fp)
+                    <a href="{{ \App\Support\SitePages::pageUrl($fp) }}" class="{{ in_array($fp->slug, $fNew, true) ? 'is-new' : '' }}" tabindex="-1">{{ \App\Support\SitePages::feature($fp)['name'] }}</a>
                 @endforeach
             </div>
-        </div>
+        </nav>
     </section>
 
     {{-- ================= THE CHIP BAR ================= --}}
     <nav class="fz-nav" aria-label="Feature sections">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 fz-nav-in" id="fzNav">
-            @foreach ($fxNav as [$k, $l])<a href="#{{ $k }}" data-to="{{ $k }}">{{ $l }}</a>@endforeach
+            <a href="#all" data-to="all">All {{ $fCount }} features</a>
+            @foreach ($fTour as [$k, $l])<a href="#{{ $k }}" data-to="{{ $k }}">{{ $l }}</a>@endforeach
         </div>
     </nav>
 
-    {{-- ================= NEW ================= --}}
-    <section class="py-14 sm:py-16 bg-gray-50 border-b border-gray-100 fz-sec" id="new">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="max-w-2xl reveal">
-                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">New this season</p>
-                <h2 class="mt-2 font-heading text-2xl sm:text-3xl font-bold text-ink text-balance">Five new tools, built for the hardest weeks of the season</h2>
-            </div>
-            <div class="fz-new mt-8">
-                @foreach ($fxNew as $i => [$to, $name, $what, $icon])
-                    <a href="#{{ $to }}" class="reveal" style="--reveal-delay: {{ $i * .06 }}s"><em>New</em><img src="{{ asset('images/icons/' . $icon . '.svg') }}" alt="" width="42" height="42" loading="lazy"><b>{{ $name }}</b><p>{{ $what }}</p></a>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
     {{-- ================= EVERY FEATURE, ONE CARD EACH ================= --}}
     @if ($featurePages->isNotEmpty())
-    <section class="relative py-14 sm:py-16 bg-white border-b border-gray-100">
+    <section class="relative py-14 sm:py-16 bg-[#fbfcf9] border-b border-gray-100 fz-sec" id="all">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="max-w-2xl reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Everything in one farm app</p>
-                <h2 class="mt-2 font-heading text-2xl sm:text-3xl font-bold text-ink text-balance">{{ $featurePages->count() }} Feature Guides for One Cropping Season</h2>
-                <p class="mt-3 text-gray-600">Each one works on its own and with the rest: plan the season, keep the records, and ask for advice from the same phone. Open any of them for the full story.</p>
+                <h2 class="mt-2 font-heading text-2xl sm:text-3xl font-bold text-ink text-balance">{{ $fCount }} Features for One Cropping Season</h2>
+                <p class="mt-3 text-gray-600">Each one works on its own and with the rest: plan the season, keep the records, and ask for advice from the same phone. Pick a part of the farm, then open any feature for its full guide.</p>
             </div>
-            <div class="mt-8 reveal">@include('public.site.feature-grid', ['pages' => $featurePages])</div>
+            <div class="fz-cats reveal" role="group" aria-label="Show features for">
+                <button type="button" data-cat="" aria-pressed="true">All <b>{{ $fCount }}</b></button>
+                @foreach ($fCats as $c)
+                    <button type="button" data-cat="{{ $c }}" aria-pressed="false">{{ $c }} <b>{{ $featurePages->where('category', $c)->count() }}</b></button>
+                @endforeach
+            </div>
+            <div class="mt-6">@include('public.site.feature-grid', ['pages' => $featurePages])</div>
         </div>
     </section>
     @endif
 
-    <section class="py-16 sm:py-24 bg-white overflow-hidden">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-24 sm:space-y-32">
-
-            {{-- 1. The board --}}
-            <div class="fx-row reveal fz-sec" id="plan">
-                <div class="fx-media fx-glow">
-                    <span class="ph-frame ph-tilt-l"><img src="{{ asset('images/site/app/board.png') }}" alt="The activities board of the anee.io cropping calendar" loading="lazy" width="780" height="1520"></span>
-                </div>
-                <div>
-                    <p class="fx-kicker">Plan</p>
-                    <h2 class="fx-h">The activities board: your season, day by day</h2>
-                    <p class="fx-p">Build the whole calendar from land prep to harvest. Every task is dated from each lot's own day zero, so the timing stays right even when lots were sown a week apart.</p>
-                    <ul class="fx-list">
-                        <li>{!! $tick !!}Tasks, irrigation, hired services, payroll days and reminder checklists</li>
-                        <li>{!! $tick !!}Drag to reschedule, drafts for plans not yet decided, versions to try other plans</li>
-                        <li>{!! $tick !!}Each spray task says where the spray goes: under the leaves, over the canopy, at the base</li>
-                        <li>{!! $tick !!}Undo that still works after you log out, because it is saved on the server</li>
-                    </ul>
-                </div>
+    {{-- ================= THE TOUR ================= --}}
+    {{-- Each part of the farm in turn (rebuilt 2026-10-07): on a wide screen
+         the phone stays and changes screen as each part comes into view; on
+         a phone, each part carries its own screen. --}}
+    <section class="py-16 sm:py-24 bg-white" id="tour">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="max-w-2xl reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">The tour</p>
+                <h2 class="mt-2 font-heading text-2xl sm:text-3xl font-bold text-ink text-balance">Part by Part, the Way a Season Runs</h2>
+                <p class="mt-3 text-gray-600">Scroll on: the phone shows each part of the app as you read about it. Every screen is the real thing.</p>
             </div>
-
-            {{-- 2. From space --}}
-            <div class="fx-row is-flip reveal fz-sec" id="space">
-                <div class="fx-media fz-duo">
-                    <span class="ph-frame ph-tilt-l"><img src="{{ asset('images/site/app/satellite.webp') }}" alt="Satellite Analysis report with a crop health score of a corn field" loading="lazy" width="780" height="1520"></span>
-                    <span class="ph-frame ph-tilt-r"><img src="{{ asset('images/site/app/sky.webp') }}" alt="Satellite Weather showing clouds over Luzon and a 300 km typhoon ring around the farm" loading="lazy" width="780" height="1520"></span>
+            <div class="ft mt-10" data-tour>
+                <div class="ft-stage" aria-hidden="true">
+                    <i class="ft-halo"></i>
+                    <div class="ft-phone">
+                        <div class="ft-screen">
+                            @foreach ($fTour as $ti => $tp)
+                                @foreach ($tp[7] as $si => [$src, $alt])
+                                    <img src="{{ asset($src) }}" alt="" data-shot="{{ $ti }}-{{ $si }}" class="{{ $ti === 0 && $si === 0 ? 'is-on' : '' }}" loading="{{ $ti === 0 ? 'eager' : 'lazy' }}" decoding="async">
+                                @endforeach
+                            @endforeach
+                        </div>
+                        <span class="ft-dots">@foreach ($fTour as $ti => $tp)<i class="{{ $ti === 0 ? 'is-on' : '' }}"></i>@endforeach</span>
+                    </div>
                 </div>
-                <div>
-                    <p class="fx-kicker">From space <i>New</i></p>
-                    <h2 class="fx-h">Your field and your sky, seen from space</h2>
-                    <p class="fx-p"><b>Satellite Analysis</b> reads the field you draw from the newest Sentinel 2 picture and Sentinel 1 radar, which sees through typhoon clouds, and Anee tells you what it means. <b>Satellite Weather</b> plays back the clouds and rain over your farm, fast forwards the forecast and follows every typhoon.</p>
-                    <ul class="fx-list">
-                        <li>{!! $tick !!}Crop health score, greenness (NDVI) heatmap and the weak spots to walk first</li>
-                        <li>{!! $tick !!}Radar readings when clouds hide the field, the last 90 days as a line</li>
-                        <li>{!! $tick !!}Typhoon paths with their cone, and a warning when one comes within 300 km</li>
-                        <li>{!! $tick !!}Anee reads it against your lot: its crop, its stage, the soil and ENSO</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- 3. Fertilizer --}}
-            <div class="fx-row reveal fz-sec" id="fertilizer">
-                <div class="fx-media fx-glow">
-                    <span class="ph-frame ph-tilt-l"><img src="{{ asset('images/site/app/npk.webp') }}" alt="NPK Plus showing nitrogen, phosphorus and potassium per hectare against the usual rate for rice" loading="lazy" width="780" height="1520"></span>
-                </div>
-                <div>
-                    <p class="fx-kicker">Fertilizer <i>New</i></p>
-                    <h2 class="fx-h">NPK Plus: every nutrient in your fertilizer plan</h2>
-                    <p class="fx-p">Tap the fertilizers you plan to use, from urea and complete to manure and inoculants, or add your own from its label. NPK Plus adds up every nutrient as the element and the oxide, checks it against what your crop needs and shows the yield it can feed. Free, and as often as you like.</p>
-                    <ul class="fx-list">
-                        <li>{!! $tick !!}Nitrogen, phosphorus, potassium, and the micronutrients only when you use them</li>
-                        <li>{!! $tick !!}Biofertilizers like Azospirillum counted from field trial estimates</li>
-                        <li>{!! $tick !!}Your soil test moves the target, low or high</li>
-                        <li>{!! $tick !!}On the board and in the Protocol Builder: what each lot has had and what is still planned</li>
-                        <li>{!! $tick !!}Anee reads the plan against your place, soil, water and season</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- 4. Crop care --}}
-            <div class="fx-row is-flip reveal fz-sec" id="crop-care">
-                <div class="fx-media fx-glow">
-                    <span class="ph-frame ph-tilt-r"><img src="{{ asset('images/site/app/finder.webp') }}" alt="The Pest Finder listing rice pests with the active ingredients to spray and their IRAC groups" loading="lazy" width="780" height="1520"></span>
-                </div>
-                <div>
-                    <p class="fx-kicker">Crop care <i>New</i></p>
-                    <h2 class="fx-h">From what you see to what to spray</h2>
-                    <p class="fx-p">Pick the crop and what you see in the field. The Pest Finder and the Disease Finder name what fits, with the active ingredients that work and their groups, so you can switch groups and keep them working. The Weed Control Helper says what to do at the age of your rice.</p>
-                    <ul class="fx-list">
-                        <li>{!! $tick !!}{{ $ph ? 'Pests and diseases of palay, mais, gulay and fruit trees' : 'Pests and diseases of the main crops' }}</li>
-                        <li>{!! $tick !!}IRAC and FRAC groups, active ingredients only, never brands</li>
-                        <li>{!! $tick !!}When not to spray at all, said plainly</li>
-                        <li>{!! $tick !!}Send Anee a photo when you are not sure</li>
-                    </ul>
-                    <a href="{{ url('/pests') }}#finder" class="fz-link">Try the Pest Finder ›</a>
-                </div>
-            </div>
-
-            {{-- 5. Workers --}}
-            <div class="fx-row reveal fz-sec" id="people">
-                <div class="fx-media">
-                    <img src="{{ asset('images/site/harvest-hands.jpg') }}" alt="Farm workers harvesting in the field"
-                         class="rounded-2xl shadow-card-lg ring-1 ring-black/5 w-full max-w-md object-cover aspect-[4/3]" loading="lazy">
-                </div>
-                <div>
-                    <p class="fx-kicker">People</p>
-                    <h2 class="fx-h">Workers, payroll and permissions that fit a real farm</h2>
-                    <p class="fx-p">Keep a list of your workers with their rates and skills, assign them to activities, and watch the labor cost add up as you plan. Give a worker their own login and decide, part by part, what they can see and what they can change.</p>
-                    <ul class="fx-list">
-                        <li>{!! $tick !!}None, view or edit, for each part of the app and each worker</li>
-                        <li>{!! $tick !!}Payroll days with each worker's own rate, for half or whole days</li>
-                        <li>{!! $tick !!}Your bell rings when a worker finishes a task, adds a photo or records a voice note</li>
-                        <li>{!! $tick !!}The morning email tells the whole team today's plan at 6 AM</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- 6. Notes & media --}}
-            <div class="fx-row is-flip reveal fz-sec" id="records">
-                <div class="fx-media fx-glow">
-                    <span class="ph-frame ph-tilt-r"><img src="{{ asset('images/site/app/notes.png') }}" alt="Notes with photos and voice recordings" loading="lazy" width="780" height="1520"></span>
-                </div>
-                <div>
-                    <p class="fx-kicker">Records</p>
-                    <h2 class="fx-h">Notes, photos, videos and your own voice</h2>
-                    <p class="fx-p">The fastest record is the one you can make standing in the mud. Take a photo, film it, or just say it. Quick Voice saves a spoken note in seconds, and everything lands in a gallery you can search.</p>
-                    <ul class="fx-list">
-                        <li>{!! $tick !!}Notes for each season and each day, plus Global Notes for everything else</li>
-                        <li>{!! $tick !!}Voice notes play right on the card in notes, activities and chat</li>
-                        <li>{!! $tick !!}A drawing pad for sketching over field photos</li>
-                        <li>{!! $tick !!}Works without signal, and syncs when it comes back</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- 7. Growth & weather --}}
-            <div class="fx-row reveal fz-sec" id="agronomy">
-                <div class="fx-media fx-glow">
-                    <span class="ph-frame ph-tilt-l"><img src="{{ asset('images/site/app/growth.png') }}" alt="Growth stages of each lot" loading="lazy" width="780" height="1520"></span>
-                </div>
-                <div>
-                    <p class="fx-kicker">Agronomy</p>
-                    <h2 class="fx-h">Growth stages and weather that read your fields</h2>
-                    <p class="fx-p">anee.io knows {{ $ph ? '85 Philippine crops' : 'nearly a hundred crops' }}. Pick any date and it says where every lot stands: the growth stage, what it needs and what to watch for, with the week's forecast beside it.</p>
-                    <ul class="fx-list">
-                        <li>{!! $tick !!}{{ $ph ? 'Palay, mais, gulay and fruit trees' : 'Rice, corn, vegetables and fruit trees' }}, annuals and perennials both</li>
-                        <li>{!! $tick !!}Realign by Anee when a crop runs ahead of or behind the calendar</li>
-                        <li>{!! $tick !!}Maps: draw and measure your lots, drop pins, save team maps</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- 8. Money --}}
-            <div class="fx-row is-flip reveal fz-sec" id="money">
-                <div class="fx-media fx-glow">
-                    <span class="ph-frame ph-tilt-r"><img src="{{ asset('images/site/app/dashboard.png') }}" alt="The dashboard with money and season summaries" loading="lazy" width="780" height="1520"></span>
-                </div>
-                <div>
-                    <p class="fx-kicker">Money</p>
-                    <h2 class="fx-h">Inventory, expenses and reports that agree to the {{ $ph ? 'peso' : 'cent' }}</h2>
-                    <p class="fx-p">The shed keeps your stock, and every move in or out is recorded with a name. Labor, expenses and profit reports are worked out straight from the plan, and Anee can write a full report of the season on top.</p>
-                    <ul class="fx-list">
-                        <li>{!! $tick !!}Inventory items and moves, with an audit trail of who did what</li>
-                        <li>{!! $tick !!}Labor, expenses and profit, computed and never guessed</li>
-                        <li>{!! $tick !!}Post harvest observations with yields, buyers and prices</li>
-                        <li>{!! $tick !!}Compare any two reports side by side</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- 9. Community --}}
-            <div class="fx-row reveal fz-sec" id="community">
-                <div class="fx-media fx-glow">
-                    <span class="ph-frame ph-tilt-l"><img src="{{ asset('images/site/app/community.png') }}" alt="The farmer community feed" loading="lazy" width="780" height="1520"></span>
-                </div>
-                <div>
-                    <p class="fx-kicker">Community</p>
-                    <h2 class="fx-h">Cofarmers, discussions and a ladder worth climbing</h2>
-                    <p class="fx-p">A news feed for wins and warnings, focused discussion rooms, direct messages with photos, clips and voice notes, and a ladder of 100 levels that turns helping into a game.</p>
-                    <ul class="fx-list">
-                        <li>{!! $tick !!}Public, password and approval rooms for private groups</li>
-                        <li>{!! $tick !!}A team Collab Room per season: chat, whiteboard and calls</li>
-                        <li>{!! $tick !!}The latest farm news, with what it means for your farm</li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- 10. Resources --}}
-            <div class="fx-row is-flip reveal fz-sec" id="resources">
-                <div class="fx-media fx-glow">
-                    <span class="ph-frame ph-tilt-r"><img src="{{ asset('images/site/app/stash.webp') }}" alt="The Stash shelf of PhilRice e-magazines" loading="lazy" width="780" height="1520"></span>
-                </div>
-                <div>
-                    <p class="fx-kicker">Resources <i>New</i></p>
-                    <h2 class="fx-h">The Stash: resources shared by anee.io's partners</h2>
-                    <p class="fx-p">Magazines, guides and studies from the institutions that work beside Filipino farmers, kept in one shelf inside the app. Search by title or year and read them in anee.io's own reader, free for every member.</p>
-                    <div class="fz-partner"><img src="{{ asset('images/partners/philrice.webp') }}" alt="PhilRice logo" width="48" height="48" loading="lazy"><span><b>PhilRice</b><small>Every PhilRice Magazine issue, 75 and counting</small></span></div>
-                    <ul class="fx-list">
-                        <li>{!! $tick !!}A shelf per partner and type, growing as partners join</li>
-                        <li>{!! $tick !!}Opens at page one even on a slow signal</li>
-                    </ul>
+                <div class="ft-steps">
+                    @foreach ($fTour as $ti => [$tk, $tchip, $tkick, $tnew, $th, $tpara, $tlist, $tshots, $tguide])
+                        <div class="ft-step fz-sec{{ $ti === 0 ? ' is-on' : '' }}" id="{{ $tk }}" data-step="{{ $ti }}" data-shots="{{ count($tshots) }}" style="--ft-h: {{ [100, 210, 35, 0, 160, 260, 120, 45, 300, 50][$ti] ?? 100 }}">
+                            <div class="ft-card">
+                                <div class="ft-inline">
+                                    @foreach ($tshots as [$src, $alt])<img src="{{ asset($src) }}" alt="{{ $alt }}" loading="lazy" decoding="async">@endforeach
+                                </div>
+                                <p class="ft-k"><span>{{ $ti + 1 }}</span>{{ $tkick }}@if ($tnew)<i>New</i>@endif</p>
+                                <h3 class="ft-h">{{ $th }}</h3>
+                                <p class="ft-p">{{ $tpara }}</p>
+                                <ul class="ft-list">
+                                    @foreach ($tlist as $li => $item)<li style="--n: {{ $li }}">{!! $tick !!}<span>{{ $item }}</span></li>@endforeach
+                                </ul>
+                                @if ($tk === 'resources')
+                                    <div class="fz-partner"><img src="{{ asset('images/partners/philrice.webp') }}" alt="PhilRice logo" width="48" height="48" loading="lazy"><span><b>PhilRice</b><small>Every PhilRice Magazine issue, 75 and counting</small></span></div>
+                                @endif
+                                <a href="{{ url('/features/' . $tguide) }}" class="ft-go">Read the full guide <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
+                                @if ($tk === 'crop-care')<a href="{{ url('/pests') }}#finder" class="ft-go" style="margin-left: 1rem">Try the Pest Finder ›</a>@endif
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -430,7 +365,13 @@
     if (!nav) return;
     // The bar hangs right under the site header, whatever its height today.
     const hdr = document.querySelector('header');
-    const hang = () => { if (hdr) nav.parentElement.style.top = Math.round(hdr.getBoundingClientRect().height) + 'px'; };
+    const hang = () => {
+        if (!hdr) return;
+        const h = Math.round(hdr.getBoundingClientRect().height);
+        nav.parentElement.style.top = h + 'px';
+        // The tour's phone stays below the header and the chip bar.
+        document.documentElement.style.setProperty('--fz-top', (h + nav.parentElement.offsetHeight) + 'px');
+    };
     hang();
     addEventListener('resize', hang, { passive: true });
     if (!('IntersectionObserver' in window)) return;
@@ -449,6 +390,56 @@
         if (vis) light(vis.target.id);
     }, { rootMargin: '-40% 0px -55% 0px' });
     secs.forEach((s) => io.observe(s));
+})();
+
+(() => {
+    /* The filter: the cards of one part of the farm, coming back softly. */
+    const bar = document.querySelector('.fz-cats');
+    const cards = [...document.querySelectorAll('#all .fg-card')];
+    if (!bar || !cards.length) return;
+    bar.addEventListener('click', (e) => {
+        const b = e.target.closest('button[data-cat]');
+        if (!b) return;
+        bar.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        let n = 0;
+        cards.forEach((c) => {
+            const show = !b.dataset.cat || c.dataset.cat === b.dataset.cat;
+            c.classList.toggle('is-out', !show);
+            c.classList.remove('is-in');
+            if (show) { c.style.setProperty('--n', n++); void c.offsetWidth; c.classList.add('is-in'); }
+        });
+    });
+})();
+
+(() => {
+    /* The tour: the part in the middle of the screen lights its card and
+       puts its screen on the phone (two screens take turns). */
+    const tour = document.querySelector('[data-tour]');
+    if (!tour) return;
+    const steps = [...tour.querySelectorAll('.ft-step')];
+    const shots = [...tour.querySelectorAll('.ft-screen img')];
+    const dots = [...tour.querySelectorAll('.ft-dots i')];
+    const stage = tour.querySelector('.ft-stage');
+    let on = -1, turn = null, which = 0;
+    const show = (key) => shots.forEach((im) => im.classList.toggle('is-on', im.dataset.shot === key));
+    const light = (i) => {
+        if (i === on) return;
+        on = i;
+        steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
+        dots.forEach((d, k) => d.classList.toggle('is-on', k === i));
+        if (stage) stage.style.setProperty('--ft-h', getComputedStyle(steps[i]).getPropertyValue('--ft-h'));
+        clearInterval(turn); which = 0;
+        show(i + '-0');
+        const n = Number(steps[i].dataset.shots || 1);
+        if (n > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) turn = setInterval(() => { which = (which + 1) % n; show(i + '-' + which); }, 2600);
+    };
+    if (!('IntersectionObserver' in window)) { steps.forEach((s) => s.classList.add('is-seen')); return; }
+    const seen = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-seen'); seen.unobserve(e.target); } }), { threshold: .25 });
+    const mid = new IntersectionObserver((es) => {
+        const v = es.filter((e) => e.isIntersecting)[0];
+        if (v) light(steps.indexOf(v.target));
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    steps.forEach((s) => { seen.observe(s); mid.observe(s); });
 })();
 </script>
 @endpush

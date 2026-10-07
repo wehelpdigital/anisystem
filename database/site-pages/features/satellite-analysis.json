@@ -1,0 +1,202 @@
+{
+  "section": "features",
+  "slug": "satellite-analysis",
+  "sortOrder": 400,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Satellite Crop Monitoring: See Your Field From Space, Then Ask Anee",
+  "metaTitle": "Satellite Crop Monitoring for Your Field",
+  "metaDescription": "Satellite crop monitoring for Filipino farms: draw your field, and Anee reads Sentinel 2 greenness and Sentinel 1 radar to tell you where to walk first.",
+  "focusKeyword": "satellite crop monitoring",
+  "keywords": [
+    "satellite crop monitoring",
+    "satellite analysis",
+    "NDVI",
+    "Sentinel 2",
+    "Sentinel 1 radar",
+    "crop health",
+    "farm map"
+  ],
+  "excerpt": "Satellite crop monitoring in anee.io starts with a field you draw on the map. Satellite Analysis reads the newest clear Sentinel 2 picture and the latest Sentinel 1 radar pass of that field. Then Anee, your smart farm technician, weighs the weather and the soil of your area and tells you where to walk first.",
+  "heroImage": {
+    "src": "/images/site/app/satellite.webp",
+    "alt": "Satellite crop monitoring report on a phone for a corn field in Muñoz, with a health score of 72, NDVI 0.65, radar VH and the rain expected in the next 10 days",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How satellite crop monitoring works in anee.io"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Tell Anee about the field",
+          "text": "Type the town or use where you stand. Pick the crop and, if you know it, the variety. Add the planting date, how it went in, the water and what you know of the soil."
+        },
+        {
+          "title": "Say what worries you",
+          "text": "Pick any that fit, like yellowing, gaps, lodging or standing water. Anee looks hardest where you point. A routine check is fine too."
+        },
+        {
+          "title": "Draw the field",
+          "text": "Tap each corner of the field on the satellite map, in order around it. Drag a corner to fix it. The area in hectares shows as you draw."
+        },
+        {
+          "title": "Run it",
+          "text": "The run reads both satellites, then the weather and the soil. After that Anee writes the report, in about two minutes."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the satellites see"
+    },
+    {
+      "type": "text",
+      "text": "Sentinel 2 takes pictures in visible and infrared light at 10 meters a pixel. From them the app works out NDVI, a greenness score from 0 to about 0.9. Bare or flooded ground sits near 0 to 0.2, and a full green canopy reads 0.6 to 0.9. Clouds and their shadows never count, because the app masks them pixel by pixel.\n\nSentinel 1 is radar, and radar sees through cloud. Its VH signal rises as leaves and stems fill in. So when a typhoon hides your field from Sentinel 2, the report says so and reads the crop from radar alone."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The field in nine parts"
+    },
+    {
+      "type": "text",
+      "text": "The app cuts your field into a three by three grid and reads each part on its own. A weak corner shows up as a weak cell, so the report can say 'the south east corner reads lower' instead of one flat average. It also draws the last 90 days of greenness and radar."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Anee adds to the picture"
+    },
+    {
+      "type": "text",
+      "text": "A satellite number alone does not tell you what to do. So before Anee writes, the app gathers the rain of the last 30 days and the forecast for the next 16. It adds the same weeks of the last five years and the El Niño or La Niña outlook. Then comes the modelled soil at the spot from ISRIC SoilGrids. Finally, Anee searches the web for soil studies of your area and its record of typhoons, floods and drought.\n\nThe report opens in tabs:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Overview**: a health score out of 100, the stage she reads, and how even the stand is",
+        "**Map**: the NDVI heatmap, the true color picture and the radar layer over your outline",
+        "**Crop health**: weak spots, their likely cause and what to check on foot, plus the disease risk",
+        "**Radar**: the VV and VH readings and their 90 day trend",
+        "**Threats and weather**: the next 10 days, ENSO and what earlier years brought",
+        "**Soil** and **What to do**: the soil numbers, then actions marked now, this week or this month"
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Walk the field before you spend",
+      "text": "A satellite reading is a guide. At 10 meters a pixel it cannot count plants or spot one sick hill. Use it to choose where to walk, then confirm on foot before you buy a spray. Our [pest catalogue](/pests) and [disease catalogue](/diseases) help you name what you find."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where satellite crop monitoring fits your season"
+    },
+    {
+      "type": "text",
+      "text": "Satellite Analysis works beside the tools you already use. Your [farm maps](/features/farm-maps) keep each field's outline for every season. Next, [growth stages and weather](/features/growth-stages-and-weather) say what each lot should be doing today, so you can hold the satellite reading against the calendar. If a lot runs behind, [Realign by Anee](/features/realign-by-anee) shifts its stages to match.\n\nEvery report lands on the Saved tab, where you can search it and open it again."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Plans and credits",
+      "text": "Satellite Analysis comes with Libre plus Anee, Solo Farmer and Farm Owner. Each run uses credits, and the page shows the price and your balance first. The charge comes only when the report is ready. If neither satellite has passed over your field lately, the run stops and you pay nothing."
+    },
+    {
+      "type": "cta",
+      "title": "See your field from space",
+      "text": "Sign up free, add Anee, and draw your first field for a satellite reading.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about satellite crop monitoring"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How often do the satellites pass over my farm?",
+          "a": "Sentinel 2 passes about every five days, and Sentinel 1 about every 6 to 12 days. A run uses the newest clear picture from the last 10 days."
+        },
+        {
+          "q": "What if typhoon clouds cover my field?",
+          "a": "Then Sentinel 2 cannot see it. The report tells you when the last clear picture came, and reads the crop from radar, which sees through cloud."
+        },
+        {
+          "q": "Can it count my plants?",
+          "a": "No. A pixel is 10 meters wide, so it judges how even the stand is, not single plants. Anee says that limit plainly."
+        },
+        {
+          "q": "Is the soil reading a soil test?",
+          "a": "No. It comes from a global soil map at 250 meters, a modelled estimate. A soil test of your own field is surer."
+        },
+        {
+          "q": "Which crops does it work for?",
+          "a": "It works for the crops in the anee.io catalogue, from palay and mais to vegetables and fruit trees."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm maps",
+          "url": "/features/farm-maps"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Anee, your smart farm technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Realign by Anee",
+          "url": "/features/realign-by-anee"
+        },
+        {
+          "label": "Farm weather forecast",
+          "url": "/features/farm-weather-forecast"
+        },
+        {
+          "label": "When to plant analysis",
+          "url": "/features/when-to-plant-analysis"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "European Space Agency: Sentinel 2",
+          "url": "https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-2"
+        },
+        {
+          "label": "European Space Agency: Sentinel 1",
+          "url": "https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-1"
+        },
+        {
+          "label": "Google Earth Engine",
+          "url": "https://earthengine.google.com/"
+        },
+        {
+          "label": "ISRIC: SoilGrids, the global soil map",
+          "url": "https://www.isric.org/explore/soilgrids"
+        }
+      ]
+    }
+  ]
+}

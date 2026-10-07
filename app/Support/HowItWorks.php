@@ -65,7 +65,35 @@ class HowItWorks
         'season' => 'anee-season-report',
         'compare' => 'compare-reports',
         'asProtocol' => 'view-as-protocol',
+        // The five tools of 2026-10-07.
+        'satellite' => 'satellite-analysis',
+        'skyWeather' => 'satellite-weather',
+        'npk' => 'npk-plus-calculator',
+        'finders' => 'pest-and-disease-finders',
+        'stash' => 'the-stash',
     ];
+
+    /**
+     * The app's own icon for a feature page (images/...), the one its tool
+     * wears in the app and in How It Works; the reports page, which no one
+     * tool owns, wears the profit report's. Null for a page with no tool.
+     */
+    public static function iconOfPage(string $slug): ?string
+    {
+        static $map = null;
+        if ($map === null) {
+            $map = ['farm-reports' => 'icons/profit.png'];
+            foreach (self::stages() as $st) {
+                foreach ($st['items'] as $it) {
+                    if ($it && ! empty(self::PAGES[$it['key']])) {
+                        $map[self::PAGES[$it['key']]] = $it['icon'];
+                    }
+                }
+            }
+        }
+
+        return $map[$slug] ?? null;
+    }
 
     public static function stages(): array
     {
@@ -103,7 +131,7 @@ class HowItWorks
                     self::item('satellite', 'Satellite Analysis', 'Your field, read from space', 'icons/satellite.svg', true,
                         'Draw your field on the map and Anee reads the newest Sentinel 2 picture and Sentinel 1 radar, which sees through typhoon clouds, then weighs the weather, ENSO and the soil of your area.',
                         ['Crop health and the weak spots in the field', 'Radar when clouds hide the field', 'Threats, soil and what to do next'],
-                        null, 'sat.page'),
+                        'satellite-analysis', 'sat.page'),
                     self::item('maps', 'Lot planning with GPS maps', 'Draw, measure and pin your fields', 'location-marker.png', false,
                         'Trace each field over a satellite view and the app gives you its area and the length of each side. Drop pins on the pump, the gate or the low spot that floods.',
                         ['The area and sides of every field', 'Pins with notes and photos', 'Attach a map to a lot, a task or a note'],
@@ -116,7 +144,7 @@ class HowItWorks
                     self::item('stash', 'The Stash', "Partners' magazines and guides, in the app", 'icons/stash.svg', false,
                         "Resources shared by anee.io's partners, read right inside the app. It starts with every issue of the PhilRice Magazine: new varieties, field methods and the farmers who made them work.",
                         ['Every PhilRice Magazine issue, free to read', 'Search by year, title or topic', 'More partners to come'],
-                        null, 'stash.shelf:philrice,e-magazines'),
+                        'the-stash', 'stash.shelf:philrice,e-magazines'),
                 ],
             ],
             [
@@ -141,7 +169,7 @@ class HowItWorks
                     self::item('npk', 'NPK Plus Calculator', 'Every nutrient in your fertilizer plan', 'icons/npk.svg', false,
                         'Tap the fertilizers you plan to use and NPK Plus adds up every nutrient, as the element and as the oxide, checks it against what your crop needs and shows the yield it can feed. Free. Anee can read the plan against your place, soil and season.',
                         ['N, P and K per hectare and in all', 'Micronutrients and biofertilizers counted too', 'Short, right or too much for your crop'],
-                        null, 'npk.page'),
+                        'npk-plus-calculator', 'npk.page'),
                     self::item('review', 'Anee reviews your protocol', 'A second pair of eyes on your plan', 'icons/technician-support.png', true,
                         'Before you commit, let Anee read your protocol. She points out the problems, the strengths and the weak spots: a rate that is too high, a spray too close to harvest, a stage with nothing planned.',
                         ['Problems, strengths and weak spots', 'Clear changes you can make', 'Ask her more about it in chat'],
@@ -211,7 +239,7 @@ class HowItWorks
                     self::item('skyWeather', 'Satellite Weather', 'Clouds, rain and typhoons over your farm', 'icons/storm.svg', false,
                         'Watch the clouds and rain of the last hours over your farm, fast forward the forecast, and see every typhoon with its path, its cone and how far it is from your field.',
                         ['Satellite clouds and rain radar, played back', 'Typhoon tracks with a warning inside 300 km', 'Ten days of forecast for your farm'],
-                        null, 'sky.page'),
+                        'satellite-weather', 'sky.page'),
                     self::item('realign', 'Realign by Anee', 'When a crop runs ahead or behind', 'user-refresh.png', true,
                         "Crops do not read calendars. Anee reads a lot's records, its weather and your notes, works out the stage it is truly in, and moves that lot's stage count to match.",
                         ['The real stage, with her reasons', 'What to do now and what to watch', 'Your calendar dates stay as they are'],
@@ -256,7 +284,7 @@ class HowItWorks
                     self::item('finders', 'Weed, pest and disease finders', 'Find it from what you see, and what to spray', 'icons/pest.svg', false,
                         'Pick the crop and what you see in the field, and the finder names the pests or diseases that fit, with the active ingredients to spray and their groups. The weed helper says what to do at the age of your rice.',
                         ['From the damage or the signs you see', 'Active ingredients, never brands', 'Weed control by the age of your rice'],
-                        null, 'fh.page:pests'),
+                        'pest-and-disease-finders', 'fh.page:pests'),
                     $ph ? self::item('guides', 'Crop problem guides', 'Pests, diseases and weeds, explained', 'icons/tool-box.png', false,
                         'Free guides to the pests, diseases and weeds of Philippine crops: how to spot them, why they come and what to do about them.',
                         ['Written for Philippine farms', 'What to look for, with pictures', 'What to do, step by step'],

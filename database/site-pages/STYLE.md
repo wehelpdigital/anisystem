@@ -240,7 +240,9 @@ Features:
 /features/farm-documentation, /features/farm-photo-gallery,
 /features/labor-report, /features/expenses-report, /features/profit-report,
 /features/anee-season-report, /features/compare-reports,
-/features/view-as-protocol
+/features/view-as-protocol, /features/satellite-analysis,
+/features/satellite-weather, /features/npk-plus-calculator,
+/features/pest-and-disease-finders, /features/the-stash
 
 Crops:
 /crops/palay, /crops/pagtatanim-ng-palay, /crops/rice-varieties-philippines,

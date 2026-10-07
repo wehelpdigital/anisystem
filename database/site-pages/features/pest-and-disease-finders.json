@@ -1,0 +1,175 @@
+{
+  "section": "features",
+  "slug": "pest-and-disease-finders",
+  "sortOrder": 430,
+  "lang": "en",
+  "category": "Crop care",
+  "title": "Pest Identification Made Simple: The Pest Finder, Disease Finder and Weed Control Helper",
+  "metaTitle": "Pest Identification: Free Pest and Disease Finders",
+  "metaDescription": "Free pest identification for Filipino farmers: pick your crop and the damage you see, and get the likely pests or diseases and what to spray against them.",
+  "focusKeyword": "pest identification",
+  "keywords": [
+    "pest identification",
+    "pest finder",
+    "disease finder",
+    "weed control",
+    "integrated pest management",
+    "herbicides for rice weeds",
+    "Fertilizer and Pesticide Authority"
+  ],
+  "excerpt": "The Pest Finder, the Disease Finder and the Weed Control Helper turn pest identification into a few taps. Pick your crop and what you see in the field, and anee.io lists the pests, diseases or weeds that fit. Each one comes with its page and the active ingredients that work on it, free on the public site and inside the app.",
+  "heroImage": {
+    "src": "/images/site/app/finder.webp",
+    "alt": "Pest identification with the anee.io Pest Finder on a phone: rice pests like the brown planthopper and the rice black bug, each with its photo and the active ingredients to spray",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pest identification in two taps"
+    },
+    {
+      "type": "text",
+      "text": "Open the [Pest Finder](/pests#finder) and pick your crop first: palay, mais, gulay (vegetables), coconut, banana, mango, cacao, coffee, papaya, citrus or other fruit trees. Then tell it where you see the damage. Choose the leaves, the stems or tillers, the panicles or ears, the fruits or pods, the roots, young seedlings or the whole plant. A choice with nothing for your crop turns grey, so you never land on an empty list.\n\nEach pest that fits comes back as a card with its photo, its kind (insect, mite, snail, rat or bird) and one line on the damage it leaves. Tap the card to open its full page in our [catalogue of crop pests](/pests), with the signs, when to act and what to do first."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to spray, by active ingredient"
+    },
+    {
+      "type": "text",
+      "text": "Under each card sits What to spray: the active ingredients that work on that pest, each with its IRAC group. That group number tells how an insecticide kills. For the [brown planthopper](/pests/brown-planthopper), for example, the card shows pymetrozine in IRAC group 9B. Switch to a different group next time, so the pest does not learn to survive it. Where no spray helps, the card says why instead.\n\nFor palay younger than 30 to 40 days after transplanting, the finder also tells you to hold the insecticide unless a pest is at outbreak level. Early sprays kill the spiders and wasps that protect your crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The Disease Finder"
+    },
+    {
+      "type": "text",
+      "text": "The [Disease Finder](/diseases#finder) works the same way, but it asks what you see. Pick spots or streaks, large dead patches, wilting, yellowing, stunted plants, rotting, powdery or fuzzy growth, or curled and mottled leaves. Back come the diseases that look like it, from fungi and bacteria to viruses and nematodes.\n\nFungicides come with their FRAC group, the fungicide version of the IRAC number. No spray cures a virus, so for [rice grassy stunt](/diseases/rice-grassy-stunt) the card says exactly that. Then it tells you to control the brown planthopper that carries it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The Weed Control Helper for rice"
+    },
+    {
+      "type": "text",
+      "text": "Weeds follow the age of the rice, so the [Weed Control Helper](/weeds#control) asks three things. First, how did you plant: lipat tanim (transplanted) or sabog tanim (direct seeded)? Next, how old is the rice, from 0 to 5 days up to 31 to 40 days? And which weeds do you see: grasses, sedges or broadleaves? A short hint under each group helps you tell them apart.\n\nThe answer opens with Do this first, the steps for that age, like keeping the soil wet after transplanting. Then come the active ingredients for the weeds you picked, each with its group number. Pick two or three groups and you get only the ones that work on all of them. If none covers them all, each group gets its own list. Where no herbicide fits that age, the helper tells you to weed by hand and keep the water up."
+    },
+    {
+      "type": "text",
+      "text": "The lists follow PhilRice recommendations for rice weeds, and our [herbicide guide](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Confirm before you spray",
+      "text": "Many pests and diseases look alike, so check the signs on each page before you spend on a spray. Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label for the rate, the timing and your safety. The helpers name active ingredients only, never brands and never a rate."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Inside the app, and when you are still not sure"
+    },
+    {
+      "type": "text",
+      "text": "Members open all three from the tools on their dashboard, with a switch at the top to jump between them. There they open straight away. On the public pages, each helper asks for your name and email once before it shows the full answer.\n\nStill not sure? Take a clear photo and send it to [Anee, your smart farm technician](/features/ai-agricultural-technician), on a plan with Anee. She reads it with your crop, its age and the weather, then tells you what it most likely is and what to check next, in Tagalog or English. For the bigger picture, read our guide to [integrated pest management](/pests/integrated-pest-management)."
+    },
+    {
+      "type": "cta",
+      "title": "Find the problem before you spray",
+      "text": "Use the helpers free, or sign up free to keep them one tap away inside anee.io.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about pest identification"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Are the finders free?",
+          "a": "Yes. They are free on the public site after you give your name and email once, and free inside the app for every member, Libre included."
+        },
+        {
+          "q": "Do they name brands or spray rates?",
+          "a": "No. They give active ingredients with their IRAC, FRAC or herbicide group. Take the ingredient to the store, then read the label for the rate."
+        },
+        {
+          "q": "Which crops do they cover?",
+          "a": "The Pest Finder and the Disease Finder cover palay, mais, vegetables, and fruit and plantation crops like coconut, banana, mango, cacao and coffee. The Weed Control Helper is for rice."
+        },
+        {
+          "q": "What if nothing matches?",
+          "a": "Then the finder says so. Send a photo to Anee, and she tells you what it most likely is."
+        },
+        {
+          "q": "How do I tell a pest from a disease?",
+          "a": "Chewed leaves, holes, droppings and the insects themselves point to a pest. Spots, rot, wilting or mottled leaves with no insect in sight point to a disease. If you cannot tell, try both finders."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Crop pests",
+          "url": "/pests"
+        },
+        {
+          "label": "Crop diseases",
+          "url": "/diseases"
+        },
+        {
+          "label": "Weeds and grasses",
+          "url": "/weeds"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        },
+        {
+          "label": "Herbicides for rice weeds",
+          "url": "/weeds/herbicides-for-rice-weeds"
+        },
+        {
+          "label": "Anee, your smart farm technician",
+          "url": "/features/ai-agricultural-technician"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "IRAC: Mode of action classification online",
+          "url": "https://irac-online.org/mode-of-action/classification-online/"
+        },
+        {
+          "label": "FRAC Code List 2025, Fungicide Resistance Action Committee",
+          "url": "https://www.frac.info/media/ljsi3qrv/frac-code-list-2025.pdf"
+        },
+        {
+          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
+        },
+        {
+          "label": "PhilRice: Young rice plants can take care of themselves",
+          "url": "https://www.philrice.gov.ph/young-rice-plants-can-take-care-of-themselves/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "section": "features",
+  "slug": "satellite-weather",
+  "sortOrder": 410,
+  "lang": "en",
+  "category": "Weather",
+  "title": "Satellite Weather: A Typhoon Tracker, Clouds and Rain Over Your Farm",
+  "metaTitle": "Typhoon Tracker and Satellite Weather for Your Farm",
+  "metaDescription": "A typhoon tracker for Filipino farms: live clouds, rain radar, storm tracks and the distance of every storm to your farm, plus a 10 day forecast. Free.",
+  "focusKeyword": "typhoon tracker",
+  "keywords": [
+    "typhoon tracker",
+    "satellite weather",
+    "bagyo",
+    "rain radar",
+    "weather forecast",
+    "PAGASA"
+  ],
+  "excerpt": "Satellite Weather in anee.io is a typhoon tracker and a sky map in one, centered on your own farm. Play back the clouds of the last three hours, watch the rain radar and follow every active storm with its track and cone. It also tells you how far the eye is from your field, so a bagyo, or typhoon, inside 300 km shows as a direct threat.",
+  "heroImage": {
+    "src": "/images/site/app/sky.webp",
+    "alt": "Typhoon tracker in anee.io Satellite Weather on a phone, with satellite clouds over Luzon, a 300 km ring around a farm in Nueva Ecija and a badge that reads No typhoon within 300 km",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The sky over your farm, live"
+    },
+    {
+      "type": "text",
+      "text": "Open Satellite Weather and choose your farm in one of three ways: your phone's location, a town or province, or one of your [farm lots](/features/farm-lots). A lot with a pin on its map goes straight to that spot, and one without a pin uses its town. A yellow ring then marks 300 km around the farm.\n\nThe layer chips along the top switch what the map shows:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Clouds**: Himawari 9 infrared pictures every 10 minutes for the last three hours, through NASA",
+        "**Rain radar**: where rain fell in the last hours, from RainViewer",
+        "**Typhoons**: every active storm's track, its cone and its forecast points",
+        "**Rain now**, **Cloud cover** and **Wind**: live layers from OpenWeatherMap"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Press play and the clouds move across the islands. A second slider sets how strong a layer shows, so the towns stay readable under it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A typhoon tracker that measures from your field"
+    },
+    {
+      "type": "text",
+      "text": "Most storm maps show the storm. This typhoon tracker also shows you. On a calm day the badge at the top reads 'No typhoon within 300 km'. When a storm's eye comes inside the ring, the badge turns into a warning with its name and distance. If only its forecast track crosses the ring, the badge warns that it may pass within so many kilometers.\n\nUnder the map, each storm gets a card. It says if the storm is active, its alert level, its top wind speed and how far the eye is from your farm. It also names the closest forecast point to you and when the storm should reach it."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Fast forward the forecast"
+    },
+    {
+      "type": "text",
+      "text": "Switch from Past 3 h to Forecast, and the slider moves into the days ahead. The storm's eye walks along its forecast track. Meanwhile a readout shows the rain, the gusts, the cloud cover and the storm's distance from your farm at that hour. So you can see if the worst comes at night or at dawn, before you decide to harvest early or secure the seedbed."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The next 10 days at your farm"
+    },
+    {
+      "type": "text",
+      "text": "A strip of ten days sits under the map, with the high, the low, the rain expected and its chance. Any day with gusts of 50 km/h or more carries a warning. The forecast comes from Open Meteo for the exact point of your farm, not for the nearest city. For the forecast beside each day of your plan, see the [farm weather forecast](/features/farm-weather-forecast) on your board."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ask Anee what the storm means for your crop"
+    },
+    {
+      "type": "text",
+      "text": "Weather news tells you a storm is coming. It does not tell you what to do with palay at flowering or corn at tasseling. For that, pick one of your lots and ask Anee, your smart farm technician. She reads the storms, the forecast, the same weeks in the last five years and the El Niño or La Niña outlook. Then she checks all of it against the lot's crop, its age and its [growth stage](/features/growth-stages-and-weather).\n\nHer reading comes back in five tabs: an overview with the risk level, the storm, the next days, your lot, and what to do. Each step carries its timing: now, before the storm, during, after or this week. Draining the canals, holding the fertilizer before heavy rain, harvesting early when the grain is ready and keeping the harvest dry are the kind of steps she weighs."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Follow PAGASA for warnings",
+      "text": "Satellite Weather helps you plan farm work, but it does not issue warnings. For tropical cyclone wind signals, storm surge and evacuation, follow PAGASA and your municipal disaster office. Anee uses wind signal words only as a guide and never claims that PAGASA raised a signal."
+    },
+    {
+      "type": "text",
+      "text": "The map, the typhoon tracker and the 10 day forecast are free with every anee.io account, Libre included. Anee's reading comes with Libre plus Anee, Solo Farmer and Farm Owner. It runs on credits and charges only when the reading is ready. Your past readings stay on the page, so you can open last week's again."
+    },
+    {
+      "type": "cta",
+      "title": "Watch the sky over your own farm",
+      "text": "Sign up free. The typhoon tracker and the 10 day forecast come with the free Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the typhoon tracker"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Where does the storm data come from?",
+          "a": "Storm tracks come from GDACS, the disaster alert system of the European Commission and the United Nations. The clouds come from the Himawari 9 satellite through NASA, the rain radar from RainViewer and the forecast from Open Meteo."
+        },
+        {
+          "q": "Does it replace PAGASA?",
+          "a": "No. Use it to plan farm work, and follow PAGASA bulletins and your local disaster office for warnings and signals."
+        },
+        {
+          "q": "What does the 300 km ring mean?",
+          "a": "It marks 300 km around your farm. A storm whose eye is inside it counts as a direct threat, and the badge at the top turns into a warning."
+        },
+        {
+          "q": "Is the typhoon tracker free?",
+          "a": "Yes. The map, the storm tracks and the forecast are free with any account. Only Anee's reading against a lot uses credits, on a plan with Anee."
+        },
+        {
+          "q": "Can I use it before I add any lots?",
+          "a": "Yes. Use your phone's location or type the town. Once your lots have pins, they show up as quick choices."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm weather forecast",
+          "url": "/features/farm-weather-forecast"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Farm lots",
+          "url": "/features/farm-lots"
+        },
+        {
+          "label": "Anee, your smart farm technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "When to plant analysis",
+          "url": "/features/when-to-plant-analysis"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "GDACS: Global Disaster Alert and Coordination System",
+          "url": "https://www.gdacs.org/"
+        },
+        {
+          "label": "NASA GIBS: satellite imagery service",
+          "url": "https://nasa-gibs.github.io/gibs-api-docs/"
+        },
+        {
+          "label": "PAGASA: Tropical cyclone bulletins",
+          "url": "https://www.pagasa.dost.gov.ph/tropical-cyclone/severe-weather-bulletin"
+        },
+        {
+          "label": "Open Meteo: open weather data",
+          "url": "https://open-meteo.com/"
+        },
+        {
+          "label": "RainViewer: rain radar",
+          "url": "https://www.rainviewer.com/"
+        }
+      ]
+    }
+  ]
+}
