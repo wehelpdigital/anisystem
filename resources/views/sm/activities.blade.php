@@ -2994,7 +2994,9 @@
             #actHeaderBar > .icon-btn,
             #actHeaderBar > #addActivityWrap { flex: 0 0 auto; }
             #actHeaderBar > .btn, #actHeaderBar > .icon-btn { justify-content: center; }
-            #actHeaderBar > #versionsSheetBtn { flex: 1 1 auto; min-width: 0; overflow: hidden; }
+            /* Narrower (the owner, 2026-10-07): the version button gives the
+               row's slack back instead of taking it, so NPK Plus fits. */
+            #actHeaderBar > #versionsSheetBtn { flex: 0 1 auto; max-width: 9rem; min-width: 0; overflow: hidden; }
             /* The name gives way, never the icons either side of it: a long
                version trails off into an ellipsis instead of shouldering the
                chevron out of the button. */
@@ -3017,6 +3019,7 @@
             #actToolbar > #readinessBtn,
             #actToolbar > #searchToolbarBtn,
             #actHeaderBar > #todayTomorrowBtn,
+            #actHeaderBar > #npkPlanBtn,
             #actHeaderBar > #addActivityWrap > .btn { width: 2.25rem;
                 padding-left: 0; padding-right: 0; }
         }
@@ -4286,6 +4289,13 @@
     </div>
     <button type="button" id="manageVersionBtn" class="icon-btn shrink-0" title="Rename or delete the current version">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+    </button>
+    {{-- NPK Plus (2026-10-07): the season's fertilizer lot by lot, and
+         Anee's reading of it (sm.partials.npk-plan owns the sheet). --}}
+    <button type="button" id="npkPlanBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+            title="NPK Plus: the fertilizer in this season, lot by lot">
+        <img src="{{ asset('images/icons/npk.svg') }}" alt="" class="w-4 h-4" style="transform:scale(1.25)">
+        <span class="hidden sm:inline">NPK</span>
     </button>
     <button type="button" id="todayTomorrowBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
             title="Scroll to today">
@@ -6559,6 +6569,7 @@
 @include('sm.partials.inventory-js', ['schedule' => $schedule, 'standalone' => false])
 {{-- The tag picker: one shared sheet for every form on the board. --}}
 @include('sm.partials.tag-picker')
+@include('sm.partials.npk-plan', ['schedule' => $schedule])
 @include('community.partials.lightbox-js')
 <script>
     // Filter-sheet extras: active-filter count badge on the toolbar button, and

@@ -923,6 +923,11 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-growth-realign-quote', [App\Http\Controllers\Manager\GrowthRealignController::class, 'quote'])->name('sm.growth.realign.quote');
     Route::post('/app/sm-growth-realign', [App\Http\Controllers\Manager\GrowthRealignController::class, 'generate'])->name('sm.growth.realign');
     Route::get('/app/sm-growth-realign-job/{id}', [App\Http\Controllers\Manager\GrowthRealignController::class, 'job'])->whereNumber('id')->name('sm.growth.realign.job');
+    // NPK Plus on the board (2026-10-07): the season's fertilizer per lot, free; Anee's reading per lot, paid.
+    Route::get('/app/sm-npk-plan', [App\Http\Controllers\Manager\NpkSeasonController::class, 'summary'])->name('sm.npk');
+    Route::post('/app/sm-npk-plan', [App\Http\Controllers\Manager\NpkSeasonController::class, 'generate'])->name('sm.npk.generate');
+    Route::get('/app/sm-npk-plan-job/{id}', [App\Http\Controllers\Manager\NpkSeasonController::class, 'job'])->whereNumber('id')->name('sm.npk.job');
+    Route::get('/app/sm-npk-plan-list', [App\Http\Controllers\Manager\NpkSeasonController::class, 'list'])->name('sm.npk.list');
     // Media Box: every picture and video this schedule has, in one place.
     Route::get('/app/sm-media', [App\Http\Controllers\Manager\MediaBoxController::class, 'page'])->name('sm.media');
     // The season modules' old addresses land on the global pages.
