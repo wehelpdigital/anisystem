@@ -88,7 +88,7 @@
         <a href="{{ $S::pageUrl($p) }}" class="fg-card" style="--h: {{ $f['hue'] }}; --n: {{ $i }}" data-cat="{{ $p->category }}">
             @if (in_array($p->slug, $fgNew, true) && empty($compact))<span class="fg-new">New</span>@endif
             @if ($shot)<span class="fg-shot"><img src="{{ $shot }}" alt="" loading="lazy" decoding="async" width="480" height="935"></span>@endif
-            <span class="fg-body">
+            <div class="fg-body">
                 <span class="fg-ico" @if (! $shot) style="margin-top: 0" @endif>
                     @if ($icon)
                         <img src="{{ asset('images/' . $icon) }}" alt="" class="{{ str_starts_with($icon, 'anee/') ? 'is-face' : '' }}" loading="lazy" width="40" height="40">
@@ -99,7 +99,7 @@
                 <b>{{ $f['name'] }}</b>
                 <p>{{ $f['blurb'] }}</p>
                 <span class="go">Read the guide <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></span>
-            </span>
+            </div>
         </a>
     @endforeach
 </div>
