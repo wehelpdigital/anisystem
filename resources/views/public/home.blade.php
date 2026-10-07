@@ -194,7 +194,7 @@
                         <li>{{ $ph ? 'Wet palay is docked for moisture, and the trader sets the weight.' : 'Wet grain is docked for moisture, and the buyer sets the weight.' }}</li>
                         <li>You cannot set the price you get.</li>
                     </ul>
-                    @include('public.partials.sum-trend', ['cls' => 'is-down', 'label' => 'The price you get, season after season', 'heights' => [72, 63, 55, 47, 39, 31]])
+                    @include('public.partials.sum-trend', ['cls' => 'is-down', 'label' => 'The net profit you get, season after season', 'heights' => [72, 63, 55, 47, 39, 31]])
                 </div>
                 <span class="hp-sum-op" aria-hidden="true">=</span>
                 <div class="hp-sum-card is-way reveal" style="--reveal-delay: .24s">

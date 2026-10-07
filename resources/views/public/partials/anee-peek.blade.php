@@ -2,15 +2,15 @@
      leans in from the right edge of the screen, looks around, notices the
      visitor, waves with a big smile, and leaves.
 
-     Drawn on a canvas, frame by frame, from her own art: the 23 poses in
-     images/anee/peek.webp are cut from her hello film (the walk up, the
-     "oh!", the wave, the happy close) and packed in a 6 wide grid of
-     334 px squares, each scaled so her head is the same size and in the
-     same place. The leaning in, the looking around, the hop, the "!",
+     Drawn on a canvas, frame by frame, from her own art: the 20 poses in
+     images/anee/peek.webp are cut from her hello film (the wave) and packed
+     in a 6 wide grid of 334 px squares, every face lined up on the same
+     spot and wearing the same closed smile (she does not talk), the last
+     one a wink. The leaning in, the looking around, the hop, the "!",
      the sparkles and the leaving are all done here. Once per page view,
      about six seconds, never in anyone's way (no pointer events) and not at
      all under reduced motion or once the visitor has scrolled on. --}}
-<canvas class="hp-peek" data-peek data-sheet="{{ asset('images/anee/peek.webp') }}?v=1" aria-hidden="true"></canvas>
+<canvas class="hp-peek" data-peek data-sheet="{{ asset('images/anee/peek.webp') }}?v=2" aria-hidden="true"></canvas>
 
 @once
 @push('head')
@@ -31,8 +31,8 @@
     const ctx = cv.getContext('2d');
     const FW = 334, COLS = 6, RAD = Math.PI / 180;
     // The poses in the sheet, in order.
-    const OH = 0, NEAR = 1, SMILE = 2, ARM = 3, WAVE = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], DOWN = [18, 19, 20], HAPPY = 21, HAPPY2 = 22;
-    const END = 6.2;
+    const SMILE = 0, ARM = 1, WAVE = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], DOWN = [16, 17, 18], WINK = 19;
+    const END = 6.3;
     let size = 300, dpr = 1;
 
     const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -45,15 +45,14 @@
     // Where she is and which pose, at second t. x is how far she sits out
     // past the right edge (in frame widths), rot her lean, y a hop.
     const pose = (t) => {
-        const s = { x: .62, rot: -16, y: 0, frame: NEAR, bang: 0, spark: 0, glow: 1 };
+        const s = { x: .62, rot: -16, y: 0, frame: SMILE, bang: 0, spark: 0, glow: 1, wink: 0 };
         // In from the edge, only her face and a shoulder: a peek.
         s.x = lerp(1.05, .5, eOut(seg(t, 0, .75)));
         s.glow = seg(t, 0, .6);
         // Looking around.
         if (t > .75 && t < 1.55) { const k = (t - .75) / .8; s.rot = -16 + Math.sin(k * Math.PI * 2) * 4; s.y = Math.sin(k * Math.PI * 4) * -2; }
-        // She notices you: the "oh!", a hop, the "!".
+        // She notices you: a hop, the "!".
         if (t >= 1.55) {
-            s.frame = OH;
             s.y = -14 * Math.sin(seg(t, 1.55, 1.85) * Math.PI);
             s.bang = eBack(seg(t, 1.55, 1.75)) * (1 - seg(t, 2.3, 2.5));
         }
@@ -61,7 +60,6 @@
         if (t >= 1.95) {
             const k = eBack(seg(t, 1.95, 2.45));
             s.x = lerp(.5, .04, k); s.rot = lerp(-16, -3, k);
-            s.frame = SMILE;
         }
         // The wave: the arm comes up, two rounds of waving, the arm comes down.
         if (t >= 2.45) s.frame = ARM;
@@ -70,14 +68,13 @@
             s.frame = f < WAVE.length ? WAVE[f] : WAVE[4 + ((f - WAVE.length) % (WAVE.length - 4))];
             s.spark = seg(t, 2.6, 2.9);
         }
-        if (t >= 4.45) {
-            const f = Math.floor((t - 4.45) * 12);
-            s.frame = f < DOWN.length ? DOWN[f] : (t < 4.95 ? HAPPY : HAPPY2);
-            s.spark = 1 - seg(t, 4.45, 4.9);
-        }
+        // A wink, hand still up.
+        if (t >= 4.35) { s.frame = WINK; s.spark = 1 - seg(t, 4.35, 4.9); s.wink = Math.sin(seg(t, 4.35, 5.05) * Math.PI); }
+        // The hand comes down.
+        if (t >= 5.05) { const f = Math.floor((t - 5.05) * 12); s.frame = DOWN[Math.min(f, DOWN.length - 1)]; }
         // And off she goes, still smiling.
-        if (t >= 5.3) {
-            const k = eInBack(seg(t, 5.3, END - .1));
+        if (t >= 5.35) {
+            const k = eInBack(seg(t, 5.35, END - .1));
             s.x = lerp(.04, 1.1, k); s.rot = lerp(-3, -18, k);
             s.glow = 1 - seg(t, 5.6, END);
         }
@@ -98,10 +95,11 @@
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, cv.width, cv.height);
         ctx.setTransform(dpr * u, 0, 0, dpr * u, 0, 0);
-        // A soft light behind her, so she reads on the dark photo.
+        // A faint light behind her head, so she reads on the dark photo;
+        // it fades to nothing well inside the canvas, so no edge ever shows.
         if (s.glow > 0) {
-            const g = ctx.createRadialGradient(205, 140, 10, 205, 160, 190);
-            g.addColorStop(0, `rgba(250, 226, 130, ${.34 * s.glow})`); g.addColorStop(1, 'rgba(250, 226, 130, 0)');
+            const g = ctx.createRadialGradient(214, 150, 0, 214, 150, 118);
+            g.addColorStop(0, `rgba(250, 228, 140, ${.13 * s.glow})`); g.addColorStop(.6, `rgba(250, 228, 140, ${.05 * s.glow})`); g.addColorStop(1, 'rgba(250, 228, 140, 0)');
             ctx.fillStyle = g; ctx.fillRect(0, 0, FW, FW);
         }
         ctx.save();
@@ -122,6 +120,8 @@
             ctx.fillStyle = '#1a1a1a'; ctx.font = '900 23px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('!', 0, 1.5);
             ctx.restore();
         }
+        // A little twinkle by the winking eye.
+        if (s.wink > .01) star(270 + (s.x * FW), 122 + FW * .12 + s.y, 8 * s.wink, t * 3, s.wink);
         // Sparkles round her hand and her face while she waves.
         if (s.spark > .01) {
             [[34, 92, 10, 0], [98, 40, 7, 1.3], [270, 70, 9, 2.1], [22, 170, 7, 3.4], [292, 150, 6, 4.2]].forEach(([x, y, r, ph]) => {
