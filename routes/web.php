@@ -702,6 +702,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sky-weather/frames', [App\Http\Controllers\SkyWeatherController::class, 'frames'])->name('sky.frames');
     Route::get('/app/sky-weather/storms', [App\Http\Controllers\SkyWeatherController::class, 'storms'])->name('sky.storms');
     Route::get('/app/sky-weather/forecast', [App\Http\Controllers\SkyWeatherController::class, 'forecast'])->middleware('throttle:60,1')->name('sky.forecast');
+    Route::get('/app/sky-weather/forecast-grid', [App\Http\Controllers\SkyWeatherController::class, 'forecastGrid'])->middleware('throttle:30,1')->name('sky.grid');
     Route::post('/app/sky-weather/generate', [App\Http\Controllers\SkyWeatherController::class, 'generate'])->name('sky.generate');
     Route::get('/app/sky-weather/job/{id}', [App\Http\Controllers\SkyWeatherController::class, 'jobState'])->whereNumber('id')->name('sky.job');
     Route::get('/app/sky-weather/list', [App\Http\Controllers\SkyWeatherController::class, 'list'])->name('sky.list');

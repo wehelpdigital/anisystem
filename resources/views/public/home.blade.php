@@ -3350,6 +3350,16 @@
     .hp-sum-card.is-down { background: #fffbeb; border-color: #fde68a; }
     .hp-sum-card.is-way { color: #fff; border: 0; background: radial-gradient(120% 120% at 0% 0%, #5c9434 0%, #3d6823 45%, #24420f 100%);
         box-shadow: 0 30px 60px -30px rgb(36 66 15 / .85), 0 0 0 3px rgb(245 197 24 / .55); }
+    /* The answer card breathes: two soft gold ripples leave its edge in turn
+       and a warm glow swells under it (the owner's call, 2026-10-08). */
+    .hp-sum-card.is-way { isolation: isolate; animation: hpWayGlow 3.6s ease-in-out infinite; }
+    .hp-sum-card.is-way::before, .hp-sum-card.is-way::after { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 1.5rem; pointer-events: none;
+        box-shadow: 0 0 0 2px rgb(245 197 24 / .6), 0 0 22px 2px rgb(245 197 24 / .28); opacity: 0; animation: hpRipple 3.6s cubic-bezier(.22,1,.36,1) infinite; }
+    .hp-sum-card.is-way::after { animation-delay: 1.8s; }
+    @keyframes hpRipple { 0% { inset: 0; border-radius: 1.5rem; opacity: .9; } 100% { inset: -18px; border-radius: calc(1.5rem + 18px); opacity: 0; } }
+    @keyframes hpWayGlow { 50% { box-shadow: 0 30px 70px -26px rgb(36 66 15 / .9), 0 0 0 3px rgb(245 197 24 / .7), 0 0 46px -6px rgb(245 197 24 / .45); } }
+    @media (prefers-reduced-motion: reduce) { .hp-sum-card.is-way, .hp-sum-card.is-way::before, .hp-sum-card.is-way::after { animation: none; } }
+    html.sm-still .hp-sum-card.is-way, html.sm-still .hp-sum-card.is-way::before, html.sm-still .hp-sum-card.is-way::after { animation: none; }
     .hp-sum-ico { width: 3rem; height: 3rem; border-radius: 1rem; display: grid; place-items: center; }
     .hp-sum-ico svg { width: 1.6rem; height: 1.6rem; }
     .is-up .hp-sum-ico { color: #dc2626; background: #fee2e2; }

@@ -5,6 +5,8 @@
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))
 
 @section('content')
+@include('partials.tag-sheet-css')
+@include('partials.weather-scenes')
 <style>
     /* ---- SATELLITE WEATHER (2026-10-07, redrawn the same day) -------------
        The sky over the farm, played back and fast forwarded; storms drawn
@@ -134,24 +136,54 @@
     .sk-km { grid-row: span 3; text-align: right; font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; line-height: 1.1; color: var(--color-gray-900); }
     .sk-km small { display: block; font-family: var(--font-body, inherit); font-size: .66rem; font-weight: 700; color: var(--color-gray-500); }
     .sk-km.is-near { color: #dc2626; }
-    .sk-days { display: flex; gap: .45rem; margin: .75rem -1.05rem 0; padding: .1rem 1.05rem .35rem; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; }
-    .sk-day { flex: 1 0 4.6rem; scroll-snap-align: start; display: grid; justify-items: center; gap: .15rem; padding: .6rem .3rem .55rem; border-radius: 1rem; text-align: center;
-        background: var(--color-gray-50); border: 1px solid var(--color-gray-100); font-size: .7rem; color: var(--color-gray-600); animation: skUp .4s var(--sk-ease) both; animation-delay: calc(var(--i) * 35ms); }
-    html.dark .sk-day { background: #121a0d; border-color: #2b3a1c; }
-    .sk-day.is-today { border-color: var(--color-brand-600); background: #f3f8ec; }
-    html.dark .sk-day.is-today { background: #1c2c10; }
+    /* The next 10 days: cards that go on to the next line, never a panel
+       that scrolls sideways. Five across on a wide screen; two across on a
+       phone, each with its sky beside the words. The skies move. */
+    .sk-days { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .45rem; margin-top: .75rem; }
+    .sk-days > p { grid-column: 1 / -1; }
+    .sk-day { display: flex; flex-direction: column; align-items: center; gap: .12rem; min-width: 0; padding: .55rem .35rem .6rem; border-radius: 1rem; text-align: center;
+        border: 1px solid var(--color-gray-100); font-size: .7rem; color: var(--color-gray-600); animation: skUp .4s var(--sk-ease) both; animation-delay: calc(var(--i) * 40ms); }
+    html.dark .sk-day { border-color: #2b3a1c; }
+    .sk-day.is-today { box-shadow: inset 0 0 0 2px var(--color-brand-600); }
     @keyframes skUp { from { opacity: 0; transform: translateY(8px); } }
-    .sk-day b { font-size: .78rem; color: var(--color-gray-900); }
-    .sk-day svg { width: 1.7rem; height: 1.7rem; margin: .1rem 0; }
-    .sk-day .t { font-size: .82rem; font-weight: 800; color: var(--color-gray-900); }
+    .sk-day > b { font-size: .78rem; color: var(--color-gray-900); }
+    .sk-day > b small { display: none; font-weight: 600; color: var(--color-gray-500); }
+    .sk-day > small { font-size: .64rem; color: var(--color-gray-500); }
+    .sk-day .wx-sky { margin: .1rem 0; }
+    .sk-day > em { font-style: normal; font-size: .7rem; font-weight: 800; color: var(--color-gray-800); line-height: 1.2; min-height: 1.7rem; display: grid; place-items: center; }
+    .sk-day .t { font-size: .78rem; font-weight: 800; color: var(--color-gray-900); }
     .sk-day .t small { font-weight: 600; color: var(--color-gray-500); }
-    .sk-day .r { display: block; width: 100%; height: .3rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; margin-top: .2rem; }
-    .sk-day .r i { display: block; height: 100%; border-radius: 999px; background: #4c8ed9; }
-    .sk-day em { font-style: normal; font-size: .68rem; font-weight: 800; color: #2563eb; }
-    .sk-day .p { font-size: .6rem; font-weight: 700; color: var(--color-gray-500); }
-    html.dark .sk-day em { color: #93c5fd; }
-    .sk-day .g { font-size: .6rem; font-weight: 800; color: #b45309; }
-    .sk-ask select { margin-top: .7rem; }
+    .sk-day .r { font-size: .68rem; font-weight: 800; color: #2563eb; }
+    html.dark .sk-day .r { color: #93c5fd; }
+    .sk-day .g { font-size: .62rem; font-weight: 800; color: #b45309; }
+    @media (max-width: 639.98px) {
+        .sk-days { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .sk-day { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); grid-template-areas: 'sky day' 'sky what' 'sky temp' 'sky rain' 'sky gust'; column-gap: .45rem; row-gap: 0;
+            align-items: center; text-align: left; padding: .5rem .55rem; }
+        .sk-day .wx-sky { grid-area: sky; width: 2.6rem !important; height: 2.6rem !important; margin: 0; }
+        .sk-day > b { grid-area: day; } .sk-day > b small { display: inline; }
+        .sk-day > small { display: none; }
+        .sk-day > em { grid-area: what; min-height: 0; display: block; }
+        .sk-day .t { grid-area: temp; } .sk-day .r { grid-area: rain; } .sk-day .g { grid-area: gust; }
+    }
+    /* Which lot Anee checks: a tag that opens a sheet of the lots. */
+    .sk-lottag { margin-top: .75rem; }
+    .sk-lottag .crop-tag-t small { display: block; font-size: .72rem; font-weight: 600; color: var(--color-gray-500); overflow: hidden; text-overflow: ellipsis; }
+    .sk-lot-h { font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); margin: .85rem 0 .3rem; }
+    .sk-lot-h:first-child { margin-top: 0; }
+    .sk-lotchips { display: flex; flex-wrap: wrap; gap: .25rem; margin-top: .3rem; }
+    .sk-lotchips em { font-style: normal; font-size: .68rem; font-weight: 800; padding: .14rem .5rem; border-radius: 999px; color: #2d5016; background: #e4efd4; }
+    .sk-lotchips em.is-stage { color: #7c4a03; background: #fef3c7; }
+    .sk-lotchips em.is-day { color: #334155; background: #e2e8f0; }
+    html.dark .sk-lotchips em { color: #a5c97e; background: #1c2c10; } html.dark .sk-lotchips em.is-stage { color: #fcd34d; background: #3a2a06; } html.dark .sk-lotchips em.is-day { color: #cbd5e1; background: #1e293b; }
+    .sk-lotrow .dt-row-body i { margin-top: .3rem; }
+    .sk-lotsearch { position: relative; margin-bottom: .6rem; }
+    .sk-lotsearch svg { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); width: 1.05rem; height: 1.05rem; color: var(--color-gray-400); pointer-events: none; }
+    .sk-lotsearch .form-input { padding-left: 2.4rem; }
+    .sk-lotsearch[hidden] { display: none; }
+    /* The forecast clouds and rain, drawn over the map while it plays. */
+    .sk-fc { position: absolute; pointer-events: none; opacity: 0; transition: opacity .4s var(--sk-ease); }
+    .sk-fc.is-on { opacity: 1; }
     .sk-run { margin-top: .8rem; width: 100%; display: flex; align-items: center; justify-content: center; gap: .5rem; padding: .9rem 1rem; border-radius: 1rem; border: 0;
         font-weight: 800; color: #1a1a1a; background: linear-gradient(135deg, #f7d23a, #f5c518); box-shadow: 0 14px 30px -18px rgb(201 158 0 / .9); cursor: pointer; transition: transform .28s var(--sk-ease); }
     .sk-run img { width: 1.6rem; height: 1.6rem; border-radius: 999px; }
@@ -178,14 +210,16 @@
     .sk-acts li { display: flex; gap: .6rem; padding: .6rem 0; border-bottom: 1px dashed var(--color-gray-200); }
     .sk-acts li:last-child { border-bottom: 0; }
     .sk-acts em { flex: none; height: fit-content; font-style: normal; font-size: .66rem; font-weight: 800; text-transform: uppercase; padding: .2rem .5rem; border-radius: 999px; background: #fff1c2; color: #8a5a00; }
-    .sk-saved { display: grid; gap: .45rem; margin-top: .6rem; }
-    .sk-srow { display: flex; gap: .6rem; align-items: center; width: 100%; padding: .65rem .75rem; border-radius: .9rem; border: 1px solid var(--color-gray-200); background: var(--color-white);
+    /* The column is minmax(0, 1fr): a long headline is cut with an ellipsis
+       inside the card instead of pushing the row out over its edge. */
+    .sk-saved { display: grid; grid-template-columns: minmax(0, 1fr); gap: .45rem; margin-top: .6rem; }
+    .sk-srow { display: flex; gap: .6rem; align-items: center; width: 100%; min-width: 0; padding: .65rem .75rem; border-radius: .9rem; border: 1px solid var(--color-gray-200); background: var(--color-white);
         text-align: left; cursor: pointer; font-size: .82rem; color: var(--color-gray-800); transition: transform .28s var(--sk-ease), border-color .28s var(--sk-ease); }
     .sk-srow:hover { transform: translateY(-1px); border-color: var(--color-brand-600); }
     .sk-srow i { flex: none; width: .65rem; height: .65rem; border-radius: 999px; background: #22c55e; }
     .sk-srow i.r-moderate { background: #f59e0b; } .sk-srow i.r-high, .sk-srow i.r-severe { background: #ef4444; }
     .sk-srow span { min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
-    .sk-srow small { flex: none; color: var(--color-gray-500); }
+    .sk-srow small { flex: none; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--color-gray-500); }
     @media (prefers-reduced-motion: reduce) {
         .sk-badge.is-warn, .sk-eye::before, .sk-eye::after, .sk-pane.is-on, .sk-day, .sk-rhead { animation: none; }
         .sk-panel, .sk-lay, .sk-run, .sk-play, .sk-read, .sk-place, .sk-srow { transition: none; }
@@ -236,7 +270,7 @@
             </div>
         </div>
     </div>
-    <p class="sk-credit">Clouds: Himawari-9 infrared from NASA GIBS. Rain radar: RainViewer. Live layers: OpenWeatherMap. Typhoon tracks: GDACS. Forecast: Open-Meteo. Times are Philippine time.</p>
+    <p class="sk-credit">Clouds: Himawari-9 infrared from NASA GIBS. Rain radar: RainViewer. Live layers: OpenWeatherMap. Typhoon tracks: GDACS. Forecast, and the forecast clouds and rain the map plays: the Open-Meteo model. Times are Philippine time.</p>
 
     <div class="sk-grid">
         <div class="sk-col">
@@ -247,14 +281,18 @@
             </div>
             <div class="sk-card">
                 <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>The next 10 days at your farm</h3>
-                <p class="sk-sub">High and low, the rain expected and its chance. Swipe for more days.</p>
+                <p class="sk-sub">The sky, the high and the low, the rain expected and its chance.</p>
                 <div class="sk-days" id="skDays"><p class="sk-sub">Choose your farm to see its forecast.</p></div>
             </div>
         </div>
         <div class="sk-card sk-ask">
             <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Ask Anee what it means for your crop</h3>
             <p class="sk-sub">Anee reads the storms, the forecast, ENSO and the past five years, then checks them against one of your lots: its crop, age and stage.</p>
-            <select id="skLot" class="form-select"><option value="">No lot, my farm in general</option></select>
+            <button type="button" class="crop-tag sk-lottag" id="skLotBtn">
+                <span class="crop-tag-e" id="skLotIcon">🗺️</span>
+                <span class="crop-tag-t" id="skLotNow">No lot, my farm in general</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
             <button type="button" class="sk-run" id="skRun"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""><span id="skRunSays">Ask Anee</span></button>
             <p class="sk-fine" id="skFine"></p>
             <div class="mt-4">
@@ -265,6 +303,23 @@
     </div>
     <div class="sk-rep" id="skRep" hidden></div>
     @include('sm.partials.anee-wait')
+</div>
+
+{{-- Which lot Anee checks the sky against. --}}
+<div class="sheet hidden" id="skLotSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which lot should Anee check?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <p class="form-hint mt-0 mb-3">Anee weighs the storms and the rain against the lot's crop and how far along it is.</p>
+        <div class="sk-lotsearch" id="skLotSearchBox" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="text" id="skLotQ" class="form-input" autocomplete="off" placeholder="Find a lot or a crop">
+        </div>
+        <div class="dt-rows" id="skLotRows"></div>
+    </div>
 </div>
 @endsection
 
@@ -277,7 +332,7 @@
     const U = {
         options: @json(route('sky.options')), frames: @json(route('sky.frames')), storms: @json(route('sky.storms')), forecast: @json(route('sky.forecast')),
         tile: @json(url('/app/sky-weather/tile')), generate: @json(route('sky.generate')), job: (id) => @json(url('/app/sky-weather/job')) + '/' + id,
-        list: @json(route('sky.list')), one: (id) => @json(url('/app/sky-weather/one')) + '/' + id, places: @json(route('sat.places')),
+        list: @json(route('sky.list')), one: (id) => @json(url('/app/sky-weather/one')) + '/' + id, places: @json(route('sat.places')), grid: @json(route('sky.grid')),
     };
     const KEY = 'anee.skyPlace';
     let OPT = null, map = null, farm = null, farmMark = null, ring = null, FR = { clouds: [], radar: [] }, STORMS = [], FC = { hours: [], days: [] };
@@ -374,6 +429,7 @@
         }
         loadStorms();
         loadForecast();
+        if (mode === 'future') loadGrid().then(() => future(Number($('skSlider').value)));
     };
     const panel = (on) => { $('skPanel').classList.toggle('is-on', on); $('skPlaceBtn').setAttribute('aria-expanded', String(on)); };
     $('skPlaceBtn').addEventListener('click', () => panel(!$('skPanel').classList.contains('is-on')));
@@ -403,6 +459,7 @@
         $('skOp').value = Math.round(o * 100);
         if (owmLayer) owmLayer.setOpacity(o);
         paintFrame();
+        if (fcOver && mode === 'future') fcOver.paint(fcT);
     };
     $('skOp').addEventListener('input', (e) => setOpacity(e.target.value / 100));
     const ensureAnim = (kind) => {
@@ -410,7 +467,8 @@
         animLayers[kind] = FR[kind].map((f) => { const l = new ScaledTiles(f.url, kind === 'clouds' ? 6 : 7); map.overlayMapTypes.push(l); return l; });
     };
     const paintFrame = () => {
-        Object.entries(animLayers).forEach(([k, list]) => list.forEach((l, i) => l.setOpacity(mode === 'past' && k === anim && i === frameIdx ? opacity : (mode === 'future' && k === anim && i === list.length - 1 ? opacity : 0))));
+        Object.entries(animLayers).forEach(([k, list]) => list.forEach((l, i) => l.setOpacity(mode === 'past' && k === anim && i === frameIdx ? opacity : 0)));
+        if (fcOver) { fcOver.show(mode === 'future'); if (mode === 'future') fcOver.paint(fcT); }
         const f = FR[anim][frameIdx];
         if (mode === 'past') $('skTimeLabel').textContent = f ? (anim === 'clouds' ? 'Clouds · ' : 'Rain radar · ') + f.ph : 'No pictures right now';
     };
@@ -445,6 +503,116 @@
         }
     });
 
+    /* ---- the forecast clouds and rain, played on the map ----
+       Cloud cover and rain from the Open-Meteo model over a grid around the
+       farm, every 3 hours for 5 days (sky.grid). Between two forecasts the
+       picture is blended, the field is laid out on the map's own projection,
+       and a little texture drifts through it, so it reads as weather moving
+       across the islands rather than squares. */
+    let FG = null, fgKey = '', fcOver = null, fcT = null, NOISE = null;
+    const FW = 8;
+    const loadGrid = async () => {
+        if (!farm) return null;
+        const key = Math.round(farm.lat / 2) + ',' + Math.round(farm.lng / 2);
+        if (FG && fgKey === key) return FG;
+        try {
+            const r = await window.api(U.grid + '?lat=' + farm.lat + '&lng=' + farm.lng);
+            const d = r.data || {};
+            FG = (d.cloud || []).length ? Object.assign(d, { startMs: Date.parse(d.start), frames: d.cloud.length }) : null;
+        } catch (_) { FG = null; }
+        fgKey = key;
+        return FG;
+    };
+    const makeNoise = (w, h) => {
+        // Two octaves of value noise, smooth enough to look like cloud texture.
+        const out = new Float32Array(w * h);
+        [[6, 0.65], [14, 0.35]].forEach(([n, amp]) => {
+            const gw = n + 1, gh = Math.ceil(n * h / w) + 1, g = Array.from({ length: gw * gh }, () => Math.random());
+            for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                const gx = x / w * n, gy = y / h * (gh - 1), x0 = Math.floor(gx), y0 = Math.floor(gy), fx = gx - x0, fy = gy - y0;
+                const a = g[y0 * gw + x0], b = g[y0 * gw + Math.min(gw - 1, x0 + 1)], c = g[Math.min(gh - 1, y0 + 1) * gw + x0], e = g[Math.min(gh - 1, y0 + 1) * gw + Math.min(gw - 1, x0 + 1)];
+                const sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy);
+                out[y * w + x] += amp * ((a * (1 - sx) + b * sx) * (1 - sy) + (c * (1 - sx) + e * sx) * sy);
+            }
+        });
+        return out;
+    };
+    const merc = (lat) => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+    const unmerc = (m) => (2 * Math.atan(Math.exp(m)) - Math.PI / 2) * 180 / Math.PI;
+    const RAMP = [[0, [96, 165, 250]], [0.35, [52, 211, 153]], [0.65, [250, 204, 21]], [1, [239, 68, 68]]];
+    const rampAt = (v) => { for (let i = 1; i < RAMP.length; i++) { if (v <= RAMP[i][0]) { const [a, ca] = RAMP[i - 1], [b, cb] = RAMP[i], t = (v - a) / (b - a); return ca.map((x, j) => x + (cb[j] - x) * t); } } return RAMP[RAMP.length - 1][1]; };
+    const small = document.createElement('canvas');
+    const fieldAt = (t) => {
+        const cols = FG.cols, rows = FG.rows, w = cols * FW, h = rows * FW;
+        if (small.width !== w) { small.width = w; small.height = h; NOISE = makeNoise(w, h); }
+        const k = Math.max(0, Math.min(FG.frames - 1, (t - FG.startMs) / (FG.stepHours * 3.6e6)));
+        const k0 = Math.floor(k), k1 = Math.min(FG.frames - 1, k0 + 1), a = k - k0;
+        const C0 = FG.cloud[k0], C1 = FG.cloud[k1], R0 = FG.rain[k0], R1 = FG.rain[k1];
+        const half = FG.step / 2, S = FG.lat0 - half, N = FG.lat0 + (rows - 1) * FG.step + half, Wd = FG.lng0 - half, E = FG.lng0 + (cols - 1) * FG.step + half;
+        const mN = merc(N), mS = merc(S), drift = Math.round((t / 3.6e6) * 0.7) % w;
+        const sample = (A, B, gr, gc) => {
+            const r0 = Math.floor(gr), c0 = Math.floor(gc), r1 = Math.min(rows - 1, r0 + 1), c1 = Math.min(cols - 1, c0 + 1), fr = gr - r0, fc = gc - c0;
+            const v = (arr) => (arr[r0 * cols + c0] * (1 - fc) + arr[r0 * cols + c1] * fc) * (1 - fr) + (arr[r1 * cols + c0] * (1 - fc) + arr[r1 * cols + c1] * fc) * fr;
+            return v(A) * (1 - a) + v(B) * a;
+        };
+        const ctx = small.getContext('2d'), img = ctx.createImageData(w, h), px = img.data;
+        const clouds = anim !== 'radar';
+        for (let y = 0; y < h; y++) {
+            const lat = unmerc(mN + (mS - mN) * (y + 0.5) / h);
+            const gr = Math.max(0, Math.min(rows - 1, (lat - FG.lat0) / FG.step));
+            for (let x = 0; x < w; x++) {
+                const lng = Wd + (E - Wd) * (x + 0.5) / w;
+                const gc = Math.max(0, Math.min(cols - 1, (lng - FG.lng0) / FG.step));
+                const nz = NOISE[y * w + ((x + drift) % w)];
+                let r = 0, g = 0, b = 0, al = 0;
+                if (clouds) {
+                    const c = sample(C0, C1, gr, gc) / 100;
+                    al = Math.min(1, Math.pow(c, 1.35) * (0.55 + 0.75 * nz)) * 0.88;
+                    r = 238; g = 242; b = 247;
+                }
+                const mm = sample(R0, R1, gr, gc);
+                if (mm >= 0.3) {
+                    const iv = Math.min(1, Math.log1p(mm) / Math.log1p(25)), [rr, rg, rb] = rampAt(iv), ra = Math.min(0.9, 0.3 + 0.6 * iv) * (0.8 + 0.4 * nz);
+                    const out = ra + al * (1 - ra);
+                    r = (rr * ra + r * al * (1 - ra)) / out; g = (rg * ra + g * al * (1 - ra)) / out; b = (rb * ra + b * al * (1 - ra)) / out; al = out;
+                }
+                const i = (y * w + x) * 4;
+                px[i] = r; px[i + 1] = g; px[i + 2] = b; px[i + 3] = Math.round(al * 255);
+            }
+        }
+        ctx.putImageData(img, 0, 0);
+        return { canvas: small, N, S, W: Wd, E };
+    };
+    let FcOverlay = null;
+    const defineFc = () => {
+        FcOverlay = class extends google.maps.OverlayView {
+            onAdd() { this.cv = document.createElement('canvas'); this.cv.className = 'sk-fc'; this.getPanes().overlayLayer.appendChild(this.cv); this.show(this.on); }
+            onRemove() { this.cv?.remove(); this.cv = null; }
+            show(on) { this.on = on; if (this.cv) this.cv.classList.toggle('is-on', !!on && !!FG); }
+            draw() { this.paint(fcT); }
+            paint(t) {
+                if (!this.cv || !FG || t == null || !this.on) { this.show(this.on); return; }
+                const proj = this.getProjection();
+                if (!proj) return;
+                const div = map.getDiv(), w = div.offsetWidth, h = div.offsetHeight, dpr = Math.min(2, window.devicePixelRatio || 1);
+                const d0 = proj.fromLatLngToDivPixel(proj.fromContainerPixelToLatLng(new google.maps.Point(0, 0)));
+                this.cv.style.left = d0.x + 'px'; this.cv.style.top = d0.y + 'px';
+                if (this.cv.width !== Math.round(w * dpr) || this.cv.height !== Math.round(h * dpr)) { this.cv.width = Math.round(w * dpr); this.cv.height = Math.round(h * dpr); this.cv.style.width = w + 'px'; this.cv.style.height = h + 'px'; }
+                const f = fieldAt(t), ctx = this.cv.getContext('2d');
+                const nw = proj.fromLatLngToContainerPixel(new google.maps.LatLng(f.N, f.W)), se = proj.fromLatLngToContainerPixel(new google.maps.LatLng(f.S, f.E));
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                ctx.clearRect(0, 0, w, h);
+                ctx.globalAlpha = Math.min(1, opacity + 0.15);
+                ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+                ctx.drawImage(f.canvas, nw.x, nw.y, se.x - nw.x, se.y - nw.y);
+                this.show(true);
+            }
+        };
+        fcOver = new FcOverlay();
+        fcOver.on = false;
+        fcOver.setMap(map);
+    };
+
     /* ---- time: the past three hours, or the storm's forecast ---- */
     const futureSpan = () => {
         const pts = STORMS.flatMap((s) => (s.points || []).filter((p) => p.forecast && p.utc).map((p) => Date.parse(p.utc)));
@@ -465,6 +633,8 @@
             $('skSlider').max = 100; $('skSlider').value = 0;
             $('skRead').classList.add('is-on');
             future(0);
+            // The forecast clouds come in once their grid has landed.
+            loadGrid().then(() => { if (mode === 'future') { future(Number($('skSlider').value)); paintFrame(); } });
         }
         paintFrame();
     };
@@ -484,6 +654,8 @@
     const future = (v) => {
         const { start, end } = futureSpan();
         const t = start + (end - start) * (v / 100);
+        fcT = t;
+        if (fcOver) fcOver.paint(t);
         const d = new Date(t);
         $('skTimeLabel').textContent = 'Forecast · ' + d.toLocaleString('en-PH', { timeZone: 'Asia/Manila', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
         const h = FC.hours.length ? FC.hours.reduce((best, x) => Math.abs(Date.parse(x.t + ':00+08:00') - t) < Math.abs(Date.parse(best.t + ':00+08:00') - t) ? x : best) : null;
@@ -492,6 +664,7 @@
         const bits = [];
         if (h) bits.push('<span>Rain <b>' + esc(h.rain ?? 0) + ' mm</b></span>', '<span>Gusts <b>' + esc(Math.round(h.gust ?? 0)) + ' km/h</b></span>', '<span>Cloud <b>' + esc(h.cloud ?? 0) + '%</b></span>');
         if (pos && farm) bits.push('<span>' + esc(pos.s.name) + ' <b>' + Math.round(km(farm, pos)) + ' km</b> away</span>');
+        if (FG && t > FG.startMs + (FG.frames - 1) * FG.stepHours * 3.6e6) bits.push('<span>The forecast clouds end here</span>');
         $('skRead').innerHTML = bits.join('');
     };
     const moveEye = (pos) => {
@@ -593,20 +766,58 @@
     const loadForecast = async () => {
         if (!farm) return;
         try { const r = await window.api(U.forecast + '?lat=' + farm.lat + '&lng=' + farm.lng); FC = r.data || FC; } catch (_) {}
-        const maxR = Math.max(10, ...FC.days.map((d) => Number(d.rain) || 0));
         const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Manila' });
-        $('skDays').innerHTML = FC.days.length ? FC.days.map((d, i) => {
+        $('skDays').innerHTML = FC.days.length ? FC.days.slice(0, 10).map((d, i) => {
             const day = new Date(d.date + 'T00:00:00');
             const rain = Number(d.rain) || 0;
-            return '<div class="sk-day' + (d.date === today ? ' is-today' : '') + '" style="--i:' + i + '" title="' + esc(wxWord(d.code, rain)) + '"><b>' + esc(d.date === today ? 'Today' : day.toLocaleDateString('en-PH', { weekday: 'short' }))
-                + '</b><span>' + esc(day.toLocaleDateString('en-PH', { month: 'short', day: 'numeric' })) + '</span>' + wxIcon(d.code, rain)
-                + '<span class="t">' + esc(Math.round(d.tmax)) + '°' + (d.tmin != null ? ' <small>' + esc(Math.round(d.tmin)) + '°</small>' : '') + '</span>'
-                + '<em>' + esc(rain >= 10 ? Math.round(rain) : rain) + ' mm</em>' + (d.pop != null ? '<span class="p">' + esc(Math.round(d.pop)) + '% chance</span>' : '')
-                + '<span class="r"><i style="width:' + Math.min(100, rain / maxR * 100) + '%"></i></span>'
+            const key = window.wxKeyFor ? window.wxKeyFor(d.code, false, d.tmax, d.gust) : null;
+            const md = day.toLocaleDateString('en-PH', { month: 'short', day: 'numeric' });
+            return '<div class="sk-day ' + (key && window.wxHue ? window.wxHue(key) : '') + (d.date === today ? ' is-today' : '') + '" style="--i:' + i + '"><b>' + esc(d.date === today ? 'Today' : day.toLocaleDateString('en-PH', { weekday: 'short' }))
+                + '<small> ' + esc(md) + '</small></b><small>' + esc(md) + '</small>' + (key && window.wxSky ? window.wxSky(key, 44) : wxIcon(d.code, rain))
+                + '<em>' + esc(key && window.wxName ? window.wxName(key) : wxWord(d.code, rain)) + '</em>'
+                + '<span class="t">' + esc(Math.round(d.tmax)) + '°' + (d.tmin != null ? ' <small>/ ' + esc(Math.round(d.tmin)) + '°</small>' : '') + '</span>'
+                + '<span class="r">' + esc(rain >= 10 ? Math.round(rain) : rain) + ' mm' + (d.pop != null ? ' · ' + esc(Math.round(d.pop)) + '%' : '') + '</span>'
                 + ((d.gust || 0) >= 50 ? '<span class="g">Gusts ' + Math.round(d.gust) + ' km/h</span>' : '') + '</div>';
         }).join('') : '<p class="sk-sub">The forecast did not load. Try again in a moment.</p>';
         if (mode === 'future') future(Number($('skSlider').value));
     };
+
+    /* ---- which lot Anee checks ---- */
+    let lotId = '';
+    const TICK = '<svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+    const lotDay = (l) => l.day != null && l.day >= 0 ? (l.counter || 'Day') + ' ' + l.day : '';
+    const setLot = (id) => {
+        lotId = id ? String(id) : '';
+        const l = OPT.lots.find((x) => String(x.id) === lotId);
+        $('skLotIcon').textContent = l ? (l.icon || '🌱') : '🗺️';
+        $('skLotNow').innerHTML = l ? esc(l.name) + '<small>' + esc([l.crop, l.stage, lotDay(l)].filter(Boolean).join(' · ')) + '</small>' : 'No lot, my farm in general<small>Anee reads the sky for the whole farm</small>';
+    };
+    const paintLots = () => {
+        const q = ($('skLotQ').value || '').trim().toLowerCase();
+        const row = (l) => '<button type="button" class="dt-row sk-lotrow' + (String(l.id) === lotId ? ' is-on' : '') + '" data-id="' + l.id + '"><span class="dt-row-e">' + esc(l.icon || '🌱') + '</span>'
+            + '<span class="dt-row-body"><b>' + esc(l.name) + '</b><span class="sk-lotchips"><em>' + esc(l.crop) + '</em>' + (l.stage ? '<em class="is-stage">' + esc(l.stage) + '</em>' : '') + (lotDay(l) ? '<em class="is-day">' + esc(lotDay(l)) + '</em>' : '') + '</span>'
+            + (l.place ? '<i>' + esc(l.place) + '</i>' : (l.lat ? '<i>Pinned on its map</i>' : '')) + '</span>' + TICK + '</button>';
+        const hit = (l) => !q || (l.name + ' ' + l.crop + ' ' + (l.season || '') + ' ' + (l.place || '')).toLowerCase().includes(q);
+        const groups = {};
+        OPT.lots.filter(hit).forEach((l) => { const g = l.season || 'Lots'; (groups[g] = groups[g] || []).push(l); });
+        $('skLotRows').innerHTML = (q ? '' : '<button type="button" class="dt-row sk-lotrow' + (!lotId ? ' is-on' : '') + '" data-id=""><span class="dt-row-e">🗺️</span><span class="dt-row-body"><b>No lot, my farm in general</b><i>Anee reads the sky for the whole farm</i></span>' + TICK + '</button>')
+            + Object.entries(groups).map(([g, list]) => '<p class="sk-lot-h">' + esc(g) + '</p>' + list.map(row).join('')).join('')
+            + (!OPT.lots.length ? '<p class="text-xs text-gray-400 mt-2">Your lots show here once a season has them.</p>' : (q && !Object.keys(groups).length ? '<p class="text-xs text-gray-400 mt-2">No lot by that name.</p>' : ''));
+    };
+    $('skLotBtn').addEventListener('click', () => {
+        if (!OPT || !window.openSheet) return;
+        $('skLotSearchBox').hidden = OPT.lots.length < 7; $('skLotQ').value = '';
+        paintLots();
+        window.openSheet('skLotSheet');
+    });
+    $('skLotQ').addEventListener('input', paintLots);
+    $('skLotRows').addEventListener('click', (e) => {
+        const b = e.target.closest('.sk-lotrow');
+        if (!b) return;
+        setLot(b.dataset.id);
+        $('skLotRows').querySelectorAll('.sk-lotrow').forEach((x) => x.classList.toggle('is-on', x === b));
+        setTimeout(() => window.closeSheet('skLotSheet'), 150);
+    });
 
     /* ---- Anee ---- */
     const quote = () => {
@@ -619,7 +830,7 @@
         $('skRun').disabled = true;
         window.aneeWait.show({ title: 'Anee is reading the sky…', sub: 'The storms, the forecast and your lot. Under a minute.', lines: ['Tracing the typhoon tracks…', 'Measuring the distance to your farm…', 'Reading the next ten days…', 'Checking your crop\'s stage…'] });
         try {
-            const r = await window.api(U.generate, { method: 'POST', body: { lat: farm.lat, lng: farm.lng, place: farm.label, lotId: $('skLot').value || null } });
+            const r = await window.api(U.generate, { method: 'POST', body: { lat: farm.lat, lng: farm.lng, place: farm.label, lotId: lotId || null } });
             const d = r.data && r.data.status === 'ready' ? r.data : await window.aneeWait.poll({ id: r.data.id, job: U.job, phases: window.aneeWait.phases.plain });
             await window.aneeWait.done({ title: 'Here is the sky, read.', line: 'What it means for your crop.' });
             OPT.balance = d.balance; quote(); showReport(d); loadSaved();
@@ -668,14 +879,14 @@
             const r = await window.api(U.options);
             OPT = r.data;
             quote();
-            $('skLot').insertAdjacentHTML('beforeend', OPT.lots.map((l) => '<option value="' + l.id + '">' + esc(l.name + ' · ' + l.crop + (l.stage ? ' · ' + l.stage : '') + (l.season ? ' (' + l.season + ')' : '')) + '</option>').join(''));
+            setLot('');
             $('skLots').innerHTML = OPT.lots.filter((l) => (l.lat && l.lng) || l.place).map((l) => '<button type="button" class="sk-opt" data-lot="' + l.id + '"><span>' + esc(l.name) + '<small>' + esc(l.crop + (l.place ? ' · ' + l.place : '')) + '</small></span></button>').join('') || '<p class="text-xs text-gray-400">Pin a lot on its map and it shows here.</p>';
             $('skLots').addEventListener('click', (e) => {
                 const b = e.target.closest('.sk-opt');
                 if (!b) return;
                 const l = OPT.lots.find((x) => String(x.id) === b.dataset.lot);
                 if (!l) return;
-                $('skLot').value = String(l.id);
+                setLot(l.id);
                 if (l.lat && l.lng) return setFarm({ lat: l.lat, lng: l.lng, label: l.name });
                 // No pin on the lot yet: its town stands in for it.
                 window.api(U.places + '?q=' + encodeURIComponent(l.place)).then((r) => {
@@ -687,6 +898,7 @@
             try { const f = await window.api(U.frames); FR = f.data || FR; } catch (_) {}
             await initMap();
             defineEye();
+            defineFc();
             let saved = null;
             try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (_) {}
             if (saved && saved.lat) setFarm(saved, true); else { panel(true); loadStorms(); }

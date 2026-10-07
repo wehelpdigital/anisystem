@@ -88,8 +88,10 @@ class SkyWeatherController extends Controller
         foreach ($lots as $lot) {
             $s = $seasons->firstWhere('id', $lot->croppingScheduleId);
             $f = $this->lotFacts($lot, $s);
+            $cropKey = $lot->crop ?: ($s?->cropType ?? null);
             $out[] = [
-                'id' => $lot->id, 'season' => $s?->title, 'name' => $lot->lotName, 'crop' => $f['crop'], 'stage' => $f['stage'], 'day' => $f['day'],
+                'id' => $lot->id, 'season' => $s?->title, 'name' => $lot->lotName, 'crop' => str_replace(' — ', ', ', $f['crop']), 'stage' => $f['stage'], 'day' => $f['day'],
+                'counter' => $f['counter'], 'icon' => ($cropKey && isset(CropCatalog::CROPS[$cropKey]['icon'])) ? CropCatalog::CROPS[$cropKey]['icon'] : '🌱',
                 'lat' => $lot->pinLat, 'lng' => $lot->pinLng, 'place' => trim(implode(', ', array_filter([$lot->locBarangay, $lot->locTown, $lot->locProvince]))),
             ];
         }
@@ -221,6 +223,71 @@ class SkyWeatherController extends Controller
         abort_unless($lat >= -90 && $lat <= 90 && $lng >= -180 && $lng <= 180 && ($lat || $lng), 422);
 
         return $this->json(true, 'ok', $this->hourly($lat, $lng));
+    }
+
+    /**
+     * The forecast the map plays (2026-10-08): cloud cover and rain from the
+     * Open-Meteo model over a 13 by 11 grid around the farm, 1.5 degrees
+     * apart, every 3 hours for 5 days. One call answers the whole grid; it
+     * is kept for 3 hours per 2 degree square, so farms near each other share it.
+     */
+    public function forecastGrid(Request $request)
+    {
+        $lat = (float) $request->query('lat');
+        $lng = (float) $request->query('lng');
+        abort_unless($lat >= -80 && $lat <= 80 && $lng >= -180 && $lng <= 180 && ($lat || $lng), 422);
+        $clat = (int) (round($lat / 2) * 2);
+        $clng = (int) (round($lng / 2) * 2);
+        $rows = 13;
+        $cols = 11;
+        $step = 1.5;
+        $lat0 = $clat - ($rows - 1) / 2 * $step;
+        $lng0 = $clng - ($cols - 1) / 2 * $step;
+        $block = now('UTC')->format('Ymd') . '-' . intdiv((int) now('UTC')->format('G'), 3);
+
+        $grid = Cache::remember("sky:grid:{$clat},{$clng}:{$block}", 3 * 3600, function () use ($rows, $cols, $step, $lat0, $lng0) {
+            $lats = [];
+            $lngs = [];
+            for ($r = 0; $r < $rows; $r++) {
+                for ($c = 0; $c < $cols; $c++) {
+                    $lats[] = round($lat0 + $r * $step, 2);
+                    $lngs[] = round($lng0 + $c * $step, 2);
+                }
+            }
+            try {
+                $res = Http::timeout(25)->get('https://api.open-meteo.com/v1/forecast', [
+                    'latitude' => implode(',', $lats), 'longitude' => implode(',', $lngs),
+                    'hourly' => 'cloud_cover,precipitation', 'forecast_days' => 6, 'timezone' => 'GMT',
+                ]);
+            } catch (\Throwable $e) {
+                return null;
+            }
+            $all = $res->ok() ? $res->json() : null;
+            if (! is_array($all) || ! isset($all[0]['hourly']['time']) || count($all) !== $rows * $cols) {
+                return null;
+            }
+            $times = $all[0]['hourly']['time'];
+            $nowHour = now('UTC')->startOfHour()->format('Y-m-d\TH:i');
+            $from = array_search($nowHour, $times, true);
+            $from = $from === false ? 0 : $from;
+            $cloud = [];
+            $rain = [];
+            for ($k = $from; $k + 2 < count($times) && count($cloud) < 40; $k += 3) {
+                $cf = [];
+                $rf = [];
+                foreach ($all as $loc) {
+                    $h = $loc['hourly'];
+                    $cf[] = (int) round((float) ($h['cloud_cover'][$k] ?? 0));
+                    $rf[] = round((float) ($h['precipitation'][$k] ?? 0) + (float) ($h['precipitation'][$k + 1] ?? 0) + (float) ($h['precipitation'][$k + 2] ?? 0), 1);
+                }
+                $cloud[] = $cf;
+                $rain[] = $rf;
+            }
+
+            return ['start' => $times[$from] . ':00Z', 'stepHours' => 3, 'cloud' => $cloud, 'rain' => $rain];
+        });
+
+        return $this->json(true, 'ok', $grid ? ['lat0' => $lat0, 'lng0' => $lng0, 'step' => $step, 'rows' => $rows, 'cols' => $cols] + $grid : ['frames' => 0]);
     }
 
     private function hourly(float $lat, float $lng): array
