@@ -67,6 +67,8 @@ return Application::configure(basePath: dirname(__DIR__))
             // The Logs tab's pen: one diary line per successful write that
             // resolved a schedule. After everything, so it sees the outcome.
             \App\Http\Middleware\RecordsScheduleActivity::class,
+            // The public site's share and search tags, never missing (2026-10-07).
+            \App\Http\Middleware\PublicSeoTags::class,
         ]);
         $middleware->redirectGuestsTo(fn () => route('login'));
         $middleware->redirectUsersTo(fn () => route('app.dashboard'));

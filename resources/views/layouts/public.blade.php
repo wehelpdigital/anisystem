@@ -435,7 +435,7 @@
             background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .08); transition: color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
         .te-list li:hover { color: #fff; border-color: rgb(255 255 255 / .22); background: rgb(255 255 255 / .09); }
         .te-mark { flex: none; width: 1rem; height: 1rem; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
-        .te-fine { margin-top: .6rem; font-size: .68rem; color: #6b7280; }
+        .te-fine { margin-top: .6rem; font-size: .74rem; color: #6b7280; }
         @media (prefers-reduced-motion: reduce) { .te-list li { transition: none; } }
     </style>
 
