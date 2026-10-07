@@ -571,7 +571,18 @@
                     </div>
                 </div>
 
-                <div class="reveal">
+                <div class="reveal hp-anee-media">
+                    {{-- Anee herself, floating over the chat: the hello clip
+                         the app's chat windows open with (owner, 2026-10-07). --}}
+                    <figure class="hp-anee-film" data-anee-film>
+                        <video playsinline preload="none" poster="{{ asset('videos/anee-hello-poster.webp') }}" aria-label="Anee says hello">
+                            <source src="{{ asset('videos/anee-hello.mp4') }}" type="video/mp4">
+                        </video>
+                        <button type="button" class="hp-anee-film-play" aria-label="Play Anee's hello">
+                            <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
+                            <em>Hear Anee</em>
+                        </button>
+                    </figure>
                     <div class="hp-chat" data-chat>
                         <div class="hp-chat-top">
                             <img src="{{ $face }}" alt="" class="hp-face is-lg">
@@ -595,6 +606,23 @@
                                 </ol>
                             </div>
                         </div>
+                    </div>
+                    {{-- The anee.io song, Let's Plant With a Dream, under the chat. --}}
+                    <div class="hp-song" data-song>
+                        <img class="hp-song-art" src="{{ asset('images/anee-song-poster.jpg') }}" alt="" loading="lazy" width="1200" height="655">
+                        <div class="hp-song-body">
+                            <span class="hp-song-kick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>The anee.io song</span>
+                            <b class="hp-song-h">Let&rsquo;s Plant With a Dream!</b>
+                            <div class="hp-song-row">
+                                <button type="button" class="hp-song-play" aria-label="Play the song">
+                                    <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                                    <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
+                                </button>
+                                <span class="hp-song-track"><input type="range" min="0" max="1000" value="0" step="1" aria-label="Move through the song"><i></i></span>
+                                <span class="hp-song-time">0:00</span>
+                            </div>
+                        </div>
+                        <audio preload="none" src="{{ asset('audio/anee-kay-anee-ang-ani-ay-high.mp3') }}"></audio>
                     </div>
                 </div>
             </div>
@@ -2241,6 +2269,42 @@
     /* The window's own colour is the header's green at the top and the
        body's at the bottom: a white window showed through the rounded top
        corners as a thin white line (2026-10-06). */
+    /* Anee floating over the chat, and the song under it (2026-10-07). */
+    .hp-anee-media { position: relative; max-width: 28rem; margin: 0 auto; width: 100%; }
+    .hp-anee-film { position: absolute; z-index: 3; top: -2.4rem; right: -1.6rem; width: 11.5rem; aspect-ratio: 16 / 9; margin: 0; border-radius: 1rem; overflow: hidden;
+        background: #0d1408; box-shadow: 0 22px 44px -18px rgb(0 0 0 / .85), 0 0 0 3px rgb(245 197 24 / .85); animation: hpFilmFloat 6s ease-in-out infinite; }
+    .hp-anee-film video { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .hp-anee-film-play { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: .4rem; padding: .45rem; border: 0; cursor: pointer;
+        background: linear-gradient(180deg, transparent 45%, rgb(9 14 6 / .55)); transition: background .28s var(--hp-ease); }
+    .hp-anee-film-play span { display: flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 999px; background: #f5c518; color: #1a1a1a;
+        box-shadow: 0 6px 16px -6px rgb(0 0 0 / .6); transition: transform .28s var(--hp-ease), opacity .28s var(--hp-ease); }
+    .hp-anee-film-play span svg { width: .85rem; height: .85rem; margin-left: .1rem; }
+    .hp-anee-film-play em { font-style: normal; font-size: .68rem; font-weight: 800; letter-spacing: .04em; color: #fff; text-shadow: 0 1px 3px rgb(0 0 0 / .6); transition: opacity .28s var(--hp-ease); }
+    .hp-anee-film:hover .hp-anee-film-play span { transform: scale(1.08); }
+    .hp-anee-film.is-playing { animation-play-state: paused; }
+    .hp-anee-film.is-playing .hp-anee-film-play { background: transparent; }
+    .hp-anee-film.is-playing .hp-anee-film-play span, .hp-anee-film.is-playing .hp-anee-film-play em { opacity: 0; }
+    @keyframes hpFilmFloat { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-.55rem) rotate(.8deg); } }
+    @media (max-width: 639.98px) { .hp-anee-film { width: 8.6rem; top: -3.4rem; right: -.2rem; } .hp-anee-media { margin-top: 1.2rem; } }
+    @media (prefers-reduced-motion: reduce) { .hp-anee-film { animation: none; } }
+    .hp-song { position: relative; display: grid; grid-template-columns: 6.2rem minmax(0, 1fr); gap: .85rem; align-items: center; margin-top: 1rem; padding: .7rem; border-radius: 1.2rem;
+        background: linear-gradient(135deg, rgb(255 255 255 / .1), rgb(255 255 255 / .04)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .14), 0 18px 40px -26px rgb(0 0 0 / .9); }
+    .hp-song-art { width: 6.2rem; height: 4.6rem; border-radius: .8rem; object-fit: cover; }
+    .hp-song-body { min-width: 0; }
+    .hp-song-kick { display: inline-flex; align-items: center; gap: .3rem; font-size: .66rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--hp-sun); }
+    .hp-song-kick svg { width: .85rem; height: .85rem; }
+    .hp-song-h { display: block; margin-top: .15rem; font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; color: #fff; }
+    .hp-song-row { display: flex; align-items: center; gap: .55rem; margin-top: .45rem; }
+    .hp-song-play { flex: none; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 999px; border: 0; cursor: pointer; background: #f5c518; color: #1a1a1a;
+        transition: transform .28s var(--hp-ease); }
+    .hp-song-play:hover { transform: scale(1.06); }
+    .hp-song-play svg { width: .95rem; height: .95rem; }
+    .hp-song-play .i-pause, .hp-song.is-playing .hp-song-play .i-play { display: none; }
+    .hp-song.is-playing .hp-song-play .i-pause { display: block; }
+    .hp-song-track { position: relative; flex: 1 1 auto; height: .38rem; border-radius: 999px; background: rgb(255 255 255 / .18); }
+    .hp-song-track i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 999px; background: #f5c518; pointer-events: none; }
+    .hp-song-track input { position: absolute; inset: -.6rem 0; width: 100%; height: auto; opacity: 0; cursor: pointer; margin: 0; }
+    .hp-song-time { flex: none; min-width: 2.4rem; text-align: right; font-size: .72rem; font-weight: 700; color: #d3dec7; font-variant-numeric: tabular-nums; }
     .hp-chat { position: relative; max-width: 28rem; margin: 0 auto; border-radius: 1.6rem; color: var(--hp-ink); overflow: hidden;
         background: linear-gradient(180deg, #34591c 50%, #f6f8f3 50%); box-shadow: 0 50px 90px -40px rgb(0 0 0 / .85); }
     .hp-chat-top { display: flex; align-items: center; gap: .7rem; padding: .9rem 1.1rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
@@ -3711,6 +3775,49 @@
         const paint = () => sticky.classList.toggle('is-on', pastHero && !atEnd);
         new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; paint(); }).observe(heroEl);
         if (finalEl) new IntersectionObserver(([e]) => { atEnd = e.isIntersecting || e.boundingClientRect.top < 0; paint(); }, { threshold: 0.05 }).observe(finalEl);
+    }
+})();
+</script>
+
+<script>
+(() => {
+    /* Anee's hello over the chat: tap to play with sound, tap to stop;
+       when it ends it returns to its still. */
+    const film = document.querySelector('[data-anee-film]');
+    if (film) {
+        const v = film.querySelector('video');
+        film.querySelector('.hp-anee-film-play').addEventListener('click', () => {
+            if (!v.paused) { v.pause(); return; }
+            document.querySelectorAll('[data-song] audio').forEach((a) => a.pause());
+            film.classList.add('is-playing');
+            v.play().catch(() => film.classList.remove('is-playing'));
+        });
+        v.addEventListener('pause', () => film.classList.remove('is-playing'));
+        v.addEventListener('ended', () => { film.classList.remove('is-playing'); v.load(); });
+    }
+    /* The song: play and pause, a bar to drag, the time. */
+    const song = document.querySelector('[data-song]');
+    if (song) {
+        const a = song.querySelector('audio'), seek = song.querySelector('input'), fill = song.querySelector('.hp-song-track i'), time = song.querySelector('.hp-song-time');
+        const fmt = (t) => Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2, '0');
+        song.querySelector('.hp-song-play').addEventListener('click', () => {
+            if (a.paused) { if (film) film.querySelector('video').pause(); a.play(); } else a.pause();
+        });
+        a.addEventListener('play', () => song.classList.add('is-playing'));
+        a.addEventListener('pause', () => song.classList.remove('is-playing'));
+        a.addEventListener('timeupdate', () => {
+            if (!a.duration) return;
+            const r = a.currentTime / a.duration;
+            fill.style.width = (r * 100) + '%';
+            seek.value = Math.round(r * 1000);
+            time.textContent = fmt(a.currentTime);
+        });
+        a.addEventListener('loadedmetadata', () => { time.textContent = fmt(a.duration); });
+        a.addEventListener('ended', () => { song.classList.remove('is-playing'); fill.style.width = '0'; seek.value = 0; });
+        seek.addEventListener('input', () => {
+            if (!a.duration) { a.preload = 'metadata'; a.load(); return; }
+            a.currentTime = seek.value / 1000 * a.duration;
+        });
     }
 })();
 </script>
