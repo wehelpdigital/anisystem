@@ -1232,7 +1232,7 @@
                             <g class="hp-sat-panel"><rect x="106" y="26" width="50" height="28" rx="3"/><path d="M118.5 26v28M131 26v28M143.5 26v28M106 40h50"/></g>
                         </svg>
                     </span>
-                    <span class="hp-sat-tag is-photo"><i></i>High resolution photos</span>
+                    <span class="hp-sat-tag is-photo"><i></i>Crop health analysis</span>
                     <span class="hp-sat-tag is-radar"><i></i>Radar through clouds</span>
                     <span class="hp-sat-legend">
                         <span><i style="--c: #2f9e44"></i>Healthy</span><span><i style="--c: #f2c94c"></i>Watch</span><span><i style="--c: #e8590c"></i>Problem</span>
