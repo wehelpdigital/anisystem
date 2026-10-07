@@ -205,7 +205,9 @@
                         <li>It writes down every {{ $peso }}, so you can see what works and do it again.</li>
                         <li>NPK Plus and the pest finders show what your crop is missing and what to spray, so nothing is bought for nothing.</li>
                     </ul>
-                    @include('public.partials.sum-trend', ['cls' => 'is-way', 'label' => 'The aim: more from every hectare, season after season', 'heights' => [20, 31, 44, 58, 76, 98]])
+                    {{-- Flat until now (the harvest that "stays the same, year after
+                         year"), then up: the climb is the aim, not the past. --}}
+                    @include('public.partials.sum-trend', ['cls' => 'is-way', 'label' => 'The aim: more from every hectare, season after season', 'heights' => [36, 37, 35, 38, 64, 96]])
                 </div>
             </div>
 
@@ -249,7 +251,10 @@
 
             <div class="mt-12 grid gap-5 md:grid-cols-2">
                 @foreach ([
-                    ['n' => 40, 'img' => 'palay-heads.jpg', 'l' => 'Lost to pests and diseases', 'p' => 'When the rice bug, thrips or fall armyworm are treated late, or not at all.', 'peso' => '₱25,000 to ₱40,000'],
+                    {{-- Every peso range is "up to n%" of a hectare that earns
+                         ₱60,000 to ₱100,000 (the note under the cards says so):
+                         keep the two in step when a number changes. --}}
+                    ['n' => 40, 'img' => 'palay-heads.jpg', 'l' => 'Lost to pests and diseases', 'p' => 'When the rice bug, thrips or fall armyworm are treated late, or not at all.', 'peso' => '₱24,000 to ₱40,000'],
                     ['n' => 30, 'img' => 'sacks.jpg', 'l' => 'Wasted on the wrong fix', 'p' => 'If you guess the problem wrong, you pay full price for the wrong product while the real problem grows.', 'peso' => '₱18,000 to ₱30,000'],
                     ['n' => 30, 'img' => 'palay-phone.jpg', 'l' => 'Lost to farm myths', 'p' => 'Remedies heard from others, or lucky planting days, tried on a whole field before anyone checked.', 'peso' => '₱18,000 to ₱30,000'],
                     ['n' => 30, 'img' => 'sacks-shed.jpg', 'l' => 'Lost to spending nobody tracked', 'p' => 'Small costs you never write down add up all season, and you only see them at the end.', 'peso' => '₱18,000 to ₱30,000'],
@@ -273,7 +278,7 @@
             </div>
 
             <p class="hp-loss-src reveal">
-                Percent ranges come from FAO crop loss and {{ $ph ? 'Philippine rice' : 'published crop' }} research estimates{{ $ph ? '. Peso ranges assume a palay hectare that earns ₱85,000 to ₱100,000 before costs' : '' }}. Your own numbers will be different.
+                Percent ranges come from FAO crop loss and {{ $ph ? 'Philippine rice' : 'published crop' }} research estimates{{ $ph ? '. Peso ranges assume a palay hectare that earns ₱60,000 to ₱100,000 before costs' : '' }}. Your own numbers will be different.
             </p>
 
             <div class="hp-cta reveal">
@@ -388,7 +393,7 @@
                      'See the growth stage of each lot on any day, with what to do and what to watch for. Anee can check the real stage for you.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
                     ['Costs go up.', 'One extra spray, one job done twice, and your profit gets smaller without you noticing.',
-                     'Labor, materials and services add up in ' . $R::symbol() . ' as you go, so you know the cost before you spend.',
+                     'Labor, materials and services add up as you go, ' . $peso . ' by ' . $peso . ', so you know the cost before you spend.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
                     ['Fertilizer costs more every season.', 'A bag too many is money left in the soil. A bag too few is yield you never harvest.',
                      'NPK Plus counts every nutrient in your fertilizer plan against what your crop needs, so you buy only what is missing. Free for every farmer.',
@@ -566,7 +571,7 @@
             </button>
         </figure>
             <div class="hp-anee-grid">
-                <div class="reveal">
+                <div class="reveal hp-anee-copy">
                     <p class="hp-kick">Meet Anee</p>
                     <h2 class="hp-h2">Your Smart Farm Technician <em>Already Knows Your Farm.</em></h2>
                     <p class="hp-p">
@@ -588,13 +593,6 @@
                         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         Then your answer, in seconds
                     </p>
-
-                    <div class="hp-cta is-left">
-                        <div class="hp-cta-row">
-                            <a href="{{ $ask }}" class="btn btn-accent btn-lg hp-go">Ask Anee a free question {!! $arrow !!}</a>
-                            <a href="{{ $signup }}" class="hp-alt">Create your free account</a>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="reveal hp-anee-media">
@@ -621,6 +619,16 @@
                                 </ol>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                {{-- The ask comes after the proof (2026-10-07): under the chat on a
+                     phone, where the words and the chat stack; under the words,
+                     beside the chat, on a desk. --}}
+                <div class="hp-cta is-left hp-anee-cta reveal">
+                    <div class="hp-cta-row">
+                        <a href="{{ $ask }}" class="btn btn-accent btn-lg hp-go">Ask Anee a free question {!! $arrow !!}</a>
+                        <a href="{{ $signup }}" class="hp-alt">Create your free account</a>
                     </div>
                 </div>
             </div>
@@ -860,7 +868,7 @@
                 </div>
             </div>
 
-            <div>
+            <div class="hp-biz-copy">
                 <div class="reveal">
                     <p class="hp-kick">Your farm is a business</p>
                     <h2 class="hp-h2">Your Farm Is a Business. <em>Run It Like One.</em></h2>
@@ -913,12 +921,15 @@
                         </div>
                     @endforeach
                 </div>
+            </div>
 
-                <div class="hp-cta is-left reveal">
-                    <div class="hp-cta-row">
-                        <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and upgrade your farm {!! $arrow !!}</a>
-                        <a href="{{ route('about') }}" class="hp-alt">Read our story</a>
-                    </div>
+            {{-- After the farmers' own words on a phone (the pictures, the quote
+                 and the song stack under the story there); under the story,
+                 beside the pictures, on a desk. --}}
+            <div class="hp-cta is-left reveal hp-biz-cta">
+                <div class="hp-cta-row">
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and upgrade your farm {!! $arrow !!}</a>
+                    <a href="{{ route('about') }}" class="hp-alt">Read our story</a>
                 </div>
             </div>
         </div>
@@ -1378,7 +1389,10 @@
                         <div class="hp-clevel">
                             <div class="hp-clevel-hd">
                                 <span class="hp-clevel-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8m-4-4v4m-5-17h10v4a5 5 0 01-10 0V4zm10 1h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></svg></span>
-                                <span><small>Your level</small><b><span data-lv-from>Lv 19</span><span data-lv-to>Lv 20</span></b></span>
+                                {{-- A title covers ten levels (CommunityRank: Lv 11 to 20 is
+                                     Rising Farmer, Lv 21 to 30 Green Thumb), so the new title
+                                     comes with Lv 21, not 20. --}}
+                                <span><small>Your level</small><b><span data-lv-from>Lv 20</span><span data-lv-to>Lv 21</span></b></span>
                                 <span class="hp-clevel-title"><i class="is-old">Rising Farmer</i><i class="is-new">Green Thumb</i></span>
                             </div>
                             <span class="hp-clevel-bar"><i></i></span>
@@ -1468,7 +1482,7 @@
                     ['Materials and money', 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', [
                         ['Materials and budget', 'Rough estimates. Overspending creeps in unnoticed.', 'What the plan needs against what is in the shed, so you buy only what is missing.'],
                         ['Stock in the shed', 'Counted by looking, and often wrong.', 'Tick a task done and the stock counts itself. Undo it and it goes back.'],
-                        ['Labor cost', 'Added up by hand at the end, often a nasty surprise.', 'Worker rates add up in ' . $R::symbol() . ' as the work gets done.'],
+                        ['Labor cost', 'Added up by hand at the end, often a nasty surprise.', 'Worker pay adds up, ' . $peso . ' by ' . $peso . ', as the work gets done.'],
                         ['Expenses', 'Receipts lost and small costs forgotten.', 'Every ' . $peso . ' the season cost, in one report built from your records.'],
                         ['Profit', 'Known roughly at the end, if at all.', 'Harvest sales against every cost, so you see the real profit of the season.'],
                     ]],
@@ -1501,25 +1515,35 @@
                 @endforeach
             </nav>
 
-            <div class="hp-vs">
+            {{-- On a phone the long list folds (2026-10-07): every part keeps its
+                 title and count, the first one starts open, a tap opens the
+                 rest. Every line stays in the page; on a desk every part starts
+                 open. --}}
+            @php $vsX = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>'; @endphp
+            <div class="hp-vs" data-vs>
                 <div class="hp-vs-head" aria-hidden="true">
                     <span class="is-n">{{ $vsCount }} things that change</span>
-                    <span class="is-old">By memory and paper</span>
-                    <span class="is-new"><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">With anee.io</span>
+                    <span class="is-old"><i class="hp-vs-key">{!! $vsX !!}</i>By memory and paper</span>
+                    <span class="is-new"><i class="hp-vs-key">{!! $tick !!}</i><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">With anee.io</span>
                 </div>
                 @foreach ($vsGroups as $gi => [$gt, $gico, $rows])
-                    <div class="hp-vs-group reveal" id="vs-{{ $gi }}">
+                    <div class="hp-vs-group reveal" id="vs-{{ $gi }}" data-vs-group>
                         <h3 class="hp-vs-gt">
-                            <span class="hp-vs-gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $gico }}"/></svg></span>
-                            {{ $gt }}<small>{{ count($rows) }}</small>
+                            <button type="button" class="hp-vs-tog" aria-expanded="true" aria-controls="vsRows{{ $gi }}">
+                                <span class="hp-vs-gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $gico }}"/></svg></span>
+                                <span class="hp-vs-gn">{{ $gt }}</span><small>{{ count($rows) }}</small>
+                                <svg class="hp-vs-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                            </button>
                         </h3>
-                        @foreach ($rows as $i => [$dim, $old, $new])
-                            <div class="hp-vs-row" style="--i: {{ $i }}">
-                                <b class="hp-vs-dim">{{ $dim }}</b>
-                                <p class="hp-vs-old"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></span><em class="hp-vs-label">Traditional:</em> {{ $old }}</p>
-                                <p class="hp-vs-new"><span aria-hidden="true">{!! $tick !!}</span><em class="hp-vs-label">With anee.io:</em> {{ $new }}</p>
-                            </div>
-                        @endforeach
+                        <div class="hp-vs-body" id="vsRows{{ $gi }}"><div>
+                            @foreach ($rows as $i => [$dim, $old, $new])
+                                <div class="hp-vs-row" style="--i: {{ $i }}">
+                                    <b class="hp-vs-dim">{{ $dim }}</b>
+                                    <p class="hp-vs-old"><span aria-hidden="true">{!! $vsX !!}</span><em class="hp-vs-label">Traditional:</em> {{ $old }}</p>
+                                    <p class="hp-vs-new"><span aria-hidden="true">{!! $tick !!}</span><em class="hp-vs-label">With anee.io:</em> {{ $new }}</p>
+                                </div>
+                            @endforeach
+                        </div></div>
                     </div>
                 @endforeach
             </div>
@@ -2100,7 +2124,7 @@
     .hp-prec-prob h3 { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff; line-height: 1.25; }
     .hp-prec-prob p { margin-top: .25rem; font-size: .9rem; line-height: 1.55; color: #c9d5bd; }
     .hp-prec-flow { display: flex; align-items: center; gap: .55rem; color: var(--hp-sun); }
-    .hp-prec-flow-t { flex: none; font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .hp-prec-flow-t { flex: none; font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
     .hp-prec-flow svg { flex: none; width: 1rem; height: 1rem; }
     .hp-prec-line { position: relative; flex: 1; height: 2px; border-radius: 2px;
         background: linear-gradient(90deg, rgb(248 113 113 / .5), rgb(245 197 24 / .85)); }
@@ -2301,6 +2325,19 @@
         .hp-tvs-new { border-radius: 0; background: rgb(168 204 126 / .1); }
         .hp-tvs-row:hover .hp-tvs-new { background: rgb(168 204 126 / .16); }
     }
+    /* On a phone the two answers stack in each row, so the column titles
+       come back as a key over the table: which side is the visit, which
+       is Anee (2026-10-07). */
+    @media (max-width: 819.98px) {
+        .hp-tvs-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+        .hp-tvs-cols span:first-child { display: none; }
+        .hp-tvs-cols span { display: flex; align-items: center; gap: .5rem; padding: .75rem 1rem; font-family: var(--font-heading);
+            font-size: .9rem; font-weight: 800; line-height: 1.25; }
+        .hp-tvs-cols svg { flex: none; width: 1.1rem; height: 1.1rem; }
+        .hp-tvs-cols .is-old { color: #fca5a5; background: rgb(248 113 113 / .08); }
+        .hp-tvs-cols .is-new { color: var(--hp-ink); background: var(--hp-sun); }
+        .hp-tvs-cols img { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px rgb(20 33 12 / .25); }
+    }
     /* The window's own colour is the header's green at the top and the
        body's at the bottom: a white window showed through the rounded top
        corners as a thin white line (2026-10-06). */
@@ -2316,6 +2353,16 @@
         .hp-anee-grid { align-items: start; }
         .hp-anee-film { position: absolute; top: -6.2rem; right: .5rem; width: 31rem; margin: 0; }
         .hp-anee-media { padding-top: 7.8rem; }
+    }
+    /* The call after the proof: third in the stack on a phone (words, chat,
+       call); on a desk it sits under the words in the first column while
+       the chat spans both rows of the second. */
+    .hp-anee-cta.hp-cta { margin-top: 0; }
+    @media (min-width: 1024px) {
+        .hp-anee-grid { grid-template-rows: auto 1fr; row-gap: 0; }
+        .hp-anee-copy { grid-column: 1; grid-row: 1; }
+        .hp-anee-media { grid-column: 2; grid-row: 1 / span 2; }
+        .hp-anee-cta.hp-cta { grid-column: 1; grid-row: 2; align-self: start; margin-top: 2rem; }
     }
     /* Room above the edge for the film: the section before ends lower. */
     .hp-steps.hp-sec { padding-bottom: 7.5rem; }
@@ -2395,8 +2442,18 @@
     .hp-biz-pics { position: relative; }
     .hp-biz-a { display: block; width: 100%; height: auto; border-radius: 1.6rem; object-fit: cover; aspect-ratio: 3 / 2;
         box-shadow: 0 30px 60px -36px rgb(20 33 12 / .7); }
-    /* Under 1024 the words come first and the pictures follow. */
-    @media (max-width: 1023.98px) { .hp-biz-left { order: 2; } }
+    /* Under 1024 the words come first, the pictures, the quote and the song
+       follow, and the call comes last. On a desk the pictures span both rows
+       of the first column, the words end and the call starts at the middle
+       of the second. */
+    .hp-biz-cta.hp-cta { margin-top: 0; }
+    @media (max-width: 1023.98px) { .hp-biz-left { order: 2; } .hp-biz-cta { order: 3; } }
+    @media (min-width: 1024px) {
+        .hp-biz { row-gap: 0; }
+        .hp-biz-left { grid-column: 1; grid-row: 1 / span 2; }
+        .hp-biz-copy { grid-column: 2; grid-row: 1; align-self: end; }
+        .hp-biz-cta.hp-cta { grid-column: 2; grid-row: 2; align-self: start; margin-top: 2rem; }
+    }
 
     .hp-biz-quote { position: relative; margin: 1.6rem 0 0; padding: 1.25rem 1.35rem 1.2rem; border-radius: 1.3rem; background: #fff;
         border: 1px solid #dcead0; box-shadow: 0 24px 50px -40px rgb(20 33 12 / .6); }
@@ -2844,7 +2901,7 @@
         color: #0b1324; background: #f5c518; box-shadow: 0 8px 18px -8px rgb(0 0 0 / .6); }
     .hp-storm-top { position: absolute; left: .7rem; top: .7rem; display: inline-flex; align-items: center; gap: .1rem .45rem; flex-wrap: wrap; max-width: 60%;
         padding: .35rem .7rem; border-radius: .7rem; font-size: .74rem; font-weight: 800; color: #fff; background: rgb(11 19 36 / .72); backdrop-filter: blur(6px); }
-    .hp-storm-top small { flex-basis: 100%; padding-left: .85rem; font-size: .64rem; font-weight: 700; color: #94a3b8; }
+    .hp-storm-top small { flex-basis: 100%; padding-left: .85rem; font-size: .7rem; font-weight: 700; color: #94a3b8; }
     .hp-storm-layers { position: absolute; right: .7rem; top: .7rem; display: flex; gap: .2rem; padding: .2rem; border-radius: .7rem; background: rgb(11 19 36 / .72); backdrop-filter: blur(6px); }
     .hp-storm-layers b { padding: .25rem .5rem; border-radius: .5rem; font-size: .66rem; font-weight: 800; color: #cbd5e1; }
     .hp-storm-layers b.is-on { color: #0b1324; background: #fff; }
@@ -2863,6 +2920,22 @@
     @container (max-width: 420px) {
         .hp-storm-top small, .hp-storm-layers b:not(.is-on) { display: none; }
         .hp-storm-farm b { font-size: .62rem; }
+    }
+    /* A phone's map is a quarter of its drawing's size, so the words drawn
+       on it came out six pixels tall: drawn bigger there (about 10 px), the
+       farm's tag goes under its dot (it covered the "110 km"), the title
+       moves to the free top right corner (it covered Saturday's end of the
+       path), and the layer switch, a picture of a control, steps aside. */
+    @container (max-width: 520px) {
+        .hp-storm-day text { font-size: 44px; stroke-width: 9px; }
+        .hp-storm-day circle { r: 13px; stroke-width: 6; }
+        .hp-storm-km { font-size: 42px; stroke-width: 9px; transform: translate(-8px, -24px); }
+        /* Monday sits under the timeline at the map's edge; the timeline says it. */
+        .hp-storm-day:first-of-type text { display: none; }
+        .hp-storm-name { font-size: 42px; stroke-width: 14px; }
+        .hp-storm-farm b { right: auto; left: 0; top: .8rem; translate: -50% 0; }
+        .hp-storm-top { left: auto; right: .6rem; top: .6rem; }
+        .hp-storm-layers { display: none; }
     }
     .hp-storm-plan { padding: 1.1rem 1.15rem 1.2rem; border-radius: 1.3rem; color: #374151; background: #fff; box-shadow: 0 30px 60px -36px rgb(0 0 0 / .8); }
     .hp-storm-plan-hd { display: flex; align-items: center; gap: .6rem; }
@@ -2903,7 +2976,7 @@
     .hp-cpost-hd { display: flex; align-items: center; gap: .55rem; flex-wrap: wrap; }
     .hp-cpost-hd b { display: block; font-size: .86rem; color: var(--hp-ink); }
     .hp-cpost-hd small { display: block; font-size: .72rem; color: #6b7280; }
-    .hp-crank-chip { margin-left: auto; padding: .18rem .55rem; border-radius: 999px; font-size: .66rem; font-weight: 800; color: #14532d; background: #dcfce7; }
+    .hp-crank-chip { margin-left: auto; padding: .18rem .55rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: #14532d; background: #dcfce7; }
     .hp-cpost-t { margin-top: .6rem; font-size: .86rem; line-height: 1.5; color: #374151; }
     .hp-cpost-img { margin-top: .6rem; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: .9rem; }
     .hp-cpost-react { margin-top: .6rem; display: flex; gap: .45rem; }
@@ -3023,10 +3096,14 @@
     .hp-ak-ti { flex: none; width: 2.2rem; height: 2.2rem; border-radius: .75rem; display: grid; place-items: center; color: #fff; background: var(--hp-green);
         box-shadow: 0 10px 18px -12px rgb(47 82 25 / .9); }
     .hp-ak-ti svg { width: 1.2rem; height: 1.2rem; }
-    .hp-ak-picks { display: flex; justify-content: center; gap: .45rem; padding: 0 1rem 1.15rem; }
-    .hp-ak-pick { position: relative; width: .6rem; height: .6rem; padding: 0; border: 0; border-radius: 999px; overflow: hidden; cursor: pointer; background: #dbe7cd;
+    /* Wider apart than they look, so each dot's tap area (24 by 38 px, from
+       its ::before) reaches its neighbour's without overlapping it. No
+       overflow clip on the dot: it clipped the ::before, and with it the
+       bigger tap area (the bar inside never leaves the dot anyway). */
+    .hp-ak-picks { display: flex; justify-content: center; gap: .9rem; padding: .4rem 1rem 1.3rem; }
+    .hp-ak-pick { position: relative; width: .6rem; height: .6rem; padding: 0; border: 0; border-radius: 999px; cursor: pointer; background: #dbe7cd;
         transition: width .4s var(--hp-ease), background-color .4s var(--hp-ease); }
-    .hp-ak-pick::before { content: ''; position: absolute; inset: -.6rem -.25rem; }
+    .hp-ak-pick::before { content: ''; position: absolute; inset: -.9rem -.45rem; }
     .hp-ak-pick:hover { background: #c4d9ab; }
     .hp-ak-pick.is-on { width: 2.2rem; background: #dbe7cd; }
     .hp-ak-pick i { position: absolute; inset: 0; border-radius: inherit; transform-origin: left; transform: scaleX(0); background: var(--hp-green); }
@@ -3047,7 +3124,9 @@
     .hp-ak-dot { flex: none; width: .55rem; height: .55rem; margin-top: .4rem; border-radius: 999px; background: var(--hp-sun); }
 
     .hp-ak-track { position: relative; margin-top: 1rem; display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; padding: 1.9rem 0 1.9rem; }
-    .hp-ak-stage { padding: .55rem .2rem; border-radius: .5rem; text-align: center; font-size: .66rem; font-weight: 800; color: #3d5a24; background: #e4efd6; }
+    /* Over the markers' lines, so a line stops at the stage's edge instead
+       of running through its name ("Panicle" was struck through). */
+    .hp-ak-stage { position: relative; z-index: 2; padding: .55rem .2rem; border-radius: .5rem; text-align: center; font-size: .7rem; font-weight: 800; color: #3d5a24; background: #e4efd6; }
     .hp-ak-stage:nth-child(2) { background: #d3e7bd; }
     .hp-ak-stage:nth-child(3) { background: #c2dda5; }
     .hp-ak-mark { position: absolute; top: 0; font-style: normal; translate: -50% 0; transition: left 1.2s cubic-bezier(.65,0,.35,1) .6s; }
@@ -3118,8 +3197,19 @@
     .hp-vs-head { display: none; }
     .hp-vs-group { scroll-margin-top: 6rem; }
     .hp-vs-group + .hp-vs-group { border-top: 1px solid #e3eada; }
-    .hp-vs-gt { display: flex; align-items: center; gap: .65rem; padding: .85rem 1.2rem; font-family: var(--font-heading); font-size: 1.02rem;
-        font-weight: 800; color: var(--hp-ink); background: linear-gradient(90deg, #f3f8ec, #fbfcf9); }
+    .hp-vs-gt { font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; color: var(--hp-ink);
+        background: linear-gradient(90deg, #f3f8ec, #fbfcf9); }
+    /* Each part's title is the button that folds and opens it. */
+    .hp-vs-tog { width: 100%; min-height: 3.4rem; display: flex; align-items: center; gap: .65rem; padding: .85rem 1.2rem; text-align: left;
+        font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    .hp-vs-tog:focus-visible { outline: 2px solid var(--hp-green); outline-offset: -4px; border-radius: .6rem; }
+    .hp-vs-gn { min-width: 0; }
+    .hp-vs-chev { flex: none; width: 1.15rem; height: 1.15rem; color: var(--hp-green); transition: transform .28s var(--hp-ease); }
+    .hp-vs-group.is-folded .hp-vs-chev { transform: rotate(-90deg); }
+    .hp-vs-body { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s var(--hp-ease), visibility .28s; }
+    .hp-vs-body > div { min-height: 0; overflow: hidden; }
+    .hp-vs-group.is-folded .hp-vs-body { grid-template-rows: 0fr; visibility: hidden; }
+    .hp-vs-key { display: none; }
     .hp-vs-gt small { margin-left: auto; padding: .1rem .55rem; border-radius: 999px; font-family: inherit; font-size: .72rem; color: var(--hp-deep); background: #e1eed2; }
     .hp-vs-gi { flex: none; width: 2.1rem; height: 2.1rem; border-radius: .7rem; display: grid; place-items: center; color: #fff; background: var(--hp-green);
         box-shadow: 0 8px 16px -10px rgb(47 82 25 / .9); }
@@ -3144,7 +3234,7 @@
         .hp-vs-head .is-new { display: flex; align-items: center; gap: .5rem; color: #fff; background: var(--hp-deep); }
         .hp-vs-head .is-new img { width: 1.3rem; height: 1.3rem; object-fit: contain; }
         .hp-vs-group { scroll-margin-top: 8.5rem; }
-        .hp-vs-gt { padding: .8rem 1.4rem; }
+        .hp-vs-tog { padding: .8rem 1.4rem; }
         .hp-vs-row { grid-template-columns: 1fr 1.1fr 1.25fr; gap: 0; padding: 0; align-items: stretch; }
         .hp-vs-row > * { padding: .9rem 1.4rem; }
         .hp-vs-row:hover { background: #fcfdfb; }
@@ -3154,10 +3244,24 @@
         .hp-vs-row:hover .hp-vs-new { background: #eff7e6; }
     }
     @media (max-width: 767.98px) {
-        .hp-vs-gt { padding: .75rem 1rem; }
+        .hp-vs-tog { padding: .75rem 1rem; }
         .hp-vs-row { gap: .35rem; padding: .8rem 1rem; }
         .hp-vs-old { font-size: .84rem; }
         .hp-vs-new { font-size: .88rem; padding: .5rem .6rem; }
+        /* The folded titles are the list of parts here, so the jump chips
+           step aside; the column titles come back as a key over the list. */
+        html.js .hp-vs-jump { display: none; }
+        .hp-vs-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+        .hp-vs-head span { display: flex; align-items: center; gap: .45rem; padding: .7rem .9rem; font-family: var(--font-heading);
+            font-size: .84rem; font-weight: 800; line-height: 1.25; }
+        .hp-vs-head .is-n { grid-column: 1 / -1; color: var(--hp-deep); background: #fff; font-size: .92rem; border-bottom: 1px solid #eef2ea; }
+        .hp-vs-head .is-old { color: #4b5563; background: #f9fafb; }
+        .hp-vs-head .is-new { color: #fff; background: var(--hp-deep); }
+        .hp-vs-head .is-new img { display: none; }
+        .hp-vs-key { flex: none; width: 1.35rem; height: 1.35rem; border-radius: 999px; display: grid; place-items: center; }
+        .hp-vs-key svg { width: .75rem; height: .75rem; }
+        .is-old .hp-vs-key { color: #6b7280; background: #e5e7eb; }
+        .is-new .hp-vs-key { color: var(--hp-deep); background: #fff; }
     }
     @media (min-width: 1024px) {
         .hp-vs-head { top: 81px; }
@@ -3211,7 +3315,7 @@
     .hg-lead::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, transparent 30%, rgb(10 18 6 / .25) 50%, rgb(10 18 6 / .86) 100%); }
     .hg-lead:hover img { transform: scale(1.05); }
     .hg-lead-in { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; padding: 1rem 1.1rem 1.05rem; }
-    .hg-cat { padding: .2rem .55rem; border-radius: 999px; font-size: .66rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: hsl(var(--h) 60% 20%);
+    .hg-cat { padding: .2rem .55rem; border-radius: 999px; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: hsl(var(--h) 60% 20%);
         background: hsl(var(--h) 70% 90% / .95); }
     .hg-lead-in b { font-family: var(--font-heading); font-size: clamp(1.05rem, 1.7vw, 1.3rem); font-weight: 800; line-height: 1.25; color: #fff; text-wrap: balance;
         text-shadow: 0 2px 12px rgb(0 0 0 / .4); }
@@ -3224,7 +3328,7 @@
     .hg-row:hover { background: hsl(var(--h) 50% 96%); }
     .hg-row img { flex: none; width: 4rem; height: 3rem; border-radius: .65rem; object-fit: cover; background: hsl(var(--h) 30% 90%); }
     .hg-row span { flex: 1; min-width: 0; }
-    .hg-row small { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: hsl(var(--h) 45% 38%); }
+    .hg-row small { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: hsl(var(--h) 45% 38%); }
     .hg-row b { display: block; font-size: .92rem; font-weight: 700; line-height: 1.3; color: var(--hp-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .hg-row svg { flex: none; width: 1rem; height: 1rem; color: hsl(var(--h) 40% 55%); transition: transform .28s var(--hp-ease), color .28s var(--hp-ease); }
     .hg-row:hover svg { transform: translateX(3px); color: hsl(var(--h) 55% 32%); }
@@ -3453,6 +3557,8 @@
         .hp-biz-u, .hp-biz-ui, .hp-biz-ok, .hp-biz-swap span { transition: none !important; }
         .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
         .hp-tick, .hp-tick path, .hp-tick::after { animation: none !important; }
+        .hp-vs-body, .hp-vs-chev, .hp-ak-pick { transition: none !important; }
+        .hp-cam figcaption i { animation: none !important; }
         .hp-prec-spin, .hp-prec-line b, .hp-prec-chk, .hp-prec-chk path, .hp-prec-old-x { animation: none !important; }
         .hp-prec-line b { opacity: 0; }
         html.js .hp-prec-vis .hp-prec-old, html.js .hp-prec-vis .hp-prec-card { opacity: 1 !important; translate: none !important; }
@@ -3674,11 +3780,20 @@
                 if (r.top > innerHeight * .7 || r.bottom < 80) info.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
             }
         }));
-        seen(steps.querySelector('.hp-st'), (on) => {
-            live = on;
+        // The film plays while the phone itself is on screen.
+        seen(steps.querySelector('.hp-st-show'), (on) => {
             video.dataset.live = on ? '1' : '0';
-            if (on) { play(video); schedule(); } else { video.pause(); clearTimeout(timer); tabs[at].classList.remove('is-timing'); }
+            if (on) play(video); else video.pause();
         }, { threshold: 0.3 });
+        // The walk runs while its tabs can be seen. On a desk the whole block
+        // fits one screen; on a phone it is three screens tall, so it walks
+        // only while the tab strip is on screen, and a reader further down,
+        // in the tools or their explanation, is never moved on (2026-10-07).
+        const narrow = window.matchMedia('(max-width: 1023.98px)').matches;
+        seen(steps.querySelector(narrow ? '.hp-st-list' : '.hp-st'), (on) => {
+            live = on;
+            if (on) schedule(); else { clearTimeout(timer); tabs[at].classList.remove('is-timing'); }
+        }, { threshold: narrow ? 0.9 : 0.3 });
     }
 
     /* Anee's answer plays on a loop while the chat is on screen: the
@@ -3756,7 +3871,9 @@
         const tabs = [...room.querySelectorAll('[data-room-tab]')];
         const panes = [...room.querySelectorAll('[data-room-pane]')];
         const clock = room.querySelector('[data-call-clock]');
-        const DWELL = 4500;
+        // Long enough for the pane's own little film to finish (the board
+        // draws for about four seconds) and its words to be read.
+        const DWELL = 6500;
         let at = 0, timer = null, live = false, held = false, secs = 42, tick = null;
         const show = (i) => {
             at = (i + tabs.length) % tabs.length;
@@ -3793,7 +3910,9 @@
     if (ak) {
         const tabs = [...ak.querySelectorAll('[data-ak-tab]')];
         const panes = [...ak.querySelectorAll('[data-ak-pane]')];
-        const DWELL = 5200;
+        // Each card has two sentences and a picture that plays for about two
+        // seconds: 5.2 s left a farmer reading in a second language behind.
+        const DWELL = 8000;
         let at = 0, timer = null, live = false, held = false;
         const show = (i) => {
             at = (i + tabs.length) % tabs.length;
@@ -3889,16 +4008,42 @@
         seen(comm, (on) => { live = on; if (on && !timers.length) run(); if (!on) stop(); }, { threshold: 0.3 });
     }
 
+    /* Traditional vs anee.io: each part's title folds it and opens it. On a
+       phone only the first part starts open (the whole list was eight
+       screens long); a jump chip opens the part it points to. */
+    const vs = document.querySelector('[data-vs]');
+    if (vs) {
+        const groups = [...vs.querySelectorAll('[data-vs-group]')];
+        const setOpen = (g, open) => {
+            g.classList.toggle('is-folded', !open);
+            g.querySelector('.hp-vs-tog')?.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+        if (window.matchMedia('(max-width: 767.98px)').matches) groups.forEach((g, i) => setOpen(g, i === 0));
+        groups.forEach((g) => g.querySelector('.hp-vs-tog')?.addEventListener('click', () => setOpen(g, g.classList.contains('is-folded'))));
+        document.querySelectorAll('.hp-vs-jump a[href^="#vs-"]').forEach((a) => a.addEventListener('click', () => {
+            const g = document.querySelector(a.getAttribute('href'));
+            if (g) setOpen(g, true);
+        }));
+    }
+
     /* On a phone, the way in stays one tap away once the hero has gone by,
-       and steps aside for the last call and the footer. */
+       and steps aside for the last call and the footer. It also steps aside
+       while a section's own call is on screen (2026-10-07), so the same
+       yellow button never shows twice at once. */
     const sticky = document.querySelector('[data-sticky]');
     const heroEl = document.querySelector('[data-hero]');
     const finalEl = document.querySelector('[data-final]');
     if (sticky && heroEl && 'IntersectionObserver' in window) {
         let pastHero = false, atEnd = false;
-        const paint = () => sticky.classList.toggle('is-on', pastHero && !atEnd);
+        const calls = new Set();
+        const paint = () => sticky.classList.toggle('is-on', pastHero && !atEnd && !calls.size);
         new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; paint(); }).observe(heroEl);
         if (finalEl) new IntersectionObserver(([e]) => { atEnd = e.isIntersecting || e.boundingClientRect.top < 0; paint(); }, { threshold: 0.05 }).observe(finalEl);
+        const callIo = new IntersectionObserver((es) => {
+            es.forEach((e) => (e.isIntersecting ? calls.add(e.target) : calls.delete(e.target)));
+            paint();
+        });
+        document.querySelectorAll('.hp-cta').forEach((c) => callIo.observe(c));
     }
 })();
 </script>
