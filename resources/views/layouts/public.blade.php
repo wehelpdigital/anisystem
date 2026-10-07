@@ -473,27 +473,28 @@
                      named in words. --}}
                 @php
                     $teMarks = [
-                        // Only what runs today (owner, 2026-10-07). Google Earth Engine,
-                        // Copernicus Sentinel and ISRIC SoilGrids join (marks in
-                        // images/tech) once Satellite Analysis has its service
-                        // running; Anthropic if Anee's provider is switched to Claude.
+                        // What anee.io is built on (owner, 2026-10-07).
+                        ['Anthropic', 'anthropic', 'Claude, by Anthropic: one of the AI models Anee can think with'],
                         ['Google Gemini', 'googlegemini', 'Anee thinks with Gemini, by Google'],
                         ['Google Maps Platform', 'googlemaps', 'Maps, places and drawing your fields'],
+                        ['Google Earth Engine', 'googleearthengine', 'Satellite analysis of your field'],
+                        ['Copernicus Sentinel', null, 'European Space Agency satellites: Sentinel 2 pictures and Sentinel 1 radar'],
                         ['NASA GIBS', null, 'Himawari 9 cloud imagery, through NASA Global Imagery Browse Services'],
                         ['Open-Meteo', null, 'Weather forecasts and climate history'],
                         ['OpenWeather', null, 'Live rain, cloud and wind layers'],
                         ['RainViewer', null, 'Rain radar'],
                         ['GDACS', null, 'Typhoon tracks, from the Global Disaster Alert and Coordination System'],
+                        ['ISRIC SoilGrids', null, 'Soil maps'],
                         ['OpenStreetMap', 'openstreetmap', 'Place search'],
                         ['Pusher', 'pusher', 'Live updates: team chat, the whiteboard and the board as it changes'],
                         ['LiveKit', 'livekit', 'Live video calls and cameras in the Collab Room'],
                         ['Cloudflare', 'cloudflare', 'A fast, safe connection'],
-                        ['Laravel', 'laravel', 'The framework anee.io is built on'],
+                        ['Laravel Cloud', 'laravel', 'Where anee.io runs: the Laravel framework on Laravel Cloud'],
                     ];
                 @endphp
                 <div class="te">
                     <h2 class="te-h">Our tech ecosystem</h2>
-                    <p class="te-p">anee.io is built on the core, industry standard technology trusted by leading apps and research agencies: AI and maps from Google, satellite imagery from NASA, weather from Open-Meteo and OpenWeather, and live chat and video calls from Pusher and LiveKit.</p>
+                    <p class="te-p">anee.io is built on the core, industry standard technology trusted by leading apps and research agencies: AI from Anthropic and Google, maps and satellite analysis from Google, satellites from the European Space Agency and NASA, weather from Open-Meteo and OpenWeather, and live chat and video calls from Pusher and LiveKit.</p>
                     <ul class="te-list">
                         @foreach ($teMarks as [$teName, $teIcon, $teWhat])
                             <li title="{{ $teWhat }}">

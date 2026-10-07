@@ -181,10 +181,7 @@
                         <li>Seed, sprays and the rent for a tractor or a harvester go up with everything else.</li>
                         <li>Rain, heat or pests that come early mean extra sprays and work.</li>
                     </ul>
-                    <div class="hp-sum-trend is-up" aria-hidden="true">
-                        <span class="hp-sum-bars">@foreach ([34, 42, 49, 58, 70, 84] as $k => $h)<i style="--h: {{ $h }}%; --k: {{ $k }}"></i>@endforeach</span>
-                        <small>What one hectare costs you, season after season</small>
-                    </div>
+                    @include('public.partials.sum-trend', ['cls' => 'is-up', 'label' => 'What one hectare costs you, season after season', 'heights' => [30, 40, 51, 63, 77, 94]])
                 </div>
                 <span class="hp-sum-op" aria-hidden="true">+</span>
                 <div class="hp-sum-card is-down reveal" style="--reveal-delay: .12s">
@@ -197,10 +194,7 @@
                         <li>{{ $ph ? 'Wet palay is docked for moisture, and the trader sets the weight.' : 'Wet grain is docked for moisture, and the buyer sets the weight.' }}</li>
                         <li>You cannot set the price you get.</li>
                     </ul>
-                    <div class="hp-sum-trend is-down" aria-hidden="true">
-                        <span class="hp-sum-bars">@foreach ([52, 47, 53, 46, 50, 45] as $k => $h)<i style="--h: {{ $h }}%; --k: {{ $k }}"></i>@endforeach</span>
-                        <small>The price you get, season after season</small>
-                    </div>
+                    @include('public.partials.sum-trend', ['cls' => 'is-down', 'label' => 'The price you get, season after season', 'heights' => [72, 63, 55, 47, 39, 31]])
                 </div>
                 <span class="hp-sum-op" aria-hidden="true">=</span>
                 <div class="hp-sum-card is-way reveal" style="--reveal-delay: .24s">
@@ -214,10 +208,7 @@
                         <li>It writes down every {{ $peso }}, so you can see what works and do it again.</li>
                         <li>NPK Plus and the pest finders show what your crop is missing and what to spray, so nothing is bought for nothing.</li>
                     </ul>
-                    <div class="hp-sum-trend is-way" aria-hidden="true">
-                        <span class="hp-sum-bars">@foreach ([40, 47, 55, 64, 74, 86] as $k => $h)<i style="--h: {{ $h }}%; --k: {{ $k }}"></i>@endforeach</span>
-                        <small>The aim: more from every hectare, season after season</small>
-                    </div>
+                    @include('public.partials.sum-trend', ['cls' => 'is-way', 'label' => 'The aim: more from every hectare, season after season', 'heights' => [20, 31, 44, 58, 76, 98]])
                 </div>
             </div>
 
@@ -3292,20 +3283,46 @@
     /* The bottom of the two cards (2026-10-07): the trend, drawn, not
        counted. Costs climb bar by bar; the price stays where it was. */
     .hp-sum-trend { margin-top: auto; padding-top: 1.1rem; }
-    .hp-sum-bars { display: flex; align-items: flex-end; gap: .4rem; height: 4.2rem; padding: .45rem .5rem 0; border-radius: .9rem .9rem 0 0; border-bottom: 2px solid; }
+    .hp-sum-plot { position: relative; }
+    .hp-sum-bars { display: flex; align-items: flex-end; gap: .4rem; height: 5.4rem; padding: 1rem .5rem 0; border-radius: .9rem .9rem 0 0; border-bottom: 2px solid; }
     .hp-sum-bars i { flex: 1; height: var(--h); border-radius: .4rem .4rem .15rem .15rem; transform-origin: bottom; transform: scaleY(.08);
         transition: transform .7s var(--hp-ease) calc(.25s + var(--k) * .09s); }
+    /* The two years ahead: what it comes to if nothing changes (or, on the green card, what to aim for). */
+    .hp-sum-bars i.is-ahead { opacity: .55; background-image: repeating-linear-gradient(135deg, rgb(255 255 255 / .28) 0 4px, transparent 4px 8px) !important; }
     .hp-sum-card.is-visible .hp-sum-bars i, html:not(.js) .hp-sum-bars i { transform: none; }
     .is-up .hp-sum-bars { background: linear-gradient(180deg, transparent, rgb(254 226 226 / .7)); border-color: #fca5a5; }
-    .is-up .hp-sum-bars i { background: linear-gradient(180deg, #f87171, #dc2626); }
+    .is-up .hp-sum-bars i { background-color: #dc2626; background-image: linear-gradient(180deg, #f87171, #dc2626); }
     .is-down .hp-sum-bars { background: linear-gradient(180deg, transparent, rgb(254 243 199 / .8)); border-color: #fcd34d; }
-    .is-down .hp-sum-bars i { background: linear-gradient(180deg, #fbbf24, #d97706); }
+    .is-down .hp-sum-bars i { background-color: #d97706; background-image: linear-gradient(180deg, #fbbf24, #d97706); }
+    .hp-sum-trend.is-way .hp-sum-bars { background: linear-gradient(180deg, transparent, rgb(255 255 255 / .08)); border-color: rgb(245 197 24 / .7); }
+    .hp-sum-trend.is-way .hp-sum-bars i { background-color: #f5c518; background-image: linear-gradient(180deg, #fde68a, #f5c518); }
+    /* The arrow: it draws itself along the tops once the bars are up, then a
+       bright dash keeps running along it in the trend's direction. */
+    .hp-sum-arrow { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .hp-sum-arrow path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .hp-sum-arrow .ln { stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s var(--hp-ease) .95s; }
+    .hp-sum-arrow .hd { stroke-width: 3; opacity: 0; transform-box: fill-box; transition: opacity .3s ease 1.9s; }
+    .hp-sum-arrow .fl { stroke-width: 3; stroke-dasharray: 10 70; opacity: 0; transition: opacity .3s ease 2.1s; animation: hpTrendFlow 2.4s linear infinite; }
+    .is-drawn .hp-sum-arrow .ln { stroke-dashoffset: 0; }
+    .is-drawn .hp-sum-arrow .hd, .is-drawn .hp-sum-arrow .fl { opacity: 1; }
+    @keyframes hpTrendFlow { from { stroke-dashoffset: 80; } to { stroke-dashoffset: 0; } }
+    .is-up .hp-sum-arrow .ln, .is-up .hp-sum-arrow .hd { stroke: #991b1b; }
+    .is-down .hp-sum-arrow .ln, .is-down .hp-sum-arrow .hd { stroke: #92400e; }
+    .hp-sum-trend.is-way .hp-sum-arrow .ln, .hp-sum-trend.is-way .hp-sum-arrow .hd { stroke: #fff; }
+    .hp-sum-arrow .fl { stroke: #fff; }
+    .hp-sum-trend.is-way .hp-sum-arrow .fl { stroke: #f5c518; }
+    .hp-sum-years { display: flex; gap: .4rem; padding: .35rem .5rem 0; }
+    .hp-sum-years b { flex: 1; text-align: center; font-size: .66rem; font-weight: 700; font-variant-numeric: tabular-nums; opacity: .75; }
+    .hp-sum-years b.is-now { font-weight: 900; opacity: 1; }
+    .hp-sum-years b.is-ahead { font-style: italic; opacity: .55; }
+    .is-up .hp-sum-years { color: #991b1b; }
+    .is-down .hp-sum-years { color: #92400e; }
+    .hp-sum-trend.is-way .hp-sum-years { color: #fde68a; }
     .hp-sum-trend small { display: block; margin-top: .45rem; font-size: .76rem; font-weight: 700; letter-spacing: .02em; }
     .is-up .hp-sum-trend small { color: #b91c1c; }
     .is-down .hp-sum-trend small { color: #92400e; }
-    .hp-sum-trend.is-way .hp-sum-bars { background: linear-gradient(180deg, transparent, rgb(255 255 255 / .08)); border-color: rgb(245 197 24 / .7); }
-    .hp-sum-trend.is-way .hp-sum-bars i { background: linear-gradient(180deg, #fde68a, #f5c518); }
     .hp-sum-trend.is-way small { color: #fde68a; }
+    @media (prefers-reduced-motion: reduce) { .hp-sum-arrow .ln { transition: none; stroke-dashoffset: 0; } .hp-sum-arrow .hd, .hp-sum-arrow .fl { transition: none; opacity: 1; } .hp-sum-arrow .fl { animation: none; opacity: 0; } }
     @media (prefers-reduced-motion: reduce) { .hp-sum-bars i { transition: none; transform: none; } }
     .hp-sum-p { margin-top: .7rem; font-size: .98rem; line-height: 1.6; color: #e4f0d6; }
     /* "higher yield." in the green card: gold, with an underline that
