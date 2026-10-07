@@ -705,6 +705,11 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sky-weather/list', [App\Http\Controllers\SkyWeatherController::class, 'list'])->name('sky.list');
     Route::get('/app/sky-weather/one/{id}', [App\Http\Controllers\SkyWeatherController::class, 'one'])->whereNumber('id')->name('sky.one');
     Route::delete('/app/sky-weather/{id}', [App\Http\Controllers\SkyWeatherController::class, 'destroy'])->whereNumber('id')->name('sky.delete');
+    // The Stash (2026-10-07): partners' resources, shelved, searched and read in the app.
+    Route::get('/app/stash/read/{id}', [App\Http\Controllers\StashController::class, 'read'])->whereNumber('id')->name('stash.read');
+    Route::get('/app/stash/file/{id}', [App\Http\Controllers\StashController::class, 'file'])->whereNumber('id')->middleware('throttle:600,1')->name('stash.file');
+    Route::get('/app/stash/{partner}/{type}', [App\Http\Controllers\StashController::class, 'shelf'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.shelf');
+    Route::get('/app/stash/{partner}/{type}/items', [App\Http\Controllers\StashController::class, 'items'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.items');
     // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.
     Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases')->name('fh.page');
     // NPK Plus (2026-10-07): the free fertilizer calculator, and Anee's reading of a plan.

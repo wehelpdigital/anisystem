@@ -87,6 +87,9 @@ return Application::configure(basePath: dirname(__DIR__))
             ->when(fn () => \App\Models\AsSiteSetting::yes('news.run_now'))
             ->before(fn () => \App\Models\AsSiteSetting::put('news.run_now', '0'))
             ->withoutOverlapping(180)->runInBackground();
+        // The Stash's PDFs come home a few at a time (2026-10-07); with
+        // nothing pending the command ends at once.
+        $schedule->command('stash:fetch')->everyTenMinutes()->withoutOverlapping(60)->runInBackground();
         // Proof the scheduler runs (Laravel Cloud's toggle, 2026-10-07):
         // /deploy-check shows the last tick, written to the shared settings.
         $schedule->call(fn () => \App\Models\AsSiteSetting::put('scheduler.tick', now()->toIso8601String()))

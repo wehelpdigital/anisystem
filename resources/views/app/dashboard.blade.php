@@ -965,6 +965,8 @@
          on any visit come before the shelf of what is due today. --}}
     <div>
         @include('partials.global-tools')
+        {{-- The Stash (2026-10-07): partners' resources, folded under the tools. --}}
+        @include('partials.stash-card')
     </div>
 
     {{-- My Cropping Schedules — ONLY the seasons with work on the board
