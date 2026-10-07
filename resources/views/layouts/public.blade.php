@@ -425,6 +425,18 @@
         .pf-list a:hover { color: #3d6823; padding-left: .2rem; }
         .pf-list .pf-all { font-weight: 800; color: #3d6823; }
         @media (prefers-reduced-motion: reduce) { .pf-list a, .pf-fold, .pf-plus::before, .pf-plus::after { transition: none !important; } }
+        /* Our tech ecosystem, in the footer (2026-10-07): each mark in one
+           plain colour, brighter on hover; the house curve. */
+        .te { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgb(255 255 255 / .08); }
+        .te-h { font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #f5c518; }
+        .te-p { margin-top: .45rem; font-size: .8rem; line-height: 1.6; color: #9ca3af; }
+        .te-list { margin-top: .8rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+        .te-list li { display: inline-flex; align-items: center; gap: .45rem; padding: .38rem .7rem; border-radius: 999px; font-size: .76rem; font-weight: 700; color: #d1d5db;
+            background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .08); transition: color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+        .te-list li:hover { color: #fff; border-color: rgb(255 255 255 / .22); background: rgb(255 255 255 / .09); }
+        .te-mark { flex: none; width: 1rem; height: 1rem; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
+        .te-fine { margin-top: .6rem; font-size: .68rem; color: #6b7280; }
+        @media (prefers-reduced-motion: reduce) { .te-list li { transition: none; } }
     </style>
 
     <footer class="bg-gray-900 text-gray-300">
@@ -438,6 +450,44 @@
                     every {{ \App\Support\Region::ph() ? 'peso' : 'dollar' }}, the workers, the field seen from space and Anee, your smart farm technician,
                     in one place. Built by farm technicians, for farms that last.
                 </p>
+                {{-- Our tech ecosystem (2026-10-07): what anee.io is built on.
+                     Marks are shown as their owners publish them, in one
+                     plain colour, never altered; a source with no published
+                     mark (or one whose mark may not be used, like NASA's) is
+                     named in words. --}}
+                @php
+                    $teMarks = [
+                        ['Anthropic', 'anthropic', 'Anee thinks with Claude, by Anthropic'],
+                        ['Google Gemini', 'googlegemini', 'AI models from Google'],
+                        ['Google Maps Platform', 'googlemaps', 'Maps, places and drawing your fields'],
+                        ['Google Earth Engine', 'googleearthengine', 'Satellite analysis of your field'],
+                        ['Copernicus Sentinel', null, 'European Space Agency satellites: Sentinel 2 pictures and Sentinel 1 radar'],
+                        ['NASA GIBS', null, 'Himawari 9 cloud imagery, through NASA Global Imagery Browse Services'],
+                        ['Open-Meteo', null, 'Weather forecasts and climate history'],
+                        ['OpenWeather', null, 'Live rain, cloud and wind layers'],
+                        ['RainViewer', null, 'Rain radar'],
+                        ['GDACS', null, 'Typhoon tracks, from the Global Disaster Alert and Coordination System'],
+                        ['ISRIC SoilGrids', null, 'Soil maps'],
+                        ['OpenStreetMap', 'openstreetmap', 'Place search'],
+                        ['Cloudflare', 'cloudflare', 'A fast, safe connection'],
+                        ['Laravel', 'laravel', 'The framework anee.io is built on'],
+                    ];
+                @endphp
+                <div class="te">
+                    <h4 class="te-h">Our tech ecosystem</h4>
+                    <p class="te-p">anee.io is built on the core, industry standard technology trusted by leading apps and research agencies: AI from Anthropic and Google, maps and satellite analysis from Google, satellites from the European Space Agency and NASA, and weather from Open-Meteo and OpenWeather.</p>
+                    <ul class="te-list">
+                        @foreach ($teMarks as [$teName, $teIcon, $teWhat])
+                            <li title="{{ $teWhat }}">
+                                @if ($teIcon)
+                                    <span class="te-mark" style="--m: url('{{ asset('images/tech/' . $teIcon . '.svg') }}')" aria-hidden="true"></span>
+                                @endif
+                                <span>{{ $teName }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <p class="te-fine">Names and marks belong to their owners and are shown to say what anee.io uses. It does not mean they endorse anee.io.</p>
+                </div>
             </div>
             <div class="md:justify-self-end">
                 <h4 class="text-white font-bold mb-3">Contact</h4>
