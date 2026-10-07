@@ -151,6 +151,8 @@ class SatelliteController extends Controller
             'soilConditions' => 'nullable|array|max:7',
             'soilConditions.*' => 'string|in:' . implode(',', array_keys(SoilConditions::OPTIONS)),
             'phValue' => 'nullable|numeric|min:2|max:12',
+            'phLow' => 'nullable|numeric|min:2|max:12',
+            'phHigh' => 'nullable|numeric|min:2|max:12|gte:phLow',
             'concerns' => 'nullable|array|max:12',
             'concerns.*' => 'string|in:' . implode(',', array_keys(self::CONCERNS)),
             'notes' => 'nullable|string|max:800',
@@ -192,11 +194,13 @@ class SatelliteController extends Controller
             'water' => (string) $request->input('water'),
             'soilConditions' => SoilConditions::normalize($request->input('soilConditions', [])),
             'phValue' => SoilConditions::phValue($request->input('phValue')),
+            'phLow' => SoilConditions::phValue($request->input('phLow')),
+            'phHigh' => SoilConditions::phValue($request->input('phHigh')),
             'concerns' => array_values(array_intersect((array) $request->input('concerns', []), array_keys(self::CONCERNS))),
             'notes' => trim((string) $request->input('notes', '')),
             'polygon' => ['type' => 'Polygon', 'coordinates' => [$ring]],
         ];
-        $title = CropCatalog::label($p['crop']) . ' · ' . $p['location'] . ' · ' . now('Asia/Manila')->format('M j, Y');
+        $title = str_replace(' — ', ', ', CropCatalog::label($p['crop'])) . ' · ' . $p['location'] . ' · ' . now('Asia/Manila')->format('M j, Y');
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($title, 0, 190),
             'params' => json_encode($p), 'report' => json_encode(new \stdClass), 'credits' => 0,
@@ -453,7 +457,8 @@ class SatelliteController extends Controller
             . 'Planted: ' . ($p['plantedOn'] ? $p['plantedOn'] . ' (' . $age . ' days ago)' : 'not stated') . '; way in: ' . (self::METHODS[$p['method']] ?? $p['method']) . "\n"
             . 'Seeding rate or density: ' . ($p['density'] ? rtrim(rtrim(number_format($p['density'], 2, '.', ''), '0'), '.') . ' ' . ($units[$p['densityUnit']] ?? '') : 'not stated') . "\n"
             . 'Water: ' . (self::WATER[$p['water']] ?? $p['water']) . "\n"
-            . 'Soil as the farmer knows it: ' . (SoilConditions::words($p['soilConditions'], $p['phValue']) ?: 'not stated') . "\n"
+            . 'Soil as the farmer knows it: ' . (SoilConditions::words($p['soilConditions'], ($p['phLow'] ?? null) !== null ? null : $p['phValue']) ?: 'not stated')
+            . (($p['phLow'] ?? null) !== null ? '; tested pH ' . ($p['phLow'] == ($p['phHigh'] ?? $p['phLow']) ? $p['phLow'] : $p['phLow'] . ' to ' . $p['phHigh']) : '') . "\n"
             . 'What worries the farmer: ' . (collect($p['concerns'])->map(fn ($k) => self::CONCERNS[$k] ?? $k)->implode('; ') ?: 'nothing named') . "\n"
             . ($p['notes'] ? 'Farmer\'s notes: ' . $p['notes'] . "\n" : '');
     }

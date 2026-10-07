@@ -5,6 +5,8 @@
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))
 
 @section('content')
+@include('partials.tag-sheet-css')
+@include('partials.weather-scenes')
 <style>
     /* ---- SATELLITE ANALYSIS (2026-10-07) ---------------------------------
        A wizard that walks, a map you draw on, and a report in tabs. Every
@@ -71,6 +73,53 @@
     .sat-picked { margin-top: .7rem; display: flex; gap: .5rem; align-items: center; font-size: .82rem; font-weight: 700; color: var(--color-brand-700, #3d6823); }
     .sat-picked[hidden] { display: none; }
     .sat-nav { display: flex; gap: .5rem; margin-top: 1.2rem; }
+    /* A choice that opens a sheet. */
+    .sat-choice { display: flex; align-items: center; justify-content: space-between; gap: .5rem; width: 100%; padding: .62rem .8rem; border-radius: .8rem; cursor: pointer; text-align: left;
+        font-size: .9rem; font-weight: 700; color: #3d6823; background: var(--color-white); border: 1px solid var(--color-gray-200);
+        transition: border-color .28s var(--sat-ease), background-color .28s var(--sat-ease), transform .28s var(--sat-ease); }
+    .sat-choice:hover:not(:disabled) { border-color: var(--color-brand-300, #a8cc7e); background: var(--color-brand-50, #f3f8ec); }
+    .sat-choice:disabled { opacity: .55; cursor: default; }
+    .sat-choice span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sat-choice.is-none span { color: var(--color-gray-500); font-weight: 600; }
+    .sat-choice-c { width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); }
+    .sat-choice.is-unit { width: auto; flex: none; max-width: 52%; }
+    html.dark .sat-choice { background: #1c2416; border-color: #2b3a1c; color: #a5c97e; }
+    .sat-link { border: 0; background: none; padding: .48rem .2rem; font-size: .8rem; font-weight: 800; color: var(--color-brand-700, #3d6823); text-decoration: underline; cursor: pointer; }
+    .sat-date { width: 100%; justify-content: flex-start; }
+    .sat-psearch { position: relative; margin-bottom: .6rem; }
+    .sat-psearch svg { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); width: 1.05rem; height: 1.05rem; color: var(--color-gray-400); pointer-events: none; }
+    .sat-psearch .form-input { padding-left: 2.4rem; }
+    .sat-pick-h { font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); margin: .8rem 0 .3rem; }
+    #satPickFoot[hidden], #satPickSearchBox[hidden] { display: none; }
+    /* The pH: a range on the soil's colours, acidic to alkaline. */
+    .sat-switch { display: flex; align-items: center; gap: .55rem; font-size: .86rem; font-weight: 700; color: var(--color-gray-700); cursor: pointer; }
+    .sat-switch input { width: 1.1rem; height: 1.1rem; accent-color: var(--color-brand-600); }
+    .sat-ph { margin-top: .7rem; padding: .85rem .9rem .7rem; border-radius: 1rem; border: 1px solid var(--color-gray-200); background: var(--color-gray-50); animation: satIn .3s var(--sat-ease) both; }
+    .sat-ph[hidden] { display: none; }
+    html.dark .sat-ph { background: #121a0d; border-color: #2b3a1c; }
+    .sat-ph-read { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; }
+    .sat-ph-read b { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: var(--color-gray-900); }
+    .sat-ph-read span { font-size: .8rem; font-weight: 700; color: var(--color-gray-500); }
+    .sat-ph-range { position: relative; height: 2.6rem; margin-top: .5rem; }
+    .sat-ph-track { position: absolute; left: 0; right: 0; top: 50%; height: .75rem; margin-top: -.375rem; border-radius: 999px;
+        background: linear-gradient(90deg, #c0262d 0%, #e8590c 15.4%, #f2b705 30.8%, #94c11f 41.5%, #2f9e44 46.2%, #2f9e44 58.5%, #1c7ed6 69.2%, #5f3dc4 84.6%, #7b2cbf 100%); }
+    .sat-ph-sel { position: absolute; top: 50%; height: 1.25rem; margin-top: -.625rem; border-radius: 999px; border: 2.5px solid #fff; box-shadow: 0 0 0 1px rgb(0 0 0 / .3), 0 6px 14px -6px rgb(0 0 0 / .5);
+        transition: left .12s linear, width .12s linear; }
+    .sat-ph-range input[type="range"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; margin: 0; background: none; pointer-events: none; -webkit-appearance: none; appearance: none; }
+    .sat-ph-range input[type="range"]::-webkit-slider-runnable-track { background: transparent; height: 100%; }
+    .sat-ph-range input[type="range"]::-moz-range-track { background: transparent; }
+    .sat-ph-range input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; pointer-events: auto; width: 1.6rem; height: 1.6rem; margin-top: .5rem; border-radius: 999px; cursor: grab;
+        background: #fff; border: 4px solid var(--c, #2f9e44); box-shadow: 0 3px 8px rgb(0 0 0 / .35); }
+    .sat-ph-range input[type="range"]::-moz-range-thumb { pointer-events: auto; width: 1.1rem; height: 1.1rem; border-radius: 999px; cursor: grab; background: #fff; border: 4px solid var(--c, #2f9e44); box-shadow: 0 3px 8px rgb(0 0 0 / .35); }
+    .sat-ph-range input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px rgb(74 124 42 / .35); }
+    .sat-ph-scale { position: relative; height: 1.1rem; margin-top: .15rem; font-size: .68rem; font-weight: 800; }
+    .sat-ph-scale span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+    .sat-ph-scale .is-acid { color: #c2410c; } .sat-ph-scale .is-neutral { color: #2f9e44; } .sat-ph-scale .is-alk { color: #5f3dc4; }
+    html.dark .sat-ph-scale .is-acid { color: #fb923c; } html.dark .sat-ph-scale .is-neutral { color: #69db7c; } html.dark .sat-ph-scale .is-alk { color: #b197fc; }
+    .sat-ph-nums { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: .6rem; }
+    .sat-ph-nums label { display: grid; gap: .25rem; font-size: .72rem; font-weight: 800; color: var(--color-gray-600); }
+    .sat-ph-err { margin-top: .4rem; font-size: .76rem; font-weight: 700; color: #b45309; }
+    .sat-ph-err[hidden] { display: none; }
 
     /* Drawing the field */
     .sat-draw { position: relative; border-radius: 1rem; overflow: hidden; border: 1px solid var(--color-gray-200); background: #1d2a14; }
@@ -122,7 +171,8 @@
     .sat-top h2 { font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; line-height: 1.25; color: #fff; }
     .sat-top p { margin-top: .4rem; font-size: .86rem; line-height: 1.6; color: #d4e4c3; }
     .sat-when { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .7rem; }
-    .sat-when span { display: inline-flex; align-items: center; gap: .3rem; font-size: .7rem; font-weight: 800; padding: .28rem .55rem; border-radius: 999px; background: rgb(255 255 255 / .12); color: #f1f7ea; }
+    .sat-when span { display: inline-flex; align-items: center; gap: .3rem; min-width: 0; max-width: 100%; font-size: .7rem; font-weight: 800; padding: .28rem .55rem; border-radius: 999px; background: rgb(255 255 255 / .12); color: #f1f7ea; }
+    .sat-when span svg { flex: none; }
     .sat-when span.is-warn { background: rgb(245 197 24 / .25); color: #ffe58a; }
 
     .sat-rtabs { position: sticky; top: 3.4rem; z-index: 4; display: flex; gap: .3rem; margin: 1rem -1rem 0; padding: .55rem 1rem; overflow-x: auto; scrollbar-width: none;
@@ -168,6 +218,10 @@
         font-size: .74rem; line-height: 1.35; box-shadow: 0 8px 18px -10px rgb(0 0 0 / .8); pointer-events: none; }
     .sat-shot b { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #f5c518; }
     .sat-shot[hidden] { display: none; }
+    .sat-shot i { display: block; margin-top: .15rem; font-style: normal; font-size: .64rem; font-weight: 700; color: #cfe3bd; }
+    .sat-mapnote { display: flex; gap: .55rem; align-items: flex-start; padding: .65rem .8rem; border-radius: .9rem; font-size: .78rem; line-height: 1.5; color: #6b4a00; background: #fff8e1; border: 1px solid #f5d77a; }
+    .sat-mapnote svg { flex: none; width: 1.05rem; height: 1.05rem; margin-top: .1rem; color: #b45309; }
+    html.dark .sat-mapnote { color: #f3dc9a; background: #2a2208; border-color: #5c4a10; }
 
     .sat-grid9 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .3rem; max-width: 18rem; }
     .sat-grid9 div { aspect-ratio: 1.3; border-radius: .6rem; display: grid; place-items: center; text-align: center; font-size: .7rem; font-weight: 800; color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / .45); }
@@ -189,10 +243,34 @@
     .sat-tag.lv-high { background: #fde2e1; color: #b42318; }
     .sat-tag.lv-medium { background: #fff1c2; color: #8a5a00; }
     .sat-tag.lv-low { background: #e4efd4; color: #2d5016; }
-    .sat-wx { display: grid; grid-template-columns: repeat(10, minmax(2.6rem, 1fr)); gap: .3rem; overflow-x: auto; padding-bottom: .2rem; }
-    .sat-wx div { border-radius: .7rem; padding: .45rem .2rem; text-align: center; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); font-size: .66rem; color: var(--color-gray-600); }
-    .sat-wx b { display: block; font-size: .72rem; color: var(--color-gray-900); }
-    .sat-wx i { display: block; margin: .3rem auto .2rem; width: .5rem; border-radius: 999px; background: #4c8ed9; min-height: 2px; }
+    /* Five across, two rows, on a wide screen; on a phone two across, each a
+       short card with the sky beside the words, so ten days never scroll sideways. */
+    .sat-wx { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .45rem; }
+    .sat-wxd { display: flex; flex-direction: column; align-items: center; gap: .15rem; min-width: 0; padding: .55rem .35rem .6rem; border-radius: .9rem; text-align: center;
+        border: 1px solid var(--color-gray-100); font-size: .7rem; color: var(--color-gray-600); animation: satFade .4s var(--sat-ease) both; animation-delay: calc(var(--k, 0) * 45ms); }
+    html.dark .sat-wxd { border-color: #2b3a1c; }
+    .sat-wxd > b { font-size: .76rem; color: var(--color-gray-900); }
+    .sat-wxd-md { display: none; }
+    @media (max-width: 639.98px) { .sat-wxd-md { display: inline; } }
+    .sat-wxd > small { font-size: .64rem; color: var(--color-gray-500); }
+    .sat-wxd .wx-sky { margin: .1rem 0; }
+    .sat-wxd > em { font-style: normal; font-size: .7rem; font-weight: 800; color: var(--color-gray-800); line-height: 1.2; min-height: 1.7rem; display: grid; place-items: center; }
+    .sat-wxd > span { font-size: .72rem; font-weight: 700; color: var(--color-gray-700); }
+    .sat-wxd > i { font-style: normal; font-size: .66rem; font-weight: 800; color: #2563eb; }
+    html.dark .sat-wxd > i { color: #7cc0ff; }
+    @media (max-width: 639.98px) {
+        .sat-wx { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .sat-wxd { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); grid-template-areas: 'sky day' 'sky what' 'sky temp' 'sky rain'; column-gap: .45rem; row-gap: 0;
+            align-items: center; text-align: left; padding: .5rem .55rem; }
+        .sat-wxd .wx-sky { grid-area: sky; width: 2.6rem !important; height: 2.6rem !important; margin: 0; }
+        .sat-wxd > b { grid-area: day; }
+        .sat-wxd > b small { font-weight: 600; color: var(--color-gray-500); }
+        .sat-wxd > small { display: none; }
+        .sat-wxd > em { grid-area: what; min-height: 0; display: block; font-size: .72rem; }
+        .sat-wxd > span { grid-area: temp; font-size: .7rem; }
+        .sat-wxd > i { grid-area: rain; }
+    }
+    @media (prefers-reduced-motion: reduce) { .sat-wxd { animation: none; } }
     .sat-table { width: 100%; font-size: .8rem; border-collapse: collapse; }
     .sat-table th, .sat-table td { text-align: left; padding: .45rem .4rem; border-bottom: 1px solid var(--color-gray-100); color: var(--color-gray-700); vertical-align: top; }
     .sat-table th { font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; color: var(--color-gray-500); }
@@ -263,9 +341,8 @@
         .sat-ring small { font-size: .58rem; }
         .sat-top h2 { font-size: 1rem; }
         .sat-top p { margin-top: .2rem; font-size: .76rem; }
-        .sat-top .sat-when { grid-column: 1 / -1; margin-top: 0; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -.9rem; padding: 0 .9rem; }
-        .sat-when::-webkit-scrollbar { display: none; }
-        .sat-when span { flex: none; }
+        .sat-top .sat-when { grid-column: 1 / -1; margin-top: 0; flex-wrap: wrap; }
+        .sat-when span { max-width: 100%; white-space: normal; line-height: 1.35; }
         .sat-stats { gap: .5rem; }
         .sat-stat { padding: .65rem .7rem; }
         .sat-stat b { font-size: 1.1rem; }
@@ -310,26 +387,54 @@
             <div class="sat-stepno"><span id="satStepNo">Step 1 of 7</span><span id="satStepName">The place</span></div>
             <div class="sat-rail" id="satRail" aria-hidden="true"></div>
 
+            {{-- Every choice is a tag that opens a sheet (the owner's rule for the
+                 wizards, 2026-10-08): the province and the town, the crop, how it
+                 was planted, the water, the soil and the worries. --}}
             <section class="sat-step is-on" data-step="0">
                 <h3>Where is the field?</h3>
-                <p class="sat-sub">Type the barangay, town or province, then pick it. Or use where you are standing now.</p>
-                <div class="sat-row">
-                    <input type="text" id="satPlaceQ" class="form-input flex-1" maxlength="120" placeholder="Like Science City of Muñoz, Nueva Ecija" autocomplete="off">
-                    <button type="button" class="btn btn-white" id="satPlaceGo">Find</button>
-                </div>
-                <button type="button" class="sat-pill mt-2" id="satHere">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
-                    Use my current location
-                </button>
+                @if (\App\Support\Region::ph())
+                    <p class="sat-sub">Pick the province and the town. The map opens there, and you draw the field on it.</p>
+                    <span class="sat-label">Province</span>
+                    <button type="button" class="sat-choice is-none" id="satProvBtn"><span>Choose the province</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                    <span class="sat-label">Town or city</span>
+                    <button type="button" class="sat-choice is-none" id="satTownBtn" disabled><span>Pick the province first</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                    <div class="sat-row mt-3" style="flex-wrap:wrap">
+                        <button type="button" class="sat-pill" id="satHere">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+                            Use my current location
+                        </button>
+                        <button type="button" class="sat-link" id="satByName">Or find a barangay by name</button>
+                    </div>
+                    <div id="satByNameBox" hidden>
+                        <div class="sat-row mt-2">
+                            <input type="text" id="satPlaceQ" class="form-input flex-1" maxlength="120" placeholder="Like Barangay Bantug, Muñoz" autocomplete="off">
+                            <button type="button" class="btn btn-white" id="satPlaceGo">Find</button>
+                        </div>
+                    </div>
+                @else
+                    <p class="sat-sub">Type the town or the county and the state, then pick it. Or use where you are standing now.</p>
+                    <div class="sat-row">
+                        <input type="text" id="satPlaceQ" class="form-input flex-1" maxlength="120" placeholder="Like Davis, California" autocomplete="off">
+                        <button type="button" class="btn btn-white" id="satPlaceGo">Find</button>
+                    </div>
+                    <button type="button" class="sat-pill mt-2" id="satHere">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+                        Use my current location
+                    </button>
+                @endif
                 <div class="sat-places" id="satPlaces"></div>
                 <p class="sat-picked" id="satPicked" hidden></p>
             </section>
 
             <section class="sat-step" data-step="1">
                 <h3>What is growing there?</h3>
-                <p class="sat-sub">Pick the crop. Type to find it faster.</p>
-                <input type="search" id="satCropQ" class="form-input" placeholder="Search crops" autocomplete="off">
-                <div class="sat-pills sat-crops" id="satCrops"></div>
+                <p class="sat-sub">The crop tells Anee how green and how tall the field should look by now.</p>
+                <span class="sat-label">Crop</span>
+                <button type="button" class="crop-tag" id="satCropBtn">
+                    <span class="crop-tag-e" id="satCropIcon">🌱</span>
+                    <span class="crop-tag-t is-none" id="satCropNow">Choose the crop</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
                 <label class="sat-label" for="satVariety">Variety <span class="text-gray-400 font-normal">(optional)</span></label>
                 <input type="text" id="satVariety" class="form-input" maxlength="80" placeholder="Like NSIC Rc 222, or a hybrid corn name">
             </section>
@@ -337,37 +442,49 @@
             <section class="sat-step" data-step="2">
                 <h3>When and how was it planted?</h3>
                 <p class="sat-sub">The age tells Anee how green the field should be right now.</p>
-                <label class="sat-label" for="satPlanted">Planting date</label>
-                <input type="date" id="satPlanted" class="form-input">
-                <label class="sat-label">How it was planted</label>
-                <div class="sat-pills" id="satMethods"></div>
+                <span class="sat-label">Planting date</span>
+                @include('partials.date-tag', ['id' => 'satPlanted', 'empty' => 'Pick the planting date', 'class' => 'sat-date'])
+                <span class="sat-label">How it was planted</span>
+                <button type="button" class="sat-choice" id="satMethodBtn"><span>Transplanted</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
                 <label class="sat-label" for="satDensity">Seeding rate or plant density <span class="text-gray-400 font-normal">(optional)</span></label>
                 <div class="sat-row">
                     <input type="number" id="satDensity" class="form-input flex-1" min="1" step="any" inputmode="decimal" placeholder="Like 90000">
-                    <select id="satDensityUnit" class="form-select" style="max-width: 11rem">
-                        <option value="seeds_ha">seeds per ha</option>
-                        <option value="plants_ha">plants per ha</option>
-                        <option value="kg_ha">kg seed per ha</option>
-                        <option value="hills_m2">hills per m²</option>
-                    </select>
+                    <button type="button" class="sat-choice is-unit" id="satDensityUnitBtn" aria-label="Unit"><span>seeds per ha</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
                 </div>
             </section>
 
             <section class="sat-step" data-step="3">
                 <h3>The ground and the water</h3>
                 <p class="sat-sub">Pick what you know. Leave the rest.</p>
-                <label class="sat-label">Water</label>
-                <div class="sat-pills" id="satWater"></div>
-                <label class="sat-label">Soil</label>
-                <div class="sat-pills" id="satSoil"></div>
-                <label class="sat-label" for="satPh">Soil pH from a test <span class="text-gray-400 font-normal">(optional)</span></label>
-                <input type="number" id="satPh" class="form-input" min="2" max="12" step="0.1" inputmode="decimal" placeholder="Like 8.4">
+                <span class="sat-label">Water</span>
+                <button type="button" class="sat-choice" id="satWaterBtn"><span>Irrigated</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                <span class="sat-label">Soil</span>
+                <button type="button" class="sat-choice is-none" id="satSoilBtn"><span>Not sure</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                <span class="sat-label">Soil pH</span>
+                <label class="sat-switch"><input type="checkbox" id="satPhOn"> <span>I know the pH, from a soil test</span></label>
+                <div class="sat-ph" id="satPhBox" hidden>
+                    <div class="sat-ph-read"><b id="satPhSay">pH 6 to 6.8</b><span id="satPhWord"></span></div>
+                    <div class="sat-ph-range">
+                        <span class="sat-ph-track" aria-hidden="true"></span>
+                        <span class="sat-ph-sel" id="satPhSel" aria-hidden="true"></span>
+                        <input type="range" id="satPhLo" min="3.5" max="10" step="0.1" value="6" aria-label="pH from">
+                        <input type="range" id="satPhHi" min="3.5" max="10" step="0.1" value="6.8" aria-label="pH to">
+                    </div>
+                    <div class="sat-ph-scale" aria-hidden="true"><span class="is-acid" style="left:19%">Acidic</span><span class="is-neutral" style="left:52.3%">Neutral</span><span class="is-alk" style="left:80%">Alkaline</span></div>
+                    <div class="sat-ph-nums">
+                        <label>From <input type="number" id="satPhLoIn" class="form-input" min="3.5" max="10" step="0.1" inputmode="decimal" value="6"></label>
+                        <label>To <input type="number" id="satPhHiIn" class="form-input" min="3.5" max="10" step="0.1" inputmode="decimal" value="6.8"></label>
+                    </div>
+                    <p class="sat-ph-err" id="satPhErr" hidden></p>
+                    <p class="sat-note">Drag the two handles, or type the numbers. One test reading? Set both to it.</p>
+                </div>
             </section>
 
             <section class="sat-step" data-step="4">
                 <h3>Anything worrying you?</h3>
                 <p class="sat-sub">Anee looks hardest where you point. Pick any that fit.</p>
-                <div class="sat-pills" id="satConcerns"></div>
+                <span class="sat-label">What you have seen</span>
+                <button type="button" class="sat-choice is-none" id="satConcernsBtn"><span>Nothing picked</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
                 <label class="sat-label" for="satNotes">Notes <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="satNotes" class="form-textarea" rows="3" maxlength="800" placeholder="Like: the north end flooded last week"></textarea>
             </section>
@@ -414,6 +531,27 @@
     </div>
 </div>
 
+{{-- One sheet for every choice: a list, searchable when long, one or several. --}}
+<div class="sheet hidden" id="satPickSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="satPickTitle">Choose</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <p class="form-hint mt-0 mb-3" id="satPickHint" hidden></p>
+        <div class="sat-psearch" id="satPickSearchBox" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="text" id="satPickQ" class="form-input" autocomplete="off" placeholder="Search">
+        </div>
+        <div class="dt-rows" id="satPickRows"></div>
+        <p class="sat-note text-center py-3" id="satPickNone" hidden>Nothing by that name.</p>
+    </div>
+    <div class="sheet-footer" id="satPickFoot" hidden>
+        <button type="button" class="btn btn-primary" data-sheet-close>Done</button>
+    </div>
+</div>
+
 <div class="sat-view" id="satView" hidden role="dialog" aria-modal="true" aria-label="Satellite analysis">
     <div class="sat-view-bar">
         <b id="satViewTitle">Satellite analysis</b>
@@ -436,7 +574,7 @@
         del: (id) => @json(url('/app/satellite')) + '/' + id,
     };
     let OPT = null;
-    const st = { step: 0, place: null, crop: null, method: 'transplanted', water: 'irrigated', soil: [], concerns: [], ring: [] };
+    const st = { step: 0, place: null, crop: null, method: 'transplanted', water: 'irrigated', soil: [], concerns: [], ring: [], densityUnit: 'seeds_ha', prov: null, town: null };
     const STEPS = 7;
 
     /* Shops, stops and pins only clutter a field: the map keeps roads and places. */
@@ -478,35 +616,135 @@
         }
     };
     let booted = false;
-    const pills = (box, items, { multi = false, get, set }) => {
-        box.innerHTML = Object.entries(items).map(([k, v]) => '<button type="button" class="sat-pill" data-k="' + esc(k) + '" aria-pressed="false">' + esc(v) + '</button>').join('');
-        const paint = () => box.querySelectorAll('.sat-pill').forEach((b) => b.setAttribute('aria-pressed', String(multi ? get().includes(b.dataset.k) : get() === b.dataset.k)));
-        box.addEventListener('click', (e) => {
-            const b = e.target.closest('.sat-pill');
-            if (!b) return;
-            const k = b.dataset.k;
-            if (multi) { const cur = get(); set(cur.includes(k) ? cur.filter((x) => x !== k) : cur.concat(k)); } else set(k);
-            paint();
+    const TICK = '<svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+    const words = (v) => String(v || '').split(' — ');
+    const tagSay = (id, text, none) => { const b = $(id); if (!b) return; b.querySelector('span').textContent = text; b.classList.toggle('is-none', !!none); };
+
+    /* ---- one sheet for every choice: a list, searchable when long, one or several ---- */
+    let pk = null;
+    const pick = ({ title, hint = '', items, cur, multi = false, search = false, exclusive = null, cb }) => {
+        if (!window.openSheet) return window.toast?.('One moment, the page is still loading.', 'info');
+        $('satPickTitle').textContent = title;
+        $('satPickHint').textContent = hint; $('satPickHint').hidden = !hint;
+        $('satPickSearchBox').hidden = !search; $('satPickQ').value = '';
+        $('satPickFoot').hidden = !multi;
+        pk = { items, multi, sel: multi ? [...(cur || [])] : cur, exclusive, cb };
+        paintPick();
+        window.openSheet('satPickSheet');
+        if (search && !matchMedia('(hover: none)').matches) setTimeout(() => $('satPickQ').focus(), 280);
+    };
+    const paintPick = () => {
+        const q = ($('satPickQ').value || '').trim().toLowerCase();
+        let html = '', group = null, shown = 0;
+        pk.items.forEach((it) => {
+            if (q && !(it.label + ' ' + (it.sub || '') + ' ' + (it.group || '')).toLowerCase().includes(q)) return;
+            if (it.group && it.group !== group) { group = it.group; html += '<p class="sat-pick-h">' + esc(group) + '</p>'; }
+            const on = pk.multi ? pk.sel.includes(it.k) : pk.sel === it.k;
+            html += '<button type="button" class="dt-row' + (on ? ' is-on' : '') + '" data-k="' + esc(it.k) + '" aria-pressed="' + on + '">' + (it.icon ? '<span class="dt-row-e">' + esc(it.icon) + '</span>' : '')
+                + '<span class="dt-row-body"><b>' + esc(it.label) + '</b>' + (it.sub ? '<i>' + esc(it.sub) + '</i>' : '') + '</span>' + TICK + '</button>';
+            shown++;
         });
-        paint();
+        $('satPickRows').innerHTML = html;
+        $('satPickNone').hidden = shown > 0;
     };
-    const crops = () => {
-        const q = $('satCropQ').value.trim().toLowerCase();
-        const list = OPT.crops.filter((c) => !q || c.label.toLowerCase().includes(q));
-        $('satCrops').innerHTML = list.slice(0, 120).map((c) => '<button type="button" class="sat-pill" data-k="' + esc(c.key) + '" aria-pressed="' + (st.crop === c.key) + '">' + esc(c.icon) + ' ' + esc(c.label) + '</button>').join('')
-            || '<p class="sat-note">No crop by that name.</p>';
-    };
-    $('satCrops').addEventListener('click', (e) => {
-        const b = e.target.closest('.sat-pill');
-        if (!b) return;
-        st.crop = b.dataset.k;
-        const c = OPT.crops.find((x) => x.key === st.crop);
-        // The usual way in for the crop: transplanted palay, seeded rows for the rest.
-        st.method = c && c.perennial ? 'perennial' : (/^rice/.test(st.crop) ? (/dsr|direct/.test(st.crop) ? 'direct' : 'transplanted') : 'planted');
-        crops();
-        pills($('satMethods'), OPT.methods, { get: () => st.method, set: (v) => { st.method = v; } });
+    $('satPickQ').addEventListener('input', () => pk && paintPick());
+    $('satPickRows').addEventListener('click', (e) => {
+        const b = e.target.closest('.dt-row');
+        if (!b || !pk) return;
+        const k = b.dataset.k;
+        if (pk.multi) {
+            pk.sel = pk.sel.includes(k) ? pk.sel.filter((x) => x !== k) : (pk.exclusive ? pk.exclusive(pk.sel, k) : pk.sel).concat(k);
+            paintPick();
+            pk.cb(pk.sel);
+            return;
+        }
+        $('satPickRows').querySelectorAll('.dt-row').forEach((x) => x.classList.toggle('is-on', x === b));
+        const cb = pk.cb; pk = null;
+        setTimeout(() => window.closeSheet('satPickSheet'), 150);
+        cb(k);
     });
-    $('satCropQ').addEventListener('input', crops);
+    const listOf = (obj) => Object.entries(obj).map(([k, v]) => { const [label, sub] = words(v); return { k, label, sub: sub ? sub.charAt(0).toUpperCase() + sub.slice(1) : '' }; });
+
+    /* the crop */
+    const cropName = (c) => String(c.label || '').replace(' — ', ', ');
+    const setCrop = (k) => {
+        st.crop = k;
+        const c = OPT.crops.find((x) => x.key === k);
+        $('satCropIcon').textContent = c ? c.icon : '🌱';
+        $('satCropNow').textContent = c ? cropName(c) : 'Choose the crop';
+        $('satCropNow').classList.toggle('is-none', !c);
+        // The usual way in for the crop: transplanted palay, seeded rows for the rest.
+        st.method = c && c.perennial ? 'perennial' : (/^rice/.test(k) ? (/dsr|direct/.test(k) ? 'direct' : 'transplanted') : 'planted');
+        tagSay('satMethodBtn', words(OPT.methods[st.method])[0]);
+    };
+    $('satCropBtn').addEventListener('click', () => {
+        if (!OPT) return;
+        pick({ title: 'Choose the crop', search: true, cur: st.crop, items: OPT.crops.map((c) => ({ k: c.key, label: cropName(c), icon: c.icon, group: c.group,
+            sub: c.perennial ? 'Tree crop, counted by age' : (c.maturity ? c.maturity + ' days to harvest' : '') })), cb: (k) => { setCrop(k); if (st.step === 1) setTimeout(() => $('satVariety').focus({ preventScroll: true }), 300); } });
+    });
+
+    /* how it was planted, the water, the soil, the worries */
+    const DENSITY = { seeds_ha: 'seeds per ha', plants_ha: 'plants per ha', kg_ha: 'kg seed per ha', hills_m2: 'hills per m²' };
+    $('satMethodBtn').addEventListener('click', () => OPT && pick({ title: 'How it was planted', items: listOf(OPT.methods), cur: st.method, cb: (k) => { st.method = k; tagSay('satMethodBtn', words(OPT.methods[k])[0]); } }));
+    $('satDensityUnitBtn').addEventListener('click', () => pick({ title: 'The rate is in', items: listOf(DENSITY), cur: st.densityUnit, cb: (k) => { st.densityUnit = k; tagSay('satDensityUnitBtn', DENSITY[k]); } }));
+    $('satWaterBtn').addEventListener('click', () => OPT && pick({ title: 'Where the water comes from', items: listOf(OPT.water), cur: st.water, cb: (k) => { st.water = k; tagSay('satWaterBtn', words(OPT.water[k])[0]); } }));
+    const PH_WORDS = ['acidic', 'neutral', 'alkaline'];
+    const soilSay = () => tagSay('satSoilBtn', st.soil.length ? st.soil.map((k) => words(OPT.soilConditions[k])[0]).join(', ') : 'Not sure', !st.soil.length);
+    $('satSoilBtn').addEventListener('click', () => OPT && pick({ title: 'What is true of the soil', hint: 'Pick all that fit. Leave it empty if you are not sure.', multi: true, cur: st.soil,
+        items: listOf(Object.fromEntries(Object.entries(OPT.soilConditions).filter(([k]) => k !== 'unsure'))),
+        // The three pH words exclude one another; sodium, salt and acid sulfate ride with any.
+        exclusive: (sel, k) => PH_WORDS.includes(k) ? sel.filter((x) => !PH_WORDS.includes(x)) : sel,
+        cb: (sel) => { st.soil = sel; soilSay(); } }));
+    const concernsSay = () => tagSay('satConcernsBtn', st.concerns.length ? st.concerns.map((k) => words(OPT.concerns[k])[0]).join(', ') : 'Nothing picked', !st.concerns.length);
+    $('satConcernsBtn').addEventListener('click', () => OPT && pick({ title: 'Anything worrying you?', hint: 'Pick any that fit.', multi: true, cur: st.concerns, items: listOf(OPT.concerns),
+        exclusive: (sel, k) => k === 'none' ? [] : sel.filter((x) => x !== 'none'),
+        cb: (sel) => { st.concerns = sel; concernsSay(); } }));
+
+    /* the soil pH: a range from and to, on the soil's colours */
+    const PH_MIN = 3.5, PH_MAX = 10;
+    const phStops = [[3.5, [192, 38, 45]], [4.5, [232, 89, 12]], [5.5, [242, 183, 5]], [6.2, [148, 193, 31]], [6.5, [47, 158, 68]], [7.3, [47, 158, 68]], [8, [28, 126, 214]], [9, [95, 61, 196]], [10, [123, 44, 191]]];
+    const phColor = (v) => {
+        for (let i = 1; i < phStops.length; i++) {
+            const [b, cb] = phStops[i], [a, ca] = phStops[i - 1];
+            if (v <= b) { const t = (v - a) / (b - a); return 'rgb(' + ca.map((x, j) => Math.round(x + (cb[j] - x) * t)).join(' ') + ')'; }
+        }
+        return 'rgb(123 44 191)';
+    };
+    const phWord = (v) => v < 5 ? 'Strongly acidic' : v < 6 ? 'Acidic' : v < 6.5 ? 'Slightly acidic' : v <= 7.3 ? 'Neutral' : v <= 7.8 ? 'Slightly alkaline' : v < 8.5 ? 'Alkaline' : 'Strongly alkaline';
+    const fx = (v) => String(Math.round(v * 10) / 10);
+    const phPaint = (from) => {
+        const lo = $('satPhLo'), hi = $('satPhHi');
+        let a = Number(lo.value), b = Number(hi.value);
+        // The handles never cross: the one being moved stops at the other.
+        if (a > b) { if (from === 'hi') { b = a; hi.value = b; } else { a = b; lo.value = a; } }
+        const pc = (v) => (v - PH_MIN) / (PH_MAX - PH_MIN) * 100;
+        $('satPhSel').style.left = 'calc(' + pc(a) + '% - .65rem)';
+        $('satPhSel').style.width = 'calc(' + (pc(b) - pc(a)) + '% + 1.3rem)';
+        lo.style.setProperty('--c', phColor(a)); hi.style.setProperty('--c', phColor(b));
+        // The low handle sits on top when both are at the top end, so it can still be pulled down.
+        lo.style.zIndex = a >= PH_MAX - 0.3 ? 3 : 1;
+        $('satPhSay').textContent = a === b ? 'pH ' + fx(a) : 'pH ' + fx(a) + ' to ' + fx(b);
+        $('satPhWord').textContent = phWord(a) === phWord(b) ? phWord(a) : phWord(a) + ' to ' + phWord(b).toLowerCase();
+        if (from !== 'num') { $('satPhLoIn').value = fx(a); $('satPhHiIn').value = fx(b); }
+        st.ph = $('satPhOn').checked ? { lo: Math.round(a * 10) / 10, hi: Math.round(b * 10) / 10 } : null;
+    };
+    $('satPhLo').addEventListener('input', () => phPaint('lo'));
+    $('satPhHi').addEventListener('input', () => phPaint('hi'));
+    const phTyped = () => {
+        const a = Number($('satPhLoIn').value), b = Number($('satPhHiIn').value);
+        let why = '';
+        if ($('satPhLoIn').value === '' || $('satPhHiIn').value === '' || !isFinite(a) || !isFinite(b)) why = 'Type both numbers.';
+        else if (a < PH_MIN || b > PH_MAX || a > PH_MAX || b < PH_MIN) why = 'A soil pH is between ' + PH_MIN + ' and ' + PH_MAX + '.';
+        else if (a > b) why = 'The first number should be the lower one.';
+        $('satPhErr').textContent = why; $('satPhErr').hidden = !why;
+        if (why) return;
+        $('satPhLo').value = a; $('satPhHi').value = b;
+        phPaint('num');
+    };
+    $('satPhLoIn').addEventListener('input', phTyped);
+    $('satPhHiIn').addEventListener('input', phTyped);
+    $('satPhOn').addEventListener('change', () => { $('satPhBox').hidden = !$('satPhOn').checked; $('satPhErr').hidden = true; phPaint('lo'); });
+    phPaint('lo');
 
     /* the place */
     const setPlace = (p) => {
@@ -534,6 +772,38 @@
         } catch (err) { $('satPlaces').innerHTML = '<p class="sat-note">' + esc(err.message) + '</p>'; }
     };
     $('satPlaceGo').addEventListener('click', findPlace);
+    /* In the Philippines: the province, then the town, each from its sheet;
+       the map opens on the town (found through the same place search). */
+    let PH = null;
+    const loadPh = async () => PH ??= await (await fetch(@json(asset('data/ph-locations.json')))).json();
+    const townName = (t) => String(t).replace(/\s*\(Capital\)\s*$/i, '');
+    $('satProvBtn')?.addEventListener('click', async () => {
+        try { await loadPh(); } catch (_) { return window.toast?.('The list of provinces could not load. Find the place by name instead.', 'error'); }
+        pick({ title: 'Choose the province', search: true, cur: st.prov, items: Object.keys(PH).sort((a, b) => a.localeCompare(b)).map((p) => ({ k: p, label: p, sub: PH[p].length + ' towns and cities' })),
+            cb: (k) => {
+                if (k !== st.prov) { st.town = null; tagSay('satTownBtn', 'Choose the town', true); }
+                st.prov = k; tagSay('satProvBtn', k);
+                $('satTownBtn').disabled = false;
+                if (!st.town) setTimeout(() => $('satTownBtn').click(), 260);
+            } });
+    });
+    $('satTownBtn')?.addEventListener('click', async () => {
+        if (!st.prov) return;
+        try { await loadPh(); } catch (_) { return; }
+        pick({ title: 'Choose the town or city', hint: st.prov, search: true, cur: st.town, items: (PH[st.prov] || []).map((t) => ({ k: t, label: townName(t), sub: /\(Capital\)/i.test(t) ? 'The capital' : '' })),
+            cb: (k) => { st.town = k; tagSay('satTownBtn', townName(k)); locate(townName(k), st.prov); } });
+    });
+    const locate = async (town, prov) => {
+        $('satPicked').hidden = false;
+        $('satPicked').textContent = 'Finding ' + town + ' on the map…';
+        const ask = async (q) => { const r = await window.api(U.places + '?q=' + encodeURIComponent(q)); return ((r.data && r.data.places) || [])[0] || null; };
+        try {
+            const p = (await ask(town + ', ' + prov + ', Philippines')) || (await ask(town + ', ' + prov)) || (await ask(prov + ', Philippines'));
+            if (!p) throw new Error('That town could not be found on the map. Find it by name instead.');
+            setPlace({ label: town + ', ' + prov, lat: Number(p.lat), lng: Number(p.lng) });
+        } catch (err) { $('satPicked').hidden = true; window.toast?.(err.message, 'error'); }
+    };
+    $('satByName')?.addEventListener('click', () => { $('satByNameBox').hidden = false; $('satByName').hidden = true; $('satPlaceQ').focus(); });
     $('satPlaceQ').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); findPlace(); } });
     $('satHere').addEventListener('click', () => {
         if (!navigator.geolocation) return window.toast?.('This phone cannot share its location.', 'error');
@@ -595,9 +865,9 @@
     const review = () => {
         const c = OPT.crops.find((x) => x.key === st.crop);
         const rows = [
-            ['Place', st.place ? st.place.label : ''], ['Crop', c ? c.icon + ' ' + c.label + ($('satVariety').value.trim() ? ', ' + $('satVariety').value.trim() : '') : ''],
-            ['Planted', ($('satPlanted').value || 'Not given') + ' · ' + label(OPT.methods, st.method)],
-            ['Water and soil', label(OPT.water, st.water) + (st.soil.length ? ' · ' + st.soil.map((k) => (OPT.soilConditions[k] || k).split(' —')[0]).join(', ') : '')],
+            ['Place', st.place ? st.place.label : ''], ['Crop', c ? c.icon + ' ' + cropName(c) + ($('satVariety').value.trim() ? ', ' + $('satVariety').value.trim() : '') : ''],
+            ['Planted', ($('satPlanted').value || 'Not given') + ' · ' + words(label(OPT.methods, st.method))[0]],
+            ['Water and soil', words(label(OPT.water, st.water))[0] + (st.soil.length ? ' · ' + st.soil.map((k) => words(OPT.soilConditions[k] || k)[0]).join(', ') : '') + (st.ph ? ' · pH ' + (st.ph.lo === st.ph.hi ? st.ph.lo : st.ph.lo + ' to ' + st.ph.hi) : '')],
             ['Field', ringArea().toLocaleString(undefined, { maximumFractionDigits: 2 }) + ' ha, ' + st.ring.length + ' corners'],
         ];
         $('satReview').innerHTML = rows.map(([k, v]) => '<div><b>' + esc(k) + '</b><span>' + esc(v) + '</span></div>').join('');
@@ -606,8 +876,9 @@
         $('satRunSays').textContent = !OPT.connected ? 'The satellite link is being set up' : (OPT.canUse ? 'Run the satellite analysis' : 'Anee is not on your plan');
     };
     const canNext = () => {
-        if (st.step === 0 && !st.place) return 'Pick the place first.';
+        if (st.step === 0 && !st.place) return st.town ? 'One moment, the town is still being found on the map.' : 'Pick the place first.';
         if (st.step === 1 && !st.crop) return 'Pick the crop.';
+        if (st.step === 3 && $('satPhOn').checked && !$('satPhErr').hidden) return $('satPhErr').textContent;
         if (st.step === 5 && st.ring.length < 3) return 'Tap at least three corners of the field.';
         if (st.step === 5 && ringArea() > 2000) return 'That is over 2,000 hectares. Draw one field at a time.';
         return null;
@@ -628,8 +899,8 @@
         ring.push(ring[0]);
         const body = {
             location: st.place.label, crop: st.crop, variety: $('satVariety').value.trim(), plantedOn: $('satPlanted').value || null,
-            method: st.method, density: $('satDensity').value ? Number($('satDensity').value) : null, densityUnit: $('satDensityUnit').value,
-            water: st.water, soilConditions: st.soil, phValue: $('satPh').value ? Number($('satPh').value) : null,
+            method: st.method, density: $('satDensity').value ? Number($('satDensity').value) : null, densityUnit: st.densityUnit,
+            water: st.water, soilConditions: st.soil, phValue: st.ph ? Math.round((st.ph.lo + st.ph.hi) / 2 * 10) / 10 : null, phLow: st.ph ? st.ph.lo : null, phHigh: st.ph ? st.ph.hi : null,
             concerns: st.concerns, notes: $('satNotes').value.trim(), polygon: { type: 'Polygon', coordinates: [ring] },
         };
         $('satRun').disabled = true;
@@ -709,7 +980,6 @@
         const ringColor = score >= 75 ? '#66bd63' : score >= 55 ? '#d9ef8b' : score >= 35 ? '#fdae61' : '#f46d43';
         const wx = cx.weather || {};
         const next = (wx.days || []).filter((x) => !x.past).slice(0, 10);
-        const maxRain = Math.max(1, ...next.map((x) => Number(x.rain) || 0));
         const when = [];
         // When each picture was taken, said plainly, with how long ago (the owner could not find it).
         const ago = (t) => { const d = Math.round(Number((t || {}).ageDays)); return isNaN(d) ? '' : d <= 0 ? ' (today)' : d === 1 ? ' (yesterday)' : ' (' + d + ' days ago)'; };
@@ -730,7 +1000,9 @@
                 + '<div class="sat-stat"><small>Confidence</small><b style="text-transform:capitalize">' + esc(a.confidence || '–') + '</b><i>' + esc((a.stage || {}).guess || '') + '</i></div></div>'
                 + card('What Anee sees', p(a.summary) + p((a.stage || {}).basis ? 'Stage: ' + a.stage.guess + '. ' + a.stage.basis : ''), ICON.eye)
                 + card('Stand and spacing', p(SP.reading) + p(SP.density) + '<p class="sat-note mt-2">' + esc(SP.note || '') + '</p>', ICON.leaf),
-            map: '<div class="sat-map-wrap"><div class="sat-map" id="satRMap"></div>'
+            map: '<div class="sat-mapnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>'
+                + '<span><b>The latest photo is for analysis, like the heatmaps.</b> It is the satellite\'s 10 meter picture from the date shown, not a live view of how the field looks right now.</span></div>'
+                + '<div class="sat-map-wrap"><div class="sat-map" id="satRMap"></div>'
                 + '<div class="sat-layers"><button type="button" data-l="rgb" class="is-on">Latest photo</button><button type="button" data-l="ndvi">NDVI heatmap</button><button type="button" data-l="sar">Radar</button><button type="button" data-l="none">Map only</button>'
                 + '</div><label class="sat-opacity">Layer <input type="range" id="satOp" min="0" max="100" value="100" aria-label="Layer opacity"></label>'
                 + '<div class="sat-legend" id="satLegend" hidden>NDVI<i></i><span><em>0 bare</em><em>0.9 lush</em></span></div>'
@@ -749,7 +1021,14 @@
                     + '<div class="mt-3">' + grid9(s1.zones, (v) => 'hsl(' + Math.max(0, Math.min(130, (Number(v) + 26) * 7)) + ' 55% 40%)', (v) => Number(v).toFixed(1) + ' dB') + '</div>' : '<p class="sat-note">No radar pass in the window.</p>'), ICON.radar)
                 + card('Radar, last 90 days', chart((s.series || {}).radar, ['vv', 'vh'], ['#4c8ed9', '#f59e0b'], (v) => Number(v).toFixed(1) + ' dB') + '<p class="sat-note">Blue VV, amber VH.</p>', ICON.radar),
             threats: ((a.threats || []).length ? card('Threats to watch', '<div class="sat-list">' + a.threats.map((t) => '<div class="sat-item"><b>' + esc(t.threat) + '</b><div class="sat-tags"><span class="sat-tag lv-' + lv(t.likelihood) + '">Likely: ' + esc(t.likelihood) + '</span><span class="sat-tag lv-' + lv(t.severity) + '">Severity: ' + esc(t.severity) + '</span><span class="sat-tag">' + esc(t.when) + '</span></div><p>' + esc(t.why) + '</p><p><b style="display:inline">Do:</b> ' + esc(t.action) + '</p></div>').join('') + '</div>', ICON.warn) : '')
-                + card('The next 10 days', '<div class="sat-wx">' + next.map((x) => '<div><b>' + esc(new Date(x.date + 'T00:00:00').toLocaleDateString(undefined, { weekday: 'short' })) + '</b>' + esc(Math.round(x.tmax)) + '°<i style="height:' + Math.max(2, (Number(x.rain) || 0) / maxRain * 46) + 'px"></i>' + esc(x.rain) + ' mm</div>').join('') + '</div>' + p(W.outlook) + p(W.rain) + p(W.heat) + p(W.wind), ICON.cloud)
+                + card('The next 10 days', '<div class="sat-wx">' + next.map((x, i) => {
+                    const key = window.wxKeyFor ? window.wxKeyFor(x.code, false, x.tmax, x.gust ?? x.wind) : 'cloudy';
+                    const dt = new Date(x.date + 'T00:00:00');
+                    return '<div class="sat-wxd ' + (window.wxHue ? window.wxHue(key) : '') + '" style="--k:' + i + '"><b>' + esc(OPT && x.date === OPT.today ? 'Today' : dt.toLocaleDateString(undefined, { weekday: 'short' })) + '<small class="sat-wxd-md"> ' + esc(dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })) + '</small></b>'
+                        + '<small>' + esc(dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })) + '</small>' + (window.wxSky ? window.wxSky(key, 44) : '')
+                        + '<em>' + esc(window.wxName ? window.wxName(key) : '') + '</em><span>' + esc(Math.round(x.tmax)) + '° / ' + esc(Math.round(x.tmin)) + '°</span>'
+                        + '<i>' + esc(x.rain) + ' mm' + (x.pop != null ? ' · ' + esc(x.pop) + '%' : '') + '</i></div>';
+                }).join('') + '</div>' + p(W.outlook) + p(W.rain) + p(W.heat) + p(W.wind), ICON.cloud)
                 + card('ENSO and earlier years', p(CL.enso) + p(CL.history) + ((cx.climate || []).length ? '<table class="sat-table mt-2"><tr><th>Same weeks of</th><th>Rain</th><th>Days over 10 mm</th><th>Days 35°C+</th></tr>' + cx.climate.map((y) => '<tr><td>' + esc(String(y.from).slice(0, 4)) + '</td><td>' + esc(y.rain) + ' mm</td><td>' + esc(y.wetDays) + '</td><td>' + esc(y.hotDays) + '</td></tr>').join('') + '</table>' : ''), ICON.cloud),
             soil: card('The soil here', p(SO.reading) + p(SO.fit), ICON.soil)
                 + ((SO.properties || []).length ? card('Soil numbers', '<table class="sat-table"><tr><th>What</th><th>Value</th><th>Meaning</th></tr>' + SO.properties.map((x) => '<tr><td>' + esc(x.name) + '</td><td>' + esc(x.value) + '</td><td>' + esc(x.meaning) + '</td></tr>').join('') + '</table><p class="sat-note mt-2">From the global soil map (ISRIC SoilGrids, 250 m), a modelled estimate. A soil test of your field is surer.</p>', ICON.soil) : '')
@@ -759,7 +1038,7 @@
                 + ((rep.webSources || []).length ? card('Additional sources of analysis', '<ul class="list-disc pl-5">' + [...new Set(rep.webSources.map((w) => w.title).filter(Boolean))].slice(0, 12).map((t) => '<li>' + esc(t) + '</li>').join('') + '</ul>', ICON.eye) : '')
                 + '<p class="sat-note">Satellite readings are a guide. Walk the field to confirm before you spend on fertilizer or sprays.</p>',
         };
-        $('satViewTitle').textContent = d.title || 'Satellite analysis';
+        $('satViewTitle').textContent = String(d.title || 'Satellite analysis').replace(/ — /g, ', ');
         $('satReport').innerHTML = '<div class="sat-top"><div class="sat-ring" style="--v:' + score + ';--c:' + ringColor + '"><div><b>' + score + '</b><small>' + esc(a.healthWord || '') + '</small></div></div>'
             + '<div><h2>' + esc(a.headline || '') + '</h2><p>' + esc(d.at ? 'Read ' + d.at : '') + '</p></div><div class="sat-when">' + when.join('') + '</div></div>'
             + '<div class="sat-rtabs" role="tablist">' + tabs.map(([k, l], i) => '<button type="button" class="sat-rtab' + (i ? '' : ' is-on') + '" data-t="' + k + '" role="tab">' + esc(l) + '</button>').join('') + '</div>'
@@ -841,7 +1120,7 @@
         const ago = (t) => { const d = Math.round(Number((t || {}).ageDays)); return isNaN(d) ? '' : d <= 0 ? ', today' : d === 1 ? ', yesterday' : ', ' + d + ' days ago'; };
         const taken = (t) => t && t.phText ? esc(t.phText) + esc(ago(t)) : '';
         shots = {
-            rgb: s2.available ? '<b>Latest satellite photo</b>' + taken(s2.time) : '',
+            rgb: s2.available ? '<b>Latest satellite photo</b>' + taken(s2.time) + '<i>For analysis, not a live view</i>' : '',
             ndvi: s2.available ? '<b>Greenness from the photo of</b>' + taken(s2.time) : '',
             sar: s1.available ? '<b>Radar pass</b>' + taken(s1.time) : '',
         };
@@ -867,7 +1146,7 @@
         try {
             const r = await window.api(U.list + '?page=' + savedPage + '&q=' + encodeURIComponent(savedQ));
             const rows = (r.data && r.data.rows) || [];
-            $('satSaved').insertAdjacentHTML('beforeend', rows.map((x) => '<button type="button" class="sat-srow" data-id="' + x.id + '"><span class="mini" style="--v:' + (Number(x.score) || 0) + '">' + (x.score ?? '–') + '</span><span><b>' + esc(x.title) + '</b><small>' + esc(x.at) + (x.ndvi != null ? ' · NDVI ' + esc(x.ndvi) : '') + (x.mode === 'radar-only' ? ' · radar only' : '') + '</small></span></button>').join(''));
+            $('satSaved').insertAdjacentHTML('beforeend', rows.map((x) => '<button type="button" class="sat-srow" data-id="' + x.id + '"><span class="mini" style="--v:' + (Number(x.score) || 0) + '">' + (x.score ?? '–') + '</span><span><b>' + esc(String(x.title || '').replace(/ — /g, ', ')) + '</b><small>' + esc(x.at) + (x.ndvi != null ? ' · NDVI ' + esc(x.ndvi) : '') + (x.mode === 'radar-only' ? ' · radar only' : '') + '</small></span></button>').join(''));
             $('satSavedEmpty').hidden = !!$('satSaved').children.length;
             $('satSavedMore').hidden = !r.data.hasMore;
         } catch (err) { window.toast?.(err.message, 'error'); }
@@ -895,11 +1174,9 @@
             const r = await window.api(U.options);
             OPT = r.data;
             quote();
-            crops();
-            pills($('satMethods'), OPT.methods, { get: () => st.method, set: (v) => { st.method = v; } });
-            pills($('satWater'), OPT.water, { get: () => st.water, set: (v) => { st.water = v; } });
-            pills($('satSoil'), Object.fromEntries(Object.entries(OPT.soilConditions).map(([k, v]) => [k, v.split(' —')[0]])), { multi: true, get: () => st.soil, set: (v) => { st.soil = v; } });
-            pills($('satConcerns'), OPT.concerns, { multi: true, get: () => st.concerns, set: (v) => { st.concerns = v.includes('none') && !st.concerns.includes('none') ? ['none'] : v.filter((x) => x !== 'none' || v.length === 1); } });
+            tagSay('satMethodBtn', words(OPT.methods[st.method])[0]);
+            tagSay('satWaterBtn', words(OPT.water[st.water])[0]);
+            soilSay(); concernsSay();
             $('satPlanted').max = OPT.today;
             show(0);
             booted = true;
