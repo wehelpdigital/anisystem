@@ -1,0 +1,202 @@
+{
+  "section": "land-preparation",
+  "slug": "saline-soil-preparation",
+  "sortOrder": 150,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Saline Soil Preparation: Leaching, Drainage and Salt Tolerant Rice",
+  "metaTitle": "Saline Soil Preparation: Leaching, Drainage, Beds",
+  "metaDescription": "Saline soil preparation for coastal farms and storm hit fields: spot salt damage, leach with fresh water, drain, shape beds and choose tolerant rice.",
+  "focusKeyword": "saline soil preparation",
+  "keywords": [
+    "saline soil preparation",
+    "saline soil",
+    "saltwater intrusion",
+    "salt tolerant rice",
+    "leaching"
+  ],
+  "excerpt": "Saline soil preparation is a race against the sea and the dry season, because salt that sits in the root zone stops seeds from sprouting and burns the leaves. PhilRice counts 500,000 to 600,000 hectares of coastal saline prone land in the Philippines. Also, salt water enters low lying fields at high tide. This guide covers how to spot salt damage, flush it out with fresh water, drain the field and shape the beds.",
+  "heroImage": {
+    "src": "/images/site/photos/storm-paddies.jpg",
+    "alt": "Storm clouds over rice paddies, where saline soil preparation matters after floods and storm surge",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The facts below come from the FAO Soils Bulletin 39 on salt affected soils and from PhilRice stories about saline fields in Bicol and Iloilo. A salty field needs a salt test, so ask the BSWM or your DA regional office where to have the soil tested."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to recognize salt damage"
+    },
+    {
+      "type": "text",
+      "text": "The FAO bulletin defines a saline soil as one with an electrical conductivity above 4 dS/m in the saturated extract. It adds that the Soil Science Society of America lowered the line to 2 dS/m. Chloride and sulfate salts of sodium, calcium and magnesium are the usual ones. The pH stays below 8.2, often close to neutral.\n\nIn the field, look for spotty growth and white salt crusts on the surface. Mild salt often gives plants a blue green tinge. Barren spots and stunted plants may show up too. The size of the bare spots hints at how much salt is in the soil. The FAO bulletin says salt stress can look like drought stress. PhilRice describes rice leaves that turn yellowish or look burned."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Salty or sodic?",
+      "text": "Saline soil has a pH under 8.2 and a white crust. Sodic soil has a high pH, a hard crust and poor drainage. They need different cures. For the second kind, read the [sodic and alkaline soil guide](/land-preparation/sodic-alkaline-soil-preparation)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Saline soil preparation step by step"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Stop the salt water at the source",
+          "text": "PhilRice says salt water enters fields in Canaman, Camarines Sur at high tide and in the dry season, when the river and sea push inland. PhilRice says the timing of planting should follow the tides and the rainfall pattern, so check the tide table before you plant."
+        },
+        {
+          "title": "Leach with fresh water",
+          "text": "The FAO bulletin calls leaching by far the most effective way to remove salts from the root zone. You pond fresh water on the soil and let it soak in. PhilRice also says fresh water flushing remains the best answer, and that even tolerant varieties cannot survive on salt water irrigation alone."
+        },
+        {
+          "title": "Estimate how much water to use",
+          "text": "The bulletin gives a rule of thumb. A depth of water removes about 80 percent of the salts from the same depth of soil. So 30 cm of water passing through takes out about 80 percent of the salt in the top 30 cm. To cut the top 60 cm to about 20 percent of the salt, pass about 60 cm of water through. A small leaching test on your own soil is more reliable."
+        },
+        {
+          "title": "Drain the leachate away",
+          "text": "Leaching works when the salty water drains out of the field and does not lift the water table. The bulletin says to dig ditches for surface drainage, and it warns that a high groundwater table makes salinity return. Its critical depth ranges from 1.5 to 3.0 meters, depending on the soil and climate."
+        },
+        {
+          "title": "Shape the beds",
+          "text": "Seeds sprout only when they sit away from the zone of salt build up. In furrow irrigation, salt gathers on top of the ridge. On double beds, the salt collects in the center and leaves the edges freer. On sloping beds, you plant on the slope below the salt zone."
+        },
+        {
+          "title": "Reduce evaporation",
+          "text": "Between irrigations and during fallow, leached salts tend to rise back to the surface. The bulletin says to reduce evaporation from the soil surface, with mulch for one, because evaporation pulls salt up."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When to leach, and what does not work"
+    },
+    {
+      "type": "text",
+      "text": "The bulletin notes that leaching is best done when the soil is dry and the water table is deep. Summer leaching loses a lot of water to evaporation. Scraping and surface flushing have only limited success, so do not rely on them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "After a flood or storm surge"
+    },
+    {
+      "type": "text",
+      "text": "A surge leaves salt on the field. The first step is the same: flush with fresh water and drain. Test the soil before you replant. In Bicol, PhilRice reports that farmers struggling with consecutive typhoons and salty soils avoid planting when the water is salty. Do not seed or transplant into a field that still holds salt water."
+    },
+    {
+      "type": "cta",
+      "title": "Plan around the tides and the weather",
+      "text": "Add the lot to anee.io and the [cropping calendar](/features/cropping-calendar) dates leaching, drainage and planting from your own day zero. The [weather forecast](/features/farm-weather-forecast) shows the week's rain for your lot, and Anee can help you plan the dates.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Salt tolerant rice varieties"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice names NSIC Rc 480 as a saline resilient variety, and it introduced the variety in a 2022 demonstration in Bicol. The same story says salt tolerant varieties handle 4 to 8 dS/m. Varieties that are not tolerant stop at about 2 dS/m. PhilRice also describes a farm near Anilao in Iloilo with soil salinity of 3.4 to 5.4 dS/m. There, farmers trialed NSIC Rc 392 and NSIC Rc 480. They reported 90 to 120 sacks of 42 kg per cropping season, up from 35 to 45 sacks before.\n\nA tolerant variety is a help, not a cure. Combine it with leaching, drainage and good timing. For the full field routine, read our [rice land preparation guide](/land-preparation/rice-land-preparation) and the [rice varieties guide](/crops/rice-varieties-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Irrigating with salt water and expecting a tolerant variety to cope.",
+        "Leaching with no drain, so the salt stays in the field.",
+        "Leaving the field bare and fallow, so salt creeps back up.",
+        "Planting seeds on the salty top of a ridge.",
+        "Using lime or dolomite on salty soil. That is a fix for [acidic soil](/land-preparation/acidic-soil-preparation), not for salt."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about saline soil"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How do I know my soil is saline?",
+          "a": "Look for spotty growth, white salt crusts and leaves that turn yellowish or burned. The FAO bulletin counts a soil as saline above 4 dS/m, so a test confirms it."
+        },
+        {
+          "q": "How much water does it take to leach salt?",
+          "a": "The FAO bulletin's rule of thumb is that 30 cm of water removes about 80 percent of the salt in the top 30 cm. A test on a small area gives a better number."
+        },
+        {
+          "q": "Which rice varieties tolerate salt?",
+          "a": "PhilRice names NSIC Rc 480 and NSIC Rc 392 in its saline farm stories. Ask the PhilRice station near you which variety fits your site."
+        },
+        {
+          "q": "Can I plant after saltwater intrusion?",
+          "a": "Flush the field with fresh water first. PhilRice says farmers avoid planting while the water is still salty."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Sodic and alkaline soil preparation",
+          "url": "/land-preparation/sodic-alkaline-soil-preparation"
+        },
+        {
+          "label": "Acidic soil preparation",
+          "url": "/land-preparation/acidic-soil-preparation"
+        },
+        {
+          "label": "Rice land preparation",
+          "url": "/land-preparation/rice-land-preparation"
+        },
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "Weather forecast for your farm",
+          "url": "/features/farm-weather-forecast"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FAO Soils Bulletin 39: Salt affected soils and their management, chapter 3 on saline soils",
+          "url": "https://www.fao.org/4/x5871e/x5871e04.htm"
+        },
+        {
+          "label": "PhilRice: Bicol farmers struggle with consecutive typhoons and saline prone soils (2025)",
+          "url": "https://www.philrice.gov.ph/bicol-farmers-struggle-with-consecutive-typhoons-and-saline-prone-soils/"
+        },
+        {
+          "label": "PhilRice: Ilonggo farmer gets a handsome yield using saline resistant rice varieties (2018)",
+          "url": "https://www.philrice.gov.ph/?p=7165"
+        }
+      ]
+    }
+  ]
+}

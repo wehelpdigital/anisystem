@@ -1,0 +1,191 @@
+{
+  "section": "land-preparation",
+  "slug": "legume-land-preparation",
+  "sortOrder": 90,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Legume Land Preparation: After Rice, Furrows and Mulch",
+  "metaTitle": "Legume Land Preparation: After Rice, Furrows and Mulch",
+  "metaDescription": "Legume land preparation for mungbean, peanut, soybean and sitao: zero or minimum tillage after rice, furrow sizes, drainage and straw mulch.",
+  "focusKeyword": "legume land preparation",
+  "keywords": [
+    "legume land preparation",
+    "mungbean",
+    "peanut",
+    "soybean",
+    "sitao",
+    "zero tillage",
+    "minimum tillage",
+    "rice straw mulch",
+    "furrows"
+  ],
+  "excerpt": "Legume land preparation is mostly about timing and water. Mungbean, peanut, soybean and sitao often follow rice, when the paddy soil is wet, packed and poor in structure. The Department of Agriculture (DA) and Philippine trials show you can plant with zero or minimum tillage, but only if the soil is drained and the sowing date is right.",
+  "heroImage": {
+    "src": "/images/site/palay.jpg",
+    "alt": "Rice field after harvest where legume land preparation begins for a dry season crop",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The firmest numbers below are for mungbean and sitao, because the DA has published guides for them. For peanut and soybean we found Philippine trials, not a full DA guide, so those parts are shorter. Treat every number as a starting point and ask your municipal agriculturist before you plant.\n\nLegumes also fix nitrogen, so they follow rice well. But they need the opposite of what rice likes. Rice grows in puddled, flooded soil. Legumes need loose, aerobic soil that drains."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Legume land preparation after rice"
+    },
+    {
+      "type": "text",
+      "text": "A trial of mungbean, soybean and peanut after rainfed rice, with sites in Pangasinan, explains the problem. Right after wetland rice the soil is still very wet, and sowing into it risks waterlogging that blocks emergence and roots. As the puddled layer dries, its strength rises fast, so roots struggle to get through. That is why the authors say the sowing window is narrow and the timing makes or breaks the crop.\n\nSo the first job after the rice harvest is to read the soil. Do not plant into a sticky paddy, and do not wait until the soil is a brick. Work it at a moisture where it crumbles."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Zero tillage or minimum tillage"
+    },
+    {
+      "type": "text",
+      "text": "The DA mungbean guide says that for post rice culture, zero or minimum tillage can be practiced. Philippine research supports this. In one study, a minimum tilled plot with 8 tons per hectare of rice straw mulch and 400,000 plants per hectare gave the best mungbean yield. Zero tillage matched it for seed yield but grew less. A 1987 thesis on soybean and mungbean after rice found zero tillage gave higher grain yield, seeds per pod and pods per plant than conventional tillage, and mulch added soil moisture.\n\nHowever, weeds were worse in the minimum tilled plots, and the rice straw mulch held them back. So mulch is part of the method, not an extra."
+    },
+    {
+      "type": "table",
+      "caption": "Tillage options for legumes after rice, from DA and Philippine trials",
+      "rows": [
+        ["Option", "What you do", "What the sources say"],
+        ["Zero tillage", "Drain the paddy, make planting holes or shallow lines, mulch with rice straw", "DA says it can be practiced for mungbean after rice. Soybean and mungbean yielded well in a 1987 thesis"],
+        ["Minimum tillage", "Open furrows only, leave the rest of the soil", "Best mungbean result with 8 tons per hectare rice straw mulch"],
+        ["Conventional tillage", "Plow, then harrow at weekly intervals", "DA says to do this for upland fields. Needs the right soil moisture"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mungbean: furrows, drainage and flooding"
+    },
+    {
+      "type": "text",
+      "text": "For upland fields, the DA says to plow alternated with harrowing at weekly intervals so seeds germinate evenly and compete with weeds. Drill the seeds in shallow furrows 60 cm apart. Twenty kg of seed is enough for a hectare.\n\nFor post rice culture, the DA gives a clear trick. Flood the paddy one to two days before planting, then drain the water before you broadcast the seeds. That gives the moisture seeds need without leaving the field wet.\n\nSoil pH should be 5.8 to 6.5. In the wet season the soil must be well drained, because mungbean is sensitive to extended waterlogging. The DA says heavy soils suit only dry season planting."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Inoculant, only if you can get it",
+      "text": "The DA says to coat seeds with an appropriate Rhizobia inoculant if it is available, right before planting, and to keep coated seeds out of direct sun. With inoculant, it advises only 20 kg per hectare of nitrogen. If you cannot source inoculant, skip it and use the basal rate below."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sitao, soybean and peanut"
+    },
+    {
+      "type": "text",
+      "text": "**Sitao.** The DA Region 02 guide wants fertile, friable, well drained soil high in organic matter, with pH 5.5 to 6.6. Plow 15 to 20 cm deep two to three times, a week apart, and harrow after each pass. Then set furrows 2.5 to 3.0 m apart. Without a soil test, it gives 3 bags of 14 14 14 complete fertilizer and 20 bags of organic fertilizer or compost per hectare. Pole sitao needs stakes 1.5 to 2 m long by 25 days after emergence at the latest. Corn can serve as a living trellis, planted at 100 cm between furrows and 30 cm between hills.\n\n**Soybean.** Philippine trials found zero tillage after lowland rice gave higher grain yield than conventional tillage. Mulch raised soil moisture. We did not find a DA soybean guide with furrow sizes, so check the DA office in your region.\n\n**Peanut.** In the post rice trials, peanut reached 2.3 megagrams per hectare, which is 2.3 tons. The trial authors cite earlier work saying intensive tillage is not needed before sowing peanut on light soils. A 1995 study at UPLB and in Bulacan also grew peanut after wetland rice. We did not find a Philippine DA guide with peanut furrow sizes."
+    },
+    {
+      "type": "cta",
+      "title": "Plan the sowing date, not just the plowing",
+      "text": "Land preparation days go on the calendar, dated back from planting. Add your legume lot to anee.io and it dates the draining, tillage and sowing for you.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice straw mulch and basal fertilizer"
+    },
+    {
+      "type": "text",
+      "text": "In the trial across the Philippines and Indonesia, mulch tended to raise yields in drier areas because it saves water. In wetter areas mulch was not needed and could even cut yield when conditions were too wet. So use straw mulch where the dry season is real, and thin it where it rains often.\n\nIf you have no soil test, the DA gives a basal rate for dry season mungbean: 150 kg of 14 14 14 per hectare on heavy soils such as loam to clay loam, and 200 kg on light soils such as sandy to sandy loam. In the same trial set, residual fertilizer from the rice crop mattered in wetter areas. Put the fertilizer in the furrows and cover it with a thin layer of fine soil before seeding. Read our [fertilizer application methods](/blog/fertilizer-application-methods) guide for more."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Change the work by soil and season"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Heavy clay.** Use it only in the dry season, says the DA for mungbean. Open drain furrows before planting.",
+        "**Sandy loam.** Mungbean is fairly well adapted. Use the higher basal rate of 200 kg of 14 14 14.",
+        "**Acidic soil.** Mungbean wants pH 5.8 to 6.5 and sitao 5.5 to 6.6. If your test is lower, read [acidic soil preparation](/land-preparation/acidic-soil-preparation).",
+        "**Salty or alkaline soil.** See [saline soil preparation](/land-preparation/saline-soil-preparation) and [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation).",
+        "**Seasons.** The DA lists mungbean planting in May to June, September to October and February to March. Humid weather from continuous rain can reduce seed quality."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Sowing into saturated paddy soil that has not drained.",
+        "Waiting until the puddled layer dries hard, then trying to push seeds through it.",
+        "Planting mungbean on heavy soil in the wet season.",
+        "Mulching too thick in a wet area.",
+        "Leaving seed inoculant in the sun."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "After planting, the DA says to off bar 15 days after planting, hand weed, then hill up with a carabao drawn plow. For legume pests such as the [bean fly](/pests/bean-fly) and [legume pod borer](/pests/legume-pod-borer), see our pest pages. Anee, the [AI agricultural technician](/features/ai-agricultural-technician), can also read a photo of a damaged leaf."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about legume land preparation"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I plant mungbean right after rice without plowing?",
+          "a": "Yes. The DA says zero or minimum tillage can be practiced for mungbean after rice. Flood the paddy one to two days before planting, then drain it before sowing."
+        },
+        {
+          "q": "How far apart are mungbean furrows?",
+          "a": "The DA says shallow furrows 60 cm apart, with 20 kg of seed per hectare."
+        },
+        {
+          "q": "Do I need rice straw mulch?",
+          "a": "In drier areas it helped yield and cut weeds in Philippine trials. In very wet areas it was not needed and could reduce yield."
+        },
+        {
+          "q": "Do legumes need inoculant?",
+          "a": "The DA recommends it when it is available. If you cannot get it, use the basal fertilizer rate from the guide or your soil test."
+        },
+        {
+          "q": "What is the best time to sow after rice?",
+          "a": "The trial authors found that correct sowing time was the most important factor. Sow when the soil has drained enough to work and there is still moisture below the surface."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read also",
+      "items": [
+        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
+        { "label": "Onion and garlic land preparation", "url": "/land-preparation/onion-garlic-land-preparation" },
+        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
+        { "label": "Corn land preparation", "url": "/land-preparation/corn-land-preparation" },
+        { "label": "Pagtatanim ng gulay", "url": "/crops/pagtatanim-ng-gulay" },
+        { "label": "Bean fly", "url": "/pests/bean-fly" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "DA High Value Crops Development Program: Mungbean Production Guide", "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf" },
+        { "label": "DA Region 02: Sitao Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Sitao.pdf" },
+        { "label": "Kirchhof and others: Grain legumes after rainfed lowland rice, Soil and Tillage Research (ACIAR)", "url": "https://ei-ado.aciar.gov.au/sites/default/files/KirchhofEtAl%282000%29GrowthYieldResponseGrainLegumesDifferentSoilManagementPracticesRainfedLowlandRice.pdf" },
+        { "label": "FAO AGRIS: Management requirements of mungbean after paddy rice", "url": "https://agris.fao.org/search/en/records/6471eaef2a40512c710eb3e1" },
+        { "label": "FAO AGRIS: Soybean and mungbean after lowland rice, tillage and mulch, Philippines", "url": "https://agris.fao.org/search/zh/records/6471c83b2a40512c710e3f96" },
+        { "label": "FAO AGRIS: Upland crop production in rainfed lowland rice areas", "url": "https://agris.fao.org/search/en/records/64722b0577fd37171a735d8b" }
+      ]
+    }
+  ]
+}

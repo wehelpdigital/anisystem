@@ -1,0 +1,213 @@
+{
+  "section": "land-preparation",
+  "slug": "direct-seeded-rice-land-preparation",
+  "sortOrder": 30,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Direct Seeded Rice Land Preparation: Wet and Dry Seeding",
+  "metaTitle": "Direct Seeded Rice Land Preparation: Wet and Dry",
+  "metaDescription": "Direct seeded rice land preparation for wet and dry seeding: leveling, drainage canals, the stale seedbed for weeds, seeding rates and mistakes.",
+  "focusKeyword": "direct seeded rice land preparation",
+  "keywords": [
+    "direct seeded rice land preparation",
+    "wet direct seeding",
+    "dry direct seeding",
+    "stale seedbed",
+    "drum seeder",
+    "drainage canals"
+  ],
+  "excerpt": "Direct seeded rice land preparation has one job that transplanting does not: give a seed that sits on the soil, with no seedling head start, a flat and weed poor bed. Get the leveling, the drainage and the weeds right before sowing, and direct seeding saves a lot of labor. This guide covers both wet and dry seeding.",
+  "heroImage": {
+    "src": "/images/site/palay.jpg",
+    "alt": "A leveled palay field ready for direct seeded rice",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why farmers choose direct seeding"
+    },
+    {
+      "type": "text",
+      "text": "Direct seeding means you sow the seed in the field instead of growing seedlings and transplanting them. A PhilRice policy brief says it needs only 1 to 2 man days per hectare for crop establishment, against 20 to 25 man days for transplanting. It also cites IRRI figures of 12 to 35 percent less water for crop establishment and irrigation under efficient water management.\n\nStill, only 31 to 43 percent of Filipino rice farmers used it in the 2016 and 2017 survey. The brief names the reasons: risks in crop establishment, more weeds, insects and disease, and higher seed use. Land preparation answers most of them, so it deserves your care.\n\nIf you transplant instead, read [rice land preparation](/land-preparation/rice-land-preparation). For the general picture, see [land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Two kinds of direct seeding"
+    },
+    {
+      "type": "table",
+      "caption": "Wet and dry direct seeding compared",
+      "rows": [
+        ["", "Wet direct seeding", "Dry direct seeding"],
+        ["Seed", "Pre germinated seed", "Dry or pre germinated seed"],
+        ["Soil", "Puddled, leveled, wet mud", "Dry or moist soil, tilled or not tilled"],
+        ["Main land preparation", "PalayCheck Key Check 2, plus canals", "Dry tillage or no tillage, leveling, weed kill"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The PhilRice policy brief defines direct seeding as sowing dry or pregerminated seed into dry or puddled soil. It also says the PalayCheck system is a useful reference for farmers who practice wet direct seeding in irrigated lowland areas."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Direct seeded rice land preparation for wet seeding"
+    },
+    {
+      "type": "text",
+      "text": "For wet direct seeding, PalayCheck says to prepare the field with the same land preparation and leveling steps as transplanted rice. That means plowing or rotovating 21 to 30 days before planting, harrowing every 7 days, then a final harrowing and leveling with 5 cm of water.\n\nThe leveling matters even more here, because a seed on the surface has no way to survive a pool. Water that is too deep drowns the seed, and bare high spots dry out and let weeds in. PalayCheck's test is simple. After final leveling, no part of the field should have water deeper than 5 cm, and no soil mound should show above the water."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Dig small drainage canals"
+    },
+    {
+      "type": "text",
+      "text": "PalayCheck tells wet direct seeding farmers to dig small canals, 25 cm wide and 5 cm deep, around the field near the dikes and through the middle of the field. They give excess water a path out. They also help you collect snails and work in the field for replanting and weeding.\n\nA 2025 study of Philippine farmers in Frontiers in Sustainable Food Systems reports one more danger. Wet direct seeding is hard when heavy rain falls right after sowing, because the seeds wash away easily. Good canals let you drain the field quickly."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Seeding rate and water after sowing"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Row seeding with a drum seeder: 40 to 60 kg of seed per hectare.",
+        "Broadcasting pre germinated seed: 60 to 80 kg per hectare.",
+        "Keep an extra 1 kg of pre germinated seed at the side of the field for replanting.",
+        "Replant bald areas wider than a 10 cm radius within 7 to 10 days after sowing so the crop matures evenly.",
+        "Suspend irrigation for 0 to 14 days after sowing, unless severe drought symptoms appear."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dry seeding: tilled or not tilled"
+    },
+    {
+      "type": "text",
+      "text": "IRRI guidelines for dry seeded rice, written for eastern India but useful as a model, give two options. In conventional tillage, you cultivate the soil 5 to 10 cm deep to get a fine seedbed with good seed to soil contact. In zero tillage, you sow into the untilled stubble after killing the weeds with a non selective herbicide such as glyphosate, and you follow the FPA label.\n\nThe same guide says to sow shallow, at 1 to 2 cm and never deeper than 3 cm. It also says not to grow dry seeded rice on sands or loamy sands, because the crop does better on soils from sandy loam to heavy clay. IRRI adds that best results need an accurately leveled field, and that laser guided leveling is the best way to get it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The stale seedbed: kill the weeds before the rice"
+    },
+    {
+      "type": "text",
+      "text": "Weeds are the biggest threat in direct seeding. The IRRI guide calls weed management usually the biggest challenge in dry seeded rice, and it says weeds can cut yield to zero if left alone. A PhilRice brief adds that land preparation should exhaust the weed seeds in the soil.\n\nThe stale seedbed does exactly that. First, prepare the field and give it water so the weed seeds sprout. Then kill the seedlings before you sow the rice."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Prepare and wet the field",
+          "text": "Level the field. IRRI says to give one or two irrigations about a month before sowing so weeds germinate."
+        },
+        {
+          "title": "Let the weeds sprout",
+          "text": "Wait until the weed seedlings are actively growing. In the IRRI guide, an irrigation comes first if the soil is dry, because herbicide works only on actively growing weeds."
+        },
+        {
+          "title": "Kill the weeds",
+          "text": "Use shallow tillage, or a non selective herbicide such as glyphosate. Follow the FPA label for the rate and safety. IRRI notes that deep tillage brings more weed seeds near the surface."
+        },
+        {
+          "title": "Sow the rice",
+          "text": "Sow the seed soon after, with minimal soil disturbance, and keep the water plan that matches your method."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Not for every field",
+      "text": "IRRI says not to grow dry seeded rice in fields with a history of heavy weed infestation. If your field has a weedy rice or sedge problem, read the [weed management in rice](/weeds/weed-management-in-rice) guide first and consider transplanting."
+    },
+    {
+      "type": "cta",
+      "title": "Date the whole direct seeding season",
+      "text": "Land preparation days go on the cropping calendar, dated back from sowing. Set day zero for your lot, and see the stale seedbed, sowing and the first weeding on one calendar.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dry season and wet season"
+    },
+    {
+      "type": "text",
+      "text": "The PhilRice survey found direct seeding more common in the dry season than in the wet season. In the dry season, you control the water, so wet seeding with canals works well. In the wet season, hard rains can wash seed away and flood the field, so drainage matters more.\n\nFor soil problems, see [acidic soil preparation](/land-preparation/acidic-soil-preparation) and [saline soil preparation](/land-preparation/saline-soil-preparation). Anee, the [AI technician](/features/ai-agricultural-technician), can also read your lot and the weather before you pick a sowing date."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes in direct seeded rice land preparation"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Skipping the leveling, so the seed drowns in low spots and the high spots grow weeds.",
+        "No drainage canals, so heavy rain washes the seed away.",
+        "Sowing straight after plowing, with no stale seedbed to deplete the weeds.",
+        "Sowing deeper than 3 cm in dry seeding.",
+        "Forgetting a reserve of seed for replanting bald patches."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about direct seeded rice land preparation"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Do I need to puddle for direct seeded rice?",
+          "a": "In wet direct seeding, yes. The field is puddled and leveled like transplanted rice. In dry direct seeding, no puddling is done, and the soil is tilled lightly or not at all."
+        },
+        {
+          "q": "How wide and deep should the drainage canals be?",
+          "a": "PalayCheck says 25 cm wide and 5 cm deep, around the field near the dikes and through the middle."
+        },
+        {
+          "q": "How much seed do I need per hectare?",
+          "a": "PalayCheck gives 40 to 60 kg for row seeding and 60 to 80 kg for broadcasting pre germinated seed."
+        },
+        {
+          "q": "What is a stale seedbed?",
+          "a": "It is a field prepared and watered early so weeds sprout, then killed by shallow tillage or glyphosate before sowing. Follow the FPA label for any herbicide."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
+        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
+        { "label": "Planting rice: the full guide", "url": "/crops/pagtatanim-ng-palay" },
+        { "label": "Weed management in rice", "url": "/weeds/weed-management-in-rice" },
+        { "label": "Weedy rice", "url": "/weeds/weedy-rice" },
+        { "label": "Golden apple snail", "url": "/pests/golden-apple-snail" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "PhilRice: PalayCheck System, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
+        { "label": "PhilRice: Enabling the shift from transplanted to direct seeded rice systems in the Philippines", "url": "https://www.philrice.gov.ph/enabling-the-shift-from-transplanted-to-direct-seeded-rice-systems-in-the-philippines" },
+        { "label": "IRRI and CSISA: Guidelines for dry seeded rice in the Eastern Gangetic Plains of India", "url": "https://csisa.org/wp-content/uploads/sites/2/2013/10/DSR-EGP_English.pdf" },
+        { "label": "Frontiers in Sustainable Food Systems: Direct seeded rice adoption in the Philippines, 2025", "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2025.1696563/full" }
+      ]
+    }
+  ]
+}

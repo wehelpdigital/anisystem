@@ -1,0 +1,198 @@
+{
+  "section": "land-preparation",
+  "slug": "onion-garlic-land-preparation",
+  "sortOrder": 60,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Land Preparation for Onion and Garlic After Rice",
+  "metaTitle": "Land Preparation for Onion and Garlic After Rice",
+  "metaDescription": "Land preparation for onion and garlic after rice: fine seedbed, raised beds, zero tillage with rice straw mulch and drainage, from DA and BPI sources.",
+  "focusKeyword": "land preparation for onion and garlic",
+  "keywords": [
+    "land preparation for onion and garlic",
+    "onion",
+    "garlic",
+    "zero tillage",
+    "rice straw mulch",
+    "raised beds",
+    "seedbed",
+    "rice onion rotation"
+  ],
+  "excerpt": "Land preparation for onion and garlic usually begins in a rice field that has just been harvested. The soil is wet, hard and full of stubble, but both crops need loose, fine and well drained ground. Here is how Filipino farmers prepare it, with tillage or with zero tillage, based on Department of Agriculture (DA) and Bureau of Plant Industry (BPI) sources.",
+  "heroImage": {
+    "src": "/images/site/fields-aerial.jpg",
+    "alt": "Aerial view of farm fields where land preparation for onion and garlic follows the rice harvest",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The DA calls this rice onion rotation. In its Mindoro brief, the DA says farmers plant rice in the first season and onion in the next. Onion suits that field because it grows in friable, well drained soil and needs little water. The two crops also mature in time for the cropping seasons.\n\nGarlic follows the same pattern in places such as Batanes. So the job is the same for both: turn a paddy into a dry field and keep water away from the bulbs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Land preparation for onion and garlic: two ways to do it"
+    },
+    {
+      "type": "text",
+      "text": "The DA Region 02 garlic guide names two methods, with tillage and without tillage, or zero tillage. Onion farmers use both too. Pick the one that matches your soil moisture, your machines and the time left before planting."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "With tillage"
+    },
+    {
+      "type": "text",
+      "text": "This method is like the work for corn, soybean and other upland crops. The DA says to plow and harrow the field twice or more, at seven days interval or less. A tractor mounted rotavator can also do the job. Then dig canals around the area for drainage.\n\nThe seven day gap does two things. First, the stubble starts to rot. Next, weed seeds sprout, and the following pass buries them. The UPLB and FAO records on onion after rice back this up. One study in Nueva Ecija tested tillage, mulching and burning rice hull before planting, and found that mulching and burning rice hull on the field before planting held weeds down."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Zero tillage with rice straw mulch"
+    },
+    {
+      "type": "text",
+      "text": "The DA garlic guide says zero tillage is usually done in Itbayat, Batanes after the palay harvest. Farmers remove the rice straw and the weeds and use them as mulch. They then plant by dibbling, which means pushing a pointed wooden stake into the soil to make each hole.\n\nThe mulch goes on after planting, in an even layer 3 to 5 cm thick. In Batanes, rice straw and cogon are the usual mulch. The DA also lists rice hull, sawdust, grasses and plastic sheet. Mulch controls soil moisture and weeds."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Zero tillage and purple nutsedge",
+      "text": "A 1987 Philippine study on onion under three tillage systems found that [purple nutsedge](/weeds/purple-nutsedge) became a problem under zero tillage but was controlled with conventional cultivation. If your field has nutsedge, till it instead of skipping the plow."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fine seedbed and raised beds"
+    },
+    {
+      "type": "text",
+      "text": "A BPI leaflet on onion culture says to keep the seedbed rich and the field weed free and in fine tilth. It describes raised beds about one meter wide, of any length, as practical for all purposes. In a meter wide bed, set three or four rows with seedlings 10 cm apart in the rows. The leaflet says seedlings spend four to six weeks in the seedbed, or four weeks if the bed is rich.\n\nThe leaflet is old, so check bed size and spacing against your variety and your municipal agriculturist. Still, the idea holds: a raised bed lifts the roots above standing water, and the one meter width lets you weed from both sides."
+    },
+    {
+      "type": "table",
+      "caption": "Land preparation compared by method",
+      "rows": [
+        ["Step", "With tillage", "Zero tillage"],
+        ["Plowing and harrowing", "Twice or more, at seven days interval or less", "None. Clear straw and weeds by hand"],
+        ["Drainage", "Canals around the field", "Keep the paddy dikes open and drain the field before planting"],
+        ["Planting hole", "Dibble or planting stick after the beds are made", "Dibble with a pointed wooden stake"],
+        ["Mulch", "Optional, 3 to 5 cm after planting", "Rice straw, 3 to 5 cm, after planting"],
+        ["Main weed risk", "Weeds from the soil seed bank", "Purple nutsedge and volunteer rice"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Drainage and soil"
+    },
+    {
+      "type": "text",
+      "text": "The DA says garlic grows in sandy, silt and clay loam that is fertile, rich in organic matter, well drained and able to hold moisture. Garlic does not grow well where rain is excessive, and it grows best on gently sloping land. Onion likes the same friable, well drained soil.\n\nBecause palay fields are flat and often heavy, drainage is the first fix. Cut canals around the field, open the dikes and shape the beds so water runs off. The DA guide also warns about Fusarium bulb rot, a soil borne disease that rots roots and bulbs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Organic matter before planting"
+    },
+    {
+      "type": "text",
+      "text": "The DA says organic fertilizer works well for garlic. It recommends 1 kg per square meter, or 200 bags per hectare, which is a high rate. It also tells farmers to test the soil before planting. Hand kits that measure soil fertility and pH are available from local DA offices.\n\nBefore planting, irrigate the field a day or two earlier if the soil is dry. Then plant the cloves. The DA gives a spacing of 15 to 20 cm by 10 to 25 cm, with each clove pushed two thirds of its length into the soil, about 2 to 3 cm deep, and needs 400 to 700 kg of seed cloves per hectare."
+    },
+    {
+      "type": "cta",
+      "title": "Put every field task on one calendar",
+      "text": "Land preparation days go on the calendar, dated back from planting. Add your onion or garlic lot to anee.io and it dates the plowing, mulching and planting for you.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Weeds: the stale seedbed idea"
+    },
+    {
+      "type": "text",
+      "text": "Weeds cost onion growers heavily. The 1987 study found that high yielding onion varieties lost more yield to weeds than lower yielding ones. The authors suggest letting flushes of weeds grow for a while before cultivating again. Farmers call this a stale seedbed.\n\nA herbicide is an option, not a must. The UPLB study found that one herbicide plus one hand weeding controlled weeds and gave a comparable yield to heavier schedules. The 1987 trial used oxyfluorfen as the active ingredient. Do not copy a trial rate. Follow the Fertilizer and Pesticide Authority (FPA) registered label for any product, and read our [weed guide](/weeds/common-weeds-philippines) first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dry season and wet season"
+    },
+    {
+      "type": "text",
+      "text": "Both crops are dry season crops in the Philippines. The DA says farmers usually plant garlic from September to November. December planting tends to give smaller bulbs, because thrips and mites attack late and early rain can hit the crop. Batanes plants in October and November, and Nueva Vizcaya plants in November and December.\n\nThat timing means the rice crop must come off early. If the paddy dries late, prepare the field in two or three passes instead of one, and finish drainage before the first rain."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Planting into wet, sticky soil, so the seedlings sit in water.",
+        "Skipping canals around the field.",
+        "Using zero tillage on a field full of nutsedge.",
+        "Leaving rice straw thicker than 5 cm, so it smothers young shoots.",
+        "Planting garlic on the same field year after year. The DA advises rotating at least every four years and fallowing one season if Fusarium bulb rot appears."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "If armyworm is common in your area, read about the [onion armyworm](/pests/onion-armyworm). For leaf spots, see [purple blotch](/diseases/purple-blotch). You can also ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), about a photo of a sick leaf."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about land preparation for onion and garlic"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I plant onion or garlic right after rice?",
+          "a": "Yes. The DA describes rice onion rotation in Mindoro and zero tillage garlic after palay in Batanes. Drain the field first, because both crops need well drained soil."
+        },
+        {
+          "q": "What is zero tillage for garlic?",
+          "a": "You do not plow. You remove the rice straw and weeds, dibble the cloves with a pointed stick and lay the straw back as mulch, 3 to 5 cm thick."
+        },
+        {
+          "q": "How wide should an onion bed be?",
+          "a": "An old BPI leaflet describes raised beds about one meter wide, with three or four rows and seedlings 10 cm apart. Check with your municipal agriculturist for your variety."
+        },
+        {
+          "q": "How much organic fertilizer does garlic need?",
+          "a": "The DA recommends 1 kg per square meter, or 200 bags per hectare. A soil test tells you more for your field."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read also",
+      "items": [
+        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
+        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
+        { "label": "Vegetable land preparation", "url": "/land-preparation/vegetable-land-preparation" },
+        { "label": "Legume land preparation", "url": "/land-preparation/legume-land-preparation" },
+        { "label": "Pagtatanim ng gulay", "url": "/crops/pagtatanim-ng-gulay" },
+        { "label": "Purple nutsedge", "url": "/weeds/purple-nutsedge" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "DA Region 02: Garlic Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/garlic_production_guide_final.pdf" },
+        { "label": "DA AMIA: Rice onion crop rotation in Mindoro, climate resilient agriculture brief", "url": "https://amia.da.gov.ph/wp-content/uploads/2025/02/CRA-Technical-Brief_Mindoro_MIMAROPA_Rice-Onion-Crop-Rotation.pdf" },
+        { "label": "UPLB: Reducing herbicide use with agronomic practices in onion grown after rice", "url": "https://www.ukdr.uplb.edu.ph/journal-articles/3363" },
+        { "label": "FAO AGRIS: Weed control in onions grown under three tillage systems, Philippines", "url": "https://agris.fao.org/search/en/records/6471c83c2a40512c710e401b" },
+        { "label": "Bureau of Plant Industry leaflet: Cultural directions for onions", "url": "https://repository.mainlib.upd.edu.ph/omekas/files/original/afd85574989778dc0516f43bf70678554a84fea1.pdf" }
+      ]
+    }
+  ]
+}

@@ -705,6 +705,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sky-weather/list', [App\Http\Controllers\SkyWeatherController::class, 'list'])->name('sky.list');
     Route::get('/app/sky-weather/one/{id}', [App\Http\Controllers\SkyWeatherController::class, 'one'])->whereNumber('id')->name('sky.one');
     Route::delete('/app/sky-weather/{id}', [App\Http\Controllers\SkyWeatherController::class, 'destroy'])->whereNumber('id')->name('sky.delete');
+    // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.
+    Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases')->name('fh.page');
     // NPK Plus (2026-10-07): the free fertilizer calculator, and Anee's reading of a plan.
     Route::get('/app/npk-plus', [App\Http\Controllers\NpkPlusController::class, 'page'])->name('npk.page');
     Route::get('/app/npk-plus/options', [App\Http\Controllers\NpkPlusController::class, 'options'])->name('npk.options');

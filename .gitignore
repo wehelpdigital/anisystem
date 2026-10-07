@@ -25,3 +25,6 @@ Thumbs.db
 
 # Headless-probe scratch page (see the probe tooling); never a real asset.
 public/__probe_page.html
+
+# Python caches from the content checker
+database/site-pages/__pycache__/

@@ -78,6 +78,17 @@ class SitePages
             'intro' => 'Know what is eating or sickening your crop before you spend on a chemical. Each guide shows the signs, the timing and the ways to manage it.',
             'kicker' => 'Crop problems',
         ],
+        // Land preparation (2026-10-07): how to ready the ground for each
+        // crop, from IRRI, PhilRice and DA guidelines, and for problem soils.
+        'land-preparation' => [
+            'label' => 'Land Preparation',
+            'crumb' => 'Land preparation',
+            'hubTitle' => 'Land Preparation Guides for Philippine Farms',
+            'metaTitle' => 'Land Preparation in the Philippines: Guides by Crop',
+            'metaDescription' => 'How to prepare the land for palay, mais, vegetables, root crops, sugarcane, banana and fruit trees, plus sodic, acidic and saline soils.',
+            'intro' => 'A good season starts before planting. Each guide shows how to plow, harrow, level and shape the field for one crop, following IRRI, PhilRice and DA practice, and what to change on sodic, acidic or saline ground.',
+            'kicker' => 'Land preparation',
+        ],
         'blog' => [
             // "Blog" until 2026-10-07: the address stays /blog, the name is
             // the section's job now, the farm news roundups first.

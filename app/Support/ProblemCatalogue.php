@@ -95,4 +95,42 @@ final class ProblemCatalogue
     {
         return self::entries($section)[$slug] ?? null;
     }
+
+    /**
+     * What the finder partial needs, for a page that is not the hub (the
+     * app's Field helpers, 2026-10-07): the same items, crops, questions and
+     * words the hub computes for itself.
+     */
+    public static function finderFacts(string $section): array
+    {
+        $S = SitePages::class;
+        $live = $S::inSection($section)->keyBy('slug');
+        $thumbOf = function ($p) use ($S) {
+            $h = is_array($p->heroImage) ? $p->heroImage : [];
+            $src = (string) ($h['thumb'] ?? ($h['src'] ?? ''));
+            if ($src !== '' && ! isset($h['thumb']) && str_starts_with($src, '/images/')) {
+                $twin = preg_replace('/\.(jpe?g|png|webp)$/i', '-480.webp', $src);
+                if ($twin && is_file(public_path(ltrim($twin, '/')))) {
+                    $src = $twin;
+                }
+            }
+
+            return $S::img($src);
+        };
+        $items = collect(self::entries($section))->filter(fn ($e, $slug) => $live->has($slug))
+            ->map(fn ($e, $slug) => $e + ['slug' => $slug, 'url' => $S::pageUrl($live[$slug]), 'thumb' => $thumbOf($live[$slug]),
+                'alt' => (is_array($live[$slug]->heroImage) ? ($live[$slug]->heroImage['alt'] ?? null) : null) ?: $e['name']]);
+        $isPests = $section === 'pests';
+        $usedCrops = $items->pluck('crops')->flatten()->unique()->all();
+
+        return [
+            'section' => $section,
+            'items' => $items,
+            'crops' => array_filter(self::CROPS, fn ($k) => in_array($k, $usedCrops, true), ARRAY_FILTER_USE_KEY),
+            'askOpts' => $isPests ? self::PARTS : self::SIGNS,
+            'words' => self::HUB[$section],
+            'isPests' => $isPests,
+            'kindHue' => self::KINDS,
+        ];
+    }
 }

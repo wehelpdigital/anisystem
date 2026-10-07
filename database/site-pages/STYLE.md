@@ -219,7 +219,7 @@ season (a "cropping schedule"). It has:
 ## 8. URL map (link only to these)
 
 Site: / (home), /features, /pricing, /about, /tutorial, /contact, /signup,
-/crops, /problems, /pests, /diseases, /weeds, /blog
+/crops, /problems, /pests, /diseases, /weeds, /land-preparation, /blog
 
 Features:
 /features/ai-agricultural-technician, /features/cropping-calendar,
@@ -248,6 +248,23 @@ Crops:
 /crops/mais-rice, /crops/vegetables-philippines, /crops/pagtatanim-ng-gulay,
 /crops/coconut-fertilizer, /crops/banana-farming-philippines,
 /crops/pagtatanim-ng-puno
+
+Land preparation (by crop, and for problem soils):
+/land-preparation/land-preparation-philippines,
+/land-preparation/rice-land-preparation,
+/land-preparation/direct-seeded-rice-land-preparation,
+/land-preparation/corn-land-preparation,
+/land-preparation/vegetable-land-preparation,
+/land-preparation/onion-garlic-land-preparation,
+/land-preparation/cucurbit-land-preparation,
+/land-preparation/root-crop-land-preparation,
+/land-preparation/legume-land-preparation,
+/land-preparation/sugarcane-land-preparation,
+/land-preparation/banana-land-preparation,
+/land-preparation/fruit-tree-land-preparation,
+/land-preparation/sodic-alkaline-soil-preparation,
+/land-preparation/acidic-soil-preparation,
+/land-preparation/saline-soil-preparation
 
 Pests (guides):
 /pests/rice-insects, /pests/hanip-mites-and-aphids,

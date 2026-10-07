@@ -1,0 +1,220 @@
+{
+  "section": "land-preparation",
+  "slug": "root-crop-land-preparation",
+  "sortOrder": 80,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Root Crop Land Preparation: Ridges, Mounds and Drainage",
+  "metaTitle": "Root Crop Land Preparation: Ridges and Drainage",
+  "metaDescription": "Root crop land preparation for kamote, cassava, ube and gabi: plowing depth, ridge and mound sizes, drainage and organic matter, from DA and FAO.",
+  "focusKeyword": "root crop land preparation",
+  "keywords": [
+    "root crop land preparation",
+    "root crops",
+    "sweet potato",
+    "kamote",
+    "cassava",
+    "gabi",
+    "ube",
+    "ridges",
+    "mounds"
+  ],
+  "excerpt": "Root crop land preparation has one job: give the roots loose, deep soil that never sits in water. Kamote, cassava, ube and gabi all swell underground, so a hard layer or a flooded bed costs you tubers. Here is how to plow, ridge, mound and drain the field, with numbers from the Department of Agriculture (DA), the Philippine Root Crop Research and Training Center and FAO.",
+  "heroImage": {
+    "src": "/images/site/photos/hero-planting.jpg",
+    "alt": "Farmers planting by hand in a prepared field, as in root crop land preparation",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The numbers here come from the DA Regional Field Office 02 production guides for kamote (sweet potato) and ubi, the FAO Save and Grow guide for cassava, and the Philippine Root Crop Research and Training Center in Leyte. Gabi guidance is thinner, so we say so where it applies.\n\nRoot crops forgive poor soil more than vegetables do. They do not forgive standing water. So drainage comes first in every step below."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Root crop land preparation: the basic order"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Pick a well drained site",
+          "text": "The DA kamote guide says a flat or gently sloping field (0 to 5 percent slope) with well drained soil. Newly planted cuttings rot when the soil is waterlogged for more than 24 hours."
+        },
+        {
+          "title": "Plow deep",
+          "text": "Plow when the soil is damp, not too wet and not too dry. The DA says to plow deeply to aerate the soil and kill roots and weeds. Ube needs a deep, loose soil, so plow deep for it too."
+        },
+        {
+          "title": "Harrow once or twice",
+          "text": "For kamote, harrow twice on clay loam and once on sandy loam. For ube, the DA says two plowings and two harrowings are usually enough, along and across the field."
+        },
+        {
+          "title": "Mix in organic matter",
+          "text": "Spread compost or manure before the last harrowing so it goes into the soil. The DA gives 5 to 10 tons per hectare for kamote and 2 to 5 tons per hectare for ube."
+        },
+        {
+          "title": "Make ridges, mounds or flat beds",
+          "text": "Choose by soil and rain, as the table below shows."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ridges and mounds by crop"
+    },
+    {
+      "type": "table",
+      "caption": "Ridges, spacing and soil notes for four root crops",
+      "rows": [
+        ["Crop", "Ridges or beds", "Planting and spacing", "Source"],
+        ["Kamote (sweet potato)", "Ridges 15 to 20 cm high, 75 to 100 cm apart. Not needed on sandy loam", "Cuttings 25 to 30 cm apart, 10 to 15 cm deep, on furrows in sandy loam and on ridges in clay loam", "DA Region 02"],
+        ["Kamote, other guidance", "Ridges 30 to 45 cm high, 90 to 120 cm apart, higher in wet areas", "Mounds suit farmers who use hand tools only", "Pacific sweet potato key"],
+        ["Ube (ubi)", "Flat or ridged beds. Ridges 1 m apart", "Setts on ridges 1.0 m apart, hills 0.5 to 0.6 m apart", "DA Region 02"],
+        ["Cassava", "Ridges or mounds where soil is wet or poorly drained", "Stakes on top of ridges in wet soil, on the flat in dry spells", "FAO"],
+        ["Gabi (taro)", "Furrows or flat beds in the upland, rice style puddling in the lowland", "Setts 100 to 120 g, 75 cm between rows, 50 cm between plants", "Gabi production guide copy"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The two kamote sources differ on ridge height, so ask your municipal agriculturist which fits your rain. The Pacific guide says to go higher where the field is wet."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Kamote: ridges and the soil"
+    },
+    {
+      "type": "text",
+      "text": "Kamote needs a soft, uniform soil to form the hills or ridges. A Pacific sweet potato guide warns that heavy machinery can leave a compacted layer, especially in clay. That hard pan causes waterlogging and poor roots.\n\nThe DA also says soil pH should be 5.5 to 6.5 and the soil should have at least medium fertility. It recommends a soil test. Hill up the plants two to four weeks after planting, before the canopy closes, and keep soil disturbance in the ridge small to avoid root damage."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Cassava: tillage, drainage and zero tillage"
+    },
+    {
+      "type": "text",
+      "text": "FAO notes that cassava can give good yields in untilled soil if the soil is healthy, well structured and free of compaction. In degraded soil, no tillage may give lower yields in the first years. FAO adds that reduced or zero tillage lowers the risk of waterlogging, because it keeps internal drainage.\n\nWhere you do till, prepare the soil when it is not too dry or too wet. A subsoiler can break up a compacted layer. On slopes, plow and ridge along the contour to cut erosion. Plant as soon as the rains start, because FAO says delayed planting can sharply cut yields. In heavy rain, plant stakes on top of ridges or mounds, but stakes planted in dry periods sprout better on the flat."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Post planting work matters more than the first plowing",
+      "text": "A 1987 trial at the Philippine Root Crop Research and Training Center found that the land preparation method did not change cassava yield or weed growth. The best result came after planting: off barring at 2 weeks, hand weeding at 3 weeks, and hilling up at 5 and 7 weeks. Prepare the field well, but plan these passes too."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ube: deep soil and trellis"
+    },
+    {
+      "type": "text",
+      "text": "The DA says ubi needs a well drained area but grows in all kinds of soil, and prefers clay loam rich in organic matter. Make the ridges one meter apart and contour them on rolling land. If you use flat beds, plant right after the last harrowing.\n\nUbi is usually planted from March to May, but the DA says the best time is the start of the rainy season. Mulch right after planting with coconut fronds, corn stalks, rice straw or grass clippings that are free of weed seeds. Ubi also gives higher yield with a trellis, so plan your stakes before planting. If you stake in rows, remember that the stakes may block animal drawn weeding, as the DA guide notes."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Gabi: upland and lowland"
+    },
+    {
+      "type": "text",
+      "text": "For upland gabi, plow and harrow thoroughly to kill weeds and pulverize the soil, then set furrows or plant flat. For lowland gabi, prepare the field like lowland rice, with the weeds removed and the soil puddled. These details come from a copy of the DA Bureau of Plant Industry gabi guide, which we could only read through a document host, so confirm them with your local DA office.\n\nA 1984 Philippine study on upland taro found that planting in holes beat flat planting at every plant population in leaf area and total yield."
+    },
+    {
+      "type": "cta",
+      "title": "Date every pass on the calendar",
+      "text": "Land preparation days go on the calendar, dated back from planting. Set your day zero and anee.io places plowing, ridging and the post planting passes for you.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Change the work by soil and season"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Clay loam.** Harrow twice and ridge. The DA plants kamote on ridges in clay loam.",
+        "**Sandy loam.** Harrow once. For kamote, the DA says ridging is not necessary and cuttings go in furrows.",
+        "**Heavy or wet soil.** Use higher ridges or mounds and keep canals open. FAO says to plant cassava on ridges or mounds when the soil is poorly drained.",
+        "**Acidic soil.** Kamote wants pH 5.5 to 6.5, so test first. Read our [acidic soil preparation](/land-preparation/acidic-soil-preparation) guide if your test comes back low.",
+        "**Salty or alkaline soil.** See [saline soil preparation](/land-preparation/saline-soil-preparation) and [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation).",
+        "**Dry season and wet season.** FAO says cassava stakes sprout better on the flat in dry spells, and do better on ridges or mounds when heavy rain leaves the soil wet."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Plowing when the soil is too wet, which smears and compacts it.",
+        "Planting cuttings in a low spot where water stands for a day.",
+        "Ridging sandy loam that does not need it for kamote, which adds work for nothing.",
+        "Ignoring the post planting passes, which matter as much as the first plowing.",
+        "Skipping a soil test and guessing the fertilizer."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), when your soil or rain does not match the guide. Log compost and manure in the [farm inventory](/features/farm-inventory-and-expenses) so each ridge has a cost."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about root crop land preparation"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How high should kamote ridges be?",
+          "a": "The DA Region 02 guide says 15 to 20 cm high, 75 to 100 cm apart. Another guide says 30 to 45 cm high and 90 to 120 cm apart, higher in wet areas. Not needed on sandy loam, says the DA."
+        },
+        {
+          "q": "Do I need to plow for cassava?",
+          "a": "Not always. FAO says cassava can yield well on untilled soil if the soil is healthy and not compacted. Where you do till, avoid working wet soil and use a subsoiler for a hard layer."
+        },
+        {
+          "q": "How far apart are ube ridges?",
+          "a": "The DA says one meter apart, with hills 0.5 to 0.6 m apart along the ridge. Contour the ridges on slopes."
+        },
+        {
+          "q": "How much compost goes into a root crop field?",
+          "a": "The DA gives 5 to 10 tons per hectare for kamote and 2 to 5 tons per hectare for ube, mixed in at the last harrowing. A soil test is better."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read also",
+      "items": [
+        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
+        { "label": "Vegetable land preparation", "url": "/land-preparation/vegetable-land-preparation" },
+        { "label": "Legume land preparation", "url": "/land-preparation/legume-land-preparation" },
+        { "label": "Acidic soil preparation", "url": "/land-preparation/acidic-soil-preparation" },
+        { "label": "Crop pests in the Philippines", "url": "/pests/crop-pests-philippines" },
+        { "label": "Organic fertilizer examples", "url": "/blog/organic-fertilizer-examples" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "DA Region 02: Sweet Potato Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/sweet_potato.pdf" },
+        { "label": "Pacific Pests and Pathogens: Sweet potato land preparation and cultivation", "url": "https://keys.lucidcentral.org/keys/sweetpotato/key/Sweetpotato Diagnotes/Media/Html/TheCrop/CropManagement/Crop mgt Land prep.htm" },
+        { "label": "DA Region 02: Ubi Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/ube_production_guide.pdf" },
+        { "label": "FAO: Save and Grow Cassava", "url": "https://openknowledge.fao.org/server/api/core/bitstreams/4c82dcdb-2e82-4dd9-8c4f-617596ed8c12/content" },
+        { "label": "FAO AGRIS: Land preparation and postplanting tillage on weed control and cassava yield, Philippines", "url": "https://agris.fao.org/search/zh/records/6471c8362a40512c710e3cdb" },
+        { "label": "FAO AGRIS: Upland taro, population density and planting method, Philippines", "url": "https://agris.fao.org/search/en/records/64775109f2e6fe92b364869f" }
+      ]
+    }
+  ]
+}

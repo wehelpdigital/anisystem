@@ -1,0 +1,245 @@
+{
+  "section": "land-preparation",
+  "slug": "land-preparation-philippines",
+  "sortOrder": 10,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Land Preparation in the Philippines: A Guide for Every Crop",
+  "metaTitle": "Land Preparation in the Philippines: Steps for Every Crop",
+  "metaDescription": "Land preparation in the Philippines step by step: clearing, plowing, harrowing, leveling, beds and ridges, tillage machines and timing before planting.",
+  "focusKeyword": "land preparation in the Philippines",
+  "keywords": [
+    "land preparation in the Philippines",
+    "land preparation",
+    "tillage",
+    "plowing and harrowing",
+    "minimum tillage",
+    "zero tillage",
+    "hand tractor"
+  ],
+  "excerpt": "Land preparation in the Philippines is the work you do on a field before the first seed or seedling goes in. It decides how well water moves, how many weeds come up and how evenly the crop grows. This guide covers the basic operations, the machines, the timing before planting and a table that sends each crop to its own guide.",
+  "heroImage": {
+    "src": "/images/site/lp/tractor.webp",
+    "alt": "A tractor working a field during land preparation in the Philippines",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why land preparation in the Philippines decides the crop"
+    },
+    {
+      "type": "text",
+      "text": "A good seed cannot make up for a bad field. PhilRice says a poorly prepared rice field could yield 5 percent less. It also says that proper leveling solves more than 50 percent of the problems in rice production, because it helps water management, weed control and snail control.\n\nMoney follows the same rule. PhilRice estimates that proper land leveling can save about 1,850 pesos per hectare in expenses. So the weeks before planting are not lost time. They are the cheapest part of the season to get right."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The basic operations, in order"
+    },
+    {
+      "type": "text",
+      "text": "Every crop uses a mix of the same few jobs. What changes is how deep, how fine and how wet the soil should be. Here is the usual order."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Clear the field and handle residue",
+          "text": "Remove or cut the old crop, trash and weeds. For rice, clean and repair the dikes (pilapil) and ditches too. PhilRice says clean dikes cut pest buildup and compacted dikes stop seepage."
+        },
+        {
+          "title": "Plow",
+          "text": "Plowing breaks and turns the soil and buries stubble and weeds. For rice, PhilRice advises plowing or rotovating 21 to 30 days before planting. For corn, the DA Cagayan Valley guide says to plow 15 to 20 cm deep when the soil moisture is right."
+        },
+        {
+          "title": "Harrow",
+          "text": "Harrowing breaks clods and starts the leveling. In the PalayCheck schedule, you harrow every 7 days after plowing. The first pass follows the plowing pattern and the second goes crosswise."
+        },
+        {
+          "title": "Level",
+          "text": "In rice, level the field with 5 cm of water and a wooden plank or a tiller attached leveler. In upland fields, level so that water does not pond in low spots."
+        },
+        {
+          "title": "Puddle (lowland rice only)",
+          "text": "Puddling works the soil under water into soft mud. PhilRice counts a well puddled field as part of a well leveled field. Dry land crops skip this step."
+        },
+        {
+          "title": "Make beds, ridges, furrows or holes",
+          "text": "Upland crops are planted in rows. For corn, the DA Cagayan Valley guide sets furrows 70 to 75 cm apart. Sugarcane furrows are about one meter apart in the Tarlac Mill District Office guide."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Tillage machines: carabao, hand tractor and four wheel tractor"
+    },
+    {
+      "type": "text",
+      "text": "Most Filipino farms are small, so the machine follows the farm size and the crop. A UN CSAM review of Philippine mechanization says the carabao with a single native moldboard plow is still the main draft animal for rice and corn land preparation. It adds that two wheel tractors, which we call the hand tractor, are used more each year, while sugarcane plantations use four wheel tractors."
+    },
+    {
+      "type": "table",
+      "caption": "Power sources and the tillage tools they pull, from the UN CSAM review",
+      "rows": [
+        ["Power", "Main tillage tools", "Common use"],
+        ["Carabao", "Native moldboard plow", "Rice and corn on small plots"],
+        ["Hand tractor (two wheel)", "Disk plow, single moldboard plow, rotary tiller", "Rice and corn"],
+        ["Four wheel tractor", "Moldboard plow, disk plow, disk harrow, rotavator", "Larger farms and sugarcane"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "PhilRice has also built tools for hard conditions. Its Laboy Tiller works in soft, deep mud with long stubble, and its Microtiller works in fields with knee deep hard pans. A ride on attachment lets the hand tractor operator sit while plowing, harrowing and leveling, which lowers the operator's heart rate by about 10 beats per minute.\n\nPhilMech has delivered four wheel tractors to farmer cooperatives, for example in Leyte. If you farm with a group, ask your municipal agriculture office and PhilMech about machines and custom hire. For laser guided leveling, PhilRice ran a 16 day demonstration on 10 hectares in Alaminos, Pangasinan."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Timing before planting"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice recommends a field preparation period of 21 days for rice, with plowing and harrowing once a week for three rounds before the final leveling. The weekly gap lets weeds and dropped seeds sprout so the next pass kills them. For corn, the DA Cagayan Valley guide also says to harrow two to three times with a one week interval for weed control.\n\nCrack plowing is a shallow dry tillage that PhilRice recommends after harvest or at the start of the rainy season, so the field is already worked before the main plowing."
+    },
+    {
+      "type": "table",
+      "caption": "A rice land preparation schedule, counted back from transplanting",
+      "rows": [
+        ["Days before planting", "Work"],
+        ["After harvest or at first rains", "Crack plowing, clean dikes and ditches"],
+        ["30 to 21", "First plowing or rotovating, with water if the field is dry"],
+        ["About 14", "First harrowing along the plowing pattern"],
+        ["About 7", "Second harrowing, crosswise"],
+        ["Day of planting or the day before", "Final harrowing and leveling with 5 cm of water"]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "The days are counted back from planting",
+      "text": "The schedule above follows the PhilRice 21 to 30 day window and the weekly harrowing rhythm. Adjust it to your soil and water supply, and ask your technician when the dry spell is long."
+    },
+    {
+      "type": "cta",
+      "title": "Put land preparation on the calendar",
+      "text": "On anee.io, every land preparation day goes on the cropping calendar, dated back from planting. Set the planting date of a lot and the plowing, harrowing and leveling days line up behind it.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Minimum tillage and zero tillage"
+    },
+    {
+      "type": "text",
+      "text": "Minimum tillage disturbs the soil less. Zero tillage plants straight into the old stubble. In both systems, farmers usually control the standing weeds with a non selective herbicide such as glyphosate, and you must follow the FPA label.\n\nResearch in Bukidnon in 1995 compared zero tillage, minimum tillage and the usual farmer practice in corn using glyphosate plus ammonium sulphate. Corn yield matched or beat the conventional method, and the system saved cost and time. The DA Cagayan Valley guide also lists zero to minimum tillage among the soil conservation practices for hilly corn areas.\n\nStill, these systems do not suit every field. A field that needs leveling, or one that has a hard pan, needs real tillage first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Change the work by soil"
+    },
+    {
+      "type": "text",
+      "text": "Heavy clay needs more passes than sandy or loam soil, and it is easier to work at the right moisture. The Tarlac Mill District Office says the number of plowing and harrowing rounds for sugarcane depends on soil type, with clay needing more than light sandy loam. Acid soil needs agricultural lime first, so read our guide on [acidic soil preparation](/land-preparation/acidic-soil-preparation).\n\nSodic or alkaline soil and saline soil each have their own fixes. See [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation) and [saline soil preparation](/land-preparation/saline-soil-preparation) before you plant."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Land preparation by crop: where to read next"
+    },
+    {
+      "type": "table",
+      "caption": "Each crop has its own land preparation guide",
+      "rows": [
+        ["Crop", "Main work", "Guide"],
+        ["Transplanted rice", "Plow, harrow weekly, puddle, level", "[Rice land preparation](/land-preparation/rice-land-preparation)"],
+        ["Direct seeded rice", "Level well, canals, stale seedbed", "[Direct seeded rice land preparation](/land-preparation/direct-seeded-rice-land-preparation)"],
+        ["Corn", "Plow, harrow, furrows", "[Corn land preparation](/land-preparation/corn-land-preparation)"],
+        ["Vegetables", "Beds and drainage", "[Vegetable land preparation](/land-preparation/vegetable-land-preparation)"],
+        ["Onion and garlic", "Fine, raised beds", "[Onion and garlic land preparation](/land-preparation/onion-garlic-land-preparation)"],
+        ["Cucurbits", "Hills or rows", "[Cucurbit land preparation](/land-preparation/cucurbit-land-preparation)"],
+        ["Root crops", "Deep, loose soil", "[Root crop land preparation](/land-preparation/root-crop-land-preparation)"],
+        ["Legumes", "Fine seedbed", "[Legume land preparation](/land-preparation/legume-land-preparation)"],
+        ["Sugarcane", "Deep plowing, subsoiling, furrows", "[Sugarcane land preparation](/land-preparation/sugarcane-land-preparation)"],
+        ["Banana", "Holes and drainage", "[Banana land preparation](/land-preparation/banana-land-preparation)"],
+        ["Fruit trees", "Holes and spacing", "[Fruit tree land preparation](/land-preparation/fruit-tree-land-preparation)"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Plowing once and planting the next day, so the weeds that sprout later beat the crop.",
+        "Leveling without water in rice, which hides the high and low spots until it is too late.",
+        "Skipping the dike and ditch repair, which leaves rat holes and seepage.",
+        "Working clay when it is too wet or too dry, which makes clods.",
+        "Ignoring soil pH, so lime and fertilizer are wasted on acid soil."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Besides the calendar, you can ask Anee, the [AI technician](/features/ai-agricultural-technician), what to do in Tagalog or English. Anee reads your lot, your crop and the week's weather before answering."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about land preparation"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many days before planting should I plow?",
+          "a": "For rice, PhilRice advises plowing or rotovating 21 to 30 days before planting, then harrowing every 7 days. Other crops use shorter windows, so check the guide for your crop."
+        },
+        {
+          "q": "What is the difference between plowing and harrowing?",
+          "a": "Plowing cuts and turns the soil, burying stubble and weeds. Harrowing breaks the clods and smooths the field, and it is repeated to level it."
+        },
+        {
+          "q": "Can I use a carabao instead of a tractor?",
+          "a": "Yes. A UN CSAM review says the carabao with a native moldboard plow is still the main draft animal for rice and corn. It is slower, so it suits small plots."
+        },
+        {
+          "q": "Is zero tillage safe for corn?",
+          "a": "A Bukidnon study found zero and minimum tillage matched conventional corn yields and saved cost and time. It used glyphosate on the weeds, and you must follow the FPA label."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
+        { "label": "Direct seeded rice land preparation", "url": "/land-preparation/direct-seeded-rice-land-preparation" },
+        { "label": "Corn land preparation", "url": "/land-preparation/corn-land-preparation" },
+        { "label": "Sugarcane land preparation", "url": "/land-preparation/sugarcane-land-preparation" },
+        { "label": "Planting rice: the full guide", "url": "/crops/pagtatanim-ng-palay" },
+        { "label": "Growing corn in the Philippines", "url": "/crops/pagtatanim-ng-mais" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "PhilRice: Basics of land preparation", "url": "https://www.philrice.gov.ph/basics-land-preparation/" },
+        { "label": "PhilRice: PalayCheck System, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
+        { "label": "PhilRice: Well leveled field lessens yield losses", "url": "https://www.philrice.gov.ph/well-levelled-field-lessens-yield-losses-philrice-expert/" },
+        { "label": "PhilRice: Land preparation machines", "url": "https://www.philrice.gov.ph/category/products/machines/land-preparation/" },
+        { "label": "DA Region 2: Corn techno guide, 2012 revised edition", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf" },
+        { "label": "UN CSAM: Mechanizing Philippine agriculture for food sufficiency", "url": "https://un-csam.org/sites/default/files/2021-01/ph_0.pdf" },
+        { "label": "Tarlac Mill District Office: Cultural practices of sugarcane farming", "url": "https://tarlacmd.blogspot.com/2010/05/cultural-practices-of-sugarcane-farming.html" },
+        { "label": "AGRIS: Conservation tillage in corn using glyphosate plus ammonium sulphate", "url": "https://agris.fao.org/search/ar/records/6471fa3277fd37171a72600e" },
+        { "label": "The Manila Times: Leyte farmers receive farming machinery", "url": "https://manilatimes.net/2021/10/29/business/top-business/leyte-farmers-receive-farming-machinery/1820108" }
+      ]
+    }
+  ]
+}

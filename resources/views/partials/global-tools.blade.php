@@ -275,6 +275,18 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        {{-- Field helpers (2026-10-07): the public site's weed control helper
+             and pest and disease finders, as small modules of their own. --}}
+        @foreach (\App\Http\Controllers\FieldHelperController::TOOLS as $fhKey => [$fhName, $fhLead, $fhIcon])
+            <a href="{{ route('fh.page', $fhKey) }}" class="qa-tile qa-build">
+                <span class="qa-ico"><img src="{{ asset('images/icons/' . $fhIcon . '.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+                <span class="qa-txt">
+                    <b>{{ $fhName }}</b>
+                    <i>{{ $fhLead }}. Free.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
+        @endforeach
         {{-- NPK Plus (2026-10-07): the free fertilizer calculator; Anee's
              reading of a plan is the paid step inside it. --}}
         <a href="{{ route('npk.page') }}" class="qa-tile qa-build">

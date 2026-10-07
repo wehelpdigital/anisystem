@@ -1,0 +1,202 @@
+{
+  "section": "land-preparation",
+  "slug": "rice-land-preparation",
+  "sortOrder": 20,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Rice Land Preparation: The PalayCheck Way",
+  "metaTitle": "Rice Land Preparation: PalayCheck Steps and Timing",
+  "metaDescription": "Rice land preparation step by step: the PalayCheck 21 day plan for plowing, harrowing, leveling and puddling, plus pilapil repair and the seedbed.",
+  "focusKeyword": "rice land preparation",
+  "keywords": [
+    "rice land preparation",
+    "land preparation for rice",
+    "puddling",
+    "pilapil",
+    "laser land leveling",
+    "rice seedbed",
+    "well leveled field"
+  ],
+  "excerpt": "Rice land preparation starts weeks before the first seedling goes in. PhilRice puts it as Key Check 2 of its PalayCheck System: a well leveled field. This guide walks through the plan for transplanted lowland rice, day by day, and shows how to fix the usual mistakes.",
+  "heroImage": {
+    "src": "/images/site/photos/transplant.jpg",
+    "alt": "Transplanting seedlings into a leveled and puddled rice field",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why rice land preparation pays back"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice says a well leveled field is a prerequisite to good crop growth and management. It helps water management, weed control, snail control, nutrient use and uniform maturity. It also lets farm machines work well.\n\nThe cost of skipping it is clear. According to PalayCheck, a poorly prepared field could yield 5 percent less. On a farm aiming for 100 sacks per hectare, that is about 5 sacks gone before the first seed.\n\nThis page covers transplanted lowland rice. If you sow the seed directly, read our guide on [direct seeded rice land preparation](/land-preparation/direct-seeded-rice-land-preparation). For the big picture, see [land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The 21 day plan for rice land preparation"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice recommends preparing the field over 21 days. You plow once, then harrow once a week, then level just before planting. The gap between passes is on purpose, because it lets weeds and dropped seeds sprout so that the next pass buries them."
+    },
+    {
+      "type": "table",
+      "caption": "Rice land preparation schedule based on the PalayCheck System",
+      "rows": [
+        ["When", "Work", "Why"],
+        ["Right after harvest or at the first rains", "Shallow dry tillage, also called crack plowing", "PhilRice recommends it after harvest or at the onset of the rainy season"],
+        ["21 to 30 days before planting", "Plow or rotovate, clean and repair dikes and ditches", "Time for weeds and dropped seeds to sprout and for straw and stubble to decompose"],
+        ["7 days after plowing", "First harrowing, along the plowing pattern", "Breaks clods and buries stubble"],
+        ["14 days after plowing", "Second harrowing, crosswise, for initial leveling", "Weed seeds sprout again and the field starts to level"],
+        ["Day of planting or just before", "Final harrowing and leveling with 5 cm of water", "Gives a flat surface for even water depth"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Step 1: Clean and repair the pilapil and ditches"
+    },
+    {
+      "type": "text",
+      "text": "Do this first, before the water comes in. PalayCheck says clean dikes help prevent or reduce pest infestation, and compacted dikes stop seepage. It also advises a dike height of 15 cm and a width of 20 cm, which discourages rats from burrowing. Clean ditches keep water moving and help the field drain."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Step 2: Plow or rotovate 21 to 30 days before planting"
+    },
+    {
+      "type": "text",
+      "text": "Plowing works the weeds, straw and stubble into the soil and gives them time to decompose. PalayCheck warns that if plant residues do not fully decompose, the soil turns acidic and some nutrients become less available. So you can apply organic fertilizer at this stage to help the soil life break the residue down.\n\nPhilRice lists the moldboard plow, disc plow, rotavator and floating tiller as primary tillage tools. A farm tractor, a hand tractor or an animal can pull them."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Step 3: Harrow every 7 days"
+    },
+    {
+      "type": "text",
+      "text": "The first harrowing follows the plowing pattern. The second goes crosswise, and it also acts as the first leveling. PalayCheck says harrowing breaks clods, buries stubble, lets weed seeds sprout, helps reduce the starting pest population and maintains the soil's hard pan.\n\nThat last point matters. A firm layer under the mud holds the water and carries the weight of the machines and the people who work the field."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Step 4: Puddle, then level"
+    },
+    {
+      "type": "text",
+      "text": "Puddling means working the soil under water until it turns into soft mud. PhilRice says a field is well leveled when weeds, rice straw and stubble are fully decomposed and the land is well puddled.\n\nFor the final harrowing and leveling, use a wooden plank or a tiller attached leveler. Keep the water at 5 cm, about a thumb length, to make the leveling easier."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "The 5 cm water test",
+      "text": "After the final leveling, no part of the field should have water deeper than 5 cm, and no mound of soil should show above the 5 cm water surface. If you see high or low spots, level again. This is the PalayCheck way of checking Key Check 2."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Laser leveling and water leveling"
+    },
+    {
+      "type": "text",
+      "text": "Water leveling is the method above. You let the water show where the field is high or low, then you drag a plank to fix it.\n\nLaser guided leveling is the machine option. IRRI reports that it raises rice yield by an average of 8 percent in one report and 15 percent in another, so the gain varies by field. IRRI also says the Department of Agriculture regional offices provide laser leveling services in the Philippines. Since the machine is costly, most farmers use it as a hired service. PhilRice held a 16 day demonstration on 10 hectares in Alaminos, Pangasinan."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Preparing the rice seedbed"
+    },
+    {
+      "type": "text",
+      "text": "Transplanting needs seedlings, so the seedbed gets its own preparation. PalayCheck advises a manual transplanting seedbed area of 400 square meters per hectare and a seeding rate of 20 to 40 kg per hectare. It also says a bed 20 m long and 1 m wide gives the seedlings enough space.\n\nBefore leveling the seedbed, apply organic fertilizer or carbonized rice hull, which loosens the soil and makes pulling the seedlings easier with less root damage. On fine textured soil, PalayCheck gives a rate of 3 to 4 bags of commercial organic fertilizer. On medium textured soil, it says you do not need to add any."
+    },
+    {
+      "type": "cta",
+      "title": "Date every land preparation day",
+      "text": "Land preparation days go on the cropping calendar, dated back from your transplanting date. Add the lot, set day zero, and the plowing, harrowing and leveling dates fall into place.",
+      "label": "Open the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Adjust the work by soil and season"
+    },
+    {
+      "type": "text",
+      "text": "Heavy clay holds water and cracks when dry. Harrow it at the right moisture, and give it enough days between passes. Sandy and loamy soil work faster, but they drain quickly and need steady water during puddling.\n\nSome rice soils are problem soils. If your field is acidic, read our guide on [acidic soil preparation](/land-preparation/acidic-soil-preparation). If you farm near the coast, see [saline soil preparation](/land-preparation/saline-soil-preparation). For sodic or alkaline fields, see [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation).\n\nIn the dry season, you need to plan your water before you plow, because irrigation turns are fixed. In the wet season, start with crack plowing at the first rains and watch the weather forecast. A typhoon during final leveling undoes the work. The [weather forecast](/features/farm-weather-forecast) in anee.io shows the week for each lot."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes in rice land preparation"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Plowing and harrowing back to back with no rest, so no weeds sprout between passes.",
+        "Leveling with no standing water, so you cannot see the low spots.",
+        "Leaving old stubble and straw undecomposed, which turns the soil acidic.",
+        "Ignoring the dikes, which leaves seepage and rat burrows.",
+        "Pulling or transplanting seedlings older than 25 days. PalayCheck says seedlings older than 25 days recover slowly and make fewer tillers."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about land preparation for rice"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How long does land preparation for rice take?",
+          "a": "PhilRice recommends 21 days, with plowing first and harrowing once a week until the final leveling. Plowing starts 21 to 30 days before planting."
+        },
+        {
+          "q": "How deep should the water be when I level the field?",
+          "a": "Keep it at 5 cm, about a thumb length. After leveling, no part of the field should be deeper than 5 cm, and no soil should show above the water."
+        },
+        {
+          "q": "What size should the pilapil be?",
+          "a": "PalayCheck advises dikes of 15 cm high and 20 cm wide to discourage rat burrowing. Clean and compact them before you flood the field."
+        },
+        {
+          "q": "Is laser leveling worth it?",
+          "a": "IRRI reports yield gains of 8 percent on average in one report and 15 percent in another. It is a hired service for most farmers, so compare the fee with your expected gain."
+        },
+        {
+          "q": "How big should a rice seedbed be?",
+          "a": "PalayCheck gives 400 square meters of seedbed per hectare for manual transplanting at a seeding rate of 20 to 40 kg per hectare."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
+        { "label": "Direct seeded rice land preparation", "url": "/land-preparation/direct-seeded-rice-land-preparation" },
+        { "label": "Planting rice: the full guide", "url": "/crops/pagtatanim-ng-palay" },
+        { "label": "Weed management in rice", "url": "/weeds/weed-management-in-rice" },
+        { "label": "Golden apple snail", "url": "/pests/golden-apple-snail" },
+        { "label": "Fertilizer for rice", "url": "/blog/fertilizer-for-rice" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "PhilRice: PalayCheck System, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
+        { "label": "PhilRice: Basics of land preparation", "url": "https://www.philrice.gov.ph/basics-land-preparation/" },
+        { "label": "PhilRice: Well leveled field lessens yield losses", "url": "https://www.philrice.gov.ph/well-levelled-field-lessens-yield-losses-philrice-expert/" },
+        { "label": "IRRI News: WateRice project demonstrated laser guided leveling", "url": "https://news.irri.org/2018/06/waterice-project-demonstrated-laser.html" },
+        { "label": "IRRI: Laser land leveling webinar summary", "url": "https://www.irri.org/node/1306" }
+      ]
+    }
+  ]
+}

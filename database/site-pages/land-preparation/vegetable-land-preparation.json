@@ -1,0 +1,232 @@
+{
+  "section": "land-preparation",
+  "slug": "vegetable-land-preparation",
+  "sortOrder": 50,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Vegetable Land Preparation: Plowing, Beds and Drainage",
+  "metaTitle": "Vegetable Land Preparation: Plowing, Beds and Drainage",
+  "metaDescription": "Vegetable land preparation step by step for tomato, eggplant, pepper, okra, cabbage and lettuce: plowing depth, bed sizes, mulch and drainage.",
+  "focusKeyword": "vegetable land preparation",
+  "keywords": [
+    "vegetable land preparation",
+    "land preparation for vegetables",
+    "raised beds",
+    "plastic mulch",
+    "seedbed",
+    "tomato",
+    "eggplant",
+    "pepper",
+    "okra",
+    "lettuce",
+    "cabbage"
+  ],
+  "excerpt": "Good vegetable land preparation decides how well your tomato, eggplant, pepper, okra or lettuce roots grow. The Department of Agriculture (DA) guides agree on the basics: plow early, plow and harrow two to three times, and shape the field so water drains away. Here is the full order of work, with the numbers from the DA field offices.",
+  "heroImage": {
+    "src": "/images/site/lp/tractor.webp",
+    "alt": "Tractor working a field for vegetable land preparation",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Every number below comes from the DA Regional Field Office 02 production guides for each crop. Your town may differ in soil and rain, so treat the numbers as a starting point and ask your municipal agriculturist when your field is unusual.\n\nVegetables are shallow rooted and fussy about water. That is why the work before planting matters more here than for many other crops. A soft, level, well drained soil with plenty of organic matter gives the seedlings a fast start."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Vegetable land preparation: the order of work"
+    },
+    {
+      "type": "text",
+      "text": "Start early. The DA tomato and eggplant guides tell farmers to prepare the field as early as possible, so the weeds and stubble of the last crop have time to rot. Then follow these steps."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Clear the field",
+          "text": "Remove old stalks, stones and large weeds. Leave the residue in the field only if it can rot before planting."
+        },
+        {
+          "title": "Plow 15 to 20 cm deep",
+          "text": "The DA guides for tomato, eggplant, okra, upo and squash all give a plowing depth of 15 to 20 cm. Use a carabao, a hand tractor or a tractor, whichever you have."
+        },
+        {
+          "title": "Plow two to three times, one week apart",
+          "text": "The weeks between passes let weed seeds sprout so the next pass buries them. Harrow after every plowing to break clods and level the soil."
+        },
+        {
+          "title": "Pulverize and level",
+          "text": "The DA says well pulverized soil gives good aeration and helps roots form. A level field also stops water from pooling in low spots."
+        },
+        {
+          "title": "Add organic matter",
+          "text": "Spread decomposed manure or compost before the last harrowing so it mixes into the soil. The DA tomato guide gives 20 bags per hectare when no soil test is available."
+        },
+        {
+          "title": "Form furrows or beds",
+          "text": "Make them just after the last harrowing. Sizes depend on the crop, as the table below shows."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Raised beds and furrow sizes by crop"
+    },
+    {
+      "type": "text",
+      "text": "Fruiting vegetables usually go on furrows or ridges, while leafy vegetables go on raised beds. Cabbage can go either way. For example, the DA says to use furrows 30 to 50 cm apart for commercial cabbage, but raised beds about 100 cm wide in backyards or where drainage is poor."
+    },
+    {
+      "type": "table",
+      "caption": "Furrow and bed sizes from the DA Region 02 production guides",
+      "rows": [
+        ["Crop", "Furrows or beds", "Other planting detail"],
+        ["Tomato", "Plow and harrow, then furrow", "Hills 50 cm apart, seedlings 25 to 30 days old"],
+        ["Eggplant", "Furrows 50 cm apart", "Plastic mulch holes 50 cm apart"],
+        ["Pepper", "Furrows 80 cm apart", "Double rows: 35 cm between the two rows, 75 cm between double rows"],
+        ["Okra", "Furrows 100 cm between rows", "Plow 15 to 20 cm deep"],
+        ["Cabbage", "Furrows 30 to 50 cm apart to form ridges, or raised beds about 100 cm wide", "Use raised beds where drainage is poor"],
+        ["Lettuce", "Raised beds 1 m wide, 0.75 m apart", "Hills 30 to 40 cm apart, 2 rows per bed for crisphead, 3 for loose leaf"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pepper deserves a note. Double rows shade the developing fruits, so the DA says they have better protection against sunburn."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plastic mulch on the bed"
+    },
+    {
+      "type": "text",
+      "text": "Plastic mulch keeps weeds down, holds soil moisture and reduces fertilizer loss. The DA eggplant guide also says the silver colour reflects sunlight and repels insects hiding under the leaves.\n\nPut the plastic on before transplanting. First, stretch it over the bed with the silver side up. Next, fasten the edges with bamboo slats 6 to 8 cm long, spaced 30 cm apart, or cover the edges with soil. Then punch holes 50 cm apart, about 10 cm from the edge on both sides. Finally, water the beds two days before transplanting to cool the soil under the plastic.\n\nIf you do not use plastic, spread rice straw, rice hull or coconut coir dust 3 to 5 cm thick after hilling up. For lettuce, the DA also names rice straw or a mulching film."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Drainage and the season"
+    },
+    {
+      "type": "text",
+      "text": "Tomato likes well drained soil rich in organic matter. During the wet season, the DA says to choose a slightly elevated area to avoid waterlogging. During the dry season, dig a catchment canal at the field edge to drain excess water after irrigation.\n\nThe same idea holds for the other crops. Eggplant is moderately sensitive to flooding, especially at flowering and fruit development. So in the rainy months, make beds higher, cut canals between them and keep the outlet open before the first typhoon rains arrive."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Test the soil first",
+      "text": "The DA guides set fertilizer rates by soil analysis. They give fallback rates only for farmers without a test. Ask your DA regional laboratory or municipal agriculturist about a soil test before you buy fertilizer."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Nursery and seedling beds"
+    },
+    {
+      "type": "text",
+      "text": "Most vegetables start in a nursery, so prepare that bed with the same care as the field. The DA tomato guide describes two ways."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Seedbed method.** Choose a level, sunny, well drained spot near water with a windbreak. Plow and harrow until the soil is fine. Build five seedbeds, each 1 m by 10 m and 15 cm high. For tomato, that is enough for 150 to 200 grams of seed for one hectare.",
+        "**Sterilizing the seedbed.** Moisten the bed, spread 3 to 5 cm of rice straw or rice hull on top and burn it slowly. Remove the unburned bits and excess ash. Do not sow right after burning, because fresh ash can harm the seeds.",
+        "**Trays or potlets.** Use trays with 100 to 104 holes. Fill them with one part compost, one part carbonized rice hull and one part garden soil. Trays need less seed and cause less transplanting shock.",
+        "**Lettuce seedbeds.** Mix 1 kg of fully decomposed chicken manure and 300 g of carbonized rice hull per square meter into the soil, then mulch the sown rows lightly."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Date every land preparation task",
+      "text": "Land preparation days go on the calendar, dated back from planting. Set your day zero once and anee.io places each plowing, harrowing and bed making task for you.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Change the work by soil"
+    },
+    {
+      "type": "text",
+      "text": "The DA guides name sandy loam and clay loam as the best soils for tomato and eggplant. Soil pH matters too: tomato accepts 5.5 to 8.0 and eggplant 5.5 to 6.8 in the DA guides.\n\nHeavy clay holds water, so lean on raised beds and canals, as the cabbage guide advises for poorly drained fields. Sandy soil dries fast, so add more compost and keep mulch on the bed. If your soil is acidic, read our guide to [acidic soil preparation](/land-preparation/acidic-soil-preparation). For salty or alkaline fields, see [saline soil preparation](/land-preparation/saline-soil-preparation) and [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Planting right after one rushed plowing, with big clods and no weeds killed.",
+        "Skipping the canals, so the beds flood in the first heavy rain.",
+        "Sowing seeds straight after burning rice straw on the seedbed.",
+        "Applying fertilizer without a soil test and over feeding the crop.",
+        "Leaving the plastic mulch loose, so wind lifts it."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Land preparation is also where you plan your inputs. Log your manure, compost and basal fertilizer in the [farm inventory](/features/farm-inventory-and-expenses) so you know the cost of each bed before the season starts. If you are unsure which crop to plant next, ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), in Tagalog or English."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about vegetable land preparation"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How deep should I plow for vegetables?",
+          "a": "The DA production guides for tomato, eggplant, okra, upo and squash give 15 to 20 cm. Plow two to three times, one week apart, and harrow after each pass."
+        },
+        {
+          "q": "How wide should a raised bed be?",
+          "a": "For lettuce, the DA says 1 m wide with 0.75 m between beds. For cabbage in backyards or poorly drained fields, it says about 100 cm wide."
+        },
+        {
+          "q": "Is plastic mulch worth it for eggplant?",
+          "a": "The DA eggplant guide says mulch controls weeds, conserves moisture and prevents leaching of fertilizer. Silver plastic also reflects sunlight and repels some insects. Cost and labor vary, so compare with rice straw mulch for your farm."
+        },
+        {
+          "q": "How big is a vegetable seedbed?",
+          "a": "The DA tomato guide uses five seedbeds of 1 m by 10 m, 15 cm high, enough for 150 to 200 grams of seed, which plants one hectare."
+        },
+        {
+          "q": "What do I do for drainage in the wet season?",
+          "a": "Choose a slightly elevated area, build raised beds and dig canals so water leaves the field. Eggplant and tomato suffer when waterlogged."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read also",
+      "items": [
+        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
+        { "label": "Cucurbit land preparation", "url": "/land-preparation/cucurbit-land-preparation" },
+        { "label": "Onion and garlic land preparation", "url": "/land-preparation/onion-garlic-land-preparation" },
+        { "label": "Pagtatanim ng gulay", "url": "/crops/pagtatanim-ng-gulay" },
+        { "label": "Vegetables in the Philippines", "url": "/crops/vegetables-philippines" },
+        { "label": "Organic fertilizer examples", "url": "/blog/organic-fertilizer-examples" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "DA Region 02: Tomato Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf" },
+        { "label": "DA Region 02: Eggplant Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Eggplant.pdf" },
+        { "label": "DA Region 02: Pepper Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Pepper.pdf" },
+        { "label": "DA Region 02: Okra Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Okra.pdf" },
+        { "label": "DA Region 02: Cabbage Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Cabbage.pdf" },
+        { "label": "DA Region 02: Lettuce Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Lettuce.pdf" }
+      ]
+    }
+  ]
+}

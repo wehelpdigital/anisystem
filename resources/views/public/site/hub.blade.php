@@ -43,6 +43,7 @@
             <div class="mt-7 flex flex-wrap items-center gap-3">
                 <div class="sp-tabs">
                     <a href="{{ $S::url('crops') }}" class="{{ $section === 'crops' ? 'is-on' : '' }}">Crop guides</a>
+                    <a href="{{ $S::url('land-preparation') }}" class="{{ $section === 'land-preparation' ? 'is-on' : '' }}">Land preparation</a>
                     <a href="{{ $S::url('pests') }}" class="{{ $section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
                     <a href="{{ $S::url('diseases') }}" class="{{ $section === 'diseases' ? 'is-on' : '' }}">Crop diseases</a>
                     <a href="{{ $S::url('weeds') }}" class="{{ $section === 'weeds' ? 'is-on' : '' }}">Weeds and grasses</a>

@@ -1,0 +1,252 @@
+{
+  "section": "land-preparation",
+  "slug": "banana-land-preparation",
+  "sortOrder": 110,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Banana Land Preparation: Clearing, Holing, Spacing and Drainage",
+  "metaTitle": "Banana Land Preparation: Holes, Spacing, Drainage",
+  "metaDescription": "Banana land preparation in the Philippines: plow and harrow, dig 40 to 50 cm holes, pick Lakatan or Cardava spacing and open drainage canals first.",
+  "focusKeyword": "banana land preparation",
+  "keywords": [
+    "banana land preparation",
+    "banana planting distance",
+    "banana planting hole size",
+    "banana farming"
+  ],
+  "excerpt": "Good banana land preparation decides how well the mat stands, drains and fruits for years, because a banana is planted once and stays in the same spot. This guide follows the Department of Agriculture banana manual: clear the land, plow and harrow, lay out the rows, dig the holes and open drainage canals before any sucker goes in.",
+  "heroImage": {
+    "src": "/images/site/lp/tractor.webp",
+    "alt": "A tractor working a field, the first step of banana land preparation",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The numbers below come from the Department of Agriculture Banana Production Manual and from the IITA standard procedure for land preparation of banana and plantain. Spacing and hole sizes differ by variety and by farm, so use them as a starting point and ask your municipal agriculturist about your own soil."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Choose the site before you clear it"
+    },
+    {
+      "type": "text",
+      "text": "The DA manual says banana needs moist, deep, fertile and well drained soil. It grows best in sandy loam or alluvial loam. It can stand a soil pH from 4.5 to 7.5, so test your soil first. Our guides for [acidic soil](/land-preparation/acidic-soil-preparation) and [sodic and alkaline soil](/land-preparation/sodic-alkaline-soil-preparation) cover what to do when the reading falls outside that range.\n\nFlat land is the easiest to manage. Hilly or rolling land can also be used, but the manual asks you to plan for erosion and to adjust the planting distance and plant population."
+    },
+    {
+      "type": "text",
+      "text": "Wind matters too. The manual warns that banana plants are sensitive to strong winds and tells farmers in windy places to provide windbreaks. In a typhoon belt, plan the windbreak rows now, because they take time to grow."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Banana land preparation step by step"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Clear the land",
+          "text": "Remove brush, old stumps and weeds. IITA prefers manual clearing because banana fields are prepared with minimum soil disturbance, and it says never to use a bulldozer, which damages the topsoil. Leave big stumps to decay and leave small branches to rot into organic matter. If the field grew bananas before, check for sick mats first. The DA manual says to fallow an infected area for 6 months to 1 year and to burn infected plant parts using rice hull."
+        },
+        {
+          "title": "Plow and harrow thoroughly",
+          "text": "The DA manual says to plow and harrow the field thoroughly to remove weeds and give the soil a good tilth. Neither source gives a plowing depth, so follow what your local technician advises for your soil. IITA says a disc harrow helps where the topsoil is shallow, and compost can go in at that time."
+        },
+        {
+          "title": "Lay out the rows",
+          "text": "Mark the rows with a measuring rope and stakes before you dig. The DA manual recommends rows running east to west so every row gets an equal share of sunlight. On hills, lay the rows along the contour."
+        },
+        {
+          "title": "Dig the holes",
+          "text": "Dig a hole at every stake. The DA manual shows a hole 40 cm wide and 40 cm deep. IITA digs 50 cm on each side and keeps the topsoil apart."
+        },
+        {
+          "title": "Open the drainage canals",
+          "text": "In flood prone areas, the DA manual says a good drainage system should be in place. IITA adds trenches in heavy rainfall areas so water does not stand around the roots, which can rot them. Dig canals so water leaves the field."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Banana planting distance and field layout"
+    },
+    {
+      "type": "text",
+      "text": "Several things set the right banana planting distance: the variety, the slope and soil fertility. Sucker control and the use of machines also count. Close spaced plants must not touch their neighbors. For distances, the DA recommends these:"
+    },
+    {
+      "type": "table",
+      "caption": "Recommended planting distances in the DA Banana Production Manual",
+      "rows": [
+        [
+          "Variety",
+          "Distance in the hill by between rows",
+          "Mats per hectare"
+        ],
+        [
+          "Lakatan",
+          "2.0 m by 2.5 m",
+          "2,000"
+        ],
+        [
+          "Lakatan, wider",
+          "3.0 m by 3.0 m",
+          "1,111"
+        ],
+        [
+          "Cardava",
+          "5 m by 7 m",
+          "286"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Two layouts appear in the manual. In the square method, a plant sits at every corner of a square. In the quincunx system, one more plant sits at the center of each square. Topography, irrigation and equipment shape the layout, and the DA recommends east to west rows so each row gets equal sunlight. IITA suggests north to south rows for sunlight. So pick the direction that suits your slope, and ask your technician. On hillsides, both sources plant along the contour to cut erosion."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Banana planting hole size and clean planting material"
+    },
+    {
+      "type": "text",
+      "text": "For the banana planting hole size, the DA manual draws the hole at 40 cm by 40 cm. The IITA standard procedure for banana and plantain (a research institute that works on bananas worldwide) digs 50 cm by 50 cm by 50 cm. So 40 to 50 cm on each side is a fair guide for the Philippines. The larger hole suits a tight or poor soil.\n\nDig the hole right after pegging. Put the topsoil in one pile and the rest of the soil in another. Set the plant upright, then fill the hole with topsoil first and the rest after, so the new roots grow in the most fertile soil. IITA also says compost or manure can be worked into the soil during land preparation."
+    },
+    {
+      "type": "text",
+      "text": "The DA manual lists two kinds of planting material: tissue culture plantlets and sword leaf stage suckers. It stresses that you must select planting materials free from diseases. For Fusarium wilt, it says to use tissue culture plants. It also says to clean machines and tools that have been in a sick field. For nematodes, it says to use nematode free suckers or tissue culture plants.\n\nIITA adds a rule for suckers. Pare the corm, plant within a week and do not keep suckers more than two weeks, because stored suckers yield less. IITA also advises against planting where bananas grew before, unless the land rested for 2 to 3 years."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Planting sick material plants the disease",
+      "text": "A banana mat that carries Fusarium wilt, Moko or bunchy top will infect the new field for years. Buy certified clean plantlets or suckers. Read about [banana bunchy top](/diseases/banana-bunchy-top) and [Moko disease](/diseases/moko-disease) before you buy."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Drainage canals protect the mats"
+    },
+    {
+      "type": "text",
+      "text": "Banana needs plenty of water. Yet the manual says to build good drainage in flood prone areas. It also lists drainage canals as a control for banana freckles and Sigatoka, because standing water raises humidity and favors leaf disease. Soil borne diseases also appear in the manual's control list under good drainage.\n\nDig the canals before planting, not after the first flood. Slope them so water runs out of the field. Read about [black Sigatoka](/diseases/black-sigatoka) to see what wet, humid fields invite."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Change the work by soil and season"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Sandy loam and alluvial loam: the best soils in the manual. Plow, harrow and plant.",
+        "Heavy clay that holds water: spend more effort on canals, because both sources ask for well drained soil.",
+        "Acidic soil: check the pH, because banana tolerates pH 4.5 to 7.5. Follow the [acidic soil guide](/land-preparation/acidic-soil-preparation) if you read below that.",
+        "Salty or sodic land: banana does not appear in the manual as a salt tolerant crop, so read the [saline soil guide](/land-preparation/saline-soil-preparation) first.",
+        "Dry season: the manual wants 20 to 22 cm of rain spread evenly each month, and growth suffers below 10 cm a month. Plan irrigation before you plant.",
+        "Wet season or typhoon areas: finish the canals and the windbreak first."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Planting suckers from a mat that looks tired or sick.",
+        "Digging holes but skipping the canals.",
+        "Planting too close, so leaves touch and humidity builds up.",
+        "Running the rows with no plan for the slope on a hillside.",
+        "Skipping the soil test, then finding out the pH is far from the range."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Put every land preparation day on the calendar",
+      "text": "Add each lot to anee.io, set its planting date and the [cropping calendar](/features/cropping-calendar) dates the clearing, plowing, holing and canal digging back from planting. Hired hands and fertilizer go on the same board.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about banana land preparation"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How big should the planting hole be for banana?",
+          "a": "The DA Banana Production Manual shows a hole 40 cm wide and 40 cm deep. The IITA procedure digs 50 cm by 50 cm by 50 cm and keeps the topsoil separate. Ask your agriculturist if your soil is heavy or poor."
+        },
+        {
+          "q": "What is the planting distance for Lakatan?",
+          "a": "The DA recommends 2.0 m in the hill by 2.5 m between rows, which gives 2,000 mats per hectare, or 3.0 m by 3.0 m for 1,111 mats per hectare."
+        },
+        {
+          "q": "Which direction should banana rows run?",
+          "a": "The DA manual says east to west, so each row gets an equal share of sunlight. IITA suggests north to south. Both plant along the contour on hillsides."
+        },
+        {
+          "q": "Do bananas need drainage canals?",
+          "a": "Yes, in flood prone areas. The manual says to establish a good drainage system and lists drainage canals as a control for freckles and Sigatoka."
+        },
+        {
+          "q": "Should I use suckers or tissue culture plants?",
+          "a": "The DA manual lists both. It says planting materials must be free from disease, and it recommends tissue culture plants to keep Fusarium wilt out of clean farms."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Banana farming in the Philippines",
+          "url": "/crops/banana-farming-philippines"
+        },
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Fruit tree land preparation",
+          "url": "/land-preparation/fruit-tree-land-preparation"
+        },
+        {
+          "label": "Banana weevil",
+          "url": "/pests/banana-weevil"
+        },
+        {
+          "label": "Banana bunchy top",
+          "url": "/diseases/banana-bunchy-top"
+        },
+        {
+          "label": "Black Sigatoka",
+          "url": "/diseases/black-sigatoka"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Department of Agriculture, High Value Crops Development Program: Banana Production Manual",
+          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
+        },
+        {
+          "label": "IITA: Standard operating procedure for land preparation and planting of banana and plantain (2025)",
+          "url": "https://data.iita.org/dataset/2bf9a6b4-9399-4422-92b0-d39f84e3f377/resource/178222cb-de58-440e-992b-b70aaa53d5c7/download/sop18-land-preparation-and-planting-banana-and-plantain.pdf"
+        }
+      ]
+    }
+  ]
+}

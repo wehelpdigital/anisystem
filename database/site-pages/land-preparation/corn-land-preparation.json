@@ -1,0 +1,210 @@
+{
+  "section": "land-preparation",
+  "slug": "corn-land-preparation",
+  "sortOrder": 40,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Corn Land Preparation: Plowing, Harrowing and Furrows",
+  "metaTitle": "Corn Land Preparation: Plowing, Harrowing, Furrows",
+  "metaDescription": "Corn land preparation for yellow and white corn: plow depth, harrowing, furrow spacing, lime, minimum tillage after rice and raised beds for wet fields.",
+  "focusKeyword": "corn land preparation",
+  "keywords": [
+    "corn land preparation",
+    "yellow corn",
+    "white corn",
+    "plowing and harrowing",
+    "furrows",
+    "minimum tillage",
+    "raised beds",
+    "mais"
+  ],
+  "excerpt": "Corn land preparation is simpler than rice, but it still decides your stand. Corn (mais) needs loose, well drained soil, so the work is plowing, harrowing and then furrows. This guide covers yellow and white corn, the schedule before planting, lime, minimum tillage after rice and raised beds for wet fields.",
+  "heroImage": {
+    "src": "/images/site/corn-rows.jpg",
+    "alt": "Rows of corn growing in furrows after corn land preparation",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What corn land preparation has to achieve"
+    },
+    {
+      "type": "text",
+      "text": "The DA Regional Field Office 2 corn guide, written for Cagayan Valley, the top corn region of the country, puts the goal this way: prepare the land thoroughly for uniform seedling emergence and good root development. The same rules apply to yellow corn for feeds and white corn for food.\n\nSo you want soil that is loose to the depth of the roots, free of clods and weeds, and able to drain after rain. Corn does not tolerate standing water, so drainage is part of the plan, not an extra.\n\nFor the general picture, see [land preparation in the Philippines](/land-preparation/land-preparation-philippines). To plan the crop itself, read about [growing corn](/crops/pagtatanim-ng-mais)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plowing and harrowing for corn"
+    },
+    {
+      "type": "text",
+      "text": "The DA guide sets the depth: plow at 15 to 20 cm when the soil moisture is right. It adds that deeper plowing is better for root development. Then harrow right after plowing, preferably two to three times, with an interval of one week between passes for effective weed control.\n\nIf you use a four wheel drive tractor with a trailing harrow, one to two passes at one week intervals is enough before furrowing and planting. In areas with continuous farm mechanization, the guide recommends deep plowing with a chisel plow or a subsoiler every 2 to 3 years to break the hard pan."
+    },
+    {
+      "type": "table",
+      "caption": "Corn land preparation schedule based on the DA Region 2 guide",
+      "rows": [
+        ["Timing", "Work", "Depth or spacing"],
+        ["About 2 to 3 weeks before planting", "Plow when the soil moisture is right", "15 to 20 cm, deeper is better for roots"],
+        ["Right after plowing", "First harrowing to break clods", "Two to three passes in total"],
+        ["One week later", "Next harrowing to start weeds and level", "One week between passes"],
+        ["Last harrowing", "Broadcast organic fertilizer if you use it", "Ten bags per hectare"],
+        ["A day before or on planting day", "Make furrows", "70 to 75 cm apart"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The \"about 2 to 3 weeks\" in the first row is our reading of two to three harrowing passes at one week gaps. It is not a number from the guide, so adjust it to your soil and machine."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Furrows and spacing"
+    },
+    {
+      "type": "text",
+      "text": "Furrows are the planting rows. The DA guide uses a furrow spacing of 70 cm for hybrid corn, with 18 to 20 cm between hills, and 75 cm for open pollinated varieties (OPV), with 25 cm between hills. For a bigger green corn ear, it suggests a wider 30 cm by 75 cm spacing.\n\nThe guide says to plant one seed per hill after setting the furrows, and to cover the seed with 3.5 cm of soil. It also says a hybrid planted this way needs 22 to 24 kg of seed per hectare to reach a population of at least 75,000 plants."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Fertilizer goes in the same pass",
+      "text": "The DA guide says to broadcast ten bags of organic fertilizer per hectare during the last harrowing before furrowing. For the inorganic fertilizer, it places all the P and K and half the N in a band 5 cm to the side and 5 cm below the seed at planting."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Lime for acid soil"
+    },
+    {
+      "type": "text",
+      "text": "The DA guide says the best pH range for corn is from slightly acidic to neutral, 6.0 to 7.0. It sets 5.4 as the critical pH, so acidic soil below that needs lime. The amount depends on the soil type and pH. A soil test tells you where you stand."
+    },
+    {
+      "type": "table",
+      "caption": "Lime requirement in metric tons per hectare, DA Region 2 corn guide",
+      "rows": [
+        ["Soil pH", "Sandy", "Sandy loam", "Loam", "Silt and clay loam", "Clay"],
+        ["4.0 to 4.4", "3.0", "3.5", "4.5", "6.0", "7.5"],
+        ["4.5 to 4.9", "1.5", "2.5", "3.2", "4.2", "5.2"],
+        ["5.0 to 5.3", "1.0", "1.5", "2.0", "2.5", "3.0"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For more on acid fields and the use of agricultural lime, see our guide on [acidic soil preparation](/land-preparation/acidic-soil-preparation)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Minimum tillage and zero tillage for corn"
+    },
+    {
+      "type": "text",
+      "text": "You can plant corn with less tillage. The DA Region 2 guide lists zero to minimum tillage among the soil conservation practices for hilly corn areas, with the Sloping Agricultural Land Technology (SALT) and contour farming.\n\nA Bukidnon trial from 1995 compared zero tillage, minimum tillage and the usual farmer practice. It used glyphosate plus ammonium sulphate to kill the weeds. Corn yield matched or beat the conventional method, and the system saved cost and time. That trial was on upland corn, not on a rice field, so test it on a small plot first.\n\nIn a zero tillage system, you spray the standing weeds and stubble with a non selective herbicide such as glyphosate, then plant through the residue. Follow the FPA label for the rate and the safety steps."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Corn after rice"
+    },
+    {
+      "type": "text",
+      "text": "After rice, you start with rice stubble and weeds. The two options are the usual plowing and harrowing, or the zero tillage method above. Zero tillage saves the most time and fuel. Plowing and harrowing gives a finer seedbed.\n\nIn fields with a compacted layer, the DA guide's answer is deep tillage with a chisel plow or a subsoiler every 2 to 3 years. Our guide does not give a rice to corn tillage schedule, so ask your municipal agriculturist what works on your soil."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Raised beds for wet fields"
+    },
+    {
+      "type": "text",
+      "text": "Wet season corn and low fields drown easily. A raised bed lifts the planting row above the water and puts a furrow beside it to carry the excess away. In a 2024 trial in Bangladesh, a raised bed 65 cm wide gave 13.1 tons per hectare, against 9.89 tons per hectare for the conventional method, and used 37.72 percent less irrigation water. It was one site with furrow irrigation, so treat it as a clue and not as a Philippine standard.\n\nWhatever bed you choose, keep a drainage furrow along the low side of the field, so water leaves in hours and not in days."
+    },
+    {
+      "type": "cta",
+      "title": "Put land preparation on the calendar",
+      "text": "Land preparation days go on the cropping calendar, dated back from planting. Add your corn lot, set day zero and see plowing, harrowing, furrowing and the first fertilizer in one place.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Adjust corn land preparation by soil and season"
+    },
+    {
+      "type": "text",
+      "text": "Clay soil needs more passes and the right moisture, because wet clay makes clods and dry clay breaks into lumps. Sandy soil needs fewer passes and more organic matter. In the dry season, plan the moisture first. In the wet season, start early, work in the dry spells and keep drainage furrows open.\n\nFor problem soils, see [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation) and [saline soil preparation](/land-preparation/saline-soil-preparation). Anee, the [AI technician](/features/ai-agricultural-technician), can answer in Tagalog or English if you describe your soil or send a photo."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Plowing when the soil is too wet, which makes hard clods.",
+        "A single pass and planting, which leaves weeds ahead of the crop.",
+        "Skipping the soil test and the lime on acid soil.",
+        "Making furrows too early, so rain fills them before planting.",
+        "No drainage in the wet season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about corn land preparation"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How deep should I plow for corn?",
+          "a": "The DA Region 2 guide says to plow 15 to 20 cm deep when the soil moisture is right. Deeper plowing is better for root development."
+        },
+        {
+          "q": "How many times should I harrow?",
+          "a": "Preferably two to three times, with one week between passes. With a four wheel drive tractor and a trailing harrow, one to two passes a week apart is enough."
+        },
+        {
+          "q": "How far apart should the furrows be?",
+          "a": "The DA guide uses 70 cm for hybrid corn and 75 cm for open pollinated varieties."
+        },
+        {
+          "q": "Can I plant corn without plowing?",
+          "a": "Zero and minimum tillage matched conventional corn yields in a Bukidnon trial. They use a non selective herbicide such as glyphosate, so follow the FPA label."
+        },
+        {
+          "q": "When does corn need lime?",
+          "a": "When the soil pH is below the critical level of 5.4, according to the DA guide. The target is 6.0 to 7.0."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
+        { "label": "Acidic soil preparation", "url": "/land-preparation/acidic-soil-preparation" },
+        { "label": "Growing corn in the Philippines", "url": "/crops/pagtatanim-ng-mais" },
+        { "label": "Corn seeds", "url": "/crops/corn-seeds" },
+        { "label": "Asian corn borer", "url": "/pests/asian-corn-borer" },
+        { "label": "Fall armyworm", "url": "/pests/fall-armyworm" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "DA Region 2: Corn techno guide, 2012 revised edition", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf" },
+        { "label": "AGRIS: Conservation tillage in corn using glyphosate plus ammonium sulphate, Bukidnon", "url": "https://agris.fao.org/search/ar/records/6471fa3277fd37171a72600e" },
+        { "label": "Asian Journal of Agriculture: Optimizing raised bed dimensions for maize", "url": "https://smujo.id/aja/article/view/19244" }
+      ]
+    }
+  ]
+}

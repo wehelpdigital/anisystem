@@ -44,16 +44,16 @@ TRANSITIONS = [
     "in other words", "for this reason", "that means", "this means", "above", "besides that", "on top of that",
 ]
 
-SECTIONS = {"crops", "pests", "diseases", "weeds", "blog", "features"}
+SECTIONS = {"crops", "pests", "diseases", "weeds", "land-preparation", "blog", "features"}
 BLOCK_TYPES = {"heading", "text", "list", "steps", "table", "callout", "image", "quote", "faq", "cta", "links", "sources"}
 
-SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/blog"}
+SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/land-preparation", "/blog"}
 
 
 def url_map():
     text = open(os.path.join(HERE, "STYLE.md"), encoding="utf-8").read()
     part = text.split("## 8. URL map", 1)[1]
-    return SITE_URLS | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|blog)/[a-z0-9\-]+)", part))
+    return SITE_URLS | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|land-preparation|blog)/[a-z0-9\-]+)", part))
 
 
 LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")

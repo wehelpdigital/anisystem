@@ -1,0 +1,217 @@
+{
+  "section": "land-preparation",
+  "slug": "cucurbit-land-preparation",
+  "sortOrder": 70,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Cucurbit Land Preparation: Hills, Beds and Trellis",
+  "metaTitle": "Cucurbit Land Preparation: Hills, Beds and Trellis",
+  "metaDescription": "Cucurbit land preparation for ampalaya, squash, upo, patola and cucumber: plowing depth, furrow and hill spacing, drainage, mulch and trellis size.",
+  "focusKeyword": "cucurbit land preparation",
+  "keywords": [
+    "cucurbit land preparation",
+    "ampalaya",
+    "squash",
+    "cucumber",
+    "upo",
+    "patola",
+    "trellis",
+    "plastic mulch",
+    "raised beds"
+  ],
+  "excerpt": "Cucurbit land preparation sets up the long runs of vine that ampalaya, squash, upo, patola and cucumber need. These crops sprawl for meters, hate wet feet and carry heavy fruit. So you plan the furrows, the hills, the drainage and the trellis before a seed goes in. Here are the Department of Agriculture (DA) numbers, step by step.",
+  "heroImage": {
+    "src": "/images/site/fields-aerial.jpg",
+    "alt": "Aerial view of farm rows, a layout used in cucurbit land preparation",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Most numbers here come from the DA Regional Field Office 02 production guides for ampalaya, squash, upo and patola, plus the ATI guide for cucumber. We did not find a DA guide for watermelon, so ask your municipal agriculturist about it.\n\nThe guides agree on one thing. Prepare the field early and thoroughly, drain it well and leave room for the vines."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Cucurbit land preparation: step by step"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Plow 15 to 20 cm deep",
+          "text": "The DA guides for ampalaya, squash, upo and patola all give this depth for better root development."
+        },
+        {
+          "title": "Plow and harrow two to three times, a week apart",
+          "text": "The gap lets weed seeds sprout before the next plowing. Harrow after each pass. The DA says well pulverized soil promotes good aeration and root formation."
+        },
+        {
+          "title": "Add organic matter",
+          "text": "Without a soil test, the DA ampalaya guide says 10 to 20 tons per hectare of organic fertilizer, decomposed manure or compost before field preparation. For squash, it says 1 to 2 kg per hill."
+        },
+        {
+          "title": "Set furrows after the last harrowing",
+          "text": "Spacing depends on the crop and season, as the table shows."
+        },
+        {
+          "title": "Dig drainage canals",
+          "text": "The DA says to build canals to prevent waterlogging in the rainy season."
+        },
+        {
+          "title": "Plan the trellis",
+          "text": "Mark the post lines before planting so furrows and trellis match."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Furrows, hills and trellis by crop"
+    },
+    {
+      "type": "table",
+      "caption": "Spacing and trellis sizes from the DA and ATI guides",
+      "rows": [
+        ["Crop", "Furrows or beds", "Hills", "Trellis"],
+        ["Ampalaya", "2 m apart in the dry season, 3 m in the wet season", "1.5 to 2.5 m along the furrow", "2.5 to 3.0 m wide, 1.5 to 2 m high, posts every 3 m. Start when plants are 15 cm tall"],
+        ["Squash", "2.0 to 3.0 m apart", "1 m apart", "No trellis in the DA guide. Lay 5 to 6 cm of straw or rice hull under the fruits"],
+        ["Upo", "2 to 3 m apart", "1 m apart", "Overhead trellis 2 to 3 m wide and 2 m high"],
+        ["Patola", "2.5 to 3.0 m apart", "1.0 m apart", "Overhead trellis 2 to 3 m wide and 2 m high"],
+        ["Cucumber", "Beds 1 m wide with 0.5 m between", "0.5 m apart", "Posts 2 m high every 2 to 3 m, with wire and twine"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Cucumber comes from the ATI Tagalog guide, which quotes the DA Region 02 cucumber guide. It says to mix 500 g of compost or chicken manure per furrow after the last harrowing."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Raised beds and drainage"
+    },
+    {
+      "type": "text",
+      "text": "Cucurbits rot where water stands. The DA says ampalaya cannot tolerate waterlogging, so provide a drainage canal. Upo is sensitive to excessive soil moisture, which favors disease, so provide adequate drainage in the wet season.\n\nFor seeds, the DA says to plant squash, upo and patola on raised beds or ridges during the wet season to prevent rotting of seeds and seedlings from flooding. In the dry season, use furrow irrigation about weekly for upo. Then spread rice straw around the plant base as mulch to hold moisture.\n\nSoil should be well drained. The DA lists sandy loam or clay loam with good drainage, high organic matter and pH 6.0 to 6.7 for ampalaya, and pH 5.5 to 6.5 for squash."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Trellis setup before planting"
+    },
+    {
+      "type": "text",
+      "text": "A trellis lifts fruit off the wet soil. The DA says trellising is essential in the wet season for upo to reduce fruit rot and malformation, and usually essential for patola too.\n\nBuild an overhead trellis with ipil ipil or bamboo poles. Make it 2 to 3 m wide and 2 m high. Then tie wire or nylon twine across it, lengthwise and crosswise. Add a ladder like trellis or a vertical pole beside each plant, and tie the young stem lightly to it until it reaches the top.\n\nFor ampalaya, the DA says to put up the trellis when plants are about 15 cm high. Use posts every 3 m and fix plastic string or straw twine along the hills so the vines climb."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Zero tillage for squash",
+      "text": "The DA says squash can be grown with zero tillage. Clear the weeds by hand, dig holes 10 cm deep spaced 3 m apart and pulverize the soil in each hole to help germination."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plastic mulch and natural mulch"
+    },
+    {
+      "type": "text",
+      "text": "The ATI cucumber guide lists three kinds of mulch: organic mulch such as rice straw or dry cogon, plastic mulch, and living mulch such as pechay or kangkong. It says mulch helps control weeds and keeps soil moisture after about 20 days from emergence.\n\nIf you use plastic, lay it over the bed before planting and make planting holes. For the steps, follow the DA method in our [vegetable land preparation](/land-preparation/vegetable-land-preparation) guide. For squash, the DA also says to lay 5 to 6 cm of straw or rice hull under the fruits, so they do not touch the soil and rot."
+    },
+    {
+      "type": "cta",
+      "title": "Put every field task on one calendar",
+      "text": "Land preparation days go on the calendar, dated back from planting. Add your cucurbit lot to anee.io and it dates the plowing, trellis building and planting for you.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Change the work by soil and season"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Dry season.** Ampalaya furrows go 2 m apart. Use furrow irrigation and straw mulch.",
+        "**Wet season.** Ampalaya furrows go 3 m apart. Use raised beds, canals and a trellis. The DA lists patola planting from June to September in the wet season and February to May in the dry season.",
+        "**Clay and sandy soils.** The DA names sandy loam and clay loam as best. Heavy clay needs higher beds and canals, and sandy soil needs more compost.",
+        "**Acidic soil.** If your test shows a pH below the ranges above, read [acidic soil preparation](/land-preparation/acidic-soil-preparation).",
+        "**Salty or alkaline soil.** See [saline soil preparation](/land-preparation/saline-soil-preparation) and [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Setting furrows too close, so vines tangle and cannot be sprayed.",
+        "Skipping canals, so the field floods in the first typhoon rains.",
+        "Planting squash, upo or patola on flat ground in the wet season.",
+        "Building the trellis late, after the vines have already run on the ground.",
+        "Using fresh manure that burns the roots."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Fruit flies and beetles hit cucurbits hard. Read about the [melon fly](/pests/melon-fly) and the [squash beetle](/pests/squash-beetle) before the fruiting stage. Ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), when your layout does not match these numbers."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about cucurbit land preparation"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How far apart should ampalaya furrows be?",
+          "a": "The DA Region 02 guide says 2 m in the dry season and 3 m in the wet season, with hills 1.5 to 2.5 m apart along the furrow."
+        },
+        {
+          "q": "How high should a trellis for upo or patola be?",
+          "a": "The DA says overhead trellis 2 to 3 m wide and 2 m high, built with ipil ipil or bamboo poles."
+        },
+        {
+          "q": "Can squash be planted without plowing?",
+          "a": "Yes. The DA says zero tillage works. Clear weeds by hand, dig holes 10 cm deep spaced 3 m apart and loosen the soil in each hole."
+        },
+        {
+          "q": "Do cucurbits need raised beds?",
+          "a": "In the wet season, yes. The DA says to plant squash, upo and patola on raised beds or ridges to prevent flooding from rotting seeds and seedlings."
+        },
+        {
+          "q": "How much organic fertilizer do I add?",
+          "a": "Without a soil test, the DA says 10 to 20 tons per hectare for ampalaya, or 1 to 2 kg per hill for squash, before planting."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read also",
+      "items": [
+        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
+        { "label": "Vegetable land preparation", "url": "/land-preparation/vegetable-land-preparation" },
+        { "label": "Root crop land preparation", "url": "/land-preparation/root-crop-land-preparation" },
+        { "label": "Pagtatanim ng gulay", "url": "/crops/pagtatanim-ng-gulay" },
+        { "label": "Melon fly", "url": "/pests/melon-fly" },
+        { "label": "Squash beetle", "url": "/pests/squash-beetle" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "DA Region 02: Ampalaya Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Ampalaya.pdf" },
+        { "label": "DA Region 02: Squash Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf" },
+        { "label": "DA Region 02: Upo Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Upo.pdf" },
+        { "label": "DA Region 02: Patola Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Patola.pdf" },
+        { "label": "ATI: Gabay sa Produksyon ng Pipino", "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2024-12/GABAY%20SA%20PRODUKSYON%20NG%20PIPINO.pdf" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "section": "land-preparation",
+  "slug": "sugarcane-land-preparation",
+  "sortOrder": 100,
+  "lang": "en",
+  "category": "Land preparation",
+  "title": "Sugarcane Land Preparation: Deep Plowing, Subsoiling and Furrows",
+  "metaTitle": "Sugarcane Land Preparation: Plowing, Subsoiling, Furrows",
+  "metaDescription": "Sugarcane land preparation in the Philippines: deep plowing, subsoiling, harrowing and furrowing, the November to May window, lime and soil by soil changes.",
+  "focusKeyword": "sugarcane land preparation",
+  "keywords": [
+    "sugarcane land preparation",
+    "subsoiling",
+    "deep plowing",
+    "furrowing",
+    "four wheel tractor",
+    "hard pan",
+    "agricultural lime"
+  ],
+  "excerpt": "Sugarcane land preparation is the heaviest tillage job on a Philippine farm, because the crop roots deep and stays in the field for years of ratoons. The work is deep plowing, harrowing, subsoiling where there is a hard pan, and furrowing right before planting. This guide follows the practices of a Tarlac mill district office and adds machine notes.",
+  "heroImage": {
+    "src": "/images/site/fields-aerial.jpg",
+    "alt": "Aerial view of farm fields in rows, as in sugarcane land preparation",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why sugarcane land preparation is different"
+    },
+    {
+      "type": "text",
+      "text": "The Tarlac Mill District Office calls sugarcane a fairly deep rooted plant. So the soil must be loose to a good depth if the roots are to take in water and nutrients, especially in a dry spell. A shallow, hurried job shows up later as thin stands and weak ratoons.\n\nCane is a tractor crop in the Philippines. A UN CSAM review of Philippine mechanization says that sugarcane plantations use four wheel tractors, while rice and corn farms mostly rely on the carabao and the hand tractor. Their usual tools are the moldboard plow, the disk plow, the disk harrow and the rotavator.\n\nFor the big picture on all crops, read [land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sugarcane land preparation step by step"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Choose the direction of the work",
+          "text": "In a rectangular field, plow and harrow in the direction that gives the best efficiency. On rolling land, follow the contour of the land to prevent serious soil erosion."
+        },
+        {
+          "title": "Plow deep",
+          "text": "In deep soil, the Tarlac guide says to plow 45 to 90 cm deep so the roots can go deep. In shallow soil with a hard pan, plow only 15 to 20 cm, or up to where the hard pan begins, so you do not bring the infertile subsoil to the surface."
+        },
+        {
+          "title": "Harrow",
+          "text": "Harrow to break the clods and smooth the surface. The guide says heavy soils such as clay and clay loam need more plowing and harrowing than light soils."
+        },
+        {
+          "title": "Subsoil if there is a hard pan",
+          "text": "Subsoiling breaks the compacted layer without turning the infertile subsoil up. The guide gives a depth of at least 50 to 175 cm, and says to do it when the soil is relatively dry so the hard pan cracks."
+        },
+        {
+          "title": "Furrow just before planting",
+          "text": "Make furrows only when the cane points are ready to plant, so that you use the moisture in the freshly opened soil."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Deep plowing and harrowing: how many passes"
+    },
+    {
+      "type": "text",
+      "text": "No single number fits every farm. The Tarlac guide ties the number of rounds to the soil type, with clay needing more rounds than sandy loam. So count the rounds by what the soil looks like, not by a fixed number.\n\nA good rule is to stop when the clods are broken and the soil is loose at the planting depth. A technician in your mill district can check the field with you."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Subsoiling: when and how deep"
+    },
+    {
+      "type": "text",
+      "text": "Subsoiling uses a tractor drawn subsoiler. The Tarlac guide says to make one or two passes, with the last pass crisscrossing the first. Do it when the soil is relatively dry, because a dry hard pan shatters while a wet one only smears.\n\nSubsoiling is costly in fuel and time. So use it where you know there is a hard pan, for example where machines have run for years on the same lines."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The November to May window"
+    },
+    {
+      "type": "text",
+      "text": "The Tarlac guide says field preparation runs from November until May, when harvesting has just finished and plenty of planting materials are available. This is the Luzon cane calendar. Other mill districts have their own harvest and planting months, so match your own mill's season.\n\nIn practice, plan the order of your fields so that the field you harvest first is the first plowed. Then every lot can go from stubble to furrow while the soil is still dry enough to work."
+    },
+    {
+      "type": "table",
+      "caption": "Sugarcane land preparation operations and depths from the Tarlac guide",
+      "rows": [
+        [
+          "Operation",
+          "Depth or measure",
+          "Note"
+        ],
+        [
+          "Deep plowing, deep soil",
+          "45 to 90 cm",
+          "So roots go deep for water and nutrients"
+        ],
+        [
+          "Plowing, shallow soil with hard pan",
+          "15 to 20 cm, or to the hard pan",
+          "Do not bring up the infertile subsoil"
+        ],
+        [
+          "Subsoiling",
+          "At least 50 to 175 cm",
+          "One or two passes, the last crisscrossing the first, when the soil is relatively dry"
+        ],
+        [
+          "Furrow spacing",
+          "About 1 m between furrows",
+          "Around three cane points per meter of furrow"
+        ],
+        [
+          "Fertilizer in the furrow",
+          "Cover with a thin layer of soil",
+          "Protects the buds from injury"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Furrows only when the cane is ready",
+      "text": "The guide is clear that furrows should be made only when cane points are ready to plant. Opened furrows lose moisture fast, so the cutting, hauling and planting crews must be on hand the same day."
+    },
+    {
+      "type": "cta",
+      "title": "Schedule the passes on the calendar",
+      "text": "Land preparation days go on the cropping calendar, dated back from planting. Add a lot, set the planting date, and the plowing, subsoiling and furrowing days line up for you, with your crew and machine hire on the same board.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Lime and soil changes"
+    },
+    {
+      "type": "text",
+      "text": "For acid soils, the Tarlac guide calls for quality agricultural lime with at least 95 percent neutralizing value, applied at least one month before planting. A soil test tells you how much. See our guide on [acidic soil preparation](/land-preparation/acidic-soil-preparation) for how lime works.\n\nOn sodic or alkaline fields, see [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation). Near the coast, read [saline soil preparation](/land-preparation/saline-soil-preparation). For clay, plan more passes and work only at the right moisture. For light sandy soil, fewer passes are needed, but add organic matter."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dry season and wet season"
+    },
+    {
+      "type": "text",
+      "text": "Cane land preparation usually falls in the dry months, because the tractor works best on dry soil and subsoiling needs a dry hard pan. In the wet season, wet clay smears under the plow, so wait for a dry spell.\n\nThe [weather forecast](/features/farm-weather-forecast) in anee.io shows the week ahead per lot, so you can book the tractor for a dry window. You can also ask Anee, the [AI technician](/features/ai-agricultural-technician), about the field if you are unsure."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes in sugarcane land preparation"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Plowing shallow in deep soil, which limits the roots.",
+        "Plowing deep over a hard pan in shallow soil, which brings up the infertile subsoil.",
+        "Subsoiling when the soil is wet, so the hard pan smears instead of cracking.",
+        "Opening furrows long before planting.",
+        "Plowing up and down a slope, which invites erosion.",
+        "Skipping lime on acid soil."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about sugarcane land preparation"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How deep should I plow for sugarcane?",
+          "a": "The Tarlac Mill District Office says 45 to 90 cm in deep soil, and only 15 to 20 cm, or up to the hard pan, in shallow soil."
+        },
+        {
+          "q": "What is subsoiling?",
+          "a": "It is breaking the compacted hard pan without turning the infertile subsoil to the top. The guide gives a depth of at least 50 to 175 cm and says to do it when the soil is relatively dry."
+        },
+        {
+          "q": "How far apart are the furrows?",
+          "a": "The guide describes standard planting with about one meter between furrows and around three cane points per meter of furrow."
+        },
+        {
+          "q": "When do I prepare the field?",
+          "a": "In the Tarlac guide, from November to May, right after harvest. Other mill districts follow their own harvest and planting seasons."
+        },
+        {
+          "q": "Do I need lime?",
+          "a": "If your soil test shows acid soil, yes. The guide says to use quality agricultural lime with at least 95 percent neutralizing value, at least one month before planting."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Acidic soil preparation",
+          "url": "/land-preparation/acidic-soil-preparation"
+        },
+        {
+          "label": "Saline soil preparation",
+          "url": "/land-preparation/saline-soil-preparation"
+        },
+        {
+          "label": "Corn land preparation",
+          "url": "/land-preparation/corn-land-preparation"
+        },
+        {
+          "label": "White grub",
+          "url": "/pests/white-grub"
+        },
+        {
+          "label": "Types of weeds",
+          "url": "/weeds/types-of-weeds"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Tarlac Mill District Office: Cultural practices of sugarcane farming",
+          "url": "https://tarlacmd.blogspot.com/2010/05/cultural-practices-of-sugarcane-farming.html"
+        },
+        {
+          "label": "UN CSAM: Mechanizing Philippine agriculture for food sufficiency",
+          "url": "https://un-csam.org/sites/default/files/2021-01/ph_0.pdf"
+        }
+      ]
+    }
+  ]
+}
