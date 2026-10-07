@@ -8,8 +8,11 @@
     Until a name and an email are given, the card's header stays readable
     and its body is blurred under this form. POST /tools/open checks the
     email with Reoon (ToolGateController) and a good one joins the Acumbamail
-    list. The browser then remembers the opening for every tool; a signed in
-    member never sees the gate. Without JavaScript nothing is hidden.
+    list. Each tool opens on its own (2026-10-07: one opening used to open
+    all three, so a visitor who opened the weed helper found the finders
+    already open); the browser keeps the name and email, so the next tool
+    is one tap. A signed in member never sees the gate. Without JavaScript
+    nothing is hidden.
 --}}
 @php
     $gateWords = [
@@ -115,13 +118,17 @@
 @push('scripts')
 <script>
 (() => {
-    /* One opening serves every tool in this browser. A storage that throws
-       (a private window) just means the form shows again next visit. */
-    const KEY = 'anee.toolsOpen';
+    /* Each tool opens on its own; the name and email are kept so the next
+       one is a single tap. A storage that throws (a private window) just
+       means the form shows again next visit. */
+    const KEY = 'anee.toolGate';
     const member = @json(auth()->check());
-    const read = () => { try { return !!localStorage.getItem(KEY); } catch (_) { return false; } };
-    const save = (name) => { try { localStorage.setItem(KEY, JSON.stringify({ at: Date.now(), name })); } catch (_) {} };
-    let open = member || read();
+    const read = () => { try { return JSON.parse(localStorage.getItem(KEY) || 'null') || {}; } catch (_) { return {}; } };
+    const save = (tool, name, email) => {
+        try { const d = read(); d.name = name; d.email = email; d.tools = Object.assign({}, d.tools, { [tool]: Date.now() }); localStorage.setItem(KEY, JSON.stringify(d)); } catch (_) {}
+    };
+    const kept = read();
+    const isOpen = (tool) => member || !!(kept.tools && kept.tools[tool]);
     const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
     const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -129,7 +136,8 @@
         const gate = wrap.querySelector('.tg-gate');
         const card = wrap.querySelector('.wc-card');
         const out = wrap.closest('[aria-live]');
-        if (!gate || !card || open) return;
+        const tool = wrap.dataset.toolGate;
+        if (!gate || !card || isOpen(tool)) return;
 
         // The header (the age, the crop, the count) stays readable: the gate
         // starts where the card's body does, after every redraw.
@@ -153,9 +161,11 @@
             input.closest('.tg-field').querySelector('.tg-err').textContent = msg || '';
         };
         ['name', 'email'].forEach((n) => field(n).addEventListener('input', () => say(n, '')));
+        // Opened another tool before: the form comes filled in.
+        if (kept.name) field('name').value = kept.name;
+        if (kept.email) field('email').value = kept.email;
 
         const unlock = (first) => {
-            open = true;
             const thanks = gate.querySelector('.tg-thanks');
             thanks.querySelector('b').textContent = first ? 'Thank you, ' + first + '. Here are your results.' : 'Here are your results.';
             form.hidden = true;
@@ -167,8 +177,8 @@
                 if (out) out.setAttribute('aria-live', 'polite');
                 setTimeout(() => { gate.hidden = true; wrap.classList.remove('is-opening'); watch.disconnect(); }, reduce() ? 0 : 320);
             }, reduce() ? 300 : 900);
-            // Every other gate on the page opens with this one.
-            document.querySelectorAll('.tg.is-locked').forEach((w) => { if (w !== wrap) w.dispatchEvent(new CustomEvent('tg:open')); });
+            // Any other gate on the page for the same tool opens with this one.
+            document.querySelectorAll('.tg.is-locked').forEach((w) => { if (w !== wrap && w.dataset.toolGate === tool) w.dispatchEvent(new CustomEvent('tg:open')); });
         };
         wrap.addEventListener('tg:open', () => {
             wrap.classList.remove('is-locked'); card.inert = false; gate.hidden = true; watch.disconnect();
@@ -191,7 +201,7 @@
             const slow = setTimeout(() => { wait.textContent = 'Still checking. This can take a few seconds.'; }, 4000);
             try {
                 const res = await window.api(@json(route('tools.open')), { method: 'POST', body: { name, email, tool: form.dataset.tool, website: field('website').value } });
-                save(name.split(' ')[0]);
+                save(tool, name, email);
                 unlock(res?.data?.firstName || name.split(' ')[0]);
             } catch (err) {
                 const errs = err.errors || {};
