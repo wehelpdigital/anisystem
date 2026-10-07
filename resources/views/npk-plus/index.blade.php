@@ -3,6 +3,8 @@
 @section('page-title', 'NPK Plus')
 @section('page-subtitle', 'Every nutrient in your fertilizer plan')
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))
+{{-- No phone tab bar here (the owner's call): the calculator has the whole screen. --}}
+@section('body-class', 'hide-tabbar')
 
 @section('content')
 @include('partials.tag-sheet-css')
@@ -301,13 +303,6 @@
         color: #1a1a1a; background: linear-gradient(135deg, #f7d23a, #f5c518); transition: transform .28s var(--np-ease); }
     .np-anee:hover { transform: translateY(-1px); } .np-anee:disabled { opacity: .5; transform: none; cursor: default; }
     .np-anee img { width: 1.6rem; height: 1.6rem; border-radius: 999px; }
-    .np-mbar { position: fixed; left: 0; right: 0; bottom: calc(4.2rem + env(safe-area-inset-bottom)); z-index: 30; display: flex; gap: .5rem; align-items: center; justify-content: space-between;
-        margin: 0 .8rem; padding: .6rem .8rem; border-radius: 1rem; color: #fff; background: rgb(21 33 12 / .94); box-shadow: 0 14px 30px -16px rgb(0 0 0 / .8);
-        transform: translateY(150%); transition: transform .32s var(--np-ease); }
-    .np-mbar.is-on { transform: none; }
-    .np-mbar b { font-family: var(--font-heading); font-size: 1rem; }
-    .np-mbar button { padding: .45rem .8rem; border-radius: 999px; border: 0; font-size: .76rem; font-weight: 800; color: #1a1a1a; background: #f5c518; cursor: pointer; }
-    @media (min-width: 1024px) { .np-mbar { display: none; } }
     .np-rep { margin-top: 1rem; }
     .np-rep[hidden] { display: none; }
     .np-rhead { border-radius: 1.1rem; padding: 1rem 1.1rem; color: #fff; background: radial-gradient(120% 140% at 100% 0%, #4a7c2a 0%, #14250a 65%); }
@@ -331,7 +326,7 @@
     .np-srow em { flex: none; font-style: normal; font-size: .7rem; font-weight: 800; padding: .2rem .5rem; border-radius: 999px; background: #fef3c7; color: #8a5a00; }
     @media (prefers-reduced-motion: reduce) {
         .np-chem span, .np-line, .np-line.is-flash, .np-pane, .np-mrow, .lb-spill, .lb-top, .lb-turn svg { animation: none; }
-        .np-hero-fold, .np-hero-chev, .np-soil, .np-mbar, .np-need-bar .have, .np-pill, .np-otab-ind, .lb-st, .lb-water, .lb-kbar span, .np-utag, .np-qty, .np-add { transition: none; }
+        .np-hero-fold, .np-hero-chev, .np-soil, .np-need-bar .have, .np-pill, .np-otab-ind, .lb-st, .lb-water, .lb-kbar span, .np-utag, .np-qty, .np-add { transition: none; }
     }
     html.sm-still .lb-spill, html.sm-still .lb-top, html.sm-still .np-chem span { animation: none; }
 </style>
@@ -458,7 +453,6 @@
                 <div class="np-rep" id="npRep" hidden></div>
             </div>
         </div>
-        <div class="np-mbar" id="npMbar"><span>N P₂O₅ K₂O per ha <b id="npMbarV">0-0-0</b></span><button type="button" id="npMbarGo">See the totals</button></div>
     </div>
 
     <div id="npSavedPane" hidden>
@@ -944,8 +938,6 @@
         const perHa = Object.fromEntries(NUTRIENTS.map((n) => [n, area > 0 ? tot[n] / area : 0]));
         $('npN').textContent = fmt(perHa.N, 0); $('npP').textContent = fmt(perHa.P2O5, 0); $('npK').textContent = fmt(perHa.K2O, 0);
         const npk = fmt(perHa.N, 0) + '-' + fmt(perHa.P2O5, 0) + '-' + fmt(perHa.K2O, 0);
-        $('npMbarV').textContent = npk;
-        $('npMbar').classList.toggle('is-on', out.length > 0);
         $('npOutSub').textContent = out.length ? 'For ' + fmt(area, 3) + ' ha.' + (estimated ? ' Includes biofertilizer estimates.' : '') : 'Add a fertilizer to see the totals.';
 
         // NPK: as the bag reads them, N, P2O5 and K2O.
@@ -1206,7 +1198,6 @@
         keys.forEach((x) => { $(PANES[x]).hidden = x !== k; });
         if (k === 'barrel') BR.enter(); else BR.leave();
     });
-    $('npMbarGo').addEventListener('click', () => $('npOut').scrollIntoView({ behavior: still() ? 'auto' : 'smooth', block: 'start' }));
 
     /* ---- save, and Anee ---- */
     const save = async () => {
