@@ -15,8 +15,9 @@
     <meta property="og:title" content="{{ $meta['metaTitle'] }}">
     <meta property="og:description" content="{{ $meta['metaDescription'] }}">
     <meta property="og:url" content="{{ url('/questions') }}">
+    {{-- @@context: a bare @context is a Blade directive, and printed PHP into this JSON. --}}
     <script type="application/ld+json">{!! json_encode([
-        '@context' => 'https://schema.org',
+        '@@context' => 'https://schema.org',
         '@type' => 'CollectionPage',
         'name' => $meta['hubTitle'],
         'description' => $meta['metaDescription'],

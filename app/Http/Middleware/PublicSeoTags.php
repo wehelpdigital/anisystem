@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\ImageWords;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -98,15 +99,63 @@ class PublicSeoTags
         $add[] = '<script type="application/ld+json">' . json_encode(['@context' => 'https://schema.org', '@graph' => $graph], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) . '</script>';
 
         $html = substr($html, 0, $cut) . "\n    " . implode("\n    ", $add) . "\n" . substr($html, $cut);
+        $html = self::hoistStyles($html);
 
-        // A picture with alt words carries them as its title too.
-        return preg_replace_callback('#<img\b([^>]*)>#i', function ($m) {
-            $tag = $m[1];
-            if (preg_match('#\btitle\s*=#i', $tag) || ! preg_match('#\balt="([^"]+)"#i', $tag, $a)) {
+        // A picture drawn as decoration (an empty alt) or with no alt at all
+        // gets readable words (App\Support\ImageWords); a decorative one
+        // stays out of a screen reader's way, as its empty alt kept it. Then
+        // a picture with alt words carries them as its title too. Markup
+        // inside a script (a string the page builds later) is left alone.
+        return preg_replace_callback('#<script\b[^>]*>.*?</script>|<img\b([^>]*)>#is', function ($m) {
+            if (strncasecmp($m[0], '<script', 7) === 0) {
                 return $m[0];
+            }
+            $tag = $m[1];
+            if (! preg_match('#\balt="[^"]+"#i', $tag) && preg_match('#\bsrc="([^"]+)"#i', $tag, $s)
+                && ($words = ImageWords::forSrc($s[1])) !== '') {
+                $decor = (bool) preg_match('#\balt=""#i', $tag);
+                $tag = ' alt="' . htmlspecialchars($words, ENT_QUOTES, 'UTF-8') . '"'
+                    . ($decor && ! preg_match('#\baria-hidden=#i', $tag) ? ' aria-hidden="true"' : '')
+                    . preg_replace('#\s*\balt=""#i', '', $tag);
+            }
+            if (preg_match('#\btitle\s*=#i', $tag) || ! preg_match('#\balt="([^"]+)"#i', $tag, $a)) {
+                return '<img' . $tag . '>';
             }
 
             return '<img title="' . $a[1] . '"' . $tag . '>';
         }, $html) ?? $html;
+    }
+
+    /**
+     * Every <style> in the body moves to the end of the head, in its order.
+     * A markup check counts a <style> in the body an error, and many parts
+     * ship their own (the forms, the finders, Anee's wait). The cascade is
+     * the same: they came after the head's styles, and still do. A style
+     * inside a script, a template or an SVG drawing stays where it is.
+     */
+    private static function hoistStyles(string $html): string
+    {
+        $cut = stripos($html, '</head>');
+        if ($cut === false) {
+            return $html;
+        }
+        $moved = [];
+        $body = preg_replace_callback(
+            '#<script\b[^>]*>.*?</script>|<template\b[^>]*>.*?</template>|<svg\b[^>]*>.*?</svg>|<textarea\b[^>]*>.*?</textarea>|<style\b[^>]*>.*?</style>#is',
+            function ($m) use (&$moved) {
+                if (strncasecmp($m[0], '<style', 6) !== 0) {
+                    return $m[0];
+                }
+                $moved[] = $m[0];
+
+                return '';
+            },
+            substr($html, $cut + 7)
+        );
+        if ($body === null || ! $moved) {
+            return $html;
+        }
+
+        return substr($html, 0, $cut) . implode("\n", $moved) . "\n</head>" . $body;
     }
 }

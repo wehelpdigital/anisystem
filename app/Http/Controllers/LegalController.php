@@ -21,6 +21,31 @@ class LegalController extends Controller
         return $this->show('ph', $slug);
     }
 
+    /** The Philippine face's list of the legal pages, at /legal. */
+    public function indexPh()
+    {
+        return $this->index('ph');
+    }
+
+    /**
+     * /legal itself (2026-10-07): every page the footer links to, in one
+     * list. The address answered 404 and a site audit counted it a broken
+     * link, since every legal page sits under it.
+     */
+    public function index(string $face)
+    {
+        $pages = AsLegalPage::active()->published()->orderBy('sortOrder')->orderBy('id')->get();
+        // A core page with no row at all wears the standard wording, as in show().
+        $rows = AsLegalPage::whereIn('slug', array_keys(AsLegalPage::CORE))->pluck('slug')->all();
+        foreach (array_keys(AsLegalPage::CORE) as $slug) {
+            if (! in_array($slug, $rows, true) && ($page = AsLegalPage::fromDefault($slug))) {
+                $pages->push($page);
+            }
+        }
+
+        return view('legal.index', ['pages' => $pages->sortBy('sortOrder')->values()]);
+    }
+
     /** The face comes first on the address (/en/legal/privacy); scalar route parameters arrive by position. */
     public function show(string $face, string $slug)
     {
@@ -53,15 +78,17 @@ class LegalController extends Controller
 
         [$html, $toc] = $this->withAnchors(CommunityText::safeHtml($page->body));
 
-        // The pages link to each other and to the public pages by their old,
-        // face-less addresses ("/legal/cookies", "/pricing"), which answer
-        // with a redirect that picks a face for the visitor. Point them at
-        // the face being read instead, so an /en reader stays on /en.
-        $html = preg_replace(
-            '~href="/(legal/[a-z0-9\-]+|pricing|contact|about|features|tutorial)(?=["#?])~',
-            'href="/' . $face . '/$1',
-            $html
-        ) ?? $html;
+        // The pages link to each other and to the public pages by their
+        // face-less addresses ("/legal/cookies", "/pricing"). Those are the
+        // Philippine pages; an /en reader is pointed at the /en twins. (The
+        // Philippine face once got "/ph/..." too, a redirect on every link.)
+        if ($face !== 'ph') {
+            $html = preg_replace(
+                '~href="/(legal/[a-z0-9\-]+|pricing|contact|about|features|tutorial)(?=["#?])~',
+                'href="/' . $face . '/$1',
+                $html
+            ) ?? $html;
+        }
 
         return view('legal.show', [
             'page' => $page,

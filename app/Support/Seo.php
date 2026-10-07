@@ -75,7 +75,9 @@ final class Seo
     /** Behind the login, or a door of its own: closed to every crawler. */
     private const CLOSED = ['/app/', '/admin/', '/account', '/purchase', '/notifications', '/login', '/signup', '/auth/',
         '/forgot-password', '/reset-password', '/verify-email', '/verify-notice', '/pw/', '/s/', '/worker-invite/',
-        '/ads/', '/storage/', '/broadcasting/', '/blog-preview', '/site-preview', '/deploy-check', '/up', '/ask-anee/answer/'];
+        '/ads/', '/storage/', '/broadcasting/', '/blog-preview', '/site-preview', '/deploy-check', '/up', '/ask-anee/answer/',
+        // The flag's switch: it sets a cookie and redirects, never a page.
+        '/face/'];
 
     /**
      * Facebook's own fetchers. They index nothing: they read a page to draw

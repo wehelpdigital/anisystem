@@ -119,7 +119,10 @@
                 @if ($film)
                     <figure class="sp-phone is-film">
                         <video src="{{ $film[0] }}" @if ($film[1]) poster="{{ $film[1] }}" @endif muted playsinline loop autoplay preload="metadata"
-                               aria-label="{{ $feat['name'] ?? $page->title }} in the anee.io app, recorded on a phone" data-sp-film></video>
+                               aria-label="{{ $feat['name'] ?? $page->title }} in the anee.io app, recorded on a phone" data-sp-film>
+                            {{-- Shown only where a video cannot play; it also gives the page a picture of its own. --}}
+                            @if ($film[1])<img src="{{ $film[1] }}" alt="{{ $feat['name'] ?? $page->title }} in the anee.io smart farm app, on a phone" loading="lazy">@endif
+                        </video>
                         <figcaption class="sp-phone-tag"><i></i>Recorded in the real app</figcaption>
                     </figure>
                 @elseif ($heroSrc && $portrait)

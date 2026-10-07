@@ -1671,7 +1671,7 @@
                         <ul class="hg-rows">
                             @foreach ($pages->slice(1)->take(4) as $p)
                                 <li><a href="{{ $SP::pageUrl($p) }}" class="hg-row">
-                                    <img src="{{ $guideThumb($p) }}" alt="" loading="lazy" width="96" height="72" referrerpolicy="no-referrer">
+                                    <img src="{{ $guideThumb($p) }}" alt="{{ (is_array($p->heroImage) ? ($p->heroImage['alt'] ?? '') : '') ?: $p->title }}" aria-hidden="true" loading="lazy" width="96" height="72" referrerpolicy="no-referrer">
                                     <span>@if ($p->category)<small>{{ $p->category }}</small>@endif<b>{{ $SP::shortTitle($p) }}</b></span>
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                                 </a></li>
@@ -1750,8 +1750,9 @@
         </div>
     </section>
     @push('head')
+    {{-- @@context: a bare @context is a Blade directive, and printed PHP into this JSON. --}}
     <script type="application/ld+json">{!! json_encode([
-        '@context' => 'https://schema.org',
+        '@@context' => 'https://schema.org',
         '@type' => 'FAQPage',
         'mainEntity' => array_map(fn ($f) => ['@type' => 'Question', 'name' => $f[0], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]]], $faqs),
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>

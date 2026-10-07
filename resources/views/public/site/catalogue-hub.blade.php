@@ -45,8 +45,9 @@
     <meta property="og:description" content="{{ $meta['metaDescription'] }}">
     <meta property="og:url" content="{{ $S::url($section) }}">
     @if ($faces->count())<meta property="og:image" content="{{ $faces[0]['thumb'] }}">@endif
+    {{-- @@context: a bare @context is a Blade directive, and printed PHP into this JSON. --}}
     <script type="application/ld+json">{!! json_encode([
-        '@context' => 'https://schema.org',
+        '@@context' => 'https://schema.org',
         '@type' => 'CollectionPage',
         'name' => $meta['hubTitle'],
         'description' => $meta['metaDescription'],
@@ -165,11 +166,11 @@
                             <span class="wk-tag">{{ $P::GROUPS[$w['group']][0] === 'Fruits and Plantation Crops' ? 'Fruits' : $P::GROUPS[$w['group']][0] }}</span>
                             <span class="wk-tag is-kind" style="--g: {{ $kindHue[$w['kind']] ?? 98 }}">{{ $w['kind'] }}</span>
                         </span>
-                        <span class="wk-in">
+                        <div class="wk-in">
                             <b>{{ $w['name'] }}</b>
                             <em>{{ $w['sci'] }}</em>
                             @if ($w['local'] !== '')<p><span>Local names:</span> {{ $w['local'] }}</p>@elseif ($w['hint'] !== '')<p>{{ $w['hint'] }}</p>@endif
-                        </span>
+                        </div>
                     </a>
                 @endforeach
             </div>

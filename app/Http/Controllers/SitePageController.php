@@ -109,7 +109,7 @@ class SitePageController extends Controller
 
     public function sitemap()
     {
-        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/blog', '/ask-anee', '/questions'];
+        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/land-preparation', '/blog', '/ask-anee', '/questions', '/legal'];
         $urls = array_map(fn ($p) => ['loc' => url($p), 'lastmod' => null], $static);
         try {
             foreach (AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'updated_at']) as $p) {
@@ -117,6 +117,13 @@ class SitePageController extends Controller
             }
         } catch (\Throwable $e) {
             // no pages table yet: the site's own pages still go out
+        }
+        try {
+            foreach (\App\Models\AsLegalPage::active()->published()->orderBy('sortOrder')->get(['slug', 'updated_at']) as $p) {
+                $urls[] = ['loc' => url('/legal/' . $p->slug), 'lastmod' => $p->updated_at?->toAtomString()];
+            }
+        } catch (\Throwable $e) {
+            // the legal pages' table is the mother app's; without it, /legal alone
         }
 
         return response()->view('public.site.sitemap', ['urls' => $urls])->header('Content-Type', 'application/xml; charset=UTF-8');

@@ -171,6 +171,52 @@
             .pm-page, .pm-guide { animation: none; }
         }
     </style>
+    @include('partials.face-switch-css')
+    {{-- The footer's styles (they sat in the body, which a markup check counts an error). --}}
+    <style>
+        .pf { background: linear-gradient(180deg, #f6faf1 0%, #eef6e6 100%); border-top: 1px solid #e1edd3; }
+        .pf-grid { display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .pf-grid:not(.has-guides) { grid-template-columns: minmax(0, 1fr); }
+        .pf-grid:not(.has-guides) .pf-list { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; }
+        @media (min-width: 1024px) { .pf-grid.has-guides { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2rem; } }
+        .pf-h { display: flex; align-items: center; gap: .5rem; width: 100%; text-align: left; font-family: var(--font-heading); font-weight: 700; font-size: 1rem; color: #14210c; margin-bottom: .9rem; cursor: default; }
+        .pf-plus { display: none; }
+        .pf-fold { display: grid; grid-template-rows: 1fr; }
+        .pf-fold > ul { overflow: hidden; }
+        /* A phone folds each column to its heading; a tap opens it. */
+        @media (max-width: 639.98px) {
+            .pf-grid.has-guides { grid-template-columns: minmax(0, 1fr); gap: 0; }
+            .pf-grid.has-guides .pf-col { border-bottom: 1px solid #dfeccf; }
+            .pf-grid.has-guides .pf-h { margin: 0; padding: .85rem 0; cursor: pointer; }
+            .pf-grid.has-guides .pf-plus { display: block; position: relative; margin-left: auto; width: .9rem; height: .9rem; }
+            .pf-grid.has-guides .pf-plus::before, .pf-grid.has-guides .pf-plus::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; border-radius: 2px; background: #3d6823;
+                transition: transform .28s cubic-bezier(.22,1,.36,1); }
+            .pf-grid.has-guides .pf-plus::after { transform: rotate(90deg); }
+            .pf-grid.has-guides .is-open .pf-plus::after { transform: rotate(0); }
+            .pf-grid.has-guides .pf-fold { grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+            .pf-grid.has-guides .is-open .pf-fold { grid-template-rows: 1fr; }
+            .pf-grid.has-guides .pf-list { padding-left: 2.4rem; }
+            .pf-grid.has-guides .pf-list li:last-child { margin-bottom: 1rem; }
+        }
+        .pf-h svg { width: 1.9rem; height: 1.9rem; padding: .4rem; border-radius: .65rem; background: #fff; color: #3d6823; box-shadow: 0 1px 0 #d9e9c6, 0 6px 14px -10px rgb(20 33 12 / .5); flex: none; }
+        .pf-list { display: grid; gap: .5rem; font-size: .9rem; }
+        .pf-list a { color: #4b5563; text-decoration: none; transition: color .28s cubic-bezier(.22,1,.36,1), padding .28s cubic-bezier(.22,1,.36,1); }
+        .pf-list a:hover { color: #3d6823; padding-left: .2rem; }
+        .pf-list .pf-all { font-weight: 800; color: #3d6823; }
+        @media (prefers-reduced-motion: reduce) { .pf-list a, .pf-fold, .pf-plus::before, .pf-plus::after { transition: none !important; } }
+        /* Our tech ecosystem, in the footer (2026-10-07): each mark in one
+           plain colour, brighter on hover; the house curve. */
+        .te { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgb(255 255 255 / .08); }
+        .te-h { font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #f5c518; }
+        .te-p { margin-top: .45rem; font-size: .8rem; line-height: 1.6; color: #9ca3af; }
+        .te-list { margin-top: .8rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+        .te-list li { display: inline-flex; align-items: center; gap: .45rem; padding: .38rem .7rem; border-radius: 999px; font-size: .76rem; font-weight: 700; color: #d1d5db;
+            background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .08); transition: color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+        .te-list li:hover { color: #fff; border-color: rgb(255 255 255 / .22); background: rgb(255 255 255 / .09); }
+        .te-mark { flex: none; width: 1rem; height: 1rem; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
+        .te-fine { margin-top: .6rem; font-size: .74rem; color: #6b7280; }
+        @media (prefers-reduced-motion: reduce) { .te-list li { transition: none; } }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col bg-white">
 
@@ -399,50 +445,6 @@
             </div>
         </div>
     </section>
-    <style>
-        .pf { background: linear-gradient(180deg, #f6faf1 0%, #eef6e6 100%); border-top: 1px solid #e1edd3; }
-        .pf-grid { display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .pf-grid:not(.has-guides) { grid-template-columns: minmax(0, 1fr); }
-        .pf-grid:not(.has-guides) .pf-list { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; }
-        @media (min-width: 1024px) { .pf-grid.has-guides { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2rem; } }
-        .pf-h { display: flex; align-items: center; gap: .5rem; width: 100%; text-align: left; font-family: var(--font-heading); font-weight: 700; font-size: 1rem; color: #14210c; margin-bottom: .9rem; cursor: default; }
-        .pf-plus { display: none; }
-        .pf-fold { display: grid; grid-template-rows: 1fr; }
-        .pf-fold > ul { overflow: hidden; }
-        /* A phone folds each column to its heading; a tap opens it. */
-        @media (max-width: 639.98px) {
-            .pf-grid.has-guides { grid-template-columns: minmax(0, 1fr); gap: 0; }
-            .pf-grid.has-guides .pf-col { border-bottom: 1px solid #dfeccf; }
-            .pf-grid.has-guides .pf-h { margin: 0; padding: .85rem 0; cursor: pointer; }
-            .pf-grid.has-guides .pf-plus { display: block; position: relative; margin-left: auto; width: .9rem; height: .9rem; }
-            .pf-grid.has-guides .pf-plus::before, .pf-grid.has-guides .pf-plus::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; border-radius: 2px; background: #3d6823;
-                transition: transform .28s cubic-bezier(.22,1,.36,1); }
-            .pf-grid.has-guides .pf-plus::after { transform: rotate(90deg); }
-            .pf-grid.has-guides .is-open .pf-plus::after { transform: rotate(0); }
-            .pf-grid.has-guides .pf-fold { grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-            .pf-grid.has-guides .is-open .pf-fold { grid-template-rows: 1fr; }
-            .pf-grid.has-guides .pf-list { padding-left: 2.4rem; }
-            .pf-grid.has-guides .pf-list li:last-child { margin-bottom: 1rem; }
-        }
-        .pf-h svg { width: 1.9rem; height: 1.9rem; padding: .4rem; border-radius: .65rem; background: #fff; color: #3d6823; box-shadow: 0 1px 0 #d9e9c6, 0 6px 14px -10px rgb(20 33 12 / .5); flex: none; }
-        .pf-list { display: grid; gap: .5rem; font-size: .9rem; }
-        .pf-list a { color: #4b5563; text-decoration: none; transition: color .28s cubic-bezier(.22,1,.36,1), padding .28s cubic-bezier(.22,1,.36,1); }
-        .pf-list a:hover { color: #3d6823; padding-left: .2rem; }
-        .pf-list .pf-all { font-weight: 800; color: #3d6823; }
-        @media (prefers-reduced-motion: reduce) { .pf-list a, .pf-fold, .pf-plus::before, .pf-plus::after { transition: none !important; } }
-        /* Our tech ecosystem, in the footer (2026-10-07): each mark in one
-           plain colour, brighter on hover; the house curve. */
-        .te { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgb(255 255 255 / .08); }
-        .te-h { font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #f5c518; }
-        .te-p { margin-top: .45rem; font-size: .8rem; line-height: 1.6; color: #9ca3af; }
-        .te-list { margin-top: .8rem; display: flex; flex-wrap: wrap; gap: .4rem; }
-        .te-list li { display: inline-flex; align-items: center; gap: .45rem; padding: .38rem .7rem; border-radius: 999px; font-size: .76rem; font-weight: 700; color: #d1d5db;
-            background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .08); transition: color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
-        .te-list li:hover { color: #fff; border-color: rgb(255 255 255 / .22); background: rgb(255 255 255 / .09); }
-        .te-mark { flex: none; width: 1rem; height: 1rem; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
-        .te-fine { margin-top: .6rem; font-size: .74rem; color: #6b7280; }
-        @media (prefers-reduced-motion: reduce) { .te-list li { transition: none; } }
-    </style>
 
     <footer class="bg-gray-900 text-gray-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] items-start">
