@@ -146,7 +146,7 @@
     (async () => {
         try {
             const task = lib.getDocument({ url: FILE, rangeChunkSize: 1 << 20, disableAutoFetch: true, withCredentials: true });
-            task.onProgress = (p) => { if (p.total) $('rdWaitSays').textContent = 'Opening the magazine… ' + Math.round(p.loaded / p.total * 100) + '%'; };
+            task.onProgress = (p) => { const w = $('rdWaitSays'); if (w && p.total) w.textContent = 'Opening the magazine… ' + Math.round(p.loaded / p.total * 100) + '%'; };
             doc = await task.promise;
             const first = await doc.getPage(1);
             base = first.getViewport({ scale: 1 });
@@ -163,7 +163,7 @@
             watch();
             track();
         } catch (err) {
-            $('rdWaitSays').textContent = 'The magazine could not open here. Use the download button to read it.';
+            const w = $('rdWaitSays'); if (w) w.textContent = 'The magazine could not open here. Use the download button to read it.';
         }
     })();
 })();

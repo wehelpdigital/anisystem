@@ -52,8 +52,10 @@
             return [url($it['url']), 'Read the guides'];
         }
         if ($hwMode === 'app') {
-            if ($it['app'] && \Illuminate\Support\Facades\Route::has($it['app'])) {
-                return [route($it['app']), $it['app'] === 'sm.index' ? 'Find it in your schedules' : 'Open it now'];
+            // "name:param" for a route that takes one (the field helpers).
+            [$hwRoute, $hwParam] = array_pad(explode(':', (string) $it['app'], 2), 2, null);
+            if ($hwRoute && \Illuminate\Support\Facades\Route::has($hwRoute)) {
+                return [$hwParam ? route($hwRoute, $hwParam) : route($hwRoute), $hwRoute === 'sm.index' ? 'Find it in your schedules' : 'Open it now'];
             }
 
             return null;
