@@ -409,6 +409,36 @@
         </div>
     </section>
 
+    {{-- ================= JUST ADDED ================= --}}
+    {{-- The newest tools (2026-10-07), each with its picture from the app;
+         the Stash said as what it is: partners' resources, shared. --}}
+    @php
+        $hpNew = [
+            ['Satellite Analysis', 'Draw your field and see its health from space: greenness, weak spots, and radar that sees through typhoon clouds.', 'satellite', 'satellite.webp', '#space'],
+            ['Satellite Weather', 'Clouds and rain over your farm, played back and fast forwarded, with every typhoon\'s path and its distance to you.', 'storm', 'sky.webp', '#space'],
+            ['NPK Plus', 'Every nutrient in your fertilizer plan, as the element and the oxide, checked against what your crop needs. Free.', 'npk', 'npk.webp', '#fertilizer'],
+            ['Pest and disease finders', 'From the damage you see to the active ingredient to spray, with its group. The weed helper by the age of your rice.', 'pest', 'finder.webp', '#crop-care'],
+            ['The Stash', 'Resources shared by anee.io\'s partners, starting with every PhilRice Magazine issue, read inside the app.', 'stash', 'stash.webp', '#resources'],
+        ];
+    @endphp
+    <section class="hp-sec hp-new" aria-labelledby="hpNewH">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="hp-head reveal">
+                <p class="hp-kick">Just added</p>
+                <h2 class="hp-h2" id="hpNewH">New Tools for the <em>Hardest Weeks.</em></h2>
+                <p class="hp-p">Built this season with farmers and technicians. Each one opens from Global and Quick Tools in the app.</p>
+            </div>
+            <div class="hp-new-rail">
+                @foreach ($hpNew as $i => [$nt, $np, $ni, $nimg, $nto])
+                    <a href="{{ route('features') }}{{ $nto }}" class="hp-new-card reveal" style="--reveal-delay: {{ $i * .06 }}s">
+                        <span class="hp-new-shot"><img src="{{ asset('images/site/app/' . $nimg) }}" alt="{{ $nt }} on a phone" loading="lazy" width="780" height="1520"></span>
+                        <span class="hp-new-tx"><img src="{{ asset('images/icons/' . $ni . '.svg') }}" alt="" width="34" height="34" loading="lazy"><b>{{ $nt }}</b><small>{{ $np }}</small></span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     {{-- ================= THE SEASON IN SEVEN STEPS ================= --}}
     {{-- The answer, shown: How It Works' seven steps as tabs. Each step lists
          its tools, and the phone plays the step's films (the same phone
@@ -3241,6 +3271,25 @@
     /* The question leads small, the promise is the title (owner, 2026-10-07). */
     .hp-final-h span { display: block; margin-bottom: .45rem; font-size: clamp(1.15rem, 2.3vw, 1.6rem); line-height: 1.25; letter-spacing: -.005em; color: #e4ecdb; }
     .hp-final-h em { display: block; font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.06; }
+    /* Just added (2026-10-07): the newest tools on a rail that swipes on a
+       phone and lays out in a row on a desk; each card a phone shot. */
+    .hp-new { background: linear-gradient(180deg, #fff, #f6faf1); }
+    .hp-new-rail { margin: 2rem -1rem 0; padding: .4rem 1rem 1rem; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(15rem, 78%); gap: .9rem; overflow-x: auto;
+        scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .hp-new-rail::-webkit-scrollbar { display: none; }
+    @media (min-width: 1024px) { .hp-new-rail { margin: 2.4rem 0 0; padding: .4rem 0 1rem; grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; } }
+    .hp-new-card { scroll-snap-align: start; display: flex; flex-direction: column; border-radius: 1.4rem; overflow: hidden; text-decoration: none; background: #fff; border: 1px solid #e4efd4;
+        box-shadow: 0 22px 44px -36px rgb(20 33 12 / .7); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .hp-new-card:hover { transform: translateY(-5px); border-color: #a8cc7e; box-shadow: 0 30px 50px -34px rgb(20 33 12 / .8); }
+    .hp-new-shot { position: relative; height: 13rem; overflow: hidden; background: linear-gradient(160deg, #e4efd4, #f6faf1); }
+    .hp-new-shot img { position: absolute; left: 50%; top: 1rem; width: 72%; transform: translateX(-50%); border-radius: 1.1rem 1.1rem 0 0; box-shadow: 0 16px 30px -18px rgb(20 33 12 / .6);
+        transition: transform .5s cubic-bezier(.22,1,.36,1); }
+    .hp-new-card:hover .hp-new-shot img { transform: translateX(-50%) translateY(-6px); }
+    .hp-new-tx { display: grid; gap: .3rem; padding: .95rem 1rem 1.1rem; }
+    .hp-new-tx img { width: 2.1rem; height: 2.1rem; }
+    .hp-new-tx b { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #14210c; }
+    .hp-new-tx small { font-size: .86rem; line-height: 1.5; color: #4b5563; }
+    @media (prefers-reduced-motion: reduce) { .hp-new-card, .hp-new-shot img { transition: none; } }
     /* The promise in gold (owner, 2026-10-07): a metal sheen that drifts
        slowly across the words, held still under reduced motion. */
     .on-dark .hp-h2.hp-final-h em { color: #f5c518; background: linear-gradient(100deg, #c08a12 0%, #f7d774 22%, #fff3b8 34%, #e0aa2a 50%, #f7d774 70%, #b8860b 100%);
