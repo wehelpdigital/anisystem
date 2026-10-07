@@ -650,7 +650,7 @@
                 <div class="hp-tvs-t reveal">
                     <div class="hp-tvs-cols" aria-hidden="true">
                         <span></span>
-                        <span class="is-old">{!! $svg('user', '2') !!}A technician visit</span>
+                        <span class="is-old">{!! $svg('user', '2') !!}Your local agricultural technician</span>
                         <span class="is-new"><img src="{{ $face }}" alt="">Anee</span>
                     </div>
                     @foreach ($aneeVs as $i => [$vk, $vi, $vo, $vn, $race])
@@ -658,7 +658,7 @@
                             <b class="hp-tvs-k"><span>{!! $svg($vi) !!}</span>{{ $vk }}</b>
                             <div class="hp-tvs-old">
                                 <i>{!! $xMark !!}</i>
-                                <p><em class="hp-vs-label">A technician visit:</em> {{ $vo }}
+                                <p><em class="hp-vs-label">Your local agricultural technician:</em> {{ $vo }}
                                     @if ($race)<span class="hp-tvs-race is-slow" aria-hidden="true"><i></i><b>Days of waiting</b></span>@endif
                                 </p>
                             </div>
