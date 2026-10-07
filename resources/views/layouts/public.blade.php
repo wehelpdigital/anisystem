@@ -45,7 +45,7 @@
         }
     @endphp
     <title>{!! $pageTitle !!}</title>
-    <meta name="description" content="@yield('meta_description', 'anee.io is the cropping schedule manager for ' . \App\Support\Region::t('farmersOf') . '. Plan your lots, workers, materials, activities and irrigation in one web app that works on any phone.')">
+    <meta name="description" content="@yield('meta_description', 'anee.io is the smart farm app for ' . \App\Support\Region::t('farmersOf') . ': your cropping calendar, costs, workers, field maps and Anee, your smart farm technician, in one app that works on any phone.')">
     {{-- Indexable only once the mother app's switch says so (App\Support\Seo). --}}
     <meta name="robots" content="{{ \App\Support\Seo::robots() }}">
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
@@ -433,8 +433,9 @@
                      stretch the wordmark sideways. --}}
                 <img src="{{ asset('images/site/logo-white.png') }}?v=anee" alt="anee.io" class="block h-8 w-auto max-w-full object-contain object-left mb-4">
                 <p class="text-sm leading-relaxed text-gray-400">
-                    anee.io is the cropping schedule manager that helps {{ \App\Support\Region::t('farmersOf') }} with
-                    farm lessons, simple technology and quality products, for farms that last.
+                    anee.io is the smart farm app for {{ \App\Support\Region::t('farmersOf') }}: the cropping calendar,
+                    every {{ \App\Support\Region::ph() ? 'peso' : 'dollar' }}, the workers, the field seen from space and Anee, your smart farm technician,
+                    in one place. Built by farm technicians, for farms that last.
                 </p>
             </div>
             <div class="md:justify-self-end">

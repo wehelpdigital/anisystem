@@ -3,10 +3,10 @@
 @include('public.partials.site-css')
 @include('public.partials.hp-base')
 
-@section('title', \App\Support\Region::ph() ? 'Cropping Calendar App for Palay, Mais and Gulay' : 'Cropping Schedule Manager for ' . \App\Support\Region::t('farmersOfTitle'))
+@section('title', 'Smart Farm Management App for ' . \App\Support\Region::t('farmersOfTitle'))
 @section('meta_description', \App\Support\Region::ph()
-    ? 'anee.io is the farm app for Filipino farmers: plan pagtatanim ng palay and mais by day count, track fertilizer and workers, and ask Anee, the AI technician.'
-    : 'anee.io helps you plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the AI Technician inside the app, and learn from a community of ' . \App\Support\Region::t('farmersOf') . '. All in one web app that works on any phone. Start free.')
+    ? 'The smart farm app for Filipino farmers: plan pagtatanim ng palay and mais by day count, track every peso and worker, see your field from space, and ask Anee.'
+    : 'The smart farm app for farmers: plan every season by day count, track every dollar and worker, see your field from space, and ask Anee, your smart farm technician.')
 
 {{-- THE HOMEPAGE (rebuilt 2026-10-05). One argument, told in order:
      the promise (hero), the proof (facts), why plans must bend, what is
@@ -1737,7 +1737,7 @@
                  farmer's life today (money, debt, worry, risk, the next
                  generation) and where it could be, an arrow between the two. --}}
             <p class="hp-kick">Think about it, seriously</p>
-            <h2 class="hp-h2 hp-final-h"><span>Think About Where You Are Now.</span> <em>Then Where You Could Be With anee.io.</em></h2>
+            <h2 class="hp-h2 hp-final-h"><span>Think About Where You Are Now.</span> <em>Versus Where You Could Be With anee.io in 5 Years.</em></h2>
             <p class="hp-p">Same field, same hands, same rain. What changes is the life your farm gives back to you and your family.</p>
             @php
                 // Not features: the life a farm gives you now, and the one it could (the owner's ask, 2026-10-07).
@@ -3241,6 +3241,13 @@
     /* The question leads small, the promise is the title (owner, 2026-10-07). */
     .hp-final-h span { display: block; margin-bottom: .45rem; font-size: clamp(1.15rem, 2.3vw, 1.6rem); line-height: 1.25; letter-spacing: -.005em; color: #e4ecdb; }
     .hp-final-h em { display: block; font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.06; }
+    /* The promise in gold (owner, 2026-10-07): a metal sheen that drifts
+       slowly across the words, held still under reduced motion. */
+    .on-dark .hp-h2.hp-final-h em { color: #f5c518; background: linear-gradient(100deg, #c08a12 0%, #f7d774 22%, #fff3b8 34%, #e0aa2a 50%, #f7d774 70%, #b8860b 100%);
+        background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 2px 10px rgb(0 0 0 / .35)); animation: hpGold 7s ease-in-out infinite alternate; }
+    @keyframes hpGold { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+    @media (prefers-reduced-motion: reduce) { .on-dark .hp-h2.hp-final-h em { animation: none; } }
     .hp-final-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(160deg, rgb(20 36 12 / .93), rgb(29 51 15 / .82) 55%, rgb(47 82 25 / .78)); }
     /* Think about it: each row is the same moment of the season, without
        Anee (dim, crossed) and with her (lit, ticked). The rows arrive one by
