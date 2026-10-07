@@ -22,7 +22,7 @@
                 @if ($email) to <span class="font-semibold text-gray-900">{{ $email }}</span>@endif.
                 Tap it to open your free account.
             </p>
-            <p class="mt-3 text-xs text-gray-400">
+            <p class="mt-3 text-sm text-gray-500">
                 Nothing after a minute? Check your spam folder, or send a new link below.
             </p>
 
@@ -37,7 +37,7 @@
 
         <p class="text-center text-sm text-gray-600 mt-6">
             Wrong address?
-            <a href="{{ route('signup') }}" class="font-bold text-brand-700 hover:underline">Sign up again</a>
+            <a href="{{ route('signup') }}" class="inline-block py-2 font-bold text-brand-700 hover:underline">Sign up again</a>
         </p>
     </div>
 </div>

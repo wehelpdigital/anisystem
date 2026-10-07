@@ -46,7 +46,11 @@ class PlanCompare
                 ['Chat with Anee', 'Ask anything, send a photo', $gate('ai')],
                 ['AI analyses', 'When to Plant, What to Plant, Variety Research, Crop Protocol', $gate('aiAnalyses')],
                 ['Realign by Anee', 'The true growth stage of a lot', $gate('ai')],
-            ], 'Anee works on AI credits, bought as packs inside the app. Every chat and analysis shows its price in credits before it runs.'],
+                // What a paid month brings (ManualPay grants creditsMonthly for
+                // every month bought); a plan with Anee but none buys packs.
+                ['AI credits included', 'Added for every month you pay for', fn (array $t) => empty($t['ai']) ? false
+                    : (! empty($t['creditsMonthly']) ? $t['creditsMonthly'] . ' a month' : 'Buy packs')],
+            ], 'Anee works on AI credits. Solo Farmer and Farm Owner add credits for every month you pay for, and any plan with Anee can buy more packs inside the app. Every chat and analysis shows its price in credits before it runs.'],
             ['Workers and team', 'M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z', [
                 ['Workers and payroll', 'Roster, rates, attendance', $gate('workers')],
                 ['Inventory', 'The shed: what you have and what it cost', $gate('inventory')],
@@ -72,8 +76,10 @@ class PlanCompare
                 ['Private rooms', 'Password and approval rooms', $gate('discussionPrivateJoin')],
                 ['Create your own rooms', null, $gate('discussionCreate')],
             ]],
-            ['The rest', 'M5 13l4 4L19 7', [
-                ['No ads', null, $adFree],
+            // Said as what the reader sees, not as a tick for "No ads": a
+            // dash under "No ads" was a double negative on a phone.
+            ['Ads', 'M3 11l18-5v12L3 14v-3zM11.6 16.8a3 3 0 11-5.8-1.6', [
+                ['Ads in the app', 'They keep Libre free', fn (array $t) => $adFree($t) ? 'None' : 'A few'],
             ]],
         ];
     }

@@ -2,11 +2,17 @@
 
 @section('title', 'Reset Password')
 
+{{-- The header already wears the logo; on a phone the second one only
+     pushed the form down. --}}
+@push('head')
+<style>@media (max-width: 639.98px) { .au-logo { display: none; } }</style>
+@endpush
+
 @section('content')
 <div class="bg-gray-50 py-10 md:py-16 px-4 min-h-[70vh] flex items-start justify-center">
     <div class="w-full max-w-md">
         <div class="text-center mb-6">
-            <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-12 w-auto mx-auto mb-4">
+            <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="au-logo h-12 w-auto mx-auto mb-4">
             <h1 class="text-2xl font-bold text-gray-900">Set a new password</h1>
             <p class="text-sm text-gray-500 mt-1">Pick a strong password you will remember.</p>
         </div>
@@ -36,12 +42,12 @@
                         class="form-input" placeholder="Repeat your new password" required autocomplete="new-password">
                 </div>
 
-                <button type="submit" class="btn btn-accent btn-lg w-full">Save New Password</button>
+                <button type="submit" class="btn btn-accent btn-lg w-full">Save my new password</button>
             </form>
         </div>
 
         <p class="text-center text-sm text-gray-600 mt-6">
-            <a href="{{ route('login') }}" class="font-bold text-brand-700 hover:underline">Back to log in</a>
+            <a href="{{ route('login') }}" class="inline-block py-2 font-bold text-brand-700 hover:underline">Back to log in</a>
         </p>
     </div>
 </div>

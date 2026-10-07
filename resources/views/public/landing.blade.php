@@ -77,6 +77,24 @@
     .lpd-what em { display: inline-block; margin-top: .25rem; padding: .1rem .5rem; border-radius: 999px; font-style: normal; font-size: .68rem; font-weight: 800; color: #075985; background: #e0f2fe; }
     .lpd-note { margin-top: 1rem; text-align: center; font-size: .8rem; color: #6b7280; }
     .lp-demo .fx-h em, .lp-demo .fx-h strong { font-style: normal; color: #4a7c2a; }
+    /* What the day counts and the gold dots mean, under the season's name. */
+    .lpd-key { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: .2rem .9rem; margin-top: .15rem; font-size: .74rem; color: #cfe0bd; }
+    .lpd-key span { display: inline-flex; align-items: center; gap: .35rem; }
+    .lpd-key i { flex: none; width: .6rem; height: .6rem; border-radius: 999px; background: #f5c518; border: 2px solid #c79e00; }
+    /* The way on after the sample: under the list on a phone, where the
+       reader has just finished it; beside it, in the picker, on a desk. */
+    .lpd-end { display: none; padding: 0 1rem 1.1rem; }
+    @media (max-width: 899.98px) {
+        .lpd-ask .lpd-go { display: none; }
+        .lpd-end { display: block; }
+        /* The three crops side by side, so the season shows right under them. */
+        .lpd-ask { padding: 1rem; }
+        .lpd-crops { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .lpd-crops button { flex-direction: column; justify-content: center; gap: .1rem; min-height: 4.4rem; padding: .55rem .35rem; text-align: center; font-size: .92rem; }
+        .lpd-crops button .lpd-emo { font-size: 1.35rem; line-height: 1.1; }
+        .lpd-crops button small { margin-left: 0; font-size: .68rem; line-height: 1.2; }
+        .lpd-q + .lpd-crops + .lpd-q { margin-top: .9rem; }
+    }
     /* New this season, on a dark band: four real screens. */
     .lp-space { position: relative; isolation: isolate; overflow: hidden; color: #e8efe1; background: radial-gradient(60rem 30rem at 80% 0%, #2c4f17 0%, transparent 60%), #0d1609; }
     .lp-space::before { content: ''; position: absolute; inset: 0; z-index: -1; background-image: radial-gradient(rgb(255 255 255 / .1) 1px, transparent 1.5px); background-size: 22px 22px; opacity: .6; }
@@ -95,6 +113,17 @@
     .lp-space-tx { padding: 1rem 1.1rem 1.2rem; }
     .lp-space-tx h3 { font-family: var(--font-heading); font-weight: 800; font-size: 1.08rem; color: #fff; }
     .lp-space-tx p { margin-top: .35rem; font-size: .88rem; line-height: 1.55; color: #b9caa8; }
+    /* A phone: each tool as a row, its real screen beside its words, so the
+       four read in about one screen instead of two and a half. */
+    @media (max-width: 559.98px) {
+        .lp-space-grid { gap: .8rem; }
+        .lp-space-card { display: grid; grid-template-columns: 40% minmax(0, 1fr); }
+        .lp-space-shot { height: auto; min-height: 12.5rem; }
+        .lp-space-shot img { width: 84%; top: .9rem; border-radius: .8rem .8rem 0 0; }
+        .lp-space-tx { align-self: center; padding: .95rem 1rem 1rem .95rem; }
+        .lp-space-tx h3 { font-size: 1rem; line-height: 1.25; }
+        .lp-space-tx p { font-size: .84rem; line-height: 1.5; }
+    }
     @media (prefers-reduced-motion: reduce) {
         .lpd-row { opacity: 1; transform: none; transition: none; }
         .lpd-list::after { transition: none; }
@@ -119,7 +148,9 @@
     /* A long headline a size down, so the email box still shows on the first screen. */
     .lp-h1.is-long { font-size: clamp(1.8rem, 4.1vw, 2.9rem); line-height: 1.22; }
     .lp-h1 em, .lp-closer h2 em { font-style: normal; background: linear-gradient(transparent 62%, #fadd6d 62%); padding: 0 .1em; }
-    .lp-closer h2 em { background: linear-gradient(transparent 62%, rgb(250 221 109 / .55) 62%); }
+    /* On the dark photo a half clear marker turned muddy: the marked words
+       are gold instead, as on the dark New this season band. */
+    .lp-closer h2 em { background: none; padding: 0; color: #fadd6d; }
     .lp-sub { color: #3f4a37; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.65; text-wrap: pretty; }
     .lp-form { display: flex; gap: .5rem; padding: .4rem; border-radius: 1.1rem; background: #fff;
         box-shadow: 0 18px 40px -22px rgb(20 33 12 / .45), 0 0 0 1px #dcead0; max-width: 34rem; }
@@ -146,7 +177,7 @@
     .lp-float { position: absolute; z-index: 3; display: flex; align-items: center; gap: .55rem; padding: .6rem .8rem;
         border-radius: 1rem; background: #fff; box-shadow: 0 16px 36px -18px rgb(20 33 12 / .5), 0 0 0 1px #e7eedf;
         font-size: .8rem; font-weight: 800; color: #14210c; white-space: nowrap; animation: lpFloat 6s ease-in-out infinite; }
-    .lp-float small { display: block; font-size: .68rem; font-weight: 700; color: #6b7a5e; }
+    .lp-float small { display: block; font-size: .74rem; font-weight: 700; color: #5f6e52; }
     .lp-float .dot { flex: none; width: 2rem; height: 2rem; border-radius: .7rem; display: grid; place-items: center; font-size: 1rem; }
     .lp-float.f1 { top: 18%; left: max(0px, calc(50% - 260px)); }
     .lp-float.f2 { bottom: 16%; right: max(0px, calc(50% - 270px)); animation-delay: -3s; }
@@ -197,6 +228,10 @@
     @media (min-width: 768px) { .lp-loss-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     .lp-losses .loss-card { border-color: transparent; box-shadow: 0 20px 44px -26px rgb(0 0 0 / .7); }
     .lp-loss-note { margin-top: 1.1rem; font-size: .78rem; color: rgb(255 255 255 / .55); text-align: center; line-height: 1.55; }
+    /* The peso range keeps its line, and "lost per hectare" drops whole
+       under it on a phone instead of breaking a pill in two. */
+    .lp-losses .loss-peso { flex-wrap: wrap; column-gap: .3rem; row-gap: 0; border-radius: .85rem; line-height: 1.35; }
+    .lp-losses .loss-peso span { font-weight: 700; }
     /* Precision: the four "rights" */
     .lp-rights { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr)); }
     .lp-right { position: relative; padding: 1.35rem 1.2rem 1.25rem; border-radius: 1.25rem; background: #fff;
@@ -207,6 +242,13 @@
     .lp-right .e { display: grid; place-items: center; width: 2.9rem; height: 2.9rem; border-radius: 1rem; background: #f0f7e6; font-size: 1.45rem; }
     .lp-right h3 { margin-top: .85rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; color: #14210c; }
     .lp-right p { margin-top: .35rem; color: #4b5563; line-height: 1.6; font-size: .93rem; }
+    /* A phone: the icon beside the title, not on a line of its own. */
+    @media (max-width: 639.98px) {
+        .lp-right { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); column-gap: .85rem; align-items: center; padding: 1.15rem 1.1rem 1.15rem; }
+        .lp-right .e { width: 2.6rem; height: 2.6rem; border-radius: .85rem; font-size: 1.3rem; }
+        .lp-right h3 { margin-top: 0; }
+        .lp-right p { grid-column: 1 / -1; margin-top: .6rem; }
+    }
     /* Three steps */
     .lp-steps { display: grid; gap: 1rem; counter-reset: s; }
     @media (min-width: 820px) { .lp-steps { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
@@ -216,6 +258,11 @@
         background: linear-gradient(135deg, #6b9f3d, #3d6823); color: #fff; font-weight: 900; font-size: 1.05rem; }
     .lp-step h3 { margin-top: .85rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; color: #14210c; }
     .lp-step p { margin-top: .35rem; color: #4b5563; line-height: 1.6; font-size: .95rem; }
+    @media (max-width: 639.98px) {
+        .lp-step { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); column-gap: .85rem; align-items: center; padding: 1.15rem 1.1rem 1.15rem; }
+        .lp-step h3 { margin-top: 0; }
+        .lp-step p { grid-column: 1 / -1; margin-top: .55rem; }
+    }
     @media (min-width: 820px) {
         .lp-step:not(:last-child)::after { content: ''; position: absolute; top: 2.6rem; right: -1.05rem; width: .9rem; height: 2px;
             background: repeating-linear-gradient(90deg, #6b9f3d 0 4px, transparent 4px 7px); }
@@ -438,7 +485,11 @@
                                 <p class="loss-n"><span data-n="{{ $n }}">{{ $n }}</span><small>%</small></p>
                                 <p class="loss-l">{{ $l['title'] ?? '' }}</p>
                                 @if (trim($l['text'] ?? '') !== '')<p class="loss-p">{{ $l['text'] }}</p>@endif
-                                <p class="loss-peso">{{ \App\Support\Region::ph() && $peso !== '' ? $peso . ' lost per hectare' : 'up to ' . $n . '% of what a hectare earns, lost' }}</p>
+                                @if (\App\Support\Region::ph() && $peso !== '')
+                                    <p class="loss-peso"><b>{{ $peso }}</b> <span>lost per hectare</span></p>
+                                @else
+                                    <p class="loss-peso"><span>up to {{ $n }}% of what a hectare earns, lost</span></p>
+                                @endif
                                 <div class="loss-bar" aria-hidden="true"><i></i></div>
                             </div>
                         </div>
@@ -502,17 +553,18 @@
                 <div class="lpd-ask">
                     <p class="lpd-q"><i>1</i>Your crop</p>
                     <div class="lpd-crops" role="radiogroup" aria-label="Your crop">
-                        <button type="button" role="radio" aria-checked="true" data-crop="rice">🌾 {{ \App\Support\Region::ph() ? 'Palay' : 'Rice' }}<small>transplanted</small></button>
-                        <button type="button" role="radio" aria-checked="false" data-crop="corn">🌽 {{ \App\Support\Region::ph() ? 'Mais' : 'Corn' }}<small>yellow corn</small></button>
-                        <button type="button" role="radio" aria-checked="false" data-crop="veg">🍆 {{ \App\Support\Region::ph() ? 'Talong' : 'Eggplant' }}<small>transplanted</small></button>
+                        <button type="button" role="radio" aria-checked="true" data-crop="rice"><span class="lpd-emo" aria-hidden="true">🌾</span> {{ \App\Support\Region::ph() ? 'Palay' : 'Rice' }}<small>transplanted</small></button>
+                        <button type="button" role="radio" aria-checked="false" data-crop="corn"><span class="lpd-emo" aria-hidden="true">🌽</span> {{ \App\Support\Region::ph() ? 'Mais' : 'Corn' }}<small>yellow corn</small></button>
+                        <button type="button" role="radio" aria-checked="false" data-crop="veg"><span class="lpd-emo" aria-hidden="true">🍆</span> {{ \App\Support\Region::ph() ? 'Talong' : 'Eggplant' }}<small>transplanted</small></button>
                     </div>
-                    <p class="lpd-q"><i>2</i>The day you plant</p>
-                    <input type="date" id="lpdDate" class="form-input w-full" aria-label="The day you plant">
+                    <p class="lpd-q"><i>2</i><label for="lpdDate">The day you plant</label></p>
+                    <input type="date" id="lpdDate" class="form-input w-full">
                     <a href="{{ $signup }}" class="btn btn-primary btn-lg w-full mt-5 lpd-go">{{ $lp['demo']['cta'] }} {!! $arrow !!}</a>
                 </div>
                 <div class="lpd-out" aria-live="polite">
-                    <div class="lpd-head"><b id="lpdTitle">Your season</b><span id="lpdSpan"></span></div>
+                    <div class="lpd-head"><b id="lpdTitle">Your season</b><span id="lpdSpan"></span><p class="lpd-key" id="lpdKey"></p></div>
                     <ol class="lpd-list" id="lpdList"></ol>
+                    <div class="lpd-end"><a href="{{ $signup }}" class="btn btn-primary btn-lg w-full lpd-go">{{ $lp['demo']['cta'] }} {!! $arrow !!}</a></div>
                 </div>
             </div>
             @if (trim($lp['demo']['note'] ?? '') !== '')<p class="lpd-note reveal">{{ $lp['demo']['note'] }}</p>@endif
@@ -740,7 +792,9 @@
             bar.querySelector('a').tabIndex = on ? 0 : -1;
         };
         new IntersectionObserver(([e]) => { heroGone = !e.isIntersecting && e.boundingClientRect.top < 0; paint(); }).observe(hero);
-        new IntersectionObserver(([e]) => { closerIn = e.isIntersecting; paint(); }, { threshold: .15 }).observe(closer);
+        // Off from the closer down: its own form is there, and past it the
+        // footer's links should not sit under a bar.
+        new IntersectionObserver(([e]) => { closerIn = e.isIntersecting || e.boundingClientRect.top < 0; paint(); }, { threshold: .15 }).observe(closer);
     }
 })();
 </script>
@@ -758,9 +812,9 @@
             [-14, 'Plow and flood the field', 'First plowing, then let the stubble rot under water.'],
             [-2, 'Final harrowing and leveling', 'A level field keeps the water even and the weeds down.'],
             [0, 'Transplant, with basal fertilizer', 'Complete and ammonium phosphate, worked into the mud.', 1],
-            [3, 'Pre-emergence herbicide', 'On standing water, three days after transplanting.', 0, '', 'Checks the forecast first'],
-            [14, 'First top-dress', 'Urea at early tillering, on a thin sheet of water.', 1],
-            [35, 'Second top-dress', 'Urea and potash at panicle initiation.', 1],
+            [3, 'Preemergence herbicide', 'On standing water, three days after transplanting.', 0, '', 'Checks the forecast first'],
+            [14, 'First top dress', 'Urea at early tillering, on a thin sheet of water.', 1],
+            [35, 'Second top dress', 'Urea and potash at panicle initiation.', 1],
             [45, 'Scout for stem borer and leaffolder', 'Spray only past the threshold.', 0, '', 'Checks the forecast first'],
             [60, 'Flowering: keep 5 cm of water', 'The stage that decides the grain.'],
             [85, 'Drain the field', 'Two weeks before harvest.'],
@@ -769,10 +823,10 @@
         corn: { name: ph ? 'Mais, yellow corn' : 'Yellow corn', unit: 'DAP', len: 110, tasks: [
             [-14, 'Plow and harrow', 'Two passes, then furrows 75 cm apart.'],
             [0, 'Plant, with basal fertilizer', 'Seeds in the furrow, complete fertilizer beside them.', 1],
-            [3, 'Pre-emergence herbicide', 'On moist soil, before the weeds come up.', 0, '', 'Checks the forecast first'],
-            [14, 'First side-dress and off-barring', 'Urea beside the row, soil pulled away from the plants.', 1],
+            [3, 'Preemergence herbicide', 'On moist soil, before the weeds come up.', 0, '', 'Checks the forecast first'],
+            [14, 'First side dress and off barring', 'Urea beside the row, soil pulled away from the plants.', 1],
             [21, 'Scout for fall armyworm', 'Look into the whorl; spray only when needed.', 0, '', 'Checks the forecast first'],
-            [30, 'Second side-dress and hilling up', 'Urea, then soil back against the stalks.', 1],
+            [30, 'Second side dress and hilling up', 'Urea, then soil back against the stalks.', 1],
             [55, 'Tasseling and silking', 'Water now if the soil is dry.'],
             [100, 'Harvest window', 'When the husks are dry and the black layer shows.', 1],
         ] },
@@ -781,7 +835,7 @@
             [-7, 'Prepare raised beds', 'Beds 1 m wide with mulch, and organic fertilizer worked in.'],
             [0, 'Transplant, with basal fertilizer', 'In the late afternoon, then water.', 1],
             [7, 'Replant the missing hills', 'Keep the stand even.'],
-            [14, 'First side-dress', 'Complete fertilizer beside each plant.', 1],
+            [14, 'First side dress', 'Complete fertilizer beside each plant.', 1],
             [25, 'Stake the plants', 'Before the first fruits weigh them down.'],
             [30, 'Scout for fruit and shoot borer', 'Cut and bury the wilted tips each week.', 0, '', 'Checks the forecast first'],
             [50, 'First harvest', 'Then every three to four days.', 1],
@@ -791,35 +845,70 @@
     const $ = (id) => document.getElementById(id);
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const still = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let crop = 'rice', timers = [];
+    let crop = 'rice', timers = [], rowIO = null;
+    // Two weeks from today, in the visitor's own calendar (toISOString is
+    // UTC, which in Manila before 8 in the morning is still yesterday).
     const d0 = new Date(); d0.setDate(d0.getDate() + 14);
-    $('lpdDate').value = d0.toISOString().slice(0, 10);
+    const ymd = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    $('lpdDate').value = ymd(d0);
     const fmt = (d) => d.toLocaleDateString(ph ? 'en-PH' : undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    // The day counts, said in words the first time a reader meets them.
+    const UNITS = { DAS: 'days after sowing', DAT: 'days after transplanting', DAP: 'days after planting' };
     const draw = () => {
         timers.forEach(clearTimeout); timers = [];
         const S = SEASONS[crop];
-        const base = new Date(($('lpdDate').value || d0.toISOString().slice(0, 10)) + 'T00:00:00');
+        const base = new Date(($('lpdDate').value || ymd(d0)) + 'T00:00:00');
         const at = (n) => { const d = new Date(base); d.setDate(d.getDate() + n); return d; };
         $('lpdTitle').textContent = S.name;
         $('lpdSpan').textContent = fmt(at(S.tasks[0][0])) + ' to ' + fmt(at(S.tasks[S.tasks.length - 1][0])) + ' · ' + S.tasks.length + ' tasks';
+        const used = [...new Set(S.tasks.map((t) => (t[4] || (t[0] >= 0 ? S.unit : '')).split(' ')[0]).filter((u) => UNITS[u]))];
+        $('lpdKey').innerHTML = used.map((u) => '<span>' + u + ': ' + UNITS[u] + '</span>').join('')
+            + '<span><i aria-hidden="true"></i>Fertilizer and harvest days</span>';
         const list = $('lpdList');
         list.style.setProperty('--fill', '0%');
         list.innerHTML = S.tasks.map(([n, t, sub, key, label, wx]) => '<li class="lpd-row' + (key ? ' is-key' : '') + '"><span class="lpd-when"><b>' + esc(fmt(at(n))) + '</b><small>'
             + esc(label || (n < 0 ? Math.abs(n) + ' days before' : S.unit + ' ' + n)) + '</small></span><span class="lpd-what"><b>' + esc(t) + '</b><small>' + esc(sub) + '</small>'
             + (wx ? '<em>' + esc(wx) + '</em>' : '') + '</span></li>').join('');
         const rows = [...list.children];
-        if (still()) { rows.forEach((r) => r.classList.add('is-in')); list.style.setProperty('--fill', '100%'); return; }
-        rows.forEach((r, i) => timers.push(setTimeout(() => { r.classList.add('is-in'); list.style.setProperty('--fill', Math.round((i + 1) / rows.length * 100) + '%'); }, 120 + i * 140)));
+        if (rowIO) { rowIO.disconnect(); rowIO = null; }
+        if (still() || !('IntersectionObserver' in window)) { rows.forEach((r) => r.classList.add('is-in')); list.style.setProperty('--fill', '100%'); return; }
+        // Each task lands as the reader reaches it: the ones on screen one
+        // after another, the rest when scrolled to (on a phone the list runs
+        // two screens, and a timer alone finished it out of sight). The line
+        // fills to the last task that has landed.
+        const fill = () => {
+            let last = -1;
+            rows.forEach((r, i) => { if (r.classList.contains('is-in')) last = i; });
+            list.style.setProperty('--fill', Math.round((last + 1) / rows.length * 100) + '%');
+        };
+        let next = 0;
+        rowIO = new IntersectionObserver((es) => {
+            const now = performance.now();
+            next = Math.max(next, now);
+            es.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top).forEach((e) => {
+                rowIO.unobserve(e.target);
+                next += 140;
+                timers.push(setTimeout(() => { e.target.classList.add('is-in'); fill(); }, next - now));
+            });
+        }, { rootMargin: '0px 0px -6% 0px' });
+        rows.forEach((r) => rowIO.observe(r));
     };
+    // It plays the first time the season itself comes into view. On a phone
+    // that is a screen below the section's title, and watching the section
+    // let the rows land before the reader got there. A pick made before then
+    // plays it at once, and the first sight does not play it again.
+    let io = null;
+    const pick = () => { if (io) { io.disconnect(); io = null; } draw(); };
     box.querySelectorAll('[data-crop]').forEach((b) => b.addEventListener('click', () => {
         crop = b.dataset.crop;
         box.querySelectorAll('[data-crop]').forEach((x) => x.setAttribute('aria-checked', String(x === b)));
-        draw();
+        pick();
     }));
-    $('lpdDate').addEventListener('change', draw);
-    // It plays the first time it comes into view.
-    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); draw(); } }, { rootMargin: '0px 0px -25% 0px' });
-    io.observe(box);
+    $('lpdDate').addEventListener('change', pick);
+    const out = box.querySelector('.lpd-out') || box;
+    if (!('IntersectionObserver' in window)) { draw(); return; }
+    io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) pick(); }, { rootMargin: '0px 0px -15% 0px' });
+    io.observe(out);
 })();
 </script>
 @endpush

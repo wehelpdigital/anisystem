@@ -13,10 +13,15 @@
         <div class="relative max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center animate-fade-up" style="z-index:1">
             <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Simple prices made for farmers</p>
             <h1 class="mt-2 font-heading text-4xl sm:text-5xl font-bold text-white text-balance">Start Free. Grow When You're Ready.</h1>
+            {{-- Libre has no Anee (config tiers: ai false), so the hero says where
+                 she starts instead of promising her to a free account. --}}
+            @php $prAnee = isset($tiers['libreAnee']) ? \App\Support\Region::tierPrice('libreAnee', 'month') : null; @endphp
             <p class="mt-5 text-brand-100 text-base sm:text-lg">
-                The Libre plan is free forever. No card, and no trial that runs out. Upgrades are paid in {{ \App\Support\Region::currencyName() }}
-                through {{ \App\Support\Region::payMethod() }}. Anee, the smart farm technician, uses credits on top of your plan, so you only pay her
-                for what you ask.
+                The Libre plan is free forever: no card, and no trial that runs out.
+                @if ($prAnee)
+                    Anee, your smart farm technician, comes with every paid plan, starting with <span class="whitespace-nowrap">{{ $tiers['libreAnee']['name'] }}</span> at {{ \App\Support\Region::priceTag($prAnee) }} a month.
+                @endif
+                Paid plans are paid in {{ \App\Support\Region::currencyName() }} through {{ \App\Support\Region::payMethod() }}.
             </p>
         </div>
     </section>
@@ -43,6 +48,14 @@
         foreach (array_values(array_diff($pdKeys, [$pdOrder[0]])) as $i => $k) {
             $pdSlotOf[$k] = $i + 1;
         }
+        // What a year saves against twelve months, at most, rounded down so the
+        // billing switch never promises more than the plans give.
+        $pdSave = (int) collect($pdKeys)->map(function ($k) {
+            $m = \App\Support\Region::tierPrice($k, 'month');
+            $y = \App\Support\Region::tierPrice($k, 'year');
+
+            return ($m && $y) ? floor((1 - $y / ($m * 12)) * 100 + 1e-9) : 0;
+        })->max();
     @endphp
     <section class="py-16 sm:py-20 bg-gray-50 bg-drift pd-section" x-data="pdDeck()">
         <div class="pd-scope max-w-6xl mx-auto px-4 sm:px-6">
@@ -50,7 +63,7 @@
                 <div class="pd-seg pd-bill" role="group" aria-label="Billing period">
                     <span class="pd-thumb" aria-hidden="true"></span>
                     <button type="button" aria-pressed="true" :aria-pressed="yearly ? 'false' : 'true'" @click="yearly = false">Monthly</button>
-                    <button type="button" aria-pressed="false" :aria-pressed="yearly ? 'true' : 'false'" @click="yearly = true">Yearly <span class="pd-soft">· save more</span></button>
+                    <button type="button" aria-pressed="false" :aria-pressed="yearly ? 'true' : 'false'" @click="yearly = true">Yearly @if ($pdSave > 0)<span class="pd-soft">· save up to {{ $pdSave }}%</span>@endif</button>
                 </div>
                 <div class="pd-seg pd-tabs" role="tablist" aria-label="Plans">
                     <span class="pd-thumb" aria-hidden="true"></span>
@@ -70,7 +83,12 @@
                             $isStar = $key === 'owner';
                             $isFree = empty($tier['price']);
                             $pdSlot = $pdSlotOf[$key] ?? 0;
-                            if (! $isFree) { $prM = \App\Support\Region::tierPrice($key, 'month'); $prY = \App\Support\Region::tierPrice($key, 'year'); }
+                            if (! $isFree) {
+                                $prM = \App\Support\Region::tierPrice($key, 'month');
+                                $prY = \App\Support\Region::tierPrice($key, 'year');
+                                // Twelve months against one year, said in money.
+                                $prSaved = max(0, round($prM * 12 - $prY, 2));
+                            }
                         @endphp
                         <div class="pd-card {{ $pdSlot === 0 ? 'is-front' : 'is-back' }} {{ $isStar ? 'is-star' : '' }}"
                              data-name="{{ $tier['name'] }}" data-slot="{{ $pdSlot }}"
@@ -105,8 +123,8 @@
                                             <span class="pr-amount">{{ \App\Support\Region::priceTag($prY) }}</span>
                                             <span class="pr-per">/ year</span>
                                         </span>
-                                        <span class="pr-year" x-show="!yearly">or {{ \App\Support\Region::priceTag($prY) }} a year, about {{ \App\Support\Region::priceTag(round($prY / 12, 2)) }} a month</span>
-                                        <span class="pr-year" x-show="yearly" x-cloak>That is about {{ \App\Support\Region::priceTag(round($prY / 12, 2)) }} a month, paid once through {{ \App\Support\Region::payMethod() }}</span>
+                                        <span class="pr-year" x-show="!yearly">or {{ \App\Support\Region::priceTag($prY) }} a year, about {{ \App\Support\Region::priceTag(round($prY / 12, 2)) }} a month{{ $prSaved > 0 ? ', and you save ' . \App\Support\Region::priceTag($prSaved) : '' }}</span>
+                                        <span class="pr-year" x-show="yearly" x-cloak>That is about {{ \App\Support\Region::priceTag(round($prY / 12, 2)) }} a month, paid once through {{ \App\Support\Region::payMethod() }}{{ $prSaved > 0 ? ': you save ' . \App\Support\Region::priceTag($prSaved) : '' }}</span>
                                         {{-- What it actually costs to run, said the way a farmer
                                              counts: by the day. A month is an abstraction; a peso a
                                              day is a number you can hold against anything else you
@@ -149,20 +167,32 @@
     <section class="py-16 sm:py-20 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 class="font-heading text-3xl font-bold text-ink text-center reveal">Common questions</h2>
-            <div class="mt-8 space-y-3">
-                @foreach ([
-                    ['Do my workers need their own subscriptions?', 'No. Workers log in under the owner\'s plan. You invite them, choose what each one may see or edit, and they use anee.io for free.'],
-                    ['What happens when my plan ends?', 'Your data stays safe and you can still read it. Renew any time and pick up where the season left off. If you renew early, the new days are added on top, so nothing is wasted.'],
+            @php
+                // The credit answer reads the plans' own numbers (ManualPay grants
+                // creditsMonthly for every month bought), so it cannot drift.
+                $faqAnee = collect($tiers)->filter(fn ($t) => ! empty($t['ai']))->pluck('name')->values()->all();
+                $faqCredits = collect($tiers)->filter(fn ($t) => ! empty($t['creditsMonthly']))
+                    ->map(fn ($t) => $t['name'] . ' adds ' . $t['creditsMonthly'])->values()->all();
+                $faqList = fn (array $a) => count($a) > 1 ? implode(', ', array_slice($a, 0, -1)) . ' and ' . end($a) : implode('', $a);
+                $faqOwner = $tiers['owner']['name'] ?? 'Farm Owner';
+                $faqSolo = $tiers['solo']['name'] ?? 'Solo Farmer';
+            @endphp
+            <div class="mt-8 space-y-3 pr-faq">
+                @foreach (array_values(array_filter([
+                    $faqAnee ? ['How do Anee\'s credits work?', 'Anee comes with ' . $faqList($faqAnee) . '. Every question and analysis shows its price in credits before it runs, so you only pay for what you ask. '
+                        . ($faqCredits ? $faqList($faqCredits) . ' credits for every month you pay for, and you' : 'You') . ' can buy more packs inside the app any time.'] : null,
                     ['Do credits expire?', 'No. Credits sit on your account until you spend them, across seasons.'],
+                    ['Do my workers need their own subscriptions?', 'No. On ' . $faqOwner . ', workers log in under your plan: you invite them, choose what each one may see or edit, and they use anee.io for free. On ' . $faqSolo . ' you keep their attendance and their pay in your own account, without giving them a login.'],
+                    ['What happens when my plan ends?', 'Your data stays safe and you can still read it. Renew any time and pick up where the season left off. If you renew early, the new days are added on top, so nothing is wasted.'],
                     ['Can I use it on a computer too?', 'Yes. anee.io is a web app. It is made first for phones in the field, and the same account works in any browser.'],
-                    ['Is my farm data private?', 'Yes. Your schedules, notes and money figures are yours alone unless you publish something to the community on purpose.'],
-                ] as [$q, $a])
+                    ['Is my farm data private?', 'Yes. Your seasons, notes and money figures are yours alone unless you publish something to the community on purpose.'],
+                ])) as [$q, $a])
                     <details class="group rounded-2xl bg-white ring-1 ring-gray-200 px-5 py-4 reveal">
                         <summary class="cursor-pointer list-none flex items-center justify-between gap-3 font-heading font-bold text-ink">
                             {{ $q }}
-                            <svg class="w-5 h-5 shrink-0 text-brand-600 transition group-open:rotate-45" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+                            <svg class="pr-faq-plus w-5 h-5 shrink-0 text-brand-600" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
                         </summary>
-                        <p class="mt-3 text-sm text-gray-600 leading-relaxed">{{ $a }}</p>
+                        <p class="pt-3 text-sm text-gray-600 leading-relaxed">{{ $a }}</p>
                     </details>
                 @endforeach
             </div>
@@ -210,9 +240,11 @@
     /* Four names will not sit in one row on a phone: a tidy two by two. */
     @media (max-width: 479.98px) {
         .pd-tabs { display: grid; grid-template-columns: 1fr 1fr; width: 100%; max-width: 22rem; border-radius: 1.15rem; }
-        .pd-tabs > button { border-radius: .9rem; padding: .6rem .5rem; }
+        .pd-tabs > button { border-radius: .9rem; padding: .6rem .5rem; min-height: 2.6rem; }
         .pd-tabs .pd-thumb { border-radius: .9rem; }
     }
+    /* A thumb's worth of button on a touch screen. */
+    @media (pointer: coarse) { .pd-bill > button { min-height: 2.6rem; } }
 
     /* ---- the hand ----
        Every card sits in the same grid cell, centred. --s is a card's place
@@ -302,20 +334,31 @@
     .pd-go:hover { transform: translateY(-2px); box-shadow: 0 22px 40px -18px rgb(199 158 0 / .95); }
     .pd-go svg { flex: none; width: 1.2rem; height: 1.2rem; }
     .pd-note { font-size: .92rem; font-weight: 700; color: #4a7c2a; }
-    .pd-more { display: inline-flex; align-items: center; gap: .4rem; margin-top: .3rem; font-size: .9rem; font-weight: 800; color: #2f5219;
+    .pd-more { display: inline-flex; align-items: center; gap: .4rem; margin-top: 0; padding: .55rem .3rem; font-size: .9rem; font-weight: 800; color: #2f5219;
         text-decoration: underline; text-decoration-color: #b9d39b; text-underline-offset: 4px; transition: color .28s var(--pd-ease); }
     .pd-more:hover { color: #4a7c2a; }
     .pd-more svg { width: 1rem; height: 1rem; transition: transform .28s var(--pd-ease); }
     .pd-more:hover svg { transform: translateX(3px); }
     @media (max-width: 479.98px) { .pd-go { width: 100%; justify-content: center; } }
 
+    /* The questions fold open on the house curve (where the browser can
+       animate a details box; elsewhere they open at once, as before). */
+    .pr-faq { interpolate-size: allow-keywords; }
+    .pr-faq details::details-content { block-size: 0; overflow-y: clip;
+        transition: block-size .28s cubic-bezier(.22,1,.36,1), content-visibility .28s allow-discrete; }
+    .pr-faq details[open]::details-content { block-size: auto; }
+    .pr-faq-plus { transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .pr-faq details[open] .pr-faq-plus { transform: rotate(45deg); }
+
     @media (prefers-reduced-motion: reduce) {
+        .pr-faq details::details-content, .pr-faq-plus { transition: none; }
         .pd-seg > button, .pd-thumb, .pd-card, .pd-face, .pd-inner, .pd-fog, .pd-peek, .pd-card .pr-flag, .pd-go { transition: none !important; }
         .pd-card .pr-price, .pd-card .pr-year, .pd-card .pr-day { animation: none; }
     }
     html.sm-still .pd-seg > button, html.sm-still .pd-thumb, html.sm-still .pd-card, html.sm-still .pd-face,
     html.sm-still .pd-inner, html.sm-still .pd-fog, html.sm-still .pd-card .pr-flag { transition: none !important; }
     html.sm-still .pd-card .pr-price, html.sm-still .pd-card .pr-year, html.sm-still .pd-card .pr-day { animation: none; }
+    html.sm-still .pr-faq details::details-content, html.sm-still .pr-faq-plus { transition: none; }
 </style>
 @endpush
 

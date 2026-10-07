@@ -21,6 +21,16 @@
     $pcTint = ['libre' => '#86b556', 'libreAnee' => '#f5c518', 'solo' => '#4a7c2a', 'owner' => '#2d5016'];
     $pcFree = collect($pcPlans)->search(fn ($t) => empty($t['price']));
     $pcB = array_search('solo', $pcKeys, true);
+    // The most a year saves against twelve months, rounded down so it never
+    // promises more than the dearest yearly price gives.
+    $pcSave = (int) collect($pcKeys)->map(function ($k) {
+        $m = \App\Support\Region::tierPrice($k, 'month');
+        $y = \App\Support\Region::tierPrice($k, 'year');
+
+        return ($m && $y) ? floor((1 - $y / ($m * 12)) * 100 + 1e-9) : 0;
+    })->max();
+    $pcTick = '<svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+    $pcCross = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></svg>';
 @endphp
 
 @section('content')
@@ -49,7 +59,7 @@
                 <div class="pc-seg" role="group" aria-label="Billing period" :class="yearly && 'is-year'">
                     <span class="pc-thumb" aria-hidden="true"></span>
                     <button type="button" :aria-pressed="(!yearly).toString()" aria-pressed="true" @click="yearly = false">Monthly</button>
-                    <button type="button" :aria-pressed="yearly.toString()" aria-pressed="false" @click="yearly = true">Yearly</button>
+                    <button type="button" :aria-pressed="yearly.toString()" aria-pressed="false" @click="yearly = true">Yearly @if ($pcSave > 0)<span class="pc-soft">save up to {{ $pcSave }}%</span>@endif</button>
                 </div>
                 {{-- A phone sets two plans against each other. --}}
                 <div class="pc-pick">
@@ -62,9 +72,17 @@
                         @foreach ($pcPlans as $key => $t)<option value="{{ $loop->index }}">{{ $t['name'] }}</option>@endforeach
                     </select>
                 </div>
+                {{-- What the two marks mean, said once above the table. --}}
+                <p class="pc-key">
+                    <span><i class="pc-yes">{!! $pcTick !!}</i>Included</span>
+                    <span><i class="pc-no">{!! $pcCross !!}</i>Not in this plan</span>
+                </p>
             </div>
 
-            <div class="pc-wrap reveal" style="--reveal-delay: .06s">
+            {{-- No scroll reveal here: the table is taller than a phone's screen,
+                 so the reveal's threshold left a blank space under the pickers
+                 until the reader had scrolled a third of a screen. --}}
+            <div class="pc-wrap">
                 <table class="pc-table" :data-hl="hl" @mouseleave="hl = null">
                     <caption class="sr-only">What each anee.io plan includes</caption>
                     <thead>
@@ -77,6 +95,13 @@
                                     <span class="pc-band" aria-hidden="true"></span>
                                     @if ($star)<em>Most complete</em>@endif
                                     <b>{{ $t['name'] }}</b>
+                                    {{-- A phone: the plan's name in the header that stays on
+                                         screen is itself a picker, so the reader can change a
+                                         column halfway down the table without going back up. --}}
+                                    <select class="pc-swap" aria-label="Change the {{ $t['name'] }} column to another plan"
+                                            @change="swap({{ $i }}, Number($event.target.value)); $event.target.value = '{{ $i }}'">
+                                        @foreach ($pcPlans as $t2)<option value="{{ $loop->index }}" @selected($loop->index === $i)>{{ $t2['name'] }}</option>@endforeach
+                                    </select>
                                     <span class="pc-price">
                                         @if (empty($t['price']))
                                             <strong>Free</strong><small>forever</small>
@@ -85,6 +110,7 @@
                                             <strong x-show="yearly" x-cloak>{{ \App\Support\Region::priceTag(\App\Support\Region::tierPrice($key, 'year')) }}</strong><small x-show="yearly" x-cloak>a year</small>
                                         @endif
                                     </span>
+                                    <span class="pc-change" aria-hidden="true">Change<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
                                 </th>
                             @endforeach
                         </tr>
@@ -115,9 +141,9 @@
                                         <td data-c="{{ $i }}" class="{{ $v === true ? 'is-yes' : ($v === false ? 'is-no' : 'is-val') }} {{ $key === 'owner' ? 'is-star' : '' }}"
                                             :class="{ 'is-off': ![a, b].includes({{ $i }}) }" @mouseenter="hl = {{ $i }}">
                                             @if ($v === true)
-                                                <span class="pc-yes"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span><span class="sr-only">Included</span>
+                                                <span class="pc-yes">{!! $pcTick !!}</span><span class="sr-only">Included</span>
                                             @elseif ($v === false)
-                                                <span class="pc-no" aria-hidden="true"></span><span class="sr-only">Not included</span>
+                                                <span class="pc-no" aria-hidden="true">{!! $pcCross !!}</span><span class="sr-only">Not included</span>
                                             @else
                                                 <span class="pc-val">{{ $v }}</span>
                                             @endif
@@ -154,9 +180,17 @@
     /* The bar over the table: billing, and on a phone the two plans to set side by side. */
     .pc-bar { display: flex; flex-direction: column; align-items: center; gap: .9rem; margin-bottom: 1.4rem; }
     .pc-seg { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; padding: .25rem; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px #e1e8d7, 0 10px 24px -20px rgb(20 33 12 / .5); }
-    .pc-seg button { position: relative; z-index: 1; padding: .5rem 1.3rem; border-radius: 999px; font-size: .88rem; font-weight: 800; color: #4b5563;
+    .pc-seg button { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        min-height: 2.75rem; padding: .45rem 1.3rem; border-radius: 999px; font-size: .88rem; font-weight: 800; line-height: 1.15; color: #4b5563;
         transition: color .3s var(--pc-ease); }
     .pc-seg button[aria-pressed="true"] { color: #fff; }
+    /* What a year saves, under the word, so the two halves stay equal. */
+    .pc-soft { display: block; margin-top: .1rem; font-size: .72rem; font-weight: 700; opacity: .85; white-space: nowrap; }
+    /* The two marks, explained once. */
+    .pc-key { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem 1.1rem; font-size: .82rem; font-weight: 700; color: #4b5563; }
+    .pc-key span { display: inline-flex; align-items: center; gap: .4rem; }
+    .pc-key i { width: 1.35rem; height: 1.35rem; }
+    .pc-key i svg { width: .8rem; height: .8rem; }
     .pc-thumb { position: absolute; top: .25rem; bottom: .25rem; left: .25rem; width: calc(50% - .25rem); border-radius: 999px; background: #4a7c2a;
         box-shadow: 0 8px 18px -10px rgb(47 82 25 / .8); transition: transform .45s var(--pc-ease); }
     .pc-seg.is-year .pc-thumb { transform: translateX(100%); }
@@ -180,8 +214,10 @@
     .pc-plan { position: relative; }
     .pc-band { position: absolute; left: .7rem; right: .7rem; top: 0; height: 4px; border-radius: 0 0 4px 4px; background: var(--tint); }
     .pc-plan em { display: inline-block; margin-bottom: .3rem; padding: .14rem .5rem; border-radius: 999px; background: #4a7c2a; color: #fff; font-style: normal;
-        font-size: .58rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+        font-size: .64rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
     .pc-plan b { display: block; font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; line-height: 1.2; color: #14210c; }
+    /* The phone's column pickers live in the header; a desk shows every plan. */
+    .pc-change, .pc-swap { display: none; }
     .pc-price { display: block; margin-top: .25rem; }
     .pc-price strong { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #2f5219; animation: pcIn .4s var(--pc-ease) both; }
     .pc-price small { display: block; font-size: .7rem; font-weight: 600; color: #6b7280; }
@@ -207,7 +243,10 @@
     .pc-table[data-hl="2"] [data-c="2"], .pc-table[data-hl="3"] [data-c="3"] { background: #eef6e5; }
     .pc-yes { display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 999px; background: #e4f0d6; color: #3d6823; }
     .pc-yes svg { width: .95rem; height: .95rem; }
-    .pc-no { display: inline-block; width: .9rem; height: 2px; border-radius: 2px; background: #cbd5c1; vertical-align: middle; }
+    /* Not in the plan: a quiet cross, the same mark the plan cards use, so it
+       reads as "no" and not as a value nobody filled in. */
+    .pc-no { display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 999px; background: #f3f4f1; color: #a3ab9b; }
+    .pc-no svg { width: .8rem; height: .8rem; }
     .pc-val { font-size: .88rem; font-weight: 800; color: #1f3a0f; }
     .pc-table tbody:last-child tr:last-child > * { border-bottom: 0; }
 
@@ -225,6 +264,17 @@
         .pc-price strong { font-size: 1.05rem; }
         .pc-table thead th:not(.is-off) { animation: pcIn .4s var(--pc-ease) both; }
         .pc-table td:not(.is-off) { animation: pcIn .4s var(--pc-ease) both; }
+        /* Each plan's header is a picker: the Change chip says so, and the
+           native select lies over the whole header cell for the thumb. */
+        .pc-change { display: inline-flex; align-items: center; gap: .1rem; margin-top: .35rem; padding: .14rem .45rem .14rem .55rem; border-radius: 999px;
+            font-size: .72rem; font-weight: 800; color: #2f5219; background: #eef5e5; white-space: nowrap; }
+        .pc-change svg { width: .75rem; height: .75rem; }
+        /* Two plans side by side: the flag would widen its column and wrap
+           the other plan's name; the tinted column still marks it. */
+        .pc-plan em { display: none; }
+        .pc-swap { display: block; position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+            font-size: 16px; -webkit-appearance: none; appearance: none; }
+        .pc-plan:has(.pc-swap:focus-visible) { box-shadow: inset 0 0 0 2px #86b556; }
     }
     @keyframes pcIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
@@ -250,6 +300,12 @@
         init() {
             this.$watch('a', (v, old) => { if (v === this.b) this.b = old; });
             this.$watch('b', (v, old) => { if (v === this.a) this.a = old; });
+        },
+        // A header picker on a phone: the column it sits in becomes `to`.
+        swap(col, to) {
+            if (Number.isNaN(to) || to === col) return;
+            if (col === this.a) this.a = to;
+            else if (col === this.b) this.b = to;
         },
     });
 </script>

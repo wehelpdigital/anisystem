@@ -68,7 +68,8 @@
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
                         <label for="password" class="form-label mb-0">Password</label>
-                        <a href="{{ route('password.request') }}" class="text-xs font-semibold text-brand-700 hover:underline">Forgot password?</a>
+                        {{-- A thumb's worth of link: padded out, pulled back by as much. --}}
+                        <a href="{{ route('password.request') }}" class="pl-3 text-sm font-semibold text-brand-700 hover:underline" style="margin-block: -.5rem; padding-block: .5rem">Forgot password?</a>
                     </div>
                     <input id="password" name="password" type="password"
                         class="form-input" placeholder="••••••••" required autocomplete="current-password">
@@ -84,14 +85,14 @@
 
                 <button type="submit" id="loginSubmit" class="btn btn-accent btn-lg w-full">
                     <svg class="login-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
-                    <span data-login-label>Log In</span>
+                    <span data-login-label>Log in</span>
                 </button>
             </form>
         </div>
 
         <p class="text-center text-sm text-gray-600 mt-6">
             No account yet?
-            <a href="{{ route('signup') }}" class="font-bold text-brand-700 hover:underline">Sign up free</a>
+            <a href="{{ route('signup') }}" class="inline-block py-2 font-bold text-brand-700 hover:underline">Sign up free</a>
         </p>
 
         @php
@@ -223,7 +224,7 @@
             btn.disabled = false;
             btn.classList.remove('is-busy');
             btn.removeAttribute('aria-busy');
-            if (label) label.textContent = 'Log In';
+            if (label) label.textContent = 'Log in';
         });
     })();
 </script>
