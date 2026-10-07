@@ -748,6 +748,11 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/protocol-builder/{id}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'destroy'])->whereNumber('id')->name('pb.delete');
     Route::post('/app/protocol-builder/{id}/analyze', [App\Http\Controllers\ProtocolBuilderController::class, 'analyze'])->whereNumber('id')->name('pb.analyze');
     Route::get('/app/protocol-builder/{id}/job', [App\Http\Controllers\ProtocolBuilderController::class, 'job'])->whereNumber('id')->name('pb.job');
+    // NPK Plus in the builder (2026-10-07): the protocol's fertilizer added up (free), Anee's reading of it (paid).
+    Route::get('/app/protocol-builder/{id}/npk', [App\Http\Controllers\ProtocolNpkController::class, 'summary'])->whereNumber('id')->name('pb.npk');
+    Route::post('/app/protocol-builder/{id}/npk', [App\Http\Controllers\ProtocolNpkController::class, 'generate'])->whereNumber('id')->name('pb.npk.generate');
+    Route::get('/app/protocol-builder/{id}/npk-list', [App\Http\Controllers\ProtocolNpkController::class, 'list'])->whereNumber('id')->name('pb.npk.list');
+    Route::get('/app/protocol-builder/npk-job/{id}', [App\Http\Controllers\ProtocolNpkController::class, 'job'])->whereNumber('id')->name('pb.npk.job');
     Route::get('/app/protocol-builder/{id}/analyses', [App\Http\Controllers\ProtocolBuilderController::class, 'analyses'])->whereNumber('id')->name('pb.analyses');
     Route::get('/app/protocol-builder/{id}/analyses/{aid}', [App\Http\Controllers\ProtocolBuilderController::class, 'analysisOne'])->whereNumber(['id', 'aid'])->name('pb.analyses.one');
     // A kept review, riding into an Anee chat (?pbreview=ID).

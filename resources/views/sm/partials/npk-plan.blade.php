@@ -161,7 +161,7 @@
         }).join('');
         const lines = (l.lines || []).map((x) => '<li><em class="' + (x.done ? '' : 'is-plan') + '">' + (x.done ? 'Done' : 'Planned') + '</em><span><b>' + esc(x.date) + '</b> ' + esc(x.title) + ': ' + esc(x.name)
             + ' ' + esc(x.amount) + (x.shared && x.kg != null ? ' (this lot ' + fmt(x.kg, 1) + ' kg)' : '') + (x.estimate ? ' (estimate)' : '') + '</span></li>').join('');
-        return '<div class="nkp-lot"><h4>' + esc(l.name) + '<small>' + [l.crop, l.size, l.stage, l.age].filter(Boolean).map(esc).join(' · ') + '</small></h4>'
+        return '<div class="nkp-lot"><h4>' + esc(l.name) + '<small>' + [String(l.crop || '').replace(' — ', ', '), l.size, l.stage, l.age].filter(Boolean).map(esc).join(' · ') + '</small></h4>'
             + (l.areaHa ? '<table class="nkp-tbl"><tr><th>kg per ha</th><th>N</th><th>P₂O₅</th><th>K₂O</th></tr>' + row('Applied so far', l.applied) + row('Still planned', l.planned) + row('Season total', l.total, 'is-total') + '</table>'
                 : '<p class="nkp-unread">Set this lot\'s size in Lots to see it per hectare. In all: applied ' + esc(Object.entries((l.kg || {}).applied || {}).map(([n, v]) => lab(n) + ' ' + fmt(v, 1)).join(', ') || 'nothing') + ' kg.</p>')
             + (extra.length ? '<div class="nkp-more">' + extra.map(([n, v]) => '<span>' + esc(lab(n)) + ' ' + fmt(v, v >= 10 ? 0 : v >= 1 ? 1 : v >= .1 ? 2 : 3) + ' kg/ha</span>').join('') + '</div>' : '')
