@@ -1308,6 +1308,92 @@
                 <audio id="dashSongAudio" preload="metadata" src="{{ asset('audio/anee-kay-anee-ang-ani-ay-high.mp3') }}"></audio>
             </section>
 
+            {{-- What's New in Agriculture (the owner, 2026-10-07): the newest
+                 farm news roundup on a card of its own, apart from the blog.
+                 Its stories' headlines are listed so the farmer sees what is
+                 inside before opening it. --}}
+            @if (!empty($latestNews))
+                @php
+                    $wnPost = $latestNews['post'];
+                    $wnCover = $wnPost->covers()[0]['url'] ?? null;
+                @endphp
+                @push('head')
+                <style>
+                    .wn-card { display: grid; overflow: hidden; border-radius: 1.2rem; text-decoration: none; color: inherit; background: var(--color-white); border: 1px solid var(--color-gray-200);
+                        box-shadow: 0 16px 36px -30px rgb(15 23 42 / .6); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+                    .wn-card:hover { transform: translateY(-2px); box-shadow: 0 22px 40px -28px rgb(15 23 42 / .7); }
+                    @media (min-width: 640px) { .wn-card { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); } }
+                    .wn-cover { position: relative; min-height: 10rem; background: linear-gradient(135deg, #2d5016, #14250a); }
+                    .wn-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+                    .wn-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgb(0 0 0 / .55)); }
+                    .wn-tag { position: absolute; left: .75rem; bottom: .7rem; z-index: 1; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 999px;
+                        font-size: .7rem; font-weight: 800; color: #1f1500; background: #f5c518; }
+                    .wn-tag i { width: .45rem; height: .45rem; border-radius: 999px; background: #b91c1c; animation: wnBlink 1.6s ease-in-out infinite; }
+                    @keyframes wnBlink { 50% { opacity: .25; } }
+                    .wn-body { padding: .95rem 1rem 1rem; min-width: 0; }
+                    .wn-body small { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--color-brand-600); }
+                    .wn-title { display: block; margin-top: .25rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.02rem; line-height: 1.3; color: var(--color-gray-900); }
+                    .wn-list { margin-top: .6rem; display: grid; gap: .35rem; counter-reset: wn; }
+                    .wn-list li { position: relative; padding-left: 1.6rem; font-size: .82rem; line-height: 1.4; color: var(--color-gray-700); counter-increment: wn; }
+                    .wn-list li::before { content: counter(wn); position: absolute; left: 0; top: .05rem; width: 1.15rem; height: 1.15rem; border-radius: 999px; display: grid; place-items: center;
+                        font-size: .64rem; font-weight: 800; color: #fff; background: var(--color-brand-600); }
+                    .wn-more { display: inline-flex; align-items: center; gap: .35rem; margin-top: .8rem; font-size: .82rem; font-weight: 800; color: var(--color-brand-700); }
+                    @media (prefers-reduced-motion: reduce) { .wn-card { transition: none; } .wn-tag i { animation: none; } }
+                </style>
+                @endpush
+                <section aria-labelledby="dashNewsH">
+                    <div class="flex items-center justify-between gap-3 mb-3 px-1">
+                        <h2 id="dashNewsH" class="flex items-center gap-2 text-base md:text-lg font-bold text-gray-900">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-brand-600" style="width:1.3rem;height:1.3rem" aria-hidden="true"><path d="M4 5h13v13a2 2 0 002 2H6a2 2 0 01-2-2V5z"/><path d="M17 9h3v9a2 2 0 01-2 2"/><path d="M8 9h5M8 13h5M8 17h3"/></svg>
+                            What's New in Agriculture
+                        </h2>
+                        <a href="{{ route('community.blog') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">All news →</a>
+                    </div>
+                    <a href="{{ route('community.blog.show', ['id' => $wnPost->id, 'from' => 'dashboard']) }}" class="wn-card">
+                        <div class="wn-cover">
+                            @if ($wnCover)<img src="{{ $wnCover }}" alt="" loading="lazy">@endif
+                            <span class="wn-tag"><i aria-hidden="true"></i>Farm news{{ $latestNews['range'] ? ', ' . $latestNews['range'] : '' }}</span>
+                        </div>
+                        <div class="wn-body">
+                            <small>The latest roundup</small>
+                            <span class="wn-title">{{ $wnPost->title }}</span>
+                            @if ($latestNews['stories'])
+                                <ol class="wn-list">
+                                    @foreach ($latestNews['stories'] as $wnStory)
+                                        <li>{{ $wnStory }}</li>
+                                    @endforeach
+                                </ol>
+                            @endif
+                            <span class="wn-more">Read all {{ $latestNews['count'] }} stories and what they mean for your farm →</span>
+                        </div>
+                    </a>
+                </section>
+            @endif
+
+            {{-- Latest from the Technician's Blog.
+
+                 The same band the blog's own page draws, from the same partial —
+                 Home had its own 16:9 tile, so one article looked like two different
+                 things depending on which screen you met it on. Three of them here
+                 rather than six: this is a taste, and the page is long already.
+                 Above the News Feed (the owner, 2026-10-07): the technicians' word
+                 comes before the chatter. --}}
+            @if (!empty($latestBlog) && $latestBlog->isNotEmpty())
+                @include('community.blog.partials.card-css')
+                <div>
+                    <div class="flex items-center justify-between gap-3 mb-3 px-1">
+                        <h2 class="flex items-center gap-2 text-base md:text-lg font-bold text-gray-900">
+                            <img src="{{ asset('images/blog.png') }}" alt="" width="22" height="22" class="shrink-0" style="width:1.375rem;height:1.375rem;">
+                            From the Technician's Blog
+                        </h2>
+                        <a href="{{ route('community.blog') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">See all →</a>
+                    </div>
+                    <div class="blog-grid blog-grid-inset">
+                        @include('community.blog.partials.cards', ['posts' => $latestBlog->take(3), 'blogFrom' => 'dashboard'])
+                    </div>
+                </div>
+            @endif
+
             @if (\App\Support\WorkerContext::canUseCommunity())
             <div>
                 <div class="flex items-center justify-between gap-3 mb-3 px-1">
@@ -1469,27 +1555,6 @@
 
     </div>
 
-    {{-- Latest from the Technician's Blog.
-
-         The same band the blog's own page draws, from the same partial —
-         Home had its own 16:9 tile, so one article looked like two different
-         things depending on which screen you met it on. Three of them here
-         rather than six: this is a taste, and the page is long already. --}}
-    @if (!empty($latestBlog) && $latestBlog->isNotEmpty())
-        @include('community.blog.partials.card-css')
-        <div>
-            <div class="flex items-center justify-between gap-3 mb-3 px-1">
-                <h2 class="flex items-center gap-2 text-base md:text-lg font-bold text-gray-900">
-                    <img src="{{ asset('images/blog.png') }}" alt="" width="22" height="22" class="shrink-0" style="width:1.375rem;height:1.375rem;">
-                    From the Technician's Blog
-                </h2>
-                <a href="{{ route('community.blog') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">See all →</a>
-            </div>
-            <div class="blog-grid blog-grid-inset">
-                @include('community.blog.partials.cards', ['posts' => $latestBlog->take(3), 'blogFrom' => 'dashboard'])
-            </div>
-        </div>
-    @endif
 
 </div>
 

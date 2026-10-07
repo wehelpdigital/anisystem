@@ -86,6 +86,10 @@
     .article-body .a-note b { display:block; margin-bottom:.2rem; color:var(--color-gray-900); }
     .article-body .a-btn { display:inline-block; background:var(--color-brand-600); color:#fff !important;
         font-weight:700; padding:.55rem 1.1rem; border-radius:999px; text-decoration:none; margin:.4rem 0; }
+    /* A news roundup's link out: a button with the leave-the-app arrow (it opens in the browser). */
+    .article-body .a-btn.a-out { display:inline-flex; align-items:center; gap:.45rem; }
+    .article-body .a-btn.a-out::after { content:''; flex:none; width:.95rem; height:.95rem; background:currentColor;
+        -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5'/%3E%3C/svg%3E") center / contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5'/%3E%3C/svg%3E") center / contain no-repeat; }
     .article-body .a-embed { position:relative; padding-top:56.25%; margin:1.2rem 0; border-radius:.85rem; overflow:hidden; }
     .article-body .a-embed iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
     .article-body table { width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; }

@@ -162,12 +162,31 @@ class AppController extends Controller
         $aiBalance = app(\App\Services\AiCreditService::class)->balance($aiPayerId);
 
         \App\Support\TechBlog::syncIfStale();
+        // The farm news roundups have their own card, What's New in
+        // Agriculture (the owner, 2026-10-07); the blog band keeps the rest.
+        $roundupPageIds = \App\Models\AsSitePage::where('section', 'blog')->where('kind', 'roundup')->pluck('id')->all();
         $latestBlog = \App\Models\AsCommunityBlogPost::active()
             ->published()
+            ->when($roundupPageIds, fn ($q) => $q->where(fn ($w) => $w->whereNull('sitePageId')->orWhereNotIn('sitePageId', $roundupPageIds)))
             ->orderByDesc('publishedAt')
             ->orderByDesc('id')
             ->limit(6)
             ->get();
+        $latestNews = null;
+        if ($roundupPageIds) {
+            $newsPost = \App\Models\AsCommunityBlogPost::active()->published()->whereIn('sitePageId', $roundupPageIds)
+                ->orderByDesc('publishedAt')->orderByDesc('id')->first();
+            $newsPage = $newsPost ? \App\Models\AsSitePage::find($newsPost->sitePageId) : null;
+            if ($newsPost && $newsPage) {
+                $blocks = collect((array) $newsPage->blocks);
+                $latestNews = [
+                    'post' => $newsPost,
+                    'range' => preg_replace('/^This roundup covers\s+/i', '', (string) ($blocks->firstWhere('type', 'callout')['title'] ?? '')),
+                    'stories' => $blocks->filter(fn ($b) => ($b['type'] ?? '') === 'heading' && (int) ($b['level'] ?? 2) === 3)->pluck('text')->take(5)->values()->all(),
+                    'count' => $blocks->filter(fn ($b) => ($b['type'] ?? '') === 'heading' && (int) ($b['level'] ?? 2) === 3)->count(),
+                ];
+            }
+        }
 
 
         $meId = (int) $user->id;
@@ -286,6 +305,7 @@ class AppController extends Controller
             // shows them an infinity, not a zero that looks like broke.
             'aiUnlimited' => app(\App\Services\AiCreditService::class)->unlimited($aiPayerId),
             'latestBlog' => $latestBlog,
+            'latestNews' => $latestNews,
             'scheduleNext' => $scheduleNext,
             'latestDiscussions' => $latestDiscussions,
             'connectedWall' => $connectedWall,

@@ -34,7 +34,7 @@ class TechBlog
     public const AUTHOR = 'anee.io Technicians';
 
     /** Bump when the drawing below changes, so every article is drawn again. */
-    private const VERSION = 3;
+    private const VERSION = 5;
 
     private const STAMP = 'tech-blog:synced';
 
@@ -199,6 +199,14 @@ class TechBlog
                 $h .= "<$tag>" . e($b['text']) . "</$tag>\n";
             } elseif ($type === 'text') {
                 foreach (SitePages::paragraphs($b['text'] ?? '') as $para) {
+                    // A news roundup's "Read the full report" line is a button
+                    // (the owner, 2026-10-07); the purifier sends it to a new
+                    // tab, which a phone's installed app opens in the browser.
+                    if (preg_match('/^\*\*(.+?)\*\*\s*\[(Read the full report[^\]]*)\]\((https?:\/\/[^)\s]+)\)\s*$/', trim($para), $m)) {
+                        $h .= '<p><strong>' . e($m[1]) . '</strong><br><a class="a-btn a-out" href="' . e($m[3]) . '" title="Opens in your browser">' . e($m[2]) . "</a></p>\n";
+
+                        continue;
+                    }
                     $h .= '<p>' . $in($para) . "</p>\n";
                 }
             } elseif ($type === 'list') {
