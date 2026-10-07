@@ -1328,10 +1328,8 @@
                     .wn-cover { position: relative; min-height: 10rem; background: linear-gradient(135deg, #2d5016, #14250a); }
                     .wn-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
                     .wn-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgb(0 0 0 / .55)); }
-                    .wn-tag { position: absolute; left: .75rem; bottom: .7rem; z-index: 1; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 999px;
-                        font-size: .7rem; font-weight: 800; color: #1f1500; background: #f5c518; }
-                    .wn-tag i { width: .45rem; height: .45rem; border-radius: 999px; background: #b91c1c; animation: wnBlink 1.6s ease-in-out infinite; }
-                    @keyframes wnBlink { 50% { opacity: .25; } }
+                    .wn-tag { position: absolute; right: .75rem; top: .75rem; z-index: 1; display: inline-flex; align-items: center; padding: .32rem .7rem; border-radius: 999px;
+                        font-size: .72rem; font-weight: 800; color: #1f1500; background: #f5c518; box-shadow: 0 6px 16px -8px rgb(0 0 0 / .6); }
                     .wn-body { padding: .95rem 1rem 1rem; min-width: 0; }
                     .wn-body small { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--color-brand-600); }
                     .wn-title { display: block; margin-top: .25rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.02rem; line-height: 1.3; color: var(--color-gray-900); }
@@ -1342,7 +1340,7 @@
                     .wn-list li::before { content: counter(wn); position: absolute; left: 0; top: .55rem; width: 1.15rem; height: 1.15rem; border-radius: 999px; display: grid; place-items: center;
                         font-size: .64rem; font-weight: 800; color: #fff; background: var(--color-brand-600); }
                     .wn-more { display: inline-flex; align-items: center; gap: .35rem; margin-top: .4rem; font-size: .82rem; font-weight: 800; color: var(--color-brand-700); }
-                    @media (prefers-reduced-motion: reduce) { .wn-card { transition: none; } .wn-tag i { animation: none; } }
+                    @media (prefers-reduced-motion: reduce) { .wn-card { transition: none; } }
                 </style>
                 @endpush
                 <section aria-labelledby="dashNewsH">
@@ -1356,7 +1354,7 @@
                     <a href="{{ route('community.blog.show', ['id' => $wnPost->id, 'from' => 'dashboard']) }}" class="wn-card">
                         <div class="wn-cover">
                             @if ($wnCover)<img src="{{ $wnCover }}" alt="" loading="lazy">@endif
-                            <span class="wn-tag"><i aria-hidden="true"></i>Farm news{{ $latestNews['range'] ? ', ' . $latestNews['range'] : '' }}</span>
+                            @if ($latestNews['range'])<span class="wn-tag">{{ $latestNews['range'] }}</span>@endif
                         </div>
                         <div class="wn-body">
                             <small>The latest roundup</small>

@@ -163,6 +163,12 @@
         background: linear-gradient(90deg, #a50026, #d73027, #f46d43, #fdae61, #fee08b, #d9ef8b, #a6d96a, #66bd63, #1a9850, #006837); }
     .sat-legend span { display: flex; justify-content: space-between; opacity: .85; }
     .sat-legend[hidden] { display: none; }
+    /* Which picture is on the map, and when the satellite took it. */
+    .sat-shot { position: absolute; right: .6rem; bottom: .6rem; z-index: 2; max-width: calc(100% - 1.2rem); padding: .4rem .65rem; border-radius: .8rem; background: rgb(15 29 8 / .85); color: #fff;
+        font-size: .74rem; line-height: 1.35; text-align: right; box-shadow: 0 8px 18px -10px rgb(0 0 0 / .8); }
+    .sat-shot b { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #f5c518; }
+    .sat-shot[hidden] { display: none; }
+    @media (max-width: 479.98px) { .sat-shot.is-up { bottom: 3.7rem; } }
 
     .sat-grid9 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .3rem; max-width: 18rem; }
     .sat-grid9 div { aspect-ratio: 1.3; border-radius: .6rem; display: grid; place-items: center; text-align: center; font-size: .7rem; font-weight: 800; color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / .45); }
@@ -199,7 +205,8 @@
     .sat-actions em.p-month { background: #e4efd4; color: #2d5016; }
     .sat-note { font-size: .78rem; line-height: 1.55; color: var(--color-gray-500); }
 
-    .sat-saved { display: grid; gap: .55rem; }
+    /* minmax(0, 1fr): a long title is cut with an ellipsis, it no longer widens the page on a phone. */
+    .sat-saved { display: grid; grid-template-columns: minmax(0, 1fr); gap: .55rem; }
     .sat-srow { display: flex; gap: .75rem; align-items: center; width: 100%; text-align: left; padding: .75rem .8rem; border-radius: 1rem; background: var(--color-white);
         border: 1px solid var(--color-gray-200); cursor: pointer; transition: transform .28s var(--sat-ease), box-shadow .28s var(--sat-ease); }
     .sat-srow:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -16px rgb(0 0 0 / .5); }
@@ -207,7 +214,8 @@
         background: radial-gradient(closest-side, var(--color-white) 72%, transparent 74% 100%), conic-gradient(#66bd63 calc(var(--v) * 1%), var(--color-gray-100) 0); }
     .sat-srow span { min-width: 0; flex: 1 1 auto; }
     .sat-srow b { display: block; font-size: .88rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .sat-srow small { font-size: .74rem; color: var(--color-gray-500); }
+    .sat-srow { min-width: 0; }
+    .sat-srow small { display: block; font-size: .74rem; color: var(--color-gray-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
     /* ---- the phone, redrawn (2026-10-07) ----------------------------------
        Short hero, the step's number, Back and Next held above the tab bar,
@@ -568,7 +576,7 @@
         try { await loadMaps(); } catch (err) { $('satArea').textContent = err.message; return; }
         if (!dmap) {
             dmap = new google.maps.Map($('satDrawMap'), { center: st.place, zoom: st.place.here ? 17 : 15, mapTypeId: 'hybrid', streetViewControl: false, fullscreenControl: false,
-                mapTypeControl: false, cameraControl: false, clickableIcons: false, gestureHandling: 'greedy', tilt: 0, styles: QUIET });
+                mapTypeControl: false, cameraControl: false, clickableIcons: false, gestureHandling: 'greedy', tilt: 0, mapId: OPT.mapId || 'DEMO_MAP_ID', renderingType: 'VECTOR', headingInteractionEnabled: true, tiltInteractionEnabled: false, rotateControl: true, styles: QUIET });
             dpoly = new google.maps.Polygon({ map: dmap, strokeColor: '#f5c518', strokeWeight: 2.5, fillColor: '#f5c518', fillOpacity: .18, clickable: false });
             dmap.addListener('click', (e) => { if (st.ring.length < 300) { st.ring.push({ lat: e.latLng.lat(), lng: e.latLng.lng() }); paintDraw(); } });
         } else if (!st.ring.length) {
@@ -704,9 +712,11 @@
         const next = (wx.days || []).filter((x) => !x.past).slice(0, 10);
         const maxRain = Math.max(1, ...next.map((x) => Number(x.rain) || 0));
         const when = [];
-        if (s2.available) when.push('<span>' + ICON.leaf.replace('<svg', '<svg width="12" height="12"') + ' Sentinel-2 · ' + esc(s2.time.phText || s2.time.ph) + '</span>');
-        else when.push('<span class="is-warn">Sentinel-2 blocked by cloud' + (s2.lastClear && s2.lastClear.ph ? ' · last clear ' + esc(String(s2.lastClear.ph).slice(0, 10)) : '') + '</span>');
-        if (s1.available) when.push('<span>' + ICON.radar.replace('<svg', '<svg width="12" height="12"') + ' Sentinel-1 · ' + esc(s1.time.phText || s1.time.ph) + '</span>');
+        // When each picture was taken, said plainly, with how long ago (the owner could not find it).
+        const ago = (t) => { const d = Math.round(Number((t || {}).ageDays)); return isNaN(d) ? '' : d <= 0 ? ' (today)' : d === 1 ? ' (yesterday)' : ' (' + d + ' days ago)'; };
+        if (s2.available) when.push('<span>' + ICON.leaf.replace('<svg', '<svg width="12" height="12"') + ' Satellite photo taken ' + esc(s2.time.phText || s2.time.ph) + esc(ago(s2.time)) + '</span>');
+        else when.push('<span class="is-warn">Clouds hid the field in the last photos' + (s2.lastClear && s2.lastClear.phText ? ' · last clear photo ' + esc(s2.lastClear.phText) + esc(ago(s2.lastClear)) : '') + '</span>');
+        if (s1.available) when.push('<span>' + ICON.radar.replace('<svg', '<svg width="12" height="12"') + ' Radar pass ' + esc(s1.time.phText || s1.time.ph) + esc(ago(s1.time)) + '</span>');
         when.push('<span>' + esc(s.areaHa) + ' ha</span>');
         if (s.mode === 'radar-only') when.push('<span class="is-warn">Radar only (clouds)</span>');
 
@@ -722,10 +732,13 @@
                 + card('What Anee sees', p(a.summary) + p((a.stage || {}).basis ? 'Stage: ' + a.stage.guess + '. ' + a.stage.basis : ''), ICON.eye)
                 + card('Stand and spacing', p(SP.reading) + p(SP.density) + '<p class="sat-note mt-2">' + esc(SP.note || '') + '</p>', ICON.leaf),
             map: '<div class="sat-map-wrap"><div class="sat-map" id="satRMap"></div>'
-                + '<div class="sat-layers"><button type="button" data-l="rgb">True color</button><button type="button" data-l="ndvi" class="is-on">NDVI heatmap</button><button type="button" data-l="sar">Radar</button><button type="button" data-l="none">Map only</button>'
-                + '</div><label class="sat-opacity">Layer <input type="range" id="satOp" min="0" max="100" value="80" aria-label="Layer opacity"></label>'
-                + '<div class="sat-legend" id="satLegend">NDVI<i></i><span><em>0 bare</em><em>0.9 lush</em></span></div></div>'
-                + '<p class="sat-note">' + (s.source === 'planetary' ? 'Pictures from Copernicus Sentinel 2 and Sentinel 1, through Microsoft Planetary Computer.' : 'Heatmaps from Google Earth Engine.') + ' NDVI red is bare or stressed, deep green is a full, healthy canopy. Radar colors: green and yellow are dense canopy, blue and dark are water or bare soil.</p>',
+                + '<div class="sat-layers"><button type="button" data-l="rgb" class="is-on">Latest photo</button><button type="button" data-l="ndvi">NDVI heatmap</button><button type="button" data-l="sar">Radar</button><button type="button" data-l="none">Map only</button>'
+                + '</div><label class="sat-opacity">Layer <input type="range" id="satOp" min="0" max="100" value="100" aria-label="Layer opacity"></label>'
+                + '<div class="sat-legend" id="satLegend" hidden>NDVI<i></i><span><em>0 bare</em><em>0.9 lush</em></span></div>'
+                + '<div class="sat-shot" id="satShot" hidden></div></div>'
+                + '<p class="sat-note">' + (s.source === 'planetary' ? 'Pictures from Copernicus Sentinel 2 and Sentinel 1, through Microsoft Planetary Computer.' : 'Heatmaps from Google Earth Engine.')
+                + ' The latest photo is the field as the satellite saw it on the date shown. Each dot of it is 10 by 10 meters, so it looks softer than the base map around it, which is a sharper photo taken months or years ago.'
+                + ' NDVI red is bare or stressed, deep green is a full, healthy canopy. Radar colors: green and yellow are dense canopy, blue and dark are water or bare soil.</p>',
             health: card('Crop health', p(H.reading) + p(H.ndviMeaning) + p(H.uniformity), ICON.leaf)
                 + (s2.available ? card('How green, across the field', '<div class="sat-bars">' + [['Lowest 10%', nd.p10], ['Middle', nd.p50], ['Top 10%', nd.p90], ['Average', nd.mean]].map(([k, v]) => '<div class="sat-bar">' + esc(k) + '<span><i style="width:' + Math.max(2, Math.min(100, (Number(v) || 0) / 0.9 * 100)) + '%"></i></span><b>' + esc(v) + '</b></div>').join('') + '</div>'
                     + '<p class="sat-note mt-2">' + esc(Math.round((nd.lowShare || 0) * 100)) + ' percent of the field is clearly below the middle. Spread (std dev) ' + esc(nd.stdDev) + '.</p>'
@@ -776,7 +789,7 @@
         const l = e.target.closest('.sat-layers button');
         if (l && !l.disabled) setLayer(l.dataset.l);
     });
-    $('satReport').addEventListener('input', (e) => { if (e.target.id === 'satOp' && rmap) rmap.overlayMapTypes.forEach((o) => o.setOpacity(e.target.value / 100)); });
+    $('satReport').addEventListener('input', (e) => { if (e.target.id === 'satOp' && rmap) { rmap.overlayMapTypes.forEach((o) => o.setOpacity(e.target.value / 100)); if (ground) ground.setOpacity(e.target.value / 100); } });
     const closeView = () => {
         const view = $('satView');
         view.classList.remove('is-on');
@@ -786,18 +799,29 @@
     $('satViewX').addEventListener('click', closeView);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('satView').hidden) closeView(); });
 
-    let tiles = {}, layer = 'ndvi';
+    let tiles = {}, pics = {}, cropBounds = null, ground = null, shots = {}, layer = 'rgb';
+    const opacity = () => Number(($('satOp') || {}).value || 100) / 100;
     const overlay = (url) => new google.maps.ImageMapType({
         getTileUrl: (c, z) => url.replace('{x}', c.x).replace('{y}', c.y).replace('{z}', z),
-        tileSize: new google.maps.Size(256, 256), opacity: Number(($('satOp') || {}).value || 80) / 100, name: 'layer',
+        tileSize: new google.maps.Size(256, 256), opacity: opacity(), name: 'layer',
     });
     const setLayer = (k) => {
         layer = k;
         document.querySelectorAll('.sat-layers button').forEach((b) => b.classList.toggle('is-on', b.dataset.l === k));
         if ($('satLegend')) $('satLegend').hidden = k !== 'ndvi';
+        // Which picture this is, and when it was taken.
+        if ($('satShot')) { $('satShot').hidden = !shots[k]; $('satShot').innerHTML = shots[k] || ''; $('satShot').classList.toggle('is-up', k === 'ndvi'); }
         if (!rmap) return;
         rmap.overlayMapTypes.clear();
-        if (k !== 'none' && tiles[k]) rmap.overlayMapTypes.push(overlay(tiles[k]));
+        if (ground) { ground.setMap(null); ground = null; }
+        if (k === 'none') return;
+        // One picture of the field and around it, smoothed by the browser (the
+        // tiles are blocky 10 m squares when zoomed in this far); tiles otherwise.
+        if (pics[k] && cropBounds) {
+            const [w, so, e, n] = cropBounds;
+            ground = new google.maps.GroundOverlay(pics[k], new google.maps.LatLngBounds({ lat: so, lng: w }, { lat: n, lng: e }), { opacity: opacity(), clickable: false });
+            ground.setMap(rmap);
+        } else if (tiles[k]) rmap.overlayMapTypes.push(overlay(tiles[k]));
     };
     const drawReportMap = async () => {
         if (rmap || !cur) return;
@@ -805,17 +829,34 @@
         const rep = cur.report || {}, s = rep.satellite || {};
         const ring = ((cur.params || {}).polygon || {}).coordinates?.[0] || [];
         const path = ring.map(([lng, lat]) => ({ lat, lng }));
-        rmap = new google.maps.Map($('satRMap'), { mapTypeId: 'hybrid', streetViewControl: false, fullscreenControl: false, cameraControl: false, mapTypeControl: false, clickableIcons: false, gestureHandling: 'greedy', tilt: 0, styles: QUIET });
+        // A vector map, so it turns with two fingers like the Google Maps app (the compass puts north back up).
+        rmap = new google.maps.Map($('satRMap'), { mapTypeId: 'hybrid', streetViewControl: false, fullscreenControl: false, cameraControl: false, mapTypeControl: false, clickableIcons: false, gestureHandling: 'greedy', tilt: 0, mapId: OPT.mapId || 'DEMO_MAP_ID', renderingType: 'VECTOR', headingInteractionEnabled: true, tiltInteractionEnabled: false, rotateControl: true, styles: QUIET });
         new google.maps.Polygon({ map: rmap, paths: path, strokeColor: '#f5c518', strokeWeight: 2, fillOpacity: 0, clickable: false });
         const b = new google.maps.LatLngBounds(); path.forEach((x) => b.extend(x)); rmap.fitBounds(b, 30);
-        tiles = Object.assign({}, (s.sentinel2 || {}).tiles || {}, (s.sentinel1 || {}).tiles || {});
-        // Earth Engine map ids last a few hours; an older report asks again (Planetary Computer addresses do not expire).
+        const s2 = s.sentinel2 || {}, s1 = s.sentinel1 || {};
+        tiles = Object.assign({}, s2.tiles || {}, s1.tiles || {});
+        pics = Object.assign({}, s2.crops || {}, s1.crops || {});
+        cropBounds = s.cropBounds || null;
+        const ago = (t) => { const d = Math.round(Number((t || {}).ageDays)); return isNaN(d) ? '' : d <= 0 ? ', today' : d === 1 ? ', yesterday' : ', ' + d + ' days ago'; };
+        const taken = (t) => t && t.phText ? esc(t.phText) + esc(ago(t)) : '';
+        shots = {
+            rgb: s2.available ? '<b>Latest satellite photo</b>' + taken(s2.time) : '',
+            ndvi: s2.available ? '<b>Greenness from the photo of</b>' + taken(s2.time) : '',
+            sar: s1.available ? '<b>Radar pass</b>' + taken(s1.time) : '',
+        };
+        // Earth Engine map ids last a few hours; an older report asks again (Planetary
+        // Computer addresses do not expire). A report from before the smooth pictures asks for them.
         const age = (s.generatedAt && s.generatedAt.utc) ? (Date.now() - Date.parse(s.generatedAt.utc)) / 3.6e6 : 99;
-        if (age > 4 && cur.savedId) {
-            try { const r = await window.api(U.tiles(cur.savedId), { method: 'POST' }); tiles = Object.assign(tiles, (r.data || {}).tiles || {}); } catch (_) {}
+        if (cur.savedId && ((age > 4 && s.source !== 'planetary') || (s.source === 'planetary' && !cropBounds))) {
+            try {
+                const r = await window.api(U.tiles(cur.savedId), { method: 'POST' });
+                tiles = Object.assign(tiles, (r.data || {}).tiles || {});
+                pics = Object.assign(pics, (r.data || {}).crops || {});
+                cropBounds = (r.data || {}).cropBounds || cropBounds;
+            } catch (_) {}
         }
-        document.querySelectorAll('.sat-layers button').forEach((btn) => { if (btn.dataset.l !== 'none') btn.disabled = !tiles[btn.dataset.l]; });
-        setLayer(tiles.ndvi ? 'ndvi' : (tiles.sar ? 'sar' : 'none'));
+        document.querySelectorAll('.sat-layers button').forEach((btn) => { if (btn.dataset.l !== 'none') btn.disabled = !tiles[btn.dataset.l] && !pics[btn.dataset.l]; });
+        setLayer((tiles.rgb || pics.rgb) ? 'rgb' : (tiles.ndvi || pics.ndvi) ? 'ndvi' : (tiles.sar || pics.sar) ? 'sar' : 'none');
     };
 
     /* ---- saved ---- */

@@ -83,6 +83,10 @@ return [
     // the Maps JavaScript API enabled (billing on, generous free tier).
     'google_maps' => [
         'key' => env('GOOGLE_MAPS_KEY'),
+        // A Map ID makes a map a vector one, which turns with two fingers like
+        // the Google Maps app (Satellite Analysis, 2026-10-07). Google's
+        // DEMO_MAP_ID works until one is made in the Cloud console.
+        'map_id' => env('GOOGLE_MAPS_MAP_ID', 'DEMO_MAP_ID'),
     ],
 
     'livekit' => [

@@ -3433,7 +3433,9 @@
     .is-up .hp-sum-years { color: #991b1b; }
     .is-down .hp-sum-years { color: #92400e; }
     .hp-sum-trend.is-way .hp-sum-years { color: #fde68a; }
-    .hp-sum-trend small { display: block; margin-top: .45rem; font-size: .76rem; font-weight: 700; letter-spacing: .02em; }
+    /* Each chart's caption on one line (owner, 2026-10-07): the size shrinks with the card to fit its own length. */
+    .hp-sum-trend { container-type: inline-size; }
+    .hp-sum-trend small { display: block; margin-top: .45rem; font-size: min(.76rem, var(--fit, 3.8cqw)); font-weight: 700; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .is-up .hp-sum-trend small { color: #b91c1c; }
     .is-down .hp-sum-trend small { color: #92400e; }
     .hp-sum-trend.is-way small { color: #fde68a; }

@@ -52,6 +52,15 @@ class PlanetarySatellite
             $c = $this->centroid($ring);
             $s2 = $this->sentinel2($geom, $ring, $days);
             $s1 = $this->sentinel1($geom, $ring, $days);
+            // One picture of the field and its surroundings per layer (a
+            // GroundOverlay the browser smooths), beside the tiles.
+            $box = $this->around($ring);
+            if ($s2['available'] ?? false) {
+                $s2['crops'] = ['rgb' => $this->cropRgb($s2['imageId'], $box), 'ndvi' => $this->cropNdvi($s2['imageId'], $box)];
+            }
+            if ($s1['available'] ?? false) {
+                $s1['crops'] = ['sar' => $this->cropSar($s1['imageId'], $box)];
+            }
             $mode = ($s2['available'] ?? false) && ($s1['available'] ?? false) ? 'optical+radar'
                 : (($s1['available'] ?? false) ? 'radar-only' : (($s2['available'] ?? false) ? 'optical-only' : 'none'));
 
@@ -61,6 +70,7 @@ class PlanetarySatellite
                 'generatedAt' => $this->times(time()),
                 'areaHa' => round($area, 2),
                 'centroid' => ['lng' => round($c[0], 6), 'lat' => round($c[1], 6)],
+                'cropBounds' => array_map(fn ($v) => round($v, 6), $box),
                 'sentinel2' => $s2,
                 'sentinel1' => $s1,
                 'mode' => $mode,
@@ -77,15 +87,28 @@ class PlanetarySatellite
     public function tiles(array $polygon, ?string $s2Id, ?string $s1Id): array
     {
         $out = [];
+        $crops = [];
+        $box = null;
+        try {
+            $box = $this->around($this->ring($polygon));
+        } catch (\Throwable $e) {
+        }
         if ($s2Id) {
             $out['ndvi'] = $this->tileNdvi($s2Id);
             $out['rgb'] = $this->tileRgb($s2Id);
+            if ($box) {
+                $crops['rgb'] = $this->cropRgb($s2Id, $box);
+                $crops['ndvi'] = $this->cropNdvi($s2Id, $box);
+            }
         }
         if ($s1Id) {
             $out['sar'] = $this->tileSar($s1Id);
+            if ($box) {
+                $crops['sar'] = $this->cropSar($s1Id, $box);
+            }
         }
 
-        return ['ok' => true, 'data' => ['ok' => true, 'tiles' => $out]];
+        return ['ok' => true, 'data' => ['ok' => true, 'tiles' => $out, 'crops' => $crops, 'cropBounds' => $box]];
     }
 
     // ------------------------------------------------------------------ Sentinel-2
@@ -338,6 +361,45 @@ class PlanetarySatellite
     {
         return self::DATA . '/item/tiles/WebMercatorQuad/{z}/{x}/{y}@1x?' . http_build_query(['collection' => 'sentinel-1-rtc', 'item' => $id,
             'expression' => self::DB, 'asset_as_band' => 'true', 'format' => 'png']) . '&rescale=-22,0&rescale=-28,-8&rescale=2,14';
+    }
+
+    /** [west, south, east, north] of the field and around it: at least 1.2 km a side, the field in the middle. */
+    private function around(array $ring): array
+    {
+        $xs = array_column($ring, 0);
+        $ys = array_column($ring, 1);
+        [$w, $e, $s, $n] = [min($xs), max($xs), min($ys), max($ys)];
+        $lat = deg2rad(($s + $n) / 2);
+        $minLat = 1200 / 111320;
+        $minLng = 1200 / (111320 * max(.2, cos($lat)));
+        $padLat = max(($n - $s) * .6, ($minLat - ($n - $s)) / 2);
+        $padLng = max(($e - $w) * .6, ($minLng - ($e - $w)) / 2);
+
+        return [$w - $padLng, $s - $padLat, $e + $padLng, $n + $padLat];
+    }
+
+    private function crop(array $box, array $q): string
+    {
+        return self::DATA . '/item/bbox/' . implode(',', array_map(fn ($v) => round($v, 6), $box)) . '.png?' . preg_replace('/%5B\d+%5D=/', '=', http_build_query($q));
+    }
+
+    private function cropRgb(string $id, array $box): string
+    {
+        // The true color picture, brightened a little (it reads dark straight off the satellite).
+        return $this->crop($box, ['collection' => 'sentinel-2-l2a', 'item' => $id, 'assets' => 'visual', 'asset_bidx' => 'visual|1,2,3',
+            'color_formula' => 'Gamma RGB 1.6 Saturation 1.15']);
+    }
+
+    private function cropNdvi(string $id, array $box): string
+    {
+        return $this->crop($box, ['collection' => 'sentinel-2-l2a', 'item' => $id, 'expression' => '(B08-B04)/(B08+B04)', 'asset_as_band' => 'true',
+            'rescale' => '0,0.9', 'colormap_name' => 'rdylgn']);
+    }
+
+    private function cropSar(string $id, array $box): string
+    {
+        return $this->crop($box, ['collection' => 'sentinel-1-rtc', 'item' => $id, 'expression' => self::DB, 'asset_as_band' => 'true'])
+            . '&rescale=-22,0&rescale=-28,-8&rescale=2,14';
     }
 
     private function tile(array $q): string

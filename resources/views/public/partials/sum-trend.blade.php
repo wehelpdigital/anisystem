@@ -22,7 +22,7 @@
             <b class="{{ $k === 3 ? 'is-now' : ($k > 3 ? 'is-ahead' : '') }}">{{ $k === 3 ? 'Now' : $stYear + $k - 3 }}</b>
         @endforeach
     </span>
-    <small>{{ $label }}</small>
+    <small style="--fit: {{ round(186 / max(20, mb_strlen($label)), 2) }}cqw">{{ $label }}</small>
 </div>
 @once
 @push('scripts')

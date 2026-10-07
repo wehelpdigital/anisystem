@@ -116,6 +116,7 @@ class SatelliteController extends Controller
             'connected' => $this->field->configured(),
             'whyNot' => $canUse ? null : ($settings->isUsable() ? Tier::aneeNeeds($payer) : 'Anee is not switched on yet. Please check back soon.'),
             'mapsKey' => (string) config('services.google_maps.key'),
+            'mapId' => (string) config('services.google_maps.map_id'),
             'today' => now('Asia/Manila')->toDateString(),
         ]);
     }
@@ -393,7 +394,7 @@ class SatelliteController extends Controller
             return $this->json(false, 'The map layers could not be refreshed right now.', [], 502);
         }
 
-        return $this->json(true, 'ok', ['tiles' => $res['data']['tiles'] ?? []]);
+        return $this->json(true, 'ok', ['tiles' => $res['data']['tiles'] ?? [], 'crops' => $res['data']['crops'] ?? [], 'cropBounds' => $res['data']['cropBounds'] ?? null]);
     }
 
     public function destroy(int $id)
