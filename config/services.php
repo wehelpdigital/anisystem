@@ -98,4 +98,17 @@ return [
         'key' => (string) env('REOON', ''),
     ],
 
+    // The field health service (services/field-health, FastAPI + Google Earth
+    // Engine): Sentinel-2 NDVI and Sentinel-1 radar for Satellite Analysis,
+    // and storm tracks for Satellite Weather. Blank url = not connected yet.
+    'field_health' => [
+        'url' => rtrim((string) env('FIELD_HEALTH_URL', ''), '/'),
+        'token' => (string) env('FIELD_HEALTH_TOKEN', ''),
+    ],
+
+    // OpenWeatherMap: the cloud and rain map tiles on Satellite Weather.
+    'openweather' => [
+        'key' => (string) env('OPENWEATHER', ''),
+    ],
+
 ];

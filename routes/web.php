@@ -138,6 +138,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
 
             return ['lastTick' => $tick, 'minutesAgo' => $at ? (int) $at->diffInMinutes(now()) : null, 'running' => $at !== null && $at->diffInMinutes(now()) <= 11];
         })(),
+        // The satellite pair: the field health service and the weather tiles.
+        'fieldHealth' => ['configured' => app(\App\Services\FieldHealth::class)->configured()],
+        'openweather' => ['configured' => (string) config('services.openweather.key') !== ''],
         // The free tools' email check: whether the Reoon key reached this env.
         'reoon' => ['configured' => app(\App\Services\EmailVerifier::class)->configured()],
         'acumbamail' => [
@@ -251,6 +254,9 @@ Route::get('/pests', [App\Http\Controllers\SitePageController::class, 'hub'])->d
 Route::get('/pests/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'pests')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.pests.show');
 Route::get('/diseases', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'diseases')->name('site.diseases');
 Route::get('/diseases/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'diseases')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.diseases.show');
+// Land preparation by crop and by soil (2026-10-07).
+Route::get('/land-preparation', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'land-preparation')->name('site.land');
+Route::get('/land-preparation/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'land-preparation')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.land.show');
 Route::get('/weeds', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'weeds')->name('site.weeds');
 Route::get('/weeds/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'weeds')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.weeds.show');
 Route::get('/blog', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'blog')->name('site.blog');
@@ -686,6 +692,18 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/variety-research/job/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'jobState'])->whereNumber('id')->name('vary.job');
     Route::delete('/app/variety-research/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'destroy'])->whereNumber('id')->name('vary.delete');
     // Crop Protocol Analysis — the fourth: the season by growth stage, for one field.
+    // Satellite Analysis (2026-10-07): a drawn field read from Sentinel-2 and
+    // Sentinel-1 through the field health service, then by Anee.
+    Route::get('/app/satellite', [App\Http\Controllers\SatelliteController::class, 'page'])->name('sat.page');
+    Route::get('/app/satellite/options', [App\Http\Controllers\SatelliteController::class, 'options'])->name('sat.options');
+    Route::get('/app/satellite/places', [App\Http\Controllers\SatelliteController::class, 'places'])->middleware('throttle:20,1')->name('sat.places');
+    Route::post('/app/satellite/generate', [App\Http\Controllers\SatelliteController::class, 'generate'])->name('sat.generate');
+    Route::get('/app/satellite/job/{id}', [App\Http\Controllers\SatelliteController::class, 'jobState'])->whereNumber('id')->name('sat.job');
+    Route::get('/app/satellite/list', [App\Http\Controllers\SatelliteController::class, 'list'])->name('sat.list');
+    Route::get('/app/satellite/one/{id}', [App\Http\Controllers\SatelliteController::class, 'one'])->whereNumber('id')->name('sat.one');
+    Route::post('/app/satellite/tiles/{id}', [App\Http\Controllers\SatelliteController::class, 'tiles'])->whereNumber('id')->middleware('throttle:30,1')->name('sat.tiles');
+    Route::post('/app/satellite/meta', [App\Http\Controllers\SatelliteController::class, 'meta'])->name('sat.meta');
+    Route::delete('/app/satellite/{id}', [App\Http\Controllers\SatelliteController::class, 'destroy'])->whereNumber('id')->name('sat.delete');
     Route::get('/app/crop-protocol', [App\Http\Controllers\CropProtocolController::class, 'page'])->name('proto.page');
     Route::get('/app/crop-protocol/options', [App\Http\Controllers\CropProtocolController::class, 'options'])->name('proto.options');
     Route::post('/app/crop-protocol/generate', [App\Http\Controllers\CropProtocolController::class, 'generate'])->name('proto.generate');

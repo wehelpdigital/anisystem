@@ -218,6 +218,22 @@
                 @endif
             </a>
 
+            {{-- Satellite Analysis (2026-10-07): a drawn field read from
+                 Sentinel-2 and Sentinel-1, then by Anee. --}}
+            <a href="{{ route('sat.page') }}" class="qa-tile qa-wtp"
+               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Satellite Analysis comes with {{ $qWtpWith }}. Draw your field and Anee reads the newest satellite pictures and radar for crop health, weak spots and threats." @endif>
+                <span class="qa-ico"><img src="{{ asset('images/icons/satellite.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+                <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
+                    <b>Satellite Analysis</b>
+                    <i>Draw your field and see its health from space: greenness, weak spots, radar through clouds, threats and soil.</i>
+                </span>
+                @if ($qWtpLocked)
+                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                @else
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @endif
+            </a>
+
             {{-- Compare Reports: two saved reports side by side, any season
                  against any other. Gated as CompareController::gate() gates
                  it -- the farm's plan first (reportsAll), then a worker's

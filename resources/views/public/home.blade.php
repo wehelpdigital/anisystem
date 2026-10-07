@@ -79,10 +79,11 @@
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
-                        anee.io is the farm app designed for Filipino farmers who grow palay, mais and gulay. From
-                        pagtatanim to ani, it helps you manage your crop, keeps track of every peso, and lets you ask
-                        Anee, your smart farm technician, any time, in Filipino or English. Just as serious businesses
-                        become successful and accurate through systems, smart, successful farmers use anee.io.
+                        anee.io is the farm app designed for Filipino farmers who grow palay, mais and gulay. With more
+                        than 50 features, it is the only farm app that puts your cropping calendar, every peso, a view of
+                        your field from space and Anee, your smart farm technician, in one place, from pagtatanim to ani,
+                        in Filipino or English. Just as serious businesses become successful and accurate through
+                        systems, smart, successful farmers use anee.io.
                     @else
                         anee.io puts your whole season on your phone: every field counted from its own day zero, every
                         task on its right day, every dollar written down, and Anee, your smart farm technician, ready with
