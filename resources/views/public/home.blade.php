@@ -1627,7 +1627,7 @@
                         <div class="hg-head">
                             <span class="hg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $shIcon }}"/></svg></span>
                             <span class="hg-name"><b>{{ $shName }}</b><small>{{ $shSub }}</small></span>
-                            @if ($n)<span class="hg-count">{{ $n }} {{ $sec === 'blog' ? 'posts' : 'guides' }}</span>@endif
+                            @if ($n)<span class="hg-count">{{ $n }} {{ $sec === 'blog' ? 'stories' : 'guides' }}</span>@endif
                         </div>
                         <a href="{{ $SP::pageUrl($lead) }}" class="hg-lead">
                             <img src="{{ $leadSrc }}" alt="{{ $leadHero['alt'] ?? $lead->title }}" loading="lazy" width="1200" height="675" referrerpolicy="no-referrer">
@@ -1710,7 +1710,7 @@
                 <a href="{{ url('/crops') }}" class="hc-link" style="--h: 100">Crop guides ›</a>
                 <a href="{{ url('/pests') }}" class="hc-link" style="--h: 30">Crop pests ›</a>
                 <a href="{{ url('/weeds') }}" class="hc-link" style="--h: 80">Weeds and grasses ›</a>
-                <a href="{{ url('/blog') }}" class="hc-link" style="--h: 150">The blog ›</a>
+                <a href="{{ url('/blog') }}" class="hc-link" style="--h: 150">Latest in Agriculture ›</a>
             </div>
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
