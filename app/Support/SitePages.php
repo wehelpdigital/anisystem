@@ -207,7 +207,9 @@ class SitePages
             return null;
         }
         try {
-            return AsSitePage::live()->where('section', $section)->where('slug', $slug)->first();
+            // Everything but the seed copy (seedJson), which only the sync reads.
+            return AsSitePage::live()->where('section', $section)->where('slug', $slug)
+                ->first(array_merge(self::LIST_COLUMNS, ['metaDescription', 'focusKeyword', 'keywords', 'blocks', 'status', 'showIn', 'editedAt', 'editedBy', 'seedHash', 'deleteStatus']));
         } catch (\Throwable $e) {
             return null;   // the table is not there yet
         }
@@ -223,12 +225,28 @@ class SitePages
         }
     }
 
-    /** A section's live pages, in order. */
+    /**
+     * What a list of pages shows (cards, tiles, links): never the page body.
+     * The body (blocks) and the seed copy (seedJson) are most of a row's
+     * weight; a section of 46 pages read whole every request was the
+     * heaviest thing a guide page did (2026-10-07, "slow pages").
+     */
+    public const LIST_COLUMNS = ['id', 'section', 'kind', 'slug', 'lang', 'category', 'title', 'metaTitle', 'excerpt', 'heroImage',
+        'sortOrder', 'publishedAt', 'updated_at', 'created_at'];
+
+    /**
+     * A section's live pages, in order, for lists (no bodies: see
+     * LIST_COLUMNS). Kept for ten minutes and dropped at every sync; a page
+     * edited in the mother app shows in the lists within ten minutes (its own
+     * page shows the edit at once).
+     */
     public static function inSection(string $section): Collection
     {
         try {
-            return AsSitePage::live()->where('section', $section)
-                ->orderBy('sortOrder')->orderBy('title')->get();
+            $rows = Cache::remember('site-pages:list:' . $section, 600, fn () => AsSitePage::live()->where('section', $section)
+                ->orderBy('sortOrder')->orderBy('title')->get(self::LIST_COLUMNS)->map(fn ($p) => $p->getAttributes())->all());
+
+            return collect($rows)->map(fn ($a) => (new AsSitePage())->setRawAttributes($a, true))->values();
         } catch (\Throwable $e) {
             return collect();
         }
@@ -408,6 +426,11 @@ class SitePages
     public static function forgetCaches(): void
     {
         Cache::forget('site-pages:footer');
+        foreach (array_keys(self::SECTIONS) as $section) {
+            Cache::forget('site-pages:list:' . $section);
+        }
+        Cache::forget('site-pages:list:features');
+        Cache::forget('site-pages:list:questions');
     }
 
     // ------------------------------------------------------------------

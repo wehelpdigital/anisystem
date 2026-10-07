@@ -36,6 +36,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // public site until the mother app's switch opens it. Global, and so
         // outside the router: the guest redirect the auth middleware throws
         // (which runs ahead of anything in the web group) passes through it.
+        // www.anee.io to anee.io (after the proxies are trusted, so the scheme is right).
+        $middleware->append(\App\Http\Middleware\DropWww::class);
         $middleware->append(\App\Http\Middleware\RobotsHeaders::class);
         // Facebook's link readers, noted as they come (see the class).
         $middleware->append(\App\Http\Middleware\NoteLinkReaders::class);

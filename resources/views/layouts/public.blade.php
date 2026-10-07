@@ -462,7 +462,7 @@
             <div class="max-w-xl">
                 {{-- Its own shape at any width: a squeezed column used to
                      stretch the wordmark sideways. --}}
-                <img src="{{ asset('images/site/logo-white.png') }}?v=anee" alt="anee.io" class="block h-8 w-auto max-w-full object-contain object-left mb-4">
+                <img src="{{ asset('images/site/logo-white-520.webp') }}?v=anee" alt="anee.io" width="520" height="80" loading="lazy" decoding="async" class="block h-8 w-auto max-w-full object-contain object-left mb-4">
                 <p class="text-sm leading-relaxed text-gray-400">
                     anee.io is the smart farm app for {{ \App\Support\Region::t('farmersOf') }}: the cropping calendar,
                     every {{ \App\Support\Region::ph() ? 'peso' : 'dollar' }}, the workers, the field seen from space and Anee, your smart farm technician,

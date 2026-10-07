@@ -8,6 +8,15 @@
     $S = \App\Support\SitePages::class;
     $hero = is_array($page->heroImage) ? $page->heroImage : [];
     $heroSrc = $S::img($hero['src'] ?? null);
+    // A phone sized copy (-800.webp) beside a site photo, for srcset.
+    $heroSet = null;
+    if (! empty($hero['src']) && ! preg_match('#^https?://#i', $hero['src'])) {
+        $heroPath = public_path(ltrim($hero['src'], '/'));
+        $heroMid = preg_replace('#\.(jpe?g|png|webp)$#i', '-800.webp', $heroPath);
+        if ($heroMid !== $heroPath && is_file($heroMid) && ($heroW = (@getimagesize($heroPath)[0] ?? 0)) > 800) {
+            $heroSet = $S::img(preg_replace('#\.(jpe?g|png|webp)$#i', '-800.webp', $hero['src'])) . ' 800w, ' . $heroSrc . ' ' . $heroW . 'w';
+        }
+    }
     $seoTitle = trim((string) ($page->metaTitle ?: $page->title));
     $updated = $page->updated_at ?? now();
     $sectionUrl = $page->section === 'features' ? route('features') : $S::url($page->section);
@@ -141,7 +150,9 @@
                 </div>
                 @if ($film)
                     <figure class="sp-phone is-film">
-                        <video src="{{ $film[0] }}" @if ($film[1]) poster="{{ $film[1] }}" @endif muted playsinline loop autoplay preload="metadata"
+                        {{-- The film's file comes after the page has loaded (data-src): its
+                             megabyte no longer counts against the page's own load. --}}
+                        <video data-src="{{ $film[0] }}" @if ($film[1]) poster="{{ $film[1] }}" @endif muted playsinline loop preload="none"
                                aria-label="{{ $feat['name'] ?? $page->title }} in the anee.io app, recorded on a phone" data-sp-film>
                             {{-- Shown only where a video cannot play; it also gives the page a picture of its own. --}}
                             @if ($film[1])<img src="{{ $film[1] }}" alt="{{ $feat['name'] ?? $page->title }} in the anee.io smart farm app, on a phone" loading="lazy">@endif
@@ -155,7 +166,7 @@
                 @elseif ($heroSrc)
                     <figure class="sp-figure mt-7 {{ $isFeature ? 'is-product' : '' }}">
                         {{-- A news roundup's picture is the original report's: shown from there, credited and linked to it. --}}
-                        <img src="{{ $heroSrc }}" alt="{{ $hero['alt'] ?? $page->title }}" fetchpriority="high" referrerpolicy="no-referrer">
+                        <img src="{{ $heroSrc }}" @if ($heroSet) srcset="{{ $heroSet }}" sizes="(min-width: 1152px) 1088px, calc(100vw - 2rem)" @endif alt="{{ $hero['alt'] ?? $page->title }}" fetchpriority="high" referrerpolicy="no-referrer">
                         @if (trim((string) ($hero['credit'] ?? '')) !== '')<figcaption>{{ $tl ? 'Larawan:' : 'Photo:' }} {!! $S::inline($hero['credit']) !!}</figcaption>@endif
                     </figure>
                 @endif
@@ -297,12 +308,19 @@
     (() => {
         const v = document.querySelector('[data-sp-film]');
         if (!v) return;
-        /* Less motion: the film waits on its first frame, with the player's
-           own buttons so the visitor can still choose to watch it. */
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); v.controls = true; return; }
-        if (!('IntersectionObserver' in window)) return;
+        const arm = () => { if (!v.src && v.dataset.src) { v.src = v.dataset.src; v.preload = 'metadata'; } };
+        /* Less motion: the film waits on its poster, with the player's own
+           buttons so the visitor can still choose to watch it. */
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { arm(); v.controls = true; return; }
+        let seen = false;
+        const play = () => { if (!seen || !v.src) return; const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+        /* The file is asked for once the page itself has finished loading. */
+        const ready = () => { arm(); play(); };
+        if (document.readyState === 'complete') setTimeout(ready, 300); else addEventListener('load', () => setTimeout(ready, 300), { once: true });
+        if (!('IntersectionObserver' in window)) { seen = true; return; }
         new IntersectionObserver((es) => es.forEach((e) => {
-            if (e.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } else v.pause();
+            seen = e.isIntersecting;
+            if (seen) play(); else v.pause();
         }), { threshold: 0.25 }).observe(v);
     })();
 </script>
