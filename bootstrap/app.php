@@ -81,6 +81,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // In the background, so a slow AI answer never holds the next minute.
         $schedule->command('news:roundup')->dailyAt('07:00')->timezone('Asia/Manila')
             ->withoutOverlapping(180)->runInBackground();
+        // "Write one now, from the scheduler": news.run_now on the settings
+        // shelf makes the next minute's pass write one (forced) and clears it.
+        $schedule->command('news:roundup --force')->everyMinute()
+            ->when(fn () => \App\Models\AsSiteSetting::yes('news.run_now'))
+            ->before(fn () => \App\Models\AsSiteSetting::put('news.run_now', '0'))
+            ->withoutOverlapping(180)->runInBackground();
         // Proof the scheduler runs (Laravel Cloud's toggle, 2026-10-07):
         // /deploy-check shows the last tick, written to the shared settings.
         $schedule->call(fn () => \App\Models\AsSiteSetting::put('scheduler.tick', now()->toIso8601String()))
