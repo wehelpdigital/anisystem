@@ -406,7 +406,7 @@
         const t = start + (end - start) * (v / 100);
         const d = new Date(t);
         $('skTimeLabel').textContent = 'Forecast · ' + d.toLocaleString('en-PH', { timeZone: 'Asia/Manila', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
-        const h = FC.hours.reduce((best, x) => Math.abs(Date.parse(x.t + ':00+08:00') - t) < Math.abs(Date.parse((best || x).t + ':00+08:00') - t) ? x : best, null);
+        const h = FC.hours.length ? FC.hours.reduce((best, x) => Math.abs(Date.parse(x.t + ':00+08:00') - t) < Math.abs(Date.parse(best.t + ':00+08:00') - t) ? x : best) : null;
         const pos = at(t);
         moveEye(pos);
         const bits = [];
@@ -499,7 +499,13 @@
     const loadStorms = async () => {
         try {
             const r = await window.api(U.storms + (farm ? '?lat=' + farm.lat + '&lng=' + farm.lng : ''));
-            STORMS = (r.data && r.data.storms) || [];
+            // Only storms that matter here: active ones within 4,000 km, or one
+            // that ended near the farm in the last few days.
+            STORMS = ((r.data && r.data.storms) || []).filter((s) => {
+                if (!farm || !s.eye) return s.current;
+                const d = km(farm, s.eye);
+                return (s.current && d <= 4000) || d <= 1500;
+            });
         } catch (_) { STORMS = []; }
         drawStorms();
         badge();
