@@ -609,6 +609,10 @@
     .hw-step span { color: var(--soft); }
     .hw-h2 { margin-top: .35rem; font-family: var(--font-heading); font-weight: 800; color: #fff; font-size: clamp(1.55rem, 3.4vw, 2.45rem); line-height: 1.08; letter-spacing: -.01em; }
     .hw-sub { margin-top: .5rem; color: var(--mute); font-size: .96rem; line-height: 1.6; }
+    /* Step 1 says once what a tool does when tapped, and what Anee's face on one means. */
+    .hw-hint { margin-top: .75rem; font-size: .86rem; font-weight: 600; line-height: 1.5; color: var(--leaf); }
+    .hw-hint i { display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem; margin-right: .4rem; vertical-align: -.3rem; border-radius: 999px; background: rgb(245 197 24 / .18); }
+    .hw-hint i::before { content: ''; margin-left: .12rem; border-style: solid; border-width: .26rem 0 .26rem .42rem; border-color: transparent transparent transparent var(--acc); }
 
     /* Anee at the step: her face in the middle of the field, the step's number on her shoulder. */
     .hw-hub { position: absolute; left: calc(var(--rail-x) - var(--pad) - var(--hub) / 2); top: 2.35rem; width: var(--hub); height: var(--hub); z-index: 2; }
@@ -892,7 +896,7 @@
         .hw-chip:active .hw-ico { transform: scale(.93); }
         .hw-item.is-open .hw-ico { box-shadow: 0 0 0 3px var(--acc), 0 12px 24px -14px rgb(0 0 0 / .9); }
         .hw-ico img { width: 2rem; height: 2rem; }
-        .hw-txt b { font-size: .74rem; font-weight: 700; line-height: 1.25; }
+        .hw-txt b { font-size: .8rem; font-weight: 700; line-height: 1.25; }
         .hw-txt small, .hw-plus, .hw-more { display: none; }
         /* Anee's tools wear her face on the icon's corner. */
         .hw-by { top: -.3rem; right: calc(50% - 2.1rem); width: 1.35rem; height: 1.35rem; padding: 0; gap: 0; justify-content: center; font-size: 0;
@@ -902,6 +906,13 @@
         .hw-band-copy { padding: 1.4rem 1.1rem; background: linear-gradient(180deg, #16270f, #0f1a0a); border: 1px solid rgb(168 204 126 / .16); border-radius: 1.6rem; }
         .hw-band-copy .hw-step { justify-content: center; }
         .hw-band-svg { display: none; }
+        /* The notes stack on the rail here: a note waiting its turn is a
+           solid, muted card (not a see through one, which let the rail run
+           through its words), and turns white when its part plays. */
+        .hw-note { opacity: 1; background: #c3cbbc; transition: background-color .4s var(--ease), transform .4s var(--ease), box-shadow .4s var(--ease); }
+        .hw-note > * { opacity: .8; transition: opacity .4s var(--ease); }
+        .hw-note.is-read, .hw-note.is-hot { background: #fff; }
+        .hw-note.is-read > *, .hw-note.is-hot > * { opacity: 1; }
         .hw-end { padding: 2.4rem 0 0; text-align: center; }
         .hw-loop { position: relative; left: auto; top: auto; width: 3.4rem; height: 3.4rem; margin: 0 auto 1rem; }
         .hw-end .hw-step, .hw-end .hw-btns { justify-content: center; }
@@ -916,15 +927,17 @@
     html.hw-lock { overflow: hidden; }
     .hw-film { position: fixed; inset: 0; z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
     .hw-film[hidden] { display: none; }
-    .hw-film-bg { position: absolute; inset: 0; background: rgb(6 10 4 / .74); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); opacity: 0; transition: opacity .3s var(--ease); }
+    .hw-film-bg { position: absolute; inset: 0; background: rgb(6 10 4 / .74); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); opacity: 0; transition: opacity .3s var(--ease); touch-action: none; }
     .hw-film.is-on .hw-film-bg { opacity: 1; }
     .hw-film-card { position: relative; width: 100%; max-width: 40rem; max-height: 94vh; overflow-y: auto; overscroll-behavior: contain; text-align: left; color: var(--ink);
         padding: 1.1rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom, 0px)); border-radius: 1.6rem 1.6rem 0 0;
         background: linear-gradient(180deg, #1a2d12, #0f1a0a); border: 1px solid rgb(168 204 126 / .2); border-bottom: 0;
         transform: translateY(100%); transition: transform .42s var(--ease); }
     .hw-film.is-on .hw-film-card { transform: none; }
-    .hw-film-x { position: absolute; top: .8rem; right: .8rem; z-index: 2; width: 2.4rem; height: 2.4rem; border-radius: .8rem; display: grid; place-items: center;
-        background: rgb(255 255 255 / .1); color: #fff; transition: background .28s var(--ease); }
+    /* On a phone the X rides at the top of the sheet as it scrolls (it used
+       to scroll away with the words), and takes no room of its own. */
+    .hw-film-x { position: sticky; top: 0; z-index: 2; width: 2.75rem; height: 2.75rem; margin: 0 0 -2.75rem auto; border-radius: .9rem; display: grid; place-items: center;
+        background: rgb(255 255 255 / .12); color: #fff; transition: background .28s var(--ease); }
     .hw-film-x:hover { background: rgb(255 255 255 / .18); }
     .hw-film-x:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
     .hw-film-x svg { width: 1.1rem; height: 1.1rem; }
@@ -949,6 +962,11 @@
     .hw-film-head em[hidden] { display: none; }
     .hw-film-body { margin-top: 1rem; }
     .hw-film-body p { font-size: .95rem; line-height: 1.6; color: #d9e5cd; }
+    /* A close within a thumb's reach at the end of the sheet (a phone only). */
+    .hw-film-done { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 3rem; margin-top: 1.3rem; border-radius: .9rem; font-weight: 800; color: #fff;
+        border: 1.5px solid rgb(255 255 255 / .28); background: rgb(255 255 255 / .05); transition: background .28s var(--ease), border-color .28s var(--ease); }
+    .hw-film-done:hover, .hw-film-done:active { background: rgb(255 255 255 / .12); border-color: rgb(255 255 255 / .45); }
+    .hw-film-done:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
     .hw-film.is-swap .hw-film-copy, .hw-film.is-swap .hw-film-phone { animation: hwSwap .45s var(--ease); }
     @keyframes hwSwap { from { opacity: .15; transform: translateY(10px); } to { opacity: 1; transform: none; } }
     @media (min-width: 768px) {
@@ -957,6 +975,8 @@
             border-radius: 1.6rem; border-bottom: 1px solid rgb(168 204 126 / .2); opacity: 0; transform: translateY(26px) scale(.97);
             transition: transform .42s var(--ease), opacity .3s var(--ease); }
         .hw-film.is-on .hw-film-card { opacity: 1; transform: none; }
+        .hw-film-x { position: absolute; top: .8rem; right: .8rem; width: 2.4rem; height: 2.4rem; margin: 0; border-radius: .8rem; }
+        .hw-film-done { display: none; }
         .hw-film-phone { width: 15.5rem; margin: 0; }
         .hw-film-copy { margin-top: 0; }
         .hw-film.no-video .hw-film-card { grid-template-columns: minmax(0, 1fr); max-width: 34rem; }
@@ -1235,6 +1255,9 @@
                     <p class="hw-step">Step {{ $n + 1 }} <span>{{ $st['when'] }}</span></p>
                     <{{ $hwHead }} class="hw-h2" id="hw-h-{{ $st['key'] }}">{{ $st['title'] }}</{{ $hwHead }}>
                     <p class="hw-sub">{{ $st['lede'] }}</p>
+                    @if ($n === 0)
+                        <p class="hw-hint"><i aria-hidden="true"></i>Tap any tool to watch it work in the real app. Anee's face on a tool means she does that one for you.</p>
+                    @endif
                 </header>
                 @if (! empty($st['say']))
                 <div class="hw-say">
@@ -1309,10 +1332,9 @@
                 <button type="button" class="hw-ghost" data-hw-go="plan">Back to step 1
                     <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true" style="transform: rotate(180deg)"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
                 </button>
+                {{-- On the site the page's own way in follows right below, so no second sign up button here. --}}
                 @if ($hwMode === 'app')
                     <a href="{{ route('sm.index') }}" class="btn btn-accent">Open my schedules</a>
-                @else
-                    <a href="{{ route('signup') }}" class="btn btn-accent">Start your first season</a>
                 @endif
             </div>
         </div>
@@ -1333,6 +1355,7 @@
                     <div><b></b><small></small><em hidden><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">With Anee</em></div>
                 </div>
                 <div class="hw-film-body"></div>
+                <button type="button" class="hw-film-done" data-film-close>Close</button>
             </div>
         </div>
     </div>

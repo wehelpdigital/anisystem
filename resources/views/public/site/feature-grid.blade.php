@@ -5,7 +5,9 @@
      Each card (2026-10-07, the owner: "use the icons in the app"): the
      icon the tool wears in the app, its name and one line, and on the full
      size a glimpse of its real screen rising from the card's top. Cards
-     carry their category for the filter on /features. --}}
+     carry their category for the filter on /features. On a phone, where
+     two cards share a row and the blurb is too long, each card says what
+     it is in the short line the tool wears in How It Works. --}}
 @php
     $S = \App\Support\SitePages::class;
     $HW = \App\Support\HowItWorks::class;
@@ -21,6 +23,16 @@
 
         return $S::img(is_file(public_path(ltrim($small, '/'))) ? $small : $src);
     };
+    // Each page's short line, from its tool in How It Works (the reports
+    // guide belongs to no one tool, so it says its own).
+    $fgShorts = ['farm-reports' => 'Labor, expenses and profit, added up'];
+    foreach ($HW::stages() as $fgSt) {
+        foreach ($fgSt['items'] as $fgIt) {
+            if ($fgIt && ! empty($HW::PAGES[$fgIt['key']]) && ! empty($fgIt['short'])) {
+                $fgShorts[$HW::PAGES[$fgIt['key']]] = $fgIt['short'];
+            }
+        }
+    }
 @endphp
 @once
 @push('head')
@@ -46,6 +58,7 @@
     .fg-card:hover .fg-ico { transform: translateY(-3px) rotate(-4deg); }
     .fg-card b { font-family: var(--font-heading); font-size: 1.08rem; line-height: 1.3; color: #14210c; margin-top: .25rem; }
     .fg-card p { font-size: .88rem; line-height: 1.55; color: #4b5563; }
+    .fg-short { display: none; }
     .fg-card .go { margin-top: auto; padding-top: .35rem; font-size: .82rem; font-weight: 800; color: hsl(var(--h) 55% 30%); display: inline-flex; align-items: center; gap: .25rem; }
     .fg-card .go svg { width: .9rem; height: .9rem; transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .fg-card:hover .go svg { transform: translateX(3px); }
@@ -65,6 +78,7 @@
         .fg-grid:not(.is-compact) .fg-ico img { width: 1.7rem; height: 1.7rem; }
         .fg-grid:not(.is-compact) .fg-card b { font-size: .94rem; }
         .fg-grid:not(.is-compact) .fg-card p { display: none; }
+        .fg-grid:not(.is-compact) .fg-short { display: block; font-size: .8rem; line-height: 1.4; color: #4b5563; }
         .fg-grid:not(.is-compact) .fg-card .go { font-size: .76rem; }
     }
     /* Compact: no screen, the icon beside the words. */
@@ -97,6 +111,7 @@
                     @endif
                 </span>
                 <b>{{ $f['name'] }}</b>
+                @if (! empty($fgShorts[$p->slug]))<span class="fg-short">{{ $fgShorts[$p->slug] }}</span>@endif
                 <p>{{ $f['blurb'] }}</p>
                 <span class="go">Read the guide <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></span>
             </div>
