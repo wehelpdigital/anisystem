@@ -216,6 +216,15 @@
         .te-mark { flex: none; width: 1rem; height: 1rem; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
         .te-fine { margin-top: .6rem; font-size: .74rem; color: #6b7280; }
         @media (prefers-reduced-motion: reduce) { .te-list li { transition: none; } }
+        @media (min-width: 768px) { .ft-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 3rem; } }
+        .ft-side { display: grid; gap: 1.6rem; align-content: start; }
+        .ft-h { margin-bottom: .7rem; font-weight: 700; color: #fff; }
+        .ft-list { display: grid; gap: .45rem; font-size: .86rem; color: #9ca3af; }
+        .ft-list a { color: #9ca3af; text-decoration: none; transition: color .28s cubic-bezier(.22,1,.36,1); }
+        .ft-list a:hover { color: #f5c518; }
+        .ft-two { display: grid; gap: 1.6rem; }
+        @media (min-width: 480px) { .ft-two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; } }
+        .ft-note { font-size: .72rem; line-height: 1.5; color: #6b7280; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-white">
@@ -447,7 +456,7 @@
     </section>
 
     <footer class="bg-gray-900 text-gray-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] items-start">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid gap-8 items-start ft-grid">
             <div class="max-w-xl">
                 {{-- Its own shape at any width: a squeezed column used to
                      stretch the wordmark sideways. --}}
@@ -464,25 +473,27 @@
                      named in words. --}}
                 @php
                     $teMarks = [
-                        ['Anthropic', 'anthropic', 'Anee thinks with Claude, by Anthropic'],
-                        ['Google Gemini', 'googlegemini', 'AI models from Google'],
+                        // Only what runs today (owner, 2026-10-07). Google Earth Engine,
+                        // Copernicus Sentinel and ISRIC SoilGrids join (marks in
+                        // images/tech) once Satellite Analysis has its service
+                        // running; Anthropic if Anee's provider is switched to Claude.
+                        ['Google Gemini', 'googlegemini', 'Anee thinks with Gemini, by Google'],
                         ['Google Maps Platform', 'googlemaps', 'Maps, places and drawing your fields'],
-                        ['Google Earth Engine', 'googleearthengine', 'Satellite analysis of your field'],
-                        ['Copernicus Sentinel', null, 'European Space Agency satellites: Sentinel 2 pictures and Sentinel 1 radar'],
                         ['NASA GIBS', null, 'Himawari 9 cloud imagery, through NASA Global Imagery Browse Services'],
                         ['Open-Meteo', null, 'Weather forecasts and climate history'],
                         ['OpenWeather', null, 'Live rain, cloud and wind layers'],
                         ['RainViewer', null, 'Rain radar'],
                         ['GDACS', null, 'Typhoon tracks, from the Global Disaster Alert and Coordination System'],
-                        ['ISRIC SoilGrids', null, 'Soil maps'],
                         ['OpenStreetMap', 'openstreetmap', 'Place search'],
+                        ['Pusher', 'pusher', 'Live updates: team chat, the whiteboard and the board as it changes'],
+                        ['LiveKit', 'livekit', 'Live video calls and cameras in the Collab Room'],
                         ['Cloudflare', 'cloudflare', 'A fast, safe connection'],
                         ['Laravel', 'laravel', 'The framework anee.io is built on'],
                     ];
                 @endphp
                 <div class="te">
                     <h2 class="te-h">Our tech ecosystem</h2>
-                    <p class="te-p">anee.io is built on the core, industry standard technology trusted by leading apps and research agencies: AI from Anthropic and Google, maps and satellite analysis from Google, satellites from the European Space Agency and NASA, and weather from Open-Meteo and OpenWeather.</p>
+                    <p class="te-p">anee.io is built on the core, industry standard technology trusted by leading apps and research agencies: AI and maps from Google, satellite imagery from NASA, weather from Open-Meteo and OpenWeather, and live chat and video calls from Pusher and LiveKit.</p>
                     <ul class="te-list">
                         @foreach ($teMarks as [$teName, $teIcon, $teWhat])
                             <li title="{{ $teWhat }}">
@@ -496,12 +507,57 @@
                     <p class="te-fine">Names and marks belong to their owners and are shown to say what anee.io uses. It does not mean they endorse anee.io.</p>
                 </div>
             </div>
-            <div class="md:justify-self-end">
-                <h2 class="text-white font-bold mb-3">Contact</h2>
-                <ul class="space-y-2 text-sm text-gray-400">
-                    <li><a href="mailto:support@anee.io" class="hover:text-accent-500">support@anee.io</a></li>
-                    <li>Philippines</li>
-                </ul>
+            {{-- The right column (2026-10-07): how to reach us, then the
+                 agencies a Filipino farmer leans on and the newsrooms the
+                 Latest in Agriculture roundups read. --}}
+            @php
+                $ftGov = [
+                    ['Department of Agriculture', 'https://www.da.gov.ph'],
+                    ['PhilRice', 'https://www.philrice.gov.ph'],
+                    ['PAGASA weather', 'https://www.pagasa.dost.gov.ph'],
+                    ['Bureau of Plant Industry', 'https://www.bpi.da.gov.ph'],
+                    ['Fertilizer and Pesticide Authority', 'https://fpa.da.gov.ph'],
+                    ['Agricultural Training Institute', 'https://ati.da.gov.ph'],
+                    ['Philippine Statistics Authority', 'https://psa.gov.ph'],
+                    ['IRRI', 'https://www.irri.org'],
+                ];
+                $ftNews = [
+                    ['Philippine News Agency', 'https://www.pna.gov.ph'],
+                    ['Inquirer', 'https://www.inquirer.net'],
+                    ['GMA News', 'https://www.gmanetwork.com/news'],
+                    ['Philstar', 'https://www.philstar.com'],
+                    ['Rappler', 'https://www.rappler.com'],
+                    ['ABS CBN News', 'https://www.abs-cbn.com/news'],
+                    ['Daily Tribune', 'https://tribune.net.ph'],
+                    ['The Manila Times', 'https://www.manilatimes.net'],
+                    ['BusinessWorld', 'https://www.bworldonline.com'],
+                ];
+            @endphp
+            <div class="ft-side">
+                <div>
+                    <h2 class="ft-h">Contact</h2>
+                    <ul class="ft-list">
+                        <li><a href="mailto:support@anee.io">support@anee.io</a></li>
+                        <li>Philippines</li>
+                    </ul>
+                </div>
+                @if (\App\Support\Region::ph())
+                    <div class="ft-two">
+                        <div>
+                            <h2 class="ft-h">Government and research</h2>
+                            <ul class="ft-list">
+                                @foreach ($ftGov as [$ftName, $ftUrl])<li><a href="{{ $ftUrl }}" target="_blank" rel="noopener">{{ $ftName }}</a></li>@endforeach
+                            </ul>
+                        </div>
+                        <div>
+                            <h2 class="ft-h">Our news sources</h2>
+                            <ul class="ft-list">
+                                @foreach ($ftNews as [$ftName, $ftUrl])<li><a href="{{ $ftUrl }}" target="_blank" rel="noopener">{{ $ftName }}</a></li>@endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="ft-note">Links to the agencies and newsrooms anee.io reads. They are not partners and do not endorse anee.io.</p>
+                @endif
             </div>
         </div>
         <div class="border-t border-gray-800">

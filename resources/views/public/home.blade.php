@@ -177,8 +177,14 @@
                     <ul class="hp-sum-list">
                         <li>{{ $ph ? 'A sack of urea or complete fertilizer 14 14 14 costs more every season.' : 'Every sack of fertilizer costs more each season.' }}</li>
                         <li>Diesel for the tractor, the pump and every trip to town costs more too.</li>
+                        <li>Labor costs more every year: planting, weeding and harvest hands ask a higher daily rate, and are hard to find when every farm needs them at once.</li>
+                        <li>Seed, sprays and the rent for a tractor or a harvester go up with everything else.</li>
                         <li>Rain, heat or pests that come early mean extra sprays and work.</li>
                     </ul>
+                    <div class="hp-sum-trend is-up" aria-hidden="true">
+                        <span class="hp-sum-bars">@foreach ([34, 42, 49, 58, 70, 84] as $k => $h)<i style="--h: {{ $h }}%; --k: {{ $k }}"></i>@endforeach</span>
+                        <small>What one hectare costs you, season after season</small>
+                    </div>
                 </div>
                 <span class="hp-sum-op" aria-hidden="true">+</span>
                 <div class="hp-sum-card is-down reveal" style="--reveal-delay: .12s">
@@ -187,8 +193,14 @@
                     <ul class="hp-sum-list">
                         <li>{{ $ph ? 'The palay price at harvest barely moves.' : 'The price at harvest barely moves.' }}</li>
                         <li>Imports can push it down before you sell.</li>
+                        <li>Everyone harvests in the same weeks, so {{ $ph ? 'traders' : 'buyers' }} pay the least just when you sell.</li>
+                        <li>{{ $ph ? 'Wet palay is docked for moisture, and the trader sets the weight.' : 'Wet grain is docked for moisture, and the buyer sets the weight.' }}</li>
                         <li>You cannot set the price you get.</li>
                     </ul>
+                    <div class="hp-sum-trend is-down" aria-hidden="true">
+                        <span class="hp-sum-bars">@foreach ([52, 47, 53, 46, 50, 45] as $k => $h)<i style="--h: {{ $h }}%; --k: {{ $k }}"></i>@endforeach</span>
+                        <small>The price you get, season after season</small>
+                    </div>
                 </div>
                 <span class="hp-sum-op" aria-hidden="true">=</span>
                 <div class="hp-sum-card is-way reveal" style="--reveal-delay: .24s">
@@ -200,7 +212,12 @@
                         <li>It dates every task from each lot's own planting day, so fertilizer and sprays go in on time.</li>
                         <li>Anee checks your crop, its growth stage and the weather before you spend.</li>
                         <li>It writes down every {{ $peso }}, so you can see what works and do it again.</li>
+                        <li>NPK Plus and the pest finders show what your crop is missing and what to spray, so nothing is bought for nothing.</li>
                     </ul>
+                    <div class="hp-sum-trend is-way" aria-hidden="true">
+                        <span class="hp-sum-bars">@foreach ([40, 47, 55, 64, 74, 86] as $k => $h)<i style="--h: {{ $h }}%; --k: {{ $k }}"></i>@endforeach</span>
+                        <small>The aim: more from every hectare, season after season</small>
+                    </div>
                 </div>
             </div>
 
@@ -838,13 +855,6 @@
                 {{-- The anee.io song (moved from Meet Anee, 2026-10-07): the farmers
                      who built anee.io, singing it, under their own words. --}}
                 <div class="hp-song reveal" data-song>
-                    <div class="hp-song-art">
-                        <img src="{{ asset('images/anee-song-poster.jpg') }}" alt="Anee on a tractor in a palay field, the cover of the anee.io song Let's Plant With a Dream" loading="lazy" width="1200" height="655">
-                        <button type="button" class="hp-song-play is-big" aria-label="Play the song">
-                            <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
-                            <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
-                        </button>
-                    </div>
                     <div class="hp-song-body">
                         <span class="hp-song-kick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>The anee.io song<span class="hp-song-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
                         <h3 class="hp-song-h">Let&rsquo;s Plant With a Dream!</h3>
@@ -2341,12 +2351,8 @@
     .hp-song { position: relative; display: grid; gap: 1rem; margin-top: 1.4rem; padding: .8rem; border-radius: 1.4rem; color: #e8efe1; overflow: hidden;
         background: radial-gradient(80% 120% at 100% 0%, #3f6a22 0%, transparent 60%), linear-gradient(140deg, #14210c 0%, #1f3312 60%, #2b4518 100%);
         box-shadow: 0 50px 90px -50px rgb(20 33 12 / .9); }
-    @media (min-width: 560px) { .hp-song { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center; gap: 1.2rem; padding: .8rem 1.3rem .8rem .8rem; } }
-    .hp-song-art { position: relative; border-radius: 1rem; overflow: hidden; aspect-ratio: 1200 / 655; box-shadow: 0 24px 50px -26px rgb(0 0 0 / .9); }
-    .hp-song-art img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .6s var(--hp-ease); }
-    .hp-song:hover .hp-song-art img { transform: scale(1.03); }
-    .hp-song-body { min-width: 0; padding: 0 .4rem .5rem; }
-    @media (min-width: 560px) { .hp-song-body { padding: 0; } }
+    .hp-song { padding: 1.3rem 1.4rem 1.35rem; }
+    .hp-song-body { min-width: 0; }
     .hp-song-kick { display: inline-flex; align-items: center; gap: .4rem; font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-sun); }
     .hp-song-kick svg { width: 1rem; height: 1rem; }
     .hp-song-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: .9rem; margin-left: .3rem; }
@@ -2361,18 +2367,13 @@
         box-shadow: 0 10px 22px -10px rgb(245 197 24 / .8); transition: transform .28s var(--hp-ease); }
     .hp-song-play:hover { transform: scale(1.06); }
     .hp-song-play svg { width: 1.2rem; height: 1.2rem; }
-    .hp-song-play.is-big { position: absolute; left: 50%; top: 50%; width: 3.8rem; height: 3.8rem; translate: -50% -50%; transition: transform .28s var(--hp-ease), opacity .28s var(--hp-ease);
-        box-shadow: 0 0 0 10px rgb(245 197 24 / .25), 0 18px 34px -12px rgb(0 0 0 / .8); }
-    .hp-song-play.is-big svg { width: 1.5rem; height: 1.5rem; }
-    .hp-song.is-playing .hp-song-play.is-big { opacity: 0; }
-    .hp-song-art:hover .hp-song-play.is-big { opacity: 1; }
     .hp-song-play .i-pause, .hp-song.is-playing .hp-song-play .i-play { display: none; }
     .hp-song.is-playing .hp-song-play .i-pause { display: block; }
     .hp-song-track { position: relative; flex: 1 1 auto; height: .45rem; border-radius: 999px; background: rgb(255 255 255 / .18); }
     .hp-song-track i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 999px; background: #f5c518; pointer-events: none; }
     .hp-song-track input { position: absolute; inset: -.7rem 0; width: 100%; height: auto; opacity: 0; cursor: pointer; margin: 0; }
     .hp-song-time { flex: none; min-width: 2.6rem; text-align: right; font-size: .8rem; font-weight: 700; color: #d3dec7; font-variant-numeric: tabular-nums; }
-    @media (prefers-reduced-motion: reduce) { .hp-song-eq i { animation: none; } .hp-song-art img { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { .hp-song-eq i { animation: none; } }
     .hp-chat { position: relative; max-width: 28rem; margin: 0 auto; border-radius: 1.6rem; color: var(--hp-ink); overflow: hidden;
         background: linear-gradient(180deg, #34591c 50%, #f6f8f3 50%); box-shadow: 0 50px 90px -40px rgb(0 0 0 / .85); }
     .hp-chat-top { display: flex; align-items: center; gap: .7rem; padding: .9rem 1.1rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
@@ -3288,6 +3289,24 @@
     .hp-sum-list li::before { content: ''; position: absolute; left: 0; top: calc(.8rem + .55em); width: .42rem; height: .42rem; border-radius: 999px; background: currentColor; opacity: .45; }
     .is-up .hp-sum-list li::before { background: #dc2626; opacity: .7; }
     .is-down .hp-sum-list li::before { background: #d97706; opacity: .7; }
+    /* The bottom of the two cards (2026-10-07): the trend, drawn, not
+       counted. Costs climb bar by bar; the price stays where it was. */
+    .hp-sum-trend { margin-top: auto; padding-top: 1.1rem; }
+    .hp-sum-bars { display: flex; align-items: flex-end; gap: .4rem; height: 4.2rem; padding: .45rem .5rem 0; border-radius: .9rem .9rem 0 0; border-bottom: 2px solid; }
+    .hp-sum-bars i { flex: 1; height: var(--h); border-radius: .4rem .4rem .15rem .15rem; transform-origin: bottom; transform: scaleY(.08);
+        transition: transform .7s var(--hp-ease) calc(.25s + var(--k) * .09s); }
+    .hp-sum-card.is-visible .hp-sum-bars i, html:not(.js) .hp-sum-bars i { transform: none; }
+    .is-up .hp-sum-bars { background: linear-gradient(180deg, transparent, rgb(254 226 226 / .7)); border-color: #fca5a5; }
+    .is-up .hp-sum-bars i { background: linear-gradient(180deg, #f87171, #dc2626); }
+    .is-down .hp-sum-bars { background: linear-gradient(180deg, transparent, rgb(254 243 199 / .8)); border-color: #fcd34d; }
+    .is-down .hp-sum-bars i { background: linear-gradient(180deg, #fbbf24, #d97706); }
+    .hp-sum-trend small { display: block; margin-top: .45rem; font-size: .76rem; font-weight: 700; letter-spacing: .02em; }
+    .is-up .hp-sum-trend small { color: #b91c1c; }
+    .is-down .hp-sum-trend small { color: #92400e; }
+    .hp-sum-trend.is-way .hp-sum-bars { background: linear-gradient(180deg, transparent, rgb(255 255 255 / .08)); border-color: rgb(245 197 24 / .7); }
+    .hp-sum-trend.is-way .hp-sum-bars i { background: linear-gradient(180deg, #fde68a, #f5c518); }
+    .hp-sum-trend.is-way small { color: #fde68a; }
+    @media (prefers-reduced-motion: reduce) { .hp-sum-bars i { transition: none; transform: none; } }
     .hp-sum-p { margin-top: .7rem; font-size: .98rem; line-height: 1.6; color: #e4f0d6; }
     /* "higher yield." in the green card: gold, with an underline that
        draws itself in once the card has scrolled into view. */
@@ -3303,7 +3322,7 @@
     .hp-sum-how li::before { content: ''; position: absolute; left: 0; top: calc(.7rem + .2em); width: 1.05rem; height: 1.05rem; border-radius: 999px;
         background: var(--hp-sun) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314210c' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / 70% no-repeat; }
     @media (prefers-reduced-motion: reduce) { .hp-hl { transition: none; background-size: 100% 3px; } }
-    .hp-sum-brand { margin-top: auto; padding-top: 1.1rem; display: inline-flex; align-items: center; gap: .5rem; font-weight: 800; color: var(--hp-sun); }
+    .hp-sum-brand { margin-top: .4rem; padding-top: 1.1rem; display: inline-flex; align-items: center; gap: .5rem; font-weight: 800; color: var(--hp-sun); }
     .hp-sum-brand img { width: 1.5rem; height: 1.5rem; object-fit: contain; }
     .hp-sum-op { align-self: center; justify-self: center; font-family: var(--font-heading); font-size: 2.6rem; font-weight: 800; line-height: 1;
         color: #9ca3af; }
@@ -3496,7 +3515,11 @@
             probe.classList.remove('is-out', 'is-in');
             probe.textContent = w;
             rot.appendChild(probe);
-            const px = probe.getBoundingClientRect().width;
+            // The word's box takes its negative side margins with it (the
+            // shimmer pads the letters and takes the padding back): count
+            // them, or "Yield." steps right when the first width is set.
+            const cs = getComputedStyle(probe);
+            const px = probe.getBoundingClientRect().width + parseFloat(cs.marginLeft || 0) + parseFloat(cs.marginRight || 0);
             probe.remove();
             return px;
         };
