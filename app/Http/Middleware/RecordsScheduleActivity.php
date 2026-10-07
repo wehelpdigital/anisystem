@@ -226,14 +226,83 @@ class RecordsScheduleActivity
             return;
         }
 
+        $detail = $this->detail($request, $response, $before, $name);
         \App\Models\AsScheduleAudit::create([
             'croppingScheduleId' => $scheduleId,
             'userId' => (int) Auth::id(),
             'routeName' => Str::limit($name, 118, ''),
             'method' => $request->method(),
             'label' => self::SAYS[$name] ?? $this->humanize($name),
-            'detail' => $this->detail($request, $response, $before, $name),
+            'detail' => $detail,
         ]);
+
+        try {
+            $this->ringTheOwner($scheduleId, $name, $detail);
+        } catch (\Throwable $e) {
+            // A missed bell is a quieter farm, not a broken request.
+        }
+    }
+
+    /**
+     * What a worker does in the field reaches the owner's bell (2026-10-07):
+     * a task ticked, a photo, a voice note, a video, a note, an observation,
+     * stock moved, money written down. Route => how the bell says it, and
+     * which page it opens. Everything else a worker does stays in the diary.
+     */
+    private const WORKER_BELL = [
+        'sm.activities.toggle-done' => ['ticked a task', 'sm.activities'],
+        'sm.activities.store' => ['added a task', 'sm.activities'],
+        'sm.activities.update' => ['edited a task', 'sm.activities'],
+        'sm.activities.day-expense.save' => ['recorded an expense', 'sm.activities'],
+        'sm.activities.day-income.save' => ['recorded an income', 'sm.activities'],
+        'sm.notes.store' => ['wrote a note', 'sm.notes'],
+        'sm.notes.image-upload' => ['added a photo', 'sm.notes'],
+        'sm.notes.video-upload' => ['added a video', 'sm.notes'],
+        'sm.notes.audio-upload' => ['recorded a voice note', 'sm.notes'],
+        'quick-voice.clip' => ['recorded a voice note', 'sm.notes'],
+        'quick-record.clip' => ['recorded a video clip', 'sm.notes'],
+        'quick-capture.notes' => ['added photos', 'sm.notes'],
+        'quick-capture.gallery' => ['added photos to an album', 'sm.gallery'],
+        'sm.gallery.image.store' => ['added a picture to the gallery', 'sm.gallery'],
+        'sm.post-harvest.store' => ['recorded an observation', 'sm.post-harvest'],
+        'sm.post-harvest.image-upload' => ['added a photo to an observation', 'sm.post-harvest'],
+        'sm.inventory.move' => ['moved stock', 'sm.inventory'],
+        'sm.doc-entries.store' => ['added a document', 'sm.hub'],
+        'sm.draw.save' => ['saved a drawing', 'sm.notes'],
+        'sm.photo.save' => ['drew on a photo', 'sm.gallery'],
+    ];
+
+    private function ringTheOwner(int $scheduleId, string $route, ?string $detail): void
+    {
+        $bell = self::WORKER_BELL[$route] ?? null;
+        if (! $bell || ! \App\Support\WorkerContext::inWorkerContext()) {
+            return;
+        }
+        [$what, $page] = $bell;
+        $owner = \App\Support\WorkerContext::effectiveOwnerId();
+        $me = Auth::user();
+        if (! $owner || ! $me || $owner === (int) $me->id) {
+            return;
+        }
+        $schedule = \App\Models\AsCroppingSchedule::find($scheduleId);
+        if (! $schedule) {
+            return;
+        }
+        $d = json_decode((string) $detail, true) ?: [];
+        $thing = $d['entity']['name'] ?? null;
+        if ($route === 'sm.activities.toggle-done' && isset($d['changes']['isDone'])) {
+            $what = ($d['changes']['isDone']['to'] ?? '') === 'yes' ? 'finished a task' : 'reopened a task';
+        }
+        $who = trim(((string) ($me->firstName ?? '')) . ' ' . ((string) ($me->lastName ?? ''))) ?: 'Your worker';
+        $title = Str::limit($who . ' ' . $what . ($thing ? ': ' . $thing : ''), 180, '');
+        // A burst (ten photos in a row) rings once.
+        $recent = \App\Models\AnisystemNotification::where('userId', $owner)->where('type', 'worker')->where('actorUserId', (int) $me->id)
+            ->where('title', $title)->where('created_at', '>=', now()->subMinutes(10))->exists();
+        if ($recent) {
+            return;
+        }
+        app(\App\Services\NotificationService::class)->notify($owner, 'worker', $title, 'In ' . $schedule->title . '.',
+            route($page, ['id' => $scheduleId]), (int) $me->id, $scheduleId);
     }
 
     /**
