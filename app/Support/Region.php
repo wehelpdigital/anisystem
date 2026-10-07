@@ -421,8 +421,17 @@ final class Region
     public static function cleanPhone(?string $raw, ?string $code = null): string
     {
         $strip = self::phone($code)['strip'] ?? '/[\s\-]+/';
+        $clean = (string) preg_replace($strip, '', (string) $raw);
+        // A Philippine number typed the international way (+63 917..., 63917...,
+        // or 917... without the zero) is the same number: write it 09...
+        if (($code ?? self::code()) === self::HOME) {
+            $digits = preg_replace('/[^0-9+]/', '', $clean);
+            if (preg_match('/^\+?63(9\d{9})$/', $digits, $m) || preg_match('/^(9\d{9})$/', $digits, $m)) {
+                return '0' . $m[1];
+            }
+        }
 
-        return (string) preg_replace($strip, '', (string) $raw);
+        return $clean;
     }
 
     /** The account's own address labels: ['city' => [...], 'region' => [...], 'divisions' => …]. */

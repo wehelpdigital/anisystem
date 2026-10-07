@@ -547,7 +547,9 @@ class NewsRoundup
                     $blocks[] = ['type' => 'callout', 'tone' => 'tip', 'title' => 'What it means for your farm', 'text' => $c($s['soWhat'])];
                 }
                 $blocks[] = ['type' => 'text', 'text' => '**' . $item->source . ', ' . $when . '.** [Read the full report at ' . $item->source . '](' . $item->link . ')'];
-                $sources[] = ['label' => $item->source . ': ' . $c($item->title), 'url' => $item->link];
+                // A feed title can carry a web address or a broken one at its end ("... https:/."): words only.
+                $title = trim((string) preg_replace(['#\s*https?:/*\S*#i', '#\s*www\.\S+#i', '#[\s.:,;]+$#'], ['', '', ''], (string) $item->title));
+                $sources[] = ['label' => $item->source . ': ' . $c($title !== '' ? $title : (string) $item->title), 'url' => $item->link];
             }
         }
 

@@ -89,6 +89,14 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [
             'phone.regex' => $phoneRule['error'],
+            'phone.required' => 'Please enter your mobile number.',
+            'firstName.required' => 'Please enter your first name.',
+            'lastName.required' => 'Please enter your last name.',
+            'email.required' => 'Please enter your email address.',
+            'email.email' => 'That email address does not look right. Please check it.',
+            'password.required' => 'Please choose a password.',
+            'password.min' => 'Your password needs at least 8 characters.',
+            'password.confirmed' => 'The two passwords do not match. Please type the same password twice.',
         ]);
 
         $user = User::create([

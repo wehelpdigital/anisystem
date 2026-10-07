@@ -202,6 +202,8 @@
         .pf-list { display: grid; gap: .5rem; font-size: .9rem; }
         .pf-list a { color: #4b5563; text-decoration: none; transition: color .28s cubic-bezier(.22,1,.36,1), padding .28s cubic-bezier(.22,1,.36,1); }
         .pf-list a:hover { color: #3d6823; padding-left: .2rem; }
+        /* A thumb's height on a phone: the links were 20 px tall. */
+        @media (max-width: 767.98px) { .pf-list a { display: inline-block; padding-block: .45rem; } .pf-list { gap: 0; } .fo-list a { display: inline-block; padding-block: .35rem; } .fo-list { gap: .1rem; } }
         .pf-list .pf-all { font-weight: 800; color: #3d6823; }
         @media (prefers-reduced-motion: reduce) { .pf-list a, .pf-fold, .pf-plus::before, .pf-plus::after { transition: none !important; } }
         /* Our tech ecosystem, in the footer (2026-10-07): each mark in one

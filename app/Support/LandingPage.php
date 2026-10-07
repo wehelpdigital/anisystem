@@ -146,7 +146,7 @@ class LandingPage
             'headline' => 'What might be happening to your farm now',
             'sub' => 'Deciding without accuracy, and without a solution you can be sure of, costs you your yield security.',
             'items' => [
-                ['n' => 40, 'title' => 'Yield lost to pests and diseases', 'text' => 'When the intervention comes late, or never comes at all.', 'peso' => '₱25,000 to ₱40,000', 'image' => 'palay-heads', 'upload' => ''],
+                ['n' => 40, 'title' => 'Yield lost to pests and diseases', 'text' => 'When the intervention comes late, or never comes at all.', 'peso' => '₱24,000 to ₱40,000', 'image' => 'palay-heads', 'upload' => ''],
                 ['n' => 30, 'title' => 'Wasted on the wrong solution', 'text' => 'A misread problem means the wrong product, at full price, while the real problem keeps eating.', 'peso' => '₱18,000 to ₱30,000', 'image' => 'sacks', 'upload' => ''],
                 ['n' => 30, 'title' => 'Yield lost to trying myths that are not true', 'text' => 'Hearsay remedies and beliefs about lucky timing, passed around as fact, and tested on a whole field before anyone checked.', 'peso' => '₱18,000 to ₱30,000', 'image' => 'palay-phone', 'upload' => ''],
                 ['n' => 30, 'title' => 'Profit lost to untracked spending', 'text' => 'Costs remembered instead of recorded leak all season, and only show themselves at settling time.', 'peso' => '₱18,000 to ₱30,000', 'image' => 'sacks-shed', 'upload' => ''],
@@ -272,7 +272,7 @@ class LandingPage
                 ['q' => 'Will it really increase my harvest?', 'a' => 'No app can promise a number, because the weather and the market decide part of it. What anee.io does is take away the losses that come from late, early or wrong applications and from costs nobody tracked, which is where most avoidable losses are.'],
                 ['q' => 'Do I need a credit card?', 'a' => 'No. You sign up with {signupWays}. Paid plans are paid by {pay}, only if and when you choose one.'],
                 ['q' => 'Can I cancel any time?', 'a' => 'Nothing renews by itself. You pay for a month or a year at a time, and if you stop, your season and your records stay safe and readable.'],
-                ['q' => 'Does it work on my phone, even in the field?', 'a' => 'Yes. anee.io runs in the browser of any phone, tablet or computer, and it is built for the phone first. Paid plans also keep working when the signal drops.'],
+                ['q' => 'Does it work on my phone, even in the field?', 'a' => 'Yes. anee.io runs in the browser of any phone, tablet or computer, and it is built for the phone first. Solo Farmer and Farm Owner also keep working when the signal drops.'],
                 ['q' => 'Which crops does it know?', 'a' => '{crops} crops grown in the Philippines, each with its own growth stages and day count: rice transplanted or direct seeded, corn, vegetables, fruit trees and more.'],
                 ['q' => 'Can my workers use it too?', 'a' => 'Yes. On Solo Farmer you keep their days and their pay; on Farm Owner they log in themselves, and you choose what each one may see or do.'],
                 ['q' => 'Is my farm data private?', 'a' => 'Yes. Your seasons, notes and money are yours alone unless you choose to share something with the community.'],
@@ -365,7 +365,7 @@ class LandingPage
             '{libreAnee}' => Region::priceTag(Region::tierPrice('libreAnee', 'month')),
             // The losses band's source note, said for the page's own country.
             '{cropResearch}' => Region::ph() ? 'Philippine rice' : 'published crop',
-            '{pesoBasis}' => Region::ph() ? '; peso ranges assume a typical palay hectare grossing ₱85,000 to ₱100,000' : '',
+            '{pesoBasis}' => Region::ph() ? '; peso ranges assume a typical palay hectare grossing ₱60,000 to ₱100,000' : '',
             '{solo}' => Region::priceTag(Region::tierPrice('solo', 'month')),
         ];
     }

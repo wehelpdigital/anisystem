@@ -16,6 +16,10 @@
         .sp-crumbs .sp-here { display: none; }
         .sp-crumbs a { padding: .55rem 0; margin: -.55rem 0; }
     }
+    .sp-finder-link { display: inline-flex; align-items: center; min-height: 2.5rem; margin-left: .5rem; font-size: .85rem; font-weight: 800; color: #3d6823; text-decoration: none;
+        transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .sp-finder-link:hover { color: #2d5016; text-decoration: underline; }
+    @media (max-width: 639.98px) { .sp-finder-link { display: flex; margin: .35rem 0 0; } }
     .sp-chip { display: inline-flex; align-items: center; gap: .35rem; font-size: .72rem; font-weight: 800; letter-spacing: .06em;
         text-transform: uppercase; color: #2d5016; background: #e4efd4; border-radius: 999px; padding: .3rem .7rem; }
     .sp-h1 { font-family: var(--font-heading); font-weight: 800; color: #14210c; font-size: clamp(1.9rem, 4.2vw, 2.9rem);

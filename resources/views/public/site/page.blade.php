@@ -118,6 +118,8 @@
                         </div>
                     @elseif ($prob)
                         <a href="{{ $S::url($page->section) }}?group={{ $prob['group'] }}#catalogue" class="sp-chip">{{ $page->category }}</a>
+                        {{-- Not sure this is the one? The finder, from the top (it also waits at the foot). --}}
+                        <a href="{{ $S::url($page->section) }}#finder" class="sp-finder-link">{{ $page->section === 'pests' ? 'Not sure it is this pest? Use the Pest Finder' : 'Not sure it is this disease? Use the Disease Finder' }} ›</a>
                     @elseif ($weed)
                         {{-- A weed's group opens the catalogue on that group. --}}
                         <a href="{{ $S::url('weeds') }}?group={{ $weed['group'] }}#catalogue" class="sp-chip">{{ $page->category }}</a>
