@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('title', 'Tutorial: How anee.io Works')
-@section('meta_description', 'A step by step guide to anee.io: create an account, pay by ' . \App\Support\Region::payMethod() . ', set up lots, workers, materials and services, build your activities timeline, plan irrigation and export your season.')
+@section('meta_description', 'A step by step guide to anee.io: create an account, pay by ' . \App\Support\Region::payMethod() . ', set up lots, workers and materials, build your activities timeline and export your season.')
 
 @section('content')
 
@@ -93,7 +93,7 @@
                             <div class="card-body">
                                 <div class="flex items-center gap-2.5">
                                     <svg class="w-6 h-6 text-brand-600 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">{!! $step['icon'] !!}</svg>
-                                    <h3 class="font-heading text-lg sm:text-xl font-bold text-ink">{{ $step['title'] }}</h3>
+                                    <h2 class="font-heading text-lg sm:text-xl font-bold text-ink">{{ $step['title'] }}</h2>
                                 </div>
                                 <p class="mt-2 text-sm sm:text-base text-gray-600 leading-relaxed">{{ $step['text'] }}</p>
                             </div>

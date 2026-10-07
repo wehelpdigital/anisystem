@@ -50,7 +50,7 @@
         }
     @endphp
     <title>{!! $pageTitle !!}</title>
-    <meta name="description" content="@yield('meta_description', 'anee.io is the smart farm app for ' . \App\Support\Region::t('farmersOf') . ': your cropping calendar, costs, workers, field maps and Anee, your smart farm technician, in one app that works on any phone.')">
+    <meta name="description" content="@yield('meta_description', 'anee.io is the smart farm app for ' . \App\Support\Region::t('farmersOf') . ': cropping calendar, costs, workers, field maps and Anee, your smart farm technician, in one app for any phone.')">
     {{-- Indexable only once the mother app's switch says so (App\Support\Seo). --}}
     <meta name="robots" content="{{ \App\Support\Seo::robots() }}">
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">

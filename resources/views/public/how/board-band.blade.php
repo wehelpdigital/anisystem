@@ -163,10 +163,10 @@
                                     @if ($g['do'] || $g['watch'])
                                         <div class="hwg-lists">
                                             @if ($g['do'])
-                                                <div class="hwg-list hwg-do"><h4>{!! $hwI('M5 13l4 4L19 7', 2.5) !!}What to do now</h4><ul>@foreach ($g['do'] as $t)<li>{{ $t }}</li>@endforeach</ul></div>
+                                                <div class="hwg-list hwg-do"><div class="hwg-h">{!! $hwI('M5 13l4 4L19 7', 2.5) !!}What to do now</div><ul>@foreach ($g['do'] as $t)<li>{{ $t }}</li>@endforeach</ul></div>
                                             @endif
                                             @if ($g['watch'])
-                                                <div class="hwg-list hwg-watch"><h4>{!! $hwI('M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z', 2.5) !!}What to watch for</h4><ul>@foreach ($g['watch'] as $t)<li>{{ $t }}</li>@endforeach</ul></div>
+                                                <div class="hwg-list hwg-watch"><div class="hwg-h">{!! $hwI('M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z', 2.5) !!}What to watch for</div><ul>@foreach ($g['watch'] as $t)<li>{{ $t }}</li>@endforeach</ul></div>
                                             @endif
                                         </div>
                                     @endif

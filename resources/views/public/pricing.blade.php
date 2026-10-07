@@ -15,7 +15,7 @@
             <h1 class="mt-2 font-heading text-4xl sm:text-5xl font-bold text-white text-balance">Start Free. Grow When You're Ready.</h1>
             <p class="mt-5 text-brand-100 text-base sm:text-lg">
                 The Libre plan is free forever. No card, and no trial that runs out. Upgrades are paid in {{ \App\Support\Region::currencyName() }}
-                through {{ \App\Support\Region::payMethod() }}. Anee, the AI technician, uses credits on top of your plan, so you only pay her
+                through {{ \App\Support\Region::payMethod() }}. Anee, the smart farm technician, uses credits on top of your plan, so you only pay her
                 for what you ask.
             </p>
         </div>

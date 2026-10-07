@@ -55,7 +55,7 @@ class LandingPage
         // The browser tab and the link preview; a blank description is the hero's sub.
         'meta' => [
             'title' => 'Precision agriculture on your phone',
-            'description' => '',
+            'description' => 'Precision agriculture on your phone: the right spray, fertilizer and water on the right day, planned around your weather. Less waste, more harvest, higher income.',
         ],
         'hero' => [
             'kicker' => 'Precision agriculture for {farmers}',
@@ -210,7 +210,7 @@ class LandingPage
                 'upload' => '', 'frame' => 'phone',
             ],
             [
-                'kicker' => 'Anee, your AI farm technician',
+                'kicker' => 'Anee, your smart farm technician',
                 'title' => 'Know what is wrong before you spend on it',
                 'text' => 'Snap the leaf, the pest or the field and ask in Tagalog, Bisaya, Ilocano or Taglish. Anee reads your crop, its stage and your season, and answers with what is accurate and scientifically based, so the fix you buy is the right one.',
                 'bullets' => ['Reads a photo of the leaf, the pest or the field', 'Knows your crop, variety, stage and weather', 'Deep analyses: when to plant, what to plant, which variety'],

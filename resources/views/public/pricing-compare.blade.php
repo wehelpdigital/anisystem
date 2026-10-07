@@ -8,7 +8,7 @@
 @include('public.partials.site-css')
 
 @section('title', 'Pricing Comparison: Every anee.io Plan Side by Side')
-@section('meta_description', 'Compare every anee.io plan side by side: seasons, lots, maps, weather, Anee the AI technician, workers, inventory, reports, storage and community. Libre is free forever.')
+@section('meta_description', 'Compare anee.io plans side by side: seasons, lots, maps, weather, Anee the smart farm technician, workers, inventory, reports and storage. Libre is free forever.')
 
 @push('head')
     <link rel="canonical" href="{{ route('pricing.compare') }}">

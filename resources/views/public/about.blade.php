@@ -132,7 +132,7 @@
                 @foreach ([
                     ['Years in the field', 'Our team has helped farmers grow bigger harvests of ' . \App\Support\Region::t('rice') . ', ' . \App\Support\Region::t('corn') . ' and more through research, technician support, fertilization and farm management, with results recognized here and abroad.', 'images/icons/soil-restoration.png'],
                     ['The system behind the results', 'To run client farms well, our technicians built a cropping schedule manager: every task counted from day zero, every cost written down, every season kept on record.', 'images/icons/calendar.png'],
-                    ['Now in your hands', 'anee.io puts that same system on your phone, with Anee, the AI farm technician, to answer when a technician cannot be there.', 'images/icons/technician-support.png'],
+                    ['Now in your hands', 'anee.io puts that same system on your phone, with Anee, the smart farm technician, to answer when a technician cannot be there.', 'images/icons/technician-support.png'],
                 ] as $i => [$t, $p, $img])
                     <li class="ab-step reveal" style="--reveal-delay: {{ $i * 0.12 }}s">
                         <span class="ab-step-n">{{ $i + 1 }}</span>
@@ -219,7 +219,7 @@
             <div class="ab-does">
                 @foreach ([
                     ['cropping-calendar', 'images/icons/calendar.png', 'One plan for the whole season', 'Land preparation, sowing, fertilizer, crop protection and harvest on one cropping calendar.'],
-                    ['ai-agricultural-technician', 'images/icons/chat.png', 'Anee, your AI farm technician', 'Ask about pests, fertilizer or a sick leaf, even with a photo, and get an answer for your own field.'],
+                    ['ai-agricultural-technician', 'images/icons/chat.png', 'Anee, your smart farm technician', 'Ask about pests, fertilizer or a sick leaf, even with a photo, and get an answer for your own field.'],
                     ['farm-reports', 'images/icons/profit.png', 'Costs and profit you can see', 'Labor, materials and services add up as you go, and the reports match to the ' . ($ph ? 'peso' : 'cent') . '.'],
                     ['growth-stages-and-weather', 'images/icons/soil-restoration.png', 'Growth stages and weather', 'See where each lot stands today, what to do now, and the forecast for your field.'],
                     ['farm-workers-and-payroll', 'images/icons/tea.png', 'Workers and payroll', 'Put the right people on each task, tick who came, and the labor cost adds itself up.'],

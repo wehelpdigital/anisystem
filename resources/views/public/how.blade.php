@@ -6,12 +6,12 @@
 @include('public.partials.site-css')
 
 @section('title', 'How anee.io Works: Anee at Every Step of the Season')
-@section('meta_description', 'See how anee.io works from the first plan to the last sack: plan, build the plan, plant, grow, protect, harvest and look back, with Anee, the AI farm technician, at every step.')
+@section('meta_description', 'See how anee.io works from the first plan to the last sack: plan, plant, grow, protect, harvest and look back, with Anee, your smart farm technician, at every step.')
 
 @push('head')
     <link rel="canonical" href="{{ route('how') }}">
     <meta property="og:title" content="How anee.io works">
-    <meta property="og:description" content="Plan, build the plan, plant, grow, protect, harvest and look back, with Anee, the AI farm technician, at every step.">
+    <meta property="og:description" content="Plan, build the plan, plant, grow, protect, harvest and look back, with Anee, your smart farm technician, at every step.">
     <meta property="og:url" content="{{ route('how') }}">
     <meta property="og:image" content="{{ asset('images/site/photos/palay-phone.jpg') }}">
     @php
@@ -19,7 +19,7 @@
             '@context' => 'https://schema.org',
             '@type' => 'HowTo',
             'name' => 'How a cropping season runs on anee.io',
-            'description' => 'Seven steps from the first plan to the last sack, with Anee, the AI farm technician, at every step.',
+            'description' => 'Seven steps from the first plan to the last sack, with Anee, your smart farm technician, at every step.',
             'step' => collect(\App\Support\HowItWorks::stages())->values()->map(fn ($s, $i) => [
                 '@type' => 'HowToStep',
                 'position' => $i + 1,

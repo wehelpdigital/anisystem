@@ -92,7 +92,7 @@
         <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Ask Anee anytime</p>
         <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance">Your whole season in one app</h2>
         <p class="mt-4 text-[#cdd8c0] leading-relaxed max-w-2xl mx-auto">
-            A cropping calendar that dates every task, a record of your fertilizer and costs, and Anee, the AI technician who answers in Tagalog or English.
+            A cropping calendar that dates every task, a record of your fertilizer and costs, and Anee, the smart farm technician who answers in Tagalog or English.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
             <a href="{{ route('signup') }}?utm_source=questions" class="btn btn-accent btn-lg">Try it for free</a>

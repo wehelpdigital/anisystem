@@ -15,7 +15,7 @@
 @endphp
 
 @section('title', 'Contact anee.io: Help With Your Farm App')
-@section('meta_description', 'Get in touch with the anee.io team. Questions about plans, ' . $pay . ' payments, or using the app? Email support@anee.io and a real person replies, usually within a business day.')
+@section('meta_description', 'Questions about plans, ' . $pay . ' payments or using the app? Email support@anee.io and a real person on the anee.io team replies, usually within a business day.')
 
 {{-- CONTACT (rebuilt 2026-10-06 in the homepage's look). Still no form, on
      purpose: a contact form swallows a message, the sender cannot see what

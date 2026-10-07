@@ -141,7 +141,7 @@
     .hwr-burger { display: grid; gap: 5px; width: 22px; }
     .hwr-burger i { height: 2px; border-radius: 2px; background: #374151; }
     .hwr-login { padding: 48px 16px 0; }
-    .hwr-login h3 { text-align: center; font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: #1a1a1a; }
+    .hwr-login .hwr-h { text-align: center; font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: #1a1a1a; }
     .hwr-login > p { margin-top: 4px; text-align: center; font-size: 14px; color: #4b5563; }
     .hwr-card { margin-top: 24px; padding: 16px; border-radius: 16px; background: #fff; box-shadow: 0 4px 6px -2px rgb(26 26 26 / .05), 0 12px 32px -8px rgb(26 26 26 / .14); }
     .hwr-lab { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 6px; font-size: 14px; font-weight: 600; color: #1f2937; }
@@ -395,8 +395,8 @@
     .hwg-needs { margin-top: 11px; padding: 10px 11px; border-radius: 11px; background: rgb(107 159 61 / .14); color: #3f6220; font-size: 13.4px; line-height: 1.5; }
     .hwg-lists { display: grid; gap: 8px; margin-top: 13px; }
     .hwg-list { padding: 10px 12px; border-radius: 13px; }
-    .hwg-list h4 { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; font-size: 10.2px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
-    .hwg-list h4 svg { width: 14px; height: 14px; }
+    .hwg-list .hwg-h { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; font-size: 10.2px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .hwg-list .hwg-h svg { width: 14px; height: 14px; }
     .hwg-list li { display: flex; gap: 6px; font-size: 12.8px; line-height: 1.45; }
     .hwg-list li::before { content: ''; flex: none; width: 5.6px; height: 5.6px; margin-top: 7px; border-radius: 999px; background: currentColor; opacity: .5; }
     .hwg-list li + li { margin-top: 5px; }
@@ -982,7 +982,7 @@
         <div class="hw-copy">
             <p class="hw-kick">How it works</p>
             <{{ $hwTop }} class="hw-h1">From the first plan to the last sack, <em>Anee is with you</em></{{ $hwTop }}>
-            <p class="hw-lede">anee.io follows your season the way a farm lives it: plan, build the plan, plant, grow, protect, harvest, then look back. Every step has its tools, and Anee, the AI farm technician, works beside you at each one.</p>
+            <p class="hw-lede">anee.io follows your season the way a farm lives it: plan, build the plan, plant, grow, protect, harvest, then look back. Every step has its tools, and Anee, your smart farm technician, works beside you at each one.</p>
             <div class="hw-btns">
                 @if ($hwMode === 'site')
                     <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free</a>
@@ -1003,7 +1003,7 @@
                     <div class="hw-scene s-login is-on">
                         <div class="hwr-pub"><img src="{{ asset('images/logo.png') }}?v=anee" alt=""><span class="hwr-burger"><i></i><i></i><i></i></span></div>
                         <div class="hwr-login">
-                            <h3>Welcome back</h3>
+                            <div class="hwr-h">Welcome back</div>
                             <p>Log in to manage your farm.</p>
                             <div class="hwr-card">
                                 <div class="hwr-lab">Email address</div>

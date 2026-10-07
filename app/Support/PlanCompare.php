@@ -42,7 +42,7 @@ class PlanCompare
                 ['Forecast', null, fn (array $t) => $t['weatherDays'] === null ? 'Full forecast' : 'Today and tomorrow'],
                 ['Weather right now', 'Shown on your dashboard', $gate('weatherNow')],
             ]],
-            ['Anee, the AI technician', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5', [
+            ['Anee, the smart farm technician', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5', [
                 ['Chat with Anee', 'Ask anything, send a photo', $gate('ai')],
                 ['AI analyses', 'When to Plant, What to Plant, Variety Research, Crop Protocol', $gate('aiAnalyses')],
                 ['Realign by Anee', 'The true growth stage of a lot', $gate('ai')],

@@ -7,12 +7,12 @@
 @include('public.site.css')
 
 @section('title_full', 'Ask Anee a Farming Question for Free | anee.io')
-@section('meta_description', 'Ask Anee, the anee.io AI farm technician, one farming question for free. Palay, mais, gulay, pests or fertilizer: tell her about your farm and get a full answer.')
+@section('meta_description', 'Ask Anee, the anee.io smart farm technician, one farming question for free. Palay, mais, gulay, pests or fertilizer: tell her about your farm and get a full answer.')
 
 @push('head')
     <link rel="canonical" href="{{ url('/ask-anee') }}">
     <meta property="og:title" content="Ask Anee a farming question, free">
-    <meta property="og:description" content="Ask Anee, the anee.io AI farm technician, one farming question and get a full answer for your farm.">
+    <meta property="og:description" content="Ask Anee, the anee.io smart farm technician, one farming question and get a full answer for your farm.">
     <meta property="og:url" content="{{ url('/ask-anee') }}">
     <meta property="og:image" content="{{ asset('images/site/photos/palay-phone.jpg') }}">
     @if ($siteKey)
@@ -268,10 +268,10 @@
 <section class="ak-hero">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <div class="ak-top">
-            <div class="ak-face"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="Anee, the anee.io AI farm technician"></div>
+            <div class="ak-face"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="Anee, the anee.io smart farm technician"></div>
             <div><span class="ak-kicker">Free for everyone</span></div>
             <h1 class="ak-h1">Try and <span>Ask Anee</span></h1>
-            <p class="ak-lead">Ask Anee, the anee.io AI farm technician, one farming question. She looks at it together with your farm and sends you a full answer by email.</p>
+            <p class="ak-lead">Ask Anee, the anee.io smart farm technician, one farming question. She looks at it together with your farm and sends you a full answer by email.</p>
         </div>
 
         <div class="ak-steps" aria-hidden="true">
