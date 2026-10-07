@@ -207,7 +207,7 @@
                     </ul>
                     {{-- Flat until now (the harvest that "stays the same, year after
                          year"), then up: the climb is the aim, not the past. --}}
-                    @include('public.partials.sum-trend', ['cls' => 'is-way', 'label' => 'The aim: more from every hectare, season after season', 'heights' => [36, 37, 35, 38, 64, 96]])
+                    @include('public.partials.sum-trend', ['cls' => 'is-way', 'label' => 'The aim: more from every hectare, season after season', 'heights' => [34, 35, 33, 46, 68, 96], 'mark' => 3, 'markLabel' => 'You start using anee.io'])
                 </div>
             </div>
 
@@ -1825,12 +1825,6 @@
         </div>
     </section>
 
-    {{-- The way in, always one tap away on a phone once the hero has gone by. --}}
-    <div class="hp-sticky" data-sticky>
-        <a href="{{ $signup }}" class="btn btn-accent hp-go">Create your free account</a>
-        <a href="{{ $ask }}" class="hp-sticky-ask" aria-label="Ask Anee a free question"><img src="{{ $face }}" alt="" class="hp-face is-lg"></a>
-    </div>
-
 @endsection
 
 @push('head')
@@ -3412,6 +3406,26 @@
     .hp-sum-trend.is-way .hp-sum-arrow .ln, .hp-sum-trend.is-way .hp-sum-arrow .hd { stroke: #fff; }
     .hp-sum-arrow .fl { stroke: #fff; }
     .hp-sum-trend.is-way .hp-sum-arrow .fl { stroke: #f5c518; }
+    /* The marked point (the green card): words above the chart, an arrow
+       that draws itself down to Now after the bars and the line, and a dot
+       that pulses there. */
+    .hp-sum-plot.has-mark { padding-top: 1.7rem; }
+    .hp-sum-mark { position: absolute; top: 0; left: .5rem; font-family: var(--font-heading); font-size: .8rem; font-weight: 800; line-height: 1.2; color: #fff;
+        opacity: 0; translate: 0 4px; transition: opacity .4s var(--hp-ease) 2.2s, translate .4s var(--hp-ease) 2.2s; }
+    .is-drawn .hp-sum-mark { opacity: 1; translate: none; }
+    .hp-sum-arrow .mk { stroke: #fde68a; stroke-width: 2.2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .9s var(--hp-ease) 2.5s; }
+    .hp-sum-arrow .mk-hd { stroke: #fde68a; stroke-width: 2.2; opacity: 0; transition: opacity .2s ease 3.3s; }
+    .hp-sum-arrow .mk-dot { fill: #fff; stroke: #f5c518; stroke-width: 2.5; opacity: 0; transition: opacity .3s ease 3.3s; }
+    .hp-sum-arrow .mk-ring { fill: none; stroke: #fde68a; stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; }
+    .is-drawn .hp-sum-arrow .mk { stroke-dashoffset: 0; }
+    .is-drawn .hp-sum-arrow .mk-hd, .is-drawn .hp-sum-arrow .mk-dot { opacity: 1; }
+    .is-drawn .hp-sum-arrow .mk-ring { animation: hpMarkPing 2.2s ease-out 3.5s infinite; }
+    @keyframes hpMarkPing { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(3); } }
+    @media (prefers-reduced-motion: reduce) {
+        .hp-sum-mark, .hp-sum-arrow .mk, .hp-sum-arrow .mk-hd, .hp-sum-arrow .mk-dot { transition: none; }
+        .hp-sum-mark { opacity: 1; translate: none; } .hp-sum-arrow .mk { stroke-dashoffset: 0; } .hp-sum-arrow .mk-hd, .hp-sum-arrow .mk-dot { opacity: 1; }
+        .is-drawn .hp-sum-arrow .mk-ring { animation: none; }
+    }
     .hp-sum-years { display: flex; gap: .4rem; padding: .35rem .5rem 0; }
     .hp-sum-years b { flex: 1; text-align: center; font-size: .66rem; font-weight: 700; font-variant-numeric: tabular-nums; opacity: .75; }
     .hp-sum-years b.is-now { font-weight: 900; opacity: 1; }
@@ -3452,7 +3466,7 @@
         transition: background-color .28s var(--hp-ease), transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
     .hp-topic:hover { transform: translateY(-2px); background: hsl(var(--h) 60% 90%); box-shadow: inset 0 0 0 1px hsl(var(--h) 45% 72%); }
 
-    /* ---- final call, sticky bar ---- */
+    /* ---- final call ---- */
     .hp-final { position: relative; isolation: isolate; overflow: hidden; }
     .hp-final-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
     /* The question leads small, the promise is the title (owner, 2026-10-07). */
@@ -3518,22 +3532,13 @@
         .hp-ws-to::before { transform: none; }
         .hp-ws-to svg { opacity: 1; }
     }
-    .hp-sticky { position: fixed; left: .75rem; right: .75rem; bottom: calc(.75rem + env(safe-area-inset-bottom, 0px)); z-index: 38;
-        display: flex; gap: .6rem; align-items: center; padding: .55rem; border-radius: 1.3rem; background: rgb(16 22 12 / .92);
-        backdrop-filter: blur(10px); box-shadow: 0 20px 40px -18px rgb(0 0 0 / .7);
-        transform: translateY(140%); opacity: 0; visibility: hidden;
-        transition: transform .45s var(--hp-ease), opacity .45s var(--hp-ease), visibility .45s; }
-    .hp-sticky.is-on { transform: none; opacity: 1; visibility: visible; }
-    .hp-sticky .btn { flex: 1 1 auto; justify-content: center; min-height: 3rem; }
-    .hp-sticky-ask { flex: none; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 999px; background: rgb(255 255 255 / .1); }
-    @media (min-width: 768px) { .hp-sticky { display: none; } }
 
     @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
         .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down,
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs-group.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
-        .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
+        .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box,
         .hp-go, .hp-alt, .hp-prec-row, .hp-prec-rights li, .hp-prec-old, .hp-prec-card, .hp-prec-checks li, .hp-prec-bar i, .hp-prec-on, .hp-st-tab, .hp-gain, .hp-q, .hc-card, .hg-shelf, .hg-lead img, .hg-row, .hg-row svg, .hg-all, .hg-all svg, .hg-read svg, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
         .hp-tvs-race i::before, .hp-tvs-old > i, .hp-tvs-new > i { animation: none !important; }
@@ -4026,25 +4031,6 @@
         }));
     }
 
-    /* On a phone, the way in stays one tap away once the hero has gone by,
-       and steps aside for the last call and the footer. It also steps aside
-       while a section's own call is on screen (2026-10-07), so the same
-       yellow button never shows twice at once. */
-    const sticky = document.querySelector('[data-sticky]');
-    const heroEl = document.querySelector('[data-hero]');
-    const finalEl = document.querySelector('[data-final]');
-    if (sticky && heroEl && 'IntersectionObserver' in window) {
-        let pastHero = false, atEnd = false;
-        const calls = new Set();
-        const paint = () => sticky.classList.toggle('is-on', pastHero && !atEnd && !calls.size);
-        new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; paint(); }).observe(heroEl);
-        if (finalEl) new IntersectionObserver(([e]) => { atEnd = e.isIntersecting || e.boundingClientRect.top < 0; paint(); }, { threshold: 0.05 }).observe(finalEl);
-        const callIo = new IntersectionObserver((es) => {
-            es.forEach((e) => (e.isIntersecting ? calls.add(e.target) : calls.delete(e.target)));
-            paint();
-        });
-        document.querySelectorAll('.hp-cta').forEach((c) => callIo.observe(c));
-    }
 })();
 </script>
 
