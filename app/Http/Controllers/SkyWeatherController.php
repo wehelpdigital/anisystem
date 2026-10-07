@@ -227,7 +227,7 @@ class SkyWeatherController extends Controller
 
     /**
      * The forecast the map plays (2026-10-08): cloud cover and rain from the
-     * Open-Meteo model over a 13 by 11 grid around the farm, 1.5 degrees
+     * Open-Meteo model over a 13 by 15 grid around the farm, 1.5 degrees
      * apart, every 3 hours for 5 days. One call answers the whole grid; it
      * is kept for 3 hours per 2 degree square, so farms near each other share it.
      */
@@ -239,13 +239,13 @@ class SkyWeatherController extends Controller
         $clat = (int) (round($lat / 2) * 2);
         $clng = (int) (round($lng / 2) * 2);
         $rows = 13;
-        $cols = 11;
+        $cols = 15;
         $step = 1.5;
         $lat0 = $clat - ($rows - 1) / 2 * $step;
         $lng0 = $clng - ($cols - 1) / 2 * $step;
         $block = now('UTC')->format('Ymd') . '-' . intdiv((int) now('UTC')->format('G'), 3);
 
-        $grid = Cache::remember("sky:grid:{$clat},{$clng}:{$block}", 3 * 3600, function () use ($rows, $cols, $step, $lat0, $lng0) {
+        $grid = Cache::remember("sky:grid2:{$clat},{$clng}:{$block}", 3 * 3600, function () use ($rows, $cols, $step, $lat0, $lng0) {
             $lats = [];
             $lngs = [];
             for ($r = 0; $r < $rows; $r++) {

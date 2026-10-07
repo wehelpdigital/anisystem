@@ -564,6 +564,8 @@
                 const lng = Wd + (E - Wd) * (x + 0.5) / w;
                 const gc = Math.max(0, Math.min(cols - 1, (lng - FG.lng0) / FG.step));
                 const nz = NOISE[y * w + ((x + drift) % w)];
+                // Feathered at the grid's edge, so the forecast fades into the map instead of ending in a straight line.
+                const ed = Math.min(x, w - 1 - x, y, h - 1 - y) / (FW * 1.6), fade = ed >= 1 ? 1 : ed * ed * (3 - 2 * ed);
                 let r = 0, g = 0, b = 0, al = 0;
                 if (clouds) {
                     const c = sample(C0, C1, gr, gc) / 100;
@@ -571,13 +573,13 @@
                     r = 238; g = 242; b = 247;
                 }
                 const mm = sample(R0, R1, gr, gc);
-                if (mm >= 0.3) {
-                    const iv = Math.min(1, Math.log1p(mm) / Math.log1p(25)), [rr, rg, rb] = rampAt(iv), ra = Math.min(0.9, 0.3 + 0.6 * iv) * (0.8 + 0.4 * nz);
+                if (mm >= 0.8) {
+                    const iv = Math.min(1, Math.log1p(mm) / Math.log1p(25)), [rr, rg, rb] = rampAt(iv), ra = Math.min(0.88, 0.2 + 0.62 * iv) * (0.8 + 0.4 * nz);
                     const out = ra + al * (1 - ra);
                     r = (rr * ra + r * al * (1 - ra)) / out; g = (rg * ra + g * al * (1 - ra)) / out; b = (rb * ra + b * al * (1 - ra)) / out; al = out;
                 }
                 const i = (y * w + x) * 4;
-                px[i] = r; px[i + 1] = g; px[i + 2] = b; px[i + 3] = Math.round(al * 255);
+                px[i] = r; px[i + 1] = g; px[i + 2] = b; px[i + 3] = Math.round(al * fade * 255);
             }
         }
         ctx.putImageData(img, 0, 0);
