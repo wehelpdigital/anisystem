@@ -332,16 +332,9 @@
         background: linear-gradient(180deg, rgb(13 19 9 / .55), rgb(13 19 9 / .82) 60%, rgb(13 19 9 / .92)); }
     .lp-closer .lp-form { box-shadow: 0 22px 44px -20px rgb(0 0 0 / .6); margin-inline: auto; }
     .lp-risk { margin-top: 1rem; font-size: .9rem; font-weight: 700; color: #d9f99d; }
-    /* The bar that waits at the foot of a phone once the hero's form has gone by. */
-    .lp-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom, 0px));
-        background: rgb(255 255 255 / .96); backdrop-filter: blur(8px); border-top: 1px solid #e3ecd9;
-        transform: translateY(110%); transition: transform .32s cubic-bezier(.22,1,.36,1); }
-    .lp-bar.is-on { transform: none; }
-    .lp-bar a { width: 100%; }
-    @media (min-width: 900px) { .lp-bar { display: none; } }
     @media (prefers-reduced-motion: reduce) {
         .lp-float, .lp-kicker i { animation: none; }
-        .lp-bar, .lp-qa .a, .lp-qa button svg, .lp-tile, .lp-right, .loss-bar i { transition: none; }
+        .lp-qa .a, .lp-qa button svg, .lp-tile, .lp-right, .loss-bar i { transition: none; }
     }
 </style>
 @endpush
@@ -732,10 +725,6 @@
         </div>
     </section>
 
-    {{-- The phone's bar: the offer, one thumb away, once the hero's form has gone by. --}}
-    <div class="lp-bar" id="lpBar" aria-hidden="true">
-        <a href="{{ $signup }}" class="btn btn-accent btn-lg" tabindex="-1">{{ $lp['hero']['cta'] }} {!! $arrow !!}</a>
-    </div>
 
 @endsection
 
@@ -779,23 +768,6 @@
         losses.forEach(light);
     }
 
-    // The phone's bar: on once the hero's form is out of sight, off again at the closer's own form.
-    const bar = document.getElementById('lpBar');
-    const hero = document.getElementById('lpHeroForm');
-    const closer = document.getElementById('lpCloser');
-    if (bar && hero && closer && 'IntersectionObserver' in window) {
-        let heroGone = false, closerIn = false;
-        const paint = () => {
-            const on = heroGone && !closerIn;
-            bar.classList.toggle('is-on', on);
-            bar.setAttribute('aria-hidden', on ? 'false' : 'true');
-            bar.querySelector('a').tabIndex = on ? 0 : -1;
-        };
-        new IntersectionObserver(([e]) => { heroGone = !e.isIntersecting && e.boundingClientRect.top < 0; paint(); }).observe(hero);
-        // Off from the closer down: its own form is there, and past it the
-        // footer's links should not sit under a bar.
-        new IntersectionObserver(([e]) => { closerIn = e.isIntersecting || e.boundingClientRect.top < 0; paint(); }, { threshold: .15 }).observe(closer);
-    }
 })();
 </script>
 
