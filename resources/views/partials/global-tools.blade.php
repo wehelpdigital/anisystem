@@ -28,7 +28,7 @@
            sit on the band). By night the band goes a shade deeper and the
            words stay light. */
         .qa-panel-head { display: flex; align-items: center; gap: .7rem; width: 100%;
-            text-align: left; padding: .75rem .85rem; cursor: pointer; border: 0; color: #fff;
+            text-align: left; padding: .7rem .8rem; cursor: pointer; border: 0; color: #fff;
             --sw-1: #2f5219; --sw-2: #4a7c2a; --sw-3: #6b9f3d;
             background-image: linear-gradient(120deg, var(--sw-1), var(--sw-2) 28%, var(--sw-3) 52%, var(--sw-2) 76%, var(--sw-1));
             background-size: 220% 100%; animation: gradSweep 11s ease-in-out infinite alternate;
@@ -41,9 +41,10 @@
             background: transparent; color: #cfe6b8; box-shadow: none; }
         .qa-panel-ico svg { width: 1.25rem; height: 1.25rem; }
         .qa-panel-txt { min-width: 0; flex: 1 1 auto; }
-        .qa-panel-txt b { display: block; font-size: .875rem; font-weight: 800; color: #fff; }
-        .qa-panel-txt i { display: block; font-style: normal; font-size: .75rem; color: rgb(255 255 255 / .82);
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .qa-panel-txt b { display: block; font-size: .9rem; font-weight: 800; color: #fff; }
+        /* Wraps like the Stash card's line under it, so the two folded heads
+           stand the same height (the owner's call, 2026-10-07). */
+        .qa-panel-txt i { display: block; font-style: normal; font-size: .75rem; color: rgb(255 255 255 / .82); }
         .qa-panel-chev { width: 1.1rem; height: 1.1rem; flex: none; color: rgb(255 255 255 / .9);
             transition: transform .28s cubic-bezier(.22,1,.36,1); }
         .qa-panel { border-color: var(--color-brand-200); }
@@ -148,7 +149,7 @@
                 <span class="qa-panel-ico"><img src="{{ asset('images/icons/tool-box.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-panel-txt">
                     <b>Global and Quick Tools</b>
-                    <i>Tools for all your seasons, in one place.</i>
+                    <i>Planting analyses, satellite, NPK Plus, notes, maps and more, in one place.</i>
                 </span>
                 <svg class="qa-panel-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             </button>

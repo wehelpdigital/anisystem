@@ -95,5 +95,20 @@
         try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (_) {}
     });
 })();
+// Folded, this head and the Global and Quick Tools head above it stand the
+// same height (the owner's call): their lines are about as long, and on the
+// few widths where one wraps a word sooner, the shorter head grows to match.
+(() => {
+    const a = document.getElementById('globalToolsHead'), b = document.getElementById('stashHead');
+    if (!a || !b || !window.ResizeObserver) return;
+    const even = () => {
+        a.style.minHeight = b.style.minHeight = '';
+        const h = Math.max(a.offsetHeight, b.offsetHeight);
+        a.style.minHeight = b.style.minHeight = h + 'px';
+    };
+    let w = 0;
+    new ResizeObserver(([e]) => { const n = Math.round(e.contentRect.width); if (n !== w) { w = n; even(); } }).observe(b.closest('section').parentElement);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(even);
+})();
 </script>
 @endpush
