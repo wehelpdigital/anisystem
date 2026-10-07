@@ -75,15 +75,13 @@
                          engines and screen readers. Each word wears its own
                          shimmer: a gradient clipped to text does not reach
                          into a moving child. --}}
-                    <span class="hp-mark"><span class="hp-rot" data-words="Higher,Stable,Bigger,Better,Steady,Secured,Record,Greater,Maximum"><span class="hp-rot-w hp-shimmer">Higher</span></span> <span class="hp-shimmer">Yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
+                    <span class="hp-mark"><span class="hp-rot" data-words="Higher,Stable,Bigger,Better,Steady,Secured,Record,Greater,Maximum"><span class="hp-rot-w hp-shimmer">Higher</span></span> <span class="hp-shimmer">Yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M6 13 Q 150 27, 294 5"/></svg></span>
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
-                        anee.io is the farm app designed for Filipino farmers who grow palay, mais and gulay. With more
-                        than 50 features, it is the only farm app that puts your cropping calendar, every peso, a view of
-                        your field from space and Anee, your smart farm technician, in one place, from pagtatanim to ani,
-                        in Filipino or English. Just as serious businesses become successful and accurate through
-                        systems, smart, successful farmers use anee.io.
+                        The farm app for Filipino farmers who grow palay, mais and gulay: your cropping calendar, every
+                        peso, your field from space and Anee, your smart farm technician, in one place. Successful
+                        businesses run on systems. Smart farmers run on anee.io.
                     @else
                         anee.io puts your whole season on your phone: every field counted from its own day zero, every
                         task on its right day, every dollar written down, and Anee, your smart farm technician, ready with
@@ -370,7 +368,7 @@
                      'You see the forecast for each lot ahead of time. If you need to move the plan, drag it and every date moves with it.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999A5.002 5.002 0 105.9 12.1 4 4 0 003 15zM13 21l-2 2m6-4l-2 2m-8-2l-2 2"/>'],
                     ['Pests come early.', 'Yellow leaves or holes appear, like from the rice bug or thrips, and help is days away.',
-                     'Take a photo and Anee tells you what it is and what to do, so you treat the right problem with the right dose today.',
+                     'Take a photo and Anee tells you what it is and what to do. Or open the pest and disease finders: from the damage you see to the active ingredient to spray. The right problem, the right dose, today.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/>'],
                     ['The crop grows faster or slower.', 'Hot days make it grow faster than the plan. Cool days slow it down.',
                      'See the growth stage of each lot on any day, with what to do and what to watch for. Anee can check the real stage for you.',
@@ -378,6 +376,9 @@
                     ['Costs go up.', 'One extra spray, one job done twice, and your profit gets smaller without you noticing.',
                      'Labor, materials and services add up in ' . $R::symbol() . ' as you go, so you know the cost before you spend.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
+                    ['Fertilizer costs more every season.', 'A bag too many is money left in the soil. A bag too few is yield you never harvest.',
+                     'NPK Plus counts every nutrient in your fertilizer plan against what your crop needs, so you buy only what is missing. Free for every farmer.',
+                     '<path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12l-1 13H7L6 7zm3 0V5a3 3 0 016 0v2M9.5 12.5h5M12 10v5"/>'],
                 ] as $i => [$t, $w, $a, $ico])
                     <div class="hp-prec-row reveal" style="--reveal-delay: {{ $i * 0.08 }}s; --i: {{ $i }}">
                         <div class="hp-prec-prob">
@@ -405,36 +406,6 @@
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and farm with precision {!! $arrow !!}</a>
                 </div>
                 <p class="hp-cta-note">Your first season plan is free, and it moves when the weather does.</p>
-            </div>
-        </div>
-    </section>
-
-    {{-- ================= JUST ADDED ================= --}}
-    {{-- The newest tools (2026-10-07), each with its picture from the app;
-         the Stash said as what it is: partners' resources, shared. --}}
-    @php
-        $hpNew = [
-            ['Satellite Analysis', 'Draw your field and see its health from space: greenness, weak spots, and radar that sees through typhoon clouds.', 'satellite', 'satellite.webp', '#space'],
-            ['Satellite Weather', 'Clouds and rain over your farm, played back and fast forwarded, with every typhoon\'s path and its distance to you.', 'storm', 'sky.webp', '#space'],
-            ['NPK Plus', 'Every nutrient in your fertilizer plan, as the element and the oxide, checked against what your crop needs. Free.', 'npk', 'npk.webp', '#fertilizer'],
-            ['Pest and disease finders', 'From the damage you see to the active ingredient to spray, with its group. The weed helper by the age of your rice.', 'pest', 'finder.webp', '#crop-care'],
-            ['The Stash', 'Resources shared by anee.io\'s partners, starting with every PhilRice Magazine issue, read inside the app.', 'stash', 'stash.webp', '#resources'],
-        ];
-    @endphp
-    <section class="hp-sec hp-new" aria-labelledby="hpNewH">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="hp-head reveal">
-                <p class="hp-kick">Just added</p>
-                <h2 class="hp-h2" id="hpNewH">New Tools for the <em>Hardest Weeks.</em></h2>
-                <p class="hp-p">Built this season with farmers and technicians. Each one opens from Global and Quick Tools in the app.</p>
-            </div>
-            <div class="hp-new-rail">
-                @foreach ($hpNew as $i => [$nt, $np, $ni, $nimg, $nto])
-                    <a href="{{ route('features') }}{{ $nto }}" class="hp-new-card reveal" style="--reveal-delay: {{ $i * .06 }}s">
-                        <span class="hp-new-shot"><img src="{{ asset('images/site/app/' . $nimg) }}" alt="{{ $nt }} on a phone" loading="lazy" width="780" height="1520"></span>
-                        <span class="hp-new-tx"><img src="{{ asset('images/icons/' . $ni . '.svg') }}" alt="" width="34" height="34" loading="lazy"><b>{{ $nt }}</b><small>{{ $np }}</small></span>
-                    </a>
-                @endforeach
             </div>
         </div>
     </section>
@@ -569,6 +540,18 @@
     @endphp
     <section class="hp-anee spark-field on-dark">
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
+        {{-- Anee herself, big and tilted, crossing the top edge of the
+             section (owner, 2026-10-07): the hello clip the app's chat
+             windows open with. --}}
+        <figure class="hp-anee-film" data-anee-film>
+            <video playsinline preload="none" poster="{{ asset('videos/anee-hello-poster.webp') }}" aria-label="Anee says hello">
+                <source src="{{ asset('videos/anee-hello.mp4') }}" type="video/mp4">
+            </video>
+            <button type="button" class="hp-anee-film-play" aria-label="Play Anee's hello">
+                <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
+                <em>Hear Anee</em>
+            </button>
+        </figure>
             <div class="hp-anee-grid">
                 <div class="reveal">
                     <p class="hp-kick">Meet Anee</p>
@@ -602,17 +585,6 @@
                 </div>
 
                 <div class="reveal hp-anee-media">
-                    {{-- Anee herself, floating over the chat: the hello clip
-                         the app's chat windows open with (owner, 2026-10-07). --}}
-                    <figure class="hp-anee-film" data-anee-film>
-                        <video playsinline preload="none" poster="{{ asset('videos/anee-hello-poster.webp') }}" aria-label="Anee says hello">
-                            <source src="{{ asset('videos/anee-hello.mp4') }}" type="video/mp4">
-                        </video>
-                        <button type="button" class="hp-anee-film-play" aria-label="Play Anee's hello">
-                            <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
-                            <em>Hear Anee</em>
-                        </button>
-                    </figure>
                     <div class="hp-chat" data-chat>
                         <div class="hp-chat-top">
                             <img src="{{ $face }}" alt="" class="hp-face is-lg">
@@ -636,23 +608,6 @@
                                 </ol>
                             </div>
                         </div>
-                    </div>
-                    {{-- The anee.io song, Let's Plant With a Dream, under the chat. --}}
-                    <div class="hp-song" data-song>
-                        <img class="hp-song-art" src="{{ asset('images/anee-song-poster.jpg') }}" alt="" loading="lazy" width="1200" height="655">
-                        <div class="hp-song-body">
-                            <span class="hp-song-kick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>The anee.io song</span>
-                            <b class="hp-song-h">Let&rsquo;s Plant With a Dream!</b>
-                            <div class="hp-song-row">
-                                <button type="button" class="hp-song-play" aria-label="Play the song">
-                                    <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
-                                    <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
-                                </button>
-                                <span class="hp-song-track"><input type="range" min="0" max="1000" value="0" step="1" aria-label="Move through the song"><i></i></span>
-                                <span class="hp-song-time">0:00</span>
-                            </div>
-                        </div>
-                        <audio preload="none" src="{{ asset('audio/anee-kay-anee-ang-ani-ay-high.mp3') }}"></audio>
                     </div>
                 </div>
             </div>
@@ -936,6 +891,33 @@
                 </div>
             </div>
         </div>
+        {{-- The anee.io song (moved here from Meet Anee, 2026-10-07): the
+             farmers who built anee.io, singing it. Big, under the story. --}}
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="hp-song reveal" data-song>
+                <div class="hp-song-art">
+                    <img src="{{ asset('images/anee-song-poster.jpg') }}" alt="Anee on a tractor in a palay field, the cover of the anee.io song Let's Plant With a Dream" loading="lazy" width="1200" height="655">
+                    <button type="button" class="hp-song-play is-big" aria-label="Play the song">
+                        <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                        <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
+                    </button>
+                </div>
+                <div class="hp-song-body">
+                    <span class="hp-song-kick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>The anee.io song<span class="hp-song-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
+                    <h3 class="hp-song-h">Let&rsquo;s Plant With a Dream!</h3>
+                    <p class="hp-song-p">A song from the farmers who built anee.io, for every farmer who plants with a dream and harvests with a plan. Play it loud in the field.</p>
+                    <div class="hp-song-row">
+                        <button type="button" class="hp-song-play" aria-label="Play the song">
+                            <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                            <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
+                        </button>
+                        <span class="hp-song-track"><input type="range" min="0" max="1000" value="0" step="1" aria-label="Move through the song"><i></i></span>
+                        <span class="hp-song-time">0:00</span>
+                    </div>
+                </div>
+                <audio preload="none" src="{{ asset('audio/anee-kay-anee-ang-ani-ay-high.mp3') }}"></audio>
+            </div>
+        </div>
     </section>
 
     {{-- ================= YOUR TEAM IN THE FIELD, YOUR FARM FROM SPACE ================= --}}
@@ -1202,6 +1184,11 @@
                         <div><b>Through clouds</b><small>Radar sees your crop in the monsoon</small></div>
                         <div><b>No drone needed</b><small>Nothing to buy, nothing to fly, nothing to charge</small></div>
                     </div>
+                    <a href="{{ route('features') }}#space" class="hp-sky-go">
+                        <img src="{{ asset('images/icons/satellite.svg') }}" alt="" width="28" height="28" loading="lazy">
+                        <span><b>Satellite Analysis</b><small>Draw your field, see its health from space</small></span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg>
+                    </a>
                 </div>
 
                 <div class="hp-sat reveal" aria-hidden="true">
@@ -1262,6 +1249,11 @@
                         <div><b>The path, near you</b><small>How close the storm passes your farm, and when</small></div>
                         <div><b>Anee's plan</b><small>Harvest, drain, hold the fertilizer, protect the seedbed</small></div>
                     </div>
+                    <a href="{{ route('features') }}#space" class="hp-sky-go">
+                        <img src="{{ asset('images/icons/storm.svg') }}" alt="" width="28" height="28" loading="lazy">
+                        <span><b>Satellite Weather</b><small>Clouds, rain and every typhoon's path over your farm</small></span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg>
+                    </a>
                 </div>
 
                 <div class="hp-storm-map reveal" aria-hidden="true">
@@ -1681,6 +1673,33 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
                     </div>
                 @endforeach
+            </div>
+            {{-- Two more ways in (2026-10-07, when the Just added band went):
+                 the finders, from the damage you see, and the Stash, what the
+                 partners share inside the app. --}}
+            <div class="hgx">
+                <div class="hgx-card reveal">
+                    <div class="hgx-tx">
+                        <span class="hgx-k"><img src="{{ asset('images/icons/pest.svg') }}" alt="" width="26" height="26" loading="lazy">Finders</span>
+                        <h3 class="hgx-h">Find What Is Wrong <em>From What You See.</em></h3>
+                        <p class="hgx-p">Pick the crop, tick the signs, and the pest and disease finders name the likely cause, with the active ingredient to spray and its group. The weed helper goes by the age of your rice.</p>
+                        <div class="hgx-links">
+                            <a href="{{ url('/pests') }}#finder">Pest finder</a>
+                            <a href="{{ url('/diseases') }}#finder">Disease finder</a>
+                            <a href="{{ url('/weeds') }}#control">Weed helper</a>
+                        </div>
+                    </div>
+                    <span class="hgx-shot"><img src="{{ asset('images/site/app/finder.webp') }}" alt="The pest and disease finder in the anee.io app, on a phone" width="780" height="1520" loading="lazy"></span>
+                </div>
+                <a href="{{ route('features') }}#resources" class="hgx-card is-stash reveal" style="--reveal-delay: .08s">
+                    <div class="hgx-tx">
+                        <span class="hgx-k"><img src="{{ asset('images/icons/stash.svg') }}" alt="" width="26" height="26" loading="lazy">Inside the app</span>
+                        <h3 class="hgx-h">The Stash, <em>Shared by Our Partners.</em></h3>
+                        <p class="hgx-p">Resources from anee.io's partners, read right inside the app, starting with every issue of the PhilRice Magazine.</p>
+                        <span class="hgx-more">See the Stash {!! $arrow !!}</span>
+                    </div>
+                    <span class="hgx-shot"><img src="{{ asset('images/site/app/stash.webp') }}" alt="The Stash in the anee.io app, with PhilRice Magazine issues, on a phone" width="780" height="1520" loading="lazy"></span>
+                </a>
             </div>
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
@@ -2214,7 +2233,8 @@
     .hp-st-show .hp-film-tag { bottom: -2.6rem; }
 
     /* ---- Anee ---- */
-    .hp-anee { position: relative; overflow: hidden; color: #e8efe1;
+    /* Clipped sideways only: Anee's film crosses the top edge (2026-10-07). */
+    .hp-anee { position: relative; z-index: 2; overflow-x: clip; overflow-y: visible; color: #e8efe1;
         background: radial-gradient(90% 120% at 85% 10%, #2d4a1a 0%, transparent 60%), linear-gradient(160deg, #10160c 0%, #1c2416 55%, #24301a 100%); }
     .hp-anee-grid { display: grid; gap: 3rem; align-items: center; }
     @media (min-width: 1024px) { .hp-anee-grid { grid-template-columns: 1.05fr .95fr; gap: 4rem; } }
@@ -2300,42 +2320,73 @@
     /* The window's own colour is the header's green at the top and the
        body's at the bottom: a white window showed through the rounded top
        corners as a thin white line (2026-10-06). */
-    /* Anee floating over the chat, and the song under it (2026-10-07). */
+    /* Anee's hello, big and tilted, crossing the section's top edge into
+       the one above (owner, 2026-10-07). In the flow on a phone, at the
+       top; beside the chat's top on a desk. */
     .hp-anee-media { position: relative; max-width: 28rem; margin: 0 auto; width: 100%; }
-    .hp-anee-film { position: absolute; z-index: 3; top: -2.4rem; right: -1.6rem; width: 11.5rem; aspect-ratio: 16 / 9; margin: 0; border-radius: 1rem; overflow: hidden;
-        background: #0d1408; box-shadow: 0 22px 44px -18px rgb(0 0 0 / .85), 0 0 0 3px rgb(245 197 24 / .85); animation: hpFilmFloat 6s ease-in-out infinite; }
+    .hp-anee-film { position: relative; z-index: 3; display: block; width: min(92%, 25rem); aspect-ratio: 16 / 9; margin: -7.6rem auto 2.4rem; border-radius: 1.3rem; overflow: hidden;
+        background: #0d1408; box-shadow: 0 34px 60px -24px rgb(0 0 0 / .8), 0 0 0 4px #f5c518, 0 0 0 9px rgb(245 197 24 / .18);
+        transform: rotate(-4deg); animation: hpFilmFloat 6s ease-in-out infinite; }
+    @media (min-width: 640px) { .hp-anee-film { width: 28rem; margin-top: -9.8rem; } }
+    @media (min-width: 1024px) {
+        .hp-anee-grid { align-items: start; }
+        .hp-anee-film { position: absolute; top: -6.2rem; right: .5rem; width: 31rem; margin: 0; }
+        .hp-anee-media { padding-top: 7.8rem; }
+    }
+    /* Room above the edge for the film: the section before ends lower. */
+    .hp-steps.hp-sec { padding-bottom: 7.5rem; }
+    @media (min-width: 1024px) { .hp-steps.hp-sec { padding-bottom: 9.5rem; } }
     .hp-anee-film video { width: 100%; height: 100%; display: block; object-fit: cover; }
-    .hp-anee-film-play { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: .4rem; padding: .45rem; border: 0; cursor: pointer;
-        background: linear-gradient(180deg, transparent 45%, rgb(9 14 6 / .55)); transition: background .28s var(--hp-ease); }
-    .hp-anee-film-play span { display: flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 999px; background: #f5c518; color: #1a1a1a;
-        box-shadow: 0 6px 16px -6px rgb(0 0 0 / .6); transition: transform .28s var(--hp-ease), opacity .28s var(--hp-ease); }
-    .hp-anee-film-play span svg { width: .85rem; height: .85rem; margin-left: .1rem; }
-    .hp-anee-film-play em { font-style: normal; font-size: .68rem; font-weight: 800; letter-spacing: .04em; color: #fff; text-shadow: 0 1px 3px rgb(0 0 0 / .6); transition: opacity .28s var(--hp-ease); }
+    .hp-anee-film-play { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: .5rem; padding: .8rem .9rem; border: 0; cursor: pointer;
+        background: linear-gradient(180deg, transparent 50%, rgb(9 14 6 / .6)); transition: background .28s var(--hp-ease); }
+    .hp-anee-film-play span { display: flex; align-items: center; justify-content: center; width: 3.4rem; height: 3.4rem; border-radius: 999px; background: #f5c518; color: #1a1a1a;
+        box-shadow: 0 0 0 6px rgb(245 197 24 / .25), 0 10px 22px -8px rgb(0 0 0 / .7); transition: transform .28s var(--hp-ease), opacity .28s var(--hp-ease); }
+    .hp-anee-film-play span svg { width: 1.35rem; height: 1.35rem; margin-left: .15rem; }
+    .hp-anee-film-play em { font-style: normal; font-family: var(--font-heading); font-size: 1rem; font-weight: 800; letter-spacing: .02em; color: #fff; text-shadow: 0 1px 4px rgb(0 0 0 / .7); transition: opacity .28s var(--hp-ease); }
     .hp-anee-film:hover .hp-anee-film-play span { transform: scale(1.08); }
     .hp-anee-film.is-playing { animation-play-state: paused; }
     .hp-anee-film.is-playing .hp-anee-film-play { background: transparent; }
     .hp-anee-film.is-playing .hp-anee-film-play span, .hp-anee-film.is-playing .hp-anee-film-play em { opacity: 0; }
-    @keyframes hpFilmFloat { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-.55rem) rotate(.8deg); } }
-    @media (max-width: 639.98px) { .hp-anee-film { width: 8.6rem; top: -3.4rem; right: -.2rem; } .hp-anee-media { margin-top: 1.2rem; } }
+    @keyframes hpFilmFloat { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-.6rem) rotate(-2.6deg); } }
     @media (prefers-reduced-motion: reduce) { .hp-anee-film { animation: none; } }
-    .hp-song { position: relative; display: grid; grid-template-columns: 6.2rem minmax(0, 1fr); gap: .85rem; align-items: center; margin-top: 1rem; padding: .7rem; border-radius: 1.2rem;
-        background: linear-gradient(135deg, rgb(255 255 255 / .1), rgb(255 255 255 / .04)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .14), 0 18px 40px -26px rgb(0 0 0 / .9); }
-    .hp-song-art { width: 6.2rem; height: 4.6rem; border-radius: .8rem; object-fit: cover; }
-    .hp-song-body { min-width: 0; }
-    .hp-song-kick { display: inline-flex; align-items: center; gap: .3rem; font-size: .66rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--hp-sun); }
-    .hp-song-kick svg { width: .85rem; height: .85rem; }
-    .hp-song-h { display: block; margin-top: .15rem; font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; color: #fff; }
-    .hp-song-row { display: flex; align-items: center; gap: .55rem; margin-top: .45rem; }
-    .hp-song-play { flex: none; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 999px; border: 0; cursor: pointer; background: #f5c518; color: #1a1a1a;
-        transition: transform .28s var(--hp-ease); }
+
+    /* The anee.io song, under the farm business story (2026-10-07): the
+       cover big with its own play button, the words and the bar beside it. */
+    .hp-song { position: relative; display: grid; gap: 1.2rem; margin-top: 3.5rem; padding: .9rem; border-radius: 1.8rem; color: #e8efe1; overflow: hidden;
+        background: radial-gradient(80% 120% at 100% 0%, #3f6a22 0%, transparent 60%), linear-gradient(140deg, #14210c 0%, #1f3312 60%, #2b4518 100%);
+        box-shadow: 0 50px 90px -50px rgb(20 33 12 / .9); }
+    @media (min-width: 768px) { .hp-song { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; gap: 2.2rem; padding: 1rem 2.2rem 1rem 1rem; } }
+    .hp-song-art { position: relative; border-radius: 1.3rem; overflow: hidden; aspect-ratio: 1200 / 655; box-shadow: 0 24px 50px -26px rgb(0 0 0 / .9); }
+    .hp-song-art img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .6s var(--hp-ease); }
+    .hp-song:hover .hp-song-art img { transform: scale(1.03); }
+    .hp-song-body { min-width: 0; padding: 0 .4rem .6rem; }
+    @media (min-width: 768px) { .hp-song-body { padding: 0; } }
+    .hp-song-kick { display: inline-flex; align-items: center; gap: .4rem; font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-sun); }
+    .hp-song-kick svg { width: 1rem; height: 1rem; }
+    .hp-song-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: .9rem; margin-left: .3rem; }
+    .hp-song-eq i { width: 3px; height: 30%; border-radius: 2px; background: var(--hp-sun); animation: hpEq .9s ease-in-out infinite; animation-play-state: paused; }
+    .hp-song-eq i:nth-child(2) { animation-delay: -.3s; } .hp-song-eq i:nth-child(3) { animation-delay: -.6s; } .hp-song-eq i:nth-child(4) { animation-delay: -.15s; }
+    .hp-song.is-playing .hp-song-eq i { animation-play-state: running; }
+    @keyframes hpEq { 0%, 100% { height: 25%; } 50% { height: 100%; } }
+    .hp-song-h { margin-top: .5rem; font-family: var(--font-heading); font-size: clamp(1.6rem, 3.4vw, 2.5rem); font-weight: 800; line-height: 1.08; letter-spacing: -.01em; color: #fff; }
+    .hp-song-p { margin-top: .7rem; font-size: .98rem; line-height: 1.65; color: #cbd8bd; }
+    .hp-song-row { display: flex; align-items: center; gap: .75rem; margin-top: 1.3rem; }
+    .hp-song-play { flex: none; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 999px; border: 0; cursor: pointer; background: #f5c518; color: #1a1a1a;
+        box-shadow: 0 10px 22px -10px rgb(245 197 24 / .8); transition: transform .28s var(--hp-ease); }
     .hp-song-play:hover { transform: scale(1.06); }
-    .hp-song-play svg { width: .95rem; height: .95rem; }
+    .hp-song-play svg { width: 1.2rem; height: 1.2rem; }
+    .hp-song-play.is-big { position: absolute; left: 50%; top: 50%; width: 4.6rem; height: 4.6rem; translate: -50% -50%; transition: transform .28s var(--hp-ease), opacity .28s var(--hp-ease);
+        box-shadow: 0 0 0 10px rgb(245 197 24 / .25), 0 18px 34px -12px rgb(0 0 0 / .8); }
+    .hp-song-play.is-big svg { width: 1.8rem; height: 1.8rem; }
+    .hp-song.is-playing .hp-song-play.is-big { opacity: 0; }
+    .hp-song-art:hover .hp-song-play.is-big { opacity: 1; }
     .hp-song-play .i-pause, .hp-song.is-playing .hp-song-play .i-play { display: none; }
     .hp-song.is-playing .hp-song-play .i-pause { display: block; }
-    .hp-song-track { position: relative; flex: 1 1 auto; height: .38rem; border-radius: 999px; background: rgb(255 255 255 / .18); }
+    .hp-song-track { position: relative; flex: 1 1 auto; height: .45rem; border-radius: 999px; background: rgb(255 255 255 / .18); }
     .hp-song-track i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 999px; background: #f5c518; pointer-events: none; }
-    .hp-song-track input { position: absolute; inset: -.6rem 0; width: 100%; height: auto; opacity: 0; cursor: pointer; margin: 0; }
-    .hp-song-time { flex: none; min-width: 2.4rem; text-align: right; font-size: .72rem; font-weight: 700; color: #d3dec7; font-variant-numeric: tabular-nums; }
+    .hp-song-track input { position: absolute; inset: -.7rem 0; width: 100%; height: auto; opacity: 0; cursor: pointer; margin: 0; }
+    .hp-song-time { flex: none; min-width: 2.6rem; text-align: right; font-size: .8rem; font-weight: 700; color: #d3dec7; font-variant-numeric: tabular-nums; }
+    @media (prefers-reduced-motion: reduce) { .hp-song-eq i { animation: none; } .hp-song-art img { transition: none; } }
     .hp-chat { position: relative; max-width: 28rem; margin: 0 auto; border-radius: 1.6rem; color: var(--hp-ink); overflow: hidden;
         background: linear-gradient(180deg, #34591c 50%, #f6f8f3 50%); box-shadow: 0 50px 90px -40px rgb(0 0 0 / .85); }
     .hp-chat-top { display: flex; align-items: center; gap: .7rem; padding: .9rem 1.1rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
@@ -2702,6 +2753,17 @@
     @media (max-width: 559.98px) { .hp-sky-stats { grid-template-columns: 1fr; } }
     .hp-sky-stats div { padding: .8rem .9rem; border-radius: 1rem; background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12); }
     .hp-sky-stats b { display: block; font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--hp-sun); line-height: 1.25; }
+    /* The tool behind each block (2026-10-07, when the Just added band went). */
+    .hp-sky-go { margin-top: 1.1rem; display: inline-flex; align-items: center; gap: .75rem; padding: .6rem .9rem .6rem .65rem; border-radius: 1.1rem; text-decoration: none;
+        background: rgb(245 197 24 / .1); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45);
+        transition: background .28s var(--hp-ease), transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .hp-sky-go:hover { background: rgb(245 197 24 / .18); transform: translateY(-2px); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .8); }
+    .hp-sky-go img { flex: none; width: 2.3rem; height: 2.3rem; padding: .3rem; border-radius: .75rem; background: #fff; }
+    .hp-sky-go b { display: block; font-family: var(--font-heading); font-size: .98rem; font-weight: 800; color: #fff; }
+    .hp-sky-go small { display: block; font-size: .78rem; line-height: 1.35; color: #cbd5e1; }
+    .hp-sky-go > svg { flex: none; width: 1.05rem; height: 1.05rem; color: var(--hp-sun); transition: transform .28s var(--hp-ease); }
+    .hp-sky-go:hover > svg { transform: translateX(3px); }
+    @media (prefers-reduced-motion: reduce) { .hp-sky-go, .hp-sky-go > svg { transition: none; } }
     .hp-sky-stats small { display: block; margin-top: .2rem; font-size: .78rem; line-height: 1.4; color: #cbd5e1; }
 
     /* The satellite over the paddies: the health map is scanned in, radar
@@ -2782,6 +2844,7 @@
         .hp-storm-copy .hp-kick, .hp-storm-copy .hp-sky-h { grid-column: 1; }
         .hp-storm-copy .hp-sky-p { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
         .hp-storm-copy .hp-sky-stats { grid-column: 1 / -1; }
+        .hp-storm-copy .hp-sky-go { grid-column: 1 / -1; justify-self: start; }
         .hp-storm-plan { grid-area: plan; }
     }
     @media (max-width: 559.98px) { .hp-storm .hp-sky-stats { grid-template-columns: 1fr; } }
@@ -3154,6 +3217,37 @@
     .hq-body.is-open { grid-template-rows: 1fr; }
     .hq-body > div { overflow: hidden; }
     /* The guide shelves: two by two, each a card with its own tint. */
+    .hgx { margin-top: 1.6rem; display: grid; gap: 1.4rem; }
+    @media (min-width: 768px) { .hgx { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; } }
+    .hgx-card { --shot-w: 8.5rem; position: relative; display: grid; grid-template-columns: minmax(0, 1fr) var(--shot-w); gap: 1rem; padding: 1.3rem 1.2rem 0 1.3rem; border-radius: 1.6rem; overflow: hidden;
+        color: inherit; text-decoration: none; background: linear-gradient(150deg, #fff 0%, #f3f8ec 100%); box-shadow: inset 0 0 0 1px #e1ebd5, 0 24px 50px -40px rgb(20 33 12 / .55);
+        transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .hgx-card:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px #c9dfae, 0 36px 70px -44px rgb(20 33 12 / .6); }
+    .hgx-card.is-stash { background: linear-gradient(150deg, #fffdf3 0%, #fbf3d4 100%); box-shadow: inset 0 0 0 1px #efe2b0, 0 24px 50px -40px rgb(70 50 0 / .5); }
+    @media (min-width: 1024px) { .hgx-card { --shot-w: 10.5rem; padding: 1.6rem 1.5rem 0 1.6rem; } }
+    .hgx-tx { padding-bottom: 1.4rem; min-width: 0; }
+    .hgx-k { display: inline-flex; align-items: center; gap: .45rem; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #4d7c2a; }
+    .hgx-card.is-stash .hgx-k { color: #8a6a00; }
+    .hgx-k img { width: 1.6rem; height: 1.6rem; }
+    .hgx-h { margin-top: .55rem; font-family: var(--font-heading); font-size: clamp(1.25rem, 2.2vw, 1.55rem); font-weight: 800; line-height: 1.15; color: #14210c; }
+    .hgx-h em { font-style: normal; color: #4d7c2a; }
+    .hgx-card.is-stash .hgx-h em { color: #a77f00; }
+    .hgx-p { margin-top: .6rem; font-size: .92rem; line-height: 1.6; color: #4b5563; }
+    .hgx-links { margin-top: .9rem; display: flex; flex-wrap: wrap; gap: .45rem; }
+    .hgx-links a { padding: .45rem .8rem; border-radius: 999px; font-size: .84rem; font-weight: 800; color: #2f5219; background: #fff; box-shadow: inset 0 0 0 1px #cfe3b8;
+        text-decoration: none; transition: background .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .hgx-links a:hover { background: #eef6e6; box-shadow: inset 0 0 0 1px #8fbf5f; }
+    .hgx-more { margin-top: .9rem; display: inline-flex; align-items: center; gap: .4rem; font-size: .9rem; font-weight: 800; color: #6b5200; }
+    .hgx-more svg { width: 1rem; height: 1rem; transition: transform .28s var(--hp-ease); }
+    .hgx-card:hover .hgx-more svg { transform: translateX(3px); }
+    .hgx-shot { position: relative; align-self: end; height: 100%; min-height: 12rem; }
+    /* The phone rises from the card's foot: when the card is taller than
+       the phone, it slides down until its last 3rem are cut off. */
+    .hgx-shot img { position: absolute; left: 0; right: 0; top: max(.2rem, calc(100% - var(--shot-w) * 1.95 + 3rem)); width: 100%; height: auto; border-radius: 1.2rem 1.2rem 0 0;
+        box-shadow: 0 0 0 5px #1f2a17, 0 24px 40px -20px rgb(20 33 12 / .6); transition: transform .28s var(--hp-ease); }
+    .hgx-card:hover .hgx-shot img { transform: translateY(-5px); }
+    @media (max-width: 479.98px) { .hgx-card { --shot-w: 6.4rem; padding: 1.1rem 1rem 0 1.1rem; } .hgx-shot { min-height: 10rem; } }
+    @media (prefers-reduced-motion: reduce) { .hgx-card, .hgx-shot img, .hgx-more svg, .hgx-links a { transition: none; } }
     .hg-shelves { margin-top: 2.8rem; display: grid; gap: 1.4rem; }
     @media (min-width: 768px) { .hg-shelves { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; } }
     .hg-shelf { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: 1.15rem; border-radius: 1.6rem; background: #fff;
@@ -3272,25 +3366,6 @@
     /* The question leads small, the promise is the title (owner, 2026-10-07). */
     .hp-final-h span { display: block; margin-bottom: .45rem; font-size: clamp(1.15rem, 2.3vw, 1.6rem); line-height: 1.25; letter-spacing: -.005em; color: #e4ecdb; }
     .hp-final-h em { display: block; font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.06; }
-    /* Just added (2026-10-07): the newest tools on a rail that swipes on a
-       phone and lays out in a row on a desk; each card a phone shot. */
-    .hp-new { background: linear-gradient(180deg, #fff, #f6faf1); }
-    .hp-new-rail { margin: 2rem -1rem 0; padding: .4rem 1rem 1rem; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(15rem, 78%); gap: .9rem; overflow-x: auto;
-        scroll-snap-type: x mandatory; scrollbar-width: none; }
-    .hp-new-rail::-webkit-scrollbar { display: none; }
-    @media (min-width: 1024px) { .hp-new-rail { margin: 2.4rem 0 0; padding: .4rem 0 1rem; grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; } }
-    .hp-new-card { scroll-snap-align: start; display: flex; flex-direction: column; border-radius: 1.4rem; overflow: hidden; text-decoration: none; background: #fff; border: 1px solid #e4efd4;
-        box-shadow: 0 22px 44px -36px rgb(20 33 12 / .7); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
-    .hp-new-card:hover { transform: translateY(-5px); border-color: #a8cc7e; box-shadow: 0 30px 50px -34px rgb(20 33 12 / .8); }
-    .hp-new-shot { position: relative; height: 13rem; overflow: hidden; background: linear-gradient(160deg, #e4efd4, #f6faf1); }
-    .hp-new-shot img { position: absolute; left: 50%; top: 1rem; width: 72%; transform: translateX(-50%); border-radius: 1.1rem 1.1rem 0 0; box-shadow: 0 16px 30px -18px rgb(20 33 12 / .6);
-        transition: transform .5s cubic-bezier(.22,1,.36,1); }
-    .hp-new-card:hover .hp-new-shot img { transform: translateX(-50%) translateY(-6px); }
-    .hp-new-tx { display: grid; gap: .3rem; padding: .95rem 1rem 1.1rem; }
-    .hp-new-tx img { width: 2.1rem; height: 2.1rem; }
-    .hp-new-tx b { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #14210c; }
-    .hp-new-tx small { font-size: .86rem; line-height: 1.5; color: #4b5563; }
-    @media (prefers-reduced-motion: reduce) { .hp-new-card, .hp-new-shot img { transition: none; } }
     /* The promise in gold (owner, 2026-10-07): a metal sheen that drifts
        slowly across the words, held still under reduced motion. */
     .on-dark .hp-h2.hp-final-h em { color: #f5c518; background: linear-gradient(100deg, #c08a12 0%, #f7d774 22%, #fff3b8 34%, #e0aa2a 50%, #f7d774 70%, #b8860b 100%);
@@ -3857,9 +3932,9 @@
     if (song) {
         const a = song.querySelector('audio'), seek = song.querySelector('input'), fill = song.querySelector('.hp-song-track i'), time = song.querySelector('.hp-song-time');
         const fmt = (t) => Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2, '0');
-        song.querySelector('.hp-song-play').addEventListener('click', () => {
+        song.querySelectorAll('.hp-song-play').forEach((b) => b.addEventListener('click', () => {
             if (a.paused) { if (film) film.querySelector('video').pause(); a.play(); } else a.pause();
-        });
+        }));
         a.addEventListener('play', () => song.classList.add('is-playing'));
         a.addEventListener('pause', () => song.classList.remove('is-playing'));
         a.addEventListener('timeupdate', () => {

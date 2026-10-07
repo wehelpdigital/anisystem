@@ -34,7 +34,7 @@
             <span class="ct2-chip animate-fade-up">Contact us</span>
             <h1 class="ct2-h1 animate-fade-up" style="animation-delay:.06s">
                 We Are Here
-                <span class="hp-mark"><span class="hp-shimmer">to Help.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
+                <span class="hp-mark"><span class="hp-shimmer">to Help.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M6 13 Q 150 27, 294 5"/></svg></span>
             </h1>
             <p class="ct2-lede animate-fade-up" style="animation-delay:.12s">
                 Questions about plans, {{ $pay }} payments or setting up your season? Write to us. A real person reads
