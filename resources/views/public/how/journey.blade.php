@@ -615,6 +615,10 @@
         transition: opacity .6s var(--ease), filter .6s var(--ease), transform .6s var(--ease); }
     .hw-stage.is-lit .hw-hub-core { border-color: var(--acc); box-shadow: 0 0 0 5px rgb(245 197 24 / .14), 0 0 36px 4px rgb(168 204 126 / .35); }
     .hw-stage.is-lit .hw-hub-core img { opacity: 1; filter: none; transform: none; }
+    .hw-hub-core.is-glyph { display: grid; place-items: center; color: rgb(185 202 168 / .5); transition: border-color .6s var(--ease), box-shadow .6s var(--ease), color .6s var(--ease), background-color .6s var(--ease); }
+    .hw-hub-core.is-glyph svg { width: 46%; height: 46%; transform: scale(.9); transition: transform .6s var(--ease); }
+    .hw-stage.is-lit .hw-hub-core.is-glyph { color: var(--acc); background-color: #22381a; }
+    .hw-stage.is-lit .hw-hub-core.is-glyph svg { transform: none; }
     .hw-ring { position: absolute; inset: 0; border-radius: 999px; border: 1.5px solid var(--leaf); opacity: 0; pointer-events: none; }
     .hw-num { position: absolute; right: -.35rem; top: -.3rem; z-index: 1; width: 1.45rem; height: 1.45rem; border-radius: 999px; display: grid; place-items: center;
         background: var(--acc); color: #3b2f00; font-size: .72rem; font-weight: 900; box-shadow: 0 0 0 3px #0d1609; }
@@ -1244,7 +1248,12 @@
                 <div class="hw-field" style="--fh: {{ $fh }}rem">
                 <div class="hw-hub" aria-hidden="true">
                     <i class="hw-ring"></i><i class="hw-ring"></i>
-                    <span class="hw-hub-core"><img src="{{ asset('images/anee/emoji/' . $st['face'] . '.png') }}" alt="" loading="lazy"></span>
+                    {{-- In the app the step wears its own mark, not Anee's face (the owner, 2026-10-07). --}}
+                    @if ($hwMode === 'app')
+                        <span class="hw-hub-core is-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $st['glyph'] }}"/></svg></span>
+                    @else
+                        <span class="hw-hub-core"><img src="{{ asset('images/anee/emoji/' . $st['face'] . '.png') }}" alt="" loading="lazy"></span>
+                    @endif
                     <span class="hw-num">{{ $n + 1 }}</span>
                 </div>
                 @foreach ($st['items'] as $i => $it)

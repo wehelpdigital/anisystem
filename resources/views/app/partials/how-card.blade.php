@@ -19,18 +19,19 @@
     .hwc-kick { display: inline-flex; align-items: center; gap: .45rem; font-size: .66rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: #a8cc7e; }
     .hwc-h { display: block; margin-top: .35rem; font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; line-height: 1.2; color: #fff; }
     .hwc-p { display: block; margin-top: .3rem; font-size: .86rem; line-height: 1.5; color: #b9caa8; }
-    /* A face for each step on a dotted line, a light running along it and each face waking as it passes. */
+    /* A mark for each step on a dotted line, a light running along it and each mark waking as it passes.
+       The steps wear their own marks, not Anee's faces (the owner, 2026-10-07). */
     .hwc-art { position: relative; display: flex; align-items: center; justify-content: space-between; gap: .35rem; margin-top: .9rem; max-width: 22rem; }
     .hwc-art::before { content: ''; position: absolute; left: 1rem; right: 1rem; top: 50%; height: 2px; margin-top: -1px;
         background: radial-gradient(circle, rgb(255 255 255 / .35) 1px, transparent 1.4px) left center / 8px 2px repeat-x; }
     .hwc-art::after { content: ''; position: absolute; left: 1rem; top: 50%; width: 2.2rem; height: 3px; margin-top: -1.5px; border-radius: 3px;
         background: linear-gradient(90deg, transparent, #f5c518); box-shadow: 0 0 10px #f5c518; animation: hwcRun 4.8s linear infinite; }
     @keyframes hwcRun { from { transform: translateX(0); opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } to { transform: translateX(calc(min(22rem, 100vw - 5rem) - 4.2rem)); opacity: 0; } }
-    .hwc-art i { position: relative; z-index: 1; width: 2.3rem; height: 2.3rem; border-radius: 999px; overflow: hidden; border: 2px solid rgb(168 204 126 / .4); background: #1a2c12;
+    .hwc-art i { position: relative; z-index: 1; display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 999px; overflow: hidden; border: 2px solid rgb(168 204 126 / .4); background: #1a2c12;
         animation: hwcWake 4.8s var(--ease, cubic-bezier(.22,1,.36,1)) infinite; animation-delay: calc(var(--k) * 3.6s / var(--last, 5)); }
-    .hwc-art img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.7) brightness(.8); animation: hwcFace 4.8s ease infinite; animation-delay: calc(var(--k) * 3.6s / var(--last, 5)); }
+    .hwc-art svg { width: 1.1rem; height: 1.1rem; color: rgb(185 202 168 / .55); animation: hwcMark 4.8s ease infinite; animation-delay: calc(var(--k) * 3.6s / var(--last, 5)); }
     @keyframes hwcWake { 0%, 100% { transform: none; border-color: rgb(168 204 126 / .4); } 6% { transform: scale(1.18); border-color: #f5c518; } 16% { transform: none; border-color: #f5c518; } 40% { border-color: rgb(168 204 126 / .4); } }
-    @keyframes hwcFace { 0%, 100% { filter: grayscale(.7) brightness(.8); } 6%, 30% { filter: none; } }
+    @keyframes hwcMark { 0%, 100% { color: rgb(185 202 168 / .55); } 6%, 30% { color: #f5c518; } }
     .hwc-go { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .7rem 1.15rem; border-radius: .95rem; font-weight: 800; font-size: .92rem;
         color: #3b2f00; background: #f5c518; box-shadow: 0 10px 22px -12px rgb(245 197 24 / .8); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); white-space: nowrap; }
     .hwc-go svg { width: 1.05rem; height: 1.05rem; }
@@ -57,8 +58,8 @@
     .hwm-bar > div, .hwm-scroll > * { animation: hwmIn .5s .18s cubic-bezier(.22,1,.36,1) backwards; }
     @keyframes hwmIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) {
-        .hwc-art::after, .hwc-art i, .hwc-art img, .hwm-bar > div, .hwm-scroll > * { animation: none; }
-        .hwc-art img { filter: none; }
+        .hwc-art::after, .hwc-art i, .hwc-art svg, .hwm-bar > div, .hwm-scroll > * { animation: none; }
+        .hwc-art svg { color: #f5c518; }
         .hwc-go, .hwm-x { transition: none; }
     }
 </style>
@@ -72,7 +73,7 @@
             <span class="hwc-p">Seven steps, from the first plan to the last sack. Tap any tool to see what it does for your farm.</span>
             <span class="hwc-art" aria-hidden="true" style="--last: {{ max(1, count($hwcStages) - 1) }}">
                 @foreach ($hwcStages as $k => $s)
-                    <i style="--k: {{ $k }}"><img src="{{ asset('images/anee/emoji/' . $s['face'] . '.png') }}" alt=""></i>
+                    <i style="--k: {{ $k }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $s['glyph'] }}"/></svg></i>
                 @endforeach
             </span>
         </span>

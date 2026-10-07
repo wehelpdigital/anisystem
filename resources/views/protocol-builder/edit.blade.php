@@ -57,7 +57,7 @@
     html.dark .pb-pen { background: #151b12; border-color: #2b3a1c; color: #a5b89a; }
 
     /* The editing tools: undo, redo, the saved word, add. */
-    .pb-tools { display: flex; align-items: center; gap: .4rem; margin-bottom: .75rem; position: sticky; top: calc(3.6rem + env(safe-area-inset-top, 0px)); z-index: 5;
+    .pb-tools { display: flex; align-items: center; gap: .4rem; margin-bottom: .75rem; position: sticky; top: var(--app-head, calc(3.5rem + 1px)); z-index: 5;
         padding: .45rem .5rem; border-radius: .9rem; background: rgba(255,255,255,.92); border: 1px solid var(--color-gray-200); backdrop-filter: blur(6px); }
     .pb-tool { display: inline-flex; align-items: center; gap: .3rem; padding: .42rem .55rem; border-radius: .7rem; font-size: .76rem; font-weight: 800; white-space: nowrap; color: var(--color-gray-700); border: 1px solid var(--color-gray-200); background: var(--color-white);
         transition: opacity .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
@@ -72,6 +72,9 @@
         .pb-tools.is-stuck { margin-inline: -1rem; padding-inline: 1rem; border-radius: 0; border-left-color: transparent; border-right-color: transparent; border-top-color: transparent;
             box-shadow: 0 6px 14px -10px rgba(15,23,42,.35); }
     }
+    /* Stuck, it hangs from the top bar on every width (the owner's ask,
+       2026-10-07): flush against it, square where they meet. */
+    .pb-tools.is-stuck { border-top-left-radius: 0; border-top-right-radius: 0; border-top-color: transparent; }
     @media (prefers-reduced-motion: reduce) { .pb-tools { transition: none; } }
     @media (min-width: 480px) { .pb-tool-w { display: inline; } }
     .pb-tool.is-div { color: #92400e; border-color: #fcd34d; }

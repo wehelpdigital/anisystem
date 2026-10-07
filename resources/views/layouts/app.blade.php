@@ -599,6 +599,21 @@
     </header>
 
     <script>
+        /* The top bar's real height, for anything that sticks under it
+           (--app-head). A guessed rem left a strip of page showing above a
+           sticky toolbar on some phones and tucked it under the bar on wide
+           screens; this follows the bar wherever it grows. */
+        (function () {
+            var h = document.currentScript.previousElementSibling;
+            while (h && h.tagName !== 'HEADER') h = h.previousElementSibling;
+            if (!h) return;
+            var set = function () { document.documentElement.style.setProperty('--app-head', h.offsetHeight + 'px'); };
+            set();
+            if (window.ResizeObserver) new ResizeObserver(set).observe(h);
+        })();
+    </script>
+
+    <script>
         /* The info button this used to drive left the top bar; the map still
            calls it, so it stays as a shrug rather than a TypeError. */
         window.setEditingNotice = function () {};
