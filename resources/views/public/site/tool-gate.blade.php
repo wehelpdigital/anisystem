@@ -16,9 +16,9 @@
 --}}
 @php
     $gateWords = [
-        'weeds' => ['See What to Spray at This Age', 'Type your name and email to see what to do first and the active ingredients to spray at this age of your rice.'],
-        'pests' => ['See What to Spray', 'Type your name and email to see the pests that fit what you see, and the active ingredients to spray against each one.'],
-        'diseases' => ['See What to Spray', 'Type your name and email to see the diseases that fit what you see, and the active ingredients to spray against each one.'],
+        'weeds' => ['See What to Spray at This Age', 'It is free. Type your name and email once to see what to do first and the active ingredients to spray at this age of your rice.'],
+        'pests' => ['See What to Spray', 'It is free. Type your name and email once to see the pests that fit what you see and the active ingredients to spray against each one.'],
+        'diseases' => ['See What to Spray', 'It is free. Type your name and email once to see the diseases that fit what you see and the active ingredients to spray against each one.'],
     ][$tool];
     $gateId = 'tg' . ucfirst($tool);
 @endphp
@@ -47,7 +47,7 @@
         </button>
         <p class="tg-wait" aria-live="polite"></p>
         <p class="tg-fine">
-            We send farm tips by email now and then, and you can unsubscribe any time. We never share your email.
+            <b>Why we ask:</b> we send farm tips by email now and then. You can unsubscribe any time, and we never share your email.
             <a href="{{ url('/legal/privacy') }}">Privacy</a>
         </p>
     </form>
@@ -94,7 +94,8 @@
     @keyframes tgSpin { to { transform: rotate(360deg); } }
     .tg-wait { font-size: .8rem; color: #4b5563; }
     .tg-wait:empty { display: none; }
-    .tg-fine { font-size: .74rem; line-height: 1.5; color: #6b7280; }
+    .tg-fine { font-size: .8rem; line-height: 1.5; color: #6b7280; }
+    .tg-fine b { color: #374151; }
     .tg-fine a { color: #3d6823; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
     .tg-thanks { display: grid; justify-items: center; gap: .6rem; padding: 1.5rem; border-radius: 1.2rem; background: #fff; border: 1px solid #e1edd3;
         box-shadow: 0 28px 60px -30px rgb(20 33 12 / .55); animation: tgPop .34s cubic-bezier(.22,1,.36,1) both; }

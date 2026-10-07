@@ -201,7 +201,7 @@
     },
     {
       "type": "text",
-      "text": "Your fertilizer for rice plan only works if each dose lands on the right day. In anee.io, the [cropping calendar](/features/cropping-calendar) dates every basal and top dressing task from each lot's own day zero. The [Protocol Builder](/features/protocol-builder) lets you write the fertilizer program ahead, with materials and rates. It even warns you when two fertilizer applications fall within two days.\n\nThe [farm inventory](/features/farm-inventory-and-expenses) counts every bag of urea, complete and potash. Each task you tick done takes its bags out of stock. Ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), to compute a fertilizer plan for your lots in Tagalog or English."
+      "text": "Your fertilizer for rice plan only works if each dose lands on the right day. In anee.io, the [cropping calendar](/features/cropping-calendar) dates every basal and top dressing task from each lot's own day zero. The [Protocol Builder](/features/protocol-builder) lets you write the fertilizer program ahead, with materials and rates. It even warns you when two fertilizer applications fall within two days.\n\nThe [farm inventory](/features/farm-inventory-and-expenses) counts every bag of urea, complete and potash. Each task you tick done takes its bags out of stock. Ask Anee, the [smart farm technician](/features/ai-agricultural-technician), to compute a fertilizer plan for your lots in Tagalog or English."
     },
     {
       "type": "cta",

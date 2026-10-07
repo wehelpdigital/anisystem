@@ -22,11 +22,19 @@
         }
         return $S::img($src);
     };
+    // A crop's shelf: rice, corn and vegetables are their own; every tree
+    // and plantation crop sits on the fruits shelf.
+    $shelfOf = fn ($crop) => isset($P::GROUPS[$crop]) ? $crop : 'fruits';
     $items = collect($P::entries($section))->filter(fn ($e, $slug) => $live->has($slug))
         ->map(fn ($e, $slug) => $e + ['slug' => $slug, 'url' => $S::pageUrl($live[$slug]), 'thumb' => $thumbOf($live[$slug]),
-            'alt' => (is_array($live[$slug]->heroImage) ? ($live[$slug]->heroImage['alt'] ?? null) : null) ?: $e['name']]);
+            'alt' => (is_array($live[$slug]->heroImage) ? ($live[$slug]->heroImage['alt'] ?? null) : null) ?: $e['name'],
+            // Every shelf whose crops it attacks, its own first: the fall
+            // armyworm lives on the corn shelf and shows under rice too, so
+            // a shelf's count is the finder's count for that crop.
+            'shelves' => array_values(array_unique(array_merge([$e['group']], array_map($shelfOf, $e['crops'] ?? []))))]);
     $guides = $pages->filter(fn ($p) => ! $P::get($section, $p->slug))->values();
-    $count = fn ($g) => $items->where('group', $g)->count();
+    $onShelf = fn ($g) => $items->filter(fn ($w) => in_array($g, $w['shelves'], true));
+    $count = fn ($g) => $onShelf($g)->count();
     $faces = collect(array_keys($P::GROUPS))->map(fn ($g) => $items->where('group', $g)->first(fn ($w) => $w['thumb']))->filter()->take(3)->values();
     $isPests = $section === 'pests';
     $askOpts = $isPests ? $P::PARTS : $P::SIGNS;
@@ -59,6 +67,9 @@
         .wk-group p.ex { font-size: .86rem; line-height: 1.5; color: #4b5563; }
         .wk-group p.ex b { color: #14210c; }
         .wk-tag.is-kind { left: auto; right: .55rem; }
+        /* Two tags across a phone card ran into each other ("Vegetables"
+           over "Water mold"): there the kind sits on the photo's lower edge. */
+        @media (max-width: 639.98px) { .wk-tag.is-kind { top: auto; bottom: .4rem; left: .4rem; right: auto; } }
     </style>
 @endpush
 
@@ -115,15 +126,15 @@
             </div>
             <div class="wk-groups mt-8" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr))">
                 @foreach ($P::GROUPS as $g => [$gLabel, $gLocal, $gHue, $gIcon])
-                    @php($inG = $items->where('group', $g)->values())
+                    @php($inG = $onShelf($g)->values())
                     @continue($inG->isEmpty())
                     <div class="wk-group" style="--g: {{ $gHue }}">
                         <div class="wk-group-top">
                             <span class="wk-gico"><svg fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $gIcon }}"/></svg></span>
                             <h3>{{ $gLabel }}<small>{{ $inG->count() }} {{ $words['nouns'] }} · {{ $gLocal }}</small></h3>
                         </div>
-                        <p class="ex">Like <b>{{ $inG->take(3)->pluck('name')->map(fn ($n) => preg_replace('/\s*\(.*\)$/', '', $n))->join(', ', ' and ') }}</b>.</p>
-                        <button type="button" data-show-group="{{ $g }}">See them all
+                        <p class="ex">Like <b>{{ $inG->where('group', $g)->take(3)->pluck('name')->map(fn ($n) => preg_replace('/\s*\(.*\)$/', '', $n))->join(', ', ' and ') }}</b>.</p>
+                        <button type="button" data-show-group="{{ $g }}">See all {{ $inG->count() }}
                             <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
                     </div>
                 @endforeach
@@ -155,7 +166,7 @@
             <div class="wk-grid mt-6" id="wkGrid">
                 @foreach ($items as $w)
                     @php($gh = $P::GROUPS[$w['group']][2])
-                    <a href="{{ $w['url'] }}" class="wk-card" style="--g: {{ $gh }}" data-group="{{ $w['group'] }}"
+                    <a href="{{ $w['url'] }}" class="wk-card" style="--g: {{ $gh }}" data-group="{{ $w['group'] }}" data-shelves="{{ implode(' ', $w['shelves']) }}"
                        data-q="{{ \Illuminate\Support\Str::lower($w['name'] . ' ' . $w['sci'] . ' ' . $w['local'] . ' ' . $w['kind']) }}">
                         <span class="wk-ph">
                             @if ($w['thumb'])
@@ -169,14 +180,19 @@
                         <div class="wk-in">
                             <b>{{ $w['name'] }}</b>
                             <em>{{ $w['sci'] }}</em>
-                            @if ($w['local'] !== '')<p><span>Local names:</span> {{ $w['local'] }}</p>@elseif ($w['hint'] !== '')<p>{{ $w['hint'] }}</p>@endif
+                            {{-- A few "local" fields are a sentence about the names ("Maya is the name for..."): those cards show the sign instead. --}}
+                            @if ($w['local'] !== '' && ! preg_match('/\b(is|are|call|called|means)\b/i', $w['local']))<p><span>Local names:</span> {{ $w['local'] }}</p>@elseif ($w['hint'] !== '')<p>{{ $w['hint'] }}</p>@endif
                         </div>
                     </a>
                 @endforeach
             </div>
+            <button type="button" class="wk-more" id="wkMore">Show all {{ $items->count() }} {{ $words['nouns'] }}
+                <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
             <div class="wk-empty mt-6" id="wkEmpty">
-                Nothing by that name in the catalogue yet. Try its scientific name, or take a photo and
-                <a href="{{ url('/features/ai-agricultural-technician') }}">ask Anee, the smart farm technician</a>.
+                {{-- The name is in the catalogue, under another crop: say so, one tap away. --}}
+                <p class="wk-else" hidden>None under this crop. <button type="button" id="wkElse"></button></p>
+                <p class="wk-none">Nothing by that name in the catalogue yet. Try its scientific name, or take a photo and
+                <a href="{{ url('/features/ai-agricultural-technician') }}">ask Anee, the smart farm technician</a>.</p>
             </div>
         </div>
     </section>
@@ -200,7 +216,7 @@
                     <h2>{{ $words['guides'] }}</h2>
                     <p>{{ $words['guidesLead'] }}</p>
                 </div>
-                <div class="sp-grid mt-8">
+                <div class="sp-grid wk-guides mt-8">
                     @foreach ($guides as $p)
                         @include('public.site.tile', ['p' => $p])
                     @endforeach
@@ -226,26 +242,46 @@
 @push('scripts')
 <script>
 (() => {
-    /* The catalogue: a crop chip and the search box narrow the cards together. */
+    /* The catalogue: a crop chip and the search box narrow the cards
+       together. A chip shows every card that attacks that crop, its own
+       shelf first. A phone shows the first eight until asked for more. */
     const grid = document.getElementById('wkGrid'), cats = document.getElementById('wkCats'), q = document.getElementById('wkQ');
-    const count = document.getElementById('wkCount'), empty = document.getElementById('wkEmpty');
+    const count = document.getElementById('wkCount'), empty = document.getElementById('wkEmpty'), more = document.getElementById('wkMore');
     if (!grid || !cats || !q) return;
     const cards = [...grid.querySelectorAll('.wk-card')];
-    let group = '';
+    const CAP = 8, phone = matchMedia('(max-width: 639.98px)');
+    let group = '', all = false;
     const norm = (s) => s.toLowerCase().replace(/[^a-z0-9ñ ]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const rise = (c, i) => { c.classList.remove('is-in'); c.style.animationDelay = Math.min(i, 12) * 25 + 'ms'; void c.offsetWidth; c.classList.add('is-in'); };
     const apply = () => {
         const words = norm(q.value).split(' ').filter(Boolean);
+        const capped = !all && !group && !words.length;
         let shown = 0;
         cards.forEach((c) => {
-            const on = (!group || c.dataset.group === group) && words.every((w) => norm(c.dataset.q).includes(w));
+            const on = (!group || (c.dataset.shelves || c.dataset.group).split(' ').includes(group)) && words.every((w) => norm(c.dataset.q).includes(w));
             const was = !c.classList.contains('is-out');
             c.classList.toggle('is-out', !on);
-            if (on && !was) { c.classList.remove('is-in'); c.style.animationDelay = Math.min(shown, 12) * 25 + 'ms'; void c.offsetWidth; c.classList.add('is-in'); }
+            c.classList.toggle('is-also', !!group && c.dataset.group !== group);
+            if (on && !was) rise(c, shown);
             if (on) shown++;
         });
-        count.textContent = shown === cards.length ? cards.length + ' in all' : 'Showing ' + shown + ' of ' + cards.length;
+        grid.classList.toggle('is-capped', capped);
+        count.textContent = capped && phone.matches ? 'Showing ' + Math.min(CAP, cards.length) + ' of ' + cards.length
+            : shown === cards.length ? cards.length + ' in all' : 'Showing ' + shown + ' of ' + cards.length;
         empty.classList.toggle('is-on', shown === 0);
+        // Nothing under this crop, but the name is in the catalogue: offer them.
+        const elsewhere = shown === 0 && group && words.length ? cards.filter((c) => words.every((w) => norm(c.dataset.q).includes(w))).length : 0;
+        elseP.hidden = !elsewhere;
+        if (elsewhere) elseB.textContent = 'See the ' + elsewhere + ' found in all crops';
     };
+    const elseP = empty.querySelector('.wk-else'), elseB = document.getElementById('wkElse');
+    elseB.addEventListener('click', () => setGroup(''));
+    more?.addEventListener('click', () => {
+        all = true; apply();
+        cards.slice(CAP).forEach((c, i) => rise(c, i));
+        cards[CAP]?.focus({ preventScroll: true });
+    });
+    phone.addEventListener?.('change', apply);
     const setGroup = (g) => { group = g; cats.querySelectorAll('button').forEach((b) => b.classList.toggle('is-on', b.dataset.group === g)); apply(); };
     cats.addEventListener('click', (e) => { const b = e.target.closest('button[data-group]'); if (b) setGroup(b.dataset.group); });
     q.addEventListener('input', apply);

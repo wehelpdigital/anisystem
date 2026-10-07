@@ -9,6 +9,13 @@
     .sp-crumbs a { color: #3d6823; font-weight: 600; text-decoration: none; }
     .sp-crumbs a:hover { text-decoration: underline; }
     .sp-crumbs svg { width: .8rem; height: .8rem; color: #a8cc7e; }
+    .sp-crumbs .sp-here { display: inline-flex; align-items: center; gap: .35rem; min-width: 0; }
+    /* A phone: the trail stops at the section. The page's own name is the
+       title right under it, and on a long title it only wrapped and cut off. */
+    @media (max-width: 639.98px) {
+        .sp-crumbs .sp-here { display: none; }
+        .sp-crumbs a { padding: .55rem 0; margin: -.55rem 0; }
+    }
     .sp-chip { display: inline-flex; align-items: center; gap: .35rem; font-size: .72rem; font-weight: 800; letter-spacing: .06em;
         text-transform: uppercase; color: #2d5016; background: #e4efd4; border-radius: 999px; padding: .3rem .7rem; }
     .sp-h1 { font-family: var(--font-heading); font-weight: 800; color: #14210c; font-size: clamp(1.9rem, 4.2vw, 2.9rem);
@@ -35,7 +42,10 @@
     .sp-mtoc-fold a { padding: .55rem .5rem; border-top: 1px solid #f1f5ec; font-size: .92rem; color: #374151; text-decoration: none; }
     .sp-mtoc-fold a:active { color: #3d6823; }
     @media (min-width: 1024px) { .sp-mtoc { display: none; } }
-    @media (max-width: 1023.98px) { .sp-toc-card { display: none; } }
+    /* Below the desktop the side column falls under the article. Its contents
+       and its "Keep reading" list are then repeats: the folded contents sit
+       under the title, and the same pages come next as cards. */
+    @media (max-width: 1023.98px) { .sp-toc-card, .sp-keep { display: none; } }
     @media (prefers-reduced-motion: reduce) { .sp-mtoc-fold, .sp-mtoc-h i::before, .sp-mtoc-h i::after { transition: none; } }
     /* A feature page: its icon, and the screen shown in a frame. */
     .sp-hero.is-feature { background: radial-gradient(60rem 22rem at 85% 0%, hsl(var(--h, 100) 70% 92%) 0%, transparent 70%), linear-gradient(180deg, #f6faf1 0%, #fff 100%); }
@@ -79,6 +89,9 @@
     .sp-wcard p { margin-top: .4rem; font-size: .86rem; line-height: 1.55; color: #4b5563; }
     .sp-wcard .btn { margin-top: .8rem; width: 100%; justify-content: center; }
     .sp-promo { border-radius: 1.1rem; padding: 1.2rem; color: #e8efe1; background: linear-gradient(140deg, #2d5016, #24400f 70%); }
+    /* An answered question on a phone ends on one ask: "Ask Anee for free".
+       The season promo is the desktop side column's. */
+    @media (max-width: 1023.98px) { .sp-side.is-question .sp-promo { display: none; } }
     .sp-promo b { display: block; font-family: var(--font-heading); font-size: 1.05rem; color: #fff; }
     .sp-promo p { margin-top: .4rem; font-size: .86rem; line-height: 1.55; color: #cfe0bd; }
     .sp-promo .btn { margin-top: .9rem; width: 100%; justify-content: center; }
@@ -111,6 +124,23 @@
     .sp-table td { padding: .6rem .8rem; border-bottom: 1px solid #f0f3ec; vertical-align: top; }
     .sp-table tr:last-child td { border-bottom: 0; }
     .sp-table caption { caption-side: bottom; text-align: left; padding: .5rem .8rem; font-size: .78rem; color: #6b7280; }
+    /* A phone: a table of three columns or more becomes one card per row
+       (blocks.blade marks it .is-stack and labels each cell with its column).
+       Before, the newest prices sat past the right edge behind a thin scroll. */
+    @media (max-width: 639.98px) {
+        .sp-table th { white-space: normal; }
+        .sp-table-wrap.is-stack { overflow: visible; border: 0; border-radius: 0; }
+        .is-stack .sp-table { display: flex; flex-direction: column; gap: .6rem; font-size: .93rem; }
+        .is-stack .sp-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+        .is-stack .sp-table tbody { display: grid; gap: .6rem; }
+        .is-stack .sp-table tr { display: block; padding: .75rem .95rem .6rem; border: 1px solid #e5ebdf; border-radius: 1rem; background: #fff; }
+        .is-stack .sp-table td { display: grid; grid-template-columns: minmax(0, 40%) minmax(0, 1fr); gap: .8rem; padding: .4rem 0; border-bottom: 1px solid #f0f3ec; }
+        .is-stack .sp-table td::before { content: attr(data-th); font-size: .8rem; font-weight: 700; line-height: 1.45; color: #4d7c2a; padding-top: .1rem; }
+        .is-stack .sp-table td:first-child { display: block; padding: 0 0 .5rem; font-family: var(--font-heading); font-weight: 800; font-size: 1rem; color: #14210c; }
+        .is-stack .sp-table td:first-child::before { content: none; }
+        .is-stack .sp-table tr td:last-child { border-bottom: 0; }
+        .is-stack .sp-table caption { order: 2; display: block; padding: 0 .2rem; }
+    }
     .sp-call { display: flex; gap: .8rem; padding: 1rem 1.1rem; border-radius: 1rem; border: 1px solid; }
     .sp-call svg { flex: none; width: 1.35rem; height: 1.35rem; margin-top: .15rem; }
     .sp-call b { display: block; font-family: var(--font-heading); }
@@ -138,6 +168,16 @@
     .sp-faq summary svg { flex: none; width: 1.1rem; height: 1.1rem; color: #6b9f3d; transition: transform .28s cubic-bezier(.22,1,.36,1); margin-top: .2rem; }
     .sp-faq details[open] summary svg { transform: rotate(45deg); }
     .sp-faq .ans { padding: 0 1.1rem 1rem; color: #374151; font-size: .98rem; }
+    /* A news roundup's source: who and when, then the report as a button. */
+    .sp-body .sp-srcline { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .8rem; }
+    .sp-srcline span { font-size: .88rem; font-weight: 700; color: #4b5563; }
+    .sp-body .sp-srcline .sp-srcbtn { display: inline-flex; align-items: center; gap: .45rem; min-height: 2.6rem; padding: .5rem 1rem; border-radius: 999px; border: 1.5px solid #a8cc7e;
+        background: #fff; color: #2d5016; font-size: .9rem; font-weight: 800; line-height: 1.25; text-decoration: none;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .sp-srcbtn svg { flex: none; width: 1rem; height: 1rem; }
+    .sp-body .sp-srcline .sp-srcbtn:hover { background: #f3f8ec; border-color: #6b9f3d; }
+    .sp-srcbtn:active { transform: scale(.98); }
+    @media (prefers-reduced-motion: reduce) { .sp-body .sp-srcline .sp-srcbtn { transition: none; } }
     .sp-cta { border-radius: 1.25rem; padding: 1.5rem 1.4rem; color: #e8efe1; background: linear-gradient(135deg, #3d6823, #24400f 75%); position: relative; overflow: hidden; }
     .sp-cta::after { content: ''; position: absolute; right: -3rem; top: -3rem; width: 11rem; height: 11rem; border-radius: 999px; background: rgb(245 197 24 / .14); }
     .sp-cta b { position: relative; display: block; font-family: var(--font-heading); font-size: 1.3rem; color: #fff; line-height: 1.3; }
@@ -155,7 +195,8 @@
     .sp-links b { font-family: var(--font-heading); color: #14210c; }
     .sp-links ul { margin-top: .5rem; display: grid; gap: .4rem; }
     @media (min-width: 640px) { .sp-links ul { grid-template-columns: 1fr 1fr; } }
-    .sp-links a { display: flex; align-items: center; gap: .4rem; color: #3d6823; font-weight: 700; font-size: .95rem; text-decoration: none; }
+    .sp-links a { display: flex; align-items: center; gap: .4rem; padding: .3rem 0; color: #3d6823; font-weight: 700; font-size: .95rem; text-decoration: none; }
+    .sp-links ul { gap: .1rem .4rem; }
     .sp-links a:hover { text-decoration: underline; }
     .sp-links a svg { flex: none; width: .9rem; height: .9rem; }
     .sp-sources { font-size: .85rem; color: #6b7280; border-top: 1px solid #eef1ea; padding-top: 1rem; }
@@ -174,10 +215,23 @@
     .sp-tile:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -26px rgb(20 33 12 / .55); border-color: #c9e0ad; }
     .sp-tile img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #f3f8ec; }
     .sp-tile .in { padding: .95rem 1.05rem 1.1rem; display: flex; flex-direction: column; gap: .35rem; flex: 1; }
-    .sp-tile .cat { font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #6b9f3d; }
+    .sp-tile .cat { font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #6b9f3d; }
     .sp-tile b { font-family: var(--font-heading); font-size: 1.05rem; line-height: 1.3; color: #14210c; }
     .sp-tile p { font-size: .88rem; line-height: 1.55; color: #4b5563; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .sp-tile .go { margin-top: auto; padding-top: .4rem; font-size: .82rem; font-weight: 800; color: #3d6823; }
+    .sp-tile .cat time { color: #6b7280; font-weight: 700; }
+    /* A phone, on the hubs and under an article: a list, a small picture
+       beside the words, so a screen shows five guides instead of two. */
+    @media (max-width: 639.98px) {
+        .sp-grid.is-list { grid-template-columns: minmax(0, 1fr); gap: .65rem; }
+        .sp-grid.is-list .sp-tile { flex-direction: row; align-items: stretch; border-radius: 1rem; }
+        .sp-grid.is-list .sp-tile img { flex: none; align-self: stretch; width: 6.6rem; height: auto; min-height: 7.25rem; aspect-ratio: auto; }
+        .sp-grid.is-list .sp-tile .in { min-width: 0; padding: .7rem .85rem .75rem; gap: .2rem; justify-content: center; }
+        .sp-grid.is-list .sp-tile b { font-size: .98rem; line-height: 1.28; }
+        .sp-grid.is-list .sp-tile p { font-size: .84rem; line-height: 1.45; -webkit-line-clamp: 2; }
+        .sp-grid.is-list .sp-tile .go { display: none; }
+        .sp-grid.is-list .sp-tile:hover { transform: none; }
+    }
     /* One row always (owner, 2026-10-07): on a narrow screen it slides sideways, the active tab brought into view. */
     .sp-tabs { display: inline-flex; flex-wrap: nowrap; max-width: 100%; overflow-x: auto; scrollbar-width: none; gap: .35rem; padding: .3rem; border-radius: 999px; background: #fff; border: 1px solid #e4efd4; }
     .sp-tabs::-webkit-scrollbar { display: none; }
@@ -186,16 +240,27 @@
     .sp-tabs a { flex: none; white-space: nowrap; padding: .45rem .95rem; border-radius: 999px; font-size: .88rem; font-weight: 700; color: #3d6823; text-decoration: none;
         transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
     .sp-tabs a.is-on { background: #4a7c2a; color: #fff; }
+    @media (max-width: 639.98px) { .sp-tabs a { padding: .6rem 1rem; } }
     .sp-tabs a:not(.is-on):hover { background: #f3f8ec; }
     .sp-cats { display: flex; flex-wrap: wrap; gap: .4rem; }
     .sp-cats button { padding: .35rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 700; border: 1px solid #e4efd4; background: #fff; color: #4b5563;
         transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
     .sp-cats button.is-on { background: #2d5016; border-color: #2d5016; color: #fff; }
+    .sp-cats button small { margin-left: .3rem; font-size: .74rem; font-weight: 700; opacity: .65; }
+    /* A phone: chips a thumb can hit. */
+    @media (max-width: 639.98px) { .sp-cats.is-hub button { min-height: 2.5rem; padding: .45rem .9rem; font-size: .84rem; } }
+    /* A feature guide's "More of what anee.io does" on a phone: the eight
+       nearest features (same part of the farm first), then one button to all. */
+    .sp-feats-all { display: none; }
+    @media (max-width: 559.98px) {
+        .sp-feats .fg-card:nth-child(n+9) { display: none; }
+        .sp-feats-all { display: flex; justify-content: center; width: 100%; margin-top: 1.1rem; }
+    }
     .sp-tile.is-out { display: none; }
     .sp-tile.is-in { animation: spIn .32s cubic-bezier(.22,1,.36,1) both; }
     @keyframes spIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) {
-        .sp-tile, .sp-toc a, .sp-faq details, .sp-faq summary svg { transition: none; }
+        .sp-tile, .sp-toc a, .sp-faq details, .sp-faq summary svg, .sp-tabs a, .sp-cats button { transition: none; }
         .sp-tile.is-in { animation: none; }
     }
 </style>

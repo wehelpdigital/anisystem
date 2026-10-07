@@ -81,9 +81,50 @@
         }
         .wk-card.is-out { display: none; }
         .wk-card.is-in { animation: spIn .32s cubic-bezier(.22,1,.36,1) both; }
+        /* Under a crop chip, the ones that live on another shelf but attack
+           this crop too come after this shelf's own. */
+        .wk-card.is-also { order: 1; }
+        /* A phone shows the first eight until the reader searches, picks a
+           group or asks for all: the helper below is not 40 rows away. */
+        .wk-more { display: none; }
+        @media (max-width: 639.98px) {
+            .wk-grid.is-capped > .wk-card:nth-child(n+9) { display: none; }
+            .wk-grid.is-capped + .wk-more { display: flex; }
+        }
+        .wk-more { margin: 1.1rem auto 0; width: 100%; max-width: 24rem; min-height: 2.9rem; align-items: center; justify-content: center; gap: .45rem;
+            padding: .7rem 1.1rem; border-radius: 999px; font-size: .95rem; font-weight: 800; color: #2d5016; background: #fff; border: 1px solid #c9e0ad;
+            box-shadow: 0 10px 22px -18px rgb(20 33 12 / .6); transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+        .wk-more:hover { background: #f6faf1; border-color: #a8cc7e; }
+        .wk-more svg { width: 1rem; height: 1rem; }
+        /* The shelf cards: on a phone the whole card is the button, and it sits tighter. */
+        .wk-group { position: relative; }
+        @media (max-width: 639.98px) {
+            .wk-group { padding: 1rem 1.05rem 1.05rem; gap: .55rem; }
+            .wk-group button::after { content: ''; position: absolute; inset: 0; border-radius: 1.25rem; }
+        }
+        /* The guides on a phone: a row each (picture beside the words), not a
+           screen tall card each. */
+        @media (max-width: 639.98px) {
+            .wk-guides { gap: .7rem; }
+            .wk-guides .sp-tile { flex-direction: row; }
+            .wk-guides .sp-tile img { flex: none; width: 6.6rem; aspect-ratio: auto; height: auto; align-self: stretch; object-fit: cover; }
+            .wk-guides .sp-tile .in { padding: .75rem .85rem .8rem; gap: .25rem; min-width: 0; }
+            .wk-guides .sp-tile b { font-size: .98rem; }
+            .wk-guides .sp-tile p { font-size: .84rem; -webkit-line-clamp: 2; }
+            .wk-guides .sp-tile .go { padding-top: .2rem; }
+            .wk-guides .sp-tile .cat { font-size: .72rem; }
+            /* The group chips are real buttons: a thumb sized row. */
+            .wk-cats button { min-height: 2.5rem; padding-left: .9rem; padding-right: .9rem; }
+        }
         .wk-empty { display: none; padding: 2rem 1rem; text-align: center; color: #6b7280; border: 1px dashed #d7e8c2; border-radius: 1.1rem; }
         .wk-empty.is-on { display: block; animation: spIn .32s cubic-bezier(.22,1,.36,1) both; }
         .wk-empty a { color: #3d6823; font-weight: 700; }
+        .wk-else { margin-bottom: .6rem; }
+        .wk-else[hidden] { display: none; }
+        .wk-else button { display: inline-flex; align-items: center; min-height: 2.5rem; margin: .4rem .2rem 0; padding: .5rem 1rem; border-radius: 999px; font-weight: 800;
+            color: #fff; background: #2d5016; transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+        .wk-else button:hover { background: #3d6823; }
+        .wk-else:not([hidden]) + .wk-none { display: none; }
 
         /* The weed control helper */
         .wc-sec { background: linear-gradient(180deg, #f6faf1, #eef5e6); border-top: 1px solid #e4efd4; border-bottom: 1px solid #e4efd4; scroll-margin-top: 5rem; }
@@ -146,8 +187,19 @@
         .wc-fine { margin-top: 1.1rem; display: flex; gap: .6rem; font-size: .85rem; line-height: 1.6; color: #4b5563; }
         .wc-fine svg { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .15rem; color: #c79e00; }
         .wc-fine a { color: #3d6823; font-weight: 700; text-decoration: underline; text-decoration-color: #a8cc7e; text-underline-offset: 3px; }
+        /* Below two columns the answer sits under the questions, out of
+           sight: this button says what is waiting and takes the reader there. */
+        .wc-out { scroll-margin-top: 5rem; }
+        .wc-go { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%; min-height: 3rem; padding: .7rem 1rem; border-radius: .95rem;
+            font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #3b2f00; background: #f5c518; box-shadow: 0 12px 24px -18px rgb(59 47 0 / .8);
+            transition: background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+        .wc-go:hover { background: #ffd23f; }
+        .wc-go svg { flex: none; width: 1.1rem; height: 1.1rem; }
+        .wc-go.is-bump { animation: wcBump .42s cubic-bezier(.22,1,.36,1); }
+        @keyframes wcBump { 40% { transform: scale(1.035); } }
+        @media (min-width: 1024px) { .wc-go { display: none; } }
         @media (prefers-reduced-motion: reduce) {
-            .wk-jump a, .wk-mosaic img, .wk-card, .wk-ph img, .wc-opts button, .wc-gs button .tick, .wc-gs button .tick svg { transition: none; }
-            .wk-card.is-in, .wk-empty.is-on, .wc-card.is-swap .wc-when, .wc-card.is-swap .wc-body > * { animation: none; }
+            .wk-jump a, .wk-mosaic img, .wk-card, .wk-ph img, .wc-opts button, .wc-gs button .tick, .wc-gs button .tick svg, .wk-more, .wc-go { transition: none; }
+            .wk-card.is-in, .wk-empty.is-on, .wc-card.is-swap .wc-when, .wc-card.is-swap .wc-body > *, .wc-go.is-bump { animation: none; }
         }
     </style>

@@ -44,6 +44,9 @@
                             @endforeach
                         </div>
                     </div>
+                    {{-- Below two columns the answer is under these questions: this says what waits there. --}}
+                    <button type="button" class="wc-go" id="wcGo" aria-controls="wcCard"><span>See what to do</span>
+                        <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
                 </div>
                 <div class="wc-out" aria-live="polite">
                     <div class="tg" data-tool-gate="weeds">
@@ -138,7 +141,14 @@
             + '<small>' + esc(w.stage) + '</small></div>'
             + '<div class="wc-body"><div><h3>Do this first</h3><ol class="wc-steps">' + w.steps.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ol></div>' + ings + '</div>';
         if (swap) { card.classList.remove('is-swap'); void card.offsetWidth; card.classList.add('is-swap'); }
+        if (goText) {
+            goText.textContent = 'See what to do at ' + w.label.toLowerCase();
+            if (swap) { go.classList.remove('is-bump'); void go.offsetWidth; go.classList.add('is-bump'); }
+        }
     };
+    const go = document.getElementById('wcGo');
+    const goText = go?.querySelector('span');
+    go?.addEventListener('click', () => card.closest('.wc-out').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
     methodBox.addEventListener('click', (e) => { const b = e.target.closest('button[data-method]'); if (b && b.dataset.method !== st.method) { st.method = b.dataset.method; render(true); } });
     daysBox.addEventListener('click', (e) => { const b = e.target.closest('button[data-days]'); if (b && !b.disabled && b.dataset.days !== st.days) { st.days = b.dataset.days; render(true); } });
     groupBox.addEventListener('click', (e) => {

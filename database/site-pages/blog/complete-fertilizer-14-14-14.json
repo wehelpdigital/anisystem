@@ -153,7 +153,7 @@
     },
     {
       "type": "text",
-      "text": "The basal window is short, 0 to 14 DAT. In anee.io, the [cropping calendar](/features/cropping-calendar) dates the basal task from each lot's own day zero, so you see the deadline on the board. The [farm inventory](/features/farm-inventory-and-expenses) counts your complete fertilizer in 50 kg bags. Tick the task done and the bags leave stock, with their cost going to your expense report.\n\nUnsure how many bags each lot needs? Ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician). She reads your lot sizes and crop first, then works out a fertilizer plan in Tagalog or English."
+      "text": "The basal window is short, 0 to 14 DAT. In anee.io, the [cropping calendar](/features/cropping-calendar) dates the basal task from each lot's own day zero, so you see the deadline on the board. The [farm inventory](/features/farm-inventory-and-expenses) counts your complete fertilizer in 50 kg bags. Tick the task done and the bags leave stock, with their cost going to your expense report.\n\nUnsure how many bags each lot needs? Ask Anee, the [smart farm technician](/features/ai-agricultural-technician). She reads your lot sizes and crop first, then works out a fertilizer plan in Tagalog or English."
     },
     {
       "type": "cta",

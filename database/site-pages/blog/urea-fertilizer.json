@@ -247,7 +247,7 @@
     },
     {
       "type": "text",
-      "text": "Each lot in anee.io keeps its own day zero. So the [cropping calendar](/features/cropping-calendar) dates every urea dose by DAT, DAS or DAP, and a lot planted late keeps its own timing. The [farm inventory](/features/farm-inventory-and-expenses) counts your urea in 50 kg bags. Tick a fertilizer task done and it takes those bags out of stock and adds their cost to your expense report.\n\nNot sure how many bags your lot needs? Ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), in Tagalog or English. She reads your lot size, crop and stage, then works out a fertilizer plan to check against your soil test."
+      "text": "Each lot in anee.io keeps its own day zero. So the [cropping calendar](/features/cropping-calendar) dates every urea dose by DAT, DAS or DAP, and a lot planted late keeps its own timing. The [farm inventory](/features/farm-inventory-and-expenses) counts your urea in 50 kg bags. Tick a fertilizer task done and it takes those bags out of stock and adds their cost to your expense report.\n\nNot sure how many bags your lot needs? Ask Anee, the [smart farm technician](/features/ai-agricultural-technician), in Tagalog or English. She reads your lot size, crop and stage, then works out a fertilizer plan to check against your soil test."
     },
     {
       "type": "cta",

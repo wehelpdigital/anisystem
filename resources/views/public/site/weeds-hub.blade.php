@@ -170,9 +170,13 @@
                     </a>
                 @endforeach
             </div>
+            <button type="button" class="wk-more" id="wkMore">Show all {{ $weeds->count() }} weeds
+                <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
             <div class="wk-empty mt-6" id="wkEmpty">
-                No weed by that name in the catalogue yet. Try its scientific name, or take a photo and
-                <a href="{{ url('/features/ai-agricultural-technician') }}">ask Anee, the smart farm technician</a>.
+                {{-- The name is in the catalogue, in another group: say so, one tap away. --}}
+                <p class="wk-else" hidden>None in this group. <button type="button" id="wkElse"></button></p>
+                <p class="wk-none">No weed by that name in the catalogue yet. Try its scientific name, or take a photo and
+                <a href="{{ url('/features/ai-agricultural-technician') }}">ask Anee, the smart farm technician</a>.</p>
             </div>
         </div>
     </section>
@@ -200,7 +204,7 @@
                     <h2>Weed Guides for Rice Farmers</h2>
                     <p>The whole plan, start to finish: how to tell the weeds apart, how to keep them out across a season, and how to use herbicides safely.</p>
                 </div>
-                <div class="sp-grid mt-8">
+                <div class="sp-grid wk-guides mt-8">
                     @foreach ($guides as $p)
                         @include('public.site.tile', ['p' => $p])
                     @endforeach
@@ -237,24 +241,44 @@
     const q = document.getElementById('wkQ');
     const count = document.getElementById('wkCount');
     const empty = document.getElementById('wkEmpty');
+    const more = document.getElementById('wkMore');
     if (!grid || !cats || !q) return;
     const cards = [...grid.querySelectorAll('.wk-card')];
-    let group = '';
+    // A phone shows the first eight until the reader searches, picks a
+    // group or asks for all, so the helper is not 40 rows further down.
+    const CAP = 8, phone = matchMedia('(max-width: 639.98px)');
+    let group = '', all = false;
     const norm = (s) => s.toLowerCase().replace(/[^a-z0-9ñ ]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const rise = (c, i) => { c.classList.remove('is-in'); c.style.animationDelay = Math.min(i, 12) * 25 + 'ms'; void c.offsetWidth; c.classList.add('is-in'); };
     const apply = () => {
         const words = norm(q.value).split(' ').filter(Boolean);
+        const capped = !all && !group && !words.length;
         let shown = 0;
         cards.forEach((c) => {
             const hay = norm(c.dataset.q);
             const on = (!group || c.dataset.group === group) && words.every((w) => hay.includes(w));
             const was = !c.classList.contains('is-out');
             c.classList.toggle('is-out', !on);
-            if (on && !was) { c.classList.remove('is-in'); c.style.animationDelay = Math.min(shown, 12) * 25 + 'ms'; void c.offsetWidth; c.classList.add('is-in'); }
+            if (on && !was) rise(c, shown);
             if (on) shown++;
         });
-        count.textContent = shown === cards.length ? cards.length + ' weeds' : 'Showing ' + shown + ' of ' + cards.length + ' weeds';
+        grid.classList.toggle('is-capped', capped);
+        count.textContent = capped && phone.matches ? 'Showing ' + Math.min(CAP, cards.length) + ' of ' + cards.length + ' weeds'
+            : shown === cards.length ? cards.length + ' weeds' : 'Showing ' + shown + ' of ' + cards.length + ' weeds';
         empty.classList.toggle('is-on', shown === 0);
+        // Nothing in this group, but the name is in the catalogue: offer them.
+        const elsewhere = shown === 0 && group && words.length ? cards.filter((c) => words.every((w) => norm(c.dataset.q).includes(w))).length : 0;
+        elseP.hidden = !elsewhere;
+        if (elsewhere) elseB.textContent = 'See the ' + elsewhere + ' found in all groups';
     };
+    const elseP = empty.querySelector('.wk-else'), elseB = document.getElementById('wkElse');
+    elseB.addEventListener('click', () => setGroup(''));
+    more?.addEventListener('click', () => {
+        all = true; apply();
+        cards.slice(CAP).forEach((c, i) => rise(c, i));
+        cards[CAP]?.focus({ preventScroll: true });
+    });
+    phone.addEventListener?.('change', apply);
     const setGroup = (g) => {
         group = g;
         cats.querySelectorAll('button').forEach((b) => b.classList.toggle('is-on', b.dataset.group === g));

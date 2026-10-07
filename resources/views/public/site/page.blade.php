@@ -38,6 +38,21 @@
             $portrait = true;
         }
     }
+    // A Tagalog page speaks Tagalog around its content too: the reading time,
+    // the date, the contents, the credits and the "read next" headings.
+    $tl = $page->lang === 'tl';
+    $months = ['Enero', 'Pebrero', 'Marso', 'Abril', 'Mayo', 'Hunyo', 'Hulyo', 'Agosto', 'Setyembre', 'Oktubre', 'Nobyembre', 'Disyembre'];
+    $day = $updated->copy()->timezone('Asia/Manila');
+    $updatedText = $tl ? 'Binago noong ' . $months[$day->month - 1] . ' ' . $day->day . ', ' . $day->year : 'Updated ' . $day->format('F j, Y');
+    // A Tagalog reader's next reads: the other Tagalog pages of the section
+    // first (SitePages::related() goes by category alone, and gave a Tagalog
+    // guide four English ones).
+    if ($tl && $page->exists) {
+        $pool = $S::inSection($page->section)->where('id', '!=', $page->id);
+        $related = $pool->where('lang', 'tl')->concat($related)->unique('id')->take(4)->values();
+    }
+    // A news roundup is dated by when it went out, not when it was last touched.
+    $isNews = ($page->kind ?? null) === 'roundup';
 @endphp
 
 @section('title_full', $seoTitle . ' | anee.io')
@@ -79,8 +94,10 @@
                     <a href="{{ url('/') }}">Home</a>
                     <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     <a href="{{ $sectionUrl }}">{{ $meta['crumb'] }}</a>
-                    <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    <span class="truncate max-w-[14rem] sm:max-w-none">{{ $S::shortTitle($page) }}</span>
+                    <span class="sp-here">
+                        <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                        <span class="truncate max-w-[14rem] sm:max-w-none" aria-current="page">{{ $S::shortTitle($page) }}</span>
+                    </span>
                 </nav>
                 <div class="{{ $portrait ? 'sp-fhero' : '' }}">
                 {{-- The title and its intro use the page's full width: there is no sidebar beside them. --}}
@@ -110,9 +127,15 @@
                     <div class="sp-meta mt-4">
                         @if ($weed && $weed['sci'] !== $weed['name'])<span class="italic">{{ $weed['sci'] }}</span>@endif
                         @if ($prob)<span class="italic">{{ $prob['sci'] }}</span>@endif
-                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg>{{ $minutes }} min read</span>
-                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Updated {{ $updated->timezone('Asia/Manila')->format('F j, Y') }}</span>
-                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $isQuestion ? 'Answered by Anee, the anee.io smart farm technician' : 'By the anee.io agriculture team' }}</span>
+                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg>{{ $tl ? 'Babasahin sa ' . $minutes . ' minuto' : $minutes . ' min read' }}</span>
+                        @if ($isNews && $page->publishedAt)
+                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg><time datetime="{{ $page->publishedAt->toAtomString() }}">Published {{ $page->publishedAt->copy()->timezone('Asia/Manila')->format('F j, Y') }}</time></span>
+                        @else
+                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>{{ $updatedText }}</span>
+                        @endif
+                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $isQuestion
+                            ? ($tl ? 'Sinagot ni Anee, ang smart farm technician ng anee.io' : 'Answered by Anee, the anee.io smart farm technician')
+                            : ($tl ? 'Mula sa agriculture team ng anee.io' : 'By the anee.io agriculture team') }}</span>
                     </div>
                     @endif
                 </div>
@@ -133,21 +156,22 @@
                     <figure class="sp-figure mt-7 {{ $isFeature ? 'is-product' : '' }}">
                         {{-- A news roundup's picture is the original report's: shown from there, credited and linked to it. --}}
                         <img src="{{ $heroSrc }}" alt="{{ $hero['alt'] ?? $page->title }}" fetchpriority="high" referrerpolicy="no-referrer">
-                        @if (trim((string) ($hero['credit'] ?? '')) !== '')<figcaption>Photo: {!! $S::inline($hero['credit']) !!}</figcaption>@endif
+                        @if (trim((string) ($hero['credit'] ?? '')) !== '')<figcaption>{{ $tl ? 'Larawan:' : 'Photo:' }} {!! $S::inline($hero['credit']) !!}</figcaption>@endif
                     </figure>
                 @endif
                 </div>
             </div>
         </header>
 
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        {{-- A phone reaches the words sooner: less air between the picture and the contents. --}}
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-7 pb-10 sm:py-14">
             @if (count($toc) > 1)
                 {{-- A phone's table of contents: under the title, folded. --}}
                 <div class="sp-mtoc" x-data="{ o: false }" :class="o && 'is-open'">
                     <button type="button" class="sp-mtoc-h" @click="o = !o" :aria-expanded="o">
                         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M4 6h16M4 12h10M4 18h13"/></svg>
-                        <span>On this page</span>
-                        <small>{{ count($toc) }} sections</small>
+                        <span>{{ $tl ? 'Nilalaman' : 'On this page' }}</span>
+                        <small>{{ count($toc) }} {{ $tl ? 'bahagi' : 'sections' }}</small>
                         <i aria-hidden="true"></i>
                     </button>
                     <div class="sp-mtoc-fold"><nav>
@@ -159,19 +183,19 @@
                 <div class="sp-body" id="spBody">
                     @include('public.site.blocks', ['blocks' => $blocks])
                 </div>
-                <aside class="sp-side">
+                <aside class="sp-side {{ $isQuestion ? 'is-question' : '' }}">
                     @if ($isQuestion)
                         {{-- The door this page came through, held open for the next farmer. --}}
                         <div class="sp-ask">
                             <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="Anee">
-                            <b>Have your own farming question?</b>
-                            <p>Ask Anee one question for free. Tell her about your farm and the answer comes to your email.</p>
-                            <a href="{{ url('/ask-anee') }}" class="btn btn-accent">Ask Anee for free</a>
+                            <b>{{ $tl ? 'May sarili kang tanong sa pagsasaka?' : 'Have your own farming question?' }}</b>
+                            <p>{{ $tl ? 'Isang tanong kay Anee, libre. Ikuwento ang iyong bukid at darating ang sagot sa iyong email.' : 'Ask Anee one question for free. Tell her about your farm and the answer comes to your email.' }}</p>
+                            <a href="{{ url('/ask-anee') }}" class="btn btn-accent">{{ $tl ? 'Magtanong kay Anee nang libre' : 'Ask Anee for free' }}</a>
                         </div>
                     @endif
                     @if (count($toc) > 1)
                         <div class="sp-card sp-toc-card">
-                            <h2 class="sp-card-h">On this page</h2>
+                            <h2 class="sp-card-h">{{ $tl ? 'Nilalaman' : 'On this page' }}</h2>
                             <nav class="sp-toc" id="spToc">
                                 @foreach ($toc as $t)<a href="#{{ $t['id'] }}" data-to="{{ $t['id'] }}">{{ $t['text'] }}</a>@endforeach
                             </nav>
@@ -201,8 +225,8 @@
                         <a href="{{ route('signup') }}" class="btn btn-accent">{{ $page->lang === 'tl' ? 'Magsimula nang libre' : 'Start free' }}</a>
                     </div>
                     @if ($related->count())
-                        <div class="sp-card">
-                            <h2 class="sp-card-h">Keep reading</h2>
+                        <div class="sp-card sp-keep">
+                            <h2 class="sp-card-h">{{ $tl ? 'Basahin din' : 'Keep reading' }}</h2>
                             <div class="sp-rel">
                                 @foreach ($related as $r)<a href="{{ $S::pageUrl($r) }}">{{ $r->title }}</a>@endforeach
                             </div>
@@ -214,14 +238,25 @@
     </article>
 
     @if ($isFeature)
-    {{-- The rest of the product, one card each. --}}
+    {{-- The rest of the product, one card each: the same part of the farm
+         first. A phone shows the first eight, then a button to all of them
+         (forty cards was five screens of scrolling after the guide). --}}
+    @php
+        $others = \App\Support\SitePages::inSection('features');
+        $others = $others->where('category', $page->category)->concat($others->where('category', '!=', $page->category))->values();
+    @endphp
     <section class="bg-[#f9fbf6] border-t border-[#e4efd4]">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
             <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
                 <h2 class="font-heading text-2xl font-bold text-ink">More of what anee.io does</h2>
-                <a href="{{ route('features') }}" class="text-sm font-extrabold text-brand-700 hover:text-brand-800">See all features ›</a>
+                <a href="{{ route('features') }}" class="inline-block py-2 text-sm font-extrabold text-brand-700 hover:text-brand-800">See all features ›</a>
             </div>
-            @include('public.site.feature-grid', ['pages' => \App\Support\SitePages::inSection('features'), 'except' => $page->slug])
+            <div class="sp-feats">
+                @include('public.site.feature-grid', ['pages' => $others, 'except' => $page->slug])
+            </div>
+            <div class="sp-feats-all">
+                <a href="{{ route('features') }}" class="btn btn-outline">See all {{ $others->count() }} features</a>
+            </div>
         </div>
     </section>
     @else
@@ -229,7 +264,9 @@
     <section class="bg-[#f9fbf6] border-t border-[#e4efd4]">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
             <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
-                <h2 class="font-heading text-2xl font-bold text-ink">{{ $isQuestion ? 'More questions farmers asked' : 'More guides for your farm' }}</h2>
+                <h2 class="font-heading text-2xl font-bold text-ink">{{ $isQuestion
+                    ? ($tl ? 'Iba pang tanong ng mga magsasaka' : 'More questions farmers asked')
+                    : ($tl ? 'Iba pang gabay para sa iyong bukid' : 'More guides for your farm') }}</h2>
                 @unless ($isQuestion)
                 <div class="sp-tabs">
                     <a href="{{ $S::url('questions') }}" class="{{ $isQuestion ? 'is-on' : '' }}">Farmers' questions</a>
@@ -243,9 +280,9 @@
                 </div>
                 @endunless
             </div>
-            <div class="sp-grid">
+            <div class="sp-grid is-list">
                 @foreach ($related as $r)
-                    @include('public.site.tile', ['p' => $r])
+                    @include('public.site.tile', ['p' => $r, 'hideCat' => $page->section === 'land-preparation'])
                 @endforeach
             </div>
         </div>
@@ -260,7 +297,9 @@
     (() => {
         const v = document.querySelector('[data-sp-film]');
         if (!v) return;
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); return; }
+        /* Less motion: the film waits on its first frame, with the player's
+           own buttons so the visitor can still choose to watch it. */
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); v.controls = true; return; }
         if (!('IntersectionObserver' in window)) return;
         new IntersectionObserver((es) => es.forEach((e) => {
             if (e.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } else v.pause();

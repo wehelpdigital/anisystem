@@ -1,7 +1,11 @@
 {{-- One page's blocks (App\Support\SitePages): the kinds the mother app's
      builder offers. Every string goes through SitePages::inline(), which
      escapes first and then turns **bold** and [label](/address) into markup. --}}
-@php($S = \App\Support\SitePages::class)
+@php
+    $S = \App\Support\SitePages::class;
+    // A Tagalog page's own words around the content (the content itself is the writer's).
+    $tl = isset($page) && ($page->lang ?? '') === 'tl';
+@endphp
 @foreach ($blocks as $i => $b)
     @switch($b['type'] ?? '')
         @case('heading')
@@ -15,7 +19,14 @@
             @break
         @case('text')
             @foreach ($S::paragraphs($b['text'] ?? '') as $para)
-                <p>{!! $S::inline($para) !!}</p>
+                @if (preg_match('/^\*\*(.+?)\*\*\s*\[(Read the full report[^\]]*)\]\((https?:\/\/[^)\s]+)\)\s*$/', trim($para), $m))
+                    {{-- A news roundup's source line: who and when, then the report itself as a
+                         button a thumb can hit (the owner, 2026-10-07; the Tech Blog draws it the same). --}}
+                    <p class="sp-srcline"><span>{{ rtrim($m[1], '.') }}</span>
+                        <a class="sp-srcbtn" href="{{ $m[3] }}" target="_blank" rel="noopener">{{ $m[2] }}<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6m0-6L10 14M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg></a></p>
+                @else
+                    <p>{!! $S::inline($para) !!}</p>
+                @endif
             @endforeach
             @break
         @case('list')
@@ -38,10 +49,14 @@
         @case('table')
             @php($rows = array_values(array_filter((array) ($b['rows'] ?? []), 'is_array')))
             @if ($rows)
-                <div class="sp-table-wrap"><table class="sp-table">
+                {{-- Three columns or more do not fit a phone: there each row becomes a card,
+                     its first cell the card's name and every other cell labelled with its
+                     column (data-th), so no value hides past the screen's edge. --}}
+                @php($heads = array_map(fn ($c) => $S::plain((string) $c), array_values($rows[0])))
+                <div class="sp-table-wrap {{ count($heads) >= 3 ? 'is-stack' : '' }}"><table class="sp-table">
                     @if (trim((string) ($b['caption'] ?? '')) !== '')<caption>{{ $b['caption'] }}</caption>@endif
-                    <thead><tr>@foreach ($rows[0] as $c)<th>{!! $S::inline((string) $c) !!}</th>@endforeach</tr></thead>
-                    <tbody>@foreach (array_slice($rows, 1) as $r)<tr>@foreach ($r as $c)<td>{!! $S::inline((string) $c) !!}</td>@endforeach</tr>@endforeach</tbody>
+                    <thead><tr>@foreach ($rows[0] as $c)<th scope="col">{!! $S::inline((string) $c) !!}</th>@endforeach</tr></thead>
+                    <tbody>@foreach (array_slice($rows, 1) as $r)<tr>@foreach (array_values($r) as $k => $c)<td data-th="{{ $heads[$k] ?? '' }}">{!! $S::inline((string) $c) !!}</td>@endforeach</tr>@endforeach</tbody>
                 </table></div>
             @endif
             @break
@@ -88,7 +103,7 @@
             @break
         @case('cta')
             <div class="sp-cta">
-                <b>{{ $b['title'] ?? 'Run your farm on anee.io' }}</b>
+                <b>{{ $b['title'] ?? ($tl ? 'Patakbuhin ang bukid mo sa anee.io' : 'Run your farm on anee.io') }}</b>
                 {{-- The first line is the pitch; any line after it is a benefit, ticked. --}}
                 @php($ctaLines = array_values(array_filter(array_map('trim', preg_split('/\R+/', (string) ($b['text'] ?? ''))), fn ($l) => $l !== '')))
                 @if ($ctaLines)<p>{!! $S::inline($ctaLines[0]) !!}</p>@endif
@@ -100,12 +115,13 @@
                     </ul>
                 @endif
                 @php($ctaUrl = trim((string) ($b['url'] ?? '')) ?: '/signup')
-                <a class="btn btn-accent" href="{{ preg_match('#^https?://#', $ctaUrl) ? $ctaUrl : url($ctaUrl) }}">{{ $b['label'] ?? 'Start free' }}</a>
+                <a class="btn btn-accent" href="{{ preg_match('#^https?://#', $ctaUrl) ? $ctaUrl : url($ctaUrl) }}">{{ $b['label'] ?? ($tl ? 'Magsimula nang libre' : 'Start free') }}</a>
             </div>
             @break
         @case('links')
-            <nav class="sp-links" aria-label="{{ $b['title'] ?? 'Related guides' }}">
-                <b>{{ $b['title'] ?? 'Related guides' }}</b>
+            @php($linksTitle = $b['title'] ?? ($tl ? 'Kaugnay na gabay' : 'Related guides'))
+            <nav class="sp-links" aria-label="{{ $linksTitle }}">
+                <b>{{ $linksTitle }}</b>
                 <ul>
                     @foreach ((array) ($b['items'] ?? []) as $it)
                         @if (trim((string) ($it['url'] ?? '')) !== '')
@@ -117,7 +133,7 @@
             @break
         @case('sources')
             <div class="sp-sources">
-                <b>Sources</b>
+                <b>{{ $tl ? 'Mga sanggunian' : 'Sources' }}</b>
                 <ol>
                     @foreach ((array) ($b['items'] ?? []) as $it)
                         @if (preg_match('#^https?://#', (string) ($it['url'] ?? '')))

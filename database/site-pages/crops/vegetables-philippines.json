@@ -254,7 +254,7 @@
     {
       "type": "cta",
       "title": "Not sure what is eating your vegetables?",
-      "text": "Send a photo of the curled leaf or spotted fruit to Anee, the anee.io AI technician. Anee checks your crop's stage and the weather first, then answers in Tagalog or English.",
+      "text": "Send a photo of the curled leaf or spotted fruit to Anee, the anee.io smart farm technician. Anee checks your crop's stage and the weather first, then answers in Tagalog or English.",
       "label": "Meet Anee",
       "url": "/features/ai-agricultural-technician"
     },

@@ -57,15 +57,17 @@
     <section class="bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
             @if ($cats->count() > 1)
-                <div class="sp-cats mb-6" id="spCats">
-                    <button type="button" class="is-on" data-cat="">All</button>
-                    @foreach ($cats as $c)<button type="button" data-cat="{{ $c }}">{{ $c }}</button>@endforeach
+                {{-- Each chip says how many it holds, so a farmer knows what is behind it before tapping. --}}
+                <div class="sp-cats is-hub mb-6" id="spCats" role="group" aria-label="Show only">
+                    <button type="button" class="is-on" data-cat="" aria-pressed="true">All<small>{{ $pages->count() }}</small></button>
+                    @foreach ($cats as $c)<button type="button" data-cat="{{ $c }}" aria-pressed="false">{{ $c }}<small>{{ $pages->where('category', $c)->count() }}</small></button>@endforeach
                 </div>
             @endif
             @if ($pages->count())
-                <div class="sp-grid" id="spGrid">
+                <div class="sp-grid is-list" id="spGrid">
                     @foreach ($pages as $p)
-                        @include('public.site.tile', ['p' => $p])
+                        {{-- One category for the whole hub (land preparation): the label would only repeat the page's name. --}}
+                        @include('public.site.tile', ['p' => $p, 'hideCat' => $cats->count() <= 1])
                     @endforeach
                 </div>
             @else
@@ -100,7 +102,7 @@
     bar.addEventListener('click', (e) => {
         const b = e.target.closest('button[data-cat]');
         if (!b) return;
-        bar.querySelectorAll('button').forEach((x) => x.classList.toggle('is-on', x === b));
+        bar.querySelectorAll('button').forEach((x) => { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
         const want = b.dataset.cat;
         let i = 0;
         grid.querySelectorAll('.sp-tile').forEach((t) => {

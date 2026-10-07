@@ -163,11 +163,11 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "How anee.io's AI agricultural technician supports field teams"
+      "text": "How anee.io's smart farm technician supports field teams"
     },
     {
       "type": "text",
-      "text": "Field teams get the same kinds of questions again and again. That is where [Anee, the AI agricultural technician](/features/ai-agricultural-technician), can help, from the Libre plus Anee plan up. Anee answers in Tagalog or English and reads the farm's cropping schedule, each lot's growth stage and the weather first. She can look at a photo of a pest or a sick plant.\n\nFor the team itself, anee.io keeps the plan and the people in one place. The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. The [workers and payroll](/features/farm-workers-and-payroll) module assigns hands to activities. It comes with the Solo Farmer plan, and the Farm Owner plan adds worker logins with access levels. Meanwhile, [farm maps](/features/farm-maps) let you draw and measure fields over satellite imagery."
+      "text": "Field teams get the same kinds of questions again and again. That is where [Anee, the smart farm technician](/features/ai-agricultural-technician), can help, from the Libre plus Anee plan up. Anee answers in Tagalog or English and reads the farm's cropping schedule, each lot's growth stage and the weather first. She can look at a photo of a pest or a sick plant.\n\nFor the team itself, anee.io keeps the plan and the people in one place. The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. The [workers and payroll](/features/farm-workers-and-payroll) module assigns hands to activities. It comes with the Solo Farmer plan, and the Farm Owner plan adds worker logins with access levels. Meanwhile, [farm maps](/features/farm-maps) let you draw and measure fields over satellite imagery."
     },
     {
       "type": "callout",
@@ -177,9 +177,9 @@
     },
     {
       "type": "cta",
-      "title": "Give your field team an AI technician",
+      "title": "Give your field team a smart farm technician",
       "text": "Anee answers in Tagalog or English, checks the crop stage and weather first, and can read a photo from the field.",
-      "label": "See the AI technician",
+      "label": "See the smart farm technician",
       "url": "/features/ai-agricultural-technician"
     },
     {
@@ -221,7 +221,7 @@
           "url": "/blog/agriculture-in-the-philippine-economy"
         },
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, your smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {
