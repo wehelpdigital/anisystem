@@ -55,7 +55,6 @@
              class="hp-hero-bg" loading="eager" fetchpriority="high">
         <div class="hp-hero-shade" aria-hidden="true"></div>
         <div class="hp-hero-glow" aria-hidden="true"></div>
-        @include('public.partials.anee-peek')
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 hp-hero-in">
             <div class="hp-hero-copy">
