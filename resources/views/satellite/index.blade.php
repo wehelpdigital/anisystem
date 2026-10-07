@@ -155,8 +155,8 @@
         box-shadow: 0 6px 16px -8px rgb(0 0 0 / .6); cursor: pointer; transition: background-color .28s var(--sat-ease), color .28s var(--sat-ease); }
     .sat-layers button.is-on { background: #2d5016; color: #fff; }
     .sat-layers button:disabled { opacity: .45; cursor: default; }
-    .sat-opacity { position: absolute; right: .6rem; bottom: .6rem; z-index: 2; display: flex; align-items: center; gap: .45rem; padding: .4rem .65rem; border-radius: .8rem;
-        font-size: .72rem; font-weight: 800; color: #fff; background: rgb(15 29 8 / .82); }
+    .sat-opacity { pointer-events: auto; display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .65rem; border-radius: 999px;
+        font-size: .72rem; font-weight: 800; color: #fff; background: rgb(15 29 8 / .82); box-shadow: 0 6px 16px -8px rgb(0 0 0 / .6); }
     .sat-opacity input { width: 6.5rem; accent-color: #f5c518; }
     .sat-legend { position: absolute; left: .6rem; bottom: .6rem; z-index: 2; padding: .45rem .6rem; border-radius: .8rem; background: rgb(15 29 8 / .82); color: #fff; font-size: .68rem; font-weight: 800; }
     .sat-legend i { display: block; width: 9rem; height: .5rem; border-radius: 999px; margin: .25rem 0 .15rem;
@@ -362,6 +362,8 @@
     const st = { step: 0, place: null, crop: null, method: 'transplanted', water: 'irrigated', soil: [], concerns: [], ring: [] };
     const STEPS = 7;
 
+    /* Shops, stops and pins only clutter a field: the map keeps roads and places. */
+    const QUIET = [{ featureType: 'poi', stylers: [{ visibility: 'off' }] }, { featureType: 'transit', stylers: [{ visibility: 'off' }] }];
     /* ---- Google Maps, loaded once for both maps on this page ---- */
     let mapsReady = null;
     const loadMaps = () => mapsReady ??= new Promise((resolve, reject) => {
@@ -414,7 +416,8 @@
         if (!b) return;
         st.crop = b.dataset.k;
         const c = OPT.crops.find((x) => x.key === st.crop);
-        if (c && c.perennial) st.method = 'perennial';
+        // The usual way in for the crop: transplanted palay, seeded rows for the rest.
+        st.method = c && c.perennial ? 'perennial' : (/^rice/.test(st.crop) ? (/dsr|direct/.test(st.crop) ? 'direct' : 'transplanted') : 'planted');
         crops();
         pills($('satMethods'), OPT.methods, { get: () => st.method, set: (v) => { st.method = v; } });
     });
@@ -487,7 +490,7 @@
         try { await loadMaps(); } catch (err) { $('satArea').textContent = err.message; return; }
         if (!dmap) {
             dmap = new google.maps.Map($('satDrawMap'), { center: st.place, zoom: st.place.here ? 17 : 15, mapTypeId: 'hybrid', streetViewControl: false, fullscreenControl: false,
-                mapTypeControl: false, clickableIcons: false, gestureHandling: 'greedy', tilt: 0 });
+                mapTypeControl: false, cameraControl: false, clickableIcons: false, gestureHandling: 'greedy', tilt: 0, styles: QUIET });
             dpoly = new google.maps.Polygon({ map: dmap, strokeColor: '#f5c518', strokeWeight: 2.5, fillColor: '#f5c518', fillOpacity: .18, clickable: false });
             dmap.addListener('click', (e) => { if (st.ring.length < 300) { st.ring.push({ lat: e.latLng.lat(), lng: e.latLng.lng() }); paintDraw(); } });
         } else if (!st.ring.length) {
@@ -641,9 +644,9 @@
                 + card('What Anee sees', p(a.summary) + p((a.stage || {}).basis ? 'Stage: ' + a.stage.guess + '. ' + a.stage.basis : ''), ICON.eye)
                 + card('Stand and spacing', p(SP.reading) + p(SP.density) + '<p class="sat-note mt-2">' + esc(SP.note || '') + '</p>', ICON.leaf),
             map: '<div class="sat-map-wrap"><div class="sat-map" id="satRMap"></div>'
-                + '<div class="sat-layers"><button type="button" data-l="rgb">True color</button><button type="button" data-l="ndvi" class="is-on">NDVI heatmap</button><button type="button" data-l="sar">Radar</button><button type="button" data-l="none">Map only</button></div>'
-                + '<div class="sat-legend" id="satLegend">NDVI<i></i><span><em>0 bare</em><em>0.9 lush</em></span></div>'
-                + '<label class="sat-opacity">Layer <input type="range" id="satOp" min="0" max="100" value="80"></label></div>'
+                + '<div class="sat-layers"><button type="button" data-l="rgb">True color</button><button type="button" data-l="ndvi" class="is-on">NDVI heatmap</button><button type="button" data-l="sar">Radar</button><button type="button" data-l="none">Map only</button>'
+                + '<label class="sat-opacity">Layer <input type="range" id="satOp" min="0" max="100" value="80" aria-label="Layer opacity"></label></div>'
+                + '<div class="sat-legend" id="satLegend">NDVI<i></i><span><em>0 bare</em><em>0.9 lush</em></span></div></div>'
                 + '<p class="sat-note">Heatmaps from Google Earth Engine. NDVI red is bare or stressed, deep green is a full, healthy canopy. Radar colors: green and yellow are dense canopy, blue and dark are water or bare soil.</p>',
             health: card('Crop health', p(H.reading) + p(H.ndviMeaning) + p(H.uniformity), ICON.leaf)
                 + (s2.available ? card('How green, across the field', '<div class="sat-bars">' + [['Lowest 10%', nd.p10], ['Middle', nd.p50], ['Top 10%', nd.p90], ['Average', nd.mean]].map(([k, v]) => '<div class="sat-bar">' + esc(k) + '<span><i style="width:' + Math.max(2, Math.min(100, (Number(v) || 0) / 0.9 * 100)) + '%"></i></span><b>' + esc(v) + '</b></div>').join('') + '</div>'
@@ -719,7 +722,7 @@
         const rep = cur.report || {}, s = rep.satellite || {};
         const ring = ((cur.params || {}).polygon || {}).coordinates?.[0] || [];
         const path = ring.map(([lng, lat]) => ({ lat, lng }));
-        rmap = new google.maps.Map($('satRMap'), { mapTypeId: 'hybrid', streetViewControl: false, fullscreenControl: true, mapTypeControl: false, gestureHandling: 'greedy', tilt: 0 });
+        rmap = new google.maps.Map($('satRMap'), { mapTypeId: 'hybrid', streetViewControl: false, fullscreenControl: false, cameraControl: false, mapTypeControl: false, clickableIcons: false, gestureHandling: 'greedy', tilt: 0, styles: QUIET });
         new google.maps.Polygon({ map: rmap, paths: path, strokeColor: '#f5c518', strokeWeight: 2, fillOpacity: 0, clickable: false });
         const b = new google.maps.LatLngBounds(); path.forEach((x) => b.extend(x)); rmap.fitBounds(b, 30);
         tiles = Object.assign({}, (s.sentinel2 || {}).tiles || {}, (s.sentinel1 || {}).tiles || {});
