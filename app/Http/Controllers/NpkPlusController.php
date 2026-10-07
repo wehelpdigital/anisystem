@@ -80,6 +80,7 @@ class NpkPlusController extends Controller
             'crops' => collect(NpkCrops::TABLE)->map(fn ($c, $k) => ['key' => $k, 'label' => CropCatalog::label($k), 'icon' => CropCatalog::CROPS[$k]['icon'] ?? '🌱',
                 'group' => CropCatalog::CROPS[$k]['group'] ?? 'Other crops'] + $c)->values(),
             'soilConditions' => SoilConditions::OPTIONS,
+            'model' => \App\Support\NpkModel::forClient(),
             'water' => self::WATER,
             'timing' => self::TIMING,
             'quote' => AiPrices::of(self::KIND),
@@ -312,7 +313,12 @@ class NpkPlusController extends Controller
             . 'Totals per hectare (elemental unless named as oxide): ' . json_encode($res['perHa'] ?? []) . "\n"
             . 'N-P2O5-K2O per hectare: ' . ($res['npkPerHa'] ?? '?') . "\n"
             . ($soil ? 'Soil test: ' . json_encode($soil) . "\n" : 'No soil test given.' . "\n")
-            . (! empty($res['needs']) ? 'The calculator\'s check against the usual recommended rate for this crop, kg per ha (adjusted by the soil test when given): ' . json_encode($res['needs']) . "\n" : '')
+            . (! empty($set['texture']) && $set['texture'] !== 'unsure' ? 'Soil type: ' . $set['texture'] . "\n" : '')
+            . (! empty($set['conditions']) ? 'Soil conditions the farmer picked: ' . implode(', ', array_map('strval', (array) $set['conditions'])) . "\n" : '')
+            . (! empty($res['goal']) ? 'Yield goal the calculator counted for: ' . json_encode($res['goal']) . "\n" : '')
+            . (! empty($res['needs']) ? 'The calculator\'s need model, kg per ha for that goal on this soil (the official guide rate sized to the goal and adjusted for the soil; plan is what the plan gives): ' . json_encode($res['needs']) . "\n" : '')
+            . (! empty($res['micros']) ? 'The calculator\'s secondary, micro and beneficial element needs, kg of element per ha (level none, watch, likely, or test from a soil test): ' . json_encode($res['micros']) . "\n" : '')
+            . (isset($res['reach']) && $res['reach'] !== null ? 'Liebig reading: the scarcest nutrient lets the crop reach about ' . (int) $res['reach'] . "% of the goal by the calculator's count.\n" : '')
             . (! empty($res['support']) ? 'The calculator\'s estimate of the yield the fertilizer alone can feed, t/ha per nutrient (soil supply not counted): ' . json_encode($res['support']) . "\n" : '');
     }
 
