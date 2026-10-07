@@ -311,6 +311,10 @@
                          kept the two from matching. --}}
                 @elseif($typeLabel)
                     <span class="badge badge-green activity-type-badge">{{ $typeLabel }}</span>
+                    @php $sprayDirs = collect((array) ($a->sprayDirections ?? []))->map(fn ($d) => \App\Models\AsScheduleActivity::SPRAY_DIRECTIONS[$d] ?? null)->filter(); @endphp
+                    @if ($sprayDirs->isNotEmpty())
+                        <span class="badge spray-badge" title="Spray direction">{{ $sprayDirs->implode(', ') }}</span>
+                    @endif
                 @endif
                 @if($a->isDayZero)
                     @php $dzMode = ($cardLots->count() && $cardLots->every(fn ($l) => $l->dayType === 'DAP')) ? 'DAP' : 'DAS'; @endphp

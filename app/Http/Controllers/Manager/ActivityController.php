@@ -1479,6 +1479,8 @@ class ActivityController extends BaseScheduleController
             // is filtered out of it on the way in so nothing counts twice.
             'extraTypes'      => ['nullable', 'array', 'max:8'],
             'extraTypes.*'    => ['string', Rule::in(array_keys(AsScheduleActivity::ACTIVITY_TYPES))],
+            'sprayDirections'   => ['nullable', 'array', 'max:8'],
+            'sprayDirections.*' => ['string', Rule::in(array_keys(AsScheduleActivity::SPRAY_DIRECTIONS))],
             'waterTask'       => ['nullable', 'string', Rule::in(array_keys(AsScheduleActivity::WATER_TASKS))],
             'servicePrice'    => 'nullable|numeric|min:0|max:99999999',
             'isDayZero'       => 'nullable|boolean',
@@ -1612,6 +1614,9 @@ class ActivityController extends BaseScheduleController
             'priority'           => $request->priority,
             'activityType'       => $activityType,
             'extraTypes'         => $extraTypes ?: null,
+            // Where the spray goes: only a task that sprays keeps it.
+            'sprayDirections'    => array_intersect(array_merge([$activityType], $extraTypes), AsScheduleActivity::SPRAY_TYPES)
+                ? (array_values(array_unique(array_filter((array) $request->input('sprayDirections', []), 'is_string'))) ?: null) : null,
             // Water task only applies to irrigation activities.
             'waterTask'          => $activityType === 'irrigation'
                 ? ($request->filled('waterTask') ? $request->waterTask : 'irrigate')

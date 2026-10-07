@@ -316,6 +316,16 @@
     .pbt-counter button { padding: 0 .8rem; font-size: .8rem; font-weight: 800; color: var(--color-gray-500); background: var(--color-white); }
     .pbt-counter button.is-on { background: #3d6823; color: #fff; }
     .pbt-day .form-input { flex: 1 1 auto; min-width: 0; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .pbt-spray.is-in { animation: pbtSprayIn .28s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes pbtSprayIn { from { opacity: 0; transform: translateY(-4px); } }
+    .pbt-spray-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .pbt-spray-tag { padding: .42rem .75rem; border-radius: 999px; font-size: .8rem; font-weight: 700; cursor: pointer; color: var(--color-gray-700); background: var(--color-white);
+        border: 1.5px solid var(--color-gray-200); transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .pbt-spray-tag:hover { border-color: #a8cc7e; }
+    .pbt-spray-tag[aria-pressed="true"] { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+    .pb-chip-spray { background: #e0f2fe !important; color: #075985 !important; }
+    html.dark .pb-chip-spray { background: #0c2a3d !important; color: #7dd3fc !important; }
+    @media (prefers-reduced-motion: reduce) { .pbt-spray.is-in { animation: none; } .pbt-spray-tag { transition: none; } }
     .pbt-stage { font-size: .74rem; color: #3d6823; font-weight: 700; margin-top: .3rem; min-height: 1rem; }
     .pbt-sec { margin-top: 1.1rem; }
     .pbt-sec-h { margin-bottom: .1rem; }
@@ -719,6 +729,11 @@
                 <span class="crop-tag-t is-none" id="pbtTypeNow">Choose a type</span>
                 <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>
+        </div>
+        {{-- Where the spray goes (2026-10-07): only for a spray type. --}}
+        <div class="mt-3 pbt-spray" id="pbtSprayWrap" hidden>
+            <span class="form-label">Spray direction</span>
+            <div class="pbt-spray-tags" id="pbtSprayTags"></div>
         </div>
         <p class="pbt-warn" id="pbtWarn" hidden></p>
         <div class="mt-3">
@@ -1346,6 +1361,7 @@
         const rv = reviewFor(t.id);
         const chips = [];
         if (type) chips.push(`<span class="pb-chip">${TYPE_ICON[t.type] || '📌'} ${esc(type)}</span>`);
+        if ((t.spray || []).length && (OPT.sprayTypes || []).includes(t.type)) chips.push(`<span class="pb-chip pb-chip-spray">↗ ${esc(t.spray.map((d) => (OPT.sprayDirections || {})[d] || d).join(', '))}</span>`);
         chips.push(`<span class="pb-chip">${esc((OPT.priorities[t.priority] || {}).label || t.priority)}</span>`);
         if (items) chips.push(`<span class="pb-chip">🧴 ${items} ${items === 1 ? 'item' : 'items'}${drawn ? ` · 📦 ${drawn} from materials` : ''}</span>`);
         if (t.workers !== null && t.workers !== undefined) chips.push(`<span class="pb-chip">👷 ${t.workers}</span>`);
@@ -1710,12 +1726,29 @@
         return out;
     }
     function uniq(arr) { return [...new Set(arr)]; }
+    function paintSpray() {
+        const wrap = $id('pbtSprayWrap');
+        const on = !!(W && W.type && (OPT.sprayTypes || []).includes(W.type));
+        if (on && wrap.hidden) { wrap.hidden = false; wrap.classList.remove('is-in'); void wrap.offsetWidth; wrap.classList.add('is-in'); }
+        if (!on) wrap.hidden = true;
+        if (!$id('pbtSprayTags').children.length) {
+            $id('pbtSprayTags').innerHTML = Object.entries(OPT.sprayDirections || {}).map(([k, v]) => `<button type="button" class="pbt-spray-tag" data-dir="${k}" aria-pressed="false">${esc(v)}</button>`).join('');
+        }
+        $id('pbtSprayTags').querySelectorAll('[data-dir]').forEach((b) => b.setAttribute('aria-pressed', String(!!(W && (W.spray || []).includes(b.getAttribute('data-dir'))))));
+    }
+    $id('pbtSprayTags').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-dir]'); if (!b || !W) return;
+        const d = b.getAttribute('data-dir');
+        W.spray = (W.spray || []).includes(d) ? W.spray.filter((x) => x !== d) : (W.spray || []).concat(d);
+        paintSpray();
+    });
     function paintType() {
         const t = W.type ? OPT.types[W.type] : null;
         $id('pbtTypeIcon').textContent = W.type ? (TYPE_ICON[W.type] || '📌') : '📌';
         const now = $id('pbtTypeNow');
         now.textContent = t || 'Choose a type';
         now.classList.toggle('is-none', !t);
+        paintSpray();
     }
     let TASK_DAY = null;
     function paintStage() {
@@ -1982,6 +2015,7 @@
         W.note = $id('pbtNote').value.trim();
         const w = $id('pbtWorkers').value.trim();
         W.workers = w === '' ? null : Math.max(0, Math.min(999, parseInt(w, 10) || 0));
+        W.spray = (OPT.sprayTypes || []).includes(W.type) ? (W.spray || []) : [];
         W.groups.forEach((g) => {
             g.title = (g.title || '').trim();
             g.loads = g.perKnapsack && Number(g.loads) > 0 ? Number(g.loads) : null;

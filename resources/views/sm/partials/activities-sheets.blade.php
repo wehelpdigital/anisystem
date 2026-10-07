@@ -389,6 +389,17 @@
                     @endforeach
                 </select>
             </div>
+            {{-- Where the spray goes (2026-10-07): asked only when a picked
+                 type is one a sprayer carries. Tags, several allowed. --}}
+            <div id="activitySprayWrap" class="spray-wrap" hidden>
+                <span class="form-label">Spray direction</span>
+                <div class="spray-tags" id="activitySprayTags" role="group" aria-label="Spray direction">
+                    @foreach (\App\Models\AsScheduleActivity::SPRAY_DIRECTIONS as $k => $label)
+                        <button type="button" class="spray-tag" data-dir="{{ $k }}" aria-pressed="false">{{ $label }}</button>
+                    @endforeach
+                </div>
+                <p class="form-hint">Pick where the spray should reach. Your workers see it on the task.</p>
+            </div>
             <div id="activityWaterTaskWrap" class="hidden">
                 <span class="form-label">Water task</span>
                 <button type="button" class="crop-tag" id="activityWaterTaskBtn">

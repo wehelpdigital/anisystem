@@ -915,6 +915,7 @@ class ProtocolBuilderController extends Controller
                 $head .= ' (' . $t['subtitle'] . ')';
             }
             $head .= ' · type: ' . (AsScheduleActivity::ACTIVITY_TYPES[$t['type']] ?? 'not stated')
+                . (! empty($t['spray']) ? ' · spray direction: ' . implode(', ', array_map(fn ($k) => AsScheduleActivity::SPRAY_DIRECTIONS[$k] ?? $k, $t['spray'])) : '')
                 . ' · importance: ' . $t['priority']
                 . ($t['workers'] !== null ? ' · workers needed: ' . $t['workers'] : '');
             $lines[] = $head;
@@ -1324,6 +1325,7 @@ PROMPT;
                 'targetDate' => $date,
                 'priority' => $t['priority'],
                 'activityType' => $t['type'],
+                'sprayDirections' => ! empty($t['spray']) ? $t['spray'] : null,
                 'description' => HtmlSanitizer::rich($this->activityHtml($t, $matById)),
                 'timeRequired' => 'n/a',
                 'isDayZero' => $t['day'] === 0 && $t['counter'] !== 'DAT',
@@ -1537,6 +1539,8 @@ PROMPT;
             'dayTypes' => self::DAY_TYPES,
             'dividerColors' => self::DIVIDER_COLORS,
             'types' => AsScheduleActivity::ACTIVITY_TYPES,
+            'sprayTypes' => AsScheduleActivity::SPRAY_TYPES,
+            'sprayDirections' => AsScheduleActivity::SPRAY_DIRECTIONS,
             'kinds' => self::KINDS,
             'units' => self::UNITS,
             'canUpload' => self::canUpload(),
@@ -1754,6 +1758,9 @@ PROMPT;
                 'subtitle' => $this->text($t['subtitle'] ?? '', 200) ?? '',
                 'description' => $this->text($t['description'] ?? '', 4000) ?? '',
                 'type' => isset(AsScheduleActivity::ACTIVITY_TYPES[$type]) ? $type : null,
+                // Where the spray goes (2026-10-07): kept only on a spray.
+                'spray' => in_array($type, AsScheduleActivity::SPRAY_TYPES, true)
+                    ? array_values(array_unique(array_filter((array) ($t['spray'] ?? []), fn ($d) => is_string($d) && isset(AsScheduleActivity::SPRAY_DIRECTIONS[$d])))) : [],
                 'groups' => $groups,
                 'note' => $this->text($t['note'] ?? '', 2000) ?? '',
                 'priority' => isset(self::PRIORITIES[$priority]) ? $priority : 'medium',

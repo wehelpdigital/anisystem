@@ -1184,6 +1184,21 @@
         html.dark .tt-open.is-set { color: #e5e9f5; }
         html.dark .tt-open-ico { color: #a5c97e; }
         @media (prefers-reduced-motion: reduce) { .tt-open { transition: none; } }
+        /* Spray direction (2026-10-07): small tags under the type, shown
+           only for a spray; the reveal rides the house curve. */
+        .spray-wrap { margin-top: .9rem; }
+        .spray-wrap.is-in { animation: sprayIn .28s cubic-bezier(.22,1,.36,1) both; }
+        @keyframes sprayIn { from { opacity: 0; transform: translateY(-4px); } }
+        .spray-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .3rem; }
+        .spray-tag { padding: .42rem .75rem; border-radius: 999px; font-size: .8rem; font-weight: 700; cursor: pointer; color: #374151; background: #fff;
+            border: 1.5px solid var(--color-gray-200, #e5e7eb); transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .spray-tag:hover { border-color: #a8cc7e; }
+        .spray-tag[aria-pressed="true"] { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+        html.dark .spray-tag { background: #1c2136; border-color: #2a3050; color: #cbd5e1; }
+        html.dark .spray-tag[aria-pressed="true"] { background: #3d6823; border-color: #3d6823; color: #fff; }
+        .spray-badge { background: #e0f2fe; color: #075985; }
+        html.dark .spray-badge { background: #0c2a3d; color: #7dd3fc; }
+        @media (prefers-reduced-motion: reduce) { .spray-wrap.is-in { animation: none; } .spray-tag { transition: none; } }
 
         /* "Also add it to the inventory" — a question with its reason under
            it, because the difference between listing a material and shelving

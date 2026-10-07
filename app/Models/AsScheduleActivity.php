@@ -38,6 +38,21 @@ class AsScheduleActivity extends BaseModel
         'other'          => 'Other',
     ];
 
+    /** The task types a sprayer carries; these ask where the spray goes (2026-10-07). */
+    public const SPRAY_TYPES = ['foliar_spray', 'herbicide', 'pesticide', 'copper_fungicide', 'fungicide', 'microbial'];
+
+    /** Where the spray goes. Several may be picked; the order is the order shown. */
+    public const SPRAY_DIRECTIONS = [
+        'below' => 'From below, at the base',
+        'under' => 'Under the leaves',
+        'canopy' => 'Over the canopy',
+        'whole' => 'The whole plant, top to bottom',
+        'rows' => 'Between the rows',
+        'soil' => 'On the soil',
+        'spot' => 'Spot spray only',
+        'bunch' => 'On the fruit or bunch',
+    ];
+
     /**
      * Water-task catalog for irrigation-type activities (activityType =
      * 'irrigation'). slug => label, plus a color for the card badge.
@@ -72,6 +87,7 @@ class AsScheduleActivity extends BaseModel
         'priority',
         'activityType',
         'extraTypes',
+        'sprayDirections',
         'waterTask',
         'servicePrice',
         'isDayZero',
@@ -99,6 +115,7 @@ class AsScheduleActivity extends BaseModel
         'targetEndDate' => 'date:Y-m-d',
         'servicePrice' => 'decimal:2',
         'extraTypes' => 'array',
+        'sprayDirections' => 'array',
         'imagePaths' => 'array',
         'tags' => 'array',
         'reminders' => 'array',

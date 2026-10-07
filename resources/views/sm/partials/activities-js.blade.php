@@ -116,6 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const STORAGE_BASE = @json(asset('storage'));
 
     const ACTIVITY_TYPE_LABELS = @json($activityTypes);
+    const SPRAY_TYPES = @json(\App\Models\AsScheduleActivity::SPRAY_TYPES);
+    const SPRAY_DIR_LABELS = @json(\App\Models\AsScheduleActivity::SPRAY_DIRECTIONS);
     const WATER_TASK_LABELS = @json(\App\Models\AsScheduleActivity::WATER_TASKS);
     const WATER_TASK_COLORS = @json(\App\Models\AsScheduleActivity::WATER_TASK_COLORS);
     let activityMode = 'task';   // 'task' | 'irrigation' — the add-activity sheet mode
@@ -1135,6 +1137,8 @@ document.addEventListener('DOMContentLoaded', () => {
             typeBadge = '';        // the ticked list says what this is
         } else {
             typeBadge = typeLabel ? `<span class="badge badge-green activity-type-badge">${esc(typeLabel)}</span>` : '';
+            const dirs = (Array.isArray(a.sprayDirections) ? a.sprayDirections : []).map((d) => SPRAY_DIR_LABELS[d]).filter(Boolean);
+            if (dirs.length) typeBadge += `<span class="badge spray-badge" title="Spray direction">${esc(dirs.join(', '))}</span>`;
         }
         // Type chip before the title — keep in sync with activity-card.blade.php.
         const typeIcoClass = a.activityType === 'irrigation' ? 'type-ico-irrigation'
@@ -3398,6 +3402,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let TASK_TYPES = [];   // slugs, in the order they were picked
+    let SPRAY_DIRS = [];   // where the spray goes, for a spray task (2026-10-07)
 
     const taskTypes = () => TASK_TYPES.slice();
 
@@ -3422,6 +3427,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 warn.innerHTML = '<b>' + esc(TT_SOLO[clash]) + ' should go out alone.</b> ' + esc(TT_SOLO_WHY[clash]);
             }
         }
+        paintSpray();
         const hint = $id('activityTypeHint');
         if (hint) {
             hint.textContent = TASK_TYPES.length > 1
@@ -3443,6 +3449,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     + (TASK_TYPES.length > 1 ? ' +' + (TASK_TYPES.length - 1) + ' more' : '');
         }
     }
+
+    /* Spray direction: shown when a picked type is a spray, kept in a set. */
+    function paintSpray() {
+        const wrap = $id('activitySprayWrap');
+        if (!wrap) return;
+        const show = TASK_TYPES.some((t) => SPRAY_TYPES.includes(t));
+        if (show && wrap.hidden) { wrap.hidden = false; wrap.classList.remove('is-in'); void wrap.offsetWidth; wrap.classList.add('is-in'); }
+        if (!show) wrap.hidden = true;
+        $qsa('#activitySprayTags .spray-tag').forEach((b) => b.setAttribute('aria-pressed', String(SPRAY_DIRS.includes(b.getAttribute('data-dir')))));
+    }
+    function setSprayDirs(list) { SPRAY_DIRS = (list || []).filter((d) => SPRAY_DIR_LABELS[d]); paintSpray(); }
+    function sprayDirsForSave() { return TASK_TYPES.some((t) => SPRAY_TYPES.includes(t)) ? SPRAY_DIRS.slice() : []; }
+    $id('activitySprayTags')?.addEventListener('click', (e) => {
+        const b = e.target.closest('.spray-tag');
+        if (!b) return;
+        const d = b.getAttribute('data-dir');
+        SPRAY_DIRS = SPRAY_DIRS.includes(d) ? SPRAY_DIRS.filter((x) => x !== d) : SPRAY_DIRS.concat(d);
+        paintSpray();
+    });
 
     function setTaskTypes(list) {
         const known = new Set($qsa('#activityTypeTags .tt-tag').map((t) => t.getAttribute('data-type')));
@@ -6097,6 +6122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityPriority').value = 'medium';
         $id('activityType').value = '';
         setTaskTypes([]);
+        setSprayDirs([]);
         if ($id('activityWaterTask')) { $id('activityWaterTask').value = 'irrigate'; sayWaterTask(); }
         if ($id('activityServicePrice')) $id('activityServicePrice').value = '';
         setActivityMode('task');
@@ -6204,6 +6230,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 $id('activityType').value = a.activityType || '';
                 setTaskTypes([a.activityType, ...(Array.isArray(a.extraTypes) ? a.extraTypes : [])]);
             }
+            setSprayDirs(Array.isArray(a.sprayDirections) ? a.sprayDirections : []);
             $id('activityTimeRequired').value = a.timeRequired || 'half';
             if ($id('actWorkerChecklist')) $id('actWorkerChecklist').checked = !!boolFlag(a.workerChecklist);
             if ($id('actWorkerSelfCheck')) $id('actWorkerSelfCheck').checked = !!boolFlag(a.workerSelfCheck);
@@ -6279,6 +6306,7 @@ document.addEventListener('DOMContentLoaded', () => {
             priority: a.priority,
             activityType: a.activityType || '',
             extraTypes: Array.isArray(a.extraTypes) ? a.extraTypes.slice() : [],
+            sprayDirections: Array.isArray(a.sprayDirections) ? a.sprayDirections.slice() : [],
             waterTask: a.waterTask || '',
             servicePrice: a.servicePrice != null ? a.servicePrice : '',
             description: a.description || '',
@@ -6347,6 +6375,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Everything else in the same tank (empty unless this is a task).
             extraTypes: (isIrrigation || isService || isPayroll || isReminders)
                 ? [] : taskTypes().slice(1),
+            sprayDirections: (isIrrigation || isService || isPayroll || isReminders) ? [] : sprayDirsForSave(),
             waterTask: isIrrigation ? ($id('activityWaterTask').value || 'irrigate') : '',
             servicePrice: isService ? ($id('activityServicePrice').value || '') : '',
             description: getDescriptionContent(),
