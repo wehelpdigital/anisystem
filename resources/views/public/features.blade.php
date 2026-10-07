@@ -63,10 +63,6 @@
             'A news feed for wins and warnings, focused discussion rooms, direct messages with photos, clips and voice notes, and a ladder of 100 levels that turns helping into a game.',
             ['Public, password and approval rooms for private groups', 'A team Collab Room per season: chat, whiteboard and calls', 'The latest farm news, with what it means for your farm'],
             [['images/site/app/community.png', 'The farmer community feed']], 'farmer-community'],
-        ['resources', 'Resources', 'Resources', true, 'The Stash: resources shared by anee.io\'s partners',
-            'Magazines, guides and studies from the institutions that work beside Filipino farmers, kept in one shelf inside the app. Search by title or year and read them in anee.io\'s own reader, free for every member.',
-            ['A shelf per partner and type, growing as partners join', 'Opens at page one even on a slow signal'],
-            [['images/site/app/stash.webp', 'The Stash shelf of PhilRice e-magazines']], 'the-stash'],
     ];
 @endphp
 
@@ -186,10 +182,6 @@
     .ft-inline { display: flex; justify-content: center; gap: .8rem; margin: 0 0 1.2rem; }
     .ft-inline img { width: min(46%, 11rem); border-radius: 1.2rem; box-shadow: 0 0 0 5px #14210c, 0 24px 40px -24px rgb(20 33 12 / .6); }
     @media (min-width: 1024px) { .ft-inline { display: none; } }
-    .fz-partner { display: inline-flex; align-items: center; gap: .7rem; margin-top: 1rem; padding: .6rem .9rem .6rem .6rem; border-radius: 1rem; background: #f6faf1; border: 1px solid #e1edd3; }
-    .fz-partner img { width: 3rem; height: 3rem; border-radius: .7rem; }
-    .fz-partner b { display: block; font-size: .92rem; color: #14210c; }
-    .fz-partner small { display: block; font-size: .78rem; color: #6b7280; }
     .fz-link { display: inline-flex; align-items: center; gap: .35rem; margin-top: 1.1rem; font-weight: 800; color: #3d6823; text-decoration: none; }
     .fz-link:hover { text-decoration: underline; }
 
@@ -313,9 +305,6 @@
                                 <ul class="ft-list">
                                     @foreach ($tlist as $li => $item)<li style="--n: {{ $li }}">{!! $tick !!}<span>{{ $item }}</span></li>@endforeach
                                 </ul>
-                                @if ($tk === 'resources')
-                                    <div class="fz-partner"><img src="{{ asset('images/partners/philrice.webp') }}" alt="PhilRice logo" width="48" height="48" loading="lazy"><span><b>PhilRice</b><small>Every PhilRice Magazine issue, 75 and counting</small></span></div>
-                                @endif
                                 <a href="{{ url('/features/' . $tguide) }}" class="ft-go">Read the full guide <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
                                 @if ($tk === 'crop-care')<a href="{{ url('/pests') }}#finder" class="ft-go" style="margin-left: 1rem">Try the Pest Finder ›</a>@endif
                             </div>
