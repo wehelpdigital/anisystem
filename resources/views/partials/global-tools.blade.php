@@ -275,6 +275,16 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        {{-- NPK Plus (2026-10-07): the free fertilizer calculator; Anee's
+             reading of a plan is the paid step inside it. --}}
+        <a href="{{ route('npk.page') }}" class="qa-tile qa-build">
+            <span class="qa-ico"><img src="{{ asset('images/icons/npk.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+            <span class="qa-txt">
+                <b>NPK Plus Calculator</b>
+                <i>Add up every nutrient in your fertilizer plan, as the element and the oxide, and see if it is enough for your crop and what yield it can feed. Free.</i>
+            </span>
+            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
             {{-- The four analyses first (the owner's order, 2026-09-16); the
                  notes and the pictures gathered across every season follow. --}}
             <a href="{{ route('notes.hub') }}" class="qa-tile qa-notes">

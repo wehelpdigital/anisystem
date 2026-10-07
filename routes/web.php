@@ -705,6 +705,17 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sky-weather/list', [App\Http\Controllers\SkyWeatherController::class, 'list'])->name('sky.list');
     Route::get('/app/sky-weather/one/{id}', [App\Http\Controllers\SkyWeatherController::class, 'one'])->whereNumber('id')->name('sky.one');
     Route::delete('/app/sky-weather/{id}', [App\Http\Controllers\SkyWeatherController::class, 'destroy'])->whereNumber('id')->name('sky.delete');
+    // NPK Plus (2026-10-07): the free fertilizer calculator, and Anee's reading of a plan.
+    Route::get('/app/npk-plus', [App\Http\Controllers\NpkPlusController::class, 'page'])->name('npk.page');
+    Route::get('/app/npk-plus/options', [App\Http\Controllers\NpkPlusController::class, 'options'])->name('npk.options');
+    Route::post('/app/npk-plus/product', [App\Http\Controllers\NpkPlusController::class, 'storeProduct'])->middleware('throttle:30,1')->name('npk.product');
+    Route::delete('/app/npk-plus/product/{id}', [App\Http\Controllers\NpkPlusController::class, 'destroyProduct'])->whereNumber('id')->name('npk.product.delete');
+    Route::post('/app/npk-plus/save', [App\Http\Controllers\NpkPlusController::class, 'save'])->middleware('throttle:60,1')->name('npk.save');
+    Route::get('/app/npk-plus/list', [App\Http\Controllers\NpkPlusController::class, 'list'])->name('npk.list');
+    Route::get('/app/npk-plus/one/{id}', [App\Http\Controllers\NpkPlusController::class, 'one'])->whereNumber('id')->name('npk.one');
+    Route::delete('/app/npk-plus/{id}', [App\Http\Controllers\NpkPlusController::class, 'destroy'])->whereNumber('id')->name('npk.delete');
+    Route::post('/app/npk-plus/analyze', [App\Http\Controllers\NpkPlusController::class, 'analyze'])->name('npk.analyze');
+    Route::get('/app/npk-plus/job/{id}', [App\Http\Controllers\NpkPlusController::class, 'jobState'])->whereNumber('id')->name('npk.job');
     // Satellite Analysis (2026-10-07): a drawn field read from Sentinel-2 and
     // Sentinel-1 through the field health service, then by Anee.
     Route::get('/app/satellite', [App\Http\Controllers\SatelliteController::class, 'page'])->name('sat.page');
