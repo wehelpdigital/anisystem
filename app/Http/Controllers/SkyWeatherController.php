@@ -203,7 +203,7 @@ class SkyWeatherController extends Controller
 
     private function stormsNear(?float $lat, ?float $lng): array
     {
-        if ($this->field->configured()) {
+        if ($this->field->earthEngine()) {
             $res = $this->field->storms($lat, $lng);
             if ($res['ok']) {
                 return $res['data'];

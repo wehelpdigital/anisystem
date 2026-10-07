@@ -481,7 +481,7 @@
                         ['Anthropic', 'anthropic', 'Claude, by Anthropic: one of the AI models Anee can think with'],
                         ['Google Gemini', 'googlegemini', 'Anee thinks with Gemini, by Google'],
                         ['Google Maps Platform', 'googlemaps', 'Maps, places and drawing your fields'],
-                        ['Google Earth Engine', 'googleearthengine', 'Satellite analysis of your field'],
+                        ['Microsoft Planetary Computer', null, 'The Sentinel pictures Satellite Analysis reads'],
                         ['Copernicus Sentinel', null, 'European Space Agency satellites: Sentinel 2 pictures and Sentinel 1 radar'],
                         ['NASA GIBS', null, 'Himawari 9 cloud imagery, through NASA Global Imagery Browse Services'],
                         ['Open-Meteo', null, 'Weather forecasts and climate history'],
@@ -498,7 +498,7 @@
                 @endphp
                 <div class="te">
                     <h2 class="te-h">Our tech ecosystem</h2>
-                    <p class="te-p">anee.io is built on the core, industry standard technology trusted by leading apps and research agencies: AI from Anthropic and Google, maps and satellite analysis from Google, satellites from the European Space Agency and NASA, weather from Open-Meteo and OpenWeather, and live chat and video calls from Pusher and LiveKit.</p>
+                    <p class="te-p">anee.io is built on the core, industry standard technology trusted by leading apps and research agencies: AI from Anthropic and Google, maps from Google, satellites from the European Space Agency and NASA read through Microsoft Planetary Computer, weather from Open-Meteo and OpenWeather, and live chat and video calls from Pusher and LiveKit.</p>
                     <ul class="te-list">
                         @foreach ($teMarks as [$teName, $teIcon, $teWhat])
                             <li title="{{ $teWhat }}">

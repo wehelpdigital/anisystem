@@ -189,8 +189,8 @@
           "url": "https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-1"
         },
         {
-          "label": "Google Earth Engine",
-          "url": "https://earthengine.google.com/"
+          "label": "Microsoft Planetary Computer",
+          "url": "https://planetarycomputer.microsoft.com/"
         },
         {
           "label": "ISRIC: SoilGrids, the global soil map",

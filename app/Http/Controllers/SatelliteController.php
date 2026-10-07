@@ -495,7 +495,7 @@ class SatelliteController extends Controller
         return "You are Anee, a smart farm technician for Filipino farmers. Write a satellite field analysis as ONE JSON object, nothing else.\n\n"
             . "THE FIELD\n" . $this->facts($p)
             . 'Elevation: ' . ($ctx['elevation'] ?? 'unknown') . " m\n\n"
-            . "WHAT THE SATELLITES SAW (Google Earth Engine; times are Philippine time; NDVI from 10 m Sentinel-2 with clouds masked; radar in dB from Sentinel-1, VV and VH):\n"
+            . "WHAT THE SATELLITES SAW (" . (($sat['source'] ?? '') === 'planetary' ? 'Copernicus Sentinel pictures through Microsoft Planetary Computer; Sentinel-1 is terrain corrected gamma nought' : 'Google Earth Engine') . "; times are Philippine time; NDVI from 10 m Sentinel-2 with clouds masked; radar in dB from Sentinel-1, VV and VH):\n"
             . json_encode($sat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n\n"
             . "WEATHER: last 30 days rain " . ($w['past30Rain'] ?? '?') . " mm, evapotranspiration " . ($w['past30Et0'] ?? '?') . " mm. Next 10 days:\n" . $nextDays . "\n"
             . 'Next 16 days rain total ' . ($w['next16Rain'] ?? '?') . " mm.\n\n"

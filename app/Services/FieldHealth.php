@@ -12,10 +12,22 @@ use Illuminate\Support\Facades\Log;
  *
  *   FIELD_HEALTH_URL     where the service runs (Cloud Run)
  *   FIELD_HEALTH_TOKEN   the shared secret, sent as X-Service-Token
+ *
+ * Without them (2026-10-07), the same pictures are read from Microsoft's
+ * Planetary Computer by App\Services\PlanetarySatellite, in the same
+ * shape: Satellite Analysis works with nothing to set up. Earth Engine,
+ * once configured, takes over again.
  */
 class FieldHealth
 {
+    /** Satellite Analysis can run (Earth Engine, or the Planetary Computer behind it). */
     public function configured(): bool
+    {
+        return $this->earthEngine() || (bool) config('services.field_health.planetary', true);
+    }
+
+    /** The Earth Engine service is set up. */
+    public function earthEngine(): bool
     {
         return (string) config('services.field_health.url') !== '' && (string) config('services.field_health.token') !== '';
     }
@@ -30,12 +42,22 @@ class FieldHealth
      */
     public function fieldHealth(array $polygon, int $days = 10): array
     {
+        if (! $this->earthEngine()) {
+            return app(PlanetarySatellite::class)->fieldHealth($polygon, $days);
+        }
+
         return $this->call('post', '/api/field-health', ['polygon' => $polygon, 'days' => $days], 170);
     }
 
     /** Fresh tile URLs for images a saved report read before (map ids expire). */
     public function tiles(array $polygon, ?string $s2Id, ?string $s1Id): array
     {
+        // A Planetary Computer picture (its ids start with the satellite's
+        // name, S2A_ or S1C_) is drawn from there, whatever is set up today.
+        if (! $this->earthEngine() || preg_match('/^S[12][A-D]_/', (string) ($s2Id ?: $s1Id))) {
+            return app(PlanetarySatellite::class)->tiles($polygon, $s2Id, $s1Id);
+        }
+
         return $this->call('post', '/api/tiles', ['polygon' => $polygon, 's2Id' => $s2Id, 's1Id' => $s1Id], 60);
     }
 
@@ -47,7 +69,7 @@ class FieldHealth
 
     private function call(string $method, string $path, array $body, int $timeout): array
     {
-        if (! $this->configured()) {
+        if (! $this->earthEngine()) {
             return ['ok' => false, 'error' => 'not-configured'];
         }
         try {

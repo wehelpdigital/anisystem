@@ -725,7 +725,7 @@
                 + '<div class="sat-layers"><button type="button" data-l="rgb">True color</button><button type="button" data-l="ndvi" class="is-on">NDVI heatmap</button><button type="button" data-l="sar">Radar</button><button type="button" data-l="none">Map only</button>'
                 + '</div><label class="sat-opacity">Layer <input type="range" id="satOp" min="0" max="100" value="80" aria-label="Layer opacity"></label>'
                 + '<div class="sat-legend" id="satLegend">NDVI<i></i><span><em>0 bare</em><em>0.9 lush</em></span></div></div>'
-                + '<p class="sat-note">Heatmaps from Google Earth Engine. NDVI red is bare or stressed, deep green is a full, healthy canopy. Radar colors: green and yellow are dense canopy, blue and dark are water or bare soil.</p>',
+                + '<p class="sat-note">' + (s.source === 'planetary' ? 'Pictures from Copernicus Sentinel 2 and Sentinel 1, through Microsoft Planetary Computer.' : 'Heatmaps from Google Earth Engine.') + ' NDVI red is bare or stressed, deep green is a full, healthy canopy. Radar colors: green and yellow are dense canopy, blue and dark are water or bare soil.</p>',
             health: card('Crop health', p(H.reading) + p(H.ndviMeaning) + p(H.uniformity), ICON.leaf)
                 + (s2.available ? card('How green, across the field', '<div class="sat-bars">' + [['Lowest 10%', nd.p10], ['Middle', nd.p50], ['Top 10%', nd.p90], ['Average', nd.mean]].map(([k, v]) => '<div class="sat-bar">' + esc(k) + '<span><i style="width:' + Math.max(2, Math.min(100, (Number(v) || 0) / 0.9 * 100)) + '%"></i></span><b>' + esc(v) + '</b></div>').join('') + '</div>'
                     + '<p class="sat-note mt-2">' + esc(Math.round((nd.lowShare || 0) * 100)) + ' percent of the field is clearly below the middle. Spread (std dev) ' + esc(nd.stdDev) + '.</p>'
@@ -809,7 +809,7 @@
         new google.maps.Polygon({ map: rmap, paths: path, strokeColor: '#f5c518', strokeWeight: 2, fillOpacity: 0, clickable: false });
         const b = new google.maps.LatLngBounds(); path.forEach((x) => b.extend(x)); rmap.fitBounds(b, 30);
         tiles = Object.assign({}, (s.sentinel2 || {}).tiles || {}, (s.sentinel1 || {}).tiles || {});
-        // Earth Engine map ids last a few hours; an older report asks again.
+        // Earth Engine map ids last a few hours; an older report asks again (Planetary Computer addresses do not expire).
         const age = (s.generatedAt && s.generatedAt.utc) ? (Date.now() - Date.parse(s.generatedAt.utc)) / 3.6e6 : 99;
         if (age > 4 && cur.savedId) {
             try { const r = await window.api(U.tiles(cur.savedId), { method: 'POST' }); tiles = Object.assign(tiles, (r.data || {}).tiles || {}); } catch (_) {}

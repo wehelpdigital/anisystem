@@ -104,6 +104,9 @@ return [
     'field_health' => [
         'url' => rtrim((string) env('FIELD_HEALTH_URL', ''), '/'),
         'token' => (string) env('FIELD_HEALTH_TOKEN', ''),
+        // Without Earth Engine, read the same Sentinel pictures from Microsoft's
+        // Planetary Computer (App\Services\PlanetarySatellite); false turns it off.
+        'planetary' => (bool) env('FIELD_HEALTH_PLANETARY', true),
     ],
 
     // OpenWeatherMap: the cloud and rain map tiles on Satellite Weather.
