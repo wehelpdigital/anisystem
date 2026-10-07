@@ -112,6 +112,11 @@ class HowItWorks
                         'Plan with your team on a drawing: where the seedbed goes, how the water moves, who works which lot. Sketch a layout, a plan or a flow, and everyone works from the same picture.',
                         ['Shapes, lines, text and colors', 'Draw over a photo of your field', 'Kept in your gallery for any season'],
                         null, 'draw.page'),
+                    // The Stash (2026-10-07): partners' resources, read before the season is planned.
+                    self::item('stash', 'The Stash', "Partners' magazines and guides, in the app", 'icons/stash.svg', false,
+                        "Resources shared by anee.io's partners, read right inside the app. It starts with every issue of the PhilRice Magazine: new varieties, field methods and the farmers who made them work.",
+                        ['Every PhilRice Magazine issue, free to read', 'Search by year, title or topic', 'More partners to come'],
+                        null, 'stash.shelf:philrice,e-magazines'),
                 ],
             ],
             [

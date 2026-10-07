@@ -52,10 +52,11 @@
             return [url($it['url']), 'Read the guides'];
         }
         if ($hwMode === 'app') {
-            // "name:param" for a route that takes one (the field helpers).
+            // "name:param" for a route that takes one (the field helpers),
+            // "name:a,b" for one that takes two (the Stash's shelf).
             [$hwRoute, $hwParam] = array_pad(explode(':', (string) $it['app'], 2), 2, null);
             if ($hwRoute && \Illuminate\Support\Facades\Route::has($hwRoute)) {
-                return [$hwParam ? route($hwRoute, $hwParam) : route($hwRoute), $hwRoute === 'sm.index' ? 'Find it in your schedules' : 'Open it now'];
+                return [$hwParam ? route($hwRoute, explode(',', $hwParam)) : route($hwRoute), $hwRoute === 'sm.index' ? 'Find it in your schedules' : 'Open it now'];
             }
 
             return null;

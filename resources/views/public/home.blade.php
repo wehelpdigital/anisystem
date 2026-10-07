@@ -29,7 +29,9 @@
     $ask = route('ask.page');
     $stages = $HW::stages();
     $tools = collect($stages)->flatMap(fn ($s) => $s['items'])->keyBy('key');
-    $toolUrl = fn ($it) => (! empty($it['page']) && $ph) ? \App\Support\SitePages::url('features', $it['page']) : route('how');
+    // A tool's "Read more": its feature page, or for the two with none, where a visitor can see them.
+    $toolUrl = fn ($it) => (! empty($it['page']) && $ph) ? \App\Support\SitePages::url('features', $it['page'])
+        : (['finders' => url('/pests') . '#finder', 'stash' => route('features') . '#resources'][$it['key']] ?? route('how'));
     $filmOf = function (string $key, ?string $name = null) use ($HW, $tools) {
         $v = $HW::video($key);
         return $v ? ['key' => $key, 'src' => $v[0], 'poster' => $v[1], 'name' => $name ?? ($tools[$key]['name'] ?? '')] : null;
@@ -55,6 +57,7 @@
              class="hp-hero-bg" loading="eager" fetchpriority="high">
         <div class="hp-hero-shade" aria-hidden="true"></div>
         <div class="hp-hero-glow" aria-hidden="true"></div>
+        @include('public.partials.anee-peek')
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 hp-hero-in">
             <div class="hp-hero-copy">
@@ -216,6 +219,12 @@
          and the anee.io answer to each leak. The counters count up and the
          red bars fill when the cards scroll into view. --}}
     <section class="hp-sec hp-loss-dark on-dark">
+        {{-- Behind it, faint under the red (owner, 2026-10-07): a farmer
+             over palay a storm laid flat. --}}
+        <img class="hp-loss-bg" src="{{ asset('images/site/photos/storm-lodged.webp') }}"
+             srcset="{{ asset('images/site/photos/storm-lodged-900.webp') }} 900w, {{ asset('images/site/photos/storm-lodged.webp') }} 1600w" sizes="100vw"
+             alt="A Filipino farmer on the phone looks over his palay field, flattened by a storm before harvest"
+             title="Palay flattened by a storm: the harvest a late decision costs" width="1600" height="893" loading="lazy" decoding="async">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick is-red">The real cost of guessing</p>
@@ -549,7 +558,6 @@
             </video>
             <button type="button" class="hp-anee-film-play" aria-label="Play Anee's hello">
                 <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
-                <em>Hear Anee</em>
             </button>
         </figure>
             <div class="hp-anee-grid">
@@ -827,6 +835,31 @@
                         <span><b>The farmers behind anee.io</b><small>Made in the field, not in an office.</small></span>
                     </figcaption>
                 </figure>
+                {{-- The anee.io song (moved from Meet Anee, 2026-10-07): the farmers
+                     who built anee.io, singing it, under their own words. --}}
+                <div class="hp-song reveal" data-song>
+                    <div class="hp-song-art">
+                        <img src="{{ asset('images/anee-song-poster.jpg') }}" alt="Anee on a tractor in a palay field, the cover of the anee.io song Let's Plant With a Dream" loading="lazy" width="1200" height="655">
+                        <button type="button" class="hp-song-play is-big" aria-label="Play the song">
+                            <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                            <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
+                        </button>
+                    </div>
+                    <div class="hp-song-body">
+                        <span class="hp-song-kick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>The anee.io song<span class="hp-song-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
+                        <h3 class="hp-song-h">Let&rsquo;s Plant With a Dream!</h3>
+                        <p class="hp-song-p">From the farmers who built anee.io, for every farmer who plants with a dream and harvests with a plan.</p>
+                        <div class="hp-song-row">
+                            <button type="button" class="hp-song-play" aria-label="Play the song">
+                                <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                                <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
+                            </button>
+                            <span class="hp-song-track"><input type="range" min="0" max="1000" value="0" step="1" aria-label="Move through the song"><i></i></span>
+                            <span class="hp-song-time">0:00</span>
+                        </div>
+                    </div>
+                    <audio preload="none" src="{{ asset('audio/anee-kay-anee-ang-ani-ay-high.mp3') }}"></audio>
+                </div>
             </div>
 
             <div>
@@ -889,33 +922,6 @@
                         <a href="{{ route('about') }}" class="hp-alt">Read our story</a>
                     </div>
                 </div>
-            </div>
-        </div>
-        {{-- The anee.io song (moved here from Meet Anee, 2026-10-07): the
-             farmers who built anee.io, singing it. Big, under the story. --}}
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="hp-song reveal" data-song>
-                <div class="hp-song-art">
-                    <img src="{{ asset('images/anee-song-poster.jpg') }}" alt="Anee on a tractor in a palay field, the cover of the anee.io song Let's Plant With a Dream" loading="lazy" width="1200" height="655">
-                    <button type="button" class="hp-song-play is-big" aria-label="Play the song">
-                        <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
-                        <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
-                    </button>
-                </div>
-                <div class="hp-song-body">
-                    <span class="hp-song-kick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>The anee.io song<span class="hp-song-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
-                    <h3 class="hp-song-h">Let&rsquo;s Plant With a Dream!</h3>
-                    <p class="hp-song-p">A song from the farmers who built anee.io, for every farmer who plants with a dream and harvests with a plan. Play it loud in the field.</p>
-                    <div class="hp-song-row">
-                        <button type="button" class="hp-song-play" aria-label="Play the song">
-                            <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
-                            <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
-                        </button>
-                        <span class="hp-song-track"><input type="range" min="0" max="1000" value="0" step="1" aria-label="Move through the song"><i></i></span>
-                        <span class="hp-song-time">0:00</span>
-                    </div>
-                </div>
-                <audio preload="none" src="{{ asset('audio/anee-kay-anee-ang-ani-ay-high.mp3') }}"></audio>
             </div>
         </div>
     </section>
@@ -1674,33 +1680,6 @@
                     </div>
                 @endforeach
             </div>
-            {{-- Two more ways in (2026-10-07, when the Just added band went):
-                 the finders, from the damage you see, and the Stash, what the
-                 partners share inside the app. --}}
-            <div class="hgx">
-                <div class="hgx-card reveal">
-                    <div class="hgx-tx">
-                        <span class="hgx-k"><img src="{{ asset('images/icons/pest.svg') }}" alt="" width="26" height="26" loading="lazy">Finders</span>
-                        <h3 class="hgx-h">Find What Is Wrong <em>From What You See.</em></h3>
-                        <p class="hgx-p">Pick the crop, tick the signs, and the pest and disease finders name the likely cause, with the active ingredient to spray and its group. The weed helper goes by the age of your rice.</p>
-                        <div class="hgx-links">
-                            <a href="{{ url('/pests') }}#finder">Pest finder</a>
-                            <a href="{{ url('/diseases') }}#finder">Disease finder</a>
-                            <a href="{{ url('/weeds') }}#control">Weed helper</a>
-                        </div>
-                    </div>
-                    <span class="hgx-shot"><img src="{{ asset('images/site/app/finder.webp') }}" alt="The pest and disease finder in the anee.io app, on a phone" width="780" height="1520" loading="lazy"></span>
-                </div>
-                <a href="{{ route('features') }}#resources" class="hgx-card is-stash reveal" style="--reveal-delay: .08s">
-                    <div class="hgx-tx">
-                        <span class="hgx-k"><img src="{{ asset('images/icons/stash.svg') }}" alt="" width="26" height="26" loading="lazy">Inside the app</span>
-                        <h3 class="hgx-h">The Stash, <em>Shared by Our Partners.</em></h3>
-                        <p class="hgx-p">Resources from anee.io's partners, read right inside the app, starting with every issue of the PhilRice Magazine.</p>
-                        <span class="hgx-more">See the Stash {!! $arrow !!}</span>
-                    </div>
-                    <span class="hgx-shot"><img src="{{ asset('images/site/app/stash.webp') }}" alt="The Stash in the anee.io app, with PhilRice Magazine issues, on a phone" width="780" height="1520" loading="lazy"></span>
-                </a>
-            </div>
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Put the guide on your calendar {!! $arrow !!}</a>
@@ -1950,6 +1929,13 @@
                     radial-gradient(60% 50% at 100% 100%, rgb(127 29 29 / .25), transparent 70%),
                     linear-gradient(180deg, #1c1311 0%, #120c0a 100%); }
     .hp-loss-dark > * { position: relative; }
+    /* The photo behind (2026-10-07): faint, and taking the band's own red
+       (luminosity blend), so the red stays in charge; it fades out at the
+       top and the bottom into the band. */
+    .hp-loss-dark { isolation: isolate; }
+    .hp-loss-dark > .hp-loss-bg { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 40%;
+        opacity: .2; mix-blend-mode: luminosity; pointer-events: none;
+        -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 70%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 70%, transparent 100%); }
     .on-dark .hp-kick.is-red { color: #fca5a5; }
     .on-dark .hp-h2 em.is-red { color: #f87171; }
     .hp-loss-dark .loss-card { border-color: rgb(254 202 202 / .5); box-shadow: 0 24px 50px -30px rgb(0 0 0 / .8); }
@@ -2341,26 +2327,26 @@
         background: linear-gradient(180deg, transparent 50%, rgb(9 14 6 / .6)); transition: background .28s var(--hp-ease); }
     .hp-anee-film-play span { display: flex; align-items: center; justify-content: center; width: 3.4rem; height: 3.4rem; border-radius: 999px; background: #f5c518; color: #1a1a1a;
         box-shadow: 0 0 0 6px rgb(245 197 24 / .25), 0 10px 22px -8px rgb(0 0 0 / .7); transition: transform .28s var(--hp-ease), opacity .28s var(--hp-ease); }
-    .hp-anee-film-play span svg { width: 1.35rem; height: 1.35rem; margin-left: .15rem; }
-    .hp-anee-film-play em { font-style: normal; font-family: var(--font-heading); font-size: 1rem; font-weight: 800; letter-spacing: .02em; color: #fff; text-shadow: 0 1px 4px rgb(0 0 0 / .7); transition: opacity .28s var(--hp-ease); }
+    /* The triangle's own drawing sits a touch right of its box's middle, which is the optical centre: no extra nudge. */
+    .hp-anee-film-play span svg { display: block; width: 1.35rem; height: 1.35rem; }
     .hp-anee-film:hover .hp-anee-film-play span { transform: scale(1.08); }
     .hp-anee-film.is-playing { animation-play-state: paused; }
     .hp-anee-film.is-playing .hp-anee-film-play { background: transparent; }
-    .hp-anee-film.is-playing .hp-anee-film-play span, .hp-anee-film.is-playing .hp-anee-film-play em { opacity: 0; }
+    .hp-anee-film.is-playing .hp-anee-film-play span { opacity: 0; }
     @keyframes hpFilmFloat { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-.6rem) rotate(-2.6deg); } }
     @media (prefers-reduced-motion: reduce) { .hp-anee-film { animation: none; } }
 
     /* The anee.io song, under the farm business story (2026-10-07): the
        cover big with its own play button, the words and the bar beside it. */
-    .hp-song { position: relative; display: grid; gap: 1.2rem; margin-top: 3.5rem; padding: .9rem; border-radius: 1.8rem; color: #e8efe1; overflow: hidden;
+    .hp-song { position: relative; display: grid; gap: 1rem; margin-top: 1.4rem; padding: .8rem; border-radius: 1.4rem; color: #e8efe1; overflow: hidden;
         background: radial-gradient(80% 120% at 100% 0%, #3f6a22 0%, transparent 60%), linear-gradient(140deg, #14210c 0%, #1f3312 60%, #2b4518 100%);
         box-shadow: 0 50px 90px -50px rgb(20 33 12 / .9); }
-    @media (min-width: 768px) { .hp-song { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; gap: 2.2rem; padding: 1rem 2.2rem 1rem 1rem; } }
-    .hp-song-art { position: relative; border-radius: 1.3rem; overflow: hidden; aspect-ratio: 1200 / 655; box-shadow: 0 24px 50px -26px rgb(0 0 0 / .9); }
+    @media (min-width: 560px) { .hp-song { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center; gap: 1.2rem; padding: .8rem 1.3rem .8rem .8rem; } }
+    .hp-song-art { position: relative; border-radius: 1rem; overflow: hidden; aspect-ratio: 1200 / 655; box-shadow: 0 24px 50px -26px rgb(0 0 0 / .9); }
     .hp-song-art img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .6s var(--hp-ease); }
     .hp-song:hover .hp-song-art img { transform: scale(1.03); }
-    .hp-song-body { min-width: 0; padding: 0 .4rem .6rem; }
-    @media (min-width: 768px) { .hp-song-body { padding: 0; } }
+    .hp-song-body { min-width: 0; padding: 0 .4rem .5rem; }
+    @media (min-width: 560px) { .hp-song-body { padding: 0; } }
     .hp-song-kick { display: inline-flex; align-items: center; gap: .4rem; font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-sun); }
     .hp-song-kick svg { width: 1rem; height: 1rem; }
     .hp-song-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: .9rem; margin-left: .3rem; }
@@ -2368,16 +2354,16 @@
     .hp-song-eq i:nth-child(2) { animation-delay: -.3s; } .hp-song-eq i:nth-child(3) { animation-delay: -.6s; } .hp-song-eq i:nth-child(4) { animation-delay: -.15s; }
     .hp-song.is-playing .hp-song-eq i { animation-play-state: running; }
     @keyframes hpEq { 0%, 100% { height: 25%; } 50% { height: 100%; } }
-    .hp-song-h { margin-top: .5rem; font-family: var(--font-heading); font-size: clamp(1.6rem, 3.4vw, 2.5rem); font-weight: 800; line-height: 1.08; letter-spacing: -.01em; color: #fff; }
-    .hp-song-p { margin-top: .7rem; font-size: .98rem; line-height: 1.65; color: #cbd8bd; }
-    .hp-song-row { display: flex; align-items: center; gap: .75rem; margin-top: 1.3rem; }
-    .hp-song-play { flex: none; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 999px; border: 0; cursor: pointer; background: #f5c518; color: #1a1a1a;
+    .hp-song-h { margin-top: .35rem; font-family: var(--font-heading); font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 800; line-height: 1.1; letter-spacing: -.01em; color: #fff; }
+    .hp-song-p { margin-top: .45rem; font-size: .86rem; line-height: 1.55; color: #cbd8bd; }
+    .hp-song-row { display: flex; align-items: center; gap: .65rem; margin-top: .85rem; }
+    .hp-song-play { flex: none; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 999px; border: 0; cursor: pointer; background: #f5c518; color: #1a1a1a;
         box-shadow: 0 10px 22px -10px rgb(245 197 24 / .8); transition: transform .28s var(--hp-ease); }
     .hp-song-play:hover { transform: scale(1.06); }
     .hp-song-play svg { width: 1.2rem; height: 1.2rem; }
-    .hp-song-play.is-big { position: absolute; left: 50%; top: 50%; width: 4.6rem; height: 4.6rem; translate: -50% -50%; transition: transform .28s var(--hp-ease), opacity .28s var(--hp-ease);
+    .hp-song-play.is-big { position: absolute; left: 50%; top: 50%; width: 3.8rem; height: 3.8rem; translate: -50% -50%; transition: transform .28s var(--hp-ease), opacity .28s var(--hp-ease);
         box-shadow: 0 0 0 10px rgb(245 197 24 / .25), 0 18px 34px -12px rgb(0 0 0 / .8); }
-    .hp-song-play.is-big svg { width: 1.8rem; height: 1.8rem; }
+    .hp-song-play.is-big svg { width: 1.5rem; height: 1.5rem; }
     .hp-song.is-playing .hp-song-play.is-big { opacity: 0; }
     .hp-song-art:hover .hp-song-play.is-big { opacity: 1; }
     .hp-song-play .i-pause, .hp-song.is-playing .hp-song-play .i-play { display: none; }
@@ -3217,37 +3203,6 @@
     .hq-body.is-open { grid-template-rows: 1fr; }
     .hq-body > div { overflow: hidden; }
     /* The guide shelves: two by two, each a card with its own tint. */
-    .hgx { margin-top: 1.6rem; display: grid; gap: 1.4rem; }
-    @media (min-width: 768px) { .hgx { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; } }
-    .hgx-card { --shot-w: 8.5rem; position: relative; display: grid; grid-template-columns: minmax(0, 1fr) var(--shot-w); gap: 1rem; padding: 1.3rem 1.2rem 0 1.3rem; border-radius: 1.6rem; overflow: hidden;
-        color: inherit; text-decoration: none; background: linear-gradient(150deg, #fff 0%, #f3f8ec 100%); box-shadow: inset 0 0 0 1px #e1ebd5, 0 24px 50px -40px rgb(20 33 12 / .55);
-        transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
-    .hgx-card:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px #c9dfae, 0 36px 70px -44px rgb(20 33 12 / .6); }
-    .hgx-card.is-stash { background: linear-gradient(150deg, #fffdf3 0%, #fbf3d4 100%); box-shadow: inset 0 0 0 1px #efe2b0, 0 24px 50px -40px rgb(70 50 0 / .5); }
-    @media (min-width: 1024px) { .hgx-card { --shot-w: 10.5rem; padding: 1.6rem 1.5rem 0 1.6rem; } }
-    .hgx-tx { padding-bottom: 1.4rem; min-width: 0; }
-    .hgx-k { display: inline-flex; align-items: center; gap: .45rem; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #4d7c2a; }
-    .hgx-card.is-stash .hgx-k { color: #8a6a00; }
-    .hgx-k img { width: 1.6rem; height: 1.6rem; }
-    .hgx-h { margin-top: .55rem; font-family: var(--font-heading); font-size: clamp(1.25rem, 2.2vw, 1.55rem); font-weight: 800; line-height: 1.15; color: #14210c; }
-    .hgx-h em { font-style: normal; color: #4d7c2a; }
-    .hgx-card.is-stash .hgx-h em { color: #a77f00; }
-    .hgx-p { margin-top: .6rem; font-size: .92rem; line-height: 1.6; color: #4b5563; }
-    .hgx-links { margin-top: .9rem; display: flex; flex-wrap: wrap; gap: .45rem; }
-    .hgx-links a { padding: .45rem .8rem; border-radius: 999px; font-size: .84rem; font-weight: 800; color: #2f5219; background: #fff; box-shadow: inset 0 0 0 1px #cfe3b8;
-        text-decoration: none; transition: background .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
-    .hgx-links a:hover { background: #eef6e6; box-shadow: inset 0 0 0 1px #8fbf5f; }
-    .hgx-more { margin-top: .9rem; display: inline-flex; align-items: center; gap: .4rem; font-size: .9rem; font-weight: 800; color: #6b5200; }
-    .hgx-more svg { width: 1rem; height: 1rem; transition: transform .28s var(--hp-ease); }
-    .hgx-card:hover .hgx-more svg { transform: translateX(3px); }
-    .hgx-shot { position: relative; align-self: end; height: 100%; min-height: 12rem; }
-    /* The phone rises from the card's foot: when the card is taller than
-       the phone, it slides down until its last 3rem are cut off. */
-    .hgx-shot img { position: absolute; left: 0; right: 0; top: max(.2rem, calc(100% - var(--shot-w) * 1.95 + 3rem)); width: 100%; height: auto; border-radius: 1.2rem 1.2rem 0 0;
-        box-shadow: 0 0 0 5px #1f2a17, 0 24px 40px -20px rgb(20 33 12 / .6); transition: transform .28s var(--hp-ease); }
-    .hgx-card:hover .hgx-shot img { transform: translateY(-5px); }
-    @media (max-width: 479.98px) { .hgx-card { --shot-w: 6.4rem; padding: 1.1rem 1rem 0 1.1rem; } .hgx-shot { min-height: 10rem; } }
-    @media (prefers-reduced-motion: reduce) { .hgx-card, .hgx-shot img, .hgx-more svg, .hgx-links a { transition: none; } }
     .hg-shelves { margin-top: 2.8rem; display: grid; gap: 1.4rem; }
     @media (min-width: 768px) { .hg-shelves { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; } }
     .hg-shelf { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: 1.15rem; border-radius: 1.6rem; background: #fff;
