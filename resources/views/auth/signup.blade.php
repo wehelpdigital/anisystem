@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Create an Account')
+@section('title', 'Create Your Free anee.io Farm Account')
 
 @push('head')
     @include('partials.ad-tags')

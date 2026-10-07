@@ -14,7 +14,7 @@
     $arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>';
 @endphp
 
-@section('title', 'Contact Us')
+@section('title', 'Contact anee.io: Help With Your Farm App')
 @section('meta_description', 'Get in touch with the anee.io team. Questions about plans, ' . $pay . ' payments, or using the app? Email support@anee.io and a real person replies, usually within a business day.')
 
 {{-- CONTACT (rebuilt 2026-10-06 in the homepage's look). Still no form, on

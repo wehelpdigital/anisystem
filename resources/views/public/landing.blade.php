@@ -242,11 +242,11 @@
     .lp-tile:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -22px rgb(20 33 12 / .45); }
     .lp-tile .e { flex: none; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: .8rem; background: #f3f8ec;
         font-size: 1.2rem; line-height: 1; }
-    .lp-tile h4 { font-weight: 800; color: #14210c; font-size: .95rem; line-height: 1.3; }
+    .lp-tile h4, .lp-tile .lp-tile-h { font-weight: 800; color: #14210c; font-size: .95rem; line-height: 1.3; }
     .lp-tile p { margin-top: .15rem; font-size: .84rem; color: #5b6651; line-height: 1.45; }
     @media (max-width: 559px) {
         .lp-tile { flex-direction: column; gap: .5rem; padding: .8rem; }
-        .lp-tile h4 { font-size: .9rem; }
+        .lp-tile h4, .lp-tile .lp-tile-h { font-size: .9rem; }
         .lp-tile p { font-size: .8rem; }
     }
     /* Testimonials */
@@ -609,7 +609,7 @@
                                 @foreach ($tiles as $t)
                                     <div class="lp-tile">
                                         <span class="e" aria-hidden="true">{{ $t['icon'] ?: '🌱' }}</span>
-                                        <div><h4>{{ $t['title'] }}</h4><p>{{ $t['text'] }}</p></div>
+                                        <div><h3 class="lp-tile-h">{{ $t['title'] }}</h3><p>{{ $t['text'] }}</p></div>
                                     </div>
                                 @endforeach
                             </div>

@@ -43,6 +43,11 @@
             $pageTitle = trim($__env->yieldContent('title', 'anee.io'));
             $pageTitle = $pageTitle === 'anee.io' ? $pageTitle : $pageTitle . ' | anee.io';
         }
+        // A long title drops the brand at its end rather than run past what a
+        // results page shows (2026-10-07 SEO audit): the page's own words matter more.
+        if (mb_strlen(html_entity_decode($pageTitle)) > 65 && str_ends_with($pageTitle, ' | anee.io')) {
+            $pageTitle = mb_substr($pageTitle, 0, -10);
+        }
     @endphp
     <title>{!! $pageTitle !!}</title>
     <meta name="description" content="@yield('meta_description', 'anee.io is the smart farm app for ' . \App\Support\Region::t('farmersOf') . ': your cropping calendar, costs, workers, field maps and Anee, your smart farm technician, in one app that works on any phone.')">
@@ -474,7 +479,7 @@
                     ];
                 @endphp
                 <div class="te">
-                    <h4 class="te-h">Our tech ecosystem</h4>
+                    <h2 class="te-h">Our tech ecosystem</h2>
                     <p class="te-p">anee.io is built on the core, industry standard technology trusted by leading apps and research agencies: AI from Anthropic and Google, maps and satellite analysis from Google, satellites from the European Space Agency and NASA, and weather from Open-Meteo and OpenWeather.</p>
                     <ul class="te-list">
                         @foreach ($teMarks as [$teName, $teIcon, $teWhat])
@@ -490,7 +495,7 @@
                 </div>
             </div>
             <div class="md:justify-self-end">
-                <h4 class="text-white font-bold mb-3">Contact</h4>
+                <h2 class="text-white font-bold mb-3">Contact</h2>
                 <ul class="space-y-2 text-sm text-gray-400">
                     <li><a href="mailto:support@anee.io" class="hover:text-accent-500">support@anee.io</a></li>
                     <li>Philippines</li>

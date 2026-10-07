@@ -168,7 +168,7 @@
                     @endif
                     @if (count($toc) > 1)
                         <div class="sp-card sp-toc-card">
-                            <h4>On this page</h4>
+                            <h2 class="sp-card-h">On this page</h2>
                             <nav class="sp-toc" id="spToc">
                                 @foreach ($toc as $t)<a href="#{{ $t['id'] }}" data-to="{{ $t['id'] }}">{{ $t['text'] }}</a>@endforeach
                             </nav>
@@ -177,7 +177,7 @@
                     @if ($prob)
                         {{-- The finder, opened on this one's first crop. --}}
                         <div class="sp-card sp-wcard">
-                            <h4>{{ $page->section === 'pests' ? 'What is attacking my crop?' : 'What is wrong with my crop?' }}</h4>
+                            <h2 class="sp-card-h">{{ $page->section === 'pests' ? 'What is attacking my crop?' : 'What is wrong with my crop?' }}</h2>
                             <p>Not sure this is it? Pick your crop and what you see, and compare the {{ $page->section }} that match.</p>
                             <a href="{{ $S::url($page->section) }}?crop={{ $prob['crops'][0] ?? 'rice' }}#finder" class="btn btn-outline btn-sm">Open the finder</a>
                         </div>
@@ -185,7 +185,7 @@
                     @if ($weed)
                         {{-- The helper, opened on this weed's group. --}}
                         <div class="sp-card sp-wcard">
-                            <h4>Weed control by rice age</h4>
+                            <h2 class="sp-card-h">Weed control by rice age</h2>
                             <p>Pick how you planted and how old your rice is, and see the active ingredients that work on {{ strtolower(\App\Support\WeedControl::GROUPS[$weed['group']]['label']) }} at that age.</p>
                             <a href="{{ $S::url('weeds') }}?group={{ $weed['group'] }}#control" class="btn btn-outline btn-sm">Open the helper</a>
                         </div>
@@ -199,7 +199,7 @@
                     </div>
                     @if ($related->count())
                         <div class="sp-card">
-                            <h4>Keep reading</h4>
+                            <h2 class="sp-card-h">Keep reading</h2>
                             <div class="sp-rel">
                                 @foreach ($related as $r)<a href="{{ $S::pageUrl($r) }}">{{ $r->title }}</a>@endforeach
                             </div>

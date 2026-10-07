@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Log In')
+@section('title', 'Log In to anee.io, the Smart Farm App')
 
 {{-- The only public page that wears the saved theme. Declared at the top level
      rather than inside @section('content') because the layout tests this flag

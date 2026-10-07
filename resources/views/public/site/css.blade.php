@@ -70,7 +70,7 @@
     .sp-side { display: grid; gap: 1.25rem; align-content: start; }
     @media (min-width: 1024px) { .sp-side { position: sticky; top: 6rem; } }
     .sp-card { border: 1px solid #e5ebdf; border-radius: 1.1rem; background: #fff; padding: 1.1rem 1.15rem; }
-    .sp-card h4 { font-family: var(--font-heading); font-weight: 800; font-size: .95rem; color: #14210c; }
+    .sp-card h4, .sp-card .sp-card-h { font-family: var(--font-heading); font-weight: 800; font-size: .95rem; color: #14210c; }
     .sp-toc { display: grid; gap: .15rem; margin-top: .6rem; }
     .sp-toc a { display: block; padding: .38rem .55rem; border-radius: .55rem; font-size: .86rem; line-height: 1.35; color: #4b5563; text-decoration: none;
         transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }

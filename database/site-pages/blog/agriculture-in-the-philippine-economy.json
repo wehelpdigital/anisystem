@@ -21,6 +21,10 @@
   },
   "blocks": [
     {
+      "type": "text",
+      "text": "Agriculture in economy terms is measured three ways: its share of the country's output, its share of jobs, and the value of what farms produce each year. The sections below take each in turn."
+    },
+    {
       "type": "heading",
       "level": 2,
       "text": "How big is agriculture in the economy?"
