@@ -692,6 +692,19 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/variety-research/job/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'jobState'])->whereNumber('id')->name('vary.job');
     Route::delete('/app/variety-research/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'destroy'])->whereNumber('id')->name('vary.delete');
     // Crop Protocol Analysis — the fourth: the season by growth stage, for one field.
+    // Satellite Weather (2026-10-07): clouds, rain, typhoon tracks and the
+    // forecast over the farm; Anee reads it against a lot.
+    Route::get('/app/sky-weather', [App\Http\Controllers\SkyWeatherController::class, 'page'])->name('sky.page');
+    Route::get('/app/sky-weather/options', [App\Http\Controllers\SkyWeatherController::class, 'options'])->name('sky.options');
+    Route::get('/app/sky-weather/tile/{layer}/{z}/{x}/{y}', [App\Http\Controllers\SkyWeatherController::class, 'tile'])->where(['layer' => '[a-z_]+', 'z' => '\d+', 'x' => '\d+', 'y' => '\d+'])->middleware('throttle:900,1')->name('sky.tile');
+    Route::get('/app/sky-weather/frames', [App\Http\Controllers\SkyWeatherController::class, 'frames'])->name('sky.frames');
+    Route::get('/app/sky-weather/storms', [App\Http\Controllers\SkyWeatherController::class, 'storms'])->name('sky.storms');
+    Route::get('/app/sky-weather/forecast', [App\Http\Controllers\SkyWeatherController::class, 'forecast'])->middleware('throttle:60,1')->name('sky.forecast');
+    Route::post('/app/sky-weather/generate', [App\Http\Controllers\SkyWeatherController::class, 'generate'])->name('sky.generate');
+    Route::get('/app/sky-weather/job/{id}', [App\Http\Controllers\SkyWeatherController::class, 'jobState'])->whereNumber('id')->name('sky.job');
+    Route::get('/app/sky-weather/list', [App\Http\Controllers\SkyWeatherController::class, 'list'])->name('sky.list');
+    Route::get('/app/sky-weather/one/{id}', [App\Http\Controllers\SkyWeatherController::class, 'one'])->whereNumber('id')->name('sky.one');
+    Route::delete('/app/sky-weather/{id}', [App\Http\Controllers\SkyWeatherController::class, 'destroy'])->whereNumber('id')->name('sky.delete');
     // Satellite Analysis (2026-10-07): a drawn field read from Sentinel-2 and
     // Sentinel-1 through the field health service, then by Anee.
     Route::get('/app/satellite', [App\Http\Controllers\SatelliteController::class, 'page'])->name('sat.page');

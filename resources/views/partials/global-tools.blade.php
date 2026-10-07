@@ -234,6 +234,17 @@
                 @endif
             </a>
 
+            {{-- Satellite Weather (2026-10-07): clouds, rain and typhoon
+                 tracks over the farm; free to look at, Anee's reading paid. --}}
+            <a href="{{ route('sky.page') }}" class="qa-tile qa-wtp">
+                <span class="qa-ico"><img src="{{ asset('images/icons/storm.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+                <span class="qa-txt">
+                    <b>Satellite Weather</b>
+                    <i>Watch clouds, rain and typhoon paths over your farm, fast forward the forecast, and ask Anee what it means for your lot.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
+
             {{-- Compare Reports: two saved reports side by side, any season
                  against any other. Gated as CompareController::gate() gates
                  it -- the farm's plan first (reportsAll), then a worker's
