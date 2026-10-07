@@ -35,14 +35,14 @@
     .sk-place svg { flex: none; width: 1rem; height: 1rem; color: #f5c518; }
     .sk-place .sk-caret { width: .8rem; height: .8rem; color: #94a3b8; transition: transform .28s var(--sk-ease); }
     .sk-place[aria-expanded="true"] .sk-caret { transform: rotate(180deg); }
-    .sk-badge { margin-left: auto; flex: 0 1 auto; min-width: 0; display: inline-flex; align-items: center; gap: .4rem; padding: .55rem .8rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
+    .sk-badge { margin-left: auto; flex: none; max-width: 62%; display: inline-flex; align-items: center; gap: .4rem; padding: .55rem .8rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
         color: #dcfce7; background: rgb(21 128 61 / .88); box-shadow: 0 8px 20px -10px rgb(0 0 0 / .8); transition: background-color .28s var(--sk-ease), color .28s var(--sk-ease); }
     .sk-badge span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .sk-badge i { flex: none; width: .5rem; height: .5rem; border-radius: 999px; background: currentColor; }
     .sk-badge.is-warn { color: #fff; background: rgb(220 38 38 / .94); animation: skPulse 1.6s ease-in-out infinite; }
     .sk-badge.is-watch { color: #1a1a1a; background: rgb(245 197 24 / .96); }
     @keyframes skPulse { 50% { box-shadow: 0 0 0 .5rem rgb(220 38 38 / .25), 0 8px 20px -10px rgb(0 0 0 / .8); } }
-    @media (max-width: 479.98px) { .sk-place, .sk-badge { font-size: .74rem; padding: .5rem .7rem; } .sk-badge { max-width: 48%; } }
+    @media (max-width: 479.98px) { .sk-place, .sk-badge { font-size: .74rem; padding: .5rem .7rem; } }
 
     /* The layers: one row of chips, swiped on a phone. The two that play
        (clouds, radar) come first; the live overlays and the storms after. */
@@ -86,7 +86,8 @@
     @media (min-width: 640px) { .sk-op { flex: none; width: 8.5rem; } }
     .sk-read { display: flex; gap: .35rem; flex-wrap: wrap; opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .28s var(--sk-ease), transform .28s var(--sk-ease); }
     .sk-read.is-on { opacity: 1; transform: none; }
-    .sk-read span { padding: .32rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; }
+    .sk-read span { padding: .32rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: #e2e8f0; background: rgb(12 18 32 / .82);
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 16px -8px rgb(0 0 0 / .8); }
     .sk-read span b { color: #f5c518; }
 
     /* The farm picker, dropped from the place pill. */
@@ -134,7 +135,7 @@
     .sk-km small { display: block; font-family: var(--font-body, inherit); font-size: .66rem; font-weight: 700; color: var(--color-gray-500); }
     .sk-km.is-near { color: #dc2626; }
     .sk-days { display: flex; gap: .45rem; margin: .75rem -1.05rem 0; padding: .1rem 1.05rem .35rem; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; }
-    .sk-day { flex: 0 0 4.6rem; scroll-snap-align: start; display: grid; justify-items: center; gap: .15rem; padding: .6rem .3rem .55rem; border-radius: 1rem; text-align: center;
+    .sk-day { flex: 1 0 4.6rem; scroll-snap-align: start; display: grid; justify-items: center; gap: .15rem; padding: .6rem .3rem .55rem; border-radius: 1rem; text-align: center;
         background: var(--color-gray-50); border: 1px solid var(--color-gray-100); font-size: .7rem; color: var(--color-gray-600); animation: skUp .4s var(--sk-ease) both; animation-delay: calc(var(--i) * 35ms); }
     html.dark .sk-day { background: #121a0d; border-color: #2b3a1c; }
     .sk-day.is-today { border-color: var(--color-brand-600); background: #f3f8ec; }
@@ -146,7 +147,8 @@
     .sk-day .t small { font-weight: 600; color: var(--color-gray-500); }
     .sk-day .r { display: block; width: 100%; height: .3rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; margin-top: .2rem; }
     .sk-day .r i { display: block; height: 100%; border-radius: 999px; background: #4c8ed9; }
-    .sk-day em { font-style: normal; font-size: .64rem; font-weight: 800; color: #2563eb; }
+    .sk-day em { font-style: normal; font-size: .68rem; font-weight: 800; color: #2563eb; }
+    .sk-day .p { font-size: .6rem; font-weight: 700; color: var(--color-gray-500); }
     html.dark .sk-day em { color: #93c5fd; }
     .sk-day .g { font-size: .6rem; font-weight: 800; color: #b45309; }
     .sk-ask select { margin-top: .7rem; }
@@ -599,7 +601,7 @@
             return '<div class="sk-day' + (d.date === today ? ' is-today' : '') + '" style="--i:' + i + '" title="' + esc(wxWord(d.code, rain)) + '"><b>' + esc(d.date === today ? 'Today' : day.toLocaleDateString('en-PH', { weekday: 'short' }))
                 + '</b><span>' + esc(day.toLocaleDateString('en-PH', { month: 'short', day: 'numeric' })) + '</span>' + wxIcon(d.code, rain)
                 + '<span class="t">' + esc(Math.round(d.tmax)) + '°' + (d.tmin != null ? ' <small>' + esc(Math.round(d.tmin)) + '°</small>' : '') + '</span>'
-                + '<em>' + esc(rain >= 10 ? Math.round(rain) : rain) + ' mm' + (d.pop != null ? ' · ' + esc(Math.round(d.pop)) + '%' : '') + '</em>'
+                + '<em>' + esc(rain >= 10 ? Math.round(rain) : rain) + ' mm</em>' + (d.pop != null ? '<span class="p">' + esc(Math.round(d.pop)) + '% chance</span>' : '')
                 + '<span class="r"><i style="width:' + Math.min(100, rain / maxR * 100) + '%"></i></span>'
                 + ((d.gust || 0) >= 50 ? '<span class="g">Gusts ' + Math.round(d.gust) + ' km/h</span>' : '') + '</div>';
         }).join('') : '<p class="sk-sub">The forecast did not load. Try again in a moment.</p>';
