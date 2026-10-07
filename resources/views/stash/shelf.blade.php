@@ -91,7 +91,7 @@
     const skel = (n) => Array.from({ length: n }, () => '<div class="ss-skel"></div>').join('');
     const card = (x, i) => (x.ready ? '<a class="ss-item" href="' + esc(x.url) + '"' : '<div class="ss-item is-wait"') + ' style="--i:' + (i % 18) + '" title="' + esc(x.blurb || x.title) + '">'
         + '<span class="ss-cover">' + (x.cover ? '<img src="' + esc(x.cover) + '" alt="Cover of ' + esc(x.title) + '" loading="lazy">' : '')
-        + (x.ready ? (x.mb ? '<em>' + esc(x.mb) + ' MB</em>' : '') : '<em class="is-wait">Getting ready</em>') + '</span>'
+        + (x.ready ? '' : '<em class="is-wait">Getting ready</em>') + '</span>'
         + '<span class="ss-body"><b>' + esc(x.title) + '</b><small>' + esc(x.date || 'Undated') + '</small></span>' + (x.ready ? '</a>' : '</div>');
     const load = async (reset) => {
         if (!window.api || (st.busy && !reset)) return;

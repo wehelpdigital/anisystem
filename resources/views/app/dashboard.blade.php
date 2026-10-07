@@ -1335,11 +1335,13 @@
                     .wn-body { padding: .95rem 1rem 1rem; min-width: 0; }
                     .wn-body small { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--color-brand-600); }
                     .wn-title { display: block; margin-top: .25rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.02rem; line-height: 1.3; color: var(--color-gray-900); }
-                    .wn-list { margin-top: .6rem; display: grid; gap: .35rem; counter-reset: wn; }
-                    .wn-list li { position: relative; padding-left: 1.6rem; font-size: .82rem; line-height: 1.4; color: var(--color-gray-700); counter-increment: wn; }
-                    .wn-list li::before { content: counter(wn); position: absolute; left: 0; top: .05rem; width: 1.15rem; height: 1.15rem; border-radius: 999px; display: grid; place-items: center;
+                    /* The stories, each on its own line with a thin rule between (owner, 2026-10-07). */
+                    .wn-list { margin-top: .5rem; display: grid; counter-reset: wn; }
+                    .wn-list li { position: relative; padding: .5rem 0 .5rem 1.6rem; font-size: .82rem; line-height: 1.4; color: var(--color-gray-700); counter-increment: wn; }
+                    .wn-list li + li { border-top: 1px solid var(--color-gray-100); }
+                    .wn-list li::before { content: counter(wn); position: absolute; left: 0; top: .55rem; width: 1.15rem; height: 1.15rem; border-radius: 999px; display: grid; place-items: center;
                         font-size: .64rem; font-weight: 800; color: #fff; background: var(--color-brand-600); }
-                    .wn-more { display: inline-flex; align-items: center; gap: .35rem; margin-top: .8rem; font-size: .82rem; font-weight: 800; color: var(--color-brand-700); }
+                    .wn-more { display: inline-flex; align-items: center; gap: .35rem; margin-top: .4rem; font-size: .82rem; font-weight: 800; color: var(--color-brand-700); }
                     @media (prefers-reduced-motion: reduce) { .wn-card { transition: none; } .wn-tag i { animation: none; } }
                 </style>
                 @endpush
@@ -1366,7 +1368,7 @@
                                     @endforeach
                                 </ol>
                             @endif
-                            <span class="wn-more">Read all {{ $latestNews['count'] }} stories and what they mean for your farm →</span>
+                            <span class="wn-more">Read all and why they matter →</span>
                         </div>
                     </a>
                 </section>

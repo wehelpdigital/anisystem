@@ -49,7 +49,7 @@ class StashController extends Controller
             'id' => (int) $r->id, 'title' => $r->title, 'blurb' => $r->blurb ? mb_substr($r->blurb, 0, 220) : null,
             'date' => $r->publishedOn ? Carbon::parse($r->publishedOn)->format('F Y') : null,
             'cover' => $r->coverPath ? asset(ltrim($r->coverPath, '/')) : null, 'ready' => $r->status === 'ready',
-            'mb' => $r->bytes ? round($r->bytes / 1048576, 1) : null, 'url' => route('stash.read', $r->id),
+            'url' => route('stash.read', $r->id),
         ])->values()]]);
     }
 
