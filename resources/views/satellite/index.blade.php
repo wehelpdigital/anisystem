@@ -164,11 +164,10 @@
     .sat-legend span { display: flex; justify-content: space-between; opacity: .85; }
     .sat-legend[hidden] { display: none; }
     /* Which picture is on the map, and when the satellite took it. */
-    .sat-shot { position: absolute; right: .6rem; bottom: .6rem; z-index: 2; max-width: calc(100% - 1.2rem); padding: .4rem .65rem; border-radius: .8rem; background: rgb(15 29 8 / .85); color: #fff;
-        font-size: .74rem; line-height: 1.35; text-align: right; box-shadow: 0 8px 18px -10px rgb(0 0 0 / .8); }
+    .sat-shot { position: absolute; left: .6rem; top: 3.1rem; z-index: 2; max-width: calc(100% - 1.2rem); padding: .4rem .65rem; border-radius: .8rem; background: rgb(15 29 8 / .85); color: #fff;
+        font-size: .74rem; line-height: 1.35; box-shadow: 0 8px 18px -10px rgb(0 0 0 / .8); pointer-events: none; }
     .sat-shot b { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #f5c518; }
     .sat-shot[hidden] { display: none; }
-    @media (max-width: 479.98px) { .sat-shot.is-up { bottom: 3.7rem; } }
 
     .sat-grid9 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .3rem; max-width: 18rem; }
     .sat-grid9 div { aspect-ratio: 1.3; border-radius: .6rem; display: grid; place-items: center; text-align: center; font-size: .7rem; font-weight: 800; color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / .45); }
@@ -833,6 +832,8 @@
         rmap = new google.maps.Map($('satRMap'), { mapTypeId: 'hybrid', streetViewControl: false, fullscreenControl: false, cameraControl: false, mapTypeControl: false, clickableIcons: false, gestureHandling: 'greedy', tilt: 0, mapId: OPT.mapId || 'DEMO_MAP_ID', renderingType: 'VECTOR', headingInteractionEnabled: true, tiltInteractionEnabled: false, rotateControl: true, styles: QUIET });
         new google.maps.Polygon({ map: rmap, paths: path, strokeColor: '#f5c518', strokeWeight: 2, fillOpacity: 0, clickable: false });
         const b = new google.maps.LatLngBounds(); path.forEach((x) => b.extend(x)); rmap.fitBounds(b, 30);
+        // Not closer than 17 at first: the satellite's 10 m dots blur into a smear when a small field fills the screen.
+        google.maps.event.addListenerOnce(rmap, 'idle', () => { if (rmap.getZoom() > 17) rmap.setZoom(17); });
         const s2 = s.sentinel2 || {}, s1 = s.sentinel1 || {};
         tiles = Object.assign({}, s2.tiles || {}, s1.tiles || {});
         pics = Object.assign({}, s2.crops || {}, s1.crops || {});
