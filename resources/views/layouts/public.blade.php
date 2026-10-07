@@ -222,8 +222,10 @@
         .fo-list { display: grid; gap: .45rem; font-size: .86rem; color: #9ca3af; }
         .fo-list a { color: #9ca3af; text-decoration: none; transition: color .28s cubic-bezier(.22,1,.36,1); }
         .fo-list a:hover { color: #f5c518; }
-        .fo-two { display: grid; gap: 1.6rem; }
-        @media (min-width: 480px) { .fo-two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; } }
+        /* Two columns even on a phone: one long list was a screen of links. */
+        .fo-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+        @media (min-width: 480px) { .fo-two { gap: 1.4rem; } }
+        @media (max-width: 479.98px) { .fo-two .fo-list { font-size: .8rem; gap: .5rem; } .fo-two .fo-h { font-size: .95rem; } }
         .fo-note { font-size: .72rem; line-height: 1.5; color: #6b7280; }
     </style>
 </head>
