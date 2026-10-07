@@ -77,7 +77,8 @@ class NpkPlusController extends Controller
         return $this->json(true, 'ok', [
             'products' => $products->map(fn ($p) => $this->productRow($p))->values(),
             'categories' => self::CATEGORIES,
-            'crops' => collect(NpkCrops::TABLE)->map(fn ($c, $k) => ['key' => $k, 'label' => CropCatalog::label($k), 'icon' => CropCatalog::CROPS[$k]['icon'] ?? '🌱'] + $c)->values(),
+            'crops' => collect(NpkCrops::TABLE)->map(fn ($c, $k) => ['key' => $k, 'label' => CropCatalog::label($k), 'icon' => CropCatalog::CROPS[$k]['icon'] ?? '🌱',
+                'group' => CropCatalog::CROPS[$k]['group'] ?? 'Other crops'] + $c)->values(),
             'soilConditions' => SoilConditions::OPTIONS,
             'water' => self::WATER,
             'timing' => self::TIMING,
@@ -153,7 +154,7 @@ class NpkPlusController extends Controller
             return $this->json(false, $v->errors()->first(), [], 422);
         }
         $crop = $request->input('crop');
-        $title = trim((string) $request->input('title')) ?: (($crop ? CropCatalog::label($crop) : 'Fertilizer plan') . ' · ' . rtrim(rtrim(number_format((float) $request->input('areaHa'), 2), '0'), '.') . ' ha · ' . now('Asia/Manila')->format('M j, Y'));
+        $title = trim((string) $request->input('title')) ?: (($crop ? str_replace(' — ', ', ', CropCatalog::label($crop)) : 'Fertilizer plan') . ' · ' . rtrim(rtrim(number_format((float) $request->input('areaHa'), 2), '0'), '.') . ' ha · ' . now('Asia/Manila')->format('M j, Y'));
         $row = ['title' => mb_substr($title, 0, 190), 'crop' => $crop, 'areaHa' => (float) $request->input('areaHa'), 'targetYield' => $request->input('targetYield'),
             'lines' => json_encode($request->input('lines')), 'soil' => json_encode($request->input('soil')), 'result' => json_encode($request->input('result')), 'updated_at' => now()];
         $id = (int) $request->input('id');
@@ -291,9 +292,22 @@ class NpkPlusController extends Controller
             . ' = ' . ($l['kg'] ?? '?') . ' kg; carries ' . collect($l['pct'] ?? [])->map(fn ($v, $k) => $k . ' ' . $v . '%')->implode(', ')
             . (! empty($l['estimate']) ? '; biofertilizer estimate ' . collect($l['estimate'])->map(fn ($v, $k) => $k . ' ' . $v . ' kg per dose')->implode(', ') : ''))->implode("\n");
         $soil = json_decode((string) $calc->soil, true) ?: [];
+        // The crop's setup from the form (2026-10-07): the variety, what is
+        // planted and how much, and the yield the variety can give.
+        $set = (array) ($res['setup'] ?? []);
+        $seed = (array) ($set['seed'] ?? []);
+        $pot = (array) ($set['potential'] ?? []);
 
         return 'Crop: ' . ($calc->crop ? CropCatalog::label($calc->crop) : 'not set') . '; area ' . (float) $calc->areaHa . ' ha'
-            . ($calc->targetYield ? '; target yield ' . (float) $calc->targetYield . ' t/ha' : '') . "\n"
+            . (! empty($set['variety']) ? '; variety ' . mb_substr((string) $set['variety'], 0, 80) : '')
+            . (! empty($pot['value'])
+                ? '; potential yield of the variety ' . (float) $pot['value'] . ' ' . mb_substr((string) ($pot['unit'] ?? 't/ha'), 0, 30)
+                    . (! empty($pot['tPerHa']) && ($pot['unit'] ?? '') !== 't/ha' ? ' (' . round((float) $pot['tPerHa'], 2) . ' t/ha)' : '')
+                : ($calc->targetYield ? '; target yield ' . (float) $calc->targetYield . ' t/ha' : ''))
+            . (! empty($seed['amount'])
+                ? '; planted with ' . (float) $seed['amount'] . ' ' . mb_substr((string) ($seed['unit'] ?? ''), 0, 30) . ' for the whole area'
+                    . (! empty($seed['perHa']) ? ' (' . round((float) $seed['perHa'], 1) . ' per hectare)' : '')
+                : '') . "\n"
             . "Fertilizers planned (for the whole area):\n" . $lines . "\n"
             . 'Totals per hectare (elemental unless named as oxide): ' . json_encode($res['perHa'] ?? []) . "\n"
             . 'N-P2O5-K2O per hectare: ' . ($res['npkPerHa'] ?? '?') . "\n"
