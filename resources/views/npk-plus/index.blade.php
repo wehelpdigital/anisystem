@@ -131,6 +131,7 @@
     .np-season .np-enso { display: inline-block; margin-top: .35rem; padding: .15rem .55rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: #9a3412; background: #ffedd5; }
     .np-season .np-enso.is-wet { color: #1e40af; background: #dbeafe; }
     .np-season .np-enso.is-flat { color: #334155; background: #e2e8f0; }
+    .np-date { width: 100%; justify-content: flex-start; }
     .lb-sky { margin-top: .9rem; }
     .lb-sky h4 { font-family: var(--font-heading); font-weight: 800; font-size: .9rem; color: var(--color-gray-900); }
     .lb-skyrow { display: grid; grid-template-columns: 2rem minmax(0, 1fr) auto; gap: .55rem; align-items: center; margin-top: .45rem; padding: .5rem .6rem; border-radius: .8rem;
@@ -1747,7 +1748,7 @@
             const L = rows[limIdx], Ls = STAVES[limIdx];
             say = reach >= 97
                 ? 'Every plank NPK Plus can measure reaches the rim: on this plan, the nutrients are not what holds your goal back.'
-                : 'The shortest plank is <b>' + esc(NAMES[Ls.k]) + '</b> (' + Ls.t + '): ' + esc(L.note.toLowerCase()) + '. It holds the water at ' + reach + '% of your goal. Raise it first; more of the others will not raise the water.';
+                : 'The shortest plank is <b>' + esc(Ls.name || NAMES[Ls.k]) + '</b>' + (Ls.name ? '' : ' (' + Ls.t + ')') + ': ' + esc(L.note.toLowerCase()) + '. It holds the water at ' + reach + '% of your goal. Raise it first; more of the others will not raise the water.';
             const over = STAVES.filter((s, i) => rows[i].state === 'over').map((s) => NAMES[s.k].toLowerCase());
             if (over.length) say += ' Too much ' + esc(list(over)) + ': the taller plank holds no more water. It costs money' + (over.includes('nitrogen') ? ', and too much nitrogen can make the crop lodge and draw pests' : '') + '.';
             const unk = STAVES.filter((s, i) => rows[i].state === 'unknown').map((s) => s.t);
