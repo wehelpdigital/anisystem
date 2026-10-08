@@ -383,8 +383,8 @@
     .lb-arrow .lb-ap { transition: stroke-dashoffset 1s var(--np-ease); }
     .lb-arrow .lb-ah { opacity: 0; transition: opacity .3s var(--np-ease) .85s; }
     .lb-arrow.is-drawn .lb-ah { opacity: 1; }
-    .lb-alab b { display: block; margin-top: .15rem; font-size: .92rem; font-style: normal; white-space: nowrap; }
-    .lb-alab { position: absolute; right: .5rem; top: 44%; width: 5.4rem; padding: .25rem .35rem; border-radius: .55rem; text-align: center; pointer-events: none;
+    .lb-alab b { display: block; margin-top: .15rem; font-size: .84rem; font-style: normal; line-height: 1.15; }
+    .lb-alab { position: absolute; right: .45rem; top: 42%; width: 5.8rem; padding: .25rem .35rem; border-radius: .55rem; text-align: center; pointer-events: none;
         font-family: var(--font-heading); font-style: italic; font-weight: 800; font-size: .74rem; line-height: 1.15; color: #1d6fd1; background: rgb(255 255 255 / .82);
         transform: rotate(-5deg) scale(.9); opacity: 0; transition: opacity .4s var(--np-ease), transform .4s var(--np-ease); }
     .lb-alab.is-on { opacity: 1; transform: rotate(-5deg) scale(1); }
