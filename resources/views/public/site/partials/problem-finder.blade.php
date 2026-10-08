@@ -2,9 +2,17 @@
      damage shows (pests) or what is seen (diseases), and the matching pages
      with what to spray. Shared by the public hubs (/pests, /diseases, behind
      the email gate) and the app's Field helpers (no gate: members are in).
+     Every crop of the catalog since 2026-10-08: the crop is a tag that opens
+     a sheet of them (partials.crop-pick).
      Expects $section, $items, $crops, $askOpts, $words, $isPests, $kindHue
-     (ProblemCatalogue::finderFacts) and $gate. --}}
-@php $S = \App\Support\SitePages::class; @endphp
+     (ProblemCatalogue::finderFacts), $gate, and may take $defaultCrop. --}}
+@php
+    $S = \App\Support\SitePages::class;
+    $F = \App\Support\FieldCatalogue::class;
+    // The crop asked for (?crop=), else the one the page brings (the app: the newest season's).
+    $fdCrop = $F::cropKey(request('crop') ?: ($defaultCrop ?? null));
+    $fdCrop = isset($crops[$fdCrop]) ? $fdCrop : array_key_first($crops);
+@endphp
 @once
 @push('head')
     <style>
@@ -64,10 +72,9 @@
                 <div class="wc-ask">
                     <div class="wc-q">
                         <b><i>1</i>Which crop?</b>
-                        <div class="wc-opts" role="radiogroup" aria-label="Which crop?" id="fdCrop">
-                            @foreach ($crops as $k => [$local, $en])
-                                <button type="button" role="radio" aria-checked="{{ $loop->first ? 'true' : 'false' }}" data-crop="{{ $k }}">{{ $local }}@if ($local !== $en)<small>{{ $en }}</small>@endif</button>
-                            @endforeach
+                        <small>{{ count($crops) }} crops, from palay to durian</small>
+                        <div id="fdCrop">
+                            @include('public.site.partials.crop-pick', ['id' => 'fdCropSheet', 'crops' => $crops, 'current' => $fdCrop, 'title' => 'Which crop?', 'noun' => $words['nouns']])
                         </div>
                     </div>
                     <div class="wc-q">
@@ -104,8 +111,9 @@
     <script type="application/json" id="fdData">{!! json_encode([
         'items' => $items->map(fn ($w) => ['name' => $w['name'], 'sci' => $w['sci'], 'local' => $w['local'] ?? '', 'kind' => $w['kind'], 'crops' => $w['crops'],
             'where' => $isPests ? $w['parts'] : $w['signs'], 'hint' => $w['hint'], 'url' => $w['url'], 'thumb' => $w['thumb'],
-            'hue' => $kindHue[$w['kind']] ?? 98, 'ai' => $w['ai'] ?? [], 'no' => $w['no'] ?? ''])->values(),
+            'hue' => $kindHue[$w['kind']] ?? 98, 'ai' => $w['ai'] ?? [], 'no' => $w['no'] ?? '', 'ranks' => (object) ($w['ranks'] ?? [])])->values(),
         'crops' => collect($crops)->map(fn ($c) => $c[1]),
+        'crop' => $fdCrop,
         'where' => $askOpts,
         'noun' => $words['noun'], 'nouns' => $words['nouns'], 'pests' => $isPests,
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
@@ -118,9 +126,8 @@
     const el = document.getElementById('fdData'), card = document.getElementById('fdCard');
     if (!el || !card) return;
     const D = JSON.parse(el.textContent);
-    const cropBox = document.getElementById('fdCrop'), whereBox = document.getElementById('fdWhere');
-    const params = new URLSearchParams(location.search);
-    const st = { crop: D.crops[params.get('crop')] ? params.get('crop') : Object.keys(D.crops)[0], where: '' };
+    const cropTag = document.querySelector('#fdCrop .cp-tag'), whereBox = document.getElementById('fdWhere');
+    const st = { crop: D.crop, where: '' };
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const arrow = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>';
     const leaf = '<svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg>';
@@ -154,12 +161,13 @@
             + '</a>' + spray(i) + '</div>';
     };
     const render = (swap) => {
-        const forCrop = D.items.filter((i) => i.crops.includes(st.crop));
+        // The crop's worst first, as its sources rank them; the rest in the catalogue's order.
+        const rank = (i) => (i.ranks && i.ranks[st.crop] !== undefined ? i.ranks[st.crop] : 99);
+        const forCrop = D.items.filter((i) => i.crops.includes(st.crop)).map((i, n) => [i, n]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map((x) => x[0]);
         // IRRI and PhilRice: no insecticide on young palay unless a pest is at outbreak level.
         const early = D.pests && st.crop === 'rice'
             ? '<p class="wc-note">Palay younger than 30 to 40 days after transplanting: hold the insecticide unless a pest is at outbreak level. Early sprays kill the spiders and wasps that protect your crop.</p>'
             : '';
-        cropBox.querySelectorAll('button').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.crop === st.crop)));
         whereBox.querySelectorAll('button').forEach((b) => {
             const has = forCrop.some((i) => i.where.includes(b.dataset.where));
             b.disabled = !has;
@@ -175,7 +183,7 @@
                 ? early + '<div class="fd-res' + (early ? ' fd-wait' : '') + '">' + hits.map(row).join('') + '</div>'
                     + '<p class="wc-legend">' + (D.pests ? 'The IRAC group tells how an insecticide kills.' : 'The FRAC group tells how a fungicide works.')
                     + ' Switch to a different group next time, so the ' + D.noun + ' does not learn to survive it. Open a ' + D.noun + ' for when to spray and the steps to take first.</p>'
-                : '<p class="wc-note ok">Nothing in our catalogue matches that yet. Send a photo to Anee, the smart farm technician, and she will tell you what it most likely is.</p>')
+                : '<p class="wc-note ok">Nothing in our catalogue for ' + esc(D.crops[st.crop].toLowerCase()) + ' matches that yet. Send a photo to Anee, the smart farm technician, and she will tell you what it most likely is.</p>')
             + '</div>';
         if (swap) { card.classList.remove('is-swap'); void card.offsetWidth; card.classList.add('is-swap'); }
         if (goText) {
@@ -184,7 +192,7 @@
         }
     };
     go?.addEventListener('click', () => card.closest('.wc-out').scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'start' }));
-    cropBox.addEventListener('click', (e) => { const b = e.target.closest('button[data-crop]'); if (b && b.dataset.crop !== st.crop) { st.crop = b.dataset.crop; render(true); } });
+    cropTag?.addEventListener('croppick', (e) => { st.crop = e.detail.crop; render(true); });
     whereBox.addEventListener('click', (e) => {
         const b = e.target.closest('button[data-where]');
         if (!b || b.disabled) return;

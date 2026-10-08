@@ -24,13 +24,12 @@ class SitePageController extends Controller
         abort_unless(isset(SitePages::SECTIONS[$section]) && $section !== 'features', 404);
 
         // The weeds have their own front page: a catalogue to filter, the
-        // weed control helper by rice age, and the guides.
+        // weed control helper by crop age, and the guides.
         if ($section === 'weeds') {
             return view('public.site.weeds-hub', [
                 'section' => $section,
                 'meta' => SitePages::SECTIONS[$section],
                 'pages' => SitePages::inSection($section),
-                'control' => \App\Support\WeedControl::TABLE,
             ]);
         }
         // Pests and diseases: catalogues like the weeds (2026-10-07), with a
@@ -72,9 +71,41 @@ class SitePageController extends Controller
         $section = (string) $request->route('section');
         $slug = (string) $request->route('slug');
         $page = SitePages::find($section, $slug);
+        if (! $page && ($sheet = $this->factSheet($request, $section, $slug))) {
+            return $sheet;
+        }
         abort_unless($page, 404);
 
         return $this->draw($page, false);
+    }
+
+    /**
+     * A pest, disease or weed of the field catalogue with no profile page
+     * written yet (2026-10-08): its short fact sheet, from its row. Kept out
+     * of search engines (thin beside a profile) until a page replaces it.
+     */
+    private function factSheet(Request $request, string $section, string $slug)
+    {
+        $F = \App\Support\FieldCatalogue::class;
+        $e = match ($section) {
+            'pests', 'diseases' => $F::problem($section, $slug),
+            'weeds' => $F::weed($slug),
+            default => null,
+        };
+        if (! $e) {
+            return null;
+        }
+        $request->attributes->set('robots', 'noindex, follow');
+        // Others of its first crop, the profiles and sheets alike.
+        $first = $e['crops'][0] ?? null;
+        $all = $section === 'weeds' ? $F::weeds() : $F::problems($section);
+        $more = collect($all)->filter(fn ($o, $s) => $s !== $slug && $first && in_array($first, $o['crops'], true))
+            ->take(8)->map(fn ($o, $s) => ['name' => $o['name'], 'url' => SitePages::url($section, $s)])->values();
+
+        return response()->view('public.site.fact-sheet', [
+            'section' => $section, 'slug' => $slug, 'e' => $e, 'more' => $more,
+            'meta' => SitePages::SECTIONS[$section],
+        ]);
     }
 
     /**

@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "Open the [Pest Finder](/pests#finder) and pick your crop first: palay, mais, gulay (vegetables), coconut, banana, mango, cacao, coffee, papaya, citrus or other fruit trees. Then tell it where you see the damage. Choose the leaves, the stems or tillers, the panicles or ears, the fruits or pods, the roots, young seedlings or the whole plant. A choice with nothing for your crop turns grey, so you never land on an empty list.\n\nEach pest that fits comes back as a card with its photo, its kind (insect, mite, snail, rat or bird) and one line on the damage it leaves. Tap the card to open its full page in our [catalogue of crop pests](/pests), with the signs, when to act and what to do first."
+      "text": "Open the [Pest Finder](/pests#finder) and pick your crop first. The crop button opens a list of every crop anee.io knows, shelf by shelf: palay, mais and sorghum, the beans, the root crops, the vegetables, onion and garlic, sugarcane, pineapple and the fruit trees, from coconut and banana to durian and dragon fruit. Search it by its Filipino or English name, like kamote or sweet potato. Then tell it where you see the damage. Choose the leaves, the stems, vines or trunk, the grain, panicles or ears, the fruits or pods, the roots or tubers, young seedlings or the whole plant. A choice with nothing for your crop turns grey, so you never land on an empty list.\n\nEach pest that fits comes back as a card, the worst for your crop first, with its photo, its kind (insect, mite, snail, rat or bird) and one line on the damage it leaves. Tap the card to open its page in our [catalogue of crop pests](/pests): a full guide with the signs, when to act and what to do first, or a short fact sheet with its names, the crops it attacks, what to spray and the sources behind it."
     },
     {
       "type": "heading",
@@ -54,15 +54,15 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "The Weed Control Helper for rice"
+      "text": "The Weed Control Helper for every crop"
     },
     {
       "type": "text",
-      "text": "Weeds follow the age of the rice, so the [Weed Control Helper](/weeds#control) asks three things. First, how did you plant: lipat tanim (transplanted) or sabog tanim (direct seeded)? Next, how old is the rice, from 0 to 5 days up to 31 to 40 days? And which weeds do you see: grasses, sedges or broadleaves? A short hint under each group helps you tell them apart.\n\nThe answer opens with Do this first, the steps for that age, like keeping the soil wet after transplanting. Then come the active ingredients for the weeds you picked, each with its group number. Pick two or three groups and you get only the ones that work on all of them. If none covers them all, each group gets its own list. Where no herbicide fits that age, the helper tells you to weed by hand and keep the water up."
+      "text": "Weeds follow the age of the crop, so the [Weed Control Helper](/weeds#control) asks about your crop first. Pick it from the same list of crops. For palay it asks how you planted: lipat tanim (transplanted) or sabog tanim (direct seeded). Next it asks how old the crop is: from 0 to 5 days up to 31 to 40 days for palay, from before planting to the last weeding for mais, beans, root crops, vegetables, onion and sugarcane, and from young trees to bearing trees for an orchard. Then pick the weeds you see: grasses, sedges or broadleaves. A short hint under each group helps you tell them apart.\n\nThe answer opens with Do this first, the steps for that age, like keeping the soil wet after transplanting palay or hilling up corn at 4 to 6 weeks. Then come the active ingredients for the weeds you picked, each with its group number. A note in brackets says when one is safe on only some crops, like yellow corn only, or must be sprayed with a shield so it never touches the crop. Pick two or three groups and you get only the ones that work on all of them. If none covers them all, each group gets its own list. Where no herbicide fits that age, the helper tells you to weed by hand."
     },
     {
       "type": "text",
-      "text": "The lists follow PhilRice recommendations for rice weeds, and our [herbicide guide](/weeds/herbicides-for-rice-weeds) explains the groups."
+      "text": "The lists follow PhilRice recommendations for palay, and the guides of the DA, the sugar and coconut agencies and the universities for the other crops. Our [herbicide guide](/weeds/herbicides-for-rice-weeds) explains the groups."
     },
     {
       "type": "callout",
@@ -104,7 +104,7 @@
         },
         {
           "q": "Which crops do they cover?",
-          "a": "The Pest Finder and the Disease Finder cover palay, mais, vegetables, and fruit and plantation crops like coconut, banana, mango, cacao and coffee. The Weed Control Helper is for rice."
+          "a": "Every crop in anee.io: palay, mais, sorghum, the beans, the root crops, the vegetables, onion and garlic, sugarcane, pineapple, tobacco, and the fruit and plantation crops from coconut, banana and mango to durian, cacao and coffee. The Weed Control Helper covers all of them too."
         },
         {
           "q": "What if nothing matches?",

@@ -62,15 +62,15 @@
     </nav>
     <div class="fh-body">
         @if ($tool === 'weeds')
-            @include('public.site.partials.weed-helper', ['gate' => false])
+            @include('public.site.partials.weed-helper', ['gate' => false, 'defaultCrop' => $defaultCrop])
         @else
-            @include('public.site.partials.problem-finder', $facts + ['gate' => false])
+            @include('public.site.partials.problem-finder', $facts + ['gate' => false, 'defaultCrop' => $defaultCrop])
         @endif
     </div>
     <div class="fh-more">
         @if ($tool === 'weeds')
             <a href="{{ url('/weeds') }}#catalogue">Every weed, with pictures ›</a>
-            <a href="{{ url('/weeds/herbicides-for-rice-weeds') }}">The herbicide guide ›</a>
+            <a href="{{ url('/weeds/herbicides-for-rice-weeds') }}">The herbicide groups explained ›</a>
         @else
             <a href="{{ url('/' . $tool) }}#catalogue">The whole {{ $tool === 'pests' ? 'pest' : 'disease' }} catalogue ›</a>
         @endif

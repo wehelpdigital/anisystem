@@ -5,43 +5,27 @@
      filtered by shelf), the finder ("What is attacking my crop?": the crop,
      then where the damage shows or what the farmer sees, and the matching
      pages), the guides and Anee. The words around it come from
-     App\Support\ProblemCatalogue::HUB, the card facts from its data. --}}
+     App\Support\ProblemCatalogue::HUB, the card facts from the field
+     catalogue (App\Support\FieldCatalogue), every crop since 2026-10-08. --}}
 @include('public.partials.site-css')
 @include('public.site.css')
 
 @php
     $S = \App\Support\SitePages::class;
     $P = \App\Support\ProblemCatalogue::class;
-    $live = $pages->keyBy('slug');
-    $thumbOf = function ($p) use ($S) {
-        $h = is_array($p->heroImage) ? $p->heroImage : [];
-        $src = (string) ($h['thumb'] ?? ($h['src'] ?? ''));
-        if ($src !== '' && ! isset($h['thumb']) && str_starts_with($src, '/images/')) {
-            $twin = preg_replace('/\.(jpe?g|png|webp)$/i', '-480.webp', $src);
-            if ($twin && is_file(public_path(ltrim($twin, '/')))) { $src = $twin; }
-        }
-        return $S::img($src);
-    };
-    // A crop's shelf: rice, corn and vegetables are their own; every tree
-    // and plantation crop sits on the fruits shelf.
-    $shelfOf = fn ($crop) => isset($P::GROUPS[$crop]) ? $crop : 'fruits';
-    $items = collect($P::entries($section))->filter(fn ($e, $slug) => $live->has($slug))
-        ->map(fn ($e, $slug) => $e + ['slug' => $slug, 'url' => $S::pageUrl($live[$slug]), 'thumb' => $thumbOf($live[$slug]),
-            'alt' => (is_array($live[$slug]->heroImage) ? ($live[$slug]->heroImage['alt'] ?? null) : null) ?: $e['name'],
-            // Every shelf whose crops it attacks, its own first: the fall
-            // armyworm lives on the corn shelf and shows under rice too, so
-            // a shelf's count is the finder's count for that crop.
-            'shelves' => array_values(array_unique(array_merge([$e['group']], array_map($shelfOf, $e['crops'] ?? []))))]);
+    $F = \App\Support\FieldCatalogue::class;
+    // Every entry of every crop: its profile page when one is written, its
+    // fact sheet when not (2026-10-08), and the shelves whose crops it attacks.
+    $items = $P::items($section, $pages);
     $guides = $pages->filter(fn ($p) => ! $P::get($section, $p->slug))->values();
     $onShelf = fn ($g) => $items->filter(fn ($w) => in_array($g, $w['shelves'], true));
     $count = fn ($g) => $onShelf($g)->count();
-    $faces = collect(array_keys($P::GROUPS))->map(fn ($g) => $items->where('group', $g)->first(fn ($w) => $w['thumb']))->filter()->take(3)->values();
-    $isPests = $section === 'pests';
-    $askOpts = $isPests ? $P::PARTS : $P::SIGNS;
-    $usedCrops = $items->pluck('crops')->flatten()->unique()->all();
-    $crops = array_filter($P::CROPS, fn ($k) => in_array($k, $usedCrops, true), ARRAY_FILTER_USE_KEY);
-    $words = $P::HUB[$section];
+    $faces = collect(array_keys($F::SHELVES))->map(fn ($g) => $items->where('group', $g)->first(fn ($w) => $w['thumb']))->filter()->take(3)->values();
+    $finder = $P::finderFacts($section, $items);
+    $isPests = $finder['isPests'];
+    $words = $finder['words'];
     $kindHue = $P::KINDS;
+    $shelfTag = fn ($g) => ['Fruits and Plantation Crops' => 'Fruits', 'Sugarcane and Industrial Crops' => 'Industrial', 'Corn and Sorghum' => 'Corn'][$F::SHELVES[$g][0]] ?? $F::SHELVES[$g][0];
 @endphp
 
 @section('title_full', $meta['metaTitle'] . ' | anee.io')
@@ -95,9 +79,9 @@
                 @if ($faces->count() === 3)
                     <div class="wk-mosaic" aria-hidden="true">
                         @foreach ($faces as $f)
-                            <figure style="--g: {{ $P::GROUPS[$f['group']][2] }}">
+                            <figure style="--g: {{ $F::SHELVES[$f['group']][2] }}">
                                 <img src="{{ $f['thumb'] }}" alt="" referrerpolicy="no-referrer" @if ($loop->first) fetchpriority="high" @else loading="lazy" @endif>
-                                <figcaption><i></i>{{ $P::GROUPS[$f['group']][0] }}: {{ $f['name'] }}</figcaption>
+                                <figcaption><i></i>{{ $F::SHELVES[$f['group']][0] }}: {{ $f['name'] }}</figcaption>
                             </figure>
                         @endforeach
                     </div>
@@ -122,10 +106,10 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
             <div class="wk-sec-h">
                 <h2>{{ ucfirst($words['nouns']) }} by Crop</h2>
-                <p>Start from the crop in front of you. Each shelf holds the {{ $words['nouns'] }} that matter most on Philippine farms, with their local names and how to manage them.</p>
+                <p>Start from the crop in front of you. Each shelf holds the {{ $words['nouns'] }} that matter most on Philippine farms, from palay to durian, with their local names and what to spray.</p>
             </div>
             <div class="wk-groups mt-8" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr))">
-                @foreach ($P::GROUPS as $g => [$gLabel, $gLocal, $gHue, $gIcon])
+                @foreach ($F::SHELVES as $g => [$gLabel, $gLocal, $gHue, $gIcon])
                     @php($inG = $onShelf($g)->values())
                     @continue($inG->isEmpty())
                     <div class="wk-group" style="--g: {{ $gHue }}">
@@ -133,7 +117,7 @@
                             <span class="wk-gico"><svg fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $gIcon }}"/></svg></span>
                             <h3>{{ $gLabel }}<small>{{ $inG->count() }} {{ $words['nouns'] }} · {{ $gLocal }}</small></h3>
                         </div>
-                        <p class="ex">Like <b>{{ $inG->where('group', $g)->take(3)->pluck('name')->map(fn ($n) => preg_replace('/\s*\(.*\)$/', '', $n))->join(', ', ' and ') }}</b>.</p>
+                        <p class="ex">Like <b>{{ ($inG->where('group', $g)->count() ? $inG->where('group', $g) : $inG)->take(3)->pluck('name')->map(fn ($n) => preg_replace('/\s*\(.*\)$/', '', $n))->join(', ', ' and ') }}</b>.</p>
                         <button type="button" data-show-group="{{ $g }}">See all {{ $inG->count() }}
                             <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
                     </div>
@@ -147,7 +131,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
             <div class="wk-sec-h">
                 <h2>{{ $words['catalogue'] }}</h2>
-                <p>{{ $items->count() }} {{ $words['nouns'] }} of palay, mais, gulay and the fruit and plantation crops. {{ $words['catalogueLead'] }}</p>
+                <p>{{ $items->count() }} {{ $words['nouns'] }} of {{ count($finder['crops']) }} Philippine crops, from palay, mais and gulay to the root crops, sugarcane and the fruit trees. {{ $words['catalogueLead'] }}</p>
             </div>
             <div class="wk-tools mt-7">
                 <label class="wk-search">
@@ -157,24 +141,24 @@
                 </label>
                 <div class="sp-cats wk-cats" id="wkCats" role="group" aria-label="Crop">
                     <button type="button" class="is-on" data-group="">All <i>{{ $items->count() }}</i></button>
-                    @foreach ($P::GROUPS as $g => [$gLabel])
-                        @if ($count($g))<button type="button" data-group="{{ $g }}">{{ $g === 'fruits' ? 'Fruits and plantation' : $gLabel }} <i>{{ $count($g) }}</i></button>@endif
+                    @foreach ($F::SHELVES as $g => [$gLabel])
+                        @if ($count($g))<button type="button" data-group="{{ $g }}">{{ $shelfTag($g) }} <i>{{ $count($g) }}</i></button>@endif
                     @endforeach
                 </div>
                 <span class="wk-count" id="wkCount" aria-live="polite"></span>
             </div>
             <div class="wk-grid mt-6" id="wkGrid">
                 @foreach ($items as $w)
-                    @php($gh = $P::GROUPS[$w['group']][2])
+                    @php($gh = $F::SHELVES[$w['group']][2])
                     <a href="{{ $w['url'] }}" class="wk-card" style="--g: {{ $gh }}" data-group="{{ $w['group'] }}" data-shelves="{{ implode(' ', $w['shelves']) }}"
-                       data-q="{{ \Illuminate\Support\Str::lower($w['name'] . ' ' . $w['sci'] . ' ' . $w['local'] . ' ' . $w['kind']) }}">
+                       data-q="{{ \Illuminate\Support\Str::lower($w['name'] . ' ' . $w['sci'] . ' ' . $w['local'] . ' ' . $w['kind'] . ' ' . collect($w['crops'])->map(fn ($c) => implode(' ', array_slice($F::crops()[$c] ?? [], 0, 2)))->join(' ')) }}">
                         <span class="wk-ph">
                             @if ($w['thumb'])
                                 <img src="{{ $w['thumb'] }}" alt="{{ $w['alt'] }}" loading="lazy" width="480" height="360" referrerpolicy="no-referrer">
                             @else
-                                <span class="none"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $P::GROUPS[$w['group']][3] }}"/></svg></span>
+                                <span class="none"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $F::SHELVES[$w['group']][3] }}"/></svg></span>
                             @endif
-                            <span class="wk-tag">{{ $P::GROUPS[$w['group']][0] === 'Fruits and Plantation Crops' ? 'Fruits' : $P::GROUPS[$w['group']][0] }}</span>
+                            <span class="wk-tag">{{ $shelfTag($w['group']) }}</span>
                             <span class="wk-tag is-kind" style="--g: {{ $kindHue[$w['kind']] ?? 98 }}">{{ $w['kind'] }}</span>
                         </span>
                         <div class="wk-in">
@@ -205,7 +189,7 @@
                 <h2 class="mt-3">{{ $words['finder'] }}</h2>
                 <p>{{ $words['finderLead'] }}</p>
             </div>
-            @include('public.site.partials.problem-finder', ['gate' => true])
+            @include('public.site.partials.problem-finder', $finder + ['gate' => true])
         </div>
     </section>
 
@@ -249,13 +233,13 @@
     const count = document.getElementById('wkCount'), empty = document.getElementById('wkEmpty'), more = document.getElementById('wkMore');
     if (!grid || !cats || !q) return;
     const cards = [...grid.querySelectorAll('.wk-card')];
-    const CAP = 8, phone = matchMedia('(max-width: 639.98px)');
+    const phone = matchMedia('(max-width: 639.98px)'), cap = () => (phone.matches ? 8 : 24);
     let group = '', all = false;
     const norm = (s) => s.toLowerCase().replace(/[^a-z0-9ñ ]+/g, ' ').replace(/\s+/g, ' ').trim();
     const rise = (c, i) => { c.classList.remove('is-in'); c.style.animationDelay = Math.min(i, 12) * 25 + 'ms'; void c.offsetWidth; c.classList.add('is-in'); };
     const apply = () => {
         const words = norm(q.value).split(' ').filter(Boolean);
-        const capped = !all && !group && !words.length;
+        const capped = !all && !group && !words.length && cards.length > cap();
         let shown = 0;
         cards.forEach((c) => {
             const on = (!group || (c.dataset.shelves || c.dataset.group).split(' ').includes(group)) && words.every((w) => norm(c.dataset.q).includes(w));
@@ -266,7 +250,7 @@
             if (on) shown++;
         });
         grid.classList.toggle('is-capped', capped);
-        count.textContent = capped && phone.matches ? 'Showing ' + Math.min(CAP, cards.length) + ' of ' + cards.length
+        count.textContent = capped ? 'Showing ' + cap() + ' of ' + cards.length
             : shown === cards.length ? cards.length + ' in all' : 'Showing ' + shown + ' of ' + cards.length;
         empty.classList.toggle('is-on', shown === 0);
         // Nothing under this crop, but the name is in the catalogue: offer them.
@@ -278,8 +262,9 @@
     elseB.addEventListener('click', () => setGroup(''));
     more?.addEventListener('click', () => {
         all = true; apply();
-        cards.slice(CAP).forEach((c, i) => rise(c, i));
-        cards[CAP]?.focus({ preventScroll: true });
+        const from = cap();
+        cards.slice(from).forEach((c, i) => rise(c, i));
+        cards[from]?.focus({ preventScroll: true });
     });
     phone.addEventListener?.('change', apply);
     const setGroup = (g) => { group = g; cats.querySelectorAll('button').forEach((b) => b.classList.toggle('is-on', b.dataset.group === g)); apply(); };

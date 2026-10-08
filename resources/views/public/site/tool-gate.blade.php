@@ -16,7 +16,7 @@
 --}}
 @php
     $gateWords = [
-        'weeds' => ['See What to Spray at This Age', 'It is free. Type your name and email once to see what to do first and the active ingredients to spray at this age of your rice.'],
+        'weeds' => ['See What to Spray at This Age', 'It is free. Type your name and email once to see what to do first and the active ingredients to spray at this age of your crop.'],
         'pests' => ['See What to Spray', 'It is free. Type your name and email once to see the pests that fit what you see and the active ingredients to spray against each one.'],
         'diseases' => ['See What to Spray', 'It is free. Type your name and email once to see the diseases that fit what you see and the active ingredients to spray against each one.'],
     ][$tool];

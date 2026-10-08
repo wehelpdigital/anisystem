@@ -117,9 +117,9 @@
                                     <li><a href="{{ $S::pageUrl($p) }}"><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>{{ $S::shortTitle($p) }}</a></li>
                                 @endforeach
                             </ul>
-                            {{-- The counts the hub itself shows: "46 pests", then the guides apart. --}}
-                            @php($nItems = $pages->filter(fn ($p) => $isEntry($sec, $p))->count())
-                            @php($nGuides = $pages->count() - $nItems)
+                            {{-- The counts the hub itself shows: "160 pests" (every crop's), then the guides apart. --}}
+                            @php($nItems = $sec === 'weeds' ? count(\App\Support\FieldCatalogue::weeds()) : count(\App\Support\FieldCatalogue::problems($sec)))
+                            @php($nGuides = $pages->filter(fn ($p) => ! $isEntry($sec, $p))->count())
                             <a href="{{ $S::url($sec) }}" class="pb-go">{{ $doors[$sec]['go'] }} <small>@if ($nItems){{ $nItems }} {{ $nouns[$sec] }}, @endif{{ $nGuides }} {{ $nGuides === 1 ? 'guide' : 'guides' }}</small></a>
                         </div>
                     </div>

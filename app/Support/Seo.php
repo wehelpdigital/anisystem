@@ -64,6 +64,10 @@ final class Seo
     public static function robots(?Request $request = null): string
     {
         $request ??= request();
+        // A page that asks to stay out on its own (a field catalogue fact sheet).
+        if ($own = $request?->attributes->get('robots')) {
+            return self::publicIndexable() ? (string) $own : 'noindex, nofollow';
+        }
         // The international site is closed for maintenance: never indexed while it is.
         if (! Region::intlOpen() && $request?->route('face') === 'en') {
             return 'noindex, nofollow';

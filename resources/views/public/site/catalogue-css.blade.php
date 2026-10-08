@@ -54,6 +54,11 @@
         .wk-cats button { display: inline-flex; align-items: center; gap: .4rem; }
         .wk-cats button i { font-style: normal; font-size: .72rem; font-weight: 800; opacity: .7; }
         .wk-count { font-size: .85rem; color: #6b7280; }
+        /* The crop beside the search (the weeds catalogue, 2026-10-08): the same tag the helpers use. */
+        .wk-crop { flex: 0 1 17rem; min-width: 14rem; }
+        .wk-crop .cp-tag { margin-top: 0; padding-top: .35rem; padding-bottom: .35rem; border-radius: 999px; background: #fff; border-color: #d7e8c2; }
+        .wk-crop .cp-ico { width: 2.1rem; height: 2.1rem; border-radius: 999px; font-size: 1.1rem; }
+        @media (max-width: 639.98px) { .wk-crop { flex-basis: 100%; } }
         .wk-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 12.75rem), 1fr)); }
         .wk-card { --g: 98; display: flex; flex-direction: column; overflow: hidden; border-radius: 1.1rem; background: #fff; border: 1px solid #e5ebdf; text-decoration: none;
             transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
@@ -85,11 +90,15 @@
            this crop too come after this shelf's own. */
         .wk-card.is-also { order: 1; }
         /* A phone shows the first eight until the reader searches, picks a
-           group or asks for all: the helper below is not 40 rows away. */
+           group or asks for all: the helper below is not 40 rows away. A
+           wider screen shows 24 (every crop's catalogue runs past a hundred). */
         .wk-more { display: none; }
+        .wk-grid.is-capped + .wk-more { display: flex; }
         @media (max-width: 639.98px) {
             .wk-grid.is-capped > .wk-card:nth-child(n+9) { display: none; }
-            .wk-grid.is-capped + .wk-more { display: flex; }
+        }
+        @media (min-width: 640px) {
+            .wk-grid.is-capped > .wk-card:nth-child(n+25) { display: none; }
         }
         .wk-more { margin: 1.1rem auto 0; width: 100%; max-width: 24rem; min-height: 2.9rem; align-items: center; justify-content: center; gap: .45rem;
             padding: .7rem 1.1rem; border-radius: 999px; font-size: .95rem; font-weight: 800; color: #2d5016; background: #fff; border: 1px solid #c9e0ad;

@@ -23,7 +23,7 @@
     $isFeature = $page->section === 'features';
     $isQuestion = $page->section === 'questions';
     $feat = $isFeature ? $S::feature($page) : null;
-    // A weed of rice: its catalogue facts (App\Support\WeedCatalogue).
+    // A weed of the catalogue: its facts (App\Support\FieldCatalogue).
     $weed = $page->section === 'weeds' ? \App\Support\WeedCatalogue::get($page->slug) : null;
     // A pest or a disease of the catalogue (App\Support\ProblemCatalogue).
     $prob = in_array($page->section, ['pests', 'diseases'], true) ? \App\Support\ProblemCatalogue::get($page->section, $page->slug) : null;
@@ -223,11 +223,11 @@
                         </div>
                     @endif
                     @if ($weed)
-                        {{-- The helper, opened on this weed's group. --}}
+                        {{-- The helper, opened on this weed's first crop and its group. --}}
                         <div class="sp-card sp-wcard">
-                            <h2 class="sp-card-h">Weed control by rice age</h2>
-                            <p>Pick how you planted and how old your rice is, and see the active ingredients that work on {{ strtolower(\App\Support\WeedControl::GROUPS[$weed['group']]['label']) }} at that age.</p>
-                            <a href="{{ $S::url('weeds') }}?group={{ $weed['group'] }}#control" class="btn btn-outline btn-sm">Open the helper</a>
+                            <h2 class="sp-card-h">Weed control by crop age</h2>
+                            <p>Pick your crop and how old it is, and see the active ingredients that work on {{ strtolower(\App\Support\WeedControl::GROUPS[$weed['group']]['label']) }} at that age.</p>
+                            <a href="{{ $S::url('weeds') }}?crop={{ $weed['crops'][0] ?? 'rice' }}&amp;group={{ $weed['group'] }}#control" class="btn btn-outline btn-sm">Open the helper</a>
                         </div>
                     @endif
                     <div class="sp-promo">

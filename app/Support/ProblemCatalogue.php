@@ -4,36 +4,21 @@ namespace App\Support;
 
 /**
  * The Crop Pests and Crop Diseases catalogues (2026-10-07), built like the
- * weeds one (App\Support\WeedCatalogue): one profile page per pest or
- * disease (database/site-pages/{pests,diseases}/{slug}.json, editable in the
- * mother app), and here what the hub needs beside the pages: the shelves,
- * the finder's questions and each entry's facts.
+ * weeds one: a profile page per pest or disease where one has been written
+ * (database/site-pages/{pests,diseases}/{slug}.json, editable in the mother
+ * app), a short fact sheet for the rest, and here what the hub needs beside
+ * the pages: the finder's questions and the words around the catalogue.
  *
- * The entries themselves are generated (ProblemCatalogueData) from the
- * researched profiles; this class holds the words around them.
+ * The entries themselves, for every crop of the catalog (2026-10-08), live
+ * in the field catalogue (App\Support\FieldCatalogue); its shelves are the
+ * hubs' shelves.
  */
 final class ProblemCatalogue
 {
-    /** The crop shelves of both hubs: label, a local word, hue, icon path. */
-    public const GROUPS = [
-        'rice' => ['Rice', 'Palay', 98, 'M12 21V9m0 0c0-3 1.5-5.5 4-7m-4 7C12 6 10.5 3.5 8 2m4 13c2-2 4.5-3 7-3m-7 3c-2-2-4.5-3-7-3'],
-        'corn' => ['Corn', 'Mais', 45, 'M12 21c-3 0-4.5-4-4.5-9S9 3 12 3s4.5 4 4.5 9-1.5 9-4.5 9zm-2.5-14h5m-5.5 4h6m-6 4h6'],
-        'vegetables' => ['Vegetables', 'Gulay', 140, 'M7 21c-2-4-1-9 3-12m4 12c2-4 1-9-3-12M12 9c0-3 2-6 5-6-1 3-2.5 5-5 6zm0 0c0-3-2-6-5-6 1 3 2.5 5 5 6z'],
-        'fruits' => ['Fruits and Plantation Crops', 'Niyog, saging, mangga', 25, 'M12 8c-4 0-7 3-7 7s3 6 7 6 7-2 7-6-3-7-7-7zm0 0c0-2 1-4 3-5'],
-    ];
-
-    /** Step one of the finder: the crop. */
-    public const CROPS = [
-        'rice' => ['Palay', 'Rice'], 'corn' => ['Mais', 'Corn'], 'vegetables' => ['Gulay', 'Vegetables'],
-        'coconut' => ['Niyog', 'Coconut'], 'banana' => ['Saging', 'Banana'], 'mango' => ['Mangga', 'Mango'],
-        'cacao' => ['Cacao', 'Cacao'], 'coffee' => ['Kape', 'Coffee'], 'papaya' => ['Papaya', 'Papaya'],
-        'citrus' => ['Citrus', 'Calamansi and other citrus'], 'fruit' => ['Prutas', 'Other fruit trees'],
-    ];
-
     /** Pests, step two: where the damage shows. */
     public const PARTS = [
-        'leaves' => 'On the leaves', 'stems' => 'In the stems or tillers', 'grain' => 'On the panicles or ears',
-        'fruit' => 'On fruits, pods or nuts', 'roots' => 'At the roots or base', 'seedlings' => 'On young seedlings',
+        'leaves' => 'On the leaves', 'stems' => 'In the stems, vines or trunk', 'grain' => 'On the grain, panicles or ears',
+        'fruit' => 'On fruits, pods or nuts', 'roots' => 'At the roots, tubers or base', 'seedlings' => 'On young seedlings',
         'whole' => 'The whole plant',
     ];
 
@@ -73,38 +58,36 @@ final class ProblemCatalogue
             'finderLead' => 'Tell us your crop and what you see. You get the diseases that look like it and the active ingredients to spray against each one, or why no spray helps.',
             'askWhere' => 'What do you see?',
             'guides' => 'Disease Guides for Filipino Farmers',
-            'guidesLead' => 'How to tell a fungus from a bacterium or a virus, how diseases spread, and the rice diseases by growth stage.',
+            'guidesLead' => 'How to tell a fungus from a bacterium or a virus, how diseases spread, and the diseases of palay by growth stage.',
             'bandKick' => 'Not sure which disease it is?',
             'bandTitle' => 'Send Anee a Photo of the Leaf',
             'bandText' => 'Anee, the smart farm technician in anee.io, reads the photo with your crop, its age and the weather, and tells you what it most likely is and what to do. In Tagalog or English.',
         ],
     ];
 
-    /** One section's entries: slug => facts. */
+    /** One section's entries, every crop's: slug => facts. */
     public static function entries(string $section): array
     {
-        return match ($section) {
-            'pests' => ProblemCatalogueData::PESTS,
-            'diseases' => ProblemCatalogueData::DISEASES,
-            default => [],
-        };
+        return FieldCatalogue::problems($section);
     }
 
     /** One entry's facts, or null for a page that is not in the catalogue (a guide). */
     public static function get(string $section, string $slug): ?array
     {
-        return self::entries($section)[$slug] ?? null;
+        return FieldCatalogue::problem($section, $slug);
     }
 
     /**
-     * What the finder partial needs, for a page that is not the hub (the
-     * app's Field helpers, 2026-10-07): the same items, crops, questions and
-     * words the hub computes for itself.
+     * The catalogue as the hub and the finder show it: every entry, with
+     * its page (its profile, or its fact sheet when none is written yet),
+     * its picture when the profile has one, and every shelf whose crops it
+     * attacks, its own first (the fall armyworm lives on the corn shelf and
+     * shows under rice too, so a shelf's count is the finder's count).
      */
-    public static function finderFacts(string $section): array
+    public static function items(string $section, ?\Illuminate\Support\Collection $pages = null): \Illuminate\Support\Collection
     {
         $S = SitePages::class;
-        $live = $S::inSection($section)->keyBy('slug');
+        $live = ($pages ?? $S::inSection($section))->keyBy('slug');
         $thumbOf = function ($p) use ($S) {
             $h = is_array($p->heroImage) ? $p->heroImage : [];
             $src = (string) ($h['thumb'] ?? ($h['src'] ?? ''));
@@ -117,16 +100,34 @@ final class ProblemCatalogue
 
             return $S::img($src);
         };
-        $items = collect(self::entries($section))->filter(fn ($e, $slug) => $live->has($slug))
-            ->map(fn ($e, $slug) => $e + ['slug' => $slug, 'url' => $S::pageUrl($live[$slug]), 'thumb' => $thumbOf($live[$slug]),
-                'alt' => (is_array($live[$slug]->heroImage) ? ($live[$slug]->heroImage['alt'] ?? null) : null) ?: $e['name']]);
+
+        return collect(self::entries($section))->map(function ($e, $slug) use ($section, $live, $thumbOf, $S) {
+            $page = $live->get($slug);
+            $hero = $page && is_array($page->heroImage) ? $page->heroImage : [];
+
+            return $e + ['slug' => $slug, 'url' => $S::url($section, $slug), 'hasPage' => (bool) $page,
+                'thumb' => $page ? $thumbOf($page) : null, 'alt' => ($hero['alt'] ?? null) ?: $e['name'],
+                'shelves' => array_values(array_unique(array_merge([$e['group']], array_map([FieldCatalogue::class, 'shelfOf'], $e['crops'])))),
+            ];
+        });
+    }
+
+    /**
+     * What the finder partial needs, on the hub and in the app's Field
+     * helpers (2026-10-07): the items, every crop that has some, the
+     * questions and the words.
+     */
+    public static function finderFacts(string $section, ?\Illuminate\Support\Collection $items = null): array
+    {
+        $items ??= self::items($section);
         $isPests = $section === 'pests';
-        $usedCrops = $items->pluck('crops')->flatten()->unique()->all();
+        $used = array_count_values($items->pluck('crops')->flatten()->all());
 
         return [
             'section' => $section,
             'items' => $items,
-            'crops' => array_filter(self::CROPS, fn ($k) => in_array($k, $usedCrops, true), ARRAY_FILTER_USE_KEY),
+            // crop => [local, English, icon, shelf, how many]
+            'crops' => collect(FieldCatalogue::crops())->filter(fn ($c, $k) => isset($used[$k]))->map(fn ($c, $k) => [...$c, $used[$k]])->all(),
             'askOpts' => $isPests ? self::PARTS : self::SIGNS,
             'words' => self::HUB[$section],
             'isPests' => $isPests,

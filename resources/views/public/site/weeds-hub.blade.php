@@ -1,28 +1,32 @@
 @extends('layouts.public')
 
-{{-- /weeds (2026-10-06): the weeds of Philippine rice fields. The three
-     groups, the catalogue (one card per weed profile, filtered by group and
-     searched by any of its names), the weed control helper by rice age, and
-     the long guides. The words of each weed live on its page; the card facts
-     come from App\Support\WeedCatalogue and the helper's from
-     App\Support\WeedControl. --}}
+{{-- /weeds (2026-10-06): the weeds of Philippine farms, rice first and
+     every other crop since 2026-10-08. The three groups, the catalogue (one
+     card per weed, its profile page or its fact sheet, filtered by group and
+     crop and searched by any of its names), the weed control helper by crop
+     age, and the long guides. The card facts and the helper's plans come
+     from App\Support\FieldCatalogue. --}}
 @include('public.partials.site-css')
 @include('public.site.css')
 
 @php
     $S = \App\Support\SitePages::class;
     $W = \App\Support\WeedControl::class;
-    $C = \App\Support\WeedCatalogue::class;
+    $F = \App\Support\FieldCatalogue::class;
     $live = $pages->keyBy('slug');
-    // The weeds, in the catalogue's order, that have a live page.
-    $weeds = collect($C::WEEDS)->filter(fn ($w, $slug) => $live->has($slug))
-        ->map(function ($w, $slug) use ($live, $S) {
-            $h = is_array($live[$slug]->heroImage) ? $live[$slug]->heroImage : [];
-            return $w + ['slug' => $slug, 'url' => $S::pageUrl($live[$slug]),
-                'thumb' => $S::img($h['thumb'] ?? ($h['src'] ?? null)), 'alt' => $h['alt'] ?? $w['name']];
-        });
-    $guides = $pages->filter(fn ($p) => ! $C::get($p->slug))->values();
+    // Every weed in the catalogue's order: its profile page when one is
+    // written, its fact sheet when not.
+    $weeds = collect($F::weeds())->map(function ($w, $slug) use ($live, $S) {
+        $page = $live->get($slug);
+        $h = $page && is_array($page->heroImage) ? $page->heroImage : [];
+        return $w + ['slug' => $slug, 'url' => $S::url('weeds', $slug), 'hasPage' => (bool) $page,
+            'thumb' => $S::img($h['thumb'] ?? ($h['src'] ?? null)), 'alt' => $h['alt'] ?? $w['name']];
+    });
+    $guides = $pages->filter(fn ($p) => ! $F::weed($p->slug))->values();
     $count = fn ($g) => $weeds->where('group', $g)->count();
+    // The crops the catalogue covers, each with how many weeds it has.
+    $used = array_count_values($weeds->pluck('crops')->flatten()->all());
+    $wkCrops = collect($F::crops())->filter(fn ($c, $k) => isset($used[$k]))->map(fn ($c, $k) => [...$c, $used[$k]])->all();
     // One photo per group for the hero, the first weed that has one.
     $faces = collect(array_keys($W::GROUPS))->map(fn ($g) => $weeds->where('group', $g)->first(fn ($w) => $w['thumb']))->filter()->values();
     $groupIcons = [
@@ -69,7 +73,7 @@
                     <p class="sp-lead mt-4">{{ $meta['intro'] }}</p>
                     <div class="wk-jump mt-6">
                         <a href="#catalogue"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a weed</a>
-                        <a href="#control"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Control by rice age</a>
+                        <a href="#control"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Control by crop age</a>
                         <a href="#guides"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2m0-13c1.5-1.5 4-2 8-2v13c-4 0-6.5.5-8 2m0-13v13"/></svg>Read the guides</a>
                     </div>
                 </div>
@@ -104,7 +108,7 @@
             <div class="wk-sec-h">
                 <h2>Grasses, Sedges or Broadleaves?</h2>
                 <p>
-                    Every weed in a rice field belongs to one of three groups, and the group decides what kills it. Look at the stem and the leaf first.
+                    Every weed in a field, palay, mais, gulay or orchard, belongs to one of three groups, and the group decides what kills it. Look at the stem and the leaf first.
                     Our guide to the <a href="{{ $S::url('weeds', 'types-of-weeds') }}" class="font-bold text-brand-700 underline decoration-[#a8cc7e] underline-offset-4">types of weeds</a> goes further.
                 </p>
             </div>
@@ -133,8 +137,8 @@
     <section class="bg-[#fbfcf9] border-t border-[#eef3e8]" id="catalogue" style="scroll-margin-top: 5rem">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
             <div class="wk-sec-h">
-                <h2>Weeds of Philippine Rice Fields</h2>
-                <p>{{ $weeds->count() }} weeds that grow in Philippine rice fields. Search by any name you know, English, scientific or local, like bayakibok or gabi gabi.</p>
+                <h2>Weeds of Philippine Farms</h2>
+                <p>{{ $weeds->count() }} weeds of {{ count($wkCrops) }} Philippine crops, from the rice paddy to the corn field, the vegetable plot, the cane field and the orchard. Pick your crop, or search by any name you know, English, scientific or local, like bayakibok, gabi gabi or kogon.</p>
             </div>
             <div class="wk-tools mt-7">
                 <label class="wk-search">
@@ -142,6 +146,9 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>
                     <input type="search" id="wkQ" placeholder="Search a name, like humay humay" autocomplete="off">
                 </label>
+                <div class="wk-crop" id="wkCrop">
+                    @include('public.site.partials.crop-pick', ['id' => 'wkCropSheet', 'crops' => $wkCrops, 'current' => '', 'title' => 'Weeds of which crop?', 'noun' => 'weeds', 'all' => ['All crops', 'Every weed in the catalogue']])
+                </div>
                 <div class="sp-cats wk-cats" id="wkCats" role="group" aria-label="Weed group">
                     <button type="button" class="is-on" data-group="">All <i>{{ $weeds->count() }}</i></button>
                     @foreach ($W::GROUPS as $g => $info)
@@ -152,7 +159,7 @@
             </div>
             <div class="wk-grid mt-6" id="wkGrid">
                 @foreach ($weeds as $w)
-                    <a href="{{ $w['url'] }}" class="wk-card" style="--g: {{ $groupHue[$w['group']] }}" data-group="{{ $w['group'] }}"
+                    <a href="{{ $w['url'] }}" class="wk-card" style="--g: {{ $groupHue[$w['group']] }}" data-group="{{ $w['group'] }}" data-crops="{{ implode(' ', $w['crops']) }}"
                        data-q="{{ \Illuminate\Support\Str::lower($w['name'] . ' ' . $w['sci'] . ' ' . $w['local']) }}">
                         <span class="wk-ph">
                             @if ($w['thumb'])
@@ -165,7 +172,7 @@
                         <div class="wk-in">
                             <b>{{ $w['name'] }}</b>
                             @if ($w['sci'] !== $w['name'])<em>{{ $w['sci'] }}</em>@endif
-                            @if ($w['local'] !== '')<p><span>Local names:</span> {{ $w['local'] }}</p>@endif
+                            @if ($w['local'] !== '')<p><span>Local names:</span> {{ $w['local'] }}</p>@elseif ($w['hint'] !== '')<p>{{ $w['hint'] }}</p>@endif
                         </div>
                     </a>
                 @endforeach
@@ -174,7 +181,7 @@
                 <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
             <div class="wk-empty mt-6" id="wkEmpty">
                 {{-- The name is in the catalogue, in another group: say so, one tap away. --}}
-                <p class="wk-else" hidden>None in this group. <button type="button" id="wkElse"></button></p>
+                <p class="wk-else" hidden>None here for this crop or group. <button type="button" id="wkElse"></button></p>
                 <p class="wk-none">No weed by that name in the catalogue yet. Try its scientific name, or take a photo and
                 <a href="{{ url('/features/ai-agricultural-technician') }}">ask Anee, the smart farm technician</a>.</p>
             </div>
@@ -186,10 +193,10 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
             <div class="wk-sec-h">
                 <span class="sp-chip">Weed control helper</span>
-                <h2 class="mt-3">Weed Control by Rice Age</h2>
+                <h2 class="mt-3">Weed Control by Crop Age</h2>
                 <p>
-                    Tell us how you planted, how old your rice is and which weeds you see. You get what to do first and the active ingredients that work at that age,
-                    from PhilRice recommendations. Active ingredients only, never brands.
+                    Tell us your crop, how old it is and which weeds you see. You get what to do first and the active ingredients that work at that age,
+                    from PhilRice for palay and from the DA, the sugar and coconut agencies and university guides for every other crop. Active ingredients only, never brands.
                 </p>
             </div>
             @include('public.site.partials.weed-helper', ['gate' => true])
@@ -201,8 +208,8 @@
         <section class="bg-white" id="guides" style="scroll-margin-top: 5rem">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
                 <div class="wk-sec-h">
-                    <h2>Weed Guides for Rice Farmers</h2>
-                    <p>The whole plan, start to finish: how to tell the weeds apart, how to keep them out across a season, and how to use herbicides safely.</p>
+                    <h2>Weed Guides for Filipino Farmers</h2>
+                    <p>The whole plan, start to finish: how to tell the weeds apart, how to keep them out of palay across a season, and how to use herbicides safely on any crop.</p>
                 </div>
                 <div class="sp-grid wk-guides mt-8">
                     @foreach ($guides as $p)
@@ -218,7 +225,7 @@
             <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Not sure which weed it is?</p>
             <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance">Send Anee a Photo From the Field</h2>
             <p class="mt-4 text-[#cdd8c0] leading-relaxed max-w-2xl mx-auto">
-                Anee, the smart farm technician in anee.io, tells you which weed it most likely is, its group and what to do at the age of your rice.
+                Anee, the smart farm technician in anee.io, tells you which weed it most likely is, its group and what to do at the age of your crop.
                 Then anee.io puts the weeding days on your season calendar. In Tagalog or English.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
@@ -246,37 +253,43 @@
     const cards = [...grid.querySelectorAll('.wk-card')];
     // A phone shows the first eight until the reader searches, picks a
     // group or asks for all, so the helper is not 40 rows further down.
-    const CAP = 8, phone = matchMedia('(max-width: 639.98px)');
-    let group = '', all = false;
+    const phone = matchMedia('(max-width: 639.98px)'), cap = () => (phone.matches ? 8 : 24);
+    let group = '', crop = '', all = false;
+    const cropTag = document.querySelector('#wkCrop .cp-tag');
     const norm = (s) => s.toLowerCase().replace(/[^a-z0-9ñ ]+/g, ' ').replace(/\s+/g, ' ').trim();
     const rise = (c, i) => { c.classList.remove('is-in'); c.style.animationDelay = Math.min(i, 12) * 25 + 'ms'; void c.offsetWidth; c.classList.add('is-in'); };
     const apply = () => {
         const words = norm(q.value).split(' ').filter(Boolean);
-        const capped = !all && !group && !words.length;
+        const capped = !all && !group && !crop && !words.length && cards.length > cap();
+        // The group chips count the weeds of the chosen crop.
+        const ofCrop = crop ? cards.filter((c) => c.dataset.crops.split(' ').includes(crop)) : cards;
+        cats.querySelectorAll('button').forEach((b) => { const i = b.querySelector('i'); if (i) i.textContent = b.dataset.group ? ofCrop.filter((c) => c.dataset.group === b.dataset.group).length : ofCrop.length; });
         let shown = 0;
         cards.forEach((c) => {
             const hay = norm(c.dataset.q);
-            const on = (!group || c.dataset.group === group) && words.every((w) => hay.includes(w));
+            const on = (!group || c.dataset.group === group) && (!crop || c.dataset.crops.split(' ').includes(crop)) && words.every((w) => hay.includes(w));
             const was = !c.classList.contains('is-out');
             c.classList.toggle('is-out', !on);
             if (on && !was) rise(c, shown);
             if (on) shown++;
         });
         grid.classList.toggle('is-capped', capped);
-        count.textContent = capped && phone.matches ? 'Showing ' + Math.min(CAP, cards.length) + ' of ' + cards.length + ' weeds'
+        count.textContent = capped ? 'Showing ' + cap() + ' of ' + cards.length + ' weeds'
             : shown === cards.length ? cards.length + ' weeds' : 'Showing ' + shown + ' of ' + cards.length + ' weeds';
         empty.classList.toggle('is-on', shown === 0);
         // Nothing in this group, but the name is in the catalogue: offer them.
-        const elsewhere = shown === 0 && group && words.length ? cards.filter((c) => words.every((w) => norm(c.dataset.q).includes(w))).length : 0;
+        const elsewhere = shown === 0 && (group || crop) && words.length ? cards.filter((c) => words.every((w) => norm(c.dataset.q).includes(w))).length : 0;
         elseP.hidden = !elsewhere;
-        if (elsewhere) elseB.textContent = 'See the ' + elsewhere + ' found in all groups';
+        if (elsewhere) elseB.textContent = 'See the ' + elsewhere + ' found in all crops and groups';
     };
     const elseP = empty.querySelector('.wk-else'), elseB = document.getElementById('wkElse');
-    elseB.addEventListener('click', () => setGroup(''));
+    elseB.addEventListener('click', () => { if (crop) { crop = ''; window.cropPickSet?.(cropTag, ''); } setGroup(''); });
+    cropTag?.addEventListener('croppick', (e) => { crop = e.detail.crop; apply(); });
     more?.addEventListener('click', () => {
         all = true; apply();
-        cards.slice(CAP).forEach((c, i) => rise(c, i));
-        cards[CAP]?.focus({ preventScroll: true });
+        const from = cap();
+        cards.slice(from).forEach((c, i) => rise(c, i));
+        cards[from]?.focus({ preventScroll: true });
     });
     phone.addEventListener?.('change', apply);
     const setGroup = (g) => {
@@ -291,6 +304,9 @@
         document.getElementById('catalogue').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     }));
     const want = new URLSearchParams(location.search).get('group');
+    // A weed page's crop link opens the catalogue on that crop (?crop=).
+    const wantCrop = new URLSearchParams(location.search).get('crop');
+    if (wantCrop && window.cropPickSet?.(cropTag, wantCrop)) crop = wantCrop;
     if (want && cats.querySelector('[data-group="' + CSS.escape(want) + '"]')) setGroup(want); else apply();
 })();
 </script>

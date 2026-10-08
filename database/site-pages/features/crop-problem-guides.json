@@ -6,7 +6,7 @@
   "category": "Crop care",
   "title": "Crop Problem Guides: Pests, Diseases and Weeds of Philippine Farms",
   "metaTitle": "Crop Problems in the Philippines: Free Field Guides",
-  "metaDescription": "Free guides to crop problems in the Philippines: rice and corn pests, plant diseases and weeds. Learn the signs, the causes and what to do about each one.",
+  "metaDescription": "Free guides to crop problems in the Philippines: the pests, diseases and weeds of every crop, from palay and mais to vegetables and fruit trees.",
   "focusKeyword": "crop problems",
   "keywords": [
     "crop problems",
@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "Every guide follows the same order, so you know where to look. It opens with a photo and what the problem is. Then come the signs in the field, why it builds up and how to manage it, with cultural control first and chemicals last. Each one ends with the questions farmers ask and the sources behind it, from PhilRice, IRRI, the DA and the product labels.\n\nThe guides sit behind three doors: [crop pests](/pests), [crop diseases](/diseases) and [weeds and grasses](/weeds). The weeds door holds a catalogue of 81 rice weeds, each with its local names, and a weed control helper that shows what to do at every age of your rice."
+      "text": "Every guide follows the same order, so you know where to look. It opens with a photo and what the problem is. Then come the signs in the field, why it builds up and how to manage it, with cultural control first and chemicals last. Each one ends with the questions farmers ask and the sources behind it, from PhilRice, IRRI, the DA and the product labels.\n\nThe guides sit behind three doors: [crop pests](/pests), [crop diseases](/diseases) and [weeds and grasses](/weeds). Each door covers every crop anee.io knows, from palay to durian. The weeds door holds a catalogue of the weeds of Philippine farms, each with its local names, and a weed control helper that shows what to do at every age of your crop."
     },
     {
       "type": "heading",
@@ -154,7 +154,7 @@
         },
         {
           "q": "Which crops do the guides cover?",
-          "a": "Mostly palay and corn, plus mango, sili, onion, banana, tomato and other vegetables where a pest or disease hits them."
+          "a": "Every crop in anee.io, from palay, mais and the beans to the root crops, vegetables, sugarcane and the fruit trees. Palay and corn have the longest guides. Many problems of the other crops have a short fact sheet: the signs, the crops they attack and what to spray, with the sources."
         },
         {
           "q": "Do the guides give spray rates?",
