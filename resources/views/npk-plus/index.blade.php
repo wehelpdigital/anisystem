@@ -1255,9 +1255,10 @@
     const paintProducts = () => {
         const q = ($('npProdQ').value || '').trim().toLowerCase();
         $('npProdQX').classList.toggle('hidden', !q);
-        // "16-16-8+9s" finds "16-16-8-9S": a plus between the grade and the sulfur reads as a dash.
-        const qn = q.replace(/\s*\+\s*/g, '-');
-        const hit = (p) => { if (cat !== 'all' && p.category !== cat) return false; if (!q) return true; const hay = (p.name + ' ' + (p.local || '') + ' ' + grade(p) + ' ' + Object.keys(p.pct).map((k) => NAMES[k] || k).join(' ')).toLowerCase(); return hay.includes(q) || hay.includes(qn); };
+        // Every word of the search, in any order ("anhydrous calcium sulfate"); "16-16-8+9s"
+        // finds "16-16-8-9S" (a plus between the grade and the sulfur reads as a dash).
+        const words = q.replace(/\s*\+\s*/g, '-').replace(/sulphate/g, 'sulfate').split(/\s+/).filter(Boolean);
+        const hit = (p) => { if (cat !== 'all' && p.category !== cat) return false; if (!q) return true; const hay = (p.name + ' ' + (p.local || '') + ' ' + grade(p) + ' ' + Object.keys(p.pct).map((k) => NAMES[k] || k).join(' ')).toLowerCase(); return words.every((w) => hay.includes(w)); };
         const row = (p) => {
             const inPlan = st.lines.some((l) => l.id === p.id);
             return '<button type="button" class="np-prow' + (inPlan ? ' is-in' : '') + '" data-id="' + p.id + '"><span class="np-prow-g">' + esc(badge(p)) + '</span><span class="np-prow-t"><b>' + esc(p.name) + '</b><small>' + esc(comp(p)) + '</small></span>'
