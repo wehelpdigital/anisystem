@@ -39,7 +39,7 @@ final class NpkPlan
         'carabao manure' => 'cattle-manure', 'cow manure' => 'cattle-manure', 'cattle manure' => 'cattle-manure', 'kalabaw' => 'cattle-manure',
         'vermicompost' => 'vermicompost', 'vermicast' => 'vermicompost', 'organic fertilizer' => 'organic-fertilizer', 'fish emulsion' => 'fish-emulsion',
         'azospirillum' => 'azospirillum', 'azotobacter' => 'azotobacter', 'rhizobium' => 'rhizobium', 'megaterium' => 'bacillus-megaterium',
-        'mycorrhiza' => 'mycorrhiza', 'potassium solubilizing' => 'ksb',
+        'mycorrhiza' => 'mycorrhiza', 'potassium solubilizing' => 'ksb', 'mb basal' => 'complete-16-16-8-s',
         'urea' => 'urea', 'complete' => 'complete-14', 'potash' => 'mop', 'dap' => 'dap', 'mop' => 'mop', 'sop' => 'sop', 'tsp' => 'tsp', 'ssp' => 'ssp',
     ];
 
@@ -89,7 +89,7 @@ final class NpkPlan
                 return $p;
             }
         }
-        if (preg_match('/(?<![\d.])(\d{1,2}(?:\.\d)?)\s*-\s*(\d{1,2}(?:\.\d)?)\s*-\s*(\d{1,2}(?:\.\d)?)(?:\s*-\s*(\d{1,2})\s*s)?(?![\d.])/i', $low, $m)) {
+        if (preg_match('/(?<![\d.])(\d{1,2}(?:\.\d)?)\s*-\s*(\d{1,2}(?:\.\d)?)\s*-\s*(\d{1,2}(?:\.\d)?)(?:\s*[-+]\s*(\d{1,2})\s*s)?(?![\d.])/i', $low, $m)) {
             [$n, $p2, $k] = [(float) $m[1], (float) $m[2], (float) $m[3]];
             $s = isset($m[4]) && $m[4] !== '' ? (float) $m[4] : null;
             foreach ($shelf as $p) {
