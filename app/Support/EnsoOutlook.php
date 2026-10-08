@@ -33,6 +33,42 @@ final class EnsoOutlook
             . ' typhoon-season wetness — weigh the forecast probabilities accordingly.';
     }
 
+    /**
+     * The state as numbers, for arithmetic (NPK Plus's sun and water,
+     * 2026-10-08): the latest ONI, El Niño, La Niña or neutral, and how
+     * strong. Null when NOAA could not be read.
+     *
+     * @return array{oni: float, phase: string, strength: string, label: string}|null
+     */
+    public static function state(): ?array
+    {
+        try {
+            $oni = Cache::remember('enso-oni-last', 86400, function () {
+                $txt = Http::timeout(8)->get('https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt')->body();
+                $rows = array_values(array_filter(array_map('trim', explode("\n", $txt))));
+                for ($i = count($rows) - 1; $i >= 0; $i--) {
+                    $p = preg_split('/\s+/', $rows[$i]);
+                    if (count($p) >= 4 && is_numeric($p[3])) {
+                        return (float) $p[3];
+                    }
+                }
+
+                return null;
+            });
+        } catch (\Throwable $e) {
+            return null;
+        }
+        if ($oni === null) {
+            return null;
+        }
+        $a = abs($oni);
+        $strength = $a >= 2 ? 'very strong' : ($a >= 1.5 ? 'strong' : ($a >= 1 ? 'moderate' : 'weak'));
+        $phase = $oni >= 0.5 ? 'el_nino' : ($oni <= -0.5 ? 'la_nina' : 'neutral');
+
+        return ['oni' => $oni, 'phase' => $phase, 'strength' => $phase === 'neutral' ? '' : $strength,
+            'label' => $phase === 'neutral' ? 'ENSO neutral' : ('A ' . $strength . ' ' . ($phase === 'el_nino' ? 'El Niño' : 'La Niña'))];
+    }
+
     /** The ONI table's tail — what the ocean has actually been doing. */
     public static function observed(): string
     {

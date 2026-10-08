@@ -718,6 +718,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // NPK Plus (2026-10-07): the free fertilizer calculator, and Anee's reading of a plan.
     Route::get('/app/npk-plus', [App\Http\Controllers\NpkPlusController::class, 'page'])->name('npk.page');
     Route::get('/app/npk-plus/options', [App\Http\Controllers\NpkPlusController::class, 'options'])->name('npk.options');
+    Route::get('/app/npk-plus/season', [App\Http\Controllers\NpkPlusController::class, 'season'])->middleware('throttle:30,1')->name('npk.season');
     Route::post('/app/npk-plus/product', [App\Http\Controllers\NpkPlusController::class, 'storeProduct'])->middleware('throttle:30,1')->name('npk.product');
     Route::delete('/app/npk-plus/product/{id}', [App\Http\Controllers\NpkPlusController::class, 'destroyProduct'])->whereNumber('id')->name('npk.product.delete');
     Route::post('/app/npk-plus/save', [App\Http\Controllers\NpkPlusController::class, 'save'])->middleware('throttle:60,1')->name('npk.save');

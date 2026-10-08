@@ -66,9 +66,9 @@
 
     /* The wizard: five steps, Back and Next. */
     .np-wiz { padding: 0; overflow: hidden; }
-    .np-wsteps { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .15rem; padding: .85rem .6rem .75rem; border-bottom: 1px solid var(--color-gray-100); }
+    .np-wsteps { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .15rem; padding: .85rem .6rem .75rem; border-bottom: 1px solid var(--color-gray-100); }
     html.dark .np-wsteps { border-color: #2b3a1c; }
-    .np-wline { position: absolute; left: 10%; right: 10%; top: 1.72rem; height: 2px; background: var(--color-gray-200); }
+    .np-wline { position: absolute; left: 8.33%; right: 8.33%; top: 1.72rem; height: 2px; background: var(--color-gray-200); }
     .np-wline span { display: block; height: 100%; width: var(--p, 0%); background: var(--color-brand-600); transition: width .4s var(--np-ease); }
     html.dark .np-wline { background: #2b3a1c; }
     .np-ws { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: .3rem; min-width: 0; padding: 0; border: 0; background: none; cursor: pointer;
@@ -120,7 +120,32 @@
         transition: background-color .28s var(--np-ease), border-color .28s var(--np-ease), color .28s var(--np-ease), transform .28s var(--np-ease); }
     .np-pill:hover { border-color: var(--color-brand-600); }
     .np-pill[aria-pressed="true"] { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
-    #npPickFoot[hidden] { display: none; }
+    #npPickFoot[hidden], #npPickSearchBox[hidden] { display: none; }
+    .np-psearch { position: relative; margin-bottom: .6rem; }
+    .np-psearch svg { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); width: 1.05rem; height: 1.05rem; color: var(--color-gray-400); pointer-events: none; }
+    .np-psearch .form-input { padding-left: 2.4rem; }
+    /* The season, read from ten years of weather at the field. */
+    .np-season { margin-top: .9rem; padding: .75rem .85rem; border-radius: .95rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    html.dark .np-season { background: #121a0d; border-color: #2b3a1c; }
+    .np-season b { color: var(--color-gray-900); }
+    .np-season .np-enso { display: inline-block; margin-top: .35rem; padding: .15rem .55rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: #9a3412; background: #ffedd5; }
+    .np-season .np-enso.is-wet { color: #1e40af; background: #dbeafe; }
+    .np-season .np-enso.is-flat { color: #334155; background: #e2e8f0; }
+    .lb-sky { margin-top: .9rem; }
+    .lb-sky h4 { font-family: var(--font-heading); font-weight: 800; font-size: .9rem; color: var(--color-gray-900); }
+    .lb-skyrow { display: grid; grid-template-columns: 2rem minmax(0, 1fr) auto; gap: .55rem; align-items: center; margin-top: .45rem; padding: .5rem .6rem; border-radius: .8rem;
+        background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    html.dark .lb-skyrow { background: #121a0d; border-color: #2b3a1c; }
+    .lb-skyrow > i { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: .6rem; font-style: normal; font-size: 1.05rem; background: #fef3c7; }
+    .lb-skyrow.is-water > i { background: #dbeafe; } .lb-skyrow.is-temp > i { background: #fee2e2; }
+    .lb-skyrow b { display: block; font-size: .82rem; color: var(--color-gray-900); }
+    .lb-skyrow small { display: block; font-size: .7rem; line-height: 1.4; color: var(--color-gray-500); }
+    .lb-skyrow em { font-style: normal; font-family: var(--font-heading); font-weight: 800; font-size: 1rem; color: var(--color-gray-900); }
+    .lb-rainyears { display: flex; align-items: flex-end; gap: 3px; height: 3.2rem; margin-top: .55rem; }
+    .lb-rainyears span { flex: 1 1 0; min-width: 0; border-radius: 3px 3px 0 0; background: #93c5fd; position: relative; transition: height .6s var(--np-ease); }
+    .lb-rainyears span.is-now { background: repeating-linear-gradient(135deg, #f97316 0 4px, #fdba74 4px 8px); }
+    .lb-rainyears span b { position: absolute; left: 50%; bottom: -1.05rem; transform: translateX(-50%); font-size: .52rem; font-weight: 700; color: var(--color-gray-400); white-space: nowrap; }
+    .lb-rainkey { margin-top: 1.25rem; font-size: .68rem; color: var(--color-gray-500); }
 
     /* The crop sheet: the same catalogue rows the other analyses use. */
     .crop-search { position: relative; margin-bottom: .6rem; }
@@ -263,7 +288,7 @@
         background: linear-gradient(135deg, #0f766e, #14b8a6); }
     .np-mrow.is-sec > i { background: linear-gradient(135deg, #a16207, #eab308); }
     .np-mrow.is-ben > i { background: linear-gradient(135deg, #475569, #94a3b8); }
-    .np-mrow.is-soil > i, .np-mrow.is-notneeded > i { opacity: .55; }
+    .np-mrow.is-noflag > i, .np-mrow.is-notneeded > i { opacity: .55; }
     .np-mrow b { display: block; font-size: .84rem; color: var(--color-gray-900); }
     .np-mrow small { display: block; font-size: .7rem; line-height: 1.4; color: var(--color-gray-500); }
     .np-mrow.is-short .np-mtxt small { color: #b45309; }
@@ -277,8 +302,9 @@
     .np-mrow.is-short .np-mbar .have { background: #f59e0b; } .np-mrow.is-over .np-mbar .have { background: #dc2626; }
     .np-mval { text-align: right; min-width: 4.6rem; }
     .np-mval em { display: block; font-style: normal; font-size: .7rem; font-weight: 800; color: var(--color-gray-500); }
-    .np-mrow.is-short .np-mval em { color: #b45309; } .np-mrow.is-over .np-mval em { color: #b91c1c; } .np-mrow.is-right .np-mval em, .np-mrow.is-soil .np-mval em { color: #2d5016; }
-    html.dark .np-mrow.is-right .np-mval em, html.dark .np-mrow.is-soil .np-mval em { color: #a5c97e; }
+    .np-mrow.is-short .np-mval em { color: #b45309; } .np-mrow.is-over .np-mval em { color: #b91c1c; } .np-mrow.is-right .np-mval em, .np-mrow.is-testok .np-mval em { color: #2d5016; }
+    html.dark .np-mrow.is-right .np-mval em, html.dark .np-mrow.is-testok .np-mval em { color: #a5c97e; }
+    .np-mrow small.np-down { color: var(--color-gray-500); font-style: italic; }
 
     /* Liebig's barrel: CSS in 3D, turned by a finger or a mouse. */
     .lb { margin-top: .4rem; }
@@ -356,7 +382,8 @@
     .lb-arrow .lb-ap { transition: stroke-dashoffset 1s var(--np-ease); }
     .lb-arrow .lb-ah { opacity: 0; transition: opacity .3s var(--np-ease) .85s; }
     .lb-arrow.is-drawn .lb-ah { opacity: 1; }
-    .lb-alab { position: absolute; right: .5rem; top: 46%; width: 4.9rem; padding: .25rem .35rem; border-radius: .55rem; text-align: center; pointer-events: none;
+    .lb-alab b { display: block; margin-top: .15rem; font-size: .92rem; font-style: normal; white-space: nowrap; }
+    .lb-alab { position: absolute; right: .5rem; top: 44%; width: 5.4rem; padding: .25rem .35rem; border-radius: .55rem; text-align: center; pointer-events: none;
         font-family: var(--font-heading); font-style: italic; font-weight: 800; font-size: .74rem; line-height: 1.15; color: #1d6fd1; background: rgb(255 255 255 / .82);
         transform: rotate(-5deg) scale(.9); opacity: 0; transition: opacity .4s var(--np-ease), transform .4s var(--np-ease); }
     .lb-alab.is-on { opacity: 1; transform: rotate(-5deg) scale(1); }
@@ -380,7 +407,7 @@
     .lb-k.is-short .lb-kbar span { background: #f59e0b; } .lb-k.is-over .lb-kbar span { background: #dc2626; }
     .lb-k.is-dull .lb-kbar span, .lb-k.is-unknown .lb-kbar span { background: var(--color-gray-300, #cbd5e1); }
     .lb-k em { font-style: normal; font-size: .66rem; font-weight: 800; text-align: right; color: var(--color-gray-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .lb-k.is-short em { color: #b45309; } .lb-k.is-over em { color: #b91c1c; } .lb-k.is-right em, .lb-k.is-soil em, .lb-k.is-fixed em { color: #2d5016; }
+    .lb-k.is-short em { color: #b45309; } .lb-k.is-over em { color: #b91c1c; } .lb-k.is-right em, .lb-k.is-fixed em { color: #2d5016; }
     .lb-reach { display: flex; align-items: baseline; gap: .55rem; margin-top: .7rem; font-size: .8rem; line-height: 1.45; color: var(--color-gray-600); }
     .lb-reach[hidden] { display: none; }
     .lb-reach b { flex: none; font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; line-height: 1; color: #1d6fd1; }
@@ -456,8 +483,9 @@
                         <button type="button" class="np-ws is-on" data-s="0"><i>1</i><span>Crop</span></button>
                         <button type="button" class="np-ws" data-s="1"><i>2</i><span>Yield</span></button>
                         <button type="button" class="np-ws" data-s="2"><i>3</i><span>Planting</span></button>
-                        <button type="button" class="np-ws" data-s="3"><i>4</i><span>Soil</span></button>
-                        <button type="button" class="np-ws" data-s="4"><i>5</i><span>Fertilizers</span></button>
+                        <button type="button" class="np-ws" data-s="3"><i>4</i><span>Season</span></button>
+                        <button type="button" class="np-ws" data-s="4"><i>5</i><span>Soil</span></button>
+                        <button type="button" class="np-ws" data-s="5"><i>6</i><span>Fertilizers</span></button>
                     </div>
                     <div class="np-wbody">
                         <section class="np-wstep" data-s="0">
@@ -499,11 +527,35 @@
                             <div class="np-row"><input type="number" id="npSeed" class="form-input flex-1" min="0" step="any" inputmode="decimal" placeholder="Like 40">
                                 <button type="button" class="np-utag is-inline" id="npSeedUnit" aria-label="What you plant"><span>kg</span>{!! $chev !!}</button></div>
                             <span class="np-hint" id="npSeedHint">How much you plant on the whole area.</span>
+                            <label class="np-label" for="npGerm">Germination <span>(optional, on the seed tag)</span></label>
+                            <div class="np-row" style="align-items:center"><input type="number" id="npGerm" class="form-input flex-1" min="1" max="100" step="1" inputmode="numeric" placeholder="Like 85">
+                                <span class="np-hint" style="margin:0;flex:none;font-weight:800">%</span></div>
+                            <span class="np-hint" id="npGermHint">Seed that does not sprout grows nothing: NPK Plus counts only the seed that will.</span>
                             <label class="np-label" for="npArea">Area</label>
                             <div class="np-row"><input type="number" id="npArea" class="form-input flex-1" min="0" step="any" value="1" inputmode="decimal">
                                 <button type="button" class="np-utag is-inline" id="npAreaUnit" aria-label="Area unit"><span>ha</span>{!! $chev !!}</button></div>
                         </section>
                         <section class="np-wstep" data-s="3" hidden>
+                            <p class="np-wq">Where, when and the water</p>
+                            <p class="np-sub">The sun, the rain and the heat of your season come from ten years of weather at your field, tilted by ENSO now.</p>
+                            @if (\App\Support\Region::ph())
+                                <span class="np-label">Province</span>
+                                <button type="button" class="np-utag is-wide is-none" id="npProvBtn"><span>Choose the province</span>{!! $chev !!}</button>
+                                <span class="np-label">Town or city</span>
+                                <button type="button" class="np-utag is-wide is-none" id="npTownBtn" disabled><span>Pick the province first</span>{!! $chev !!}</button>
+                            @else
+                                <label class="np-label" for="npTownIn">Town or city</label>
+                                <input type="text" id="npTownIn" class="form-input w-full" maxlength="120" placeholder="Like Davis">
+                                <label class="np-label" for="npProvIn">State or province</label>
+                                <input type="text" id="npProvIn" class="form-input w-full" maxlength="120" placeholder="Like California">
+                            @endif
+                            <span class="np-label">Planting date</span>
+                            @include('partials.date-tag', ['id' => 'npPlanted', 'empty' => 'Pick the planting date', 'class' => 'np-date'])
+                            <span class="np-label">Water</span>
+                            <button type="button" class="np-utag is-wide" id="npWaterBtn"><span>Irrigated</span>{!! $chev !!}</button>
+                            <div class="np-season" id="npSeason">Pick the place and the planting date to read the season.</div>
+                        </section>
+                        <section class="np-wstep" data-s="4" hidden>
                             <p class="np-wq">Your soil</p>
                             <p class="np-sub">It decides how much the soil gives on its own and how much of the fertilizer the crop can catch.</p>
                             <span class="np-label">Soil type</span>
@@ -524,7 +576,7 @@
                                 </div></div>
                             </div>
                         </section>
-                        <section class="np-wstep" data-s="4" hidden>
+                        <section class="np-wstep" data-s="5" hidden>
                             <p class="np-wq">Your fertilizers</p>
                             <p class="np-sub">Add each product you plan to use, and how much for the whole area. Not on the list? Add it from its label.</p>
                             <div class="np-lines" id="npLines"></div>
@@ -533,7 +585,7 @@
                     </div>
                     <div class="np-wnav">
                         <button type="button" class="btn btn-white" id="npBack" disabled>Back</button>
-                        <small id="npStepOf">Step 1 of 5</small>
+                        <small id="npStepOf">Step 1 of 6</small>
                         <button type="button" class="btn btn-primary" id="npNext">Next</button>
                     </div>
                 </div>
@@ -572,6 +624,7 @@
                             </div>
                             <div class="lb-reach" id="lbReach" hidden></div>
                             <div class="lb-key" id="lbKey"></div>
+                            <div class="lb-sky" id="lbSky" hidden></div>
                             <div id="lbSay"></div>
                         </div>
                     </div>
@@ -623,6 +676,10 @@
     </div>
     <div class="sheet-body">
         <p class="form-hint mt-0 mb-3" id="npPickHint" hidden></p>
+        <div class="np-psearch" id="npPickSearchBox" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="text" id="npPickQ" class="form-input" autocomplete="off" placeholder="Search">
+        </div>
         <div class="dt-rows" id="npPickRows"></div>
     </div>
     <div class="sheet-footer" id="npPickFoot" hidden>
@@ -747,10 +804,6 @@
         <p class="np-sub mt-0">Anee checks your plan against the place, your soil, the water, the season and ENSO, then says what to keep, cut, add or split, and when. Your soil from the wizard goes with it.</p>
         <label class="np-label" for="npLoc">Where is the field?</label>
         <input type="text" id="npLoc" class="form-input w-full" maxlength="160" placeholder="Town and province">
-        <span class="np-label">Water</span>
-        <div class="np-pills" id="npWater"></div>
-        <label class="np-label" for="npPlant">Planting date <span>(optional)</span></label>
-        <input type="date" id="npPlant" class="form-input w-full">
         <span class="np-label">How will you apply it?</span>
         <div class="np-pills" id="npTiming"></div>
         <label class="np-label" for="npNotes">Anything else <span>(optional)</span></label>
@@ -769,7 +822,7 @@
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const U = {
         options: @json(route('npk.options')), product: @json(route('npk.product')),
-        save: @json(route('npk.save')), list: @json(route('npk.list')), one: (id) => @json(url('/app/npk-plus/one')) + '/' + id,
+        save: @json(route('npk.save')), season: @json(route('npk.season')), ph: @json(asset('data/ph-locations.json')), list: @json(route('npk.list')), one: (id) => @json(url('/app/npk-plus/one')) + '/' + id,
         analyze: @json(route('npk.analyze')), job: (id) => @json(url('/app/npk-plus/job')) + '/' + id,
     };
     const NUTRIENTS = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si', 'Cl', 'Co'];
@@ -800,11 +853,15 @@
     const PH_WORDS = ['acidic', 'neutral', 'alkaline'];
     // What raised a risk, in words.
     const FACTOR = { sandy: 'sandy soil', clay: 'clay soil', acid: 'acid soil', strongAcid: 'very acid soil', alkaline: 'alkaline soil', strongAlk: 'strongly alkaline soil', sodic: 'sodic soil',
-        saline: 'salty soil', acid_sulfate: 'acid sulfate soil', low_om: 'low organic matter', peat: 'peat soil', waterlogged: 'waterlogged soil', flooded: 'a flooded paddy' };
+        saline: 'salty soil', acid_sulfate: 'acid sulfate soil', low_om: 'low organic matter', peat: 'peat soil', waterlogged: 'waterlogged soil', flooded: 'a flooded paddy',
+        calcareous: 'limy (calcareous) soil', high_p: 'heavy phosphorus in the plan locks it up', high_k: 'heavy potassium in the plan crowds it out',
+        liming: 'the lime in the plan locks it up', excess_zn: 'heavy zinc in the plan crowds it out' };
+    // The usual germination the seeding rates in the guides assume.
+    const GERM_USUAL = 85;
 
     let OPT = null, M = null, calcId = null, RES = null;
     const st = { crop: null, cropPicked: false, lines: [], areaUnit: 'ha', yUnit: 't', seedUnit: 'kg', seedUnitSet: false, pMethod: 'olsen', kUnit: 'ppm', form: 'granular',
-        texture: 'unsure', conds: [], step: 0 };
+        texture: 'unsure', conds: [], step: 0, prov: null, town: null, water: 'irrigated', season: null };
     const areaHa = () => st.areaUnit === 'sqm' ? num('npArea') / 10000 : num('npArea');
     const tagSay = (id, dict, k) => { $(id).querySelector('span').textContent = dict[k][1]; };
 
@@ -815,7 +872,7 @@
     $('npHeroHead').addEventListener('click', () => { const on = !$('npHero').classList.contains('is-open'); hero(on); try { localStorage.setItem(HERO_KEY, on ? '1' : '0'); } catch (_) {} });
 
     /* ---- the wizard: one step at a time ---- */
-    const STEPS = 5;
+    const STEPS = 6;
     const go = (n) => {
         n = clamp(n, 0, STEPS - 1);
         const cls = n >= st.step ? 'go-next' : 'go-back';
@@ -846,21 +903,25 @@
 
     /* ---- one sheet for every small choice, one or several ---- */
     let pk = null;
-    const pick = (title, hint, dict, cur, cb, multi = false) => {
+    const pick = (title, hint, dict, cur, cb, multi = false, search = false) => {
         $('npPickTitle').textContent = title;
         $('npPickHint').textContent = hint || ''; $('npPickHint').hidden = !hint;
+        $('npPickSearchBox').hidden = !search; $('npPickQ').value = '';
         pk = { dict, multi, sel: multi ? [...cur] : cur, cb };
+        if (search && !matchMedia('(hover: none)').matches) setTimeout(() => $('npPickQ').focus(), 280);
         paintPick();
         $('npPickFoot').hidden = !multi;
         window.openSheet('npPickSheet');
     };
     const paintPick = () => {
-        $('npPickRows').innerHTML = Object.entries(pk.dict).map(([k, v]) => {
+        const q = ($('npPickQ').value || '').trim().toLowerCase();
+        $('npPickRows').innerHTML = Object.entries(pk.dict).filter(([, v]) => !q || (v[0] + ' ' + (v[1] || '') + ' ' + (v[2] || '')).toLowerCase().includes(q)).map(([k, v]) => {
             const on = pk.multi ? pk.sel.includes(k) : k === pk.sel;
             const hint = v.length > 2 ? v[2] : v[1];
             return '<button type="button" class="dt-row' + (on ? ' is-on' : '') + '" data-k="' + esc(k) + '" aria-pressed="' + on + '"><span class="dt-row-body"><b>' + esc(v[0]) + '</b>' + (hint ? '<i>' + esc(hint) + '</i>' : '') + '</span>' + TICK + '</button>';
         }).join('');
     };
+    $('npPickQ').addEventListener('input', () => pk && paintPick());
     $('npPickRows').addEventListener('click', (e) => {
         const b = e.target.closest('.dt-row');
         if (!b || !pk) return;
@@ -941,6 +1002,7 @@
             if (c.treesPerHa) f.push(c.treesPerHa + ' trees per ha in the guide');
         }
         $('npFacts').innerHTML = f.map((x) => '<span>' + esc(x) + '</span>').join('');
+        if (st.prov || ($('npProvIn') && $('npProvIn').value.trim())) seasonSoon();
         hints(); calc();
     };
 
@@ -951,13 +1013,20 @@
         const out = { perHa: null, kind: seedKind(st.seedUnit), usual: null, sf: 1, pop: 1, words: '', warn: false };
         if (!v || !a) return out;
         out.perHa = (st.seedUnit === 'g' ? v / 1000 : v) / a;
+        // Seed is counted at its germination against the usual 85% the guides
+        // assume: 40 kg at 60% sprouts like 28 kg of normal seed. Seedlings,
+        // cuttings and plants are already growing.
+        out.germ = ['kg', 'g', 'seeds', 'hills'].includes(st.seedUnit) && num('npGerm') ? clamp(num('npGerm'), 1, 100) : null;
+        out.raw = out.perHa;
+        if (out.germ) out.perHa = out.perHa * out.germ / GERM_USUAL;
         const sd = c && M.seeding[c.key];
         const u = sd && sd[out.kind];
         const unitWord = out.kind === 'w' ? 'kg' : ((sd && sd.countWord) || 'plants');
         if (!u) { out.words = sd ? 'The usual for ' + cropShort(c).toLowerCase() + ' is given ' + (out.kind === 'w' ? 'as a count of plants' : 'in kilograms') + ', so this cannot be compared.' : ''; return out; }
         out.usual = u;
         const tree = c.treesPerHa || sd.countWord === 'trees' || sd.countWord === 'palms';
-        out.words = 'The usual is ' + span(u[0], u[1]) + ' ' + unitWord + ' per hectare.';
+        out.words = (out.germ && Math.abs(out.germ - GERM_USUAL) >= 1 ? 'At ' + Math.round(out.germ) + '% germination it plants like ' + fmt(out.perHa, out.perHa >= 100 ? 0 : 1) + ' ' + unitWord + ' of seed at the usual ' + GERM_USUAL + '%. ' : '')
+            + 'The usual is ' + span(u[0], u[1]) + ' ' + unitWord + ' per hectare.';
         if (tree && out.kind === 'n') {
             const base = c.treesPerHa || (u[0] + u[1]) / 2;
             out.pop = clamp(out.perHa / base, 0.3, 2);
@@ -993,16 +1062,100 @@
                 + (g.sd.sf < 1 ? ' Your stand is thin, so it counts for ' + fmt(g.Yeff / f) + ' ' + esc(unit) + '.' : '') + (g.warn ? '<br><span class="text-xs">' + esc(g.warn) + '</span>' : '')
             : 'No yield numbers for this crop: give your goal, or the guide rate is used as it is.';
         const s = num('npSeed'), a = areaHa(), sd = c && M.seeding[c.key];
-        $('npSeedHint').textContent = s && a ? 'For the whole area: ' + fmt(g.sd.perHa * (st.seedUnit === 'g' ? 1000 : 1), g.sd.perHa >= 100 ? 0 : 1) + ' ' + SEED_U[st.seedUnit][1] + ' per hectare. ' + g.sd.words
+        $('npSeedHint').textContent = s && a ? 'For the whole area: ' + fmt(g.sd.raw * (st.seedUnit === 'g' ? 1000 : 1), g.sd.raw >= 100 ? 0 : 1) + ' ' + SEED_U[st.seedUnit][1] + ' per hectare. ' + g.sd.words
             : 'How much you plant on the whole area.' + (sd && sd.note ? ' ' + sd.note : '');
         $('npSeedHint').classList.toggle('is-warn', !!g.sd.warn);
     };
     $('npYUnit').addEventListener('click', () => pick('Yields in', 'For the potential and your goal.', Y_U, st.yUnit, (k) => { st.yUnit = k; tagSay('npYUnit', Y_U, k); hints(); calc(); }));
     $('npSeedUnit').addEventListener('click', () => pick('What you plant', 'For the whole area.', SEED_U, st.seedUnit, (k) => { st.seedUnit = k; st.seedUnitSet = true; tagSay('npSeedUnit', SEED_U, k); hints(); calc(); }));
     $('npAreaUnit').addEventListener('click', () => pick('The area in', '', AREA_U, st.areaUnit, (k) => { st.areaUnit = k; tagSay('npAreaUnit', AREA_U, k); hints(); calc(); }));
-    ['npArea', 'npPotential', 'npTarget', 'npSeed', 'npVariety', 'npPh'].forEach((id) => $(id).addEventListener('input', () => { hints(); calc(); }));
+    ['npArea', 'npPotential', 'npTarget', 'npSeed', 'npGerm', 'npVariety', 'npPh'].forEach((id) => $(id).addEventListener('input', () => { hints(); calc(); }));
 
-    /* ---- step 4: the soil ---- */
+    /* ---- step 4: the place, the planting date, the water, and the season ---- */
+    const WATER_U = { irrigated: ['Irrigated', 'Irrigated', 'NIA, a pump or a canal, all season'], partial: ['Partly irrigated', 'Partly irrigated', 'Water some of the time, rain the rest'], rainfed: ['Rainfed only', 'Rainfed only', 'Only the rain'] };
+    let PHL = null;
+    const loadPh = async () => PHL ??= await (await fetch(U.ph)).json();
+    const townName = (t) => String(t || '').replace(/\s*\(Capital\)\s*$/i, '');
+    $('npProvBtn')?.addEventListener('click', async () => {
+        if (!ready()) return;
+        try { await loadPh(); } catch (_) { return window.toast?.('The list of provinces could not load.', 'error'); }
+        pick('Choose the province', '', Object.fromEntries(Object.keys(PHL).sort((a, b) => a.localeCompare(b)).map((p) => [p, [p, p, PHL[p].length + ' towns and cities']])), st.prov, (k) => {
+            if (k !== st.prov) { st.town = null; tagWide('npTownBtn', 'Choose the town', true); }
+            st.prov = k; tagWide('npProvBtn', k, false);
+            $('npTownBtn').disabled = false;
+            if (!st.town) setTimeout(() => $('npTownBtn').click(), 260);
+            seasonSoon();
+        }, false, true);
+    });
+    $('npTownBtn')?.addEventListener('click', async () => {
+        if (!st.prov) return;
+        try { await loadPh(); } catch (_) { return; }
+        pick('Choose the town or city', st.prov, Object.fromEntries((PHL[st.prov] || []).map((t) => [t, [townName(t), townName(t), /\(Capital\)/i.test(t) ? 'The capital' : '']])), st.town, (k) => {
+            st.town = k; tagWide('npTownBtn', townName(k), false); seasonSoon();
+        }, false, true);
+    });
+    const tagWide = (id, text, none) => { const b = $(id); if (!b) return; b.querySelector('span').textContent = text; b.classList.toggle('is-none', !!none); };
+    $('npWaterBtn').addEventListener('click', () => pick('Where the water comes from', '', WATER_U, st.water, (k) => { st.water = k; tagWide('npWaterBtn', WATER_U[k][0], false); calc(); }));
+    ['npTownIn', 'npProvIn'].forEach((id) => $(id)?.addEventListener('input', () => seasonSoon(900)));
+    $('npPlanted').addEventListener('change', () => seasonSoon());
+    const placeWords = () => $('npTownIn') ? [$('npTownIn').value.trim(), $('npProvIn').value.trim()] : [townName(st.town), st.prov || ''];
+    const seasonDays = (c) => c ? (c.perennial ? 365 : (Number(c.maturity) || 110)) : 110;
+    let seasonT = 0, seasonAsk = 0;
+    const seasonSoon = (ms = 120) => { clearTimeout(seasonT); seasonT = setTimeout(loadSeason, ms); };
+    const loadSeason = async () => {
+        const [town, prov] = placeWords();
+        if (!prov || (!town && !$('npTownIn'))) { st.season = null; paintSeason(); calc(); return; }
+        const c = cropOf(st.crop), ask = ++seasonAsk;
+        $('npSeason').innerHTML = 'Reading ten years of weather at ' + esc(town ? town + ', ' + prov : prov) + '…';
+        try {
+            const r = await window.api(U.season + '?' + new URLSearchParams({ town, province: prov, from: $('npPlanted').value || '', days: seasonDays(c) }).toString());
+            if (ask !== seasonAsk) return;
+            st.season = r.data;
+        } catch (err) { if (ask !== seasonAsk) return; st.season = null; $('npSeason').textContent = err.message || 'The season could not be read.'; calc(); return; }
+        paintSeason(); calc();
+    };
+    // How ENSO tilts this season (NpkModel::ENSO_TILT): full in October to May, half in the southwest monsoon, half again when the season is far off.
+    const ensoTilt = (S) => {
+        const e = S && S.enso;
+        if (!e || e.phase === 'neutral' || !M.ensoTilt[e.phase]) return { rain: 1, sun: 1, temp: 0, e };
+        const lvl = { weak: 0, moderate: 1, strong: 2, 'very strong': 3 }[e.strength] ?? 1, T = M.ensoTilt[e.phase];
+        const months = (S.window && S.window.months) || [];
+        const dry = months.length ? months.filter((m) => m >= 10 || m <= 5).length / months.length : 1;
+        const w = (0.5 + 0.5 * dry) * ((S.monthsAhead || 0) > 9 ? 0.5 : 1);
+        return { rain: 1 + T.rain[lvl] * w, sun: 1 + T.sun[lvl] * w, temp: T.temp[lvl] * w, e };
+    };
+    const paintSeason = () => {
+        const S = st.season;
+        if (!S) { $('npSeason').textContent = 'Pick the place and the planting date to read the season.'; return; }
+        if (!S.avg) { $('npSeason').textContent = 'No weather history could be read for ' + S.place.label + '.'; return; }
+        const t = ensoTilt(S), a = S.avg, from = new Date(S.window.from + 'T00:00:00'), to = new Date(from.getTime() + (S.window.days - 1) * 864e5);
+        const md = (d) => d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        $('npSeason').innerHTML = '<b>' + esc(md(from)) + ' to ' + esc(md(to)) + '</b> (' + S.window.days + ' days) at ' + esc(S.place.label) + '. In the same weeks of the last ' + S.years.length + ' years: about <b>' + Math.round(a.rain) + ' mm</b> of rain, <b>' + a.rad + ' MJ</b> of sun a day, an average of <b>' + a.tmean + '°C</b>, and ' + Math.round(a.hot32) + ' days at 32°C or more.'
+            + (t.e ? '<br><span class="np-enso' + (t.e.phase === 'la_nina' ? ' is-wet' : t.e.phase === 'neutral' ? ' is-flat' : '') + '">' + esc(t.e.label) + (t.e.phase !== 'neutral' ? ': rain about ' + Math.round(Math.abs(1 - t.rain) * 100) + '% ' + (t.rain < 1 ? 'lower' : 'higher') + ' this time' : '') + '</span>' : '');
+    };
+    // The season's three planks: the share of the goal the sun, the water and the heat allow.
+    const seasonPlanks = (c, g) => {
+        const S = st.season;
+        if (!c || !S || !S.avg) return null;
+        const K = Object.assign({}, M.climate.default, M.climate[c.key] || {}), t = ensoTilt(S), a = S.avg, days = S.window.days;
+        const rain = a.rain * t.rain, rad = a.rad * t.sun, tmean = a.tmean + t.temp, et0 = a.et0 * (t.rain < 1 ? 1 + (1 - t.rain) * 0.15 : 1);
+        // Water: what the crop drinks against what it gets (FAO's yield response, ky).
+        const need = et0 * K.kc + (K.extraMm || 0), eff = rain * 0.75;
+        const supply = st.water === 'irrigated' ? need : st.water === 'partial' ? eff + 0.5 * Math.max(0, need - eff) : eff;
+        const wr = Math.min(1, supply / Math.max(1, need)), water = clamp(1 - K.ky * (1 - wr), 0.1, 1);
+        const driest = S.years.reduce((m, y) => Math.min(m, y.rain), Infinity) * t.rain * 0.75;
+        const wrDry = Math.min(1, (st.water === 'irrigated' ? need : st.water === 'partial' ? driest + 0.5 * Math.max(0, need - driest) : driest) / Math.max(1, need));
+        // Sun: a full potential wants about K.rad MJ a day; less sun lowers the yield the season can carry.
+        const fs = Math.min(1.1, rad / K.rad), P = g.P || (g.Y ? g.Y / 0.8 : null);
+        const sun = P && g.Yeff ? clamp(P * fs / g.Yeff, 0.2, 1) : clamp(fs, 0.2, 1);
+        // Temperature: the mean against the crop's best range, and the days too hot for flowers and fruit.
+        const dev = Math.max(0, K.opt[0] - tmean, tmean - K.opt[1]);
+        const hotN = (K.hot >= 35 ? a.hot35 : K.hot >= 32 ? a.hot32 : a.hot30) * (t.e && t.e.phase === 'el_nino' ? 1.3 : t.e && t.e.phase === 'la_nina' ? 0.85 : 1);
+        const temp = clamp((1 - 0.07 * dev) * (1 - 0.8 * Math.min(1, hotN / days)), 0.25, 1);
+        return { sun, water, temp, rain, rad, tmean, need, supply, wr, wrDry: clamp(1 - K.ky * (1 - wrDry), 0.1, 1), hotN, K, t };
+    };
+
+    /* ---- step 5: the soil ---- */
     const soilTag = () => {
         const t = $('npTexture'); t.querySelector('span').textContent = M.textures[st.texture][0]; t.classList.toggle('is-none', st.texture === 'unsure');
         const c = $('npConds'); c.querySelector('span').textContent = st.conds.length ? st.conds.map((k) => (M.conditions[k] || [k])[0]).join(', ') : 'None picked'; c.classList.toggle('is-none', !st.conds.length);
@@ -1046,6 +1199,9 @@
         if (ph != null) { if (ph < 5) f.add('strongAcid'); else if (ph < 5.5) f.add('acid'); else if (ph > 8) f.add('strongAlk'); else if (ph > 7.3) f.add('alkaline'); }
         else { if (st.conds.includes('acidic')) f.add('acid'); if (st.conds.includes('alkaline')) f.add('alkaline'); }
         ['sodic', 'saline', 'acid_sulfate', 'low_om', 'peat', 'waterlogged'].forEach((k) => { if (st.conds.includes(k)) f.add(k); });
+        // Strongly alkaline and NOT sodic reads as a limy soil, rich in calcium.
+        // A sodic soil's high pH is sodium, which crowds the calcium off the clay.
+        if (f.has('strongAlk') && !f.has('sodic')) f.add('calcareous');
         if (c && (c.key === 'rice' || c.key === 'rice_dsr_wet')) { f.add('flooded'); f.delete('waterlogged'); }
         return f;
     };
@@ -1200,7 +1356,7 @@
     });
 
     /* ---- the need model (App\Support\NpkModel says where each number comes from) ---- */
-    const needModel = (c, g, f, cls) => {
+    const needModel = (c, g, f, cls, perHa = {}) => {
         const out = { need: {}, raw: {}, how: {}, share: {}, adj: {}, whys: [], Yg: null, micro: {}, base: null };
         // How the soil sizes N, P2O5 and K2O, and the soil's own share.
         const base = Object.assign({}, M.soilShare, (c && M.soilShareCrop[c.key]) || {});
@@ -1237,21 +1393,35 @@
             }
             if (v != null) { out.raw[n] = v; out.need[n] = v * out.adj[n]; }
         });
+        // Lockouts the plan itself makes: too much phosphorus ties up zinc and
+        // iron, too much potassium crowds out magnesium and calcium, lime ties
+        // up zinc, boron, manganese, copper and iron, too much zinc crowds out copper.
+        const pf = new Set();
+        if ((perHa.P2O5 || 0) > (out.need.P2O5 ? out.need.P2O5 * 1.5 : 100)) pf.add('high_p');
+        if ((perHa.K2O || 0) > (out.need.K2O ? out.need.K2O * 1.5 : 150)) pf.add('high_k');
+        if ((perHa.Ca || 0) >= 150) pf.add('liming');
+        if ((perHa.Zn || 0) > 10) pf.add('excess_zn');
+        out.lockouts = [...pf];
+        const ff = new Set([...f, ...pf]);
         // Secondary, micro and beneficial elements: from a bag only where a shortfall is likely.
         const ys = c.typicalYield && g.Yeff ? clamp(g.Yeff / c.typicalYield.hi, 0.8, 1.4) : 1;
         Object.entries(M.elements).forEach(([el, e]) => {
-            const why = [];
+            const why = [], down = [];
             let score = 0;
-            Object.entries(e.weights || {}).forEach(([k, w]) => { if (f.has(k)) { score += w; why.push(FACTOR[k] || k); } });
+            Object.entries(e.weights || {}).forEach(([k, w]) => {
+                if (!ff.has(k)) return;
+                score += w;
+                if (w > 0) why.push(FACTOR[k] || k); else if (e.down && e.down[k] && !down.includes(e.down[k])) down.push(e.down[k]);
+            });
             const sens = (e.sensitive || []).includes(c.key);
             if (sens) { score += e.sensitiveWeight || 1; why.push(cropShort(c).split(',')[0].toLowerCase() + ' needs more of it'); }
             const L = M.levels;
             let level = score >= L.likely.at ? 'likely' : score >= L.watch.at ? 'watch' : 'none';
             if (e.beneficial && !sens) level = 'notneeded';
             if (cls[el] === 'low') { level = 'test'; why.unshift('your soil test reads low'); }
-            else if (cls[el] === 'ok') { level = 'none'; why.length = 0; why.push('your soil test reads enough'); }
+            else if (cls[el] === 'ok') level = 'testok';
             const lv = L[level] || { dose: 0, share: 1 };
-            out.micro[el] = { level, why, need: e.base * lv.dose * ys, share: lv.share };
+            out.micro[el] = { level, why, down, need: e.base * lv.dose * ys, share: lv.share };
         });
         return out;
     };
@@ -1275,7 +1445,7 @@
         $('npN').textContent = fmt(perHa.N, 0); $('npP').textContent = fmt(perHa.P2O5, 0); $('npK').textContent = fmt(perHa.K2O, 0);
         const npk = fmt(perHa.N, 0) + '-' + fmt(perHa.P2O5, 0) + '-' + fmt(perHa.K2O, 0);
 
-        const c = cropOf(st.crop), g = goalOf(c), f = factors(c), cls = soilClass(soil()), md = needModel(c, g, f, cls);
+        const c = cropOf(st.crop), g = goalOf(c), f = factors(c), cls = soilClass(soil()), md = needModel(c, g, f, cls, perHa);
         const yu = Y_U[st.yUnit], goalSaid = g.Yeff ? fmt(g.Yeff / yu[3]) + ' ' + yu[1] : '';
         $('npOutSub').textContent = (out.length ? 'For ' + fmt(area, 3) + ' ha' : 'Add a fertilizer to see the totals') + (c && goalSaid ? ', against the need for ' + goalSaid + ' of ' + cropShort(c).toLowerCase() : '') + '.' + (estimated ? ' Includes biofertilizer estimates.' : '');
 
@@ -1316,8 +1486,10 @@
             setup: { variety: $('npVariety').value.trim(), areaUnit: st.areaUnit, areaValue: num('npArea'), yUnit: st.yUnit,
                 potential: num('npPotential') ? { value: num('npPotential'), unit: yu[1], key: st.yUnit, tPerHa: Math.round(num('npPotential') * yu[3] * 100) / 100 } : null,
                 target: num('npTarget') ? { value: num('npTarget'), unit: yu[1], tPerHa: Math.round(num('npTarget') * yu[3] * 100) / 100 } : null,
-                seed: seedV ? { amount: seedV, unit: SEED_U[st.seedUnit][1], key: st.seedUnit, perHa: g.sd.perHa ? Math.round(g.sd.perHa * 10) / 10 : null } : null,
-                texture: st.texture, conditions: st.conds.slice(), ph: phVal() } };
+                seed: seedV ? { amount: seedV, unit: SEED_U[st.seedUnit][1], key: st.seedUnit, perHa: g.sd.raw ? Math.round(g.sd.raw * 10) / 10 : null, germination: g.sd.germ || null } : null,
+                texture: st.texture, conditions: st.conds.slice(), ph: phVal(), prov: st.prov, town: st.town, water: st.water, planted: $('npPlanted').value || null },
+            season: (() => { const SP = seasonPlanks(c, g); return SP ? { place: st.season.place, window: st.season.window, enso: SP.t.e ? SP.t.e.label : null, rainMm: Math.round(SP.rain), sunMJ: SP.rad, tmean: SP.tmean,
+                needMm: Math.round(SP.need), water: st.water, planks: { sun: Math.round(SP.sun * 100), water: Math.round(SP.water * 100), temp: Math.round(SP.temp * 100) } } : null; })() };
         $('npAnee').disabled = !out.length;
         $('npSave').disabled = !out.length;
     };
@@ -1335,7 +1507,10 @@
             else if (h === 'removal') li.push('<b>' + lab(n) + ':</b> puts back what the harvest carries away: ' + fmt(md.need[n], 0) + ' kg. A soil test tells if more is needed.');
             else if (h === 'legume') li.push('<b>N:</b> a legume makes most of its own nitrogen, so only a starter: ' + fmt(md.need.N, 0) + ' kg.');
         });
+        if (g.sd.germ) li.push('<b>Germination:</b> ' + Math.round(g.sd.germ) + '%, so only that share of the seed counts toward the stand (the guides\' seeding rates assume about ' + GERM_USUAL + '%).');
         li.push('<b>Your soil:</b> ' + (md.whys.length ? esc(md.whys.join('; ')) + '.' : 'nothing you said changes the count. A soil type, pH or soil test makes it surer.'));
+        li.push('<b>Lockouts:</b> acid or alkaline soil locks up phosphorus (counted above), and alkaline, sodic or limy soil locks up zinc, iron, manganese and boron (the Micros tab).'
+            + (md.lockouts && md.lockouts.length ? ' Your plan adds its own: ' + esc(list(md.lockouts.map((k) => ({ high_p: 'heavy phosphorus ties up zinc and iron', high_k: 'heavy potassium crowds out magnesium and calcium', liming: 'lime ties up zinc, boron, manganese, copper and iron', excess_zn: 'heavy zinc crowds out copper' })[k]))) + '.' : ''));
         li.push('<b>What the soil gives on its own:</b> about ' + NPK.map((n) => lab(n) + ' ' + Math.round(md.share[n] * 100) + '%').join(', ') + ' of the goal, as fields given none of that nutrient show in trials. The barrel\'s planks start there.');
         const src = (c.sources || []).map((s) => '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label) + '</a></li>').join('');
         return '<details class="np-src"><summary>How NPK Plus counted the need</summary><ul>' + li.map((x) => '<li>' + x + '</li>').join('') + '</ul>'
@@ -1353,17 +1528,21 @@
             const need = mm.need;
             let state;
             if (need > 0) { const r = plan / need; state = r < 0.9 ? 'short' : r > (e.over || 5) ? 'over' : 'right'; }
-            else state = plan > 0 ? 'extra' : mm.level === 'notneeded' ? 'notneeded' : 'soil';
+            else state = plan > 0 ? 'extra' : mm.level === 'notneeded' ? 'notneeded' : mm.level === 'testok' ? 'testok' : 'noflag';
             out[el] = { need: Math.round(need * 1000) / 1000, plan: Math.round(plan * 1000) / 1000, level: mm.level, state };
-            const say = { none: 'Your soil usually gives enough', notneeded: 'Not needed for this crop', watch: 'May run short', likely: 'Likely short', test: 'Short by your soil test' }[mm.level]
+            // "Not flagged" is not "the soil gives enough": it means nothing you
+            // told NPK Plus points to a shortage. Only a soil test says enough.
+            const say = { none: 'No shortage flagged: nothing you told NPK Plus points to one', notneeded: 'Not needed for this crop', watch: 'May run short', likely: 'Likely short',
+                test: 'Short by your soil test', testok: 'Enough, by your soil test' }[mm.level]
                 + (mm.why.length && (mm.level === 'watch' || mm.level === 'likely') ? ': ' + list(mm.why) : '') + '.';
+            const down = mm.down && mm.down.length ? '<small class="np-down">' + esc(list(mm.down).charAt(0).toUpperCase() + list(mm.down).slice(1)) + '.</small>' : '';
             const fix = state === 'short' && e.fert ? ' Usual source: ' + e.fert + '.' : '';
             const warn = state === 'over' && e.toxic ? ' ' + e.toxic : '';
             const scale = Math.max(need * 1.6, plan * 1.05, 1e-9);
             const bar = need > 0 || plan > 0 ? '<span class="np-mbar"><span class="have" style="width:' + Math.min(100, plan / scale * 100) + '%"></span>' + (need > 0 ? '<span class="need" style="left:' + (need / scale * 100) + '%"></span>' : '') + '</span>' : '';
-            const word = { short: 'Short', right: 'Enough', over: 'Too much', extra: 'Extra', soil: 'Soil gives', notneeded: 'Not needed' }[state];
+            const word = { short: 'Short', right: 'Enough', over: 'Too much', extra: 'Extra', noflag: 'Not flagged', testok: 'Enough', notneeded: 'Not needed' }[state];
             return '<div class="np-mrow is-' + state + (['Ca', 'Mg', 'S'].includes(el) ? ' is-sec' : '') + (e.beneficial ? ' is-ben' : '') + '" style="--k:' + (k++) + '"><i>' + el + '</i>'
-                + '<span class="np-mtxt"><b>' + NAMES[el] + (e.beneficial ? '<span class="np-ben">Beneficial, not required</span>' : '') + '</b><small>' + esc(say + fix + warn) + '</small>' + bar + '</span>'
+                + '<span class="np-mtxt"><b>' + NAMES[el] + (e.beneficial ? '<span class="np-ben">Beneficial, not required</span>' : '') + '</b><small>' + esc(say + fix + warn) + '</small>' + down + bar + '</span>'
                 + '<span class="np-mval"><em>' + word + '</em><small>' + (need > 0 ? 'Need ' + amt(need) + ' per ha' + (area > 0 && Math.abs(area - 1) > 0.001 ? ', ' + amt(need * area) + ' in all' : '') : 'Need none') + '</small><small>Plan ' + (plan > 0 ? amt(plan) + ' per ha' : 'none') + '</small></span></div>';
         };
         if (!c) {
@@ -1377,7 +1556,8 @@
             + '<p class="np-mh">Micronutrients</p><div class="np-mlist">' + mic.map(row).join('') + '</div>'
             + '<p class="np-mh">Beneficial elements</p><div class="np-mlist">' + ben.map(row).join('') + '</div>'
             + (tot.Cl > 0 ? '<p class="np-fine">Your plan also carries ' + amt(perHa.Cl) + ' of chloride per ha, from muriate of potash. Most crops take it well; on salty soil, sulfate of potash is the gentler source.</p>' : '')
-            + '<div class="np-say">Each need is a corrective dose sized to your goal, counted only where your crop and soil make a shortfall likely. Most soils give enough of the rest, and a soil test tells for sure.</div>';
+            + (md.lockouts && md.lockouts.length ? '<div class="np-say"><b>Lockouts from the plan:</b> ' + esc(list(md.lockouts.map((k) => ({ high_p: 'the heavy phosphorus can tie up zinc and iron', high_k: 'the heavy potassium can crowd out magnesium and calcium', liming: 'the lime can tie up zinc, boron, manganese, copper and iron', excess_zn: 'the heavy zinc can crowd out copper' })[k]))) + '. They are counted in the needs above.</div>' : '')
+            + '<div class="np-say">Each need is a corrective dose sized to your goal, counted only where your crop, your soil or your plan make a shortfall likely. "Not flagged" means nothing you told NPK Plus points to a shortage, not that the soil has enough: only a soil test can say that.</div>';
         return out;
     };
 
@@ -1492,11 +1672,19 @@
             leave() { on = false; clearTimeout(arrowT); },
         };
     })();
-    const WORD = { short: 'Short', right: 'Enough', over: 'Too much', soil: 'Soil gives', fixed: 'From the air', unknown: 'Not counted', dull: 'Not measured' };
+    const WORD = { short: 'Short', right: 'Enough', over: 'Too much', fixed: 'From the air', unknown: 'Not measured', dull: 'Not measured' };
     const barrel = (c, md, states, perHa, has, g) => {
-        const H = BR.H, rows = [];
+        const H = BR.H, rows = [], SP = seasonPlanks(c, g);
         STAVES.forEach((s) => {
-            if (s.dull) { rows.push({ state: 'dull', ratio: null, px: H, pct: '', note: 'Not measured here' }); return; }
+            if (s.dull) {
+                if (!SP) { rows.push({ state: 'dull', ratio: null, px: H, pct: '', note: 'Pick the place and the planting date' }); return; }
+                const r = SP[s.k], state = r < 0.97 ? 'short' : 'right';
+                const note = s.k === 'sun' ? fmt(SP.rad, 1) + ' MJ of sun a day against the ' + SP.K.rad + ' a full harvest wants'
+                    : s.k === 'water' ? (st.water === 'irrigated' ? 'Irrigated: the crop gets the ' + Math.round(SP.need) + ' mm it drinks' : 'About ' + Math.round(SP.supply) + ' of the ' + Math.round(SP.need) + ' mm the crop drinks')
+                    : fmt(SP.tmean, 1) + '°C on average, ' + Math.round(SP.hotN) + ' days too hot for flowers';
+                rows.push({ state, ratio: r, px: Math.max(22, Math.round(H * r)), pct: Math.round(r * 100) + '%', note, season: true });
+                return;
+            }
             const n = s.k;
             let state = 'unknown', ratio = null, note = c ? 'No numbers for this crop' : 'Pick the crop';
             if (c && NPK.includes(n)) {
@@ -1516,12 +1704,25 @@
                     state = cover > ((M.elements[n] || {}).over || 5) ? 'over' : ratio < 0.97 ? 'short' : 'right';
                     if (state === 'over') ratio = 1.1;
                     note = { watch: 'May run short', likely: 'Likely short', test: 'Low by your soil test' }[mm.level] + (plan > 0 ? ', plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '%' : ', none in plan');
-                } else { state = 'soil'; ratio = 1; note = 'Your soil usually gives enough'; }
+                } else if (mm.level === 'testok') { state = 'right'; ratio = 1; note = 'Enough, by your soil test'; }
+                else { state = 'unknown'; ratio = null; note = 'No shortage flagged, not measured'; }
             }
             const px = state === 'unknown' ? H : Math.max(22, Math.round(H * Math.min(1.22, ratio)));
             rows.push({ state, ratio, px, pct: ratio === null ? '?' : Math.round(Math.min(ratio, 1) * 100) + '%', note });
         });
         const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null && r.state !== 'dull');
+        // The season's sky and water, from ten years of weather.
+        $('lbSky').hidden = !SP;
+        if (SP) {
+            const S = st.season, yrs = S.years, maxR = Math.max(1, ...yrs.map((y) => y.rain), SP.rain);
+            $('lbSky').innerHTML = '<h4>Your season\'s sun, water and heat</h4>'
+                + '<div class="lb-skyrow"><i>☀️</i><span><b>Sun</b><small>' + fmt(SP.rad, 1) + ' MJ a day expected, against about ' + SP.K.rad + ' for a full harvest of ' + esc(cropShort(c).toLowerCase()) + (SP.t.sun !== 1 ? ', with ENSO' : '') + '.</small></span><em>' + Math.round(SP.sun * 100) + '%</em></div>'
+                + '<div class="lb-skyrow is-water"><i>💧</i><span><b>Water</b><small>' + Math.round(SP.rain) + ' mm of rain expected' + (SP.t.rain !== 1 ? ' (ENSO tilted)' : '') + '; the crop drinks about ' + Math.round(SP.need) + ' mm. ' + esc(WATER_U[st.water][0]) + '.' + (st.water !== 'irrigated' ? ' In the driest of the ' + yrs.length + ' years: ' + Math.round(SP.wrDry * 100) + '%.' : (SP.t.e && SP.t.e.phase === 'el_nino' && SP.t.rain < 0.8 ? ' In a strong El Niño, check that the canal will run all season.' : '')) + '</small></span><em>' + Math.round(SP.water * 100) + '%</em></div>'
+                + '<div class="lb-skyrow is-temp"><i>🌡️</i><span><b>Temperature</b><small>' + fmt(SP.tmean, 1) + '°C on average against ' + SP.K.opt[0] + ' to ' + SP.K.opt[1] + '°C best for it; about ' + Math.round(SP.hotN) + ' days at ' + SP.K.hot + '°C or more.</small></span><em>' + Math.round(SP.temp * 100) + '%</em></div>'
+                + '<div class="lb-rainyears" aria-label="Rain in the same weeks of each year">' + yrs.map((y) => '<span style="height:' + Math.max(4, y.rain / maxR * 100) + '%" title="' + y.year + ': ' + y.rain + ' mm"><b>' + String(y.year).slice(2) + '</b></span>').join('')
+                + '<span class="is-now" style="height:' + Math.max(4, SP.rain / maxR * 100) + '%" title="Expected this season: ' + Math.round(SP.rain) + ' mm"><b>Now</b></span></div>'
+                + '<p class="lb-rainkey">Rain in the same weeks of each of the last ' + yrs.length + ' years, and the striped bar for this season, tilted by ' + esc(SP.t.e ? SP.t.e.label.toLowerCase() : 'nothing') + '. Weather history: Open-Meteo. ENSO: NOAA.</p>';
+        }
         let limIdx = -1, level = 0;
         if (has && measured.length) { [, limIdx] = measured.reduce((a, b) => (b[0].px < a[0].px ? b : a)); level = Math.min(H, rows[limIdx].px); }
         BR.set(rows, level, limIdx);
@@ -1536,6 +1737,7 @@
         const reach = limIdx >= 0 ? Math.round(Math.min(1, rows[limIdx].ratio) * 100) : null;
         $('lbReach').hidden = reach === null;
         if (reach !== null) $('lbReach').innerHTML = '<b>' + reach + '%</b><span>of your goal' + (g.Yeff ? ', near ' + fmt(g.Yeff * reach / 100 / yu[3]) + ' ' + esc(yu[1]) : '') + ', by this count. The water is your yield.</span>';
+        $('lbALab').innerHTML = 'The water is your yield' + (reach !== null && g.Yeff ? '<b>about ' + esc(fmt(g.Yeff * reach / 100 / yu[3])) + ' ' + esc(yu[1]) + '</b>' : '');
         let say = '';
         const cName = c ? esc(cropShort(c).toLowerCase()) : '';
         if (!c) say = st.cropPicked ? 'No crop picked: the barrel needs the crop\'s numbers.' : 'Pick the crop in step 1: the planks are measured against what it needs.';
@@ -1549,9 +1751,10 @@
             const over = STAVES.filter((s, i) => rows[i].state === 'over').map((s) => NAMES[s.k].toLowerCase());
             if (over.length) say += ' Too much ' + esc(list(over)) + ': the taller plank holds no more water. It costs money' + (over.includes('nitrogen') ? ', and too much nitrogen can make the crop lodge and draw pests' : '') + '.';
             const unk = STAVES.filter((s, i) => rows[i].state === 'unknown').map((s) => s.t);
-            if (unk.length) say += ' Not counted: ' + esc(unk.join(', ')) + '.';
+            if (unk.length) say += ' Not measured: ' + esc(unk.join(', ')) + '. Nothing you told NPK Plus points to a shortage of them; a soil test would measure them.';
         }
-        say += ' The grey planks, sun, water and temperature, can be the shortest too. NPK Plus cannot measure them; Anee\'s reading weighs the season.';
+        say += SP ? ' Sun, water and temperature are read from ten years of weather at your field and the ENSO state now: a rough guide to the season, not a forecast of it.'
+            : ' The grey planks, sun, water and temperature, can be the shortest too: pick the place and the planting date in step 4 and NPK Plus reads them from ten years of weather at your field.';
         $('lbSay').innerHTML = '<div class="np-say">' + say + '</div>';
         return reach;
     };
@@ -1580,11 +1783,12 @@
     $('npSave').addEventListener('click', async () => { try { const r = await save(); window.toast?.(r.message + ' It is on the Saved tab.', 'success'); } catch (err) { window.toast?.(err.message, 'error'); } });
     $('npAnee').addEventListener('click', () => {
         $('npRun').disabled = !OPT.canUse;
+        if (!$('npLoc').value.trim()) { const [tw, pv] = placeWords(); if (pv) $('npLoc').value = (tw ? tw + ', ' : '') + pv; }
         $('npRunSays').textContent = OPT.canUse ? 'Ask Anee · ' + OPT.quote + ' credits' : 'Anee is not on your plan';
         $('npRunFine').innerHTML = OPT.canUse ? 'You have ' + (window.creditCoin ? window.creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()) : OPT.balance) + '. Charged only when the reading is ready.' : esc(OPT.whyNot || '');
         window.openSheet('npAneeSheet');
     });
-    const ans = { water: 'irrigated', timing: 'split2' };
+    const ans = { timing: 'split2' };
     const pills = (box, items, key) => {
         box.innerHTML = Object.entries(items).map(([k, v]) => '<button type="button" class="np-pill" data-k="' + esc(k) + '">' + esc(String(v).split(' —')[0]) + '</button>').join('');
         const paint = () => box.querySelectorAll('.np-pill').forEach((b) => b.setAttribute('aria-pressed', String(ans[key] === b.dataset.k)));
@@ -1592,6 +1796,7 @@
         paint();
     };
     $('npRun').addEventListener('click', async () => {
+        if (!$('npLoc').value.trim()) { const [tw, pv] = placeWords(); if (pv) $('npLoc').value = (tw ? tw + ', ' : '') + pv; }
         if (!$('npLoc').value.trim()) return window.toast?.('Say where the field is.', 'error');
         $('npRun').disabled = true;
         try {
@@ -1599,7 +1804,7 @@
             window.closeSheet('npAneeSheet');
             window.aneeWait.show({ title: 'Anee is checking your plan…', sub: 'The soil, the season and the timing. About a minute.', lines: ['Weighing each nutrient against the need…', 'Reading the soils of your area…', 'Checking the rains around planting…', 'Deciding what to split and when…'] });
             const r = await window.api(U.analyze, { method: 'POST', body: { calcId, location: $('npLoc').value.trim(), soilConditions: st.conds.filter((k) => k in (OPT.soilConditions || {})), phValue: phVal(),
-                water: ans.water, plantingDate: $('npPlant').value || null, timing: ans.timing, variety: $('npVariety').value.trim(), notes: $('npNotes').value.trim() } });
+                water: st.water, plantingDate: $('npPlanted').value || null, timing: ans.timing, variety: $('npVariety').value.trim(), notes: $('npNotes').value.trim() } });
             const d = r.data && r.data.status === 'ready' ? r.data : await window.aneeWait.poll({ id: r.data.id, job: U.job });
             await window.aneeWait.done({ title: 'Your plan, read.', line: 'Here is what to keep and what to change.' });
             OPT.balance = d.balance;
@@ -1652,6 +1857,13 @@
             st.seedUnitSet = !!seed;
             if (seed && SEED_U[seed.key]) { st.seedUnit = seed.key; tagSay('npSeedUnit', SEED_U, st.seedUnit); }
             $('npSeed').value = seed ? seed.amount : '';
+            $('npGerm').value = seed && seed.germination ? seed.germination : '';
+            st.prov = set.prov || null; st.town = set.town || null; st.water = WATER_U[set.water] ? set.water : 'irrigated';
+            if ($('npProvBtn')) { tagWide('npProvBtn', st.prov || 'Choose the province', !st.prov); tagWide('npTownBtn', st.town ? townName(st.town) : (st.prov ? 'Choose the town' : 'Pick the province first'), !st.town); $('npTownBtn').disabled = !st.prov; }
+            tagWide('npWaterBtn', WATER_U[st.water][0], false);
+            $('npPlanted').value = set.planted || '';
+            st.season = null; paintSeason();
+            if (st.prov) seasonSoon(400);
             st.texture = M.textures[set.texture] ? set.texture : 'unsure';
             st.conds = Array.isArray(set.conditions) ? set.conditions.filter((k) => M.conditions[k]) : [];
             const s = d.soil || {};
@@ -1663,7 +1875,7 @@
             tagSay('npPMethod', P_METHOD, st.pMethod); tagSay('npKUnit', K_UNIT, st.kUnit);
             soilTag();
             st.lines = (d.lines || []).filter((l) => OPT.products.some((p) => p.id === l.id)).map((l) => ({ id: l.id, amount: l.amount, unit: l.unit }));
-            tab(false); lines(); setCrop(d.crop || null); go(4);
+            tab(false); lines(); setCrop(d.crop || null); go(5);
             if (d.analysis) showReport(d.analysis.report); else $('npRep').hidden = true;
         } catch (err) { window.toast?.(err.message, 'error'); }
     });
@@ -1683,7 +1895,6 @@
             const r = await window.api(U.options);
             OPT = r.data; M = OPT.model;
             $('npCats').innerHTML = '<button type="button" class="np-cat is-on" data-c="all">All</button>' + Object.entries(OPT.categories).map(([k, v]) => '<button type="button" class="np-cat" data-c="' + esc(k) + '">' + esc(v) + '</button>').join('');
-            pills($('npWater'), OPT.water, 'water');
             pills($('npTiming'), OPT.timing, 'timing');
             soilTag(); lines(); hints(); calc();
         } catch (err) { window.toast?.(err.message || 'Could not load the calculator.', 'error'); }

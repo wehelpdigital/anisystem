@@ -16,7 +16,9 @@ use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -78,7 +80,7 @@ class NpkPlusController extends Controller
             'products' => $products->map(fn ($p) => $this->productRow($p))->values(),
             'categories' => self::CATEGORIES,
             'crops' => collect(NpkCrops::TABLE)->map(fn ($c, $k) => ['key' => $k, 'label' => CropCatalog::label($k), 'icon' => CropCatalog::CROPS[$k]['icon'] ?? '🌱',
-                'group' => CropCatalog::CROPS[$k]['group'] ?? 'Other crops'] + $c)->values(),
+                'group' => CropCatalog::CROPS[$k]['group'] ?? 'Other crops', 'maturity' => CropCatalog::CROPS[$k]['maturity'] ?? null, 'perennial' => CropCatalog::isPerennial($k)] + $c)->values(),
             'soilConditions' => SoilConditions::OPTIONS,
             'model' => \App\Support\NpkModel::forClient(),
             'water' => self::WATER,
@@ -103,6 +105,60 @@ class NpkPlusController extends Controller
         }
 
         return $out;
+    }
+
+    /**
+     * The season the crop will grow through (2026-10-08): the field found
+     * from its town and province, the same weeks in each of the last ten
+     * years from the Open-Meteo weather history (rain, sunshine, the water
+     * the air pulls from a crop, heat), and the ENSO state now. The page
+     * turns them into the sun, water and temperature planks of the barrel.
+     */
+    public function season(Request $request)
+    {
+        $v = Validator::make($request->all(), [
+            'town' => 'nullable|string|max:120', 'province' => 'nullable|string|max:120', 'lat' => 'nullable|numeric|between:-60,60', 'lng' => 'nullable|numeric|between:-180,180',
+            'from' => 'nullable|date', 'days' => 'nullable|integer|min:20|max:400',
+        ]);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        $lat = $request->input('lat');
+        $lng = $request->input('lng');
+        $label = trim(implode(', ', array_filter([$request->input('town'), $request->input('province')])));
+        if ($lat === null || $lng === null) {
+            if ($label === '') {
+                return $this->json(false, 'Say where the field is.', [], 422);
+            }
+            $hit = \App\Support\PlaceSearch::find($label)[0] ?? (\App\Support\PlaceSearch::find((string) $request->input('province'))[0] ?? null);
+            if (! $hit) {
+                return $this->json(false, 'That place could not be found on the map.', [], 422);
+            }
+            $lat = (float) $hit['lat'];
+            $lng = (float) $hit['lng'];
+        }
+        $lat = (float) $lat;
+        $lng = (float) $lng;
+        $from = $request->input('from') ? \Illuminate\Support\Carbon::parse($request->input('from')) : now('Asia/Manila')->addDays(14);
+        $days = (int) ($request->input('days') ?: 110);
+
+        // From the climate shelf (App\Support\ClimateStore), collected by the
+        // scheduler: nothing outside is asked on a calculation. A place nobody
+        // has asked about before is filled once and kept.
+        $hist = \App\Support\ClimateStore::season($lat, $lng, $from, $days, $label ?: null);
+        $years = $hist['years'] ?? [];
+        $avg = $hist['avg'] ?? null;
+        $months = [];
+        for ($d = 0; $d < $days; $d += 7) {
+            $months[(int) $from->copy()->addDays($d)->format('n')] = true;
+        }
+
+        return $this->json(true, 'ok', [
+            'place' => ['label' => $label ?: round($lat, 3) . ', ' . round($lng, 3), 'lat' => round($lat, 4), 'lng' => round($lng, 4)],
+            'window' => ['from' => $from->toDateString(), 'days' => $days, 'months' => array_keys($months)],
+            'years' => $years, 'avg' => $avg, 'enso' => \App\Support\ClimateStore::enso(), 'through' => $hist['through'] ?? null,
+            'monthsAhead' => (int) max(0, now('Asia/Manila')->startOfDay()->diffInMonths($from->copy()->startOfDay(), false)),
+        ]);
     }
 
     /** A farmer's own product, typed in from its label. */

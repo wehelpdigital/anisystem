@@ -94,6 +94,11 @@ return Application::configure(basePath: dirname(__DIR__))
         // The Stash's PDFs come home a few at a time (2026-10-07); with
         // nothing pending the command ends at once.
         $schedule->command('stash:fetch')->everyFiveMinutes()->withoutOverlapping(60)->runInBackground();
+        // The climate shelf (2026-10-08): ENSO once a day, and the weather
+        // history a few cells an hour (every province first, then the stale
+        // ones), so NPK Plus reads the season from its own tables.
+        $schedule->command('climate:collect --enso')->dailyAt('08:15')->timezone('Asia/Manila')->withoutOverlapping(30)->runInBackground();
+        $schedule->command('climate:collect --limit=6')->hourlyAt(23)->withoutOverlapping(50)->runInBackground();
         // Proof the scheduler runs (Laravel Cloud's toggle, 2026-10-07):
         // /deploy-check shows the last tick, written to the shared settings.
         $schedule->call(fn () => \App\Models\AsSiteSetting::put('scheduler.tick', now()->toIso8601String()))
