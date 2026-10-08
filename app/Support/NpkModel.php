@@ -12,10 +12,18 @@ namespace App\Support;
  * for a good harvest of about GUIDE_YIELD, or 1.25 times the national
  * average where no source names one. The share of the crop's uptake the
  * guide expects fertilizer to cover is kept, so the need grows with the
- * yield goal: need = guide rate x goal / guide yield. A crop with no guide
+ * yield goal. Nitrogen grows in step with it (each ton takes about the same
+ * nitrogen): need = guide rate x goal / guide yield. Phosphorus and
+ * potassium grow only part way (PK_BASE): part of their guide rate keeps the
+ * soil's supply up whatever the harvest, the rest follows the tons the
+ * harvest carries away: need = guide rate x (PK_BASE + (1 - PK_BASE) x goal
+ * / guide yield). Scaled whole, a 12 t corn goal asked for about 125 kg of
+ * P2O5 before the soil, 15 bags of 16-20-0 on alkaline soil; the high yield
+ * trials (IPNI, SSNM) put it near 90 to 100 kg (2026-10-08). A crop with no guide
  * counts from its uptake per ton: goal x uptake x (1 - soil share) /
- * recovery. Each is then sized by the soil (ADJUST) and, for trees, by the
- * number of plants. A legume makes its own nitrogen.
+ * recovery. Each is then sized by the soil (ADJUST; two conditions that
+ * lose a nutrient the same way, `same`, count once, the larger) and, for
+ * trees, by the number of plants. A legume makes its own nitrogen.
  *
  * The soil's own share (SOIL_SHARE) is what omission plots show: a field
  * given no nitrogen still yields about two thirds of its goal, one given
@@ -64,6 +72,17 @@ final class NpkModel
     /** The yield a crop's guide rate is written for, where its source says. */
     public const GUIDE_YIELD = ['corn_yellow' => 6.8];
 
+    /** The share of a phosphorus or potassium guide rate that does not follow the yield goal. */
+    public const PK_BASE = 0.5;
+
+    /**
+     * The variety's potential when the farmer gives none: this many times the
+     * guide's good harvest. The season's planks are what the sun, the water
+     * and the heat let that potential carry, in tons, so they do not move with
+     * the goal (2026-10-08).
+     */
+    public const POTENTIAL_X = 1.6;
+
     /**
      * How the soil sizes the N, P2O5 and K2O need (multipliers), and the
      * soil's own share (share: multipliers on SOIL_SHARE). Kept within 0.5 to
@@ -72,13 +91,18 @@ final class NpkModel
     public const ADJUST = [
         'sandy' => ['N' => 1.15, 'K2O' => 1.2, 'share' => ['N' => 0.9, 'K2O' => 0.9], 'why' => 'Sandy soil lets nitrogen and potassium wash down'],
         'clay' => ['K2O' => 0.9, 'why' => 'Clay holds potassium'],
-        'strongAcid' => ['P2O5' => 1.3, 'why' => 'Very acid soil (pH under 5) locks up phosphorus'],
-        'acid' => ['P2O5' => 1.2, 'why' => 'Acid soil locks up phosphorus'],
-        'alkaline' => ['P2O5' => 1.15, 'N' => 1.05, 'why' => 'Alkaline soil locks up phosphorus and loses some urea nitrogen to the air'],
-        'strongAlk' => ['P2O5' => 1.25, 'N' => 1.1, 'why' => 'Strongly alkaline soil (pH over 8) locks up phosphorus and loses urea nitrogen to the air'],
-        'sodic' => ['N' => 1.1, 'K2O' => 1.1, 'why' => 'Sodic soil loses nitrogen to the air, and sodium crowds out potassium'],
+        'strongAcid' => ['P2O5' => 1.3, 'same' => ['P2O5' => 'pfix'], 'why' => 'Very acid soil (pH under 5) locks up phosphorus'],
+        'acid' => ['P2O5' => 1.2, 'same' => ['P2O5' => 'pfix'], 'why' => 'Acid soil locks up phosphorus'],
+        // A high pH locks phosphorus up as calcium phosphate in a limy soil; in a
+        // sodic one the high pH is sodium, and sodium phosphate stays soluble,
+        // so there (unless sodic) only the nitrogen lost to the air counts.
+        'alkaline' => ['P2O5' => 1.15, 'N' => 1.05, 'same' => ['P2O5' => 'pfix', 'N' => 'nair'], 'unless' => ['P2O5' => 'sodic'], 'why' => 'Alkaline soil locks up phosphorus and loses some urea nitrogen to the air',
+            'whyUnless' => 'Alkaline soil loses some urea nitrogen to the air'],
+        'strongAlk' => ['P2O5' => 1.25, 'N' => 1.1, 'same' => ['P2O5' => 'pfix', 'N' => 'nair'], 'unless' => ['P2O5' => 'sodic'], 'why' => 'Strongly alkaline soil (pH over 8) locks up phosphorus and loses urea nitrogen to the air',
+            'whyUnless' => 'Strongly alkaline soil (pH over 8) loses urea nitrogen to the air; its sodium keeps phosphorus soluble, so phosphorus is not raised'],
+        'sodic' => ['N' => 1.1, 'K2O' => 1.1, 'same' => ['N' => 'nair'], 'why' => 'Sodic soil loses nitrogen to the air, and sodium crowds out potassium'],
         'saline' => ['K2O' => 1.15, 'N' => 1.05, 'why' => 'On salty soil potassium helps the crop keep the salt out'],
-        'acid_sulfate' => ['P2O5' => 1.3, 'why' => 'Acid sulfate soil locks up phosphorus'],
+        'acid_sulfate' => ['P2O5' => 1.3, 'same' => ['P2O5' => 'pfix'], 'why' => 'Acid sulfate soil locks up phosphorus'],
         'low_om' => ['N' => 1.15, 'share' => ['N' => 0.9], 'why' => 'Low organic matter gives less nitrogen of its own'],
         'peat' => ['N' => 0.85, 'share' => ['N' => 1.1], 'why' => 'Peat gives more nitrogen of its own'],
         'waterlogged' => ['N' => 1.1, 'why' => 'Waterlogged upland soil loses nitrogen'],
@@ -302,7 +326,7 @@ final class NpkModel
 
         return [
             'textures' => self::TEXTURES, 'conditions' => $conditions + self::MORE_CONDITIONS, 'soilShare' => self::SOIL_SHARE, 'soilShareCrop' => self::SOIL_SHARE_CROP, 'recovery' => self::RECOVERY,
-            'guideYield' => self::GUIDE_YIELD, 'adjust' => self::ADJUST, 'seeding' => self::SEEDING, 'elements' => self::ELEMENTS, 'levels' => self::MICRO_LEVELS, 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
+            'guideYield' => self::GUIDE_YIELD, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => self::SEEDING, 'elements' => self::ELEMENTS, 'levels' => self::MICRO_LEVELS, 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
         ];
     }
 }

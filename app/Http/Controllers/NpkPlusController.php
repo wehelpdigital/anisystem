@@ -374,7 +374,8 @@ class NpkPlusController extends Controller
             . (! empty($res['goal']) ? 'Yield goal the calculator counted for: ' . json_encode($res['goal']) . "\n" : '')
             . (! empty($res['needs']) ? 'The calculator\'s need model, kg per ha for that goal on this soil (the official guide rate sized to the goal and adjusted for the soil; plan is what the plan gives): ' . json_encode($res['needs']) . "\n" : '')
             . (! empty($res['micros']) ? 'The calculator\'s secondary, micro and beneficial element needs, kg of element per ha (level none, watch, likely, or test from a soil test): ' . json_encode($res['micros']) . "\n" : '')
-            . (isset($res['reach']) && $res['reach'] !== null ? 'Liebig reading: the scarcest nutrient lets the crop reach about ' . (int) $res['reach'] . "% of the goal by the calculator's count.\n" : '')
+            . (isset($res['reach']) && $res['reach'] !== null ? 'Liebig reading: the shortest plank (a nutrient, or the season\'s sun, water or heat) lets the crop reach about ' . (int) $res['reach'] . "% of the goal by the calculator's count.\n" : '')
+            . (! empty($res['season']['carriesTPerHa']) ? 'What the season lets the variety carry, t/ha (from ten years of weather at the field and the ENSO state; potential ' . json_encode($res['season']['potential'] ?? null) . '): ' . json_encode($res['season']['carriesTPerHa']) . "\n" : '')
             . (! empty($res['support']) ? 'The calculator\'s estimate of the yield the fertilizer alone can feed, t/ha per nutrient (soil supply not counted): ' . json_encode($res['support']) . "\n" : '');
     }
 

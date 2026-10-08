@@ -33,7 +33,7 @@ final class NpkPlan
         'zinc sulfate hepta' => 'zinc-sulfate-7', 'zinc sulphate hepta' => 'zinc-sulfate-7', 'zinc sulfate' => 'zinc-sulfate', 'zinc sulphate' => 'zinc-sulfate',
         'ferrous sulfate' => 'ferrous-sulfate', 'iron sulfate' => 'ferrous-sulfate', 'manganese sulfate' => 'manganese-sulfate',
         'copper sulfate' => 'copper-sulfate', 'molybdate' => 'sodium-molybdate', 'boric acid' => 'boric-acid', 'borax' => 'borax',
-        'magnesium sulfate' => 'epsom', 'epsom' => 'epsom', 'kieserite' => 'kieserite', 'gypsum' => 'gypsum', 'dolomite' => 'dolomite',
+        'magnesium sulfate' => 'epsom', 'epsom' => 'epsom', 'kieserite' => 'kieserite', 'anhydrous gypsum' => 'gypsum-anhydrous', 'gypsum anhydrous' => 'gypsum-anhydrous', 'anhydrite' => 'gypsum-anhydrous', 'gypsum' => 'gypsum', 'dolomite' => 'dolomite',
         'agricultural lime' => 'lime', 'apog' => 'lime', 'calcitic' => 'lime', 'elemental sulfur' => 'sulfur',
         'chicken manure' => 'chicken-manure', 'chicken dung' => 'chicken-manure', 'ipot ng manok' => 'chicken-manure', 'poultry manure' => 'chicken-manure',
         'carabao manure' => 'cattle-manure', 'cow manure' => 'cattle-manure', 'cattle manure' => 'cattle-manure', 'kalabaw' => 'cattle-manure',
@@ -44,7 +44,7 @@ final class NpkPlan
     ];
 
     /** A name that says it is a fertilizer, so leaving it out is worth saying. */
-    private const LOOKS_LIKE = '/fertili[sz]er|abono|foliar|\bnpk\b|\d+\s*-\s*\d+\s*-\s*\d+|nitrogen|phosph|potas|calcium|magnes|zinc|boron|micronutri|manure|compost|organic|\blime\b|gypsum|sulfate|sulphate|nitrate|urea/i';
+    private const LOOKS_LIKE = '/fertili[sz]er|abono|foliar|\bnpk\b|\d+\s*-\s*\d+\s*-\s*\d+|nitrogen|phosph|potas|calcium|magnes|zinc|boron|micronutri|manure|compost|organic|\blime\b|gypsum|anhydrite|sulfate|sulphate|nitrate|urea/i';
 
     private static ?array $shelf = null;
 

@@ -1134,7 +1134,16 @@
         $('npSeason').innerHTML = '<b>' + esc(md(from)) + ' to ' + esc(md(to)) + '</b> (' + S.window.days + ' days) at ' + esc(S.place.label) + '. In the same weeks of the last ' + S.years.length + ' years: about <b>' + Math.round(a.rain) + ' mm</b> of rain, <b>' + a.rad + ' MJ</b> of sun a day, an average of <b>' + a.tmean + '°C</b>, and ' + Math.round(a.hot32) + ' days at 32°C or more.'
             + (t.e ? '<br><span class="np-enso' + (t.e.phase === 'la_nina' ? ' is-wet' : t.e.phase === 'neutral' ? ' is-flat' : '') + '">' + esc(t.e.label) + (t.e.phase !== 'neutral' ? ': rain about ' + Math.round(Math.abs(1 - t.rain) * 100) + '% ' + (t.rain < 1 ? 'lower' : 'higher') + ' this time' : '') + '</span>' : '');
     };
-    // The season's three planks: the share of the goal the sun, the water and the heat allow.
+    // The season's three planks. Each is what the sun, the water or the heat
+    // lets the variety carry, in tons (its potential cut by that one), set
+    // against the goal: the same season at a lower goal is a taller plank,
+    // never a smaller harvest (the owner's report, 2026-10-08).
+    const potentialOf = (c, g) => {
+        if (g.P) return { t: g.P, given: true };
+        const Yg = M.guideYield[c.key] || (c.typicalYield ? c.typicalYield.hi * 1.25 : null);
+        const t = Math.max(Yg ? Yg * (M.potentialX || 1.6) : 0, g.Yeff ? g.Yeff / 0.8 : 0);
+        return t ? { t, given: false } : null;
+    };
     const seasonPlanks = (c, g) => {
         const S = st.season;
         if (!c || !S || !S.avg) return null;
@@ -1147,13 +1156,16 @@
         const driest = S.years.reduce((m, y) => Math.min(m, y.rain), Infinity) * t.rain * 0.75;
         const wrDry = Math.min(1, (st.water === 'irrigated' ? need : st.water === 'partial' ? driest + 0.5 * Math.max(0, need - driest) : driest) / Math.max(1, need));
         // Sun: a full potential wants about K.rad MJ a day; less sun lowers the yield the season can carry.
-        const fs = Math.min(1.1, rad / K.rad), P = g.P || (g.Y ? g.Y / 0.8 : null);
-        const sun = P && g.Yeff ? clamp(P * fs / g.Yeff, 0.2, 1) : clamp(fs, 0.2, 1);
+        const fs = clamp(rad / K.rad, 0.2, 1.1), fw = water;
         // Temperature: the mean against the crop's best range, and the days too hot for flowers and fruit.
         const dev = Math.max(0, K.opt[0] - tmean, tmean - K.opt[1]);
         const hotN = (K.hot >= 35 ? a.hot35 : K.hot >= 32 ? a.hot32 : a.hot30) * (t.e && t.e.phase === 'el_nino' ? 1.3 : t.e && t.e.phase === 'la_nina' ? 0.85 : 1);
-        const temp = clamp((1 - 0.07 * dev) * (1 - 0.8 * Math.min(1, hotN / days)), 0.25, 1);
-        return { sun, water, temp, rain, rad, tmean, need, supply, wr, wrDry: clamp(1 - K.ky * (1 - wrDry), 0.1, 1), hotN, K, t };
+        const ft = clamp((1 - 0.07 * dev) * (1 - 0.8 * Math.min(1, hotN / days)), 0.25, 1);
+        // In tons: the potential each one allows; as planks: that against the goal.
+        const pot = potentialOf(c, g), cap = pot ? { sun: pot.t * fs, water: pot.t * fw, temp: pot.t * ft } : null;
+        const of = (k, f0) => (cap && g.Yeff ? cap[k] / g.Yeff : f0);
+        return { sun: of('sun', Math.min(1, fs)), water: of('water', fw), temp: of('temp', ft), cap, pot, f: { sun: fs, water: fw, temp: ft },
+            rain, rad, tmean, need, supply, wr, wrDry: clamp(1 - K.ky * (1 - wrDry), 0.1, 1), hotN, K, t };
     };
 
     /* ---- step 5: the soil ---- */
@@ -1358,17 +1370,30 @@
 
     /* ---- the need model (App\Support\NpkModel says where each number comes from) ---- */
     const needModel = (c, g, f, cls, perHa = {}) => {
-        const out = { need: {}, raw: {}, how: {}, share: {}, adj: {}, whys: [], Yg: null, micro: {}, base: null };
+        const out = { need: {}, raw: {}, how: {}, share: {}, adj: {}, scale: {}, whys: [], Yg: null, micro: {}, base: null };
         // How the soil sizes N, P2O5 and K2O, and the soil's own share.
         const base = Object.assign({}, M.soilShare, (c && M.soilShareCrop[c.key]) || {});
-        const m = { N: 1, P2O5: 1, K2O: 1 }, sh = Object.assign({}, base);
+        const m = { N: 1, P2O5: 1, K2O: 1 }, sh = Object.assign({}, base), same = {};
         f.forEach((k) => {
             const a = M.adjust[k];
             if (!a) return;
-            let used = false;
-            NPK.forEach((n) => { if (a[n]) { m[n] *= a[n]; used = true; } if (a.share && a.share[n]) sh[n] *= a.share[n]; });
-            if (used) out.whys.push(a.why);
+            let used = false, skipped = false;
+            NPK.forEach((n) => {
+                // A factor that does not hold beside another (a sodic soil's high pH keeps phosphorus soluble).
+                if (a[n] && a.unless && a.unless[n] && f.has(a.unless[n])) { skipped = true; return; }
+                if (a[n]) {
+                    if (n === 'P2O5' && a[n] > 1) out.pLock = true;
+                    // Two conditions that lose it the same way (a sodic soil is an
+                    // alkaline one: one loss of urea to the air) count once, the larger.
+                    const s = a.same && a.same[n];
+                    if (s) same[n + ':' + s] = Math.max(same[n + ':' + s] || 1, a[n]); else m[n] *= a[n];
+                    used = true;
+                }
+                if (a.share && a.share[n]) sh[n] *= a.share[n];
+            });
+            if (used) out.whys.push(skipped && a.whyUnless ? a.whyUnless : a.why);
         });
+        Object.entries(same).forEach(([key, v]) => { m[key.split(':')[0]] *= v; });
         NPK.forEach((n) => {
             const b = cls[n] === 'low' ? 'testLow' : cls[n] === 'high' ? 'testHigh' : null;
             if (!b) return;
@@ -1386,7 +1411,12 @@
             let v = null;
             if (c.legume && n === 'N') { out.how.N = 'legume'; out.raw.N = Array.isArray(R.N) ? R.N[0] : 20; out.need.N = out.raw.N; out.share.N = 0.95; return; }
             if (Array.isArray(R[n])) {
-                v = (R[n][0] + R[n][1]) / 2 * (g.Yeff && Yg ? g.Yeff / Yg : 1) * (fromTypical ? g.sd.pop : 1);
+                // Nitrogen follows the goal ton for ton; phosphorus and potassium
+                // only part way (NpkModel::PK_BASE): part of their guide rate keeps
+                // the soil's supply up whatever the harvest.
+                const ratio = g.Yeff && Yg ? g.Yeff / Yg : 1, pk = M.pkBase ?? 0.5;
+                out.scale[n] = n === 'N' ? ratio : pk + (1 - pk) * ratio;
+                v = (R[n][0] + R[n][1]) / 2 * out.scale[n] * (fromTypical ? g.sd.pop : 1);
                 out.how[n] = 'guide';
             } else if (Up[n] > 0 && g.Yeff) {
                 v = c.removalOnly ? g.Yeff * Up[n] : g.Yeff * Up[n] * (1 - base[n]) / RE[n];
@@ -1472,9 +1502,12 @@
             $('npNeed').innerHTML = '<div class="np-say">' + (st.cropPicked ? 'No crop picked, so these are the totals only.' : 'Pick the crop in step 1 to see what it needs for your goal.') + '</div>';
         }
         const short = NPK.filter((n) => states[n] && states[n].state === 'short'), over = NPK.filter((n) => states[n] && states[n].state === 'over');
+        // Where the soil locks phosphorus up, a band beats more of it.
+        const pLock = c && md.need.P2O5 && md.pLock;
         $('npSay').innerHTML = c && out.length && Object.keys(states).length
             ? '<div class="np-say">' + (short.length ? 'Short of ' + esc(list(short.map((n) => NAMES[n].toLowerCase()))) + ' for your goal. ' : '') + (over.length ? 'More ' + esc(list(over.map((n) => NAMES[n].toLowerCase()))) + ' than the crop needs: it costs money and can harm the crop. ' : '')
                 + (!short.length && !over.length ? 'The plan meets the need for nitrogen, phosphorus and potassium. ' : '') + 'The Barrel tab shows what that means for the harvest.</div>'
+                + (pLock ? '<div class="np-say"><b>On this soil, band the phosphorus.</b> Put it in a band beside and a little below the seed, or in the planting hole, instead of spreading it over the field: less of it touches the soil that locks it up. The need above counts the lock up as if it were spread, so a banded plan can do with less.</div>' : '')
             : '';
 
         const micro = micros(c, md, tot, perHa, area, out.length);
@@ -1490,7 +1523,9 @@
                 seed: seedV ? { amount: seedV, unit: SEED_U[st.seedUnit][1], key: st.seedUnit, perHa: g.sd.raw ? Math.round(g.sd.raw * 10) / 10 : null, germination: g.sd.germ || null } : null,
                 texture: st.texture, conditions: st.conds.slice(), ph: phVal(), prov: st.prov, town: st.town, water: st.water, planted: $('npPlanted').value || null },
             season: (() => { const SP = seasonPlanks(c, g); return SP ? { place: st.season.place, window: st.season.window, enso: SP.t.e ? SP.t.e.label : null, rainMm: Math.round(SP.rain), sunMJ: SP.rad, tmean: SP.tmean,
-                needMm: Math.round(SP.need), water: st.water, planks: { sun: Math.round(SP.sun * 100), water: Math.round(SP.water * 100), temp: Math.round(SP.temp * 100) } } : null; })() };
+                needMm: Math.round(SP.need), water: st.water, planks: { sun: Math.round(Math.min(1, SP.sun) * 100), water: Math.round(Math.min(1, SP.water) * 100), temp: Math.round(Math.min(1, SP.temp) * 100) },
+                potential: SP.pot ? { tPerHa: Math.round(SP.pot.t * 10) / 10, given: SP.pot.given } : null,
+                carriesTPerHa: SP.cap ? { sun: Math.round(SP.cap.sun * 10) / 10, water: Math.round(SP.cap.water * 10) / 10, temp: Math.round(SP.cap.temp * 10) / 10 } : null } : null; })() };
         $('npAnee').disabled = !out.length;
         $('npSave').disabled = !out.length;
     };
@@ -1503,7 +1538,9 @@
         if (g.Yeff && NPK.some((n) => Up[n] > 0)) li.push('<b>What the crop takes up:</b> at ' + fmt(g.Yeff) + ' t/ha, about ' + NPK.filter((n) => Up[n] > 0).map((n) => fmt(Up[n] * g.Yeff, 0) + ' kg ' + lab(n)).join(', ') + (c.removalOnly ? ' leaves with the harvest.' : ' in all, from the soil and the fertilizer together.'));
         NPK.forEach((n) => {
             const h = md.how[n], R = (c.recommendedPerHa || {})[n];
-            if (h === 'guide') li.push('<b>' + lab(n) + ':</b> the guide rate (' + span(R[0], R[1]).replace('about ', '') + ' kg) is taken as written for about ' + fmt(md.Yg) + ' t/ha and sized to your goal: ' + fmt(md.raw[n], 0) + ' kg' + (Math.abs(md.adj[n] - 1) > 0.01 ? ', then ' + (md.adj[n] > 1 ? 'up' : 'down') + ' ' + Math.round(Math.abs(md.adj[n] - 1) * 100) + '% for your soil: ' + fmt(md.need[n], 0) + ' kg' : '') + '.');
+            if (h === 'guide') li.push('<b>' + lab(n) + ':</b> the guide rate (' + span(R[0], R[1]).replace('about ', '') + ' kg) is taken as written for about ' + fmt(md.Yg) + ' t/ha and sized to your goal'
+                + (n === 'N' ? '' : ' part way (half of it keeps the soil\'s supply up whatever the harvest; the other half follows the tons the harvest carries away)')
+                + ': ' + fmt(md.raw[n], 0) + ' kg' + (Math.abs(md.adj[n] - 1) > 0.01 ? ', then ' + (md.adj[n] > 1 ? 'up' : 'down') + ' ' + Math.round(Math.abs(md.adj[n] - 1) * 100) + '% for your soil: ' + fmt(md.need[n], 0) + ' kg' : '') + '.');
             else if (h === 'uptake') li.push('<b>' + lab(n) + ':</b> no guide rate on file, so from the uptake: the part the soil cannot give (' + Math.round((1 - md.base[n]) * 100) + '%), divided by the share of fertilizer the crop catches: ' + fmt(md.need[n], 0) + ' kg.');
             else if (h === 'removal') li.push('<b>' + lab(n) + ':</b> puts back what the harvest carries away: ' + fmt(md.need[n], 0) + ' kg. A soil test tells if more is needed.');
             else if (h === 'legume') li.push('<b>N:</b> a legume makes most of its own nitrogen, so only a starter: ' + fmt(md.need.N, 0) + ' kg.');
@@ -1674,16 +1711,51 @@
         };
     })();
     const WORD = { short: 'Short', right: 'Enough', over: 'Too much', fixed: 'From the air', unknown: 'Not measured', dull: 'Not measured' };
+    /* What each plank lets the crop carry, in tons, whatever the goal: the
+       plank is that against the goal, so a lower goal is a taller plank and
+       never a smaller harvest (the owner's report, 2026-10-08).
+       N, P2O5, K2O: the plan feeds the yield whose need it meets (the need
+       model run backwards); below the guide's good harvest the soil's own
+       share carries part of it. Other elements: the soil alone carries its
+       share of the variety's potential, the plan the rest. */
+    const allowance = (c, md, g, pot) => {
+        const G = g.Yeff, Yr = md.Yg, ys = (y) => (c.typicalYield ? clamp(y / c.typicalYield.hi, 0.8, 1.4) : 1);
+        const scaleOf = (n) => {
+            if (md.how[n] !== 'guide') return (y) => y;                      // uptake and removal: in step with the tons
+            const pk = n === 'N' ? 0 : (M.pkBase ?? 0.5);
+            return (y) => pk + (1 - pk) * y / Yr;
+        };
+        return {
+            npk(n, plan) {
+                if (!G || !Yr || md.need[n] == null || !(md.need[n] > 0)) return null;
+                const sc = scaleOf(n), K = md.need[n] / sc(G), needAt = (y) => K * sc(y);
+                const needYr = needAt(Yr), s0 = md.share[n];
+                if (plan >= needYr) {
+                    // the yield whose need equals the plan
+                    if (md.how[n] === 'guide' && n !== 'N') { const pk = M.pkBase ?? 0.5; return Yr * (plan / K - pk) / (1 - pk); }
+                    return md.how[n] === 'guide' ? Yr * plan / K : plan / K;
+                }
+                return s0 * Yr + (1 - s0) * Yr * plan / needYr;
+            },
+            micro(mm, plan) {
+                if (!G || !pot || !(mm.need > 0)) return null;
+                const needPot = mm.need * ys(pot.t) / ys(G);
+                return pot.t * (mm.share + (1 - mm.share) * Math.min(1, plan / needPot));
+            },
+        };
+    };
     const barrel = (c, md, states, perHa, has, g) => {
-        const H = BR.H, rows = [], SP = seasonPlanks(c, g);
+        const H = BR.H, rows = [], SP = seasonPlanks(c, g), pot = c ? potentialOf(c, g) : null, AL = c ? allowance(c, md, g, pot) : null, yuA = Y_U[st.yUnit];
+        const tons = (t) => fmt(t / yuA[3]) + ' ' + yuA[1];
         STAVES.forEach((s) => {
             if (s.dull) {
                 if (!SP) { rows.push({ state: 'dull', ratio: null, px: H, pct: '', note: 'Pick the place and the planting date' }); return; }
-                const r = SP[s.k], state = r < 0.97 ? 'short' : 'right';
-                const note = s.k === 'sun' ? fmt(SP.rad, 1) + ' MJ of sun a day against the ' + SP.K.rad + ' a full harvest wants'
+                const r = SP[s.k], state = r < 0.97 ? 'short' : 'right', yu0 = Y_U[st.yUnit];
+                const note = (s.k === 'sun' ? fmt(SP.rad, 1) + ' MJ of sun a day against the ' + SP.K.rad + ' a full harvest wants'
                     : s.k === 'water' ? (st.water === 'irrigated' ? 'Irrigated: the crop gets the ' + Math.round(SP.need) + ' mm it drinks' : 'About ' + Math.round(SP.supply) + ' of the ' + Math.round(SP.need) + ' mm the crop drinks')
-                    : fmt(SP.tmean, 1) + '°C on average, ' + Math.round(SP.hotN) + ' days too hot for flowers';
-                rows.push({ state, ratio: r, px: Math.max(22, Math.round(H * r)), pct: Math.round(r * 100) + '%', note, season: true });
+                    : fmt(SP.tmean, 1) + '°C on average, ' + Math.round(SP.hotN) + ' days too hot for flowers')
+                    + (SP.cap ? ', enough for about ' + fmt(SP.cap[s.k] / yu0[3]) + ' ' + yu0[1] : '');
+                rows.push({ state, ratio: r, px: Math.max(22, Math.round(H * Math.min(1.22, r))), pct: Math.round(Math.min(1, r) * 100) + '%', note, season: true });
                 return;
             }
             const n = s.k;
@@ -1691,35 +1763,43 @@
             if (c && NPK.includes(n)) {
                 if (md.how.N === 'legume' && n === 'N') { state = 'fixed'; ratio = 1; note = 'A legume makes its own'; }
                 else if (md.need[n] != null) {
-                    const s0 = md.share[n], cover = md.need[n] > 0 ? perHa[n] / md.need[n] : 1;
-                    ratio = s0 + (1 - s0) * Math.min(1, cover);
+                    const s0 = md.share[n], cover = md.need[n] > 0 ? perHa[n] / md.need[n] : 1, A = AL.npk(n, perHa[n] || 0);
+                    ratio = A != null ? A / g.Yeff : s0 + (1 - s0) * Math.min(1, cover);
                     state = states[n] ? states[n].state : 'right';
+                    // Short of the goal's need, but the soil's own share carries the rest of it.
+                    if (state === 'short' && ratio >= 0.97) state = 'right';
                     if (state === 'over') ratio = Math.min(1.22, 1 + (cover - 1) * 0.25);
-                    note = 'Soil ' + Math.round(s0 * 100) + '%, plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the rest';
+                    note = 'Plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the need for your goal' + (A != null ? ', enough for about ' + tons(A) : ', soil ' + Math.round(s0 * 100) + '%');
                 }
             } else if (c && md.micro[n]) {
                 const mm = md.micro[n], plan = perHa[n] || 0;
                 if (mm.need > 0) {
-                    const cover = plan / mm.need;
-                    ratio = mm.share + (1 - mm.share) * Math.min(1, cover);
+                    const cover = plan / mm.need, A = AL.micro(mm, plan);
+                    ratio = A != null ? A / g.Yeff : mm.share + (1 - mm.share) * Math.min(1, cover);
                     state = cover > ((M.elements[n] || {}).over || 5) ? 'over' : ratio < 0.97 ? 'short' : 'right';
                     if (state === 'over') ratio = 1.1;
-                    note = { watch: 'May run short', likely: 'Likely short', test: 'Low by your soil test' }[mm.level] + (plan > 0 ? ', plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '%' : ', none in plan');
+                    note = { watch: 'May run short', likely: 'Likely short', test: 'Low by your soil test' }[mm.level] + (plan > 0 ? ', plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '%' : ', none in plan')
+                        + (A != null ? '; enough for about ' + tons(A) : '');
                 } else if (mm.level === 'testok') { state = 'right'; ratio = 1; note = 'Enough, by your soil test'; }
                 else { state = 'unknown'; ratio = null; note = 'No shortage flagged, not measured'; }
             }
             const px = state === 'unknown' ? H : Math.max(22, Math.round(H * Math.min(1.22, ratio)));
+            // A plank taller than the goal holds the water at the rim, no higher.
             rows.push({ state, ratio, px, pct: ratio === null ? '?' : Math.round(Math.min(ratio, 1) * 100) + '%', note });
         });
         const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null && r.state !== 'dull');
         // The season's sky and water, from ten years of weather.
         $('lbSky').hidden = !SP;
         if (SP) {
-            const S = st.season, yrs = S.years, maxR = Math.max(1, ...yrs.map((y) => y.rain), SP.rain);
+            const S = st.season, yrs = S.years, maxR = Math.max(1, ...yrs.map((y) => y.rain), SP.rain), yu0 = Y_U[st.yUnit];
+            // Each row: what it lets the variety carry, in tons, and that against the goal.
+            const carry = (k) => SP.cap ? ' Enough for about <b>' + esc(fmt(SP.cap[k] / yu0[3])) + ' ' + esc(yu0[1]) + '</b>.' : '';
+            const pctOf = (k) => Math.round(Math.min(1, SP[k]) * 100) + '%';
             $('lbSky').innerHTML = '<h4>Your season\'s sun, water and heat</h4>'
-                + '<div class="lb-skyrow"><i>☀️</i><span><b>Sun</b><small>' + fmt(SP.rad, 1) + ' MJ a day expected, against about ' + SP.K.rad + ' for a full harvest of ' + esc(cropShort(c).toLowerCase()) + (SP.t.sun !== 1 ? ', with ENSO' : '') + '.</small></span><em>' + Math.round(SP.sun * 100) + '%</em></div>'
-                + '<div class="lb-skyrow is-water"><i>💧</i><span><b>Water</b><small>' + Math.round(SP.rain) + ' mm of rain expected' + (SP.t.rain !== 1 ? ' (ENSO tilted)' : '') + '; the crop drinks about ' + Math.round(SP.need) + ' mm. ' + esc(WATER_U[st.water][0]) + '.' + (st.water !== 'irrigated' ? ' In the driest of the ' + yrs.length + ' years: ' + Math.round(SP.wrDry * 100) + '%.' : (SP.t.e && SP.t.e.phase === 'el_nino' && SP.t.rain < 0.8 ? ' In a strong El Niño, check that the canal will run all season.' : '')) + '</small></span><em>' + Math.round(SP.water * 100) + '%</em></div>'
-                + '<div class="lb-skyrow is-temp"><i>🌡️</i><span><b>Temperature</b><small>' + fmt(SP.tmean, 1) + '°C on average against ' + SP.K.opt[0] + ' to ' + SP.K.opt[1] + '°C best for it; about ' + Math.round(SP.hotN) + ' days at ' + SP.K.hot + '°C or more.</small></span><em>' + Math.round(SP.temp * 100) + '%</em></div>'
+                + (SP.pot ? '<p class="lb-rainkey" style="margin:0 0 .5rem">Each is what it lets ' + (SP.pot.given ? 'your variety\'s ' + esc(fmt(SP.pot.t / yu0[3])) + ' ' + esc(yu0[1]) + ' potential' : 'a good variety (about ' + esc(fmt(SP.pot.t / yu0[3])) + ' ' + esc(yu0[1]) + '; give the potential in step 2 to use yours)') + ' carry this season, set against your goal.</p>' : '')
+                + '<div class="lb-skyrow"><i>☀️</i><span><b>Sun</b><small>' + fmt(SP.rad, 1) + ' MJ a day expected, against about ' + SP.K.rad + ' for a full harvest of ' + esc(cropShort(c).toLowerCase()) + (SP.t.sun !== 1 ? ', with ENSO' : '') + '.' + carry('sun') + '</small></span><em>' + pctOf('sun') + '</em></div>'
+                + '<div class="lb-skyrow is-water"><i>💧</i><span><b>Water</b><small>' + Math.round(SP.rain) + ' mm of rain expected' + (SP.t.rain !== 1 ? ' (ENSO tilted)' : '') + '; the crop drinks about ' + Math.round(SP.need) + ' mm. ' + esc(WATER_U[st.water][0]) + '.' + (st.water !== 'irrigated' ? ' In the driest of the ' + yrs.length + ' years: ' + Math.round(SP.wrDry * 100) + '%.' : (SP.t.e && SP.t.e.phase === 'el_nino' && SP.t.rain < 0.8 ? ' In a strong El Niño, check that the canal will run all season.' : '')) + carry('water') + '</small></span><em>' + pctOf('water') + '</em></div>'
+                + '<div class="lb-skyrow is-temp"><i>🌡️</i><span><b>Temperature</b><small>' + fmt(SP.tmean, 1) + '°C on average against ' + SP.K.opt[0] + ' to ' + SP.K.opt[1] + '°C best for it; about ' + Math.round(SP.hotN) + ' days at ' + SP.K.hot + '°C or more.' + carry('temp') + '</small></span><em>' + pctOf('temp') + '</em></div>'
                 + '<div class="lb-rainyears" aria-label="Rain in the same weeks of each year">' + yrs.map((y) => '<span style="height:' + Math.max(4, y.rain / maxR * 100) + '%" title="' + y.year + ': ' + y.rain + ' mm"><b>' + String(y.year).slice(2) + '</b></span>').join('')
                 + '<span class="is-now" style="height:' + Math.max(4, SP.rain / maxR * 100) + '%" title="Expected this season: ' + Math.round(SP.rain) + ' mm"><b>Now</b></span></div>'
                 + '<p class="lb-rainkey">Rain in the same weeks of each of the last ' + yrs.length + ' years, and the striped bar for this season, tilted by ' + esc(SP.t.e ? SP.t.e.label.toLowerCase() : 'nothing') + '. Weather history: Open-Meteo. ENSO: NOAA.</p>';
@@ -1746,8 +1826,10 @@
         else if (limIdx < 0) say = 'There are no numbers on file for ' + cName + ', so the planks cannot be measured.';
         else {
             const L = rows[limIdx], Ls = STAVES[limIdx];
+            const seasonMax = SP && SP.cap ? Math.min(SP.cap.sun, SP.cap.water, SP.cap.temp) : null;
             say = reach >= 97
                 ? 'Every plank NPK Plus can measure reaches the rim: on this plan, the nutrients are not what holds your goal back.'
+                    + (seasonMax && g.Yeff && seasonMax >= g.Yeff ? ' The season itself could carry about ' + esc(fmt(seasonMax / yu[3])) + ' ' + esc(yu[1]) + ', so your goal of ' + esc(fmt(g.Yeff / yu[3])) + ' ' + esc(yu[1]) + ' sits within it.' : '')
                 : 'The shortest plank is <b>' + esc(Ls.name || NAMES[Ls.k]) + '</b>' + (Ls.name ? '' : ' (' + Ls.t + ')') + ': ' + esc(L.note.toLowerCase()) + '. It holds the water at ' + reach + '% of your goal. Raise it first; more of the others will not raise the water.';
             const over = STAVES.filter((s, i) => rows[i].state === 'over').map((s) => NAMES[s.k].toLowerCase());
             if (over.length) say += ' Too much ' + esc(list(over)) + ': the taller plank holds no more water. It costs money' + (over.includes('nitrogen') ? ', and too much nitrogen can make the crop lodge and draw pests' : '') + '.';
