@@ -355,9 +355,12 @@ class ScheduleMapController extends BaseScheduleController
                 return $this->jsonFail('Could not load the map picture.', 502);
             }
 
+            // The same view asks the same address: the browser keeps the picture
+            // half an hour, so the autosaves of one sitting pay Google once
+            // (2026-10-12; it was two minutes, against a save every 15 seconds).
             return response($res->body(), 200, [
                 'Content-Type' => $res->header('Content-Type'),
-                'Cache-Control' => 'private, max-age=120',
+                'Cache-Control' => 'private, max-age=1800',
             ]);
         } catch (\Throwable $e) {
             return $this->jsonFail('Could not load the map picture.', 502);

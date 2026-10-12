@@ -176,7 +176,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             $site = $request->getSchemeAndHttpHost();
             $ask = fn () => Illuminate\Support\Facades\Http::timeout(8)->withHeaders(['Referer' => $site . '/app/maps'])
                 ->get('https://maps.googleapis.com/maps/api/staticmap', ['center' => '14.1,121.3', 'zoom' => 10, 'size' => '32x32', 'key' => $key])->status();
-            $code = $request->boolean('fresh') ? $ask() : Illuminate\Support\Facades\Cache::remember('dc:mapsKey:' . $site, 600, $ask);
+            // A fresh probe is a billed Google call: six an hour, site wide, then the kept answer.
+            $fresh = $request->boolean('fresh') && Illuminate\Support\Facades\RateLimiter::attempt('dc:mapsKey:fresh', 6, fn () => true, 3600);
+            $code = $fresh ? $ask() : Illuminate\Support\Facades\Cache::remember('dc:mapsKey:' . $site, 600, $ask);
 
             return ['site' => $site, 'accepted' => $code === 200, 'status' => $code];
         }, 'unknown', false),

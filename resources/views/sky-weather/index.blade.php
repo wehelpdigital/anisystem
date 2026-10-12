@@ -524,8 +524,11 @@
         if (owmLayer) { const i = map.overlayMapTypes.getArray().indexOf(owmLayer); if (i >= 0) map.overlayMapTypes.removeAt(i); owmLayer = null; }
         owm = layer;
         if (layer && OPT.owm) {
-            owmLayer = new google.maps.ImageMapType({ getTileUrl: (c, z) => { const n = 1 << z; return U.tile + '/' + layer + '/' + z + '/' + (((c.x % n) + n) % n) + '/' + c.y; }, tileSize: new google.maps.Size(256, 256), opacity, maxZoom: 12, name: layer });
+            // OpenWeatherMap's layers carry no more detail past zoom 7: those
+            // tiles are read and scaled up, not fetched again for every zoom.
+            owmLayer = new ScaledTiles(U.tile + '/' + layer + '/{z}/{x}/{y}', 7);
             map.overlayMapTypes.push(owmLayer);
+            owmLayer.setOpacity(opacity);
         }
     };
     $('skLayers').addEventListener('click', (e) => {

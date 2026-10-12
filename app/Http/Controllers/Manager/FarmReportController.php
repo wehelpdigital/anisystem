@@ -1290,7 +1290,7 @@ class FarmReportController extends BaseScheduleController
                     $place = trim(implode(', ', array_filter([(string) $L->locTown, (string) $L->locProvince])));
                     if ($place !== '') {
                         $geo = app(\App\Services\WeatherService::class)->geocode($place);
-                        if ($geo) { $lat = (float) $geo['lat']; $lng = (float) $geo['lng']; break; }
+                        if ($geo) { $lat = (float) $geo['lat']; $lng = (float) ($geo['lon'] ?? $geo['lng'] ?? 0); break; }
                     }
                 }
             }

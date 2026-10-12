@@ -116,13 +116,21 @@ final class ClimateStore
     }
 
     /**
-     * Fill a cell from the archive: everything since a year before what it
-     * holds (the last weeks are re-summed as late days arrive), or eleven
-     * years when it is new. Returns the weeks written.
+     * Fill a cell from the archive: the last four months before what it
+     * holds, from the start of their week (ERA5's early days are replaced by
+     * the final ones within about three months, so those weeks are summed
+     * again; older weeks never change, and are not asked for again: 2026-10-12,
+     * it used to re-read a year and a half every fortnight), or eleven years
+     * when it is new. Returns the weeks written.
      */
     public static function fill(object $cell): int
     {
-        $start = $cell->fetchedThrough ? Carbon::parse($cell->fetchedThrough)->subYear()->startOfYear() : now('Asia/Manila')->subYears(self::YEARS + 1)->startOfYear();
+        if ($cell->fetchedThrough) {
+            $start = Carbon::parse($cell->fetchedThrough)->subDays(120);
+            $start = $start->copy()->subDays(($start->dayOfYear - 1) % 7)->startOfDay();
+        } else {
+            $start = now('Asia/Manila')->subYears(self::YEARS + 1)->startOfYear();
+        }
         $end = now('Asia/Manila')->subDays(6)->startOfDay();
         try {
             $r = Http::timeout(40)->get('https://archive-api.open-meteo.com/v1/archive', [

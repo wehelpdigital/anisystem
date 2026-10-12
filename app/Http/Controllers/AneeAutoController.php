@@ -64,9 +64,17 @@ class AneeAutoController extends Controller
 {
     public const KIND = 'auto';
 
-    /** Fair use inside the flat price, per season per day. */
-    private const OBSERVE_PER_DAY = 12;
-    private const ASK_PER_DAY = 40;
+    /**
+     * Fair use inside the flat price, per season per day, growing with the
+     * lots paid for: a season of one lot gets 6 readings of the field and 15
+     * questions a day, and each lot more adds 2 and 5. At about 1.20 pesos a
+     * reading and 0.50 a question, even a season used to the limit every day
+     * stays inside what its lots paid.
+     */
+    private const OBSERVE_BASE = 4;
+    private const OBSERVE_PER_LOT = 2;
+    private const ASK_BASE = 10;
+    private const ASK_PER_LOT = 5;
     private const READINGS = 3;
     /** A season's calendar is long: one call may write for five minutes, so a job is dead only after eight quiet ones. */
     private const JOB_STALE = 480;
@@ -978,8 +986,9 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             return $this->json(false, $v->errors()->first(), [], 422);
         }
         $used = AsAutoEvent::where('autoId', $auto->id)->where('kind', 'observation')->where('created_at', '>=', now('Asia/Manila')->startOfDay())->count();
-        if ($used >= self::OBSERVE_PER_DAY) {
-            return $this->json(false, 'That is ' . self::OBSERVE_PER_DAY . ' observations today. Send the next one tomorrow, or ask in the chat.', [], 429);
+        $cap = self::OBSERVE_BASE + self::OBSERVE_PER_LOT * max(1, (int) $auto->lotsPaid);
+        if ($used >= $cap) {
+            return $this->json(false, 'That is ' . $cap . ' observations today. Send the next one tomorrow, or ask in the chat.', [], 429);
         }
         $lotId = $request->filled('lotId') ? (int) $request->input('lotId') : null;
         if ($lotId && ! AsAutoLot::where('autoId', $auto->id)->where('lotId', $lotId)->exists()) {
@@ -1126,8 +1135,9 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             return $this->json(false, 'Ask in a few words.', [], 422);
         }
         $used = AsAutoEvent::where('autoId', $auto->id)->where('kind', 'ask')->where('created_at', '>=', now('Asia/Manila')->startOfDay())->count();
-        if ($used >= self::ASK_PER_DAY) {
-            return $this->json(false, 'That is ' . self::ASK_PER_DAY . ' questions today. Ask again tomorrow, or use Anee\'s chat.', [], 429);
+        $cap = self::ASK_BASE + self::ASK_PER_LOT * max(1, (int) $auto->lotsPaid);
+        if ($used >= $cap) {
+            return $this->json(false, 'That is ' . $cap . ' questions today. Ask again tomorrow, or use Anee\'s chat.', [], 429);
         }
         AsAutoEvent::say($auto->id, 'ask', $q, [], ['role' => 'farmer', 'userId' => Auth::id()]);
         $recent = AsAutoEvent::where('autoId', $auto->id)->orderByDesc('id')->limit(10)->get()->reverse()
