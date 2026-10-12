@@ -1,0 +1,308 @@
+{
+  "section": "blog",
+  "slug": "online-marketplace-for-farmers-philippines",
+  "sortOrder": 400,
+  "lang": "en",
+  "category": "Community",
+  "title": "Which Online Marketplace for Farmers in the Philippines Is Best for Selling Produce?",
+  "metaTitle": "Online Marketplace for Farmers: Where to Sell in the PH",
+  "metaDescription": "No single online marketplace for farmers fits every crop. Compare Kadiwa, NFA, DA buyer matching and online selling, and keep buyers and prices on record.",
+  "focusKeyword": "online marketplace for farmers",
+  "keywords": [
+    "online marketplace for farmers",
+    "sell produce online",
+    "Kadiwa",
+    "NFA palay buying",
+    "farm buyers",
+    "selling palay"
+  ],
+  "excerpt": "There is no single best online marketplace for farmers in the Philippines. Most farmers sell best through a mix: DA Kadiwa outlets and buyer matching, NFA buying stations for palay, a cooperative, and online selling to buyers they can deliver to. anee.io, a farm app built for Filipino farmers, is not a marketplace and does not buy or sell produce, but it keeps your harvest records, buyers and prices so you sell from real numbers.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-online-marketplace-for-farmers-philippines.webp",
+    "alt": "Vegetable stalls of farmer groups at a Kadiwa ng Pangulo market in Cebu",
+    "credit": "PaulGorduiz106, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Selling is where many seasons are won or lost. You can grow a good crop and still earn little if you sell wet palay to the first trader, or if your tomatoes ripen the week the market is full.\n\nAn app alone will not fix that. But the right channels, a clear price floor and good records will. Here is what works today, and what to check before you trust any platform."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Government channels such as Kadiwa stores and DA buyer matching usually work through registered farmer groups.",
+        "The NFA buys palay from farmers listed in the RSBSA, at its buying stations, with moisture and purity standards.",
+        "Online selling through social media, chat apps or marketplace sites suits buyers you can reach and deliver to.",
+        "anee.io does not buy produce, sell inputs or take payments. It keeps your records, contacts and community in one place."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should an online marketplace for farmers offer?"
+    },
+    {
+      "type": "text",
+      "text": "Before you list a harvest on any site or group, ask the same questions you would ask a trader at the farm gate. If a platform cannot answer them, sell somewhere else."
+    },
+    {
+      "type": "table",
+      "caption": "How to judge a place to sell your harvest",
+      "rows": [
+        [
+          "Check",
+          "Why it matters",
+          "Good sign"
+        ],
+        [
+          "Buyers near you",
+          "Transport eats your margin on bulky or soft crops",
+          "Buyers in your province or a pickup point near you"
+        ],
+        [
+          "Price before delivery",
+          "You need to compare it with your cost per kilo",
+          "A posted price or a written offer in chat"
+        ],
+        [
+          "Who pays for hauling",
+          "A higher price with your own trucking can pay less",
+          "Clear terms on pickup or delivery"
+        ],
+        [
+          "Payment terms",
+          "Unpaid deliveries are the biggest risk online",
+          "Cash, bank or GCash on delivery, with a receipt"
+        ],
+        [
+          "Grade and volume rules",
+          "Rejected loads cost you twice",
+          "Written moisture, size or volume rules"
+        ],
+        [
+          "Fees",
+          "Some platforms take a cut or charge a listing fee",
+          "Every fee stated before you list"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where can Filipino farmers sell produce?"
+    },
+    {
+      "type": "text",
+      "text": "These are real channels farmers use, with what each one asks of you. Prices and rules change by region and season, so confirm with the office or buyer near you."
+    },
+    {
+      "type": "table",
+      "caption": "Channels for selling farm produce in the Philippines",
+      "rows": [
+        [
+          "Channel",
+          "Best for",
+          "What you need",
+          "Watch out for"
+        ],
+        [
+          "DA Kadiwa stores and markets",
+          "Farmer groups selling straight to consumers",
+          "A duly registered association that meets DA requirements",
+          "Slots and schedules set by the DA office"
+        ],
+        [
+          "DA market linkage (AMAS)",
+          "Cooperatives and associations with steady volume",
+          "A registered group, and a product buyers can rely on",
+          "Buyers expect volume and quality every week"
+        ],
+        [
+          "NFA buying stations",
+          "Palay",
+          "RSBSA listing or membership in a farmers' organization",
+          "Moisture and purity rules, and a price that changes"
+        ],
+        [
+          "Traders, millers and the bagsakan",
+          "Any crop, any volume",
+          "Contacts and a price check",
+          "Low offers when you must sell fast"
+        ],
+        [
+          "Online selling",
+          "Vegetables, fruit, eggs and processed goods sold direct",
+          "Good photos, delivery and a way to get paid",
+          "Scams, unpaid orders and spoilage in transit"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Kadiwa, DA buyer matching and the NFA"
+    },
+    {
+      "type": "text",
+      "text": "The Kadiwa program lets farmers and producers sell fresh and processed products directly to consumers, without middlemen. The DA says associations in the program must be duly registered and compliant with all requirements. In the same way, the DA Agribusiness and Marketing Assistance Service links farmers' groups with consumer markets and institutional buyers. So a [Filipino farmer community](/blog/filipino-farmer-community-online) that is a registered cooperative opens doors a single farmer cannot.\n\nFor palay, the NFA is a price floor worth knowing. In a 2020 DA report from Nueva Ecija, the NFA bought only from legitimate farmers listed in the RSBSA or members of farmers' organizations. It also asked for palay at 14 percent moisture or less and at least 96 percent purity. Check today's buying price at your NFA branch, and compare it with the [palay price](/blog/palay-price-philippines) traders offer."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Dry it before you sell it",
+      "text": "Wet palay sells for less, and buyers often deduct for moisture. If you can dry to the NFA standard before you sell, you can choose between buyers instead of taking the first offer. Note the moisture of every load, because it explains the price you got."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you sell produce online safely?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Know your floor price",
+          "text": "Add up what the crop cost you per kilo before you post a price. Our guide to [farm profitability](/blog/farm-profitability) shows how. Never sell below your cost just to clear a harvest unless the crop will spoil."
+        },
+        {
+          "title": "Check market prices",
+          "text": "The DA gathers prices along the value chain of basic crops and publishes them through its market information service. Ask your agriculture office where your region posts them."
+        },
+        {
+          "title": "Post clear facts",
+          "text": "Show the crop, the harvest date, the volume, the grade and your pickup point. Use real photos from your field, not stock pictures."
+        },
+        {
+          "title": "Agree in writing",
+          "text": "Confirm the price, volume, delivery and payment in one chat message. A screenshot is your record if anything goes wrong."
+        },
+        {
+          "title": "Get paid at delivery",
+          "text": "For new buyers, ask for payment on delivery or a partial payment first. Do not release a big load on a promise."
+        },
+        {
+          "title": "Record the sale",
+          "text": "Write the buyer, the price, the volume and any rejects the same day. Next season you will know who paid fairly."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Can you buy farm inputs on an online marketplace for farmers?"
+    },
+    {
+      "type": "text",
+      "text": "You can, but check before you pay. Buy fertilizer and pesticides from dealers licensed by the FPA, and check the active ingredient against your problem first. Our guides on [fertilizer brands and dealers](/blog/fertilizer-brands-and-dealers) and on how to [avoid buying the wrong pesticide](/blog/avoid-buying-the-wrong-pesticide) cover what to check. Always follow the product label and its FPA registration."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help you sell if it is not a marketplace?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io does not buy your harvest, sell you inputs or handle payments for produce. Its Shop is marked coming soon and is not open. What it does is keep the facts that make you a better seller."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**[Harvest records](/features/harvest-records)**: after harvest, note the yield and moisture per lot, the buyer and the price, and any problems. Next season you plan from real numbers.",
+        "**Contact List**: keep buyers, traders and haulers with notes and tags such as Buyer, so you find them in seconds every season.",
+        "**Profit Report**: your sales from the harvest records against everything the season cost, on paid plans.",
+        "**Compare Reports**: two seasons side by side, and Anee explains what changed, using credits.",
+        "**The community**: ask other growers where they sell and what buyers paid this week."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Keep every buyer and price on record",
+      "text": "Start free on Libre, log your next harvest, and see which buyer really paid best.",
+      "label": "See harvest records",
+      "url": "/features/harvest-records"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about selling farm produce online"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the best online marketplace for farmers in the Philippines?",
+          "a": "No single platform is best for every crop. Palay often sells best to the NFA, a miller or a trusted trader, while vegetables and fruit can sell direct online or through Kadiwa. Most farmers do best with two or three channels and good records."
+        },
+        {
+          "q": "Does anee.io buy or sell farm products?",
+          "a": "No. anee.io is a farm app, not a marketplace. It does not buy produce, sell inputs or take payments for produce. It helps you keep harvest records, buyer contacts and prices, and it has a farmer community."
+        },
+        {
+          "q": "How can I sell palay to the NFA?",
+          "a": "Register in the RSBSA through your municipal agriculture office, then ask the nearest NFA branch about its buying price and requirements. In a DA report, the NFA asked for at most 14 percent moisture and at least 96 percent purity."
+        },
+        {
+          "q": "How do farmers join Kadiwa?",
+          "a": "Kadiwa works with registered farmers' associations and cooperatives that meet DA requirements. Ask your DA regional office or its marketing division what your group needs to qualify."
+        },
+        {
+          "q": "How do I avoid scams when I sell online?",
+          "a": "Agree on the price, volume and payment in writing before you deliver. For new buyers, ask for payment on delivery or a partial payment first, and keep screenshots of every deal."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Filipino farmer community",
+          "url": "/blog/filipino-farmer-community-online"
+        },
+        {
+          "label": "Palay price in the Philippines",
+          "url": "/blog/palay-price-philippines"
+        },
+        {
+          "label": "Farm profitability",
+          "url": "/blog/farm-profitability"
+        },
+        {
+          "label": "Farm record keeping",
+          "url": "/blog/farm-record-keeping"
+        },
+        {
+          "label": "Harvest records in anee.io",
+          "url": "/features/harvest-records"
+        },
+        {
+          "label": "Farm Contact List",
+          "url": "/features/farm-contact-list"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA: Agribusiness and Marketing Assistance",
+          "url": "https://www.da.gov.ph/services/agribusiness-and-marketing-assistance/"
+        },
+        {
+          "label": "DA Cordillera: Kadiwa Store launched in Kalinga, February 2026",
+          "url": "https://car.da.gov.ph/?p=7422"
+        },
+        {
+          "label": "DA Region 3: DA NFA Nueva Ecija heightens palay procurement",
+          "url": "https://rfo3.da.gov.ph/index.php/da-nfa-nueva-ecija-heightens-palay-procurement/"
+        },
+        {
+          "label": "DA Cordillera: RSBSA frequently asked questions",
+          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
+        }
+      ]
+    }
+  ]
+}

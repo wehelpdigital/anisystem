@@ -1,0 +1,284 @@
+{
+  "section": "blog",
+  "slug": "farm-records-for-loans-and-insurance",
+  "sortOrder": 780,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "What Farm Records for Loans and Crop Insurance Do I Need in the Philippines?",
+  "metaTitle": "Farm Records for Loans and Crop Insurance: A Checklist",
+  "metaDescription": "The farm records for loans and PCIC crop insurance in the Philippines: RSBSA, land papers, a farm plan and budget, planting dates and proof of loss.",
+  "focusKeyword": "farm records for loans",
+  "keywords": [
+    "farm records for loans",
+    "crop insurance requirements",
+    "PCIC rice crop insurance",
+    "RSBSA requirements",
+    "farm plan and budget",
+    "agricultural loan requirements"
+  ],
+  "excerpt": "Most farm loans and crop insurance in the Philippines start with three things: your RSBSA registration, proof that you own, rent or till the land, and a farm plan and budget for the season. PCIC also asks for planting and harvest dates and the farm's location, and a claim needs a notice of loss on time. Good farm records for loans and insurance make each of these quick to fill. In anee.io, a farm app built for Filipino farmers, the plan, dates, costs and photos stay in one place.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-records-for-loans-and-insurance.webp",
+    "alt": "Rice field flooded by Typhoon Ketsana days before harvest in the Philippines",
+    "credit": "Chris Quintana, IRRI, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A typhoon can flatten a field in one night. Whether you recover the money then depends on papers you prepared months before: your registration, your insurance application and the plan behind it. Lenders look at the same papers, plus your record of past harvests.\n\nThe DA calls the RSBSA, the Registry System for Basic Sectors in Agriculture, a targeting tool for its programs. Registration makes you eligible for agricultural loans, crop and livestock insurance, seeds, fertilizer, farm inputs and technical help. It is voluntary, it has no fee, and it is a lifetime enrollment."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Register in the RSBSA first.** Many DA, ACPC and insurance programs start there.",
+        "**Keep your land papers ready:** proof of ownership, tenancy or lease.",
+        "**Write a farm plan and budget.** For PCIC rice insurance, it sets how much of the crop is covered.",
+        "**Record your real planting date per lot.** PCIC deadlines count from it.",
+        "**Document losses fast,** with dated photos, and file the notice within the deadline."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which farm records for loans and insurance do I need?"
+    },
+    {
+      "type": "table",
+      "caption": "A checklist of farm records for loans and crop insurance, from DA, PCIC and ACPC program pages",
+      "rows": [
+        [
+          "Record",
+          "What it is",
+          "Who asks for it"
+        ],
+        [
+          "RSBSA stub or control number",
+          "Proof of registration from your Municipal Agriculture Office",
+          "DA programs, ACPC loans such as SURE, insurance"
+        ],
+        [
+          "Valid government ID",
+          "A photocopy with the ID number",
+          "RSBSA registration"
+        ],
+        [
+          "Land papers",
+          "Title, tax declaration, CLOA, emancipation patent or other proof of ownership. Tenants bring proof of tenancy, and lessees their agreement.",
+          "RSBSA registration"
+        ],
+        [
+          "Farm plan and budget",
+          "The season's planned inputs and their costs, per farm",
+          "PCIC rice insurance, Land Bank's Sikat Saka program"
+        ],
+        [
+          "Farm details",
+          "Planting and harvest schedule, location, size, variety and boundaries",
+          "The PCIC application form"
+        ],
+        [
+          "Location sketch plan",
+          "A sketch of where the farm lies",
+          "Sikat Saka loans and insurance"
+        ],
+        [
+          "Actual planting record",
+          "The real date, area and place you planted",
+          "PCIC, if anything changed from the plan"
+        ],
+        [
+          "Loss records",
+          "Date, cause and extent of the damage, with photos",
+          "PCIC claims, and your own proof"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does PCIC ask for rice crop insurance?"
+    },
+    {
+      "type": "text",
+      "text": "The DA's FFEDIS page on PCIC rice crop insurance lists two documents for a single farmer. First comes the PCIC application form, with your planting and harvest schedules, farm location, size, variety and boundaries. Second comes an individual farm plan and budget. Groups file a group application and a standard farm plan and budget instead.\n\nThe farm plan and budget matters more than many farmers think. The amount of cover equals the cost of production inputs in it. You may add up to 20 percent more to cover part of the expected yield. On that page, the ceiling per hectare for inbred rice is PHP 41,000 for a self financed farmer and PHP 67,000 for a borrowing farmer."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The deadlines that decide a claim"
+    },
+    {
+      "type": "table",
+      "caption": "Deadlines on the DA FFEDIS page for PCIC rice crop insurance. Terms differ by program, so confirm with your PCIC office.",
+      "rows": [
+        [
+          "Step",
+          "Deadline"
+        ],
+        [
+          "Apply, if self financed",
+          "Any day before direct seeding or transplanting, up to 30 calendar days after"
+        ],
+        [
+          "Apply, if borrowing",
+          "When you apply for the production loan"
+        ],
+        [
+          "Notice of deviation",
+          "Within 10 calendar days from the actual planting date, if the area or place changed or you failed to plant"
+        ],
+        [
+          "Claim for indemnity",
+          "Within 20 calendar days from the loss, and before the scheduled harvest"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "You may send the first notice of loss by text or email to the PCIC office. It must give your name and address, the type of insurance and the cause of loss. Then follow it with the written claim. Some programs also pay the premium for the farmer. For example, PCIC gave full premium subsidy to the subsistence farmers in the DA and Land Bank Sikat Saka program. Ask your Municipal Agriculture Office or PCIC office what applies to you."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Missing a deadline can cost the claim",
+      "text": "Count the days from your real planting date, not from the date in your plan. If a typhoon hits, report it as soon as you can, by text if that is fastest. Take dated photos of the damage on every lot before you clean up or replant."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What do lenders look for?"
+    },
+    {
+      "type": "text",
+      "text": "Government lending programs usually begin with RSBSA. The ACPC SURE program, for example, serves small farmers in areas under a state of calamity who have enrolled in the RSBSA. It lends up to PHP 25,000 at 0 percent interest, although the lending conduit may charge a 3 percent service fee. It asks for no collateral, and you can pay over up to 3 years.\n\nFor production loans, a lender wants to see that you can repay. Records of past harvests, sales and costs help show that. A clear season plan with its budget shows what the money will buy. Our guide to [farm cash flow](/blog/farm-cash-flow) shows how to plan that budget week by week."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I get my records ready before planting?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Register in the RSBSA",
+          "text": "Get the enrollment form from your Municipal Agriculture Office. Bring your ID and land papers, and keep the stub."
+        },
+        {
+          "title": "Measure and map each lot",
+          "text": "Know the area and the boundaries of every field. A map with its sides and area helps with the sketch plan."
+        },
+        {
+          "title": "Write the farm plan and budget",
+          "text": "List the season's tasks with their inputs and costs, by lot. This becomes the basis of your cover."
+        },
+        {
+          "title": "Apply on time",
+          "text": "File the insurance application before planting, or within 30 days after if you finance yourself."
+        },
+        {
+          "title": "Record the real planting date",
+          "text": "Note when and where each lot went in. If it differs from the plan, file the notice of deviation within 10 days."
+        },
+        {
+          "title": "Keep a photo log",
+          "text": "Take dated photos of each lot at each stage. If damage comes, you can show how the crop looked before."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help with farm records for loans?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, each lot keeps its crop, variety, size, place and its own day zero, so your planting dates stay exact. With [farm maps](/features/farm-maps), you trace each field over a satellite view and get its area and the length of each side. In the [Protocol Builder](/features/protocol-builder), you write the season's tasks with their materials. That gives you the base of a farm plan and budget.\n\nDuring the season, photos and notes stay dated with the season. Receipts and other files go into Documentation. After harvest, Observations keep yield, price and buyer, and the reports total your costs and profit. The app does not file papers with PCIC or a bank for you, but it keeps what they ask for in one place."
+    },
+    {
+      "type": "cta",
+      "title": "Keep your loan and insurance records ready",
+      "text": "Sign up free, map your lots, and keep your plan, planting dates and photos together for the whole season.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about records for loans and insurance"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Do I need RSBSA registration for crop insurance?",
+          "a": "The DA says RSBSA registration makes you eligible for its programs, crop and livestock insurance among them. Register at your Municipal Agriculture Office first, then ask PCIC what else your cover needs."
+        },
+        {
+          "q": "What is a farm plan and budget?",
+          "a": "It lists the season's planned activities and inputs with their costs. For PCIC rice insurance, the amount of cover equals the cost of production inputs in it."
+        },
+        {
+          "q": "How soon must I report crop damage to PCIC?",
+          "a": "On the DA FFEDIS page for rice crop insurance, the claim is due within 20 calendar days from the loss and before the scheduled harvest. You may send the first notice by text or email."
+        },
+        {
+          "q": "Can a tenant get crop insurance or a loan?",
+          "a": "Tenants and lessees can register in the RSBSA with proof of tenancy or of their lease agreement. PCIC insures the farmer who has an insurable interest in the standing crop."
+        },
+        {
+          "q": "Do photos help an insurance claim?",
+          "a": "Dated photos of each lot before and after the damage give you a clear record to show the adjuster. They do not replace the notice and claim forms, so file those on time too."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Farm record keeping",
+          "url": "/blog/farm-record-keeping"
+        },
+        {
+          "label": "Farm cash flow, week by week",
+          "url": "/blog/farm-cash-flow"
+        },
+        {
+          "label": "How to prepare your farm for a typhoon",
+          "url": "/blog/typhoon-preparation-for-farmers"
+        },
+        {
+          "label": "Cost of producing rice per hectare",
+          "url": "/blog/cost-of-producing-rice-per-hectare"
+        },
+        {
+          "label": "Farm documentation in anee.io",
+          "url": "/features/farm-documentation"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA Cordillera: RSBSA frequently asked questions",
+          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
+        },
+        {
+          "label": "DA FFEDIS: Rice Crop Insurance by PCIC",
+          "url": "https://ffedis.da.gov.ph/projects/6/view"
+        },
+        {
+          "label": "DA FFEDIS: Sikat Saka Program by PCIC",
+          "url": "https://ffedis.da.gov.ph/projects/2/view"
+        },
+        {
+          "label": "ACPC: Survival and Recovery (SURE) Program",
+          "url": "https://acpc.gov.ph/?p=12090"
+        }
+      ]
+    }
+  ]
+}

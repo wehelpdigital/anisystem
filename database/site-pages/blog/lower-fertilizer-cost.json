@@ -1,0 +1,239 @@
+{
+  "section": "blog",
+  "slug": "lower-fertilizer-cost",
+  "sortOrder": 470,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "How Do I Lower Fertilizer Cost Without Lowering My Harvest?",
+  "metaTitle": "Lower Fertilizer Cost Without Cutting Your Harvest",
+  "metaDescription": "Lower fertilizer cost without a smaller harvest: test before you buy, return rice straw, read leaf color, compare price per kilo of nutrient, stop losses.",
+  "focusKeyword": "lower fertilizer cost",
+  "keywords": [
+    "lower fertilizer cost",
+    "save on fertilizer",
+    "rice straw nitrogen",
+    "leaf color chart savings",
+    "price per kilo of nitrogen",
+    "fertilizer discount voucher"
+  ],
+  "excerpt": "You can lower fertilizer cost without lowering your harvest by cutting waste, not nutrients. Test the soil before you buy, return rice straw and manure to the field, let a leaf color chart decide each nitrogen dose and compare bags by the price per kilo of nutrient. PhilRice estimates that pairing inorganic fertilizer with organic sources can save PHP 2,000 to 4,000 per hectare. anee.io, a farm app built for Filipino farmers, helps you buy only what your plan needs and shows what each season really cost.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-lower-fertilizer-cost.webp",
+    "alt": "Two farmers in Laguna spread rice straw back over a wet paddy, a free source of nutrients that helps lower fertilizer cost",
+    "credit": "IRRI Images, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Fertilizer is the input you can least afford to waste. You cannot control the price of a bag. What you can control is how many kilos reach your crop. The rest washes away, escapes into the air or sits unused in the soil.\n\nThe ways below come from PhilRice, the PalayCheck System and the FPA's own weekly prices. None of them asks you to starve the crop."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Test before you buy,** so you stop paying for nutrients your soil already has.",
+        "**Return the straw.** PhilRice says straw from a 5 ton harvest supplies about 30 kg of nitrogen, worth about 1.3 bags of urea.",
+        "**Let the leaves decide.** A leaf color chart can save one to two sacks of nitrogen fertilizer per hectare, PhilRice reports.",
+        "**Compare by the kilo of nutrient,** not by the price of the bag.",
+        "**Stop the losses** with good timing, shallow water and closed bunds."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where does fertilizer money get wasted?"
+    },
+    {
+      "type": "text",
+      "text": "The first leak is guessing. A plan copied from a neighbor can give too much of one nutrient and too little of another, and both cost you. The second leak is loss. Urea left on the surface turns to gas. Fertilizer spread before a rain that spills over the bunds leaves with the water.\n\nThe third leak is burning. Straw worked back into the soil returns nutrients for free, and PalayCheck counts on it, but fire throws that value away. Finally, many farmers compare bags by price alone, while the real question is what each kilo of nutrient costs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can I lower fertilizer cost, step by step?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Test the soil, or use MOET",
+          "text": "A soil test or PhilRice's MOET kit shows which nutrients your field lacks. Your municipal agriculturist can tell you where to send samples."
+        },
+        {
+          "title": "Work the straw back in",
+          "text": "Spread and incorporate the straw instead of burning it. Straw from a 5 ton harvest replaces about 1.3 bags of urea. At the FPA average price for October 5 to 9, 2026, that is about PHP 2,914 per hectare."
+        },
+        {
+          "title": "Add organic fertilizer you can get cheaply",
+          "text": "PhilRice's Abonong Swak plan adds 10 bags of decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost per hectare. Our guide to [organic fertilizer examples](/blog/organic-fertilizer-examples) lists what works."
+        },
+        {
+          "title": "Read the leaves before each nitrogen dose",
+          "text": "Check 10 leaves with a leaf color chart every 7 days from 14 days after transplanting. Skip the dose when the leaves are still dark enough."
+        },
+        {
+          "title": "Put every kilo where roots can use it",
+          "text": "PalayCheck says to mix granular fertilizer into the soil and to top dress into 2 to 5 cm of water after 3 in the afternoon. Keep the bunds closed afterward."
+        },
+        {
+          "title": "Ask about government vouchers",
+          "text": "DA regional offices have handed out fertilizer discount vouchers to registered rice farmers in past seasons. Ask your municipal agriculturist which ones run this season."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which bag gives the cheapest nutrient?"
+    },
+    {
+      "type": "text",
+      "text": "Divide the bag price by the kilos of nutrient inside. Compare nitrogen with nitrogen and potassium with potassium, because each nutrient does a different job. Our [fertilizer dealer guide](/blog/fertilizer-brands-and-dealers) explains the method in more detail."
+    },
+    {
+      "type": "table",
+      "caption": "Price per kilo of nutrient at FPA national average prices for October 5 to 9, 2026, our own arithmetic. Prices change every week.",
+      "rows": [
+        [
+          "Grade",
+          "Price per 50 kg bag (PHP)",
+          "Nutrient per bag",
+          "Price per kg of nutrient (PHP)"
+        ],
+        [
+          "Urea 46 0 0, prilled",
+          "2,241.41",
+          "23 kg N",
+          "97.45 per kg N"
+        ],
+        [
+          "Ammosul 21 0 0",
+          "1,238.95",
+          "10.5 kg N plus sulfur",
+          "118.00 per kg N"
+        ],
+        [
+          "Muriate of potash 0 0 60",
+          "1,673.88",
+          "30 kg K2O",
+          "55.80 per kg K2O"
+        ],
+        [
+          "Complete 14 14 14",
+          "1,897.00",
+          "21 kg of N, P2O5 and K2O",
+          "90.33 per kg, all three together"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So a bag of [ammonium sulfate](/blog/ammonium-sulfate-21-0-0) is cheaper than a bag of urea, but its nitrogen costs more per kilo. It still makes sense on soils short of sulfur. Complete fertilizer looks cheap per kilo, yet it only saves money if your soil needs all three nutrients."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not save by skipping potash or phosphorus",
+      "text": "Cutting the nutrient your soil lacks costs more in lost harvest than it saves at the store. Cut the waste first, meaning losses, bad timing and nutrients the soil already has, and only then the dose."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help me spend less?"
+    },
+    {
+      "type": "text",
+      "text": "One easy way to lower fertilizer cost is to stop overbuying. In anee.io, your protocol adds up what its tasks will use. On Solo Farmer, the [farm inventory](/features/farm-inventory-and-expenses) sets that against what is already in the shed. So you buy only what is left, and each fertilizer task you tick done takes its bags out of stock.\n\nThe free [NPK Plus calculator](/features/npk-plus-calculator) shows if your plan carries too much of a nutrient before you pay for it. After harvest, the [expenses report](/features/expenses-report) shows every peso the season cost, materials included. Compare Reports then sets one season beside another."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/lp/report-money.webp",
+      "alt": "A season report on a phone showing money in, money out and where the money went, with materials as the largest share",
+      "caption": "Anee's season report shows where the money went, fertilizer and other materials included. It uses credits."
+    },
+    {
+      "type": "cta",
+      "title": "Buy only what your plan needs",
+      "text": "Track every bag in and out, and see what your season really cost before you plan the next one.",
+      "label": "See farm inventory",
+      "url": "/features/farm-inventory-and-expenses"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about saving on fertilizer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is ammosul cheaper than urea?",
+          "a": "Per bag, yes. In the FPA survey for October 5 to 9, 2026, ammosul averaged PHP 1,238.95 and prilled urea PHP 2,241.41. Per kilo of nitrogen, urea was cheaper at about PHP 97 against PHP 118."
+        },
+        {
+          "q": "How much can rice straw save me?",
+          "a": "PhilRice says the straw from a 5 ton harvest, worked back into the soil, supplies about 30 kg of nitrogen. That equals about 1.3 bags of urea, or roughly PHP 2,900 at the FPA average price in October 2026."
+        },
+        {
+          "q": "Can I get government help to buy fertilizer?",
+          "a": "Sometimes. DA Caraga, for example, gave discount vouchers worth PHP 1,131 per hectare for inbred rice and PHP 2,262 for hybrid rice to farmers registered in the RSBSA. Programs change each season, so ask your municipal agriculturist."
+        },
+        {
+          "q": "Will using less nitrogen lower my yield?",
+          "a": "Not if the leaves show the crop has enough. A leaf color chart tells you when the crop wants nitrogen. PhilRice reports it can save one to two sacks per hectare. Skipping a dose the crop needs, on the other hand, does cut the harvest."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer dealer guide and price per kilo",
+          "url": "/blog/fertilizer-brands-and-dealers"
+        },
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "How many bags of fertilizer per hectare",
+          "url": "/blog/bags-of-fertilizer-per-hectare"
+        },
+        {
+          "label": "Cost of producing rice per hectare",
+          "url": "/blog/cost-of-producing-rice-per-hectare"
+        },
+        {
+          "label": "Farm inventory tracking",
+          "url": "/blog/farm-inventory-tracking"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K (Abonong Swak recommendations)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "PhilRice: Rice nutrient status at your fingertips soon (leaf color chart, 2018)",
+          "url": "https://www.philrice.gov.ph/rice-nutrient-status-fingertips-soon/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "FPA: Prices of 6 major fertilizer grades, October 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_-1.pdf"
+        },
+        {
+          "label": "DA Caraga: DA Fertilizer Discount Voucher reaches 10K Caraga rice farmers",
+          "url": "https://caraga.da.gov.ph/?p=12254"
+        }
+      ]
+    }
+  ]
+}

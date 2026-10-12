@@ -1,0 +1,274 @@
+{
+  "section": "blog",
+  "slug": "farm-app-for-vegetable-growers",
+  "sortOrder": 320,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "Which Farm App for Vegetable Growers Gives the Best Value in the Philippines?",
+  "metaTitle": "Farm App for Vegetable Growers: Best Value in Pesos",
+  "metaDescription": "Which farm app for vegetable growers gives the most for each peso? See what gulay farmers need, what anee.io costs, and what it does not do yet.",
+  "focusKeyword": "farm app for vegetable growers",
+  "keywords": [
+    "farm app for vegetable growers",
+    "harvest records",
+    "farm inventory"
+  ],
+  "excerpt": "The best value farm app for vegetable growers in the Philippines is the one that keeps track of many crops, many pickings and many small costs for the fewest pesos. anee.io, a farm app built for Filipino farmers, starts free, and its Solo Farmer plan costs PHP 1,800 a year. That is about 1.4 percent of the PHP 132,480 that the Bureau of Plant Industry lists as the cost of one hectare of ampalaya. Value still depends on you using the records to decide what to plant, buy and sell next.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-app-for-vegetable-growers.webp",
+    "alt": "Vegetable beds of different crops on a small farm in Santa Maria, Bulacan, the kind of farm a farm app for vegetable growers must track",
+    "credit": "FBenjr123, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Gulay is not palay. A rice lot has one harvest, but a vine crop keeps giving. The BPI ampalaya guide says to harvest 2 to 3 times a week, for 2 to 3 months. Meanwhile the beds beside it hold other crops on other clocks. Every picking, spray and bag of fertilizer is a record, and it is easy to lose track by the second month."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A good farm app for vegetable growers handles several crops at once, each with its own planting day.",
+        "It records every picking with the kilos, the price and the buyer, then adds them up for you.",
+        "It tracks inputs and labor, because those are most of the cost on a vegetable farm.",
+        "On anee.io, Libre is free for one lot, and Solo Farmer at PHP 200 a month adds up to 5 lots per season, workers, inventory and all reports."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a farm app for vegetable growers keep track of?"
+    },
+    {
+      "type": "text",
+      "text": "The BPI ampalaya guide puts labor at PHP 34,500 and materials at PHP 80,700 for one hectare, before a 15 percent allowance for other costs. So a useful app must follow the money as closely as the crop."
+    },
+    {
+      "type": "table",
+      "caption": "What a gulay farm needs from an app, and how anee.io answers",
+      "rows": [
+        [
+          "Need",
+          "Why it matters",
+          "In anee.io"
+        ],
+        [
+          "Several crops at once",
+          "Ampalaya on one bed, pechay on the next",
+          "Each lot keeps its own crop, variety and day zero"
+        ],
+        [
+          "Many pickings",
+          "A vine crop is picked for weeks",
+          "Record each picking in Observations: kilos, price and buyer"
+        ],
+        [
+          "Dated sprays and side dressing",
+          "Late feeding or a missed spray costs fruit",
+          "Tasks dated from each lot's day zero, with the forecast beside them"
+        ],
+        [
+          "Labor by the day",
+          "Trellising, weeding and harvest all take paid days",
+          "Workers, daily rates and a labor report"
+        ],
+        [
+          "Inputs in the shed",
+          "Materials cost more than labor in the BPI table",
+          "Inventory that deducts stock when you tick a task done"
+        ],
+        [
+          "Buyers and prices",
+          "The DA posts prices every week, and they move",
+          "A Contact List of traders and buyers, with notes and tags"
+        ],
+        [
+          "Pest and disease help",
+          "The BPI guide wraps ampalaya fruits against fruit flies",
+          "Free Pest Finder and Disease Finder, and Anee can read a photo"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Records you will actually use"
+    },
+    {
+      "type": "text",
+      "text": "Record each picking as its own observation in the [harvest records](/features/harvest-records). Give it a date, the lot, the kilos, the price per kilo and the buyer. The Season so far card then adds up the harvest and its gross value, so you see the total without a calculator.\n\nNext, keep your shed honest. The [farm inventory](/features/farm-inventory-and-expenses) counts bags, liters and kilos. When you tick a fertilizer or spray task done, the stock goes down, and the cost flows into the expenses report."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Write the picking down before the buyer leaves",
+      "text": "Snap a photo of the scale and type the kilos and price while the trader is still at the farm. After ten pickings, nobody remembers which day the price dropped. Your own records will show which buyer paid best over the season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much does each plan cost, and which gives the best value?"
+    },
+    {
+      "type": "table",
+      "caption": "anee.io plans for vegetable growers (prices in pesos)",
+      "rows": [
+        [
+          "Plan",
+          "Price",
+          "Best for"
+        ],
+        [
+          "Libre",
+          "Free, with a few ads",
+          "One plot, one crop, learning the habit"
+        ],
+        [
+          "Libre plus Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "One plot, plus Anee's answers in Tagalog and her analyses"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "Several beds or lots, hired help and a shed of inputs"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "A farm with a manager and workers who log in"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For most commercial gulay growers, Solo Farmer gives the most for each peso. It adds up to 5 lots in a season and 3 active seasons, so a leafy crop and a vine crop can run side by side. It also adds workers, inventory, all the reports, video notes and no ads.\n\nStill, price is only half of value. An app pays its way only when you act on the records. For example, you might drop a crop that lost money, call back the buyer who paid best, or buy only what the shed lacks. See the full plan list on the [pricing page](/pricing)."
+    },
+    {
+      "type": "cta",
+      "title": "Track your gulay lots free",
+      "text": "Start on Libre with one lot, then add lots, workers and inventory when the farm grows.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does the app help during the season?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Plan before you plant",
+          "text": "Add each bed or field as a lot with its crop and planting date. Growth stages cover 85 Philippine crops, gulay included, so each lot shows what to do and what to watch."
+        },
+        {
+          "title": "Date the work",
+          "text": "The [cropping calendar](/features/cropping-calendar) puts sowing, transplanting, side dressing and sprays on their days. Drag a task when the rain moves your plan."
+        },
+        {
+          "title": "Catch problems early",
+          "text": "Use the free [pest and disease finders](/features/pest-and-disease-finders), which name active ingredients and their groups, never brands. Always follow the product label and its FPA registration."
+        },
+        {
+          "title": "Close the season",
+          "text": "On Solo Farmer and up, the expenses and profit reports set your sales against every peso spent. Then plan the next crop from real numbers."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What anee.io does not do for vegetable growers yet"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Anee needs internet and uses credits. The board works offline, but her answers wait for a signal.",
+        "Libre and Libre plus Anee allow one lot per season, so a farm with several crops needs Solo Farmer or Farm Owner.",
+        "It keeps records of sales, but it does not sell your produce or take payment for it.",
+        "It does not replace a soil test. For fertilizer amounts, start from a soil analysis or the BPI production guides."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions vegetable growers ask about farm apps"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can one app handle ampalaya, tomato and eggplant at the same time?",
+          "a": "Yes, if each crop is its own lot. In anee.io every lot keeps its own crop, variety and day zero. Libre allows one lot per season, Solo Farmer up to five, and Farm Owner has no limit."
+        },
+        {
+          "q": "Is the free plan enough for a vegetable farm?",
+          "a": "Libre fits one plot and one crop. It includes the activities board, notes, growth stages, observations and the labor report, with a few ads. Workers, inventory and the full reports start at Solo Farmer."
+        },
+        {
+          "q": "Can I record many harvests from one planting?",
+          "a": "Yes. Record each picking as its own observation with the date, kilos, price and buyer. The Season so far card adds up the harvest and its gross value for the whole season."
+        },
+        {
+          "q": "Does the app tell me what to spray?",
+          "a": "The free Pest Finder and Disease Finder name the active ingredients and their groups for the problem you see, never brand names. Anee can also look at a photo, which uses credits. Always follow the product label and its FPA registration."
+        },
+        {
+          "q": "How do I pay for a plan?",
+          "a": "Pay by GCash or bank transfer in the Philippines. Plans run monthly or yearly, and the yearly price costs less than twelve months."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides for gulay growers",
+      "items": [
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Vegetable land preparation",
+          "url": "/land-preparation/vegetable-land-preparation"
+        },
+        {
+          "label": "What crop to plant this season",
+          "url": "/blog/what-crop-to-plant-this-season"
+        },
+        {
+          "label": "Staggered planting schedule",
+          "url": "/blog/staggered-planting-schedule"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Bureau of Plant Industry: Ampalaya Production Guide (cost and return per hectare)",
+          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
+        },
+        {
+          "label": "Bureau of Plant Industry: Production guides for vegetables and other crops",
+          "url": "https://buplant.da.gov.ph/production-guide/"
+        },
+        {
+          "label": "Department of Agriculture: Price Monitoring",
+          "url": "https://www.da.gov.ph/price-monitoring/"
+        }
+      ]
+    }
+  ]
+}

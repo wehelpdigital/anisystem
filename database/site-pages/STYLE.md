@@ -172,7 +172,7 @@ terraces), /images/site/fields-aerial.jpg (aerial farm fields),
 /images/site/photos/palay-phone.jpg (farmer using a phone in the field),
 /images/site/lp/tractor.webp (tractor in a field), /images/site/lp/weather.webp,
 /images/site/app/board.png, /images/site/app/growth.png,
-/images/site/app/weather.png, /images/site/app/notes.png,
+/images/site/app/notes.png,
 /images/site/app/dashboard.png, /images/site/app/community.png (app screens),
 /images/site/lp/anee-chat-hand.webp (chatting with Anee on a phone),
 /images/site/lp/report-money.webp, /images/site/lp/report-top.webp (reports).

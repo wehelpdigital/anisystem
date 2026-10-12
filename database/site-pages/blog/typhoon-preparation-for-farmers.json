@@ -1,0 +1,318 @@
+{
+  "section": "blog",
+  "slug": "typhoon-preparation-for-farmers",
+  "sortOrder": 570,
+  "lang": "en",
+  "category": "Weather",
+  "title": "Typhoon Preparation for Farmers: How to Protect Your Crop Before Harvest",
+  "metaTitle": "Typhoon Preparation for Farmers: A Before Harvest Checklist",
+  "metaDescription": "Typhoon preparation for farmers, step by step: read PAGASA wind signals, harvest what is ready, clear drains, secure seed and animals, then save wet palay.",
+  "focusKeyword": "typhoon preparation for farmers",
+  "keywords": [
+    "typhoon preparation for farmers",
+    "PAGASA wind signal",
+    "harvest before typhoon",
+    "wet palay drying",
+    "bagyo",
+    "typhoon checklist farm"
+  ],
+  "excerpt": "Typhoon preparation for farmers starts the moment PAGASA raises a wind signal: harvest any crop that is mature, clear the drains, move seed, inputs, animals and machines to higher ground, and plan how to dry wet palay within a day. Signal 1 gives about 36 hours of warning, and even that level can damage rice at flowering and ripening. anee.io, a farm app built for Filipino farmers, shows typhoon tracks against your own farm and tells you each lot's age, so you can decide what to harvest first.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-typhoon-preparation-for-farmers.webp",
+    "alt": "A farmer in Laguna pushes a raft of wet rice across a field flooded by Typhoon Ketsana, why typhoon preparation for farmers matters",
+    "credit": "IRRI Images, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A bagyo near harvest is the worst timing a farmer can get. The crop is full, the money is spent, and one night of wind and flood can flatten it. You cannot stop the storm. But the hours before it hits decide how much you keep.\n\nThis guide to typhoon preparation for farmers follows the order of a real storm: the warning, the early harvest, the last day of work, and the first day after."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Each PAGASA wind signal has a lead time: 36 hours for Signal 1, 24 for Signal 2, 18 for Signal 3, and 12 for Signals 4 and 5.",
+        "PhilRice says palay is ready when 85 to 90 percent of the grains are golden yellow for hand harvest, or 90 to 95 percent for a combine.",
+        "The DA advises farmers to harvest matured crops, secure seed and inputs, and move animals and machines to higher ground.",
+        "After the storm, dry wet threshed palay within 24 hours, using a mechanical dryer if you can."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What do PAGASA wind signals mean for your crop?"
+    },
+    {
+      "type": "text",
+      "text": "PAGASA uses five Tropical Cyclone Wind Signals. A higher number means stronger wind and less time to act. The lead time counts from the first time a signal goes up over your area. So when PAGASA raises Signal 1, you may have about a day and a half."
+    },
+    {
+      "type": "table",
+      "caption": "PAGASA Tropical Cyclone Wind Signals and the possible damage to crops",
+      "rows": [
+        [
+          "Signal",
+          "Wind",
+          "Lead time",
+          "What PAGASA says about crops"
+        ],
+        [
+          "1",
+          "39 to 61 km/h",
+          "36 hours",
+          "Rice at flowering and ripening may suffer some damage"
+        ],
+        [
+          "2",
+          "62 to 88 km/h",
+          "24 hours",
+          "Considerable damage likely to rice at flowering and ripening"
+        ],
+        [
+          "3",
+          "89 to 117 km/h",
+          "18 hours",
+          "Rice at flowering and ripening may suffer heavy damage"
+        ],
+        [
+          "4",
+          "118 to 184 km/h",
+          "12 hours",
+          "Almost total damage to rice and other crops"
+        ],
+        [
+          "5",
+          "185 km/h or higher",
+          "12 hours",
+          "Few trees, plants and crops will survive"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Do not wait for a signal over your own town to start. Follow the track while the storm is still far out at sea. Our guide on how to [track typhoons near your farm](/blog/track-typhoons-near-my-farm) explains the cone and the forecast points."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When should you harvest early before a typhoon?"
+    },
+    {
+      "type": "text",
+      "text": "Harvest early only a crop that is truly mature. For palay, PhilRice PalayCheck sets the mark at 85 to 90 percent golden yellow grains for hand harvest, or 90 to 95 percent with a combine harvester. Grain cut too early is immature, and its milling recovery can fall as low as 53 percent.\n\nStill, a mature crop left standing in a storm can lodge, shatter or sprout. That is why the DA, ahead of bad weather, tells farmers to harvest matured crops and use postharvest facilities."
+    },
+    {
+      "type": "table",
+      "caption": "Harvest or hold, by crop stage, when a typhoon is coming",
+      "rows": [
+        [
+          "Your crop",
+          "What to do"
+        ],
+        [
+          "Palay at or near harvest maturity",
+          "Harvest now. Book the harvester and the dryer early, because everyone calls at once"
+        ],
+        [
+          "Palay at flowering or milk stage",
+          "It cannot be harvested yet. Clear the drains so water leaves the field fast"
+        ],
+        [
+          "Corn ready for harvest",
+          "Harvest and move it under a roof"
+        ],
+        [
+          "Vegetables and fruit at market size",
+          "Pick what you can sell and store it dry and shaded"
+        ],
+        [
+          "Young crops and seedbeds",
+          "Protect the seedbed and keep spare seed ready for replanting"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Count the days before you call the harvester",
+      "text": "Check each lot's days after transplanting or sowing against the maturity on the seed bag. A lot planted ten days after its neighbor may not be ready yet."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Typhoon preparation for farmers: the last day before landfall"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Watch the track twice a day",
+          "text": "Read the PAGASA bulletin in the morning and at night. Note when the storm should pass nearest your town, not only where it makes landfall."
+        },
+        {
+          "title": "Harvest and haul what is ready",
+          "text": "Bring harvested palay and corn under a roof the same day. Wet grain piled in the field heats up fast."
+        },
+        {
+          "title": "Clear drains and outlets",
+          "text": "The DA asks farmers to clear drainage, irrigation canals and rice paddies of anything that blocks water. A field that drains in hours suffers less than one that stays under."
+        },
+        {
+          "title": "Secure seed, fertilizer and chemicals",
+          "text": "Lift sacks off the floor and move them to the highest dry place. Keep seed for replanting apart and sealed."
+        },
+        {
+          "title": "Move animals and machines",
+          "text": "Bring livestock, tractors, pumps and tools to higher ground. Stock feed and water for a few days."
+        },
+        {
+          "title": "Take photos of every lot",
+          "text": "Photos before and after the storm help you report damage and remember what happened."
+        },
+        {
+          "title": "Tell your workers the plan",
+          "text": "Agree who checks the field after the storm, and when. No one goes out while the wind is still strong."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Stay out of the field during the storm",
+      "text": "No crop is worth a life. Stay away from flooded fields, rivers and fallen power lines until local officials say it is safe."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should you do after the storm?"
+    },
+    {
+      "type": "text",
+      "text": "Move fast, because wet rice spoils in a day or two. PhilRice gives these steps for palay hit by a typhoon."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Dry threshed rice that got wet within 24 hours, with a mechanical dryer if you can reach one. For seed, keep the drying heat at 43 degrees Celsius or lower.",
+        "For standing crops that stayed under water for 24 hours or less, harvest what you can save. Spread the stalks to drain, then thresh right away.",
+        "For crops under water for 1 to 2 days, check first if harvest is still possible. If not, leave them, because they turn dark and rot within 24 to 48 hours, more so under mud.",
+        "Use a combine only once the field is dry. If the field cannot drain, harvest by hand at once.",
+        "Mill slightly discolored rice instead of selling it at a low price."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Then report the damage to your municipal agriculture office. If your crop is insured with the Philippine Crop Insurance Corporation, file your notice of loss right away, since your policy sets the deadline. Good [farm records for loans and insurance](/blog/farm-records-for-loans-and-insurance) make that report much easier."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can anee.io help you prepare for a typhoon?"
+    },
+    {
+      "type": "text",
+      "text": "Typhoon preparation for farmers works best when the storm and the farm sit on one screen. anee.io puts them together, so you decide with facts instead of rumors."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**[Satellite Weather](/features/satellite-weather)**: every typhoon with its path, its cone, the time at every forecast point and how far it is from your field.",
+        "**Weather for your farm**: rain and heat for the coming days beside your plan, with a reminder when rain falls on a spray day.",
+        "**Growth stages and Count the days**: each lot's stage and its day count, so you know which lot to harvest first.",
+        "**Contact List**: the harvester operator, the dryer and your buyers in one list, ready when everyone is calling.",
+        "**Notes and photos**: Quick Capture saves a photo of each lot before and after, kept with the season.",
+        "**Harvest records**: write down the yield, moisture and losses, so next season's plan starts from the truth."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "anee.io also works without signal, which matters when towers go down. Your changes wait on the phone and sync once the signal returns. After the storm, Satellite Analysis can read Sentinel 1 radar, which sees through typhoon clouds, to show weak spots in the field. Satellite Analysis is done by Anee and uses credits."
+    },
+    {
+      "type": "cta",
+      "title": "See the next typhoon against your own farm",
+      "text": "Draw your lots, add your planting dates, and follow every storm track with each lot's stage beside it.",
+      "label": "Explore Satellite Weather",
+      "url": "/features/satellite-weather"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about typhoon preparation on the farm"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many hours before a typhoon should I harvest?",
+          "a": "Start as soon as PAGASA raises Signal 1 over your area, which comes about 36 hours before those winds. Better still, follow the track days ahead and book the harvester early. Higher signals give less time: 24 hours for Signal 2 and 18 hours for Signal 3."
+        },
+        {
+          "q": "Can I harvest palay early if a typhoon is coming?",
+          "a": "Only if it is close to maturity. PhilRice sets ripe palay at 85 to 90 percent golden grains for hand harvest. Grain cut much earlier is immature and mills poorly, so weigh that against the risk of losing the crop."
+        },
+        {
+          "q": "What should I do with palay that got wet?",
+          "a": "Dry threshed wet palay within 24 hours, best with a mechanical dryer. Crops that stayed under water for 24 hours or less can often be saved if you drain and thresh them right away."
+        },
+        {
+          "q": "Where do I report typhoon damage to my crop?",
+          "a": "Report it to your municipal agriculture office, which gathers damage reports for DA help. If you have crop insurance with PCIC, file your notice of loss right away and keep photos of the damage."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Track typhoons near your farm",
+          "url": "/blog/track-typhoons-near-my-farm"
+        },
+        {
+          "label": "Weather app for farmers",
+          "url": "/blog/weather-app-for-farmers"
+        },
+        {
+          "label": "El Nino and La Nina farming tips",
+          "url": "/blog/el-nino-la-nina-farming-tips"
+        },
+        {
+          "label": "Reduce crop losses",
+          "url": "/blog/reduce-crop-losses"
+        },
+        {
+          "label": "Farm records for loans and insurance",
+          "url": "/blog/farm-records-for-loans-and-insurance"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PAGASA: Tropical Cyclone Wind Signal",
+          "url": "https://www.pagasa.dost.gov.ph/learning-tools/tropical-cyclone-wind-signal"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 Revised Edition (Key Check 8, harvest management)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Give palay a second chance",
+          "url": "https://www.philrice.gov.ph/give-palay-a-second-chance/"
+        },
+        {
+          "label": "PhilRice: Managing crops after typhoon",
+          "url": "https://www.philrice.gov.ph/managing-crops-typhoon/"
+        },
+        {
+          "label": "DA: Agri department readies assistance to Habagat affected farmers",
+          "url": "https://www.da.gov.ph/agri-dept-readies-assistance-to-habagat-affected-farmers/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,280 @@
+{
+  "section": "blog",
+  "slug": "farm-expense-management-software",
+  "sortOrder": 360,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "Which Farm Expense Management Software Gives Filipino Farms the Best Value?",
+  "metaTitle": "Farm Expense Management Software for Filipino Farms",
+  "metaDescription": "Compare farm expense management software by value: what it must track, what it costs per crop, and how anee.io counts materials, labor and services.",
+  "focusKeyword": "farm expense management software",
+  "keywords": [
+    "farm expense management software",
+    "farm labor management software",
+    "farm expense tracker",
+    "farm accounting app",
+    "cost of production",
+    "profit per season"
+  ],
+  "excerpt": "The best value farm expense management software records each cost where it happens, on the task in the field, and turns it into an expenses report and a real profit figure without retyping. Judge the price per crop and per hectare, not per month. anee.io, a farm app built for Filipino farmers, tracks materials, labor and services from PHP 200 a month, and you can try its free Libre plan first.",
+  "heroImage": {
+    "src": "/images/site/lp/report-money.webp",
+    "alt": "Season report in anee.io farm expense management software showing money in, money out and where the money went",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Many farm owners shop for software by the monthly price. But the real question is what you lose when costs go unrecorded: a bag of urea nobody wrote down, a pakyaw crew paid twice, a harvest that looked profitable until rent and family labor came in. Good farm expense management software closes those gaps, so it pays for itself in a season or it is not worth having.\n\nThis guide sets out what to look for, where the money on a Filipino farm really goes, and how the anee.io plans compare per crop. It also says plainly what anee.io does not do."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Value means cost per crop.** Solo Farmer at PHP 1,800 a year comes to about PHP 900 a crop if you plant twice a year.",
+        "**Labor is the big line.** In 2024 it took close to PHP 30,000 of the PHP 59,695 it cost to grow a hectare of palay (PSA data).",
+        "**Record costs at the source.** The best tools log materials, wages and services on the task, then build the reports for you.",
+        "**Count what you do not pay in cash.** Your own labor, your land and palay given as shares are costs too.",
+        "**Check the limits.** Offline use, local payment, ads on free plans and AI credits all change the real value."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What makes farm expense management software good value?"
+    },
+    {
+      "type": "text",
+      "text": "A tool earns its price when it saves you from typing twice and from forgetting. So look past the feature list and ask how each cost gets in, and what comes out at the end. Here are the questions to ask, with how anee.io answers them."
+    },
+    {
+      "type": "table",
+      "caption": "Questions to ask any farm expense management software",
+      "rows": [
+        [
+          "Ask this",
+          "Why it matters",
+          "What anee.io does"
+        ],
+        [
+          "Does it log costs on the task?",
+          "A cost tied to a task and lot tells you what it was for",
+          "Materials, workers and services sit on each task of the season board"
+        ],
+        [
+          "Does stock deduct itself?",
+          "Fertilizer and sprays are cash sitting in the shed",
+          "Tick a fertilizer or spray task done and the shed takes it out of stock"
+        ],
+        [
+          "Does labor count itself?",
+          "Labor is the biggest cost on most rice farms",
+          "Attendance on each task becomes the labor cost at each worker's rate"
+        ],
+        [
+          "Can I add extra expenses?",
+          "Fuel, food and repairs leak money",
+          "Extra expenses go on the day, next to tasks"
+        ],
+        [
+          "Does it build the reports?",
+          "Reports you must type are reports you skip",
+          "Expenses, labor and profit reports come from the records"
+        ],
+        [
+          "Does it work offline?",
+          "Costs happen in the field",
+          "Offline mode on every plan, with sync later"
+        ],
+        [
+          "Can I pay locally?",
+          "Not every farmer has a credit card",
+          "GCash or bank transfer, priced in pesos"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where does the money go on a Filipino farm?"
+    },
+    {
+      "type": "text",
+      "text": "Many expense apps focus on inputs, but inputs are the smaller share on a rice farm. PhilRice found that in 2020, fertilizer took about 8 percent of total rice production cost. Seeds and pesticides took only 3 to 4 percent each.\n\nLabor and land weigh far more. The 2024 PSA figures reported by Philstar put labor close to PHP 30,000 per hectare and seed at PHP 4,316, out of PHP 59,695. PhilRice and IRRI also list land rent among the biggest parts of the cost of producing rice. So any farm labor management software you choose must handle crews, contracts and rent as well as fertilizer."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Count the costs you never paid in cash",
+      "text": "PhilRice and IRRI value the farmer's own labor, family and exchange labor at the going wage, and value owned land at the local rent. If you leave these out, a season can look profitable when it only paid you a small wage for your own work. Write them in, even as an estimate."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do the anee.io plans compare per crop?"
+    },
+    {
+      "type": "table",
+      "caption": "anee.io plans in Philippine pesos. Per crop assumes two crops a year on the yearly price.",
+      "rows": [
+        [
+          "Plan",
+          "Price",
+          "About per crop",
+          "What it adds for expenses"
+        ],
+        [
+          "Libre",
+          "Free",
+          "Free",
+          "Activities, notes, growth stages, observations and the labor report, for 1 active season, with a few ads"
+        ],
+        [
+          "Libre plus Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "PHP 350",
+          "Anee's chat and analyses, with a few ads"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "PHP 900",
+          "Workers, inventory, all reports, 3 active seasons, no ads"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "PHP 3,250",
+          "Everything unlimited, worker logins, the Collab Room, no ads"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For most rice farms that hire a crew, Solo Farmer is the plan that does the expense work. If you plant one hectare twice a year, PHP 900 a crop is about 1.5 percent of the PHP 59,695 average cost per hectare in 2024. Farm Owner fits a manager who wants a foreman or partner to enter costs from the field. Plans and limits are on the [pricing page](/pricing)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I run farm expenses in anee.io?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Stock the shed",
+          "text": "Enter your fertilizer, seed and chemicals in the [farm inventory](/features/farm-inventory-and-expenses), each in its own unit and price."
+        },
+        {
+          "title": "Build the season",
+          "text": "Add the tasks for each lot, with the materials and workers they need. Hired services and extra expenses go on their days too."
+        },
+        {
+          "title": "Tick work done",
+          "text": "When a task is done, its stock leaves the shed and its costs flow into your expenses. Undo the tick and the stock goes back."
+        },
+        {
+          "title": "Record the harvest",
+          "text": "Note yield, price and buyer in Observations after harvest, so sales sit next to costs."
+        },
+        {
+          "title": "Read the reports",
+          "text": "Open the [expenses report](/features/expenses-report) and the [profit report](/features/profit-report). Then compare two seasons side by side."
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "See every peso your season costs",
+      "text": "Start free on Libre, then move to Solo Farmer when you want workers, inventory and all reports.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What are the other options, and what are anee.io's limits?"
+    },
+    {
+      "type": "text",
+      "text": "A notebook and a calculator still work for a small farm. A spreadsheet adds up for you, but few farmers fill it in from the field. PhilRice's PalayCheck App, made for Android, tracks rice activities, expenses and harvest data and gives a season summary of production costs and estimated net income. General bookkeeping apps can handle the money side too, but they do not know your lots, stages or crew.\n\nNow the limits of anee.io. It is a farm records app, not a bookkeeping system for tax filing. Libre and Libre plus Anee show a few ads, and Libre keeps one active season. Anee, the smart farm technician, needs internet and uses credits for her chats and analyses. For the cost side in detail, see our guide to the [cost of producing rice per hectare](/blog/cost-of-producing-rice-per-hectare)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm expense management software"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there free farm expense management software?",
+          "a": "Yes, a spreadsheet costs nothing, and anee.io has a free Libre plan with one active season. Workers, inventory and all reports start with Solo Farmer at PHP 200 a month or PHP 1,800 a year."
+        },
+        {
+          "q": "Can it handle more than one farm or season?",
+          "a": "Solo Farmer runs 3 active seasons with up to 5 lots each. Farm Owner removes those limits, so it suits several farms or many lots."
+        },
+        {
+          "q": "Can I see the profit of each season?",
+          "a": "Yes. The Profit Report sets your harvest sales from Observations against everything the season cost. Compare Reports puts two seasons side by side, and Anee can explain what changed."
+        },
+        {
+          "q": "Can my workers enter expenses?",
+          "a": "On Farm Owner, you can give a worker or partner a login and choose none, view or edit for each module. A diary shows every change and who made it."
+        },
+        {
+          "q": "How do I pay for anee.io?",
+          "a": "You pay in pesos by GCash or bank transfer in the Philippines. Monthly and yearly options are on the pricing page."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "The best farm labor tracking app",
+          "url": "/blog/farm-labor-tracking-app"
+        },
+        {
+          "label": "How to know if your farm is really profitable",
+          "url": "/blog/farm-profitability"
+        },
+        {
+          "label": "Farm cash flow, week by week",
+          "url": "/blog/farm-cash-flow"
+        },
+        {
+          "label": "Farm inventory tracking",
+          "url": "/blog/farm-inventory-tracking"
+        },
+        {
+          "label": "Expenses report in anee.io",
+          "url": "/features/expenses-report"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
+          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
+        },
+        {
+          "label": "PhilRice: Rice Science for Decision Makers Vol. 11, fertilizer and production cost",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf"
+        },
+        {
+          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (costs of rice production)",
+          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
+        },
+        {
+          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App)",
+          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
+        }
+      ]
+    }
+  ]
+}

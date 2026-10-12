@@ -1,0 +1,263 @@
+{
+  "section": "blog",
+  "slug": "weather-app-for-farmers",
+  "sortOrder": 790,
+  "lang": "en",
+  "category": "Weather",
+  "title": "What Is the Best Weather App for Farmers in the Philippines?",
+  "metaTitle": "Weather App for Farmers: What to Use in the Philippines",
+  "metaDescription": "The best weather app for farmers in the Philippines ties the forecast to your field and your plan. Compare PAGASA, phone apps and a farm app like anee.io.",
+  "focusKeyword": "weather app for farmers",
+  "keywords": [
+    "weather app for farmers",
+    "farm weather forecast",
+    "PAGASA farm weather forecast",
+    "rain forecast",
+    "Satellite Weather",
+    "wind signals"
+  ],
+  "excerpt": "The best weather app for farmers in the Philippines gives the forecast for your own farm, hour by hour, and puts it beside your work so you can move a spray or a harvest in time. For warnings and wind signals, PAGASA stays the official source, and its daily farm weather forecast is free. The farm app anee.io, built for Filipino farmers, adds the forecast to each lot's plan, reminds you when rain falls on a spray day and tracks typhoons on a satellite map.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-weather-app-for-farmers.webp",
+    "alt": "Heavy rain clouds roll over pineapple fields in Bukidnon and hide Mount Kitanglad, the kind of afternoon downpour a weather app for farmers should warn about",
+    "credit": "Boykong, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A city forecast says rain in Nueva Ecija. What you need to know is whether rain falls on your lot on Thursday afternoon, the day you planned to spray. That gap is why the question of the best weather app matters to farmers more than to anyone else.\n\nThere are three kinds of tools. PAGASA gives the official forecasts, warnings and a daily farm weather forecast. General phone apps give a city forecast by the hour. Farm apps put the forecast beside the work you planned. Most farmers do best with PAGASA plus one app that knows their field."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "PAGASA is the official source for warnings and wind signals. No app replaces it.",
+        "Pick an app that forecasts your farm's location, hour by hour, not just the nearest city.",
+        "The forecast should sit beside your plan and your crop's stage, not on a separate screen.",
+        "For typhoons, look for tracks, cones and the distance from the storm to your farm.",
+        "Check what the free plan shows, because many free plans show fewer days."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a weather app for farmers do?"
+    },
+    {
+      "type": "text",
+      "text": "Hold any app against these criteria. The table compares the free PAGASA farm weather forecast with anee.io, honestly, row by row."
+    },
+    {
+      "type": "table",
+      "caption": "Criteria for a weather app for farmers",
+      "rows": [
+        [
+          "What it should do",
+          "PAGASA farm weather forecast",
+          "anee.io"
+        ],
+        [
+          "Forecast your location",
+          "By region, with lowland and upland columns",
+          "By the town of each lot, so a farm in three towns gets three forecasts"
+        ],
+        [
+          "Show the hours",
+          "One outlook valid for 24 hours",
+          "Hour by hour on Solo Farmer and Farm Owner, with the hour rain will likely start"
+        ],
+        [
+          "Say what it means for the crop",
+          "Farming advisories, soil moisture and leaf wetness",
+          "Forecast beside growth stages, and a reminder when rain falls on a spray day"
+        ],
+        [
+          "Give official warnings",
+          "Yes, it is the official source",
+          "No. It points you to PAGASA for signals and evacuation."
+        ],
+        [
+          "Track typhoons",
+          "Tropical cyclone bulletins",
+          "Satellite Weather with storm tracks, cones and the distance to your field. It uses credits."
+        ],
+        [
+          "Cost",
+          "Free on the PAGASA website",
+          "Today and tomorrow free on Libre, the full forecast on Solo Farmer at PHP 200 a month"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is PAGASA enough for farm weather?"
+    },
+    {
+      "type": "text",
+      "text": "For many decisions, yes. The PAGASA Farm Weather Forecast comes out at 7:00 AM and stays valid for 24 hours. It gives each region its sky, wind, temperature, humidity and leaf wetness, for lowland and upland areas. It also maps soil moisture, gives farming advisories and shows the El Nino or La Nina status. All of it is free on the PAGASA website.\n\nThe limit is scale. A regional line cannot say which hour rain reaches your barangay, and it does not know you planned to spray Lot 2 on Thursday. That is where an app tied to your field and your plan helps. During storm season, PAGASA counts an average of 20 tropical cyclones in its area of responsibility each year, with 8 or 9 of them crossing the country. So also follow its bulletins, whatever app you use."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where does a farm app's forecast come from?"
+    },
+    {
+      "type": "text",
+      "text": "Many weather apps do not run their own models. They pass on forecasts from the big models of national weather services. The forecast in anee.io comes from Open Meteo, which says it draws on models from over 15 national weather services. So ask any app two questions: where does its forecast come from, and how fresh is the reading on the screen?"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you use a weather app on the farm?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Set the location exactly",
+          "text": "Give each lot its town or pin it on a map, so the forecast follows the field and not your house."
+        },
+        {
+          "title": "Read the week on Sunday",
+          "text": "Mark the days with a high chance of rain and the hours when it will likely fall."
+        },
+        {
+          "title": "Move sprays and drying",
+          "text": "Shift sprays and palay drying to the dry windows. Our guide on [rain before spraying](/blog/rain-before-spraying) shows how many dry hours a spray needs."
+        },
+        {
+          "title": "Time the fertilizer",
+          "text": "Avoid top dressing right before the heaviest rain, so the nutrients stay in your paddy."
+        },
+        {
+          "title": "Check again each morning",
+          "text": "Forecasts change as the models update, so read the day's hours before the crew goes out."
+        },
+        {
+          "title": "Watch the storms",
+          "text": "In typhoon season, check the storm tracks and the PAGASA bulletins, and act on the storm plan you agreed with your crew."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Spray on a dry canopy",
+      "text": "Ohio State University found that a fungicide became rainfast faster on dry heads than on dewy ones. So wait for the dew to lift before you spray, and check the leaf wetness line in the PAGASA farm forecast for your region."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io handle weather for farmers?"
+    },
+    {
+      "type": "text",
+      "text": "The [farm weather forecast](/features/farm-weather-forecast) in anee.io follows your lots. Each town where you have a lot gets the rain and heat for the coming days, beside the growth stage of each lot. On the Activities board, a spray task that lands on a rainy day gets a reminder, so you can drag it to a drier day.\n\nFor storms, [Satellite Weather](/features/satellite-weather) plays back the clouds and rain radar of the last hours over your farm and runs the forecast forward. It shows every typhoon with its path, its cone, the time at each forecast point and how far it is from your field. Anee, the smart farm technician, can then read the storm against a lot's crop and stage."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/lp/weather.webp",
+      "alt": "The anee.io weather screen with a town's forecast by day and by hour and what it means for field work",
+      "caption": "The weather screen in anee.io: the days ahead, today's hours and a line on what the sky means for the work."
+    },
+    {
+      "type": "cta",
+      "title": "Put the forecast beside your plan",
+      "text": "Add your lots and their towns, and anee.io shows each lot's weather next to its tasks and growth stage.",
+      "label": "See the farm forecast",
+      "url": "/features/farm-weather-forecast"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does it cost, and what are the limits?"
+    },
+    {
+      "type": "text",
+      "text": "On the free Libre plan, anee.io shows the weather for today and tomorrow, beside one active season, and it shows a few ads. Solo Farmer, at PHP 200 a month or PHP 1800 a year, opens the full weather. Satellite Weather and Anee's readings run on credits. See the [pricing page](/pricing) for each plan.\n\nNow the limits. anee.io helps you plan farm work, but it does not issue warnings. For wind signals, storm surge and evacuation, follow PAGASA and your municipal disaster office. A forecast is a chance, not a promise, and it needs a signal to refresh."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about weather apps for farmers"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a free weather app for farmers in the Philippines?",
+          "a": "Yes. The PAGASA Farm Weather Forecast is free on its website and comes out each morning. The free Libre plan of anee.io also shows today's and tomorrow's weather beside your farm plan."
+        },
+        {
+          "q": "Which weather app is the most accurate?",
+          "a": "No app is right every time, because every forecast is a chance. Pick one that uses models from national weather services, shows how fresh its reading is and forecasts your exact location. For warnings, trust PAGASA."
+        },
+        {
+          "q": "Can a weather app warn me about typhoons?",
+          "a": "An app can show a storm's track and how far it is from your farm, which helps you prepare early. Official wind signals come only from PAGASA, so follow its bulletins too. Our guide on how to [track typhoons](/blog/track-typhoons-near-my-farm) explains both."
+        },
+        {
+          "q": "Does anee.io replace PAGASA?",
+          "a": "No. anee.io is a tool for planning farm work around the weather. For signals, storm surge and evacuation, follow PAGASA and your local disaster office."
+        },
+        {
+          "q": "Why does the forecast change every day?",
+          "a": "Weather models update several times a day as new readings come in. So the forecast for Thursday can shift between Monday and Wednesday. Read it again each morning before the crew goes out."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Rain before spraying",
+          "url": "/blog/rain-before-spraying"
+        },
+        {
+          "label": "Track typhoons near your farm",
+          "url": "/blog/track-typhoons-near-my-farm"
+        },
+        {
+          "label": "El Nino farming tips",
+          "url": "/blog/el-nino-la-nina-farming-tips"
+        },
+        {
+          "label": "Satellite Weather",
+          "url": "/features/satellite-weather"
+        },
+        {
+          "label": "Best time to plant rice",
+          "url": "/blog/best-time-to-plant-rice-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PAGASA: Farm Weather Forecast",
+          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
+        },
+        {
+          "label": "PAGASA: Tropical Cyclone Information",
+          "url": "https://www.pagasa.dost.gov.ph/climate/tropical-cyclone-information"
+        },
+        {
+          "label": "Open Meteo: free weather API and its forecast models",
+          "url": "https://open-meteo.com/"
+        },
+        {
+          "label": "Ohio State University Extension: Rainfastness of fungicides in wheat",
+          "url": "https://agcrops.osu.edu/newsletter/corn-newsletter/2016-11/rainfastness-fungicides-wheat"
+        }
+      ]
+    }
+  ]
+}

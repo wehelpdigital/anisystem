@@ -1,0 +1,266 @@
+{
+  "section": "blog",
+  "slug": "what-to-do-on-my-farm-today",
+  "sortOrder": 860,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "Is There an App That Tells Me What to Do on My Farm Today?",
+  "metaTitle": "What to Do on My Farm Today: An App That Plans Each Day",
+  "metaDescription": "Asking what to do on my farm today? anee.io shows each lot's tasks, stage and weather every morning and emails the plan at 6 AM. See how it works.",
+  "focusKeyword": "what to do on my farm today",
+  "keywords": [
+    "what to do on my farm today",
+    "daily farm plan app",
+    "farm task app",
+    "farm to do list",
+    "cropping calendar app",
+    "Anee Auto"
+  ],
+  "excerpt": "Yes. If you keep asking what to do on my farm today, anee.io, a farm app built for Filipino farmers, answers it every morning. Each lot shows its tasks, growth stage, watch list and weather, dated from its own planting day, and the plan reaches your team by email at 6 AM. If you would rather not plan at all, let Anee, the smart farm technician, run Anee Auto on credits: she writes the whole season and moves tasks when rain comes.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-what-to-do-on-my-farm-today.webp",
+    "alt": "A farmer in Imugan, Nueva Vizcaya, plants tomato seedlings on a hillside plot, one clear answer to what to do on my farm today",
+    "credit": "USAID Biodiversity and Forestry, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Good timing is most of farming. PhilRice's PalayCheck system sets key checks for each growth stage of rice and tracks the work and results stage by stage. PhilRice also advises a walk through the field early every morning. PAGASA's farm weather advisories add the sky's part: schedule fertilizer and pesticide work for suitable weather, and watch your crops for pests, disease and moisture stress.\n\nThat is a lot to keep in your head for one lot, and harder for five lots planted on different days. A daily plan app does the counting, so you can do the work."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "anee.io opens each day with the tasks on each lot, dated from that lot's own day zero.",
+        "Each lot shows its growth stage, what to do now and what to watch for, from 85 Philippine crops.",
+        "The weather sits beside the plan, with a reminder when rain falls on a spray day.",
+        "At 6 AM the day's plan goes out by email, so the whole team starts on the same page.",
+        "Anee Auto can write and keep the whole season for you, using credits."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should an app tell you each morning?"
+    },
+    {
+      "type": "text",
+      "text": "A useful morning screen answers six questions in a minute. Here is where anee.io answers each one."
+    },
+    {
+      "type": "table",
+      "caption": "What a farmer needs each morning, and where anee.io shows it",
+      "rows": [
+        [
+          "What you need to know",
+          "Where it is in anee.io",
+          "What you see"
+        ],
+        [
+          "What work is due, and on which lot",
+          "Today on the board",
+          "Each task on its lot, with workers and materials. Tick it done, add a photo or a voice note"
+        ],
+        [
+          "How old each crop is and what that means",
+          "Growth stages",
+          "The stage, a do list and a watch list for each lot"
+        ],
+        [
+          "Whether the weather allows it",
+          "Weather for your farm",
+          "Rain and heat for the coming days beside the plan, with a reminder when rain falls on a spray day"
+        ],
+        [
+          "Who does what",
+          "Morning plan email",
+          "The day's plan by email at 6 AM: what to do and on which lot"
+        ],
+        [
+          "How much cash to prepare",
+          "Cash to prepare",
+          "Wages, materials, stock to buy and extra expenses for the day, line by line"
+        ],
+        [
+          "One thing to keep in mind",
+          "Anee's tip of the day",
+          "One tip for the stage your crop is in, on the dashboard, using credits"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io answers what to do on my farm today"
+    },
+    {
+      "type": "text",
+      "text": "Each lot keeps its own day zero, the day it was sown or transplanted. So a task written as day 21 after transplanting lands on the right date for each lot, even when you planted the lots a week apart. When the rain comes, drag a task to another day, and the board keeps the record for your reports.\n\nStart the season from a protocol you wrote in the [Protocol Builder](/features/protocol-builder), from Anee's Crop Protocol Analysis, or from scratch. The [daily farm tasks](/features/daily-farm-tasks) board then shows each day, and the [morning plan email](/features/morning-plan-email) sends it to your team. Offline mode keeps the board working where there is no signal, and your changes sync later."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you set it up?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Sign up free",
+          "text": "Create an account. The free Libre plan holds one active season, enough to try a full crop."
+        },
+        {
+          "title": "Add your lots",
+          "text": "Give each field its crop, variety, size, place and day zero. Trace it on the map if you like."
+        },
+        {
+          "title": "Load the season's tasks",
+          "text": "Pick a protocol, ask Anee for a Crop Protocol Analysis, or write tasks yourself, counted in days after sowing or transplanting."
+        },
+        {
+          "title": "Add your team",
+          "text": "On Solo Farmer, keep a roster of workers and put them on tasks. Farm Owner adds a login for each of them."
+        },
+        {
+          "title": "Open Today each morning",
+          "text": "Tick what is done, mark who worked, and add a photo or a voice note. Move what the weather will not allow."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Or let Anee Auto plan it for you"
+    },
+    {
+      "type": "text",
+      "text": "Rather not plan at all? Answer a few questions once: your lots, the crop and variety, your soil, your water, your fertilizer and your workers. Anee looks up your variety, reads the forecast and the season ahead, and writes every task from land preparation to harvest. Then she keeps it on track every day.\n\nToday's work comes every morning, by email too, for you and each worker. If a task cannot happen today, she moves it to the best day near it. Send her a photo, a video or a voice note from the field, and she adjusts the plan. Anee Auto uses credits."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "The plan is only as good as day zero",
+      "text": "Enter the real sowing or transplanting date of each lot. If a lot runs ahead of or behind its calendar, [Realign by Anee](/features/realign-by-anee) reads its records, its weather and your notes, then moves that lot's stage count to match. It uses credits."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does it cost?"
+    },
+    {
+      "type": "table",
+      "caption": "anee.io plans for a daily farm plan, in Philippine pesos",
+      "rows": [
+        [
+          "Plan",
+          "Price",
+          "For your daily plan"
+        ],
+        [
+          "Libre",
+          "Free",
+          "One active season, the board, growth stages, notes, and weather for today and tomorrow, with a few ads"
+        ],
+        [
+          "Libre plus Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "Everything in Libre, plus Anee's chat, her analyses and Realign by Anee, with a few ads"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "3 active seasons of up to 5 lots each, full weather, workers and inventory, 30 AI credits each renewal, no ads"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "Everything in Solo Farmer without limits, worker logins, the Collab Room and 100 AI credits each renewal"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Anee and Anee Auto need internet and use credits. Also, the app does not see your field by itself. The plan stays right only if you tick tasks and note what happens. The [pricing page](/pricing) has the current details, and you pay by GCash or bank transfer."
+    },
+    {
+      "type": "cta",
+      "title": "Get tomorrow's plan tonight",
+      "text": "Sign up free, add your lots and their planting dates, and open anee.io tomorrow morning to a plan for every lot.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about a daily farm plan app"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Does the app know what to do with my crop?",
+          "a": "anee.io knows the growth stages of 85 Philippine crops, from palay and mais to vegetables and fruit trees. For each lot it shows the stage, what to do now and what to watch for. The tasks come from your protocol, from Anee's analysis or from Anee Auto."
+        },
+        {
+          "q": "Can my workers get the plan without the app?",
+          "a": "Yes. The morning plan email goes out at 6 AM with what to do and on which lot. You can also share the plan, one day or one task as a public link that anyone can open with no login."
+        },
+        {
+          "q": "What happens when it rains on a spray day?",
+          "a": "The weather sits beside the plan, and anee.io reminds you when rain falls on a spray day. Drag the task to a better day, or let Anee Auto move it for you."
+        },
+        {
+          "q": "Does it work without signal?",
+          "a": "Yes. Offline mode is always on, so you can tick tasks and write notes in the field. Your changes sync when the signal comes back, but Anee needs internet."
+        },
+        {
+          "q": "Is it only for rice?",
+          "a": "No. It covers 85 Philippine crops, and each lot can grow a different crop with its own day zero."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "How to make a cropping calendar",
+          "url": "/blog/how-to-make-a-cropping-calendar"
+        },
+        {
+          "label": "Share the farm plan with workers",
+          "url": "/blog/share-the-farm-plan-with-workers"
+        },
+        {
+          "label": "A farm app without internet",
+          "url": "/blog/farm-app-without-internet"
+        },
+        {
+          "label": "Rain before spraying",
+          "url": "/blog/rain-before-spraying"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck System",
+          "url": "https://www.pinoyrice.com/palaycheck/"
+        },
+        {
+          "label": "PAGASA: Farm weather forecast and advisories",
+          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
+        },
+        {
+          "label": "PhilRice (2012): Young rice plants can take care of themselves",
+          "url": "https://www.philrice.gov.ph/young-rice-plants-can-take-care-of-themselves/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,328 @@
+{
+  "section": "blog",
+  "slug": "crop-disease-diagnosis-app",
+  "sortOrder": 330,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "What Is the Best Crop Disease Diagnosis App for Rice and Corn in the Philippines?",
+  "metaTitle": "Crop Disease Diagnosis App for Rice and Corn: How to Choose",
+  "metaDescription": "The best crop disease diagnosis app reads your photo with your crop's age and weather. See what to look for, the free tools, and how anee.io compares.",
+  "focusKeyword": "crop disease diagnosis app",
+  "keywords": [
+    "crop disease diagnosis app",
+    "rice disease app",
+    "corn disease app",
+    "plant disease app Philippines",
+    "Rice Doctor",
+    "Disease Finder"
+  ],
+  "excerpt": "The best crop disease diagnosis app for a Filipino rice or corn farmer reads your photo together with the crop's age, variety and weather. It tells you how to confirm the problem and names active ingredients, not brands. That is how anee.io, a farm app built for Filipino farmers, works: Anee, its smart farm technician, reads your photo with your season, and a free Pest Finder and Disease Finder match the signs. Still, confirm in the field before you spray.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-crop-disease-diagnosis-app.webp",
+    "alt": "Corn leaves with the long tan lesions of northern corn leaf blight, the kind of problem a crop disease diagnosis app is asked to name",
+    "credit": "Chroanch, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A photo of a sick leaf looks like a simple question, but it is not. A 2016 study in Frontiers in Plant Science tested a deep learning model on leaf photos. On test images taken in controlled conditions, it named the crop and the disease correctly 99.35 percent of the time. On photos from other sources, its accuracy fell to about 31 percent. The authors also noted that it worked on single leaves, facing up, on a plain background. A palay field never looks like that.\n\nRice also has look alikes that fool the eye and the camera. IRRI warns that the yellowing and stunting of tungro can pass for nitrogen or zinc deficiency or water stress. They can also pass for planthopper or stem borer damage. So the best app asks the right questions, then tells you how to check its answer."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Pick an app that reads the photo with your crop's age, variety, place and weather, not the photo alone.",
+        "It should tell you how to confirm the problem before it tells you what to buy.",
+        "It should name active ingredients, not brands, and say plainly when no spray helps, as with a virus.",
+        "In anee.io the finders are free on every plan, and Anee reads photos on plans with Anee, from PHP 70 a month."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a crop disease diagnosis app do for palay and mais?"
+    },
+    {
+      "type": "text",
+      "text": "Palay is rice still in its husk, and mais is corn. Each has its own list of Philippine diseases, so start with coverage. Then look at how the app reaches its answer. Use the table below as a checklist when you compare apps."
+    },
+    {
+      "type": "table",
+      "caption": "What a Filipino rice or corn farmer should look for in a diagnosis app",
+      "rows": [
+        [
+          "What to look for",
+          "Why it matters",
+          "How to test it"
+        ],
+        [
+          "Knows Philippine rice and corn problems",
+          "Tungro, blast, bacterial leaf blight, downy mildew and stem borers are local headaches",
+          "Ask it about a problem you already know well"
+        ],
+        [
+          "Reads the photo with your crop's age and weather",
+          "The same yellow leaf can mean different things at 20 and at 60 days after transplanting",
+          "See if it asks for the variety, the day count and the place"
+        ],
+        [
+          "Tells you how to confirm",
+          "Look alikes are common in rice",
+          "It should give a field check, not only a name"
+        ],
+        [
+          "Names active ingredients and their groups",
+          "The same ingredient sells under many brand names",
+          "Look for the ingredient, its group and a reminder to follow the label"
+        ],
+        [
+          "Says when no spray helps",
+          "IRRI says a rice plant infected by tungro cannot be cured",
+          "Ask it about a virus and read what it says"
+        ],
+        [
+          "Prices in pesos",
+          "A dollar subscription is hard to pay from the farm",
+          "Check that you can pay by GCash or bank transfer"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Field checks a good app should mention"
+    },
+    {
+      "type": "text",
+      "text": "IRRI gives simple tests that any farmer can do. For kresek, the seedling stage of bacterial leaf blight, squeeze the lower end of a sick seedling. Yellowish bacterial ooze comes out of the cut end. Unlike plants hit by stem borer, plants with kresek do not pull out easily. On older leaves, cut a young lesion, put it in a clear glass of water and hold it against the light. A cloudy stream from the cut end points to bacteria.\n\nFor tungro, IRRI notes that lab tests such as ELISA can confirm it where available. No photo can do that. That is why an honest app sends you to your municipal agriculturist when it suspects a virus."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io meet these points?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io runs the whole cropping season, and its diagnosis tools sit inside that season. That is the main difference from a photo only app. When you ask, the app already knows the lot, the variety, the day count and the weather."
+    },
+    {
+      "type": "table",
+      "caption": "How anee.io handles diagnosis, and where it stops",
+      "rows": [
+        [
+          "Need",
+          "What anee.io gives you",
+          "Plan"
+        ],
+        [
+          "Photo diagnosis with context",
+          "Chat with Anee: send a photo, and she answers with your lot, its stage, the weather and what you already applied in mind",
+          "Libre plus Anee, Solo Farmer or Farm Owner, using credits"
+        ],
+        [
+          "Match the signs yourself",
+          "Disease Finder and Pest Finder: pick your crop and what you see, then get the likely problems, how to be sure, and the active ingredients with their groups, never brands",
+          "Free on every plan"
+        ],
+        [
+          "Read before you spray",
+          "Crop problem guides to the pests, diseases and weeds of Philippine crops",
+          "Free"
+        ],
+        [
+          "Keep a record",
+          "Quick Capture saves a photo as a note on the season, with your own tags",
+          "Every plan"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Its limits, said plainly"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Anee needs internet and uses credits. The rest of the app keeps working offline and syncs later.",
+        "The free Libre plan has the finders and guides but not the Anee chat. It also shows a few ads and holds one active season.",
+        "A photo reading is a first opinion. Anee cannot run a lab test for a virus or smell a rotting stem.",
+        "For a spreading outbreak, call your municipal agriculturist."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Take a photo an app can read",
+      "text": "Shoot in daylight, close enough to fill the frame, with the spot in focus. Then take a second photo of the whole hill and a third of the field, so the pattern shows. For planthoppers and stem borers, photograph the base of the plant too, not just the leaf tip."
+    },
+    {
+      "type": "cta",
+      "title": "Show Anee a photo of your sick palay or mais",
+      "text": "Sign up free, add your lot, and ask Anee in Tagalog, Bisaya, Ilocano or English with a photo.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much does it cost?"
+    },
+    {
+      "type": "text",
+      "text": "The finders and guides cost nothing. Anee comes with the plans below, and you can buy credit packs when you run low. You pay by GCash or bank transfer, and the [pricing page](/pricing) shows the current details."
+    },
+    {
+      "type": "table",
+      "caption": "anee.io plans for diagnosis, in Philippine pesos",
+      "rows": [
+        [
+          "Plan",
+          "Price",
+          "For diagnosis"
+        ],
+        [
+          "Libre",
+          "Free",
+          "Disease Finder, Pest Finder, guides and photo notes, with a few ads"
+        ],
+        [
+          "Libre plus Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "Adds the Anee chat with photos and all her analyses, with a few ads"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "Anee plus 30 credits each renewal, full weather and no ads"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "Anee plus 100 credits each renewal, team logins and the Collab Room"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which free tools can you use beside an app?"
+    },
+    {
+      "type": "text",
+      "text": "IRRI's Rice Doctor is a free tool on its Rice Knowledge Bank. It helps you identify problems in a rice crop and gives advice to manage them. For corn and vegetables, the Plant Doctor Online of East West Seed shows symptoms photographed in Philippine fields.\n\nIf you want a person to answer, see where to [ask an agriculturist online](/blog/ask-an-agriculturist-online). Our [guide to rice diseases](/diseases/rice-diseases) and the page on [corn downy mildew](/diseases/corn-downy-mildew) also show what to look for."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you diagnose a sick crop with an app, step by step?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Look at the pattern",
+          "text": "Walk the bund first. Note whether the problem sits in patches, in rows, along one side or across the whole field."
+        },
+        {
+          "title": "Photograph close and wide",
+          "text": "Take the sick leaf or stem up close, then the whole hill, then the field."
+        },
+        {
+          "title": "Ask with details",
+          "text": "Give the crop, the variety, the day count and what you applied last. In anee.io, Anee already reads these from your season."
+        },
+        {
+          "title": "Confirm in the field",
+          "text": "Do the check the app suggests, like the ooze test or pulling a tiller, before you buy anything."
+        },
+        {
+          "title": "Decide and record",
+          "text": "Choose between no spray, a change in water or fertilizer, or a registered product used by its label. Then save the photo and the result as a note."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about choosing a crop disease diagnosis app"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can an app diagnose rice diseases from one photo?",
+          "a": "Sometimes, but not reliably. In a 2016 study, a model scored over 99 percent on controlled photos. On photos from other sources, it dropped to about 31 percent. Use the photo as a first opinion and confirm it in the field."
+        },
+        {
+          "q": "Is there a free crop disease diagnosis app in the Philippines?",
+          "a": "Yes. The Disease Finder and Pest Finder of anee.io are free on every plan, and IRRI's Rice Doctor is free on the web. Photo reading by Anee needs a plan with Anee, from PHP 70 a month."
+        },
+        {
+          "q": "What if the app and my technician disagree?",
+          "a": "Go with the person who saw the field. An app sees a photo, while your municipal agriculturist can walk the paddy, pull a tiller and send a sample to a lab."
+        },
+        {
+          "q": "Does Anee work without signal?",
+          "a": "No, Anee needs internet. The rest of anee.io works offline. Take photos and notes in the field, and they sync when the signal comes back."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Plant disease detection for fruit growers",
+          "url": "/blog/plant-disease-detection-for-fruit-growers"
+        },
+        {
+          "label": "Identify rice pests from a photo",
+          "url": "/blog/identify-rice-pests-from-a-photo"
+        },
+        {
+          "label": "Pest or disease: how to tell",
+          "url": "/blog/pest-or-disease-how-to-tell"
+        },
+        {
+          "label": "Is AI farm advice accurate?",
+          "url": "/blog/ai-farm-advice-accuracy"
+        },
+        {
+          "label": "Rice diseases in the Philippines",
+          "url": "/diseases/rice-diseases"
+        },
+        {
+          "label": "Pest and Disease Finders",
+          "url": "/features/pest-and-disease-finders"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Mohanty, Hughes and Salathe (2016), Using deep learning for image based plant disease detection, Frontiers in Plant Science",
+          "url": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2016.01419/full"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Tungro",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Bacterial blight",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice Doctor",
+          "url": "http://www.knowledgebank.irri.org/decision-tools/rice-doctor"
+        },
+        {
+          "label": "East West Seed: Plant Doctor Online",
+          "url": "https://plantdoctor.eastwestseed.com/"
+        }
+      ]
+    }
+  ]
+}

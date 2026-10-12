@@ -1,0 +1,241 @@
+{
+  "section": "blog",
+  "slug": "farm-profitability",
+  "sortOrder": 710,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "Farm Profitability: How Do I Know If My Farm Is Really Profitable?",
+  "metaTitle": "Farm Profitability: Is Your Farm Really Making Money?",
+  "metaDescription": "Check your farm profitability the honest way: net returns, your own labor and land, break even price and yield, with 2024 PSA palay figures to compare.",
+  "focusKeyword": "farm profitability",
+  "keywords": [
+    "farm profitability",
+    "is my farm profitable",
+    "net returns per hectare",
+    "net profit cost ratio",
+    "break even yield",
+    "profit per season"
+  ],
+  "excerpt": "Your farm is really profitable when harvest sales cover every cost and still leave money over. That includes the work and land you did not pay for in cash. Measure farm profitability each season with net returns, the net profit cost ratio, and your break even price and yield. With anee.io, a farm app built for Filipino farmers, a Profit Report does this from your season's own records.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-profitability.webp",
+    "alt": "Farmer raking palay to dry on a concrete road beside harvested rice fields in the Philippines",
+    "credit": "JFVelasquez Floro, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Cash in hand after the ani does not prove a farm made money. Part of that cash may be your own wages. Part may be rent your land could have earned, and some costs may still be unpaid. So a real check of farm profitability starts with a full cost count, then sets it against the harvest.\n\nHere is a yardstick from PSA data reported by Philstar. In 2024, a hectare of palay brought in PHP 95,906 on average. It cost PHP 59,695, so net returns were PHP 36,211. That is a net profit cost ratio of 0.61: each peso spent came back with about 61 centavos more."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Profit is sales minus all costs,** including palay paid as shares and the value of your own labor and land.",
+        "**Use four numbers:** net returns, the net profit cost ratio, the break even price and the break even yield.",
+        "**Compare per hectare and per kilo,** so a bigger or smaller farm still compares fairly.",
+        "**Watch price and cost apart.** A good price can hide a costly season.",
+        "**Check every season,** and compare it with the last one, not only with a neighbor."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which numbers measure farm profitability?"
+    },
+    {
+      "type": "table",
+      "caption": "Farm profitability measures, with the 2024 national averages for palay from PSA data reported by Philstar",
+      "rows": [
+        [
+          "Measure",
+          "How to compute it",
+          "2024 palay average"
+        ],
+        [
+          "Gross returns",
+          "Kilos harvested times the price per kilo",
+          "PHP 95,906 per hectare"
+        ],
+        [
+          "Total cost",
+          "Cash costs plus palay paid as shares plus imputed costs",
+          "PHP 59,695 per hectare"
+        ],
+        [
+          "Net returns",
+          "Gross returns minus total cost",
+          "PHP 36,211 per hectare"
+        ],
+        [
+          "Net profit cost ratio",
+          "Net returns divided by total cost",
+          "0.61"
+        ],
+        [
+          "Break even price",
+          "Total cost divided by kilos harvested",
+          "PHP 14.52 per kilo"
+        ],
+        [
+          "Break even yield",
+          "Total cost divided by the price per kilo",
+          "About 2,540 kg at PHP 23.48 per kilo"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The break even price tells you the lowest price you can sell at without losing money. The break even yield tells you how many kilos you need at today's price. If your harvest beats both, the season paid. For the cost side in detail, follow our guide to the [cost of producing rice per hectare](/blog/cost-of-producing-rice-per-hectare)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why profit and income are not the same"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice and IRRI separate two ideas. Net profit from rice farming is gross revenue minus the total production cost. That cost includes the value of your own labor, land and money. Income is what your household actually takes home.\n\nSay you own the land and the capital and work the farm yourself. Then your income is the net profit plus the value of your own labor, the land rent and the interest on your capital. So a farm can give you an income while showing little profit. In that case, farming paid you a wage and rent, but no more than renting out the land and working elsewhere."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "A good price can hide a costly season",
+      "text": "From 2023 to 2024, the average farmgate price of palay rose from PHP 19.88 to PHP 23.48 per kilo. The cost per kilo rose too, from PHP 13.54 to PHP 14.52. Net returns went up because the price rose faster than the cost. When prices fall back, a farm with a high cost per kilo feels it first. So track cost per kilo every season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I check my farm profitability in five steps?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Count every cost",
+          "text": "Add cash costs and palay paid to harvesters and threshers. Then add your own and family labor at the going wage, and rent on land you own."
+        },
+        {
+          "title": "Value the whole harvest",
+          "text": "Multiply all the kilos by your selling price. Include palay you kept for food or seed, since the field produced it too."
+        },
+        {
+          "title": "Find your net returns",
+          "text": "Subtract total cost from gross returns. Then divide by your hectares to compare with the average."
+        },
+        {
+          "title": "Work out your break even points",
+          "text": "Divide total cost by kilos for your break even price, and by the price for your break even yield."
+        },
+        {
+          "title": "Compare with last season",
+          "text": "Put this season beside the last one and ask which costs grew and why."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What makes one farm more profitable than another?"
+    },
+    {
+      "type": "text",
+      "text": "Yield is the biggest lever, because many costs stay about the same whether you harvest 3 tons or 5. Next come labor and rent, which PhilRice and IRRI found among the largest costs on Philippine rice farms. Then come the price you sell at and the moisture of your palay when you sell.\n\nFor that reason, the farms that do best keep records by lot and by season. One farmer in a PhilRice Bicol training said her records tell her if she failed or succeeded in a season. Good records also show that one lot always floods, or that a pakyaw crew cost more than a daily crew. Our guides on [farm record keeping](/blog/farm-record-keeping) and [palay prices](/blog/palay-price-philippines) cover those sides."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/lp/report-top.webp",
+      "alt": "anee.io season report showing net profit, money in, money out and the harvest of a dry season",
+      "caption": "A season report in anee.io: net profit, money in and money out, built from the season's own records."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io show my real profit?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, the costs collect while you work. Stock leaves the shed when you tick a task done, and wages come from the workers on each task. Services and extra expenses sit on their days. After harvest, you record yield, moisture, price and buyer in Observations.\n\nThe [profit report](/features/profit-report) then sets your harvest sales against everything you spent, so you see the real profit, not a guess. [Compare Reports](/features/compare-reports) puts two seasons side by side. Anee, the smart farm technician, can also write an Anee Season Report: a plain story of what went well and what to change. It uses credits."
+    },
+    {
+      "type": "cta",
+      "title": "See the real profit of your next season",
+      "text": "Sign up free, run your season in anee.io, and let the Profit Report do the math at harvest.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm profitability"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is a good net return per hectare for rice?",
+          "a": "Based on PSA data, the 2024 average was PHP 36,211 per hectare, up from PHP 26,423 in 2023. Compare your own figure with that, and with your own past seasons."
+        },
+        {
+          "q": "Should I count my family's labor as a cost?",
+          "a": "Yes, at the going daily wage. PhilRice and IRRI do the same. Then you can see if the farm paid more than your family could earn working for others."
+        },
+        {
+          "q": "What if I keep part of the harvest for food?",
+          "a": "Count it in your gross returns at the price you would have sold it for. The field produced it, so leaving it out makes the farm look less profitable than it was."
+        },
+        {
+          "q": "How often should I check farm profitability?",
+          "a": "Do a full check after every harvest, and a quick cost check at mid season. Mid season is still early enough to change course."
+        },
+        {
+          "q": "Can anee.io compare two seasons?",
+          "a": "Yes. Compare Reports shows two reports of the same type side by side, line by line, and Anee can explain what changed. Anee's explanations use credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Cost of producing rice per hectare",
+          "url": "/blog/cost-of-producing-rice-per-hectare"
+        },
+        {
+          "label": "Farm record keeping",
+          "url": "/blog/farm-record-keeping"
+        },
+        {
+          "label": "Farm cash flow, week by week",
+          "url": "/blog/farm-cash-flow"
+        },
+        {
+          "label": "How to increase rice yield per hectare",
+          "url": "/blog/increase-rice-yield-per-hectare"
+        },
+        {
+          "label": "Profit report in anee.io",
+          "url": "/features/profit-report"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
+          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
+        },
+        {
+          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (costs and profitability chapters)",
+          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
+        },
+        {
+          "label": "PhilRice: PhilRice Bicol trains farmers on agripreneurship (record keeping)",
+          "url": "https://www.philrice.gov.ph/philrice-bicol-trains-farmers-agripreneurship/"
+        }
+      ]
+    }
+  ]
+}

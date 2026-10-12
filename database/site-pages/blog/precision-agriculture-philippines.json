@@ -1,0 +1,275 @@
+{
+  "section": "blog",
+  "slug": "precision-agriculture-philippines",
+  "sortOrder": 850,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "What Is Precision Agriculture, and Can Small Farmers in the Philippines Use It?",
+  "metaTitle": "Precision Agriculture Philippines: A Guide for Small Farms",
+  "metaDescription": "Precision agriculture in the Philippines is not only for big farms. Learn what it means, the low cost tools that already work, and how farm apps help.",
+  "focusKeyword": "precision agriculture Philippines",
+  "keywords": [
+    "precision agriculture Philippines",
+    "precision agriculture",
+    "leaf color chart",
+    "MOET App",
+    "Rice Crop Manager",
+    "NPK Plus Calculator"
+  ],
+  "excerpt": "Precision agriculture means giving each field, or each part of a field, what it really needs, based on measurements instead of one rate for everything. Small farmers in the Philippines can use it now: a leaf color chart, the MOET App, a mapped field, free satellite pictures and good records are all precision tools, and none needs a drone. The farm app anee.io, built for Filipino farmers, brings several together, from mapping each lot to dating every task by that lot's own day count.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-precision-agriculture-philippines.webp",
+    "alt": "An agricultural drone flies over a green rice field while its operator stands in the paddy, one face of precision agriculture",
+    "credit": "Benlisquare, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The International Society of Precision Agriculture calls it a management strategy that gathers and analyzes data across space and time, and over single plants. It then combines that data with other information to support decisions by the variation it finds. The goals are better use of inputs, better yields and quality, more profit and more sustainable farming.\n\nIn plain words: measure first, then give each field or each part of it what it needs. Big farms abroad do this with GPS tractors and yield monitors. A Filipino farmer with two hectares can do it with a plastic color chart, a phone and a notebook."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Precision agriculture is an idea, not a machine: measure, then match the inputs to the need.",
+        "For rice, PhilRice already teaches precision tools: the leaf color chart, the MOET App and the Rice Crop Manager Advisory Service.",
+        "Timing each lot by its own day count is precision too, because lots planted a week apart need their fertilizer a week apart.",
+        "Satellites and drones add a view from above, but they are optional on small farms.",
+        "Records close the loop, because they show which change paid off."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Precision agriculture: Philippines examples you can use now"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice's PalayCheck System names the tools to set the right amount of nitrogen, phosphorus and potassium. These are the leaf color chart or its app, the MOET kit and app, the Nutrient Omission Plot Technique and the Rice Crop Manager Advisory Service. Each one measures your field instead of trusting a general rate."
+    },
+    {
+      "type": "table",
+      "caption": "Precision agriculture: Philippines tools from free to costly",
+      "rows": [
+        [
+          "Tool",
+          "What it measures",
+          "Cost",
+          "Where it comes from"
+        ],
+        [
+          "Leaf color chart or LCC App",
+          "When rice needs nitrogen, from leaf color",
+          "Low",
+          "PhilRice, part of PalayCheck"
+        ],
+        [
+          "MOET kit and MOET App",
+          "Which nutrients your soil lacks, from a pot test",
+          "Low",
+          "PhilRice, part of PalayCheck"
+        ],
+        [
+          "Rice Crop Manager Advisory Service",
+          "A nutrient and crop guide for one field",
+          "Free when PhilRice launched it",
+          "IRRI with PhilRice"
+        ],
+        [
+          "Soil test",
+          "Soil nutrients and pH",
+          "Varies",
+          "A soils laboratory"
+        ],
+        [
+          "Mapped field area",
+          "The true size of each field",
+          "Free to low",
+          "GPS map apps"
+        ],
+        [
+          "Satellite pictures",
+          "Greenness and weak zones",
+          "Free data",
+          "Copernicus Sentinel satellites"
+        ],
+        [
+          "Drones",
+          "Spraying or mapping from the air",
+          "High",
+          "Hired service providers"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The leaf color chart shows how simple precision can be. PalayCheck says to read it every 7 days from 14 DAT or 21 DAS until early flowering. Apply nitrogen only when 6 or more of 10 leaves read below 4 in transplanted rice. So the nitrogen follows the crop, not the calendar. Our guide on [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice) shows what a hungry crop looks like."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can a small farm start with precision agriculture?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Measure each field's true area",
+          "text": "Trace it on a map. Every bag per hectare depends on that number."
+        },
+        {
+          "title": "Find what the soil lacks",
+          "text": "Use the MOET App, a soil test or the Rice Crop Manager before you buy fertilizer."
+        },
+        {
+          "title": "Split the farm into real lots",
+          "text": "A sandy strip, a low spot that floods and a well drained field behave differently, so give each its own lot and plan."
+        },
+        {
+          "title": "Time inputs by each lot's stage",
+          "text": "Date every fertilizer and spray from that lot's own day zero, and read the leaf color chart on schedule."
+        },
+        {
+          "title": "Record what went in and what came out",
+          "text": "Write the inputs, the costs and the harvest for each lot."
+        },
+        {
+          "title": "Compare and adjust",
+          "text": "Hold this season against the last one, lot by lot, then change the next plan."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Precision agriculture, Philippines style: measure the field first",
+      "text": "Many fields called one hectare by habit are smaller or larger. If a field you call one hectare measures 0.8 on the map, a one hectare plan puts a quarter more fertilizer per hectare than you meant. A traced map fixes that before you spend a peso."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Do you need drones and sensors?"
+    },
+    {
+      "type": "text",
+      "text": "No. They help on large farms, but small farms get most of the gain from the steps above. If you hire a spraying drone, check the product first. The Fertilizer and Pesticide Authority keeps a separate list of pesticide products registered for drone use, apart from its main list. Follow the label and the FPA registration.\n\nSatellites are cheaper than drones, because the Sentinel data are free. They show weak zones across a field about every five days when clouds allow. PhilRice also runs PRISM, a satellite based system that maps rice areas, planting dates and flood or drought damage for planning. Our guide to [satellite images of my farm](/blog/satellite-crop-monitoring-philippines) explains what a picture can and cannot show."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io fit precision agriculture?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io covers the measuring, the timing and the record. [Farm maps](/features/farm-maps) give the area and the length of each side of a field you trace over a satellite view. Each lot keeps its own day zero, so the [Protocol Builder](/features/protocol-builder) and the cropping calendar date every fertilizer task for that lot.\n\nThe free [NPK Plus Calculator](/features/npk-plus-calculator) adds up every nutrient in the fertilizers you plan to use. It checks the total against what your crop needs and shows the yield it can feed. Satellite Analysis reads Sentinel pictures of a field you draw, and Anee, the smart farm technician, points to the weak spots. At the end, the reports show what each season cost and earned, and Compare Reports puts two seasons side by side.\n\nBe clear about the limits, though. The app has no drone or field sensor of its own, so it works from your records, your maps and satellite pictures. Anee's analyses need internet and use credits."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/lp/report-money.webp",
+      "alt": "An anee.io season report showing money in, money out and where the money went by month",
+      "caption": "A season report in anee.io: what came in, what went out and where it went, to compare one season with the next."
+    },
+    {
+      "type": "cta",
+      "title": "Check your fertilizer plan against your crop",
+      "text": "Tap the fertilizers you plan to use, and NPK Plus adds up every nutrient per hectare. It is free.",
+      "label": "Try NPK Plus",
+      "url": "/features/npk-plus-calculator"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does it cost?"
+    },
+    {
+      "type": "text",
+      "text": "The NPK Plus Calculator is free, and so is the Libre plan, which covers one active season with a few ads. Satellite Analysis and Anee's readings need a plan with Anee, from PHP 70 a month, and they run on credits. Solo Farmer, at PHP 200 a month, adds all reports, workers and inventory. See the [pricing page](/pricing) for every plan, and our guide to [digital farming tools](/blog/digital-farming-tools) for the wider picture."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about precision agriculture"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is precision agriculture in simple words?",
+          "a": "It means measuring your field and giving each part what it needs, instead of one rate for everything. The measuring can be a leaf color chart, a soil test or a satellite picture. The point is to spend inputs where they pay."
+        },
+        {
+          "q": "Is precision agriculture only for big farms?",
+          "a": "No. PhilRice tools like the leaf color chart and the MOET App were made for ordinary rice farms. A mapped field, lots timed by their own day count and good records are precision steps any farmer can take."
+        },
+        {
+          "q": "What is the MOET App?",
+          "a": "MOET stands for the Minus One Element Technique. PalayCheck describes it as a pot test of your soil, paired with an app, that shows which nutrients your soil lacks and how much fertilizer a target yield needs."
+        },
+        {
+          "q": "Can I use a drone to spray my rice?",
+          "a": "Only with a product registered for drone use. The FPA keeps a separate list of pesticide products registered for drone use. Follow the label and the registration."
+        },
+        {
+          "q": "Does anee.io work with drones or sensors?",
+          "a": "No. anee.io works from your maps, your records and free satellite pictures, with Anee to read them. It has no drone or field sensor of its own."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Satellite images of my farm",
+          "url": "/blog/satellite-crop-monitoring-philippines"
+        },
+        {
+          "label": "Monitor crop health without a drone",
+          "url": "/blog/monitor-crop-health-without-a-drone"
+        },
+        {
+          "label": "Fertilizer calculator app",
+          "url": "/blog/fertilizer-calculator-app"
+        },
+        {
+          "label": "Season fertilizer plan",
+          "url": "/blog/season-fertilizer-plan"
+        },
+        {
+          "label": "NPK Plus Calculator",
+          "url": "/features/npk-plus-calculator"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "International Society of Precision Agriculture: Precision Agriculture Definition",
+          "url": "https://www.ispag.org/resources/definition"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Web tool to help raise rice yield and income (Rice Crop Manager)",
+          "url": "https://www.philrice.gov.ph/web-tool-to-help-raise-rice-yield-income/"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority: Registered products, including pesticides for drone use",
+          "url": "https://fpa.da.gov.ph/registered-products/"
+        },
+        {
+          "label": "PhilRice: Philippine Rice Information System (PRISM)",
+          "url": "https://prism.philrice.gov.ph/"
+        }
+      ]
+    }
+  ]
+}

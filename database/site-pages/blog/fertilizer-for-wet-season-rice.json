@@ -1,0 +1,257 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-for-wet-season-rice",
+  "sortOrder": 430,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "What Is the Best Fertilizer Plan for Wet Season Rice?",
+  "metaTitle": "Fertilizer for Wet Season Rice: Bags, Timing and Rain Tips",
+  "metaDescription": "Fertilizer for wet season rice: why the rate is lower than in the dry season, bag plans by yield target, and how to time each top dressing around the rain.",
+  "focusKeyword": "fertilizer for wet season rice",
+  "keywords": [
+    "fertilizer for wet season rice",
+    "wet season palay fertilizer",
+    "rainy season rice fertilizer",
+    "top dressing in the rain",
+    "leaf color chart",
+    "wet season yield target"
+  ],
+  "excerpt": "The best fertilizer for wet season rice is a smaller plan with sharper timing, because cloudy months cap the yield the crop can reach. PhilRice's general recommendation for irrigated lowland gives 97 kg of nitrogen per hectare in the wet season, against 139 kg in the dry season. A DA, PhilRice and IRRI quick guide for Nueva Ecija uses 2 to 4 bags of 14 14 14 at transplanting, then urea at active tillering and at panicle initiation, by yield target. anee.io, a farm app built for Filipino farmers, dates each dose from your transplanting day and shows the rain forecast beside it.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-wet-season-rice.webp",
+    "alt": "Lush tillering palay beside an irrigation canal under a cloudy August sky at PhilRice in Muñoz, Nueva Ecija, a wet season rice crop",
+    "credit": "Judgefloro, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The wet season crop grows under clouds. IRRI's Fundamentals of Rice Crop Science explains that the tropics get more sunlight in the dry season, so dry season yields are usually higher. Even so, the right variety and good management can still give about 5 to 6 tons per hectare in the wet season.\n\nThat changes the fertilizer plan in two ways. First, the target is lower, so the rate is lower. Second, rain can wash away a dose that lands on the wrong day, so timing matters more than ever."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Feed for a wet season target.** PhilRice gives 97 kg of nitrogen per hectare in the wet season and 139 kg in the dry season.",
+        "**Put the basal dose into the soil** between transplanting and 14 days after, with all the phosphorus.",
+        "**Split the urea** between active tillering and panicle initiation.",
+        "**Top dress into shallow water,** 2 to 5 cm deep, late in the afternoon, with the bunds closed.",
+        "**Let the leaves decide extra nitrogen.** A leaf color chart stops you from overfeeding a crop that is already green."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why does wet season rice need a different plan?"
+    },
+    {
+      "type": "text",
+      "text": "Less sunlight means the crop can turn less fertilizer into grain. If you feed a wet season crop like a dry season one, the extra nitrogen tends to go into leaves rather than grain. PalayCheck warns that too much nitrogen during panicle initiation and flowering invites lodging and pests. It also raises the share of unfilled grains.\n\nWet months also bring strong winds and typhoons, and a tall, soft crop falls over first. So the wet season plan aims a little lower and keeps the stems firm."
+    },
+    {
+      "type": "table",
+      "caption": "PhilRice modified general recommendation for irrigated lowland rice, kg per hectare, for farms without a soil test or decision tool.",
+      "rows": [
+        [
+          "Nutrient",
+          "Wet season",
+          "Dry season"
+        ],
+        [
+          "Nitrogen (N)",
+          "97",
+          "139"
+        ],
+        [
+          "Phosphorus (P)",
+          "28",
+          "35"
+        ],
+        [
+          "Potassium (K)",
+          "43",
+          "50"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is the best fertilizer for wet season rice, bag by bag?"
+    },
+    {
+      "type": "text",
+      "text": "For transplanted rice in Nueva Ecija, DA, PhilRice, the provincial government and IRRI made a quick guide in bags per hectare. It counts one cavan as 56 kg of fresh palay from the thresher. The days follow your variety: early, medium early or medium maturing."
+    },
+    {
+      "type": "table",
+      "caption": "Quick guide for fertilizing transplanted rice in the wet season in Nueva Ecija, bags per hectare. DAT means days after transplanting.",
+      "rows": [
+        [
+          "Step and stage",
+          "When (DAT)",
+          "Fertilizer",
+          "70 to 90 cavans",
+          "90 to 110 cavans",
+          "110 to 130 cavans"
+        ],
+        [
+          "1. Early growth",
+          "0 to 14",
+          "14 14 14 with sulfur",
+          "2 bags",
+          "3 bags",
+          "4 bags"
+        ],
+        [
+          "2. Active tillering",
+          "23 to 27, 24 to 28 or 28 to 32",
+          "Urea 46 0 0",
+          "1 bag",
+          "1.5 bags",
+          "2 bags"
+        ],
+        [
+          "3. Panicle initiation",
+          "33 to 37, 35 to 39 or 43 to 47",
+          "Urea 46 0 0",
+          "1 bag",
+          "1.5 bags",
+          "2 bags"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The guide fits fields with enough water, average soil fertility and seedlings under 23 days old. It also assumes no flood silt, no straw returned to the field and no organic matter besides the stubble. If your farm differs, your municipal agriculturist can help you get a field level plan.\n\nCompare it with the dry season guide for the same province. There the targets run from 110 to 170 cavans, with up to 6 bags of 14 14 14, more urea and added potash at panicle initiation. So a wet season field that copies the dry season plan pays for a harvest it cannot reach."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I time each dose around the rain?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Mix the basal dose into the soil",
+          "text": "PalayCheck says to incorporate granular fertilizer into the soil, which cuts leaching and nitrogen loss to the air. Put only about 30 percent of the season's nitrogen in this first dose."
+        },
+        {
+          "title": "Check the forecast before each top dressing",
+          "text": "Skip a day when heavy rain will spill over the bunds, because the overflow carries the dissolved urea away. Keep bunds and outlets closed for a few days after you spread."
+        },
+        {
+          "title": "Spread into shallow water, late in the day",
+          "text": "Top dress when the field holds 2 to 5 cm of water. PalayCheck advises the cooler hours, after 3 in the afternoon, to cut nitrogen loss."
+        },
+        {
+          "title": "Read the leaves every week",
+          "text": "With a leaf color chart, check every 7 days from 14 days after transplanting until early flowering. Apply nitrogen only when 6 or more of 10 leaves read below 4, or below 3 for direct wet seeded rice."
+        },
+        {
+          "title": "Finish potassium near panicle initiation",
+          "text": "Give the second potassium dose 5 to 7 days before or after panicle initiation. Potassium helps the crop stand against lodging, pests and diseases."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "A dark green, lush field does not need more urea",
+      "text": "When the canopy is already deep green and the stems look thin, hold the next nitrogen dose and read the leaf color chart first. In the wet season, a soft crop is the first to lodge when the wind comes."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io keep the wet season plan on time?"
+    },
+    {
+      "type": "text",
+      "text": "In the [Protocol Builder](/features/protocol-builder) you write every dose on its day after transplanting. Keep one version for the wet season and one for the dry. When you plant, the protocol becomes a [cropping calendar](/features/cropping-calendar) dated from each lot's own transplanting day.\n\nThe [farm weather forecast](/features/farm-weather-forecast) sits beside your plan, so you see the rain before you send workers out with urea. Anee, the smart farm technician inside anee.io, can review the protocol and point out a stage with nothing planned or a rate that looks too high. Her reviews use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Keep a wet season version of your plan",
+      "text": "Write your wet season fertilizer protocol once in the Protocol Builder, then reuse it every year with new dates.",
+      "label": "See the Protocol Builder",
+      "url": "/features/protocol-builder"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about wet season fertilizer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many bags of urea does wet season rice need?",
+          "a": "The Nueva Ecija wet season quick guide uses 2 to 4 bags of urea per hectare in total, split between active tillering and panicle initiation. The amount rises with the yield target, from 70 to 90 cavans up to 110 to 130 cavans."
+        },
+        {
+          "q": "Can I use my dry season fertilizer plan in the wet season?",
+          "a": "It is better not to. The dry season has more sunlight and higher yield targets, so its plans carry more nitrogen. In the wet season, the extra urea tends to make tall, soft plants that lodge."
+        },
+        {
+          "q": "Should I add potash in the wet season?",
+          "a": "PhilRice's general recommendation still gives 43 kg of potassium per hectare in the wet season. Potassium firms up stems and helps grains fill. Give the second dose 5 to 7 days before or after panicle initiation."
+        },
+        {
+          "q": "What if it rains right after I top dress?",
+          "a": "PalayCheck advises top dressing into 2 to 5 cm of water to cut nitrogen loss and run off. The bigger loss comes when water spills over the dikes and carries dissolved fertilizer away. So check the forecast first and keep the outlets shut."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer for rice: a season plan",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Fertilizer timing by growth stage",
+          "url": "/blog/fertilizer-timing-by-growth-stage"
+        },
+        {
+          "label": "How to prepare for a typhoon",
+          "url": "/blog/typhoon-preparation-for-farmers"
+        },
+        {
+          "label": "Will it rain before I spray?",
+          "url": "/blog/rain-before-spraying"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Rice Science for Decision Makers Vol. 11, Reinforcing Right EAT for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf"
+        },
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "DA, PhilRice, Nueva Ecija and IRRI: Quick guide for fertilizing transplanted rice during the wet season in Nueva Ecija",
+          "url": "http://www.knowledgebank.irri.org/pinoyrkb/QuickGuide/english/Region%203/Nueva%20Ecija/Quick%20guide%20for%20fertilizing%20transplanted%20rice%20during%20the%20wet%20season%20in%20Nueva%20Ecija.pdf"
+        },
+        {
+          "label": "DA, PhilRice, Nueva Ecija and IRRI: Quick guide for fertilizing transplanted rice during the dry season in Nueva Ecija",
+          "url": "http://www.knowledgebank.irri.org/pinoyrkb/QuickGuide/english/Region%203/Nueva%20Ecija/Quick%20guide%20for%20fertilizing%20transplanted%20rice%20during%20the%20dry%20season%20in%20Nueva%20Ecija.pdf"
+        },
+        {
+          "label": "IRRI: Fundamentals of Rice Crop Science (Yoshida, 1981)",
+          "url": "http://books.irri.org/9711040522_content.pdf"
+        }
+      ]
+    }
+  ]
+}

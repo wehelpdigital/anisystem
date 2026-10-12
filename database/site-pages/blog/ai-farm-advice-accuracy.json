@@ -1,0 +1,263 @@
+{
+  "section": "blog",
+  "slug": "ai-farm-advice-accuracy",
+  "sortOrder": 660,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "Is AI Farm Advice Accurate Enough to Trust for My Crops?",
+  "metaTitle": "AI Farm Advice: How Accurate Is It, and When to Trust It",
+  "metaDescription": "Is AI farm advice accurate? What AI gets right, where it fails, a five step check for any answer, and how Anee, the anee.io smart farm technician, works.",
+  "focusKeyword": "AI farm advice",
+  "keywords": [
+    "AI farm advice",
+    "AI for farmers",
+    "is AI accurate for farming",
+    "AI crop advice",
+    "farm chatbot",
+    "smart farm technician"
+  ],
+  "excerpt": "AI farm advice is accurate enough to trust as a first opinion and a planning aid, not as the final word before you spray or spend. It is only as good as what it can see, such as a sharp photo, your crop's age, your weather and what you applied, and it slips when your field looks unlike what it learned on. On anee.io, a farm app built for Filipino farmers, Anee, its smart farm technician, uses AI and reads your own season records first. Still, confirm in the field and follow the label.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-ai-farm-advice-accuracy.webp",
+    "alt": "A farmer sprays a young rice field by hand, a step to take only after AI farm advice is checked in the field",
+    "credit": "Chris Graham/AusAID, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Here is a real number to keep in mind. A 2016 study in Frontiers in Plant Science trained a deep learning model on leaf photos taken in a controlled setting. On test photos from that same setting, it named the crop and disease correctly 99.35 percent of the time. On photos from other sources, it got about 31 percent right. Same model, different field, very different answer.\n\nThat is the main lesson for any farmer. AI does well on questions that look like what it has seen before, and it can sound just as sure when it is wrong. So the useful question is not whether AI is accurate, but when."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Trust AI farm advice most for explaining, planning and reminding.",
+        "Trust it least for naming a virus or a nutrient problem from a photo alone, where look alikes are common.",
+        "Never take a spray rate or a product from AI alone. Read the label and check the FPA registration.",
+        "Give it context: crop, variety, age, place, photos and what you applied.",
+        "Check any answer against PhilRice, the DA or your municipal agriculturist before money changes hands."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When can you trust AI farm advice?"
+    },
+    {
+      "type": "text",
+      "text": "Sort your question first. Some questions have one right answer everywhere, and others depend on your field."
+    },
+    {
+      "type": "table",
+      "caption": "How far to trust AI farm advice, by type of question",
+      "rows": [
+        [
+          "Question",
+          "How far to trust it",
+          "Why",
+          "Check with"
+        ],
+        [
+          "Explain a term, like DAT or what 14 14 14 means",
+          "High",
+          "These facts do not change from farm to farm",
+          "Any good guide"
+        ],
+        [
+          "Plan dates by growth stage",
+          "High, if your dates are right",
+          "The math is simple once day zero is correct",
+          "Your own planting record"
+        ],
+        [
+          "Name a pest from a sharp photo of the insect",
+          "Medium",
+          "Many pests look alike, and photos miss the base of the plant",
+          "A field check"
+        ],
+        [
+          "Name a disease or nutrient problem from a leaf photo",
+          "Low to medium",
+          "IRRI warns that tungro can look like nitrogen or zinc deficiency",
+          "A field or lab test"
+        ],
+        [
+          "Pick a product or a spray rate",
+          "Do not rely on it",
+          "Only the label and the FPA registration count",
+          "The label and the FPA list"
+        ],
+        [
+          "Time a spray around the rain",
+          "Medium",
+          "Forecasts change by the hour",
+          "The latest PAGASA forecast"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why does AI farm advice go wrong?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Bad photos.** Blurry, dark or distant pictures hide the details that separate one problem from another.",
+        "**Missing context.** Without the variety, the age and the place, AI falls back on textbook answers that may not fit your field.",
+        "**Look alikes.** IRRI notes that tungro, nitrogen or zinc deficiency and water stress can all yellow and stunt rice.",
+        "**Different conditions.** Advice built for another country, crop or season may not fit a rainfed palay field in the Visayas.",
+        "**Confident mistakes.** A chatbot can state a wrong number in a sure voice, so every number deserves a second source."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to check any AI answer in five steps"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Ask for the reason",
+          "text": "A good answer explains why and what to check. If it gives only a name or a product, ask again."
+        },
+        {
+          "title": "Confirm in the field",
+          "text": "Do the check it suggests, like tapping the base of the hill or pulling a tiller."
+        },
+        {
+          "title": "Compare with a trusted guide",
+          "text": "Use PhilRice's PalayCheck system for rice, the guides of your DA region, or our own [crop guides](/crops) and [pest pages](/pests)."
+        },
+        {
+          "title": "Check the product",
+          "text": "Look up the active ingredient in the FPA list of registered products, then follow the label for the rate."
+        },
+        {
+          "title": "Record what happened",
+          "text": "Write down what you did and the result, so the next answer starts from facts."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Never spray on AI advice alone",
+      "text": "Before you mix anything, read the product label for the crop, the pest, the rate and the days before harvest. Then check that the FPA has registered the product. That rule holds for advice from a chatbot, a neighbor or a store."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How Anee gives AI farm advice inside anee.io"
+    },
+    {
+      "type": "text",
+      "text": "Anee is the smart farm technician inside anee.io. She starts from your season, not from a blank page. Before she answers, she reads the farm's own records: the lots, their growth stages, your protocol, the weather, the history and your photos. She answers in Tagalog, Bisaya, Ilocano, Taglish or English.\n\nSome of her work shows its sources. [Variety Research](/features/variety-research) lists the sources she used, so you can check them yourself. When she [reviews your protocol](/features/protocol-review-by-anee), she points out problems such as a rate that is too high or a spray too close to harvest. You decide what to change."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Where Anee stops"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "She is not a licensed agriculturist and cannot walk your field.",
+        "A photo reading is a first opinion. Confirm it before you spend.",
+        "Her answers use credits. Libre plus Anee costs PHP 70 a month, and you can buy credit packs when you need more.",
+        "She needs internet, though the rest of the app keeps working offline."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Ask Anee, then check her answer",
+      "text": "Anee reads your lots, stages, weather and records before she answers, in Tagalog or English. Start free and add Anee for PHP 70 a month.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about AI farm advice"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can AI replace my agricultural technician?",
+          "a": "No. AI farm advice is a quick first opinion at any hour. Field visits, soil tests and lab tests still need people, like your municipal agriculturist."
+        },
+        {
+          "q": "Why does AI give different answers to the same question?",
+          "a": "Chat tools can word things differently each time, and small changes in your question change the answer. Give the same details each time, and check numbers against a trusted source."
+        },
+        {
+          "q": "Is AI farm advice free?",
+          "a": "Some tools are free and others charge. In anee.io, the Pest Finder and Disease Finder are free. The chat with Anee and her analyses use credits, on plans from PHP 70 a month."
+        },
+        {
+          "q": "Does Anee know Philippine conditions?",
+          "a": "Yes. Anee is made for Filipino farmers and reads your own season: your lots, stages, weather and records. The app knows 85 Philippine crops, from palay and mais to vegetables and fruit trees."
+        },
+        {
+          "q": "What should I never let AI decide alone?",
+          "a": "The product and the rate to spray, whether to destroy a crop, and anything that needs a signature. Those need the label, the FPA list and a person who can see your field."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Crop disease diagnosis apps",
+          "url": "/blog/crop-disease-diagnosis-app"
+        },
+        {
+          "label": "Ask an agriculturist online",
+          "url": "/blog/ask-an-agriculturist-online"
+        },
+        {
+          "label": "AI for Filipino farmers",
+          "url": "/blog/ai-for-filipino-farmers"
+        },
+        {
+          "label": "Avoid buying the wrong pesticide",
+          "url": "/blog/avoid-buying-the-wrong-pesticide"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Mohanty, Hughes and Salathe (2016), Using deep learning for image based plant disease detection, Frontiers in Plant Science",
+          "url": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2016.01419/full"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Tungro",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
+        },
+        {
+          "label": "FPA: Registered products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck System",
+          "url": "https://www.pinoyrice.com/palaycheck/"
+        },
+        {
+          "label": "PAGASA: Farm weather forecast and advisories",
+          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
+        }
+      ]
+    }
+  ]
+}

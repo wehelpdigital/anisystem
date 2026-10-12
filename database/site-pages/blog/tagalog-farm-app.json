@@ -1,0 +1,318 @@
+{
+  "section": "blog",
+  "slug": "tagalog-farm-app",
+  "sortOrder": 600,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "Is There a Tagalog Farm App for Filipino Farmers?",
+  "metaTitle": "Tagalog Farm App: Ask Farm Questions in Your Own Language",
+  "metaDescription": "Want a Tagalog farm app? See which farm tools speak Tagalog, Bisaya or Ilocano, how Anee in anee.io answers in your language, and what is still in English.",
+  "focusKeyword": "Tagalog farm app",
+  "keywords": [
+    "Tagalog farm app",
+    "farm app in Filipino",
+    "Bisaya farm advice",
+    "Taglish",
+    "PalayCheck Tagalog",
+    "ask in Tagalog"
+  ],
+  "excerpt": "anee.io is the closest thing to a full Tagalog farm app today: Anee, its smart farm technician, answers in Tagalog, Bisaya, Ilocano, Taglish or English, and she reads your own lots, crop stage and weather before she answers. The menus of anee.io are in plain English, so you tap in English and talk in your own language. For rice, PhilRice also publishes its PalayCheck guide in Tagalog, as Sistemang PalayCheck.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-tagalog-farm-app.webp",
+    "alt": "A farmer in Guiguinto, Bulacan, drags palay seedlings on a tarp across a flooded paddy, the kind of grower a Tagalog farm app is for",
+    "credit": "FBenjr123, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Most farm apps were built in English, for farms far from here. Yet a farmer in Nueva Ecija thinks in Tagalog, a grower in Bukidnon in Bisaya, and one in Isabela in Ilocano. When the app does not speak your language, you ask smaller questions, or none at all.\n\nSo what can you use today? Here is an honest look at what is truly in Tagalog, what is still in English, and how to get farm answers in the words you think in."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Few farm apps are fully in Tagalog. Most mix English screens with Filipino guides or chat.",
+        "In anee.io, the menus are in plain English, and Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English.",
+        "PhilRice publishes its PalayCheck guide in Tagalog, and describes its rice apps in Filipino.",
+        "Anee uses credits. She comes with Libre + Anee for PHP 70 a month and with every paid plan."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What makes a good Tagalog farm app?"
+    },
+    {
+      "type": "text",
+      "text": "A translated menu is nice, but it is not the main thing. What matters is whether you can ask a real question in your own words, and get an answer that fits your field. Check these points."
+    },
+    {
+      "type": "table",
+      "caption": "What to look for in a Tagalog farm app",
+      "rows": [
+        [
+          "What to look for",
+          "Why it matters",
+          "anee.io"
+        ],
+        [
+          "Answers in your language",
+          "You explain the problem better in Tagalog or Bisaya",
+          "Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English"
+        ],
+        [
+          "Taglish is fine",
+          "Farmers mix words like abono, DAT and urea",
+          "Anee replies in the same mix you write in"
+        ],
+        [
+          "Knows your own farm",
+          "Generic advice misses your stage and weather",
+          "Anee reads your lots, stage, protocol, weather and history first"
+        ],
+        [
+          "Reads a photo",
+          "A picture says what words cannot",
+          "Send a photo of the leaf, the pest or the field"
+        ],
+        [
+          "Covers your crop",
+          "Not every farm grows palay",
+          "Growth stages for 85 Philippine crops"
+        ],
+        [
+          "Simple screens",
+          "You should not need a manual",
+          "Plain English menus with the farm words used in the field"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you ask Anee in Tagalog?"
+    },
+    {
+      "type": "text",
+      "text": "Write the way you would talk to a technician who visits your farm. You do not need perfect grammar. Anee looks at your season before she answers, so short questions work."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Open the chat with Anee",
+          "text": "Start a chat with the [smart farm technician](/features/ai-agricultural-technician) inside the app."
+        },
+        {
+          "title": "Ask in your own words",
+          "text": "Type in Tagalog, Bisaya, Ilocano or Taglish. She answers in the language you used."
+        },
+        {
+          "title": "Add a photo",
+          "text": "For a sick plant or a pest, send a close photo and one of the whole field."
+        },
+        {
+          "title": "Ask a follow up",
+          "text": "If the answer is not clear, ask again. The chat picks up where you left off."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Here are a few examples of questions you can send."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "\"Bakit naninilaw ang dahon ng palay ko? 35 DAT na siya.\"",
+        "\"Kailan ako dapat maglagay ulit ng abono sa Lot 2?\"",
+        "\"Anong peste ito? May butas ang mga dahon ng talong.\"",
+        "\"Uulan ba bukas? Mag spray sana ako ng insecticide.\""
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Stuck on an English word on the screen?",
+      "text": "Ask Anee what it means. For example, type \"Ano ang ibig sabihin ng DAT?\" and she will explain it in Tagalog."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which farm resources are already in Tagalog?"
+    },
+    {
+      "type": "text",
+      "text": "Besides Anee, several trusted sources already write for farmers in Filipino and other Philippine languages. Use them side by side."
+    },
+    {
+      "type": "table",
+      "caption": "Farm guides in Tagalog and other Philippine languages",
+      "rows": [
+        [
+          "Resource",
+          "Languages",
+          "What it covers"
+        ],
+        [
+          "Sistemang PalayCheck, PhilRice",
+          "Tagalog",
+          "The PhilRice rice crop management system, key check by key check"
+        ],
+        [
+          "PhilRice Rice Apps page",
+          "Descriptions in Filipino",
+          "Binhing Palay, PalayCheck, MOET, LCC and Rice Crop Manager apps"
+        ],
+        [
+          "ATI guide to lowland vegetables",
+          "Tagalog",
+          "Ampalaya, kalabasa, kamatis, mustasa, okra, patola, sili, sitaw and talong"
+        ],
+        [
+          "anee.io Tagalog guides",
+          "Tagalog",
+          "[Pagtatanim ng palay](/crops/pagtatanim-ng-palay), [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay), mais and fruit trees"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "If you need the English for a farm word, our glossary of [farm words in Tagalog](/blog/farm-words-in-tagalog) covers weeds, pests, diseases and fertilizer terms."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is still in English in this Tagalog farm app?"
+    },
+    {
+      "type": "text",
+      "text": "Here is the honest part. The screens of anee.io, its menus, buttons and report titles, are in plain English. We keep the farm words people use in the field, such as lot, DAT and harvest, and avoid office words. So you tap in English, and you talk to Anee in Tagalog.\n\nFor many farmers that works, because the words on a farm board are short and repeat every day. If it does not work for you, tell us through the [contact page](/contact). It helps us decide what to translate first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much does it cost to ask Anee?"
+    },
+    {
+      "type": "table",
+      "caption": "Plans that include Anee, in Philippine pesos",
+      "rows": [
+        [
+          "Plan",
+          "Price",
+          "Anee"
+        ],
+        [
+          "Libre",
+          "Free",
+          "Not included. The farm diary, growth stages and community only"
+        ],
+        [
+          "Libre + Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "Chat, photos and all four analyses. Buy credit packs when you need more"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "30 AI credits each renewal, and you can buy more"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "100 AI credits each renewal, and you can buy more"
+        ]
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Ask Anee in Tagalog",
+      "text": "Tell her about your lot in your own words and send a photo. She answers with your farm in mind.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm apps in Tagalog"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a farm app in Tagalog?",
+          "a": "Fully translated farm apps are rare. In anee.io, the menus are in plain English, while Anee, its smart farm technician, answers in Tagalog, Bisaya, Ilocano, Taglish or English. PhilRice also publishes its PalayCheck guide in Tagalog."
+        },
+        {
+          "q": "Can Anee answer in Bisaya or Ilocano?",
+          "a": "Yes. If you write in Bisaya, Ilocano, Tagalog or Taglish, Anee answers in the same language. English works too."
+        },
+        {
+          "q": "Can I send a photo and ask in Tagalog?",
+          "a": "Yes. Send a photo of the leaf, the pest or the field and ask your question in Tagalog. Anee looks at the photo with your lot, its stage and the weather in mind."
+        },
+        {
+          "q": "Is Anee free?",
+          "a": "No. Anee uses credits and comes with Libre + Anee for PHP 70 a month, or with Solo Farmer and Farm Owner. The free Libre plan has the farm diary, growth stages and the community, but not Anee."
+        },
+        {
+          "q": "Where can I read farm guides in Tagalog?",
+          "a": "Try Sistemang PalayCheck from PhilRice, the ATI guide to lowland vegetables, and the Tagalog guides on anee.io, such as Pagtatanim ng Palay and Pagtatanim ng Gulay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Farm words in Tagalog",
+          "url": "/blog/farm-words-in-tagalog"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Ask an agriculturist online",
+          "url": "/blog/ask-an-agriculturist-online"
+        },
+        {
+          "label": "Is AI farm advice accurate?",
+          "url": "/blog/ai-farm-advice-accuracy"
+        },
+        {
+          "label": "AI for farmers",
+          "url": "/blog/ai-for-filipino-farmers"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Sistemang PalayCheck (Tagalog)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Sistemang-PalayCheck.pdf"
+        },
+        {
+          "label": "PhilRice: Rice Apps download page",
+          "url": "https://www.philrice.gov.ph/rice-apps/"
+        },
+        {
+          "label": "Agricultural Training Institute MIMAROPA: Mga Gulay sa Kapatagan (lowland vegetables)",
+          "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-12/lowland_vegetables.pdf"
+        },
+        {
+          "label": "Agricultural Training Institute: e Extension and the Farmers' Contact Center",
+          "url": "https://www.e-extension.gov.ph/home/"
+        }
+      ]
+    }
+  ]
+}

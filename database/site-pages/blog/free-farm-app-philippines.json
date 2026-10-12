@@ -1,0 +1,315 @@
+{
+  "section": "blog",
+  "slug": "free-farm-app-philippines",
+  "sortOrder": 580,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "What Is the Best Free Farm App for Filipino Farmers?",
+  "metaTitle": "Free Farm App for Filipino Farmers: What to Look For",
+  "metaDescription": "Looking for a free farm app in the Philippines? See what a good one must do, which free PhilRice apps help rice farmers, and what anee.io Libre gives.",
+  "focusKeyword": "free farm app",
+  "keywords": [
+    "free farm app",
+    "farm app Philippines",
+    "free app for farmers",
+    "PhilRice apps",
+    "Rice Crop Manager",
+    "cropping calendar app"
+  ],
+  "excerpt": "The best free farm app keeps your season in order without charging you: tasks dated from your planting day, growth stages, notes and photos, weather and a record of your harvest. anee.io, a farm app built for Filipino farmers, does this on its free Libre plan for one active season, with a few ads. For rice, the free Rice Crop Manager and the PhilRice apps are worth keeping beside it.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-free-farm-app-philippines.webp",
+    "alt": "A farmer on her phone in a hillside vegetable farm in Benguet, where a free farm app has to work",
+    "credit": "Flordeliz Ranola, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Free apps are easy to find and easy to drop. Most farmers install one, enter a few tasks, and stop when the season gets busy. So the real test of a free farm app is simple: does it still help you at harvest, three months after you started?\n\nBelow is what a useful free app must do, the free tools from the government that rice farmers should know, and an honest look at what the free plan of anee.io includes and what it does not."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A free farm app should plan your tasks by date, show your crop's stage and keep your records, at no cost and with no trial clock.",
+        "The Rice Crop Manager is free, and PhilRice offers apps for varieties, PalayCheck, MOET and the leaf color chart.",
+        "anee.io's Libre plan is free: one active season, the activities board, growth stages, notes, photos, weather for two days and harvest records.",
+        "Libre shows a few ads. Anee, workers, inventory, full weather and most reports come with paid plans."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a free farm app do?"
+    },
+    {
+      "type": "text",
+      "text": "Judge any app by the work it saves you during a real season. Use this table as a checklist, then try the app on your next planting."
+    },
+    {
+      "type": "table",
+      "caption": "What a good free farm app should do, and how anee.io Libre does it",
+      "rows": [
+        [
+          "What to look for",
+          "Why it matters",
+          "anee.io Libre"
+        ],
+        [
+          "Tasks dated from your planting day",
+          "Fertilizer and sprays work only on the right day",
+          "Yes, every task counts from each lot's day zero"
+        ],
+        [
+          "Your crop's growth stage",
+          "You know what to do now and what to watch for",
+          "Yes, for 85 Philippine crops"
+        ],
+        [
+          "Works with weak signal",
+          "Fields rarely have good data",
+          "Yes, offline mode is on for every plan"
+        ],
+        [
+          "Notes and photos",
+          "A photo with a date beats memory",
+          "Yes, with 1 GB of storage"
+        ],
+        [
+          "Weather",
+          "No spray on the day before rain",
+          "Today and tomorrow. Full weather is on Solo Farmer"
+        ],
+        [
+          "Harvest records",
+          "Next season starts from real numbers",
+          "Yes, yield, moisture, buyer and price"
+        ],
+        [
+          "Costs",
+          "You need to know what the crop cost",
+          "Labor report. All reports are on Solo Farmer"
+        ],
+        [
+          "Fair free terms",
+          "No surprise bill after 30 days",
+          "Free with a few ads, with no end date"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which free farm app tools from the government should rice farmers install?"
+    },
+    {
+      "type": "text",
+      "text": "If you grow palay, start with the tools PhilRice and the DA already give for free. They do one job each, and they do it well."
+    },
+    {
+      "type": "table",
+      "caption": "Free rice tools from PhilRice, the DA and IRRI",
+      "rows": [
+        [
+          "Tool",
+          "What it does"
+        ],
+        [
+          "Rice Crop Manager (RCM PH)",
+          "Gives the right kind, amount and timing of fertilizer and advice on crop management. Free on the web and as an app"
+        ],
+        [
+          "Binhing Palay",
+          "A catalogue of released rice varieties with their traits, pest and disease resistance and grain quality. Works offline"
+        ],
+        [
+          "PalayCheck app",
+          "Guidance and reminders for your place and the age of your palay, plus a list of tasks and costs"
+        ],
+        [
+          "MOET app",
+          "Works out how much fertilizer to apply and when"
+        ],
+        [
+          "LCC app",
+          "Reads the nitrogen your palay needs from a photo of the leaf color"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "PhilRice lists these on its Rice Apps page, with Play Store and APK links. The Rice Crop Manager was built by IRRI with PhilRice and is free at its web address or as the RCM PH app. Use them for the questions they answer. Then keep the season itself, its dates, money and photos, in a farm app."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does the free Libre plan of anee.io include?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io is a mobile friendly web app. It runs in the browser of any phone, tablet or computer, and you can add it to your home screen. The Libre plan is free and has no end date. In exchange, it shows a few ads."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Included in Libre"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "One active season, plus one archived season, with one lot.",
+        "The [cropping calendar](/features/cropping-calendar) with activities, notes and tags.",
+        "[Growth stages](/features/growth-stages-and-weather) for 85 Philippine crops, from palay and mais to gulay and fruit trees.",
+        "Weather for today and tomorrow at your farm.",
+        "Drawings, photos and up to 3 maps.",
+        "Observations at harvest, and the labor report.",
+        "Community access with photos, and 1 GB of storage.",
+        "Offline mode: tick tasks and write notes with no signal, then sync later."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Free tools for everyone"
+    },
+    {
+      "type": "text",
+      "text": "Some tools of anee.io are free on their own. The [NPK Plus calculator](/features/npk-plus-calculator) adds up the nutrients in the fertilizers you plan to use. Pest Finder, Disease Finder and Weed Control Helper name the likely problem and the active ingredients by group, never brands. Inside the app, The Stash lets you read every issue of the PhilRice Magazine for free."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Not included in Libre"
+    },
+    {
+      "type": "table",
+      "caption": "What paid plans add, in Philippine pesos",
+      "rows": [
+        [
+          "Plan",
+          "Price",
+          "What it adds"
+        ],
+        [
+          "Libre + Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "Anee, the smart farm technician: chat, photos and all four analyses. Still with ads"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "3 active seasons, up to 5 lots each, workers, inventory, full weather, all reports, no ads"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "Everything unlimited, worker logins, the Collab Room, no ads"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Start the app on your next planting day",
+      "text": "A farm app helps most when it holds a whole season. Add your lot and its transplanting or sowing date first. Then let the calendar fill in the dates, and add a photo every week. By harvest you will have a record you can learn from."
+    },
+    {
+      "type": "cta",
+      "title": "Try the free Libre plan",
+      "text": "Sign up free, add your lot and planting date, and see your whole season on one board.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is a free farm app enough for your farm?"
+    },
+    {
+      "type": "text",
+      "text": "For many small farms, yes. If you farm one lot and do most of the work yourself, Libre and the free PhilRice tools cover the basics. You pay nothing, and you keep a clean record.\n\nUpgrade when the farm outgrows it. For example, if you hire workers and pay wages, Solo Farmer adds payroll and the labor cost of every task. If you buy fertilizer by the bag, the inventory takes each bag out of stock when you tick the task done. And if you want answers about your own crop, Libre + Anee adds Anee for PHP 70 a month. Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English, and her answers use credits. Compare every plan on the [pricing page](/pricing)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about free farm apps"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is anee.io really free?",
+          "a": "Yes. The Libre plan is free with no end date and shows a few ads. It covers one active season with the activities board, growth stages, notes, photos, two days of weather and harvest records."
+        },
+        {
+          "q": "Does the free plan work without internet?",
+          "a": "Yes. Offline mode is on for every plan, Libre included. You can tick tasks and write notes with no signal, and the changes sync when the signal comes back."
+        },
+        {
+          "q": "Can I ask Anee questions on the free plan?",
+          "a": "Not on Libre. Anee comes with Libre + Anee for PHP 70 a month and with every paid plan, and her answers use credits. The pest and disease finders and the NPK Plus calculator are free."
+        },
+        {
+          "q": "Which free apps does PhilRice offer?",
+          "a": "PhilRice lists Binhing Palay, the PalayCheck app, the MOET app, the LCC app and the Rice Crop Manager on its Rice Apps page. The Rice Crop Manager gives fertilizer advice for your field and is free."
+        },
+        {
+          "q": "Do I need a new phone for a farm app?",
+          "a": "No. anee.io runs in the browser of any phone, tablet or computer, and you can add it to your home screen like an app."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Farm management app in the Philippines",
+          "url": "/blog/farm-management-app-philippines"
+        },
+        {
+          "label": "Farm app without internet",
+          "url": "/blog/farm-app-without-internet"
+        },
+        {
+          "label": "Tagalog farm app",
+          "url": "/blog/tagalog-farm-app"
+        },
+        {
+          "label": "Fertilizer calculator app",
+          "url": "/blog/fertilizer-calculator-app"
+        },
+        {
+          "label": "How to make a cropping calendar",
+          "url": "/blog/how-to-make-a-cropping-calendar"
+        },
+        {
+          "label": "anee.io plans and prices",
+          "url": "/pricing"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Rice Apps download page",
+          "url": "https://www.philrice.gov.ph/rice-apps/"
+        },
+        {
+          "label": "PhilRice: Web tool to help raise rice yield and income (Rice Crop Manager)",
+          "url": "https://www.philrice.gov.ph/web-tool-to-help-raise-rice-yield-income/"
+        },
+        {
+          "label": "PhilRice: New app features PH rice varieties (Binhing Palay)",
+          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
+        },
+        {
+          "label": "Agricultural Training Institute: e Extension program",
+          "url": "https://www.e-extension.gov.ph/home/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "section": "blog",
+  "slug": "best-time-to-plant-rice-philippines",
+  "sortOrder": 510,
+  "lang": "en",
+  "category": "Planning",
+  "title": "When Is the Best Time to Plant Rice in Your Province?",
+  "metaTitle": "Best Time to Plant Rice in the Philippines, by Province",
+  "metaDescription": "The best time to plant rice depends on your water, your climate type and your typhoon months. See the planting windows and how to time your province.",
+  "focusKeyword": "best time to plant rice",
+  "keywords": [
+    "best time to plant rice",
+    "rice planting season Philippines",
+    "wet season planting",
+    "dry season planting",
+    "planting window",
+    "synchronous planting",
+    "climate type"
+  ],
+  "excerpt": "The best time to plant rice in your province depends on two things: sure water, and flowering and harvest that miss your typhoon months. Nationwide, wet season planting peaks in June and July and dry season planting in November and December, but each region differs. In irrigated areas, PhilRice's PalayCheck says to plant within 14 days of your irrigation schedule. The When to Plant Analysis in anee.io, a farm app built for Filipino farmers, reads your own town's weather record to name the best window.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-best-time-to-plant-rice-philippines.webp",
+    "alt": "Farmers transplanting rice seedlings in a flooded paddy in Pandi, Bulacan, at the best time to plant rice in their area",
+    "credit": "Judgefloro, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "PAGASA divides the year into a rainy season from June to November and a dry season from December to May. Yet rain does not fall the same way everywhere. The country's yearly rainfall runs from 965 to 4,064 millimeters. Most typhoons also track northwest, sparing much of Mindanao from direct hits. That is why your neighbor's calendar in another province may be wrong for you."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "There is no single national date. Satellite records from 2016 to 2018 show wet season planting from April to August and dry season planting from September to February.",
+        "Irrigated farms should plant within 14 days before or after the area's regular schedule, after a 30 day rest of the field.",
+        "Count back from your danger months, so flowering and harvest miss the typhoons and floods.",
+        "PAGASA says a strong to very strong El Nino may last until the first half of 2027, so plan the coming dry season around sure water."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When do Filipino farmers plant rice in each season?"
+    },
+    {
+      "type": "text",
+      "text": "Researchers from IRRI and PhilRice mapped planting dates across the country with satellite radar from 2016 to 2018. Their findings give a fair picture of the two main seasons."
+    },
+    {
+      "type": "table",
+      "caption": "Rice planting seasons in the Philippines (IRRI and PhilRice, 2019)",
+      "rows": [
+        [
+          "",
+          "Wet season crop",
+          "Dry season crop"
+        ],
+        [
+          "Planting window",
+          "April to August",
+          "September to February"
+        ],
+        [
+          "Peak of planting",
+          "June to July",
+          "November to December"
+        ],
+        [
+          "Early examples",
+          "Surigao del Sur peaked in April",
+          "Misamis Oriental, Basilan and Sulu peaked in September"
+        ],
+        [
+          "Late examples",
+          "Guimaras, Bohol and Camiguin peaked in August",
+          "Most Luzon provinces peaked in January"
+        ],
+        [
+          "Main risk",
+          "Typhoons and floods near harvest",
+          "Water running short before harvest"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The same study found that in most regions planting stretches over more than 100 days. A spread that long lets pests and diseases move from early fields to late ones. So timing with your neighbors matters as much as the month."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does your climate type change the best time to plant rice?"
+    },
+    {
+      "type": "text",
+      "text": "PAGASA sorts places into four climate types by how the rain spreads through the year. The study above describes them this way, and your type tells you how much room you have."
+    },
+    {
+      "type": "table",
+      "caption": "Climate types and what they mean for planting",
+      "rows": [
+        [
+          "Climate type",
+          "Rain pattern",
+          "Example areas",
+          "What it means for you"
+        ],
+        [
+          "Type I",
+          "Dry from November to April, wet the rest of the year",
+          "Central Luzon, Western Visayas",
+          "Two clear seasons, so the dry season crop depends on irrigation"
+        ],
+        [
+          "Type II",
+          "No dry season, heaviest rain from November to January",
+          "Eastern Luzon, Eastern Visayas, northeast Mindanao",
+          "Keep flowering and harvest away from the peak rain months"
+        ],
+        [
+          "Type III",
+          "Dry from November to February, wet the rest",
+          "Central Visayas, western Bicol, Northern Mindanao",
+          "A short dry spell, so time the dry season crop with care"
+        ],
+        [
+          "Type IV",
+          "Rain spread fairly evenly all year",
+          "Central Mindanao",
+          "A wide window, but plant together with neighbors"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you find the best time to plant rice on your own farm?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Get your water schedule",
+          "text": "Ask your irrigators' association when the water comes. PalayCheck counts a farm as synchronous if it plants within 14 days of the area's regular schedule, before or after."
+        },
+        {
+          "title": "Count back from the danger months",
+          "text": "Write down when typhoons or floods usually hit your area. Then pick a variety and a sowing date so flowering and harvest fall outside them. PalayCheck notes that PSB Rc 10, an early variety of 106 days, can fit the crop calendar before the typhoon months."
+        },
+        {
+          "title": "Read the season outlook",
+          "text": "Check the PAGASA ENSO alert before each season. In a dry year, plant only where water is sure, and choose drought tolerant or early maturing varieties."
+        },
+        {
+          "title": "Get the field and seedbed ready",
+          "text": "Let the field rest at least 30 days after the last harvest. PalayCheck wants seedlings 18 to 21 days old for hand transplanting, so sow the seedbed that many days before."
+        },
+        {
+          "title": "Rainfed fields wait for real rain",
+          "text": "Start when the rains have settled and the paddy holds water, not after the first shower. A crop that dries out in its first weeks rarely catches up."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not race ahead of your neighbors",
+      "text": "A lone early lot, or a late lot after everyone has harvested, feeds pests that have nowhere else to eat. If an area plants together, PalayCheck says, everyone harvests at about the same time. Then pests run out of food. Tungro, spread by the green leafhopper, is the classic example."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What changes in an El Nino or La Nina year?"
+    },
+    {
+      "type": "text",
+      "text": "In its 7 October 2026 update, PAGASA said a strong to very strong El Nino is present. It may peak before the end of 2026 and last until the first half of 2027. For the coming dry season, PhilRice advises drought tolerant or early maturing varieties. It also suggests dry direct seeding and controlled irrigation to save water.\n\nIn a La Nina year the danger flips to floods and storms. PhilRice advises planning the planting so that flowering, grain filling and harvest do not meet strong rain or wind. Our guide to [El Nino farming tips](/blog/el-nino-la-nina-farming-tips) covers both seasons. For seed, see [best rice variety for your area](/blog/best-rice-variety-for-my-area)."
+    },
+    {
+      "type": "cta",
+      "title": "Get a planting window for your own town",
+      "text": "Anee reads your town's weather record and the months ahead. Then she names the best window, a second choice and the risk in each month.",
+      "label": "See When to Plant Analysis",
+      "url": "/features/when-to-plant-analysis"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can anee.io help you plant on time?"
+    },
+    {
+      "type": "text",
+      "text": "The When to Plant Analysis is run by Anee, the smart farm technician inside anee.io. She reads the storms, floods, droughts and heat of past years in your area, and the El Nino outlook. Then she fits the window to your variety's maturity. It uses credits and comes with Libre plus Anee from PHP 70 a month, Solo Farmer and Farm Owner.\n\nOnce you choose a date, set the lot's day zero inside that window. The [cropping calendar](/features/cropping-calendar) then dates the rest of the season. After that, [growth stages and weather](/features/growth-stages-and-weather) follow each lot day by day. For the full crop, read our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) and [rice land preparation](/land-preparation/rice-land-preparation)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the best time to plant rice"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What month is best to plant rice in the Philippines?",
+          "a": "No single month fits the whole country. Wet season planting peaks in June and July and dry season planting in November and December, but each province differs. In irrigated areas, plant within 14 days of your irrigation schedule."
+        },
+        {
+          "q": "Can I plant rice during El Nino?",
+          "a": "Yes, where water is sure. PhilRice advises drought tolerant and early maturing varieties, dry direct seeding and water saving methods such as controlled irrigation. If you have no stored water, a low water crop like munggo may use the season better."
+        },
+        {
+          "q": "How many days before transplanting should I sow the seedbed?",
+          "a": "PalayCheck recommends seedlings 18 to 21 days old for hand transplanting. So sow the seedbed 18 to 21 days before you transplant. Seedlings older than 25 days recover slowly and produce fewer tillers."
+        },
+        {
+          "q": "Why should I plant at the same time as my neighbors?",
+          "a": "Synchronous planting leaves pests with no young crop to move to after harvest. PalayCheck also asks you to rest the field for 30 days. Most insect pests live about 30 days, so they starve without a host."
+        },
+        {
+          "q": "Does anee.io tell me when to plant?",
+          "a": "Yes. The When to Plant Analysis names the best planting window and a second choice for your town and variety, with the risk in each month. It runs on credits and comes with any plan that includes Anee."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related planting guides",
+      "items": [
+        {
+          "label": "El Nino and La Nina farming tips",
+          "url": "/blog/el-nino-la-nina-farming-tips"
+        },
+        {
+          "label": "Best rice variety for your area",
+          "url": "/blog/best-rice-variety-for-my-area"
+        },
+        {
+          "label": "How to make a cropping calendar",
+          "url": "/blog/how-to-make-a-cropping-calendar"
+        },
+        {
+          "label": "Staggered planting schedule",
+          "url": "/blog/staggered-planting-schedule"
+        },
+        {
+          "label": "Rice tungro disease",
+          "url": "/diseases/rice-tungro"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI and PhilRice: The rice planting window in the Philippines, an analysis using SAR imagery (ISPRS Archives, 2019)",
+          "url": "https://isprs-archives.copernicus.org/articles/XLII-4-W19/241/2019/"
+        },
+        {
+          "label": "PAGASA: Climate of the Philippines",
+          "url": "https://www.pagasa.dost.gov.ph/information/climate-philippines"
+        },
+        {
+          "label": "PAGASA: El Nino and La Nina monitoring, ENSO alert status",
+          "url": "https://www.pagasa.dost.gov.ph/climate/el-nino-la-nina/monitoring"
+        },
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: El Nino, La Nina at pagpapalayan (Q and A)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/12/Q_A-22-EN-LN-at-Pagpapalay-Dec.-2023.pdf"
+        }
+      ]
+    }
+  ]
+}

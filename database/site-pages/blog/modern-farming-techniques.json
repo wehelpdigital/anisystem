@@ -1,0 +1,274 @@
+{
+  "section": "blog",
+  "slug": "modern-farming-techniques",
+  "sortOrder": 840,
+  "lang": "en",
+  "category": "Getting Started",
+  "title": "What Is the Best Way to Learn Modern Farming Techniques in the Philippines?",
+  "metaTitle": "Modern Farming Techniques: How to Learn Them in the PH",
+  "metaDescription": "Learn modern farming techniques the practical way: free ATI courses, PalayCheck, farmer field schools and tests on your own lot, plus which ones pay first.",
+  "focusKeyword": "modern farming techniques",
+  "keywords": [
+    "modern farming techniques",
+    "modern farming in the Philippines",
+    "alternate wetting and drying",
+    "farmer field school",
+    "PalayCheck",
+    "free farming courses"
+  ],
+  "excerpt": "The best way to learn modern farming techniques in the Philippines is to pair a free course with practice on your own field. Take an ATI online course or join a farmer field school, follow a proven system like PhilRice PalayCheck, then try one new technique per season on part of your lot and compare it with your old way. anee.io, a farm app built for Filipino farmers, makes that comparison easy, because it records what you did, on which day and what it cost, season after season.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-modern-farming-techniques.webp",
+    "alt": "A drone sprays a rice field during an IRRI demonstration of modern farming techniques in Los Banos, Laguna",
+    "credit": "Christopher Hedreyd, PIA 4A CALABARZON, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Modern farming is not only drones and machines. For most Filipino farmers, the techniques that pay first are cheaper ones: giving fertilizer by what the soil and leaves say, watering rice only when it needs it, and harvesting at the right day. They need knowledge more than money.\n\nAnd knowledge is the easy part to get for free. The hard part is turning a seminar into a habit on your own lot. Here is how to do both."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Free courses: the ATI runs self paced online courses, radio lessons and a contact center for farm questions.",
+        "Farmer field schools teach by doing: a group meets through a whole season and tests practices in the field.",
+        "Start with techniques that cut costs, such as alternate wetting and drying and fertilizer by soil and leaf color.",
+        "Test one change at a time on part of your lot, record it, and compare the results with your usual way."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What counts as modern farming techniques?"
+    },
+    {
+      "type": "text",
+      "text": "A technique is modern if research shows it gives more, or costs less, than the old way in conditions like yours. These are the ones Filipino rice and vegetable farmers hear about most, with where to learn each."
+    },
+    {
+      "type": "table",
+      "caption": "Modern farming techniques and where to learn them",
+      "rows": [
+        [
+          "Technique",
+          "What it does",
+          "Where to learn"
+        ],
+        [
+          "PalayCheck",
+          "Compares your practices with the best ones, stage by stage, through key checks",
+          "The PhilRice PalayCheck guide, in English or Tagalog"
+        ],
+        [
+          "Alternate wetting and drying (AWD)",
+          "Cuts irrigation water in rice without lowering yield, says IRRI",
+          "IRRI Rice Knowledge Bank and your irrigators' association"
+        ],
+        [
+          "Fertilizer by soil and leaf color",
+          "Gives the crop what it lacks, not a fixed recipe",
+          "Rice Crop Manager and the PhilRice MOET and LCC apps"
+        ],
+        [
+          "Mechanization",
+          "Saves labor and time at planting, harvest and drying",
+          "PhilMech, the DA center for postharvest and mechanization"
+        ],
+        [
+          "Records and weather planning",
+          "Puts every task on the right day and shows what each costs",
+          "A farm app or a notebook kept every day"
+        ],
+        [
+          "Satellite crop monitoring",
+          "Shows weak spots in a field from above",
+          "Our guide to [satellite crop monitoring](/blog/satellite-crop-monitoring-philippines)"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where can you learn modern farming techniques for free?"
+    },
+    {
+      "type": "text",
+      "text": "The DA Agricultural Training Institute leads the government's digital extension. Its e Extension program gathers most of what a farmer can use from home."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**e Learning**: self paced online certificate courses on crops, livestock and poultry, fisheries and sustainable agriculture.",
+        "**School on the Air**: radio lessons on the full package of technology for rice, corn, high value crops, livestock and organic farming.",
+        "**Farmers' Contact Center**: technical advice by voice call, text, email or online chat.",
+        "**Agri Extension on Wheels**: a mobile hub that brings knowledge products closer to farming communities.",
+        "**PalayCheck**: the PhilRice rice system, free to download in English and in Tagalog."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Inside anee.io, The Stash also lets you read every issue of the PhilRice Magazine for free. It covers new varieties, field methods and the farmers who made them work."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why do farmer field schools work so well?"
+    },
+    {
+      "type": "text",
+      "text": "Because you learn on a real field, with your neighbors, across a real season. FAO describes a farmer field school as a group that meets regularly during a production cycle. Members set up experiments and learn hands on, so they can adapt practices to their own conditions.\n\nPalayCheck works the same way. It presents the best practices as key checks, compares them with what farmers do, and learns through farmers' discussion groups. So ask your municipal agriculturist or the nearest ATI center if a field school or PalayCheck group runs in your area."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you test modern farming techniques on your own farm?"
+    },
+    {
+      "type": "text",
+      "text": "A technique that works at a research station may not work on your lot. So test it, but test it fairly."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Pick one technique",
+          "text": "Choose one change only, such as AWD, a new variety or a fertilizer plan from a soil test. Two changes at once tell you nothing."
+        },
+        {
+          "title": "Split the field",
+          "text": "Use the new way on one part and your usual way on the other. Keep the variety, planting date and care the same."
+        },
+        {
+          "title": "Record everything",
+          "text": "Write each task, its date, its inputs and its cost for both parts."
+        },
+        {
+          "title": "Harvest each part apart",
+          "text": "Weigh the harvest of each part on its own and note the moisture."
+        },
+        {
+          "title": "Compare the cost per kilo",
+          "text": "More kilos at a much higher cost is not a win. Compare what each kilo cost you."
+        },
+        {
+          "title": "Decide, then grow it",
+          "text": "Keep what worked and use it on more of the farm next season."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "AWD needs the right field and the right timing",
+      "text": "IRRI advises starting AWD 1 to 2 weeks after transplanting, and waiting 2 to 3 weeks longer if many weeds are present. Irrigate again when the water in the field tube drops about 15 cm below the soil. Keep the field flooded from a week before flowering to a week after."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which modern farming techniques pay off first?"
+    },
+    {
+      "type": "text",
+      "text": "Start with the ones that need knowledge, not big equipment. Fertilizer advice by field is a good example. IRRI reported that in a 2018 assessment, farmers who followed Rice Crop Manager advice harvested 640 kg more per hectare on average than farmers who did not. They also had about PHP 11,146 more net benefit per hectare.\n\nTiming pays too. PhilRice PalayCheck warns that palay cut too early can drop its milling recovery to as low as 53 percent. So the day you harvest is a technique in itself. Machines come next, and you can often hire them as a service instead of buying."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help you learn and test new techniques?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io turns your own farm into the classroom. The [Protocol Builder](/features/protocol-builder) lets you write the new method task by task, with materials and rates, and keep it as a version beside your old one. Each lot keeps its own day zero, so a test plot and a normal plot each follow their own dates on the [cropping calendar](/features/cropping-calendar).\n\nAt harvest, the harvest records keep the yield and moisture per lot. [Compare Reports](/features/compare-reports) puts two seasons side by side, and Anee explains what changed and why. View as Protocol then turns the lot that did best into a step by step recipe for next season. Anee's explanations use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Write your new method as a protocol",
+      "text": "Plan every task of the new technique on its day, then compare it with your usual way at harvest.",
+      "label": "Open the Protocol Builder",
+      "url": "/features/protocol-builder"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about modern farming techniques"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are examples of modern farming techniques in the Philippines?",
+          "a": "Common ones are PalayCheck crop management, alternate wetting and drying for irrigated rice, fertilizer by soil test or leaf color, and mechanized planting, harvest and drying. Keeping records and planning by the weather also count."
+        },
+        {
+          "q": "Where can I take free farming courses online?",
+          "a": "The Agricultural Training Institute offers self paced online certificate courses through its e Extension program. It also runs School on the Air on radio and a Farmers' Contact Center for questions."
+        },
+        {
+          "q": "What is alternate wetting and drying?",
+          "a": "It is a water saving technique for irrigated rice from IRRI. You let the water in the field drop to about 15 cm below the soil before you irrigate again, and keep the field flooded around flowering."
+        },
+        {
+          "q": "Is it better to buy farm machines or hire them?",
+          "a": "It depends on how many hectares you farm and how often you would use the machine. Compare the hire cost per hectare with the yearly cost of owning, including repairs, fuel and the operator."
+        },
+        {
+          "q": "Can an app teach modern farming techniques?",
+          "a": "An app cannot replace a field school, but it helps you test and remember. anee.io records each task, input and cost per lot, so you can compare a new technique with your usual way at harvest."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Precision agriculture in the Philippines",
+          "url": "/blog/precision-agriculture-philippines"
+        },
+        {
+          "label": "Digital farming tools",
+          "url": "/blog/digital-farming-tools"
+        },
+        {
+          "label": "Increase rice yield per hectare",
+          "url": "/blog/increase-rice-yield-per-hectare"
+        },
+        {
+          "label": "Start farming with no experience",
+          "url": "/blog/start-farming-with-no-experience"
+        },
+        {
+          "label": "Satellite crop monitoring",
+          "url": "/blog/satellite-crop-monitoring-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Agricultural Training Institute: e Extension program",
+          "url": "https://www.e-extension.gov.ph/home/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Saving water with alternate wetting drying",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/water-management/saving-water-alternate-wetting-drying-awd"
+        },
+        {
+          "label": "FAO: Global Farmer Field School Platform",
+          "url": "https://www.fao.org/farmer-field-schools/en/"
+        },
+        {
+          "label": "IRRI News: DA strengthens support for the nationwide deployment of Rice Crop Manager",
+          "url": "https://news.irri.org/2019/05/philippine-department-of-agriculture.html"
+        }
+      ]
+    }
+  ]
+}

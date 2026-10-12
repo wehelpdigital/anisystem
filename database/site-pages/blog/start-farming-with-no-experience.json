@@ -1,0 +1,310 @@
+{
+  "section": "blog",
+  "slug": "start-farming-with-no-experience",
+  "sortOrder": 820,
+  "lang": "en",
+  "category": "Getting Started",
+  "title": "How to Start Farming in the Philippines With Little or No Experience",
+  "metaTitle": "Start Farming With No Experience: A Philippine Guide",
+  "metaDescription": "Want to start farming with no experience? Learn free through the ATI, register in the RSBSA, start small, plan your first season and find starter loans.",
+  "focusKeyword": "start farming",
+  "keywords": [
+    "start farming",
+    "farming for beginners",
+    "how to start farming in the Philippines",
+    "RSBSA registration",
+    "KAYA loan",
+    "ATI online courses"
+  ],
+  "excerpt": "You can start farming with no experience if you learn first, start small and plan every step before you plant. Take free courses from the Agricultural Training Institute, register in the RSBSA so you qualify for DA help, and grow one crop on a small plot in your first season. anee.io, a farm app built for Filipino farmers, helps you plan that first season: it dates every task from your planting day and shows what your crop needs at each stage.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-start-farming-with-no-experience.webp",
+    "alt": "A Filipino farmer planting eggplant in a freshly prepared field, a simple way to start farming",
+    "credit": "Kunokuno, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Many new farmers in the Philippines are not new to hard work. They are OFWs coming home, office workers with family land, or young people who grew up near the bukid but never ran a season. You can learn the skills. What hurts beginners most is money spent before the lessons.\n\nSo the order matters. Learn, register, plan, then plant, and keep the first season small enough that a mistake does not end your farming."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Learn before you buy: the ATI offers free online courses, radio lessons and a contact center for farm questions.",
+        "Register in the RSBSA. It is free, it is for life, and it opens DA loans, insurance, seeds, fertilizer and soil analysis.",
+        "Start with one crop on a small plot, and know who will buy it before you plant.",
+        "Young farmers aged 18 to 30 may qualify for the ACPC KAYA loan of up to PHP 500,000 with no interest and no collateral."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What do you need to start farming?"
+    },
+    {
+      "type": "text",
+      "text": "Before you think about seeds, answer six questions. If one answer is missing, fix it first. It is cheaper than learning it in the field."
+    },
+    {
+      "type": "table",
+      "caption": "Six things to sort out before your first season",
+      "rows": [
+        [
+          "What you need",
+          "Question to answer",
+          "Where to get help"
+        ],
+        [
+          "Land",
+          "Do you own it, rent it, or farm family land? For how many seasons?",
+          "Your barangay and municipal agriculture office"
+        ],
+        [
+          "Water",
+          "Is there irrigation, or will you depend on rain?",
+          "Your irrigators' association or neighbors"
+        ],
+        [
+          "Skills",
+          "Do you know the crop from planting to harvest?",
+          "ATI courses, PalayCheck and a farmer you trust"
+        ],
+        [
+          "Money",
+          "Can you pay for the whole season, with some to spare?",
+          "Savings, a cooperative or an ACPC loan"
+        ],
+        [
+          "Buyers",
+          "Who will buy your harvest, and at what price?",
+          "Traders, cooperatives, Kadiwa or the NFA for palay"
+        ],
+        [
+          "Time",
+          "Can you be at the farm on the days that matter?",
+          "Family, a caretaker or hired workers"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you start farming step by step?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Learn the basics",
+          "text": "Take a free online course from the ATI, or read the PhilRice PalayCheck system if you plan to grow palay. Spend a few days with an experienced farmer during planting and harvest."
+        },
+        {
+          "title": "Register in the RSBSA",
+          "text": "Get the form from your city or municipal agriculture office. Bring a valid ID and proof of ownership, tenancy or lease if you farm your own lot. The DA says registration is free and lasts for life."
+        },
+        {
+          "title": "Know your land",
+          "text": "Walk the lot after heavy rain to see where water stays. Ask the agriculture office about soil analysis, one of the services open to RSBSA farmers."
+        },
+        {
+          "title": "Choose one crop",
+          "text": "Pick a crop that suits your land, your water and a buyer near you. Our guides to [what crop to plant this season](/blog/what-crop-to-plant-this-season) and [small farm ideas](/blog/small-farm-ideas-philippines) can help."
+        },
+        {
+          "title": "Pick the planting date",
+          "text": "Plant so the crop avoids the worst of the weather at flowering and harvest. See the [best time to plant rice](/blog/best-time-to-plant-rice-philippines) for palay."
+        },
+        {
+          "title": "Write the season plan and budget",
+          "text": "List every task from land preparation to harvest, with its day and its cost. A loan officer will ask for a farm plan and budget too."
+        },
+        {
+          "title": "Start small",
+          "text": "Plant a part of your land first. Learn the crop, then grow the area next season."
+        },
+        {
+          "title": "Keep records from day one",
+          "text": "Write what you did, what it cost and what you harvested. Your second season starts from those notes."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where can beginners learn farming for free?"
+    },
+    {
+      "type": "text",
+      "text": "You do not need to pay for a seminar to start farming well. The government already offers a lot for free, and much of it works from a phone."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**ATI e Learning**: self paced online certificate courses on crops, livestock and poultry, fisheries and sustainable agriculture.",
+        "**School on the Air**: farm lessons by radio, made for farmers in hard to reach areas.",
+        "**Farmers' Contact Center**: the ATI help desk for farm questions, by call, text, email or online chat.",
+        "**PalayCheck**: the PhilRice rice crop management system, with key checks for each stage, in English and in Tagalog.",
+        "**Other farmers**: ask in the [farmer community](/features/farmer-community) of anee.io, and work beside a neighbor for a season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much money do you need to start farming?"
+    },
+    {
+      "type": "text",
+      "text": "It depends on the crop, the land and the area. A hectare of palay costs far more than a small vegetable plot, and rented land adds its own cost. So do not trust a single number from a post. Instead, list every input and every work day, price them in your town, and add them up. Our guide to the [cost of producing rice per hectare](/blog/cost-of-producing-rice-per-hectare) shows the method.\n\nIf you need capital, the Agricultural Credit Policy Council has two programs worth knowing. Both lend through partner cooperatives and rural banks, and both ask for proof of registration, such as the RSBSA."
+    },
+    {
+      "type": "table",
+      "caption": "ACPC loan programs for new and small farmers",
+      "rows": [
+        [
+          "Program",
+          "Who can borrow",
+          "Loan terms"
+        ],
+        [
+          "KAYA, Kapital Access for Young Agripreneurs",
+          "Farm and fishery entrepreneurs aged 18 to 30 who finished formal or non formal schooling, including farm schools and ATI programs",
+          "Up to PHP 500,000, 0 percent interest (a service fee of up to 3.5 percent may apply), no collateral, up to 5 years"
+        ],
+        [
+          "ANYO, Agri Negosyo Loan Program",
+          "Individual small farmers and fisherfolk, and farmer groups",
+          "Up to PHP 300,000 for an individual, 2 percent interest (service fee up to 3.5 percent), up to 5 years"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Applicants sign up through the ACPC online portal and go through a program briefing. KAYA asks for a simple business plan, and ANYO asks individuals for a farm plan and budget. A dated season plan makes both much easier to write."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What mistakes do first time farmers make?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Planting the whole land in the first season, then running out of cash halfway.",
+        "Planting without a buyer, then selling at any price at harvest.",
+        "Buying chemicals because of an ad, without knowing the problem or the active ingredient.",
+        "Forgetting to count labor, including their own days.",
+        "Keeping no records, so the second season repeats the first season's mistakes."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not spray what you cannot name",
+      "text": "Before you buy any pesticide, find out what the problem is. Then choose by active ingredient, and follow the product label and its FPA registration. Ask your municipal agriculturist if you are unsure."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can anee.io help you start farming?"
+    },
+    {
+      "type": "text",
+      "text": "A beginner's biggest gap is knowing what to do next, and when. anee.io fills that gap with dates. On the free Libre plan, the [cropping calendar](/features/cropping-calendar) dates every task from your planting day. Each lot also shows its growth stage, what to do now and what to watch for. Notes and photos keep your record as you go.\n\nWith Libre + Anee, from PHP 70 a month, you can ask Anee in Tagalog or English, and run the What to Plant and When to Plant analyses for your town. Anee Auto goes one step further. Answer a few questions once about your lots, crop, soil, water and workers, and Anee writes every task from land preparation to harvest. Then she tells you each morning what to do. Anee and Anee Auto use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Plan your first season for free",
+      "text": "Sign up, add your lot and your planting date, and see every task of the season on one board.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about starting a farm"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I start farming with no experience?",
+          "a": "Yes, if you learn first and start small. Take a free ATI course, work beside an experienced farmer, and grow one crop on part of your land in your first season. Keep records so you learn faster."
+        },
+        {
+          "q": "What is the easiest crop to start farming with?",
+          "a": "Fast leafy vegetables are a common start, because a mistake costs little and you learn quickly. The ATI says pechay can be harvested 30 to 40 days after sowing. Choose a crop that someone near you will buy."
+        },
+        {
+          "q": "Do I need to register as a farmer?",
+          "a": "It is not required to farm, but RSBSA registration is free and opens DA help. The DA lists loans, crop and livestock insurance, seeds, fertilizer, technical help and soil analysis for registered farmers."
+        },
+        {
+          "q": "Is there a loan for young farmers in the Philippines?",
+          "a": "Yes. The ACPC KAYA program lends up to PHP 500,000 to farm entrepreneurs aged 18 to 30, at 0 percent interest and with no collateral. A partner lender may charge a service fee of up to 3.5 percent."
+        },
+        {
+          "q": "Can an app teach me to farm?",
+          "a": "An app cannot replace time in the field, but it can tell you what to do and when. anee.io dates every task from your planting day and shows your crop's stage, and Anee answers your questions in Tagalog or English."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Small farm ideas",
+          "url": "/blog/small-farm-ideas-philippines"
+        },
+        {
+          "label": "What crop to plant this season",
+          "url": "/blog/what-crop-to-plant-this-season"
+        },
+        {
+          "label": "Modern farming techniques",
+          "url": "/blog/modern-farming-techniques"
+        },
+        {
+          "label": "How to make a cropping calendar",
+          "url": "/blog/how-to-make-a-cropping-calendar"
+        },
+        {
+          "label": "Farm record keeping",
+          "url": "/blog/farm-record-keeping"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Agricultural Training Institute: e Extension, e Learning and School on the Air",
+          "url": "https://www.e-extension.gov.ph/home/"
+        },
+        {
+          "label": "DA Cordillera: RSBSA frequently asked questions",
+          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
+        },
+        {
+          "label": "ACPC: Kapital Access for Young Agripreneurs (KAYA)",
+          "url": "https://acpc.gov.ph/kapital-access-for-young-agripreneurs-kaya/"
+        },
+        {
+          "label": "ACPC: Agri Negosyo Loan Program (ANYO)",
+          "url": "https://acpc.gov.ph/agri-negosyo-loan-program-anyo/"
+        },
+        {
+          "label": "ATI Cordillera: Pechay production for urban and home gardening",
+          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/pechay_production_for_urban_gardening_leaflet.pdf"
+        }
+      ]
+    }
+  ]
+}

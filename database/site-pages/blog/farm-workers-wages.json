@@ -1,0 +1,238 @@
+{
+  "section": "blog",
+  "slug": "farm-workers-wages",
+  "sortOrder": 730,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "How Do I Pay and Track Farm Workers' Wages Fairly?",
+  "metaTitle": "Farm Workers' Wages: How to Pay and Track Them Fairly",
+  "metaDescription": "Pay farm workers' wages fairly: check your region's minimum wage, agree on daily, pakyaw or share pay first, track every day worked, and pay on time.",
+  "focusKeyword": "farm workers wages",
+  "keywords": [
+    "farm workers wages",
+    "minimum wage for farm workers",
+    "pakyaw",
+    "arawan",
+    "hunusan",
+    "farm payroll"
+  ],
+  "excerpt": "To pay farm workers' wages fairly, agree on the pay before the work starts, follow your region's minimum wage, and record every day each person works. Then pay on the day you promised. Write down share and contract pay in pesos too, so you count everyone the same way. In anee.io, a farm app built for Filipino farmers, each worker's rate, attendance and payroll days sit on one board.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-workers-wages.webp",
+    "alt": "Farm workers harvesting ripe rice by hand in a field in Dipolog, Philippines",
+    "credit": "Ronnie from Yahoo, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Hired hands do most of the work on a Philippine rice farm. In the PhilRice and IRRI benchmark study of 2013 and 2014, hired workers did 76 to 79 percent of all farm labor. They mostly did the transplanting, harvesting and hand weeding. Labor also costs the most: close to PHP 30,000 per hectare in 2024, based on PSA data reported by Philstar.\n\nSo fair farm workers' wages are not only right, they are good farming. A crew that trusts your count comes back next season. And a clear record keeps small mistakes from turning into big quarrels at harvest."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Know the legal floor.** Minimum wages are set by region through wage orders, and they change.",
+        "**Agree before work starts:** the pay, the job, half days, food and the payday.",
+        "**Record every day worked,** with the task and the lot, the same day.",
+        "**Put a peso value on share pay,** so harvesters and daily workers are compared fairly.",
+        "**Show the count before you pay,** and keep a list each worker can check."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is the minimum wage for farm workers?"
+    },
+    {
+      "type": "text",
+      "text": "The Philippines has no single national minimum wage. Each Regional Tripartite Wages and Productivity Board issues a wage order for its region. As of October 10, 2026, the NWPC summary of the latest orders lists new daily minimum rates from PHP 426 in parts of BARMM to above PHP 700 in Metro Manila.\n\nMost regions list a range rather than one rate. So read your own region's wage order to find the rate that applies to farm work. Check it again each year, because new orders come out often."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Daily, pakyaw or share: which pay is fair?"
+    },
+    {
+      "type": "text",
+      "text": "Each way of paying can be fair, if both sides agree on it first and you record it the same way every time. PhilRice and IRRI describe the arrangements common on Philippine rice farms."
+    },
+    {
+      "type": "table",
+      "caption": "Common ways of paying farm workers on Philippine rice farms. Shares are from PhilRice and IRRI (Launio and others, 2015).",
+      "rows": [
+        [
+          "Arrangement",
+          "How the pay works",
+          "What to record"
+        ],
+        [
+          "Arawan (daily wage)",
+          "A day's wage for each day worked, whole or half day",
+          "Dates, task, lot, whole or half day, rate"
+        ],
+        [
+          "Pakyaw (contract)",
+          "One price for a whole job, like weeding a lot or transplanting a hectare",
+          "Job, area, agreed price, crew leader, date paid"
+        ],
+        [
+          "Hunusan (harvest share)",
+          "Harvesters and threshers take a share of the gross harvest, 7 to 14 percent for harvesting",
+          "Kilos harvested, share given and its peso value"
+        ],
+        [
+          "Threshing share",
+          "The thresher and its operators take 6 to 7 percent of the gross harvest",
+          "Kilos threshed, share given and its peso value"
+        ],
+        [
+          "Porsyentuhan or kasugpong",
+          "A worker hired for the whole season, usually paid about 10 percent of the gross harvest",
+          "The agreed share, cash advances and extra tasks"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Share pay keeps cash in your pocket at harvest, which is why many farmers like it. But it still costs you. So convert every share into pesos at your selling price, and add it to your labor cost. Our guide to the [cost of producing rice per hectare](/blog/cost-of-producing-rice-per-hectare) shows where it fits."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I track farm workers' wages fairly?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Agree on the terms first",
+          "text": "Settle the rate, the job, what counts as a half day, meals and the payday before work starts. Write it down."
+        },
+        {
+          "title": "Record attendance every day",
+          "text": "Note who came, for which task and lot, and for a whole or half day. Do it in the field, not at night from memory."
+        },
+        {
+          "title": "Log cash advances",
+          "text": "Write down every bale, or cash advance, with its date and amount, so it comes off the right payday."
+        },
+        {
+          "title": "Add up on a fixed day",
+          "text": "Count days times rate for each worker, then subtract advances. Do it the same way for everyone."
+        },
+        {
+          "title": "Show the count, then pay",
+          "text": "Read out or show each worker their days and amount before you hand over the money."
+        },
+        {
+          "title": "Keep the list",
+          "text": "Save each payroll list for the season. It settles questions about farm workers' wages and feeds your labor cost."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Show the count before the cash",
+      "text": "Most wage quarrels are about days, not rates. If each worker sees their own days and advances before payday, mistakes get caught while the work is still fresh in everyone's mind. Then payday becomes a short line, not a long argument."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does fair look like beyond the rate?"
+    },
+    {
+      "type": "text",
+      "text": "Pay on the day you promised, because many farm workers live day to day. If you provide meals, say so when you agree on the pay, so payday holds no surprises. Give the protective gear that the pesticide label asks for to anyone who sprays.\n\nFinally, treat the same work the same way. Two people who transplant the same area on the same terms should get the same pay. A clear record makes that easy to show."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io keep farm workers' wages straight?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, [workers and payroll](/features/farm-workers-and-payroll) keeps each worker's rate. You put people on each task, tick who came as a whole or half day, and set payroll days on the same board. Global Workers holds one roster for every season, with each person's skills and days off.\n\nThe [labor report](/features/labor-report) adds up every worker day at each person's rate, so the count is the same for everyone. Tap any day to see the cash to prepare, wages included. On Farm Owner, a foreman can get a login to mark attendance, with a diary of every change and who made it."
+    },
+    {
+      "type": "cta",
+      "title": "Count every worker day the same way",
+      "text": "Workers and payroll come with Solo Farmer at PHP 200 a month. Start free and move up when your crew is ready.",
+      "label": "See the plans",
+      "url": "/pricing"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm workers' wages"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the minimum wage for farm workers in my region?",
+          "a": "It depends on your region's latest wage order. The NWPC keeps a summary of the latest orders from every regional board, so check it before the season starts."
+        },
+        {
+          "q": "How do I pay a half day?",
+          "a": "Agree beforehand on what counts as a half day, then pay half the daily rate. Record it as a half day, so your count matches the worker's."
+        },
+        {
+          "q": "Is pakyaw fair to workers?",
+          "a": "It can be, if you agree on the price first and the crew earns at least what a fair daily wage would pay for the time spent. Record the job, area and price so both sides can check."
+        },
+        {
+          "q": "How do I count harvest shares in my labor cost?",
+          "a": "Multiply the kilos given as shares by your selling price, then add that to labor. PhilRice and IRRI found harvesters often take 7 to 14 percent of the gross harvest."
+        },
+        {
+          "q": "Can my workers see their own days in anee.io?",
+          "a": "On the Farm Owner plan, you can give a worker a login and choose none, view or edit for each module. You decide what each person can see."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "The best farm labor tracking app",
+          "url": "/blog/farm-labor-tracking-app"
+        },
+        {
+          "label": "Share the farm plan with workers",
+          "url": "/blog/share-the-farm-plan-with-workers"
+        },
+        {
+          "label": "Farm cash flow, week by week",
+          "url": "/blog/farm-cash-flow"
+        },
+        {
+          "label": "Cost of producing rice per hectare",
+          "url": "/blog/cost-of-producing-rice-per-hectare"
+        },
+        {
+          "label": "Labor report in anee.io",
+          "url": "/features/labor-report"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "NWPC: Summary of latest wage orders issued by the Regional Boards",
+          "url": "https://nwpc.dole.gov.ph/summary-of-latest-wage-orders-issued-by-the-regional-boards/"
+        },
+        {
+          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (labor and mechanization)",
+          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
+        },
+        {
+          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
+          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
+        }
+      ]
+    }
+  ]
+}

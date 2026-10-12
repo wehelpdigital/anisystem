@@ -1,0 +1,307 @@
+{
+  "section": "blog",
+  "slug": "filipino-farmer-community-online",
+  "sortOrder": 390,
+  "lang": "en",
+  "category": "Community",
+  "title": "Which Filipino Farmer Community Should You Join for Advice and Farm Inputs?",
+  "metaTitle": "Filipino Farmer Community: Where to Join and Buy Inputs",
+  "metaDescription": "Which Filipino farmer community is worth joining? Compare coops, DA programs and online groups for advice and inputs, and what anee.io offers for free.",
+  "focusKeyword": "Filipino farmer community",
+  "keywords": [
+    "Filipino farmer community",
+    "farmers cooperative",
+    "RSBSA registration",
+    "farm inputs",
+    "online farmer group",
+    "farmer networking"
+  ],
+  "excerpt": "The best Filipino farmer community is the one where real growers near you answer your questions, and where membership gets you cheaper inputs. For most farmers that means two memberships: a registered cooperative or association for inputs and DA programs, and an online group for daily advice. anee.io, a farm app built for Filipino farmers, has a free community inside the same app that runs your season, but it does not sell inputs.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-filipino-farmer-community-online.webp",
+    "alt": "Elders and neighbors of the farming village of Imugan, Nueva Vizcaya, sit together at a barangay meeting, a Filipino farmer community talking things over",
+    "credit": "USAID Biodiversity and Forestry, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Farming alone is expensive. You pay retail for fertilizer, you guess at a new pest, and you learn about a good buyer after your harvest is gone. A community fixes part of that, but only if you pick the right one for the right job.\n\nSo split the question in two. Where do you get advice and contacts? And where do you get inputs at a better price? The answers are usually different groups."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Cheaper inputs come through cooperatives, farmers' associations and DA programs, not through social media groups.",
+        "RSBSA registration is free and makes you eligible for DA help such as seeds, fertilizer, loans and crop insurance.",
+        "An online Filipino farmer community is best for quick advice, early pest warnings and new contacts.",
+        "anee.io has no separate premium community fee. The community comes with every plan, including the free Libre plan."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What makes a good Filipino farmer community?"
+    },
+    {
+      "type": "text",
+      "text": "A big group is not always a good group. Before you join, or before you pay, check these points. They work for a barangay association, a Facebook group or an app."
+    },
+    {
+      "type": "table",
+      "caption": "What to check before you join a farmer community",
+      "rows": [
+        [
+          "What to look for",
+          "Why it matters",
+          "How to check"
+        ],
+        [
+          "Real farmers who grow your crop",
+          "Advice from a palay grower in your province fits your field",
+          "Read the last 20 posts. Are they from farmers or from sellers?"
+        ],
+        [
+          "Answers with reasons",
+          "A tip without a reason can cost you a spray or a bag of fertilizer",
+          "See if members explain why, and say what worked on their own farm"
+        ],
+        [
+          "Your language",
+          "You ask better questions in the words you think in",
+          "Look for Tagalog, Bisaya, Ilocano or Taglish posts"
+        ],
+        [
+          "Clear rules against hard selling",
+          "Some groups are only a storefront for one brand",
+          "Check if product posts name the active ingredient or only a brand"
+        ],
+        [
+          "Group buying or programs",
+          "Volume and DA programs lower input costs",
+          "Ask if the group buys inputs together or links you to the DA"
+        ],
+        [
+          "The real cost",
+          "Fees, share capital or a monthly plan",
+          "Ask what you pay and what you get in return"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where can you buy farm inputs as a group?"
+    },
+    {
+      "type": "text",
+      "text": "If your goal is lower prices on seed, fertilizer and chemicals, an online group will not do much. Instead, the savings come from buying together and from government programs. These are the usual doors."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Register in the RSBSA",
+          "text": "The Registry System for Basic Sectors in Agriculture is the DA list of farmers, farm workers and fisherfolk. Get the form from your city or municipal agriculture office. Registration is voluntary, free and a lifetime enrollment, according to the DA."
+        },
+        {
+          "title": "Join a cooperative or association",
+          "text": "A cooperative registered with the Cooperative Development Authority can buy inputs in volume and borrow as a group. Ask about the membership fee or share capital before you join, and ask what members received last season."
+        },
+        {
+          "title": "Ask the agriculture office about programs",
+          "text": "Once you are in the RSBSA, you can apply for DA help. The DA lists loans, crop and livestock insurance, seeds, fertilizer, farm inputs, technical help and soil analysis."
+        },
+        {
+          "title": "Buy the rest from licensed dealers",
+          "text": "For what you buy alone, use a dealer licensed by the FPA. Our guide to [fertilizer brands and dealers](/blog/fertilizer-brands-and-dealers) and the page on the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) explain what to check."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Many cooperatives also work with the DA Agribusiness and Marketing Assistance Service. It helps farmer groups with business planning and market matching. That matters later, when you sell, as our guide to an [online marketplace for farmers](/blog/online-marketplace-for-farmers-philippines) shows."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Check the label, not the post",
+      "text": "A group post that says \"this spray cured my rice\" is a story, not a recommendation. Before you buy, find the active ingredient, then follow the product label and its FPA registration for your crop. If the post names only a brand, ask what the active ingredient is."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is a premium membership worth paying for?"
+    },
+    {
+      "type": "text",
+      "text": "Pay only for what you will use. A cooperative fee pays for group buying, credit and a share of the profits. A farm app plan pays for tools. Most online farmer groups are free, so a fee to simply join a chat group is hard to justify.\n\nOn anee.io there is no separate community membership. You get the community on every plan. Paid plans add tools for running the farm, and they open more of the community. The prices below are in Philippine pesos."
+    },
+    {
+      "type": "table",
+      "caption": "The anee.io community on each plan",
+      "rows": [
+        [
+          "Plan",
+          "Price",
+          "Community access"
+        ],
+        [
+          "Libre",
+          "Free, with a few ads",
+          "Community access with photos"
+        ],
+        [
+          "Libre + Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "Same as Libre, plus Anee to answer when no one else does"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "Full community access, no ads"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "Full access, and you can create your own discussion rooms"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "You can compare every plan on the [pricing page](/pricing). If you only want the community and a free farm diary, Libre is enough."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does the anee.io farmer community work?"
+    },
+    {
+      "type": "text",
+      "text": "The [farmer community](/features/farmer-community) sits inside the same app where you plan your season. That is the difference. When you ask about yellow leaves, your crop, its stage and your photos are one tap away."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**News feed**: post a photo of your field and growers reply with what worked for them.",
+        "**Discussion rooms**: topics such as palay, gulay or pests, where you ask and answer.",
+        "**Messages**: talk one to one with photos and voice notes.",
+        "**Cofarmers**: connect with growers you trust and keep up with their posts.",
+        "**A ladder of 100 levels**: members who help others climb ten titles, so helpful farmers stand out."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "If nobody answers, ask Anee, the smart farm technician inside anee.io. She reads your lot, its stage and the weather before she answers, in Tagalog or English. Anee uses credits, and she comes with Libre + Anee and every paid plan. Meanwhile, the [Contact List](/features/farm-contact-list) keeps the suppliers, traders and buyers you meet, with notes and tags, across every season."
+    },
+    {
+      "type": "cta",
+      "title": "Join the anee.io farmer community for free",
+      "text": "Sign up for Libre, post your first photo and meet growers who plant what you plant.",
+      "label": "Join free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should you post to get good answers?"
+    },
+    {
+      "type": "text",
+      "text": "A vague post gets vague replies. So give people what an agriculturist would ask you first."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "A close photo of the problem and one photo of the whole field.",
+        "The crop and variety, and its age in days after transplanting or sowing.",
+        "What you applied and when, with the active ingredient if it was a spray.",
+        "The weather of the last week: heavy rain, dry spell or strong wind.",
+        "What you want to know: what it is, what to do, or whether to wait."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For a second opinion from a trained person, see where to [ask an agriculturist online](/blog/ask-an-agriculturist-online). The Agricultural Training Institute also runs a Farmers' Contact Center that answers by call, text, email and online chat."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about joining a Filipino farmer community"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a free Filipino farmer community online?",
+          "a": "Yes. Most farmer groups on social media are free, and the anee.io community is free on the Libre plan. Libre also includes a farm diary for one active season. It shows a few ads."
+        },
+        {
+          "q": "Can I buy fertilizer and seeds through a farmer community?",
+          "a": "Not through anee.io, which does not sell inputs. Group buying usually happens through a registered cooperative or farmers' association. RSBSA registration also makes you eligible for DA programs that give seeds and fertilizer."
+        },
+        {
+          "q": "How do I register in the RSBSA?",
+          "a": "Ask your city or municipal agriculture office for the enrollment form. Bring a valid government ID and, if you farm your own lot, proof of ownership, tenancy or lease. The DA says registration is free and lasts for life."
+        },
+        {
+          "q": "Do I need to pay to post in the anee.io community?",
+          "a": "No. Every plan, including Libre, can use the community. Paid plans add full community access and farm tools, and Farm Owner can also create discussion rooms."
+        },
+        {
+          "q": "How do I know if advice from a group is safe?",
+          "a": "Ask for the reason behind the advice and the active ingredient behind any product. Then follow the label and its FPA registration for your crop. When in doubt, ask your municipal agriculturist."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Ask an agriculturist online",
+          "url": "/blog/ask-an-agriculturist-online"
+        },
+        {
+          "label": "Online marketplace for farmers",
+          "url": "/blog/online-marketplace-for-farmers-philippines"
+        },
+        {
+          "label": "Fertilizer brands and dealers",
+          "url": "/blog/fertilizer-brands-and-dealers"
+        },
+        {
+          "label": "Tagalog farm app",
+          "url": "/blog/tagalog-farm-app"
+        },
+        {
+          "label": "The anee.io farmer community",
+          "url": "/features/farmer-community"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA Cordillera: RSBSA frequently asked questions",
+          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
+        },
+        {
+          "label": "Cooperative Development Authority",
+          "url": "https://cda.gov.ph/"
+        },
+        {
+          "label": "DA: Agribusiness and Marketing Assistance",
+          "url": "https://www.da.gov.ph/services/agribusiness-and-marketing-assistance/"
+        },
+        {
+          "label": "Agricultural Training Institute: e Extension and the Farmers' Contact Center",
+          "url": "https://www.e-extension.gov.ph/home/"
+        }
+      ]
+    }
+  ]
+}

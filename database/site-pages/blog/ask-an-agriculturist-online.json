@@ -1,0 +1,258 @@
+{
+  "section": "blog",
+  "slug": "ask-an-agriculturist-online",
+  "sortOrder": 650,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "Where Can I Ask an Agriculturist Online for Free in the Philippines?",
+  "metaTitle": "Ask an Agriculturist Online for Free in the Philippines",
+  "metaDescription": "Ask an agriculturist online for free: the PhilRice Text Center, the ATI Farmers' Contact Center, your municipal agriculturist, and what to send them.",
+  "focusKeyword": "ask an agriculturist online",
+  "keywords": [
+    "ask an agriculturist online",
+    "PhilRice Text Center",
+    "Farmers Contact Center",
+    "municipal agriculturist",
+    "free farm advice Philippines",
+    "e Extension"
+  ],
+  "excerpt": "You can ask an agriculturist online for free through public services: the PhilRice Text Center (0917 111 7423) for rice, and the Farmers' Contact Center of the Agricultural Training Institute or your municipal agriculture office for any crop. Most cost you no more than a text, a call or your data. For an answer at any hour, anee.io, a farm app built for Filipino farmers, has a free farmer community. Its smart farm technician, Anee, answers in Tagalog or English on the Libre plus Anee plan for PHP 70 a month.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-ask-an-agriculturist-online.webp",
+    "alt": "An agronomist checks bean leaves with farmers in their field, the same kind of help you get when you ask an agriculturist online",
+    "credit": "Department of Foreign Affairs and Trade, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The free channels below connect you with government agriculture experts, or with the offices that employ them. Each one has its strength. The PhilRice line knows rice best, the Agricultural Training Institute covers every crop, and your municipal agriculturist knows your town.\n\nNone of them can see your field through the phone, though. The better your question, the better the answer, so read the checklist further down before you send anything."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "For rice, text or call the PhilRice Text Center at 0917 111 7423.",
+        "For any crop, livestock or fisheries question, use the ATI Farmers' Contact Center on the e Extension site.",
+        "For field visits and local alerts, contact your municipal or city agriculture office.",
+        "Send the crop, variety, age, place, photos and what you applied, so the expert can answer in one reply.",
+        "For answers at any hour, anee.io has a farmer community and Anee, its smart farm technician, who uses credits."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where can you ask an agriculturist online for free?"
+    },
+    {
+      "type": "text",
+      "text": "These are public services. Most cost you no more than a text, a call or the data on your phone."
+    },
+    {
+      "type": "table",
+      "caption": "Free places to ask farm questions in the Philippines",
+      "rows": [
+        [
+          "Where",
+          "Best for",
+          "How to reach it",
+          "Who runs it"
+        ],
+        [
+          "PhilRice Text Center",
+          "Rice: varieties, seeds, pests and fertilizer",
+          "Text or call 0917 111 7423",
+          "PhilRice, attached to the DA"
+        ],
+        [
+          "Farmers' Contact Center",
+          "Any crop, livestock or fisheries question",
+          "Voice call, text, email, online chat or discussion forum, through the e Extension site",
+          "The Agricultural Training Institute of the DA"
+        ],
+        [
+          "Municipal or city agriculture office",
+          "Field visits, local pest alerts and programs in your town",
+          "Visit, call or message your local office",
+          "Your local government"
+        ],
+        [
+          "Pinoy Rice Knowledge Bank",
+          "Reading up on rice methods by yourself",
+          "The pinoyrice.com website",
+          "PhilRice"
+        ],
+        [
+          "Rice Crop Manager",
+          "A crop and fertilizer guide for your own rice field",
+          "Listed on the e Extension site",
+          "Part of the DA e Extension program"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "How to use the PhilRice Text Center"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Register first",
+          "text": "Text REG, your name, your location and your occupation, separated by spaces, to 0917 111 7423. For example: REG JUAN DELA CRUZ LEYTE FARMER."
+        },
+        {
+          "title": "Ask your question",
+          "text": "Text or call the same number with your rice question, and add the details from the checklist below."
+        },
+        {
+          "title": "Look up a variety by keyword",
+          "text": "Text a variety name, such as Rc160. The reply gives its yield, maturity, reaction to pests and eating quality."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "When PhilRice launched the number in 2018, agents answered from Monday to Friday, 9 AM to 5 PM. The main agent was an agriculturist, and the top questions were about seed quality, varieties, seed supply, pests and fertilizer. Registered farmers also receive farm advisories by text."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "How to use the ATI Farmers' Contact Center"
+    },
+    {
+      "type": "text",
+      "text": "The e Extension program of the Agricultural Training Institute is the digital extension strategy of the DA. It has run since December 2007. Its Farmers' Contact Center gives technical advice on agriculture and fisheries by voice call, text, email, online chat and discussion forums. The same site lists the e Learning portal, with self paced online courses on crops, livestock and fisheries."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should you send when you ask an agriculturist online?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The crop and variety, like palay NSIC Rc 222.",
+        "The age, in days after transplanting or sowing.",
+        "Your town or barangay.",
+        "What you see, since when, and how much of the field it covers.",
+        "Clear photos: one close, one of the whole hill, one of the field.",
+        "What you applied and when: fertilizer, sprays and their active ingredients.",
+        "The recent weather, like heavy rain, a dry spell or a typhoon."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Ask with details",
+      "text": "Compare two questions. One says: Lot 2, NSIC Rc 222, 35 days after transplanting, white streaks on the leaves since Monday. The other says \"may sakit ang palay\", which only means the rice is sick. The first one gets a far sharper answer."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When is an online answer not enough?"
+    },
+    {
+      "type": "text",
+      "text": "Online advice works for common problems. Go to your municipal agriculturist in person when the problem spreads fast or your neighbors see the same thing. Go, too, when you need a soil test or a lab test. Also go when you need an official visit or a signed document. PhilRice tells farmers to ask their municipal or city agriculture office, PhilRice or the BPI for help with [integrated pest management](/pests/integrated-pest-management)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps when the offices are closed"
+    },
+    {
+      "type": "text",
+      "text": "Farm problems do not keep office hours. In the [anee.io farmer community](/features/farmer-community), you can post a photo and ask growers who may have seen the same thing. The free Libre plan includes community access with photos, and Solo Farmer opens full community access.\n\nFor an answer at any hour, [Anee](/features/ai-agricultural-technician), the smart farm technician inside anee.io, answers in Tagalog, Bisaya, Ilocano, Taglish or English. She reads your farm's records first and can look at a photo. Anee uses AI and runs on credits. Plans with Anee start with Libre plus Anee, at PHP 70 a month or PHP 700 a year. She is not a licensed agriculturist, so use her to prepare for the agriculturist's visit, not to replace it. Read more on [how far to trust AI farm advice](/blog/ai-farm-advice-accuracy).\n\nTo read up on your own, [The Stash](/features/the-stash) in anee.io carries every issue of the PhilRice Magazine, free to read."
+    },
+    {
+      "type": "cta",
+      "title": "Join the farmer community for free",
+      "text": "Sign up free, post a photo of your problem, and learn from growers across the Philippines. Add Anee whenever you want answers at any hour.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about asking an agriculturist online"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is the PhilRice Text Center free?",
+          "a": "It is a PhilRice helpdesk on an ordinary mobile number. You pay only your normal charge for the text or call. Register first by texting REG with your name, location and occupation to 0917 111 7423."
+        },
+        {
+          "q": "Can I ask about crops other than rice?",
+          "a": "Yes. The ATI Farmers' Contact Center covers agriculture and fisheries, and your municipal agriculture office handles every crop in your town. The PhilRice line focuses on rice."
+        },
+        {
+          "q": "Is Anee a licensed agriculturist?",
+          "a": "No. Anee is the smart farm technician inside anee.io, and she uses AI. Use her for quick answers and planning, and go to your municipal agriculturist for field visits, soil tests and signed papers."
+        },
+        {
+          "q": "What hours can I ask?",
+          "a": "Government lines keep office hours. When PhilRice launched its Text Center number in 2018, agents answered weekdays from 9 AM to 5 PM. Check the current hours with them. You can post to the anee.io community or ask Anee at any hour."
+        },
+        {
+          "q": "Can I take farming courses online?",
+          "a": "Yes. The e Learning portal of the Agricultural Training Institute offers self paced online courses on crops, livestock, fisheries and more. PhilRice's Pinoy Rice Knowledge Bank also has guides on rice."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Is AI farm advice accurate?",
+          "url": "/blog/ai-farm-advice-accuracy"
+        },
+        {
+          "label": "A farm app in Tagalog",
+          "url": "/blog/tagalog-farm-app"
+        },
+        {
+          "label": "The anee.io farmer community",
+          "url": "/features/farmer-community"
+        },
+        {
+          "label": "Crop disease diagnosis apps",
+          "url": "/blog/crop-disease-diagnosis-app"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice (2018): New farmers' helpline launched",
+          "url": "https://www.philrice.gov.ph/new-farmers-helpline-launched/"
+        },
+        {
+          "label": "PhilRice: Infotxt and e info services",
+          "url": "https://www.philrice.gov.ph/services/infotxt-e-info/"
+        },
+        {
+          "label": "Agricultural Training Institute: e Extension program",
+          "url": "https://www.e-extension.gov.ph/home/"
+        },
+        {
+          "label": "ATI Caraga: Information services",
+          "url": "https://ati2.da.gov.ph/ati-13/content/information-services"
+        },
+        {
+          "label": "PhilRice (2024): PhilRice urges farmers to watch out for pest infestations",
+          "url": "https://www.philrice.gov.ph/philrice-urges-farmers-to-watch-out-for-pest-infestations/"
+        }
+      ]
+    }
+  ]
+}

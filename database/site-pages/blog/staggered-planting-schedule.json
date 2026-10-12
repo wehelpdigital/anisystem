@@ -1,0 +1,299 @@
+{
+  "section": "blog",
+  "slug": "staggered-planting-schedule",
+  "sortOrder": 550,
+  "lang": "en",
+  "category": "Planning",
+  "title": "How Do I Plan a Staggered Planting Schedule for Lots Planted on Different Days?",
+  "metaTitle": "Staggered Planting Schedule: Plan Lots on Different Days",
+  "metaDescription": "A staggered planting schedule spreads labor, cash and harvest across lots. Learn how to plan one, when rice should not be staggered, with a sample table.",
+  "focusKeyword": "staggered planting schedule",
+  "keywords": [
+    "staggered planting schedule",
+    "staggered planting",
+    "planting lots on different days",
+    "synchronous planting",
+    "day zero"
+  ],
+  "excerpt": "To plan a season for lots planted on different days, give each lot its own day zero and count every task from it. A staggered planting schedule then spreads labor, water, cash and harvest across the season. For rice, keep the spread tight: PhilRice's PalayCheck asks you to plant within 14 days of your area's schedule, because a long spread feeds pests. In anee.io, a farm app built for Filipino farmers, each lot counts from its own day zero on one board.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-staggered-planting-schedule.webp",
+    "alt": "Rice paddies in Bohol at different stages, newly transplanted beside taller rice, as in a staggered planting schedule",
+    "credit": "Øyvind Holmstad, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Few farms plant every field on the same day. You may have one hand tractor, a short crew, water that reaches the lower paddies first, or cash that comes in waves. Vegetable growers also stagger on purpose, so the buyer gets produce every week instead of all at once.\n\nStaggering helps the work, but it can hurt the crop if the spread is too wide. So the plan has two jobs: keep each lot on its own clock, and keep the clocks close enough together."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Give each lot its own day zero, then count every task from it: DAT, DAS or DAP.",
+        "For rice, plant within 14 days before or after your area's schedule, after a 30 day rest of the field.",
+        "For vegetables, stagger so a new planting starts bearing as the old one slows.",
+        "Merge all lots into one calendar to spot the days when two lots need workers, cash or water at once."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When does a staggered planting schedule make sense?"
+    },
+    {
+      "type": "table",
+      "caption": "Stagger or plant together?",
+      "rows": [
+        [
+          "Situation",
+          "What to do",
+          "Why"
+        ],
+        [
+          "Rice lots under one irrigation turnout",
+          "Stagger only within 14 days",
+          "PalayCheck Key Check 3, so pests do not carry over"
+        ],
+        [
+          "Rice in a rainfed community",
+          "Plant together with neighbors",
+          "PhilRice says synchronous planting cuts pests and diseases"
+        ],
+        [
+          "Short crew or one hand tractor",
+          "Small gaps of a few days",
+          "Land preparation and transplanting get done on time"
+        ],
+        [
+          "Vegetables sold every week",
+          "Stagger plantings on purpose",
+          "The buyer gets a steady supply"
+        ],
+        [
+          "Vine crops like ampalaya",
+          "Start the next planting before picking slows",
+          "The BPI guide says picking runs 2 to 3 months"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "A wide spread feeds rice pests",
+      "text": "When planting in one area stretches over many weeks, insects and diseases move from early fields to late ones. An IRRI and PhilRice study found planting in most regions spans more than 100 days, and warned that this can raise pest and disease problems. PhilRice's Oplan Iwas Peste asks communities to plant within a month of their planting calendar."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you plan a staggered planting schedule, step by step?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "List your lots",
+          "text": "Write each lot's size, crop and variety. Then decide the order of planting, for example the lot nearest the canal first."
+        },
+        {
+          "title": "Set the gaps",
+          "text": "For rice, keep every lot inside your area's 14 day window. For vegetables, set the gap from the crop's harvest window and your buyer's needs."
+        },
+        {
+          "title": "Give each lot its own day zero",
+          "text": "Use the transplanting or sowing date of that lot. For hand transplanted rice, sow each lot's seedbed 18 to 21 days before its day zero."
+        },
+        {
+          "title": "Copy the same task list to every lot",
+          "text": "Use one protocol, with each task on its day count. Each lot then gets the same tasks on its own dates."
+        },
+        {
+          "title": "Merge and look for clashes",
+          "text": "Put all lots on one calendar. Mark the days when two lots need the same workers, the same water or a lot of cash."
+        },
+        {
+          "title": "Track each lot separately",
+          "text": "Watch each lot's growth stage on its own. A lot that falls behind needs its own adjustment, not the whole farm's."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sample staggered planting schedule for three rice lots"
+    },
+    {
+      "type": "text",
+      "text": "Here are three lots of a 111 to 120 day variety, hand transplanted 11 days apart for the dry season. That keeps them inside PalayCheck's 14 day window. The timings come from PalayCheck and PhilRice's Abonong Swak fertilizer plan."
+    },
+    {
+      "type": "table",
+      "caption": "Three rice lots, each counted from its own day zero (dry season sample)",
+      "rows": [
+        [
+          "Task",
+          "Lot A",
+          "Lot B",
+          "Lot C"
+        ],
+        [
+          "Sow seedbed, 21 days before",
+          "Nov 10",
+          "Nov 17",
+          "Nov 21"
+        ],
+        [
+          "Transplant, DAT 0",
+          "Dec 1",
+          "Dec 8",
+          "Dec 12"
+        ],
+        [
+          "Replant missing hills, by DAT 7",
+          "Dec 8",
+          "Dec 15",
+          "Dec 19"
+        ],
+        [
+          "Basal fertilizer, by DAT 14",
+          "Dec 15",
+          "Dec 22",
+          "Dec 26"
+        ],
+        [
+          "First urea, DAT 22 to 26",
+          "Dec 23 to 27",
+          "Dec 30 to Jan 3",
+          "Jan 3 to 7"
+        ],
+        [
+          "Urea and potash, DAT 32 to 36",
+          "Jan 2 to 6",
+          "Jan 9 to 13",
+          "Jan 13 to 17"
+        ],
+        [
+          "Weed control window ends, DAT 45",
+          "Jan 15",
+          "Jan 22",
+          "Jan 26"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Now look across the rows. In the first week of January, Lot A needs its second top dressing while Lot C needs its first. That week needs more urea, more cash and more hands than any other.\n\nSpot weeks like this early, and buy the bags before the price moves. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) explains each dose, and [how to make a cropping calendar](/blog/how-to-make-a-cropping-calendar) walks through one lot in full."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Staggering vegetables for a steady harvest"
+    },
+    {
+      "type": "text",
+      "text": "For gulay, the goal is the opposite of rice: a harvest that never stops. The BPI ampalaya guide says the first fruits come 45 to 75 days from planting. Then picking runs 2 to 3 times a week for 2 to 3 months. So start the next planting early enough that it bears as the first one slows. For more crops, see [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+    },
+    {
+      "type": "cta",
+      "title": "Give every lot its own day zero",
+      "text": "Add each lot with its own planting date, and anee.io dates every task for it on one board.",
+      "label": "See farm lots",
+      "url": "/features/farm-lots"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io handle lots planted on different days?"
+    },
+    {
+      "type": "text",
+      "text": "Each lot in anee.io keeps its own crop, variety and day zero. Write the plan once in the [Protocol Builder](/features/protocol-builder), then port it into a new season and give each lot its start date. Every task lands on that lot's own count, so DAT 21 is right for all three lots. The builder can also slide extra work to the next free day, so no worker gets two tasks on one day.\n\nDuring the season, the board shows each lot's growth stage on any date. Count the days measures the gap between two dates with each lot's DAT at both ends. Cash to prepare adds up wages and materials for one day or a whole stretch, so the money is ready before the busy week. One honest limit: Libre and Libre plus Anee allow one lot per season, Solo Farmer up to five, and Farm Owner has no limit."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about staggered planting"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is a staggered planting schedule?",
+          "a": "It is a plan where you plant lots or batches on different days, each with its own task dates. The work, the cash and the harvest then come in waves instead of all at once."
+        },
+        {
+          "q": "Is staggered planting good for rice?",
+          "a": "Only within a short window. PalayCheck asks farmers to plant within 14 days before or after the area's regular schedule, after a 30 day rest of the field. A wider spread lets pests and diseases move from early lots to late ones."
+        },
+        {
+          "q": "How far apart should I plant vegetable batches?",
+          "a": "It depends on how long the crop bears and how much your buyer takes each week. A crop that bears for months, like ampalaya, needs fewer batches than a crop harvested once. Start each new batch so it bears as the last one slows."
+        },
+        {
+          "q": "Can one season hold lots with different crops?",
+          "a": "Yes. In anee.io the crop belongs to the lot, so rice in the paddies and corn on the upland block can share one season. You need a plan with more than one lot, such as Solo Farmer or Farm Owner."
+        },
+        {
+          "q": "What if one lot falls behind?",
+          "a": "Set a delay counter on that lot, and each task shows the delayed count beside the calendar's count. Only that lot shifts, while the others keep their own timing."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related planning guides",
+      "items": [
+        {
+          "label": "How to make a cropping calendar",
+          "url": "/blog/how-to-make-a-cropping-calendar"
+        },
+        {
+          "label": "Best time to plant rice",
+          "url": "/blog/best-time-to-plant-rice-philippines"
+        },
+        {
+          "label": "Farm app for vegetable growers",
+          "url": "/blog/farm-app-for-vegetable-growers"
+        },
+        {
+          "label": "Rice tungro disease",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Rice field rats",
+          "url": "/pests/rice-field-rats"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: 5 tips to prevent farm pests launched (Oplan Iwas Peste)",
+          "url": "https://www.philrice.gov.ph/5-tips-prevent-farm-pests-launched/"
+        },
+        {
+          "label": "PhilRice: Recommended varieties, technologies for the rainy season",
+          "url": "https://www.philrice.gov.ph/recommended-varieties-technologies-rainy-season/"
+        },
+        {
+          "label": "IRRI and PhilRice: The rice planting window in the Philippines (ISPRS Archives, 2019)",
+          "url": "https://isprs-archives.copernicus.org/articles/XLII-4-W19/241/2019/"
+        },
+        {
+          "label": "Bureau of Plant Industry: Ampalaya Production Guide",
+          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+{
+  "section": "blog",
+  "slug": "what-crop-to-plant-this-season",
+  "sortOrder": 520,
+  "lang": "en",
+  "category": "Planning",
+  "title": "What Crop to Plant This Season in the Philippines",
+  "metaTitle": "What Crop to Plant This Season: 6 Checks for Your Farm",
+  "metaDescription": "Not sure what crop to plant this season? Weigh your water, the El Nino outlook, soil, market, cash and labor, plus crops PhilRice suggests for dry years.",
+  "focusKeyword": "what crop to plant this season",
+  "keywords": [
+    "what crop to plant this season",
+    "crops for El Nino",
+    "Palayamanan"
+  ],
+  "excerpt": "What crop to plant this season comes down to six checks: water, the season ahead, soil, market, cash and labor. For the coming dry season, PAGASA expects a strong El Nino that may last until mid 2027. So on fields without sure irrigation, low water crops such as munggo deserve a hard look. The What to Plant Analysis in anee.io, run by Anee, weighs your climate, forecast, soil and water to rank the crops for your land.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-what-crop-to-plant-this-season.webp",
+    "alt": "A munggo field near harvest in San Mateo, Isabela, one answer to what crop to plant this season in a dry year",
+    "credit": "Bona Rae Villarta, CC BY SA 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Many farmers plant palay every season out of habit. Yet PhilRice itself promotes Palayamanan Plus, which mixes rice with vegetables, other crops and livestock, and returns straw and hull to the soil. The right crop for your field this season may still be rice. The point is to choose it on purpose, after checking what the season will give you."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Start with water. A crop that runs dry halfway loses more than a cheaper crop that finishes.",
+        "Read the PAGASA ENSO alert. As of 7 October 2026, a strong to very strong El Nino is present.",
+        "In a dry year, PhilRice names munggo, root crops and high value cucurbits as options where water is short.",
+        "Check the buyer and the price before you plant, not after you harvest."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should you check before deciding what crop to plant this season?"
+    },
+    {
+      "type": "table",
+      "caption": "Six checks before you choose a crop",
+      "rows": [
+        [
+          "Check",
+          "Question to ask",
+          "Where to find the answer"
+        ],
+        [
+          "Water",
+          "Is water sure for the whole crop, up to harvest?",
+          "Your irrigators' association, your own records from past seasons"
+        ],
+        [
+          "Season and outlook",
+          "Which months bring rain, typhoons or drought?",
+          "PAGASA climate outlooks and the ENSO alert"
+        ],
+        [
+          "Soil",
+          "Is it heavy clay, sandy, acidic or salty?",
+          "A soil test, or your Municipal Agriculture Office"
+        ],
+        [
+          "Market",
+          "Who will buy, and at what price?",
+          "Traders you know, the DA price monitoring page"
+        ],
+        [
+          "Cash",
+          "Can you carry the costs until the first sale?",
+          "Your expense records, a production guide's cost table"
+        ],
+        [
+          "Labor",
+          "Who will weed, spray and harvest?",
+          "Your family, your workers and the busy months"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Soil problems change the whole answer. If your field is acidic, salty or alkaline, read our guides to [acidic soil preparation](/land-preparation/acidic-soil-preparation) and [saline soil preparation](/land-preparation/saline-soil-preparation) before you choose."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which crops fit a dry season or an El Nino year?"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice's question and answer guide on El Nino lists what farmers can plant when water is short. Here is the gist of it."
+    },
+    {
+      "type": "table",
+      "caption": "Crop options PhilRice gives for El Nino",
+      "rows": [
+        [
+          "Crop",
+          "What PhilRice says about it"
+        ],
+        [
+          "Munggo (mung bean)",
+          "Lives on little water, so it can add income during El Nino"
+        ],
+        [
+          "Pakwan, kalabasa, melon",
+          "Crops of high commercial value that can add to income"
+        ],
+        [
+          "Kamoteng kahoy, kamote, ube",
+          "Root crops that survive even when water is short"
+        ],
+        [
+          "Vegetables in place of rice",
+          "Plant gulay instead of palay where irrigation is short, as in Palayamanan Plus"
+        ],
+        [
+          "Drought tolerant palay",
+          "Where some water exists, plant varieties that tolerate drought or mature early"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "At PhilRice's Lakbay Palay field day in September 2026, farmers' groups also set their El Nino priorities. These included drought tolerant varieties such as NSIC Rc 480, crop insurance, rainwater harvesting and small irrigation pumps.\n\nCorn is another choice after rice where the field drains well. Our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais) covers its season, and [legume land preparation](/land-preparation/legume-land-preparation) covers munggo and peanut beds."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What about a wet or La Nina season?"
+    },
+    {
+      "type": "text",
+      "text": "In a wet year, low fields stay with rice. PhilRice advises flood tolerant varieties such as NSIC Rc194 (Submarino 1), repaired dikes and canals, and drainage after heavy rain. Vegetables in a wet season need raised ground and good drainage, as our guide to [vegetables in the Philippines](/crops/vegetables-philippines) explains."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Try a new crop on one small lot first",
+      "text": "Plant the new crop on a small part of the farm for one season, beside your usual crop. You learn its pests, its labor and its buyers before you put the whole field on it. If it works, scale it up the next season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you compare two crops on paper?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "List three candidates",
+          "text": "Pick crops that suit your water and season from the checks above. Leave out anything you have no buyer for."
+        },
+        {
+          "title": "Find the cost per hectare",
+          "text": "Use a production guide with a cost and return table. For example, the BPI ampalaya guide lists a total cost of PHP 132,480 per hectare, with its own price assumptions."
+        },
+        {
+          "title": "Check the days to first sale",
+          "text": "A quick crop pays sooner. The same guide says ampalaya is ready 45 to 75 days from planting, then picked 2 to 3 times a week."
+        },
+        {
+          "title": "Ask the buyer first",
+          "text": "Call two traders and ask what they pay and when they pay. Then check the DA price monitoring page for the trend."
+        },
+        {
+          "title": "Weigh the risk",
+          "text": "Mark the typhoon, flood and drought months on a calendar and see which crop dodges them best."
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Let Anee rank the crops for your land",
+      "text": "Tell her your town, soil, water, budget and market. She ranks ten crops for your field and month, with the reasons for each.",
+      "label": "See What to Plant Analysis",
+      "url": "/features/what-to-plant-analysis"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can anee.io help you decide?"
+    },
+    {
+      "type": "text",
+      "text": "The What to Plant Analysis asks about your field, water, budget, labor and market. Then Anee, the smart farm technician inside anee.io, ranks the crops that fit. Each pick comes with planting and harvest windows and the reasons behind it. She also reads the current El Nino or La Nina outlook, because a dry year and a wet year favor different crops.\n\nAfter that, the When to Plant Analysis times the crop for your town, and Variety Research compares seeds. These analyses use credits and come with Libre plus Anee from PHP 70 a month, Solo Farmer and Farm Owner. Treat the result as a shortlist, and talk it over with your municipal agriculturist."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about what crop to plant this season"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the most profitable crop to plant in the Philippines?",
+          "a": "No crop is the most profitable everywhere. Profit depends on your yield, your price and your costs, which change by place and season. Compare crops with cost and return tables, such as those in the BPI production guides, then check them against your own water and market."
+        },
+        {
+          "q": "What should I plant after rice in the dry season?",
+          "a": "Where irrigation is short, PhilRice suggests munggo, which lives on little water, or vegetables in place of a second rice crop. Root crops such as kamote and kamoteng kahoy also survive dry spells. Where water is sure, a second rice crop with an early or drought tolerant variety is still an option."
+        },
+        {
+          "q": "Is it better to plant rice or vegetables this season?",
+          "a": "It depends on your water, labor and buyers. Vegetables usually need more daily work and frequent picking, while rice needs more water. List both on paper with their costs, days to sale and risks before you decide."
+        },
+        {
+          "q": "How do I know if El Nino will affect my area?",
+          "a": "Check the PAGASA ENSO alert and its seasonal outlook for your province. As of 7 October 2026, PAGASA says a strong to very strong El Nino is present and may last until the first half of 2027."
+        },
+        {
+          "q": "Can an app tell me what crop to plant?",
+          "a": "An app can narrow the choice. In anee.io, the What to Plant Analysis ranks ten crops for your field and month. It gives the reasons and the risk in the harvest month. You still make the final call, ideally with your local agriculturist."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related planning guides",
+      "items": [
+        {
+          "label": "Best time to plant rice",
+          "url": "/blog/best-time-to-plant-rice-philippines"
+        },
+        {
+          "label": "El Nino and La Nina farming tips",
+          "url": "/blog/el-nino-la-nina-farming-tips"
+        },
+        {
+          "label": "Farm app for vegetable growers",
+          "url": "/blog/farm-app-for-vegetable-growers"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Corn seeds",
+          "url": "/crops/corn-seeds"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: El Nino, La Nina at pagpapalayan (Q and A)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/12/Q_A-22-EN-LN-at-Pagpapalay-Dec.-2023.pdf"
+        },
+        {
+          "label": "PAGASA: El Nino and La Nina monitoring, ENSO alert status",
+          "url": "https://www.pagasa.dost.gov.ph/climate/el-nino-la-nina/monitoring"
+        },
+        {
+          "label": "PhilRice: Farmers weigh El Nino technology options in Nueva Ecija (2026)",
+          "url": "https://www.philrice.gov.ph/farmers-weigh-el-nino-technology-options-in-nueva-ecija/"
+        },
+        {
+          "label": "Bureau of Plant Industry: Ampalaya Production Guide",
+          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
+        },
+        {
+          "label": "Department of Agriculture: Price Monitoring",
+          "url": "https://www.da.gov.ph/price-monitoring/"
+        }
+      ]
+    }
+  ]
+}

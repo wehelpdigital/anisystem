@@ -1,0 +1,231 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-timing-by-growth-stage",
+  "sortOrder": 490,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "Fertilizer Timing by Growth Stage: How Do I Know When to Apply?",
+  "metaTitle": "Fertilizer Timing by Growth Stage: Rice, Corn and Vegetables",
+  "metaDescription": "Fertilizer timing by growth stage: how to spot tillering, panicle initiation and knee high corn in the field, and which dose belongs to each stage.",
+  "focusKeyword": "fertilizer timing by growth stage",
+  "keywords": [
+    "fertilizer timing by growth stage",
+    "when to apply fertilizer",
+    "panicle initiation",
+    "active tillering",
+    "days after transplanting",
+    "knee high corn"
+  ],
+  "excerpt": "Good fertilizer timing by growth stage means you read the plant, not only the calendar. In rice, the basal dose goes in by 14 days after transplanting, nitrogen follows at tillering and the last dose lands around panicle initiation. In corn, the second half of the nitrogen goes on at about four weeks, when plants are knee high. anee.io, a farm app built for Filipino farmers, shows each lot's growth stage on any date, so you know which dose is due.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-timing-by-growth-stage.webp",
+    "alt": "A green rice field near booting stage in Mabitac, Laguna, the stage when fertilizer timing by growth stage matters most",
+    "credit": "Jdcgumpal, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Days after planting are a good guide, but crops do not read calendars. Variety, weather and water can move the same stage by several days. So use the day count to know when to start looking, and the plant itself to decide when to apply.\n\nRice gives the clearest example. IRRI's Rice Knowledge Bank explains that in the tropics the reproductive stage lasts about 35 days and ripening about 30 days. The difference between a short and a long variety lies mostly in the vegetative stage."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Count back from harvest.** Panicle initiation comes about 65 days before maturity in tropical rice.",
+        "**Check the plant to confirm.** A young panicle about 1 mm long shows inside the stem at the stage agronomists call panicle initiation.",
+        "**Feed rice from tillering to panicle initiation.** That is when PalayCheck says the crop needs nutrients most.",
+        "**Side dress corn by knee high,** and no later than about the eighth leaf.",
+        "**Give fruiting vegetables potash** once they start to set fruit."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which rice growth stages need fertilizer?"
+    },
+    {
+      "type": "text",
+      "text": "PalayCheck's Key Check 5 asks for enough nutrients from tillering to early panicle initiation and flowering. The table follows the wet season quick guide for transplanted rice in Nueva Ecija, made by DA, PhilRice and IRRI."
+    },
+    {
+      "type": "table",
+      "caption": "Rice growth stages and the fertilizer that belongs to each. DAT ranges are for early, medium early and medium maturing varieties in the Nueva Ecija quick guide.",
+      "rows": [
+        [
+          "Stage",
+          "How to recognize it",
+          "Days after transplanting",
+          "Fertilizer"
+        ],
+        [
+          "Early growth",
+          "Seedlings recover and put out new leaves",
+          "0 to 14",
+          "Basal: all the phosphorus, the first potassium dose and about 30 percent of the nitrogen"
+        ],
+        [
+          "Active tillering",
+          "New shoots keep coming from the base of each hill",
+          "23 to 27, 24 to 28 or 28 to 32",
+          "Urea"
+        ],
+        [
+          "Panicle initiation",
+          "A young panicle about 1 mm long inside the main stems",
+          "33 to 37, 35 to 39 or 43 to 47",
+          "Last urea, plus the second potassium dose"
+        ],
+        [
+          "Flowering to ripening",
+          "Panicles out, then grains fill and turn golden",
+          "After heading",
+          "Usually none, and leaf color readings stop at early flowering"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I know my rice has reached panicle initiation?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Count back from the maturity on the seed bag",
+          "text": "Subtract about 65 days, for the reproductive and ripening stages together. IRRI's example is IR64: it matures in 110 days with a 45 day vegetative stage."
+        },
+        {
+          "title": "Turn sowing days into transplanting days",
+          "text": "Your count from the seed bag runs from sowing. PalayCheck says to add the age of the seedlings at transplanting to move between days after sowing and days after transplanting."
+        },
+        {
+          "title": "Start checking a week early",
+          "text": "Pull a few of the tallest main stems and split them lengthwise near the base. IRRI says you can see a young panicle about 1 mm long with the naked eye or a magnifying glass."
+        },
+        {
+          "title": "Apply the panicle initiation dose",
+          "text": "PalayCheck puts the last nitrogen 5 to 7 days before panicle initiation for varieties under 110 days, and within 5 to 7 days either side for longer ones. The second potassium dose goes in the same window."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "From panicle initiation, heading follows in about 23 to 25 days, IRRI's Fundamentals of Rice Crop Science says. PalayCheck warns that too much nitrogen during panicle initiation and flowering raises the share of unfilled grains. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) gives the bag amounts for each dose."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Use the leaf color chart between the fixed doses",
+      "text": "PalayCheck reads the chart every 7 days from 14 days after transplanting, or 21 days after sowing, until early flowering. Apply nitrogen when 6 or more of 10 leaves read below 4, or below 3 in direct wet seeded rice."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When should corn and vegetables get their doses?"
+    },
+    {
+      "type": "text",
+      "text": "The DA Cagayan Valley corn guide stages the plant by its fully opened leaves. All the phosphorus, all the potassium and half the nitrogen go in at planting, in a band beside and below the seed. The rest of the nitrogen goes on at four weeks, or when plants are knee high at 30 to 48 cm. Farmers usually do it with the hill up at 21 to 30 days.\n\nThe guide adds that you can still side dress nitrogen up to about the eighth leaf, if the soil is moist and you do not cut the roots. See our page on how to [increase corn yield](/blog/increase-corn-yield-per-hectare) for the full program. Fruiting vegetables run on weeks after transplanting instead, with potash once fruit sets. Our guide to [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines) lists the week by week doses for ampalaya, tomato and eggplant."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/app/growth.png",
+      "alt": "The Growth Stages screen in anee.io showing a transplanted rice lot at 82 days in the flowering stage, with what to do now and what to watch for",
+      "caption": "Growth Stages in anee.io: pick a date and each lot shows its stage, what to do now and what to watch for."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help with fertilizer timing by growth stage?"
+    },
+    {
+      "type": "text",
+      "text": "[Growth stages](/features/growth-stages-and-weather) in anee.io cover 85 Philippine crops, from palay and mais to gulay and fruit trees. Pick any date, and each lot shows its stage, what to do now and what to watch for. Lots planted on different days each count from their own day zero.\n\nSome lots run behind because of drought or a late transplant. [Realign by Anee](/features/realign-by-anee) reads the lot's records, weather and your notes, then moves its stage count to match the real crop. Your calendar dates stay as they are, and the reading uses credits. The Count the days tool shows how many days lie between two dates, with each lot's count at both ends."
+    },
+    {
+      "type": "cta",
+      "title": "See every lot's stage on one screen",
+      "text": "Know which dose is due on each lot today, and which one comes next.",
+      "label": "See growth stages",
+      "url": "/features/growth-stages-and-weather"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fertilizer timing"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many days after transplanting is panicle initiation?",
+          "a": "It depends on the variety. The Nueva Ecija quick guide puts it at 33 to 37 days after transplanting for early maturing varieties. Medium early ones reach it at 35 to 39 days and medium maturing ones at 43 to 47."
+        },
+        {
+          "q": "Can I apply urea at flowering?",
+          "a": "PalayCheck reads nitrogen needs only until early flowering. It also warns that too much nitrogen at this time invites lodging and pests and raises the share of unfilled grains."
+        },
+        {
+          "q": "When is the last fertilizer for corn?",
+          "a": "The DA Cagayan Valley guide side dresses the second half of the nitrogen at about four weeks or knee high. It says you can still side dress nitrogen up to about the eighth leaf, if the soil is moist and you spare the roots."
+        },
+        {
+          "q": "Is the timing different for direct seeded rice?",
+          "a": "Yes. PalayCheck puts the first dose at 7 to 10 days after sowing for direct wet seeded rice. Leaf color chart readings start at 21 days after sowing. The panicle initiation dose follows the same rule as transplanted rice."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Crop growth stage monitoring",
+          "url": "/blog/crop-growth-stage-monitoring"
+        },
+        {
+          "label": "Fertilizer application methods",
+          "url": "/blog/fertilizer-application-methods"
+        },
+        {
+          "label": "Staggered planting schedule",
+          "url": "/blog/staggered-planting-schedule"
+        },
+        {
+          "label": "Plan fertilizer for a whole season",
+          "url": "/blog/season-fertilizer-plan"
+        },
+        {
+          "label": "Nutrient deficiency in rice",
+          "url": "/blog/nutrient-deficiency-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
+          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
+        },
+        {
+          "label": "IRRI: Fundamentals of Rice Crop Science (Yoshida, 1981)",
+          "url": "http://books.irri.org/9711040522_content.pdf"
+        },
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "DA, PhilRice, Nueva Ecija and IRRI: Quick guide for fertilizing transplanted rice during the wet season in Nueva Ecija",
+          "url": "http://www.knowledgebank.irri.org/pinoyrkb/QuickGuide/english/Region%203/Nueva%20Ecija/Quick%20guide%20for%20fertilizing%20transplanted%20rice%20during%20the%20wet%20season%20in%20Nueva%20Ecija.pdf"
+        },
+        {
+          "label": "DA Regional Field Office 2: Corn production techno guide, revised edition 2012",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
+        }
+      ]
+    }
+  ]
+}

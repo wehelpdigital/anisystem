@@ -1,0 +1,256 @@
+{
+  "section": "blog",
+  "slug": "identify-rice-pests-from-a-photo",
+  "sortOrder": 610,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "How Do I Identify Rice Pests From a Photo?",
+  "metaTitle": "Identify Rice Pests From a Photo: What to Shoot and Check",
+  "metaDescription": "Learn to identify rice pests from a photo: which pictures to take, the damage each pest leaves, the look alikes, and when a count means you should act.",
+  "focusKeyword": "identify rice pests from a photo",
+  "keywords": [
+    "identify rice pests from a photo",
+    "rice pest identification",
+    "rice insect pests",
+    "stem borer damage",
+    "hopperburn",
+    "rice bug"
+  ],
+  "excerpt": "To identify rice pests from a photo, take two pictures: a close one of the insect and one of the damage it left, both sharp and in daylight. Then match the damage to the pest: deadhearts and whiteheads point to stem borers, yellow and dried patches with insects at the base point to planthoppers, and empty grains point to rice bugs. With anee.io, a farm app built for Filipino farmers, you can send the photo to Anee, its smart farm technician, or match the damage in the free Pest Finder.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-identify-rice-pests-from-a-photo.webp",
+    "alt": "Two rice bugs on a green rice leaf, a sharp close photo of the kind that helps identify rice pests",
+    "credit": "Rison Thumboor from Thrissur, India, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Often, a photo of the damage helps more than a photo of the insect. Many rice pests hide at the base of the plant or fly off before you get close, but the damage stays. Also, many insects in a paddy are not pests at all. Spiders, dragonflies and many small wasps eat the pests, and a photo full of them is good news.\n\nIRRI also notes that different causes can leave the same mark. Deadhearts and whiteheads, for example, can come from stem borers, rats, neck blast or black bugs. So a good photo set shows three things: the insect, the damage and the pattern in the field."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Take three photos: the insect up close, the damage, and the hill or patch around it.",
+        "Shoot in the early morning or late afternoon, the hours PalayCheck gives for monitoring insect pests.",
+        "Match the damage, not just the bug, with the table below.",
+        "Confirm with a field check, like pulling a tiller or tapping the base of the hill, before you spray.",
+        "In anee.io, send the photo to Anee or match the damage in the free Pest Finder."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What photos should you take?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Go early or late",
+          "text": "Walk the field from 5 to 7 in the morning or late in the afternoon. PalayCheck gives these hours for monitoring insect pests, since many move or hide later in the day."
+        },
+        {
+          "title": "Shoot the insect",
+          "text": "Fill the frame with it, in sharp focus, from the side and from above. Put a coin or your finger beside it to show its size."
+        },
+        {
+          "title": "Shoot the damage",
+          "text": "Take the leaf, the stem base or the panicle where the harm is. For a dead center tiller, pull it and photograph its base too."
+        },
+        {
+          "title": "Shoot the pattern",
+          "text": "Step back and take the hill, then the patch or the whole field. Patches, rows and field edges each tell a different story."
+        },
+        {
+          "title": "Tap the base",
+          "text": "Grasp a hill, bend it over a little and tap it near the base, as IRRI advises for planthoppers. Then photograph what falls on the water."
+        },
+        {
+          "title": "Write it down",
+          "text": "Note the lot, the variety and the days after transplanting, because many pests strike at certain stages."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which rice pest left this damage?"
+    },
+    {
+      "type": "text",
+      "text": "Match what your photo shows with the first column. Then do the check in the last column before you decide anything."
+    },
+    {
+      "type": "table",
+      "caption": "Common rice pest damage in the Philippines and how to confirm it",
+      "rows": [
+        [
+          "What the photo shows",
+          "Likely pest",
+          "How to be sure"
+        ],
+        [
+          "The center tiller dries and pulls out easily (deadheart)",
+          "Stem borer",
+          "Split the stem and look for the larva"
+        ],
+        [
+          "White, empty panicles at heading (whitehead)",
+          "Stem borer, though rats, neck blast and black bugs do the same",
+          "Pull the panicle and split the stem"
+        ],
+        [
+          "Plants yellow, then brown and dry in patches, with sooty mold at the base",
+          "Brown planthopper (hopperburn)",
+          "Tap the base and count the hoppers that fall"
+        ],
+        [
+          "Plants turn reddish brown or yellow and wilt, with no honeydew or sooty mold",
+          "Rice black bug (bugburn)",
+          "Try to pull the plant: with black bug damage it will not come out"
+        ],
+        [
+          "Leaves folded lengthwise with pale streaks inside",
+          "Rice leaffolder",
+          "Open a fold and look for the caterpillar"
+        ],
+        [
+          "Empty or spotted grains from flowering to dough stage",
+          "Rice bug",
+          "Count the bugs on 20 hills in the early morning"
+        ],
+        [
+          "Young hills missing or cut at the waterline",
+          "Golden apple snail",
+          "Look for snails in the water and pink egg clusters on stems"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Look alikes that fool a photo"
+    },
+    {
+      "type": "text",
+      "text": "Hopperburn and the bugburn of black bugs look alike from the bund. IRRI's check is simple: planthoppers leave honeydew and sooty mold at the base, while black bug damage has none. Also, you cannot pull out a plant hit by black bugs, but a stem borer deadheart comes out easily.\n\nRice bug damage can look like a nutrient problem or flower thrips, so look for the bugs themselves. Not sure it is an insect at all? Read [how to tell a pest from a disease](/blog/pest-or-disease-how-to-tell), and see our guide to the [golden apple snail](/pests/golden-apple-snail) for snail damage."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When does a photo mean you should act?"
+    },
+    {
+      "type": "text",
+      "text": "One insect in a photo is not a reason to spray. IRRI says that at 1 brown planthopper per stem or fewer, there is still time to act if the numbers rise. For rice bugs, IRRI says you may need direct control above 10 bugs per 20 hills. PalayCheck also sets levels for each growth stage, so count before you decide. Our guide to [early pest detection](/blog/early-pest-detection) has the full table."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spraying early can make it worse",
+      "text": "IRRI notes that planthopper outbreaks follow pesticides that destroy their natural enemies. If you do spray, use a product registered with the FPA for rice and for that pest, and follow the label."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps you identify rice pests from a photo"
+    },
+    {
+      "type": "text",
+      "text": "Pick palay in the free [Pest Finder](/pests#finder), then where you see the damage: the leaves, the stems, the panicles or the roots. It names the pests that fit, how to be sure, and the active ingredients with their groups, never brands. On a plan with Anee, you can send the photo to Anee, the smart farm technician inside anee.io. She reads it with your lot, its day count, the weather and what you already applied. Then she tells you what it most likely is and what to check next.\n\nQuick Capture saves each photo as a note on the season, with tags such as Pest or Lot 2. Next season you can look back at when the pest came. Anee needs internet and uses credits, while the finder, notes and photos also work on the free Libre plan."
+    },
+    {
+      "type": "cta",
+      "title": "Match the damage in the Pest Finder",
+      "text": "Pick your crop and where you see the damage, and get the pests that fit, how to be sure and what controls them. Free on every plan.",
+      "label": "Open the Pest Finder",
+      "url": "/features/pest-and-disease-finders"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about identifying rice pests"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I identify a rice pest from a blurry photo?",
+          "a": "Rarely. Retake it in daylight with the insect or the damage filling the frame. A second photo of the whole hill helps too."
+        },
+        {
+          "q": "What if I only see damage and no insect?",
+          "a": "That is common, since many pests hide or fly off. Match the damage in the table above or in the Pest Finder. Then go back in the early morning and look for the insect at the base of the hills."
+        },
+        {
+          "q": "Are all insects in the paddy pests?",
+          "a": "No. Spiders, dragonflies, damselflies and many small wasps feed on rice pests. A field with plenty of them may not need any spray at all."
+        },
+        {
+          "q": "Can Anee identify rice pests from a photo in Tagalog?",
+          "a": "Yes. Ask in Tagalog, Bisaya, Ilocano, Taglish or English and add the photo. This needs a plan with Anee, and each answer uses credits."
+        },
+        {
+          "q": "When should I call the municipal agriculturist?",
+          "a": "Call when the damage spreads fast, covers patches, or your count passes the action level. The office can confirm the pest and advise on control for your area."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Rice insects in the Philippines",
+          "url": "/pests/rice-insects"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice stem borer",
+          "url": "/pests/rice-stem-borer"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Early pest detection",
+          "url": "/blog/early-pest-detection"
+        },
+        {
+          "label": "Crop disease diagnosis apps",
+          "url": "/blog/crop-disease-diagnosis-app"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Stem borer",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Planthopper",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Black bug",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/black-bug"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice bug",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck Key Check 7, Pest Management",
+          "url": "https://www.pinoyrice.com/palaycheck/pest-management/"
+        }
+      ]
+    }
+  ]
+}

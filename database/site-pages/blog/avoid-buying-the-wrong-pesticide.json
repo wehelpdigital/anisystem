@@ -1,0 +1,249 @@
+{
+  "section": "blog",
+  "slug": "avoid-buying-the-wrong-pesticide",
+  "sortOrder": 670,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "How Do I Avoid Buying the Wrong Pesticide for My Crop Problem?",
+  "metaTitle": "Wrong Pesticide? How to Buy the Right One for Your Crop",
+  "metaDescription": "Avoid the wrong pesticide: name the problem first, match the product type, check the FPA registration and label, and rotate groups. A farmer's checklist.",
+  "focusKeyword": "wrong pesticide",
+  "keywords": [
+    "wrong pesticide",
+    "how to choose a pesticide",
+    "FPA registered pesticides",
+    "pesticide label",
+    "IRAC group",
+    "pesticide resistance"
+  ],
+  "excerpt": "You avoid the wrong pesticide by naming the problem before you shop. An insecticide does nothing for a fungus, no spray cures a virus, and some problems need no spray at all. Then check that the FPA has registered the product for your crop and pest, read the label, and rotate groups so the pest does not build resistance. With anee.io, a farm app built for Filipino farmers, the free Pest Finder and Disease Finder name active ingredients with their groups, never brands, and Anee, its smart farm technician, can read a photo first.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-avoid-buying-the-wrong-pesticide.webp",
+    "alt": "A farmer pours water into a knapsack sprayer to mix a farm chemical, the moment a wrong pesticide becomes a costly mistake",
+    "credit": "Danjuma Anthony, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The wrong pesticide costs you three times. You pay for the bottle, the problem keeps growing, and the spray kills the spiders and wasps that were working for you for free. PhilRice warns that early spraying kills the natural enemies of pests, and that continuous pesticide use makes pests resistant.\n\nMany wrong purchases start the same way: a farmer describes the problem at the store, and the store picks a product. The fix is to arrive with a name for the problem and a list of active ingredients, not a brand."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Name the problem first: insect, fungus, virus, weed, snail or nutrient.",
+        "Match the product type to the cause. No spray cures a virus.",
+        "Shop by active ingredient and group, not by brand.",
+        "Check the FPA registration, then read the label for your crop, pest, rate and safety.",
+        "Rotate groups between sprays so the pest does not adapt."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which product type matches the problem?"
+    },
+    {
+      "type": "text",
+      "text": "Find your problem in the first column. The last column shows the wrong pesticide that farmers most often take home for it."
+    },
+    {
+      "type": "table",
+      "caption": "Matching the product to the problem",
+      "rows": [
+        [
+          "Problem",
+          "Cause",
+          "What works",
+          "The wrong pesticide people buy"
+        ],
+        [
+          "Stem borer, planthopper, armyworm",
+          "Insect",
+          "An insecticide registered for that pest, rotated by group",
+          "A fungicide, or a broad spray in the first 30 days"
+        ],
+        [
+          "Golden apple snail",
+          "Snail",
+          "Hand picking, water management, or a registered molluscicide",
+          "An insecticide"
+        ],
+        [
+          "Blast, sheath blight, anthracnose",
+          "Fungus",
+          "Resistant varieties, then a registered fungicide by its group",
+          "An insecticide"
+        ],
+        [
+          "Tungro, papaya ringspot, bunchy top",
+          "Virus",
+          "No spray cures it. Prevent it with resistant varieties, clean planting material and removal of sick plants",
+          "Any product sold as a cure"
+        ],
+        [
+          "Grasses, sedges, broadleaf weeds",
+          "Weed",
+          "A herbicide that fits the weed group and the crop's age, or hand weeding",
+          "A herbicide made for another crop or weed group"
+        ],
+        [
+          "Pale or yellow leaves, no spots, no insects",
+          "Nutrient or water",
+          "Fertilizer guided by a leaf color chart or a soil test",
+          "Any pesticide at all"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Not sure which row you are in? Our guide on how to tell a [pest or a disease](/blog/pest-or-disease-how-to-tell) walks you through the field checks. For weeds, see the [herbicides for rice weeds](/weeds/herbicides-for-rice-weeds) guide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Six checks before you pay"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Name the problem",
+          "text": "Use the [Pest Finder](/pests#finder) or the [Disease Finder](/diseases#finder), send a photo to Anee, or ask your municipal agriculturist. Write the name down."
+        },
+        {
+          "title": "Write the active ingredient, not the brand",
+          "text": "One ingredient can sell under many names. That is why the finders list active ingredients with their groups."
+        },
+        {
+          "title": "Check the FPA registration",
+          "text": "The FPA publishes its list of registered pesticide products in Excel and PDF, updated as of August 31, 2026 at this writing. Under Presidential Decree 1144, no one may sell or use a pesticide unless the FPA has registered it."
+        },
+        {
+          "title": "Read the label at the store",
+          "text": "Check that it names your crop and your pest, then read the rate, the safety gear and the days to wait before harvest. If your crop is not on the label, do not buy it."
+        },
+        {
+          "title": "Buy from a licensed handler",
+          "text": "The FPA requires handlers to hold a license before they sell. It also warns against unregistered, smuggled, underweight or expired products."
+        },
+        {
+          "title": "Buy only what you need",
+          "text": "Count your area and the number of sprays, so half used bottles do not sit in the shed for years."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rotate groups so the right pesticide stays right"
+    },
+    {
+      "type": "text",
+      "text": "A pesticide that works today can fail next season if you keep using the same kind. The Insecticide Resistance Action Committee, IRAC, sorts insecticides into groups by how they kill. It advises rotating groups, so that one generation of a pest after another does not meet the same group. Fungicides have their own codes, the FRAC groups, explained in our [guide to fungicides](/blog/fungicides).\n\nIn practice, write the group number next to each spray on your calendar. Then pick a different group next time, as long as it carries an FPA registration for your crop and pest."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Walk away from a doubtful product",
+      "text": "The FPA keeps a list of banned and restricted pesticides. If a seller offers a product that is not on the registered list, or one with no proper label, walk away. Report it to the FPA through its Facebook page, its website or the nearest regional field unit."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps you avoid the wrong pesticide"
+    },
+    {
+      "type": "text",
+      "text": "The free [Pest Finder and Disease Finder](/features/pest-and-disease-finders) name the active ingredients for each problem with their IRAC or FRAC group, never brands and never a rate. Where no spray helps, they say so. On a plan with Anee, send a photo first. Anee, the smart farm technician inside anee.io, reads it with your lot, its stage and what you already applied.\n\nAfter you buy, the [farm inventory](/features/farm-inventory-and-expenses) keeps each product in its own unit, liters or kilos. When you tick a spray task done, the stock goes down and the cost goes into your expenses. You can also count the days between two sprays on the board, and let Anee review your protocol for a spray too close to harvest."
+    },
+    {
+      "type": "cta",
+      "title": "Name the problem before you shop",
+      "text": "Pick your crop and the signs you see, and take the active ingredients and their groups to the store. Free on every plan.",
+      "label": "Open the finders",
+      "url": "/features/pest-and-disease-finders"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about buying the wrong pesticide"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How do I know if a pesticide is registered?",
+          "a": "Check the FPA list of registered pesticide products on the FPA website, which comes in Excel and PDF. Look up the product name or its active ingredient."
+        },
+        {
+          "q": "Can I use a fungicide for an insect problem?",
+          "a": "No. Fungicides work on fungi, and insecticides work on insects. Mixing up the two wastes money and gives the pest time to spread."
+        },
+        {
+          "q": "Is there a spray for tungro?",
+          "a": "No. IRRI says there is no cure for a rice plant infected by tungro, and spraying the leafhoppers that carry it often fails. Prevent it with resistant varieties and by planting at the same time as your neighbors."
+        },
+        {
+          "q": "Why does the same pesticide stop working?",
+          "a": "Pests adapt when they meet the same group of pesticide again and again. PhilRice warns that continuous use makes pests resistant, so rotate groups as IRAC advises."
+        },
+        {
+          "q": "Are pesticides sold online safe to buy?",
+          "a": "Only if the FPA has registered the product and the seller follows the rules. The FPA warns against unregistered, smuggled, underweight or expired products, and online sellers must follow the joint government rules for online business."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        },
+        {
+          "label": "Fungicides and their groups",
+          "url": "/blog/fungicides"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        },
+        {
+          "label": "Pest or disease: how to tell",
+          "url": "/blog/pest-or-disease-how-to-tell"
+        },
+        {
+          "label": "Rain before spraying",
+          "url": "/blog/rain-before-spraying"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FPA: Registered products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "FPA: Frequently asked questions",
+          "url": "https://fpa.da.gov.ph/faqs/"
+        },
+        {
+          "label": "IRAC: Mode of action classification",
+          "url": "https://irac-online.org/mode-of-action/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Tungro",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
+        },
+        {
+          "label": "PhilRice (2012): Young rice plants can take care of themselves",
+          "url": "https://www.philrice.gov.ph/young-rice-plants-can-take-care-of-themselves/"
+        }
+      ]
+    }
+  ]
+}

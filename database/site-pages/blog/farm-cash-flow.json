@@ -1,0 +1,242 @@
+{
+  "section": "blog",
+  "slug": "farm-cash-flow",
+  "sortOrder": 760,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "Farm Cash Flow: How Do I Prepare the Cash for Each Week of the Season?",
+  "metaTitle": "Farm Cash Flow: Prepare the Cash for Each Week",
+  "metaDescription": "Plan your farm cash flow week by week: when rice season costs fall due, a fertilizer cash plan at current FPA prices, and what to do if cash runs short.",
+  "focusKeyword": "farm cash flow",
+  "keywords": [
+    "farm cash flow",
+    "cash flow plan",
+    "weekly farm budget",
+    "cash to prepare",
+    "farm loan",
+    "rice season costs"
+  ],
+  "excerpt": "To prepare the cash for each week of the cropping season, list every task by its date, put a peso amount on each one, and add them up week by week. That farm cash flow plan shows the heavy weeks, like land preparation, fertilizer days and harvest, before you reach them. In anee.io, a farm app built for Filipino farmers, you can see the cash to prepare for any day or any stretch of days.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-cash-flow.webp",
+    "alt": "Philippine peso banknotes and coins spread on a table, cash prepared for farm expenses",
+    "credit": "Marek Ślusarczyk (Tupungato), CC BY 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A rice season does not cost the same every week. Some weeks need almost nothing. Others need wages for a whole transplanting crew and several bags of fertilizer on the same day. If the cash is not ready, the work slips, and late fertilizer or a late spray can cost you yield.\n\nThe total is large. A hectare of palay cost PHP 59,695 to grow in 2024, based on PSA data reported by Philstar. Much of that goes out weeks or months before you sell a single kilo. PhilRice and IRRI, in their cost studies, count up to four months of interest on the cash a farmer spends before harvest."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Plan by week, not by season.** A season total hides the weeks when you need the most cash.",
+        "**Start from your task calendar.** Each task has a date, so each cost has a date too.",
+        "**Subtract what is already in the shed.** Stock you own needs no cash.",
+        "**Mark where each peso will come from:** savings, a loan, or a buyer's advance.",
+        "**Check every week** and move the plan when rain or prices change."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When does the money go out in a rice season?"
+    },
+    {
+      "type": "text",
+      "text": "Here is the usual rhythm for transplanted rice, using the PhilRice fertilizer plan for a 5 to 6 ton crop on a 111 to 120 day variety. The fertilizer amounts use FPA national average prices for October 5 to 9, 2026."
+    },
+    {
+      "type": "table",
+      "caption": "When cash goes out in a rice season, per hectare. Fertilizer from the PhilRice plan at FPA national average prices. Other lines vary by farm.",
+      "rows": [
+        [
+          "When",
+          "What needs cash",
+          "Fertilizer cash per hectare"
+        ],
+        [
+          "Before planting",
+          "Seed, land preparation, machine rental, land rent if paid in cash",
+          ""
+        ],
+        [
+          "0 to 14 DAT",
+          "Transplanting crew, basal fertilizer: 2 bags of 14 14 14",
+          "PHP 3,794.00"
+        ],
+        [
+          "22 to 26 DAT",
+          "First top dressing: 1 bag of urea, weeding",
+          "PHP 2,260.39"
+        ],
+        [
+          "32 to 36 DAT",
+          "Second top dressing: 1 bag of urea and half a bag of 0 0 60",
+          "PHP 3,097.33"
+        ],
+        [
+          "Mid season",
+          "Sprays if needed, irrigation fees, pump fuel",
+          ""
+        ],
+        [
+          "Harvest",
+          "Harvesters and threshers, hauling, drying and sacks",
+          "Shares are often paid in palay"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So fertilizer alone needs about PHP 9,151.72 per hectare in three payments over about five weeks. Wages for land preparation and transplanting usually fall in the same weeks. That makes the first month after transplanting the tightest for cash on many farms. Our [cost of producing rice per hectare](/blog/cost-of-producing-rice-per-hectare) guide lists every cost line."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I build a weekly farm cash flow plan?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "List the tasks by date",
+          "text": "Start from your [cropping calendar](/features/cropping-calendar). Every task, from land preparation to harvest, needs a date."
+        },
+        {
+          "title": "Price each task",
+          "text": "Add the materials, the wages of the crew on it, and any hired service, like a tractor or a harvester."
+        },
+        {
+          "title": "Subtract what you already have",
+          "text": "Fertilizer and seed already in the shed need no new cash. Count only what you still have to buy."
+        },
+        {
+          "title": "Add up each week",
+          "text": "Total the costs for each week. Circle the heavy weeks."
+        },
+        {
+          "title": "Match the cash to the weeks",
+          "text": "Write where the money for each heavy week will come from: savings, a loan, or an advance from a buyer."
+        },
+        {
+          "title": "Check it every week",
+          "text": "If rain moves a task or a price changes, move the cost with it. A plan you never update stops helping."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Share pay saves cash, not cost",
+      "text": "PhilRice and IRRI note that many farmers pay harvesters with a share of the palay to keep cash expenses low at harvest. It does ease your farm cash flow, but the share is still a cost. Put its peso value in your records, so your profit is not overstated."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What can I do if the cash runs short?"
+    },
+    {
+      "type": "text",
+      "text": "First, see what can move. A task that is not tied to a growth stage can wait a week, but fertilizer and pest control on a stage usually cannot. Next, look at formal credit before informal lenders. Ask your Municipal Agriculture Office which DA and ACPC loan programs your area has right now. Many of them ask for RSBSA registration first.\n\nIf your area is under a state of calamity, the ACPC SURE program lends small farmers enrolled in the RSBSA up to PHP 25,000. It charges 0 percent interest, although the lending conduit may charge a 3 percent service fee. It needs no collateral and is payable over up to 3 years. Crop insurance also protects money you borrowed for the crop. Our guide to [farm records for loans and insurance](/blog/farm-records-for-loans-and-insurance) explains what to prepare."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io show the cash to prepare?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, every task sits on its date, with its workers and materials. Tap the money on any day to see the cash to prepare: wages, materials, stock to buy and extra expenses, line by line. Or pick two days and see the total for the whole stretch, so the money is ready before the work.\n\nWages come from who works each task. Stock you already hold in the [farm inventory](/features/farm-inventory-and-expenses) does not count as stock to buy. After the season, the expenses report shows where the money went, so next season's cash plan starts from real numbers."
+    },
+    {
+      "type": "cta",
+      "title": "Know this week's cash before the week starts",
+      "text": "Sign up free, put your season on the board, and tap any day to see the cash it needs.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm cash flow"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is farm cash flow?",
+          "a": "It is the timing of money coming into and going out of your farm. A farm can earn a profit for the season and still run out of cash in a heavy week, so you plan the timing as well as the total."
+        },
+        {
+          "q": "Which weeks of a rice season need the most cash?",
+          "a": "Usually land preparation, transplanting and the fertilizer weeks in the first month after transplanting. Harvest can be heavy too, unless you pay harvesters with a share of the palay."
+        },
+        {
+          "q": "How much cash do I need for fertilizer per hectare?",
+          "a": "On the PhilRice 5 to 6 ton plan, about PHP 9,151.72 per hectare at FPA national average prices for October 5 to 9, 2026. Prices change every week, so check the latest FPA list."
+        },
+        {
+          "q": "Where can a small farmer borrow for the season?",
+          "a": "Ask your Municipal Agriculture Office about DA and ACPC loan programs. Many ask for RSBSA registration, and SURE serves farmers in areas under a state of calamity."
+        },
+        {
+          "q": "Can anee.io show the cash for a whole month?",
+          "a": "Yes. Pick two days on the board and anee.io totals the cash to prepare for the whole stretch. The total covers wages, materials, stock to buy and extra expenses."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Cost of producing rice per hectare",
+          "url": "/blog/cost-of-producing-rice-per-hectare"
+        },
+        {
+          "label": "Farm records for loans and insurance",
+          "url": "/blog/farm-records-for-loans-and-insurance"
+        },
+        {
+          "label": "Farm inventory tracking",
+          "url": "/blog/farm-inventory-tracking"
+        },
+        {
+          "label": "How to make a cropping calendar",
+          "url": "/blog/how-to-make-a-cropping-calendar"
+        },
+        {
+          "label": "How to lower fertilizer cost",
+          "url": "/blog/lower-fertilizer-cost"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FPA: Average retail prices of major fertilizer grades, October 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_.pdf"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (bag plan for 5 to 6 tons)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (costs and labor chapters)",
+          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
+        },
+        {
+          "label": "ACPC: Survival and Recovery (SURE) Program",
+          "url": "https://acpc.gov.ph/?p=12090"
+        },
+        {
+          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
+          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
+        }
+      ]
+    }
+  ]
+}

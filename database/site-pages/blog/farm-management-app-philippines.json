@@ -1,0 +1,292 @@
+{
+  "section": "blog",
+  "slug": "farm-management-app-philippines",
+  "sortOrder": 890,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "What Is the Best Farm Management App in the Philippines?",
+  "metaTitle": "Best Farm Management App in the Philippines: What to Check",
+  "metaDescription": "Looking for the best farm management app in the Philippines? See what to check, how anee.io handles workers, stock, money and team logins, and its limits.",
+  "focusKeyword": "farm management app",
+  "keywords": [
+    "farm management app",
+    "farm records",
+    "farm workers and payroll",
+    "farm inventory",
+    "profit report",
+    "team logins"
+  ],
+  "excerpt": "The best farm management app in the Philippines runs the whole farm, not only the calendar: workers and pay, the shed of inputs, money in and out, and a team that can log in. It should also work on any phone, answer your questions in Tagalog and keep going with patchy signal. Built for Filipino farmers, anee.io covers all of this, from a free plan up to PHP 600 a month for a full team. Choose the app you will open every day, because records only help if you keep them.",
+  "heroImage": {
+    "src": "/images/site/photos/farmer-hijab.jpg",
+    "alt": "Smiling farmer looking at her phone in the middle of a green rice field",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Managing a farm means managing four things: time, people, materials and money. A notebook can hold one of them. Once you hire workers, buy inputs in bulk and grow more than one lot, the notebook starts to lose track.\n\nPhilRice's PalayCheck System ends with a simple loop for farmers: observe, measure and record, then compare the results to find the problems, then act. A farm management app is a tool for that loop, nothing more. Here is what a good one should do, and how anee.io does it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Look for an app that covers the plan, the workers, the inputs and the money in one place.",
+        "Your team should see only what you allow, and every change should leave a trace.",
+        "It must work on ordinary phones, offline in the field, and in Filipino languages.",
+        "anee.io starts free. Solo Farmer at PHP 200 a month adds workers and inventory, and Farm Owner at PHP 600 adds team logins."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should the best farm management app do?"
+    },
+    {
+      "type": "table",
+      "caption": "What to check in a farm management app, and what anee.io does",
+      "rows": [
+        [
+          "Need",
+          "What to look for",
+          "In anee.io"
+        ],
+        [
+          "Plan and calendar",
+          "Tasks dated per lot, easy to move",
+          "Cropping calendar and Protocol Builder"
+        ],
+        [
+          "Workers and pay",
+          "Daily rates, attendance, payroll days",
+          "Workers and payroll, one roster for every season, labor report"
+        ],
+        [
+          "Inputs and stock",
+          "Stock in and out, deducted when used",
+          "Inventory that deducts when a task is ticked done"
+        ],
+        [
+          "Money",
+          "Expenses, sales and profit per season",
+          "Expenses and profit reports from your own records"
+        ],
+        [
+          "Team access",
+          "Each person sees only what they should",
+          "Team logins with none, view or edit per module, and a diary of changes"
+        ],
+        [
+          "Today's work for the crew",
+          "Everyone starts on the same page",
+          "A 6 AM morning plan email, or a day's plan shared as a link"
+        ],
+        [
+          "Help in the field",
+          "Pests, diseases and weather",
+          "Free pest and disease finders, the forecast, and Anee with photos"
+        ],
+        [
+          "Works where you are",
+          "Any phone, weak signal",
+          "Runs in the browser and works offline on every plan"
+        ],
+        [
+          "Language and payment",
+          "Filipino languages, pesos",
+          "Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English, and you pay by GCash or bank transfer"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why the money records matter"
+    },
+    {
+      "type": "text",
+      "text": "Costs pile up in many small lines. The BPI ampalaya guide, for example, lists twelve labor lines and a long list of materials for one hectare. A farm management app should catch each line as it happens, so the season's cost is a sum, not a guess. Records also show what free advice saves you. PhilRice reports that one Tarlac farmer who followed the Rice Crop Manager cut his fertilizer from 12 bags to 6. The [farm reports](/features/farm-reports) in anee.io do that sum from the board, the shed and the payroll."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does a season run in anee.io, from plan to profit?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Plan",
+          "text": "Write the season in the [Protocol Builder](/features/protocol-builder), with tasks, materials and rates on their day counts. Anee can review it for problems before you commit, using credits."
+        },
+        {
+          "title": "Set up",
+          "text": "Add lots, stock the shed and add your workers once with their daily rates. On Farm Owner, give the foreman and partners their own logins."
+        },
+        {
+          "title": "Run",
+          "text": "Each day, the board shows the work by lot. Tick tasks done and mark who worked, and the stock deducts itself and the labor cost adds up."
+        },
+        {
+          "title": "Watch",
+          "text": "Growth stages and the forecast sit beside the plan. Halfway through, Analyze So Far has Anee read the season and list the risks ahead, using credits."
+        },
+        {
+          "title": "Close",
+          "text": "Record the harvest, its price and its buyer. The labor, expenses and profit reports then show what the season really earned."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Use pay day as your test",
+      "text": "On pay day, compare the labor report with the cash you actually handed out. If they match, your records are honest and every other report you trust can rest on them. If they do not, fix the habit first, because a profit report built on missing days is only a guess."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which anee.io plan fits your farm?"
+    },
+    {
+      "type": "table",
+      "caption": "anee.io plans by farm size (prices in pesos)",
+      "rows": [
+        [
+          "Your farm",
+          "Plan",
+          "Price",
+          "What it adds"
+        ],
+        [
+          "One lot, trying it out",
+          "Libre",
+          "Free, with a few ads",
+          "Activities, notes, growth stages, harvest records, labor report"
+        ],
+        [
+          "One lot, wants Anee",
+          "Libre plus Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "Anee's chat and analyses, with the same limits as Libre"
+        ],
+        [
+          "Family farm with hired help",
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "3 active seasons, up to 5 lots each, workers, inventory, all reports, no ads"
+        ],
+        [
+          "Farm with a manager and team",
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "No cap on lots, worker logins, Collab Room, 100 AI credits each renewal"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "See the full list on the [pricing page](/pricing). If you run the farm from the city, read [how to manage a farm remotely](/blog/manage-a-farm-remotely), and for the crew side see [farm workers and payroll](/features/farm-workers-and-payroll)."
+    },
+    {
+      "type": "cta",
+      "title": "Run your farm from one app",
+      "text": "Start free on one lot, then add workers, inventory and team logins as the farm grows.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What are the limits of anee.io?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Anee needs internet and uses credits. The board keeps working offline, but her answers wait for a signal.",
+        "Libre has ads, one active season and one lot. Workers and inventory start at Solo Farmer, and worker logins at Farm Owner.",
+        "It keeps farm costs and sales, but it is not bookkeeping software for taxes.",
+        "It does not buy your harvest or sell inputs. It only helps you keep track of who you sold to and at what price."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm management apps"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a free farm management app in the Philippines?",
+          "a": "Yes. anee.io's Libre plan is free, with one active season, one lot, the activities board, growth stages, harvest records and the labor report. It shows a few ads, and it does not include Anee, workers or inventory."
+        },
+        {
+          "q": "Can my workers use the app too?",
+          "a": "On Farm Owner, each worker or partner gets a login, and you set none, view or edit for each module. A diary records every change and who made it. On Solo Farmer you can keep workers and their pay, but without logins."
+        },
+        {
+          "q": "Does the app track fertilizer and pesticide stock?",
+          "a": "Yes, on Solo Farmer and Farm Owner. When you tick a fertilizer or spray task done, the stock goes down, and undoing the tick puts it back. The cost then flows into the expenses report."
+        },
+        {
+          "q": "Can the app show if my farm made money?",
+          "a": "Yes. The Profit Report sets your harvest sales against everything the season cost. It needs a recorded yield and price, so it never shows a made up profit."
+        },
+        {
+          "q": "Does a farm management app replace a farm technician?",
+          "a": "No. It keeps the plan and the records, and Anee can answer questions and read photos. Still, for soil tests, seed and local advice, your municipal agriculturist and the DA remain the people to ask."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Farm planning app for rice farmers",
+          "url": "/blog/farm-planning-app-philippines"
+        },
+        {
+          "label": "Digital farming tools",
+          "url": "/blog/digital-farming-tools"
+        },
+        {
+          "label": "Farm labor tracking app",
+          "url": "/blog/farm-labor-tracking-app"
+        },
+        {
+          "label": "Farm inventory tracking",
+          "url": "/blog/farm-inventory-tracking"
+        },
+        {
+          "label": "Farm record keeping",
+          "url": "/blog/farm-record-keeping"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "Bureau of Plant Industry: Ampalaya Production Guide (cost and return per hectare)",
+          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
+        },
+        {
+          "label": "PhilRice: Tarlac farmers showcase digital agri's potential in fertilizer use (RCMAS)",
+          "url": "https://www.philrice.gov.ph/tarlac-farmers-showcase-digital-agris-potential-in-fertilizer-use/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "section": "blog",
+  "slug": "share-the-farm-plan-with-workers",
+  "sortOrder": 740,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "How Do I Share the Farm Plan With Workers on Their Phones?",
+  "metaTitle": "Share the Farm Plan With Workers on Their Phones",
+  "metaDescription": "Share the farm plan with workers on their phones: a public link, a 6 AM email, worker logins or a team chat. What each needs and how anee.io does it.",
+  "focusKeyword": "share the farm plan with workers",
+  "keywords": [
+    "share the farm plan with workers",
+    "farm plan on phone",
+    "daily farm plan",
+    "send tasks to workers",
+    "morning plan email",
+    "worker login"
+  ],
+  "excerpt": "The simplest way to share the farm plan with workers is to send each day's tasks to their phones the evening before. Use a form they can open without an account. With anee.io, a farm app built for Filipino farmers, you can share a public link to the plan, a day or a task. Your team also gets the day's plan by email at 6 AM, and the people who need more can have their own login.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-share-the-farm-plan-with-workers.webp",
+    "alt": "A crew of farm workers tends a rice field below Mayon Volcano in Albay, the team you reach when you share the farm plan with workers",
+    "credit": "Gregorio B. Dantes, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A plan that lives only in the owner's head, or in a notebook at home, reaches the field late. Workers wait for instructions, a spray goes on the wrong lot, or the crew turns up on the day it rains. That hurts on a rice farm, because PhilRice and IRRI found that hired workers do about three quarters of the labor. Putting the plan on their phones fixes most of it.\n\nMost workers can already open it. In the 2024 national ICT household survey of the PSA and DICT, 67.3 percent of Filipinos aged 10 and over had used the internet. Of those, 98.8 percent went online with a cellphone. Still, not everyone has load every day, so plan for workers with and without data."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Send it the night before** or early in the morning, so the crew knows where to go.",
+        "**Show only what they need:** the date, the lot, the task, the materials and who is on it.",
+        "**Use a link anyone can open,** without an app or an account, for casual workers.",
+        "**Give logins only to those who need them,** like a foreman or a partner.",
+        "**Have a plan for no signal:** a foreman's phone that works offline, or the plan read out at the gate."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should the plan on a worker's phone show?"
+    },
+    {
+      "type": "text",
+      "text": "Keep it short. A worker standing at the dike needs to know what to do, not the whole season. Each task should answer five questions."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "**When:** the date, and the start time if it matters.",
+        "**Where:** the lot, named the way your workers name it.",
+        "**What:** the task, like top dressing, weeding or spraying.",
+        "**With what:** the material and the rate, for example 1 bag of urea on Lot 2.",
+        "**Who:** the people on the task, and who to call if something goes wrong."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which way should I share the farm plan with workers?"
+    },
+    {
+      "type": "table",
+      "caption": "Ways to share the farm plan with workers, and what each one needs",
+      "rows": [
+        [
+          "Way",
+          "What the worker needs",
+          "Best for",
+          "In anee.io"
+        ],
+        [
+          "Public link to the plan, a day or a task",
+          "Any phone browser, no login",
+          "Casual crews, cofarmers, a Facebook or WhatsApp group",
+          "Share the plan"
+        ],
+        [
+          "Email of the day's plan at 6 AM",
+          "An email address",
+          "Your regular crew and foreman",
+          "Morning plan email"
+        ],
+        [
+          "Today's or tomorrow's work by email",
+          "An email address",
+          "A change of plan, sent when you need it",
+          "Share the plan"
+        ],
+        [
+          "Their own login",
+          "Data and a login",
+          "A foreman, partner or family member",
+          "Team logins with none, view or edit per module (Farm Owner)"
+        ],
+        [
+          "Team chat for the season",
+          "Data",
+          "Daily talk, photos and voice notes",
+          "Collab Room (Farm Owner), or the chat app you already use"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For most farms, a public link in the crew's group chat plus the morning email covers everyone. Add logins later, once someone besides you needs to tick tasks or record attendance."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I share tomorrow's plan in anee.io?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Build the season on the board",
+          "text": "Add each task to the [cropping calendar](/features/cropping-calendar). It dates every task from each lot's own day zero."
+        },
+        {
+          "title": "Put workers on the tasks",
+          "text": "Assign people to each task, so the plan says who goes where."
+        },
+        {
+          "title": "Share the day as a link",
+          "text": "Open tomorrow and share it as a public page. Post the link in your crew's group chat. Anyone can open it, no login needed."
+        },
+        {
+          "title": "Or email the work",
+          "text": "Send today's or tomorrow's work by email to your workers, or send the plan to a cofarmer in the app."
+        },
+        {
+          "title": "Let the morning email run itself",
+          "text": "Every morning at 6 AM, the [morning plan email](/features/morning-plan-email) sends the team the day's work and the lot for each task."
+        },
+        {
+          "title": "Get reports back",
+          "text": "Workers with a login can tick tasks done and add a photo or a voice note, even offline. Their changes sync when the signal returns."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Name the lots the way your workers do",
+      "text": "If your crew calls it the lot by the well or the lot near the school, use that name in the plan. A worker reading Lot 3B at dawn may walk to the wrong field. The right name saves a trip and a wasted bag of fertilizer."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/app/board.png",
+      "alt": "Activities board in anee.io listing each day's tasks with their stage and cost",
+      "caption": "The Activities board in anee.io: each day's tasks, ready to share as a link or by email."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What about workers with no data or no smartphone?"
+    },
+    {
+      "type": "text",
+      "text": "Some workers carry a basic phone, or run out of load midweek. For them, let the foreman carry the plan. The anee.io app works without signal on every plan. The foreman can open the day, read it out at the gate and tick tasks in the paddy. Changes wait on the phone and sync later.\n\nAlso keep the plan short enough to say out loud. If a task needs a long explanation, add a photo or a voice note to it. Our guide to [what to do on your farm today](/blog/what-to-do-on-my-farm-today) covers daily planning in more detail."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it safe to share the plan publicly?"
+    },
+    {
+      "type": "text",
+      "text": "A public link opens for anyone who has it. So share only what the crew needs: one day or one task instead of the whole season. For people who need more, use [team logins](/features/team-logins) instead. You choose none, view or edit for each module, and a diary records every change and who made it. Worker logins and the Collab Room come with Farm Owner, at PHP 600 a month or PHP 6,500 a year."
+    },
+    {
+      "type": "cta",
+      "title": "Get tomorrow's plan to your crew tonight",
+      "text": "Sign up free, build your season, and share a day with your workers in a few taps.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about sharing the farm plan"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Do my workers need to install the app?",
+          "a": "No. A shared plan, day or task opens as a public page in any phone browser, with no login. Only workers who need to tick tasks or record attendance need their own login."
+        },
+        {
+          "q": "What if a worker has no email?",
+          "a": "Post the public link in your crew's group chat, or let the foreman read the day's plan out at the start of work. The email is one channel, not the only one."
+        },
+        {
+          "q": "Can workers mark tasks done from their phones?",
+          "a": "Yes, if you give them a login on the Farm Owner plan. You decide, module by module, whether each person gets none, view or edit access."
+        },
+        {
+          "q": "Does sharing work without signal?",
+          "a": "The worker needs data to open a link or an email. But the app itself works offline. A foreman with a login can follow and update the plan in the field, then sync later."
+        },
+        {
+          "q": "Can Anee send the daily plan for me?",
+          "a": "With Anee Auto, Anee plans the season and sends today's work every morning, by email too, for you and each worker. Anee Auto uses credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "What to do on my farm today",
+          "url": "/blog/what-to-do-on-my-farm-today"
+        },
+        {
+          "label": "How to manage a farm remotely",
+          "url": "/blog/manage-a-farm-remotely"
+        },
+        {
+          "label": "How to pay and track farm workers wages fairly",
+          "url": "/blog/farm-workers-wages"
+        },
+        {
+          "label": "A farm app that works without internet",
+          "url": "/blog/farm-app-without-internet"
+        },
+        {
+          "label": "Morning plan email in anee.io",
+          "url": "/features/morning-plan-email"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PTV News: PSA and DICT record spike in internet connected households (2024 NICTHS)",
+          "url": "https://ptvnews.ph/psa-dict-record-spike-in-internet-connected-households-increased-online-access-among-filipino-populace/"
+        },
+        {
+          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (labor and mechanization)",
+          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
+        }
+      ]
+    }
+  ]
+}

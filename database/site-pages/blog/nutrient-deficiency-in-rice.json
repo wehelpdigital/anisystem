@@ -1,0 +1,244 @@
+{
+  "section": "blog",
+  "slug": "nutrient-deficiency-in-rice",
+  "sortOrder": 460,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "Nutrient Deficiency in Rice: How Do I Know If My Palay Lacks N, P or K?",
+  "metaTitle": "Nutrient Deficiency in Rice: Signs of Low N, P, K and Zinc",
+  "metaDescription": "Spot nutrient deficiency in rice from the leaves: yellow old leaves, dark erect leaves, brown leaf edges or dusty spots. Then confirm it before you buy.",
+  "focusKeyword": "nutrient deficiency in rice",
+  "keywords": [
+    "nutrient deficiency in rice",
+    "nitrogen deficiency in rice",
+    "phosphorus deficiency in rice",
+    "potassium deficiency in rice",
+    "zinc deficiency in rice",
+    "leaf color chart"
+  ],
+  "excerpt": "You can spot a nutrient deficiency in rice by where and how the leaves change color. Yellowish green older leaves point to nitrogen, stunted plants with dark, very erect leaves point to phosphorus, and dark green plants with yellowish brown leaf edges point to potassium. Dusty brown spots on the upper leaves 2 to 4 weeks after transplanting point to zinc. Confirm it with a leaf color chart or a soil test before you buy, and in anee.io, a farm app built for Filipino farmers, you can send Anee a photo to read with your lot's records.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-nutrient-deficiency-in-rice.webp",
+    "alt": "A farmer in Bohol stands on a bund in the middle of her green rice field, checking the crop for signs of nutrient deficiency in rice",
+    "credit": "Øyvind Holmstad, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Start with where the color change shows first. PalayCheck's visual guide puts nitrogen, phosphorus, potassium and magnesium shortages on the lower, older leaves. Zinc, sulfur, iron and boron shortages show first on the upper, younger leaves.\n\nThen look at the pattern across the field. A whole field that turns pale tells a different story from a few scattered hills. The signs below come from IRRI's Rice Knowledge Bank and the 2022 PalayCheck System of PhilRice."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Nitrogen:** older leaves or whole plants turn yellowish green, starting at the tips. Tillers are few.",
+        "**Phosphorus:** plants stay short with dark, narrow, very erect leaves and thin stems.",
+        "**Potassium:** dark green plants get yellowish brown leaf edges and brown tips on older leaves, often in patches.",
+        "**Zinc:** dusty brown spots on the upper leaves of stunted plants, 2 to 4 weeks after transplanting.",
+        "**Always confirm** with a leaf color chart, MOET or a soil and plant test before you buy."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does each nutrient deficiency in rice look like?"
+    },
+    {
+      "type": "table",
+      "caption": "Signs of common nutrient deficiencies in rice, from IRRI fact sheets and PhilRice PalayCheck",
+      "rows": [
+        [
+          "Nutrient",
+          "Where it starts",
+          "What you see",
+          "Easy to confuse with"
+        ],
+        [
+          "Nitrogen (N)",
+          "Older leaves or whole plant",
+          "Yellowish green leaves, pale tips, narrow short erect leaves, fewer tillers and grains, the whole field can look yellow",
+          "Sulfur shortage, tungro"
+        ],
+        [
+          "Phosphorus (P)",
+          "Older leaves",
+          "Stunted plants with a dull dark green color, very erect leaves, thin stems, few tillers, maturity delayed by a week or more",
+          "Nothing at all, since mild cases are hard to see"
+        ],
+        [
+          "Potassium (K)",
+          "Tips and edges of older leaves",
+          "Yellowish brown edges, rusty brown spots from the tip, yellowing in an inverted V, weak stems and more unfilled grains",
+          "Brown spot disease, which is common on soils low in potassium"
+        ],
+        [
+          "Zinc (Zn)",
+          "Upper leaves",
+          "Dusty brown spots, pale midribs near the leaf base, uneven growth in patches",
+          "Iron problems, grassy stunt, tungro"
+        ],
+        [
+          "Sulfur (S)",
+          "Young leaves or whole plant",
+          "Yellowing young leaves, fewer tillers and shorter panicles, delayed maturity",
+          "Nitrogen shortage"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Potassium hunger often hides until later in the season. PalayCheck notes that its symptoms are harder to recognize than those of nitrogen. IRRI adds that it tends to hit single hills in patches rather than the whole field. It is more common where farmers apply nitrogen and phosphorus without enough potassium."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I confirm it before I buy fertilizer?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Walk the whole field",
+          "text": "Note whether the color change covers the field or only some hills, and whether it follows a low spot, a water inlet or the path where you spread fertilizer."
+        },
+        {
+          "title": "Check which leaves changed first",
+          "text": "Older, lower leaves point to nitrogen, phosphorus or potassium. Young, upper leaves point to zinc or sulfur."
+        },
+        {
+          "title": "Rule out pests and diseases",
+          "text": "Tungro, stem borers and hoppers can also yellow a crop. Our guide on [pest or disease](/blog/pest-or-disease-how-to-tell) helps you tell them apart."
+        },
+        {
+          "title": "Read nitrogen with a leaf color chart",
+          "text": "Compare 10 leaves with the chart every 7 days from 14 days after transplanting. PalayCheck says to apply nitrogen when 6 or more of 10 read below 4 in transplanted rice."
+        },
+        {
+          "title": "Test the soil for the rest",
+          "text": "For phosphorus, potassium, zinc and sulfur, IRRI advises sending soil and plant samples to a laboratory. PhilRice's MOET kit tests your own soil in pots, each one missing a nutrient."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Yellow is not always hunger",
+      "text": "PalayCheck warns that nitrogen deficiency and [rice tungro](/diseases/rice-tungro) look alike, since both leave plants shorter and yellow. With nitrogen hunger, the whole plant turns yellowish green and the leaf tips pale. With tungro, plants stay stunted with greenish to yellow top leaves, and green leafhoppers spread it. Urea will not cure a virus."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I correct each one?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Nitrogen:** top dress [urea fertilizer](/blog/urea-fertilizer) when the leaf color chart calls for it, from tillering to early flowering. Too much invites lodging and pests.",
+        "**Phosphorus:** PalayCheck puts all of it in the first dose, at 0 to 14 days after transplanting, so build it into the basal with 14 14 14 or 16 20 0.",
+        "**Potassium:** give the second dose of [potash fertilizer](/blog/potash-fertilizer) 5 to 7 days before or after panicle initiation, and work the rice straw back into the soil.",
+        "**Zinc:** choose one method, for example a 2 percent zinc oxide seedling dip for 15 to 30 minutes, or 25 kg of zinc sulfate per hectare broadcast at 10 to 14 days after transplanting.",
+        "**Sulfur:** PalayCheck says the sulfur in 14 14 14 with 12 percent sulfur at basal is usually enough."
+      ]
+    },
+    {
+      "type": "image",
+      "src": "/images/site/lp/anee-chat-hand.webp",
+      "alt": "A farmer holds his phone in a palay field while Anee reads a photo of his rice leaves in the anee.io chat",
+      "caption": "Send Anee a photo of your rice and she reads it with your lot's stage, the weather and what you already applied."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can anee.io help me read the signs?"
+    },
+    {
+      "type": "text",
+      "text": "Take a photo of the leaves and send it to [Anee, the smart farm technician](/features/ai-agricultural-technician) inside anee.io. She answers in Tagalog or English with your farm in mind: the lot, its growth stage, the weather and the fertilizer you already applied. Her answers use credits, so treat her reading as a strong lead and confirm it in the field.\n\nThe free Disease Finder helps you rule out diseases first. Then the free [NPK Plus calculator](/features/npk-plus-calculator) shows whether your plan was short on nitrogen, phosphorus or potassium in the first place."
+    },
+    {
+      "type": "cta",
+      "title": "Not sure what your rice is missing?",
+      "text": "Send Anee a photo of the leaves and get an answer that knows your lot, its stage and its fertilizer history.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about nutrient deficiency in rice"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why are only some hills yellow or brown?",
+          "a": "IRRI notes that potassium deficiency often appears in patches, hill by hill, rather than across the whole field. Patches can also follow uneven fertilizer spreading or a low spot that stays flooded. Compare the patches with where the fertilizer and water went."
+        },
+        {
+          "q": "How can I tell nitrogen deficiency from sulfur deficiency?",
+          "a": "They look almost the same, but sulfur deficiency tends to show first on the younger leaves, while nitrogen deficiency starts on the older ones. IRRI says sulfur deficiency is less common, so test before you change your fertilizer."
+        },
+        {
+          "q": "When do zinc deficiency signs appear in rice?",
+          "a": "IRRI says they appear between two and four weeks after transplanting. Mildly affected plants can recover after 4 to 6 weeks, but the crop matures later and yields less."
+        },
+        {
+          "q": "Can I give too much nitrogen?",
+          "a": "Yes. PalayCheck warns that excess nitrogen during panicle initiation and flowering makes rice prone to lodging and pests and raises the share of unfilled grains. It also wastes money."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "What to do when rice leaves turn yellow",
+          "url": "/blog/yellow-rice-leaves"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "16 20 0 fertilizer",
+          "url": "/blog/16-20-0-fertilizer"
+        },
+        {
+          "label": "Fertilizer timing by growth stage",
+          "url": "/blog/fertilizer-timing-by-growth-stage"
+        },
+        {
+          "label": "How to increase rice yield per hectare",
+          "url": "/blog/increase-rice-yield-per-hectare"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Nitrogen deficiency",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/nitrogen-deficiency"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Phosphorus deficiency",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/phosphorous-deficiency"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Potassium deficiency",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/potassium-deficiency"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Zinc deficiency",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/zinc-deficiency"
+        },
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        }
+      ]
+    }
+  ]
+}

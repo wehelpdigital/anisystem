@@ -1,0 +1,307 @@
+{
+  "section": "blog",
+  "slug": "crop-monitoring-for-vegetable-farmers",
+  "sortOrder": 380,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "Which Crop Monitoring Platform Is Best for Vegetable Farmers in the Philippines?",
+  "metaTitle": "Crop Monitoring for Vegetable Farmers in the Philippines",
+  "metaDescription": "Crop monitoring for vegetable farmers: what to check each week on ampalaya, tomato and pechay, what a good platform must do, and where anee.io fits.",
+  "focusKeyword": "crop monitoring for vegetable farmers",
+  "keywords": [
+    "crop monitoring for vegetable farmers",
+    "weekly scouting",
+    "sticky traps",
+    "pechay pests",
+    "fruit fly traps",
+    "natural enemies"
+  ],
+  "excerpt": "No platform raises vegetable yields on its own. The crop monitoring for vegetable farmers that pays is a weekly habit: turn the leaves, count pests and their natural enemies once or twice a week, note each bed's stage, and act before a problem spreads. A good platform makes that habit quick and keeps the record. For this, the farm app anee.io, built for Filipino farmers, gives every bed its own day count, growth stages, photo and voice notes, and a reminder when rain falls on a spray day.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-crop-monitoring-for-vegetable-farmers.webp",
+    "alt": "A vegetable farmer in Benguet checks young lettuce plants in a greenhouse bed, a part of crop monitoring for vegetable farmers",
+    "credit": "Rowena Harbridge/AusAID, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Vegetables move fast. A pechay crop is ready 3 to 4 weeks after transplanting, says a production guide of the Agricultural Training Institute. So one missed week of scouting can cover a big part of the crop's life, and a small aphid colony becomes a sticky bed of leaves.\n\nFarmer factsheets from an Australian funded vegetable project in the southern Philippines put it plainly. Each farm has a few pests and diseases that come back every crop, and usually one or two cause major loss unless managed. Monitoring is how you find yours early."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Check pests and their natural enemies 1 to 2 times a week and write the numbers per plant.",
+        "Turn the leaves: most insect pests sit on the undersides, close to the veins.",
+        "Match traps to the stage, such as sticky traps at transplanting and fruit fly traps at early flowering.",
+        "A good platform gives each bed its own count and keeps photos, notes and weather in one place.",
+        "No app sees your plants for you, so the walk through the beds stays your job."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should crop monitoring for vegetable farmers cover each week?"
+    },
+    {
+      "type": "text",
+      "text": "The checks change with the stage of the crop. The table follows the tomato and ampalaya IPM factsheets of that project, with the pechay harvest from the ATI guide. Our page on [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay) covers growing each crop."
+    },
+    {
+      "type": "table",
+      "caption": "What to check at each stage of a vegetable crop",
+      "rows": [
+        [
+          "Stage",
+          "What to check",
+          "Why it matters"
+        ],
+        [
+          "Seedlings",
+          "Pests and disease on every tray before transplanting",
+          "Clean seedlings keep pests out of the main field"
+        ],
+        [
+          "Transplanting",
+          "Sticky traps around seedlings for aphids and leafhoppers, and squash beetle feeding on ampalaya",
+          "In ampalaya, aphids can carry Namamarako and leafhoppers carry little leaf"
+        ],
+        [
+          "Vegetative",
+          "Undersides of leaves, eggs of fruitworm and cutworm, pests and natural enemies per plant",
+          "Rising pests with few natural enemies may call for a spray"
+        ],
+        [
+          "Flowering and fruit set",
+          "Fruit fly traps at early flowering, mirid bugs, leaf spots",
+          "Protects the fruit before the damage shows"
+        ],
+        [
+          "Harvest",
+          "Pechay at 3 to 4 weeks after transplanting, early morning or late afternoon",
+          "Picking on time keeps the quality"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Diseases need the same weekly look. Watch for wilting, stunting, leaf spots and blights. The factsheets advise pulling out plants with symptoms through the whole plant, and pruning away spots on plants that are only partly hit. Our pages on [bacterial wilt](/diseases/bacterial-wilt) and the [diamondback moth](/pests/diamondback-moth) show two problems that start small and spread fast."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Bacterial wilt rides on your tools",
+      "text": "The factsheets warn that bacterial wilt and blight spread through pruning tools. So disinfect the blade after every plant, and carry a plastic bag for the diseased parts you cut. Also drain the beds quickly after rain, because a wet film in the soil helps the wilt move."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you run a weekly scouting round?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Split the farm into beds or lots",
+          "text": "Give each planting its own name and transplanting date, because batches a week apart are at different stages."
+        },
+        {
+          "title": "Pick fixed scouting days",
+          "text": "Once or twice a week, at the same time of day, so the numbers compare."
+        },
+        {
+          "title": "Turn the leaves and count",
+          "text": "Look under the leaves near the veins. Count the pests and the natural enemies on several plants across the bed, not only at the edge."
+        },
+        {
+          "title": "Compare with last week",
+          "text": "If pests rise and natural enemies are few, a spray may be needed. Choose an active ingredient that targets that pest group, then follow the label and the FPA registration."
+        },
+        {
+          "title": "Check the sky before spraying",
+          "text": "Rain soon after a spray wastes it. Our guide on [rain before spraying](/blog/rain-before-spraying) shows how to read the forecast first."
+        },
+        {
+          "title": "Write it down",
+          "text": "Note the counts, the stage, what you did and the weather. Next season, these notes tell you when each pest usually arrives."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a crop monitoring platform do for vegetables?"
+    },
+    {
+      "type": "text",
+      "text": "Use these criteria to judge any platform, app or notebook. The last column shows how anee.io meets each one, and where it stops."
+    },
+    {
+      "type": "table",
+      "caption": "Criteria for a vegetable crop monitoring platform",
+      "rows": [
+        [
+          "What it should do",
+          "Why",
+          "In anee.io"
+        ],
+        [
+          "A count for each bed or lot",
+          "Batches planted on different days",
+          "Each lot has its own day zero, and each lot can carry a different crop"
+        ],
+        [
+          "Stage reminders",
+          "Traps and sprays belong to stages",
+          "Growth stages with a do list and a watch list, plus tasks dated by DAT"
+        ],
+        [
+          "Fast notes in the field",
+          "Counts and symptoms fade from memory",
+          "Quick Capture photos, Quick Voice notes and tags like Bed 3 or Whitefly"
+        ],
+        [
+          "Weather before sprays",
+          "Rain washes sprays off",
+          "Forecast beside the plan and a reminder when rain falls on a spray day"
+        ],
+        [
+          "Help naming a problem",
+          "A wrong guess buys the wrong spray",
+          "Free Pest Finder and Disease Finder, and Anee reads a photo (credits)"
+        ],
+        [
+          "Costs and sales",
+          "Know which crop pays",
+          "Expenses, harvest records with buyer and price, and a profit report"
+        ],
+        [
+          "Works with no signal",
+          "Upland farms lose signal",
+          "Offline mode on every plan"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help vegetable growers?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, each bed or batch becomes a lot with its own crop, variety and day zero. The growth stages cover 85 Philippine crops, ampalaya, talong and pechay among them. So the board can show that Bed 2 is at flowering while Bed 4 is still vegetative.\n\nDuring a scouting round, [notes, photos and voice](/features/notes-photos-and-voice) keep what you see with the season. When you cannot name a pest, the free [pest and disease finders](/features/pest-and-disease-finders) work from the crop and the damage. They name the active ingredients and their groups, never brands. Anee, the smart farm technician inside anee.io, can also read a photo in Tagalog or English, and that uses credits."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/app/notes.png",
+      "alt": "The anee.io Notes screen with field notes, a voice record and day notes for a season",
+      "caption": "Notes in anee.io: field observations, voice records and day notes stay with the season."
+    },
+    {
+      "type": "cta",
+      "title": "Keep every bed's count and notes in one place",
+      "text": "Add your beds as lots, record what you see each week, and plan sprays around the weather. Start free.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does it cost, and what can it not do?"
+    },
+    {
+      "type": "text",
+      "text": "The free Libre plan covers one active season with activities, notes, tags and growth stages, and it shows a few ads. Solo Farmer, at PHP 200 a month or PHP 1800 a year, opens three active seasons with up to 5 lots each, full weather, workers, inventory and all reports. Farm Owner, at PHP 600 a month, removes the limits. See the [pricing page](/pricing) for all four plans.\n\nNow the limits. anee.io does not count insects or spot disease by itself, because it only knows what you record. Anee needs internet and uses credits. A finder or a photo answer is a guide, so confirm it in the field before you buy a spray. Our guide to [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines) covers the feeding side of the crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about vegetable crop monitoring"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How often should I check my vegetable crop?",
+          "a": "Once or twice a week is the rhythm the vegetable IPM factsheets advise. Count pests and natural enemies per plant each time and write the numbers. Then you can see if a pest is rising or falling before you decide to spray."
+        },
+        {
+          "q": "Do yellow sticky traps replace walking the beds?",
+          "a": "No. A PhilRice field guide notes that sticky traps catch flying insects but not the ones that cannot fly. Eggs, larvae and disease spots only show when you turn the leaves yourself."
+        },
+        {
+          "q": "Can an app tell me what pest is on my pechay?",
+          "a": "It can narrow it down. The free Pest Finder in anee.io starts from your crop and where the damage is, and Anee can read a photo. Confirm the answer on the plants before you buy anything."
+        },
+        {
+          "q": "Will a monitoring platform raise my yield?",
+          "a": "No app can promise a bigger harvest. What it does is help you see problems earlier, time the work to each bed's stage and keep records you can learn from next season."
+        },
+        {
+          "q": "Can I use anee.io for many vegetable beds?",
+          "a": "Yes. Solo Farmer allows up to 5 lots per season in three active seasons, and Farm Owner has no limit. Each lot keeps its own crop and day count."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Fertilizer for vegetables",
+          "url": "/blog/fertilizer-for-vegetables-philippines"
+        },
+        {
+          "label": "Crop growth stage monitoring",
+          "url": "/blog/crop-growth-stage-monitoring"
+        },
+        {
+          "label": "Pest and disease finders",
+          "url": "/features/pest-and-disease-finders"
+        },
+        {
+          "label": "Eggplant fruit and shoot borer",
+          "url": "/pests/eggplant-fruit-and-shoot-borer"
+        },
+        {
+          "label": "Vegetable land preparation",
+          "url": "/land-preparation/vegetable-land-preparation"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "ACIAR vegetable project, Applied Horticultural Research: Tomato IPM farmer factsheet",
+          "url": "https://static1.squarespace.com/static/5e5856a58220896e4dd6b366/5f14eb62fcfa946754bc0bb2/5f14eb6ffcfa946754bc1097/1595206511929/Tomato-IPM-factsheet-20th-August-2017.pdf"
+        },
+        {
+          "label": "ACIAR vegetable project, Applied Horticultural Research: Ampalaya IPM farmer factsheet",
+          "url": "https://static1.squarespace.com/static/5e5856a58220896e4dd6b366/5f14eb62fcfa946754bc0bb2/5f14eb6ffcfa946754bc1085/1595206511911/Ampalaya-IPM-factsheet-27th-Sept-2017.pdf"
+        },
+        {
+          "label": "Agricultural Training Institute VII: Pechay Production Guide",
+          "url": "https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/PECHAY%20final_2.pdf"
+        },
+        {
+          "label": "PhilRice: Field guide to sampling insect pests and diseased plants in the rice field",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Sampling-insect-pests-damaged-and-diseased-plants-and-beneficial-organisms-in-the-rice-field-Devices-and-Techniques.pdf"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority: Registered products",
+          "url": "https://fpa.da.gov.ph/registered-products/"
+        }
+      ]
+    }
+  ]
+}

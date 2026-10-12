@@ -1,0 +1,257 @@
+{
+  "section": "blog",
+  "slug": "pest-or-disease-how-to-tell",
+  "sortOrder": 620,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "Pest or Disease? How to Tell What Is Wrong With Your Crop",
+  "metaTitle": "Pest or Disease? How to Tell What Is Hurting Your Crop",
+  "metaDescription": "Pest or disease? Learn the signs that separate insect damage from fungal, bacterial and virus disease, the quick field tests, and when it is both.",
+  "focusKeyword": "pest or disease",
+  "keywords": [
+    "pest or disease",
+    "pest vs disease",
+    "signs of plant disease",
+    "insect damage",
+    "crop problems",
+    "plant disease symptoms"
+  ],
+  "excerpt": "To tell a pest or disease apart, look for the culprit first. Chewed or cut tissue, holes, droppings, eggs and the insects themselves point to a pest, while spots with borders, ooze, mold, rot or mottled leaves with no insect in sight point to a disease. Yellowing with no spots can also come from the soil or the water. With anee.io, a farm app built for Filipino farmers, the free Pest Finder and Disease Finder sort the signs, and Anee, its smart farm technician, can read a photo when you are still unsure.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-pest-or-disease-how-to-tell.webp",
+    "alt": "A rice field with pale, dried patches among green plants. From the bund it is hard to say pest or disease, and here it is bacterial leaf blight",
+    "credit": "Goodmorninghpvn, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The answer decides what you buy. An insecticide does nothing for a fungus, and no spray at all cures a virus. IRRI's Rice Knowledge Bank puts the average loss of rice to pests and diseases at an estimated 37 percent of the crop each year. It also says that timely, accurate diagnosis can cut those losses.\n\nNot every sick plant has a pest or a disease, either. IRRI notes that crop problems also come from wind, water, temperature and soil acidity. So keep a third answer in mind: the soil, the water or the weather."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Look for the culprit first: insects, eggs, droppings and chewed tissue mean a pest.",
+        "Spots with borders, ooze, mold, rot and mottling with no insect in sight mean a disease.",
+        "Even yellowing over a whole field with no spots often comes from nutrients or water.",
+        "Some diseases ride on insects, like tungro on the green leafhopper, so it can be both.",
+        "Never spray just to find out. Diagnose first, then pick the product."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pest or disease: what do the signs say?"
+    },
+    {
+      "type": "text",
+      "text": "Read the signs in the first column, then do the quick check before you decide. The examples come from rice, but the same logic works on corn and vegetables."
+    },
+    {
+      "type": "table",
+      "caption": "Signs that separate a pest from a disease, with rice examples",
+      "rows": [
+        [
+          "Sign",
+          "Points to",
+          "Example in rice",
+          "Quick check"
+        ],
+        [
+          "Holes, chewed edges, cut or missing leaves",
+          "Pest",
+          "Caterpillars, snails, rats",
+          "Look for the animal at dawn or dusk"
+        ],
+        [
+          "Insects, egg masses or droppings on the plant",
+          "Pest",
+          "Stem borer egg masses on leaves",
+          "Turn the leaves over and look at the base"
+        ],
+        [
+          "A dead center tiller that pulls out easily",
+          "Pest",
+          "Stem borer deadheart",
+          "Split the stem and look for the larva"
+        ],
+        [
+          "Spots with a clear border or a halo",
+          "Fungal disease",
+          "Blast: spindle shaped spots with gray centers and brown borders",
+          "Brown spot looks rounder, with a yellow halo"
+        ],
+        [
+          "Wavy yellow stripes from the leaf tip or edge, milky drops in the morning",
+          "Bacterial disease",
+          "Bacterial leaf blight",
+          "Do the glass of water test below"
+        ],
+        [
+          "Powdery, fuzzy or moldy growth",
+          "Fungal disease",
+          "Fungi such as downy mildew on corn",
+          "Look in the early morning while leaves are damp"
+        ],
+        [
+          "Yellow or orange leaves from the tip, stunted plants in patches",
+          "Virus disease",
+          "Tungro, carried by the green leafhopper",
+          "Only a lab test confirms it"
+        ],
+        [
+          "Even yellowing across the field, no spots, no insects",
+          "Soil, water or nutrients",
+          "Nitrogen shortage or water stress",
+          "Check your fertilizer and water records"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When it is both"
+    },
+    {
+      "type": "text",
+      "text": "Some diseases ride on pests. Tungro is a virus disease, but leafhoppers carry it from plant to plant, and the green leafhopper is the most efficient one. IRRI says spraying the leafhoppers often fails, because they keep moving in from nearby fields. Prevention works better: resistant varieties, planting at the same time as your neighbors, and plowing infected stubble after harvest.\n\nThe brown planthopper does the same with [rice grassy stunt](/diseases/rice-grassy-stunt). In both cases the plant shows a disease, but the cause walks in on legs. That is why the finders and Anee ask about insects even when you report yellow leaves."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Five field checks before you decide"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Read the pattern",
+          "text": "Step back first. Patches that grow outward, rows, field edges or the whole field each point somewhere different. A problem along one side may follow water, wind or a neighbor's spray."
+        },
+        {
+          "title": "Look under the leaves and at the base",
+          "text": "Go in the early morning, when many pests are still on the plant. Turn the leaves over and part the hill to see the base."
+        },
+        {
+          "title": "Pull a tiller",
+          "text": "A stem borer deadheart pulls out easily. Kresek, the seedling wilt of bacterial leaf blight, does not, IRRI notes."
+        },
+        {
+          "title": "Do the ooze test",
+          "text": "Squeeze the base of a wilted seedling, or cut a young streak and stand the leaf in a clear glass of water. Yellowish ooze or a cloudy stream from the cut end points to bacteria."
+        },
+        {
+          "title": "Check your records",
+          "text": "Note the growth stage, the last fertilizer and the recent weather. IRRI warns that tungro can look like nitrogen or zinc deficiency or water stress, so your records help rule those out."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not spray to find out",
+      "text": "Spraying an insecticide to see if the problem stops wastes money and kills the spiders and wasps that protect your crop. Diagnose first. Then, if you need a product, use one registered with the FPA for your crop and follow its label."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps you decide"
+    },
+    {
+      "type": "text",
+      "text": "anee.io has two free helpers for this exact question. The [Pest Finder](/pests#finder) asks where you see the damage. The [Disease Finder](/diseases#finder) asks what you see: spots or streaks, wilting, yellowing, stunted plants, rotting, powdery or fuzzy growth, or curled and mottled leaves. If you cannot tell, try both.\n\nOn a plan with Anee, send a photo to Anee, the smart farm technician inside anee.io. She reads it with your lot, its stage, the weather and what you already applied. Halfway through the season, Analyze So Far reads your season and lists the risks ahead. Both use credits and need internet, while the finders and your photo notes also work on the free Libre plan."
+    },
+    {
+      "type": "cta",
+      "title": "Not sure? Try both finders",
+      "text": "Pick your crop and the signs you see. The Pest Finder and Disease Finder name what fits, how to be sure and what to do first. Free on every plan.",
+      "label": "Open the finders",
+      "url": "/features/pest-and-disease-finders"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about telling a pest from a disease"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are the signs of a pest?",
+          "a": "Holes, chewed or cut leaves, droppings, eggs and the insects themselves. Some pests suck sap instead and leave yellow or dry patches, so look at the base of the plant too."
+        },
+        {
+          "q": "What are the signs of a disease?",
+          "a": "Spots with borders or halos, streaks, ooze, mold, rot, wilting, and mottled or stunted plants with no insect in sight. Fungi, bacteria and viruses each leave their own marks."
+        },
+        {
+          "q": "Can a virus be sprayed away?",
+          "a": "No. IRRI says a rice plant infected by tungro cannot be cured. Prevention works instead: resistant varieties, synchronous planting and plowing infected stubble after harvest."
+        },
+        {
+          "q": "What if I still cannot tell pest or disease?",
+          "a": "Use both finders, send a photo to Anee, or ask your municipal agriculturist. Do not spray to test, since the wrong product costs money and kills the natural enemies of pests."
+        },
+        {
+          "q": "Can weather damage look like disease?",
+          "a": "Yes. IRRI lists wind, water, temperature and soil acidity among the non living causes of crop problems. Check the weather and your water before you blame a pest or a disease."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Crop pests in the Philippines",
+          "url": "/pests/crop-pests-philippines"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        },
+        {
+          "label": "Yellow rice leaves",
+          "url": "/blog/yellow-rice-leaves"
+        },
+        {
+          "label": "Identify rice pests from a photo",
+          "url": "/blog/identify-rice-pests-from-a-photo"
+        },
+        {
+          "label": "Avoid buying the wrong pesticide",
+          "url": "/blog/avoid-buying-the-wrong-pesticide"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Pests and diseases",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Blast (leaf and collar)",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Bacterial blight",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Tungro",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Stem borer",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer"
+        }
+      ]
+    }
+  ]
+}

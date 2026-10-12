@@ -110,7 +110,7 @@
     },
     {
       "type": "text",
-      "text": "anee.io is a web app that runs in any phone browser, so the board goes wherever you go. On the Solo Farmer and Farm Owner plans, offline mode keeps your recent seasons on the phone. Tick tasks done, move dates, write day notes and take photos where there is no signal. Your changes sync when the connection comes back.\n\nWorkers can follow the board too. On the Farm Owner plan each worker gets a login, and you decide if they may view or edit the plan."
+      "text": "anee.io is a web app that runs in any phone browser, so the board goes wherever you go. On every plan, offline mode keeps your recent seasons on the phone. Tick tasks done, move dates, write day notes and take photos where there is no signal. Your changes sync when the connection comes back.\n\nWorkers can follow the board too. On the Farm Owner plan each worker gets a login, and you decide if they may view or edit the plan."
     },
     {
       "type": "callout",
@@ -147,7 +147,7 @@
         },
         {
           "q": "Does it work without internet?",
-          "a": "On the Solo Farmer and Farm Owner plans, offline mode lets you use the board, notes and growth stages without signal. Your changes sync once you are back online."
+          "a": "On every plan, offline mode lets you use the board, notes and growth stages without signal. Your changes sync once you are back online."
         },
         {
           "q": "Can I undo a mistake?",

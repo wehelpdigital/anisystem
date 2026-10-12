@@ -1,0 +1,273 @@
+{
+  "section": "blog",
+  "slug": "satellite-crop-monitoring-philippines",
+  "sortOrder": 690,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "Can Satellite Images of My Farm Show Crop Health in the Philippines?",
+  "metaTitle": "Satellite Images of My Farm: What They Show About Crops",
+  "metaDescription": "Satellite images of my farm can show weak spots, greenness and flooding. See what Sentinel pictures reveal, their limits in the Philippines and the cost.",
+  "focusKeyword": "satellite images of my farm",
+  "keywords": [
+    "satellite images of my farm",
+    "Sentinel 2",
+    "Sentinel 1 radar",
+    "NDVI",
+    "greenness score",
+    "PRISM"
+  ],
+  "excerpt": "Yes, within limits. Free Sentinel 2 satellite images of my farm, or any farm in the Philippines, show how green and even a crop is, which part of a field is weaker, and when a field flooded. They cannot count plants or name a pest, because each pixel covers 10 by 10 meters, and clouds often hide the field in the rainy season. In anee.io, a farm app built for Filipino farmers, Satellite Analysis reads Sentinel 2 pictures and Sentinel 1 radar of a field you draw, and Anee tells you where to walk first.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-satellite-crop-monitoring-philippines.webp",
+    "alt": "A Sentinel 2 satellite picture of rice fields, towns and fishponds north of Manila Bay",
+    "credit": "Copernicus Sentinel 2, ESA, CC BY SA 3.0 IGO, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A satellite does not see your rice the way you do. It measures the light that bounces off the field, including near infrared light that our eyes cannot see. Healthy leaves reflect a lot of near infrared, so a dense green crop stands out from bare or stressed ground.\n\nTwo kinds of pictures matter for farms. Optical pictures from Sentinel 2 show color and greenness, with 13 bands of light and pixels as small as 10 meters. Radar from Sentinel 1 sends its own signal, so ESA says it works day or night and in any weather. That matters in a country where typhoon clouds can cover a field for days."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Sentinel 2 passes about every five days near the equator, and its data are free under the Copernicus open data policy.",
+        "Clouds block optical pictures, but Sentinel 1 radar sees through them.",
+        "Satellites show where a field is weaker, not why. You still walk the spot to find the cause.",
+        "PhilRice runs PRISM, a satellite based rice monitoring system for planning, not for one farm.",
+        "Satellite Analysis in anee.io reads both kinds of pictures for a field you draw, and it uses credits."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What can satellite images of my farm show?"
+    },
+    {
+      "type": "text",
+      "text": "Satellite apps often turn the red and near infrared light into NDVI, a greenness score. NASA explains that values near 0.8 to 0.9 mean the densest green leaves, while 0.1 and below mean barren areas such as rock or sand. A rice paddy moves along that scale through the season: low at transplanting, then higher as the canopy closes."
+    },
+    {
+      "type": "table",
+      "caption": "What a satellite picture can tell you about a field, and its limits",
+      "rows": [
+        [
+          "What you see",
+          "What it can mean",
+          "What it cannot tell you"
+        ],
+        [
+          "Greenness score (NDVI)",
+          "How dense and green the canopy is",
+          "Why it is high or low"
+        ],
+        [
+          "A weak patch inside the field",
+          "Standing water, poor fertilizer spread, pests, disease or lodging",
+          "Which of these it is"
+        ],
+        [
+          "Change over several weeks",
+          "The crop is growing, or it stalled",
+          "Anything on a day with clouds"
+        ],
+        [
+          "Radar signal rising",
+          "Leaves and stems filling in, even under cloud",
+          "Color or nutrient problems"
+        ],
+        [
+          "Water over the field",
+          "Flooding, or a field just irrigated",
+          "How deep it is"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The government uses the same idea at a larger scale. PRISM, the Philippine Rice Information System based at PhilRice with the DA and IRRI among its partners, uses remote sensing to map rice areas, planting dates, flooded rice areas and yields. It also assesses rice areas hit by flood or drought, to help the DA plan. So it works for whole provinces, not for the day to day care of your lot."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What can satellites not see?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Single plants.** A 10 m pixel covers 100 square meters, so one sick hill disappears in the average.",
+        "**Small lots well.** One hectare holds about 100 pixels, and a quarter hectare only about 25, with the edge pixels mixed with bunds.",
+        "**The cause.** A weak patch may be a rat colony, a low spot or a missed fertilizer pass. Only a walk tells you which.",
+        "**Under cloud.** Optical pictures fail under cloud, which is common in the rainy season. Radar fills part of that gap.",
+        "**Soil numbers.** A satellite does not replace a soil test of your own field."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How often do satellites pass over the Philippines?"
+    },
+    {
+      "type": "text",
+      "text": "ESA puts the Sentinel 2 revisit at 5 days at the equator when two satellites fly, or 10 days with one. Sentinel 1 radar repeats the same view every 6 days with two satellites and every 12 with one. In practice, you get a clear optical picture less often in the wet months, so radar readings carry more weight then.\n\nFor most crops, that rhythm is enough. Rice changes over weeks, not hours, so a reading every one or two weeks shows the trend. For storms that move by the hour, use a weather map instead, as our guide on how to [track typhoons](/blog/track-typhoons-near-my-farm) explains."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you read a satellite picture of your field?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Outline your field exactly",
+          "text": "Trace the bunds over a satellite map so the reading covers your field and not the road or the neighbor's lot."
+        },
+        {
+          "title": "Check the picture's date",
+          "text": "A clear picture from last week beats a cloudy one from yesterday. Note how old it is."
+        },
+        {
+          "title": "Compare zones inside the field",
+          "text": "Look for a corner or strip that reads lower than the rest. Comparing with a neighbor planted on another day tells you little."
+        },
+        {
+          "title": "Hold it against the stage",
+          "text": "A field at transplanting reads low because water and bare mud fill the pixels. The same field should read much higher once the canopy closes."
+        },
+        {
+          "title": "Walk the weak zone",
+          "text": "Check the water, the leaves, the stems and the soil there. Our guide on how to [monitor crop health without a drone](/blog/monitor-crop-health-without-a-drone) lists what to look for."
+        },
+        {
+          "title": "Write it down and check again",
+          "text": "Note what you found and look at the next clear picture to see if the patch closed."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "A low reading is a question, not an answer",
+      "text": "Never buy a spray because a map shows a red patch. The same low reading can come from tungro, rats, deep water or a fertilizer gap, and each needs a different fix. Confirm on foot, then decide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io read satellite images of a farm?"
+    },
+    {
+      "type": "text",
+      "text": "First you trace each field over a satellite view with [farm maps](/features/farm-maps), and the app gives its area and the length of each side. Then [Satellite Analysis](/features/satellite-analysis) reads the newest Sentinel 2 picture and Sentinel 1 radar of that field. Anee, the smart farm technician inside anee.io, weighs the weather, the El Nino or La Nina outlook and the soil of your area. She returns the crop's health, its weak spots and what to do next.\n\nWhen clouds hide the field, the report reads the crop from radar. Each run uses credits and needs a plan with Anee, so the price shows before you start. The reading also sits well beside the [growth stages](/features/growth-stages-and-weather) of each lot, so you can compare what the satellite sees with what the calendar expects."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/fields-aerial.jpg",
+      "alt": "An aerial view of green rice paddies divided by bunds and a canal",
+      "caption": "From above, fields show patterns you miss on the ground. A satellite sees the same patterns at 10 m per pixel."
+    },
+    {
+      "type": "cta",
+      "title": "See your field from above",
+      "text": "Draw your field once, and let Anee read the newest satellite and radar pictures with your weather and soil.",
+      "label": "See Satellite Analysis",
+      "url": "/features/satellite-analysis"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does it cost?"
+    },
+    {
+      "type": "text",
+      "text": "The Sentinel data are free. Anyone can download them from the Copernicus Data Space website, though reading raw pictures takes skill and time. In anee.io, Satellite Analysis runs on credits and needs a plan with Anee: Libre plus Anee at PHP 70 a month, Solo Farmer at PHP 200 a month with 30 credits each renewal, or Farm Owner with 100. You can buy more credits when you need them, and the [pricing page](/pricing) has the details.\n\nThe limits stay the same in any app. A satellite reading guides your walk. It does not replace it, and it never names a pest for you. For that, use the free [pest and disease finders](/features/pest-and-disease-finders) or ask Anee with a photo."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about satellite images of a farm"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Where can I see satellite images of my farm for free?",
+          "a": "Sentinel 2 and Sentinel 1 data are free from the Copernicus Data Space website of the European Copernicus programme. Reading them takes some skill. Apps like anee.io do the reading for you, but the analysis uses credits."
+        },
+        {
+          "q": "Can a satellite tell me which pest is in my field?",
+          "a": "No. It shows that one part of the field is weaker or less green, not what caused it. Walk the spot, look at the leaves and stems, and then name the pest or disease."
+        },
+        {
+          "q": "Why is my field hidden in some pictures?",
+          "a": "Clouds block the optical pictures of Sentinel 2, which happens often in the rainy season. Sentinel 1 radar sees through clouds, so a good report falls back on radar when the sky is closed."
+        },
+        {
+          "q": "Is my lot too small for satellite monitoring?",
+          "a": "Each Sentinel 2 pixel covers 10 by 10 meters, so one hectare holds about 100 pixels. A lot under a quarter hectare gives only a few clean pixels, so the reading is rough. Field walks matter more on small lots."
+        },
+        {
+          "q": "Does the government use satellites for rice?",
+          "a": "Yes. PRISM, the Philippine Rice Information System based at PhilRice, uses remote sensing to map rice areas, planting dates, flooded areas and yields for planning. It also assesses rice areas hit by flood or drought."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Monitor crop health without a drone",
+          "url": "/blog/monitor-crop-health-without-a-drone"
+        },
+        {
+          "label": "Precision agriculture in the Philippines",
+          "url": "/blog/precision-agriculture-philippines"
+        },
+        {
+          "label": "Satellite Analysis in anee.io",
+          "url": "/features/satellite-analysis"
+        },
+        {
+          "label": "Farm maps",
+          "url": "/features/farm-maps"
+        },
+        {
+          "label": "Crop growth stage monitoring",
+          "url": "/blog/crop-growth-stage-monitoring"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "ESA SentiWiki: Sentinel 2 mission",
+          "url": "https://sentiwiki.copernicus.eu/web/s2-mission"
+        },
+        {
+          "label": "ESA SentiWiki: Sentinel 1 mission",
+          "url": "https://sentiwiki.copernicus.eu/web/s1-mission"
+        },
+        {
+          "label": "NASA Earth Observatory: Measuring Vegetation (NDVI and EVI)",
+          "url": "https://science.nasa.gov/earth/earth-observatory/measuring-vegetation-ndvi-evi"
+        },
+        {
+          "label": "PhilRice: Philippine Rice Information System (PRISM)",
+          "url": "https://prism.philrice.gov.ph/"
+        },
+        {
+          "label": "Copernicus Data Space: free access to Sentinel data",
+          "url": "https://dataspace.copernicus.eu/"
+        }
+      ]
+    }
+  ]
+}

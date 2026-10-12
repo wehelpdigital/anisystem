@@ -1,0 +1,257 @@
+{
+  "section": "blog",
+  "slug": "reduce-crop-losses",
+  "sortOrder": 900,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "How Can I Reduce Crop Losses on My Farm?",
+  "metaTitle": "Reduce Crop Losses: Field, Weather, Harvest and Storage",
+  "metaDescription": "Reduce crop losses from pests, typhoons, late harvest and poor drying, with PhilRice steps for palay and the records that show where your losses happen.",
+  "focusKeyword": "reduce crop losses",
+  "keywords": [
+    "reduce crop losses",
+    "losses after harvest",
+    "palay drying",
+    "harvest at the right maturity",
+    "crop insurance",
+    "milling recovery"
+  ],
+  "excerpt": "To reduce crop losses, find where your farm loses the most and fix that first: pests caught late, storms met unprepared, a harvest cut too early or too late, and grain dried or stored badly. FAO estimates that up to 40 percent of global crop production is lost to pests each year. For rice, a PhilRice report cites a 2010 study that put losses after harvest at 16.47 percent. The farm app anee.io, built for Filipino farmers, helps by dating each task to the crop's stage, flagging weather risks and keeping the records that show where the losses came from.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-reduce-crop-losses.webp",
+    "alt": "Palay spread to dry on blue tarps along a street in Basey, Samar, a step where farmers can reduce crop losses",
+    "credit": "Lawrence Ruiz, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Losses come in four places. In the field, pests, diseases, weeds and rats take part of the crop. Then the weather takes its share through typhoons, floods and drought. At harvest, a field cut too early or too late loses grain and quality. After that, poor drying and storage crack and spoil what was saved.\n\nThe PhilRice article that cites the 16.47 percent figure also points to milling, where 5.52 percent is lost. It links those losses to broken or cracked grains, which often come from improper drying. So the fix for a milling loss may start on the drying floor, days earlier."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Find your biggest loss first. Records by lot and season show where it is.",
+        "In the field, monitor from the early stage and name the problem before you spray.",
+        "Track storms early, and bring in ripe fields before the wind arrives.",
+        "Harvest palay when 85 to 90 percent of the grains are golden, and thresh within a day in the wet season.",
+        "Dry within 12 to 24 hours to 12 to 14 percent moisture, and store the grain dry."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where do farms lose the most?"
+    },
+    {
+      "type": "text",
+      "text": "The table follows a palay season through the PhilRice PalayCheck System. The same logic fits corn and vegetables: find the stage that leaks, then fix it."
+    },
+    {
+      "type": "table",
+      "caption": "Where palay is lost, and the first fix, from PhilRice PalayCheck 2022",
+      "rows": [
+        [
+          "Stage",
+          "How the loss happens",
+          "First fix"
+        ],
+        [
+          "Field",
+          "Pests, diseases, weeds, rats and snails",
+          "Monitor from the early stage and act at the PalayCheck thresholds"
+        ],
+        [
+          "Weather",
+          "Typhoon, flood or drought",
+          "Track storms, drain, and harvest ripe fields early"
+        ],
+        [
+          "Harvest too early",
+          "Immature grain, milling recovery as low as 53 percent",
+          "Wait until 85 to 90 percent of grains are golden"
+        ],
+        [
+          "Harvest too late",
+          "Grain shatters, with losses over 3 percent in hand harvest",
+          "Cut on time, with 90 to 95 percent golden for a combine"
+        ],
+        [
+          "Threshing",
+          "Heat builds up in piles and discolors the grain",
+          "Thresh within 1 day in the wet season or 2 in the dry"
+        ],
+        [
+          "Drying and storage",
+          "Wet grain molds, and uneven drying cracks it",
+          "Dry within 12 to 24 hours to 12 to 14 percent moisture"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you reduce crop losses in the field?"
+    },
+    {
+      "type": "text",
+      "text": "PalayCheck's Key Check 7 starts with prevention. Use varieties resistant to the pests in your area, and rotate them every 2 to 4 croppings. Plant in step with your neighbors after a 30 day rest period. Then monitor the field regularly from the early stage, so you catch pests while they are few. It treats insecticide as a last resort, after cultural, biological and physical control.\n\nSpare the natural enemies too. Spiders feed on planthoppers and leafhoppers, and careless spraying upsets that balance. When you see damage, name the cause before you buy anything. Our guides on [pest or disease](/blog/pest-or-disease-how-to-tell) and [early pest detection](/blog/early-pest-detection) help. The free [pest and disease finders](/features/pest-and-disease-finders) also work from your crop and the damage you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you cut losses from typhoons and floods?"
+    },
+    {
+      "type": "text",
+      "text": "Time is the main tool. PAGASA gives 36 hours of lead time at Wind Signal Number 1 and only 12 hours at Signals 4 and 5. Already at Signal 2, it expects considerable damage to rice at flowering or ripening. So follow each storm from the first bulletin, and agree in advance when you will harvest, drain or secure the grain. Our guide on how to [track typhoons](/blog/track-typhoons-near-my-farm) shows how.\n\nInsurance covers what you cannot save. A DA page on PCIC rice crop insurance says a notice of loss may go first by text or email. The written claim follows. Ask your PCIC office which risks your policy covers. Dated photos and the crop's stage help the claim. Our guide to [farm records for loans](/blog/farm-records-for-loans-and-insurance) lists what to keep."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you cut losses at harvest and after?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Drain before harvest",
+          "text": "Drain the field 1 to 2 weeks before the expected harvest, so the crop ripens evenly and the grain stays dry."
+        },
+        {
+          "title": "Harvest at the right maturity",
+          "text": "Cut when 85 to 90 percent of the grains have turned golden, or 90 to 95 percent for a combine. With a moisture meter, expect 20 to 25 percent in the wet season and 18 to 21 in the dry."
+        },
+        {
+          "title": "Thresh on time",
+          "text": "Thresh within one day in the wet season or two in the dry. Avoid threshing dripping wet palay in a machine, and keep most engine threshers near 800 rpm."
+        },
+        {
+          "title": "Dry within 12 to 24 hours",
+          "text": "In a mechanical dryer, keep the air no hotter than 50 to 70 degrees C, for 5 to 8 hours. In the sun, use clean concrete, stir at least every 30 minutes and keep the rain off."
+        },
+        {
+          "title": "Store clean and dry",
+          "text": "Store grain at 12 to 14 percent moisture. Leave air spaces in each pile, keep piles to 6 or 7 bags, and keep one meter from walls and roof frames."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Do not leave cut palay piled for more than a day",
+      "text": "PalayCheck warns that piles of cut palay heat up and discolor the grain, which lowers the quality of the milled rice. So plan the thresher before you plan the reapers, especially in the wet season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help reduce crop losses?"
+    },
+    {
+      "type": "text",
+      "text": "Losses shrink when work happens on time. In anee.io, every task carries a date from its lot's own day zero. The [growth stages](/features/growth-stages-and-weather) page gives each lot a watch list for its stage. The forecast sits beside the plan, with a reminder when rain falls on a spray day. For storms, Satellite Weather shows each typhoon's path and its distance from your field.\n\nAfter harvest, [observations](/features/harvest-records) record each lot's yield, moisture, price, buyer and the problems you saw. Then Anee, the smart farm technician, can write a season report on what went well and what went wrong. Compare Reports holds two seasons side by side. Those records point to the stage that leaks the most, so next season you fix that one first."
+    },
+    {
+      "type": "cta",
+      "title": "Find where your farm loses the most",
+      "text": "Plan your season by stage, track the weather and record every harvest in one place. Start free.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does it cost, and what are the limits?"
+    },
+    {
+      "type": "text",
+      "text": "The free Libre plan covers one active season with activities, notes, growth stages and observations, and it shows a few ads. Anee's season report, her readings and Satellite Weather run on credits. Anee herself comes with Libre plus Anee, from PHP 70 a month. See the [pricing page](/pricing).\n\nNo app stops a typhoon or dries your palay. What it does is put the right task on the right day and keep the numbers honest, so you see your own losses clearly. Our guide on how to [increase rice yield per hectare](/blog/increase-rice-yield-per-hectare) covers the other side of the ledger."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about reducing crop losses"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes the most crop loss on Filipino farms?",
+          "a": "It differs by farm and by season. Pests, typhoons and losses after harvest are the big three. FAO estimates pests take up to 40 percent of crop production worldwide. A PhilRice report puts rice losses after harvest at 16.47 percent, from a 2010 study. Your own records show which one hits your farm hardest."
+        },
+        {
+          "q": "How much palay is lost after harvest?",
+          "a": "A PhilRice article cites a 2010 study by the Philippine Center for Postharvest Development and Mechanization that found 16.47 percent lost after harvest. Milling alone accounted for 5.52 percent, often from grains cracked by improper drying."
+        },
+        {
+          "q": "When is palay ready to harvest?",
+          "a": "PalayCheck says to harvest when 85 to 90 percent of the grains have turned golden yellow, or 90 to 95 percent for a combine. Grain moisture then runs about 20 to 25 percent in the wet season and 18 to 21 in the dry."
+        },
+        {
+          "q": "How fast should I dry palay after threshing?",
+          "a": "Within 12 to 24 hours, down to 12 to 14 percent moisture, as PalayCheck advises. Cut palay left in piles heats up and loses quality, PalayCheck warns."
+        },
+        {
+          "q": "Can crop insurance cover my losses?",
+          "a": "PCIC offers rice crop insurance. A DA page explains how to file a notice of loss, first by text or email. Ask your PCIC office which risks your policy covers and the current deadlines."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Track typhoons near your farm",
+          "url": "/blog/track-typhoons-near-my-farm"
+        },
+        {
+          "label": "Typhoon preparation for farmers",
+          "url": "/blog/typhoon-preparation-for-farmers"
+        },
+        {
+          "label": "Early pest detection",
+          "url": "/blog/early-pest-detection"
+        },
+        {
+          "label": "Monitor crop health without a drone",
+          "url": "/blog/monitor-crop-health-without-a-drone"
+        },
+        {
+          "label": "Harvest records in anee.io",
+          "url": "/features/harvest-records"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FAO: Climate change fans spread of pests and threatens plants and crops (2021)",
+          "url": "https://www.fao.org/newsroom/detail/Climate-change-fans-spread-of-pests-and-threatens-plants-and-crops-new-FAO-study/en"
+        },
+        {
+          "label": "PhilRice: Handle rice with care (2019)",
+          "url": "https://www.philrice.gov.ph/handle-rice-with-care/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PAGASA: Tropical Cyclone Wind Signal",
+          "url": "https://pagasa.dost.gov.ph/learning-tools/tropical-cyclone-wind-signal"
+        },
+        {
+          "label": "Department of Agriculture: Rice Crop Insurance, DA and PCIC",
+          "url": "https://ffedis.da.gov.ph/projects/6/view"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,359 @@
+{
+  "section": "blog",
+  "slug": "farm-planning-app-philippines",
+  "sortOrder": 310,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "What Is the Best Farm Planning App for Small Rice Farmers in the Philippines?",
+  "metaTitle": "Farm Planning App for Rice Farmers: What to Look For",
+  "metaDescription": "Choosing a farm planning app for a small palay farm? Use these 8 checks, see how anee.io meets them, what it costs in pesos, and where it falls short.",
+  "focusKeyword": "farm planning app",
+  "keywords": [
+    "farm planning app",
+    "palay planning",
+    "days after transplanting",
+    "Rice Crop Manager",
+    "Binhing Palay app"
+  ],
+  "excerpt": "The best farm planning app for a small rice farm in the Philippines dates every task from your own transplanting or sowing day. It also knows the growth stages of palay, puts the weather beside the plan, works on an ordinary phone and costs little in pesos. anee.io, a farm app built for Filipino farmers, does all of this, and its Libre plan is free. Use it together with free government tools such as the Rice Crop Manager and the Binhing Palay app, because they answer different questions.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-planning-app-philippines.webp",
+    "alt": "A farmer prepares a flooded plot for rice planting, the start of the season a farm planning app dates every task from",
+    "credit": "Elmer nev valenzuela, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "On a family palay farm, the farmer is also the manager, the bookkeeper and often the sprayer. A plan on paper gets wet, and a plan in your head forgets the second top dressing. So the app should carry the season for you, without a computer or a big monthly fee. Below are the checks to use before you pay, then an honest look at how anee.io meets them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Pick an app that dates tasks by days after transplanting (DAT) or sowing (DAS) for each lot, not one fixed calendar for the whole farm.",
+        "It should know palay growth stages and show the forecast beside the plan, so a top dressing or a spray does not land on the day before rain.",
+        "It must run on the phone you already have, keep working where the signal is weak, and answer you in Tagalog or English.",
+        "anee.io meets these checks and starts free. Paid plans run from PHP 70 to PHP 600 a month, paid by GCash or bank transfer."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a farm planning app do for a small rice farm?"
+    },
+    {
+      "type": "text",
+      "text": "Use this table as your checklist. The last column shows what anee.io does about each line today."
+    },
+    {
+      "type": "table",
+      "caption": "Eight checks for a farm planning app on a small palay farm",
+      "rows": [
+        [
+          "What to check",
+          "Why it matters on a palay farm",
+          "How anee.io handles it"
+        ],
+        [
+          "Tasks dated from each lot's day zero",
+          "Lots planted a week apart need fertilizer a week apart",
+          "Every task counts from the lot's own DAT, DAS or DAP"
+        ],
+        [
+          "Rice growth stages",
+          "Fertilizer, water and pest checks follow the stage, not the month",
+          "Stages for 85 Philippine crops, with a do list and a watch list"
+        ],
+        [
+          "Weather beside the plan",
+          "Rain right after a spray wastes the chemical and the labor",
+          "The forecast beside the board, and a reminder when rain falls on a spray day"
+        ],
+        [
+          "Works on any phone, even without signal",
+          "Many fields have weak or no signal",
+          "Runs in the browser and works offline, then syncs"
+        ],
+        [
+          "Your own language",
+          "The family and the workers must read it",
+          "Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English"
+        ],
+        [
+          "Costs and labor in one place",
+          "You only see profit if every peso is written down",
+          "Workers, materials and profit reports on Solo Farmer and up"
+        ],
+        [
+          "Price in pesos, local payment",
+          "A dollar credit card keeps many farmers out",
+          "A free plan, and paid plans by GCash or bank transfer"
+        ],
+        [
+          "Records you can reuse",
+          "Next season should start from this season's facts",
+          "Harvest records and reports for the next plan"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why counting days beats a wall calendar"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice's PalayCheck System ties the work to days after transplanting. For example, it says to replant missing hills within 7 DAT and to control weeds from 0 to 45 DAT. A farm planning app that counts DAT for each lot turns those rules into real dates on your phone."
+    },
+    {
+      "type": "table",
+      "caption": "Sample PalayCheck timings a farm planning app should date for you (transplanted rice)",
+      "rows": [
+        [
+          "Task",
+          "When, according to PalayCheck"
+        ],
+        [
+          "Transplant by hand",
+          "Seedlings 18 to 21 days old"
+        ],
+        [
+          "Replant missing hills",
+          "Within 7 DAT"
+        ],
+        [
+          "Apply phosphorus and the first potassium",
+          "0 to 14 DAT"
+        ],
+        [
+          "Read the leaf color chart",
+          "Every 7 days from 14 DAT until early flowering"
+        ],
+        [
+          "Keep weeds under control",
+          "0 to 45 DAT"
+        ],
+        [
+          "Harvest by hand",
+          "When 85 to 90 percent of the grains are golden yellow"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io turn a rice plan into dates?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Add your lots",
+          "text": "Enter each field as a lot with its variety and size. Then mark the transplanting or sowing task as day zero."
+        },
+        {
+          "title": "Write or import the plan",
+          "text": "Use the [Protocol Builder](/features/protocol-builder) to put each task on its DAT, with materials and rates. Or ask Anee for a Crop Protocol Analysis, which uses credits."
+        },
+        {
+          "title": "Let the calendar date it",
+          "text": "The [cropping calendar](/features/cropping-calendar) places every task on the right day for each lot. Drag a task when rain moves your plan, and undo still works after you log out."
+        },
+        {
+          "title": "Follow the stage and the sky",
+          "text": "Each day the board shows the lot's growth stage and the forecast. If a lot runs behind, set its delay counter."
+        },
+        {
+          "title": "Tick, record and report",
+          "text": "Tick tasks done and mark who worked. After harvest, write the yield, price and buyer, and the reports add up the season."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Plan inside your irrigation schedule",
+      "text": "PalayCheck asks farmers to plant within 14 days before or after the regular schedule of their irrigation service area, after the field rests for at least 30 days. So put your area's schedule into the plan first, then build the season around it. A lot planted far from the others gives pests a longer meal."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much does a farm planning app cost in the Philippines?"
+    },
+    {
+      "type": "text",
+      "text": "These are anee.io's own prices in pesos, as shown on the [pricing page](/pricing). You can start on the free plan and move up only when the farm needs it."
+    },
+    {
+      "type": "table",
+      "caption": "anee.io plans for a rice farmer",
+      "rows": [
+        [
+          "Plan",
+          "Price",
+          "Good for",
+          "Limits"
+        ],
+        [
+          "Libre",
+          "Free",
+          "Trying it on one lot",
+          "1 season with 1 lot, 2 days of weather, ads, no Anee"
+        ],
+        [
+          "Libre plus Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "Adding Anee and her analyses",
+          "Same farm limits and ads as Libre"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "A family farm with hired help",
+          "3 seasons, up to 5 lots each, 30 credits each renewal"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "A farm with a team",
+          "No cap on lots, worker logins, 100 credits each renewal"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pay by GCash or bank transfer. A fair test is one lot on Libre for a full season, then decide if you need more."
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next palay season free",
+      "text": "Add one lot and its transplanting date, and anee.io dates the whole season for you.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which free government tools should you use alongside an app?"
+    },
+    {
+      "type": "text",
+      "text": "Some questions are better answered by free tools from the DA and PhilRice."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Rice Crop Manager Advisory Service (RCMAS):** free crop and nutrient advice for your own field, developed by IRRI and PhilRice and run through DA offices and extension workers.",
+        "**Binhing Palay app:** PhilRice's catalogue of released rice varieties, filtered by location, environment and season. It works offline.",
+        "**MOET App:** works with the MOET kit to give the amount, combination and type of fertilizer.",
+        "**PAGASA Agri Weather:** farm weather forecasts, ten day regional outlooks and tropical cyclone warnings for agriculture."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Then bring their answers into your plan. For example, put the RCMAS fertilizer rates into your Protocol Builder tasks, and type the variety you chose into the lot. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows the usual PhilRice timings, and [pagtatanim ng palay](/crops/pagtatanim-ng-palay) covers the whole crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where does anee.io fall short?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Anee needs internet and uses credits. The board keeps working offline, but her answers and analyses wait for a signal.",
+        "Libre covers one active season with one lot, two days of weather and a few ads.",
+        "Workers, inventory and all the reports start at Solo Farmer. Worker logins and the Collab Room need Farm Owner.",
+        "It plans and keeps records, but it is not a soil laboratory. A soil test or MOET still tells you what your soil lacks."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about choosing a farm planning app"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a free farm planning app for rice farmers in the Philippines?",
+          "a": "Yes. anee.io has a free Libre plan with one active season, one lot, the activities board, growth stages and two days of weather, with a few ads. Free government tools such as the Binhing Palay app and the Rice Crop Manager Advisory Service also help with varieties and fertilizer."
+        },
+        {
+          "q": "Can I use a farm planning app without internet in the field?",
+          "a": "anee.io keeps working without signal on every plan. Your ticks and notes wait on the phone and sync once the signal returns. Anee's chat and analyses need a connection."
+        },
+        {
+          "q": "Does the app work in Tagalog?",
+          "a": "Yes. Anee, the smart farm technician inside anee.io, answers in Tagalog, Bisaya, Ilocano, Taglish or English. You can also send her a photo of a sick plant and ask in your own words."
+        },
+        {
+          "q": "Do I need a computer to use it?",
+          "a": "No. anee.io runs in the browser of any phone, tablet or computer, and you can add it to your home screen."
+        },
+        {
+          "q": "Will a farm planning app raise my yield?",
+          "a": "No app can promise a harvest. It helps you do the right work on the right day and keep records, so you see what to change next season. Your yield still depends on the variety, soil, water, weather and management."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "How to make a cropping calendar",
+          "url": "/blog/how-to-make-a-cropping-calendar"
+        },
+        {
+          "label": "Best time to plant rice",
+          "url": "/blog/best-time-to-plant-rice-philippines"
+        },
+        {
+          "label": "Best rice variety for your area",
+          "url": "/blog/best-rice-variety-for-my-area"
+        },
+        {
+          "label": "Choosing a farm management app",
+          "url": "/blog/farm-management-app-philippines"
+        },
+        {
+          "label": "Palay: a full guide",
+          "url": "/crops/palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Tarlac farmers showcase digital agri's potential in fertilizer use (RCMAS)",
+          "url": "https://www.philrice.gov.ph/tarlac-farmers-showcase-digital-agris-potential-in-fertilizer-use/"
+        },
+        {
+          "label": "PhilRice: Binhing Palay app features PH rice varieties",
+          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
+        },
+        {
+          "label": "PhilRice: MOET App",
+          "url": "https://www.philrice.gov.ph/moet-app/"
+        },
+        {
+          "label": "PAGASA: Agri Weather",
+          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
+        }
+      ]
+    }
+  ]
+}

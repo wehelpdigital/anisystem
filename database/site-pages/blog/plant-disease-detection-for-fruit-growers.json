@@ -1,0 +1,276 @@
+{
+  "section": "blog",
+  "slug": "plant-disease-detection-for-fruit-growers",
+  "sortOrder": 340,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "Which Plant Disease Detection Tool Is Best for Filipino Fruit Growers?",
+  "metaTitle": "Plant Disease Detection for Fruit Growers: What Really Works",
+  "metaDescription": "Plant disease detection for mango, banana and papaya growers: what a photo app can and cannot tell you, the signs to check, and how anee.io helps.",
+  "focusKeyword": "plant disease detection",
+  "keywords": [
+    "plant disease detection",
+    "plant disease detection app",
+    "mango disease",
+    "banana disease",
+    "papaya ringspot",
+    "fruit tree diseases Philippines"
+  ],
+  "excerpt": "The most useful plant disease detection tool for a Filipino fruit grower is not the one with the smartest camera. It reads the leaf, fruit or trunk with your tree's stage and weather, and it tells you how to confirm. It also warns you when a sick plant must come out, because viruses such as bunchy top and papaya ringspot have no cure. That is what anee.io, a farm app built for Filipino farmers, offers: Anee, its smart farm technician, reads your photos, and a free Disease Finder covers fruit trees too.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-plant-disease-detection-for-fruit-growers.webp",
+    "alt": "Green papaya fruits with the pale ring spots of papaya ringspot virus, a disease that plant disease detection should catch early",
+    "credit": "Plant pests and diseases, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Fruit trees are a long bet. A mango tree or a banana mat that falls sick can cost you several harvests, not one. The hardest problems are also not simple leaf spots. They are viruses, bacteria and soil fungi that live inside the plant. A photo shows only what they do on the outside.\n\nMost photo tools learned from leaf pictures. A 2016 study in Frontiers in Plant Science, which tested a model on leaf photos, listed this as a limit. Its model worked on single leaves, facing up, on a plain background. Yet many diseases show on other parts of the plant, or not on the upper leaf at all. On a fruit farm, those other parts are the fruit, the flowers and the trunk."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Use plant disease detection by photo as a first opinion, then confirm before you cut or spray.",
+        "Bunchy top, papaya ringspot and Fusarium wilt have no cure. Early detection is about removing sick plants and protecting the rest.",
+        "Some spots on mango are a pest, not a disease: kurikong, the cecid fly, leaves scab like spots on the fruit.",
+        "A good tool asks your crop, its stage and the part of the plant, and tells you when it is a lab question.",
+        "In anee.io the Disease Finder and Pest Finder are free, and Anee reads photos on plans with Anee."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What can plant disease detection by photo see on fruit trees?"
+    },
+    {
+      "type": "text",
+      "text": "Some fruit problems leave clear marks that a sharp photo can show. Others look like a dozen other causes until a lab test says otherwise. The table below sorts the common ones for Filipino growers."
+    },
+    {
+      "type": "table",
+      "caption": "Fruit problems in the Philippines and what a photo can tell you",
+      "rows": [
+        [
+          "Fruit",
+          "Problem",
+          "What you see",
+          "Can a photo name it?",
+          "First step"
+        ],
+        [
+          "Mango",
+          "Kurikong, the cecid fly (a pest)",
+          "Round brown scab like spots scattered on the fruit",
+          "Often, with a close photo",
+          "Bag the fruit 45 to 55 days after flower induction and prune after harvest"
+        ],
+        [
+          "Mango",
+          "Anthracnose (a fungus)",
+          "Black, sunken spots on ripening fruit and dried flower clusters",
+          "Often, if the photo is sharp",
+          "Clean the orchard and spray only by the label"
+        ],
+        [
+          "Banana",
+          "Bunchy top (a virus)",
+          "Narrow, short, bunched leaves with dark dot and dash streaks along the veins",
+          "It can point to it, a lab test confirms it",
+          "Kill the aphids, then dig out the whole mat"
+        ],
+        [
+          "Banana",
+          "Fusarium wilt or Panama disease (a soil fungus)",
+          "Plants that wilt and die",
+          "Rarely, many causes look alike",
+          "Call your municipal agriculturist before you replant"
+        ],
+        [
+          "Papaya",
+          "Ringspot (a virus)",
+          "Yellow and green mosaic on leaves, rings on the fruit, streaks on leaf stalks",
+          "Often from the fruit rings, a lab confirms it",
+          "Remove sick trees quickly, since no spray cures it"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why the virus and wilt diseases matter most"
+    },
+    {
+      "type": "text",
+      "text": "[Banana bunchy top](/diseases/banana-bunchy-top) spreads through the banana aphid. Pacific Pests says plants infected when young rarely produce a bunch. ELISA kits or PCR tests can detect the virus. Its advice is to watch for sick plants and remove them fast. Kill the aphids first, then dig out the whole stool within 48 hours.\n\n[Papaya ringspot](/diseases/papaya-ringspot) moves even faster. Once it reaches a new planting, aphids carry it to every tree within 3 to 7 months. Sprays do not stop it, because the aphid passes the virus on before the insecticide kills it. In Davao, Fusarium wilt ravaged 635 hectares of banana in 2012, PCAARRD reported. Its Tropical Race 4 strain still threatens Cavendish farms."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a plant disease detection tool do for fruit growers?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Cover your fruit.** Check the crop list first, since many tools start with rice and vegetables.",
+        "**Read more than a leaf.** It should take photos of the fruit, the flowers, the trunk and the underside of the leaf.",
+        "**Ask the stage.** Flowering, fruit set and bearing bring different problems, so the tool should know where your trees are.",
+        "**Say when it is a lab question,** and who to call: your municipal agriculturist or the DA regional office.",
+        "**Name active ingredients, not brands,** and remind you to follow the label and the FPA registration.",
+        "**Keep a record** for each block of trees, with photos and dates you can compare next season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help fruit growers?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io knows 85 Philippine crops, fruit trees among them, and counts perennials by their own stages. Its free [Disease Finder](/diseases#finder) asks for your crop and the signs you see: spots, wilting, yellowing, rot or mottled leaves. It then names the diseases that fit, what to do first and the active ingredients with their groups. For a virus, it says no spray cures it.\n\nThe [Pest Finder](/pests#finder) works the same way for [kurikong](/pests/mango-cecid-fly) and fruit flies. On a plan with Anee, you can also send a photo of a leaf or fruit to Anee, the smart farm technician. She reads it with your crop, its stage and the weather. Every photo from Quick Capture stays with the season. You can compare the same tree month after month."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Where it stops"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Anee needs internet and uses credits. The finders and your notes also work on the free Libre plan.",
+        "No app, Anee included, can run the lab test that confirms a virus or Fusarium wilt.",
+        "Libre shows a few ads and holds one active season. Solo Farmer removes the ads and adds full weather."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not carry the disease to your next planting",
+      "text": "Bunchy top and papaya ringspot both travel in planting material. Pacific Pests notes that papaya ringspot spreads when infected plants move from nurseries. It also says bananas should cross borders only as tested tissue culture. Buy seedlings and suckers from a clean, known source."
+    },
+    {
+      "type": "cta",
+      "title": "Check your fruit trees in the Disease Finder",
+      "text": "Pick your crop and the signs you see, and get the diseases that fit, what to do first and the active ingredients. Free on every plan.",
+      "label": "Open the finders",
+      "url": "/features/pest-and-disease-finders"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should you do when you find a sick fruit tree?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Mark the tree",
+          "text": "Tie a ribbon on it and note the block. Photograph the leaf top and underside, the fruit and the trunk."
+        },
+        {
+          "title": "Count its neighbors",
+          "text": "Look at the trees around it. One tree, a row or a patch tells you a lot about how the problem spreads."
+        },
+        {
+          "title": "Run the finder or ask Anee",
+          "text": "Use the Disease Finder, or the Pest Finder if you see insects or holes. Add your photos for Anee if you have a plan with her."
+        },
+        {
+          "title": "Call for a virus or a wilt",
+          "text": "For bunchy top, ringspot or wilt, call your municipal agriculturist before you cut, spray or replant."
+        },
+        {
+          "title": "Act and record",
+          "text": "Remove, treat or bag as advised, and clean your tools. Save the photos and what you did as a note on the season."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about plant disease detection on fruit farms"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can an app detect papaya ringspot from a photo?",
+          "a": "It can suggest it, because the yellow and green mosaic and the rings on the fruit are distinct. A lab test confirms it. Either way, no spray cures it, so the step is to remove sick trees early."
+        },
+        {
+          "q": "Is there a spray for banana bunchy top?",
+          "a": "No spray cures the virus. Pacific Pests advises killing the aphids on a sick plant first. Then dig out the whole stool, main plant and suckers, within 48 hours."
+        },
+        {
+          "q": "What is kurikong on mango?",
+          "a": "Kurikong is the mango cecid fly, a tiny insect that looks like a mosquito. Its larvae bore into the fruit and leave round brown scab like spots. PCAARRD reported yield losses of 70 to 100 percent in Bulacan during one outbreak."
+        },
+        {
+          "q": "Does anee.io cover my fruit crop?",
+          "a": "anee.io knows 85 Philippine crops, fruit trees included. Open the Disease Finder and pick your crop to see whether it is on the list."
+        },
+        {
+          "q": "Is plant disease detection by app enough for export fruit?",
+          "a": "No. Treat the app as a first opinion. For a quarantine disease or an export farm, work with your municipal agriculturist and the DA regional office."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Anthracnose on mango",
+          "url": "/diseases/anthracnose"
+        },
+        {
+          "label": "Banana bunchy top",
+          "url": "/diseases/banana-bunchy-top"
+        },
+        {
+          "label": "Papaya ringspot",
+          "url": "/diseases/papaya-ringspot"
+        },
+        {
+          "label": "Fusarium wilt or Panama disease",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Mango cecid fly or kurikong",
+          "url": "/pests/mango-cecid-fly"
+        },
+        {
+          "label": "Crop disease diagnosis apps for rice and corn",
+          "url": "/blog/crop-disease-diagnosis-app"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Mohanty, Hughes and Salathe (2016), Using deep learning for image based plant disease detection, Frontiers in Plant Science",
+          "url": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2016.01419/full"
+        },
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Banana bunchy top",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/banana_bunchy_top_121.htm"
+        },
+        {
+          "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Papaya ringspot",
+          "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/papaya_ringspot_virusp_194.htm"
+        },
+        {
+          "label": "DOST PCAARRD: Management approaches against Fusarium wilt of Cavendish in Mindanao",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/s-t-management-approaches-against-fusarium-wilt-of-cavendish-in-mindanao-developed"
+        },
+        {
+          "label": "DOST PCAARRD: PCAARRD leads fight against kurikong infestation",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/pcaarrd-leads-fight-against-kurikong-infestation"
+        }
+      ]
+    }
+  ]
+}

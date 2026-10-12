@@ -1,0 +1,293 @@
+{
+  "section": "blog",
+  "slug": "ai-for-filipino-farmers",
+  "sortOrder": 870,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "AI for Farmers: How Can It Help Filipino Farmers Earn More?",
+  "metaTitle": "AI for Farmers: How It Can Help Filipino Farmers Earn More",
+  "metaDescription": "How AI for farmers can raise income in the Philippines: fewer wrong sprays, better timing, the right fertilizer and real records, plus its limits and costs.",
+  "focusKeyword": "AI for farmers",
+  "keywords": [
+    "AI for farmers",
+    "AI in agriculture Philippines",
+    "farm AI app",
+    "increase farm income",
+    "AI crop advice",
+    "smart farm technician"
+  ],
+  "excerpt": "AI for farmers raises income in two ways: it cuts costly mistakes, such as the wrong pesticide, the wrong fertilizer rate or a spray before rain, and it helps you time planting, feeding and harvest better. It does not grow the crop for you, and its advice is only as good as the facts it gets. anee.io, a farm app built for Filipino farmers, has Anee, a smart farm technician who uses AI to read your own lots, crop stage, weather and photos before she answers in Tagalog or English.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-ai-for-filipino-farmers.webp",
+    "alt": "A Filipino farmer checks his green rice field with a bolo in hand, the daily work that AI for farmers helps him plan",
+    "credit": "MarvinBikolano, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Farm income is simple math: what you sell minus what you spend. Most talk about AI promises bigger harvests. But on a Filipino farm, the quickest gains often come from the other side, the money lost to mistakes.\n\nA spray for the wrong pest. Two extra bags of urea the crop did not need. Planting into a dry spell, or harvesting into a typhoon. Here is where AI can help, what the evidence says, and where it falls short."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "AI helps most by catching costly mistakes early: wrong diagnosis, wrong fertilizer, bad timing.",
+        "Advice built from field data works. IRRI reported higher yield and net benefit for farmers who followed Rice Crop Manager advice.",
+        "AI is a helper, not an agriculturist. Check every pesticide against its label and FPA registration.",
+        "On anee.io, Anee comes with Libre + Anee for PHP 70 a month and with every paid plan, and she uses credits."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can AI for farmers raise income?"
+    },
+    {
+      "type": "text",
+      "text": "Look at where money leaks out of a season. Then match each leak with what AI can do about it. This is how anee.io lines them up."
+    },
+    {
+      "type": "table",
+      "caption": "Where money leaks, and how AI can help",
+      "rows": [
+        [
+          "Where money leaks",
+          "How AI helps",
+          "Tool in anee.io"
+        ],
+        [
+          "Wrong diagnosis, wrong spray",
+          "Reads a photo with your crop, stage and weather in mind",
+          "Chat with Anee, plus the free Pest and Disease Finders"
+        ],
+        [
+          "Fertilizer by guesswork",
+          "Adds up every nutrient and checks it against what the crop needs",
+          "NPK Plus Calculator (free) and Crop Protocol Analysis"
+        ],
+        [
+          "Planting at the wrong time",
+          "Reads your town's weather record and the outlook",
+          "When to Plant Analysis"
+        ],
+        [
+          "The wrong crop or variety",
+          "Ranks crops and compares varieties for your area",
+          "What to Plant Analysis and Variety Research"
+        ],
+        [
+          "A crop behind its calendar",
+          "Works out the stage the lot is truly in",
+          "Realign by Anee"
+        ],
+        [
+          "Weak spots you cannot see",
+          "Reads satellite images and radar of your field",
+          "Satellite Analysis"
+        ],
+        [
+          "Not knowing what paid",
+          "Reads the finished season and explains it",
+          "Anee Season Report and Compare Reports"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Each of these protects money you already spend. For example, before you buy a pesticide, Anee helps you name the problem, then the active ingredient that controls it. Our guides on how to [avoid buying the wrong pesticide](/blog/avoid-buying-the-wrong-pesticide) and [lower fertilizer cost](/blog/lower-fertilizer-cost) go deeper."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does the research say about data driven farm advice?"
+    },
+    {
+      "type": "text",
+      "text": "Chat style AI for farms is new, so long studies on it are still few. But advice built from field data has a record in the Philippines. The Rice Crop Manager, developed by IRRI with PhilRice and deployed nationwide with the DA, gives each farmer fertilizer and crop advice for their own field.\n\nIRRI reported that in a 2018 assessment, farmers who followed Rice Crop Manager advice harvested 640 kg more per hectare on average than farmers who did not. They also had about PHP 11,146 more net benefit per hectare. That is not a promise for every farm, since it compares farmers who followed with those who did not. Still, it shows why advice that fits your own field beats a fixed recipe.\n\nThe same idea is spreading. FAO, for example, has piloted generative AI that supports advisory services for farmers in Malawi, Rwanda and Zimbabwe."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What are the limits of AI for farmers?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**It is only as good as its facts.** A blurry photo or a missing planting date gives a weaker answer.",
+        "**It can be wrong.** Treat an answer as a second opinion, and ask why it says what it says.",
+        "**It needs a signal.** Anee cannot answer offline, so ask before you walk to the field.",
+        "**It costs something.** Every answer and analysis uses credits.",
+        "**It does not replace the label or your agriculturist.** For pesticides, follow the product label and its FPA registration. For big decisions, talk to your municipal agriculturist."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Never spray on AI advice alone",
+      "text": "Before any spray, confirm the problem in the field, then check that the active ingredient is registered for your crop and pest. Follow the label for the rate and the days before harvest. Our guide on [AI farm advice](/blog/ai-farm-advice-accuracy) explains how to check an answer."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you use AI on your farm, step by step?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Give it your facts",
+          "text": "Add your lots, crop, variety and planting dates in the [cropping calendar](/features/cropping-calendar). Anee reads these before she answers."
+        },
+        {
+          "title": "Ask with a photo and a reason",
+          "text": "Send a close photo and a wide one, and say what worries you. Tagalog, Bisaya, Ilocano, Taglish or English all work."
+        },
+        {
+          "title": "Read the reasons",
+          "text": "A good answer tells you why. If it does not, ask her."
+        },
+        {
+          "title": "Check before you buy",
+          "text": "Match the active ingredient to your crop, then follow the label and its FPA registration."
+        },
+        {
+          "title": "Record what you did",
+          "text": "Tick the task done and add a photo. The board keeps it for your reports."
+        },
+        {
+          "title": "Compare at harvest",
+          "text": "Look at what the season cost and earned, and keep what worked."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much does AI for farmers cost on anee.io?"
+    },
+    {
+      "type": "table",
+      "caption": "anee.io plans and Anee, in Philippine pesos",
+      "rows": [
+        [
+          "Plan",
+          "Price",
+          "What you get from Anee"
+        ],
+        [
+          "Libre",
+          "Free, with a few ads",
+          "No Anee. The NPK Plus Calculator and the pest and disease finders are free"
+        ],
+        [
+          "Libre + Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "Chat with photos, the four analyses and Realign by Anee. Buy credit packs as needed"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "Anee, plus 30 AI credits each renewal"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "Anee, plus 100 AI credits each renewal"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "There is also Anee Auto, where you answer a few questions once and Anee plans the whole season, then moves the work when rain comes or a worker cannot come. It uses credits too. See every plan on the [pricing page](/pricing)."
+    },
+    {
+      "type": "cta",
+      "title": "Ask Anee about your own farm",
+      "text": "Send a photo, ask in Tagalog or English, and get an answer that knows your lot, its stage and the weather.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about AI for farmers"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can AI really increase my farm income?",
+          "a": "It can help, mostly by cutting costly mistakes and improving timing, but no tool can promise a number. IRRI found that rice farmers who followed Rice Crop Manager advice for their own fields earned more on average than those who did not. Your result depends on how you use the advice."
+        },
+        {
+          "q": "Is AI farm advice accurate?",
+          "a": "It is often useful but not always right. Its answers are only as good as the photo and facts it gets. Check the reasons it gives, and confirm any pesticide with its label and FPA registration."
+        },
+        {
+          "q": "Does Anee understand Tagalog?",
+          "a": "Yes. Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English, in the language you write in. She reads your lots, stage, weather and records before she answers."
+        },
+        {
+          "q": "Does AI work without internet?",
+          "a": "No. Anee needs a connection to answer. The rest of anee.io, such as the activities board, notes and growth stages, keeps working offline and syncs later."
+        },
+        {
+          "q": "How much does it cost to use Anee?",
+          "a": "Anee comes with Libre + Anee for PHP 70 a month, and with Solo Farmer and Farm Owner. Every answer and analysis uses credits, and you can buy more credit packs when you need them."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Is AI farm advice accurate?",
+          "url": "/blog/ai-farm-advice-accuracy"
+        },
+        {
+          "label": "Crop disease diagnosis app",
+          "url": "/blog/crop-disease-diagnosis-app"
+        },
+        {
+          "label": "Identify rice pests from a photo",
+          "url": "/blog/identify-rice-pests-from-a-photo"
+        },
+        {
+          "label": "Lower fertilizer cost",
+          "url": "/blog/lower-fertilizer-cost"
+        },
+        {
+          "label": "Precision agriculture in the Philippines",
+          "url": "/blog/precision-agriculture-philippines"
+        },
+        {
+          "label": "Tagalog farm app",
+          "url": "/blog/tagalog-farm-app"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI News: DA strengthens support for the nationwide deployment of Rice Crop Manager",
+          "url": "https://news.irri.org/2019/05/philippine-department-of-agriculture.html"
+        },
+        {
+          "label": "PhilRice: Web tool to help raise rice yield and income",
+          "url": "https://www.philrice.gov.ph/web-tool-to-help-raise-rice-yield-income/"
+        },
+        {
+          "label": "PhilRice: Rice Apps download page",
+          "url": "https://www.philrice.gov.ph/rice-apps/"
+        },
+        {
+          "label": "FAO: Digital innovation project for farmers in Malawi, Rwanda and Zimbabwe",
+          "url": "https://www.fao.org/africa/news-stories/news-detail/fao-launches-digital-innovation-project-to-empower-farmers-in-malawi--rwanda-and-zimbabwe/en"
+        }
+      ]
+    }
+  ]
+}

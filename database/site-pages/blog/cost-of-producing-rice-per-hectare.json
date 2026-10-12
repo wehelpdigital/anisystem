@@ -1,0 +1,318 @@
+{
+  "section": "blog",
+  "slug": "cost-of-producing-rice-per-hectare",
+  "sortOrder": 700,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "How Do I Compute the Cost of Producing Rice per Hectare?",
+  "metaTitle": "Cost of Producing Rice per Hectare: How to Compute It",
+  "metaDescription": "Compute the cost of producing rice per hectare line by line: seed, fertilizer, labor, machines, rent and interest, with 2024 PSA averages to compare.",
+  "focusKeyword": "cost of producing rice per hectare",
+  "keywords": [
+    "cost of producing rice per hectare",
+    "rice production cost per hectare philippines",
+    "cost per kilo of palay",
+    "palay production cost",
+    "costs and returns",
+    "break even price"
+  ],
+  "excerpt": "To compute the cost of producing rice per hectare, add every cost of the season, whether paid in cash, paid in palay or supplied by you, then divide by the hectares you planted. Divide the same total by your harvest in kilos to get the cost per kilo. In 2024 the national average was PHP 59,695 per hectare, or PHP 14.52 per kilo of palay, based on PSA data. anee.io, a farm app built for Filipino farmers, adds these costs up from the tasks you tick done.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-cost-of-producing-rice-per-hectare.webp",
+    "alt": "Sacks of harvested palay stacked by the road beside a carabao cart in Gapan City, Nueva Ecija",
+    "credit": "CNEcija12345, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Knowing your cost per hectare tells you two things. First, it shows whether the season paid. Second, it shows where to cut next time. Yet many farmers only count the cash they handed out, so they miss the palay given to harvesters, their own work and the rent on land they own.\n\nThe method below follows the costs and returns guide that PhilRice and IRRI used to compare rice farms across Asia. It works for a quarter hectare or for ten."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Count all three kinds of cost:** cash, payments in palay, and the value of your own labor, land and money.",
+        "**Divide by hectares, then by kilos.** Cost per hectare compares farms. Cost per kilo tells you your break even price.",
+        "**Compare with the national average.** It was PHP 59,695 per hectare and PHP 14.52 per kilo in 2024.",
+        "**Labor is the biggest line.** It came close to PHP 30,000 per hectare in 2024.",
+        "**Track it per lot.** Lots on the same farm can differ a lot in cost."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What goes into the cost of producing rice per hectare?"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice and IRRI split the cost of a rice crop into the lines below. Some you pay in cash, some you pay in palay, and some you supply yourself. Put a peso value on all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Cost lines for one rice season, based on the PhilRice and IRRI costs and returns guide",
+      "rows": [
+        [
+          "Cost line",
+          "What to include",
+          "How you usually pay"
+        ],
+        [
+          "Seed",
+          "Bought seed, or your own seed at the price of dry palay",
+          "Cash or own"
+        ],
+        [
+          "Fertilizer",
+          "Every bag and bottle, at its price",
+          "Cash"
+        ],
+        [
+          "Chemicals",
+          "Herbicides, insecticides, fungicides, molluscicides and rodenticides",
+          "Cash"
+        ],
+        [
+          "Hired labor",
+          "Land preparation, crop establishment, crop care, harvesting and threshing, hauling",
+          "Cash or palay"
+        ],
+        [
+          "Permanent worker",
+          "A caretaker paid for the whole season",
+          "Cash or palay"
+        ],
+        [
+          "Own, family and exchange labor",
+          "Your work and your family's, at the going wage",
+          "Imputed"
+        ],
+        [
+          "Machines and power",
+          "Tractor, thresher or animal rental, fuel and oil",
+          "Cash or palay"
+        ],
+        [
+          "Irrigation",
+          "Irrigation fee, or pump rent and fuel",
+          "Cash"
+        ],
+        [
+          "Food, transport, other",
+          "Meals for workers, hauling inputs, sacks and twine",
+          "Cash"
+        ],
+        [
+          "Land",
+          "Rent paid, or the local rent value if you own the land, plus land tax",
+          "Cash, palay or imputed"
+        ],
+        [
+          "Interest",
+          "Interest on the cash you spent before harvest",
+          "Cash or imputed"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I compute it, step by step?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "List every cost by lot",
+          "text": "Go through the table above for each lot. Use receipts, your stock records and your worker list, not memory."
+        },
+        {
+          "title": "Turn palay payments into pesos",
+          "text": "If harvesters, the thresher or a caretaker took a share, multiply the kilos they took by your selling price."
+        },
+        {
+          "title": "Add the costs you did not pay in cash",
+          "text": "Value your own and your family's days at the local daily wage. If you own the land, add what it would earn as rent."
+        },
+        {
+          "title": "Add interest",
+          "text": "If you borrowed for the crop, add the interest you paid. PhilRice and IRRI count up to four months of interest on the cash spent before harvest."
+        },
+        {
+          "title": "Divide by the hectares",
+          "text": "Total cost divided by the area planted gives your cost per hectare."
+        },
+        {
+          "title": "Divide by the kilos",
+          "text": "Total cost divided by your harvest in kilos gives your cost per kilo."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A worked example for one season"
+    },
+    {
+      "type": "text",
+      "text": "Say your lot is 0.8 hectare and the whole season cost PHP 46,000, counting everything above. Your cost per hectare is PHP 46,000 divided by 0.8, or PHP 57,500. If you harvested 3,200 kg of palay, your cost per kilo is PHP 46,000 divided by 3,200, or about PHP 14.38.\n\nThat farm sits close to the 2024 national average of PHP 14.52 per kilo. If buyers pay more than PHP 14.38 per kilo, the season made money. If they pay less, it lost money, even when the cash in your pocket seemed fine."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What the main lines cost today"
+    },
+    {
+      "type": "table",
+      "caption": "Sample lines for one hectare. Fertilizer uses FPA national average prices for October 5 to 9, 2026, on the PhilRice plan for 5 to 6 tons. Seed and labor are 2024 PSA averages reported by Philstar.",
+      "rows": [
+        [
+          "Line",
+          "Amount per hectare",
+          "Basis"
+        ],
+        [
+          "Basal: 2 bags of 14 14 14",
+          "PHP 3,794.00",
+          "PHP 1,897.00 per 50 kg bag"
+        ],
+        [
+          "Top dressing: 2 bags of urea",
+          "PHP 4,520.78",
+          "PHP 2,260.39 per bag of granular urea"
+        ],
+        [
+          "Half a bag of 0 0 60",
+          "PHP 836.94",
+          "PHP 1,673.88 per bag"
+        ],
+        [
+          "Seed",
+          "PHP 4,316",
+          "2024 national average"
+        ],
+        [
+          "Labor, all kinds",
+          "Close to PHP 30,000",
+          "2024 national average"
+        ],
+        [
+          "All costs together",
+          "PHP 59,695",
+          "2024 national average"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Fertilizer prices move every week, so check the latest FPA list before you budget. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) explains the bag plan and its timing."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "A higher yield lowers your cost per kilo",
+      "text": "Many costs stay about the same whether you harvest 3 tons or 5, so every extra cavan spreads them thinner. PhilRice and IRRI found Philippine farms produced a kilo of palay for PHP 11.13 in the high yielding season of 2013 and 2014, but PHP 14.31 in the low yielding season. Raising yield often cuts cost per kilo faster than cutting inputs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why does the cost differ so much between farms?"
+    },
+    {
+      "type": "text",
+      "text": "Wage rates, land rent and the season all move the total. A farm that hires transplanting and harvest crews pays more for labor than one that uses a combine and direct seeding. Rented land carries a bigger rent line than land you own, although you should still count the rent value of your own land.\n\nSo compare your figure with your own past seasons first, then with the national average. To raise your yield instead, see how to [increase rice yield per hectare](/blog/increase-rice-yield-per-hectare), and to trim inputs, read how to [lower fertilizer cost](/blog/lower-fertilizer-cost)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can anee.io compute it for me?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, the costs collect as you work. Each fertilizer or spray task you tick done takes its bags out of stock and puts the cost in your expenses. Workers on each task add their wages. Hired services and extra expenses sit on their days. After harvest, you note yield, price and buyer in [harvest records](/features/harvest-records).\n\nThe [expenses report](/features/expenses-report) then shows every peso the season cost, grouped so you see where it went, and the Profit Report sets it against your sales. You can also tap any day to see the cash to prepare for it."
+    },
+    {
+      "type": "cta",
+      "title": "Let the app add up your season",
+      "text": "Sign up free, add your lots and tasks, and watch your cost per hectare build itself as you work.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about rice production cost"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the average cost of producing rice per hectare in the Philippines?",
+          "a": "Based on PSA data reported by Philstar, it was PHP 59,695 per hectare in 2024, up from PHP 56,491 in 2023. Labor made up close to PHP 30,000 of that."
+        },
+        {
+          "q": "What is the cost per kilo of palay?",
+          "a": "The 2024 national average was PHP 14.52 per kilo, against PHP 13.54 in 2023. Your own figure is your total cost divided by the kilos you harvested."
+        },
+        {
+          "q": "Should I count my own labor?",
+          "a": "Yes. PhilRice and IRRI value the farmer's own, family and exchange labor at the going wage. Without it, you cannot tell whether farming paid better than working for someone else."
+        },
+        {
+          "q": "Is land rent a cost if I own the land?",
+          "a": "Yes, as a value you give up. PhilRice and IRRI count owned land at the rent that tenants and lessees pay nearby, because you could rent it out instead."
+        },
+        {
+          "q": "How can I lower my cost per kilo?",
+          "a": "Raise yield with good seed, timely fertilizer and water, and cut waste in labor and inputs. Since many costs stay fixed, a bigger harvest spreads them over more kilos."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "How to know if your farm is really profitable",
+          "url": "/blog/farm-profitability"
+        },
+        {
+          "label": "Farm cash flow for each week of the season",
+          "url": "/blog/farm-cash-flow"
+        },
+        {
+          "label": "Fertilizer for rice: a season plan",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Palay price in the Philippines",
+          "url": "/blog/palay-price-philippines"
+        },
+        {
+          "label": "Farm expense management software",
+          "url": "/blog/farm-expense-management-software"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
+          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
+        },
+        {
+          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (costs and returns guide)",
+          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
+        },
+        {
+          "label": "FPA: Average retail prices of major fertilizer grades, October 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_.pdf"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (bag plan for 5 to 6 tons)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        }
+      ]
+    }
+  ]
+}

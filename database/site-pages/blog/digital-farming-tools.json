@@ -1,0 +1,271 @@
+{
+  "section": "blog",
+  "slug": "digital-farming-tools",
+  "sortOrder": 880,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "What Digital Farming Tools Does a Modern Filipino Farm Need?",
+  "metaTitle": "Digital Farming Tools a Modern Filipino Farm Needs",
+  "metaDescription": "The digital farming tools a Filipino farm needs: records, weather, fertilizer and variety advice, prices and RSBSA. Most are free and run on a phone.",
+  "focusKeyword": "digital farming tools",
+  "keywords": [
+    "digital farming tools",
+    "farm apps",
+    "RSBSA registration",
+    "PAGASA agri weather",
+    "Rice Crop Manager",
+    "farm records app"
+  ],
+  "excerpt": "A modern Filipino farm needs six digital farming tools: a planning and records app, a weather and typhoon tracker, a fertilizer adviser, a variety guide, a pest and disease helper, and a way to check prices and reach buyers. Most of them are free and run on an ordinary smartphone. Built for Filipino farmers, the anee.io farm app covers planning, records, weather and pest help in one place. It works best beside free government tools such as RCMAS, Binhing Palay and PAGASA's agri weather.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-digital-farming-tools.webp",
+    "alt": "A farmer picks leafy greens into a crate inside a greenhouse in La Trinidad, Benguet, the kind of modern farm that digital farming tools serve",
+    "credit": "Flordeliz Ranola, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Going digital does not start with drones or sensors. It starts with the phone already in your pocket. The right tools save trips to town, catch problems early and keep records you can show a lender, a buyer or the DA.\n\nBelow is the short list, what each tool does, the free options from government agencies, and where anee.io fits. Use what you need and skip the rest."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Start with three: a farm record app, PAGASA's agri weather and your RSBSA registration.",
+        "Get fertilizer and variety advice from free government tools, RCMAS and the Binhing Palay app.",
+        "Check prices before you sell, using the DA's price monitoring page and your own buyer records.",
+        "One farm app can hold the plan, costs, weather and pest help, so you do not juggle five notebooks."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which digital farming tools does a Filipino farm need?"
+    },
+    {
+      "type": "table",
+      "caption": "Six digital farming tools and a registry, with free options and where anee.io fits",
+      "rows": [
+        [
+          "Tool",
+          "What it does for you",
+          "Free option",
+          "Where anee.io fits"
+        ],
+        [
+          "Planning and records app",
+          "Dates tasks, tracks costs, labor and harvest",
+          "A paper notebook works too",
+          "Cropping calendar, workers, inventory and reports"
+        ],
+        [
+          "Weather and typhoon tracker",
+          "Saves sprays from rain and warns of storms",
+          "PAGASA Agri Weather",
+          "Forecast beside your plan, and Satellite Weather with typhoon tracks"
+        ],
+        [
+          "Fertilizer adviser",
+          "The right amount at the right time",
+          "Rice Crop Manager Advisory Service (RCMAS)",
+          "NPK Plus Calculator, free, and Crop Protocol Analysis on credits"
+        ],
+        [
+          "Variety guide",
+          "Seed that fits your field and season",
+          "Binhing Palay app by PhilRice",
+          "Variety Research on credits"
+        ],
+        [
+          "Pest and disease helper",
+          "Names the problem before you spray",
+          "Your municipal agriculturist",
+          "Free Pest Finder and Disease Finder, and Anee reads a photo"
+        ],
+        [
+          "Prices and buyers",
+          "Sell at a fair price to a buyer you trust",
+          "DA Price Monitoring",
+          "Contact List, and harvest records with buyer and price"
+        ],
+        [
+          "Government registry",
+          "Opens the door to DA programs",
+          "RSBSA, through your Municipal Agriculture Office",
+          "Not part of anee.io"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What the free government tools give you"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**PAGASA Agri Weather** posts farm weather forecasts, ten day regional agri weather information and tropical cyclone warnings for agriculture.",
+        "**RCMAS** is a free service developed by IRRI and PhilRice that gives crop and nutrient advice for your own field. DA offices, the Agricultural Training Institute and local extension workers run it.",
+        "**Binhing Palay** is PhilRice's catalogue of released rice varieties. You filter it by location, environment, season and crop establishment, and it works offline.",
+        "**DA Price Monitoring** publishes weekly average retail prices and a daily price index."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should you set up first?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Register in the RSBSA",
+          "text": "It is the DA's list of farmers, farm workers and fisherfolk, and it is how the government finds beneficiaries for its programs. Registration is free and lasts a lifetime."
+        },
+        {
+          "title": "Save PAGASA Agri Weather on your phone",
+          "text": "Check the farm forecast before every spray, and the cyclone warnings for agriculture in typhoon season."
+        },
+        {
+          "title": "Start a farm record on one lot",
+          "text": "Write what you did, what you spent and what you harvested. A free app like anee.io's Libre plan or a notebook both work, as long as you keep it up."
+        },
+        {
+          "title": "Ask for fertilizer advice",
+          "text": "Ask your extension worker for an RCMAS recommendation before your first fertilizer application."
+        },
+        {
+          "title": "Add tools as the farm grows",
+          "text": "Workers, inventory and full reports matter once you hire help and keep a shed of inputs."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What the RSBSA registration needs"
+    },
+    {
+      "type": "text",
+      "text": "According to the DA's RSBSA guide, you must be a Filipino citizen, at least 18 years old, and a farmer, farm worker, fisherfolk or agri youth. Get the enrollment form from your City or Municipal Agriculture Office. Bring a valid government ID and proof of land ownership, tenancy or lease. You then receive a stub with a temporary RSBSA control number.\n\nOnce registered, you can apply for DA programs such as agricultural loans, crop and livestock insurance, seeds, fertilizer, technical help and soil analysis."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "A dated photo is a record",
+      "text": "Snap the receipt, the sacks on the scale and the flooded field on the day it happens. Your phone stamps the date. When a lender, an insurer or a buyer asks what happened, a photo from that day settles it faster than memory."
+    },
+    {
+      "type": "cta",
+      "title": "Put the whole season on one app",
+      "text": "Start free on one lot. anee.io keeps the plan, the costs, the weather and the harvest together.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Do you need drones and sensors to farm digitally?"
+    },
+    {
+      "type": "text",
+      "text": "Not to start. Satellites already pass over Philippine farms, and an app can read them for you. In anee.io, Satellite Analysis has Anee read the newest Sentinel 2 picture and Sentinel 1 radar of your drawn field. Radar sees through typhoon clouds, so the reading still works in the rainy season. It uses credits.\n\nRead more in our guides to [satellite images of your farm](/blog/satellite-crop-monitoring-philippines) and [monitoring crop health without a drone](/blog/monitor-crop-health-without-a-drone). A drone or a soil sensor can come later, once your records show where the money is lost."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io fit into a digital farm?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io puts the planning, records and field help in one app that runs in any phone browser and keeps working without signal. The [cropping calendar](/features/cropping-calendar) dates every task, and the [NPK Plus calculator](/features/npk-plus-calculator) checks a fertilizer plan for free. The [pest and disease finders](/features/pest-and-disease-finders) name active ingredients, never brands. In The Stash, you can read every PhilRice Magazine issue inside the app.\n\nBe clear on the limits too. Anee needs internet and uses credits. The free Libre plan has ads, one active season and one lot, and workers and inventory start at Solo Farmer."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about digital farming tools"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the most important digital tool for a small farmer?",
+          "a": "A simple record of what you did, what you spent and what you harvested. Without it, no other tool can tell you if the season paid. Start with one lot and keep it up for a full season."
+        },
+        {
+          "q": "Are there free digital farming tools in the Philippines?",
+          "a": "Yes. PAGASA Agri Weather, the Rice Crop Manager Advisory Service, the Binhing Palay app and the DA's price monitoring page cost nothing. On anee.io, the Libre plan, the NPK Plus calculator and the pest and disease finders are free too."
+        },
+        {
+          "q": "Do these tools work without internet?",
+          "a": "Some do. The Binhing Palay app works offline, and anee.io keeps working without signal on every plan, then syncs. Weather updates and Anee's answers need a connection."
+        },
+        {
+          "q": "How do I register in the RSBSA?",
+          "a": "Get the enrollment form from your City or Municipal Agriculture Office and fill it out. Bring a valid government ID and proof of land ownership, tenancy or lease. Registration is free, and you receive a stub with a temporary control number."
+        },
+        {
+          "q": "Can I use a farm app in Tagalog?",
+          "a": "Yes. Anee, the smart farm technician inside anee.io, answers in Tagalog, Bisaya, Ilocano, Taglish or English. You can ask in your own words and send a photo of the problem."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Choosing a farm management app",
+          "url": "/blog/farm-management-app-philippines"
+        },
+        {
+          "label": "Farm planning app for rice farmers",
+          "url": "/blog/farm-planning-app-philippines"
+        },
+        {
+          "label": "Weather app for farmers",
+          "url": "/blog/weather-app-for-farmers"
+        },
+        {
+          "label": "Precision agriculture in the Philippines",
+          "url": "/blog/precision-agriculture-philippines"
+        },
+        {
+          "label": "Farm app without internet",
+          "url": "/blog/farm-app-without-internet"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Department of Agriculture CAR: RSBSA frequently asked questions",
+          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
+        },
+        {
+          "label": "PAGASA: Agri Weather",
+          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
+        },
+        {
+          "label": "PhilRice: Tarlac farmers showcase digital agri's potential in fertilizer use (RCMAS)",
+          "url": "https://www.philrice.gov.ph/tarlac-farmers-showcase-digital-agris-potential-in-fertilizer-use/"
+        },
+        {
+          "label": "PhilRice: Binhing Palay app features PH rice varieties",
+          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
+        },
+        {
+          "label": "Department of Agriculture: Price Monitoring",
+          "url": "https://www.da.gov.ph/price-monitoring/"
+        }
+      ]
+    }
+  ]
+}

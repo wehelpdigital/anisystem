@@ -1,0 +1,295 @@
+{
+  "section": "blog",
+  "slug": "monitor-crop-health-without-a-drone",
+  "sortOrder": 680,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "How Can I Monitor Crop Health Without a Drone?",
+  "metaTitle": "Monitor Crop Health Without a Drone: Low Cost Ways",
+  "metaDescription": "Monitor crop health without a drone: field walks, a leaf color chart, traps, phone photos, free satellite pictures and records that catch problems early.",
+  "focusKeyword": "monitor crop health without a drone",
+  "keywords": [
+    "monitor crop health without a drone",
+    "field walk",
+    "leaf color chart",
+    "sticky traps",
+    "satellite pictures",
+    "PalayCheck"
+  ],
+  "excerpt": "You can monitor crop health without a drone by walking each lot on a fixed schedule, checking leaves and stems at several spots, reading a leaf color chart for rice, setting simple traps and writing down what you find. Free satellite pictures can show which part of a big field to walk first. The farm app anee.io, built for Filipino farmers, keeps these checks in one season record with photos, growth stages and the weather.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-monitor-crop-health-without-a-drone.webp",
+    "alt": "A farmer bends over young rice plants and holds a leaf color chart against a leaf, a cheap way to monitor crop health without a drone",
+    "credit": "USAID Pakistan, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A drone shows a field from above, and that view helps on big farms. But the decisions still come from the plants: the eggs under a leaf, the color of the youngest leaves, the water in the paddy. None of that needs a machine in the air.\n\nPhilRice teaches the same thing in its PalayCheck System. Walk through the plots, measure with a ruler, count or weigh, and do not guess. Then write it down, because memory fails by the end of the season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Your eyes and a notebook are the main tools. A drone or a satellite only shows where to look.",
+        "PalayCheck asks for regular field monitoring from the early stage of the crop onwards.",
+        "Cheap helpers do a lot: a leaf color chart, a ruler, sticky traps and your phone camera.",
+        "Free Sentinel 2 satellite pictures show weak zones on bigger fields, about every five days when clouds allow.",
+        "Records by lot and date turn single checks into a trend you can act on."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What can you see without a drone?"
+    },
+    {
+      "type": "text",
+      "text": "Each method below shows a different part of crop health. Most farms need two or three of them, not all six."
+    },
+    {
+      "type": "table",
+      "caption": "Ways to check crop health without a drone",
+      "rows": [
+        [
+          "Method",
+          "What it shows",
+          "Cost",
+          "Limits"
+        ],
+        [
+          "Field walk",
+          "Pests, eggs, disease spots, weeds, water depth",
+          "Your time",
+          "Must cover several spots, not just the bund"
+        ],
+        [
+          "Leaf color chart",
+          "When rice needs nitrogen",
+          "Low",
+          "Rice only, read on a schedule"
+        ],
+        [
+          "Sticky, pan or light traps",
+          "Which flying insects are arriving",
+          "Low",
+          "Miss insects that do not fly"
+        ],
+        [
+          "Phone photos of the same spots",
+          "Change from week to week",
+          "Free",
+          "Same spot and angle each time"
+        ],
+        [
+          "Satellite pictures",
+          "Weak zones across a whole field",
+          "Free data, paid analysis in some apps",
+          "10 m pixels, and clouds hide the field"
+        ],
+        [
+          "Counts and notes",
+          "Trends and thresholds",
+          "Free",
+          "Only as good as you keep them"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you monitor crop health without a drone, step by step?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Map your lots and trouble spots",
+          "text": "Mark the low spot that floods, the corner near the canal and the edge by the trees. Pests and disease often start there."
+        },
+        {
+          "title": "Walk on a schedule",
+          "text": "PalayCheck asks for regular monitoring from the early stage onwards. Once a week fits, since the leaf color chart is read every 7 days anyway."
+        },
+        {
+          "title": "Check several spots",
+          "text": "Cross the lot and stop at five or more places. The plants near the road do not speak for the middle of the field."
+        },
+        {
+          "title": "Read the leaf color chart",
+          "text": "For rice, PalayCheck says to read it every 7 days from 14 DAT or 21 DAS until early flowering. Apply nitrogen if 6 or more of 10 leaves read below 4 in transplanted rice."
+        },
+        {
+          "title": "Compare with thresholds",
+          "text": "Use the PalayCheck levels in the table below to decide if the damage is worth acting on."
+        },
+        {
+          "title": "Photograph and write",
+          "text": "Take a photo at the same spots each visit and note the date, the lot and what you counted."
+        },
+        {
+          "title": "Confirm before you spray",
+          "text": "Name the cause first. Then choose by active ingredient, and follow the label and the FPA registration."
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "caption": "Levels that mean real yield loss in rice, from PhilRice PalayCheck Key Check 7",
+      "rows": [
+        [
+          "Problem",
+          "Act when"
+        ],
+        [
+          "Weeds",
+          "Over 5 percent of the area has weed cover at 0 to 40 DAS in direct seeded rice, or over 10 percent at 15 to 40 DAT in transplanted rice"
+        ],
+        [
+          "Rats",
+          "Over 5 percent of the area has damaged tillers, from maximum tillering to maturity"
+        ],
+        [
+          "Golden apple snails",
+          "Over 10 percent of the area has missing or snail damaged hills at 14 DAT or DAS"
+        ],
+        [
+          "Birds",
+          "Over 5 percent of the area has damaged panicles"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Hold the spray on early leaf damage",
+      "text": "PalayCheck advises against spraying for leaf eating insects within 30 DAT or 40 DAS. An early spray also kills the spiders that feed on planthoppers, and PalayCheck warns that careless spraying upsets the balance between pests and their natural enemies."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What do traps tell you, and what do they miss?"
+    },
+    {
+      "type": "text",
+      "text": "A PhilRice field guide on pest sampling lists the simple traps farmers can use. Sticky traps and yellow pan traps are cheap and show insects moving in. Light traps help compare one season with another, and pheromone traps catch the males of one pest, which tells you when it arrives.\n\nBut the sticky, pan and light traps in that guide share one limit: they do not catch insects that cannot fly. So treat a trap as an early alarm, then walk the lot to see the nymphs, larvae and damage. Our guides to [early pest detection](/blog/early-pest-detection) and [integrated pest management](/pests/integrated-pest-management) go further."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When is a satellite picture worth it?"
+    },
+    {
+      "type": "text",
+      "text": "Sentinel 2, a European satellite mission, photographs the Earth every five days at the equator, with 10 m pixels in its sharpest bands. Its data are free under the Copernicus open data policy. From the red and near infrared light, apps work out NDVI, a greenness score. NASA explains that values near 0.8 to 0.9 mean the densest green leaves, while 0.1 and below mean barren areas such as rock or sand.\n\nA 10 m pixel cannot show one sick hill. So use a satellite picture to choose where to walk on a big field, then confirm on foot. Our guide to [satellite images of my farm](/blog/satellite-crop-monitoring-philippines) explains how to read one. In anee.io, [Satellite Analysis](/features/satellite-analysis) reads the newest Sentinel 2 picture and Sentinel 1 radar of a field you draw, and Anee names the weak spots to check. It uses credits."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help you check crops without a drone?"
+    },
+    {
+      "type": "text",
+      "text": "Most of the work is the record. In anee.io, Quick Capture takes a photo and Quick Voice saves what you say as a note, filed with the season. The [growth stages](/features/growth-stages-and-weather) page gives each lot a watch list for its stage, so you know what to look for before you go out.\n\nWhen you find something you cannot name, the free [pest and disease finders](/features/pest-and-disease-finders) work from your crop and the damage you see. Or send Anee, the smart farm technician, a photo, and she answers with your lot, its stage and the weather in mind. Offline mode keeps notes working at the far lot, though Anee herself needs a signal."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/photos/inspect.jpg",
+      "alt": "A farmer stands in her green rice field holding a phone",
+      "caption": "A phone in the field is enough to photograph a problem, note it and check it against the season's records."
+    },
+    {
+      "type": "cta",
+      "title": "Keep every field check in one record",
+      "text": "Add your lots, then save photos, voice notes and counts with the season. The free Libre plan is enough to begin.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about monitoring crops without a drone"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is a drone worth it for a small farm?",
+          "a": "For one to a few hectares, a walk through the field shows more than a picture from above. Drones help most on large areas or for spraying. If you hire a spraying drone, the FPA keeps a separate list of pesticide products registered for drone use."
+        },
+        {
+          "q": "How often should I walk my rice field?",
+          "a": "PalayCheck asks for regular monitoring from the early stage onwards, and once a week is a good rhythm. Read the leaf color chart every 7 days from 14 DAT or 21 DAS until early flowering. After a typhoon, a flood or a dry spell, walk again right away."
+        },
+        {
+          "q": "Can I see my farm from a satellite for free?",
+          "a": "Yes. Sentinel 2 pictures are free under the Copernicus open data policy, and they cover the Philippines about every five days. Clouds often hide fields in the wet season, so radar from Sentinel 1 helps then."
+        },
+        {
+          "q": "What does a leaf color chart do?",
+          "a": "It compares the color of a rice leaf with color strips to show when the crop needs nitrogen. PalayCheck says to apply nitrogen when 6 or more of 10 leaves read below 4 in transplanted rice."
+        },
+        {
+          "q": "Can Anee tell what is wrong from a photo?",
+          "a": "Anee, the smart farm technician inside anee.io, can look at a photo and answer with your lot and stage in mind. Her answer uses credits and needs internet, so confirm it on the plants before you buy a spray."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Satellite images of my farm",
+          "url": "/blog/satellite-crop-monitoring-philippines"
+        },
+        {
+          "label": "Early pest detection",
+          "url": "/blog/early-pest-detection"
+        },
+        {
+          "label": "Pest or disease: how to tell",
+          "url": "/blog/pest-or-disease-how-to-tell"
+        },
+        {
+          "label": "Crop growth stage monitoring",
+          "url": "/blog/crop-growth-stage-monitoring"
+        },
+        {
+          "label": "Satellite Analysis in anee.io",
+          "url": "/features/satellite-analysis"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Field guide to sampling insect pests and diseased plants in the rice field",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Sampling-insect-pests-damaged-and-diseased-plants-and-beneficial-organisms-in-the-rice-field-Devices-and-Techniques.pdf"
+        },
+        {
+          "label": "ESA SentiWiki: Sentinel 2 mission",
+          "url": "https://sentiwiki.copernicus.eu/web/s2-mission"
+        },
+        {
+          "label": "NASA Earth Observatory: Measuring Vegetation (NDVI and EVI)",
+          "url": "https://science.nasa.gov/earth/earth-observatory/measuring-vegetation-ndvi-evi"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority: Registered products, including pesticides for drone use",
+          "url": "https://fpa.da.gov.ph/registered-products/"
+        }
+      ]
+    }
+  ]
+}

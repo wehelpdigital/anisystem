@@ -1,0 +1,278 @@
+{
+  "section": "blog",
+  "slug": "track-typhoons-near-my-farm",
+  "sortOrder": 810,
+  "lang": "en",
+  "category": "Weather",
+  "title": "How Can I Track Typhoons That May Hit My Farm?",
+  "metaTitle": "Track Typhoons Near Your Farm: A Guide for Filipino Farmers",
+  "metaDescription": "Track typhoons before they reach your farm: read PAGASA bulletins and wind signals, follow storm tracks and cones, and know what to do at each signal.",
+  "focusKeyword": "track typhoons",
+  "keywords": [
+    "track typhoons",
+    "PAGASA wind signal",
+    "tropical cyclone bulletin",
+    "storm cone",
+    "typhoon preparation",
+    "super typhoon"
+  ],
+  "excerpt": "To track typhoons that may hit your farm, follow PAGASA's tropical cyclone bulletins and wind signals, and use a storm map that shows each storm's track, its cone and its distance from your field. Start early, because PAGASA's Wind Signal Number 1 gives about 36 hours of warning and higher signals give less. The farm app anee.io, built for Filipino farmers, has Satellite Weather, which shows every typhoon's path and how far it is from your lots.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-track-typhoons-near-my-farm.webp",
+    "alt": "A satellite picture of a large typhoon with a clear eye covering Luzon in November 2024, the kind of storm farmers track",
+    "credit": "MODIS Land Rapid Response Team, NASA GSFC, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Typhoons are part of every farm season in the Philippines. PAGASA counts an average of 20 tropical cyclones in its area of responsibility each year, and about 8 or 9 of them cross the country. The peak runs from July through October, right when much of the wet season palay is flowering or ripening.\n\nA storm warning on the radio tells you a typhoon is coming. To protect a crop, you need more: when the worst reaches your own barangay, how strong it will be, and whether your field is ready to harvest. That is what it means to track typhoons as a farmer."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "PAGASA is the official source for tropical cyclone bulletins and wind signals.",
+        "Lead times shrink as signals rise: 36 hours at Signal 1, 24 at Signal 2, 18 at Signal 3 and 12 at Signals 4 and 5.",
+        "A storm map with the track, the cone and the forecast times shows if the worst comes at night or at dawn.",
+        "Decide your farm's action for each signal before the season, by crop stage.",
+        "Measure the distance to your own farm, not just to your province."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What do PAGASA's wind signals mean for your crops?"
+    },
+    {
+      "type": "text",
+      "text": "PAGASA's Tropical Cyclone Wind Signals warn of winds of at least 39 km/h. Each level comes with a lead time and a list of likely impacts, including on rice and bananas. The table keeps the farm parts of that list."
+    },
+    {
+      "type": "table",
+      "caption": "Tropical Cyclone Wind Signals and their likely effect on crops, from PAGASA",
+      "rows": [
+        [
+          "Signal",
+          "Wind",
+          "Lead time",
+          "Likely effect on crops"
+        ],
+        [
+          "1",
+          "39 to 61 km/h",
+          "36 hours",
+          "Bananas lean. Rice at flowering or ripening may suffer some damage."
+        ],
+        [
+          "2",
+          "62 to 88 km/h",
+          "24 hours",
+          "Most bananas tilt and some fall. Considerable damage to rice, mostly at flowering or ripening."
+        ],
+        [
+          "3",
+          "89 to 117 km/h",
+          "18 hours",
+          "Most bananas downed. Rice at flowering or ripening may suffer heavy damage."
+        ],
+        [
+          "4",
+          "118 to 184 km/h",
+          "12 hours",
+          "Almost total damage to rice and other crops."
+        ],
+        [
+          "5",
+          "185 km/h or higher",
+          "12 hours",
+          "Very few trees, plants and crops are expected to survive."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So when Signal 3 goes up over your town, the strongest winds may be only 18 hours away, night included. Harvesting a hectare of ripe palay in that window is hard without a plan made days earlier."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you track typhoons before they reach your farm?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Know your farm's exact spot",
+          "text": "Pin each field on a map. A storm 200 km from the provincial capital may pass much closer to your lot."
+        },
+        {
+          "title": "Follow PAGASA from the first bulletin",
+          "text": "Once a storm forms or enters the area of responsibility, read each tropical cyclone bulletin on the PAGASA website."
+        },
+        {
+          "title": "Read the track and the cone",
+          "text": "The line shows the forecast path of the center. The cone shows where the center may go, so treat the whole cone as at risk."
+        },
+        {
+          "title": "Note the time it comes nearest",
+          "text": "Find the forecast point closest to your farm and the hour it should arrive. Night arrivals leave less time to work."
+        },
+        {
+          "title": "Hold it against your crop's stage",
+          "text": "A ripe field, a flowering field and a young field need different actions."
+        },
+        {
+          "title": "Act within the lead time",
+          "text": "Harvest, drain or secure while the roads and the weather still allow it."
+        },
+        {
+          "title": "Record the damage after",
+          "text": "Take dated photos and note the stage of each lot, because insurance and loan papers ask for both."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "The line is not the storm",
+      "text": "A typhoon's winds and rain reach far beyond the line on the map, so a farm away from the center line can still be hit hard. Watch the cone and the distance, and listen to PAGASA, not only the line."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should you do at each crop stage?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Ripe palay.** PalayCheck says to harvest when 85 to 90 percent of the grains are golden for hand harvest, or 90 to 95 percent for a combine. Thresh within one day in the wet season, and do not pile the cut crop in the field for more than a day.",
+        "**Palay almost ripe.** Harvesting too early gives immature grain, and PalayCheck warns that milling recovery can drop as low as 53 percent. Weigh that loss against the storm's strength and distance.",
+        "**Flowering rice.** There is little to do except keep drains open, since PAGASA lists flowering and ripening rice as the most exposed.",
+        "**Young crops.** Clear the canals and outlets so floodwater leaves fast.",
+        "**Harvested grain and inputs.** Move palay and fertilizer sacks off the floor to a dry, covered place."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Our guide to [typhoon preparation for farmers](/blog/typhoon-preparation-for-farmers) has the full checklist, and our page on how to [reduce crop losses](/blog/reduce-crop-losses) covers the harvest and drying side."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help you track typhoons?"
+    },
+    {
+      "type": "text",
+      "text": "[Satellite Weather](/features/satellite-weather) in anee.io is a storm map centered on your farm. It plays back the satellite clouds and rain radar of the last hours, then runs the forecast forward. It shows every active typhoon with its path, its cone, the time at each forecast point and how far it is from your field. The storm tracks come from GDACS, a disaster awareness system that the United Nations and the European Commission run together.\n\nPick one of your lots, and Anee, the smart farm technician, reads the storm against that lot's crop, age and [growth stage](/features/growth-stages-and-weather). She then lists the steps with their timing: now, before the storm, during and after. The regular [farm weather forecast](/features/farm-weather-forecast) also sits beside your plan every day."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/photos/storm-paddies.jpg",
+      "alt": "A farmer checks his phone beside a newly planted paddy under a grey sky",
+      "caption": "Checking the storm on a phone at the paddy: the track and the distance tell you how much time is left."
+    },
+    {
+      "type": "cta",
+      "title": "See every typhoon and its distance to your farm",
+      "text": "Open Satellite Weather, pick your farm and follow each storm's path, cone and timing.",
+      "label": "See Satellite Weather",
+      "url": "/features/satellite-weather"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does it cost, and what are the limits?"
+    },
+    {
+      "type": "text",
+      "text": "Satellite Weather runs on credits. Anee's reading of a storm against your lot needs a plan with Anee, from Libre plus Anee at PHP 70 a month. See the [pricing page](/pricing) for the details.\n\nOne limit matters most: anee.io helps you plan farm work, but it does not issue warnings. For wind signals, storm surge and evacuation, follow PAGASA and your municipal disaster office. Our guide to the [weather app for farmers](/blog/weather-app-for-farmers) compares PAGASA, phone apps and farm apps."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about how to track typhoons"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Where can I see the official typhoon track?",
+          "a": "On the PAGASA website, in its tropical cyclone bulletins. PAGASA also raises the wind signals, so check it first whatever other app you use."
+        },
+        {
+          "q": "How many typhoons reach the Philippines each year?",
+          "a": "PAGASA counts an average of 20 tropical cyclones in its area of responsibility each year. About 8 or 9 of them cross the country, and the peak runs from July through October."
+        },
+        {
+          "q": "What is the difference between a typhoon and a super typhoon?",
+          "a": "PAGASA calls a tropical cyclone a typhoon at 118 to 184 km/h of sustained wind. Above 185 km/h, it becomes a super typhoon, and Signal 5 covers those winds."
+        },
+        {
+          "q": "How early should I harvest before a typhoon?",
+          "a": "If 85 to 90 percent of the grains are golden, the palay is ready, so harvest within the lead time. Cutting much earlier gives immature grain and poor milling, so weigh the storm's strength and distance first."
+        },
+        {
+          "q": "Does anee.io issue typhoon warnings?",
+          "a": "No. Satellite Weather helps you plan farm work around a storm. For signals and evacuation, follow PAGASA and your local disaster office."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Typhoon preparation for farmers",
+          "url": "/blog/typhoon-preparation-for-farmers"
+        },
+        {
+          "label": "Reduce crop losses",
+          "url": "/blog/reduce-crop-losses"
+        },
+        {
+          "label": "Weather app for farmers",
+          "url": "/blog/weather-app-for-farmers"
+        },
+        {
+          "label": "El Nino and La Nina farming tips",
+          "url": "/blog/el-nino-la-nina-farming-tips"
+        },
+        {
+          "label": "Satellite Weather in anee.io",
+          "url": "/features/satellite-weather"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PAGASA: Tropical Cyclone Wind Signal",
+          "url": "https://pagasa.dost.gov.ph/learning-tools/tropical-cyclone-wind-signal"
+        },
+        {
+          "label": "PAGASA: Tropical Cyclone Information",
+          "url": "https://www.pagasa.dost.gov.ph/climate/tropical-cyclone-information"
+        },
+        {
+          "label": "PAGASA: About Tropical Cyclones",
+          "url": "https://www.pagasa.dost.gov.ph/information/about-tropical-cyclone"
+        },
+        {
+          "label": "GDACS: Global Disaster Awareness and Coordination System",
+          "url": "https://www.gdacs.org/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        }
+      ]
+    }
+  ]
+}

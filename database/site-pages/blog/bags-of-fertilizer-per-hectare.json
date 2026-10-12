@@ -1,0 +1,301 @@
+{
+  "section": "blog",
+  "slug": "bags-of-fertilizer-per-hectare",
+  "sortOrder": 440,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "How Many Bags of Fertilizer per Hectare Does Rice Need?",
+  "metaTitle": "Bags of Fertilizer per Hectare of Rice: Counts by Yield",
+  "metaDescription": "How many bags of fertilizer per hectare of rice? About 2.5 to 6.5 bags for 3 to 8 tons in PhilRice's plan, plus how to scale and price it for your own lot.",
+  "focusKeyword": "bags of fertilizer per hectare",
+  "keywords": [
+    "bags of fertilizer per hectare",
+    "how many bags of urea per hectare",
+    "fertilizer for one hectare of rice",
+    "Abonong Swak",
+    "50 kg bag nutrients",
+    "fertilizer cost per hectare"
+  ],
+  "excerpt": "Irrigated palay usually needs about 2.5 to 6.5 bags of inorganic fertilizer per hectare, depending on the yield you aim for. PhilRice's Abonong Swak plan uses 2.5 bags for 3 to 4 tons, 4.5 bags for 5 to 6 tons and 6.5 bags for 7 to 8 tons, plus 10 bags of organic fertilizer. Treat these bags of fertilizer per hectare as a starting point and adjust them with a soil test. anee.io, a farm app built for Filipino farmers, has a free NPK Plus calculator that checks your bag count against what rice needs.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-bags-of-fertilizer-per-hectare.webp",
+    "alt": "A wide field of ripening palay in Muñoz, Nueva Ecija, where fertilizer is counted in bags per hectare",
+    "credit": "Ramon FVelasquez, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Farmers buy fertilizer by the bag, but the crop needs it by the kilo of nutrient. A 50 kg bag of urea and a 50 kg bag of 14 14 14 look the same on the tricycle. Yet one carries 23 kg of nitrogen and the other only 7 kg each of nitrogen, phosphate and potash.\n\nSo the honest answer depends on two things: the harvest you aim for and the grades you buy. The counts below come from PhilRice and from a DA, PhilRice and IRRI quick guide. Prices are FPA national averages for October 5 to 9, 2026."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**3 to 4 tons:** about 2.5 bags, that is 1 bag of 14 14 14, 1 bag of urea and half a bag of potash.",
+        "**5 to 6 tons:** about 4.5 bags, with 2 bags of 14 14 14 or 16 20 0, 2 bags of urea and half a bag of potash.",
+        "**7 to 8 tons:** about 6.5 bags, with 4 bags of urea instead of 2.",
+        "**Organic matter cuts the count.** PhilRice adds 10 bags of organic fertilizer and returns the rice straw.",
+        "**Scale it to your lot.** Multiply every bag by your area in hectares."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How many bags of fertilizer per hectare, by yield target?"
+    },
+    {
+      "type": "text",
+      "text": "Two well known plans give the count. PhilRice's Abonong Swak plan counts on rice straw and 10 bags of organic fertilizer to supply part of the nitrogen. The Nueva Ecija wet season quick guide assumes no straw and no organic matter, and it uses more bags for a similar harvest."
+    },
+    {
+      "type": "table",
+      "caption": "Inorganic bags per hectare of transplanted rice, and their cost at FPA national average prices for October 5 to 9, 2026 (plain 14 14 14 and prilled urea). One cavan in the quick guide is 56 kg.",
+      "rows": [
+        [
+          "Plan and target",
+          "14 14 14",
+          "Urea",
+          "Potash 0 0 60",
+          "Total bags",
+          "Cost (PHP)"
+        ],
+        [
+          "Abonong Swak, 3 to 4 tons",
+          "1",
+          "1",
+          "0.5",
+          "2.5",
+          "4,975.35"
+        ],
+        [
+          "Abonong Swak, 5 to 6 tons",
+          "2",
+          "2",
+          "0.5",
+          "4.5",
+          "9,113.76"
+        ],
+        [
+          "Abonong Swak, 7 to 8 tons",
+          "2",
+          "4",
+          "0.5",
+          "6.5",
+          "13,596.58"
+        ],
+        [
+          "Wet season guide, 70 to 90 cavans",
+          "2",
+          "2",
+          "0",
+          "4",
+          "8,276.82"
+        ],
+        [
+          "Wet season guide, 90 to 110 cavans",
+          "3",
+          "3",
+          "0",
+          "6",
+          "12,415.23"
+        ],
+        [
+          "Wet season guide, 110 to 130 cavans",
+          "4",
+          "4",
+          "0",
+          "8",
+          "16,553.64"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The timing of each bag matters as much as the count. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) lists the Abonong Swak days for each variety maturity. The page on [fertilizer for wet season rice](/blog/fertilizer-for-wet-season-rice) covers the quick guide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is inside each 50 kg bag?"
+    },
+    {
+      "type": "text",
+      "text": "Every grade is a percent. Multiply the percent by 50 kg and you get the kilos of nutrient in the bag. Dividing the price by those kilos tells you which bag gives the cheapest nutrient."
+    },
+    {
+      "type": "table",
+      "caption": "Nutrients in a 50 kg bag and FPA national average price per bag, October 5 to 9, 2026. Prices change every week.",
+      "rows": [
+        [
+          "Grade",
+          "What one bag holds",
+          "Price per bag (PHP)"
+        ],
+        [
+          "Urea 46 0 0, prilled",
+          "23 kg nitrogen",
+          "2,241.41"
+        ],
+        [
+          "Complete 14 14 14",
+          "7 kg each of N, P2O5 and K2O",
+          "1,897.00"
+        ],
+        [
+          "Ammophos 16 20 0",
+          "8 kg N and 10 kg P2O5",
+          "1,749.58"
+        ],
+        [
+          "Ammosul 21 0 0",
+          "10.5 kg N plus sulfur",
+          "1,238.95"
+        ],
+        [
+          "Muriate of potash 0 0 60",
+          "30 kg K2O",
+          "1,673.88"
+        ],
+        [
+          "Diammonium phosphate 18 46 0",
+          "9 kg N and 23 kg P2O5",
+          "2,960.63"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I count the bags for my own field?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Pick a yield target you can reach",
+          "text": "Start from your best recent harvest on that field, not your neighbor's. Wet season targets should sit lower than dry season ones."
+        },
+        {
+          "title": "Choose the plan for that target",
+          "text": "Use a soil test, the MOET kit or your province's quick guide if you have one. Otherwise, use the PhilRice plan above."
+        },
+        {
+          "title": "Credit what you return to the soil",
+          "text": "PhilRice says the straw from a 5 ton harvest, worked back in, supplies about 30 kg of nitrogen. That equals about 1.3 bags of urea."
+        },
+        {
+          "title": "Multiply by your area",
+          "text": "A hectare is 10,000 square meters. For a 2,500 square meter lot, multiply every bag by 0.25."
+        },
+        {
+          "title": "Price it before you buy",
+          "text": "Check the latest FPA weekly prices, then compare with your dealer. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows the full formula."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "From kilos of nutrient to bags"
+    },
+    {
+      "type": "text",
+      "text": "Some recommendations come in kilos of nutrient, not bags. PhilRice's general recommendation for irrigated lowland, for example, gives 97 kg of nitrogen per hectare in the wet season. If 2 bags of 14 14 14 already supply 14 kg, then 83 kg remain. Dividing 83 by 0.46 gives about 180 kg of urea, or 3.6 bags."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Compare by the kilo when bags are repacked",
+      "text": "FPA prices are for 50 kg bags. If your dealer sells repacked 25 kg sacks or loose kilos, divide the price by the weight first. Then compare it with the bag price so you know which one is cheaper."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io count the bags for me?"
+    },
+    {
+      "type": "text",
+      "text": "The free [NPK Plus calculator](/features/npk-plus-calculator) takes the bags you plan to use and adds up the nitrogen, phosphorus and potassium per hectare and in all. It tells you if each one is short, right or too much for rice. Want a full plan instead? [Crop Protocol Analysis](/features/crop-protocol-analysis) has Anee write the season by growth stage, with the bags and their dates. That analysis uses credits.\n\nOn Solo Farmer and Farm Owner, [farm inventory](/features/farm-inventory-and-expenses) sets what your plan needs against what is in the shed. You see at once what is left to buy. Each fertilizer task you tick done takes its bags out of stock."
+    },
+    {
+      "type": "cta",
+      "title": "Check your bag count for free",
+      "text": "Tap the fertilizers you plan to buy and see the nitrogen, phosphorus and potassium they give your rice per hectare.",
+      "label": "Open NPK Plus",
+      "url": "/features/npk-plus-calculator"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fertilizer bags per hectare"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many bags of urea do I need per hectare of rice?",
+          "a": "PhilRice's Abonong Swak plan uses 1 bag of urea for 3 to 4 tons, 2 bags for 5 to 6 tons and 4 bags for 7 to 8 tons. The Nueva Ecija wet season guide uses 2 to 4 bags. Split them between tillering and panicle initiation."
+        },
+        {
+          "q": "How much fertilizer does a quarter hectare of rice need?",
+          "a": "Multiply the hectare plan by 0.25. For the 5 to 6 ton plan, that is half a bag of 14 14 14, half a bag of urea and about 6 kg of muriate of potash."
+        },
+        {
+          "q": "How much does the fertilizer for one hectare of rice cost?",
+          "a": "At FPA national average prices for October 5 to 9, 2026, the PhilRice plan for 5 to 6 tons costs about PHP 9,114 per hectare. Prices change every week and differ by province, so check the latest FPA list."
+        },
+        {
+          "q": "Do I still need organic fertilizer if I buy enough bags?",
+          "a": "PhilRice adds 10 bags of decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost per hectare at 14 days after transplanting. It also returns the rice straw. Together they supply part of the nitrogen and build the soil, which keeps the inorganic bag count lower."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "How to lower fertilizer cost",
+          "url": "/blog/lower-fertilizer-cost"
+        },
+        {
+          "label": "Plan fertilizer for a whole season",
+          "url": "/blog/season-fertilizer-plan"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K (Abonong Swak recommendations)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "DA, PhilRice, Nueva Ecija and IRRI: Quick guide for fertilizing transplanted rice during the wet season in Nueva Ecija",
+          "url": "http://www.knowledgebank.irri.org/pinoyrkb/QuickGuide/english/Region%203/Nueva%20Ecija/Quick%20guide%20for%20fertilizing%20transplanted%20rice%20during%20the%20wet%20season%20in%20Nueva%20Ecija.pdf"
+        },
+        {
+          "label": "PhilRice: Rice Science for Decision Makers Vol. 11, Reinforcing Right EAT for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf"
+        },
+        {
+          "label": "FPA: Prices of 6 major fertilizer grades, October 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_-1.pdf"
+        }
+      ]
+    }
+  ]
+}

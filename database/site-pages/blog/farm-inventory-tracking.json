@@ -1,0 +1,252 @@
+{
+  "section": "blog",
+  "slug": "farm-inventory-tracking",
+  "sortOrder": 750,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "Farm Inventory Tracking: How Do I Track Fertilizer and Pesticide Stock?",
+  "metaTitle": "Farm Inventory Tracking for Fertilizer and Pesticides",
+  "metaDescription": "Farm inventory tracking for fertilizer, seed and pesticides: a simple stock card, first in first out, what to buy, and stock that counts itself.",
+  "focusKeyword": "farm inventory tracking",
+  "keywords": [
+    "farm inventory tracking",
+    "fertilizer inventory",
+    "pesticide inventory",
+    "stock card",
+    "first in first out",
+    "farm stock records"
+  ],
+  "excerpt": "Farm inventory tracking means writing down every bag, bottle and sack that comes into your shed and every one that goes out. Note the date, the task and who took it. Your stock on hand equals what came in minus what went out. In anee.io, a farm app built for Filipino farmers, the subtraction happens by itself: tick a fertilizer or spray task done and the shed takes it out of stock.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-inventory-tracking.webp",
+    "alt": "Workers stack sacks in a warehouse in the Philippines, the kind of stock that farm inventory tracking counts in and out",
+    "credit": "CocoyAguilar, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A shed full of fertilizer is a shed full of cash. In the FPA's price survey for October 5 to 9, 2026, a 50 kg bag of granular urea averaged PHP 2,260.39 across the country. A bag of complete 14 14 14 averaged PHP 1,897.00. One bag that goes missing, or that you buy twice by mistake, costs more than a day's wage.\n\nThe FAO says the same about chemicals. Without a record of what comes in and goes out, people order too much, and the newest stock tends to leave the store first. Then older bottles sit until they expire."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Count in the unit you buy:** bags, liters, kilos or bottles.",
+        "**Record every move,** in or out, with the date, the task or lot, and who took it.",
+        "**Use first in, first out,** so older stock goes out before it expires.",
+        "**Compare the plan with the shed** before you buy, so you buy only what is missing.",
+        "**Count the shed at each stage** and fix any difference right away."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a stock record show?"
+    },
+    {
+      "type": "text",
+      "text": "The simplest tool is a stock card for each item, one line per move. Here is a sample for urea over a few weeks."
+    },
+    {
+      "type": "table",
+      "caption": "A sample stock card for urea. The balance is everything that came in minus everything that went out.",
+      "rows": [
+        [
+          "Date",
+          "Item and unit",
+          "In",
+          "Out",
+          "What for",
+          "Who",
+          "Balance"
+        ],
+        [
+          "Oct 1",
+          "Urea 46 0 0, bags",
+          "6",
+          "",
+          "Delivery from the dealer",
+          "Owner",
+          "6"
+        ],
+        [
+          "Oct 20",
+          "Urea 46 0 0, bags",
+          "",
+          "2",
+          "First top dressing, Lot 1",
+          "Jun",
+          "4"
+        ],
+        [
+          "Oct 21",
+          "Urea 46 0 0, bags",
+          "",
+          "1",
+          "First top dressing, Lot 2",
+          "Jun",
+          "3"
+        ],
+        [
+          "Nov 2",
+          "Urea 46 0 0, bags",
+          "",
+          "2",
+          "Second top dressing, Lot 1",
+          "Ben",
+          "1"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "In farm inventory tracking, two columns matter most. What for ties each bag to a lot, so you can see what each field used. Who took it makes everyone careful, and it helps you trace a missing bag in minutes."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I set up farm inventory tracking?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "List your items and units",
+          "text": "Write each fertilizer, seed and chemical with the unit you buy it in: bags, liters, kilos or bottles."
+        },
+        {
+          "title": "Count what is in the shed now",
+          "text": "Start with a real count, not a guess. That is your opening balance."
+        },
+        {
+          "title": "Record every delivery",
+          "text": "Write the date, the amount, the price and the dealer. Keep the receipt."
+        },
+        {
+          "title": "Record every use",
+          "text": "Each time stock leaves the shed, write the task, the lot and the person who took it."
+        },
+        {
+          "title": "Use the oldest stock first",
+          "text": "Put new deliveries behind the old ones. The FAO also advises checking the dates on labels every month."
+        },
+        {
+          "title": "Count again at each stage",
+          "text": "After basal, top dressing and harvest, count the shed and compare it with your records."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Buy right, store right",
+      "text": "The FPA tells farmers to buy FPA registered products from FPA registered outlets, and to read and follow the product label. Follow the label and the FPA registration for every pesticide you use or store, and triple rinse empty containers after use. Keep chemicals locked away from food, feed and children."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much stock do I need for the season?"
+    },
+    {
+      "type": "text",
+      "text": "Work it out from your plan, then subtract what you already have. Take the PhilRice plan for a 5 to 6 ton palay crop. Per hectare, it uses 2 bags of complete, 2 bags of urea and half a bag of 0 0 60. For 3 hectares, you need 6 bags of complete, 6 of urea and 1.5 of potash.\n\nNow say the shed already holds 2 bags of complete and 4 of urea. You only need to buy 4 bags of complete, 2 of urea and 1.5 of 0 0 60. At the FPA national averages for October 5 to 9, 2026, that comes to about PHP 14,619.60. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) explains the plan, and [fertilizer calculation](/blog/fertilizer-calculation) shows how to scale it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io do farm inventory tracking by itself?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, you stock the shed once in the [farm inventory](/features/farm-inventory-and-expenses), each item in its own unit. Your protocol then adds up what its tasks will use and sets it against what you have, so you see what is left to buy.\n\nWhen you tick a fertilizer or spray task done, the shed takes it out of stock. Undo the tick and it goes back. Each move names who made it, and the cost flows into your expenses report. That is [automatic stock deduction](/features/automatic-stock-deduction): stock on hand always adds up from the moves, so the count never drifts."
+    },
+    {
+      "type": "cta",
+      "title": "Let the shed count itself",
+      "text": "Inventory comes with Solo Farmer at PHP 200 a month. See how ticking a task done takes its bags out of stock.",
+      "label": "See automatic stock deduction",
+      "url": "/features/automatic-stock-deduction"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm inventory tracking"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is first in, first out?",
+          "a": "It means the stock that came in first goes out first. Older fertilizer and chemicals get used before newer ones, so less of it expires on the shelf."
+        },
+        {
+          "q": "How often should I count the shed?",
+          "a": "Count it at the start of the season and after each big stage, like basal, top dressing and harvest. If the count and your records differ, find out why the same day."
+        },
+        {
+          "q": "Can I track liters, kilos and bags together?",
+          "a": "Yes. Give each item its own unit. In anee.io you count fertilizer in bags, sprays in liters and seed in kilos, each in its own line."
+        },
+        {
+          "q": "What if I borrow fertilizer from a neighbor?",
+          "a": "Record it as stock coming in, with a note on who lent it. When you pay it back, record it as stock going out, so your balance stays true."
+        },
+        {
+          "q": "Which anee.io plan includes inventory?",
+          "a": "Inventory and workers start with Solo Farmer at PHP 200 a month or PHP 1,800 a year. Farm Owner, at PHP 600 a month, adds worker logins."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Farm record keeping",
+          "url": "/blog/farm-record-keeping"
+        },
+        {
+          "label": "Farm cash flow, week by week",
+          "url": "/blog/farm-cash-flow"
+        },
+        {
+          "label": "How to avoid buying the wrong pesticide",
+          "url": "/blog/avoid-buying-the-wrong-pesticide"
+        },
+        {
+          "label": "The Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        },
+        {
+          "label": "Farm inventory and expenses in anee.io",
+          "url": "/features/farm-inventory-and-expenses"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FAO: Pesticide Storage and Stock Control Manual, stock planning and recording systems",
+          "url": "https://www.fao.org/4/V8966E/V8966e03.htm"
+        },
+        {
+          "label": "FAO: Pesticide Storage and Stock Control Manual, annexes on store management",
+          "url": "https://www.fao.org/4/V8966E/V8966e09.htm"
+        },
+        {
+          "label": "FPA: Proper safe use, handling and storage of pesticides for corn farmers",
+          "url": "https://fpa.da.gov.ph/?p=2673"
+        },
+        {
+          "label": "FPA: Average retail prices of major fertilizer grades, October 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_.pdf"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (bag plan for 5 to 6 tons)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        }
+      ]
+    }
+  ]
+}

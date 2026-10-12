@@ -1,0 +1,254 @@
+{
+  "section": "blog",
+  "slug": "yellow-rice-leaves",
+  "sortOrder": 640,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "What Should I Do When My Rice Leaves Turn Yellow?",
+  "metaTitle": "Yellow Rice Leaves: Causes, Field Checks and What to Do",
+  "metaDescription": "Yellow rice leaves can mean nitrogen shortage, zinc deficiency, tungro or planthoppers. Learn which leaves to check first and what to do for each cause.",
+  "focusKeyword": "yellow rice leaves",
+  "keywords": [
+    "yellow rice leaves",
+    "rice leaves turning yellow",
+    "nitrogen deficiency in rice",
+    "tungro",
+    "hopperburn",
+    "leaf color chart"
+  ],
+  "excerpt": "Yellow rice leaves point first to nitrogen shortage, one of the most common problems of rice, but tungro, planthoppers, zinc or sulfur deficiency and water stress can all turn palay yellow. Before you buy anything, check which leaves yellowed first, whether it comes in patches or covers the field, and whether insects sit at the base of the hills. With anee.io, a farm app built for Filipino farmers, you can send a photo to Anee, its smart farm technician, who reads it with your lot's age, fertilizer record and weather.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-yellow-rice-leaves.webp",
+    "alt": "A rice field with patches of yellow and orange brown plants among green ones, hopperburn from brown planthoppers, one cause of yellow rice leaves",
+    "credit": "Roy Bateman, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Yellow is a symptom, not a diagnosis. IRRI's tungro fact sheet warns that the yellowing and stunting of this virus can pass for nitrogen or zinc deficiency, water stress or planthopper damage. If you add urea to a field with tungro, you spend money and the plants stay sick.\n\nAlso, old lower leaves yellow and die as the crop ripens, and that alone is no problem. Worry when the yellow comes early, comes in patches or spreads fast."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Check which leaves turned yellow first: old leaves point to nitrogen, young leaves to sulfur.",
+        "Yellow orange patches of stunted plants point to tungro, most of all at tillering.",
+        "Leaves that turn orange yellow, then brown and dry, with hoppers at the base, mean hopperburn.",
+        "Dusty brown spots on upper leaves 2 to 4 weeks after transplanting suggest zinc deficiency.",
+        "Read a leaf color chart before you add nitrogen, and use a lab test to confirm a nutrient problem."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What causes yellow rice leaves?"
+    },
+    {
+      "type": "text",
+      "text": "Nitrogen deficiency is one of the most common problems of rice in Asia, IRRI says. It often hits at tillering and panicle initiation, when the crop needs the most. But four other causes look much like it. Use the table to narrow them down."
+    },
+    {
+      "type": "table",
+      "caption": "Common causes of yellow rice leaves and how they differ",
+      "rows": [
+        [
+          "Cause",
+          "Which leaves",
+          "Pattern in the field",
+          "Other signs"
+        ],
+        [
+          "Nitrogen deficiency",
+          "Old leaves first, light green to lemon yellow from the tip",
+          "Whole field or large areas",
+          "Short, stunted plants with few tillers"
+        ],
+        [
+          "Sulfur deficiency",
+          "Young leaves first, or all leaves",
+          "Less common than nitrogen shortage",
+          "Looks like nitrogen deficiency, so a lab test tells them apart"
+        ],
+        [
+          "Zinc deficiency",
+          "Dusty brown spots on upper leaves, pale midribs on young leaves",
+          "Uneven patches, 2 to 4 weeks after transplanting",
+          "Poorly established hills, fewer tillers"
+        ],
+        [
+          "Tungro, a virus",
+          "Yellow or orange yellow from the leaf tip down",
+          "Patches, worst at tillering",
+          "Stunting, fewer tillers, leafhoppers nearby"
+        ],
+        [
+          "Planthopper hopperburn",
+          "Leaves turn orange yellow, then brown and dry",
+          "Patches that dry out",
+          "Hoppers, honeydew and sooty mold at the base"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Other causes can yellow rice too. [Bacterial leaf blight](/diseases/bacterial-leaf-blight) and [rice grassy stunt](/diseases/rice-grassy-stunt) both do, and so does water stress. Our guide to [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice) covers the other nutrients."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to find the cause in five steps"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Note the stage",
+          "text": "Write down the days after transplanting. Zinc problems show 2 to 4 weeks after transplanting, and plants are most vulnerable to tungro at tillering."
+        },
+        {
+          "title": "Find the first yellow leaves",
+          "text": "Old leaves first suggests nitrogen. Young leaves first suggests sulfur, which IRRI calls the less common of the two."
+        },
+        {
+          "title": "Read the pattern",
+          "text": "A whole field that is pale points to feeding or water. Patches that spread point to a virus or to insects."
+        },
+        {
+          "title": "Look at the base",
+          "text": "Part a few hills and tap them. Hoppers falling on the water, honeydew or sooty mold mean planthoppers."
+        },
+        {
+          "title": "Check before you feed",
+          "text": "Read a leaf color chart and your fertilizer record. If the cause stays unclear, send soil and plant samples to a lab, as IRRI advises."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Use the leaf color chart before adding urea"
+    },
+    {
+      "type": "text",
+      "text": "PalayCheck, the crop management system of PhilRice, sets a simple rule. Read the chart every 7 days from 14 days after transplanting, or 21 days after sowing, until early flowering. Apply nitrogen when 6 or more of 10 leaves read below 4 for transplanted rice, or below 3.5 for direct seeded rice. PalayCheck also warns that too much nitrogen at panicle initiation and flowering invites lodging and pests."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What to do for each cause"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Nitrogen:** top dress by growth stage, as in our guides to [fertilizer for rice](/blog/fertilizer-for-rice) and [urea fertilizer](/blog/urea-fertilizer). IRRI advises keeping water in the field but stopping runoff over the bunds right after you apply.",
+        "**Zinc:** confirm it with a soil and plant test, then ask your municipal agriculturist about a zinc source. IRRI says mild cases can recover in 4 to 6 weeks, though maturity is delayed and yield drops.",
+        "**Tungro:** there is no cure. For the next season, IRRI advises resistant varieties, planting at the same time as your neighbors and plowing infected stubble after harvest.",
+        "**Planthoppers:** count before you act. IRRI says that at 1 planthopper per stem or fewer, there is still time, and that natural enemies keep the risk low when they outnumber the hoppers."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "More urea will not fix a virus",
+      "text": "IRRI says there is no cure for a tungro infected plant. Extra nitrogen also favors planthoppers, so feeding a sick field can make things worse. Find the cause first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps you read yellow rice leaves"
+    },
+    {
+      "type": "text",
+      "text": "On a plan with Anee, send a photo of the yellow leaves to Anee, the smart farm technician inside anee.io. She reads it with your lot's age, what you already applied and the weather, then tells you the likely cause and what to check next. The free [Disease Finder](/diseases#finder) also takes yellowing as a sign and lists the diseases that fit.\n\nYour records do the rest. Every fertilizer task you tick done stays on the board with its date, so you can see whether you missed a top dressing. The free [NPK Plus calculator](/features/npk-plus-calculator) adds up the nitrogen in your plan and shows whether it is short for your crop. Anee uses credits and needs internet, while the board and the calculator also work on the free Libre plan."
+    },
+    {
+      "type": "cta",
+      "title": "Ask Anee about your yellow palay",
+      "text": "Send a photo in Tagalog or English, and Anee reads it with your season: the lot, its stage, the weather and what you applied.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about yellow rice leaves"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why are the tips of my rice leaves turning yellow?",
+          "a": "Nitrogen deficiency often starts at the tips of old leaves. Tungro also yellows leaves from the tip down, but in patches with stunted plants. Check which leaves and where in the field before you act."
+        },
+        {
+          "q": "Should I apply urea when rice leaves turn yellow?",
+          "a": "Only if a leaf color chart or your records say nitrogen is short. Urea will not cure tungro, and extra nitrogen favors planthoppers."
+        },
+        {
+          "q": "Can yellow rice recover?",
+          "a": "If the cause is nitrogen and you feed in time, the crop can green up again. IRRI says a crop with a mild zinc shortage can recover in 4 to 6 weeks, though it matures later. A plant with tungro does not recover."
+        },
+        {
+          "q": "Is yellowing near harvest a problem?",
+          "a": "No. Lower leaves yellow as the grain ripens. Worry about yellowing that comes early, comes in patches or spreads fast."
+        },
+        {
+          "q": "Who can test my soil and leaves?",
+          "a": "Ask your municipal agriculturist where to send soil and plant samples. IRRI advises a lab test to confirm nitrogen, sulfur and zinc problems."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Nutrient deficiency in rice",
+          "url": "/blog/nutrient-deficiency-in-rice"
+        },
+        {
+          "label": "Rice tungro",
+          "url": "/diseases/rice-tungro"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Pest or disease: how to tell",
+          "url": "/blog/pest-or-disease-how-to-tell"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Nitrogen deficiency",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/nitrogen-deficiency"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Zinc deficiency",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/zinc-deficiency"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Tungro",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Planthopper",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck Key Check 5, Nutrient Management",
+          "url": "https://www.pinoyrice.com/palaycheck/nutrient-management/"
+        }
+      ]
+    }
+  ]
+}

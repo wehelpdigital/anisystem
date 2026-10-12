@@ -1,0 +1,291 @@
+{
+  "section": "blog",
+  "slug": "crop-growth-stage-monitoring",
+  "sortOrder": 370,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "What Is the Best Crop Growth Stage Monitoring Tool for Rice and Corn in the Philippines?",
+  "metaTitle": "Crop Growth Stage Monitoring for Rice and Corn",
+  "metaDescription": "Crop growth stage monitoring for palay and mais: what a good tool must do, how to check each stage in the field, and what anee.io does and costs.",
+  "focusKeyword": "crop growth stage monitoring",
+  "keywords": [
+    "crop growth stage monitoring",
+    "rice growth stages",
+    "corn growth stages",
+    "leaf color chart",
+    "growth stages",
+    "day zero"
+  ],
+  "excerpt": "The best crop growth stage monitoring tool for rice and corn counts each lot's age from its own planting day, names the stage, and tells you what to do at that stage, with the weather beside it. You do not need costly gear, since a notebook, a ruler and a leaf color chart still work. For the counting, the farm app anee.io, built for Filipino farmers, shows the stage of every lot on any date for 85 crops, and its free plan includes it.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-crop-growth-stage-monitoring.webp",
+    "alt": "Young corn plants in rows at an early leaf stage in Baao, Camarines Sur, a field ready for crop growth stage monitoring",
+    "credit": "Zyrahila, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Every big decision of the season follows the stage of the crop, not the date on the wall. The top dressing, the deep water at flowering, the drain and the harvest all hang on it. So if you misread the stage by a week, the fertilizer lands on a plant that cannot use it.\n\nThat is why PhilRice built its PalayCheck System around checks at set stages. It asks farmers to walk the field, measure with a ruler, count or weigh, and write it down. Any tool you buy or download should help you do exactly that, only faster."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The stage, not the calendar, decides when to fertilize, irrigate, spray and harvest.",
+        "A good tool counts days from each lot's own day zero (DAS, DAT or DAP) and names the stage for your variety.",
+        "A count is still a guess until you walk the lot, so field checks must be easy to record.",
+        "Paper costs nothing. An app saves the counting, adds the weather and keeps the record.",
+        "anee.io shows each lot's stage, what to do and what to watch on any date."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does crop growth stage monitoring mean for palay?"
+    },
+    {
+      "type": "text",
+      "text": "For palay (rice still in its husk), crop growth stage monitoring means knowing where each lot stands between planting and harvest, then matching the work to it. PalayCheck checks the crop at establishment, early to mid tillering, maximum tillering, panicle initiation, flowering to grain filling and maturity.\n\nEach check drives a decision, as the table shows. Our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) covers the whole season."
+    },
+    {
+      "type": "table",
+      "caption": "Rice stages to watch and the decision each one drives, from the PhilRice PalayCheck System 2022",
+      "rows": [
+        [
+          "Stage",
+          "What to look at",
+          "Decision it drives"
+        ],
+        [
+          "Establishment, 14 DAT or DAS",
+          "Missing hills, snail damage",
+          "Replant gaps. Over 10 percent of the area with missing or snail damaged hills means real yield loss."
+        ],
+        [
+          "Early tillering",
+          "Leaf color, weeds",
+          "First nitrogen by 14 DAT, or 7 to 10 DAS. Keep weeds out from 0 to 45 days."
+        ],
+        [
+          "Panicle initiation",
+          "Leaf color chart, tillers",
+          "The last nitrogen and potassium, 5 to 7 days before or after panicle initiation."
+        ],
+        [
+          "Flowering",
+          "Water depth, neck blast",
+          "Keep 5 to 7 cm of water in the field."
+        ],
+        [
+          "Maturity",
+          "Grain color",
+          "Drain 1 to 2 weeks before harvest. Harvest when 85 to 90 percent of grains are golden, or 90 to 95 percent for a combine."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do corn growth stages work?"
+    },
+    {
+      "type": "text",
+      "text": "Corn growers use a leaf and kernel code that Iowa State University Extension explains well. Vegetative stages count the leaves with a visible collar, so V6 means six collars. VT is when the lowest tassel branch shows, and R1 is when silks come out of the husk.\n\nAfter that, the kernels go from blister (R2) to milk, dough and dent, up to R6, physiological maturity, when a black layer forms at the kernel base. Iowa State adds a rule worth copying: a stage applies to the field once at least half the plants have reached it. It also notes that hail, drought, pests and sprays hurt corn differently at each stage. For the full corn season, see [pagtatanim ng mais](/crops/pagtatanim-ng-mais)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a crop growth stage monitoring tool do?"
+    },
+    {
+      "type": "text",
+      "text": "Before you pay for anything, hold the tool against these criteria. The middle column shows the free way with paper. The last column shows how anee.io meets each one, limits included."
+    },
+    {
+      "type": "table",
+      "caption": "Criteria for a rice and corn growth stage tool",
+      "rows": [
+        [
+          "What it should do",
+          "With paper",
+          "In anee.io"
+        ],
+        [
+          "Count from each lot's own day zero",
+          "Write each lot's planting date and count by hand",
+          "Each lot counts from its own day zero"
+        ],
+        [
+          "Name the stage for your crop",
+          "Read the days to harvest on the seed bag",
+          "Growth stages for 85 Philippine crops"
+        ],
+        [
+          "Say what to do and what to watch",
+          "Carry the PalayCheck booklet",
+          "A do list and a watch list per lot, on any date"
+        ],
+        [
+          "Put the weather beside the stage",
+          "Read the PAGASA farm weather forecast",
+          "Forecast beside the stages, and a reminder when rain falls on a spray day"
+        ],
+        [
+          "Correct a lot that runs late",
+          "Your own notes",
+          "Realign by Anee moves that lot's stage count. It uses credits."
+        ],
+        [
+          "Work with no signal",
+          "Always works",
+          "Offline mode on every plan. Changes sync later."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you check the stage in the field?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Write day zero for each lot",
+          "text": "Use the sowing date for direct seeded rice, the transplanting date for transplanted rice and the planting date for corn."
+        },
+        {
+          "title": "Read the expected stage",
+          "text": "Match the day count to your variety's maturity. An early variety reaches panicle initiation sooner than a late one."
+        },
+        {
+          "title": "Walk the lot and look",
+          "text": "Check several spots, not just the edge near the road. Give a corn field its stage once half the plants reach it."
+        },
+        {
+          "title": "Measure instead of guessing",
+          "text": "Count tillers, measure the water and read the leaf color chart every 7 days from 14 DAT or 21 DAS until early flowering, as PalayCheck advises."
+        },
+        {
+          "title": "Act on the gap",
+          "text": "If the field runs behind the count, move the fertilizer and spray dates with it. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) shows which doses to shift."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Check again after any setback",
+      "text": "A typhoon, a flood, a dry spell or a scorching herbicide can hold a lot back for days. So walk it again before the next fertilizer or spray. The calendar does not know what the field went through."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io handle crop growth stage monitoring?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io you add each field as a lot with its crop, variety, size and day zero. Then the [growth stages and weather](/features/growth-stages-and-weather) page reads every lot on any date you pick: the stage, the day count, what to do now and what to watch for. The same stage shows on each day of the cropping calendar, so you plan the week with the crop in view.\n\nWhen a lot runs behind, [Realign by Anee](/features/realign-by-anee) reads its tasks, notes and weather and names the stage it is really in. Then it shifts that lot's stage count, while your calendar dates stay put. Also, [offline mode](/features/offline-farm-app) works on every plan, so you can read stages at the far lot with no signal."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/app/growth.png",
+      "alt": "The anee.io Growth Stages screen showing a rice lot at flowering on day 82",
+      "caption": "The Growth Stages screen: each lot's stage and day count on the date you pick, with what to do and what to watch."
+    },
+    {
+      "type": "cta",
+      "title": "See each lot's stage on any date",
+      "text": "Add your lots and their planting days, and anee.io reads the stage of every lot for you.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much does it cost, and what are the limits?"
+    },
+    {
+      "type": "text",
+      "text": "Growth stages come with every plan. The free Libre plan covers one active season with activities, notes, growth stages and weather for today and tomorrow, and it shows a few ads. Libre plus Anee costs PHP 70 a month and adds Anee's chat, her analyses and Realign by Anee, which run on credits. Solo Farmer, at PHP 200 a month, opens three seasons, full weather, workers and inventory. The [pricing page](/pricing) lists every plan.\n\nBe clear about the limits too. The app counts days and reads your records, but it does not see the field unless you walk it, add notes and photos, or run a satellite reading. Anee also needs internet. For free ways to look closer, read how to [monitor crop health without a drone](/blog/monitor-crop-health-without-a-drone)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about crop growth stage monitoring"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are the growth stages of corn?",
+          "a": "Corn starts at VE, when the shoot comes out, then counts V stages by leaves with a visible collar. VT is the tassel and R1 is silking. R2 to R5 follow the kernel from blister to dent, and R6 is physiological maturity, when a black layer forms at the kernel base."
+        },
+        {
+          "q": "Do I need a drone or a sensor to monitor growth stages?",
+          "a": "No. A day count from each lot's planting date, a walk through the field and a leaf color chart cover most decisions. Satellites and drones help on big farms, but they do not replace a look at the plants."
+        },
+        {
+          "q": "What if my crop is behind the calendar?",
+          "a": "Compare what you see with the stage the count predicts. If the lot runs late, move the next fertilizer and spray dates with the crop. In anee.io, Realign by Anee can shift that lot's stage reading for you, and it uses credits."
+        },
+        {
+          "q": "Can I monitor growth stages in anee.io for free?",
+          "a": "Yes. Growth stages come with the free Libre plan, which allows one active season and shows a few ads. Anee's chat and Realign by Anee need a plan with Anee."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Growth stages and weather in anee.io",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Fertilizer timing by growth stage",
+          "url": "/blog/fertilizer-timing-by-growth-stage"
+        },
+        {
+          "label": "Crop monitoring for vegetable farmers",
+          "url": "/blog/crop-monitoring-for-vegetable-farmers"
+        },
+        {
+          "label": "Monitor crop health without a drone",
+          "url": "/blog/monitor-crop-health-without-a-drone"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Pagtatanim ng mais",
+          "url": "/crops/pagtatanim-ng-mais"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "Iowa State University Extension: Corn Growth Stages",
+          "url": "https://crops.extension.iastate.edu/encyclopedia/corn-growth-stages"
+        },
+        {
+          "label": "PAGASA: Farm Weather Forecast",
+          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
+        }
+      ]
+    }
+  ]
+}

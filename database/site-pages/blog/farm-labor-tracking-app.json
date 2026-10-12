@@ -1,0 +1,244 @@
+{
+  "section": "blog",
+  "slug": "farm-labor-tracking-app",
+  "sortOrder": 350,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "What Is the Best Farm Labor Tracking App for a Rice Farm in the Philippines?",
+  "metaTitle": "Farm Labor Tracking App for Rice Farms in the Philippines",
+  "metaDescription": "Choosing a farm labor tracking app for palay? See what it must do, what labor costs per hectare, and how anee.io counts wages, days and costs.",
+  "focusKeyword": "farm labor tracking app",
+  "keywords": [
+    "farm labor tracking app",
+    "farm cost tracking app",
+    "rice farm labor cost",
+    "labor cost per hectare",
+    "farm payroll app",
+    "worker attendance"
+  ],
+  "excerpt": "The best farm labor tracking app for a Philippine rice farm records who worked, on which task and lot, and at what rate. Then it adds those wages into the season's costs without typing anything twice. It should also keep working where there is no signal. That is what anee.io, a farm app built for Filipino farmers, does with its workers roster, attendance, payroll days and labor report. It starts at PHP 200 a month on the Solo Farmer plan.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-labor-tracking-app.webp",
+    "alt": "Farm workers threshing palay beside a mechanical thresher during a rice harvest in Lubao, Pampanga",
+    "credit": "Judgefloro, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Labor is the biggest bill on most palay farms. In 2024, rice farmers spent close to PHP 30,000 per hectare on labor, paid in cash, paid in palay or counted for their own family's work. The whole crop cost PHP 59,695 per hectare on average, according to PSA data reported by Philstar. So labor took nearly half of every peso.\n\nPhilRice and IRRI saw the same pattern in their 2013 and 2014 benchmark study. Labor was the biggest share of the cost of producing rice in the Philippines, and about 85 percent of that labor cost went to hired workers. That is why the right farm cost tracking app starts with people, not just with fertilizer."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Labor is most of the money.** Close to PHP 30,000 of the PHP 59,695 it cost to grow a hectare of palay in 2024 went to labor.",
+        "**Tie each worker day to a task, a lot and a rate.** Then the labor cost adds itself up and you see which lot ate the most work.",
+        "**Handle every way you pay.** Whole days, half days, pakyaw jobs and harvest shares all belong in the count.",
+        "**Work without signal.** Attendance gets marked in the field, not at home.",
+        "**Price it per season.** anee.io's Solo Farmer plan costs PHP 1,800 a year, so about PHP 900 a crop if you plant twice a year."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a farm labor tracking app do?"
+    },
+    {
+      "type": "text",
+      "text": "Before you compare prices, compare jobs. A good farm labor tracking app has to fit the way a Filipino rice farm really hires. Think of a daily crew for transplanting, a pakyaw group for weeding, harvesters paid in palay and a caretaker for the season. Use this table as your checklist."
+    },
+    {
+      "type": "table",
+      "caption": "What to look for in a farm labor tracking app, and how anee.io answers each point",
+      "rows": [
+        [
+          "What to look for",
+          "Why it matters on a rice farm",
+          "How anee.io handles it"
+        ],
+        [
+          "A roster with each worker's rate",
+          "Rates differ by person and by job",
+          "Workers and payroll keeps each rate. Global Workers keeps one roster for every season, with skills and days off."
+        ],
+        [
+          "Attendance on each task and lot",
+          "Shows which lot and which job used the labor",
+          "Put people on each task and tick who came, whole day or half day"
+        ],
+        [
+          "Hired services and contract jobs",
+          "Harvesters, threshers and pakyaw crews are labor too",
+          "Hired services sit on the same board with their cost"
+        ],
+        [
+          "Labor cost that adds itself up",
+          "No second round of typing on payday",
+          "The Labor Report counts every worker day at each person's rate"
+        ],
+        [
+          "Works without signal",
+          "Many paddies have weak or no signal",
+          "Offline mode on every plan: changes wait on the phone, then sync"
+        ],
+        [
+          "Labor linked to all other costs",
+          "Labor is only part of the season",
+          "The Expenses and Profit Reports add labor to materials and services"
+        ],
+        [
+          "A login for your foreman",
+          "The person in the field marks attendance",
+          "Worker logins with none, view or edit per module, on Farm Owner"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Two points on that list decide most of the value. First, attendance must sit on the task, because a daily list of names cannot tell you what the work was for. Second, the labor count must flow into the season's [expenses report](/features/expenses-report) by itself. If you have to copy totals by hand, the records stop after the second week."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much does rice farm labor cost per hectare?"
+    },
+    {
+      "type": "text",
+      "text": "The 2024 PSA figures put labor close to PHP 30,000 per hectare, up from PHP 28,378 in 2023. Your own number may be higher or lower, depending on your region, your wage rates and how much of the work a machine does.\n\nThe PhilRice and IRRI study also shows where the work goes. On Philippine farms, crop establishment, crop care and maintenance, and harvesting and threshing took the largest shares of labor. Hired hands did 76 to 79 percent of all labor, mostly for transplanting, harvesting and hand weeding. So those three stages are where a tracking app earns its keep."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Put a peso value on harvest shares",
+      "text": "Harvesters paid in palay hide part of your labor cost, because no cash changes hands. PhilRice and IRRI found harvesters in the Philippines took 7 to 14 percent of the gross harvest, plus 6 to 7 percent for the thresher. Count the cavans you give away and record them in pesos at the price you sold at. If you skip this, your cost per hectare looks lower than it really is."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I set up labor tracking in anee.io?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Add your workers once",
+          "text": "Enter each worker with their pay, skills and the weekdays they do not work. Global Workers keeps them for every season you open later."
+        },
+        {
+          "title": "Put them on the season's tasks",
+          "text": "On the [cropping calendar](/features/cropping-calendar), assign people to transplanting, weeding or any other task on its lot and day."
+        },
+        {
+          "title": "Tick who came",
+          "text": "Mark attendance on the day, as a whole day or a half day. Do it right in the paddy, even with no signal."
+        },
+        {
+          "title": "Set your payroll days",
+          "text": "Payroll days sit on the same board, so the crew and you both know when pay comes."
+        },
+        {
+          "title": "Read the Labor Report",
+          "text": "The [labor report](/features/labor-report) adds every worker day at each person's rate and shows your busiest months. Save it for next season."
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Count every worker day on your own farm",
+      "text": "See how anee.io keeps your crew, their rates, attendance and payroll days on one board, then try it free.",
+      "label": "See workers and payroll",
+      "url": "/features/farm-workers-and-payroll"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is a notebook or a spreadsheet enough?"
+    },
+    {
+      "type": "text",
+      "text": "For a small farm with two or three regular workers, a notebook can work. It costs nothing and needs no signal. But you add it up by hand, and it gets wet. It also cannot tell you which lot used the most labor unless you write that down every time.\n\nA spreadsheet adds up for you, yet most farmers fill it in at night from memory. Also consider the PalayCheck App from PhilRice, made for Android phones. It tracks your rice farming activities, expenses and harvest data, then gives a season summary of production costs and estimated net income. A full farm app makes sense when you run a crew, several lots or more than one crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much does anee.io cost for labor tracking, and what are its limits?"
+    },
+    {
+      "type": "text",
+      "text": "The workers roster, payroll and inventory come with Solo Farmer at PHP 200 a month or PHP 1,800 a year. That plan gives you 3 active seasons with up to 5 lots each, all reports and no ads. Farm Owner, at PHP 600 a month or PHP 6,500 a year, adds worker logins, access levels and the Collab Room. You pay by GCash or bank transfer, and the plans are on the [pricing page](/pricing).\n\nBe clear about the limits, though. Libre, the free plan, lets you try the board with one active season, but it has ads and no workers module. The app counts wages, but it does not send money to your workers. Anee, the smart farm technician inside anee.io, needs internet and uses credits when you ask her to read your season. For a deeper look at fair pay, read our guide to [farm workers wages](/blog/farm-workers-wages)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about a farm labor tracking app"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a free farm labor tracking app?",
+          "a": "A notebook or spreadsheet costs nothing, and PhilRice offers its PalayCheck App for rice activities and expenses. In anee.io, the free Libre plan covers activities and notes, but the workers roster and payroll start with Solo Farmer at PHP 200 a month."
+        },
+        {
+          "q": "Does anee.io work without signal in the field?",
+          "a": "Yes. Offline mode is on for every plan, so you can tick attendance and tasks with no signal. Your changes wait on the phone and sync once the signal comes back."
+        },
+        {
+          "q": "Can my foreman mark attendance for me?",
+          "a": "Yes, on the Farm Owner plan. You give the foreman a login and choose, module by module, whether they get none, view or edit access. A diary records every change and who made it."
+        },
+        {
+          "q": "How do I record harvesters paid in palay?",
+          "a": "Count the cavans you gave as their share and put a peso value on them at your selling price. Record that as a hired service on the harvest task, so the share shows up in your season's costs."
+        },
+        {
+          "q": "What is a normal labor cost per hectare for rice?",
+          "a": "PSA data for 2024 put it close to PHP 30,000 per hectare, out of a total cost of PHP 59,695. Your own figure depends on your wage rates, your region and how much of the work machines do."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "How to pay and track farm workers wages fairly",
+          "url": "/blog/farm-workers-wages"
+        },
+        {
+          "label": "Farm expense management software",
+          "url": "/blog/farm-expense-management-software"
+        },
+        {
+          "label": "Cost of producing rice per hectare",
+          "url": "/blog/cost-of-producing-rice-per-hectare"
+        },
+        {
+          "label": "The best farm management app in the Philippines",
+          "url": "/blog/farm-management-app-philippines"
+        },
+        {
+          "label": "Workers and payroll in anee.io",
+          "url": "/features/farm-workers-and-payroll"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
+          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
+        },
+        {
+          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (labor and costs chapters)",
+          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
+        },
+        {
+          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App)",
+          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
+        }
+      ]
+    }
+  ]
+}

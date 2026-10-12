@@ -1,0 +1,257 @@
+{
+  "section": "blog",
+  "slug": "rain-before-spraying",
+  "sortOrder": 800,
+  "lang": "en",
+  "category": "Weather",
+  "title": "How Do I Know If It Will Rain Before Spraying My Crop?",
+  "metaTitle": "Rain Before Spraying: How to Check the Sky and Forecast",
+  "metaDescription": "Rain before spraying wastes the chemical and your money. Learn how many dry hours a spray needs, how to read the forecast and what wind is safe.",
+  "focusKeyword": "rain before spraying",
+  "keywords": [
+    "rain before spraying",
+    "rainfastness",
+    "hourly forecast",
+    "wind speed for spraying",
+    "product label",
+    "spray day"
+  ],
+  "excerpt": "Read the hourly forecast for your farm's exact location the evening before and again that morning, and spray only if no rain is expected for the dry period your product label asks for. FAO guidance says most products survive a shower 2 hours after spraying without a respray, but the label decides. The farm app anee.io, built for Filipino farmers, shows the forecast beside your plan and flags a spray task that falls on a rainy day, so you can move it before you mix.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-rain-before-spraying.webp",
+    "alt": "A farmer sprays young rice against pests at dawn under a few clouds, a calm hour to check for rain before spraying",
+    "credit": "Giri Wijayanto, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A shower that comes too soon after a spray washes much of it off the leaves. Then you pay twice: once for the first tank and again for the respray, plus the labor. A herbicide can also wash into the paddy water and drift to the lots nearby. So a check for rain before spraying matters as much as picking the right product.\n\nThe dry time a product needs is called rainfastness. Ohio State University Extension defines it as the time needed between an application and a rain event for the product to keep its effect. It depends on the product, its formulation, any sticker or surfactant, and the weather at the time."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The product label is the first place to look for the rainfast period.",
+        "FAO's guidelines say a shower 2 hours after treatment does not call for a respray with most products, though some need longer.",
+        "Read the hourly forecast for your farm, the night before and again in the morning.",
+        "Wind matters too. FAO calls 3 to 7 km/h, when leaves rustle, the ideal for spraying.",
+        "Spray on a dry canopy, because dew slows how fast a spray becomes rainfast."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long does a spray need before rain?"
+    },
+    {
+      "type": "text",
+      "text": "There is no single number. The FAO guidelines on ground application say rainfastness information can usually be found on the label. They add that for most products, showers 2 hours after treatment will not need a respray. Treat that as the general rule, and the label as the law.\n\nConditions in the field change the answer. In an Ohio State test, a wheat fungicide applied before infection was rainfast after 15 minutes under dry conditions. In the field, with dew on the wheat heads, it took about 60 minutes. The authors warn not to apply those numbers to other products, but the lesson travels: a dry canopy helps, so let the dew lift first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What weather is safe for spraying?"
+    },
+    {
+      "type": "text",
+      "text": "Rain is only one part of the spray decision. The FAO guide also covers wind, heat and humidity, because they decide where the droplets land."
+    },
+    {
+      "type": "table",
+      "caption": "Weather check before you spray, after the FAO guidelines on ground application of pesticides",
+      "rows": [
+        [
+          "Condition",
+          "What you see",
+          "Decision"
+        ],
+        [
+          "Calm, below 2 km/h",
+          "Smoke rises straight up",
+          "Do not spray"
+        ],
+        [
+          "Light air, 2 to 3 km/h",
+          "Smoke drifts and shows the wind's direction",
+          "Do not spray"
+        ],
+        [
+          "Light breeze, 3 to 7 km/h",
+          "Leaves rustle and you feel the wind on your face",
+          "Ideal for spraying"
+        ],
+        [
+          "Gentle breeze, 7 to 10 km/h",
+          "Leaves in constant motion",
+          "Avoid herbicide spraying"
+        ],
+        [
+          "Hot and dry hours",
+          "Strong sun, low humidity",
+          "Droplets shrink and drift, and heat may scorch the crop, so wait"
+        ],
+        [
+          "Rain due within the label's dry time",
+          "Building clouds or rain on the radar",
+          "Wait for the next dry window"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you check for rain before spraying?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Read the label first",
+          "text": "Find the rainfast period, the rate and the crop it is registered for. Follow the label and the FPA registration."
+        },
+        {
+          "title": "Read the hours the evening before",
+          "text": "Look at the hourly forecast for your farm's town, not the nearest city, and find a dry window longer than the label's dry time."
+        },
+        {
+          "title": "Read the hours again in the morning",
+          "text": "Forecasts change overnight. Also check the PAGASA farm weather forecast, which lists leaf wetness by region."
+        },
+        {
+          "title": "Look at the sky and the canopy",
+          "text": "Wait for the dew to dry. If clouds are building fast on the horizon, hold the tank."
+        },
+        {
+          "title": "Check the wind",
+          "text": "Spray when leaves rustle and you feel a light breeze. Stop if the wind picks up or dies to dead calm."
+        },
+        {
+          "title": "Write it down",
+          "text": "Note the time, the product, the rate and the weather at and after spraying, as the FAO spray record suggests."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not add extra chemical to beat the rain",
+      "text": "A stronger mix does not stick better. It breaks the label, costs more and puts the crop, the sprayer and the paddy water at risk. Keep the label rate and wait for a dry window instead."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What if it rains right after you spray?"
+    },
+    {
+      "type": "text",
+      "text": "First, check how long the spray had. If the dry time on the label passed, the spray has likely done its work. If not, read what the label says about respraying before you mix again, and never go above its rate or its number of applications.\n\nWrite down the shower in your notes. Next season, the record shows how often rain broke a spray plan, and which months need more care. Our guide on how to [avoid buying the wrong pesticide](/blog/avoid-buying-the-wrong-pesticide) helps you get the product right before the weather question comes up. Foliar feeds wash off too, so the same rules apply to a [foliar fertilizer](/blog/foliar-fertilizer) spray."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io warn you about rain before spraying?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, the [farm weather forecast](/features/farm-weather-forecast) sits beside your plan and each lot's growth stage. When a spray task lands on a day with rain forecast for its lot, the board shows a reminder that rain falls on a spray day. Drag the task to a drier day, and the work stays on schedule.\n\nFor the next few hours, [Satellite Weather](/features/satellite-weather) plays back the rain radar and the clouds over your farm, and shows where the rain clusters are headed hour by hour. That helps on the morning you are standing with a full tank. It runs on credits."
+    },
+    {
+      "type": "cta",
+      "title": "Never waste a spray on a rainy day",
+      "text": "Plan your sprays in anee.io, and the board warns you when rain is forecast on a spray day.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does it cost, and what are the limits?"
+    },
+    {
+      "type": "text",
+      "text": "The free Libre plan shows the weather for today and tomorrow beside one active season, with a few ads. Solo Farmer, at PHP 200 a month, opens the full forecast. See the [pricing page](/pricing). A forecast is a chance, not a promise, so keep an eye on the sky too. Our guide to the [weather app for farmers](/blog/weather-app-for-farmers) compares the options."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about rain before spraying"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many dry hours do I need after spraying?",
+          "a": "Look at the product label first, because it gives the rainfast period. FAO guidelines say most products survive a shower 2 hours after treatment without a respray. Some products need longer, so the label decides."
+        },
+        {
+          "q": "What should I do if it rains right after I spray?",
+          "a": "Check whether the label's dry time had passed. If it had not, read what the label allows about respraying, and never go above its rate. Note the shower so you plan around it next season."
+        },
+        {
+          "q": "Is morning or afternoon better for spraying?",
+          "a": "Avoid the hottest, driest hours, because FAO notes that heat and low humidity shrink droplets and raise drift. Also wait for the morning dew to dry, since a wet canopy slows rainfastness. Read the label for any time of day it sets."
+        },
+        {
+          "q": "Can a weather app tell me exactly when rain will start?",
+          "a": "It can give the likely hour and the chance of rain, not a promise. A rain radar played back over your farm shows where rain is moving right now, which helps on the day itself."
+        },
+        {
+          "q": "What wind speed is safe for spraying?",
+          "a": "FAO calls 3 to 7 km/h ideal, when leaves rustle and you feel the wind on your face. Do not spray in dead calm or in stronger wind, and avoid herbicides once leaves are in constant motion."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Weather app for farmers",
+          "url": "/blog/weather-app-for-farmers"
+        },
+        {
+          "label": "Avoid buying the wrong pesticide",
+          "url": "/blog/avoid-buying-the-wrong-pesticide"
+        },
+        {
+          "label": "Fungicides",
+          "url": "/blog/fungicides"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        },
+        {
+          "label": "Farm weather forecast in anee.io",
+          "url": "/features/farm-weather-forecast"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FAO: Guidelines on Good Practice for Ground Application of Pesticides (2001)",
+          "url": "https://openknowledge.fao.org/3/y2767e/y2767e.pdf"
+        },
+        {
+          "label": "Ohio State University Extension: Rainfastness of fungicides in wheat",
+          "url": "https://agcrops.osu.edu/newsletter/corn-newsletter/2016-11/rainfastness-fungicides-wheat"
+        },
+        {
+          "label": "PAGASA: Farm Weather Forecast",
+          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority: Registered products",
+          "url": "https://fpa.da.gov.ph/registered-products/"
+        }
+      ]
+    }
+  ]
+}

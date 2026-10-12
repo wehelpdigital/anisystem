@@ -1,0 +1,287 @@
+{
+  "section": "blog",
+  "slug": "how-to-make-a-cropping-calendar",
+  "sortOrder": 540,
+  "lang": "en",
+  "category": "Planning",
+  "title": "What Is a Cropping Calendar? How to Make a Cropping Calendar for Your Farm",
+  "metaTitle": "How to Make a Cropping Calendar for Rice and Vegetables",
+  "metaDescription": "Learn how to make a cropping calendar: set day zero, place each task by DAT or DAS, add weather, labor and cash, with a sample palay calendar from PhilRice.",
+  "focusKeyword": "how to make a cropping calendar",
+  "keywords": [
+    "how to make a cropping calendar",
+    "cropping calendar",
+    "days after transplanting",
+    "PalayCheck"
+  ],
+  "excerpt": "A cropping calendar is your season written as dated tasks, from land preparation to harvest, counted from each lot's planting day. Here is how to make a cropping calendar: start with your variety's days to maturity and your transplanting or sowing date. Then place every task on its day after transplanting (DAT) or sowing (DAS), using PhilRice's PalayCheck timings for palay. With anee.io, a farm app built for Filipino farmers, you build this calendar once and it dates each lot on its own.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-how-to-make-a-cropping-calendar.webp",
+    "alt": "Two farmers transplanting rice seedlings in a muddy paddy, the day zero of a cropping calendar",
+    "credit": "Judgefloro, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A calendar shows trouble before it arrives. You see the week when three tasks pile up, the day you need cash for urea, and whether harvest lands in a typhoon month. It also helps you plant with your neighbors and your irrigation release, which PhilRice counts as a key check for a good crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Count every task from day zero, the transplanting or sowing date, not from the month.",
+        "Use trusted timings, like PalayCheck for palay or a BPI production guide for vegetables.",
+        "Mark the danger months and the irrigation schedule first, then fit the crop between them.",
+        "Add the inputs, workers and cash to each task, so the calendar is also a budget."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What goes into a cropping calendar?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Crop, variety and days to maturity**, from the seed bag or the variety list.",
+        "**Day zero** for each lot: the transplanting or sowing date.",
+        "**Tasks by stage**: land preparation, crop establishment, fertilizer, water, pest checks, harvest and drying.",
+        "**Inputs and rates** for each task, so you know what to buy and when.",
+        "**Labor**: who does each task and how many days it takes.",
+        "**Weather marks**: your typhoon, flood or dry months.",
+        "**Money**: what each week of work will cost."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to make a cropping calendar, step by step"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Pick the crop and variety",
+          "text": "Write down its days to maturity. For rice, this decides when each top dressing goes on, because PhilRice times them by maturity group."
+        },
+        {
+          "title": "Set day zero for each lot",
+          "text": "Choose the transplanting or sowing date. For hand transplanted rice, sow the seedbed 18 to 21 days earlier, since PalayCheck wants seedlings of that age."
+        },
+        {
+          "title": "List the tasks by stage",
+          "text": "Follow the PalayCheck stages for palay: land preparation, crop establishment, nutrients, water, pests, harvest and postharvest."
+        },
+        {
+          "title": "Place each task on its day",
+          "text": "Turn each rule into a day count, like basal fertilizer at 0 to 14 DAT. Then convert the count into a real date for each lot."
+        },
+        {
+          "title": "Check the dates against the weather",
+          "text": "PAGASA's rainy season runs from June to November. If harvest falls in your worst typhoon weeks, move day zero or choose an earlier variety."
+        },
+        {
+          "title": "Add inputs, labor and cash",
+          "text": "Write the bags, liters and workers beside each task. Add them up by week to see when you need money."
+        },
+        {
+          "title": "Keep it alive",
+          "text": "Rain and late tractors move things. Update the calendar as you go, and keep notes for next season."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sample cropping calendar for transplanted palay"
+    },
+    {
+      "type": "text",
+      "text": "This sample uses PhilRice's PalayCheck System and its Abonong Swak fertilizer plan for a 5 to 6 ton target. It assumes an inbred variety of 111 to 120 days, transplanted by hand."
+    },
+    {
+      "type": "table",
+      "caption": "Sample palay calendar by days after transplanting (DAT). Adjust rates to your soil test.",
+      "rows": [
+        [
+          "When",
+          "Task"
+        ],
+        [
+          "After the last harvest",
+          "Let the field rest at least 30 days"
+        ],
+        [
+          "18 to 21 days before DAT 0",
+          "Sow the seedbed: 400 square meters and 20 to 40 kg of seed per hectare"
+        ],
+        [
+          "Before DAT 0",
+          "Final leveling, with no spot under more than 5 cm of water"
+        ],
+        [
+          "DAT 0",
+          "Transplant 2 to 3 seedlings per hill, 20 by 20 cm in the wet season or 20 by 15 cm in the dry season"
+        ],
+        [
+          "0 to 14 DAT",
+          "Basal: 2 bags of 14 14 14 or 16 20 0 per hectare"
+        ],
+        [
+          "Up to 7 DAT",
+          "Replant missing hills with seedlings from the same seedbed"
+        ],
+        [
+          "Up to 15 DAT",
+          "Keep the field saturated, a PalayCheck step against golden apple snails"
+        ],
+        [
+          "From 14 DAT, every 7 days",
+          "Read the leaf color chart until early flowering"
+        ],
+        [
+          "22 to 26 DAT",
+          "First top dressing: 1 bag of urea"
+        ],
+        [
+          "32 to 36 DAT",
+          "Second top dressing: 1 bag of urea and half a bag of 0 0 60"
+        ],
+        [
+          "0 to 45 DAT",
+          "Keep weeds under control"
+        ],
+        [
+          "1 to 2 weeks before harvest",
+          "Drain the field"
+        ],
+        [
+          "Harvest",
+          "Cut when 85 to 90 percent of grains are golden yellow, thresh within 1 day in the wet season or 2 in the dry"
+        ],
+        [
+          "Within 12 to 24 hours",
+          "Dry the grain to 12 to 14 percent moisture"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Varieties that mature sooner or later shift the top dressings. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) gives the PhilRice days for each maturity group. For the weeks before DAT 0, see [rice land preparation](/land-preparation/rice-land-preparation)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "For vegetables, count from planting too"
+    },
+    {
+      "type": "text",
+      "text": "The same method works for gulay. The BPI ampalaya guide, for example, transplants seedlings 7 to 10 days after germination. Flowering starts 45 to 55 days from sowing, and harvest begins 45 to 75 days from planting. After that, picking goes on 2 to 3 times a week for 2 to 3 months, so those weeks need workers and buyers lined up. See [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay) for more crops."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Write the danger months on the calendar first",
+      "text": "Before any task, mark your typhoon weeks and your irrigation release. Then slide day zero until flowering and harvest fall outside the bad weeks. Moving a date on paper costs nothing, but moving a harvest in a storm costs the crop."
+    },
+    {
+      "type": "cta",
+      "title": "Let anee.io date your calendar",
+      "text": "Add your lots and their day zero. Every task lands on its own day for each lot, and you drag it when the weather changes.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does a farm app keep the cropping calendar up to date?"
+    },
+    {
+      "type": "text",
+      "text": "Paper calendars break when one lot runs late. In anee.io, each lot keeps its own day zero, so DAT 21 falls on the right date for every lot. Write the plan once in the [Protocol Builder](/features/protocol-builder), then import it as a new season. Every task lands on its day count, and the builder can even spread work so no worker gets two tasks on one day.\n\nDuring the season, drag a task to move it, save versions to try another timing, and undo even after you log out. The board also shows each lot's growth stage and the forecast. Count the days tells you how far apart two dates are, and Cash to prepare adds up the money each day needs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about cropping calendars"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the difference between a cropping calendar and a cropping pattern?",
+          "a": "A cropping pattern is the order of crops on a field across the year, such as rice followed by munggo. A cropping calendar dates the tasks of one season for one crop. You need both, and the pattern decides which calendars you write."
+        },
+        {
+          "q": "What do DAT, DAS and DAP mean?",
+          "a": "They mean days after transplanting, days after sowing and days after planting. Transplanted rice counts DAT, direct seeded rice counts DAS, and corn and most vegetables count DAP. Each task in your calendar should carry its count."
+        },
+        {
+          "q": "Can I make a cropping calendar on paper or in a spreadsheet?",
+          "a": "Yes, and many farmers do. The hard part is redating every task when one lot goes in late. An app that counts from each lot's day zero does that work for you."
+        },
+        {
+          "q": "How do I adjust the calendar if planting is delayed?",
+          "a": "Move the planting date and recount every task from it. In anee.io you can move a whole day's work to a new date at once. For a lot that runs behind, set a delay counter."
+        },
+        {
+          "q": "Where can I get the right timings for my crop?",
+          "a": "Use PhilRice's PalayCheck System for palay. For vegetables and fruit, the Bureau of Plant Industry publishes production guides. Your Municipal Agriculture Office can also tell you the local planting schedule."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Best time to plant rice",
+          "url": "/blog/best-time-to-plant-rice-philippines"
+        },
+        {
+          "label": "Staggered planting schedule",
+          "url": "/blog/staggered-planting-schedule"
+        },
+        {
+          "label": "Farm planning app for rice farmers",
+          "url": "/blog/farm-planning-app-philippines"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Golden apple snail",
+          "url": "/pests/golden-apple-snail"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (Abonong Swak recommendations)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "PAGASA: Climate of the Philippines",
+          "url": "https://www.pagasa.dost.gov.ph/information/climate-philippines"
+        },
+        {
+          "label": "Bureau of Plant Industry: Ampalaya Production Guide",
+          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
+        }
+      ]
+    }
+  ]
+}

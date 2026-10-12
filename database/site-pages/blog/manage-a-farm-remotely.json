@@ -1,0 +1,290 @@
+{
+  "section": "blog",
+  "slug": "manage-a-farm-remotely",
+  "sortOrder": 770,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "How Can I Manage a Farm Remotely When I Live Far Away From It?",
+  "metaTitle": "Manage a Farm Remotely: A Guide for Filipino Farm Owners",
+  "metaDescription": "Manage a farm remotely from the city or abroad: a written plan, a trusted katiwala, photo reports, weekly cash, storm rules and the app tools that help.",
+  "focusKeyword": "manage a farm remotely",
+  "keywords": [
+    "manage a farm remotely",
+    "katiwala",
+    "farm caretaker",
+    "photo reports",
+    "team logins",
+    "morning plan email"
+  ],
+  "excerpt": "To manage a farm remotely, put the season's plan in writing, give one trusted caretaker clear daily tasks, ask for a photo of each finished job, release cash by the week, and watch the weather and the records yourself. The farm app anee.io, built for Filipino farmers, keeps all of it in one place: the dated plan, a 6 AM plan email to your team, ticked tasks with photos, labor and expense records, and logins you control.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-manage-a-farm-remotely.webp",
+    "alt": "A farmer works a flooded rice paddy in Buhi, Camarines Sur, the field work an owner follows from afar to manage a farm remotely",
+    "credit": "Ronardodecaprio, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Many farm owners live far from their land. Some work in Manila, and many work abroad. Meanwhile a katiwala (caretaker) or a relative runs the field. The trouble rarely comes from bad people. It comes from a plan that lives only in someone's head, cash that leaves without a list, and news of a pest that arrives after the damage.\n\nSo remote management is not about watching every minute. It is about a clear plan, simple proof of work and records you can check from anywhere."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A written, dated season plan comes first. Your caretaker follows it and you check against it.",
+        "Ask for proof, not stories: a dated photo of each finished task.",
+        "Release cash by the week against the plan, and pay wages by your region's wage order.",
+        "Watch the weather and storms yourself, and agree in advance what the caretaker does when a signal is raised.",
+        "Keep dated records, because insurance claims and loans depend on them."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What do you need to manage a farm remotely?"
+    },
+    {
+      "type": "text",
+      "text": "Eight things cover most of the risk. The table pairs each one with the tool in anee.io that handles it, and the plan it needs."
+    },
+    {
+      "type": "table",
+      "caption": "What a remote farm owner needs, and how anee.io covers it",
+      "rows": [
+        [
+          "Need",
+          "Why",
+          "In anee.io"
+        ],
+        [
+          "A dated season plan",
+          "The caretaker knows each day's work",
+          "A cropping schedule dated from each lot's own day zero"
+        ],
+        [
+          "A daily work list",
+          "No task falls through",
+          "The day's plan by email at 6 AM, or a public link to the plan"
+        ],
+        [
+          "Proof of work",
+          "Trust with evidence",
+          "Tasks ticked done, with who worked and a photo or voice note"
+        ],
+        [
+          "Cash control",
+          "Money matches the work",
+          "Cash to prepare for any day or stretch of days, and payroll"
+        ],
+        [
+          "Stock control",
+          "Bags do not vanish",
+          "Stock that counts itself, with the name of whoever moved it (Solo Farmer)"
+        ],
+        [
+          "Weather and storms",
+          "Act before the damage",
+          "Forecast beside the plan, and Satellite Weather with typhoon tracks"
+        ],
+        [
+          "Access you control",
+          "Each person sees only what they need",
+          "Team logins with none, view or edit per module, and a diary of changes (Farm Owner)"
+        ],
+        [
+          "A view of the field",
+          "Spot weak areas between visits",
+          "Satellite Analysis of a field you draw (uses credits)"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you set up a farm you cannot visit every week?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Map the lots once",
+          "text": "On a visit or a video call, trace each field over a satellite view and drop pins on the pump, the gate and the low spot that floods."
+        },
+        {
+          "title": "Write the plan together",
+          "text": "Sit with your caretaker and list every task by days after transplanting or sowing, with the materials and rates. Plans made together get followed."
+        },
+        {
+          "title": "Agree the reporting rule",
+          "text": "Each finished task gets a photo. Any problem gets a voice note or a message the same day."
+        },
+        {
+          "title": "Set the cash rhythm",
+          "text": "Send a weekly budget built from the plan, and ask for a photo of each receipt."
+        },
+        {
+          "title": "Agree a storm rule",
+          "text": "Decide now what happens when PAGASA raises a wind signal: drain, harvest early or secure the palay."
+        },
+        {
+          "title": "Review at a fixed time",
+          "text": "Pick one evening a week to read the board, the photos and the costs, then call your caretaker."
+        },
+        {
+          "title": "Close the season with numbers",
+          "text": "Record the harvest, the buyer and the price, then read the profit before you plan the next one."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Set the photo rule on day one",
+      "text": "\"No photo, not done\" sounds harsh after a quarrel but fair when agreed at the start. Pair it with wages paid on time. A caretaker who is paid on time and trusted with a clear plan sends better reports."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help you manage a farm remotely?"
+    },
+    {
+      "type": "text",
+      "text": "The [cropping calendar](/features/cropping-calendar) puts every task, irrigation, hired service and payroll day on one board, dated from each lot's day zero. Each morning at 6 AM, the [morning plan email](/features/morning-plan-email) sends your team the day's work and the lot it belongs to. For workers without logins, you can share a public link to the plan, a day or a task.\n\nIn the field, your caretaker ticks each task done on the [daily farm tasks](/features/daily-farm-tasks) board, marks who worked and adds a photo or a voice note. Offline mode keeps this working where the signal is weak, and the changes sync once it returns. From the city, you read the same board and watch the labor cost add up.\n\nOn Farm Owner, [team logins](/features/team-logins) give each person their own account. You decide, module by module, what they may see and change, and a diary records every change and who made it. The Collab Room adds a team chat, a whiteboard and calls for each season."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/app/board.png",
+      "alt": "The anee.io Activities board listing days with their tasks, growth stage and cash for the day",
+      "caption": "The Activities board: each day shows its tasks, the crop's stage and the cash it needs."
+    },
+    {
+      "type": "cta",
+      "title": "Give your caretaker a plan you can both see",
+      "text": "Start a season, add your lots and share the day's work with your team. The free plan is enough to begin.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you pay workers fairly from far away?"
+    },
+    {
+      "type": "text",
+      "text": "Pay by the day's attendance, at a rate you agreed in writing. Each region has its own minimum wage. The National Wages and Productivity Commission lists the current wage order for every region. Check yours before the season starts.\n\nIn anee.io, [workers and payroll](/features/farm-workers-and-payroll) keeps each worker's rate, whole days and half days, and payroll days on the board. The labor cost adds itself up from who worked each task. So when your caretaker asks for the wage money, you can see the same days on your phone. Our guide to [farm workers wages](/blog/farm-workers-wages) covers fair pay in more detail."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should happen when a typhoon comes?"
+    },
+    {
+      "type": "text",
+      "text": "Do not wait for a call from the farm. PAGASA gives 36 hours of lead time for Wind Signal Number 1, which means winds of 39 to 61 km/h. Even then, it warns, rice at flowering or ripening may suffer some damage. Higher signals come with shorter lead times.\n\nSo agree on the rule early. PalayCheck says palay is ready when 85 to 90 percent of the grains have turned golden. A field at that point can come in before the storm. Our guides on how to [track typhoons](/blog/track-typhoons-near-my-farm) and [typhoon preparation for farmers](/blog/typhoon-preparation-for-farmers) give the full list."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which records protect you if something goes wrong?"
+    },
+    {
+      "type": "text",
+      "text": "Dated photos, the crop stage and what you applied all count for insurance and loans. A DA page on PCIC rice insurance says a notice of loss may go first by text or email. The written claim follows. Check the current deadlines with your PCIC office, because they are short. Our guide to [farm records for loans](/blog/farm-records-for-loans-and-insurance) lists what to keep."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does it cost?"
+    },
+    {
+      "type": "text",
+      "text": "The free Libre plan covers one active season with activities, notes and growth stages, and it shows a few ads. Solo Farmer, at PHP 200 a month or PHP 1800 a year, adds workers without logins, inventory, full weather and all reports. Farm Owner, at PHP 600 a month or PHP 6500 a year, adds worker logins, access levels and the Collab Room. See the [pricing page](/pricing).\n\nThe limits are worth saying. The app shows what your team records, so a caretaker who does not tick or photograph leaves you blind. Offline changes reach you only after the phone finds a signal. Anee, the smart farm technician, needs internet and uses credits."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about managing a farm from far away"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I run a farm while working abroad?",
+          "a": "Yes, many owners do it with a trusted caretaker. It works with a written plan, a photo per finished task, weekly cash and a fixed review time. A farm app keeps all of that in one place you can open from anywhere."
+        },
+        {
+          "q": "How do I know the work was really done?",
+          "a": "Ask for a dated photo of each finished task and read who ticked it. In anee.io, each ticked task names the workers and can carry a photo or a voice note. With team logins on Farm Owner, a diary also records every change and who made it."
+        },
+        {
+          "q": "Do my workers need smartphones?",
+          "a": "No. The caretaker can tick tasks for the whole crew. Workers with email get the 6 AM plan email. Anyone can open a shared link to the day's plan without a login."
+        },
+        {
+          "q": "What if there is no signal at the farm?",
+          "a": "Offline mode works on every anee.io plan. Your caretaker keeps ticking tasks and taking photos, and the changes sync once the phone finds a signal."
+        },
+        {
+          "q": "How do I pay workers fairly from far away?",
+          "a": "Agree each worker's daily rate in writing and pay by attendance. Check your region's minimum wage order on the NWPC website. In anee.io the labor cost adds up from who worked each task, so you can check every request."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Share the farm plan with workers",
+          "url": "/blog/share-the-farm-plan-with-workers"
+        },
+        {
+          "label": "Farm cash flow",
+          "url": "/blog/farm-cash-flow"
+        },
+        {
+          "label": "Farm record keeping",
+          "url": "/blog/farm-record-keeping"
+        },
+        {
+          "label": "Team logins",
+          "url": "/features/team-logins"
+        },
+        {
+          "label": "Morning plan email",
+          "url": "/features/morning-plan-email"
+        },
+        {
+          "label": "Track typhoons near your farm",
+          "url": "/blog/track-typhoons-near-my-farm"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PAGASA: Tropical Cyclone Wind Signal",
+          "url": "https://pagasa.dost.gov.ph/learning-tools/tropical-cyclone-wind-signal"
+        },
+        {
+          "label": "National Wages and Productivity Commission: Daily minimum wage rates by region",
+          "url": "https://nwpc.dole.gov.ph/"
+        },
+        {
+          "label": "Department of Agriculture: Rice Crop Insurance, DA and PCIC",
+          "url": "https://ffedis.da.gov.ph/projects/6/view"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        }
+      ]
+    }
+  ]
+}

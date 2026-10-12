@@ -1,0 +1,267 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-calculator-app",
+  "sortOrder": 450,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "What Is the Best Fertilizer Calculator App for Farms in the Philippines?",
+  "metaTitle": "Fertilizer Calculator App: How to Choose One for Your Farm",
+  "metaDescription": "Choosing a fertilizer calculator app? Check that it reads local bag grades, counts N, P and K per hectare, uses your soil test and dates every split.",
+  "focusKeyword": "fertilizer calculator app",
+  "keywords": [
+    "fertilizer calculator app",
+    "fertilizer computation app",
+    "NPK calculator Philippines",
+    "MOET app",
+    "Rice Crop Manager",
+    "free fertilizer calculator"
+  ],
+  "excerpt": "The best fertilizer calculator app for a Filipino farm reads the bag grades sold here, adds up nitrogen, phosphorus and potassium per hectare and compares them with what your crop needs. It should also use your soil test and help you time each split. For rice, PhilRice's MOET app and the Rice Crop Manager give recommendations, often with an extension worker's help. anee.io, a farm app built for Filipino farmers, has NPK Plus, a free calculator that also ties the plan to your dated calendar and your stock.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-calculator-app.webp",
+    "alt": "A farmer spreads fertilizer by hand from a bucket across a rice field, at a rate a fertilizer calculator app helps work out first",
+    "credit": "Chris Graham/AusAID, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A fertilizer calculator does two jobs. It turns a recommendation into bags you can buy, and it checks a bag plan you already have against what the crop needs. The math is simple, but it is easy to slip when you juggle three nutrients, five grades and a lot that is not exactly one hectare.\n\nNo single app is best for every farm. So start with what the app must do, then see which tools do it for your crop."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Local grades:** it should know 14 14 14, 16 20 0, 46 0 0, 21 0 0 and 0 0 60, and let you add a label of your own.",
+        "**Per hectare and per lot:** it should show the nutrients for one hectare and for your real area.",
+        "**A crop target:** it should compare your plan with a DA or PhilRice rate and flag what is short or too much.",
+        "**Your soil:** it should use a soil test or MOET result when you have one.",
+        "**Timing:** the best tools also split the dose by growth stage and put it on a date."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a fertilizer calculator app do?"
+    },
+    {
+      "type": "text",
+      "text": "Use this table as a checklist when you try any tool. A fertilizer calculator app that misses the first three rows will give you numbers that look exact but do not fit your field."
+    },
+    {
+      "type": "table",
+      "caption": "What to look for in a fertilizer calculator app for a Filipino farm",
+      "rows": [
+        [
+          "What to check",
+          "Why it matters"
+        ],
+        [
+          "Knows the grades your dealer sells",
+          "A plan in kilos of nitrogen is useless until it becomes bags of urea or complete"
+        ],
+        [
+          "Shows N, P2O5 and K2O per hectare and in all",
+          "Labels print oxides, and your lot may be 0.6 hectare, not 1"
+        ],
+        [
+          "Compares with a crop rate from DA or PhilRice",
+          "You see what is short or too much before you buy"
+        ],
+        [
+          "Uses your soil test, MOET or past harvest",
+          "The same bags can be too much on one field and too little on another"
+        ],
+        [
+          "Splits doses by growth stage",
+          "Timing decides how much of each bag reaches the grain"
+        ],
+        [
+          "Covers the crops you grow",
+          "Many tools cover rice only"
+        ],
+        [
+          "Prices the plan",
+          "So the cash is ready before each application"
+        ],
+        [
+          "Speaks your language and fits your phone",
+          "A tool you cannot read in the field will not get used"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which fertilizer tools can Filipino farmers use?"
+    },
+    {
+      "type": "text",
+      "text": "For rice, government tools come first, because they are built on Philippine field trials. Check with your municipal agriculturist which ones reach your barangay."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer tools available to Filipino farmers, from the makers' own descriptions",
+      "rows": [
+        [
+          "Tool",
+          "Crops",
+          "What it gives",
+          "What it needs"
+        ],
+        [
+          "MOET app (PhilRice)",
+          "Rice",
+          "N, P, K and sulfur advice for a target yield, a yield estimate and fertilizer cost",
+          "A seven pot soil test set up 30 to 45 days before transplanting, Android phone"
+        ],
+        [
+          "Rice Crop Manager (DA, PhilRice, IRRI)",
+          "Rice",
+          "Crop and nutrient advice that matches one farm",
+          "Answers to a series of questions, usually through an extension worker"
+        ],
+        [
+          "Leaf color chart",
+          "Rice",
+          "When the crop needs more nitrogen",
+          "Readings of 10 leaves every 7 to 10 days"
+        ],
+        [
+          "NPK Plus in anee.io",
+          "Rice, corn, vegetables and more",
+          "N, P and K per hectare and in all, short, right or too much, and the yield the fertilizer alone can feed",
+          "The fertilizers you plan to use, a phone or computer"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "PhilRice says the MOET app gives a recommendation in 60 seconds or less once the pot test is done, and works without an internet connection. The Rice Crop Manager started in 2013 as a free web tool and Android app from IRRI and PhilRice. In 2022 PhilRice reported that DA PhilRice and DA ICT run its advisory service, with land areas checked by GPS."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does NPK Plus in anee.io compare?"
+    },
+    {
+      "type": "text",
+      "text": "[NPK Plus](/features/npk-plus-calculator) is free on every anee.io plan, Libre included. Tap the fertilizers you plan to use and it adds up every nutrient, as the element and as the oxide, per hectare and for the whole area. It counts micronutrients and biofertilizers too, then marks each nutrient short, right or too much for your crop.\n\nThere are honest limits. NPK Plus does not test your soil, so a soil test or MOET result still gives the better base. Its yield line shows what the fertilizer alone can feed, not the harvest you will get. Asking Anee, the smart farm technician, to read the plan against your place, soil and season needs internet and uses credits. The free Libre plan also shows a few ads and keeps one active season."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Where NPK Plus goes further"
+    },
+    {
+      "type": "text",
+      "text": "A calculator answers how much. A season also needs when, and how much is left in the shed. In the [Protocol Builder](/features/protocol-builder), each fertilizer task sits on its day after sowing, transplanting or planting. The protocol then becomes your [cropping calendar](/features/cropping-calendar), and on Solo Farmer the inventory shows what is left to buy."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Add your fertilizers",
+          "text": "Tap each product you plan to use and type how much, in bags or kilos."
+        },
+        {
+          "title": "Read the balance",
+          "text": "Check nitrogen, phosphorus and potassium per hectare against the rate for your crop."
+        },
+        {
+          "title": "Fix what is off",
+          "text": "Swap or add a grade until nothing reads short or too much. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows the same math by hand."
+        },
+        {
+          "title": "Put each dose on a date",
+          "text": "Write the splits into your protocol so every lot gets them on the right day."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Check the plan you were given, and the bags you actually bought",
+      "text": "Dealers sometimes swap a grade when stock runs out. Run the calculator again with what you really carried home, so a missing bag of potash shows up before panicle initiation, not after harvest."
+    },
+    {
+      "type": "cta",
+      "title": "Try NPK Plus free",
+      "text": "Add the fertilizers you plan to use and see if your crop gets too little, enough or too much.",
+      "label": "Open NPK Plus",
+      "url": "/features/npk-plus-calculator"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fertilizer apps"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a free fertilizer calculator app in the Philippines?",
+          "a": "Yes. NPK Plus in anee.io is free on every plan, including the free Libre plan. IRRI and PhilRice also launched the Rice Crop Manager in 2013 as a free web tool and Android app for rice."
+        },
+        {
+          "q": "Can a fertilizer calculator replace a soil test?",
+          "a": "No. A calculator adds up what you plan to apply, but only a soil test, MOET or a field tool shows what your soil already supplies. Use the test to set the target, then the calculator to hit it."
+        },
+        {
+          "q": "Which app works for corn and vegetables, not only rice?",
+          "a": "The MOET app and the Rice Crop Manager are built for rice. NPK Plus in anee.io compares your plan with the usual rate for other crops too, including corn and vegetables."
+        },
+        {
+          "q": "Do I need internet to use a fertilizer app?",
+          "a": "PhilRice says the MOET app works without an internet connection. In anee.io, asking Anee to read your fertilizer plan needs internet and uses credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer calculation, step by step",
+          "url": "/blog/fertilizer-calculation"
+        },
+        {
+          "label": "How many bags of fertilizer per hectare",
+          "url": "/blog/bags-of-fertilizer-per-hectare"
+        },
+        {
+          "label": "Plan fertilizer for a whole season",
+          "url": "/blog/season-fertilizer-plan"
+        },
+        {
+          "label": "Choosing a farm planning app",
+          "url": "/blog/farm-planning-app-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Tips on fertilizer use in seconds (MOET app, 2018)",
+          "url": "https://www.philrice.gov.ph/tips-fertilizer-use-seconds/"
+        },
+        {
+          "label": "PhilRice: Web tool to help raise rice yield, income (Rice Crop Manager, 2013)",
+          "url": "https://www.philrice.gov.ph/web-tool-to-help-raise-rice-yield-income/"
+        },
+        {
+          "label": "PhilRice: RCM application pilot tested (2022)",
+          "url": "https://www.philrice.gov.ph/rcm-application-pilot-tested/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: How to manage soil fertility",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Leaf Color Chart",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility/leaf-color-chart"
+        }
+      ]
+    }
+  ]
+}

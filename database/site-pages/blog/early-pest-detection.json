@@ -1,0 +1,249 @@
+{
+  "section": "blog",
+  "slug": "early-pest-detection",
+  "sortOrder": 630,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "How to Stop Pests Before They Destroy Your Harvest: Early Pest Detection",
+  "metaTitle": "Early Pest Detection: Stop Pests Before They Ruin Your Crop",
+  "metaDescription": "Early pest detection for rice and corn: when to walk the field, what to count, the PalayCheck action levels, and how anee.io keeps scouting on time.",
+  "focusKeyword": "early pest detection",
+  "keywords": [
+    "early pest detection",
+    "pest scouting",
+    "pest monitoring rice",
+    "action threshold",
+    "PalayCheck pest management",
+    "brown planthopper monitoring"
+  ],
+  "excerpt": "Early pest detection means walking your field on a fixed routine and counting pests and their natural enemies. You act only when a count crosses an action level, long before the damage shows from the road. PhilRice advises checking fields early every morning and holding insecticide in the first 30 days after transplanting. With anee.io, a farm app built for Filipino farmers, the routine lives on your board, and Anee, its smart farm technician, reads the photos you take.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-early-pest-detection.webp",
+    "alt": "Pink egg clusters of the golden apple snail on young rice in Bulacan, an early sign that early pest detection should catch",
+    "credit": "Judgefloro, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Damage you can see from the road is late damage. IRRI says brown planthoppers cause hopperburn near maturity at about 400 to 500 nymphs per plant. At 1 planthopper per stem or fewer, there is still time to act. The gap between those two numbers is your window.\n\nThe risk is current. In January 2026, PhilRice cited Bureau of Plant Industry data from 2021 to 2025 on the top threats to rice in the first quarter. They were brown planthoppers, stem borers, rodents, bacterial leaf blight and leaffolders. Central Luzon was the most exposed, with Bicol and Eastern Visayas also at high risk."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Walk each lot on a schedule: daily in the seedbed, weekly in the field, as IRRI advises for planthoppers.",
+        "Go from 5 to 7 in the morning or late in the afternoon, the hours PalayCheck gives for monitoring insects.",
+        "Count pests and their natural enemies, then compare with the PalayCheck action levels below.",
+        "Hold insecticide in the first 30 days after transplanting or 40 days after sowing, as PhilRice advises.",
+        "Put the walks on your calendar, so they happen even in busy weeks."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does early pest detection look like in a rice field?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Set the rhythm",
+          "text": "Check the seedbed every day and each field once a week, more often in risky stages. IRRI gives this rhythm for planthoppers."
+        },
+        {
+          "title": "Walk a diagonal",
+          "text": "Cross the field corner to corner and stop at 10 to 20 hills. Do not judge the field from the bund alone."
+        },
+        {
+          "title": "Look low and tap",
+          "text": "Bend each hill a little and tap it near the base. Count the planthoppers that fall on the water, and check the leaves for egg masses."
+        },
+        {
+          "title": "Count the friends too",
+          "text": "Note spiders, water striders and mirid bugs. IRRI says that when natural enemies outnumber the planthoppers, the risk of hopperburn is low."
+        },
+        {
+          "title": "Use a light at night",
+          "text": "A lamp near a light colored wall or over a pan of water shows when planthoppers fly in. IRRI advises keeping it away from the seedbed and the field."
+        },
+        {
+          "title": "Write it down",
+          "text": "Note the date, the lot, the stage and the counts, with a photo. A count that rises over two walks matters more than one high number."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When is a count high enough to act?"
+    },
+    {
+      "type": "text",
+      "text": "PalayCheck, the rice crop management system of PhilRice, lists pest levels linked to real yield loss for a 120 day variety. Use them as your action levels. Then read the full table for your own variety and stage."
+    },
+    {
+      "type": "table",
+      "caption": "Selected PalayCheck pest levels linked to yield loss, for a 120 day rice variety",
+      "rows": [
+        [
+          "Growth stage",
+          "Stem borer",
+          "Brown or whitebacked planthopper",
+          "Rice bug"
+        ],
+        [
+          "Seedbed",
+          "5 or more egg masses per square meter",
+          "Negligible",
+          "Negligible"
+        ],
+        [
+          "Early tillering",
+          "30 percent or more deadhearts",
+          "25 or more insects per hill",
+          "Negligible"
+        ],
+        [
+          "Mid tillering to early panicle initiation",
+          "1 or more egg mass per square meter",
+          "50 or more insects per hill",
+          "Negligible"
+        ],
+        [
+          "Flowering",
+          "20 percent or more whiteheads",
+          "50 or more insects per hill",
+          "Negligible"
+        ],
+        [
+          "Milk",
+          "20 percent or more whiteheads",
+          "More than 100 insects per hill",
+          "More than 5 per square meter"
+        ],
+        [
+          "Grain filling",
+          "More than 20 percent whiteheads",
+          "More than 100 insects per hill",
+          "More than 10 per square meter"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "For mais, watch for fall armyworm"
+    },
+    {
+      "type": "text",
+      "text": "Fall armyworm is a newer threat to corn here. The report filed with the International Plant Protection Convention dates the first suspected case to June 20, 2019, in Piat, Cagayan. The Bureau of Plant Industry's national action plan uses pheromone lures and traps for monitoring, plus scouting to confirm what the traps catch. Our [fall armyworm guide](/pests/fall-armyworm) shows the signs on corn."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not spray in the first 30 days",
+      "text": "PhilRice advises against spraying for leaf feeders within 30 days after transplanting or 40 days after sowing. Young rice recovers by making new leaves and tillers, while early sprays kill the natural enemies that keep pests down."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io keeps early pest detection on schedule"
+    },
+    {
+      "type": "text",
+      "text": "A routine fails in the busy weeks, so put it on the calendar. In anee.io, add a scouting task to your [Protocol Builder](/features/protocol-builder) on the days after transplanting that matter, and it lands on each lot's own dates. The [growth stages](/features/growth-stages-and-weather) view shows each lot's stage, with what to do now and what to watch for. Then the 6 AM morning plan email tells your team which lot to walk today.\n\nIn the field, Quick Capture saves a photo and Quick Voice saves what you say, both kept with the season. Your notes keep working with no signal and sync later. On a plan with Anee, send her a photo of what you found, and she reads it with your lot's stage and weather. Satellite Analysis can also show the weak spots in a field, so you know where to walk first. Anee and Satellite Analysis use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Put scouting on your calendar",
+      "text": "Sign up free, add your lots, and give every lot a weekly scouting task dated from its own day zero.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about early pest detection"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How often should I check my rice field for pests?",
+          "a": "IRRI advises checking the seedbed daily and the field weekly for planthoppers. PhilRice adds that early morning checks catch insects before many of them move on later in the day."
+        },
+        {
+          "q": "What is an action level?",
+          "a": "It is the count at which a pest starts to cost you real yield. PalayCheck lists them by growth stage, such as 25 or more planthoppers per hill at early tillering."
+        },
+        {
+          "q": "Should I spray as soon as I see a pest?",
+          "a": "No. Count first and compare with the action level. IRRI notes that planthopper outbreaks follow pesticides that kill their natural enemies."
+        },
+        {
+          "q": "Do light traps replace field walks?",
+          "a": "No. IRRI treats a light trap as an alarm. If hundreds of planthoppers come to the light, check the field at once and scout daily for the next few weeks. If you already walk the field every day, IRRI says you do not need the trap."
+        },
+        {
+          "q": "When should we hunt rats?",
+          "a": "PhilRice advises rat hunting at the start of the rats' breeding season, or one month after crop establishment. Pair it with burrow management and safe handling of baits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice field rats",
+          "url": "/pests/rice-field-rats"
+        },
+        {
+          "label": "Fall armyworm in corn",
+          "url": "/pests/fall-armyworm"
+        },
+        {
+          "label": "Identify rice pests from a photo",
+          "url": "/blog/identify-rice-pests-from-a-photo"
+        },
+        {
+          "label": "Reduce crop losses",
+          "url": "/blog/reduce-crop-losses"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice (2026): PhilRice warns of major rice pest threats in early 2026",
+          "url": "https://www.philrice.gov.ph/philrice-warns-of-major-rice-pest-threats-in-early-2026/"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck Key Check 7, Pest Management",
+          "url": "https://www.pinoyrice.com/palaycheck/pest-management/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Planthopper",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
+        },
+        {
+          "label": "PhilRice (2012): Young rice plants can take care of themselves",
+          "url": "https://www.philrice.gov.ph/young-rice-plants-can-take-care-of-themselves/"
+        },
+        {
+          "label": "IPPC: Report of first detection of fall armyworm in the Philippines (2019)",
+          "url": "https://www.ippc.int/en/countries/philippines/pestreports/2019/10/report-of-first-detection-of-fall-army-worm-faw-in-the-republic-of-the-philippines/"
+        }
+      ]
+    }
+  ]
+}

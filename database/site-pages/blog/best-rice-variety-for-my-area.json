@@ -1,0 +1,255 @@
+{
+  "section": "blog",
+  "slug": "best-rice-variety-for-my-area",
+  "sortOrder": 530,
+  "lang": "en",
+  "category": "Planning",
+  "title": "What Is the Best Rice Variety for My Area in the Philippines?",
+  "metaTitle": "Best Rice Variety for My Area: How to Choose in the PH",
+  "metaDescription": "Asking for the best rice variety for my area? Match it to your field, season and market with PhilRice's checks, plus varieties for drought and flood.",
+  "focusKeyword": "best rice variety for my area",
+  "keywords": [
+    "best rice variety for my area",
+    "rice varieties Philippines",
+    "certified seed",
+    "Binhing Palay"
+  ],
+  "excerpt": "If you are asking \"what is the best rice variety for my area\", look for one that suits your field, season, pests and buyers. PhilRice's PalayCheck adds one more test: it should have done well in at least two seasons of local trials. Start with the varieties your DA regional office recommends, look them up in PhilRice's Binhing Palay app, and buy certified seed. Variety Research in anee.io, a farm app built for Filipino farmers, compares varieties for your own town and lists its sources.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-best-rice-variety-for-my-area.webp",
+    "alt": "Grains of many rice varieties side by side from the IRRI collection, each suited to different fields and seasons",
+    "credit": "IRRI Images, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "When PhilRice launched its Binhing Palay app in 2018, the catalogue already held 289 released rice varieties. No single one wins everywhere. A variety that tops the yield list in irrigated Nueva Ecija may lodge in a typhoon belt. It may also drown in a flood prone barangay. So the best choice starts with your field, not with the seed bag ad."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Match the variety to your environment: irrigated, rainfed, upland, flood prone or drought prone.",
+        "Choose one that solves your local problem, such as typhoons, floods, drought or a common pest.",
+        "Prefer varieties that did well in at least two seasons of trials near you, and that buyers want.",
+        "Buy certified seed with a valid NSQCS tag. PalayCheck says high quality seed can raise yield by 10 percent or more."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I find the best rice variety for my area?"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice's PalayCheck System puts variety choice first, as Key Check 1. It asks you to use high quality seed of a recommended variety, and it defines recommended in four ways."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "**It suits your environment or season.** In rainfed areas, give priority to varieties bred for rainfed fields. In the wet season, think about local pests like the [brown planthopper](/pests/brown-planthopper) and how easily a variety lodges or shatters.",
+        "**It answers a local field problem.** Where typhoons, drought or floods hit, pick a variety whose maturity lets the crop escape them.",
+        "**It has proven itself nearby.** It should have performed well in at least two seasons of adaptability trials by PhilRice or the local DA office.",
+        "**It sells.** It should have high market demand, so your buyer pays well for the grain."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which rice varieties fit which field?"
+    },
+    {
+      "type": "text",
+      "text": "The table gathers examples that PhilRice has named in its own publications. Use it as a starting list, then check what is new for your region."
+    },
+    {
+      "type": "table",
+      "caption": "Examples of varieties PhilRice has named for each condition",
+      "rows": [
+        [
+          "Field condition",
+          "Varieties PhilRice has named",
+          "What PhilRice says"
+        ],
+        [
+          "Irrigated lowland, both seasons",
+          "NSIC Rc 216, Rc 160, Rc 300, Rc 222",
+          "The four most preferred by farmers in irrigated fields nationwide (2018), maturing in 107 to 115 days after sowing"
+        ],
+        [
+          "Typhoon prone, wet season",
+          "PSB Rc14, Rc68, NSIC Rc222",
+          "Plants at most 100 cm tall with strong stems against 40 to 60 kph winds (2016)"
+        ],
+        [
+          "Flood prone",
+          "PSB Rc18 (Ala), NSIC Rc194 (Submarino 1)",
+          "Rc18 survives 5 to 7 days under water, Rc194 survives 10 to 14 days (2016)"
+        ],
+        [
+          "Rainfed, short of water",
+          "NSIC Rc192 (Sahod Ulan 1), PSB Rc14 (Rio Grande), Rc68 (Sacobia)",
+          "Known to need little water, for El Nino years"
+        ],
+        [
+          "Irrigated, water may run short",
+          "PSB Rc10 (Pagsanjan), NSIC Rc134 (Tubigan 4)",
+          "Harvested in 102 to 110 days, especially when direct seeded"
+        ],
+        [
+          "Upland",
+          "PSB Rc80 (Pasig), Rc9 (Apo), NSIC Rc23 (Katihan 1)",
+          "Survive in hilly areas with little water"
+        ],
+        [
+          "Before the typhoon months",
+          "PSB Rc 10",
+          "Early maturing at 106 days, so it fits the calendar before typhoons"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "New varieties come out every year, so check the Binhing Palay app and your DA office for the latest. Our list of [rice varieties in the Philippines](/crops/rice-varieties-philippines) has more detail on the common ones."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Check the tag before you pay",
+      "text": "Certified seed carries a BPI NSQCS tag, and PalayCheck says to make sure the tag is still valid. Old stock or seed carried over from last season should pass a germination retest before sowing. High quality seed germinates at 85 percent or more."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you test a new variety on your own farm?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Ask what is recommended near you",
+          "text": "Visit your Municipal Agriculture Office or DA regional office. Ask which varieties did well in local trials for your season."
+        },
+        {
+          "title": "Look them up",
+          "text": "Open the Binhing Palay app. PhilRice built it so you can filter released varieties by location, environment, season and crop establishment, and it works offline."
+        },
+        {
+          "title": "Plant a strip beside your usual variety",
+          "text": "Use the same land preparation, fertilizer and water on both, so the variety is the only difference."
+        },
+        {
+          "title": "Record what happens",
+          "text": "Write the dates of heading and harvest, the pests you saw, the yield with its moisture and the price paid. Keep it all in your [harvest records](/features/harvest-records)."
+        },
+        {
+          "title": "Repeat for a second season",
+          "text": "PalayCheck asks for at least two good seasons before a variety counts as proven. Switch the whole farm only after that."
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Compare varieties for your own town",
+      "text": "Anee looks up the varieties of your crop and compares yield, maturity and resistance for your area, with every source she read.",
+      "label": "See Variety Research",
+      "url": "/features/variety-research"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help you choose and track a variety?"
+    },
+    {
+      "type": "text",
+      "text": "Variety Research is run by Anee, the smart farm technician inside anee.io. You type your town, season, field type and the troubles you have seen, like drought or floods. She then compares up to eight varieties, or picks the top released ones herself, and lists every source so you can check them. It runs on credits and comes with Libre plus Anee from PHP 70 a month, Solo Farmer and Farm Owner.\n\nOnce you plant, type the variety into each [lot](/features/farm-lots), so the yield in your harvest records stays tied to it. After two seasons, Compare Reports puts the two side by side, and Anee explains what changed, which uses credits."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about choosing a rice variety"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the highest yielding rice variety in the Philippines?",
+          "a": "Maximum yields on paper differ from farm yields. PhilRice lists, for example, a maximum of 10.4 tons per hectare for NSIC Rc 300 when transplanted, and 10 tons for Rc 222. Your own yield depends on the field, season and management, so compare varieties in your own conditions."
+        },
+        {
+          "q": "Which rice variety is best for flood prone fields?",
+          "a": "PhilRice names NSIC Rc194 (Submarino 1), which can survive 10 to 14 days of complete submergence. PSB Rc18 (Ala) survives 5 to 7 days. Both can recover when submerged during the vegetative stage."
+        },
+        {
+          "q": "Which variety should I plant during El Nino?",
+          "a": "Choose drought tolerant or early maturing varieties. For rainfed fields, PhilRice suggests NSIC Rc192 (Sahod Ulan 1), PSB Rc14 and Rc68. For irrigated fields where water may run short, it names PSB Rc10 and NSIC Rc134, and our [El Nino farming tips](/blog/el-nino-la-nina-farming-tips) cover saving water too."
+        },
+        {
+          "q": "Where can I buy certified rice seed?",
+          "a": "Buy from accredited seed growers and check that the NSQCS tag is valid. If there is no accredited grower nearby, PalayCheck suggests seed from reliable farmers whose fields grow evenly, tested for germination first."
+        },
+        {
+          "q": "How many seasons should I test a variety?",
+          "a": "At least two. PalayCheck counts a variety as recommended when it performed well in at least two seasons of adaptability trials. A single good season may only mean the weather was kind."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "Best time to plant rice",
+          "url": "/blog/best-time-to-plant-rice-philippines"
+        },
+        {
+          "label": "El Nino and La Nina farming tips",
+          "url": "/blog/el-nino-la-nina-farming-tips"
+        },
+        {
+          "label": "Palay: a full guide",
+          "url": "/crops/palay"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Top 4 most popular rice varieties",
+          "url": "https://www.philrice.gov.ph/top-5-popular-rice-varieties/"
+        },
+        {
+          "label": "PhilRice: Recommended varieties, technologies for the rainy season",
+          "url": "https://www.philrice.gov.ph/recommended-varieties-technologies-rainy-season/"
+        },
+        {
+          "label": "PhilRice: El Nino, La Nina at pagpapalayan (Q and A)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/12/Q_A-22-EN-LN-at-Pagpapalay-Dec.-2023.pdf"
+        },
+        {
+          "label": "PhilRice: Binhing Palay app features PH rice varieties",
+          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
+        }
+      ]
+    }
+  ]
+}

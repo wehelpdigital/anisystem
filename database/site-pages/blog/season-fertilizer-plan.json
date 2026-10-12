@@ -1,0 +1,249 @@
+{
+  "section": "blog",
+  "slug": "season-fertilizer-plan",
+  "sortOrder": 500,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "What Is the Best Way to Plan Fertilizer for a Whole Cropping Season?",
+  "metaTitle": "Season Fertilizer Plan: Seven Steps From Target to Records",
+  "metaDescription": "Make a season fertilizer plan in seven steps: set a yield target, count what the soil gives, turn the gap into bags, date each split and record results.",
+  "focusKeyword": "season fertilizer plan",
+  "keywords": [
+    "season fertilizer plan",
+    "fertilizer plan for the cropping season",
+    "yield target",
+    "fertilizer schedule",
+    "fertilizer budget",
+    "crop protocol"
+  ],
+  "excerpt": "The best way to make a season fertilizer plan is to work backward from a yield target you can reach. Count what your soil, straw and manure already supply, turn the gap into bags, split them by growth stage and put each dose on a date with the cash and stock ready. IRRI's approach to fitting nutrients to each field starts the same way. anee.io, a farm app built for Filipino farmers, lets you write the whole plan in its Protocol Builder, check it with the free NPK Plus calculator and turn it into a dated cropping calendar.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-season-fertilizer-plan.webp",
+    "alt": "Farmers plant rice under Mount Iriga at the start of a cropping season, when the season fertilizer plan should already be ready",
+    "credit": "Yawrei, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Most fertilizer mistakes happen before anyone opens the first bag. A farmer misses a dose because the bag never arrived, or the cash ran out in the middle of tillering. Sometimes the plan copied last year's rates onto a field that now gets its straw back.\n\nA written plan fixes all three. It works the same for palay, mais or gulay, and it fits on one page."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Start from a yield target** you have reached before on that field.",
+        "**Subtract what the field already gives** from soil, straw, manure and water.",
+        "**Turn the gap into bags,** then split them by growth stage.",
+        "**Date every dose** from the lot's own day zero, with cash and stock ready.",
+        "**Record what happened** and adjust the plan next season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I make a season fertilizer plan, step by step?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Set a yield target you can reach",
+          "text": "IRRI says the target should follow your location, season, climate, variety and management, because it sets the total nutrients the crop must take up. Your own best harvest on that field is a good start."
+        },
+        {
+          "title": "Count what the field already supplies",
+          "text": "Soil, crop residues, manure and irrigation water all add nutrients. PhilRice says straw from a 5 ton harvest, worked back in, gives about 30 kg of nitrogen. A soil test or MOET shows what else the soil holds."
+        },
+        {
+          "title": "Fill the gap with fertilizer",
+          "text": "IRRI notes that a rice crop takes up about 16 kg of nitrogen per ton of grain. It advises 40 to 50 kg of fertilizer nitrogen for each extra ton above what the field gives without nitrogen."
+        },
+        {
+          "title": "Turn kilos of nutrient into bags",
+          "text": "Divide the kilos you need by the percent in the grade. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows the formula with worked examples."
+        },
+        {
+          "title": "Split the bags by growth stage",
+          "text": "PalayCheck asks for the right element, amount and timing. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) shows which dose belongs where."
+        },
+        {
+          "title": "Line up stock and cash",
+          "text": "Price the plan with the latest FPA weekly prices, then buy before each dose is due."
+        },
+        {
+          "title": "Record and review",
+          "text": "PalayCheck's cycle is simple: observe and record, compare the results with your targets, then correct the problem next season."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does a finished plan look like?"
+    },
+    {
+      "type": "text",
+      "text": "Here is one hectare of transplanted rice, using PhilRice's Abonong Swak plan for a 5 to 6 ton target and a 111 to 120 day variety. Prices are FPA national averages for October 5 to 9, 2026. Swap in your own target, soil results and dealer prices."
+    },
+    {
+      "type": "table",
+      "caption": "A season fertilizer plan for one hectare of transplanted rice, 5 to 6 tons, 111 to 120 day variety. DAT means days after transplanting.",
+      "rows": [
+        [
+          "When",
+          "Stage",
+          "What to apply",
+          "Cost (PHP)"
+        ],
+        [
+          "0 to 14 DAT",
+          "Early growth",
+          "2 bags 14 14 14 or 16 20 0, mixed into the soil",
+          "3,794.00 for 14 14 14"
+        ],
+        [
+          "14 DAT",
+          "Early tillering",
+          "10 bags decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost",
+          "Varies by source"
+        ],
+        [
+          "22 to 26 DAT",
+          "Active tillering",
+          "1 bag urea",
+          "2,241.41"
+        ],
+        [
+          "32 to 36 DAT",
+          "Toward panicle initiation",
+          "1 bag urea and half a bag of muriate of potash",
+          "3,078.35"
+        ],
+        [
+          "Total",
+          "",
+          "4.5 bags of inorganic fertilizer plus organic",
+          "9,113.76 plus organic"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Write down three more things beside the table: the lot's area, the transplanting date and who applies each dose. A plan for 0.6 hectare is the same table with every amount multiplied by 0.6. For the bag counts at other targets, see [how many bags of fertilizer per hectare](/blog/bags-of-fertilizer-per-hectare)."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Plan in kilos, buy in bags",
+      "text": "Round each purchase up to whole bags, then write down what is left after each dose. The next dose uses the leftover first, and nothing hardens in a corner of the shed until next season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Should I keep separate plans for the wet and dry season?"
+    },
+    {
+      "type": "text",
+      "text": "Yes. The dry season usually allows a higher yield target, so its plan usually carries more fertilizer. PalayCheck warns that too much nitrogen invites lodging, and the wet months bring the wind that knocks a soft crop down. Keep two versions and update each one with that season's results. Our guide to [fertilizer for wet season rice](/blog/fertilizer-for-wet-season-rice) shows the difference in bags."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io turn the plan into a season?"
+    },
+    {
+      "type": "text",
+      "text": "In the [Protocol Builder](/features/protocol-builder) you write every task of the season on its day: land preparation, sowing, each fertilizer with its rate. Keep one version for the wet season and one for the dry. The free NPK Plus calculator checks the nutrients. Anee can then review the protocol for a rate that looks too high or a stage with nothing planned. Her review uses credits.\n\nWhen you plant, the protocol becomes a [cropping calendar](/features/cropping-calendar) dated from each lot's own day zero. The protocol also adds up the materials its tasks will use, and on Solo Farmer it sets them against your stock, so you see what is left to buy. Cash to prepare then shows the money each day or stretch of days needs. After harvest, View as Protocol turns a lot's finished work into a ready start for next season."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/app/board.png",
+      "alt": "The Activities board in anee.io listing each day of the season with its tasks, growth stage tags and the cash each day needs",
+      "caption": "The Activities board in anee.io: each day's tasks, with the growth stage and the cash the day needs."
+    },
+    {
+      "type": "cta",
+      "title": "Write your season plan once, reuse it every year",
+      "text": "Build your fertilizer protocol in the Protocol Builder and turn it into a dated cropping calendar when you plant.",
+      "label": "See the Protocol Builder",
+      "url": "/features/protocol-builder"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about planning fertilizer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "When should I start my season fertilizer plan?",
+          "a": "Start before land preparation. That leaves time for a soil test or MOET, for pricing the bags and for buying them before the basal dose is due."
+        },
+        {
+          "q": "How much nitrogen does rice need per ton of harvest?",
+          "a": "IRRI says a rice crop takes up about 16 kg of nitrogen for each ton of grain, counting grain and straw. Part of that comes from the soil, so the fertilizer you add is the gap between what the crop needs and what the field supplies."
+        },
+        {
+          "q": "Can I reuse last season's plan?",
+          "a": "Yes, as a starting point. Change it if the yield, the variety, the season or your straw and manure use changed. Then fix any dose that came late or ran short."
+        },
+        {
+          "q": "Do I need a separate plan for each lot?",
+          "a": "Use one protocol, but give each lot its own area and planting date. Lots planted a week apart reach each stage a week apart, so their doses fall on different days."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer for rice: a season plan by days",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "How to make a cropping calendar",
+          "url": "/blog/how-to-make-a-cropping-calendar"
+        },
+        {
+          "label": "Farm cash flow for the season",
+          "url": "/blog/farm-cash-flow"
+        },
+        {
+          "label": "Farm record keeping",
+          "url": "/blog/farm-record-keeping"
+        },
+        {
+          "label": "Choosing a fertilizer calculator app",
+          "url": "/blog/fertilizer-calculator-app"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: How to manage soil fertility",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Nitrogen (N)",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
+        },
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K (Abonong Swak recommendations)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "FPA: Prices of 6 major fertilizer grades, October 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_-1.pdf"
+        }
+      ]
+    }
+  ]
+}

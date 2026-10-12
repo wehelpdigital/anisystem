@@ -1,0 +1,291 @@
+{
+  "section": "blog",
+  "slug": "farm-app-without-internet",
+  "sortOrder": 590,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "Is There a Farm App That Works Without Internet in the Philippines?",
+  "metaTitle": "Farm App Without Internet: What Works Offline in the Field",
+  "metaDescription": "Need a farm app without internet? See what should still work offline, how syncing works, which rice apps run offline, and how anee.io keeps working.",
+  "focusKeyword": "farm app without internet",
+  "keywords": [
+    "farm app without internet",
+    "offline farm app",
+    "farm app no signal",
+    "offline mode",
+    "sync",
+    "Binhing Palay offline"
+  ],
+  "excerpt": "Yes. A good farm app without internet keeps working when the signal drops: you open your plan, tick tasks and write notes, and the app sends your changes once the signal returns. anee.io, a farm app built for Filipino farmers, has offline mode on for every plan, including the free Libre plan, and keeps your recent seasons open on the phone. Anee, the weather and the community still need a connection.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-app-without-internet.webp",
+    "alt": "Rice terraces of Hapao in Hungduan, Ifugao, the kind of remote farm where a farm app without internet is needed",
+    "credit": "Arian Zwegers, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Signal is strong in town and weak in the field. Many lots sit behind a hill, deep in a valley or far from the nearest tower. And after a strong typhoon, power and signal can stay down for days.\n\nSo a farm app that only works online fails you where you need it most. Here is what a real offline app should do, how syncing works, and where anee.io stands."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Offline should mean you can still read today's plan and record the work, not just see an error page.",
+        "Your changes wait on the phone and go to the server, in order, when the signal comes back.",
+        "anee.io's offline mode is on for every plan, Libre included, and your recent seasons stay open on the phone.",
+        "Anee, the forecast, maps, reports and the community still need a signal."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should a farm app without internet let you do?"
+    },
+    {
+      "type": "text",
+      "text": "Test any app before the season starts. Turn on airplane mode, open the app and try the jobs below. If it fails here, it will fail in the field."
+    },
+    {
+      "type": "table",
+      "caption": "What to test in airplane mode",
+      "rows": [
+        [
+          "Test",
+          "Why it matters",
+          "anee.io offline"
+        ],
+        [
+          "Open today's plan",
+          "Workers need to know what to do and where",
+          "Yes, for your recent seasons"
+        ],
+        [
+          "Tick a task done",
+          "The record should be made where the work happens",
+          "Yes, it waits and syncs later"
+        ],
+        [
+          "Write a note",
+          "You forget details by evening",
+          "Yes, notes work offline"
+        ],
+        [
+          "See each lot's growth stage",
+          "You decide what to watch for on the spot",
+          "Yes, growth stages open offline"
+        ],
+        [
+          "Move between seasons",
+          "Many farmers run more than one season",
+          "Yes, the season list and hubs open"
+        ],
+        [
+          "Sync without losing work",
+          "Lost records mean lost wages and costs",
+          "Yes, changes go up in order once online"
+        ],
+        [
+          "Ask a question or check the forecast",
+          "These need fresh data from a server",
+          "No, Anee and the weather need a signal"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io work offline?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io is a web app that runs in your phone's browser or from your home screen. Like many modern web apps, it uses a service worker, a small helper in the browser that keeps copies of pages on the phone. That is how it opens with no signal."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Open the app once while you have signal",
+          "text": "anee.io saves your recent seasons on the phone in the background. Do this at home or in town before you walk to the field."
+        },
+        {
+          "title": "Work in the field as usual",
+          "text": "Open the [activities board](/features/daily-farm-tasks), tick tasks done and write [notes](/features/notes-photos-and-voice). A small bar tells you that you are working offline."
+        },
+        {
+          "title": "Let the changes wait",
+          "text": "Every change stays on the phone in the order you made it. Nothing is thrown away if the signal comes and goes."
+        },
+        {
+          "title": "Come back to signal",
+          "text": "When the app can reach the server again, it sends your changes in order, then shows the updated season."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not clear the browser while changes are waiting",
+      "text": "Your offline changes live in the phone's browser until they sync. Clearing the browser's data or history for anee.io before you reach signal can erase them. Sync first, then clean up."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What still needs a signal?"
+    },
+    {
+      "type": "text",
+      "text": "Some work cannot happen offline, because the answer lives on a server. anee.io shows a clear locked screen for these instead of a page that pretends to work."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Anee, the smart farm technician, and every analysis she runs.",
+        "The weather forecast and satellite views, which must fetch fresh data.",
+        "Maps, reports, workers, inventory and the community."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A good habit is to read the forecast and ask Anee your questions while you have signal, then head to the field with the plan on your phone. For more on running a farm from a distance, see how to [manage a farm remotely](/blog/manage-a-farm-remotely)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which other farm tools work without data?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io is not the only option, and a mix works best. Each of these keeps helping when data is weak or gone."
+    },
+    {
+      "type": "table",
+      "caption": "Farm help that works with weak or no data",
+      "rows": [
+        [
+          "Tool",
+          "From",
+          "What it does offline"
+        ],
+        [
+          "Binhing Palay app",
+          "PhilRice",
+          "A catalogue of released rice varieties that works in offline mode"
+        ],
+        [
+          "School on the Air",
+          "Agricultural Training Institute",
+          "Farm lessons by radio for hard to reach areas"
+        ],
+        [
+          "Farmers' Contact Center",
+          "Agricultural Training Institute",
+          "Farm advice by voice call or text, so no mobile data is needed"
+        ],
+        [
+          "A paper notebook",
+          "You",
+          "A backup for the day the phone battery dies"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Weak signal also matters after a storm. PAGASA warns that under Signal 5, electricity and telecommunications can be unavailable for long periods. Our guide to [typhoon preparation for farmers](/blog/typhoon-preparation-for-farmers) covers the days before and after."
+    },
+    {
+      "type": "cta",
+      "title": "Keep working when the signal drops",
+      "text": "Sign up free, open your season once with signal, and tick tasks in the field with or without data.",
+      "label": "See offline mode",
+      "url": "/features/offline-farm-app"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is a farm app without internet free to use?"
+    },
+    {
+      "type": "text",
+      "text": "On anee.io, yes. Offline mode is part of every plan, from the free Libre plan up to Farm Owner. Libre covers one active season and shows a few ads. If you want to compare it with other free tools, read our guide to the best [free farm app](/blog/free-farm-app-philippines), and see every plan on the [pricing page](/pricing)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm apps that work offline"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Does anee.io work without internet?",
+          "a": "Yes. Offline mode is on for every plan. You can open your recent seasons, tick tasks, write notes and check growth stages with no signal, and the changes sync once you are back online."
+        },
+        {
+          "q": "Do I need to download anee.io from the Play Store?",
+          "a": "No. anee.io runs in the browser of any phone, and you can add it to your home screen. Open it once with signal so your recent seasons are saved on the phone."
+        },
+        {
+          "q": "What happens to my changes when there is no signal?",
+          "a": "They wait on the phone in the order you made them. When the app reaches the server again, it sends them in that order and shows the updated season."
+        },
+        {
+          "q": "Can I ask Anee questions offline?",
+          "a": "No. Anee needs a connection, because she reads your records and the weather before she answers. Ask her while you have signal, then take the plan to the field."
+        },
+        {
+          "q": "Are there rice apps that work offline?",
+          "a": "Yes. PhilRice says its Binhing Palay app, a catalogue of released rice varieties, works in offline mode. For advice with no data, the ATI Farmers' Contact Center also takes calls and texts."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Free farm app",
+          "url": "/blog/free-farm-app-philippines"
+        },
+        {
+          "label": "Manage a farm remotely",
+          "url": "/blog/manage-a-farm-remotely"
+        },
+        {
+          "label": "Share the farm plan with workers",
+          "url": "/blog/share-the-farm-plan-with-workers"
+        },
+        {
+          "label": "Typhoon preparation for farmers",
+          "url": "/blog/typhoon-preparation-for-farmers"
+        },
+        {
+          "label": "Offline mode in anee.io",
+          "url": "/features/offline-farm-app"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: New app features PH rice varieties (Binhing Palay works offline)",
+          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
+        },
+        {
+          "label": "Agricultural Training Institute: e Extension, School on the Air and the Farmers' Contact Center",
+          "url": "https://www.e-extension.gov.ph/home/"
+        },
+        {
+          "label": "PAGASA: Tropical Cyclone Wind Signal",
+          "url": "https://www.pagasa.dost.gov.ph/learning-tools/tropical-cyclone-wind-signal"
+        },
+        {
+          "label": "MDN Web Docs: Service Worker API",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "section": "blog",
+  "slug": "farm-record-keeping",
+  "sortOrder": 720,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "Farm Record Keeping: What Is the Best Way to Keep Farm Records in the Philippines?",
+  "metaTitle": "Farm Record Keeping in the Philippines: What and How",
+  "metaDescription": "Farm record keeping made simple: which records a Filipino farmer needs, paper or phone, how to keep them daily, and what DA, PCIC and lenders ask for.",
+  "focusKeyword": "farm record keeping",
+  "keywords": [
+    "farm record keeping",
+    "farm records",
+    "how to keep farm records",
+    "farm record book",
+    "farm records app",
+    "record keeping for farmers"
+  ],
+  "excerpt": "The best way to keep farm records is to write each thing down where and when it happens, in one place you can add up later. For good farm record keeping, most Filipino farmers use a notebook kept every day or a phone app that works without signal. With anee.io, a farm app built for Filipino farmers, your tasks, workers, stock, photos and harvest records stay in one season and turn into reports.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-record-keeping.webp",
+    "alt": "At the edge of a rice field, a farmer talks about his season while a visitor writes it down on a clipboard, the habit behind good farm record keeping",
+    "credit": "Department of Foreign Affairs and Trade, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "PhilRice has urged farmers for years to keep farm records. Records are tools for deciding, it says. They help you track field conditions, yield and what you learned from past practices. It asks farmers to log production costs, like fertilizer, and what they did at each crop stage.\n\nIn a PhilRice Bicol training, farmers learned to record expenses such as inputs and labor. They also learned to keep receipts, inventories and crop information. One participant said her records tell her if she failed or succeeded in a season. That is the whole point of farm record keeping."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Keep seven kinds of records:** your farm, your plan, inputs, labor, field notes, harvest and money.",
+        "**Write it the same day,** in one place. Records written later from memory are guesses.",
+        "**Paper works,** but it does not add up, hold photos or survive a flood.",
+        "**A phone app helps most** when it works without signal and builds the reports for you.",
+        "**The same records open doors:** RSBSA, crop insurance and loans all ask for some of them."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which farm records should I keep?"
+    },
+    {
+      "type": "table",
+      "caption": "The records every farm should keep, and when to write them",
+      "rows": [
+        [
+          "Record",
+          "What to write",
+          "When"
+        ],
+        [
+          "Farm profile",
+          "Each lot's size and location, and your ownership, tenancy or lease papers",
+          "Once, then update when anything changes"
+        ],
+        [
+          "Season plan",
+          "Crop, variety, planting date, planned tasks and budget",
+          "Before planting"
+        ],
+        [
+          "Inputs",
+          "Seed, fertilizer and chemicals bought and used, with prices and receipts",
+          "At each purchase and each use"
+        ],
+        [
+          "Labor",
+          "Who worked, on which task and lot, for how many days, at what rate",
+          "Every work day"
+        ],
+        [
+          "Field notes",
+          "Growth stage, pests, diseases, weather damage, with photos",
+          "Each week, and whenever something happens"
+        ],
+        [
+          "Harvest",
+          "Yield per lot, moisture, price and buyer",
+          "At harvest and at sale"
+        ],
+        [
+          "Money",
+          "Sales, loans, advances and payments",
+          "Each time money moves"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Paper, spreadsheet or app: which is best for farm record keeping?"
+    },
+    {
+      "type": "text",
+      "text": "There is no single best tool. The best one is the one you will really use every day. Here is how the common choices compare."
+    },
+    {
+      "type": "table",
+      "caption": "Common ways to keep farm records",
+      "rows": [
+        [
+          "Method",
+          "Good for",
+          "Watch out for"
+        ],
+        [
+          "Notebook",
+          "Costs nothing, needs no signal, easy for anyone",
+          "You add up by hand, and it can get wet or lost"
+        ],
+        [
+          "Spreadsheet",
+          "Adds up for you, costs nothing",
+          "Needs a laptop, so it often gets filled in later from memory"
+        ],
+        [
+          "PalayCheck App from PhilRice",
+          "Rice activities, expenses and harvest data, with a season summary of costs and net income",
+          "Made for rice, on Android"
+        ],
+        [
+          "anee.io",
+          "Tasks dated from each lot's day zero, workers, stock, photos and reports for 85 Philippine crops, offline too",
+          "Workers, inventory and all reports need a paid plan from PHP 200 a month"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A notebook is a fine start, and it came up in the PhilRice Bicol training as a practical way to keep records. But once you hire a crew or farm more than one lot, the adding up takes hours. A phone app then saves time, as long as it works where you farm."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I keep records every day without it becoming a chore?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Start with a plan",
+          "text": "Write the season's tasks before planting. Then most records are just a tick on a task you already planned."
+        },
+        {
+          "title": "Tick tasks as you finish them",
+          "text": "Mark each task done on the day, with the workers who came and the materials used."
+        },
+        {
+          "title": "Take a photo instead of a long note",
+          "text": "A dated photo of a pest or a flooded lot says more than a paragraph, and it takes a second."
+        },
+        {
+          "title": "Keep receipts with the season",
+          "text": "Put each receipt with the season it belongs to, so you can find it next year."
+        },
+        {
+          "title": "Record the harvest on the day",
+          "text": "Write the yield, moisture, price and buyer for each lot before you forget them."
+        },
+        {
+          "title": "Read your totals each month",
+          "text": "Look at what the season has cost so far. Mistakes are easier to fix after weeks than after months."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "One place, same day",
+      "text": "Records split between a notebook, a phone and a pile of receipts never add up. Pick one home for your records and write in it the same day. If you cannot write, take a photo or a voice note, and sort it out that evening."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which records do the DA, PCIC and lenders ask for?"
+    },
+    {
+      "type": "text",
+      "text": "Good records also open doors. To register in the RSBSA, the DA asks for an enrollment form, a valid government ID, and proof that you own, rent or till the land. RSBSA registration then makes you eligible for programs such as loans, crop insurance, seeds and fertilizer.\n\nFor rice crop insurance, PCIC asks for a farm plan and budget, plus your planting and harvest schedules, farm location, size and variety. Our guide to [farm records for loans and insurance](/blog/farm-records-for-loans-and-insurance) lists each one."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io keep farm records for me?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, farm record keeping happens as you work. Each task on the [cropping calendar](/features/cropping-calendar) carries its date, lot, workers and materials. Ticking it done updates your stock and costs. Quick Capture, Quick Record and Quick Voice save a photo, a video or a voice note straight into the season's [notes, photos and voice](/features/notes-photos-and-voice).\n\nAfter harvest, Observations keep the yield, moisture, price and buyer per lot. Receipts and other files go into Documentation, and the reports add it all up. Offline mode works on every plan, so you can record in a paddy with no signal and sync later."
+    },
+    {
+      "type": "cta",
+      "title": "Keep this season's records in one place",
+      "text": "Sign up free, add your lots, and let each task you tick become a record you can add up.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm record keeping"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are the most important farm records?",
+          "a": "For farm record keeping, start with inputs, labor and harvest, because they decide your profit. Then add field notes and a season plan, which help you do better next time."
+        },
+        {
+          "q": "Is a notebook good enough for farm records?",
+          "a": "Yes, for a small farm with few workers, as long as you write in it every day. A PhilRice Bicol training on record keeping pointed to the notebook as a practical start."
+        },
+        {
+          "q": "Can I keep farm records on my phone without signal?",
+          "a": "Yes, if the app works offline. In anee.io, offline mode is on for every plan, and your changes sync once the signal returns."
+        },
+        {
+          "q": "How long should I keep farm records?",
+          "a": "Keep at least the records of your last few seasons, so you can compare them. Keep land papers, RSBSA proof and insurance papers for as long as they apply."
+        },
+        {
+          "q": "Do farm records help me get a loan?",
+          "a": "Yes. RSBSA registration and land papers usually come first. Records of past harvests and costs then show a lender that you can repay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Farm records for loans and insurance",
+          "url": "/blog/farm-records-for-loans-and-insurance"
+        },
+        {
+          "label": "How to know if your farm is really profitable",
+          "url": "/blog/farm-profitability"
+        },
+        {
+          "label": "Farm inventory tracking",
+          "url": "/blog/farm-inventory-tracking"
+        },
+        {
+          "label": "A farm app that works without internet",
+          "url": "/blog/farm-app-without-internet"
+        },
+        {
+          "label": "Farm documentation in anee.io",
+          "url": "/features/farm-documentation"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Keep farm records, PhilRice OIC urges farmers",
+          "url": "https://www.philrice.gov.ph/keep-farm-records-philrice-oic-urges-farmers/"
+        },
+        {
+          "label": "PhilRice: PhilRice Bicol trains farmers on agripreneurship",
+          "url": "https://www.philrice.gov.ph/philrice-bicol-trains-farmers-agripreneurship/"
+        },
+        {
+          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App)",
+          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
+        },
+        {
+          "label": "DA Cordillera: RSBSA frequently asked questions",
+          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
+        },
+        {
+          "label": "DA FFEDIS: Rice Crop Insurance by PCIC",
+          "url": "https://ffedis.da.gov.ph/projects/6/view"
+        }
+      ]
+    }
+  ]
+}
