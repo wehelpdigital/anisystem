@@ -1,4 +1,4 @@
-{{-- How anee.io works: the season in seven steps, Anee at every one
+{{-- How anee.io works: the season step by step, Anee at every one
      (App\Support\HowItWorks). One partial, two homes: the public page
      /how-it-works ($hwMode 'site') and the full screen tour behind the
      dashboard's card ($hwMode 'app', inside a scrolling modal).
@@ -48,8 +48,10 @@
     $hwNav = fn (int $on) => '<div class="hwr-nav">' . collect($hwTabs)->map(fn ($t, $k) => '<span' . ($k === $on ? ' class="on"' : '') . '><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">' . $t[1] . '</svg>' . $t[0] . '</span>')->implode('') . '</div>';
     $hwPh = \App\Support\Region::ph();
     $hwLink = function (array $it) use ($hwMode, $hwPh) {
-        if ($it['url']) {
-            return [url($it['url']), 'Read the guides'];
+        // Inside the app a tool opens itself; a public page (the guides, the
+        // weeds hub) is for the site, or for a tool the app has no door to.
+        if ($it['url'] && ($hwMode !== 'app' || ! $it['app'])) {
+            return [url($it['url']), $it['key'] === 'guides' ? 'Read the guides' : 'Read more about it'];
         }
         if ($hwMode === 'app') {
             // "name:param" for a route that takes one (the field helpers),
@@ -1008,7 +1010,7 @@
                 @if ($hwMode === 'site')
                     <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free</a>
                 @endif
-                <button type="button" class="hw-ghost" data-hw-go="plan">See the seven steps
+                <button type="button" class="hw-ghost" data-hw-go="plan">See the {{ \App\Support\HowItWorks::stepWord() }} steps
                     <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
                 </button>
             </div>
@@ -1971,6 +1973,11 @@
                 } else if (pat === 'reports') {
                     const bh = H * (0.16 + 0.55 * (0.5 + 0.5 * Math.sin(c * 0.9)) * (0.45 + 0.55 * c / Math.max(1, cols)));
                     if (y > H - bh) { cls = y - S <= H - bh ? 't' : 'k'; o = Math.min(0.95, o + 0.45); d = c * 0.035 + ((H - y) / H) * 0.9; }
+                } else if (pat === 'auto') {
+                    // Rings round Anee, lit by a hand that sweeps once round them: she keeps the whole season in view.
+                    const ring = dist / S;
+                    if (Math.abs(ring - Math.round(ring / 2.5) * 2.5) > 0.55) continue;
+                    cls = 'g'; o = Math.min(0.9, o * 1.8); d = ((Math.atan2(y - hy, x - hx) + Math.PI) / (2 * Math.PI)) * 1.4;
                 }
                 const n = make('circle', { cx: x.toFixed(1), cy: y.toFixed(1), r: small ? 2 : 2.4, class: 'hw-dot ' + cls });
                 n.style.cssText = `--o:${o.toFixed(3)};--d:${d.toFixed(2)}s` + (pd ? `;--pd:${pd}` : '');

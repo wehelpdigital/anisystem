@@ -19,7 +19,7 @@
             '@context' => 'https://schema.org',
             '@type' => 'HowTo',
             'name' => 'How a cropping season runs on anee.io',
-            'description' => 'Seven steps from the first plan to the last sack, with Anee, your smart farm technician, at every step.',
+            'description' => \App\Support\HowItWorks::stepWord(true) . ' steps from the first plan to the last sack, with Anee, your smart farm technician, at every step.',
             'step' => collect(\App\Support\HowItWorks::stages())->values()->map(fn ($s, $i) => [
                 '@type' => 'HowToStep',
                 'position' => $i + 1,

@@ -261,7 +261,7 @@
                             <div class="rounded-2xl bg-white shadow-card-lg ring-1 ring-black/5 p-2">
                                 <a href="{{ route('how') }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50 {{ request()->routeIs('how', 'ph.how') ? 'bg-brand-50' : '' }}">
                                     <span class="block text-sm font-bold text-gray-900">How It Works</span>
-                                    <span class="block text-xs font-medium text-gray-500">Seven steps, with Anee at every one</span>
+                                    <span class="block text-xs font-medium text-gray-500">{{ \App\Support\HowItWorks::stepWord(true) }} steps, with Anee at every one</span>
                                 </a>
                                 <a href="{{ route('features') }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50 {{ request()->routeIs('features', 'ph.features', 'site.features.show') ? 'bg-brand-50' : '' }}">
                                     <span class="block text-sm font-bold text-gray-900">Features</span>

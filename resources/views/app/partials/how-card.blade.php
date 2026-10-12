@@ -27,7 +27,7 @@
     .hwc-art::after { content: ''; position: absolute; left: 1rem; top: 50%; width: 2.2rem; height: 3px; margin-top: -1.5px; border-radius: 3px;
         background: linear-gradient(90deg, transparent, #f5c518); box-shadow: 0 0 10px #f5c518; animation: hwcRun 4.8s linear infinite; }
     @keyframes hwcRun { from { transform: translateX(0); opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } to { transform: translateX(calc(min(22rem, 100vw - 5rem) - 4.2rem)); opacity: 0; } }
-    .hwc-art i { position: relative; z-index: 1; display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 999px; overflow: hidden; border: 2px solid rgb(168 204 126 / .4); background: #1a2c12;
+    .hwc-art i { position: relative; z-index: 1; display: grid; place-items: center; flex: 0 1 2.3rem; min-width: 0; aspect-ratio: 1; border-radius: 999px; overflow: hidden; border: 2px solid rgb(168 204 126 / .4); background: #1a2c12;
         animation: hwcWake 4.8s var(--ease, cubic-bezier(.22,1,.36,1)) infinite; animation-delay: calc(var(--k) * 3.6s / var(--last, 5)); }
     .hwc-art svg { width: 1.1rem; height: 1.1rem; color: rgb(185 202 168 / .55); animation: hwcMark 4.8s ease infinite; animation-delay: calc(var(--k) * 3.6s / var(--last, 5)); }
     @keyframes hwcWake { 0%, 100% { transform: none; border-color: rgb(168 204 126 / .4); } 6% { transform: scale(1.18); border-color: #f5c518; } 16% { transform: none; border-color: #f5c518; } 40% { border-color: rgb(168 204 126 / .4); } }
@@ -70,7 +70,7 @@
         <span>
             <span class="hwc-kick">How anee.io works</span>
             <span class="hwc-h" id="hwcH">See how Anee helps at every step</span>
-            <span class="hwc-p">Seven steps, from the first plan to the last sack. Tap any tool to see what it does for your farm.</span>
+            <span class="hwc-p">{{ \App\Support\HowItWorks::stepWord(true) }} steps, from the first plan to the last sack. Tap any tool to see what it does for your farm.</span>
             <span class="hwc-art" aria-hidden="true" style="--last: {{ max(1, count($hwcStages) - 1) }}">
                 @foreach ($hwcStages as $k => $s)
                     <i style="--k: {{ $k }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $s['glyph'] }}"/></svg></i>
@@ -89,7 +89,7 @@
     <div class="hwm-bar">
         <div class="flex items-center gap-2.5 min-w-0">
             <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">
-            <div class="min-w-0"><b id="hwmTitle">How anee.io works</b><small>Seven steps, with Anee at every one</small></div>
+            <div class="min-w-0"><b id="hwmTitle">How anee.io works</b><small>{{ \App\Support\HowItWorks::stepWord(true) }} steps, with Anee at every one</small></div>
         </div>
         <button type="button" class="hwm-x" id="hwmClose" aria-label="Close the tour">
             <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>

@@ -29,7 +29,10 @@
     $ask = route('ask.page');
     $stages = $HW::stages();
     $tools = collect($stages)->flatMap(fn ($s) => $s['items'])->keyBy('key');
-    $toolUrl = fn ($it) => (! empty($it['page']) && $ph) ? \App\Support\SitePages::url('features', $it['page']) : route('how');
+    // A tool's own page: its feature page, else its public page (the weeds
+    // hub), else How It Works; Anee Auto opens its own section further down.
+    $toolUrl = fn ($it) => $it['key'] === 'auto' ? '#anee-auto'
+        : ((! empty($it['page']) && $ph) ? \App\Support\SitePages::url('features', $it['page']) : (! empty($it['url']) ? url($it['url']) : route('how')));
     $filmOf = function (string $key, ?string $name = null) use ($HW, $tools) {
         $v = $HW::video($key);
         return $v ? ['key' => $key, 'src' => $v[0], 'poster' => $v[1], 'name' => $name ?? ($tools[$key]['name'] ?? '')] : null;
@@ -429,8 +432,9 @@
         </div>
     </section>
 
-    {{-- ================= THE SEASON IN SEVEN STEPS ================= --}}
-    {{-- The answer, shown: How It Works' seven steps as tabs. Each step lists
+    {{-- ================= THE SEASON IN EIGHT STEPS ================= --}}
+    {{-- The answer, shown: How It Works' steps as tabs (eight since
+         2026-10-13: Anee Auto, the way to have her run the other seven). Each step lists
          its tools, and the phone plays the step's films (the same phone
          recordings the How It Works modal plays). The tabs walk on by
          themselves while the section is in view, until a visitor takes over. --}}
@@ -439,7 +443,7 @@
             <div class="hp-head reveal">
                 <p class="hp-kick">{{ $ph ? 'From pagtatanim to ani' : 'From planting to harvest' }}</p>
                 <h2 class="hp-h2">Your Whole Season in <em>{{ count($stages) }} <span class="hp-nw">Steps.<span class="hp-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.4 12.6l4.3 4.3 8.9-9.6" pathLength="1"/></svg></span></span></em></h2>
-                <p class="hp-p">Each step has its own tools, and Anee helps in every one. Tap a step, then a tool, to read what it does and watch it work on a real phone.</p>
+                <p class="hp-p"><b class="hp-st-count">{{ $tools->count() }} tools</b> for every part of the season, each step with its own, and Anee helps in every one. Tap a step, then a tool, to read what it does and watch it work on a real phone.</p>
             </div>
 
             <div class="hp-st reveal">
@@ -1964,16 +1968,16 @@
     @media (prefers-reduced-motion: reduce) { .hp-loss-warn { animation: none; } }
     .hp-loss-src { margin-top: 1.1rem; text-align: center; font-size: .78rem; line-height: 1.5; color: rgb(255 255 255 / .5); }
 
-    /* ---- the check after "7 Steps." ----
+    /* ---- the check after "8 Steps." ----
        A green badge that pops in once the heading scrolls into view, draws
        its check, then breathes a soft ring now and then. The stroke is a
        fixed size icon (not stretched), so pathLength=1 dashes the same in
        every browser. */
     .hp-nw { white-space: nowrap; }
-    .hp-tick { position: relative; display: inline-grid; place-items: center; width: .8em; height: .8em; margin-left: .26em;
-        vertical-align: -.06em; border-radius: 999px; background: var(--hp-green);
+    .hp-tick { position: relative; display: inline-grid; place-items: center; width: 1.12em; height: 1.12em; margin-left: .3em;
+        vertical-align: -.2em; border-radius: 999px; background: var(--hp-green);
         box-shadow: 0 8px 18px -8px rgb(47 82 25 / .75); transform: scale(0) rotate(-35deg); }
-    .hp-tick svg { width: 74%; height: 74%; overflow: visible; }
+    .hp-tick svg { width: 70%; height: 70%; overflow: visible; }
     .hp-tick path { fill: none; stroke: #fff; stroke-width: 3.1; stroke-linecap: round; stroke-linejoin: round;
         stroke-dasharray: 1; stroke-dashoffset: 1; }
     .hp-tick::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
@@ -1985,7 +1989,8 @@
     html:not(.js) .hp-tick path { stroke-dashoffset: 0; }
     @keyframes hpTickPop { to { transform: none; } }
     @keyframes hpTickDraw { to { stroke-dashoffset: 0; } }
-    @keyframes hpTickRing { 0% { box-shadow: 0 0 0 0 rgb(95 160 50 / .55); } 30%, 100% { box-shadow: 0 0 0 .32em rgb(95 160 50 / 0); } }
+    @keyframes hpTickRing { 0% { box-shadow: 0 0 0 0 rgb(95 160 50 / .55); } 30%, 100% { box-shadow: 0 0 0 .4em rgb(95 160 50 / 0); } }
+    .hp-st-count { color: var(--hp-green); font-weight: 800; }
 
     /* ---- the turning word in the headline ---- */
     .hp-rot { display: inline-block; position: relative; white-space: nowrap; vertical-align: top;
@@ -3712,7 +3717,7 @@
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && tour.classList.contains('is-open')) close(); });
     }
 
-    /* The seven steps: tabs that walk on by themselves while the section is
+    /* The steps: tabs that walk on by themselves while the section is
        on screen, until the visitor picks a step or a tool. */
     const steps = document.querySelector('[data-steps]');
     if (steps) {

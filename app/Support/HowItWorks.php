@@ -3,10 +3,11 @@
 namespace App\Support;
 
 /**
- * How anee.io works (2026-10-01): the cropping season told as seven steps
- * (six until 2026-10-02, when planning split into planning and building the
- * plan), each with the tools a grower reaches for at it and what Anee does
- * there.
+ * How anee.io works (2026-10-01): the cropping season told as steps (six
+ * until 2026-10-02, when planning split into planning and building the
+ * plan; eight since 2026-10-13, when Anee Auto, the way to have Anee run all
+ * seven, became the last), each with the tools a grower reaches for at it
+ * and what Anee does there. Say the count with stepWord(), never by hand.
  *
  * One list drives both tellings: the public page (/how-it-works) and the
  * full screen tour behind the dashboard's card. Change a word here and both
@@ -69,7 +70,10 @@ class HowItWorks
         'satellite' => 'satellite-analysis',
         'skyWeather' => 'satellite-weather',
         'npk' => 'npk-plus-calculator',
-        'finders' => 'pest-and-disease-finders',
+        // The finders split in three (2026-10-13, the owner): the disease
+        // finder shares the page (given on its item, so the page keeps the
+        // pest finder's icon and film); the weed helper's page is /weeds.
+        'pestFinder' => 'pest-and-disease-finders',
         'stash' => 'the-stash',
     ];
 
@@ -281,10 +285,18 @@ class HowItWorks
                         'Halfway through the season, ask Anee to read it so far: where the crop stands, the risks ahead and what to do next.',
                         ['Where each lot stands now', 'The risks in the coming weeks', 'Next steps, in order'],
                         'farm-reports', 'sm.index'),
-                    self::item('finders', 'Weed, pest and disease finders', 'Find it from what you see, and what to spray', 'icons/pest.svg', false,
-                        'Pick the crop and what you see in the field, and the finder names the pests or diseases that fit, with the active ingredients to spray and their groups. The weed helper says what to do at the age of your crop, palay or any other.',
-                        ['From the damage or the signs you see', 'Active ingredients, never brands', 'Weed control by the age of your crop'],
+                    self::item('pestFinder', 'Pest Finder', 'From the damage you see to what to spray', 'icons/pest.svg', false,
+                        'Pick your crop and where you see the damage: the leaves, the stems, the ' . ($ph ? 'panicles' : 'heads') . ' or the roots. The finder names the pests that fit, how to be sure, and the active ingredients that control them, with their groups. Free.',
+                        ['Any crop, from ' . ($ph ? 'palay to gulay' : 'rice to vegetables'), 'How to be sure before you spray', 'Active ingredients and their groups, never brands'],
                         'pest-and-disease-finders', 'fh.page:pests'),
+                    self::item('diseaseFinder', 'Disease Finder', 'From the signs you see to what to spray', 'icons/disease.svg', false,
+                        'Spots, blight, rot or wilting? Pick your crop and the signs you see, and the finder names the diseases that fit, what to do first and the active ingredients that control them. Free.',
+                        ['Matched from the signs on your crop', 'What to do first, before any spray', 'Active ingredients and their groups, never brands'],
+                        'pest-and-disease-finders', 'fh.page:diseases'),
+                    self::item('weedHelper', 'Weed Control Helper', "What to do about weeds at your crop's age", 'icons/weed.svg', false,
+                        'Pick your crop, how old it is and the weeds you see. The helper tells you what works at that age: the active ingredients for those weeds, group by group, or weeding by hand when no herbicide fits. Free.',
+                        ['By your crop and its age', 'Active ingredients by group, never brands', 'Hand weeding when no spray fits'],
+                        null, 'fh.page:weeds', $ph ? '/weeds' : null),
                     $ph ? self::item('guides', 'Crop problem guides', 'Pests, diseases and weeds, explained', 'icons/tool-box.png', false,
                         'Free guides to the pests, diseases and weeds of Philippine crops: how to spot them, why they come and what to do about them.',
                         ['Written for Philippine farms', 'What to look for, with pictures', 'What to do, step by step'],
@@ -359,6 +371,25 @@ class HowItWorks
                         "One lot's finished work written as a step by step recipe: what was done, with what and on which day. A ready start for your next protocol.",
                         ['What worked, in order', 'Rates and days from your real records', 'A starting point for the next season'],
                         null, 'sm.index'),
+                ],
+            ],
+            // Step 8 (2026-10-13, the owner): Anee Auto, for the farmer who
+            // would rather not do steps 1 to 7 at all.
+            [
+                'key' => 'auto',
+                'word' => 'Auto',
+                'when' => 'Or let Anee do it all',
+                'title' => 'Anee Auto',
+                'lede' => 'Rather not do all of this yourself? Tell Anee about your farm once. She analyzes everything, plans the whole season, tells you what to do each day, and moves the work herself when the rain comes or a worker cannot. You just follow.',
+                'say' => null,
+                'face' => 'wink',
+                'pattern' => 'auto',
+                'glyph' => 'M12 3l1.8 4.9L19 9.7l-5.2 1.8L12 16.4l-1.8-4.9L5 9.7l5.2-1.8L12 3zm6 11l.9 2.3 2.3.9-2.3.9L18 20.4l-.9-2.3-2.3-.9 2.3-.9L18 14z',
+                'items' => [
+                    self::item('auto', 'Anee Auto', 'Anee plans the season, you just follow', 'anee/avatar-160.jpg', true,
+                        'Answer a few questions once: your lots, the crop and variety, your soil, your water, your fertilizer and your workers. Anee looks up your variety, reads the forecast and the season ahead, and writes every task from land preparation to harvest. Then she keeps it on track every day.',
+                        ["Today's work every morning, by email too, for you and each worker", "Can't today? She moves it to the best day near it", 'Send a photo, a video or a voice note and she adjusts the plan'],
+                        null, 'auto.index'),
                 ],
             ],
         ]));
@@ -501,6 +532,15 @@ class HowItWorks
      * recorded on the test owner's account). Null until one is recorded; the
      * modal then shows the tool's words alone. The file's time busts caches.
      */
+    /** How many steps, said as a word for a sentence ("Eight steps, ..."). */
+    public static function stepWord(bool $capital = false): string
+    {
+        $n = count(self::stages());
+        $w = [5 => 'five', 6 => 'six', 7 => 'seven', 8 => 'eight', 9 => 'nine', 10 => 'ten'][$n] ?? (string) $n;
+
+        return $capital ? ucfirst($w) : $w;
+    }
+
     public static function video(string $key): ?array
     {
         $mp4 = public_path('videos/how/' . $key . '.mp4');
