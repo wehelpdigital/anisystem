@@ -115,6 +115,8 @@
     .np-utag.is-none span { color: var(--color-gray-500); font-weight: 600; }
     html.dark .np-utag { background: #1c2c10; border-color: #2f4a1a; color: #a5c97e; }
     .np-pills { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .np-cpack { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+    .np-cpack input { width: 7rem; }
     .np-pill { display: inline-flex; align-items: center; gap: .3rem; padding: .45rem .75rem; border-radius: 999px; font-size: .8rem; font-weight: 700; cursor: pointer;
         color: var(--color-gray-700); background: var(--color-white); border: 1px solid var(--color-gray-200);
         transition: background-color .28s var(--np-ease), border-color .28s var(--np-ease), color .28s var(--np-ease), transform .28s var(--np-ease); }
@@ -745,17 +747,18 @@
         <input type="text" id="npCName" class="form-input w-full" maxlength="120" placeholder="Like Complete 14-14-14">
         <span class="np-label">It comes as</span>
         <div class="np-pills" id="npCForm"></div>
-        <div id="npCDensityBox" hidden>
-            <label class="np-label" for="npCDensity">Kilograms per liter <span>(optional, 1 if not printed)</span></label>
-            <input type="number" id="npCDensity" class="form-input w-full" min="0.5" max="2.5" step="any" inputmode="decimal" placeholder="1">
+        {{-- The pack it is sold in: a bag, a sachet or a bottle (2026-10-12). --}}
+        <label class="np-label" for="npCPack">One pack holds <span>(optional)</span></label>
+        <div class="np-cpack">
+            <input type="number" id="npCPack" class="form-input" min="0" step="any" inputmode="decimal" placeholder="50">
+            <div class="np-pills" id="npCPackU"></div>
         </div>
-        <span class="np-label">Nutrients, percent by weight</span>
+        <span class="np-label" id="npCPctLab">Nutrients, percent by weight</span>
         <div class="np-cgrid" id="npCGrid"></div>
-        <p class="np-sub">As printed on the bag. Leave the rest empty.</p>
+        <p class="np-sub" id="npCPctSub">As printed on the bag. Leave the rest empty.</p>
     </div>
     <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" class="btn btn-primary" id="npCSave">Save and add</button>
+        <button type="button" class="btn btn-primary w-full" id="npCSave">Save and add</button>
     </div>
 </div>
 
@@ -1231,17 +1234,25 @@
     const isBag = (u) => /^bag(\d+)?$/.test(u || '');
     const unitList = (p) => {
         if (p.unit === 'dose') return [['dose', 'hectare doses']];
-        if (p.unit === 'L') return [['L', 'liters']];
+        // A liquid: by the bottle when its size is known, by the liter or the milliliter.
+        if (p.unit === 'L') return [...(p.bagKg ? [['bag', (p.bagKg < 1 ? 'packs of ' + fmt(p.bagKg * 1000, 0) + ' mL' : 'packs of ' + fmt(p.bagKg) + ' L')]] : []), ['L', 'liters'], ['mL', 'milliliters']];
+        // A small pack (a sachet or a 1 kg pack) is a pack, not a bag.
+        if (p.bagKg && p.bagKg < 20) return [['bag', 'packs of ' + (p.bagKg < 1 ? fmt(p.bagKg * 1000, 0) + ' g' : fmt(p.bagKg) + ' kg')], ['kg', 'kilograms'], ['g', 'grams']];
         const own = p.bagKg || 50;
         return [['bag', 'bags of ' + fmt(own) + ' kg'], ...[25, 50].filter((k) => k !== own).map((k) => ['bag' + k, 'bags of ' + k + ' kg']), ['kg', 'kilograms'], ['g', 'grams']];
     };
     const defUnit = (p) => p.unit === 'dose' ? 'dose' : (p.unit === 'L' ? 'L' : (p.bagKg ? 'bag' : 'kg'));
-    const kgOf = (p, amount, unit) => isBag(unit) ? amount * bagKgOf(p, unit) : unit === 'g' ? amount / 1000 : unit === 'L' ? amount * (p.density || 1) : unit === 'kg' ? amount : 0;
+    // A liquid's pack size (bagKg) is liters; its percent is grams per 100 mL, so a liter weighs in at its density (1 when not given).
+    const kgOf = (p, amount, unit) => isBag(unit) ? amount * bagKgOf(p, unit) * (p.unit === 'L' ? (p.density || 1) : 1) : unit === 'g' ? amount / 1000 : unit === 'L' ? amount * (p.density || 1) : unit === 'mL' ? amount / 1000 * (p.density || 1) : unit === 'kg' ? amount : 0;
     const amountWords = (p, l) => {
         const a = fmt(l.amount, 2);
+        if (isBag(l.unit) && (p.unit === 'L' || (p.bagKg && p.bagKg < 20 && l.unit === 'bag'))) {
+            const size = p.unit === 'L' ? (p.bagKg < 1 ? fmt(p.bagKg * 1000, 0) + ' mL' : fmt(p.bagKg) + ' L') : (p.bagKg < 1 ? fmt(p.bagKg * 1000, 0) + ' g' : fmt(p.bagKg) + ' kg');
+            return a + ' ' + (l.amount === 1 ? 'pack' : 'packs') + ' of ' + size;
+        }
         if (isBag(l.unit)) return a + ' ' + (l.amount === 1 ? 'bag' : 'bags') + (l.unit !== 'bag' ? ' of ' + bagKgOf(p, l.unit) + ' kg' : '') + ' · ' + fmt(kgOf(p, l.amount, l.unit), 1) + ' kg';
         if (l.unit === 'dose') return a + ' hectare ' + (l.amount === 1 ? 'dose' : 'doses');
-        return a + ' ' + ({ kg: 'kg', g: 'g', L: 'L' }[l.unit] || l.unit);
+        return a + ' ' + ({ kg: 'kg', g: 'g', L: 'L', mL: 'mL' }[l.unit] || l.unit);
     };
     const lines = (flash = -1) => {
         $('npLines').innerHTML = st.lines.length ? st.lines.map((l, i) => {
@@ -1300,7 +1311,7 @@
 
     // How much.
     let qty = null;
-    const STEP = { bag: 0.5, bag25: 0.5, bag50: 0.5, kg: 5, g: 100, L: 0.5, dose: 0.5 };
+    const STEP = { bag: 0.5, bag25: 0.5, bag50: 0.5, kg: 5, g: 100, L: 0.5, mL: 50, dose: 0.5 };
     const openQty = (p, idx, fromList) => {
         const l = idx >= 0 ? st.lines[idx] : null;
         qty = { p, idx, fromList, unit: l ? l.unit : defUnit(p) };
@@ -1309,7 +1320,8 @@
         $('npQtyIn').value = l ? l.amount : (qty.unit === 'kg' ? 10 : 1);
         $('npQtyFor').textContent = 'For the whole area (' + fmt(areaHa(), 3) + ' ha)';
         $('npQtyOk').textContent = l ? 'Save the amount' : 'Add to the plan';
-        $('npQtyBack').textContent = fromList ? 'Back to the list' : 'Cancel';
+        // Back to the list when it came from there; no Cancel beside the X (2026-10-12).
+        $('npQtyBack').textContent = 'Back to the list'; $('npQtyBack').hidden = !fromList;
         paintQty();
         window.openSheet('npQtySheet');
     };
@@ -1333,7 +1345,10 @@
         if (!b) return;
         // Keep the same weight when the unit changes: 2 bags become 100 kg.
         const p = qty.p, amount = Number($('npQtyIn').value) || 0, kg = kgOf(p, amount, qty.unit), next = b.dataset.u;
-        if (kg > 0 && !['dose', 'L'].includes(next) && !['dose', 'L'].includes(qty.unit)) $('npQtyIn').value = Math.round((isBag(next) ? kg / bagKgOf(p, next) : next === 'g' ? kg * 1000 : kg) * 100) / 100;
+        if (kg > 0 && next !== 'dose' && qty.unit !== 'dose') {
+            const d = p.unit === 'L' ? (p.density || 1) : 1;
+            $('npQtyIn').value = Math.round((isBag(next) ? kg / d / bagKgOf(p, next) : next === 'g' ? kg * 1000 : next === 'mL' ? kg / d * 1000 : next === 'L' ? kg / d : kg) * 100) / 100;
+        }
         qty.unit = next;
         paintQty();
     });
@@ -1358,13 +1373,20 @@
     $('npCGrid').innerHTML = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si'].map((n) => '<label>' + lab(n) + ' %<input type="number" class="form-input" min="0" max="100" step="any" inputmode="decimal" data-n="' + n + '"></label>').join('');
     const paintForm = () => {
         $('npCForm').innerHTML = Object.entries(FORMS).map(([k, v]) => '<button type="button" class="np-pill" data-f="' + k + '" aria-pressed="' + (k === st.form) + '">' + v + '</button>').join('');
-        $('npCDensityBox').hidden = st.form !== 'liquid';
+        // A liquid is sold by volume, a solid by weight; the label's percent follows.
+        const liquid = st.form === 'liquid', units = liquid ? [['mL', 'mL'], ['L', 'liters']] : [['g', 'grams'], ['kg', 'kg']];
+        if (!units.some(([k]) => k === st.packU)) st.packU = liquid ? 'L' : 'kg';
+        $('npCPackU').innerHTML = units.map(([k, v]) => '<button type="button" class="np-pill" data-pu="' + k + '" aria-pressed="' + (k === st.packU) + '">' + v + '</button>').join('');
+        $('npCPack').placeholder = liquid ? '1' : '50';
+        $('npCPctLab').textContent = liquid ? 'Nutrients, percent (grams per 100 mL, as printed)' : 'Nutrients, percent by weight';
+        $('npCPctSub').textContent = liquid ? 'As printed on the bottle. Leave the rest empty.' : 'As printed on the bag or pack. Leave the rest empty.';
     };
     $('npCForm').addEventListener('click', (e) => { const b = e.target.closest('[data-f]'); if (b) { st.form = b.dataset.f; paintForm(); } });
+    $('npCPackU').addEventListener('click', (e) => { const b = e.target.closest('[data-pu]'); if (b) { st.packU = b.dataset.pu; paintForm(); } });
     $('npCustomBtn').addEventListener('click', () => { paintForm(); window.openSheet('npCustomSheet'); });
     $('npCSave').addEventListener('click', async () => {
         const body = { name: $('npCName').value.trim(), form: st.form };
-        if (st.form === 'liquid' && $('npCDensity').value) body.density = Number($('npCDensity').value);
+        if (Number($('npCPack').value) > 0) { body.pack = Number($('npCPack').value); body.packUnit = st.packU; }
         $('npCGrid').querySelectorAll('input').forEach((i) => { if (i.value) body[i.dataset.n] = Number(i.value); });
         if (!body.name) return window.toast?.('Give the product a name.', 'error');
         $('npCSave').disabled = true;
@@ -1372,7 +1394,7 @@
             const r = await window.api(U.product, { method: 'POST', body });
             const p = r.data.product;
             OPT.products.push(p);
-            $('npCName').value = ''; $('npCDensity').value = ''; $('npCGrid').querySelectorAll('input').forEach((i) => { i.value = ''; });
+            $('npCName').value = ''; $('npCPack').value = ''; $('npCGrid').querySelectorAll('input').forEach((i) => { i.value = ''; });
             window.closeSheet('npCustomSheet');
             paintProducts();
             window.toast?.(r.message, 'success');
@@ -1382,8 +1404,12 @@
     });
 
     /* ---- the need model (App\Support\NpkModel says where each number comes from) ---- */
-    const needModel = (c, g, f, cls, perHa = {}) => {
-        const out = { need: {}, raw: {}, how: {}, share: {}, adj: {}, scale: {}, whys: [], Yg: null, micro: {}, base: null };
+    const needModel = (c, g, f, cls, perHa = {}, acidEq = 0) => {
+        const out = { need: {}, raw: {}, how: {}, share: {}, adj: {}, scale: {}, whys: [], Yg: null, micro: {}, base: null, acid: null };
+        // The plan's own acidity (kg of lime per hectare): how far it goes toward its full effect.
+        const alk = ['alkaline', 'strongAlk', 'calcareous', 'sodic'].some((k) => f.has(k)), sour = ['strongAcid', 'acid', 'acid_sulfate'].some((k) => f.has(k));
+        const au = acidEq > 0 ? clamp(acidEq / (M.acidAt || 400), 0, 1) : 0;
+        if (Math.abs(acidEq) >= 50) out.acid = { eq: acidEq, u: au, alk, sour };
         // How the soil sizes N, P2O5 and K2O, and the soil's own share.
         const base = Object.assign({}, M.soilShare, (c && M.soilShareCrop[c.key]) || {});
         const m = { N: 1, P2O5: 1, K2O: 1 }, sh = Object.assign({}, base), same = {};
@@ -1406,7 +1432,16 @@
             });
             if (used) out.whys.push(skipped && a.whyUnless ? a.whyUnless : a.why);
         });
-        Object.entries(same).forEach(([key, v]) => { m[key.split(':')[0]] *= v; });
+        Object.entries(same).forEach(([key, v]) => {
+            const n = key.split(':')[0];
+            // An acidifying plan on alkaline soil frees part of the phosphorus lock;
+            // on acid soil it adds to it.
+            if (n === 'P2O5' && key.endsWith(':pfix') && au > 0) {
+                if (alk && v > 1) { v = 1 + (v - 1) * (1 - au * (M.acidUnlock ?? 0.5)); out.whys.push('the acid fertilizers in your plan free some of the locked phosphorus'); }
+                else if (sour) { v = v + 0.1 * au; out.whys.push('the acid fertilizers in your plan make the acid soil sourer'); }
+            }
+            m[n] *= v;
+        });
         NPK.forEach((n) => {
             const b = cls[n] === 'low' ? 'testLow' : cls[n] === 'high' ? 'testHigh' : null;
             if (!b) return;
@@ -1459,6 +1494,12 @@
             });
             const sens = (e.sensitive || []).includes(c.key);
             if (sens) { score += e.sensitiveWeight || 1; why.push(cropShort(c).split(',')[0].toLowerCase() + ' needs more of it'); }
+            // Acid around the roots on a high pH soil: zinc, iron, manganese and copper come
+            // free again, and on sodic soil the soil's own lime turns to calcium.
+            if (au > 0 && alk && (['Zn', 'Fe', 'Mn', 'Cu'].includes(el) || (el === 'Ca' && f.has('sodic')))) {
+                score -= au;
+                down.push(el === 'Ca' ? 'the acid fertilizers in your plan turn the soil\'s own lime into calcium' : 'the acid fertilizers in your plan free some of it around the roots');
+            }
             const L = M.levels;
             let level = score >= L.likely.at ? 'likely' : score >= L.watch.at ? 'watch' : 'none';
             if (e.beneficial && !sens) level = 'notneeded';
@@ -1486,10 +1527,21 @@
             return { id: p.id, name: p.name, grade: grade(p), amount: l.amount, unit: l.unit, kg: Math.round(kg * 100) / 100, pct: p.pct, estimate: p.estimate };
         }).filter(Boolean);
         const perHa = Object.fromEntries(Object.keys(tot).map((n) => [n, area > 0 ? tot[n] / area : 0]));
+        // What the plan does to the soil's acidity, in kg of lime per hectare (NpkModel::ACIDITY).
+        const AC = M.acidity || { perN: {}, perS: {}, perKg: {}, defaultPerN: 1.8 };
+        const acidEq = area > 0 ? st.lines.reduce((sum, l) => {
+            const p = prodOf(l.id);
+            if (!p || l.unit === 'dose') return sum;
+            const kg = kgOf(p, l.amount, l.unit), slug = p.slug || '';
+            if (AC.perKg[slug] != null) return sum + kg * AC.perKg[slug];
+            const nKg = kg * (p.pct.N || 0) / 100, sKg = kg * (p.pct.S || 0) / 100;
+            const perN = AC.perN[slug] != null ? AC.perN[slug] : (p.pct.S >= 20 && p.pct.N >= 18 ? 5.35 : AC.defaultPerN);
+            return sum + nKg * perN + (AC.perS[slug] != null || (p.pct.S >= 80 && !(p.pct.N > 0)) ? sKg * (AC.perS[slug] ?? 3.1) : 0);
+        }, 0) / area : 0;
         $('npN').textContent = fmt(perHa.N, 0); $('npP').textContent = fmt(perHa.P2O5, 0); $('npK').textContent = fmt(perHa.K2O, 0);
         const npk = fmt(perHa.N, 0) + '-' + fmt(perHa.P2O5, 0) + '-' + fmt(perHa.K2O, 0);
 
-        const c = cropOf(st.crop), g = goalOf(c), f = factors(c), cls = soilClass(soil()), md = needModel(c, g, f, cls, perHa);
+        const c = cropOf(st.crop), g = goalOf(c), f = factors(c), cls = soilClass(soil()), md = needModel(c, g, f, cls, perHa, acidEq);
         const yu = Y_U[st.yUnit], goalSaid = g.Yeff ? fmt(g.Yeff / yu[3]) + ' ' + yu[1] : '';
         $('npOutSub').textContent = (out.length ? 'For ' + fmt(area, 3) + ' ha' : 'Add a fertilizer to see the totals') + (c && goalSaid ? ', against the need for ' + goalSaid + ' of ' + cropShort(c).toLowerCase() : '') + '.' + (estimated ? ' Includes biofertilizer estimates.' : '');
 
@@ -1515,12 +1567,18 @@
             $('npNeed').innerHTML = '<div class="np-say">' + (st.cropPicked ? 'No crop picked, so these are the totals only.' : 'Pick the crop in step 1 to see what it needs for your goal.') + '</div>';
         }
         const short = NPK.filter((n) => states[n] && states[n].state === 'short'), over = NPK.filter((n) => states[n] && states[n].state === 'over');
+        // The plan's acidity, said once.
+        const acidSay = md.acid ? (md.acid.eq > 0
+            ? '<div class="np-say"><b>Your plan acidifies the soil</b> by about ' + fmt(md.acid.eq, 0) + ' kg of lime per hectare (ammonium and sulfur fertilizers). '
+                + (md.acid.alk ? 'On this high pH soil that is welcome: around the roots it frees some of the phosphorus, zinc, iron and manganese the soil locks up' + (f.has('sodic') ? ', and turns the soil\'s own lime into the calcium that pushes sodium out' : '') + '. NPK Plus counts it above.'
+                    : md.acid.sour ? 'On this acid soil it makes things worse: lime the field, and lean on less acidifying sources.' : 'Over many seasons it lowers the pH; a soil test every few years tells when to lime.') + '</div>'
+            : '<div class="np-say"><b>Your plan raises the pH</b> by about ' + fmt(-md.acid.eq, 0) + ' kg of lime per hectare.' + (md.acid.alk ? ' On this high pH soil that locks up more phosphorus and zinc: choose ammonium or sulfate sources instead.' : '') + '</div>') : '';
         // Where the soil locks phosphorus up, a band beats more of it.
         const pLock = c && md.need.P2O5 && md.pLock;
         $('npSay').innerHTML = c && out.length && Object.keys(states).length
             ? '<div class="np-say">' + (short.length ? 'Short of ' + esc(list(short.map((n) => NAMES[n].toLowerCase()))) + ' for your goal. ' : '') + (over.length ? 'More ' + esc(list(over.map((n) => NAMES[n].toLowerCase()))) + ' than the crop needs: it costs money and can harm the crop. ' : '')
                 + (!short.length && !over.length ? 'The plan meets the need for nitrogen, phosphorus and potassium. ' : '') + 'The Barrel tab shows what that means for the harvest.</div>'
-                + (pLock ? '<div class="np-say"><b>On this soil, band the phosphorus.</b> Put it in a band beside and a little below the seed, or in the planting hole, instead of spreading it over the field: less of it touches the soil that locks it up. The need above counts the lock up as if it were spread, so a banded plan can do with less.</div>' : '')
+                + acidSay + (pLock ? '<div class="np-say"><b>On this soil, band the phosphorus.</b> Put it in a band beside and a little below the seed, or in the planting hole, instead of spreading it over the field: less of it touches the soil that locks it up. The need above counts the lock up as if it were spread, so a banded plan can do with less.</div>' : '')
             : '';
 
         const micro = micros(c, md, tot, perHa, area, out.length);

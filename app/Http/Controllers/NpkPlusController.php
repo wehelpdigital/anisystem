@@ -164,7 +164,8 @@ class NpkPlusController extends Controller
     /** A farmer's own product, typed in from its label. */
     public function storeProduct(Request $request)
     {
-        $rules = ['name' => 'required|string|max:120', 'form' => 'required|in:granular,liquid,powder', 'density' => 'nullable|numeric|min:0.5|max:2.5'];
+        $rules = ['name' => 'required|string|max:120', 'form' => 'required|in:granular,liquid,powder', 'density' => 'nullable|numeric|min:0.5|max:2.5',
+            'pack' => 'nullable|numeric|min:0.001|max:100000', 'packUnit' => 'nullable|in:g,kg,mL,L'];
         foreach (self::NUTRIENTS as $n) {
             $rules[$n] = 'nullable|numeric|min:0|max:100';
         }
@@ -173,9 +174,18 @@ class NpkPlusController extends Controller
             return $this->json(false, $v->errors()->first(), [], 422);
         }
         $sum = 0;
+        // The pack (2026-10-12): a solid's in kg (a bag of 50, a 500 g sachet), a
+        // liquid's in liters (a 1 L bottle, a 250 mL one). A liquid's label
+        // percent is grams per 100 mL, so its density stays 1 unless given.
+        $liquid = $request->input('form') === 'liquid';
+        $pack = (float) $request->input('pack', 0);
+        $packIn = match ($request->input('packUnit')) { 'g', 'mL' => $pack / 1000, 'kg', 'L' => $pack, default => 0.0 };
+        if ($packIn > 0 && ($liquid ? ! in_array($request->input('packUnit'), ['mL', 'L'], true) : ! in_array($request->input('packUnit'), ['g', 'kg'], true))) {
+            return $this->json(false, $liquid ? 'A liquid comes in liters or milliliters.' : 'A solid comes in kilograms or grams.', [], 422);
+        }
         $row = ['userId' => Auth::id(), 'slug' => null, 'name' => trim(strip_tags((string) $request->input('name'))), 'local' => null, 'category' => 'mine',
-            'form' => $request->input('form'), 'unit' => $request->input('form') === 'liquid' ? 'L' : 'kg', 'bagKg' => $request->input('form') === 'liquid' ? null : 50,
-            'densityKgL' => $request->input('form') === 'liquid' ? (float) ($request->input('density') ?: 1) : null, 'note' => null, 'sortOrder' => 0, 'deleteStatus' => 1,
+            'form' => $request->input('form'), 'unit' => $liquid ? 'L' : 'kg', 'bagKg' => $packIn > 0 ? round($packIn, 4) : ($liquid ? null : 50),
+            'densityKgL' => $liquid ? (float) ($request->input('density') ?: 1) : null, 'note' => null, 'sortOrder' => 0, 'deleteStatus' => 1,
             'created_at' => now(), 'updated_at' => now()];
         foreach (self::NUTRIENTS as $n) {
             $row[$n] = round((float) $request->input($n, 0), 3);

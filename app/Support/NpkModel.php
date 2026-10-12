@@ -72,6 +72,36 @@ final class NpkModel
     /** The yield a crop's guide rate is written for, where its source says. */
     public const GUIDE_YIELD = ['corn_yellow' => 6.8];
 
+    /**
+     * How much a fertilizer acidifies the soil, in kg of lime (CaCO3) it
+     * takes to undo it (2026-10-12): per kg of N for the ammonium and urea
+     * fertilizers (the classic equivalent acidity: ammonium sulfate 5.35,
+     * monoammonium phosphate 5.0, diammonium phosphate 3.9, urea 1.8; the
+     * nitrates are basic), per kg of S for elemental sulfur (3.1), per kg of
+     * product for lime (-0.9) and dolomite (-1.0). A product not named here
+     * counts as urea for its nitrogen. Sources: Havlin, Tisdale, Beaton and
+     * Nelson, Soil Fertility and Fertilizers (acidity of N sources); IPNI and
+     * IFA fertilizer manuals.
+     *
+     * ACID_AT is the plan's acidity per hectare at which the effect is full;
+     * below it the effect scales down. On alkaline, limy or sodic soil the
+     * acidity frees up to ACID_UNLOCK of the phosphorus lock and lowers the
+     * zinc, iron, manganese and copper scores (and calcium's on sodic soil)
+     * by up to one point; on acid soil it adds to the phosphorus lock.
+     */
+    public const ACIDITY = [
+        'perN' => ['ammonium-sulfate' => 5.35, 'map' => 5.0, 'ammonium-phosphate-s' => 5.0, 'ammonium-phosphate' => 4.4, 'dap' => 3.9,
+            'complete-14' => 3.0, 'complete-15' => 3.0, 'complete-16' => 3.0, 'npk-17-0-17' => 3.0, 'complete-16-16-8-s' => 4.0, 'urea' => 1.8,
+            'calcium-nitrate' => -1.35, 'potassium-nitrate' => -2.0],
+        'perS' => ['sulfur' => 3.1],
+        'perKg' => ['lime' => -0.9, 'dolomite' => -1.0],
+        'defaultPerN' => 1.8,
+    ];
+
+    public const ACID_AT = 400;
+
+    public const ACID_UNLOCK = 0.5;
+
     /** The share of a phosphorus or potassium guide rate that does not follow the yield goal. */
     public const PK_BASE = 0.5;
 
@@ -326,7 +356,7 @@ final class NpkModel
 
         return [
             'textures' => self::TEXTURES, 'conditions' => $conditions + self::MORE_CONDITIONS, 'soilShare' => self::SOIL_SHARE, 'soilShareCrop' => self::SOIL_SHARE_CROP, 'recovery' => self::RECOVERY,
-            'guideYield' => self::GUIDE_YIELD, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => self::SEEDING, 'elements' => self::ELEMENTS, 'levels' => self::MICRO_LEVELS, 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
+            'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => self::SEEDING, 'elements' => self::ELEMENTS, 'levels' => self::MICRO_LEVELS, 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
         ];
     }
 }
