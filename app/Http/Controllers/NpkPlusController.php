@@ -342,10 +342,20 @@ class NpkPlusController extends Controller
     }
 
     /** The calculation, said plainly for a prompt. */
+    /** A line's unit in words: "bag50" is "bags of 50 kg" (2026-10-12). */
+    private static function unitWords(string $unit): string
+    {
+        if (preg_match('/^bag(\d+)$/', $unit, $m)) {
+            return 'bags of ' . $m[1] . ' kg';
+        }
+
+        return ['bag' => 'bags', 'dose' => 'hectare doses', 'L' => 'liters'][$unit] ?? $unit;
+    }
+
     public static function planWords(object $calc): string
     {
         $res = json_decode((string) $calc->result, true) ?: [];
-        $lines = collect(json_decode((string) $calc->lines, true) ?: [])->map(fn ($l) => '- ' . ($l['name'] ?? 'product') . (! empty($l['grade']) ? ' (' . $l['grade'] . ')' : '') . ': ' . ($l['amount'] ?? '?') . ' ' . ($l['unit'] ?? 'kg')
+        $lines = collect(json_decode((string) $calc->lines, true) ?: [])->map(fn ($l) => '- ' . ($l['name'] ?? 'product') . (! empty($l['grade']) ? ' (' . $l['grade'] . ')' : '') . ': ' . ($l['amount'] ?? '?') . ' ' . self::unitWords((string) ($l['unit'] ?? 'kg'))
             . ' = ' . ($l['kg'] ?? '?') . ' kg; carries ' . collect($l['pct'] ?? [])->map(fn ($v, $k) => $k . ' ' . $v . '%')->implode(', ')
             . (! empty($l['estimate']) ? '; biofertilizer estimate ' . collect($l['estimate'])->map(fn ($v, $k) => $k . ' ' . $v . ' kg per dose')->implode(', ') : ''))->implode("\n");
         $soil = json_decode((string) $calc->soil, true) ?: [];

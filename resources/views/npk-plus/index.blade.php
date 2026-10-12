@@ -1224,12 +1224,22 @@
     const badge = (p) => grade(p) || (Object.entries(p.pct)[0] ? Object.entries(p.pct)[0][0] + ' ' + Object.entries(p.pct)[0][1] + '%' : (p.estimate ? 'Bio' : ''));
     const comp = (p) => Object.entries(p.pct).map(([k, v]) => lab(k) + ' ' + v + '%').join(' · ') || (p.estimate ? 'About ' + Object.entries(p.estimate).map(([k, v]) => v + ' kg ' + lab(k)).join(', ') + ' per hectare dose (estimate)' : '');
     const prodOf = (id) => OPT.products.find((x) => String(x.id) === String(id));
-    const unitList = (p) => p.unit === 'dose' ? [['dose', 'hectare doses']] : (p.unit === 'L' ? [['L', 'liters']] : [['bag', 'bags of ' + (p.bagKg || 50) + ' kg'], ['kg', 'kilograms'], ['g', 'grams']]);
+    // Bags come in the product's own size and the other usual one (25 or 50 kg):
+    // 'bag' is its own size, 'bag25' and 'bag50' the others (calcium nitrate is
+    // sold both ways, 2026-10-12).
+    const bagKgOf = (p, unit) => { const m = /^bag(\d+)$/.exec(unit || ''); return m ? Number(m[1]) : (p.bagKg || 50); };
+    const isBag = (u) => /^bag(\d+)?$/.test(u || '');
+    const unitList = (p) => {
+        if (p.unit === 'dose') return [['dose', 'hectare doses']];
+        if (p.unit === 'L') return [['L', 'liters']];
+        const own = p.bagKg || 50;
+        return [['bag', 'bags of ' + fmt(own) + ' kg'], ...[25, 50].filter((k) => k !== own).map((k) => ['bag' + k, 'bags of ' + k + ' kg']), ['kg', 'kilograms'], ['g', 'grams']];
+    };
     const defUnit = (p) => p.unit === 'dose' ? 'dose' : (p.unit === 'L' ? 'L' : (p.bagKg ? 'bag' : 'kg'));
-    const kgOf = (p, amount, unit) => unit === 'bag' ? amount * (p.bagKg || 50) : unit === 'g' ? amount / 1000 : unit === 'L' ? amount * (p.density || 1) : unit === 'kg' ? amount : 0;
+    const kgOf = (p, amount, unit) => isBag(unit) ? amount * bagKgOf(p, unit) : unit === 'g' ? amount / 1000 : unit === 'L' ? amount * (p.density || 1) : unit === 'kg' ? amount : 0;
     const amountWords = (p, l) => {
         const a = fmt(l.amount, 2);
-        if (l.unit === 'bag') return a + ' ' + (l.amount === 1 ? 'bag' : 'bags') + ' · ' + fmt(kgOf(p, l.amount, 'bag'), 1) + ' kg';
+        if (isBag(l.unit)) return a + ' ' + (l.amount === 1 ? 'bag' : 'bags') + (l.unit !== 'bag' ? ' of ' + bagKgOf(p, l.unit) + ' kg' : '') + ' · ' + fmt(kgOf(p, l.amount, l.unit), 1) + ' kg';
         if (l.unit === 'dose') return a + ' hectare ' + (l.amount === 1 ? 'dose' : 'doses');
         return a + ' ' + ({ kg: 'kg', g: 'g', L: 'L' }[l.unit] || l.unit);
     };
@@ -1290,7 +1300,7 @@
 
     // How much.
     let qty = null;
-    const STEP = { bag: 0.5, kg: 5, g: 100, L: 0.5, dose: 0.5 };
+    const STEP = { bag: 0.5, bag25: 0.5, bag50: 0.5, kg: 5, g: 100, L: 0.5, dose: 0.5 };
     const openQty = (p, idx, fromList) => {
         const l = idx >= 0 ? st.lines[idx] : null;
         qty = { p, idx, fromList, unit: l ? l.unit : defUnit(p) };
@@ -1323,7 +1333,7 @@
         if (!b) return;
         // Keep the same weight when the unit changes: 2 bags become 100 kg.
         const p = qty.p, amount = Number($('npQtyIn').value) || 0, kg = kgOf(p, amount, qty.unit), next = b.dataset.u;
-        if (kg > 0 && !['dose', 'L'].includes(next) && !['dose', 'L'].includes(qty.unit)) $('npQtyIn').value = Math.round((next === 'bag' ? kg / (p.bagKg || 50) : next === 'g' ? kg * 1000 : kg) * 100) / 100;
+        if (kg > 0 && !['dose', 'L'].includes(next) && !['dose', 'L'].includes(qty.unit)) $('npQtyIn').value = Math.round((isBag(next) ? kg / bagKgOf(p, next) : next === 'g' ? kg * 1000 : kg) * 100) / 100;
         qty.unit = next;
         paintQty();
     });
@@ -1714,42 +1724,14 @@
         };
     })();
     const WORD = { short: 'Short', right: 'Enough', over: 'Too much', fixed: 'From the air', unknown: 'Not measured', dull: 'Not measured' };
-    /* What each plank lets the crop carry, in tons, whatever the goal: the
-       plank is that against the goal, so a lower goal is a taller plank and
-       never a smaller harvest (the owner's report, 2026-10-08).
-       N, P2O5, K2O: the plan feeds the yield whose need it meets (the need
-       model run backwards); below the guide's good harvest the soil's own
-       share carries part of it. Other elements: the soil alone carries its
-       share of the variety's potential, the plan the rest. */
-    const allowance = (c, md, g, pot) => {
-        const G = g.Yeff, Yr = md.Yg, ys = (y) => (c.typicalYield ? clamp(y / c.typicalYield.hi, 0.8, 1.4) : 1);
-        const scaleOf = (n) => {
-            if (md.how[n] !== 'guide') return (y) => y;                      // uptake and removal: in step with the tons
-            const pk = n === 'N' ? 0 : (M.pkBase ?? 0.5);
-            return (y) => pk + (1 - pk) * y / Yr;
-        };
-        return {
-            npk(n, plan) {
-                if (!G || !Yr || md.need[n] == null || !(md.need[n] > 0)) return null;
-                const sc = scaleOf(n), K = md.need[n] / sc(G), needAt = (y) => K * sc(y);
-                const needYr = needAt(Yr), s0 = md.share[n];
-                if (plan >= needYr) {
-                    // the yield whose need equals the plan
-                    if (md.how[n] === 'guide' && n !== 'N') { const pk = M.pkBase ?? 0.5; return Yr * (plan / K - pk) / (1 - pk); }
-                    return md.how[n] === 'guide' ? Yr * plan / K : plan / K;
-                }
-                return s0 * Yr + (1 - s0) * Yr * plan / needYr;
-            },
-            micro(mm, plan) {
-                if (!G || !pot || !(mm.need > 0)) return null;
-                const needPot = mm.need * ys(pot.t) / ys(G);
-                return pot.t * (mm.share + (1 - mm.share) * Math.min(1, plan / needPot));
-            },
-        };
-    };
+    /* The planks. A nutrient's plank is judged exactly as its own tab judges
+       it, against the need for your goal: the soil's own share of the goal,
+       and the part of the rest the plan covers, short or enough by the same
+       line as the NPK and Micros tabs (the owner saw calcium "enough" here
+       and "short" there, 2026-10-12). Sun, water and heat are tons the season
+       lets the variety carry, set against the goal (seasonPlanks). */
     const barrel = (c, md, states, perHa, has, g) => {
-        const H = BR.H, rows = [], SP = seasonPlanks(c, g), pot = c ? potentialOf(c, g) : null, AL = c ? allowance(c, md, g, pot) : null, yuA = Y_U[st.yUnit];
-        const tons = (t) => fmt(t / yuA[3]) + ' ' + yuA[1];
+        const H = BR.H, rows = [], SP = seasonPlanks(c, g);
         STAVES.forEach((s) => {
             if (s.dull) {
                 if (!SP) { rows.push({ state: 'dull', ratio: null, px: H, pct: '', note: 'Pick the place and the planting date' }); return; }
@@ -1766,28 +1748,28 @@
             if (c && NPK.includes(n)) {
                 if (md.how.N === 'legume' && n === 'N') { state = 'fixed'; ratio = 1; note = 'A legume makes its own'; }
                 else if (md.need[n] != null) {
-                    const s0 = md.share[n], cover = md.need[n] > 0 ? perHa[n] / md.need[n] : 1, A = AL.npk(n, perHa[n] || 0);
-                    ratio = A != null ? A / g.Yeff : s0 + (1 - s0) * Math.min(1, cover);
+                    const s0 = md.share[n], cover = md.need[n] > 0 ? perHa[n] / md.need[n] : 1;
+                    ratio = s0 + (1 - s0) * Math.min(1, cover);
+                    // The NPK tab's own verdict, so the two never disagree.
                     state = states[n] ? states[n].state : 'right';
-                    // Short of the goal's need, but the soil's own share carries the rest of it.
-                    if (state === 'short' && ratio >= 0.97) state = 'right';
+                    if (state === 'right') ratio = Math.max(ratio, 1);
                     if (state === 'over') ratio = Math.min(1.22, 1 + (cover - 1) * 0.25);
-                    note = 'Plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the need for your goal' + (A != null ? ', enough for about ' + tons(A) : ', soil ' + Math.round(s0 * 100) + '%');
+                    note = 'Soil ' + Math.round(s0 * 100) + '%, plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the rest of the need for your goal';
                 }
             } else if (c && md.micro[n]) {
                 const mm = md.micro[n], plan = perHa[n] || 0;
                 if (mm.need > 0) {
-                    const cover = plan / mm.need, A = AL.micro(mm, plan);
-                    ratio = A != null ? A / g.Yeff : mm.share + (1 - mm.share) * Math.min(1, cover);
-                    state = cover > ((M.elements[n] || {}).over || 5) ? 'over' : ratio < 0.97 ? 'short' : 'right';
+                    const cover = plan / mm.need;
+                    ratio = mm.share + (1 - mm.share) * Math.min(1, cover);
+                    // The Micros tab's own line: short under 90% of the need, too much past its limit.
+                    state = cover > ((M.elements[n] || {}).over || 5) ? 'over' : cover < 0.9 ? 'short' : 'right';
                     if (state === 'over') ratio = 1.1;
-                    note = { watch: 'May run short', likely: 'Likely short', test: 'Low by your soil test' }[mm.level] + (plan > 0 ? ', plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '%' : ', none in plan')
-                        + (A != null ? '; enough for about ' + tons(A) : '');
+                    if (state === 'right') ratio = Math.max(ratio, 1);
+                    note = { watch: 'May run short', likely: 'Likely short', test: 'Low by your soil test' }[mm.level] + (plan > 0 ? ', plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the need for your goal' : ', none in plan');
                 } else if (mm.level === 'testok') { state = 'right'; ratio = 1; note = 'Enough, by your soil test'; }
                 else { state = 'unknown'; ratio = null; note = 'No shortage flagged, not measured'; }
             }
             const px = state === 'unknown' ? H : Math.max(22, Math.round(H * Math.min(1.22, ratio)));
-            // A plank taller than the goal holds the water at the rim, no higher.
             rows.push({ state, ratio, px, pct: ratio === null ? '?' : Math.round(Math.min(ratio, 1) * 100) + '%', note });
         });
         const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null && r.state !== 'dull');
