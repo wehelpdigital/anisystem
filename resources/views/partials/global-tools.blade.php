@@ -53,10 +53,10 @@
         html.dark .qa-panel-txt b { color: #f1f6ea; }
         html.dark .qa-panel-txt i { color: rgb(232 239 225 / .78); }
         .qa-panel.is-folded .qa-panel-chev { transform: rotate(-90deg); }
-        .qa-panel-fold { overflow: hidden;
-            transition: max-height .28s cubic-bezier(.22,1,.36,1); }
-        .qa-panel.is-folded .qa-panel-fold { max-height: 0; }
-        .qa-panel-fold > div { min-height: 0; }
+        .qa-panel-fold { display: grid; grid-template-rows: 1fr; opacity: 1;
+            transition: grid-template-rows .42s cubic-bezier(.22,1,.36,1), opacity .32s ease; }
+        .qa-panel.is-folded .qa-panel-fold { grid-template-rows: 0fr; opacity: 0; }
+        .qa-panel-fold > div { min-height: 0; overflow: hidden; }
         .qa-panel .qa-stack { padding: .55rem; }
         /* Inside the panel the tiles are rows of a list, not cards on a page. */
         .qa-panel .qa-tile { border-color: var(--color-gray-100); }
@@ -93,9 +93,23 @@
         .qa-anee.is-soft::after { display: none; }
         html.dark .qa-anee.is-soft { color: #f5d34a; background: rgb(245 197 24 / .1); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45); }
         @media (prefers-reduced-motion: reduce) { .qa-anee::after { animation: none; display: none; } }
-        /* The three groups' headings (2026-10-12). */
-        .qa-group { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .5rem; padding: .7rem .35rem .05rem; animation: qaGroupIn .4s cubic-bezier(.22,1,.36,1) both; }
-        .qa-group.is-first { padding-top: .2rem; }
+        /* The three groups (2026-10-12): a heading that folds its tiles away, smoothly, and remembers. */
+        .qa-sub { display: grid; }
+        .qa-group { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .5rem; width: 100%; padding: .7rem .45rem .55rem; border-radius: .8rem;
+            text-align: left; background: none; border: 0; cursor: pointer; animation: qaGroupIn .4s cubic-bezier(.22,1,.36,1) both;
+            transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+        .qa-group.is-first { padding-top: .35rem; }
+        @media (hover: hover) { .qa-group:hover { background: var(--color-gray-50); } html.dark .qa-group:hover { background: #1a2114; } }
+        .qa-group:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
+        .qa-group-chev { margin-left: auto; width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); transition: transform .38s cubic-bezier(.22,1,.36,1); }
+        .qa-sub.is-folded .qa-group-chev { transform: rotate(-90deg); }
+        .qa-sub-fold { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .4s cubic-bezier(.22,1,.36,1), opacity .3s ease; }
+        .qa-sub.is-folded .qa-sub-fold { grid-template-rows: 0fr; opacity: 0; }
+        /* A little room inside the fold, so a tile's hover lift is not clipped. */
+        .qa-sub-in { min-height: 0; overflow: hidden; display: grid; gap: .5rem; padding: .15rem .2rem .3rem; margin: 0 -.2rem; }
+        .qa-sub-in { transition: padding .4s cubic-bezier(.22,1,.36,1); }
+        .qa-sub.is-folded .qa-sub-in { padding-top: 0; padding-bottom: 0; visibility: hidden; transition: padding .4s cubic-bezier(.22,1,.36,1), visibility 0s linear .4s; }
+        @media (prefers-reduced-motion: reduce) { .qa-sub-fold, .qa-group-chev, .qa-group { transition: none; } }
         .qa-group .qa-anee { margin-left: 0; vertical-align: 0; }
         .qa-group b { font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--color-gray-600); }
         .qa-group i { flex-basis: 100%; font-style: normal; font-size: .72rem; line-height: 1.4; color: var(--color-gray-400); }
@@ -198,16 +212,19 @@
             @endphp
             @php $qWtpLocked = ! \App\Support\Tier::farmCan('aiAnalyses'); $qWtpRung = \App\Support\Tier::farmUnlocksAt('aiAnalyses'); $qWtpWith = \App\Support\Tier::withPlan($qWtpRung); @endphp
             {{-- Grouped by Anee (2026-10-12): what she does for you, what has her inside, and the rest. --}}
-            <div class="qa-group is-first">
+            <div class="qa-sub" data-sub="anee">
+            <button type="button" class="qa-group is-first" aria-expanded="true">
                 {!! $qAnee(false, 9) !!}
                 <b>Anee does it for you</b>
+                <svg class="qa-group-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 <i>She reads your farm and writes the analysis. Uses credits.</i>
-            </div>
+            </button>
+            <div class="qa-sub-fold"><div class="qa-sub-in">
             <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The When to Plant analysis comes with {{ $qWtpWith }}. Anee reads your town's climate and the El Niño or La Niña outlook to find your safest time to plant." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>When to Plant Analysis{!! $qAnee(false, 0) !!}</b>
+                    <b>When to Plant Analysis</b>
                     <i>Find the best time to plant your crop, based on your location, past weather, climate and the forecast.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -220,7 +237,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The What to Plant analysis comes with {{ $qWtpWith }}. Anee looks at your location, the season's forecast and your soil to suggest the best crop." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>What to Plant Analysis{!! $qAnee(false, 1) !!}</b>
+                    <b>What to Plant Analysis</b>
                     <i>Find the best crop to plant in your area, based on climate, the forecast, past weather, season, soil and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -235,7 +252,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Variety research comes with {{ $qWtpWith }}. Anee studies the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids and ranks them for your soil, weather and priorities." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/biotechnology.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Variety Research & Comparison{!! $qAnee(false, 2) !!}</b>
+                    <b>Variety Research & Comparison</b>
                     <i>Not sure which variety to plant? Anee finds and ranks the best varieties for your location, weather, climate, season, soil and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -250,7 +267,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The Crop Protocol Analysis comes with {{ $qWtpWith }}. Anee writes your season stage by stage: which fertilizer and when, the sprays to have ready, the water, and the pests and weeds to watch." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/checklist.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Crop Protocol Analysis{!! $qAnee(false, 3) !!}</b>
+                    <b>Crop Protocol Analysis</b>
                     <i>Get a recommended protocol for your crop variety, stage by stage, based on your location, weather, soil, climate and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -266,7 +283,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Satellite Analysis comes with {{ $qWtpWith }}. Draw your field and Anee reads the newest satellite pictures and radar for crop health, weak spots and threats." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/satellite.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Satellite Analysis{!! $qAnee(false, 4) !!}</b>
+                    <b>Satellite Analysis</b>
                     <i>Draw your field and see its health from space: greenness, weak spots, radar through clouds, threats and soil.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -276,18 +293,22 @@
                 @endif
             </a>
 
-            <div class="qa-group">
+            </div></div></div>
+            <div class="qa-sub" data-sub="inside">
+            <button type="button" class="qa-group" aria-expanded="true">
                 {!! $qAnee(true) !!}
                 <b>Your tools, with Anee inside</b>
+                <svg class="qa-group-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 <i>Use them on your own, and ask Anee inside when you want her reading.</i>
-            </div>
+            </button>
+            <div class="qa-sub-fold"><div class="qa-sub-in">
             {{-- Satellite Weather (2026-10-07): clouds, rain and typhoon
                  tracks over the farm; a week pass in credits since 2026-10-12
                  (App\Support\SkyPass), Anee's reading priced on its own. --}}
             <a href="{{ route('sky.page') }}" class="qa-tile qa-wtp">
                 <span class="qa-ico"><img src="{{ asset('images/icons/storm.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-txt">
-                    <b>Satellite Weather{!! $qAnee(true) !!}</b>
+                    <b>Satellite Weather</b>
                     <i>Watch clouds, rain and typhoon paths over your farm, see where the rain is headed, and ask Anee what it means for your lot. {{ \App\Support\SkyPass::price() }} credits a week.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -304,7 +325,7 @@
                    @if ($qCmpLocked) data-tier-lock="{{ $qCmpRung }}" data-lock-say="{{ \App\Support\Tier::say($qCmpRung, 'Compare Reports comes with {plan}. See any two saved reports side by side, like this season against the last.') }}" @endif>
                     <span class="qa-ico"><img src="{{ asset('images/icons/ab-testing.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt {{ $qCmpLocked ? 'tl-dim' : '' }}">
-                        <b>Compare Reports{!! $qAnee(true) !!}</b>
+                        <b>Compare Reports</b>
                         <i>Put two reports of the same kind side by side, see what changed, and let Anee explain it.</i>
                     </span>
                     @if ($qCmpLocked)
@@ -318,7 +339,7 @@
         <a href="{{ route('pb.page') }}" class="qa-tile qa-build">
             <span class="qa-ico"><img src="{{ asset('images/icons/bricks.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
             <span class="qa-txt">
-                <b>Protocol Builder{!! $qAnee(true) !!}</b>
+                <b>Protocol Builder</b>
                 <i>Write your own protocol ahead of time and save it. Turn it into a new cropping schedule later, or ask Anee to check it for problems and strong points.</i>
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -328,18 +349,22 @@
         <a href="{{ route('npk.page') }}" class="qa-tile qa-build">
             <span class="qa-ico"><img src="{{ asset('images/icons/npk.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
             <span class="qa-txt">
-                <b>NPK Plus Calculator{!! $qAnee(true) !!}</b>
+                <b>NPK Plus Calculator</b>
                 <i>Add up every nutrient in your fertilizer plan, as the element and the oxide, and see if it is enough for your crop and what yield it can feed. Free.</i>
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
 
+            </div></div></div>
             {{-- Three: the farm tools, no Anee in them. --}}
-            <div class="qa-group is-plain">
+            <div class="qa-sub" data-sub="farm">
+            <button type="button" class="qa-group is-plain" aria-expanded="true">
                 <span class="qa-group-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></span>
                 <b>Farm tools</b>
+                <svg class="qa-group-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 <i>Finders, notes, maps, your workers and quick capture. No credits needed.</i>
-            </div>
+            </button>
+            <div class="qa-sub-fold"><div class="qa-sub-in">
         {{-- Field helpers (2026-10-07): the public site's weed control helper
              and pest and disease finders, as small modules of their own. --}}
         @foreach (\App\Http\Controllers\FieldHelperController::TOOLS as $fhKey => [$fhName, $fhLead, $fhIcon])
@@ -489,6 +514,7 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
             @endif
+            </div></div></div>
         </div>
               </div>
             </div>
@@ -536,6 +562,19 @@
             folded = !panel.classList.contains('is-folded');
             paint(folded);
             try { localStorage.setItem(KEY, folded ? '1' : '0'); } catch (_) {}
+        });
+
+        // Each group folds on its own heading, and is remembered the same way.
+        panel.querySelectorAll('.qa-sub').forEach((sub) => {
+            const btn = sub.querySelector('.qa-group');
+            const subKey = KEY + ':' + sub.dataset.sub;
+            const set = (f) => { sub.classList.toggle('is-folded', f); btn.setAttribute('aria-expanded', f ? 'false' : 'true'); };
+            try { set(localStorage.getItem(subKey) === '1'); } catch (_) { set(false); }
+            btn.addEventListener('click', () => {
+                const f = !sub.classList.contains('is-folded');
+                set(f);
+                try { localStorage.setItem(subKey, f ? '1' : '0'); } catch (_) {}
+            });
         });
 
         // A tile opens a module; it is never "selected". Drop the focus a
