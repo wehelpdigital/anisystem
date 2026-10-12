@@ -904,6 +904,13 @@
     {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
     @include('partials.ad-slot', ['placement' => 'dashboard'])
 
+    {{-- Anee Auto (2026-10-12), shown off to the farm owner: Anee plans the season. --}}
+    @unless (\App\Support\WorkerContext::inWorkerContext())
+        @include('auto.partials.hero-css')
+        @include('auto.partials.hero', ['cta' => true])
+        @include('auto.partials.start')
+    @endunless
+
     {{-- ============== Global and Quick Tools ==============
          The cross-season doors and the quick add tools, above today's
          seasons (the owner's call, 2026-09-15): the things you reach for

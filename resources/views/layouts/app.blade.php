@@ -5,8 +5,8 @@
 {{-- ?embed=1: the page shown inside another page's window (Compare's
      "the two reports, as saved"). The app's own chrome steps aside and only
      the report's full-screen view is drawn; see report-view. --}}
-@php $isEmbed = request()->boolean('embed'); @endphp
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="booting{{ $isEmbed ? ' is-embed' : '' }}">
+@php $isEmbed = request()->boolean('embed'); $isFrame = request()->query('frame') === 'auto'; @endphp
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="booting{{ $isEmbed ? ' is-embed' : '' }}{{ $isFrame ? ' is-frame' : '' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
@@ -51,6 +51,15 @@
     @endif
     {{-- Ahead of everything: the page is shown whole or not at all. --}}
     @include('partials.boot-veil-css')
+    @if ($isFrame)
+    <style>
+        /* ?frame=auto: a tool working inside Anee Auto's window (NPK Plus in
+           the fertilizer step). The app's chrome steps aside; the page stays. */
+        html.is-frame body > header, html.is-frame footer, html.is-frame nav.tabbar,
+        html.is-frame .ai-float, html.is-frame #aiFloat, html.is-frame [data-help-fab], html.is-frame .team-float { display: none !important; }
+        html.is-frame main { padding-top: .75rem !important; }
+    </style>
+    @endif
     @if ($isEmbed)
     <style>
         /* Embedded: no header, tab bar, footer or floating doors, and the

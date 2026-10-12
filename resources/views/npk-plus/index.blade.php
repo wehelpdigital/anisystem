@@ -653,6 +653,22 @@
         </div>
     </div>
 
+    @if (request()->query('frame') === 'auto')
+    {{-- Inside Anee Auto (2026-10-12): the plan goes back to the season's lot. --}}
+    <div class="np-frame-bar" id="npFrameBar">
+        <span id="npFrameSay">Add the fertilizers you plan to use on this lot.</span>
+        <button type="button" class="btn btn-primary" id="npFrameUse" disabled>Use this plan</button>
+    </div>
+    <style>
+        .np-frame-bar { position: sticky; bottom: 0; z-index: 30; display: flex; align-items: center; gap: .7rem; margin: 1rem -1rem 0; padding: .75rem 1rem calc(.75rem + env(safe-area-inset-bottom));
+            background: rgb(255 255 255 / .96); backdrop-filter: blur(8px); border-top: 1px solid var(--color-gray-200); box-shadow: 0 -12px 28px -20px rgb(0 0 0 / .45); }
+        .np-frame-bar span { flex: 1; min-width: 0; font-size: .82rem; font-weight: 700; color: var(--color-gray-600); }
+        .np-frame-bar .btn { flex: none; }
+        html.dark .np-frame-bar { background: rgb(22 28 18 / .96); border-color: #2b3a1c; }
+        html.is-frame .np-hero, html.is-frame .np-tabs, html.is-frame #npSave, html.is-frame #npAnee { display: none !important; }
+    </style>
+    @endif
+
     <div id="npSavedPane" hidden>
         <input type="search" id="npSavedQ" class="form-input mb-3" placeholder="Search your calculations" autocomplete="off">
         <div class="np-saved" id="npSaved"></div>
@@ -2051,8 +2067,15 @@
         if (!b) return;
         try {
             const r = await window.api(U.one(b.dataset.id));
-            const d = r.data, set = (d.result || {}).setup || {};
-            calcId = d.id;
+            applyCalc(r.data);
+        } catch (err) { window.toast?.(err.message, 'error'); }
+    });
+    /* A saved calculation, or one Anee Auto hands over (same shape), laid
+       back into every step. */
+    const applyCalc = (d) => {
+        {
+            const set = (d.result || {}).setup || {};
+            calcId = d.id || null;
             $('npVariety').value = set.variety || '';
             st.areaUnit = set.areaUnit === 'sqm' ? 'sqm' : 'ha';
             $('npArea').value = set.areaValue || (st.areaUnit === 'sqm' ? d.areaHa * 10000 : d.areaHa);
@@ -2085,8 +2108,8 @@
             st.lines = (d.lines || []).filter((l) => OPT.products.some((p) => p.id === l.id)).map((l) => ({ id: l.id, amount: l.amount, unit: l.unit }));
             tab(false); lines(); setCrop(d.crop || null); go(5);
             if (d.analysis) showReport(d.analysis.report); else $('npRep').hidden = true;
-        } catch (err) { window.toast?.(err.message, 'error'); }
-    });
+        }
+    };
     $('npSavedMore').addEventListener('click', () => { savedPage++; loadSaved(true); });
     let sq = null;
     $('npSavedQ').addEventListener('input', () => { clearTimeout(sq); sq = setTimeout(() => { savedQ = $('npSavedQ').value.trim(); loadSaved(); }, 300); });
@@ -2109,6 +2132,41 @@
         } catch (err) { window.toast?.(err.message || 'Could not load the calculator.', 'error'); }
     };
     if (window.api) boot(); else window.addEventListener('load', boot, { once: true });
+
+    /* ---- inside Anee Auto (2026-10-12) ----
+       The season's window sends the lot (crop, variety, goal, area, place,
+       planting day, water, soil) or the plan already made for it; the plan
+       goes back with "Use this plan". Only to the same site's window. */
+    if (document.documentElement.classList.contains('is-frame') && window.parent !== window) {
+        const tell = (m) => window.parent.postMessage(m, location.origin);
+        let waits = 0;
+        const ready = () => { if (OPT) tell({ type: 'npk-ready' }); else if (waits++ < 80) setTimeout(ready, 150); };
+        ready();
+        window.addEventListener('message', async (e) => {
+            if (e.origin !== location.origin || !e.data || e.data.type !== 'auto-prefill') return;
+            const p = e.data.data || {};
+            try {
+                if (p.calcId) { applyCalc((await window.api(U.one(p.calcId))).data); }
+                else {
+                    applyCalc({ id: null, crop: p.crop || null, areaHa: p.areaHa || 1, targetYield: p.target || null, lines: [], soil: p.ph != null ? { ph: p.ph } : {},
+                        result: { setup: { variety: p.variety || '', areaUnit: p.areaUnit || 'ha', areaValue: p.areaValue || 1, yUnit: 't',
+                            potential: p.potential ? { value: p.potential, key: 't' } : null, target: p.target ? { value: p.target } : null,
+                            prov: p.prov || null, town: p.town || null, water: p.water || 'irrigated', planted: p.planted || '', texture: p.texture || 'unsure', conditions: p.conditions || [], ph: p.ph != null ? p.ph : null } } });
+                }
+                $('npFrameSay').textContent = p.say || 'Add the fertilizers you plan to use on this lot.';
+            } catch (err) { window.toast?.(err.message, 'error'); }
+        });
+        const useBtn = $('npFrameUse');
+        setInterval(() => { if (useBtn) useBtn.disabled = !(RES && RES.lines && RES.lines.length); }, 600);
+        useBtn?.addEventListener('click', async () => {
+            useBtn.disabled = true; useBtn.textContent = 'Saving…';
+            try {
+                const r = await save();
+                tell({ type: 'npk-plan', calcId: r.data.id, needs: RES.needs, micros: RES.micros, reach: RES.reach, npk: RES.npkPerHa, goal: RES.goal });
+            } catch (err) { window.toast?.(err.message, 'error'); }
+            useBtn.textContent = 'Use this plan';
+        });
+    }
 })();
 </script>
 @endpush

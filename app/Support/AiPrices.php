@@ -36,6 +36,8 @@ final class AiPrices
         'npk' => 60,
         'npkplan' => 60,
         'npkproto' => 60,
+        // 2026-10-12: Anee Auto, per lot, for the whole season.
+        'auto' => 1000,
     ];
 
     public const NAMES = [
@@ -53,6 +55,7 @@ final class AiPrices
         'npk' => 'NPK Plus, analyzed by Anee (a fertilizer calculation, searches the web)',
         'npkplan' => 'NPK Plus season check (Activities, per lot)',
         'npkproto' => 'NPK Plus protocol check (Protocol Builder)',
+        'auto' => 'Anee Auto, per lot (a whole season planned and kept on track by Anee)',
     ];
 
     /** @var array<string, int>|null */

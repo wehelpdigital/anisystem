@@ -1,0 +1,1130 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\AiSetting;
+use App\Models\AsAutoEvent;
+use App\Models\AsAutoLot;
+use App\Models\AsAutoSeason;
+use App\Models\AsAutoTask;
+use App\Models\AsCroppingSchedule;
+use App\Models\AsGlobalWorker;
+use App\Models\AsScheduleLot;
+use App\Models\AsScheduleWorker;
+use App\Models\AsScheduleWorkerOffDay;
+use App\Models\User;
+use App\Services\AiClient;
+use App\Services\AiCreditService;
+use App\Services\AutoBrain;
+use App\Services\AutoPlanner;
+use App\Support\AiPrices;
+use App\Support\AiUsage;
+use App\Support\AneeEmoji;
+use App\Support\AutoBook;
+use App\Support\CropCatalog;
+use App\Support\CropStages;
+use App\Support\FieldCatalogue;
+use App\Support\MediaStore;
+use App\Support\Tier;
+use App\Support\WorkerContext;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+
+/**
+ * Anee Auto (2026-10-12): Anee plans the season and keeps planning it; the
+ * farmer follows, and says when a day cannot be done.
+ *
+ * The flow:
+ *   1. Start: how many lots, a word on why every lot managed must be in it,
+ *      and the price (AiPrices 'auto', per lot) confirmed as final. The
+ *      credits are taken there and a season is made at once, in setup, so
+ *      nothing typed is lost to a closed tab or a dropped signal.
+ *   2. The wizard, saved as it goes: the season, the lots (place, pin, crop,
+ *      variety, the day it goes in the field), the workers and their days,
+ *      the soil by its signs, the water as it really is, the past troubles.
+ *   3. Anee's first reading (a job, searched on the web): variety, soil,
+ *      season, a realistic goal and the fertilizer focus, per lot.
+ *   4. The fertilizer, per lot, in NPK Plus itself (framed, prefilled from
+ *      the reading): bars, micros, the barrel. An unbalanced plan may go on,
+ *      with the reason kept.
+ *   5. Start: the calendar is written lot by lot (a job), then placed on the
+ *      days by AutoPlanner. The season is live and cannot be re-answered.
+ *
+ * Live: the season page is a chat: today and this week, done, not today
+ * (moves it), observations (photo, video, voice, read by Anee), questions.
+ * The morning run (auto:daily) re-plans with the new forecast and mails
+ * the owner and the workers. Everything said and done is an as_auto_events
+ * row: the post harvest story.
+ */
+class AneeAutoController extends Controller
+{
+    public const KIND = 'auto';
+
+    /** Fair use inside the flat price, per season per day. */
+    private const OBSERVE_PER_DAY = 12;
+    private const ASK_PER_DAY = 40;
+    private const READINGS = 3;
+    /** A season's calendar is long: one call may write for five minutes, so a job is dead only after eight quiet ones. */
+    private const JOB_STALE = 480;
+
+    public function __construct(private AiCreditService $credits, private AiClient $ai, private AutoBrain $brain, private AutoPlanner $planner)
+    {
+    }
+
+    /* ------------------------------------------------------------ helpers */
+
+    private function payer(): User
+    {
+        $id = WorkerContext::effectiveOwnerId();
+
+        return $id === (int) Auth::id() ? Auth::user() : (User::find($id) ?? Auth::user());
+    }
+
+    private function json(bool $ok, string $message, array $data = [], int $status = 200)
+    {
+        return response()->json(['success' => $ok, 'message' => $message, 'data' => $data], $status);
+    }
+
+    /** Why this person cannot run Anee Auto, or null. */
+    private function refusal(): ?string
+    {
+        if (WorkerContext::inWorkerContext()) {
+            return 'Only the farm owner runs Anee Auto.';
+        }
+        if (! Tier::farmCan('aiAnalyses')) {
+            return 'Anee Auto comes with ' . Tier::withPlan(Tier::farmUnlocksAt('aiAnalyses')) . ', and every plan above it.';
+        }
+        $payer = $this->payer();
+        if (! $payer->canUseAi()) {
+            return Tier::aneeNeeds($payer, 'Anee Auto');
+        }
+        if (! AiSetting::current()->isUsable()) {
+            return 'Anee is not switched on yet. Please check back soon.';
+        }
+
+        return null;
+    }
+
+    private function auto(int $id): AsAutoSeason
+    {
+        return AsAutoSeason::where('id', $id)->where('userId', Auth::id())->where('deleteStatus', 1)->firstOrFail();
+    }
+
+    private function schedule(AsAutoSeason $auto): AsCroppingSchedule
+    {
+        return AsCroppingSchedule::where('id', $auto->croppingScheduleId)->where('anisystemUserId', Auth::id())->firstOrFail();
+    }
+
+    /** The wizard's answers can change only before the calendar is written. */
+    private function setupOnly(AsAutoSeason $auto)
+    {
+        return $auto->status !== AsAutoSeason::SETTING_UP ? $this->json(false, 'This season is running. Its answers cannot change now.', [], 423) : null;
+    }
+
+    private function lotCap(): ?int
+    {
+        $cap = Tier::limit('lotsPerSchedule');
+
+        return $cap === null ? null : (int) $cap;
+    }
+
+    /* -------------------------------------------------------------- pages */
+
+    public function index()
+    {
+        if (WorkerContext::inWorkerContext()) {
+            return redirect()->route('app.dashboard')->with('error', 'Only the farm owner runs Anee Auto.');
+        }
+        $rows = AsAutoSeason::where('userId', Auth::id())->where('deleteStatus', 1)->orderByDesc('id')->get();
+        $schedules = AsCroppingSchedule::whereIn('id', $rows->pluck('croppingScheduleId'))->where('deleteStatus', 1)->get()->keyBy('id');
+
+        return view('auto.index', ['seasons' => $rows->filter(fn ($r) => $schedules->has($r->croppingScheduleId))->map(fn ($r) => [
+            'id' => $r->id, 'title' => $schedules[$r->croppingScheduleId]->title, 'status' => $r->status, 'lots' => $r->lotsPaid,
+            'next' => $r->status === AsAutoSeason::ACTIVE ? AsAutoTask::where('autoId', $r->id)->where('deleteStatus', 1)->where('status', 'planned')->whereNotNull('plannedDate')->orderBy('plannedDate')->first(['title', 'plannedDate']) : null,
+        ])->values()]);
+    }
+
+    public function quote()
+    {
+        $payer = $this->payer();
+        $why = $this->refusal();
+
+        return $this->json(true, 'ok', [
+            'perLot' => AiPrices::of(self::KIND), 'balance' => round($this->credits->balance($payer->id), 2), 'unlimited' => $this->credits->unlimited((int) $payer->id),
+            'canUse' => $why === null, 'whyNot' => $why, 'lotCap' => $this->lotCap(),
+            'canSchedule' => Auth::user()->canCreateSchedule(),
+        ]);
+    }
+
+    public function show(int $id)
+    {
+        $auto = $this->auto($id);
+        $schedule = $this->schedule($auto);
+        if ($auto->status === AsAutoSeason::SETTING_UP) {
+            return view('auto.wizard', ['auto' => $auto, 'schedule' => $schedule, 'boot' => $this->wizardState($auto, $schedule)]);
+        }
+
+        return view('auto.season', ['auto' => $auto, 'schedule' => $schedule]);
+    }
+
+    /* ------------------------------------------------------------- start */
+
+    public function start(Request $request)
+    {
+        if ($why = $this->refusal()) {
+            return $this->json(false, $why, [], 403);
+        }
+        if (! Auth::user()->canCreateSchedule()) {
+            return $this->json(false, 'Your plan allows no more active seasons. Finish or archive one first.', ['upgrade' => true], 403);
+        }
+        $cap = $this->lotCap();
+        $max = $cap === null ? 20 : min(20, $cap);
+        $v = Validator::make($request->all(), ['lots' => 'required|integer|min:1|max:' . max(1, $max), 'agree' => 'accepted']);
+        if ($v->fails()) {
+            return $this->json(false, $cap !== null && (int) $request->input('lots') > $cap ? 'Your plan allows up to ' . $cap . ' lot' . ($cap === 1 ? '' : 's') . ' in a season.' : 'Say how many lots, and confirm the charge.', [], 422);
+        }
+        $lots = (int) $request->input('lots');
+        $payer = $this->payer();
+        $price = (float) AiPrices::of(self::KIND) * $lots;
+        if (! $this->credits->unlimited((int) $payer->id) && $this->credits->balance($payer->id) < $price) {
+            return $this->json(false, 'Anee Auto for ' . $lots . ' lot' . ($lots > 1 ? 's' : '') . ' takes ' . number_format($price) . ' credits and you have ' . number_format((int) floor($this->credits->balance($payer->id))) . '.', ['outOfCredits' => true], 402);
+        }
+
+        $auto = DB::transaction(function () use ($lots, $payer, $price) {
+            $title = 'Anee Auto season · ' . now('Asia/Manila')->format('M j, Y');
+            $schedule = AsCroppingSchedule::create([
+                'anisystemUserId' => Auth::id(), 'usersId' => (int) config('anisystem.order_users_id', 1), 'title' => $title, 'description' => null,
+                'status' => 'setup', 'isActive' => 1, 'deleteStatus' => 1,
+            ]);
+            $schedule->forceFill(['aneeAuto' => 1])->save();
+            \App\Models\AsScheduleActivityVersion::create(['croppingScheduleId' => $schedule->id, 'versionName' => 'Original', 'isOriginal' => 1, 'isActive' => 1, 'versionOrder' => 0, 'deleteStatus' => 1]);
+            $auto = AsAutoSeason::create(['userId' => Auth::id(), 'croppingScheduleId' => $schedule->id, 'status' => AsAutoSeason::SETTING_UP, 'step' => 0,
+                'lotsPaid' => $lots, 'creditsCharged' => $price, 'answers' => ['tags' => []], 'deleteStatus' => 1]);
+            for ($i = 1; $i <= $lots; $i++) {
+                $lot = AsScheduleLot::create(['croppingScheduleId' => $schedule->id, 'lotName' => 'Lot ' . $i, 'lotSizeUnit' => 'hectare', 'deleteStatus' => 1]);
+                AsAutoLot::create(['autoId' => $auto->id, 'lotId' => $lot->id]);
+            }
+            $left = $this->credits->charge((int) $payer->id, $price, 'Anee Auto: ' . $lots . ' lot' . ($lots > 1 ? 's' : '') . ' (' . $title . ')');
+            if ($left === null) {
+                throw new \RuntimeException('credits');
+            }
+            AsAutoEvent::say($auto->id, 'setup', 'Salamat! :anee-happy: I am your Anee Auto for ' . $lots . ' lot' . ($lots > 1 ? 's' : '') . '. Tell me about the farm and I will plan the whole season, then keep it on track every day.', ['lots' => $lots, 'credits' => $price]);
+
+            return $auto;
+        });
+
+        return $this->json(true, 'Anee Auto is yours. Let us set it up.', ['id' => $auto->id, 'url' => route('auto.show', $auto->id)]);
+    }
+
+    /* ------------------------------------------------------------ the wizard */
+
+    private function wizardState(AsAutoSeason $auto, AsCroppingSchedule $schedule): array
+    {
+        $als = AsAutoLot::where('autoId', $auto->id)->orderBy('id')->get();
+        $lots = AsScheduleLot::whereIn('id', $als->pluck('lotId'))->get()->keyBy('id');
+        $canWorkers = Tier::scheduleCan($schedule, 'workers');
+        $cards = $canWorkers ? AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->with('offDays')->orderBy('priority')->get() : collect();
+        $crops = collect(CropCatalog::visible())->map(fn ($c, $k) => ['key' => $k, 'label' => CropCatalog::label($k), 'icon' => $c['icon'] ?? '🌱', 'group' => $c['group'] ?? 'Other crops',
+            'tree' => CropCatalog::isPerennial($k), 'maturity' => $c['maturity'] ?? null, 'methods' => AutoBook::methods($k), 'prep' => AutoBook::landPrep($k), 'nursery' => AutoBook::nursery($k)])->values();
+
+        return [
+            'id' => $auto->id, 'step' => $auto->step, 'lotsPaid' => $auto->lotsPaid, 'perLot' => AiPrices::of(self::KIND), 'lotCap' => $this->lotCap(),
+            'balance' => round($this->credits->balance($this->payer()->id), 2), 'unlimited' => $this->credits->unlimited((int) $this->payer()->id),
+            'title' => $schedule->title, 'description' => $schedule->description, 'answers' => $auto->answers ?: new \stdClass,
+            'analysis' => $auto->analysis, 'analysisRuns' => (int) $auto->analysisRuns, 'readingsLeft' => max(0, self::READINGS - (int) $auto->analysisRuns),
+            'job' => $auto->job ? ['kind' => $auto->job] + (array) $auto->jobState : null,
+            'lots' => $als->map(function ($al) use ($lots) {
+                $l = $lots->get($al->lotId);
+
+                return $l ? ['id' => (int) $l->id, 'name' => $l->lotName, 'size' => $l->lotSize !== null ? (float) $l->lotSize : null, 'unit' => $l->lotSizeUnit === 'sqm' ? 'sqm' : 'ha',
+                    'crop' => $l->crop, 'variety' => $l->variety, 'method' => $al->method, 'fieldDate' => $al->fieldDate?->toDateString(), 'sowDate' => $al->sowDate?->toDateString(),
+                    'treeMonths' => $al->treeMonths, 'province' => $l->locProvince, 'town' => $l->locTown, 'barangay' => $l->locBarangay,
+                    'pin' => $l->pinLat ? ['lat' => (float) $l->pinLat, 'lng' => (float) $l->pinLng] : null,
+                    'calcId' => $al->calcId, 'fert' => $al->fert, 'imbalance' => (bool) $al->imbalance, 'imbalanceReason' => $al->imbalanceReason] : null;
+            })->filter()->values(),
+            'canWorkers' => $canWorkers,
+            'workers' => $cards->map(fn ($w) => ['id' => (int) $w->id, 'name' => $w->workerName, 'email' => $w->email, 'phone' => $w->phone, 'globalWorkerId' => $w->globalWorkerId,
+                'off' => $w->offDays->pluck('dayOfWeek')->map(fn ($d) => (int) $d)->values()])->values(),
+            'roster' => $canWorkers ? AsGlobalWorker::where('userId', Auth::id())->where('deleteStatus', 1)->orderBy('workerName')->get(['id', 'workerName', 'email', 'phone', 'offWeekdays'])
+                ->map(fn ($g) => ['id' => (int) $g->id, 'name' => $g->workerName, 'email' => $g->email, 'phone' => $g->phone, 'off' => $g->offWeekdays ?: []])->values() : [],
+            'book' => ['signs' => AutoBook::SOIL_SIGNS, 'ph' => AutoBook::PH, 'water' => AutoBook::WATER, 'problems' => AutoBook::PROBLEMS, 'imbalance' => AutoBook::IMBALANCE],
+            'crops' => $crops,
+            'latest' => AutoBook::latestDate()->toDateString(), 'today' => now('Asia/Manila')->toDateString(),
+            'mapsKey' => (string) config('services.google_maps.key'),
+        ];
+    }
+
+    public function state(int $id)
+    {
+        $auto = $this->auto($id);
+
+        return $this->json(true, 'ok', $this->wizardState($auto, $this->schedule($auto)));
+    }
+
+    public function saveBasics(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        $v = Validator::make($request->all(), ['title' => 'required|string|max:255', 'description' => 'nullable|string|max:5000', 'tags' => 'nullable|array|max:20', 'tags.*' => 'string|max:40']);
+        if ($v->fails()) {
+            return $this->json(false, 'Give the season a name.', [], 422);
+        }
+        $this->schedule($auto)->update(['title' => trim((string) $request->input('title')), 'description' => $request->input('description')]);
+        $a = (array) $auto->answers;
+        $a['tags'] = array_values(array_unique(array_filter(array_map(fn ($t) => mb_substr(trim((string) $t), 0, 40), (array) $request->input('tags', [])))));
+        $auto->update(['answers' => $a, 'step' => max((int) $auto->step, (int) $request->input('step', 0))]);
+
+        return $this->json(true, 'Saved.');
+    }
+
+    public function saveLot(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        $v = Validator::make($request->all(), [
+            'lotId' => 'required|integer', 'name' => 'nullable|string|max:255', 'size' => 'nullable|numeric|min:0|max:100000', 'unit' => 'nullable|in:ha,sqm',
+            'crop' => 'nullable|string|max:40', 'variety' => 'nullable|string|max:120', 'method' => 'nullable|in:transplanted,direct,planted,tree',
+            'fieldDate' => 'nullable|date', 'treeMonths' => 'nullable|integer|min:0|max:1500',
+            'province' => 'nullable|string|max:120', 'town' => 'nullable|string|max:120', 'barangay' => 'nullable|string|max:120',
+            'lat' => 'nullable|numeric|between:-90,90', 'lng' => 'nullable|numeric|between:-180,180',
+        ]);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        $al = AsAutoLot::where('autoId', $auto->id)->where('lotId', (int) $request->input('lotId'))->firstOrFail();
+        $lot = AsScheduleLot::findOrFail($al->lotId);
+        $crop = $request->input('crop');
+        if ($crop && ! isset(CropCatalog::CROPS[$crop])) {
+            return $this->json(false, 'Choose a crop from the list.', [], 422);
+        }
+        $method = $request->input('method');
+        if ($crop && $method && ! array_key_exists($method, AutoBook::methods($crop))) {
+            $method = array_key_first(AutoBook::methods($crop));
+        }
+        $field = $request->filled('fieldDate') ? Carbon::parse($request->input('fieldDate'), 'Asia/Manila')->startOfDay() : null;
+        if ($field && $method !== 'tree') {
+            if ($field->lt(now('Asia/Manila')->startOfDay())) {
+                return $this->json(false, 'Pick today or a day ahead: Anee Auto plans from today.', [], 422);
+            }
+            if ($field->gt(AutoBook::latestDate())) {
+                return $this->json(false, 'Pick a day before the end of next year.', [], 422);
+            }
+        }
+        $sow = null;
+        if ($field && $method === 'transplanted' && ($n = AutoBook::nursery($crop))) {
+            $sow = $field->copy()->subDays((int) round(($n['min'] + $n['max']) / 2));
+        }
+        $prep = $field && $method !== 'tree' ? $field->copy()->subDays(AutoBook::landPrep($crop)['min']) : null;
+
+        $lot->update(array_filter([
+            'lotName' => $request->filled('name') ? trim((string) $request->input('name')) : null,
+            'lotSize' => $request->input('size'), 'lotSizeUnit' => $request->input('unit') ? ($request->input('unit') === 'sqm' ? 'sqm' : 'hectare') : null,
+            'crop' => $crop, 'variety' => $request->has('variety') ? (trim((string) $request->input('variety')) ?: '') : null,
+            'dayType' => $method ? AutoBook::counterOf($method) : null,
+            'locProvince' => $request->input('province'), 'locTown' => $request->input('town'), 'locBarangay' => $request->input('barangay'),
+            'pinLat' => $request->input('lat'), 'pinLng' => $request->input('lng'),
+        ], fn ($v) => $v !== null));
+        if ($request->boolean('clearPin')) {
+            $lot->update(['pinLat' => null, 'pinLng' => null]);
+        }
+        $al->update(['method' => $method ?: $al->method, 'fieldDate' => $method === 'tree' ? null : ($field?->toDateString() ?? $al->fieldDate?->toDateString()),
+            'sowDate' => $sow?->toDateString(), 'prepDate' => $prep?->toDateString(), 'treeMonths' => $request->input('treeMonths', $al->treeMonths)]);
+        if ($method === 'tree' && $request->filled('treeMonths')) {
+            $lot->update(['treePlantedAt' => now('Asia/Manila')->subMonths((int) $request->input('treeMonths'))->toDateString()]);
+        }
+        // A crop or a day changed: the fertilizer plan was made for the old one.
+        if ($request->hasAny(['crop', 'size', 'fieldDate']) && $al->calcId && ($al->wasChanged('fieldDate') || $lot->wasChanged(['crop', 'lotSize']))) {
+            $al->update(['fert' => null, 'calcId' => null, 'imbalance' => 0, 'imbalanceReason' => null, 'imbalanceNote' => null]);
+        }
+
+        return $this->json(true, 'Saved.', ['sowDate' => $sow?->toDateString(), 'prepDate' => $prep?->toDateString(), 'method' => $al->method]);
+    }
+
+    /** One more lot, one more lot's price. */
+    public function addLot(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        $cap = $this->lotCap();
+        $have = AsAutoLot::where('autoId', $auto->id)->count();
+        if ($cap !== null && $have >= $cap) {
+            return $this->json(false, 'Your plan allows up to ' . $cap . ' lot' . ($cap === 1 ? '' : 's') . ' in a season.', ['upgrade' => true], 403);
+        }
+        if (! $request->boolean('agree')) {
+            return $this->json(false, 'Confirm the charge first.', [], 422);
+        }
+        $payer = $this->payer();
+        $price = (float) AiPrices::of(self::KIND);
+        $schedule = $this->schedule($auto);
+        $lot = DB::transaction(function () use ($auto, $payer, $price, $have, $schedule) {
+            if ($this->credits->charge((int) $payer->id, $price, 'Anee Auto: one more lot (' . $schedule->title . ')') === null) {
+                return null;
+            }
+            $lot = AsScheduleLot::create(['croppingScheduleId' => $schedule->id, 'lotName' => 'Lot ' . ($have + 1), 'lotSizeUnit' => 'hectare', 'deleteStatus' => 1]);
+            AsAutoLot::create(['autoId' => $auto->id, 'lotId' => $lot->id]);
+            $auto->update(['lotsPaid' => (int) $auto->lotsPaid + 1, 'creditsCharged' => (float) $auto->creditsCharged + $price]);
+
+            return $lot;
+        });
+        if (! $lot) {
+            return $this->json(false, 'One more lot takes ' . number_format($price) . ' credits and you have ' . number_format((int) floor($this->credits->balance($payer->id))) . '.', ['outOfCredits' => true], 402);
+        }
+
+        return $this->json(true, 'Lot added.', ['state' => $this->wizardState($auto->fresh(), $schedule)]);
+    }
+
+    public function saveWorkers(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        $v = Validator::make($request->all(), ['workers' => 'nullable|array|max:60', 'workers.*.name' => 'required|string|max:255', 'workers.*.email' => 'nullable|email|max:255',
+            'workers.*.phone' => 'nullable|string|max:32', 'workers.*.off' => 'nullable|array', 'workers.*.off.*' => 'integer|min:0|max:6']);
+        if ($v->fails()) {
+            return $this->json(false, 'Each worker needs a name' . (str_contains($v->errors()->first(), 'email') ? ', and the email must be real' : '') . '.', [], 422);
+        }
+        $schedule = $this->schedule($auto);
+        $list = collect((array) $request->input('workers', []));
+        if (! Tier::scheduleCan($schedule, 'workers')) {
+            // No Workers module on this plan: the helpers are kept for planning only.
+            $a = (array) $auto->answers;
+            $a['crew'] = $list->map(fn ($w) => ['name' => mb_substr(trim((string) $w['name']), 0, 80), 'off' => array_values(array_unique(array_map('intval', (array) ($w['off'] ?? []))))])->values()->all();
+            $auto->update(['answers' => $a]);
+
+            return $this->json(true, 'Saved.');
+        }
+        $cap = Tier::scheduleLimit($schedule, 'workersPerSchedule');
+        if ($cap !== null && $list->count() > $cap) {
+            return $this->json(false, 'This plan allows up to ' . $cap . ' workers in a season.', ['upgrade' => true], 403);
+        }
+        DB::transaction(function () use ($list, $schedule) {
+            $keep = [];
+            foreach ($list->values() as $i => $w) {
+                $card = ! empty($w['id']) ? AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->find((int) $w['id']) : null;
+                $global = ! empty($w['globalWorkerId']) ? AsGlobalWorker::where('userId', Auth::id())->where('deleteStatus', 1)->find((int) $w['globalWorkerId']) : null;
+                $facts = ['workerName' => mb_substr(trim((string) $w['name']), 0, 255), 'email' => ($w['email'] ?? null) ?: null, 'phone' => ($w['phone'] ?? null) ?: null, 'priority' => $i + 1];
+                if (! $card) {
+                    $card = AsScheduleWorker::create($facts + ['croppingScheduleId' => $schedule->id, 'costPerHalfDay' => $global?->costPerHalfDay ?? 0,
+                        'skills' => $global?->skills, 'notes' => $global?->notes, 'globalWorkerId' => $global?->id, 'deleteStatus' => 1]);
+                } else {
+                    $card->update($facts);
+                }
+                AsScheduleWorkerOffDay::where('workerId', $card->id)->delete();
+                foreach (array_unique(array_map('intval', (array) ($w['off'] ?? []))) as $dow) {
+                    AsScheduleWorkerOffDay::create(['workerId' => $card->id, 'dayOfWeek' => $dow]);
+                }
+                try {
+                    $g = AsGlobalWorker::forCard($card->fresh(), (int) Auth::id());
+                    $g->update(['offWeekdays' => array_values(array_unique(array_map('intval', (array) ($w['off'] ?? []))))]);
+                } catch (\Throwable $e) {
+                    report($e);
+                }
+                $keep[] = $card->id;
+            }
+            AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->whereNotIn('id', $keep)->update(['deleteStatus' => 0]);
+        });
+
+        return $this->json(true, 'Saved.', ['workers' => $this->wizardState($auto, $schedule)['workers']]);
+    }
+
+    public function saveAnswers(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        $a = (array) $auto->answers;
+        if ($request->has('soil')) {
+            $soil = (array) $request->input('soil');
+            $signs = array_values(array_intersect(array_keys(AutoBook::SOIL_SIGNS), (array) ($soil['signs'] ?? [])));
+            $ph = array_key_exists($soil['ph'] ?? '', AutoBook::PH) ? $soil['ph'] : 'unsure';
+            $tested = is_numeric($soil['tested'] ?? null) && $soil['tested'] >= 2 && $soil['tested'] <= 12 ? round((float) $soil['tested'], 1) : null;
+            $a['soil'] = ['signs' => $signs, 'ph' => $ph, 'tested' => $tested];
+            $a['soilRead'] = AutoBook::readSoil($signs, $ph, $tested);
+        }
+        if ($request->has('water')) {
+            $a['water'] = array_key_exists((string) $request->input('water'), AutoBook::WATER) ? $request->input('water') : null;
+            $a['waterNote'] = mb_substr(trim((string) $request->input('waterNote', '')), 0, 400) ?: null;
+        }
+        if ($request->has('problems')) {
+            $a['problems'] = array_values(array_intersect(array_keys(AutoBook::PROBLEMS), (array) $request->input('problems', [])));
+            $names = [];
+            foreach ((array) $request->input('cropProblems', []) as $k) {
+                [$section, $slug] = array_pad(explode(':', (string) $k, 2), 2, '');
+                if ($p = FieldCatalogue::problem($section, $slug)) {
+                    $names[$k] = $p['name'];
+                }
+            }
+            $a['cropProblems'] = array_keys($names);
+            $a['cropProblemNames'] = array_values($names);
+        }
+        if ($request->has('notes')) {
+            $a['notes'] = mb_substr(trim((string) $request->input('notes')), 0, 2000) ?: null;
+        }
+        $auto->update(['answers' => $a, 'step' => max((int) $auto->step, (int) $request->input('step', 0))]);
+
+        return $this->json(true, 'Saved.', ['soilRead' => $a['soilRead'] ?? null]);
+    }
+
+    /** The lots' crop problems to offer on the troubles step. */
+    public function cropProblems(int $id)
+    {
+        $auto = $this->auto($id);
+        $crops = AsScheduleLot::whereIn('id', AsAutoLot::where('autoId', $auto->id)->pluck('lotId'))->pluck('crop')->filter()->unique()->values()->all();
+
+        return $this->json(true, 'ok', ['rows' => AutoBook::cropProblems($crops, 14)]);
+    }
+
+    /* ---------------------------------------------------------------- jobs */
+
+    /** Is every lot answered enough for Anee to read it? Returns the first gap in words, or null. */
+    private function gap(AsAutoSeason $auto, bool $forCalendar = false): ?string
+    {
+        foreach (AsAutoLot::where('autoId', $auto->id)->orderBy('id')->get() as $al) {
+            $lot = AsScheduleLot::find($al->lotId);
+            $name = $lot?->lotName ?: 'A lot';
+            if (! $lot?->crop) {
+                return $name . ' has no crop yet.';
+            }
+            if (! $al->method) {
+                return $name . ': say how it goes into the field.';
+            }
+            if ($al->method !== 'tree' && ! $al->fieldDate) {
+                return $name . ' has no planting day yet.';
+            }
+            if (! $lot->lotSize) {
+                return $name . ' has no size yet.';
+            }
+            if (! $lot->pinLat && ! ($lot->locProvince && $lot->locTown)) {
+                return $name . ': pick its town and province, or drop a pin.';
+            }
+            if ($forCalendar && ! $al->fert && ! $al->imbalance) {
+                return $name . ' has no fertilizer plan yet.';
+            }
+        }
+        $a = (array) $auto->answers;
+        if (empty($a['water'])) {
+            return 'Say where the water comes from.';
+        }
+
+        return null;
+    }
+
+    public function analyze(int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        if ($why = $this->refusal()) {
+            return $this->json(false, $why, [], 403);
+        }
+        if ($gap = $this->gap($auto)) {
+            return $this->json(false, $gap, [], 422);
+        }
+        if ($this->running($auto)) {
+            return $this->json(true, 'Already working on it.', ['pending' => true]);
+        }
+        if ((int) $auto->analysisRuns >= self::READINGS) {
+            return $this->json(false, 'Anee has read this farm ' . self::READINGS . ' times already. Go on to the fertilizer.', [], 429);
+        }
+
+        return $this->runInBackground($auto, 'reading', fn () => $this->runReading($auto->fresh()));
+    }
+
+    public function generate(int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        if ($why = $this->refusal()) {
+            return $this->json(false, $why, [], 403);
+        }
+        if (! $auto->analysis) {
+            return $this->json(false, 'Let Anee read the farm first.', [], 422);
+        }
+        if ($gap = $this->gap($auto, true)) {
+            return $this->json(false, $gap, [], 422);
+        }
+        if ($this->running($auto)) {
+            return $this->json(true, 'Already working on it.', ['pending' => true]);
+        }
+
+        return $this->runInBackground($auto, 'calendar', fn () => $this->runCalendar($auto->fresh()));
+    }
+
+    private function running(AsAutoSeason $auto): bool
+    {
+        return $auto->job && ($auto->jobState['status'] ?? '') === 'pending' && $auto->jobAt && $auto->jobAt->gt(now()->subSeconds(self::JOB_STALE));
+    }
+
+    private function runInBackground(AsAutoSeason $auto, string $kind, callable $work)
+    {
+        $auto->update(['job' => $kind, 'jobState' => ['status' => 'pending', 'phase' => 'start', 'try' => 1], 'jobAt' => now()]);
+        if (function_exists('fastcgi_finish_request')) {
+            ignore_user_abort(true);
+            @set_time_limit(0);
+            response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $auto->id]])->send();
+            fastcgi_finish_request();
+            $work();
+            exit;
+        }
+        @set_time_limit(1800);
+        $work();
+
+        return $this->job($auto->id);
+    }
+
+    private function beat(AsAutoSeason $auto, string $phase, int $try = 1): void
+    {
+        AsAutoSeason::where('id', $auto->id)->update(['jobState' => json_encode(['status' => 'pending', 'phase' => $phase, 'try' => $try]), 'jobAt' => now()]);
+    }
+
+    private function finishJob(AsAutoSeason $auto, ?string $error = null): void
+    {
+        AsAutoSeason::where('id', $auto->id)->update(['jobState' => json_encode($error ? ['status' => 'failed', 'error' => $error] : ['status' => 'ready']), 'jobAt' => now()]);
+    }
+
+    public function job(int $id)
+    {
+        $auto = $this->auto($id);
+        $s = (array) $auto->jobState;
+        $status = $s['status'] ?? 'none';
+        if ($status === 'pending' && (! $auto->jobAt || $auto->jobAt->lt(now()->subSeconds(self::JOB_STALE)))) {
+            $this->finishJob($auto, 'Anee was stopped halfway. Nothing was lost; please try again.');
+            $status = 'failed';
+            $s['error'] = 'Anee was stopped halfway. Nothing was lost; please try again.';
+        }
+        if ($status === 'pending') {
+            return $this->json(true, 'Working…', ['status' => 'pending', 'pending' => true, 'kind' => $auto->job, 'phase' => $s['phase'] ?? 'start', 'try' => (int) ($s['try'] ?? 1),
+                'beatAgo' => $auto->jobAt ? (int) max(0, now()->diffInSeconds($auto->jobAt, true)) : null]);
+        }
+        if ($status === 'failed') {
+            return $this->json(false, $s['error'] ?? 'Anee could not finish. Please try again.', ['status' => 'failed'], 502);
+        }
+
+        return $this->json(true, 'Ready.', ['status' => 'ready', 'kind' => $auto->job, 'analysis' => $auto->analysis, 'live' => $auto->status === AsAutoSeason::ACTIVE, 'url' => route('auto.show', $auto->id)]);
+    }
+
+    private function runReading(AsAutoSeason $auto): void
+    {
+        $settings = AiSetting::current()->forField('PH');
+        try {
+            $this->beat($auto, 'start');
+            [$research, $doc] = $this->brain->readingPrompts($auto);
+            $result = $this->ai->researchThenJson($settings, $research, $doc, 9000, fn (string $t) => AutoBrain::parseObject($t, 'lots'), fn ($phase, $try = 1) => $this->beat($auto, $phase, (int) $try));
+            if (! ($result['ok'] ?? false)) {
+                throw new \RuntimeException($result['error'] ?? 'Anee\'s reading could not be read. Please try again.');
+            }
+            $data = $result['data'];
+            $data['at'] = now('Asia/Manila')->format('M j, Y g:i A');
+            $data['sources'] = array_slice((array) ($result['sources'] ?? []), 0, 12);
+            $data['searched'] = (bool) ($result['searched'] ?? false);
+            AiUsage::record(self::KIND, (int) Auth::id(), (int) $this->payer()->id, $auto->id, $settings, $result, 0);
+            $auto->update(['analysis' => $data, 'analysisAt' => now(), 'analysisRuns' => (int) $auto->analysisRuns + 1, 'step' => max((int) $auto->step, 7)]);
+            AsAutoEvent::say($auto->id, 'analysis', $data['headline'] ?? 'I read the farm.', ['kind' => 'reading']);
+            $this->finishJob($auto);
+        } catch (\Throwable $e) {
+            report($e);
+            $this->finishJob($auto, mb_substr($e->getMessage(), 0, 300));
+        }
+    }
+
+    private function runCalendar(AsAutoSeason $auto): void
+    {
+        $settings = AiSetting::current()->forField('PH');
+        try {
+            $als = AsAutoLot::where('autoId', $auto->id)->orderBy('id')->get();
+            $plans = [];
+            $made = [];
+            foreach ($als->values() as $i => $al) {
+                $this->beat($auto, 'lot-' . ($i + 1));
+                $prompt = $this->brain->calendarPrompt($auto, (int) $al->lotId);
+                $result = $this->ai->askForJson($settings, $prompt, 24000, fn (string $t) => ($d = AutoBrain::parseObject($t, 'tasks')) && is_array($d['tasks']) && count($d['tasks']) >= 5 ? $d : null,
+                    ['timeout' => 360, 'onPhase' => fn ($p, $try = 1) => $this->beat($auto, 'lot-' . ($i + 1), (int) $try)]);
+                if (! ($result['ok'] ?? false)) {
+                    throw new \RuntimeException('The calendar for ' . (AsScheduleLot::find($al->lotId)?->lotName ?: 'a lot') . ' could not be written. Nothing is lost; please try again.');
+                }
+                AiUsage::record(self::KIND, (int) Auth::id(), (int) $this->payer()->id, $auto->id, $settings, $result, 0);
+                $plans[(int) $al->lotId] = $result['data'];
+            }
+            $this->beat($auto, 'placing');
+            DB::transaction(function () use ($auto, $als, $plans, &$made) {
+                AsAutoTask::where('autoId', $auto->id)->where('origin', 'plan')->delete();
+                $order = 0;
+                foreach ($als as $al) {
+                    $p = $plans[(int) $al->lotId] ?? null;
+                    if (! $p) {
+                        continue;
+                    }
+                    foreach (AutoBrain::taskRows((array) $p['tasks'], $auto->id, (int) $al->lotId, 'plan', $order) as $row) {
+                        AsAutoTask::create($row);
+                        $order++;
+                    }
+                    $made[(int) $al->lotId] = count((array) $p['tasks']);
+                    if (! empty($p['harvestDay']) && $al->fieldDate) {
+                        $al->update(['harvestDate' => Carbon::parse($al->fieldDate->toDateString())->addDays((int) $p['harvestDay'])->toDateString()]);
+                    }
+                    // The lot's own day counter, as every other module reads it.
+                    $lot = AsScheduleLot::find($al->lotId);
+                    if ($lot && $al->method !== 'tree' && $al->fieldDate) {
+                        $lot->update(['dayZeroDate' => ($al->method === 'transplanted' && $al->sowDate ? $al->sowDate : $al->fieldDate)->toDateString(),
+                            'transplantDate' => $al->method === 'transplanted' ? $al->fieldDate->toDateString() : null]);
+                    }
+                }
+                $auto->update(['status' => AsAutoSeason::ACTIVE, 'generatedAt' => now(), 'plan' => [
+                    'lots' => collect($plans)->map(fn ($p, $lotId) => ['lotId' => $lotId, 'strategy' => $p['strategy'] ?? null, 'harvestDay' => $p['harvestDay'] ?? null])->values()->all(),
+                    'safety' => array_values(array_unique(collect($plans)->flatMap(fn ($p) => (array) ($p['safetyChecks'] ?? []))->map(fn ($x) => (string) $x)->all())),
+                    'compatibility' => array_values(array_unique(collect($plans)->flatMap(fn ($p) => (array) ($p['compatibility'] ?? []))->map(fn ($x) => (string) $x)->all())),
+                ]]);
+                AsCroppingSchedule::where('id', $auto->croppingScheduleId)->update(['status' => 'generated']);
+            });
+            $auto = $auto->fresh();
+            $this->planner->plan($auto);
+            $names = AsScheduleLot::whereIn('id', array_keys($made))->pluck('lotName', 'id');
+            foreach ((array) ($auto->plan['lots'] ?? []) as $l) {
+                if (! empty($l['strategy'])) {
+                    AsAutoEvent::say($auto->id, 'plan', $l['strategy'], ['tasks' => $made[$l['lotId']] ?? 0], ['lotId' => $l['lotId']]);
+                }
+            }
+            AsAutoEvent::say($auto->id, 'briefing', 'Your season is planned :anee-thumbsup: ' . array_sum($made) . ' tasks across ' . count($made) . ' lot' . (count($made) > 1 ? 's' : '') . '. Each morning I check the weather and your workers and move what needs moving. Just tell me when a day cannot be done.', ['kind' => 'welcome']);
+            $this->finishJob($auto);
+        } catch (\Throwable $e) {
+            report($e);
+            $this->finishJob($auto, mb_substr($e->getMessage(), 0, 300));
+        }
+    }
+
+    /* ------------------------------------------------------- the fertilizer */
+
+    /** The lot's NPK Plus calculation, read back and kept with the season. */
+    public function saveFert(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        $al = AsAutoLot::where('autoId', $auto->id)->where('lotId', (int) $request->input('lotId'))->firstOrFail();
+        $calc = DB::table('as_npk_calcs')->where('id', (int) $request->input('calcId'))->where('userId', Auth::id())->where('deleteStatus', 1)->first();
+        if (! $calc) {
+            return $this->json(false, 'That fertilizer plan could not be found.', [], 404);
+        }
+        $r = json_decode((string) $calc->result, true) ?: [];
+        $fert = [
+            'lines' => array_map(fn ($l) => array_intersect_key((array) $l, array_flip(['id', 'name', 'grade', 'amount', 'unit', 'kg'])), (array) ($r['lines'] ?? [])),
+            'npkPerHa' => $r['npkPerHa'] ?? null, 'perHa' => $r['perHa'] ?? [], 'needs' => $r['needs'] ?? [], 'micros' => $r['micros'] ?? [],
+            'reach' => $r['reach'] ?? null, 'goal' => $r['goal'] ?? null, 'areaHa' => $r['areaHa'] ?? null, 'season' => $r['season'] ?? null,
+        ];
+        $short = collect((array) $fert['needs'])->filter(fn ($n) => ($n['state'] ?? '') !== 'right')->keys()->all();
+        $microShort = collect((array) $fert['micros'])->filter(fn ($m) => ($m['state'] ?? '') === 'short' || ($m['state'] ?? '') === 'over')->keys()->all();
+        $balanced = ! $short && ! $microShort && ($fert['reach'] === null || (int) $fert['reach'] >= 90);
+        $al->update(['calcId' => (int) $calc->id, 'fert' => $fert] + ($balanced ? ['imbalance' => 0, 'imbalanceReason' => null, 'imbalanceNote' => null] : []));
+
+        return $this->json(true, 'Saved.', ['fert' => $fert, 'balanced' => $balanced, 'off' => array_merge($short, $microShort)]);
+    }
+
+    public function saveImbalance(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        $v = Validator::make($request->all(), ['lotId' => 'required|integer', 'reason' => 'required|in:' . implode(',', array_keys(AutoBook::IMBALANCE)), 'note' => 'nullable|string|max:1000']);
+        if ($v->fails()) {
+            return $this->json(false, 'Pick a reason.', [], 422);
+        }
+        $al = AsAutoLot::where('autoId', $auto->id)->where('lotId', (int) $request->input('lotId'))->firstOrFail();
+        $al->update(['imbalance' => 1, 'imbalanceReason' => $request->input('reason'), 'imbalanceNote' => $request->input('note'), 'imbalanceAt' => now()]);
+
+        return $this->json(true, 'Noted. Anee plans with what you have.');
+    }
+
+    /* -------------------------------------------------------------- live */
+
+    public function feed(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        // The morning, if the scheduler has not run it yet today (no mail from here).
+        if ($auto->status === AsAutoSeason::ACTIVE && ! ($auto->briefDate && $auto->briefDate->isSameDay(now('Asia/Manila'))) && ! $request->query('before')) {
+            try {
+                app(\App\Services\AutoMorning::class)->run($auto, false);
+                $auto->refresh();
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+        $tz = 'Asia/Manila';
+        $today = now($tz)->startOfDay();
+        $als = AsAutoLot::where('autoId', $auto->id)->orderBy('id')->get()->keyBy('lotId');
+        $lots = AsScheduleLot::whereIn('id', $als->keys())->get()->keyBy('id');
+        $people = AutoPlanner::people($auto)->keyBy('id');
+        $tasks = AsAutoTask::where('autoId', $auto->id)->where('deleteStatus', 1)->where(function ($q) use ($today) {
+            $q->where(fn ($w) => $w->where('status', 'planned')->where('plannedDate', '<=', $today->copy()->addDays(13)->toDateString()))
+                ->orWhere(fn ($w) => $w->where('status', 'done')->where('doneDate', '>=', $today->copy()->subDays(1)->toDateString()));
+        })->orderBy('plannedDate')->orderByDesc('critical')->orderBy('sortOrder')->get();
+
+        $lotFacts = $lots->map(function ($l) use ($als, $today) {
+            $al = $als->get($l->id);
+            $day = $al?->fieldDate ? (int) Carbon::parse($al->fieldDate->toDateString(), 'Asia/Manila')->diffInDays($today, false) : null;
+            $das = $al?->sowDate ? (int) Carbon::parse($al->sowDate->toDateString(), 'Asia/Manila')->diffInDays($today, false) : null;
+            $counter = $al?->method ? AutoBook::counterOf($al->method) : 'DAP';
+            $stage = null;
+            if ($day !== null && $day >= 0) {
+                try {
+                    $stage = CropStages::stageFor($l->crop, $day, $counter, $l->maturityDays())['label'] ?? null;
+                } catch (\Throwable $e) {
+                }
+            }
+            $say = $al?->method === 'tree' ? 'Trees, ' . intdiv((int) $al->treeMonths, 12) . ' yr'
+                : ($day === null ? '' : ($day < 0 ? ($al->method === 'transplanted' && $das !== null && $das >= 0 ? 'DAS ' . $das . ' · transplant in ' . (-$day) . ' d' : abs($day) . ' days to ' . $counter . ' 0') : $counter . ' ' . $day));
+
+            return ['id' => (int) $l->id, 'name' => $l->lotName, 'crop' => $l->crop ? CropCatalog::label($l->crop) : null, 'icon' => CropCatalog::CROPS[$l->crop]['icon'] ?? '🌱',
+                'variety' => $l->variety, 'day' => $day, 'say' => $say, 'stage' => $stage, 'harvest' => $al?->harvestDate?->format('M j')];
+        })->values();
+
+        $sky = $this->planner->skies($lots);
+        $first = $sky[0] ?? [];
+        $week = [];
+        for ($k = 0; $k < 7; $k++) {
+            $d = $today->copy()->addDays($k)->toDateString();
+            if (isset($first[$d])) {
+                $week[] = ['date' => $d, 'dow' => $k === 0 ? 'Today' : $today->copy()->addDays($k)->format('D'), 'emoji' => $first[$d]['emoji'], 'pop' => $first[$d]['pop'], 'tmax' => $first[$d]['tmax'] ?? null];
+            }
+        }
+
+        $row = fn (AsAutoTask $t) => [
+            'id' => (int) $t->id, 'lotId' => $t->lotId, 'lot' => $t->lotId ? ($lots->get($t->lotId)?->lotName) : null, 'kind' => $t->kind,
+            'kindLabel' => AutoBook::KINDS[$t->kind][0] ?? 'Farm work', 'emoji' => AutoBook::KINDS[$t->kind][1] ?? '🧑‍🌾', 'tone' => AutoBook::KINDS[$t->kind][3] ?? 'leaf',
+            'title' => $t->title, 'summary' => $t->summary, 'why' => $t->why, 'detail' => $t->detail, 'date' => $t->plannedDate?->toDateString(),
+            'when' => $t->plannedDate ? ($t->plannedDate->isSameDay($today) ? 'Today' : ($t->plannedDate->isSameDay($today->copy()->addDay()) ? 'Tomorrow' : $t->plannedDate->format('D, M j'))) : null,
+            'time' => $t->timeOfDay, 'critical' => (bool) $t->critical, 'status' => $t->status, 'note' => $t->planNote, 'moved' => (int) $t->movedCount,
+            'late' => $t->status === 'planned' && $t->plannedDate && $t->plannedDate->lt($today),
+            'workers' => collect((array) $t->workerIds)->map(fn ($w) => $people->get($w)['name'] ?? null)->filter()->values(),
+            'doneNote' => $t->doneNote, 'doneDate' => $t->doneDate?->format('M j'),
+            'shop' => collect((array) ($t->detail['products'] ?? []))->filter(fn ($p) => ! empty($p['group']) && preg_match('/IRAC|FRAC|HRAC/i', (string) $p['group']))
+                ->map(fn ($p) => FieldCatalogue::shopLinks((string) $p['name']))->values(),
+        ];
+        $open = $tasks->where('status', 'planned');
+        $todayRows = $open->filter(fn ($t) => $t->plannedDate && $t->plannedDate->lte($today))->values();
+        $weekRows = $open->filter(fn ($t) => $t->plannedDate && $t->plannedDate->gt($today) && $t->plannedDate->lte($today->copy()->addDays(6)))->values();
+        $ready = $open->filter(fn ($t) => $t->plannedDate && $t->plannedDate->lte($today->copy()->addDays(10)))
+            ->flatMap(fn ($t) => collect((array) ($t->detail['bring'] ?? []))->merge(collect((array) ($t->detail['products'] ?? []))->map(fn ($p) => trim(($p['name'] ?? '') . (! empty($p['amount']) ? ', ' . $p['amount'] : '')))))
+            ->filter()->unique()->take(14)->values();
+
+        $before = (int) $request->query('before', 0);
+        $events = AsAutoEvent::where('autoId', $auto->id)->when($before > 0, fn ($q) => $q->where('id', '<', $before))->orderByDesc('id')->limit(30)->get()->reverse()->values();
+
+        return $this->json(true, 'ok', [
+            'status' => $auto->status, 'title' => $this->schedule($auto)->title, 'lots' => $lotFacts, 'week' => $week,
+            'today' => $todayRows->map($row)->values(), 'soon' => $weekRows->map($row)->values(),
+            'done' => $tasks->where('status', 'done')->sortByDesc('doneAt')->take(6)->map($row)->values(),
+            'ready' => $ready, 'left' => AsAutoTask::where('autoId', $auto->id)->where('deleteStatus', 1)->where('status', 'planned')->count(),
+            'doneCount' => AsAutoTask::where('autoId', $auto->id)->where('deleteStatus', 1)->where('status', 'done')->count(),
+            'events' => $events->map(fn ($e) => $this->eventRow($e))->values(), 'hasMore' => $events->count() === 30,
+            'plan' => ['safety' => array_slice((array) ($auto->plan['safety'] ?? []), 0, 12), 'compatibility' => array_slice((array) ($auto->plan['compatibility'] ?? []), 0, 8)],
+            'cant' => collect(AutoBook::CANT)->map(fn ($c, $k) => ['key' => $k, 'label' => $c[0], 'emoji' => $c[1]])->values(),
+            'people' => $people->map(fn ($p) => ['id' => $p['id'], 'name' => $p['name']])->values(),
+        ]);
+    }
+
+    private function eventRow(AsAutoEvent $e): array
+    {
+        $body = (string) $e->body;
+        $html = $e->role === 'farmer' ? nl2br(e($body)) : AneeEmoji::render(nl2br(e($body)));
+
+        return ['id' => (int) $e->id, 'role' => $e->role, 'kind' => $e->kind, 'html' => $html, 'data' => $e->data, 'taskId' => $e->taskId,
+            'media' => collect((array) $e->media)->map(fn ($m) => ['type' => $m['type'] ?? 'image', 'url' => MediaStore::url($m['path'] ?? null)])->filter(fn ($m) => $m['url'])->values(),
+            'at' => $e->created_at ? Carbon::parse($e->created_at)->timezone('Asia/Manila')->format('M j, g:i A') : ''];
+    }
+
+    private function liveTask(AsAutoSeason $auto, int $taskId): AsAutoTask
+    {
+        abort_unless($auto->status === AsAutoSeason::ACTIVE, 423);
+
+        return AsAutoTask::where('autoId', $auto->id)->where('deleteStatus', 1)->findOrFail($taskId);
+    }
+
+    public function done(Request $request, int $id, int $taskId)
+    {
+        $auto = $this->auto($id);
+        $t = $this->liveTask($auto, $taskId);
+        $v = Validator::make($request->all(), ['date' => 'nullable|date', 'note' => 'nullable|string|max:2000', 'workers' => 'nullable|array', 'used' => 'nullable|string|max:400',
+            'photo' => 'nullable|image|max:12288']);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        $today = now('Asia/Manila')->startOfDay();
+        $date = $request->filled('date') ? Carbon::parse($request->input('date'), 'Asia/Manila')->startOfDay() : $today;
+        if ($date->gt($today)) {
+            $date = $today;
+        }
+        $media = [];
+        if ($request->hasFile('photo')) {
+            if ($p = MediaStore::putFile($request->file('photo'), 'auto', $auto->id)) {
+                $media[] = ['type' => 'image', 'path' => $p];
+            }
+        }
+        $t->update(['status' => 'done', 'doneDate' => $date->toDateString(), 'doneAt' => now(), 'doneNote' => $request->input('note'),
+            'doneData' => array_filter(['workers' => array_values(array_map('intval', (array) $request->input('workers', []))), 'used' => $request->input('used'), 'media' => $media ?: null])]);
+
+        // The day the crop went in is the day every count runs from: a sowing, transplanting or planting done on another day moves them all.
+        $shift = '';
+        $al = $t->lotId ? AsAutoLot::where('autoId', $auto->id)->where('lotId', $t->lotId)->first() : null;
+        $isSeedbed = $t->anchor === 'sow' && in_array($t->kind, ['nursery', 'sowing'], true) && (int) $t->offsetDays === 0;
+        $isField = $t->anchor === 'field' && in_array($t->kind, ['transplant', 'planting', 'sowing'], true) && (int) $t->offsetDays === 0;
+        if ($al && ($isSeedbed || $isField)) {
+            $col = $isSeedbed ? 'sowDate' : 'fieldDate';
+            if ($al->{$col} && ! $al->{$col}->isSameDay($date)) {
+                $diff = (int) Carbon::parse($al->{$col}->toDateString(), 'Asia/Manila')->diffInDays($date, false);
+                $al->update([$col => $date->toDateString()] + ($al->harvestDate && ! $isSeedbed ? ['harvestDate' => $al->harvestDate->copy()->addDays($diff)->toDateString()] : []));
+                $lot = AsScheduleLot::find($al->lotId);
+                if ($lot) {
+                    $lot->update($isSeedbed ? ['dayZeroDate' => $date->toDateString()] : ($al->method === 'transplanted' ? ['transplantDate' => $date->toDateString()] : ['dayZeroDate' => $date->toDateString()]));
+                }
+                $shift = ' The days after it now count from ' . $date->format('M j') . ' (' . ($diff > 0 ? $diff . ' day' . ($diff > 1 ? 's' : '') . ' later' : abs($diff) . ' day' . (abs($diff) > 1 ? 's' : '') . ' earlier') . ' than planned), so I moved what follows.';
+            }
+        }
+        AsAutoEvent::say($auto->id, 'done', '✅ ' . $t->title . ($request->filled('note') ? "\n" . $request->input('note') : ''), ['task' => $t->title, 'used' => $request->input('used')],
+            ['role' => 'farmer', 'taskId' => $t->id, 'lotId' => $t->lotId, 'userId' => Auth::id(), 'media' => $media ?: null]);
+        $moved = $this->planner->plan($auto->fresh());
+        $praise = ['Ayos! :anee-thumbsup:', 'Galing! :anee-happy:', 'Nice work :anee-grin:', 'Done and noted :anee-salute:'][$t->id % 4];
+        AsAutoEvent::say($auto->id, 'reply', $praise . ' ' . $t->title . ' is done.' . $shift . $this->movedWords($moved), ['moved' => $moved], ['taskId' => $t->id, 'lotId' => $t->lotId]);
+
+        return $this->json(true, 'Marked done.');
+    }
+
+    public function cant(Request $request, int $id, int $taskId)
+    {
+        $auto = $this->auto($id);
+        $t = $this->liveTask($auto, $taskId);
+        $v = Validator::make($request->all(), ['reason' => 'required|in:' . implode(',', array_keys(AutoBook::CANT)), 'note' => 'nullable|string|max:1000', 'days' => 'nullable|integer|min:1|max:30']);
+        if ($v->fails()) {
+            return $this->json(false, 'Pick a reason.', [], 422);
+        }
+        $why = AutoBook::CANT[$request->input('reason')];
+        $wait = max((int) $why[2], (int) $request->input('days', 0));
+        $from = $t->plannedDate?->toDateString();
+        $t->update(['notBefore' => now('Asia/Manila')->startOfDay()->addDays($wait)->toDateString(), 'movedCount' => (int) $t->movedCount + 1]);
+        AsAutoEvent::say($auto->id, 'cant', $why[1] . ' Cannot do "' . $t->title . '" today: ' . mb_strtolower($why[0]) . ($request->filled('note') ? '. ' . $request->input('note') : '') . '.',
+            ['reason' => $request->input('reason'), 'from' => $from], ['role' => 'farmer', 'taskId' => $t->id, 'lotId' => $t->lotId, 'userId' => Auth::id()]);
+        $moved = $this->planner->plan($auto->fresh());
+        $t->refresh();
+        $late = ! empty($t->planNote['late']) || ! empty($t->planNote['risk']);
+        $say = 'No problem :anee-smile: I moved "' . $t->title . '" to ' . ($t->plannedDate ? $t->plannedDate->format('l, M j') : 'the next good day') . '.'
+            . ($t->critical && $late ? ' This one matters for the yield, so let us not let it slip further :anee-concerned:' : '')
+            . $this->movedWords(array_values(array_filter($moved, fn ($m) => $m['id'] !== $t->id)));
+
+        AsAutoEvent::say($auto->id, 'moved', $say, ['to' => $t->plannedDate?->toDateString(), 'moved' => $moved], ['taskId' => $t->id, 'lotId' => $t->lotId]);
+
+        return $this->json(true, 'Moved to ' . ($t->plannedDate ? $t->plannedDate->format('D, M j') : 'later') . '.', ['to' => $t->plannedDate?->toDateString()]);
+    }
+
+    /** "I also moved …", for the tasks a re-plan shifted. */
+    private function movedWords(array $moved): string
+    {
+        $moved = array_values(array_filter($moved, fn ($m) => $m['from'] !== null));
+        if (! $moved) {
+            return '';
+        }
+        $why = ['weather' => 'for the weather', 'workers' => 'so the workers are not doubled up', 'both' => 'for the weather and the workers', 'late' => 'because it is due', 'new' => ''];
+        $bits = array_map(fn ($m) => '"' . $m['title'] . '" to ' . Carbon::parse($m['to'])->format('D, M j') . (($why[$m['why']] ?? '') ? ' ' . $why[$m['why']] : ''), array_slice($moved, 0, 4));
+
+        return ' I also moved ' . implode('; ', $bits) . (count($moved) > 4 ? '; and ' . (count($moved) - 4) . ' more' : '') . '.';
+    }
+
+    /** What the farmer saw: pictures, a video's frames, a voice note, words. Anee reads it. */
+    public function observe(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        abort_unless($auto->status === AsAutoSeason::ACTIVE, 423);
+        if ($why = $this->refusal()) {
+            return $this->json(false, $why, [], 403);
+        }
+        $v = Validator::make($request->all(), [
+            'lotId' => 'nullable|integer', 'text' => 'nullable|string|max:3000',
+            'photos' => 'nullable|array|max:3', 'photos.*' => 'image|max:12288',
+            'frames' => 'nullable|array|max:3', 'frames.*' => 'string|max:2500000',
+            'video' => 'nullable|file|mimetypes:video/mp4,video/webm,video/quicktime|max:61440',
+            'audio' => 'nullable|file|max:12288',
+        ]);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        $used = AsAutoEvent::where('autoId', $auto->id)->where('kind', 'observation')->where('created_at', '>=', now('Asia/Manila')->startOfDay())->count();
+        if ($used >= self::OBSERVE_PER_DAY) {
+            return $this->json(false, 'That is ' . self::OBSERVE_PER_DAY . ' observations today. Send the next one tomorrow, or ask in the chat.', [], 429);
+        }
+        $lotId = $request->filled('lotId') ? (int) $request->input('lotId') : null;
+        if ($lotId && ! AsAutoLot::where('autoId', $auto->id)->where('lotId', $lotId)->exists()) {
+            $lotId = null;
+        }
+        $text = trim((string) $request->input('text', ''));
+        $pics = [];
+        $media = [];
+        foreach ((array) $request->file('photos', []) as $f) {
+            $pics[] = ['mime' => $f->getMimeType() ?: 'image/jpeg', 'data' => base64_encode((string) file_get_contents($f->getRealPath()))];
+            if ($p = MediaStore::putFile($f, 'auto', $auto->id)) {
+                $media[] = ['type' => 'image', 'path' => $p];
+            }
+        }
+        foreach ((array) $request->input('frames', []) as $dataUrl) {
+            if (preg_match('#^data:(image/(?:jpeg|png|webp));base64,(.+)$#', (string) $dataUrl, $m)) {
+                $pics[] = ['mime' => $m[1], 'data' => $m[2]];
+            }
+        }
+        if ($request->hasFile('video') && ($p = MediaStore::putFile($request->file('video'), 'auto', $auto->id))) {
+            $media[] = ['type' => 'video', 'path' => $p];
+        }
+        $heard = false;
+        if ($request->hasFile('audio')) {
+            if ($voice = $this->voiceForModel($request->file('audio'))) {
+                $pics[] = $voice;
+                $heard = true;
+            }
+            if ($p = MediaStore::putFile($request->file('audio'), 'auto', $auto->id)) {
+                $media[] = ['type' => 'audio', 'path' => $p];
+            }
+        }
+        if (! $pics && $text === '') {
+            return $this->json(false, $request->hasFile('audio') ? 'Anee could not hear that recording here. Type a few words about it instead.' : 'Add a picture, a video or a few words.', [], 422);
+        }
+        $pics = array_slice($pics, 0, 5);
+        $pictureCount = count(array_filter($pics, fn ($x) => str_starts_with((string) $x['mime'], 'image/')));
+        $mine = AsAutoEvent::say($auto->id, 'observation', $text !== '' ? $text : ($heard ? '🎙️ A voice note from the field' : '📷 From the field'), ['pictures' => $pictureCount, 'voice' => $heard],
+            ['role' => 'farmer', 'lotId' => $lotId, 'userId' => Auth::id(), 'media' => $media ?: null]);
+
+        $settings = AiSetting::current()->forField('PH');
+        $prompt = $this->brain->observationPrompt($auto, $lotId, $text, $pictureCount, (bool) $request->input('frames'), $heard);
+        $res = $this->ai->ask($settings->forDocument(), [], $prompt, $pics ?: null, 5000, ['timeout' => 120]);
+        $data = ($res['ok'] ?? false) ? AutoBrain::parseObject((string) $res['text'], 'reply') : null;
+        AiUsage::record(self::KIND, (int) Auth::id(), (int) $this->payer()->id, $auto->id, $settings, $res, 0);
+        if (! $data) {
+            AsAutoEvent::say($auto->id, 'reply', 'I could not read that one clearly :anee-oops: Try another picture in good light, close to the leaf or the pest.', [], ['lotId' => $lotId]);
+
+            return $this->json(false, 'Anee could not read it. Try again with a clearer picture.', [], 502);
+        }
+        $added = [];
+        if (! empty($data['newTasks']) && is_array($data['newTasks'])) {
+            $start = AutoPlanner::anchorDate($auto, null, 'start');
+            $today = now('Asia/Manila')->startOfDay();
+            $rows = array_map(function ($t) use ($start, $today) {
+                $t['anchor'] = 'start';
+                $t['day'] = (int) $start->diffInDays($today->copy()->addDays(max(0, (int) ($t['inDays'] ?? 0))), false);
+                $t['early'] = 0;
+
+                return $t;
+            }, array_slice($data['newTasks'], 0, 5));
+            foreach (AutoBrain::taskRows($rows, $auto->id, $lotId, 'observation', 10000 + $mine->id) as $row) {
+                $added[] = AsAutoTask::create($row)->title;
+            }
+            if ($added) {
+                $this->planner->plan($auto->fresh());
+            }
+        }
+        $reply = trim((string) ($data['reply'] ?? ''));
+        if ($added) {
+            $reply .= "\nI added to your calendar: " . implode('; ', $added) . '.';
+        }
+        AsAutoEvent::say($auto->id, 'reply', $reply ?: ($data['what'] ?? 'Noted.'), [
+            'what' => $data['what'] ?? null, 'confidence' => $data['confidence'] ?? null, 'severity' => $data['severity'] ?? null,
+            'reading' => $data['reading'] ?? null, 'actions' => array_slice((array) ($data['actions'] ?? []), 0, 6), 'watch' => $data['watch'] ?? null, 'added' => $added,
+        ], ['lotId' => $lotId, 'taskId' => null]);
+
+        return $this->json(true, 'Read.');
+    }
+
+    /**
+     * A voice note the model can hear: Gemini takes audio beside the words,
+     * as mp3 here (ffmpeg makes it small and in a form it reads; a phone
+     * records webm or mp4). Null where it cannot be heard.
+     */
+    private function voiceForModel(\Illuminate\Http\UploadedFile $file): ?array
+    {
+        if (AiSetting::current()->provider !== 'gemini') {
+            return null;
+        }
+        $bin = \App\Support\VideoOptimizer::usableBinary();
+        if ($bin) {
+            $out = tempnam(sys_get_temp_dir(), 'auv') . '.mp3';
+            $cmd = escapeshellarg($bin) . ' -y -hide_banner -loglevel error -i ' . escapeshellarg($file->getRealPath()) . ' -t 180 -vn -ac 1 -ar 16000 -b:a 32k ' . escapeshellarg($out) . ' 2>&1';
+            @exec($cmd, $o, $code);
+            if ($code === 0 && @filesize($out) > 500) {
+                $data = base64_encode((string) file_get_contents($out));
+                @unlink($out);
+
+                return ['mime' => 'audio/mp3', 'data' => $data];
+            }
+            @unlink($out);
+        }
+        $mime = (string) $file->getMimeType();
+
+        return in_array($mime, ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav', 'audio/ogg', 'audio/aac', 'audio/flac'], true) && $file->getSize() < 8 * 1024 * 1024
+            ? ['mime' => $mime === 'audio/mpeg' ? 'audio/mp3' : $mime, 'data' => base64_encode((string) file_get_contents($file->getRealPath()))] : null;
+    }
+
+    /** The season's story, day by day, for reading back and for the post harvest report. */
+    public function log(int $id)
+    {
+        $auto = $this->auto($id);
+        $lots = AsScheduleLot::whereIn('id', AsAutoLot::where('autoId', $auto->id)->pluck('lotId'))->pluck('lotName', 'id');
+        $done = AsAutoTask::where('autoId', $auto->id)->where('deleteStatus', 1)->where('status', 'done')->orderBy('doneDate')->orderBy('doneAt')->get();
+        $events = AsAutoEvent::where('autoId', $auto->id)->whereIn('kind', ['done', 'cant', 'moved', 'observation', 'reply', 'plan', 'analysis'])->orderBy('id')->get();
+        $days = [];
+        foreach ($events as $e) {
+            $d = Carbon::parse($e->created_at)->timezone('Asia/Manila')->toDateString();
+            $days[$d][] = ['at' => Carbon::parse($e->created_at)->timezone('Asia/Manila')->format('g:i A'), 'role' => $e->role, 'kind' => $e->kind,
+                'lot' => $e->lotId ? ($lots[$e->lotId] ?? null) : null, 'text' => mb_substr(strip_tags((string) $e->body), 0, 600), 'data' => $e->data];
+        }
+        krsort($days);
+
+        return $this->json(true, 'ok', [
+            'days' => collect($days)->map(fn ($rows, $d) => ['date' => $d, 'label' => Carbon::parse($d)->format('l, M j, Y'), 'rows' => $rows])->values(),
+            'done' => $done->map(fn ($t) => ['date' => $t->doneDate?->format('M j'), 'title' => $t->title, 'lot' => $t->lotId ? ($lots[$t->lotId] ?? null) : null,
+                'kind' => AutoBook::KINDS[$t->kind][0] ?? 'Farm work', 'note' => $t->doneNote, 'used' => $t->doneData['used'] ?? null, 'planned' => $t->firstDate?->format('M j'),
+                'moved' => (int) $t->movedCount])->values(),
+            'counts' => ['done' => $done->count(), 'moved' => AsAutoEvent::where('autoId', $auto->id)->where('kind', 'cant')->count(),
+                'observations' => AsAutoEvent::where('autoId', $auto->id)->where('kind', 'observation')->count()],
+        ]);
+    }
+
+    public function ask(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        abort_unless($auto->isLive(), 423);
+        if ($why = $this->refusal()) {
+            return $this->json(false, $why, [], 403);
+        }
+        $q = trim((string) $request->input('text', ''));
+        if ($q === '' || mb_strlen($q) > 2000) {
+            return $this->json(false, 'Ask in a few words.', [], 422);
+        }
+        $used = AsAutoEvent::where('autoId', $auto->id)->where('kind', 'ask')->where('created_at', '>=', now('Asia/Manila')->startOfDay())->count();
+        if ($used >= self::ASK_PER_DAY) {
+            return $this->json(false, 'That is ' . self::ASK_PER_DAY . ' questions today. Ask again tomorrow, or use Anee\'s chat.', [], 429);
+        }
+        AsAutoEvent::say($auto->id, 'ask', $q, [], ['role' => 'farmer', 'userId' => Auth::id()]);
+        $recent = AsAutoEvent::where('autoId', $auto->id)->orderByDesc('id')->limit(10)->get()->reverse()
+            ->map(fn ($e) => ($e->role === 'farmer' ? 'Farmer: ' : 'Anee: ') . mb_substr(strip_tags((string) $e->body), 0, 400))->values()->all();
+        $settings = AiSetting::current()->forField('PH');
+        $res = $this->ai->ask($settings, [], $this->brain->askPrompt($auto, $q, $recent), null, 1500, ['timeout' => 90]);
+        AiUsage::record(self::KIND, (int) Auth::id(), (int) $this->payer()->id, $auto->id, $settings, $res, 0);
+        if (! ($res['ok'] ?? false)) {
+            return $this->json(false, $res['error'] ?? 'Anee could not answer just now. Please try again.', [], 502);
+        }
+        AsAutoEvent::say($auto->id, 'reply', trim((string) $res['text']), ['kind' => 'answer']);
+
+        return $this->json(true, 'Answered.');
+    }
+}

@@ -118,6 +118,16 @@
     {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
     @include('partials.ad-slot', ['placement' => 'modules'])
 
+    {{-- An Anee Auto season (2026-10-12): its plan lives in Anee Auto. --}}
+    @php $hubAuto = (int) ($schedule->aneeAuto ?? 0) === 1 && ! \App\Support\WorkerContext::inWorkerContext() ? \App\Models\AsAutoSeason::where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->first(['id', 'status']) : null; @endphp
+    @if ($hubAuto)
+        <a href="{{ route('auto.show', $hubAuto->id) }}" class="flex items-center gap-3 mb-4 p-3 rounded-2xl text-white" style="background:linear-gradient(115deg,#24410f,#10200a)">
+            <span class="text-2xl" aria-hidden="true">🤖</span>
+            <span class="min-w-0 flex-1"><b class="block text-sm" style="color:#f5d34a">This is an Anee Auto season</b><span class="block text-xs" style="color:#cfe3b9">{{ $hubAuto->status === 'setting_up' ? 'Finish setting it up' : 'Today's work, the plan and the chat with Anee' }}</span></span>
+            <span class="text-xs font-extrabold px-3 py-1 rounded-full" style="background:#f5c518;color:#1d330d">Open</span>
+        </a>
+    @endif
+
     {{-- The season's own card. It used to be a plain white box with the
          title, some badges and a button that said "Mark completed" — which
          reads like a checkbox rather than the end of a season. It now looks

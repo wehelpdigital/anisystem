@@ -638,6 +638,10 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                 Add New Cropping Schedule
             </a>
+            {{-- Anee Auto (2026-10-12): a season Anee plans and keeps planning. --}}
+            <button type="button" class="sch-auto-cta md:hidden" data-auto-start>
+                <span aria-hidden="true">🤖</span> Anee Auto <small>Anee plans the whole season</small>
+            </button>
         @endif
 
         {{-- Search runs as you type (see the script below); the button-less form
@@ -659,6 +663,8 @@
              the floating + button is the phone equivalent. --}}
         <div class="hidden md:flex md:justify-end md:items-center gap-2">
             @if (! $isWorkerHere)
+            <a href="{{ route('auto.index') }}" class="btn btn-white">Anee Auto seasons</a>
+            <button type="button" class="sch-auto-cta is-desk" data-auto-start><span aria-hidden="true">🤖</span> Anee Auto</button>
             <a href="{{ route('sm.create') }}" class="btn btn-primary">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                 New Cropping Schedule
@@ -683,6 +689,17 @@
         @keyframes schAddTide { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
         @media (prefers-reduced-motion: reduce) { .sch-add-cta { animation: none; background-position: 40% 50%; } }
         html.dark .sch-add-cta { box-shadow: 0 10px 22px -12px rgb(0 0 0 / .7); }
+        /* Anee Auto's door: gold on the field's dark green, a light passing over it. */
+        .sch-auto-cta { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: .45rem; width: 100%; padding: .8rem 1rem; border-radius: 1rem;
+            font-weight: 800; font-size: .95rem; color: #f5d34a; background: linear-gradient(115deg, #24410f, #10200a); box-shadow: 0 10px 22px -12px rgb(16 32 10 / .7);
+            transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .sch-auto-cta small { font-size: .72rem; font-weight: 700; color: #cfe3b9; }
+        .sch-auto-cta:active { transform: scale(.985); }
+        .sch-auto-cta::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / .18) 50%, transparent 70%); transform: translateX(-100%); animation: schAutoShine 3.4s ease-in-out infinite; }
+        @keyframes schAutoShine { 55%, 100% { transform: translateX(100%); } }
+        .sch-auto-cta.is-desk { width: auto; padding: .6rem 1rem; border-radius: .8rem; font-size: .9rem; }
+        @media (prefers-reduced-motion: reduce) { .sch-auto-cta::after { animation: none; } }
+        .se-auto-badge { display: inline-flex; align-items: center; gap: .25rem; padding: .12rem .5rem; border-radius: 999px; font-size: .66rem; font-weight: 800; color: #2b3a1c; background: #f5c518; }
     </style>
 
     {{-- Two controls for the whole shelf. The orders live behind Filter
@@ -941,8 +958,14 @@
                         <div class="mt-3 sch-acts">
                             {{-- Its own clock and starting point, from its own
                                  id, so a shelf of these never sweeps as one. --}}
+                            @php $seAuto = (int) ($s->aneeAuto ?? 0) === 1 ? \App\Models\AsAutoSeason::where('croppingScheduleId', $s->id)->where('deleteStatus', 1)->value('id') : null; @endphp
+                            @if ($seAuto)
+                                <a href="{{ route('auto.show', $seAuto) }}" class="btn btn-primary w-full sweep-fill sweep-green"
+                                   style="--sw-t:{{ 9 + ($s->id % 7) }}s;--sw-d:-{{ $s->id % 11 }}s"><span class="se-auto-badge">🤖 Anee Auto</span> Open</a>
+                            @else
                             <a href="{{ route('sm.hub', ['id' => $s->id]) }}" class="btn btn-primary w-full sweep-fill sweep-green"
                                style="--sw-t:{{ 9 + ($s->id % 7) }}s;--sw-d:-{{ $s->id % 11 }}s">Open</a>
+                            @endif
                         </div>
                     </div>
                     </div>{{-- /.se-fold-wrap --}}
@@ -969,6 +992,9 @@
          green row above the search field now, where it can say its name. --}}
 
 
+@unless ($isWorkerHere ?? false)
+@include('auto.partials.start')
+@endunless
 @endsection
 
 @push('scripts')

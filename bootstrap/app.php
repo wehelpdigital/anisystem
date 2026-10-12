@@ -102,6 +102,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // NPK Plus's Philippine products (2026-10-12): the FPA's registered
         // fertilizer list once a month, and at first while only the hand
         // checked products are in.
+        // Anee Auto's morning (2026-10-12): re-plan, brief and mail each running season.
+        $schedule->command('auto:daily')->dailyAt('05:00')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
         $schedule->command('fertilizers:fpa-sync')->monthlyOn(3, '04:30')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
         $schedule->command('fertilizers:fpa-sync')->dailyAt('04:45')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground()
             ->when(fn () => \Illuminate\Support\Facades\Schema::hasTable('as_ph_fertilizers') && ! \Illuminate\Support\Facades\DB::table('as_ph_fertilizers')->where('curated', 0)->exists());

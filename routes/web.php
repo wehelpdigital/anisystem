@@ -393,6 +393,29 @@ Route::middleware('auth')->group(function () {
     // no scheduleId; a season's Collab Room still passes its own.
     Route::get('/app/maps', [App\Http\Controllers\Manager\ScheduleMapController::class, 'page'])->name('maps.page');
     Route::get('/app/draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'page'])->name('draw.page');
+    // Anee Auto (2026-10-12): Anee plans the season and keeps planning it.
+    Route::get('/app/auto', [App\Http\Controllers\AneeAutoController::class, 'index'])->name('auto.index');
+    Route::get('/app/auto/quote', [App\Http\Controllers\AneeAutoController::class, 'quote'])->name('auto.quote');
+    Route::post('/app/auto/start', [App\Http\Controllers\AneeAutoController::class, 'start'])->middleware('throttle:10,1')->name('auto.start');
+    Route::get('/app/auto/{id}', [App\Http\Controllers\AneeAutoController::class, 'show'])->whereNumber('id')->name('auto.show');
+    Route::get('/app/auto/{id}/state', [App\Http\Controllers\AneeAutoController::class, 'state'])->whereNumber('id')->name('auto.state');
+    Route::put('/app/auto/{id}/basics', [App\Http\Controllers\AneeAutoController::class, 'saveBasics'])->whereNumber('id')->name('auto.basics');
+    Route::put('/app/auto/{id}/lot', [App\Http\Controllers\AneeAutoController::class, 'saveLot'])->whereNumber('id')->name('auto.lot');
+    Route::post('/app/auto/{id}/lot', [App\Http\Controllers\AneeAutoController::class, 'addLot'])->whereNumber('id')->middleware('throttle:10,1')->name('auto.lot.add');
+    Route::put('/app/auto/{id}/workers', [App\Http\Controllers\AneeAutoController::class, 'saveWorkers'])->whereNumber('id')->name('auto.workers');
+    Route::put('/app/auto/{id}/answers', [App\Http\Controllers\AneeAutoController::class, 'saveAnswers'])->whereNumber('id')->name('auto.answers');
+    Route::get('/app/auto/{id}/crop-problems', [App\Http\Controllers\AneeAutoController::class, 'cropProblems'])->whereNumber('id')->name('auto.problems');
+    Route::post('/app/auto/{id}/analyze', [App\Http\Controllers\AneeAutoController::class, 'analyze'])->whereNumber('id')->name('auto.analyze');
+    Route::post('/app/auto/{id}/generate', [App\Http\Controllers\AneeAutoController::class, 'generate'])->whereNumber('id')->name('auto.generate');
+    Route::get('/app/auto/{id}/job', [App\Http\Controllers\AneeAutoController::class, 'job'])->whereNumber('id')->name('auto.job');
+    Route::put('/app/auto/{id}/fert', [App\Http\Controllers\AneeAutoController::class, 'saveFert'])->whereNumber('id')->name('auto.fert');
+    Route::put('/app/auto/{id}/imbalance', [App\Http\Controllers\AneeAutoController::class, 'saveImbalance'])->whereNumber('id')->name('auto.imbalance');
+    Route::get('/app/auto/{id}/feed', [App\Http\Controllers\AneeAutoController::class, 'feed'])->whereNumber('id')->name('auto.feed');
+    Route::post('/app/auto/{id}/task/{taskId}/done', [App\Http\Controllers\AneeAutoController::class, 'done'])->whereNumber('id')->whereNumber('taskId')->name('auto.done');
+    Route::post('/app/auto/{id}/task/{taskId}/cant', [App\Http\Controllers\AneeAutoController::class, 'cant'])->whereNumber('id')->whereNumber('taskId')->name('auto.cant');
+    Route::post('/app/auto/{id}/observe', [App\Http\Controllers\AneeAutoController::class, 'observe'])->whereNumber('id')->middleware('throttle:20,1')->name('auto.observe');
+    Route::get('/app/auto/{id}/log', [App\Http\Controllers\AneeAutoController::class, 'log'])->whereNumber('id')->name('auto.log');
+    Route::post('/app/auto/{id}/ask', [App\Http\Controllers\AneeAutoController::class, 'ask'])->whereNumber('id')->middleware('throttle:20,1')->name('auto.ask');
     // Global Workers (2026-10-12): the farm's own roster, added to any season.
     Route::get('/app/workers', [App\Http\Controllers\GlobalWorkerController::class, 'page'])->name('workers.global');
     Route::get('/app/workers/list', [App\Http\Controllers\GlobalWorkerController::class, 'list'])->name('workers.global.list');

@@ -298,6 +298,28 @@ class AniSystemEmailTemplateSeeder extends Seeder
                 ],
             ],
 
+            /* Anee Auto's morning (2026-10-12): the day's work Anee planned,
+             * to the owner and to each worker with an email. */
+            'auto_daily' => [
+                'name' => 'Anee Auto, the morning plan',
+                'subject' => '{{today_date}}: your day with Anee Auto · {{season_title}}',
+                'tags' => '{{recipient_name}}, {{season_title}}, {{today_date}}, {{today_count}}, {{week_count}}, {{tasks_list}}, {{week_list}}, {{weather_line}}, {{moved_line}}, {{auto_url}}, {{app_name}}',
+                'body' => S::wrap(
+                    self::p('Magandang umaga, {{recipient_name}}.')
+                    . self::p('Here is what Anee planned for {{today_date}}. She checked the weather and who can work before she wrote it.')
+                    . '{{weather_line}}'
+                    . '{{tasks_list}}'
+                    . '{{moved_line}}'
+                    . '{{week_list}}'
+                    . S::button('Open Anee Auto', '{{auto_url}}', false)
+                    . self::callout('Cannot do something today?', 'Tap “Can’t today” on the task and say why. Anee moves it to the best day near it and plans around it.')
+                    . S::note('Sent by {{app_name}} for the Anee Auto season {{season_title}}.'),
+                    'Your day with Anee',
+                    ['face' => 'salute', 'eyebrow' => 'Anee Auto · {{season_title}}', 'preheader' => '{{today_count}} tasks today, planned around the weather.',
+                     'why' => 'You are getting this because you are part of an Anee Auto season on anee.io.']
+                ),
+            ],
+
             /* ------------------------------------------------------------
              | Plans and payments
              * ---------------------------------------------------------- */
