@@ -151,7 +151,16 @@
         const title = g.map((n) => 'Group ' + n + ': ' + (D.modes[n] || '')).join('. ');
         return '<em title="' + esc(title) + '">' + (g.length > 1 ? 'Groups ' + g.join(' and ') : 'Group ' + g[0]) + '</em>';
     };
-    const list = (names) => '<ul class="wc-ings">' + names.map((n) => '<li><span>' + esc(n) + '</span>' + chip(n) + '</li>').join('') + '</ul>';
+    // Who sells it: a Shopee search and a Lazada tag page for one active
+    // ingredient (the bracket notes and "plus" dropped; "2,4 D" is "2,4-D").
+    const shopName = (n) => String(n).replace(/\s*\([^)]*\)/g, '').replace(/\s+plus\s+/gi, ' ').replace(/\b2,4 D\b/g, '2,4-D').replace(/\s+/g, ' ').trim();
+    const shop = (n) => {
+        const q = shopName(n), slug = q.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        return '<span class="shop"><a class="is-sp" href="https://shopee.ph/search?keyword=' + encodeURIComponent(q.toLowerCase()) + '" target="_blank" rel="noopener nofollow" aria-label="' + esc(q) + ' on Shopee">Shopee</a>'
+            + '<a class="is-lz" href="https://www.lazada.com.ph/tag/' + slug + '/" target="_blank" rel="noopener nofollow" aria-label="' + esc(q) + ' on Lazada">Lazada</a></span>';
+    };
+    const SHOP_NOTE = '<p class="shop-note">The Shopee and Lazada links only show who sells something with that active ingredient. They are not a recommendation of any seller or product: check the label, your crop and the FPA registration before you buy.</p>';
+    const list = (names) => '<ul class="wc-ings">' + names.map((n) => '<li><span>' + esc(n) + '</span>' + chip(n) + shop(n) + '</li>').join('') + '</ul>';
     const HUE = { grasses: 98, sedges: 168, broadleaves: 38 };
     // "0 to 5 days" sits as "0 to 5" over "days"; a worded window stays whole.
     const counted = (label) => /^\d/.test(label);
@@ -201,7 +210,7 @@
                     + '<div class="wc-split">' + gs.map((g) => '<div style="--g: ' + HUE[g] + '"><b>' + esc(D.groups[g]) + '</b>'
                         + (w[g] && w[g].length ? list(w[g]) : '<p class="wc-legend" style="margin-top:.4rem">None listed at this age. Weed by hand.</p>') + '</div>').join('') + '</div>';
             }
-            if (ings.includes('wc-ings')) ings += '<p class="wc-legend">The group number tells how a herbicide kills. Use a different group next season so the weeds do not learn to survive it.</p>';
+            if (ings.includes('wc-ings')) ings += '<p class="wc-legend">The group number tells how a herbicide kills. Use a different group next season so the weeds do not learn to survive it.</p>' + SHOP_NOTE;
         }
         const src = (p.sources || []).filter((s) => s && s.label).slice(0, 3);
         const based = src.length ? '<p class="wc-src">Based on ' + join(src.map((s) => s.url ? '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label) + '</a>' : esc(s.label))) + '.</p>' : '';

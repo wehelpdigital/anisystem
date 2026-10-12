@@ -153,6 +153,19 @@ final class FieldCatalogue
         return $all;
     }
 
+    /**
+     * Who sells it (2026-10-12): a Shopee search and a Lazada tag page for one
+     * active ingredient, its bracket notes and "plus" dropped. Not a
+     * recommendation; the pages say so. The finders' JS builds the same.
+     */
+    public static function shopLinks(string $ingredient): array
+    {
+        $q = trim((string) preg_replace('/\s+/', ' ', preg_replace(['/\s*\([^)]*\)/', '/\s+plus\s+/i', '/\b2,4 D\b/'], ['', ' ', '2,4-D'], $ingredient)));
+        $slug = trim((string) preg_replace('/[^a-z0-9]+/', '-', mb_strtolower($q)), '-');
+
+        return ['name' => $q, 'shopee' => 'https://shopee.ph/search?keyword=' . rawurlencode(mb_strtolower($q)), 'lazada' => 'https://www.lazada.com.ph/tag/' . $slug . '/'];
+    }
+
     /** The crop's names for a sentence: "sweet potato", "rice". */
     public static function cropWord(string $crop): string
     {

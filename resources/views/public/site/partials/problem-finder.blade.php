@@ -137,11 +137,20 @@
     const go = document.getElementById('fdGo');
     const goText = go?.querySelector('span');
     const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Who sells it: a Shopee search and a Lazada tag page for one active
+    // ingredient (the bracket notes and "plus" dropped; "2,4 D" is "2,4-D").
+    const shopName = (n) => String(n).replace(/\s*\([^)]*\)/g, '').replace(/\s+plus\s+/gi, ' ').replace(/\b2,4 D\b/g, '2,4-D').replace(/\s+/g, ' ').trim();
+    const shop = (n) => {
+        const q = shopName(n), slug = q.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        return '<span class="shop"><a class="is-sp" href="https://shopee.ph/search?keyword=' + encodeURIComponent(q.toLowerCase()) + '" target="_blank" rel="noopener nofollow" aria-label="' + esc(q) + ' on Shopee">Shopee</a>'
+            + '<a class="is-lz" href="https://www.lazada.com.ph/tag/' + slug + '/" target="_blank" rel="noopener nofollow" aria-label="' + esc(q) + ' on Lazada">Lazada</a></span>';
+    };
+    const SHOP_NOTE = '<p class="shop-note">The Shopee and Lazada links only show who sells something with that active ingredient. They are not a recommendation of any seller or product: check the label, your crop and the FPA registration before you buy.</p>';
     // What to spray against one pest or disease: its active ingredients with
     // their group, or, under "Before you spray", why no spray helps.
     const spray = (i) => (i.ai && i.ai.length)
         ? '<div class="fd-spray"><span class="fd-spray-h">' + drop + 'What to spray</span><ul class="fd-ais">'
-            + i.ai.map(([n, g]) => '<li' + (g ? '' : ' class="is-plain"') + '>' + esc(n) + (g ? '<i>' + esc(g) + '</i>' : '') + '</li>').join('') + '</ul></div>'
+            + i.ai.map(([n, g]) => '<li' + (g ? '' : ' class="is-plain"') + '>' + esc(n) + (g ? '<i>' + esc(g) + '</i>' : '') + shop(n) + '</li>').join('') + '</ul></div>'
         : (i.no ? '<div class="fd-spray"><p class="fd-no">' + warn + '<span><b>Before you spray</b>' + esc(i.no) + '</span></p></div>' : '');
     // The local names a farmer would say, when they are names and not a
     // sentence about names (those stay on the page), and not already in the title.
@@ -183,6 +192,7 @@
                 ? early + '<div class="fd-res' + (early ? ' fd-wait' : '') + '">' + hits.map(row).join('') + '</div>'
                     + '<p class="wc-legend">' + (D.pests ? 'The IRAC group tells how an insecticide kills.' : 'The FRAC group tells how a fungicide works.')
                     + ' Switch to a different group next time, so the ' + D.noun + ' does not learn to survive it. Open a ' + D.noun + ' for when to spray and the steps to take first.</p>'
+                    + (hits.some((i) => i.ai && i.ai.length) ? SHOP_NOTE : '')
                 : '<p class="wc-note ok">Nothing in our catalogue for ' + esc(D.crops[st.crop].toLowerCase()) + ' matches that yet. Send a photo to Anee, the smart farm technician, and she will tell you what it most likely is.</p>')
             + '</div>';
         if (swap) { card.classList.remove('is-swap'); void card.offsetWidth; card.classList.add('is-swap'); }

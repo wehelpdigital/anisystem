@@ -58,6 +58,12 @@
             font-size: .9rem; font-weight: 700; color: #14210c; }
         .fs-ais li i { font-style: normal; font-size: .7rem; font-weight: 800; padding: .14rem .45rem; border-radius: 999px; color: #2d5016; background: #e4efd4; white-space: nowrap; }
         .fs-ais li.is-plain { padding-right: .7rem; }
+        .shop { display: inline-flex; gap: .25rem; }
+        .shop a { display: inline-flex; align-items: center; min-height: 1.45rem; padding: .1rem .45rem; border-radius: 999px; font-size: .62rem; font-weight: 800; color: #fff; text-decoration: none;
+            transition: transform .28s cubic-bezier(.22,1,.36,1), filter .28s cubic-bezier(.22,1,.36,1); }
+        .shop a:hover { transform: translateY(-1px); filter: brightness(1.08); }
+        .shop a.is-sp { background: #ee4d2d; } .shop a.is-lz { background: #1a1aa6; }
+        @media (prefers-reduced-motion: reduce) { .shop a { transition: none; } }
         .fs-legend { margin-top: .7rem !important; font-size: .84rem !important; color: #6b7280 !important; }
         .fs-no { display: flex; gap: .55rem; align-items: flex-start; padding: .75rem .85rem; border-radius: .9rem; font-size: .93rem; line-height: 1.55; color: #6b4a00; background: #fff8e6; border: 1px solid #f5d98a; }
         .fs-no svg { flex: none; width: 1.1rem; height: 1.1rem; margin-top: .15rem; color: #c79e00; }
@@ -144,10 +150,11 @@
                             <h2>What to spray</h2>
                             <ul class="fs-ais">
                                 @foreach ($e['ai'] as [$ing, $grp])
-                                    <li class="{{ $grp ? '' : 'is-plain' }}">{{ $ing }}@if ($grp)<i>{{ $grp }}</i>@endif</li>
+                                    @php($sh = $F::shopLinks($ing))
+                                    <li class="{{ $grp ? '' : 'is-plain' }}">{{ $ing }}@if ($grp)<i>{{ $grp }}</i>@endif<span class="shop"><a class="is-sp" href="{{ $sh['shopee'] }}" target="_blank" rel="noopener nofollow" aria-label="{{ $sh['name'] }} on Shopee">Shopee</a><a class="is-lz" href="{{ $sh['lazada'] }}" target="_blank" rel="noopener nofollow" aria-label="{{ $sh['name'] }} on Lazada">Lazada</a></span></li>
                                 @endforeach
                             </ul>
-                            <p class="fs-legend">Active ingredients only, never brands. The {{ $isPest ? 'IRAC' : 'FRAC' }} group tells how it works: switch to a different group next time, so the {{ $noun }} does not learn to survive it. Spray only when the damage is worth the cost, and only with products registered with the <a href="{{ $S::url('blog', 'fertilizer-and-pesticide-authority') }}" class="underline">Fertilizer and Pesticide Authority</a> for your crop. Follow the label.</p>
+                            <p class="fs-legend">Active ingredients only, never brands. The {{ $isPest ? 'IRAC' : 'FRAC' }} group tells how it works: switch to a different group next time, so the {{ $noun }} does not learn to survive it. Spray only when the damage is worth the cost, and only with products registered with the <a href="{{ $S::url('blog', 'fertilizer-and-pesticide-authority') }}" class="underline">Fertilizer and Pesticide Authority</a> for your crop. Follow the label. The Shopee and Lazada links only show who sells something with that active ingredient, not a recommendation of any seller or product.</p>
                             @if ($e['no'] !== '')<p class="fs-no mt-3"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span>{{ $e['no'] }}</span></p>@endif
                         </section>
                     @elseif ($e['no'] !== '')

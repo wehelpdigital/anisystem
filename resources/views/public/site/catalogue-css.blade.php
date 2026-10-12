@@ -181,6 +181,16 @@
         .wc-ings li { display: inline-flex; align-items: center; gap: .45rem; padding: .42rem .45rem .42rem .75rem; border-radius: .8rem; background: #f6f8f3; border: 1px solid #e5ebdf;
             font-size: .88rem; font-weight: 700; color: #1f2937; }
         .wc-ings li em { font-style: normal; font-size: .68rem; font-weight: 800; padding: .15rem .45rem; border-radius: 999px; color: #2d5016; background: #e4efd4; white-space: nowrap; cursor: help; }
+        /* Who sells it (2026-10-12): a search on Shopee and Lazada beside each
+           active ingredient, never a recommendation of a seller or product. */
+        .shop { display: inline-flex; gap: .25rem; }
+        .shop a { display: inline-flex; align-items: center; min-height: 1.45rem; padding: .1rem .45rem; border-radius: 999px; font-size: .62rem; font-weight: 800; letter-spacing: .02em;
+            color: #fff; text-decoration: none; transition: transform .28s cubic-bezier(.22,1,.36,1), filter .28s cubic-bezier(.22,1,.36,1); }
+        .shop a:hover { transform: translateY(-1px); filter: brightness(1.08); }
+        .shop a.is-sp { background: #ee4d2d; }
+        .shop a.is-lz { background: #1a1aa6; }
+        .shop-note { margin-top: .45rem; font-size: .76rem; line-height: 1.5; color: #6b7280; }
+        @media (prefers-reduced-motion: reduce) { .shop a { transition: none; } }
         .wc-split { display: grid; gap: .9rem; }
         @media (min-width: 640px) { .wc-split { grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); } }
         .wc-split > div { --g: 98; padding: .8rem; border-radius: 1rem; background: hsl(var(--g) 45% 97%); border: 1px solid hsl(var(--g) 35% 88%); }
