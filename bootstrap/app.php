@@ -102,6 +102,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // NPK Plus's Philippine products (2026-10-12): the FPA's registered
         // fertilizer list once a month, and at first while only the hand
         // checked products are in.
+        // Satellite Weather's weekly renewals (2026-10-13), a little before each pass ends.
+        $schedule->command('sky:renew')->everyTenMinutes()->withoutOverlapping(10)->runInBackground();
         // Satellite Weather's batch (2026-10-12): the national grid once per 3 hour block, only while a pass runs.
         $schedule->command('sky:batch')->cron('2 0,3,6,9,12,15,18,21 * * *')->timezone('UTC')->withoutOverlapping(20)->runInBackground();
         // Anee Auto's morning (2026-10-12): re-plan, brief and mail each running season.

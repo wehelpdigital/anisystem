@@ -733,6 +733,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sky-weather', [App\Http\Controllers\SkyWeatherController::class, 'page'])->name('sky.page');
     Route::get('/app/sky-weather/options', [App\Http\Controllers\SkyWeatherController::class, 'options'])->name('sky.options');
     Route::post('/app/sky-weather/pass', [App\Http\Controllers\SkyWeatherController::class, 'buyPass'])->middleware('throttle:10,1')->name('sky.pass');
+    Route::put('/app/sky-weather/pass/renewal', [App\Http\Controllers\SkyWeatherController::class, 'renewal'])->middleware('throttle:20,1')->name('sky.pass.renewal');
     Route::get('/app/sky-weather/tile/{layer}/{z}/{x}/{y}', [App\Http\Controllers\SkyWeatherController::class, 'tile'])->where(['layer' => '[a-z_]+', 'z' => '\d+', 'x' => '\d+', 'y' => '\d+'])->middleware('throttle:900,1')->name('sky.tile');
     Route::get('/app/sky-weather/frames', [App\Http\Controllers\SkyWeatherController::class, 'frames'])->name('sky.frames');
     Route::get('/app/sky-weather/storms', [App\Http\Controllers\SkyWeatherController::class, 'storms'])->name('sky.storms');

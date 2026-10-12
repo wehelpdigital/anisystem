@@ -20,12 +20,55 @@
     .sk-wrap { max-width: 72rem; margin: 0 auto; }
     .sk-stage { position: relative; isolation: isolate; border-radius: 1.4rem; overflow: hidden; background: #0b1220; border: 1px solid #1e293b;
         box-shadow: 0 30px 60px -40px rgb(0 0 0 / .9); }
-    .sk-map { height: clamp(30rem, 74vh, 48rem); }
+    /* The map fills what is left of the screen under the tabs (--sk-h, measured), so nothing scrolls on its tab. */
+    .sk-map { height: var(--sk-h, calc(100svh - var(--app-head, 4rem) - 5rem)); min-height: 22rem; }
     @media (max-width: 1023.98px) {
-        .sk-stage { margin: -1rem -1rem 0; border-radius: 0; border: 0; box-shadow: none; }
-        .sk-map { height: max(30rem, calc(100svh - var(--app-head, 3.6rem) - 3.5rem - env(safe-area-inset-bottom, 0px))); }
+        .sk-stage { margin: 0 -1rem; border-radius: 0; border: 0; box-shadow: none; }
     }
-    @media (min-width: 640px) and (max-width: 1023.98px) { .sk-stage { margin: -1rem -1.5rem 0; } }
+    @media (min-width: 640px) and (max-width: 1023.98px) { .sk-stage { margin: 0 -1.5rem; } }
+    /* On the map's tab the page is the map: no footer under it. */
+    html.sk-maptab footer { display: none; }
+    html.sk-maptab main { padding-bottom: 0 !important; }
+    @media (max-width: 1023.98px) { html.sk-maptab main { padding-top: 0 !important; } }
+    .sk-tabs { display: flex; gap: .3rem; overflow-x: auto; scrollbar-width: none; padding: .15rem 0 .6rem; }
+    .sk-tabs::-webkit-scrollbar { display: none; }
+    @media (max-width: 1023.98px) { .sk-tabs { margin: 0 -1rem; padding: .55rem 1rem; background: var(--color-white); border-bottom: 1px solid var(--color-gray-200); } }
+    @media (min-width: 640px) and (max-width: 1023.98px) { .sk-tabs { margin: 0 -1.5rem; padding: .55rem 1.5rem; } }
+    .sk-tabs button { flex: none; display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .85rem; border-radius: 999px; font-size: .82rem; font-weight: 800; color: var(--color-gray-600);
+        background: var(--color-white); border: 1px solid var(--color-gray-200); cursor: pointer; transition: background-color .28s var(--sk-ease), color .28s var(--sk-ease), border-color .28s var(--sk-ease); }
+    .sk-tabs button svg { width: 1rem; height: 1rem; }
+    .sk-tabs button img { width: 1.15rem; height: 1.15rem; border-radius: 999px; }
+    .sk-tabs button.is-on { color: #fff; background: #1e3a8a; border-color: #1e3a8a; }
+    .sk-tabs em { font-style: normal; min-width: 1.2rem; padding: 0 .35rem; border-radius: 999px; font-size: .68rem; text-align: center; color: #fff; background: #dc2626; }
+    .sk-tabs em[hidden] { display: none; }
+    html.dark .sk-tabs { background: transparent; }
+    html.dark .sk-tabs button:not(.is-on) { background: #161c22; border-color: #283241; color: #cbd5e1; }
+    @media (max-width: 1023.98px) { html.dark .sk-tabs { background: #0f141b; border-color: #1e293b; } }
+    .sk-tp[hidden] { display: none; }
+    .sk-tp:not([data-tp="map"]) { display: grid; gap: 1rem; padding-top: .4rem; animation: skUp .34s var(--sk-ease) both; }
+    .sk-tp:not([data-tp="map"])[hidden] { display: none; }
+    .sk-wall-renew { display: flex; gap: .55rem; align-items: flex-start; margin: 0 0 .8rem; font-size: .8rem; line-height: 1.45; color: #cbd5e1; text-align: left; cursor: pointer; }
+    .sk-wall-renew input { margin-top: .15rem; width: 1rem; height: 1rem; flex: none; accent-color: #f5c518; }
+    .sk-sub-card h3 { margin-bottom: .2rem; }
+    .sk-sub-state { display: flex; align-items: center; gap: .8rem; margin-top: .8rem; padding: .9rem 1rem; border-radius: 1rem; background: linear-gradient(115deg, #eef4ff, #f8fbff); border: 1px solid #c7d6f5; }
+    .sk-sub-state.is-off { background: #fff8e6; border-color: #f5d98a; }
+    .sk-sub-state i { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .9rem; display: grid; place-items: center; font-style: normal; font-size: 1.3rem; background: #fff; }
+    .sk-sub-state b { display: block; font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+    .sk-sub-state small { display: block; font-size: .8rem; color: var(--color-gray-600); line-height: 1.45; }
+    .sk-sub-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .9rem; padding: .8rem 0; border-top: 1px dashed var(--color-gray-200); font-size: .86rem; color: var(--color-gray-700); }
+    .sk-switch { position: relative; flex: none; width: 2.9rem; height: 1.65rem; border-radius: 999px; background: var(--color-gray-300); border: 0; cursor: pointer; transition: background-color .28s var(--sk-ease); }
+    .sk-switch::after { content: ''; position: absolute; top: .2rem; left: .2rem; width: 1.25rem; height: 1.25rem; border-radius: 999px; background: #fff; box-shadow: 0 2px 5px rgb(0 0 0 / .3); transition: transform .28s var(--sk-ease); }
+    .sk-switch[aria-checked="true"] { background: #1e3a8a; }
+    .sk-switch[aria-checked="true"]::after { transform: translateX(1.25rem); }
+    .sk-sub-facts { display: grid; gap: .4rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: .4rem; }
+    @media (min-width: 640px) { .sk-sub-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .sk-sub-facts div { padding: .55rem .7rem; border-radius: .85rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .sk-sub-facts small { display: block; font-size: .64rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
+    .sk-sub-facts b { font-size: .92rem; color: var(--color-gray-900); }
+    html.dark .sk-sub-state { background: #101a2e; border-color: #1e3a5f; } html.dark .sk-sub-state.is-off { background: #2a2210; border-color: #5b4716; }
+    html.dark .sk-sub-state b, html.dark .sk-sub-facts b { color: #e5e7eb; } html.dark .sk-sub-state small { color: #94a3b8; } html.dark .sk-sub-state i { background: #1e293b; }
+    html.dark .sk-sub-facts div { background: #161c22; border-color: #283241; }
+    @media (prefers-reduced-motion: reduce) { .sk-switch, .sk-switch::after, .sk-tabs button { transition: none; } .sk-tp { animation: none !important; } }
     .sk-glass { color: #e2e8f0; background: rgb(12 18 32 / .8); backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3);
         box-shadow: 0 10px 26px -14px rgb(0 0 0 / .9), inset 0 0 0 1px rgb(255 255 255 / .07); }
 
@@ -258,7 +301,16 @@
 </style>
 
 <div class="sk-wrap">
-    <div class="sk-stage">
+    {{-- The module's tabs (2026-10-13): the map fills the screen on its own tab; the details live on theirs. --}}
+    <nav class="sk-tabs" id="skTabs" role="tablist" aria-label="Satellite Weather" hidden>
+        <button type="button" role="tab" class="is-on" data-tab="map" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4-2.7A1 1 0 013 16.4V5.6a1 1 0 011.4-.9L9 7m0 13l6-3m-6 3V7m6 10l4.6 2.3a1 1 0 001.4-.9V7.6a1 1 0 00-.6-.9L15 4m0 13V4m0 0L9 7"/></svg>Map</button>
+        <button type="button" role="tab" data-tab="storms" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg>Typhoons<em id="skTabStormN" hidden></em></button>
+        <button type="button" role="tab" data-tab="days" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>10 days</button>
+        <button type="button" role="tab" data-tab="anee" aria-selected="false"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="">Ask Anee</button>
+        <button type="button" role="tab" data-tab="pass" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 7a2 2 0 012-2h12a2 2 0 012 2M4 7v10a2 2 0 002 2h12a2 2 0 002-2V7M8 12h4"/></svg>Subscription</button>
+    </nav>
+    <section class="sk-tp is-on" data-tp="map">
+    <div class="sk-stage" id="skStage">
         <div class="sk-wall" id="skWall" hidden>
             <div class="sk-wall-card">
                 <div class="sk-wall-ico" aria-hidden="true">🛰️</div>
@@ -271,7 +323,8 @@
                     <li><span>📍</span>The distance from every storm to your farm</li>
                 </ul>
                 <div class="sk-wall-price"><span id="skWallPrice">30</span> credits<small id="skWallFor">for 7 days</small></div>
-                <button type="button" class="sk-wall-go" id="skWallGo">Open it for a week</button>
+                <label class="sk-wall-renew"><input type="checkbox" id="skWallRenew" checked><span>Renew every week from my credits. Cancel any time under Subscription.</span></label>
+                <button type="button" class="sk-wall-go" id="skWallGo">Subscribe</button>
                 <p class="sk-wall-fine" id="skWallFine"></p>
             </div>
         </div>
@@ -317,21 +370,27 @@
             </div>
         </div>
     </div>
-    <p class="sk-credit">Clouds: Himawari-9 infrared from NASA GIBS. Rain radar: RainViewer. Live layers: OpenWeatherMap. Typhoon tracks: GDACS. Forecast, and the forecast clouds and rain the map plays: the Open-Meteo model. Times are Philippine time.</p>
+    </section>
 
-    <div class="sk-grid">
-        <div class="sk-col">
+    <section class="sk-tp" data-tp="storms" hidden>
             <div class="sk-card">
                 <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg>Typhoons near your farm</h3>
                 <p class="sk-sub">Distance from the eye to your farm, measured on the map. Inside 300 km is a direct threat.</p>
                 <div id="skStorms"></div>
             </div>
+            <p class="sk-credit">Typhoon tracks: GDACS, the Global Disaster Alert and Coordination System. Times are Philippine time.</p>
+    </section>
+
+    <section class="sk-tp" data-tp="days" hidden>
             <div class="sk-card">
                 <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>The next 10 days at your farm</h3>
                 <p class="sk-sub">The sky, the high and the low, the rain expected and its chance.</p>
                 <div class="sk-days" id="skDays"><p class="sk-sub">Choose your farm to see its forecast.</p></div>
             </div>
-        </div>
+            <p class="sk-credit">Clouds: Himawari-9 infrared from NASA GIBS. Rain radar: RainViewer. Live layers: OpenWeatherMap. Forecast, and the forecast clouds and rain the map plays: the Open-Meteo model. Times are Philippine time.</p>
+    </section>
+
+    <section class="sk-tp" data-tp="anee" hidden>
         <div class="sk-card sk-ask">
             <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Ask Anee what it means for your crop</h3>
             <p class="sk-sub">Anee reads the storms, the forecast, ENSO and the past five years, then checks them against one of your lots: its crop, age and stage.</p>
@@ -347,8 +406,12 @@
                 <div class="sk-saved" id="skSaved"></div>
             </div>
         </div>
-    </div>
-    <div class="sk-rep" id="skRep" hidden></div>
+        <div class="sk-rep" id="skRep" hidden></div>
+    </section>
+
+    <section class="sk-tp" data-tp="pass" hidden>
+        <div class="sk-card sk-sub-card" id="skSubCard"></div>
+    </section>
     @include('sm.partials.anee-wait')
 </div>
 
@@ -380,7 +443,7 @@
         options: @json(route('sky.options')), frames: @json(route('sky.frames')), storms: @json(route('sky.storms')), forecast: @json(route('sky.forecast')),
         tile: @json(url('/app/sky-weather/tile')), generate: @json(route('sky.generate')), job: (id) => @json(url('/app/sky-weather/job')) + '/' + id,
         list: @json(route('sky.list')), one: (id) => @json(url('/app/sky-weather/one')) + '/' + id, places: @json(route('sat.places')), grid: @json(route('sky.grid')),
-        pass: @json(route('sky.pass')), buy: @json(route('ai.credits') . '?tab=buy'),
+        pass: @json(route('sky.pass')), renewal: @json(route('sky.pass.renewal')), buy: @json(route('ai.credits') . '?tab=buy'),
     };
     const KEY = 'anee.skyPlace';
     let OPT = null, map = null, farm = null, farmMark = null, ring = null, FR = { clouds: [], radar: [] }, STORMS = [], FC = { hours: [], days: [] };
@@ -873,6 +936,8 @@
         });
     };
     const badge = () => {
+        const nTab = $('skTabStormN');
+        if (nTab) { const n = STORMS.filter((x) => x.current).length; nTab.hidden = !n; nTab.textContent = n; }
         const near = farm ? STORMS.filter((s) => s.eye).map((s) => ({ s, d: km(farm, s.eye), c: (s.points || []).filter((p) => p.forecast).reduce((m, p) => Math.min(m, km(farm, p)), Infinity) })) : [];
         const hot = near.filter((x) => x.s.current && x.d <= 300).sort((a, b) => a.d - b.d)[0];
         const coming = near.filter((x) => x.s.current && x.c <= 300).sort((a, b) => a.c - b.c)[0];
@@ -1016,19 +1081,70 @@
 
     /* ---- boot ---- */
     /* ---- the week pass ---- */
+    /* ---- the tabs (2026-10-13): the map has the whole screen to itself ---- */
+    const fit = () => {
+        const st = $('skStage');
+        if (!st || st.closest('.sk-tp').hidden) return;
+        const top = st.getBoundingClientRect().top + window.scrollY;
+        const gap = innerWidth >= 1024 ? 16 : 0;
+        document.documentElement.style.setProperty('--sk-h', Math.max(352, Math.round(innerHeight - top - gap)) + 'px');
+    };
+    let tabNow = 'map';
+    const showTab = (t, push = true) => {
+        tabNow = t;
+        document.querySelectorAll('#skTabs [data-tab]').forEach((b) => { const on = b.dataset.tab === t; b.classList.toggle('is-on', on); b.setAttribute('aria-selected', String(on)); });
+        document.querySelectorAll('.sk-tp').forEach((pn) => { pn.hidden = pn.dataset.tp !== t; });
+        document.documentElement.classList.toggle('sk-maptab', t === 'map');
+        if (t === 'map') { window.scrollTo(0, 0); requestAnimationFrame(fit); }
+        else window.scrollTo({ top: 0, behavior: reduce() ? 'auto' : 'smooth' });
+        if (t === 'pass') paintSub();
+        if (push) { try { history.replaceState(null, '', t === 'map' ? location.pathname : location.pathname + '#' + t); } catch (_) {} }
+    };
+    $('skTabs').addEventListener('click', (e) => { const b = e.target.closest('[data-tab]'); if (b) showTab(b.dataset.tab); });
+    addEventListener('resize', () => { if (tabNow === 'map') fit(); });
+    document.documentElement.classList.add('sk-maptab');
+    fit();
+
+    /* ---- the subscription ---- */
+    const paintSub = () => {
+        const P = (OPT && OPT.pass) || {};
+        const box = $('skSubCard');
+        if (!box) return;
+        if (P.unlimited) {
+            box.innerHTML = '<h3>Subscription</h3><div class="sk-sub-state"><i>♾️</i><span><b>Unlimited account</b><small>Satellite Weather is always open on this account. Nothing is charged.</small></span></div>';
+            return;
+        }
+        const renew = !!P.autoRenew;
+        box.innerHTML = '<h3>Subscription</h3><p class="sk-sub">Satellite Weather is ' + esc(P.price) + ' credits a week. With renewal on, a new week is taken from your credits half an hour before the old one ends, so the page never closes on you. Cancel any time: the week you paid for stays open to its end.</p>'
+            + '<div class="sk-sub-state' + (renew ? '' : ' is-off') + '"><i>' + (renew ? '🔄' : '⏳') + '</i><span><b>' + (renew ? 'Active, renews every week' : 'Active until ' + esc(P.endsAt)) + '</b><small>'
+            + (renew ? 'Next renewal: ' + esc(P.endsAt) + ', ' + esc(P.price) + ' credits.' : 'Renewal is off: it closes on ' + esc(P.endsAt) + ' and nothing more is charged.') + '</small></span></div>'
+            + '<div class="sk-sub-facts"><div><small>Price</small><b>' + esc(P.price) + ' credits / week</b></div><div><small>This week ends</small><b>' + esc(P.endsAt || '') + '</b></div>'
+            + '<div><small>Openings left</small><b>' + esc(P.opensLeft ?? '') + ' of ' + esc(P.fairOpens) + '</b></div><div><small>Your credits</small><b>' + Number(Math.floor(OPT.balance || 0)).toLocaleString() + '</b></div></div>'
+            + (P.canBuy ? '<div class="sk-sub-row"><span><b>Renew every week</b><br><span class="text-xs text-gray-500">From your credits. If they run short, it simply ends; nothing is charged.</span></span><button type="button" class="sk-switch" id="skRenew" role="switch" aria-checked="' + renew + '" aria-label="Renew every week"></button></div>' : '<p class="sk-sub mt-3">The farm owner manages the subscription.</p>')
+            + '<p class="sk-sub mt-2"><a class="underline font-bold" href="' + U.buy + '">Buy credits</a> · A week covers up to ' + esc(P.fairOpens) + ' openings; when they run out, a renewing subscription starts its next week early.</p>';
+        $('skRenew')?.addEventListener('click', async (e) => {
+            const btn = e.currentTarget, on = btn.getAttribute('aria-checked') !== 'true';
+            btn.setAttribute('aria-checked', String(on));
+            try { const r = await window.api(U.renewal, { method: 'PUT', body: { on } }); OPT.pass = Object.assign({}, OPT.pass, r.data.pass); window.toast?.(r.message, 'success'); paintSub(); }
+            catch (err) { btn.setAttribute('aria-checked', String(!on)); window.toast?.(err.message, 'error'); }
+        });
+    };
+
     const wall = (P) => {
         $('skWall').hidden = false;
+        $('skTabs').hidden = true;
         $('skWallPrice').textContent = P.price;
         $('skWallFor').textContent = 'for ' + P.days + ' days, up to ' + P.fairOpens + ' openings';
         const short = !P.unlimited && OPT && OPT.balance < P.price;
         $('skWallGo').disabled = !P.canBuy || short;
-        $('skWallFine').innerHTML = !P.canBuy ? 'Ask the farm owner to open Satellite Weather for the farm.'
-            : 'You have ' + Number(Math.floor(OPT ? OPT.balance : 0)).toLocaleString() + ' credits.' + (short ? ' <a href="' + U.buy + '">Buy credits</a>' : ' Anee\'s reading of the sky is priced on its own.');
+        $('skWallFine').innerHTML = (P.lapsed && P.lapsed.note ? esc(P.lapsed.note) + ' ' : '') + (!P.canBuy ? 'Ask the farm owner to subscribe for the farm.'
+            : 'You have ' + Number(Math.floor(OPT ? OPT.balance : 0)).toLocaleString() + ' credits.' + (short ? ' <a href="' + U.buy + '">Buy credits</a>' : ' Anee\'s reading of the sky is priced on its own.'));
+        $('skWallRenew').closest('label').hidden = !P.canBuy;
     };
     $('skWallGo').addEventListener('click', async () => {
         $('skWallGo').disabled = true; $('skWallGo').textContent = 'Opening…';
-        try { const r = await window.api(U.pass, { method: 'POST' }); window.toast?.(r.message, 'success'); location.reload(); }
-        catch (err) { window.toast?.(err.message, 'error'); $('skWallGo').disabled = false; $('skWallGo').textContent = 'Open it for a week'; }
+        try { const r = await window.api(U.pass, { method: 'POST', body: { autoRenew: $('skWallRenew').checked } }); window.toast?.(r.message, 'success'); location.reload(); }
+        catch (err) { window.toast?.(err.message, 'error'); $('skWallGo').disabled = false; $('skWallGo').textContent = 'Subscribe'; }
     });
 
     const boot = async () => {
@@ -1037,7 +1153,11 @@
             OPT = r.data;
             if (!OPT.pass || !OPT.pass.active) { wall(OPT.pass || { price: 30, days: 7, fairOpens: 40, canBuy: true }); return; }
             quote();
-            if (!OPT.pass.unlimited && OPT.pass.endsAt) $('skFine').insertAdjacentHTML('afterend', '<p class="sk-passline">Your week pass runs until ' + esc(OPT.pass.endsAt) + ' · ' + OPT.pass.opensLeft + ' openings left.</p>');
+            $('skTabs').hidden = false;
+            fit();
+            // A link to a tab (#storms, #days, #anee, #pass) opens on it.
+            const hashTab = (location.hash || '').slice(1);
+            if (['storms', 'days', 'anee', 'pass'].includes(hashTab)) showTab(hashTab, false);
             setLot('');
             $('skLots').innerHTML = OPT.lots.filter((l) => (l.lat && l.lng) || l.place).map((l) => '<button type="button" class="sk-opt" data-lot="' + l.id + '"><span>' + esc(l.name) + '<small>' + esc(l.crop + (l.place ? ' · ' + l.place : '')) + '</small></span></button>').join('') || '<p class="text-xs text-gray-400">Pin a lot on its map and it shows here.</p>';
             $('skLots').addEventListener('click', (e) => {

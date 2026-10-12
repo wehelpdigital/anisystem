@@ -72,19 +72,34 @@ class SkyWeatherController extends Controller
         return $ok ? null : $this->json(false, 'Satellite Weather needs a week pass.', ['needPass' => true], 402);
     }
 
-    public function buyPass()
+    public function buyPass(Request $request)
     {
         if (WorkerContext::inWorkerContext()) {
             return $this->json(false, 'Only the farm owner can open Satellite Weather for the farm.', [], 403);
         }
         $payer = $this->payer();
-        $r = SkyPass::buy((int) $payer->id);
+        $r = SkyPass::buy((int) $payer->id, $request->boolean('autoRenew', true));
         Cache::forget('skypass:ok:' . $payer->id);
         if (! $r['ok']) {
             return $this->json(false, $r['message'], ['outOfCredits' => ($r['status'] ?? 0) === 402], $r['status'] ?? 422);
         }
 
         return $this->json(true, $r['message'], ['pass' => SkyPass::state((int) $payer->id), 'balance' => round($this->credits->balance($payer->id), 2)]);
+    }
+
+    /** The subscription's renewal, on or off (the farm owner). */
+    public function renewal(Request $request)
+    {
+        if (WorkerContext::inWorkerContext()) {
+            return $this->json(false, 'Only the farm owner changes the subscription.', [], 403);
+        }
+        $payer = $this->payer();
+        $on = $request->boolean('on');
+        if (! SkyPass::setAutoRenew((int) $payer->id, $on)) {
+            return $this->json(false, 'There is no running subscription to change.', [], 404);
+        }
+
+        return $this->json(true, $on ? 'It renews every week again.' : 'Renewal is off. Satellite Weather stays open until the week ends.', ['pass' => SkyPass::state((int) $payer->id)]);
     }
 
     public function options()
