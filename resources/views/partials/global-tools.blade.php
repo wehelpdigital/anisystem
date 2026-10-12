@@ -93,6 +93,18 @@
         .qa-anee.is-soft::after { display: none; }
         html.dark .qa-anee.is-soft { color: #f5d34a; background: rgb(245 197 24 / .1); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45); }
         @media (prefers-reduced-motion: reduce) { .qa-anee::after { animation: none; display: none; } }
+        /* The three groups' headings (2026-10-12). */
+        .qa-group { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .5rem; padding: .7rem .35rem .05rem; animation: qaGroupIn .4s cubic-bezier(.22,1,.36,1) both; }
+        .qa-group.is-first { padding-top: .2rem; }
+        .qa-group .qa-anee { margin-left: 0; vertical-align: 0; }
+        .qa-group b { font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--color-gray-600); }
+        .qa-group i { flex-basis: 100%; font-style: normal; font-size: .72rem; line-height: 1.4; color: var(--color-gray-400); }
+        .qa-group-dot { display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem; border-radius: 999px; color: var(--color-gray-500); background: var(--color-gray-100); }
+        .qa-group-dot svg { width: .8rem; height: .8rem; }
+        html.dark .qa-group b { color: #b7c9a3; } html.dark .qa-group i { color: #7f9270; }
+        html.dark .qa-group-dot { background: #22301a; color: #a5c97e; }
+        @keyframes qaGroupIn { from { opacity: 0; transform: translateY(4px); } }
+        @media (prefers-reduced-motion: reduce) { .qa-group { animation: none; } }
         .qa-go { width: .95rem; height: .95rem; flex: none; color: var(--color-gray-300);
             transition: transform .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
         @media (hover: hover) {.qa-tile:hover .qa-go { transform: translateX(2px); } }
@@ -182,6 +194,12 @@
                     . ($soft ? 'You can ask Anee inside this tool' : 'Anee, the smart farm technician, does this for you') . '"><img src="' . e($qAneeFace) . '" alt="">' . ($soft ? '+ Anee' : 'Anee') . '</span>';
             @endphp
             @php $qWtpLocked = ! \App\Support\Tier::farmCan('aiAnalyses'); $qWtpRung = \App\Support\Tier::farmUnlocksAt('aiAnalyses'); $qWtpWith = \App\Support\Tier::withPlan($qWtpRung); @endphp
+            {{-- Grouped by Anee (2026-10-12): what she does for you, what has her inside, and the rest. --}}
+            <div class="qa-group is-first">
+                {!! $qAnee(false, 9) !!}
+                <b>Anee does it for you</b>
+                <i>She reads your farm and writes the analysis. Uses credits.</i>
+            </div>
             <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The When to Plant analysis comes with {{ $qWtpWith }}. Anee reads your town's climate and the El Niño or La Niña outlook to find your safest time to plant." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
@@ -255,6 +273,11 @@
                 @endif
             </a>
 
+            <div class="qa-group">
+                {!! $qAnee(true) !!}
+                <b>Your tools, with Anee inside</b>
+                <i>Use them on your own, and ask Anee inside when you want her reading.</i>
+            </div>
             {{-- Satellite Weather (2026-10-07): clouds, rain and typhoon
                  tracks over the farm; a week pass in credits since 2026-10-12
                  (App\Support\SkyPass), Anee's reading priced on its own. --}}
@@ -297,6 +320,23 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        {{-- NPK Plus (2026-10-07): the free fertilizer calculator; Anee's
+             reading of a plan is the paid step inside it. --}}
+        <a href="{{ route('npk.page') }}" class="qa-tile qa-build">
+            <span class="qa-ico"><img src="{{ asset('images/icons/npk.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+            <span class="qa-txt">
+                <b>NPK Plus Calculator{!! $qAnee(true) !!}</b>
+                <i>Add up every nutrient in your fertilizer plan, as the element and the oxide, and see if it is enough for your crop and what yield it can feed. Free.</i>
+            </span>
+            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+
+            {{-- Three: the farm tools, no Anee in them. --}}
+            <div class="qa-group is-plain">
+                <span class="qa-group-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></span>
+                <b>Farm tools</b>
+                <i>Finders, notes, maps, your workers and quick capture. No credits needed.</i>
+            </div>
         {{-- Field helpers (2026-10-07): the public site's weed control helper
              and pest and disease finders, as small modules of their own. --}}
         @foreach (\App\Http\Controllers\FieldHelperController::TOOLS as $fhKey => [$fhName, $fhLead, $fhIcon])
@@ -309,16 +349,6 @@
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
         @endforeach
-        {{-- NPK Plus (2026-10-07): the free fertilizer calculator; Anee's
-             reading of a plan is the paid step inside it. --}}
-        <a href="{{ route('npk.page') }}" class="qa-tile qa-build">
-            <span class="qa-ico"><img src="{{ asset('images/icons/npk.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
-            <span class="qa-txt">
-                <b>NPK Plus Calculator{!! $qAnee(true) !!}</b>
-                <i>Add up every nutrient in your fertilizer plan, as the element and the oxide, and see if it is enough for your crop and what yield it can feed. Free.</i>
-            </span>
-            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-        </a>
             {{-- The four analyses first (the owner's order, 2026-09-16); the
                  notes and the pictures gathered across every season follow. --}}
             <a href="{{ route('notes.hub') }}" class="qa-tile qa-notes">
