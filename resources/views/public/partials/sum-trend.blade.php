@@ -5,10 +5,13 @@
      is-down or is-way), $label and $heights (six percentages). Optional
      $mark (a bar's index) and $markLabel: words above the chart with an
      arrow that draws itself down to that bar's point (the green card: "You
-     start using anee.io" pointing at Now, owner 2026-10-07). --}}
+     start using anee.io" pointing at Now, owner 2026-10-07). Optional
+     $curve: the arrow is one smooth curve rising from the first bar's height
+     to the last, flat at first and steeper as it goes, not a line through
+     each bar's top (the green card, owner 2026-10-12). --}}
 @php $stYear = (int) now()->timezone('Asia/Manila')->format('Y'); @endphp
 <div class="hp-sum-trend {{ $cls }}" aria-hidden="true">
-    <div class="hp-sum-plot{{ isset($mark) ? ' has-mark' : '' }}" data-trend @isset($mark) data-mark="{{ $mark }}" @endisset>
+    <div class="hp-sum-plot{{ isset($mark) ? ' has-mark' : '' }}" data-trend @isset($mark) data-mark="{{ $mark }}" @endisset @if (! empty($curve)) data-curve @endif>
         @isset($mark)<span class="hp-sum-mark">{{ $markLabel ?? '' }}</span>@endisset
         <span class="hp-sum-bars">
             @foreach ($heights as $k => $h)
@@ -37,7 +40,7 @@
         const bars = [...plot.querySelectorAll('.hp-sum-bars i')];
         const box = plot.getBoundingClientRect();
         if (!box.width || !bars.length) return;
-        const pts = bars.map((b) => {
+        const tops = bars.map((b) => {
             const r = b.getBoundingClientRect();
             const h = parseFloat(b.style.getPropertyValue('--h')) / 100;
             const inner = plot.querySelector('.hp-sum-bars').getBoundingClientRect();
@@ -45,6 +48,16 @@
             const top = inner.bottom - (inner.height - 7) * h - box.top;
             return [r.left - box.left + r.width / 2, top - 9];
         });
+        /* One clean curve (data-curve): from the first bar's height to the
+           last one's, flat at first and steeper as it goes (y rises with the
+           square and a bit of x), sampled finely and smoothed below, so it
+           is one unbroken bend and never follows a bar. The marked point
+           sits on it, above its bar. */
+        const curved = plot.dataset.curve !== undefined;
+        const [x0, y0] = tops[0], [x1, y1] = tops[tops.length - 1];
+        const onCurve = (x) => { const t = Math.max(0, Math.min(1, (x - x0) / ((x1 - x0) || 1))); return [x, y0 + (y1 - y0) * Math.pow(t, 2.2)]; };
+        const pts = curved ? Array.from({ length: 25 }, (_, i) => onCurve(x0 + (x1 - x0) * i / 24)) : tops;
+        const markAt = (i) => (curved ? onCurve(tops[i][0]) : tops[i]);
         // A smooth curve through the tops: monotone cubic (Fritsch and Carlson),
         // so it bends where the trend turns without overshooting a bar.
         const n = pts.length, dx = [], sl = [], m = [];
@@ -74,10 +87,11 @@
         let mark = '';
         const mi = plot.dataset.mark === undefined ? -1 : Number(plot.dataset.mark);
         const tag = plot.querySelector('.hp-sum-mark');
-        if (mi >= 0 && pts[mi] && tag) {
+        if (mi >= 0 && tops[mi] && tag) {
             // From the words to the marked point: out to the right, then down onto it.
             const t = tag.getBoundingClientRect();
-            const [ex, ey] = [pts[mi][0], pts[mi][1] - 7];
+            const mp = markAt(mi);
+            const [ex, ey] = [mp[0], mp[1] - 7];
             let sx = t.right - box.left + 5, sy = t.top - box.top + t.height / 2;
             let c1 = [sx + (ex - sx) * .7, sy], c2 = [ex, sy + (ey - sy) * .35];
             if (sx > ex - 18) {   // a narrow card: the words sit over the point, so straight down
@@ -87,7 +101,7 @@
             const ma = Math.atan2(ey - c2[1], ex - c2[0]);
             const mh = [ma + Math.PI - .5, ma + Math.PI + .5].map((q) => (ex + Math.cos(q) * 8).toFixed(1) + ' ' + (ey + Math.sin(q) * 8).toFixed(1));
             const f = (p) => p[0].toFixed(1) + ' ' + p[1].toFixed(1);
-            mark = `<circle class="mk-dot" cx="${pts[mi][0].toFixed(1)}" cy="${pts[mi][1].toFixed(1)}" r="4.5"/><circle class="mk-ring" cx="${pts[mi][0].toFixed(1)}" cy="${pts[mi][1].toFixed(1)}" r="4.5"/>`
+            mark = `<circle class="mk-dot" cx="${mp[0].toFixed(1)}" cy="${mp[1].toFixed(1)}" r="4.5"/><circle class="mk-ring" cx="${mp[0].toFixed(1)}" cy="${mp[1].toFixed(1)}" r="4.5"/>`
                 + `<path class="mk" d="M${f([sx, sy])} C${f(c1)} ${f(c2)} ${f([ex, ey])}" pathLength="1"/><path class="mk-hd" d="M${mh[0]} L${f([ex, ey])} L${mh[1]}"/>`;
         }
         svg.innerHTML = `<path class="ln" d="${d}" pathLength="1"/><path class="fl" d="${d}"/><path class="hd" d="M${h1} L${b[0].toFixed(1)} ${b[1].toFixed(1)} L${h2}"/>` + mark;

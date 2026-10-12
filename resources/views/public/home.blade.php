@@ -207,7 +207,7 @@
                     </ul>
                     {{-- Flat until now (the harvest that "stays the same, year after
                          year"), then up: the climb is the aim, not the past. --}}
-                    @include('public.partials.sum-trend', ['cls' => 'is-way', 'label' => 'The aim: more from every hectare, season after season', 'heights' => [34, 35, 33, 46, 68, 96], 'mark' => 3, 'markLabel' => 'You start using anee.io'])
+                    @include('public.partials.sum-trend', ['cls' => 'is-way', 'label' => 'The aim: more from every hectare, season after season', 'heights' => [34, 35, 33, 46, 68, 96], 'mark' => 3, 'markLabel' => 'You start using anee.io', 'curve' => true])
                 </div>
             </div>
 
