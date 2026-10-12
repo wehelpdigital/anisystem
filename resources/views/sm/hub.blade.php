@@ -123,7 +123,7 @@
     @if ($hubAuto)
         <a href="{{ route('auto.show', $hubAuto->id) }}" class="flex items-center gap-3 mb-4 p-3 rounded-2xl text-white" style="background:linear-gradient(115deg,#24410f,#10200a)">
             <span class="text-2xl" aria-hidden="true">🤖</span>
-            <span class="min-w-0 flex-1"><b class="block text-sm" style="color:#f5d34a">This is an Anee Auto season</b><span class="block text-xs" style="color:#cfe3b9">{{ $hubAuto->status === 'setting_up' ? 'Finish setting it up' : 'Today's work, the plan and the chat with Anee' }}</span></span>
+            <span class="min-w-0 flex-1"><b class="block text-sm" style="color:#f5d34a">This is an Anee Auto season</b><span class="block text-xs" style="color:#cfe3b9">{{ $hubAuto->status === 'setting_up' ? 'Finish setting it up' : "Today's work, the plan and the chat with Anee" }}</span></span>
             <span class="text-xs font-extrabold px-3 py-1 rounded-full" style="background:#f5c518;color:#1d330d">Open</span>
         </a>
     @endif
