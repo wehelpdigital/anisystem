@@ -720,6 +720,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/npk-plus/options', [App\Http\Controllers\NpkPlusController::class, 'options'])->name('npk.options');
     Route::get('/app/npk-plus/season', [App\Http\Controllers\NpkPlusController::class, 'season'])->middleware('throttle:30,1')->name('npk.season');
     Route::post('/app/npk-plus/product', [App\Http\Controllers\NpkPlusController::class, 'storeProduct'])->middleware('throttle:30,1')->name('npk.product');
+    Route::get('/app/npk-plus/ph', [App\Http\Controllers\NpkPlusController::class, 'phProducts'])->middleware('throttle:120,1')->name('npk.ph');
+    Route::post('/app/npk-plus/ph/use', [App\Http\Controllers\NpkPlusController::class, 'phUse'])->middleware('throttle:60,1')->name('npk.ph.use');
     Route::delete('/app/npk-plus/product/{id}', [App\Http\Controllers\NpkPlusController::class, 'destroyProduct'])->whereNumber('id')->name('npk.product.delete');
     Route::post('/app/npk-plus/save', [App\Http\Controllers\NpkPlusController::class, 'save'])->middleware('throttle:60,1')->name('npk.save');
     Route::get('/app/npk-plus/list', [App\Http\Controllers\NpkPlusController::class, 'list'])->name('npk.list');

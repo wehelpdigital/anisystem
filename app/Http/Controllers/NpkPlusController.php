@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 /**
  * NPK Plus (2026-10-07): a fertilizer calculator, and Anee's reading of it.
@@ -96,6 +97,8 @@ class NpkPlusController extends Controller
     private function productRow(object $p): array
     {
         $out = ['id' => (int) $p->id, 'slug' => $p->slug, 'name' => $p->name, 'local' => $p->local, 'category' => $p->userId ? 'mine' : $p->category,
+            // A Philippine product someone has used: on the plan's list, not on the common shelf.
+            'ph' => str_starts_with((string) $p->slug, 'ph-'),
             'form' => $p->form, 'unit' => $p->unit, 'bagKg' => $p->bagKg !== null ? (float) $p->bagKg : null, 'density' => $p->densityKgL !== null ? (float) $p->densityKgL : null,
             'note' => $p->note, 'own' => (bool) $p->userId, 'estimate' => json_decode((string) $p->estimate, true) ?: null, 'pct' => []];
         foreach (self::NUTRIENTS as $n) {
@@ -159,6 +162,37 @@ class NpkPlusController extends Controller
             'years' => $years, 'avg' => $avg, 'enso' => \App\Support\ClimateStore::enso(), 'through' => $hist['through'] ?? null,
             'monthsAhead' => (int) max(0, now('Asia/Manila')->startOfDay()->diffInMonths($from->copy()->startOfDay(), false)),
         ]);
+    }
+
+    /**
+     * The Philippine products tab (2026-10-12): the hand checked ones, or every
+     * registered product matching a search (App\Support\PhFertilizers).
+     */
+    public function phProducts(Request $request)
+    {
+        $q = Str::limit(trim((string) $request->query('q', '')), 80, '');
+        $cat = (string) $request->query('cat', '');
+        $cat = array_key_exists($cat, self::CATEGORIES) ? $cat : '';
+        try {
+            $rows = \App\Support\PhFertilizers::search($q, $cat, $q === '' ? 200 : 60);
+            $total = DB::table('as_ph_fertilizers')->where('active', 1)->count();
+            $asOf = DB::table('as_ph_fertilizers')->where('active', 1)->max('asOf');
+        } catch (\Throwable $e) {
+            return $this->json(true, 'ok', ['rows' => [], 'total' => 0, 'asOf' => null]);
+        }
+
+        return $this->json(true, 'ok', ['rows' => $rows, 'total' => $total, 'asOf' => $asOf]);
+    }
+
+    /** A Philippine product into the plan: its NPK Plus product, made the first time anyone uses it. */
+    public function phUse(Request $request)
+    {
+        $p = \App\Support\PhFertilizers::product((int) $request->input('id'));
+        if (! $p) {
+            return $this->json(false, 'That product is no longer on the list.', [], 404);
+        }
+
+        return $this->json(true, 'ok', ['product' => $this->productRow($p)]);
     }
 
     /** A farmer's own product, typed in from its label. */

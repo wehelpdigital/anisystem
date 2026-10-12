@@ -191,6 +191,15 @@
     .np-add svg { width: 1.05rem; height: 1.05rem; }
 
     /* The product sheet. */
+    .np-ptabs { display: grid; grid-template-columns: 1fr 1fr; gap: .25rem; padding: .25rem; margin-bottom: .7rem; border-radius: .9rem; background: var(--color-gray-100); }
+    .np-ptab { padding: .5rem .4rem; border-radius: .7rem; font-size: .8rem; font-weight: 800; color: var(--color-gray-600); transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .np-ptab.is-on { background: var(--color-white); color: var(--color-brand-700); box-shadow: 0 4px 12px -8px rgb(15 23 42 / .5); }
+    html.dark .np-ptabs { background: #1c2616; } html.dark .np-ptab.is-on { background: #2b3a1c; color: #e8efe1; }
+    .np-phb { display: inline-block; margin-right: .3rem; padding: .05rem .4rem; border-radius: 999px; font-size: .62rem; font-weight: 800; letter-spacing: .03em; color: #3b2f00; background: #fde68a; vertical-align: 1px; }
+    .np-phok { display: inline-block; margin-left: .3rem; font-size: .62rem; font-weight: 800; color: #2d5016; }
+    #npPhList .np-prow, #npPhList .crop-group-h { animation: npPhIn .3s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes npPhIn { from { opacity: 0; transform: translateY(4px); } }
+    @media (prefers-reduced-motion: reduce) { #npPhList .np-prow, #npPhList .crop-group-h { animation: none; } .np-ptab { transition: none; } }
     .np-cats { display: flex; gap: .3rem; overflow-x: auto; scrollbar-width: none; margin: 0 -.1rem .3rem; padding: .1rem; }
     .np-cats::-webkit-scrollbar { display: none; }
     .np-cat { flex: none; padding: .38rem .7rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: var(--color-gray-600); background: var(--color-gray-100); border: 0; cursor: pointer;
@@ -698,6 +707,22 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
+        {{-- Two shelves (2026-10-12): the common grades, and the real products
+             on Philippine shelves (FPA registered, updated monthly). --}}
+        <div class="np-ptabs" role="tablist">
+            <button type="button" class="np-ptab is-on" role="tab" aria-selected="true" data-pt="common">Common products</button>
+            <button type="button" class="np-ptab" role="tab" aria-selected="false" data-pt="ph">Philippine products</button>
+        </div>
+        <div id="npPhPane" hidden>
+            <div class="crop-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+                <input type="text" id="npPhQ" class="form-input" autocomplete="off" placeholder="Brand, product or grade, like Yara or 16-20-0">
+            </div>
+            <div class="np-cats" id="npPhCats"></div>
+            <div id="npPhList"></div>
+            <p class="np-fine mt-2" id="npPhNote">From the Fertilizer and Pesticide Authority's list of registered fertilizers, updated every month. Brands are shown so you can find them; NPK Plus does not recommend one over another.</p>
+        </div>
+        <div id="npCommonPane">
         <div class="crop-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
             <input type="text" id="npProdQ" class="form-input" autocomplete="off" placeholder="Find a product, like urea or 14-14-14">
@@ -705,6 +730,7 @@
         </div>
         <div class="np-cats" id="npCats"></div>
         <div id="npProdList"></div>
+        </div>
         <button type="button" class="np-prow is-new" id="npCustomBtn"><span class="np-prow-g">Label</span><span class="np-prow-t"><b>A product not on the list</b><small>Type what its label says, once. It stays in My products.</small></span>
             <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg></button>
     </div>
@@ -828,6 +854,7 @@
         options: @json(route('npk.options')), product: @json(route('npk.product')),
         save: @json(route('npk.save')), season: @json(route('npk.season')), ph: @json(asset('data/ph-locations.json')), list: @json(route('npk.list')), one: (id) => @json(url('/app/npk-plus/one')) + '/' + id,
         analyze: @json(route('npk.analyze')), job: (id) => @json(url('/app/npk-plus/job')) + '/' + id,
+        phProducts: @json(route('npk.ph')), phUse: @json(route('npk.ph.use')),
     };
     const NUTRIENTS = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si', 'Cl', 'Co'];
     const NPK = ['N', 'P2O5', 'K2O'];
@@ -1279,7 +1306,7 @@
         // Every word of the search, in any order ("anhydrous calcium sulfate"); "16-16-8+9s"
         // finds "16-16-8-9S" (a plus between the grade and the sulfur reads as a dash).
         const words = q.replace(/\s*\+\s*/g, '-').replace(/sulphate/g, 'sulfate').split(/\s+/).filter(Boolean);
-        const hit = (p) => { if (cat !== 'all' && p.category !== cat) return false; if (!q) return true; const hay = (p.name + ' ' + (p.local || '') + ' ' + grade(p) + ' ' + Object.keys(p.pct).map((k) => NAMES[k] || k).join(' ')).toLowerCase(); return words.every((w) => hay.includes(w)); };
+        const hit = (p) => { if (p.ph) return false; if (cat !== 'all' && p.category !== cat) return false; if (!q) return true; const hay = (p.name + ' ' + (p.local || '') + ' ' + grade(p) + ' ' + Object.keys(p.pct).map((k) => NAMES[k] || k).join(' ')).toLowerCase(); return words.every((w) => hay.includes(w)); };
         const row = (p) => {
             const inPlan = st.lines.some((l) => l.id === p.id);
             return '<button type="button" class="np-prow' + (inPlan ? ' is-in' : '') + '" data-id="' + p.id + '"><span class="np-prow-g">' + esc(badge(p)) + '</span><span class="np-prow-t"><b>' + esc(p.name) + '</b><small>' + esc(comp(p)) + '</small></span>'
@@ -1292,6 +1319,61 @@
             : l.map(row).join('');
     };
     $('npAddBtn').addEventListener('click', () => { if (!ready()) return; paintProducts(); window.openSheet('npProdSheet'); });
+
+    /* The Philippine products shelf: asked of the server (the FPA list runs
+       past fifteen hundred), the hand checked ones first. A product chosen
+       becomes one of NPK Plus's products and goes on to "How much?". */
+    let phCat = '', phT = 0, phAsk = 0;
+    const phTab = (which) => {
+        document.querySelectorAll('#npProdSheet .np-ptab').forEach((b) => { const on = b.dataset.pt === which; b.classList.toggle('is-on', on); b.setAttribute('aria-selected', String(on)); });
+        $('npPhPane').hidden = which !== 'ph';
+        $('npCommonPane').hidden = which === 'ph';
+        if (which === 'ph' && !$('npPhList').dataset.loaded) phLoad();
+    };
+    document.querySelectorAll('#npProdSheet .np-ptab').forEach((b) => b.addEventListener('click', () => phTab(b.dataset.pt)));
+    const paintPhCats = () => { $('npPhCats').innerHTML = '<button type="button" class="np-cat is-on" data-c="">All</button>' + Object.entries(OPT.categories).filter(([k]) => k !== 'mine').map(([k, v]) => '<button type="button" class="np-cat" data-c="' + k + '">' + esc(v) + '</button>').join(''); };
+    $('npPhCats').addEventListener('click', (e) => {
+        const b = e.target.closest('.np-cat');
+        if (!b) return;
+        phCat = b.dataset.c;
+        $('npPhCats').querySelectorAll('.np-cat').forEach((x) => x.classList.toggle('is-on', x === b));
+        phLoad();
+    });
+    $('npPhQ').addEventListener('input', () => { clearTimeout(phT); phT = setTimeout(phLoad, 280); });
+    const phRow = (p) => {
+        const nut = Object.entries(p.pct).filter(([, v]) => v > 0).map(([k, v]) => lab(k) + ' ' + (Math.round(v * 100) / 100) + '%').join(' · ');
+        return '<button type="button" class="np-prow" data-ph="' + p.id + '"><span class="np-prow-g">' + esc(p.grade || (Object.keys(p.pct)[0] || '')) + '</span><span class="np-prow-t"><b><span class="np-phb">' + esc(p.brand || '') + '</span>' + esc(p.name) + '</b>'
+            + '<small>' + esc(nut) + (p.packs && p.packs.length ? ' · ' + esc(p.packs.join(', ')) : '') + '</small><small>FPA ' + esc(p.reg || '') + (p.curated ? '<span class="np-phok">✓ checked</span>' : '') + '</small></span>' + PLUS + '</button>';
+    };
+    const phLoad = async () => {
+        const ask = ++phAsk, q = $('npPhQ').value.trim();
+        $('npPhList').innerHTML = '<p class="crop-none">Looking…</p>';
+        try {
+            const r = await window.api(U.phProducts + '?' + new URLSearchParams({ q, cat: phCat }).toString());
+            if (ask !== phAsk) return;
+            const rows = r.data.rows || [];
+            $('npPhList').dataset.loaded = '1';
+            if (!rows.length) { $('npPhList').innerHTML = '<p class="crop-none">No registered product by that name. Try the brand, the grade, or add it from its label below.</p>'; return; }
+            const cats = OPT.categories;
+            $('npPhList').innerHTML = !q && !phCat
+                ? Object.entries(cats).map(([k, v]) => { const g = rows.filter((p) => p.category === k); return g.length ? '<p class="crop-group-h">' + esc(v) + '</p>' + g.map(phRow).join('') : ''; }).join('')
+                : rows.map(phRow).join('');
+            $('npPhNote').textContent = 'From the Fertilizer and Pesticide Authority\'s list of ' + Number(r.data.total || 0).toLocaleString() + ' registered fertilizers' + (r.data.asOf ? ' (as of ' + new Date(r.data.asOf + 'T00:00:00').toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' }) + ')' : '') + ', updated every month. Brands are shown so you can find them; NPK Plus does not recommend one over another.';
+        } catch (err) { if (ask === phAsk) $('npPhList').innerHTML = '<p class="crop-none">' + esc(err.message || 'The list could not load.') + '</p>'; }
+    };
+    $('npPhList').addEventListener('click', async (e) => {
+        const b = e.target.closest('[data-ph]');
+        if (!b || b.disabled) return;
+        b.disabled = true;
+        try {
+            const r = await window.api(U.phUse, { method: 'POST', body: { id: Number(b.dataset.ph) } });
+            const p = r.data.product;
+            const i = OPT.products.findIndex((x) => String(x.id) === String(p.id));
+            if (i >= 0) OPT.products[i] = p; else OPT.products.push(p);
+            openQty(p, st.lines.findIndex((l) => String(l.id) === String(p.id)), true);
+        } catch (err) { window.toast?.(err.message, 'error'); }
+        finally { b.disabled = false; }
+    });
     $('npProdQ').addEventListener('input', paintProducts);
     $('npProdQX').addEventListener('click', () => { $('npProdQ').value = ''; paintProducts(); $('npProdQ').focus(); });
     $('npCats').addEventListener('click', (e) => {
@@ -2021,6 +2103,7 @@
             const r = await window.api(U.options);
             OPT = r.data; M = OPT.model;
             $('npCats').innerHTML = '<button type="button" class="np-cat is-on" data-c="all">All</button>' + Object.entries(OPT.categories).map(([k, v]) => '<button type="button" class="np-cat" data-c="' + esc(k) + '">' + esc(v) + '</button>').join('');
+            paintPhCats();
             pills($('npTiming'), OPT.timing, 'timing');
             soilTag(); lines(); hints(); calc();
         } catch (err) { window.toast?.(err.message || 'Could not load the calculator.', 'error'); }

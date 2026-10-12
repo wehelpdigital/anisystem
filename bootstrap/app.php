@@ -99,6 +99,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // ones), so NPK Plus reads the season from its own tables.
         $schedule->command('climate:collect --enso')->dailyAt('08:15')->timezone('Asia/Manila')->withoutOverlapping(30)->runInBackground();
         $schedule->command('climate:collect --limit=6')->hourlyAt(23)->withoutOverlapping(50)->runInBackground();
+        // NPK Plus's Philippine products (2026-10-12): the FPA's registered
+        // fertilizer list once a month, and at first while only the hand
+        // checked products are in.
+        $schedule->command('fertilizers:fpa-sync')->monthlyOn(3, '04:30')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
+        $schedule->command('fertilizers:fpa-sync')->dailyAt('04:45')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground()
+            ->when(fn () => \Illuminate\Support\Facades\Schema::hasTable('as_ph_fertilizers') && ! \Illuminate\Support\Facades\DB::table('as_ph_fertilizers')->where('curated', 0)->exists());
         // Proof the scheduler runs (Laravel Cloud's toggle, 2026-10-07):
         // /deploy-check shows the last tick, written to the shared settings.
         $schedule->call(fn () => \App\Models\AsSiteSetting::put('scheduler.tick', now()->toIso8601String()))

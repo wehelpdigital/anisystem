@@ -1,0 +1,5466 @@
+{
+ "about": "Philippine fertilizer products checked by hand (2026-10-12): brand, form and pack sizes, with the FPA registration, analysis and expiry from the FPA list of active registered fertilizers. Loaded into as_ph_fertilizers (App\\Support\\PhFertilizers::seedCurated); the monthly fertilizers:fpa-sync adds every other registered product.",
+ "fields": {
+  "pct": "percent by weight (w/w) unless basis is 'w/v'; P and K as P2O5 and K2O because every label states them so; Ca, Mg, S, Zn, B, Mn and Si are elemental, worked out from CaO x0.715, MgO x0.603, SO3 x0.4005, B2O3 x0.311, ZnO x0.803, MnO x0.775, SiO2 x0.467 where the label gave oxides (each such product says so in notes); ppm divided by 10,000; g/L divided by 10 (w/v)",
+  "packs": "sizes sold; packsVerified true only where a page I read showed that size (FPA weekly price bulletin for the standard 50 kg grades, Lazada PH for Yara repacks, UPLB for Bio N); otherwise the sizes are the usual ones for that kind of product and packsNote says so",
+  "densityKgL": "only where it can be worked out from the label's own w/v and w/w figures; null otherwise",
+  "fpaReg / fpaExpiry / fpaCompany / fpaName / fpaAnalysis": "copied from the FPA list of 15 Sep 2026 (the registration with the latest expiry when there are several)"
+ },
+ "products": [
+  {
+   "brand": "Atlas",
+   "name": "Atlas Granular Urea 46-0-0",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 46.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10160",
+   "fpaExpiry": "2029-07-17",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Granular Urea (46-0-0)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=46%",
+   "notes": "16 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Prilled Urea 46-0-0",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 46.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4939",
+   "fpaExpiry": "2029-10-06",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Prilled Urea 46-0-0",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=46%",
+   "notes": "Prilled (small beads). 14 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Ammosul 21-0-0 (ammonium sulfate)",
+   "category": "nitrogen",
+   "form": "crystal",
+   "pct": {
+    "N": 21.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 24.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4442",
+   "fpaExpiry": "2028-09-05",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Ammosul (21-0-0)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=21%, S=24%",
+   "notes": "Some Atlas Ammosul registrations omit the 24% S.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraVera Viking Ship Granular Urea (46-0-0)",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 46.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2061",
+   "fpaExpiry": "2029-07-14",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Viking Ship Granular Urea",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=46%",
+   "notes": "4 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Planters Products",
+   "name": "Planters Products Granular Urea 46-0-0",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 46.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1069-TPA",
+   "fpaExpiry": "2029-07-30",
+   "fpaCompany": "Planters Products, Inc.",
+   "fpaName": "Planters Products Granular Urea 46-0-0",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=46%",
+   "notes": "4 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Harbest",
+   "name": "Harbest Granular Urea 46-0-0",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 46.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1052-TPA",
+   "fpaExpiry": "2029-01-31",
+   "fpaCompany": "Harbest Agribusiness Corporation",
+   "fpaName": "Harbest Granular Urea",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=46%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Harvester (Universal Harvester)",
+   "name": "Harvester Planters' Choice Granular Urea 46-0-0",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 46.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-7802",
+   "fpaExpiry": "2029-06-07",
+   "fpaCompany": "Universal Harvester, Inc.",
+   "fpaName": "Harvester Planters' Choice Granular Urea",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=46%",
+   "notes": "10 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Amigo Planters (La Filipina Uy Gongco)",
+   "name": "Amigo Planters Granular Urea 46-0-0",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 46.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10076",
+   "fpaExpiry": "2029-03-23",
+   "fpaCompany": "La Filipina Uy Gongco Corporation",
+   "fpaName": "Amigo Planters Granular Urea",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=46%",
+   "notes": "12 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Swire / Sunrise",
+   "name": "Swire Crystalline Ammonium Sulphate 21-0-0",
+   "category": "nitrogen",
+   "form": "crystal",
+   "pct": {
+    "N": 21.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10196",
+   "fpaExpiry": "2029-08-17",
+   "fpaCompany": "Swire Agrotech Agricultural Products Inc.",
+   "fpaName": "Swire Crystalline Ammonium Sulphate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=21%",
+   "notes": "S not stated on the FPA entry (ammonium sulfate carries about 24% S). 6 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Perfect Gro 14-14-14",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10139",
+   "fpaExpiry": "2029-06-11",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Perfect Gro (14-14-14)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Philphos",
+   "name": "Philphos 14-14-14",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-013",
+   "fpaExpiry": "2027-09-12",
+   "fpaCompany": "Philippine Phosphate Fertilizer Corporation",
+   "fpaName": "Philphos 14-14-14",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraMila UNIK 16 (16-16-16)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 16.0,
+    "P2O5": 16.0,
+    "K2O": 16.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg",
+    "1 kg (repack)"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-259",
+   "fpaExpiry": "2027-06-28",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "YaraMilaTM Unik 16TM",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=16%, P₂O₅=16%, K₂O=16%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Lazada PH brand page for Yara (retail packs)",
+     "url": "https://brandwiki.lazada.com.ph/yara/"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraMila WINNER (15-9-20)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 15.0,
+    "P2O5": 9.0,
+    "K2O": 20.0,
+    "Ca": 0,
+    "Mg": 1.085,
+    "S": 3.8,
+    "Zn": 0.02,
+    "B": 0.015,
+    "Fe": 0,
+    "Mn": 0.02,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg",
+    "1 kg (repack)"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2550",
+   "fpaExpiry": "2027-08-15",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaramila Winner",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=15%, P₂O₅=9%, K₂O=20%, S=3.8%, MgO=1.8%, B=0.015%, Mn=0.02%, Zn=0.02%",
+   "notes": "Mg worked out from label MgO 1.8% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Lazada PH brand page for Yara (retail packs)",
+     "url": "https://brandwiki.lazada.com.ph/yara/"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "Viking Ship NPK 14-14-14",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8895",
+   "fpaExpiry": "2028-11-04",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Viking Ship NPK 14-14-14",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%,",
+   "notes": "4 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraBasa KUMPLE+O (14-14-14 with organic matter)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg",
+    "1 kg (repack)",
+    "2 kg (repack)"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-9298",
+   "fpaExpiry": "2026-10-25",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "YaraBasa Kumple+o",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%, OM=0.13%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Lazada PH brand page for Yara (retail packs)",
+     "url": "https://brandwiki.lazada.com.ph/yara/"
+    }
+   ]
+  },
+  {
+   "brand": "Planters Products",
+   "name": "Planters Products 14-14-14 (Complete)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10038",
+   "fpaExpiry": "2029-02-25",
+   "fpaCompany": "Planters Products, Inc.",
+   "fpaName": "Planters Products 14-14-14 (Complete)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%",
+   "notes": "3 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Harbest",
+   "name": "Harbest NPK 14-14-14",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1036-TPA",
+   "fpaExpiry": "2028-08-02",
+   "fpaCompany": "Harbest Agribusiness Corporation",
+   "fpaName": "Harbest NPK 14-14-14",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Amigo Planters (La Filipina Uy Gongco)",
+   "name": "Amigo Planters NPK 14-14-14",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9986",
+   "fpaExpiry": "2029-01-13",
+   "fpaCompany": "La Filipina Uy Gongco Corporation",
+   "fpaName": "Amigo Planters NPK 14-14-14",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%",
+   "notes": "8 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Leads Agri",
+   "name": "iSmart 14-14-14",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9944",
+   "fpaExpiry": "2028-11-06",
+   "fpaCompany": "Leads Agricultural Products Corporation",
+   "fpaName": "Ismart 14-14-14",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%,",
+   "notes": "2 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Super Gro 16-20-0 (ammophos)",
+   "category": "phosphate",
+   "form": "granular",
+   "pct": {
+    "N": 16.0,
+    "P2O5": 20.0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10015",
+   "fpaExpiry": "2029-02-02",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Super Gro (16-20-0)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=16%, P₂O₅=20%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Di-Ammonium Phosphate 18-46-0",
+   "category": "phosphate",
+   "form": "granular",
+   "pct": {
+    "N": 18.0,
+    "P2O5": 46.0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4705",
+   "fpaExpiry": "2029-03-23",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Di-Ammonium Phosphate (18-46-0)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=18%, P₂O₅=46%",
+   "notes": "13 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Philphos",
+   "name": "Philphos 16-20-0 (ammonium phosphate)",
+   "category": "phosphate",
+   "form": "granular",
+   "pct": {
+    "N": 16.0,
+    "P2O5": 20.0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-7383",
+   "fpaExpiry": "2027-11-26",
+   "fpaCompany": "Philippine Phosphate Fertilizer Corporation",
+   "fpaName": "Philphos 16-20-0 Ammonium Phosphate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=16%, P₂O₅=20%",
+   "notes": "3 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Philphos",
+   "name": "Philphos 18-46-0 (DAP)",
+   "category": "phosphate",
+   "form": "granular",
+   "pct": {
+    "N": 18.0,
+    "P2O5": 46.0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-010",
+   "fpaExpiry": "2027-01-12",
+   "fpaCompany": "Philippine Phosphate Fertilizer Corporation",
+   "fpaName": "Philphos 18-46-0 (Di-Ammonium Phosphate)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N= 18%, P₂O₅= 46%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "Viking Ship DAP 18-46-0",
+   "category": "phosphate",
+   "form": "granular",
+   "pct": {
+    "N": 18.0,
+    "P2O5": 46.0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10192",
+   "fpaExpiry": "2029-08-13",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Viking Ship DAP 18-46-0",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=18%, P₂O₅=46%,",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Muriate of Potash 0-0-60",
+   "category": "potash",
+   "form": "granular",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 60.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-7561",
+   "fpaExpiry": "2028-05-29",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Muriate of Potash (MOP)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "K₂O=60%",
+   "notes": "3 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Philphos",
+   "name": "Philphos Muriate of Potash 0-0-60",
+   "category": "potash",
+   "form": "granular",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 60.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4345",
+   "fpaExpiry": "2028-06-23",
+   "fpaCompany": "Philippine Phosphate Fertilizer Corporation",
+   "fpaName": "Philphos Muriate of Potash (0-0-60)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "K₂O=60%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "FPA weekly fertilizer prices, per 50 kg bag (30 Jun to 4 Jul 2025)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/07/WFP-JUNE-30-JULY-04-2025.pdf"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraVera Viking Ship Granular Urea + Zinc",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 45.8,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0.2,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-4281",
+   "fpaExpiry": "2029-05-03",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaravera™ Viking Ship™ Granular Urea + Zinc",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=45.8%, Zn=0.2%",
+   "notes": "2 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Ammonium Chloride 25-0-0",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 25.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8443",
+   "fpaExpiry": "2027-09-13",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Ammonium Chloride (25-0-0)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=25%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Amigo Planters (La Filipina Uy Gongco)",
+   "name": "Amigo Planters SABIC Zinc Coated Urea",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 46.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0.1,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8386",
+   "fpaExpiry": "2027-08-02",
+   "fpaCompany": "La Filipina Uy Gongco Corporation",
+   "fpaName": "Amigo Planters Sabic Zinc Coated Urea",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=46%, Zn=0.10%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Amigo Planters (La Filipina Uy Gongco)",
+   "name": "Amigo Planters Ammonium Chloride 25-0-0",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 25.0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9439",
+   "fpaExpiry": "2027-04-16",
+   "fpaCompany": "La Filipina Uy Gongco Corporation",
+   "fpaName": "Amigo Planters Ammonium Chloride",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=25%",
+   "notes": "2 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Swire / Sunrise",
+   "name": "Swire Green Growth 28-0-5",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 28.0,
+    "P2O5": 0,
+    "K2O": 5.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9957",
+   "fpaExpiry": "2028-11-14",
+   "fpaCompany": "Swire Agrotech Agricultural Products Inc.",
+   "fpaName": "Swire Green Growth 28-0-5",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=28%, K₂O=5%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Swire / Sunrise",
+   "name": "Supra Grow 42-0-5",
+   "category": "nitrogen",
+   "form": "granular",
+   "pct": {
+    "N": 42.0,
+    "P2O5": 0,
+    "K2O": 5.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-IF-10175",
+   "fpaExpiry": "2029-07-27",
+   "fpaCompany": "Swire Agrotech Agricultural Products Inc.",
+   "fpaName": "Supra Grow 42-0-5",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=42%, K₂O=5%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraMila COMPLEX (12-11-18)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 12.0,
+    "P2O5": 11.0,
+    "K2O": 18.0,
+    "Ca": 0,
+    "Mg": 0.904,
+    "S": 6.0,
+    "Zn": 0.02,
+    "B": 0.02,
+    "Fe": 0.16,
+    "Mn": 0.02,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg",
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1155",
+   "fpaExpiry": "2027-05-14",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaramila™ Complex™",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=12%, P₂O₅=11%, K₂O=18%, S=6%,  MgO=1.5%, B=0.02%, Fe=0.16%, Zn=0.02%, Mn=0.02%",
+   "notes": "Mg worked out from label MgO 1.5% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraMila HYDRAN (19-4-19)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 19.0,
+    "P2O5": 4.0,
+    "K2O": 19.0,
+    "Ca": 0,
+    "Mg": 1.447,
+    "S": 1.8,
+    "Zn": 0.1,
+    "B": 0.1,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2551",
+   "fpaExpiry": "2027-08-15",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "YaraMilaTM HydranTM",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=19%, P₂O₅=4%, K₂O=19%, S=1.8%, MgO=2.4%, B=0.1%, Zn=0.1%",
+   "notes": "Mg worked out from label MgO 2.4% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraMila GROWIN (18-3-18)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 18.0,
+    "P2O5": 3.0,
+    "K2O": 18.0,
+    "Ca": 0,
+    "Mg": 1.206,
+    "S": 1.5,
+    "Zn": 0.06,
+    "B": 0.06,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9923",
+   "fpaExpiry": "2028-10-23",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaramila™ Growin™",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=18%, P₂O₅=3%, K₂O=18%, S=1.5%, MgO=2%, B=0.06%, Zn=0.06%",
+   "notes": "Mg worked out from label MgO 2.0% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Basal 12-12-17 (+9S, 10Cl)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 12.0,
+    "P2O5": 12.0,
+    "K2O": 17.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 9.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-1054",
+   "fpaExpiry": "2027-03-04",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas 12-12-17 w/ 9% S, 10% Cl",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=12%, P₂O₅=12%, K₂O=17%, S=9%, Cl=10%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Basal Plus Zinc 15-5-15 +1.5Zn",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 15.0,
+    "P2O5": 5.0,
+    "K2O": 15.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 11.0,
+    "Zn": 1.5,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-8593",
+   "fpaExpiry": "2028-01-11",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Basal plus Zinc 15-5-15+1.5Zn",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=15%, P₂O₅=5%, K₂O=15%, S=11%, Zn=1.5%",
+   "notes": "FPA lists S 11%; the Atlas products page says 8% S.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Hi-Yield Gro 17-7-17",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 17.0,
+    "P2O5": 7.0,
+    "K2O": 17.0,
+    "Ca": 0.715,
+    "Mg": 0,
+    "S": 8.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-8124",
+   "fpaExpiry": "2026-12-07",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas 17-7-17 (Hi Yield Gro) w/ 1% CaO, 8% S, 13% Cl",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N= 17%, P₂O₅= 7%, K₂O= 17%, CaO= 1%, S= 8%, Cl= 13%",
+   "notes": "Ca worked out from label CaO 1.0% x 0.7147.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Top Dress 17-0-17",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 17.0,
+    "P2O5": 0,
+    "K2O": 17.0,
+    "Ca": 0.715,
+    "Mg": 0,
+    "S": 12.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-8140",
+   "fpaExpiry": "2026-12-28",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Top Dress (17-0-17) w/ 1% CaO, 12% S, 13% Cl,",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=17%, K₂O= 17%, CaO= 1%, S=12%, Cl=13%",
+   "notes": "NK topdress (no P). FPA lists S 12%; the Atlas products page says 8% S. Ca worked out from label CaO 1.0% x 0.7147.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas 14-5-20 +0.02B (fruit-bearing crops)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 5.0,
+    "K2O": 20.0,
+    "Ca": 0.357,
+    "Mg": 0,
+    "S": 7.0,
+    "Zn": 0,
+    "B": 0.02,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-8589",
+   "fpaExpiry": "2028-01-11",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas 14-5-20 with 0.02% B, 0.5% CaO, 7% S, 15% Cl",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=5%, K₂O=20%, B=0.02%, CaO=0.5%, S=7%, Cl=15%",
+   "notes": "Ca worked out from label CaO 0.5% x 0.7147.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas 10-15-20 +12S (tobacco)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 10.0,
+    "P2O5": 15.0,
+    "K2O": 20.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 12.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-4995",
+   "fpaExpiry": "2026-09-20",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas 10-15-20 (S)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=10%, P₂O₅=15%, K₂O=20%, S= 12%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas 10-30-10",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 10.0,
+    "P2O5": 30.0,
+    "K2O": 10.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-2910",
+   "fpaExpiry": "2028-07-24",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas 10-30-10 with 8% Cl",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=10%, P₂O₅=30%, K₂O=10%, Cl=8%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Philphos",
+   "name": "Philphos 16-16-8",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 16.0,
+    "P2O5": 16.0,
+    "K2O": 8.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-332",
+   "fpaExpiry": "2027-05-02",
+   "fpaCompany": "Philippine Phosphate Fertilizer Corporation",
+   "fpaName": "Philphos 16-16-8 NPK",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=16%, P₂O₅=16%, K₂O=8%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Harbest",
+   "name": "Harbest NPK 17-0-17",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 17.0,
+    "P2O5": 0,
+    "K2O": 17.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1051-TPA",
+   "fpaExpiry": "2028-06-21",
+   "fpaCompany": "Harbest Agribusiness Corporation",
+   "fpaName": "Harbest NPK 17-0-17",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=17%, K₂O=17%",
+   "notes": "NK topdress (no P).",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Harvester (Universal Harvester)",
+   "name": "Harvester Planters' Choice NPK 15-15-15",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 15.0,
+    "P2O5": 15.0,
+    "K2O": 15.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4011",
+   "fpaExpiry": "2027-07-28",
+   "fpaCompany": "Universal Harvester, Inc.",
+   "fpaName": "Harvester Planter's Choice NPK 15-15-15",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=15%, P₂O₅=15%, K₂O=15%",
+   "notes": "3 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Harvester (Universal Harvester)",
+   "name": "Harvester Planters' Choice NPK 10-18-24",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 10.0,
+    "P2O5": 18.0,
+    "K2O": 24.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4941",
+   "fpaExpiry": "2029-08-16",
+   "fpaCompany": "Universal Harvester, Inc.",
+   "fpaName": "Harvester Planters' Choice NPK 10-18-24",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=10%, P₂O₅=18%, K₂O=24%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Amigo Planters (La Filipina Uy Gongco)",
+   "name": "Amigo Planters NPK 14-14-14 +11S",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 11.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2920",
+   "fpaExpiry": "2028-11-19",
+   "fpaCompany": "La Filipina Uy Gongco Corporation",
+   "fpaName": "Amigo Planters NPK 14-14-14+11S",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%, S=11%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Swire / Sunrise",
+   "name": "Swire Complete 16-16-16",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 16.0,
+    "P2O5": 16.0,
+    "K2O": 16.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10089",
+   "fpaExpiry": "2029-04-22",
+   "fpaCompany": "Swire Agrotech Agricultural Products Inc.",
+   "fpaName": "Swire Complete 16-16-16",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=16%, P₂O₅=16%, K₂O=16%",
+   "notes": "3 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Bacphil Planters",
+   "name": "Bacphil Planters 14-14-14 +11S",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 11.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-0731-TPA",
+   "fpaExpiry": "2028-11-19",
+   "fpaCompany": "Bacphil Planters Fertilizer Corporation",
+   "fpaName": "Bacphil Planters 14-14-14+11S",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%, S=11%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "SQM",
+   "name": "Qrop Mix Production 14-0-23 +13CaO",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 0,
+    "K2O": 23.0,
+    "Ca": 9.291,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg",
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8707",
+   "fpaExpiry": "2028-05-12",
+   "fpaCompany": "Farmtech Agriland Corporation",
+   "fpaName": "Qrop Mix Production 14-0-23+13 CaO",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, K₂O=23%, CaO=13%",
+   "notes": "SQM blend, registered by Farmtech Agriland Corporation. NK with calcium (no P). Ca worked out from label CaO 13.0% x 0.7147.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Ramgo",
+   "name": "Nutricote 13-11-11 +2MgO +TE (controlled release)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 13.0,
+    "P2O5": 11.0,
+    "K2O": 11.0,
+    "Ca": 0,
+    "Mg": 1.206,
+    "S": 5.0,
+    "Zn": 0.015,
+    "B": 0.02,
+    "Fe": 0.2,
+    "Mn": 0.06,
+    "Cu": 0.05,
+    "Mo": 0.02,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g",
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-3IF-7450",
+   "fpaExpiry": "2029-09-15",
+   "fpaCompany": "Ramgo International Corporation",
+   "fpaName": "Nutricote 13-11-11+2MgO+TE",
+   "fpaType": "Controlled Release Fertilizer",
+   "fpaAnalysis": "N=13%, P₂O₅=11%, K₂O=11%, MgO=2%, S=5%, B=0.02%, Cu=0.05%, Fe=0.2%, Mn=0.06%, Mo=0.02%, Zn=0.015%",
+   "notes": "Controlled release fertilizer. Mg worked out from label MgO 2.0% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Allied Botanical",
+   "name": "Osmocote 15-9-12 +TE (controlled release)",
+   "category": "complete",
+   "form": "granular",
+   "pct": {
+    "N": 15.0,
+    "P2O5": 9.0,
+    "K2O": 12.0,
+    "Ca": 0,
+    "Mg": 1.3,
+    "S": 6.0,
+    "Zn": 0.05,
+    "B": 0.02,
+    "Fe": 0.46,
+    "Mn": 0.06,
+    "Cu": 0.03,
+    "Mo": 0.02,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g",
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-3IF-079",
+   "fpaExpiry": "2026-11-08",
+   "fpaCompany": "Allied Botanical Corporation",
+   "fpaName": "Osmocote 15-9-12+TE",
+   "fpaType": "Controlled Release Fertilizer",
+   "fpaAnalysis": "N=15%, P₂O₅=9%, K₂O=12%, Mg=1.3%, S=6%, B=0.02%, Cu=0.03%, Fe=0.46%, Mn=0.06%, Mo=0.02%, Zn=0.05%",
+   "notes": "Controlled release fertilizer.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "name": "Atlas Urea Super Phosphate 20-10-0",
+   "category": "phosphate",
+   "form": "granular",
+   "pct": {
+    "N": 20.0,
+    "P2O5": 10.0,
+    "K2O": 0,
+    "Ca": 0.715,
+    "Mg": 0,
+    "S": 11.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-8594",
+   "fpaExpiry": "2028-01-11",
+   "fpaCompany": "Atlas Fertilizer Corporation",
+   "fpaName": "Atlas Urea Super Phosphate 20-10-0 with 11%S, 1% CaO",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=20%, P₂O₅=10%, S=11%, CaO=1%",
+   "notes": "Ca worked out from label CaO 1.0% x 0.7147.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Atlas Fertilizer products page",
+     "url": "https://atlasfertilizer.com/products/"
+    }
+   ]
+  },
+  {
+   "brand": "Amigo Planters (La Filipina Uy Gongco)",
+   "name": "Amigo Planters Granular Single Super Phosphate 0-18-0",
+   "category": "phosphate",
+   "form": "granular",
+   "pct": {
+    "N": 0,
+    "P2O5": 18.0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8681",
+   "fpaExpiry": "2028-04-26",
+   "fpaCompany": "La Filipina Uy Gongco Corporation",
+   "fpaName": "Amigo Planters Granular Single Super Phosphate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "P₂O₅=18%",
+   "notes": "Ca and S not stated on the FPA entry (SSP usually carries about 18 to 20% Ca and 11 to 12% S).",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Bacphil Planters",
+   "name": "Calphos (4-14-0 +15Ca +12S)",
+   "category": "phosphate",
+   "form": "granular",
+   "pct": {
+    "N": 4.0,
+    "P2O5": 14.0,
+    "K2O": 0,
+    "Ca": 15.0,
+    "Mg": 0,
+    "S": 12.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-3459",
+   "fpaExpiry": "2028-08-13",
+   "fpaCompany": "Bacphil Planters Fertilizer Corporation",
+   "fpaName": "Calphos",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=4%, P₂O₅=14%, Ca=15%, S=12%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Sagrex",
+   "name": "Sagrex Duofos Granular Guano Phosphate 0-22-0",
+   "category": "phosphate",
+   "form": "granular",
+   "pct": {
+    "N": 0,
+    "P2O5": 22.0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-7395",
+   "fpaExpiry": "2027-12-04",
+   "fpaCompany": "Sagrex Corporation",
+   "fpaName": "Sagrex Duofos Granular Guano Phosphate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "P₂O₅=22%",
+   "notes": "2 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Tierra",
+   "name": "Tierraphos Guano Granule 0-20-0",
+   "category": "phosphate",
+   "form": "granular",
+   "pct": {
+    "N": 0,
+    "P2O5": 20.0,
+    "K2O": 0,
+    "Ca": 20.012,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4829",
+   "fpaExpiry": "2029-06-08",
+   "fpaCompany": "Unilox Far East Resources Inc.",
+   "fpaName": "Tierraphos Guano Granule",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "P₂O₅=20%, CaO=28%-46%",
+   "notes": "Label CaO 28 to 46%; the minimum was used. Ca worked out from label CaO 28.0% x 0.7147.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraTera KRISTA SOP (0-0-51 +18S)",
+   "category": "potash",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 51.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 18.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-3817",
+   "fpaExpiry": "2026-12-23",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "YaraTera TM Krista TM SOP",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "K₂O= 51%, S= 18%",
+   "notes": "Water soluble sulfate of potash.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Harvester (Universal Harvester)",
+   "name": "Harvester Planters' Choice Sulphate of Potash 0-0-50",
+   "category": "potash",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 50.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg",
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1LF-2452",
+   "fpaExpiry": "2028-11-20",
+   "fpaCompany": "Universal Harvester, Inc.",
+   "fpaName": "Harvester Sulphate of Potash",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "K₂O=50%",
+   "notes": "S not stated on the FPA entry (SOP carries about 17 to 18% S). 2 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Allied Botanical",
+   "name": "Nova Ferti K 0-0-61 (soluble potassium chloride)",
+   "category": "potash",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 61.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-6053",
+   "fpaExpiry": "2027-01-12",
+   "fpaCompany": "Allied Botanical Corporation",
+   "fpaName": "Nova Ferti K 0-0-61",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "K₂O=61%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraTera CALCINIT (soluble calcium nitrate)",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 15.5,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 18.94,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-0814",
+   "fpaExpiry": "2029-09-27",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaratera Calcinit",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=15.5%, CaO= 26.5%",
+   "notes": "FPA lists it as Yaratera Calcinit (soluble grade for fertigation). Ca worked out from label CaO 26.5% x 0.7147.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraRega 13-4-25",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 13.0,
+    "P2O5": 4.0,
+    "K2O": 25.0,
+    "Ca": 0,
+    "Mg": 0.362,
+    "S": 10.814,
+    "Zn": 0.08,
+    "B": 0.08,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9491",
+   "fpaExpiry": "2027-06-26",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "YararegaTM 13-4-25",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=13%, P₂O₅=4%, K₂O=25%, SO₃=27%, B=0.08%, Zn=0.08%, MgO=0.6%",
+   "notes": "Water soluble NPK for fertigation. S worked out from label SO3 27.0% x 0.4005. Mg worked out from label MgO 0.6% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraRega 18-4-19",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 18.0,
+    "P2O5": 4.0,
+    "K2O": 19.0,
+    "Ca": 0,
+    "Mg": 0.362,
+    "S": 7.61,
+    "Zn": 0.08,
+    "B": 0.08,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9490",
+   "fpaExpiry": "2027-06-26",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "YararegaTM 18-4-19",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=18%, P₂O₅=4%, K₂O=19%, SO₃=19%, B=0.08%, Zn=0.08%, MgO=0.6%",
+   "notes": "Water soluble NPK for fertigation. S worked out from label SO3 19.0% x 0.4005. Mg worked out from label MgO 0.6% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraVita BORTRAC 150",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 11.1,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "10 L"
+   ],
+   "packsVerified": false,
+   "densityKgL": 1.35,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2645",
+   "fpaExpiry": "2027-03-11",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaravita Bortrac 150",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "B=11.1%",
+   "notes": "150 g/L boron (Yara); density 1.35 kg/L worked out from 150 g/L and 11.1% w/w.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraVita ZINTRAC 700",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 40.0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "5 L"
+   ],
+   "packsVerified": true,
+   "densityKgL": 1.75,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2647",
+   "fpaExpiry": "2027-03-11",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaravita Zintrac 700",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Zn= 40%",
+   "notes": "700 g/L zinc (Yara); density 1.75 kg/L worked out from 700 g/L and 40% w/w.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Lazada PH brand page for Yara (retail packs)",
+     "url": "https://brandwiki.lazada.com.ph/yara/"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraVita MAGTRAC 300",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 20.0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "5 L"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2643",
+   "fpaExpiry": "2027-03-11",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaravita Magtrac 300",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Mg=20%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraVita CROPBOOST",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 29.5,
+    "K2O": 5.0,
+    "Ca": 0,
+    "Mg": 2.7,
+    "S": 0,
+    "Zn": 3.1,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-3482",
+   "fpaExpiry": "2026-09-16",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaravita CropBoost",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "P₂O₅= 29.5%, K₂O= 5%, MgO= 4.3% (Mg=2.7%), Zn= 3.1%",
+   "notes": "Label gives MgO 4.3% (Mg 2.7%).",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Lazada PH brand page for Yara (retail packs)",
+     "url": "https://brandwiki.lazada.com.ph/yara/"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraVita CALTRAC",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 12.0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "5 L"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-3499",
+   "fpaExpiry": "2026-10-08",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaravita Caltrac",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "CaO= 16.9%, Ca= 12%",
+   "notes": "Label states both CaO 16.9% and Ca 12%.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraVita TEPROSYN NP+Zn",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 9.0,
+    "P2O5": 15.0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 18.0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2644",
+   "fpaExpiry": "2027-03-11",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaravita Teprosyn NP+Zn Concentrated Liquid",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=9%, P₂O₅=15%, Zn=18%",
+   "notes": "Seed and early foliar treatment.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraVita GLYTREL ZnP",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 7.4,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 7.4,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L"
+   ],
+   "packsVerified": false,
+   "densityKgL": 1.35,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4659",
+   "fpaExpiry": "2028-03-13",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "Yaravita Glytrel ZnP",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "P₂O₅=7.4% w/w or 10% w/v, Zn=7.4% w/w or 10% w/v",
+   "notes": "Label: 7.4% w/w = 10% w/v, so density about 1.35 kg/L. Registered for corn.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraAmplix OPTITRAC",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 6.5,
+    "P2O5": 0,
+    "K2O": 2.7,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 1.3,
+    "B": 1.3,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/v",
+   "fpaReg": "1-1IF-7658",
+   "fpaExpiry": "2027-07-25",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "YaraAmplixTM OptitracTM Foliar",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=6.5% w/v, K₂O=2.7% w/v, B=1.3% w/v, Zn=1.3% w/v",
+   "notes": "Label values are % w/v (grams per 100 mL), not w/w.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Harbest",
+   "name": "Naturamin WSP (amino acid foliar)",
+   "category": "foliar",
+   "form": "powder",
+   "pct": {
+    "N": 11.7,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4752",
+   "fpaExpiry": "2027-04-19",
+   "fpaCompany": "Harbest Agribusiness Corporation",
+   "fpaName": "Naturamin WSP Foliar",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=11.7%, Free Amino Acids=80%",
+   "notes": "80% free amino acids.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Harbest",
+   "name": "Naturfos (0-29.5-21.75)",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 29.5,
+    "K2O": 21.75,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4769",
+   "fpaExpiry": "2027-05-05",
+   "fpaCompany": "Harbest Agribusiness Corporation",
+   "fpaName": "Naturfos",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "P₂O₅=29.5%, K₂O=21.75%",
+   "notes": "Form not stated in the FPA list.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Haifa",
+   "name": "Haifa MKP 0-52-34 (mono potassium phosphate)",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 52.0,
+    "K2O": 34.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg (repack)"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9712",
+   "fpaExpiry": "2028-03-18",
+   "fpaCompany": "ABG Trading Corporation",
+   "fpaName": "Haifa - MKP",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "P₂O₅=52%, K₂O=34%",
+   "notes": "Registered by ABG Trading Corporation.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Haifa",
+   "name": "Haifa Poly-Feed 11-11-33 +2MgO",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 11.0,
+    "P2O5": 11.0,
+    "K2O": 33.0,
+    "Ca": 0,
+    "Mg": 1.206,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9182",
+   "fpaExpiry": "2029-08-10",
+   "fpaCompany": "Rosemeadows Farm Inc.",
+   "fpaName": "Haifa Poly-Feed 11-11-33+2MgO",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=11%, P₂O₅=11%, K₂O=33%, MgO=2%",
+   "notes": "Registered by Rosemeadows Farm Inc. Mg worked out from label MgO 2.0% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Haifa",
+   "name": "Haifa Bonus 12-2-44",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 12.0,
+    "P2O5": 2.0,
+    "K2O": 44.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg (repack)"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-7257",
+   "fpaExpiry": "2027-07-09",
+   "fpaCompany": "Oracle Chem Corp.",
+   "fpaName": "Haifa Bonus 12-2-44",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=12%, P₂O₅=2%, K₂O=44%",
+   "notes": "Registered by Oracle Chem Corp.; Haifa Grow 12-2-44 (Goldenman Marketing) is the same grade.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Ramgo",
+   "name": "FertiPro 13-7-25 +3MgO",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 13.0,
+    "P2O5": 7.0,
+    "K2O": 25.0,
+    "Ca": 0,
+    "Mg": 1.809,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10047",
+   "fpaExpiry": "2029-04-08",
+   "fpaCompany": "Ramgo International Corporation",
+   "fpaName": "FertiPro 13-7-25 + 3MgO",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=13%, P₂O₅=7%, K₂O=25%, MgO=3%",
+   "notes": "Mg worked out from label MgO 3.0% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Ramgo",
+   "name": "Groviota Growth 30-10-10 +TE",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 30.0,
+    "P2O5": 10.0,
+    "K2O": 10.0,
+    "Ca": 0,
+    "Mg": 0.301,
+    "S": 0.8,
+    "Zn": 0.0066,
+    "B": 0.0096,
+    "Fe": 0.048,
+    "Mn": 0.0098,
+    "Cu": 0.0056,
+    "Mo": 0.0029,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-0372-TPA",
+   "fpaExpiry": "2027-05-03",
+   "fpaCompany": "Ramgo International Corporation",
+   "fpaName": "Groviota Growth",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=30%, P₂O₅=10%, K₂O=10%, MgO=0.50%, S=0.80%, Fe=480ppm, Mn=98ppm, Zn=66ppm, B=96ppm, Cu=56ppm, Mo=29ppm,",
+   "notes": "Mg worked out from label MgO 0.5% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Ramgo",
+   "name": "Groviota Bloom 15-15-30",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 15.0,
+    "P2O5": 15.0,
+    "K2O": 30.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10070",
+   "fpaExpiry": "2029-03-17",
+   "fpaCompany": "Ramgo International Corporation",
+   "fpaName": "Groviota Bloom",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=15%, P₂O₅=15%, K₂O=30%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Allied Botanical",
+   "name": "Peters Professional 20-20-20 +TE",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 20.0,
+    "P2O5": 20.0,
+    "K2O": 20.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0.015,
+    "B": 0.02,
+    "Fe": 0.12,
+    "Mn": 0.06,
+    "Cu": 0.015,
+    "Mo": 0.007,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g",
+    "11.34 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8524",
+   "fpaExpiry": "2027-11-17",
+   "fpaCompany": "Allied Botanical Corporation",
+   "fpaName": "Peters Professional WSF 20-20-20+TE",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=20%, P₂O₅=20%, K₂O=20%, B=0.02%, Cu=0.015%, Fe=0.12%, Mn=0.06%, Mo-0.007%, Zn=0.015%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Allied Botanical",
+   "name": "Nutrivant Plus Rice 0-46-30 +2MgO +0.2B",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 46.0,
+    "K2O": 30.0,
+    "Ca": 0,
+    "Mg": 1.206,
+    "S": 0,
+    "Zn": 0,
+    "B": 0.2,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-3580",
+   "fpaExpiry": "2027-01-09",
+   "fpaCompany": "Allied Botanical Corporation",
+   "fpaName": "Nutrivant Plus Rice 0-46-30+2MgO+0.20B+Fertivant",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "P₂O₅=46%, K₂O=30%, MgO=2%, B=0.20%",
+   "notes": "Mg worked out from label MgO 2.0% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Bayer",
+   "name": "Bayfolan (11-8-6 + micros)",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 11.0,
+    "P2O5": 8.0,
+    "K2O": 6.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0.006,
+    "B": 0.01,
+    "Fe": 0.019,
+    "Mn": 0.016,
+    "Cu": 0.008,
+    "Mo": 0.001,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "500 mL",
+    "250 mL"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2808",
+   "fpaExpiry": "2028-02-18",
+   "fpaCompany": "Bayer CropScience, Inc.",
+   "fpaName": "Bayfolan",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=11%, P₂O₅=8%, K₂O=6%, Fe=0.019%, Cu=0.008%, Mn=0.016%, Mo=0.0010%, B=0.010%, Zn=0.006%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Bayer",
+   "name": "Ambition Complete Foliar (8-8-6 + micros)",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 8.0,
+    "P2O5": 8.0,
+    "K2O": 6.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0.03,
+    "B": 0.01,
+    "Fe": 0.06,
+    "Mn": 0.03,
+    "Cu": 0.03,
+    "Mo": 0.0007,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "500 mL"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8648",
+   "fpaExpiry": "2028-03-23",
+   "fpaCompany": "Bayer CropScience, Inc.",
+   "fpaName": "Ambition Complete Foliar",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=8% w/w, P₂O₅=8% w/w, K₂O=6% w/w, B=0.01% w/w, Cu=0.03% w/w, Fe=0.06% w/w, Mn=0.03% w/w, Mo=0.0007% w/w, Zn=0.03% w/w",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Leads Agri",
+   "name": "Megabooster 10-20-30 +TE",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 10.0,
+    "P2O5": 20.0,
+    "K2O": 30.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0.02,
+    "B": 0.01,
+    "Fe": 0.04,
+    "Mn": 0.02,
+    "Cu": 0.01,
+    "Mo": 0.001,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8323",
+   "fpaExpiry": "2027-07-09",
+   "fpaCompany": "Leads Agricultural Products Corporation",
+   "fpaName": "Megabooster",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=10%, P₂O₅=20%, K₂O=30%, Fe=0.04%, Mn=0.02%, Zn=0.02% Cu=0.01%, B=0.01%, Mo=0.001%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Leads Agri",
+   "name": "Polaris T14+ Foliar (14-14-14 +MgO +S +Zn)",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 14.0,
+    "P2O5": 14.0,
+    "K2O": 14.0,
+    "Ca": 0,
+    "Mg": 4.824,
+    "S": 7.009,
+    "Zn": 1.0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1007-TPA",
+   "fpaExpiry": "2028-05-29",
+   "fpaCompany": "Leads Agricultural Products Corporation",
+   "fpaName": "Polaris T14+ Foliar",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=14%, P₂O₅=14%, K₂O=14%, MgO=8%, SO3=17.5%, Zn=1%",
+   "notes": "Form not stated in the FPA list. Mg worked out from label MgO 8.0% x 0.603. S worked out from label SO3 17.5% x 0.4005.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Leads Agri",
+   "name": "Champion 12-0-46 (potassium nitrate type)",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 12.0,
+    "P2O5": 0,
+    "K2O": 46.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8008",
+   "fpaExpiry": "2029-08-25",
+   "fpaCompany": "Leads Agricultural Products Corporation",
+   "fpaName": "Champion TM",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=12%, K₂O=46%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Crop Giant (Aldiz)",
+   "name": "Crop Giant 15-15-30 +ME",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 15.0,
+    "P2O5": 15.0,
+    "K2O": 30.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0.015,
+    "B": 0.02,
+    "Fe": 0.1,
+    "Mn": 0.05,
+    "Cu": 0.011,
+    "Mo": 0.007,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g",
+    "250 g"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-442",
+   "fpaExpiry": "2027-08-04",
+   "fpaCompany": "Aldiz Incorporated",
+   "fpaName": "Crop Giant 15-15-30+M.E.",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=15%, P₂O₅=15%, K₂O=30%, Fe=1000 ppm, Mn=500 ppm, B=200 ppm, Zn=150 ppm, Cu=110 ppm, Mo=70 ppm",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Crop Giant (Aldiz)",
+   "name": "Crop Giant 19-19-19 +ME",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 19.0,
+    "P2O5": 19.0,
+    "K2O": 19.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0.015,
+    "B": 0.02,
+    "Fe": 0.1,
+    "Mn": 0.05,
+    "Cu": 0.011,
+    "Mo": 0.007,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g",
+    "250 g"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-443",
+   "fpaExpiry": "2027-08-04",
+   "fpaCompany": "Aldiz Incorporated",
+   "fpaName": "Crop Giant 19-19-19+M.E.",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=19%, P₂O₅=19%, K₂O=19%, Fe=1000 ppm, Mn=500 ppm, B=200 ppm, Zn=150 ppm, Cu=110 ppm, Mo=70 ppm",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Grower's Gold (Vann Hawk)",
+   "name": "Grower's Gold 20-20-20",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 20.0,
+    "P2O5": 20.0,
+    "K2O": 20.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2118",
+   "fpaExpiry": "2026-11-24",
+   "fpaCompany": "Vann Hawk Agro Chemicals, Inc.",
+   "fpaName": "Grower's Gold 20-20-20",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N= 20%, P₂O₅=20%, K₂O=20%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Grower's Gold (Vann Hawk)",
+   "name": "Grower's Gold 30-10-10 +TE",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 30.0,
+    "P2O5": 10.0,
+    "K2O": 10.0,
+    "Ca": 0,
+    "Mg": 0.301,
+    "S": 0.8,
+    "Zn": 0.0066,
+    "B": 0.0096,
+    "Fe": 0.048,
+    "Mn": 0.0098,
+    "Cu": 0.0056,
+    "Mo": 0.0029,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-7139",
+   "fpaExpiry": "2027-05-03",
+   "fpaCompany": "Vann Hawk Agro Chemicals, Inc.",
+   "fpaName": "Grower's Gold 30-10-10+TE",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=30%, P₂O₅=10%, K₂O=10%, MgO=0.5%, S=0.8%, Fe=480ppm, Mo=29ppm, Mn=98ppm, Zn=66ppm, Cu=56ppm, B=96ppm",
+   "notes": "Mg worked out from label MgO 0.5% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Grow More (Sagrex)",
+   "name": "Grow More Liquid Chelate Boron",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 10.0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "500 mL",
+    "250 mL"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1966",
+   "fpaExpiry": "2026-11-25",
+   "fpaCompany": "Sagrex Corporation",
+   "fpaName": "Grow More Liquid Chelate Boron",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "B= 10%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Grow More (Sagrex)",
+   "name": "Grow More Liquid Chelate Calcium Boron",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 8.0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 1.0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "500 mL",
+    "250 mL"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-944",
+   "fpaExpiry": "2027-04-10",
+   "fpaCompany": "Sagrex Corporation",
+   "fpaName": "Liquid Chelate Calcium Boron",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Ca=8%, B=1%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Grow More (Sagrex)",
+   "name": "Grow More Liquid Chelate Calcium",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 12.0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "500 mL"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1237",
+   "fpaExpiry": "2027-12-04",
+   "fpaCompany": "Sagrex Corporation",
+   "fpaName": "Liquid Chelate Calcium",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Ca=12%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Grow More (Sagrex)",
+   "name": "Grow More Liquid Chelate Zinc with Sulfur",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 5.0,
+    "Zn": 10.0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "500 mL",
+    "250 mL"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10203",
+   "fpaExpiry": "2029-10-18",
+   "fpaCompany": "Sagrex Corporation",
+   "fpaName": "Liquid Chelate Zinc with Sulfur",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "S=5%, Zn=10%",
+   "notes": "2 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Grow More (Sagrex)",
+   "name": "Grow More Liquid Chelate Iron with Sulfur",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 3.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 5.0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "500 mL"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1959",
+   "fpaExpiry": "2026-11-08",
+   "fpaCompany": "Sagrex Corporation",
+   "fpaName": "Liquid Chelate Iron with Sulfur",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Fe=5%, S=3%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Grow More (Sagrex)",
+   "name": "Grow More Liquid Chelate General Purpose (multi-micro)",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 1.0,
+    "S": 3.0,
+    "Zn": 0.06,
+    "B": 0.03,
+    "Fe": 2.0,
+    "Mn": 0.5,
+    "Cu": 0.16,
+    "Mo": 0.04,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "500 mL"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10202",
+   "fpaExpiry": "2029-03-27",
+   "fpaCompany": "Sagrex Corporation",
+   "fpaName": "Liquid Chelate General Purpose",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Mg=1%, S=3%, B=0.03%, Cu=0.16%, Co=0.03%, Fe=2%, Mn=0.50%, Mo=0.04%, Zn=0.060",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Agway",
+   "name": "Calcium Boron Max Foliar",
+   "category": "foliar",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 12.0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 1.0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L",
+    "500 mL"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/v",
+   "fpaReg": "1-1IF-8879",
+   "fpaExpiry": "2028-10-17",
+   "fpaCompany": "Agway Chemicals Corp.",
+   "fpaName": "Calcium Boron Max Foliar",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Ca=12% w/v, B=1% (10000ppm) w/v",
+   "notes": "Label values are % w/v.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Manuchar",
+   "name": "M Nitrates Calcium Nitrate (15.5-0-0 +18.5Ca)",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 15.5,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 18.5,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9412",
+   "fpaExpiry": "2027-03-20",
+   "fpaCompany": "Manuchar Agro Philippines, Inc.",
+   "fpaName": "M Nitrates Calcium Nitrate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=15.5%, Ca=18.5%",
+   "notes": "2 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Parafield",
+   "name": "Potassium Nitrate 13-0-46 (Parafield)",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 13.0,
+    "P2O5": 0,
+    "K2O": 46.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg (repack)"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1601",
+   "fpaExpiry": "2029-03-22",
+   "fpaCompany": "Parafield Enterprises, Inc.",
+   "fpaName": "Potassium Nitrate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=13%, K₂O=46%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Crown Champion",
+   "name": "Crown Champion Potassium Nitrate 13.5-0-46 (Mango Inducer)",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 13.5,
+    "P2O5": 0,
+    "K2O": 46.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9513",
+   "fpaExpiry": "2027-07-10",
+   "fpaCompany": "Philippines Aqua-Hydroponic Prime Ventures Corp.",
+   "fpaName": "Crown Champion Nitrogen Potassium Compound Fertilizer (Mango Inducer)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=13.50%, K₂O=46%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Cleveland",
+   "name": "Mono Ammonium Phosphate 12-61-0 (Cleveland)",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 12.0,
+    "P2O5": 61.0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9566",
+   "fpaExpiry": "2027-09-23",
+   "fpaCompany": "Cleveland Industries Inc.",
+   "fpaName": "Mono Ammonium Phosphate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=12%, P₂O₅=61%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Itochu Top Premium",
+   "name": "Top Premium Urea Phosphate 17-44-0",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 17.0,
+    "P2O5": 44.0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10135",
+   "fpaExpiry": "2029-06-11",
+   "fpaCompany": "Itochu Corporation - Manila Branch",
+   "fpaName": "Top Premium Urea Phosphate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=17%, P₂O₅=44%",
+   "notes": "3 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Itochu Top Premium",
+   "name": "Top Premium Mono Potassium Phosphate 0-52-34",
+   "category": "foliar",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 52.0,
+    "K2O": 34.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9935",
+   "fpaExpiry": "2028-11-05",
+   "fpaCompany": "Itochu Corporation - Manila Branch",
+   "fpaName": "Top Premium Mono Potassium Phosphate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "P₂O₅=52%, K₂O=34%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraLiva NITRABOR (calcium nitrate + boron)",
+   "category": "secondary",
+   "form": "granular",
+   "pct": {
+    "N": 15.4,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 18.296,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0.3,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-764",
+   "fpaExpiry": "2027-07-19",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "YaraLivaTM NitraborTM",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=15.4%, CaO=25.6%, B=0.3%",
+   "notes": "Field grade calcium nitrate with boron. Ca worked out from label CaO 25.6% x 0.7147.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraLiva TROPICOTE (calcium nitrate)",
+   "category": "secondary",
+   "form": "granular",
+   "pct": {
+    "N": 15.1,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 18.225,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "50 kg",
+    "1 kg (repack)"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-0470",
+   "fpaExpiry": "2029-03-21",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "YaraLiva Tropicote",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=15.1%, CaO=25.5%",
+   "notes": "Field grade calcium nitrate, not for drip. Ca worked out from label CaO 25.5% x 0.7147.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "Lazada PH brand page for Yara (retail packs)",
+     "url": "https://brandwiki.lazada.com.ph/yara/"
+    }
+   ]
+  },
+  {
+   "brand": "Yara",
+   "name": "YaraTera KRISTA MgS (magnesium sulfate)",
+   "category": "secondary",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 9.648,
+    "S": 13.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-2078",
+   "fpaExpiry": "2028-08-06",
+   "fpaCompany": "Yara Fertilizers Philippines, Inc.",
+   "fpaName": "YaraTera™ Krista™ MgS",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "MgO=16%, S=13%",
+   "notes": "Mg worked out from label MgO 16.0% x 0.603. 2 active FPA registrations match this product; the one with the latest expiry is given.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Philphos",
+   "name": "Philphos Gypsum (phosphogypsum)",
+   "category": "secondary",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 22.156,
+    "Mg": 0,
+    "S": 17.422,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-4LF-056",
+   "fpaExpiry": "2027-12-28",
+   "fpaCompany": "Philippine Phosphate Fertilizer Corporation",
+   "fpaName": "Philphos Gypsum",
+   "fpaType": "Soil Conditioner",
+   "fpaAnalysis": "CaO=31%, SO₃=43.5%",
+   "notes": "Registered as a soil conditioner. Ca worked out from label CaO 31.0% x 0.7147. S worked out from label SO3 43.5% x 0.4005.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Planters Products",
+   "name": "Planters Products Lifelime (agricultural lime)",
+   "category": "secondary",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 36.157,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-4LF-0953-TPA",
+   "fpaExpiry": "2028-04-07",
+   "fpaCompany": "Planters Products, Inc.",
+   "fpaName": "Planters Products Lifelime",
+   "fpaType": "Soil Conditioner",
+   "fpaAnalysis": "CaO=50.59%",
+   "notes": "Registered as a soil conditioner. Ca worked out from label CaO 50.59% x 0.7147.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Ramgo",
+   "name": "Calcipro (calcium nitrate)",
+   "category": "secondary",
+   "form": "granular",
+   "pct": {
+    "N": 15.5,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 18.8,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9926",
+   "fpaExpiry": "2028-10-27",
+   "fpaCompany": "Ramgo International Corporation",
+   "fpaName": "Calcipro",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=15.5%, Ca=18.8%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Ramgo",
+   "name": "Magnepro (magnesium sulfate)",
+   "category": "secondary",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 9.648,
+    "S": 12.8,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-10079",
+   "fpaExpiry": "2029-03-30",
+   "fpaCompany": "Ramgo International Corporation",
+   "fpaName": "Magnepro",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "MgO=16%, S=12.8%",
+   "notes": "Mg worked out from label MgO 16.0% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Allied Botanical",
+   "name": "Polysulphate Standard (polyhalite)",
+   "category": "secondary",
+   "form": "granular",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 13.0,
+    "Ca": 11.793,
+    "Mg": 3.377,
+    "S": 18.623,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg",
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8523",
+   "fpaExpiry": "2027-11-17",
+   "fpaCompany": "Allied Botanical Corporation",
+   "fpaName": "Polysulphate Standard 0-0-13",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "K₂O=13%, CaO=16.50%, MgO=5.60%, SO₃=46.50%",
+   "notes": "Ca worked out from label CaO 16.5% x 0.7147. Mg worked out from label MgO 5.6% x 0.603. S worked out from label SO3 46.5% x 0.4005.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "AgSmart",
+   "name": "AgSmart Kieserite Granule",
+   "category": "secondary",
+   "form": "granular",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 16.281,
+    "S": 20.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg",
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9826",
+   "fpaExpiry": "2028-07-31",
+   "fpaCompany": "AgSmart Corporation",
+   "fpaName": "Agsmart Kieserite Granule",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "MgO=27%, S=20%",
+   "notes": "Mg worked out from label MgO 27.0% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Zetryl Chem",
+   "name": "Epsom Salt SG-98 (magnesium sulfate heptahydrate)",
+   "category": "secondary",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 9.8,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-8184",
+   "fpaExpiry": "2027-02-22",
+   "fpaCompany": "Zetryl.Chem Phils., Inc.",
+   "fpaName": "Epsom Salt SG-98 (Magnesium Sulfate Heptahydrate)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Mg=9.8%",
+   "notes": "S not stated on the FPA entry (Epsom salt carries about 13% S).",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Cleveland",
+   "name": "Magnesium Sulfate Heptahydrate (Cleveland)",
+   "category": "secondary",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 9.648,
+    "S": 12.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9286",
+   "fpaExpiry": "2026-10-18",
+   "fpaCompany": "Cleveland Industries Inc.",
+   "fpaName": "Magnesium Sulfate Heptahydrate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "MgO=16%, S=12%",
+   "notes": "Mg worked out from label MgO 16.0% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Agridol (Alcoy Agro)",
+   "name": "Agridol 50 Dolomite (No. 8 mesh)",
+   "category": "secondary",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 24.629,
+    "Mg": 10.999,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-4LF-1361",
+   "fpaExpiry": "2026-10-06",
+   "fpaCompany": "Alcoy Agro Corporation",
+   "fpaName": "Agridol 50 No. 8 Mesh Dolomite",
+   "fpaType": "Soil Conditioner",
+   "fpaAnalysis": "CaO= 34.46%, MgO=18.24%, CCE= 106%, Fineness Index=49%, Effective Neutralizing Power=50%",
+   "notes": "Ca worked out from label CaO 34.46% x 0.7147. Mg worked out from label MgO 18.24% x 0.603.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "A6 Agrisource",
+   "name": "Dolomite (A6 Agrisource)",
+   "category": "secondary",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 24.0,
+    "Mg": 11.0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-6LF-1393",
+   "fpaExpiry": "2026-12-20",
+   "fpaCompany": "A6 Agrisource Limited Corporation",
+   "fpaName": "Dolomite",
+   "fpaType": "Soil Conditioner",
+   "fpaAnalysis": "Ca=24%, Mg=11%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Agfrontier",
+   "name": "Agrisil 200 (potassium silicate liquid)",
+   "category": "secondary",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 10.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 9.348
+   },
+   "packs": [
+    "1 L"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/v",
+   "fpaReg": "1-1IF-10107",
+   "fpaExpiry": "2029-05-12",
+   "fpaCompany": "Agfrontier Philippines Corporation",
+   "fpaName": "Agrisil 200",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "K₂O=100g/L, SiO₂=200g/L",
+   "notes": "Label in g/L (w/v): K2O 100 g/L, SiO2 200 g/L. Silicon is a beneficial element, filed here under secondary. Si worked out from label SiO2 20.0% x 0.4674.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Harvester (Universal Harvester)",
+   "name": "Harvester Zinc Sulphate Heptahydrate (Zn 22%)",
+   "category": "micro",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 22.0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-4353",
+   "fpaExpiry": "2028-06-23",
+   "fpaCompany": "Universal Harvester, Inc.",
+   "fpaName": "Harvester Zinc Sulphate Heptahydrate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Zn=22%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Caldic",
+   "name": "Solubor (soluble boron 21%)",
+   "category": "micro",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 21.0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg (repack)"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-1069",
+   "fpaExpiry": "2027-07-30",
+   "fpaCompany": "Caldic Philippines Inc.",
+   "fpaName": "Solubor",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "B=21%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Etifert (Zetryl Chem)",
+   "name": "Etifert 11 (borax decahydrate)",
+   "category": "micro",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 11.0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-7646",
+   "fpaExpiry": "2028-07-16",
+   "fpaCompany": "Zetryl.Chem Phils., Inc.",
+   "fpaName": "Etifert 11 (Borax Decahydrate)",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "B=11%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Petbowe",
+   "name": "Zinc Sulphate Monohydrate (Zn 33%)",
+   "category": "micro",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 33.0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9928",
+   "fpaExpiry": "2028-10-27",
+   "fpaCompany": "Petbowe Trading Corporation",
+   "fpaName": "Petbowe Zinc Sulphate Monohydrate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Zn=33%",
+   "notes": "S not stated on the FPA entry (zinc sulfate monohydrate carries about 17% S).",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Grower's Choice (Zetryl Chem)",
+   "name": "Grower's Choice Copper Sulphate Pentahydrate",
+   "category": "micro",
+   "form": "crystal",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 12.0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 25.0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "25 kg",
+    "1 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-1IF-9833",
+   "fpaExpiry": "2028-08-06",
+   "fpaCompany": "Zetryl.Chem Phils., Inc.",
+   "fpaName": "Grower's Choice Copper Sulphate Pentahydrate",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "Cu=25%, S=12%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Biozome (Manchem)",
+   "name": "Biozome (multi-micronutrient soil conditioner)",
+   "category": "micro",
+   "form": "granular",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 1.0,
+    "S": 12.0,
+    "Zn": 12.0,
+    "B": 0.5,
+    "Fe": 1.0,
+    "Mn": 3.0,
+    "Cu": 1.0,
+    "Mo": 0.05,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "500 g"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-4LF-001",
+   "fpaExpiry": "2028-04-22",
+   "fpaCompany": "Manchem Industries, Inc.",
+   "fpaName": "Biozome",
+   "fpaType": "Soil Conditioner",
+   "fpaAnalysis": "S=12%, Mg=1%, Mn=3%, Zn=12%, Cu=1%, B=0.5%, Fe=1%, Mo=0.05%, Co=0.03%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Harvester (Universal Harvester)",
+   "name": "Harvester Planters' Choice Petroganik Granular",
+   "category": "organic",
+   "form": "granular",
+   "pct": {
+    "N": 0.91,
+    "P2O5": 1.81,
+    "K2O": 1.29,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "40 kg",
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-2IF-1310",
+   "fpaExpiry": "2027-05-27",
+   "fpaCompany": "Universal Harvester, Inc.",
+   "fpaName": "Harvester Planter's Choice Petroganik Granular",
+   "fpaType": "Inorganic Fertilizer",
+   "fpaAnalysis": "N=0.91%, P₂O₅=1.81%, K₂O=1.29%",
+   "notes": "Fortified organic fertilizer (FPA code 1-2).",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Ramgo",
+   "name": "Humarich (potassium humate)",
+   "category": "organic",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 12.1,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg",
+    "25 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-4IF-1298",
+   "fpaExpiry": "2027-09-23",
+   "fpaCompany": "Ramgo International Corporation",
+   "fpaName": "Humarich",
+   "fpaType": "Soil Conditioner",
+   "fpaAnalysis": "K₂O=12.1%, Humic Acid=87.5%, Organic Matter=80%",
+   "notes": "Soil conditioner: humic acid 87.5%, organic matter 80%.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Leads Agri",
+   "name": "Kawa 4-2-2 (fortified organic)",
+   "category": "organic",
+   "form": "granular",
+   "pct": {
+    "N": 4.0,
+    "P2O5": 2.0,
+    "K2O": 2.0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-2IF-1311",
+   "fpaExpiry": "2027-08-10",
+   "fpaCompany": "Leads Agricultural Products Corporation",
+   "fpaName": "Kawa 4-2-2",
+   "fpaType": "Fortified Organic Fertilizer",
+   "fpaAnalysis": "N=4%, P₂O₅=2%, K₂O=2%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Terralizer (Agrifix)",
+   "name": "Terralizer (fortified organic)",
+   "category": "organic",
+   "form": "granular",
+   "pct": {
+    "N": 2.84,
+    "P2O5": 3.95,
+    "K2O": 3.66,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-2LF-0821-TPA",
+   "fpaExpiry": "2027-01-24",
+   "fpaCompany": "Agrifix Farm Development and Supply, Inc.",
+   "fpaName": "Terralizer",
+   "fpaType": "Fortified Organic Fertilizer",
+   "fpaAnalysis": "N=2.84%, P₂O₅=3.95%, K₂O=3.66%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Melro (Meljay)",
+   "name": "Melro Compost",
+   "category": "organic",
+   "form": "granular",
+   "pct": {
+    "N": 2.0,
+    "P2O5": 2.0,
+    "K2O": 2.4,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "50 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-4LF-1272",
+   "fpaExpiry": "2028-07-28",
+   "fpaCompany": "Meljay Agri-Business Corp.",
+   "fpaName": "Melro Compost",
+   "fpaType": "Soil Conditioner",
+   "fpaAnalysis": "N=2%, P₂O₅=2%, K₂O=2.4%",
+   "notes": "",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "Bio N (UPLB, licensed to Agri Specialist)",
+   "name": "Bio N (Azospirillum)",
+   "category": "bio",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "200 g"
+   ],
+   "packsVerified": true,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-7LF-0105",
+   "fpaExpiry": "2028-01-31",
+   "fpaCompany": "Agri Specialist, Inc.",
+   "fpaName": "BIO N (Soil-Charcoal as Carrier)",
+   "fpaType": "Biofertilizer",
+   "fpaAnalysis": "Azospirillum spp.=1x10⁷ CFU/g",
+   "notes": "Azospirillum 1x10^7 CFU/g; replaces 30 to 50% of the N need of rice and corn (UPLB). No NPK guarantee.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    },
+    {
+     "label": "UPLB BIOTECH, Bio N product page",
+     "url": "https://biotech.uplb.edu.ph/products-and-technologies/products/bio-n"
+    }
+   ]
+  },
+  {
+   "brand": "MycoApply (Sumitomo)",
+   "name": "MycoApply EndoSmart (mycorrhiza)",
+   "category": "bio",
+   "form": "powder",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 kg"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-7IF-0004",
+   "fpaExpiry": "2028-02-01",
+   "fpaCompany": "Sumitomo Chemical Philippines, Inc.",
+   "fpaName": "MycoApply EndoSmart",
+   "fpaType": "Biofertilizer",
+   "fpaAnalysis": "Vesicular Arbuscular Mycorrhizae (VAM) ≥100 spores/g",
+   "notes": "VAM at least 100 spores/g. No NPK guarantee.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  },
+  {
+   "brand": "EM.1 (Harbest)",
+   "name": "EM.1 Effective Microorganisms",
+   "category": "bio",
+   "form": "liquid",
+   "pct": {
+    "N": 0,
+    "P2O5": 0,
+    "K2O": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "S": 0,
+    "Zn": 0,
+    "B": 0,
+    "Fe": 0,
+    "Mn": 0,
+    "Cu": 0,
+    "Mo": 0,
+    "Si": 0
+   },
+   "packs": [
+    "1 L"
+   ],
+   "packsVerified": false,
+   "densityKgL": null,
+   "basis": "w/w",
+   "fpaReg": "1-6LF-0818-TPA",
+   "fpaExpiry": "2028-07-08",
+   "fpaCompany": "Harbest Agribusiness Corporation",
+   "fpaName": "EM.1 Effective Microorganisms",
+   "fpaType": "Biofertilizer",
+   "fpaAnalysis": "Lactic Acid Bacteria=1.77x10⁶ CFU/ml",
+   "notes": "Lactic acid bacteria 1.77x10^6 CFU/mL. No NPK guarantee.",
+   "sources": [
+    {
+     "label": "FPA list of active registered fertilizers, as of 15 Sep 2026 (Excel)",
+     "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-9.15.2026.xlsx"
+    }
+   ]
+  }
+ ]
+}
