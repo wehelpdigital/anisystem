@@ -17,12 +17,15 @@ final class FieldContext
     /** The last 30 days and the next 16, day by day. */
     public static function weather(float $lat, float $lng): array
     {
-        $key = sprintf('fc:wx:%.3f,%.3f', $lat, $lng);
+        // Kept three hours per place (two decimals, about a kilometer), the
+        // same window the weather module keeps its readings, and from Open-Meteo's
+        // best match model (2026-10-12).
+        $key = sprintf('fc:wx2:%.2f,%.2f', $lat, $lng);
 
-        return Cache::remember($key, 3600, function () use ($lat, $lng) {
+        return Cache::remember($key, 3 * 3600, function () use ($lat, $lng) {
             try {
                 $res = Http::timeout(15)->retry(1, 300)->get('https://api.open-meteo.com/v1/forecast', [
-                    'latitude' => $lat, 'longitude' => $lng, 'timezone' => 'Asia/Manila',
+                    'latitude' => $lat, 'longitude' => $lng, 'timezone' => 'Asia/Manila', 'models' => 'best_match',
                     'past_days' => 30, 'forecast_days' => 16,
                     'daily' => 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,et0_fao_evapotranspiration,relative_humidity_2m_mean',
                 ]);

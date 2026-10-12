@@ -35,6 +35,7 @@ return [
         'schedulesArchived' => 1,
         'lotsPerSchedule'   => 1,
         'mapsTotal'         => 3,
+        'maps'              => false,   // the Maps module: Libre + Anee and up (2026-10-12)
         'workersPerSchedule' => 0,      // the Workers module is the Solo Farmer plan's (2026-09-19)
         'workers'           => false,
         'inventory'         => false,   // and so is the shed
@@ -92,6 +93,7 @@ return [
         'schedulesArchived' => 1,
         'lotsPerSchedule'   => 1,
         'mapsTotal'         => 3,
+        'maps'              => true,
         'workersPerSchedule' => 0,
         'workers'           => false,
         'inventory'         => false,
@@ -143,6 +145,7 @@ return [
         'schedulesArchived' => 5,
         'lotsPerSchedule'   => 5,
         'mapsTotal'         => null,
+        'maps'              => true,
         'workersPerSchedule' => null,
         'workers'           => true,
         'inventory'         => true,
@@ -197,6 +200,7 @@ return [
         'schedulesArchived' => null,
         'lotsPerSchedule'   => null,
         'mapsTotal'         => null,
+        'maps'              => true,
         'workersPerSchedule' => null,
         'workers'           => true,
         'inventory'         => true,
@@ -246,6 +250,7 @@ return [
         'schedulesArchived' => null,
         'lotsPerSchedule'   => null,
         'mapsTotal'         => null,
+        'maps'              => true,
         'workersPerSchedule' => null,
         'workers'           => true,
         'inventory'         => true,

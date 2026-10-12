@@ -319,13 +319,20 @@
             {{-- Maps and Draw left the seasons (2026-09-30): a farm's fields do
                  not change with the season, so the maps and drawings of them
                  are the grower's own, and any season can use them. --}}
-            <a href="{{ route('maps.page') }}" class="qa-tile qa-maps">
+            {{-- Maps leave Libre (2026-10-12): the tile stays, wearing a lock. --}}
+            @php $qMapLocked = ! \App\Support\Tier::farmCan('maps'); $qMapRung = \App\Support\Tier::farmUnlocksAt('maps'); @endphp
+            <a href="{{ route('maps.page') }}" class="qa-tile qa-maps"
+               @if ($qMapLocked) data-tier-lock="{{ $qMapRung }}" data-lock-say="Maps come with {{ \App\Support\Tier::withPlan($qMapRung) }}. Draw your lots on the satellite map, measure them and pin what matters." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/location-marker.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
-                <span class="qa-txt">
+                <span class="qa-txt {{ $qMapLocked ? 'tl-dim' : '' }}">
                     <b>Maps</b>
                     <i>Draw, measure and pin your fields. Save a map and attach it to your lots, activities or notes.</i>
                 </span>
-                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @if ($qMapLocked)
+                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                @else
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @endif
             </a>
             <a href="{{ route('draw.page') }}" class="qa-tile qa-draw">
                 <span class="qa-ico"><img src="{{ asset('images/writting.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>

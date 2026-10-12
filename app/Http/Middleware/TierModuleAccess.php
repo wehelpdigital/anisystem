@@ -37,6 +37,11 @@ class TierModuleAccess
         ['sm.workers.*',   'workers',   'Workers come with {plan}. Keep your crew, their work days and their pay on every activity.'],
         ['sm.inventory',   'inventory', 'The Inventory comes with {plan}. Keep the stock in your shed and see what each activity uses.'],
         ['sm.inventory.*', 'inventory', 'The Inventory comes with {plan}. Keep the stock in your shed and see what each activity uses.'],
+        // Maps leave Libre (2026-10-12): no map is drawn, so no map service is asked.
+        ['maps.page', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
+        ['sm.map', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
+        ['sm.map.*', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
+        ['sm.maps', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
     ];
 
     public function handle(Request $request, Closure $next): Response

@@ -512,7 +512,7 @@
             {{-- Workers and the Inventory are the Solo Farmer plan's: on a free
                  plan the tile stays, locked, and opens the upgrade sheet. --}}
             @php
-                $tileLocked = in_array($moduleKey, ['workers', 'inventory'], true) && ! \App\Support\Tier::scheduleCan($schedule, $moduleKey);
+                $tileLocked = in_array($moduleKey, ['workers', 'inventory', 'maps'], true) && ! \App\Support\Tier::scheduleCan($schedule, $moduleKey);
                 $tileRung = $tileLocked ? \App\Support\Tier::scheduleUnlocksAt($schedule, $moduleKey) : '';
             @endphp
             <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" @unless ($tileLocked) data-nav-loader @endunless class="card card-hover block"

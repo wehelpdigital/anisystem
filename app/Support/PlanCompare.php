@@ -35,7 +35,7 @@ class PlanCompare
                 ['Lots per season', 'Fields, each with its own crop and day zero', $count('lotsPerSchedule')],
                 ['Activities board, notes, tags', 'The whole season day by day', $all()],
                 ['Growth stages', 'Where every lot stands on any date', $all()],
-                ['Farm maps', 'Draw, measure and pin your fields', $count('mapsTotal')],
+                ['Farm maps', 'Draw, measure and pin your fields', fn (array $t) => empty($t['maps']) ? false : ($t['mapsTotal'] === null ? 'Unlimited' : (string) $t['mapsTotal'])],
                 ['Drawings and photo capture', null, $all()],
             ]],
             ['Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', [

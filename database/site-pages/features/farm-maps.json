@@ -6,7 +6,7 @@
   "category": "Planning",
   "title": "Farm Map: Draw, Measure and Pin Your Fields Over a Satellite View",
   "metaTitle": "Farm Map App: Draw and Measure Your Fields",
-  "metaDescription": "Draw your farm map over satellite imagery, measure each field's area and length, drop pins and attach maps to lots and notes. Try it free on anee.io.",
+  "metaDescription": "Draw your farm map over satellite imagery, measure each field's area and length, drop pins and attach maps to lots and notes, from Libre + Anee up.",
   "focusKeyword": "farm map",
   "keywords": [
     "farm map",
@@ -58,7 +58,7 @@
     },
     {
       "type": "text",
-      "text": "A saved map belongs to you, not to one season. Draw the farm once, then use it again next wet season and the dry season after that. Inside a season, attach a map to a lot so the lot carries its own outline. You can also tag a map in a note or on an activity, so the spray plan points to the exact block it covers.\n\nOn the free Libre plan you can keep up to three maps. Solo Farmer and Farm Owner have no map limit."
+      "text": "A saved map belongs to you, not to one season. Draw the farm once, then use it again next wet season and the dry season after that. Inside a season, attach a map to a lot so the lot carries its own outline. You can also tag a map in a note or on an activity, so the spray plan points to the exact block it covers.\n\nMaps come with Libre + Anee, which keeps up to three maps. Solo Farmer and Farm Owner have no map limit."
     },
     {
       "type": "heading",
@@ -118,9 +118,9 @@
     {
       "type": "cta",
       "title": "Put your farm on the map",
-      "text": "Sign up free and draw your first farm map today. The Libre plan keeps up to three maps.",
-      "label": "Start free",
-      "url": "/signup"
+      "text": "Choose Libre + Anee or a bigger plan and draw your first farm map today. Libre + Anee keeps up to three maps.",
+      "label": "See the plans",
+      "url": "/pricing"
     },
     {
       "type": "heading",
@@ -148,7 +148,7 @@
         },
         {
           "q": "How many maps can I save?",
-          "a": "Up to three on the free Libre plan, and as many as you need on Solo Farmer and Farm Owner."
+          "a": "Up to three on Libre + Anee, and as many as you need on Solo Farmer and Farm Owner. The free Libre plan does not include maps."
         }
       ]
     },

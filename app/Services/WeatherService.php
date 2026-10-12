@@ -4,19 +4,122 @@ namespace App\Services;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 /**
- * 5-day weather forecast via Open-Meteo (https://open-meteo.com) — free, no API
- * key. A free-text farm location ("Town, Province") is geocoded to coordinates,
- * then the daily forecast is fetched. Geocoding and forecasts are cached so a
- * page load rarely touches the network and we stay well inside the free tier.
+ * Weather forecasts via Open-Meteo (https://open-meteo.com). A free-text farm
+ * location ("Town, Province") is geocoded to coordinates, then the forecast
+ * is read.
+ *
+ * ONE READING PER PLACE, SHARED (2026-10-12, the owner). A place's forecast
+ * is asked of Open-Meteo only when someone opens it and the reading kept for
+ * that place (as_weather_forecasts) is three hours old or more; everyone
+ * else at that place, the same barangay or town, reads the kept one. One call
+ * brings the 16 days, a week of hours and the sky now, so the daily cards,
+ * the hourly rail and the greeting cost one request between them, not three.
+ * The model is Open-Meteo's best match, the highest resolution one it has for
+ * the coordinates. The geocoder resolves to the town, so the barangays of a
+ * town share its reading: forecast models are 9 to 13 km grids, finer than
+ * any of them can tell apart.
  */
 class WeatherService
 {
     private const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
     private const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
+
+    /** How long a kept reading serves everyone at its place. */
+    public const FRESH_HOURS = 3;
+
+    private const HOURLY = 'weather_code,temperature_2m,apparent_temperature,precipitation_probability,precipitation,rain,relative_humidity_2m,wind_speed_10m,is_day';
+
+    private const DAILY = 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max';
+
+    /** Readings already looked up in this request. */
+    private array $memo = [];
+
+    /**
+     * The kept reading for coordinates, or a new one when it is three hours
+     * old or there is none. A failed ask serves the old reading if there is
+     * one (stale beats nothing in the field); with neither, null.
+     *
+     * @return array{tz:string,hourly:array,daily:array,fetchedAt:string}|null
+     */
+    public function reading(float $lat, float $lon): ?array
+    {
+        $key = sprintf('%.2f,%.2f', $lat, $lon);
+        if (isset($this->memo[$key])) {
+            return $this->memo[$key];
+        }
+        $row = null;
+        try {
+            $row = DB::table('as_weather_forecasts')->where('placeKey', $key)->first();
+        } catch (\Throwable $e) {
+            $row = null;   // no table yet: the cache below stands in
+        }
+        $kept = $row ? json_decode((string) $row->payload, true) : Cache::get('weather:reading:' . $key);
+        $keptAt = $row ? Carbon::parse($row->fetchedAt) : (is_array($kept) ? Carbon::parse($kept['fetchedAt'] ?? 'now') : null);
+        if (is_array($kept) && $keptAt && $keptAt->gt(now()->subHours(self::FRESH_HOURS))) {
+            return $this->memo[$key] = $kept + ['fetchedAt' => $keptAt->toIso8601String()];
+        }
+
+        $fresh = null;
+        try {
+            $res = Http::timeout(10)->retry(1, 250)->get(self::FORECAST_URL, [
+                'latitude' => $lat,
+                'longitude' => $lon,
+                'models' => 'best_match',
+                'hourly' => self::HOURLY,
+                'daily' => self::DAILY,
+                'timezone' => 'auto',
+                'forecast_days' => 16,
+                'forecast_hours' => 168,
+            ]);
+            if ($res->ok() && is_array($res->json('daily')) && ! empty($res->json('daily.time')) && ! empty($res->json('hourly.time'))) {
+                $fresh = ['tz' => (string) ($res->json('timezone') ?: 'UTC'), 'hourly' => $res->json('hourly'), 'daily' => $res->json('daily')];
+            }
+        } catch (\Throwable $e) {
+            $fresh = null;
+        }
+        if (! $fresh) {
+            return is_array($kept) ? ($this->memo[$key] = $kept + ['fetchedAt' => $keptAt?->toIso8601String() ?? now()->toIso8601String()]) : null;
+        }
+
+        $now = now();
+        try {
+            DB::table('as_weather_forecasts')->upsert([[
+                'placeKey' => $key, 'lat' => round($lat, 4), 'lng' => round($lon, 4), 'model' => 'best_match',
+                'payload' => json_encode($fresh, JSON_UNESCAPED_SLASHES), 'fetchedAt' => $now, 'created_at' => $now, 'updated_at' => $now,
+            ]], ['placeKey'], ['lat', 'lng', 'model', 'payload', 'fetchedAt', 'updated_at']);
+        } catch (\Throwable $e) {
+            Cache::put('weather:reading:' . $key, $fresh + ['fetchedAt' => $now->toIso8601String()], $now->copy()->addHours(self::FRESH_HOURS));
+        }
+
+        return $this->memo[$key] = $fresh + ['fetchedAt' => $now->toIso8601String()];
+    }
+
+    /** One hour of a reading, as the panels draw it. */
+    private function hourRow(array $h, int $i, Carbon $when): array
+    {
+        $code = isset($h['weather_code'][$i]) ? (int) $h['weather_code'][$i] : null;
+        $meta = $this->codeMeta((int) ($code ?? 0));
+
+        return [
+            'time' => $h['time'][$i],
+            'hour' => $when->isoFormat('h A'),
+            'dow' => $when->isoFormat('ddd'),
+            'text' => $meta['text'],
+            'emoji' => $meta['emoji'],
+            'code' => $code,
+            'night' => $when->hour < 6 || $when->hour >= 18,
+            'temp' => isset($h['temperature_2m'][$i]) ? (int) round($h['temperature_2m'][$i]) : null,
+            'pop' => isset($h['precipitation_probability'][$i]) ? (int) $h['precipitation_probability'][$i] : null,
+            'mm' => isset($h['precipitation'][$i]) ? round((float) $h['precipitation'][$i], 1) : null,
+            'humidity' => isset($h['relative_humidity_2m'][$i]) ? (int) $h['relative_humidity_2m'][$i] : null,
+            'wind' => isset($h['wind_speed_10m'][$i]) ? (int) round($h['wind_speed_10m'][$i]) : null,
+        ];
+    }
 
     /** Full forecast for a free-text place, or null if it can't resolve. */
     public function forecastForPlace(?string $place, int $dayCount = 5): ?array
@@ -41,9 +144,9 @@ class WeatherService
             'lat' => $geo['lat'],
             'lon' => $geo['lon'],
             'days' => $days,
-            // When these days were last asked of Open-Meteo. A page load
-            // asks again once an hour has passed (the cache below), so the
-            // panels can say how fresh what they show is.
+            // When this place's reading was asked of Open-Meteo: it is asked
+            // again once three hours have passed, so the panels can say how
+            // fresh what they show is.
             'fetchedAt' => $this->forecastFetchedAt($geo['lat'], $geo['lon'], $dayCount)?->toIso8601String(),
         ];
     }
@@ -62,50 +165,39 @@ class WeatherService
      */
     public function current(float $lat, float $lon): ?array
     {
-        $key = sprintf('weather:now:%.2f,%.2f', $lat, $lon);
-        $cached = Cache::get($key);
-        if (is_array($cached)) {
-            return $cached;
-        }
-
-        try {
-            $res = Http::timeout(8)->retry(1, 200)->get(self::FORECAST_URL, [
-                'latitude' => $lat,
-                'longitude' => $lon,
-                'current' => 'temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,weather_code,wind_speed_10m',
-                'timezone' => 'auto',
-                'forecast_days' => 1,
-            ]);
-        } catch (\Throwable $e) {
+        // The hour we are in, from the place's kept reading: a reading kept up
+        // to three hours holds the hour now as its own forecast for it.
+        $r = $this->reading($lat, $lon);
+        if (! $r) {
             return null;
         }
-        if (! $res->ok()) {
-            return null;
+        $h = $r['hourly'];
+        $tz = $r['tz'];
+        $now = Carbon::now($tz)->startOfHour();
+        foreach ($h['time'] as $i => $iso) {
+            $when = Carbon::parse($iso, $tz);
+            if (! $when->equalTo($now)) {
+                continue;
+            }
+            $code = (int) ($h['weather_code'][$i] ?? 0);
+            $meta = $this->codeMeta($code);
+
+            return [
+                'code' => $code,
+                'text' => $meta['text'],
+                'emoji' => $meta['emoji'],
+                'temp' => isset($h['temperature_2m'][$i]) ? (int) round($h['temperature_2m'][$i]) : null,
+                'feels' => isset($h['apparent_temperature'][$i]) ? (int) round($h['apparent_temperature'][$i]) : null,
+                'isDay' => isset($h['is_day'][$i]) ? (int) $h['is_day'][$i] === 1 : ($when->hour >= 6 && $when->hour < 18),
+                'wind' => isset($h['wind_speed_10m'][$i]) ? (int) round($h['wind_speed_10m'][$i]) : null,
+                'rain' => isset($h['rain'][$i]) ? (float) $h['rain'][$i] : (isset($h['precipitation'][$i]) ? (float) $h['precipitation'][$i] : null),
+                'humidity' => isset($h['relative_humidity_2m'][$i]) ? (int) $h['relative_humidity_2m'][$i] : null,
+                'at' => (string) $iso,
+                'fetchedAt' => $r['fetchedAt'],
+            ];
         }
-        $cur = $res->json('current');
-        if (! is_array($cur) || ! isset($cur['weather_code'])) {
-            return null;
-        }
 
-        $code = (int) $cur['weather_code'];
-        $meta = $this->codeMeta($code);
-        $out = [
-            'code' => $code,
-            'text' => $meta['text'],
-            'emoji' => $meta['emoji'],
-            'temp' => isset($cur['temperature_2m']) ? (int) round($cur['temperature_2m']) : null,
-            'feels' => isset($cur['apparent_temperature']) ? (int) round($cur['apparent_temperature']) : null,
-            'isDay' => (int) ($cur['is_day'] ?? 1) === 1,
-            'wind' => isset($cur['wind_speed_10m']) ? (int) round($cur['wind_speed_10m']) : null,
-            'rain' => isset($cur['rain']) ? (float) $cur['rain'] : null,
-            'humidity' => isset($cur['relative_humidity_2m']) ? (int) $cur['relative_humidity_2m'] : null,
-            'at' => isset($cur['time']) ? (string) $cur['time'] : null,
-            'fetchedAt' => now()->toIso8601String(),
-        ];
-
-        Cache::put($key, $out, now()->addMinutes(20));
-
-        return $out;
+        return null;
     }
 
     /** The sky right now for a free-text place, or null if it can't resolve. */
@@ -123,10 +215,9 @@ class WeatherService
     /** When the cached daily forecast for these coordinates was fetched, if it is cached. */
     public function forecastFetchedAt(float $lat, float $lon, int $dayCount = 5): ?Carbon
     {
-        $dayCount = max(1, min(16, $dayCount));
-        $at = Cache::get(sprintf('weather:fc:%.2f,%.2f:%d:at', $lat, $lon, $dayCount));
+        $r = $this->reading($lat, $lon);
 
-        return $at ? Carbon::parse($at) : null;
+        return $r ? Carbon::parse($r['fetchedAt']) : null;
     }
 
     /**
@@ -198,46 +289,29 @@ class WeatherService
         return $out;
     }
 
-    /** Daily forecast for coordinates. Cached ~1h; failures aren't cached. */
+    /** The next days for coordinates, today first (from the place's kept reading). */
     public function forecast(float $lat, float $lon, int $dayCount = 5): ?array
     {
         $dayCount = max(1, min(16, $dayCount));
-        $key = sprintf('weather:fc:%.2f,%.2f:%d', $lat, $lon, $dayCount);
-        $cached = Cache::get($key);
-        if (is_array($cached)) {
-            return $cached;
-        }
-
-        try {
-            $res = Http::timeout(8)->retry(1, 200)->get(self::FORECAST_URL, [
-                'latitude' => $lat,
-                'longitude' => $lon,
-                'daily' => 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max',
-                'timezone' => 'auto',
-                'forecast_days' => $dayCount,
-            ]);
-        } catch (\Throwable $e) {
+        $r = $this->reading($lat, $lon);
+        if (! $r) {
             return null;
         }
-
-        if (! $res->ok()) {
-            return null;
-        }
-
-        $daily = $res->json('daily');
-        if (! is_array($daily) || empty($daily['time'])) {
-            return null;
-        }
-
+        $daily = $r['daily'];
+        $today = Carbon::now($r['tz'])->toDateString();
         $days = [];
         foreach ($daily['time'] as $i => $iso) {
+            if ($iso < $today || count($days) >= $dayCount) {
+                continue;
+            }
             $code = (int) ($daily['weather_code'][$i] ?? 0);
             $meta = $this->codeMeta($code);
             $when = Carbon::parse($iso);
+            $first = empty($days);
             $days[] = [
                 'date' => $iso,
-                'isToday' => $i === 0,
-                'dow' => $i === 0 ? 'Today' : $when->isoFormat('ddd'),
+                'isToday' => $first,
+                'dow' => $first ? 'Today' : $when->isoFormat('ddd'),
                 'label' => $when->isoFormat('MMM D'),
                 'code' => $code,
                 'text' => $meta['text'],
@@ -248,12 +322,7 @@ class WeatherService
             ];
         }
 
-        // An hour, not longer: every page that shows the sky asks again on
-        // load, and this is what decides whether that ask goes out.
-        Cache::put($key, $days, now()->addHour());
-        Cache::put($key . ':at', now()->toIso8601String(), now()->addHour());
-
-        return $days;
+        return $days ?: null;
     }
 
     /**
@@ -265,73 +334,23 @@ class WeatherService
     public function hourly(float $lat, float $lon, int $hours = 24): ?array
     {
         $hours = max(6, min(48, $hours));
-        $key = sprintf('weather:hr:%.2f,%.2f:%d', $lat, $lon, $hours);
-        $cached = Cache::get($key);
-        if (is_array($cached)) {
-            return $cached;
-        }
-
-        try {
-            $res = Http::timeout(8)->retry(1, 200)->get(self::FORECAST_URL, [
-                'latitude' => $lat,
-                'longitude' => $lon,
-                'hourly' => 'weather_code,temperature_2m,precipitation_probability,precipitation,relative_humidity_2m,wind_speed_10m',
-                'timezone' => 'auto',
-                // Two calendar days always covers the next 24 hours, whatever
-                // the time of day this is asked.
-                'forecast_days' => 3,
-            ]);
-        } catch (\Throwable $e) {
+        $r = $this->reading($lat, $lon);
+        if (! $r) {
             return null;
         }
-
-        if (! $res->ok()) {
-            return null;
-        }
-
-        $h = $res->json('hourly');
-        if (! is_array($h) || empty($h['time'])) {
-            return null;
-        }
-
-        // Open-Meteo returns whole days in local time; start at the hour we are
-        // actually in, so the first card is "now" rather than midnight.
-        $tz = $res->json('timezone') ?: 'UTC';
-        $now = Carbon::now($tz);
+        $h = $r['hourly'];
+        $tz = $r['tz'];
+        $now = Carbon::now($tz)->startOfHour();
         $out = [];
         foreach ($h['time'] as $i => $iso) {
             $when = Carbon::parse($iso, $tz);
-            if ($when->lt($now->copy()->startOfHour()) || count($out) >= $hours) {
+            if ($when->lt($now) || count($out) >= $hours) {
                 continue;
             }
-            $code = isset($h['weather_code'][$i]) ? (int) $h['weather_code'][$i] : null;
-            $meta = $this->codeMeta((int) ($code ?? 0));
-            $out[] = [
-                'time' => $iso,
-                'hour' => $when->isoFormat('h A'),
-                'dow' => $when->isoFormat('ddd'),
-                'isNow' => empty($out),
-                'newDay' => $when->hour === 0,
-                'text' => $meta['text'],
-                'emoji' => $meta['emoji'],
-                // Same two, for the same reason — see hourlyByDay().
-                'code' => $code,
-                'night' => $when->hour < 6 || $when->hour >= 18,
-                'temp' => isset($h['temperature_2m'][$i]) ? (int) round($h['temperature_2m'][$i]) : null,
-                'pop' => isset($h['precipitation_probability'][$i]) ? (int) $h['precipitation_probability'][$i] : null,
-                'mm' => isset($h['precipitation'][$i]) ? round((float) $h['precipitation'][$i], 1) : null,
-                'humidity' => isset($h['relative_humidity_2m'][$i]) ? (int) $h['relative_humidity_2m'][$i] : null,
-                'wind' => isset($h['wind_speed_10m'][$i]) ? (int) round($h['wind_speed_10m'][$i]) : null,
-            ];
+            $out[] = $this->hourRow($h, $i, $when) + ['isNow' => empty($out), 'newDay' => $when->hour === 0];
         }
 
-        if (empty($out)) {
-            return null;
-        }
-
-        Cache::put($key, $out, now()->addMinutes(30));
-
-        return $out;
+        return $out ?: null;
     }
 
     /** Hour-by-hour for a free-text place, or null if it cannot resolve. */
@@ -348,78 +367,27 @@ class WeatherService
     public function hourlyByDay(float $lat, float $lon, int $days = 6): ?array
     {
         $days = max(1, min(7, $days));
-        $key = sprintf('weather:hrday:%.2f,%.2f:%d', $lat, $lon, $days);
-        $cached = Cache::get($key);
-        if (is_array($cached)) {
-            return $cached;
-        }
-
-        try {
-            $res = Http::timeout(8)->retry(1, 200)->get(self::FORECAST_URL, [
-                'latitude' => $lat,
-                'longitude' => $lon,
-                'hourly' => 'weather_code,temperature_2m,precipitation_probability,precipitation,relative_humidity_2m,wind_speed_10m',
-                'timezone' => 'auto',
-                'forecast_days' => $days,
-            ]);
-        } catch (\Throwable $e) {
+        $r = $this->reading($lat, $lon);
+        if (! $r) {
             return null;
         }
-
-        if (! $res->ok()) {
-            return null;
-        }
-
-        $h = $res->json('hourly');
-        if (! is_array($h) || empty($h['time'])) {
-            return null;
-        }
-
-        $tz = $res->json('timezone') ?: 'UTC';
+        $h = $r['hourly'];
+        $tz = $r['tz'];
         $now = Carbon::now($tz);
+        $last = $now->copy()->startOfDay()->addDays($days);
         $out = [];
         foreach ($h['time'] as $i => $iso) {
             $when = Carbon::parse($iso, $tz);
-            $date = $when->toDateString();
             // Today starts at the hour we are in; every other day is whole.
-            if ($when->isSameDay($now) && $when->lt($now->copy()->startOfHour())) {
+            if (($when->isSameDay($now) && $when->lt($now->copy()->startOfHour())) || $when->lt($now->copy()->startOfDay()) || $when->gte($last)) {
                 continue;
             }
-            $code = isset($h['weather_code'][$i]) ? (int) $h['weather_code'][$i] : null;
-            $meta = $this->codeMeta((int) ($code ?? 0));
-            $out[$date][] = [
-                'time' => $iso,
-                'hour' => $when->isoFormat('h A'),
-                'isNow' => $when->isSameDay($now) && $when->hour === $now->hour,
-                'text' => $meta['text'],
-                'emoji' => $meta['emoji'],
-                /* The code itself, kept.
-                 *
-                 * It was being turned into a word and an emoji and then
-                 * dropped — but the animated scenes are chosen from the code,
-                 * so every hour arrived without one and every hour of every
-                 * day drew the same clear sun. A forecast that says "sunny"
-                 * twenty-four hours running is not a forecast.
-                 *
-                 * And whether it is dark: an hour is a POINT, so this is a
-                 * fact about it in a way it can never be about a whole day. */
-                'code' => $code,
-                'night' => $when->hour < 6 || $when->hour >= 18,
-                'temp' => isset($h['temperature_2m'][$i]) ? (int) round($h['temperature_2m'][$i]) : null,
-                'pop' => isset($h['precipitation_probability'][$i]) ? (int) $h['precipitation_probability'][$i] : null,
-                'mm' => isset($h['precipitation'][$i]) ? round((float) $h['precipitation'][$i], 1) : null,
-                'humidity' => isset($h['relative_humidity_2m'][$i]) ? (int) $h['relative_humidity_2m'][$i] : null,
-                'wind' => isset($h['wind_speed_10m'][$i]) ? (int) round($h['wind_speed_10m'][$i]) : null,
-            ];
+            $row = $this->hourRow($h, $i, $when);
+            unset($row['dow']);
+            $out[$when->toDateString()][] = $row + ['isNow' => $when->isSameDay($now) && $when->hour === $now->hour];
         }
 
-        if (empty($out)) {
-            return null;
-        }
-
-        Cache::put($key, $out, now()->addMinutes(30));
-
-        return $out;
+        return $out ?: null;
     }
 
     public function hourlyForPlace(?string $place, int $hours = 24): ?array
