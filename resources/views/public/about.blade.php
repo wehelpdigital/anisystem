@@ -11,6 +11,9 @@
     $faceLg = asset('images/anee/avatar-512.jpg');
     $feature = fn ($slug) => $ph ? \App\Support\SitePages::url('features', $slug) : route('features');
     $arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>';
+    // The app as it is today (2026-10-13): How It Works' own steps, Anee Auto first.
+    $abSteps = collect(\App\Support\HowItWorks::stages())->sortBy(fn ($st) => $st['key'] === 'auto' ? 0 : 1)->values()->all();
+    $abTools = collect($abSteps)->sum(fn ($st) => count($st['items']));
 @endphp
 
 @section('title', $ph ? 'About anee.io: Named After Ani, the Palay Harvest' : 'About anee.io: Named After the Harvest')
@@ -46,6 +49,12 @@
                 <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
                 <a href="{{ route('how') }}" class="hp-alt is-glass">See how it works</a>
             </div>
+        </div>
+        <div class="ab-facts animate-fade-up" style="animation-delay:.24s">
+            <div><b>{{ $abTools }}</b><small>tools for one season</small></div>
+            <div><b>{{ $ph ? '85' : '100' }}</b><small>crops it knows by stage</small></div>
+            <div><b>{{ count($abSteps) }}</b><small>steps from plan to harvest</small></div>
+            <div><b>Free</b><small>to start, on any phone</small></div>
         </div>
         <a href="#ab-story" class="ab-down" aria-label="Scroll to read more">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
@@ -217,22 +226,22 @@
             <div class="hp-head reveal">
                 <p class="hp-kick">The app</p>
                 <h2 class="hp-h2">What anee.io <em>Does for You.</em></h2>
-                <p class="hp-p">One app for the whole season, from planning to the final report.</p>
+                <p class="hp-p">{{ $abTools }} tools in one app, step by step through the season. Or let Anee run the whole season for you with Anee Auto.</p>
             </div>
             <div class="ab-does">
-                @foreach ([
-                    ['cropping-calendar', 'images/icons/calendar.png', 'One plan for the whole season', 'Land preparation, sowing, fertilizer, crop protection and harvest on one cropping calendar.'],
-                    ['ai-agricultural-technician', 'images/icons/chat.png', 'Anee, your smart farm technician', 'Ask about pests, fertilizer or a sick leaf, even with a photo, and get an answer for your own field.'],
-                    ['farm-reports', 'images/icons/profit.png', 'Costs and profit you can see', 'Labor, materials and services add up as you go, and the reports match to the ' . ($ph ? 'peso' : 'cent') . '.'],
-                    ['growth-stages-and-weather', 'images/icons/soil-restoration.png', 'Growth stages and weather', 'See where each lot stands today, what to do now, and the forecast for your field.'],
-                    ['farm-workers-and-payroll', 'images/icons/tea.png', 'Workers and payroll', 'Put the right people on each task, tick who came, and the labor cost adds itself up.'],
-                    ['offline-farm-app', 'images/icons/offline.png', 'Works without signal', 'Keep ticking tasks and writing notes at the far lot. It syncs when the signal comes back.'],
-                ] as $i => [$slug, $img, $t, $p])
-                    <a href="{{ $feature($slug) }}" class="ab-do reveal" style="--reveal-delay: {{ ($i % 3) * 0.07 }}s">
-                        <span class="ab-do-ico"><img src="{{ asset($img) }}" alt="" loading="lazy"></span>
-                        <h3>{{ $t }}</h3>
-                        <p>{{ $p }}</p>
-                        <span class="ab-do-more">Read more {!! $arrow !!}</span>
+                @foreach ($abSteps as $i => $st)
+                    <a href="{{ route('features') }}#step-{{ $st['key'] }}" class="ab-do {{ $st['key'] === 'auto' ? 'is-auto' : '' }} reveal" style="--reveal-delay: {{ ($i % 4) * 0.06 }}s">
+                        <span class="ab-do-top">
+                            <span class="ab-do-n">{{ $i + 1 }}</span>
+                            <span class="ab-do-count">{{ count($st['items']) }} {{ \Illuminate\Support\Str::plural('tool', count($st['items'])) }}</span>
+                        </span>
+                        <h3>{{ $st['title'] }}</h3>
+                        <p>{{ $st['lede'] }}</p>
+                        <span class="ab-do-icons" aria-hidden="true">
+                            @foreach (array_slice($st['items'], 0, 6) as $it)<img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy" class="{{ str_starts_with($it['icon'], 'anee/') ? 'is-face' : '' }}" title="{{ $it['name'] }}">@endforeach
+                            @if (count($st['items']) > 6)<i>+{{ count($st['items']) - 6 }}</i>@endif
+                        </span>
+                        <span class="ab-do-more">See the tools {!! $arrow !!}</span>
                     </a>
                 @endforeach
             </div>
@@ -306,8 +315,9 @@
     @keyframes hpKenAb { from { transform: scale(1.05); } to { transform: scale(1.14) translate3d(1.5%, -1%, 0); } }
     .ab-hero-shade { position: absolute; inset: 0; z-index: -1;
         background: radial-gradient(80% 90% at 50% 40%, rgb(16 28 10 / .55), rgb(10 18 6 / .9)); }
-    .ab-hero-in { padding-top: 6rem; padding-bottom: 7rem; }
+    .ab-hero-in { padding-top: 6rem; padding-bottom: 7.5rem; }
     @media (min-width: 1024px) { .ab-hero-in { padding-top: 8rem; padding-bottom: 8.5rem; } }
+    .ab-hero { padding-bottom: 4.5rem; }
     .ab-chip { display: inline-flex; align-items: center; padding: .4rem 1rem; border-radius: 999px; font-size: .78rem; font-weight: 800;
         letter-spacing: .1em; text-transform: uppercase; color: #f4d778; background: rgb(255 255 255 / .1);
         box-shadow: inset 0 0 0 1px rgb(255 255 255 / .22); backdrop-filter: blur(8px); }
@@ -379,9 +389,27 @@
     .ab-guide-go svg { width: 1.1rem; height: 1.1rem; }
     .ab-guide:hover .ab-guide-go { color: var(--hp-green); transform: translateX(3px); }
 
-    .ab-does { margin-top: 3rem; display: grid; gap: 1.1rem; }
+    .ab-does { margin-top: 3rem; display: grid; gap: 1rem; }
     @media (min-width: 640px) { .ab-does { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (min-width: 1024px) { .ab-does { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.3rem; } }
+    @media (min-width: 1024px) { .ab-does { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; } }
+    .ab-do-top { display: flex; align-items: center; justify-content: space-between; }
+    .ab-do-n { width: 2.4rem; height: 2.4rem; border-radius: 999px; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 800; color: #fff; background: #2d5016;
+        box-shadow: 0 0 0 4px #e6f0dc; }
+    .ab-do.is-auto { border-color: #f0dc95; background: linear-gradient(160deg, #fff8e1, #fff 60%); }
+    .ab-do.is-auto .ab-do-n { color: #2b3a1c; background: #f5c518; box-shadow: 0 0 0 4px #fff1bf; }
+    .ab-do-count { padding: .2rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: #2f5219; background: #eef6e6; }
+    .ab-do-icons { margin-top: .9rem; display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
+    .ab-do-icons img { width: 1.9rem; height: 1.9rem; padding: .25rem; border-radius: .6rem; object-fit: contain; background: #f3f8ec; box-shadow: inset 0 0 0 1px #dcead0; }
+    .ab-do-icons img.is-face { padding: 0; object-fit: cover; }
+    .ab-do-icons i { font-style: normal; font-size: .76rem; font-weight: 800; color: #4a7c2a; padding-left: .15rem; }
+    /* The facts strip on the hero's lower edge. */
+    .ab-facts { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; max-width: 54rem; margin: -4.5rem auto 0;
+        border-radius: 1.3rem; overflow: hidden; background: rgb(255 255 255 / .16); box-shadow: 0 24px 50px -30px rgb(0 0 0 / .8); backdrop-filter: blur(10px); }
+    @media (min-width: 768px) { .ab-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .ab-facts div { padding: 1rem .9rem; text-align: center; background: rgb(14 24 9 / .55); }
+    .ab-facts b { display: block; font-family: var(--font-heading); font-size: 1.9rem; font-weight: 800; line-height: 1; color: #f5c518; }
+    .ab-facts small { display: block; margin-top: .35rem; font-size: .78rem; font-weight: 700; color: #dce8cf; }
+    @media (max-width: 767.98px) { .ab-facts { margin: -3.5rem 1rem 0; } }
     .ab-do { display: flex; flex-direction: column; padding: 1.5rem; border-radius: 1.4rem; background: #fff; border: 1px solid #e5ebdf; text-decoration: none;
         transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease), border-color .28s var(--hp-ease); }
     .ab-do:hover { transform: translateY(-4px); border-color: #b9d69a; box-shadow: 0 24px 44px -30px rgb(20 33 12 / .6); }

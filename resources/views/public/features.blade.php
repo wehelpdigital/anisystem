@@ -10,16 +10,30 @@
 @php
     $R = \App\Support\Region::class;
     $ph = $R::ph();
-    $fCount = $featurePages->count();
-    $fNew = ['satellite-analysis', 'satellite-weather', 'npk-plus-calculator', 'pest-and-disease-finders', 'the-stash'];
-    // The filter's order; only the categories the pages use are shown.
-    $fCats = collect(['Planning', 'Agronomy', 'Weather', 'Crop care', 'Anee', 'Workers', 'Records', 'Money', 'Community', 'Resources'])
-        ->filter(fn ($c) => $featurePages->contains('category', $c))->values();
+    // Every tool, from How It Works itself (2026-10-13, the owner: the list here
+    // had fallen behind): the steps of the season in the homepage's order,
+    // Anee Auto first. A tool with a guide links to it; every tool has its film.
+    $HW = \App\Support\HowItWorks::class;
+    $fSteps = collect($HW::stages())->sortBy(fn ($st) => $st['key'] === 'auto' ? 0 : 1)->values()
+        ->map(fn ($st) => $st['key'] === 'auto' ? array_replace($st, ['when' => 'The easiest way']) : $st)->all();
+    $fTools = collect($fSteps)->flatMap(fn ($st) => $st['items'])->values();
+    $fCount = $fTools->count();
+    $fGuide = function (array $it) use ($ph) {
+        if (! empty($it['page']) && $ph) {
+            return \App\Support\SitePages::url('features', $it['page']);
+        }
+
+        return ! empty($it['url']) ? url($it['url']) : null;
+    };
+    $fFilm = fn (string $key) => $HW::video($key);
+    // New this month: on their cards and in the band.
+    $fNew = ['auto', 'pestFinder', 'diseaseFinder', 'weedHelper', 'globalWorkers', 'share', 'cash', 'daycount', 'tags', 'skyWeather', 'satellite', 'npk', 'stash'];
 @endphp
 
 @push('head')
 <style>
-    /* ---- FEATURES (redrawn 2026-10-07) ------------------------------------
+    /* ---- FEATURES (redrawn 2026-10-07; since 2026-10-13 every tool of How
+       It Works, step by step, each with its film) ----------------------------
        A hero that moves, a band of every feature sliding past (each one
        opens its guide), every feature as a card with a filter by part of
        the farm, Anee, then the way in. The tour and its sticky chip bar were
@@ -83,26 +97,126 @@
     .fz-track a.is-new { color: #1f1500; background: #f5c518; border-color: #f5c518; }
     @keyframes fzSlide { to { transform: translateX(-50%); } }
 
-    /* Every feature, filtered by part of the farm. */
+    /* Every tool, step by step (2026-10-13). */
     .fz-sec { scroll-margin-top: 5rem; }
-    .fz-cats { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.6rem; }
-    .fz-cats button { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .9rem; border-radius: 999px; border: 1px solid #e1ead6; background: #fff; cursor: pointer;
-        font-size: .86rem; font-weight: 800; color: #374151; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
-    .fz-cats button:hover { border-color: #a8cc7e; transform: translateY(-1px); }
-    .fz-cats button b { min-width: 1.4rem; padding: .05rem .4rem; border-radius: 999px; font-size: .72rem; text-align: center; background: #eef6e6; color: #2f5219; }
-    .fz-cats button[aria-pressed="true"] { background: #2d5016; border-color: #2d5016; color: #fff; }
-    .fz-cats button[aria-pressed="true"] b { background: #f5c518; color: #1f1500; }
-    /* A phone: the same chips a size smaller, so the parts of the farm fit in three rows. */
-    @media (max-width: 639.98px) {
-        .fz-cats { gap: .4rem; margin-top: 1.3rem; }
-        .fz-cats button { min-height: 2.5rem; padding: .4rem .7rem; font-size: .82rem; gap: .35rem; }
+    .fz-all { position: relative; padding: 3.5rem 0 4rem; background: #fbfcf9; border-bottom: 1px solid #eef2e8; }
+    .fz-steps-nav { position: sticky; top: 4rem; z-index: 20; margin-top: 1.4rem; padding: .55rem 0; background: rgb(251 252 249 / .92); backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid #eef2e8; }
+    @media (min-width: 768px) { .fz-steps-nav { top: 5rem; } }
+    .fz-steps-row { display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; }
+    .fz-steps-row::-webkit-scrollbar { display: none; }
+    .fz-steps-row a { flex: none; scroll-snap-align: start; display: inline-flex; align-items: center; gap: .45rem; padding: .42rem .8rem .42rem .45rem; border-radius: 999px;
+        font-size: .82rem; font-weight: 800; color: #374151; background: #fff; border: 1px solid #e1ead6; text-decoration: none;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .fz-steps-row a b { display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 999px; font-size: .72rem; color: #2f5219; background: #eef6e6; }
+    .fz-steps-row a.is-auto b { color: #2b3a1c; background: #f5c518; }
+    .fz-steps-row a.is-on { color: #fff; background: #2d5016; border-color: #2d5016; }
+    .fz-steps-row a.is-on b { color: #1f1500; background: #f5c518; }
+    .fz-step { scroll-margin-top: 9rem; padding-top: 2.6rem; }
+    .fz-step-head { display: flex; gap: 1rem; align-items: flex-start; max-width: 46rem; }
+    .fz-step-n { flex: none; width: 2.8rem; height: 2.8rem; border-radius: 999px; display: grid; place-items: center; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800;
+        color: #fff; background: #2d5016; box-shadow: 0 0 0 5px #e6f0dc; }
+    .fz-step.is-auto .fz-step-n { color: #2b3a1c; background: #f5c518; box-shadow: 0 0 0 5px #fff1bf; }
+    .fz-step-when { font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #4a7c2a; }
+    .fz-step.is-auto .fz-step-when { color: #8a6a00; }
+    .fz-step-h { margin-top: .2rem; font-family: var(--font-heading); font-size: clamp(1.35rem, 2.6vw, 1.75rem); font-weight: 800; color: #14210c; line-height: 1.15; }
+    .fz-step-p { margin-top: .4rem; color: #4b5563; line-height: 1.6; }
+    .fz-tools { margin-top: 1.3rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); }
+    .fz-tool { position: relative; display: flex; flex-direction: column; overflow: hidden; border-radius: 1.3rem; background: #fff; border: 1px solid #e5ebdf;
+        box-shadow: 0 18px 40px -36px rgb(20 33 12 / .5); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .fz-tool:hover { transform: translateY(-4px); border-color: #c9dcb4; box-shadow: 0 28px 50px -32px rgb(20 33 12 / .55); }
+    .fz-step.is-auto .fz-tool { border-color: #f0dc95; background: linear-gradient(160deg, #fffaf0, #fff 55%); }
+    .fz-shot { position: relative; display: block; width: 100%; height: 11rem; padding: 0; border: 0; cursor: pointer; overflow: hidden;
+        background: radial-gradient(80% 120% at 50% 110%, #d6e9c2, transparent 70%), linear-gradient(160deg, #f4f9ee, #e7f1dc); }
+    .fz-shot::after { content: ''; position: absolute; inset: auto 0 0; height: 2.4rem; background: linear-gradient(180deg, transparent, #fff); }
+    .fz-shot img { position: absolute; left: 50%; top: 1.1rem; width: 58%; translate: -50% 0; border-radius: 1rem 1rem 0 0; background: #fff;
+        box-shadow: 0 0 0 4px #1d2a15, 0 24px 40px -18px rgb(20 33 12 / .55); transition: transform .5s cubic-bezier(.22,1,.36,1); }
+    .fz-tool:hover .fz-shot img { transform: translateY(-.5rem) rotate(-1.5deg); }
+    .fz-play { position: absolute; z-index: 2; right: .9rem; top: .9rem; width: 2.5rem; height: 2.5rem; border-radius: 999px; display: grid; place-items: center; color: #1a1a1a;
+        background: #f5c518; box-shadow: 0 0 0 5px rgb(245 197 24 / .25), 0 10px 20px -10px rgb(0 0 0 / .5); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .fz-play svg { width: 1rem; height: 1rem; margin-left: 2px; }
+    .fz-shot:hover .fz-play, .fz-shot:focus-visible .fz-play { transform: scale(1.1); }
+    .fz-new { position: absolute; z-index: 3; left: .8rem; top: .8rem; padding: .18rem .55rem; border-radius: 999px; font-size: .62rem; font-weight: 900; letter-spacing: .08em;
+        text-transform: uppercase; color: #1f1500; background: #f5c518; }
+    .fz-tool-body { position: relative; display: flex; flex: 1; flex-direction: column; gap: .35rem; padding: 0 1.15rem 1.15rem; }
+    .fz-ico { width: 3rem; height: 3rem; margin-top: -1.5rem; border-radius: 1rem; display: grid; place-items: center; overflow: hidden; background: #fff;
+        box-shadow: 0 0 0 1px #e1ead6, 0 10px 22px -12px rgb(20 33 12 / .5); }
+    .fz-ico img { width: 2rem; height: 2rem; object-fit: contain; }
+    .fz-ico.is-face img { width: 100%; height: 100%; object-fit: cover; }
+    .fz-tool h4 { margin-top: .3rem; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #14210c; line-height: 1.3; }
+    .fz-anee { display: inline-block; margin-left: .4rem; padding: .08rem .45rem; border-radius: 999px; vertical-align: .12em; font-style: normal; font-size: .62rem; font-weight: 900;
+        letter-spacing: .05em; text-transform: uppercase; color: #5b4300; background: #fde68a; }
+    .fz-short { font-size: .86rem; font-weight: 700; color: #2f5219; }
+    .fz-what { font-size: .84rem; line-height: 1.55; color: #4b5563; }
+    .fz-go { margin-top: auto; padding-top: .4rem; display: inline-flex; align-items: center; gap: .25rem; font-size: .82rem; font-weight: 800; color: #2f5219; text-decoration: none; }
+    .fz-go svg { width: .9rem; height: .9rem; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .fz-go:hover svg { transform: translateX(3px); }
+    /* Anee Auto: one tool, so one wide card: the screen beside the words and her six steps. */
+    .fz-auto-steps { margin: .5rem 0 .2rem; padding: 0; list-style: none; display: grid; gap: .45rem; }
+    @media (min-width: 560px) { .fz-auto-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) { .fz-auto-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    .fz-auto-steps li { display: flex; gap: .5rem; align-items: flex-start; padding: .55rem .65rem; border-radius: .9rem; background: #fffaf0; border: 1px solid #f0e3b4;
+        font-size: .78rem; line-height: 1.4; color: #5b6651; }
+    .fz-auto-steps li b { flex: none; width: 1.4rem; height: 1.4rem; border-radius: 999px; display: grid; place-items: center; font-size: .7rem; color: #2b3a1c; background: #f5c518; }
+    .fz-auto-steps li strong { display: block; font-size: .84rem; color: #14210c; }
+    .fz-step.is-auto .fz-tools { grid-template-columns: minmax(0, 1fr); }
+    @media (min-width: 768px) {
+        .fz-step.is-auto .fz-tool { flex-direction: row; }
+        .fz-step.is-auto .fz-shot { flex: none; width: 17rem; height: auto; min-height: 19rem; }
+        .fz-step.is-auto .fz-shot::after { inset: 0 0 0 auto; width: 2.4rem; height: auto; background: linear-gradient(90deg, transparent, #fffaf0); }
+        .fz-step.is-auto .fz-shot img { width: 66%; top: 1.4rem; }
+        .fz-step.is-auto .fz-tool-body { padding: 1.4rem 1.5rem 1.4rem .4rem; }
+        .fz-step.is-auto .fz-ico { margin-top: 0; }
+        .fz-step.is-auto .fz-what { font-size: .9rem; }
     }
+    @media (max-width: 559.98px) { .fz-step.is-auto .fz-what { display: block; font-size: .8rem; } }
+    .fz-or { display: flex; align-items: center; gap: .8rem; margin-top: 2.4rem; font-size: .76rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #4a7c2a; }
+    .fz-or::before, .fz-or::after { content: ''; flex: 1; border-top: 2px dashed #c9dcb4; }
+    /* A phone: two to a row, the screen, the name and the short line. */
+    @media (max-width: 559.98px) {
+        .fz-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
+        .fz-shot { height: 7.5rem; }
+        .fz-shot img { width: 70%; top: .8rem; }
+        .fz-play { width: 2rem; height: 2rem; right: .55rem; top: .55rem; }
+        .fz-tool-body { padding: 0 .75rem .85rem; gap: .25rem; }
+        .fz-ico { width: 2.5rem; height: 2.5rem; margin-top: -1.25rem; }
+        .fz-ico img { width: 1.6rem; height: 1.6rem; }
+        .fz-tool h4 { font-size: .9rem; }
+        .fz-short { font-size: .76rem; line-height: 1.4; }
+        .fz-what { display: none; }
+        .fz-go { font-size: .74rem; }
+        .fz-step-head { gap: .75rem; }
+        .fz-step-n { width: 2.3rem; height: 2.3rem; font-size: 1rem; }
+    }
+    /* The film modal. */
+    .fz-modal { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 1rem; opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .fz-modal.is-on { opacity: 1; }
+    .fz-modal[hidden] { display: none; }
+    .fz-modal-veil { position: absolute; inset: 0; background: rgb(8 14 5 / .72); backdrop-filter: blur(4px); }
+    .fz-modal-box { position: relative; display: grid; gap: 1.4rem; align-items: center; width: min(46rem, 100%); max-height: calc(100vh - 2rem); overflow: auto; padding: 1.4rem;
+        border-radius: 1.6rem; background: #fff; box-shadow: 0 40px 90px -30px rgb(0 0 0 / .7); transform: translateY(14px) scale(.98); transition: transform .34s cubic-bezier(.22,1,.36,1); }
+    .fz-modal.is-on .fz-modal-box { transform: none; }
+    @media (min-width: 720px) { .fz-modal-box { grid-template-columns: auto minmax(0, 1fr); padding: 1.8rem; } }
+    .fz-modal-phone { justify-self: center; width: min(15rem, 62vw); aspect-ratio: 540 / 1170; padding: .45rem; border-radius: 2.2rem; background: #11180c; box-shadow: 0 30px 60px -30px rgb(0 0 0 / .8); }
+    @media (max-width: 719.98px) { .fz-modal-phone { width: min(12rem, 50vw); } }
+    .fz-modal-phone video { width: 100%; height: 100%; display: block; object-fit: cover; border-radius: 1.8rem; background: #fff; }
+    .fz-modal-step { font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #4a7c2a; }
+    .fz-modal-words h3 { margin-top: .3rem; font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #14210c; }
+    .fz-modal-words p#fzModalWhat { margin-top: .6rem; color: #4b5563; line-height: 1.65; }
+    .fz-modal-nav { margin-top: 1.2rem; display: flex; align-items: center; gap: .6rem; }
+    .fz-modal-nav button { width: 2.5rem; height: 2.5rem; border-radius: 999px; display: grid; place-items: center; border: 1px solid #e1ead6; background: #fff; color: #2f5219;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .fz-modal-nav button:hover { background: #f1f7ea; }
+    .fz-modal-nav button svg { width: 1.1rem; height: 1.1rem; }
+    .fz-modal-nav .fz-go { margin: 0 auto 0 .4rem; padding: 0; }
+    .fz-x { position: absolute; right: .8rem; top: .8rem; z-index: 2; width: 2.3rem; height: 2.3rem; border-radius: 999px; display: grid; place-items: center; color: #374151; background: #f3f4f6; }
+    .fz-x svg { width: 1.1rem; height: 1.1rem; }
 
     @media (prefers-reduced-motion: reduce) {
         .fz-orb, .fz-kick i, .fz-h1 em, .fz-phones .ph-frame, .fz-track { animation: none !important; }
         .fz-track { flex-wrap: wrap; width: auto; justify-content: center; }
         .fz-track.rev { display: none; }
-        .fz-cats button { transition: none !important; }
+        .fz-tool, .fz-shot img, .fz-modal, .fz-modal-box, .fz-play { transition: none !important; }
     }
 </style>
 @endpush
@@ -121,13 +235,13 @@
                     your workers and every {{ $ph ? 'peso' : 'dollar' }}, with Anee, your smart farm technician, beside you. Every screen below is the real thing.
                 </p>
                 <div class="fz-stats">
-                    <div><b>{{ $fCount }}</b><small>features, each with its own guide</small></div>
+                    <div><b>{{ $fCount }}</b><small>tools, each on film</small></div>
+                    <div><b>{{ count($fSteps) }}</b><small>steps of the season</small></div>
                     <div><b>{{ $ph ? '85' : '100' }}</b><small>crops it knows by stage</small></div>
-                    <div><b>2</b><small>satellites over your field</small></div>
                 </div>
                 <div class="fz-cta">
                     <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free</a>
-                    <a href="#all" class="btn btn-lg btn-on-dark">See every feature</a>
+                    <a href="#all" class="btn btn-lg btn-on-dark">See every tool</a>
                 </div>
             </div>
             <div class="fz-phones" aria-hidden="true">
@@ -139,37 +253,100 @@
         {{-- Every feature, sliding past slowly; each chip opens its guide. --}}
         <nav class="fz-band" aria-label="Every feature">
             <div class="fz-track">
-                @foreach ($featurePages->concat($featurePages) as $i => $fp)
-                    <a href="{{ \App\Support\SitePages::pageUrl($fp) }}" class="{{ in_array($fp->slug, $fNew, true) ? 'is-new' : '' }}" @if ($i >= $fCount) aria-hidden="true" tabindex="-1" @endif>{{ \App\Support\SitePages::feature($fp)['name'] }}</a>
+                @foreach ($fTools->concat($fTools) as $i => $it)
+                    <a href="#tool-{{ $it['key'] }}" class="{{ in_array($it['key'], $fNew, true) ? 'is-new' : '' }}" @if ($i >= $fCount) aria-hidden="true" tabindex="-1" @endif>{{ $it['name'] }}</a>
                 @endforeach
             </div>
             <div class="fz-track rev" aria-hidden="true">
-                @foreach ($featurePages->reverse()->concat($featurePages->reverse()) as $fp)
-                    <a href="{{ \App\Support\SitePages::pageUrl($fp) }}" class="{{ in_array($fp->slug, $fNew, true) ? 'is-new' : '' }}" tabindex="-1">{{ \App\Support\SitePages::feature($fp)['name'] }}</a>
+                @foreach ($fTools->reverse()->concat($fTools->reverse()) as $it)
+                    <a href="#tool-{{ $it['key'] }}" class="{{ in_array($it['key'], $fNew, true) ? 'is-new' : '' }}" tabindex="-1">{{ $it['name'] }}</a>
                 @endforeach
             </div>
         </nav>
     </section>
 
-    {{-- ================= EVERY FEATURE, ONE CARD EACH ================= --}}
-    @if ($featurePages->isNotEmpty())
-    <section class="relative py-14 sm:py-16 bg-[#fbfcf9] border-b border-gray-100 fz-sec" id="all">
+    {{-- ================= EVERY TOOL, STEP BY STEP ================= --}}
+    <section class="fz-all fz-sec" id="all">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="max-w-2xl reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Everything in one farm app</p>
-                <h2 class="mt-2 font-heading text-2xl sm:text-3xl font-bold text-ink text-balance">{{ $fCount }} Features for One Cropping Season</h2>
-                <p class="mt-3 text-gray-600">Each one works on its own and with the rest: plan the season, keep the records, and ask for advice from the same phone. Pick a part of the farm, then open any feature for its full guide.</p>
+                <h2 class="mt-2 font-heading text-2xl sm:text-3xl font-bold text-ink text-balance">{{ $fCount }} Tools for Your Whole Season, Step by Step</h2>
+                <p class="mt-3 text-gray-600">Each step of the season has its own tools, and they work together: plan it, run it, record it, and ask Anee from the same phone. Tap a screen to watch the tool at work.</p>
             </div>
-            <div class="fz-cats reveal" role="group" aria-label="Show features for">
-                <button type="button" data-cat="" aria-pressed="true">All <b>{{ $fCount }}</b></button>
-                @foreach ($fCats as $c)
-                    <button type="button" data-cat="{{ $c }}" aria-pressed="false">{{ $c }} <b>{{ $featurePages->where('category', $c)->count() }}</b></button>
+        </div>
+        {{-- The steps, always at hand while reading. --}}
+        <nav class="fz-steps-nav" aria-label="The steps of the season">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6"><div class="fz-steps-row">
+                @foreach ($fSteps as $si => $st)
+                    <a href="#step-{{ $st['key'] }}" class="{{ $st['key'] === 'auto' ? 'is-auto' : '' }}" data-step-link="{{ $st['key'] }}"><b>{{ $si + 1 }}</b>{{ $st['title'] }}</a>
                 @endforeach
-            </div>
-            <div class="mt-6">@include('public.site.feature-grid', ['pages' => $featurePages])</div>
+            </div></div>
+        </nav>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            @foreach ($fSteps as $si => $st)
+                <div class="fz-step {{ $st['key'] === 'auto' ? 'is-auto' : '' }}" id="step-{{ $st['key'] }}" data-step="{{ $st['key'] }}">
+                    <div class="fz-step-head reveal">
+                        <span class="fz-step-n">{{ $si + 1 }}</span>
+                        <div>
+                            <p class="fz-step-when">{{ $st['when'] }} · {{ count($st['items']) }} {{ \Illuminate\Support\Str::plural('tool', count($st['items'])) }}</p>
+                            <h3 class="fz-step-h">{{ $st['title'] }}</h3>
+                            <p class="fz-step-p">{{ $st['lede'] }}</p>
+                        </div>
+                    </div>
+                    <div class="fz-tools">
+                        @foreach ($st['items'] as $ti => $it)
+                            @php $film = $fFilm($it['key']); $guide = $fGuide($it); @endphp
+                            <article class="fz-tool reveal" id="tool-{{ $it['key'] }}" style="--reveal-delay: {{ ($ti % 3) * 0.06 }}s">
+                                @if ($film)
+                                    <button type="button" class="fz-shot" data-film="{{ $film[0] }}" data-poster="{{ $film[1] }}" data-key="{{ $it['key'] }}" aria-label="Watch {{ $it['name'] }} at work">
+                                        <img src="{{ $film[1] }}" alt="{{ $it['name'] }} on a phone" loading="lazy" decoding="async" width="540" height="1170">
+                                        <span class="fz-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
+                                    </button>
+                                @endif
+                                @if (in_array($it['key'], $fNew, true))<span class="fz-new">New</span>@endif
+                                <div class="fz-tool-body">
+                                    <span class="fz-ico{{ str_starts_with($it['icon'], 'anee/') ? ' is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy" width="40" height="40"></span>
+                                    <h4>{{ $it['name'] }}@if ($it['anee'])<i class="fz-anee">Anee</i>@endif</h4>
+                                    <p class="fz-short">{{ $it['short'] }}</p>
+                                    <p class="fz-what">{{ $it['what'] }}</p>
+                                    @if ($it['key'] === 'auto')
+                                        <ol class="fz-auto-steps">
+                                            @foreach ([['Tell her once', 'Lots, crop, soil, water, fertilizer, workers.'], ['She analyzes it all', 'Variety, El Niño or La Niña, the forecast, your soil.'], ['She plans the season', 'Every task from land preparation to harvest.'], ['You just follow', "Today's work every morning, by email too."], ['She keeps it on track', "Can't today? She moves it to the best day."], ['Show her the field', 'A photo, a video or a voice note.']] as $ak => [$at, $aw])
+                                                <li><b>{{ $ak + 1 }}</b><span><strong>{{ $at }}</strong>{{ $aw }}</span></li>
+                                            @endforeach
+                                        </ol>
+                                    @endif
+                                    @if ($guide)<a href="{{ $guide }}" class="fz-go">Read the guide <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>@endif
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                    @if ($st['key'] === 'auto')
+                        <p class="fz-or reveal"><span>Or do it yourself, step by step</span></p>
+                    @endif
+                </div>
+            @endforeach
         </div>
     </section>
-    @endif
+
+    {{-- The film of a tool, on a phone. --}}
+    <div class="fz-modal" id="fzModal" hidden role="dialog" aria-modal="true" aria-labelledby="fzModalName">
+        <div class="fz-modal-veil" data-close></div>
+        <div class="fz-modal-box">
+            <button type="button" class="fz-x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <div class="fz-modal-phone"><video id="fzModalVideo" muted playsinline loop preload="none"></video></div>
+            <div class="fz-modal-words">
+                <p class="fz-modal-step" id="fzModalStep"></p>
+                <h3 id="fzModalName"></h3>
+                <p id="fzModalWhat"></p>
+                <div class="fz-modal-nav">
+                    <button type="button" data-step-film="-1" aria-label="The tool before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M15 6l-6 6 6 6"/></svg></button>
+                    <a href="#" id="fzModalGuide" class="fz-go">Read the guide</a>
+                    <button type="button" data-step-film="1" aria-label="The next tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- ================= ANEE ================= --}}
     <section class="anee-band fz-sec" id="anee">
@@ -204,21 +381,67 @@
 @push('scripts')
 <script>
 (() => {
-    /* The filter: the cards of one part of the farm, coming back softly. */
-    const bar = document.querySelector('.fz-cats');
-    const cards = [...document.querySelectorAll('#all .fg-card')];
-    if (!bar || !cards.length) return;
-    bar.addEventListener('click', (e) => {
-        const b = e.target.closest('button[data-cat]');
-        if (!b) return;
-        bar.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-        let n = 0;
-        cards.forEach((c) => {
-            const show = !b.dataset.cat || c.dataset.cat === b.dataset.cat;
-            c.classList.toggle('is-out', !show);
-            c.classList.remove('is-in');
-            if (show) { c.style.setProperty('--n', n++); void c.offsetWidth; c.classList.add('is-in'); }
+    /* The steps bar lights the step being read, and keeps it in view. */
+    const links = [...document.querySelectorAll('[data-step-link]')];
+    const steps = [...document.querySelectorAll('.fz-step')];
+    if (links.length && 'IntersectionObserver' in window) {
+        const row = document.querySelector('.fz-steps-row');
+        const mark = (key) => links.forEach((a) => {
+            const on = a.dataset.stepLink === key;
+            a.classList.toggle('is-on', on);
+            if (on && row && row.scrollWidth > row.clientWidth) row.scrollTo({ left: a.offsetLeft - 16, behavior: 'smooth' });
         });
+        const io = new IntersectionObserver((es) => {
+            const vis = es.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+            if (vis.length) mark(vis[0].target.dataset.step);
+        }, { rootMargin: '-35% 0px -55% 0px' });
+        steps.forEach((s) => io.observe(s));
+    }
+
+    /* Every tool's film on a phone, with the tool before and after. */
+    const modal = document.getElementById('fzModal');
+    const shots = [...document.querySelectorAll('.fz-shot[data-film]')];
+    if (!modal || !shots.length) return;
+    const v = document.getElementById('fzModalVideo');
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let at = 0, last = null;
+    const show = (i) => {
+        at = (i + shots.length) % shots.length;
+        const b = shots[at], card = b.closest('.fz-tool'), step = b.closest('.fz-step');
+        document.getElementById('fzModalName').textContent = card.querySelector('h4').childNodes[0].textContent.trim();
+        document.getElementById('fzModalWhat').textContent = card.querySelector('.fz-what').textContent;
+        document.getElementById('fzModalStep').textContent = 'Step ' + step.querySelector('.fz-step-n').textContent + ' · ' + step.querySelector('.fz-step-h').textContent;
+        const g = card.querySelector('.fz-go'), guide = document.getElementById('fzModalGuide');
+        guide.hidden = !g; if (g) guide.href = g.href;
+        v.poster = b.dataset.poster; v.src = b.dataset.film;
+        v.play().catch(() => {});
+    };
+    const open = (i) => {
+        last = document.activeElement;
+        modal.hidden = false;
+        requestAnimationFrame(() => modal.classList.add('is-on'));
+        document.documentElement.style.overflow = 'hidden';
+        show(i);
+        modal.querySelector('.fz-x').focus();
+    };
+    const close = () => {
+        modal.classList.remove('is-on');
+        v.pause(); v.removeAttribute('src'); v.load();
+        document.documentElement.style.overflow = '';
+        setTimeout(() => { modal.hidden = true; }, calm ? 0 : 280);
+        last?.focus?.();
+    };
+    shots.forEach((b, i) => b.addEventListener('click', () => open(i)));
+    modal.addEventListener('click', (e) => {
+        if (e.target.closest('[data-close]')) close();
+        const s = e.target.closest('[data-step-film]');
+        if (s) show(at + Number(s.dataset.stepFilm));
+    });
+    document.addEventListener('keydown', (e) => {
+        if (modal.hidden) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowRight') show(at + 1);
+        if (e.key === 'ArrowLeft') show(at - 1);
     });
 })();
 </script>
