@@ -26,11 +26,9 @@
     $check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
     $arrow = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>';
     $mark = fn (string $t) => \App\Support\LandingPage::marked($t);
-    // The tiles, in their groups, in the order the editor keeps them.
-    $groups = [];
-    foreach ($lp['more']['items'] as $t) {
-        $groups[trim($t['group'] ?? '')][] = $t;
-    }
+    // Every tool, by the step of the season it serves: How It Works' own
+    // list, with the icons the tools wear in the app (2026-10-13).
+    $hwSteps = \App\Support\HowItWorks::stages();
 @endphp
 
 @section('title', $lp['meta']['title'])
@@ -76,7 +74,7 @@
     .lpd-what small { display: block; margin-top: .1rem; font-size: .78rem; line-height: 1.45; color: #6b7280; }
     .lpd-what em { display: inline-block; margin-top: .25rem; padding: .1rem .5rem; border-radius: 999px; font-style: normal; font-size: .68rem; font-weight: 800; color: #075985; background: #e0f2fe; }
     .lpd-note { margin-top: 1rem; text-align: center; font-size: .8rem; color: #6b7280; }
-    .lp-demo .fx-h em, .lp-demo .fx-h strong { font-style: normal; color: #4a7c2a; }
+    .lp-demo .fx-h em, .lp-demo .fx-h strong, .lp-more-h em { font-style: normal; color: #4a7c2a; }
     /* What the day counts and the gold dots mean, under the season's name. */
     .lpd-key { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: .2rem .9rem; margin-top: .15rem; font-size: .74rem; color: #cfe0bd; }
     .lpd-key span { display: inline-flex; align-items: center; gap: .35rem; }
@@ -275,6 +273,8 @@
     .lp-all { display: grid; gap: 2.5rem; align-items: start; }
     @media (min-width: 1024px) { .lp-all { grid-template-columns: 20rem 1fr; gap: 3.5rem; } .lp-all-phone { position: sticky; top: 2rem; } }
     .lp-all-phone { display: flex; justify-content: center; }
+    /* On a phone the tools speak for themselves: the screenshot would only make the page longer. */
+    @media (max-width: 1023.98px) { .lp-all-phone { display: none; } }
     .lp-all-phone .ph-frame { width: min(280px, 72vw); }
     .lp-group + .lp-group { margin-top: 1.6rem; }
     .lp-group-h { display: flex; align-items: center; gap: .6rem; margin-bottom: .7rem; font-size: .74rem; font-weight: 900;
@@ -288,14 +288,32 @@
         border: 1px solid #e7eee0; transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
     .lp-tile:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -22px rgb(20 33 12 / .45); }
     .lp-tile .e { flex: none; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: .8rem; background: #f3f8ec;
-        font-size: 1.2rem; line-height: 1; }
+        font-size: 1.2rem; line-height: 1; overflow: hidden; }
+    .lp-tile .e img { width: 1.55rem; height: 1.55rem; object-fit: contain; }
+    .lp-tile .e.is-face img { width: 100%; height: 100%; object-fit: cover; }
+    .lp-tile-tag { display: inline-block; margin-left: .35rem; padding: .05rem .4rem; border-radius: 999px; vertical-align: .1em; font-size: .62rem; font-weight: 900;
+        letter-spacing: .04em; color: #5b4300; background: #fde68a; }
+    .lp-group-h b { display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 999px; font-size: .72rem; color: #fff; background: #4a7c2a; letter-spacing: 0; }
     .lp-tile h4, .lp-tile .lp-tile-h { font-weight: 800; color: #14210c; font-size: .95rem; line-height: 1.3; }
     .lp-tile p { margin-top: .15rem; font-size: .84rem; color: #5b6651; line-height: 1.45; }
+    /* On a phone a tile is its icon and its name: {tools} of them, read at a glance. */
     @media (max-width: 559px) {
-        .lp-tile { flex-direction: column; gap: .5rem; padding: .8rem; }
-        .lp-tile h4, .lp-tile .lp-tile-h { font-size: .9rem; }
-        .lp-tile p { font-size: .8rem; }
+        .lp-tile { align-items: center; gap: .6rem; padding: .65rem .7rem; }
+        .lp-tile .e { width: 2.1rem; height: 2.1rem; }
+        .lp-tile h4, .lp-tile .lp-tile-h { font-size: .84rem; }
+        .lp-tile p { display: none; }
     }
+
+    /* The button that stays at hand on a phone: in once the hero's own
+       button is gone, out again over the closer's. */
+    .lp-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
+        background: rgb(255 255 255 / .94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 -12px 30px -18px rgb(20 33 12 / .45);
+        transform: translateY(110%); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .lp-dock.is-on { transform: none; }
+    .lp-dock a { display: flex; width: 100%; justify-content: center; }
+    .lp-dock small { display: block; margin-top: .35rem; text-align: center; font-size: .72rem; font-weight: 700; color: #5b6651; }
+    @media (min-width: 1024px) { .lp-dock { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .lp-dock { transition: none; } }
     /* Testimonials */
     .lp-quotes { display: grid; gap: 1.1rem; }
     @media (min-width: 900px) { .lp-quotes { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -530,6 +548,13 @@
         </div>
     </section>
 
+    {{-- ================= Anee Auto: the easiest way (2026-10-13) =================
+         The homepage's own section, in the site's dress, with the words the
+         mother app keeps for it. --}}
+    @if (! empty($lp['auto']['headline']))
+        @include('public.partials.anee-auto-section', ['signup' => $signup, 'aaLook' => 'site', 'aaText' => $lp['auto']])
+    @endif
+
     {{-- ================= Try it: a season in ten seconds (2026-10-07) =================
          The visitor picks a crop and a planting day and watches a sample
          season land on its days, counted the way anee.io counts them.
@@ -637,7 +662,7 @@
     <section class="pt-14 pb-16 sm:pt-20 sm:pb-24">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center reveal">
-                <h2 class="fx-h mx-auto max-w-3xl text-balance">{{ $lp['more']['headline'] }}</h2>
+                <h2 class="fx-h lp-more-h mx-auto max-w-3xl text-balance">{!! $mark($lp['more']['headline']) !!}</h2>
                 @if (trim($lp['more']['sub'] ?? '') !== '')<p class="fx-p mx-auto max-w-2xl">{{ $lp['more']['sub'] }}</p>@endif
             </div>
             <div class="lp-all mt-10">
@@ -647,14 +672,14 @@
                     </div>
                 </div>
                 <div>
-                    @foreach ($groups as $name => $tiles)
+                    @foreach ($hwSteps as $si => $st)
                         <div class="lp-group reveal">
-                            @if ($name !== '')<p class="lp-group-h">{{ $name }}</p>@endif
+                            <p class="lp-group-h"><b>{{ $si + 1 }}</b>{{ $st['title'] }}</p>
                             <div class="lp-tiles">
-                                @foreach ($tiles as $t)
+                                @foreach ($st['items'] as $t)
                                     <div class="lp-tile">
-                                        <span class="e" aria-hidden="true">{{ $t['icon'] ?: '🌱' }}</span>
-                                        <div><h3 class="lp-tile-h">{{ $t['title'] }}</h3><p>{{ $t['text'] }}</p></div>
+                                        <span class="e{{ str_starts_with($t['icon'], 'anee/') ? ' is-face' : '' }}" aria-hidden="true"><img src="{{ asset('images/' . $t['icon']) }}" alt="" loading="lazy" width="40" height="40"></span>
+                                        <div><h3 class="lp-tile-h">{{ $t['name'] }}@if ($t['anee'])<i class="lp-tile-tag">Anee</i>@endif</h3><p>{{ $t['short'] }}</p></div>
                                     </div>
                                 @endforeach
                             </div>
@@ -725,12 +750,41 @@
         </div>
     </section>
 
+    <div class="lp-dock" id="lpDock" aria-hidden="true">
+        <a href="{{ $signup }}" class="btn btn-accent btn-lg" tabindex="-1">{{ $lp['hero']['cta'] }} {!! $arrow !!}</a>
+        {{-- The hero's ticks, the first two: one line on any phone. --}}
+        <small>{{ collect(preg_split('/\s*[.·]\s+|\s*\.\s*$/', trim($lp['hero']['note'])))->map(fn ($b) => rtrim(trim($b), '.'))->filter()->take(2)->implode(' · ') }}</small>
+    </div>
+
 
 @endsection
 
 @push('scripts')
 <script>
 (() => {
+    // The phone's dock: up once the hero's button has scrolled away, down
+    // while any sign up form is on screen (the hero's or the closer's).
+    const dock = document.getElementById('lpDock');
+    if (dock && 'IntersectionObserver' in window) {
+        const forms = [...document.querySelectorAll('.lp-form')];
+        const seen = new Set();
+        let past = false;
+        const set = () => {
+            const on = past && seen.size === 0;
+            dock.classList.toggle('is-on', on);
+            dock.setAttribute('aria-hidden', on ? 'false' : 'true');
+            dock.querySelector('a').tabIndex = on ? 0 : -1;
+        };
+        new IntersectionObserver((es) => {
+            es.forEach((e) => {
+                if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target);
+                if (e.target === forms[0] && !e.isIntersecting) past = e.boundingClientRect.top < 0;
+            });
+            set();
+        }).observe(forms[0]);
+        forms.slice(1).forEach((f) => new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target); }); set(); }).observe(f));
+    }
+
     // FAQ: one open at a time, each folding on its own grid (see .lp-qa).
     document.getElementById('lpFaq')?.addEventListener('click', (e) => {
         const btn = e.target.closest('.lp-qa > button');

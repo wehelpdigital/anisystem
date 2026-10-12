@@ -3,9 +3,16 @@
      answer once, then just follow what Anee says. How it works in five steps,
      a real looking phone playing her day in a loop, with bubbles of her faces
      rising behind it (she is busy with everything), and the door to sign up.
-     No prices here. Expects $signup. --}}
+     No prices here. Expects $signup.
+
+     The ads landing page (/start, 2026-10-13) shows it too: there it passes
+     $aaLook 'site' (the site's heading classes, which /start dresses) and
+     $aaText, the mother app's words for the kicker, headline (*stars* mark
+     the green words), sub and button; any left blank keep these. --}}
 @php
     $aaE = fn (string $n) => \App\Support\AneeEmoji::url($n);
+    $aaSite = ($aaLook ?? 'home') === 'site';
+    $aaSay = fn (string $k, string $own) => trim((string) (($aaText ?? [])[$k] ?? '')) !== '' ? trim((string) $aaText[$k]) : $own;
     // [face, what she is doing, centre %, size rem, delay s, rise s, sway rem]: two columns, either side of the phone.
     $aaBubbles = [
         // Left of the phone: one every 2.5 s, all at one speed, so they never run into each other.
@@ -24,12 +31,12 @@
         ['grin', 'Emailing your workers', 95, 2.7, 13.75, 15, -.4],
     ];
 @endphp
-<section class="hp-sec hp-auto" id="anee-auto" aria-labelledby="hpAutoH">
+<section class="{{ $aaSite ? 'hp-auto is-site' : 'hp-sec hp-auto' }}" id="anee-auto" aria-labelledby="hpAutoH">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="hp-head reveal">
-            <p class="hp-kick">The Easiest Way to Precision Farming</p>
-            <h2 class="hp-h2" id="hpAutoH">Do Not Want Farming to Get Complicated? <em>Just Follow Anee.</em></h2>
-            <p class="hp-p">Building schedules, running analyses, checking the weather every morning, timing the fertilizer: not everyone has the time for it, and nobody should have to guess. With Anee Auto you answer a few questions about your farm once. Anee works out the whole season, tells you what to do each day, and changes the plan herself when the rain comes or a worker cannot.</p>
+            <p class="{{ $aaSite ? 'fx-kicker' : 'hp-kick' }}">{{ $aaSay('kicker', 'The Easiest Way to Precision Farming') }}</p>
+            <h2 class="{{ $aaSite ? 'fx-h' : 'hp-h2' }}" id="hpAutoH">{!! \App\Support\LandingPage::marked($aaSay('headline', 'Do Not Want Farming to Get Complicated? *Just Follow Anee.*')) !!}</h2>
+            <p class="{{ $aaSite ? 'fx-p' : 'hp-p' }}">{{ $aaSay('sub', 'Building schedules, running analyses, checking the weather every morning, timing the fertilizer: not everyone has the time for it, and nobody should have to guess. With Anee Auto you answer a few questions about your farm once. Anee works out the whole season, tells you what to do each day, and changes the plan herself when the rain comes or a worker cannot.') }}</p>
             <ul class="hp-auto-skip" aria-label="What you no longer have to do">
                 <li>No schedules to build</li>
                 <li>No analyses to run one by one</li>
@@ -86,7 +93,7 @@
         </div>
 
         <div class="hp-auto-cta reveal">
-            <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Let Anee plan my season</a>
+            <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">{{ $aaSay('cta', 'Let Anee plan my season') }}</a>
             <span>Answer once. Anee does the thinking; you do the farming.</span>
         </div>
     </div>
@@ -97,6 +104,8 @@
     .hp-auto { position: relative; overflow-x: clip; padding-top: 4.5rem; padding-bottom: 4.5rem;
         background: radial-gradient(55% 45% at 12% 8%, rgb(245 197 24 / .18) 0%, transparent 70%), radial-gradient(50% 50% at 92% 90%, rgb(107 159 61 / .14) 0%, transparent 70%), linear-gradient(180deg, #fffdf5 0%, #fbf7e8 100%); }
     .hp-auto .hp-head { text-align: center; max-width: 48rem; margin: 0 auto; }
+    .hp-auto.is-site .fx-h { font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.15; text-wrap: balance; }
+    .hp-auto.is-site .fx-h em { font-style: normal; color: #4a7c2a; }
     .hp-auto-skip { display: flex; flex-wrap: wrap; justify-content: center; gap: .45rem; margin: 1.3rem 0 0; padding: 0; list-style: none; }
     .hp-auto-skip li { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem .8rem; border-radius: 999px; font-size: .84rem; font-weight: 700; color: #4b3a00;
         background: #fff; border: 1px solid #f1df9c; box-shadow: 0 6px 14px -12px rgb(120 90 0 / .6); }
