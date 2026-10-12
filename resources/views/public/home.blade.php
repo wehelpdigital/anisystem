@@ -650,7 +650,7 @@
                 <div class="hp-tvs-t reveal">
                     <div class="hp-tvs-cols" aria-hidden="true">
                         <span></span>
-                        <span class="is-old">{!! $svg('user', '2') !!}Your local agricultural technician</span>
+                        <span class="is-old">{!! $svg('user', '2') !!}Your Local Agricultural Technician</span>
                         <span class="is-new"><img src="{{ $face }}" alt="">Anee</span>
                     </div>
                     @foreach ($aneeVs as $i => [$vk, $vi, $vo, $vn, $race])
@@ -658,7 +658,7 @@
                             <b class="hp-tvs-k"><span>{!! $svg($vi) !!}</span>{{ $vk }}</b>
                             <div class="hp-tvs-old">
                                 <i>{!! $xMark !!}</i>
-                                <p><em class="hp-vs-label">Your local agricultural technician:</em> {{ $vo }}
+                                <p><em class="hp-vs-label">Your Local Agricultural Technician:</em> {{ $vo }}
                                     @if ($race)<span class="hp-tvs-race is-slow" aria-hidden="true"><i></i><b>Days of waiting</b></span>@endif
                                 </p>
                             </div>
@@ -1520,7 +1520,7 @@
             <div class="hp-vs" data-vs>
                 <div class="hp-vs-head" aria-hidden="true">
                     <span class="is-n">{{ $vsCount }} things that change</span>
-                    <span class="is-old"><i class="hp-vs-key">{!! $vsX !!}</i>By memory and paper</span>
+                    <span class="is-old"><i class="hp-vs-key">{!! $vsX !!}</i>By Memory and Paper</span>
                     <span class="is-new"><i class="hp-vs-key">{!! $tick !!}</i><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">With anee.io</span>
                 </div>
                 @foreach ($vsGroups as $gi => [$gt, $gico, $rows])
