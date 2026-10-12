@@ -35,6 +35,8 @@ class TierModuleAccess
     private const RULES = [
         ['sm.workers',     'workers',   'Workers come with {plan}. Keep your crew, their work days and their pay on every activity.'],
         ['sm.workers.*',   'workers',   'Workers come with {plan}. Keep your crew, their work days and their pay on every activity.'],
+        ['workers.global',   'workers', 'Workers come with {plan}. Keep your crew, their work days and their pay on every activity.'],
+        ['workers.global.*', 'workers', 'Workers come with {plan}. Keep your crew, their work days and their pay on every activity.'],
         ['sm.inventory',   'inventory', 'The Inventory comes with {plan}. Keep the stock in your shed and see what each activity uses.'],
         ['sm.inventory.*', 'inventory', 'The Inventory comes with {plan}. Keep the stock in your shed and see what each activity uses.'],
         // Maps leave Libre (2026-10-12): no map is drawn, so no map service is asked.

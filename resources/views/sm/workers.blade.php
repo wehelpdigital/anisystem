@@ -71,9 +71,27 @@
              out by their email and arrives with the name their account
              carries; anyone else is written down here by hand. The strip
              only shows for a new worker — an existing card is one card. --}}
-        <div class="wa-tabs" id="workerTabs" role="tablist" aria-label="How to add this worker">
+        @php
+            // The farm's own roster is the owner's: how many on it are not in this season yet.
+            $gwWaiting = ((int) $schedule->anisystemUserId === (int) auth()->id() && ! \App\Support\WorkerContext::inWorkerContext())
+                ? \App\Models\AsGlobalWorker::where('userId', $schedule->anisystemUserId)->where('deleteStatus', 1)
+                    ->whereNotIn('id', \App\Models\AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->whereNotNull('globalWorkerId')->pluck('globalWorkerId'))->count()
+                : null;
+        @endphp
+        <div class="wa-tabs" id="workerTabs" role="tablist" aria-label="How to add this worker" @if ($gwWaiting !== null) style="grid-template-columns: 1fr 1fr 1fr" @endif>
+            @if ($gwWaiting !== null)
+            <button type="button" class="wa-tab" data-wtab="mine" role="tab" aria-selected="false">My workers</button>
+            @endif
             <button type="button" class="wa-tab is-on" data-wtab="new" role="tab" aria-selected="true">New worker</button>
-            <button type="button" class="wa-tab" data-wtab="account" role="tab" aria-selected="false">Has an anee.io account</button>
+            <button type="button" class="wa-tab" data-wtab="account" role="tab" aria-selected="false">Has an account</button>
+        </div>
+
+        {{-- The farm's own roster (Global Workers, 2026-10-12): someone who
+             worked another season joins this one in a tap, with their pay,
+             skills and weekdays off. --}}
+        <div id="workerMinePane" class="wa-pane space-y-3" hidden data-waiting="{{ (int) $gwWaiting }}">
+            <p class="text-sm text-gray-500">Your workers from every season. Tap one to add them here; they bring their pay, skills and weekdays off. <a href="{{ route('workers.global') }}" class="font-bold text-brand-700 underline">Manage your workers</a></p>
+            <div id="gwList" class="gw-pick"></div>
         </div>
 
         <div id="workerAccountPane" class="wa-pane space-y-4" hidden>
@@ -425,6 +443,17 @@
     /* THE TWO DOORS INTO ADD WORKER. The same segmented shape the rights
        panel uses, stretched to the sheet's width so the two read as one
        control with two halves rather than two buttons. */
+    .gw-pick { display: grid; gap: .4rem; max-height: 22rem; overflow-y: auto; }
+    .gw-row { display: flex; align-items: center; gap: .7rem; width: 100%; padding: .6rem .7rem; border-radius: .9rem; text-align: left; background: var(--color-gray-50);
+        border: 1px solid var(--color-gray-100); animation: gwIn .3s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i) * 35ms);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .gw-row:hover { border-color: var(--color-brand-300, #a8cc7e); background: var(--color-white); }
+    @keyframes gwIn { from { opacity: 0; transform: translateY(6px); } }
+    .gw-av { flex: none; width: 2.3rem; height: 2.3rem; border-radius: 999px; display: grid; place-items: center; font-weight: 800; color: #fff; background: var(--color-brand-600); }
+    .gw-t { flex: 1; min-width: 0; } .gw-t b { display: block; font-weight: 800; color: var(--color-gray-900); } .gw-t small { display: block; font-size: .78rem; color: var(--color-gray-500); }
+    .gw-add { flex: none; padding: .3rem .7rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: #fff; background: var(--color-brand-600); }
+    html.dark .gw-row { background: #1c2616; border-color: #2b3a1c; } html.dark .gw-t b { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .gw-row { animation: none; transition: none; } }
     .wa-tabs { display:grid; grid-template-columns:1fr 1fr; padding:3px; gap:3px; border-radius:.8rem;
         background:var(--color-gray-100); border:1px solid var(--color-gray-200); }
     .wa-tab { padding:.5rem .6rem; border:0; border-radius:.6rem; font-size:.8rem; font-weight:700;
@@ -707,7 +736,8 @@ const __init = () => {
         // Two doors for a new worker; an existing card is one card.
         document.getElementById('workerTabs').hidden = !!w;
         waReset();
-        showWorkerTab('new', false);
+        // Someone on the farm's roster not in this season yet: that list first.
+        showWorkerTab(!w && document.querySelector('[data-wtab="mine"]') && Number(document.getElementById('workerMinePane').dataset.waiting) > 0 ? 'mine' : 'new', false);
         openSheet('workerSheet');
     }
 
@@ -730,7 +760,7 @@ const __init = () => {
             t.classList.toggle('is-on', on);
             t.setAttribute('aria-selected', on ? 'true' : 'false');
         });
-        const panes = { new: document.getElementById('workerNewPane'), account: document.getElementById('workerAccountPane') };
+        const panes = { new: document.getElementById('workerNewPane'), account: document.getElementById('workerAccountPane'), mine: document.getElementById('workerMinePane') };
         Object.entries(panes).forEach(([key, pane]) => {
             const on = key === which;
             pane.classList.remove('is-arriving');
@@ -744,7 +774,8 @@ const __init = () => {
             }
         });
         const onAccount = which === 'account';
-        document.getElementById('saveWorkerBtn').hidden = onAccount;
+        if (which === 'mine') gwLoad();
+        document.getElementById('saveWorkerBtn').hidden = onAccount || which === 'mine';
         const addBtn = document.getElementById('addAccountBtn');
         addBtn.hidden = !onAccount;
         addBtn.disabled = !(waFound && waFound.found && !waFound.onRoster);
@@ -985,6 +1016,48 @@ const __init = () => {
             toast(err.message, 'error');
             btn.disabled = false;
         }
+    });
+
+    /* ------------- My workers: the farm's own roster -------------
+     *
+     * Global Workers (2026-10-12). The ones not on this season yet, a tap
+     * each: the card is made from their roster facts on the server. */
+    const GW_LIST = @json(route('workers.global.list'));
+    const gwEsc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    let GW_ROWS = [];
+    async function gwLoad() {
+        const box = document.getElementById('gwList');
+        box.innerHTML = '<p class="text-sm text-gray-500">Loading your workers…</p>';
+        try {
+            const res = await api(GW_LIST);
+            const rows = GW_ROWS = (res.data || []).filter((g) => !(g.seasons || []).some((s) => Number(s.id) === Number(SCHEDULE_ID)));
+            box.closest('#workerMinePane').dataset.waiting = rows.length;
+            box.innerHTML = rows.length ? rows.map((g, i) => `<button type="button" class="gw-row" data-gw="${g.id}" style="--i:${i}">
+                    <span class="gw-av">${gwEsc((g.workerName || '?').trim().charAt(0).toUpperCase())}</span>
+                    <span class="gw-t"><b>${gwEsc(g.workerName)}</b><small>${gwEsc([g.phone, g.email].filter(Boolean).join(' · ') || 'No contact yet')}${Number(g.costPerHalfDay) ? ' · ' + gwEsc(Number(g.costPerHalfDay).toLocaleString()) + ' a half day' : ''}</small></span>
+                    <span class="gw-add">Add</span></button>`).join('')
+                : '<p class="text-sm text-gray-500">Everyone on your roster is in this season already. Add someone new in the New worker tab.</p>';
+        } catch (err) { box.innerHTML = '<p class="text-sm text-gray-500">' + gwEsc(err.message) + '</p>'; }
+    }
+    document.getElementById('gwList').addEventListener('click', async (e) => {
+        const b = e.target.closest('[data-gw]');
+        if (!b || b.disabled) return;
+        b.disabled = true;
+        try {
+            const res = await api(`{{ route('sm.workers.store') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { globalWorkerId: Number(b.dataset.gw) } });
+            // Their weekdays off came with them (the server copied them to the card).
+            const offDays = ((GW_ROWS.find((g) => String(g.id) === b.dataset.gw) || {}).offWeekdays || []).map(Number);
+            WORKERS.push({ id: res.data.id, workerName: res.data.workerName, email: res.data.email, phone: res.data.phone, costPerHalfDay: res.data.costPerHalfDay,
+                priority: Number(res.data.priority) || 1, skills: res.data.skills || [], notes: res.data.notes, offDays, offDates: [], login: null });
+            renderList();
+            tellBoard('sm:worker-saved', res.data);
+            if (offDays.length) tellBoard('sm:worker-rules', { id: Number(res.data.id), offDays, offDates: [] });
+            const minePane = document.getElementById('workerMinePane');
+            minePane.dataset.waiting = Math.max(0, Number(minePane.dataset.waiting) - 1);
+            closeSheet('workerSheet');
+            toast(res.message);
+            window.smSpot?.('[data-worker-card="' + res.data.id + '"]');
+        } catch (err) { toast(err.message, 'error'); b.disabled = false; }
     });
 
     /* ------------- "Add to my Contact List too" -------------
@@ -1469,7 +1542,7 @@ const __init = () => {
             priority: Number(d.priority) || 1,
             skills: d.skills || [],
             notes: d.notes,
-            offDays: [], offDates: [],
+            offDays: (d.offDays || []).map(Number), offDates: [],
             login: null,
         });
         renderList();

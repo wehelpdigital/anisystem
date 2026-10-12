@@ -319,6 +319,23 @@
             {{-- Maps and Draw left the seasons (2026-09-30): a farm's fields do
                  not change with the season, so the maps and drawings of them
                  are the grower's own, and any season can use them. --}}
+            {{-- Global Workers (2026-10-12): the farm's own roster, added to any season. --}}
+            @php $qGwLocked = ! \App\Support\Tier::farmCan('workers') || \App\Support\WorkerContext::inWorkerContext(); $qGwRung = \App\Support\Tier::farmUnlocksAt('workers'); @endphp
+            @unless (\App\Support\WorkerContext::inWorkerContext())
+            <a href="{{ route('workers.global') }}" class="qa-tile qa-workers"
+               @if ($qGwLocked) data-tier-lock="{{ $qGwRung }}" data-lock-say="Workers come with {{ \App\Support\Tier::withPlan($qGwRung) }}. Keep your crew once and add them to any season, with their pay, skills and days off." @endif>
+                <span class="qa-ico"><img src="{{ asset('images/friends.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                <span class="qa-txt {{ $qGwLocked ? 'tl-dim' : '' }}">
+                    <b>Global Workers</b>
+                    <i>Your crew in one list: their pay, skills and days off, added to any season in a tap.</i>
+                </span>
+                @if ($qGwLocked)
+                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                @else
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @endif
+            </a>
+            @endunless
             {{-- Maps leave Libre (2026-10-12): the tile stays, wearing a lock. --}}
             @php $qMapLocked = ! \App\Support\Tier::farmCan('maps'); $qMapRung = \App\Support\Tier::farmUnlocksAt('maps'); @endphp
             <a href="{{ route('maps.page') }}" class="qa-tile qa-maps"

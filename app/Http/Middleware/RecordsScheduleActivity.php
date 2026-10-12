@@ -38,6 +38,7 @@ class RecordsScheduleActivity
         'sm.lots.update' => 'Edited a lot',
         'sm.lots.destroy' => 'Deleted a lot',
         'sm.workers.store' => 'Added a worker',
+        'workers.global.season' => 'Added a worker from the roster',
         'sm.workers.update' => 'Edited a worker',
         'sm.workers.destroy' => 'Deleted a worker',
         'sm.workers.access.grant' => 'Sent a worker login invite',

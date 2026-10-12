@@ -227,6 +227,23 @@ class WorkerController extends BaseScheduleController
             ]);
         }
 
+        /* A worker picked from the farm's own roster (Global Workers, the
+         * sheet's third tab): the card takes their name, contact, pay, skills
+         * and notes, and their weekdays off. Not twice on one season. */
+        $global = null;
+        if ($request->filled('globalWorkerId')) {
+            $global = \App\Models\AsGlobalWorker::where('id', (int) $request->input('globalWorkerId'))
+                ->where('userId', (int) $schedule->anisystemUserId)->where('deleteStatus', 1)->first();
+            if (! $global) {
+                return $this->jsonFail('That worker could not be found.', 422);
+            }
+            if ($global->inSeason((int) $schedule->id)) {
+                return $this->jsonFail($global->workerName . ' is already in this season.', 422);
+            }
+            $request->merge(['workerName' => $global->workerName, 'email' => $global->email, 'phone' => $global->phone,
+                'costPerHalfDay' => $global->costPerHalfDay, 'skills' => $global->skills ?: [], 'notes' => $global->notes]);
+        }
+
         // The tier's worker cap, judged by the schedule owner's plan.
         $wCap = \App\Support\Tier::scheduleLimit($schedule, 'workersPerSchedule');
         if ($wCap !== null && AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->count() >= $wCap) {
@@ -266,8 +283,19 @@ class WorkerController extends BaseScheduleController
             'priority' => $nextPriority,
             'skills' => $this->normalizeSkills($request->input('skills', []), $allowedSkillKeys),
             'notes' => $request->notes,
+            'globalWorkerId' => $global?->id,
             'deleteStatus' => 1,
         ]);
+        // Their weekdays off come with them from the roster.
+        foreach ((array) ($global?->offWeekdays ?? []) as $dow) {
+            AsScheduleWorkerOffDay::create(['workerId' => $worker->id, 'dayOfWeek' => (int) $dow]);
+        }
+        // Every card belongs to someone on the farm's roster; a new face joins it.
+        try {
+            \App\Models\AsGlobalWorker::forCard($worker, (int) $schedule->anisystemUserId);
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         if ($request->has('tags')) {
             \App\Support\ScheduleTags::sync($schedule, 'worker', (int) $worker->id, $request->input('tags', []));
@@ -313,6 +341,13 @@ class WorkerController extends BaseScheduleController
             'skills' => $this->normalizeSkills($request->input('skills', []), $allowedSkillKeys),
             'notes' => $request->notes,
         ]);
+
+        // Who they are follows the card onto the farm's roster.
+        try {
+            \App\Models\AsGlobalWorker::forCard($worker, (int) $schedule->anisystemUserId);
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         if ($request->has('tags')) {
             \App\Support\ScheduleTags::sync($schedule, 'worker', (int) $worker->id, $request->input('tags', []));
@@ -408,6 +443,10 @@ class WorkerController extends BaseScheduleController
                 AsScheduleWorkerOffDay::create(['workerId' => $worker->id, 'dayOfWeek' => (int) $dow]);
             }
         });
+        // Their usual weekdays off are theirs, not the season's: the roster keeps them.
+        if ($worker->globalWorkerId) {
+            \App\Models\AsGlobalWorker::where('id', $worker->globalWorkerId)->update(['offWeekdays' => json_encode(array_values(array_map('intval', array_unique((array) $request->input('offDays', [])))))]);
+        }
 
         return $this->jsonOk('Rules saved.');
     }

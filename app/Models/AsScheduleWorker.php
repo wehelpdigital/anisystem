@@ -29,6 +29,7 @@ class AsScheduleWorker extends BaseModel
         'priority',
         'skills',
         'notes',
+        'globalWorkerId',
         'deleteStatus',
     ];
 
@@ -42,6 +43,12 @@ class AsScheduleWorker extends BaseModel
     public function schedule()
     {
         return $this->belongsTo(AsCroppingSchedule::class, 'croppingScheduleId');
+    }
+
+    /** The farm's own worker this card is (Global Workers, 2026-10-12). */
+    public function globalWorker()
+    {
+        return $this->belongsTo(AsGlobalWorker::class, 'globalWorkerId');
     }
 
     public function offDates()

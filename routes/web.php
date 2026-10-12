@@ -393,6 +393,13 @@ Route::middleware('auth')->group(function () {
     // no scheduleId; a season's Collab Room still passes its own.
     Route::get('/app/maps', [App\Http\Controllers\Manager\ScheduleMapController::class, 'page'])->name('maps.page');
     Route::get('/app/draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'page'])->name('draw.page');
+    // Global Workers (2026-10-12): the farm's own roster, added to any season.
+    Route::get('/app/workers', [App\Http\Controllers\GlobalWorkerController::class, 'page'])->name('workers.global');
+    Route::get('/app/workers/list', [App\Http\Controllers\GlobalWorkerController::class, 'list'])->name('workers.global.list');
+    Route::post('/app/workers', [App\Http\Controllers\GlobalWorkerController::class, 'store'])->name('workers.global.store');
+    Route::put('/app/workers/{id}', [App\Http\Controllers\GlobalWorkerController::class, 'update'])->whereNumber('id')->name('workers.global.update');
+    Route::delete('/app/workers/{id}', [App\Http\Controllers\GlobalWorkerController::class, 'destroy'])->whereNumber('id')->name('workers.global.delete');
+    Route::post('/app/workers/{id}/season', [App\Http\Controllers\GlobalWorkerController::class, 'addToSeason'])->whereNumber('id')->name('workers.global.season');
     // Every picture from every season, the way Global Notes gathers the words.
     Route::get('/app/gallery', [App\Http\Controllers\GalleryHubController::class, 'index'])->name('gallery.hub');
 

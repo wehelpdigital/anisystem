@@ -5979,6 +5979,48 @@ document.addEventListener('DOMContentLoaded', () => {
         finally { btn.disabled = false; }
     });
 
+    /* ---- From the farm's own roster (Global Workers, 2026-10-12) ----
+     * People on the owner's roster who are not in this season yet. A tap
+     * makes their card here (the server copies their pay, skills and
+     * weekdays off) and puts them on the open activity. */
+    const GW_LIST_URL = @json(route('workers.global.list'));
+    let qrRows = [];
+    async function qrLoad() {
+        const box = $id('qrList');
+        if (!box) return;
+        box.innerHTML = '<p class="text-xs text-gray-500">Loading your workers…</p>';
+        try {
+            const res = await api(GW_LIST_URL);
+            qrRows = (res.data || []).filter((g) => !(g.seasons || []).some((s) => Number(s.id) === Number(SCHEDULE_ID)));
+            box.innerHTML = qrRows.length
+                ? qrRows.map((g) => `<button type="button" class="chip" data-chip-manual data-roster="${g.id}">${esc(g.workerName)}</button>`).join('')
+                : '<p class="text-xs text-gray-500">Everyone on your roster is in this season already.</p>';
+        } catch (err) { box.innerHTML = `<p class="text-xs text-gray-500">${esc(err.message)}</p>`; }
+    }
+    $id('quickRosterBtn')?.addEventListener('click', () => {
+        const form = $id('quickRosterForm');
+        const open = !form.classList.contains('hidden');
+        form.classList.toggle('hidden', open);
+        if (!open) { animateField(form); qrLoad(); }
+    });
+    $id('qrList')?.addEventListener('click', async (e) => {
+        const b = e.target.closest('[data-roster]');
+        if (!b || b.disabled) return;
+        b.disabled = true;
+        try {
+            const res = await api(U.workerStore(), { method: 'POST', body: { globalWorkerId: Number(b.dataset.roster) } });
+            const offDays = ((qrRows.find((g) => String(g.id) === b.dataset.roster) || {}).offWeekdays || []).map(Number);
+            WORKER_OFF[res.data.id] = { days: offDays, dates: [] };
+            const chip = learnWorker(res.data);
+            document.dispatchEvent(new CustomEvent('sm:worker-saved', { detail: Object.assign({ _from: 'board', offDays }, res.data) }));
+            chip?.click();
+            markWorkerAvailability();
+            b.remove();
+            if (!$id('qrList').querySelector('[data-roster]')) $id('quickRosterForm').classList.add('hidden');
+            toast(res.message);
+        } catch (err) { toast(err.message, 'error'); b.disabled = false; }
+    });
+
     $id('qawSave')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const workerName = ($id('qawName').value || '').trim();

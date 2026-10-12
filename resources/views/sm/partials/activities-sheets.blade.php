@@ -765,6 +765,18 @@
                         </button>
                     @endforeach
                     <button type="button" class="chip chip-dashed" id="quickAddWorkerBtn" data-chip-manual>+ New worker</button>
+                    {{-- The farm's own roster (Global Workers, 2026-10-12), for the owner. --}}
+                    @if ((int) $schedule->anisystemUserId === (int) auth()->id() && ! \App\Support\WorkerContext::inWorkerContext())
+                        <button type="button" class="chip chip-dashed" id="quickRosterBtn" data-chip-manual>+ From my workers</button>
+                    @endif
+                </div>
+                <div id="quickRosterForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">From my workers</span>
+                        <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="quickRosterForm" aria-label="Close">✕</button>
+                    </div>
+                    <p class="text-xs text-gray-500">People from your other seasons. A tap adds them to this season with their pay, skills and weekdays off, and puts them on this task.</p>
+                    <div id="qrList" class="flex flex-wrap gap-2"></div>
                 </div>
                 <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2.5">
                     <div class="flex items-center justify-between">
