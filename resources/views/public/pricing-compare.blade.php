@@ -213,8 +213,12 @@
     .pc-corner span { font-size: .72rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: #6b8f4a; }
     .pc-plan { position: relative; }
     .pc-band { position: absolute; left: .7rem; right: .7rem; top: 0; height: 4px; border-radius: 0 0 4px 4px; background: var(--tint); }
-    .pc-plan em { display: inline-block; margin-bottom: .3rem; padding: .14rem .5rem; border-radius: 999px; background: #4a7c2a; color: #fff; font-style: normal;
-        font-size: .64rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+    /* The badge's capitals sit in the middle of the pill (2026-10-13, the owner):
+       the line box is trimmed to the capitals where the browser can, and the
+       padding leans down a touch where it cannot (capitals have no descenders). */
+    .pc-plan em { display: inline-block; margin-bottom: .35rem; padding: .3rem .6rem .24rem; border-radius: 999px; background: #4a7c2a; color: #fff; font-style: normal;
+        font-size: .64rem; font-weight: 900; line-height: 1; letter-spacing: .06em; text-transform: uppercase; }
+    @supports (text-box: trim-both cap alphabetic) { .pc-plan em { text-box: trim-both cap alphabetic; padding: .32rem .6rem; } }
     .pc-plan b { display: block; font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; line-height: 1.2; color: #14210c; }
     /* The phone's column pickers live in the header; a desk shows every plan. */
     .pc-change, .pc-swap { display: none; }

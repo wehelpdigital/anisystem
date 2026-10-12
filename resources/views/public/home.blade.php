@@ -513,6 +513,29 @@
                                         </div>
                                     @endforeach
                                 </div>
+                                {{-- Anee Auto has one tool, so its step says how it works in
+                                     five and what you no longer do (2026-10-13, the owner:
+                                     "add more content to make it look balanced"). --}}
+                                @if ($st['key'] === 'auto')
+                                    <div class="hp-st-auto">
+                                        <p class="hp-st-auto-k">How Anee Auto works</p>
+                                        <ol class="hp-st-auto-steps">
+                                            @foreach ([
+                                                ['Tell her once', 'Your lots, crop and variety, soil, water, fertilizer and workers.'],
+                                                ['She analyzes it all', 'Your variety, El Niño or La Niña, the forecast for your town and your soil.'],
+                                                ['She plans the season', 'Every task from land preparation to harvest, each on its day.'],
+                                                ['You just follow', "Today's work every morning, in the app and by email to your workers."],
+                                                ['She keeps it on track', "Rain coming or no workers? Tap Can't today and she moves it."],
+                                                ['Show her the field', 'A photo, a video or a voice note, and she adjusts the plan.'],
+                                            ] as $ak => [$at, $aw])
+                                                <li style="--k: {{ $ak }}"><span class="hp-st-auto-n">{{ $ak + 1 }}</span><span><b>{{ $at }}</b><small>{{ $aw }}</small></span></li>
+                                            @endforeach
+                                        </ol>
+                                        <ul class="hp-st-auto-skip" aria-label="What you no longer do">
+                                            <li>No schedules to build</li><li>No analyses to run</li><li>No guessing the weather</li><li>No missed fertilizer days</li>
+                                        </ul>
+                                    </div>
+                                @endif
                             </div>
                         @endforeach
                     </div>
@@ -2308,6 +2331,21 @@
        cell, so the box keeps the height of the longest and nothing below
        it jumps when another tool is picked. */
     .hp-infos { margin-top: 1rem; display: grid; }
+    /* Anee Auto's step: six small numbered cards, then what you no longer do. */
+    .hp-st-auto { margin-top: 1.1rem; }
+    .hp-st-auto-k { font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #8a6a00; }
+    .hp-st-auto-steps { margin: .6rem 0 0; padding: 0; list-style: none; display: grid; gap: .5rem; }
+    @media (min-width: 560px) { .hp-st-auto-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .hp-st-auto-steps li { display: flex; align-items: flex-start; gap: .6rem; padding: .7rem .8rem; border-radius: 1rem; background: linear-gradient(135deg, #fffaf0, #f6faef);
+        border: 1px solid #f0e3b4; }
+    .hp-st-pane.is-on .hp-st-auto-steps li { animation: hpInfoIn .45s var(--hp-ease) backwards; animation-delay: calc(.12s + var(--k) * 60ms); }
+    .hp-st-auto-n { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 999px; display: grid; place-items: center; font-size: .78rem; font-weight: 800; color: #2b3a1c; background: #f5c518; }
+    .hp-st-auto-steps b { display: block; font-size: .88rem; font-weight: 800; color: var(--hp-ink); line-height: 1.3; }
+    .hp-st-auto-steps small { display: block; margin-top: .15rem; font-size: .78rem; line-height: 1.45; color: #5b6651; }
+    .hp-st-auto-skip { margin: .8rem 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; }
+    .hp-st-auto-skip li { display: inline-flex; align-items: center; gap: .35rem; padding: .32rem .7rem; border-radius: 999px; font-size: .76rem; font-weight: 700; color: #3f4b36;
+        background: #fff; border: 1px solid #e1ead6; }
+    .hp-st-auto-skip li::before { content: ''; width: .5rem; height: .5rem; border-radius: 999px; background: var(--hp-green); }
     .hp-info { grid-area: 1 / 1; display: flex; flex-direction: column; padding: 1.15rem 1.25rem 1.1rem; border-radius: 1.25rem;
         background: linear-gradient(160deg, #f8fbf4, #eef6e4); box-shadow: inset 0 0 0 1px #d9e8c8;
         opacity: 0; visibility: hidden; translate: 0 8px; transition: opacity .35s var(--hp-ease), translate .35s var(--hp-ease), visibility .35s; }
@@ -2453,7 +2491,7 @@
     @media (min-width: 1024px) {
         .hp-anee-grid { grid-template-rows: auto 1fr; row-gap: 0; }
         .hp-anee-copy { grid-column: 1; grid-row: 1; }
-        .hp-anee-media { grid-column: 2; grid-row: 1 / span 2; }
+        .hp-anee-media { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
         .hp-anee-cta.hp-cta { grid-column: 1; grid-row: 2; align-self: start; margin-top: 2rem; }
     }
 
@@ -2498,11 +2536,15 @@
     .hp-chat.s1 .hp-msg.is-me, .hp-chat.s5 .hp-msg.is-anee, .hp-read.is-shown { animation: hpChatIn .5s var(--hp-ease) both; }
     @keyframes hpChatIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
 
-    /* Anee's hello, small and tilted, over the phone's top corner. */
-    .hp-anee-film { position: absolute; z-index: 3; top: -1.9rem; right: -1.4rem; width: 10rem; aspect-ratio: 16 / 9; margin: 0; border-radius: .95rem; overflow: hidden;
+    /* Anee's hello, small and tilted, on the phone's side: only its edge
+       goes over the phone (2026-10-13, the owner). Below 1280 pixels, where
+       there is no room beside it, it sits on the phone's top edge. */
+    .hp-anee-film { --rot: -3deg; position: absolute; z-index: 3; top: -4.6rem; left: 50%; width: 11rem; margin: 0 0 0 -5.5rem; aspect-ratio: 16 / 9; border-radius: .95rem; overflow: hidden;
         background: #0d1408; box-shadow: 0 24px 44px -18px rgb(0 0 0 / .85), 0 0 0 3px #f5c518, 0 0 0 7px rgb(245 197 24 / .18);
-        transform: rotate(5deg); animation: hpFilmFloat 6s ease-in-out infinite; }
-    @media (min-width: 640px) { .hp-anee-film { width: 12.5rem; top: -2.2rem; right: -4.5rem; } }
+        transform: rotate(var(--rot)); animation: hpFilmFloat 6s ease-in-out infinite; }
+    @media (max-width: 1023.98px) { .hp-anee-phone { margin-top: 5.2rem; } }
+    /* Wide enough for room beside the phone: on its right side, the words' side kept clear. */
+    @media (min-width: 1280px) { .hp-anee-film { --rot: 5deg; top: 28%; left: calc(100% - 1.75rem); width: 10.5rem; margin: 0; } }
     .hp-anee-film video { width: 100%; height: 100%; display: block; object-fit: cover; }
     .hp-anee-film-play { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-start; padding: .55rem .6rem; border: 0; cursor: pointer;
         background: linear-gradient(180deg, transparent 45%, rgb(9 14 6 / .6)); transition: background .28s var(--hp-ease); }
@@ -2513,7 +2555,7 @@
     .hp-anee-film.is-playing { animation-play-state: paused; }
     .hp-anee-film.is-playing .hp-anee-film-play { background: transparent; }
     .hp-anee-film.is-playing .hp-anee-film-play span { opacity: 0; }
-    @keyframes hpFilmFloat { 0%, 100% { transform: translateY(0) rotate(5deg); } 50% { transform: translateY(-.45rem) rotate(3.5deg); } }
+    @keyframes hpFilmFloat { 0%, 100% { transform: translateY(0) rotate(var(--rot)); } 50% { transform: translateY(-.45rem) rotate(calc(var(--rot) + 1.5deg)); } }
     @media (prefers-reduced-motion: reduce) { .hp-anee-film { animation: none; } }
     .hp-msg.is-anee { align-self: flex-start; background: #fff; box-shadow: 0 8px 20px -14px rgb(0 0 0 / .4); border-bottom-left-radius: .35rem; }
     .hp-msg.is-anee > b { display: block; color: var(--hp-deep); }

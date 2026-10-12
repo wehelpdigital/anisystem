@@ -19,6 +19,10 @@
     $aaInputs = [['Forecast', 'El Niño', 'Your soil', 'Variety'], ['Crop stage', 'Fertilizer', 'Workers', 'Typhoons']];
 @endphp
 <section class="{{ $aaSite ? 'hp-auto is-site' : 'hp-sec hp-auto' }}" id="anee-auto" aria-labelledby="hpAutoH">
+    {{-- Her thinking, across the whole section (2026-10-13, the owner: "extend
+         the web through the section"): drawn by the script to fit it; still
+         under reduced motion. --}}
+    <svg class="hp-auto-web" data-auto-net data-inputs='@json($aaInputs)' aria-hidden="true"></svg>
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="hp-head reveal">
             <p class="{{ $aaSite ? 'fx-kicker' : 'hp-kick' }}">{{ $aaSay('kicker', 'The Easiest Way to Precision Farming') }}</p>
@@ -45,8 +49,6 @@
             {{-- The stage: her faces rising behind a phone that plays her day. --}}
             <div class="hp-auto-stage reveal" aria-hidden="true">
                 <div class="hp-auto-glow"></div>
-                {{-- Drawn by the script to fit the stage; under reduced motion it stays still. --}}
-                <svg class="hp-auto-net" data-auto-net data-inputs='@json($aaInputs)'></svg>
                 <span class="hp-auto-ring"></span><span class="hp-auto-ring is-2"></span>
                 <div class="hp-auto-phone">
                     <i class="hp-auto-key is-power"></i><i class="hp-auto-key is-up"></i><i class="hp-auto-key is-down"></i>
@@ -114,22 +116,27 @@
     .hp-auto-glow { position: absolute; inset: 8% 6%; z-index: -2; border-radius: 50%; filter: blur(30px);
         background: radial-gradient(closest-side, rgb(245 197 24 / .45), rgb(107 159 61 / .22) 60%, transparent); animation: hpAutoBreath 8s ease-in-out infinite; }
     @keyframes hpAutoBreath { 50% { transform: scale(1.08); opacity: .8; } }
-    /* The network: thin links, nodes that light when a pulse reaches them,
-       gold pulses running in toward the phone, the inputs named. */
-    .hp-auto-net { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; overflow: visible;
-        -webkit-mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent); }
-    .hp-auto-net .ln { stroke: rgb(74 124 42 / .2); stroke-width: 1; fill: none; transition: stroke .5s ease; }
-    .hp-auto-net .ln.is-hot { stroke: rgb(217 173 18 / .55); transition-duration: .12s; }
-    .hp-auto-net .nd { fill: #fff; stroke: #a9cc87; stroke-width: 1.5; transition: fill .5s ease, stroke .5s ease; }
-    .hp-auto-net .nd.is-in { fill: #f3f9ec; stroke: #4a7c2a; stroke-width: 2; }
-    .hp-auto-net .nd.is-hot { fill: #f5c518; stroke: #d9ad12; transition-duration: .1s; }
-    .hp-auto-net .halo { fill: rgb(245 197 24 / .35); opacity: 0; transform-box: fill-box; transform-origin: center; }
-    .hp-auto-net .halo.is-on { animation: hpNetHalo .8s ease-out; }
-    @keyframes hpNetHalo { from { opacity: 1; transform: scale(.6); } to { opacity: 0; transform: scale(2.4); } }
-    .hp-auto-net .pl { fill: #f5c518; filter: drop-shadow(0 0 4px rgb(245 197 24 / .9)); }
-    .hp-auto-net .tg rect { fill: rgb(255 255 255 / .92); stroke: #e3ead9; }
-    .hp-auto-net .tg text { font-size: 10.5px; font-weight: 800; fill: #2d4a17; font-family: inherit; }
-    .hp-auto-net .tg.is-hot rect { fill: #fff6d1; stroke: #e9c63e; }
+    /* The web: a mesh of nodes over the whole section, every path leading to
+       Anee's phone. Thin links, nodes that light as a pulse passes, gold
+       pulses with a tail, the things she reads named at the far ends. */
+    .hp-auto > .max-w-6xl { position: relative; z-index: 1; }
+    .hp-auto-web { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none;
+        -webkit-mask-image: linear-gradient(180deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(180deg, transparent, #000 7%, #000 93%, transparent); }
+    .hp-auto-web .ln { stroke: rgb(74 124 42 / .17); stroke-width: 1; fill: none; transition: stroke .6s ease, stroke-width .6s ease; }
+    .hp-auto-web .ln.is-in { stroke: rgb(74 124 42 / .26); stroke-dasharray: 3 4; }
+    .hp-auto-web .ln.is-hot { stroke: rgb(217 173 18 / .7); stroke-width: 1.6; transition-duration: .12s; }
+    .hp-auto-web .nd { fill: #fbfdf7; stroke: #b3d293; stroke-width: 1.4; transition: fill .6s ease, stroke .6s ease; }
+    .hp-auto-web .nd.is-src { fill: #f3f9ec; stroke: #4a7c2a; stroke-width: 2; }
+    .hp-auto-web .nd.is-hot { fill: #f5c518; stroke: #d9ad12; transition-duration: .1s; }
+    .hp-auto-web .halo { fill: rgb(245 197 24 / .32); opacity: 0; transform-box: fill-box; transform-origin: center; }
+    .hp-auto-web .halo.is-on { animation: hpNetHalo .9s ease-out; }
+    @keyframes hpNetHalo { from { opacity: 1; transform: scale(.5); } to { opacity: 0; transform: scale(2.6); } }
+    .hp-auto-web .pl { fill: #f5c518; filter: drop-shadow(0 0 5px rgb(245 197 24 / .95)); }
+    .hp-auto-web .tl { fill: #f5c518; }
+    .hp-auto-web .tg rect { fill: rgb(255 255 255 / .94); stroke: #dfe9d3; }
+    .hp-auto-web .tg text { font-size: 11px; font-weight: 800; fill: #2d4a17; font-family: inherit; }
+    .hp-auto-web .tg.is-hot rect { fill: #fff3c4; stroke: #e2b72a; }
+    .hp-auto-web .tg { transition: opacity .6s ease; }
     /* Thinking rings: slow waves out from behind the phone. */
     .hp-auto-ring { position: absolute; left: 50%; top: 50%; z-index: -1; width: 18rem; height: 18rem; margin: -9rem 0 0 -9rem; border-radius: 999px;
         border: 1.5px solid rgb(74 124 42 / .28); opacity: 0; animation: hpAutoRing 6s cubic-bezier(.22,1,.36,1) infinite; pointer-events: none; }
@@ -195,126 +202,177 @@
 @push('scripts')
 <script>
 (() => {
-    /* The network beside Anee's phone: inputs on the outside (what she
-       reads), two hidden layers, and the phone's edge as the output. Pulses
-       start at an input, hop layer by layer into the phone, and light every
-       node and link they pass. Drawn again when the stage changes size;
-       runs only while on screen; still under reduced motion. */
+    /* The web across the section: nodes on a loose grid over the whole of
+       it (none on the words, none on the phone), each joined to its nearest
+       neighbours. Every node knows its next step toward Anee's phone, so a
+       pulse that starts anywhere, often at one of the things she reads (named
+       at the far ends), hops node by node and runs into the phone. Drawn
+       again when the section changes size; runs only while on screen; still
+       under reduced motion. */
     const svg = document.querySelector('[data-auto-net]');
     if (!svg) return;
-    const stage = svg.parentElement, phone = stage.querySelector('.hp-auto-phone');
+    const sec = svg.closest('section'), phone = sec.querySelector('.hp-auto-phone');
     const NS = 'http://www.w3.org/2000/svg';
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let inputs = [[], []];
     try { inputs = JSON.parse(svg.dataset.inputs || '[[],[]]'); } catch (_) {}
+    const names = [...(inputs[0] || []), ...(inputs[1] || [])];
     const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; };
-    let net = null, raf = 0, on = false, last = 0, spawnAt = 0, pulses = [];
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    let web = null, raf = 0, on = false, last = 0, spawnAt = 0, pulses = [];
     const draw = () => {
-        const W = stage.clientWidth, H = stage.clientHeight;
-        if (!W || !H) return;
+        const W = sec.clientWidth, H = sec.clientHeight;
+        if (!W || !H || !phone) return;
         svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
         svg.textContent = '';
         pulses = [];
-        const pr = phone.getBoundingClientRect(), sr = stage.getBoundingClientRect();
-        const pl = pr.left - sr.left, prr = pr.right - sr.left, pt = pr.top - sr.top, ph = pr.height;
-        const room = pl;                       // the space beside the phone, each side
-        const small = room < 90, words = room >= 96;
-        const sides = [];
+        const sr = sec.getBoundingClientRect();
+        const rel = (el) => { const r = el.getBoundingClientRect(); return { l: r.left - sr.left, t: r.top - sr.top, r: r.right - sr.left, b: r.bottom - sr.top }; };
+        const P = rel(phone);
+        const hub = { x: (P.l + P.r) / 2, y: (P.t + P.b) / 2 };
+        const words = [...sec.querySelectorAll('.hp-head > *, .hp-auto-steps li, .hp-auto-cta > *')].map(rel);
+        const inRect = (x, y, a, pad) => x > a.l - pad && x < a.r + pad && y > a.t - pad && y < a.b + pad;
+        const small = W < 640;
+        const cell = small ? 74 : 104;
+        const cols = Math.max(3, Math.round(W / cell)), rows = Math.max(3, Math.round(H / cell));
+        const cw = W / cols, ch = H / rows;
+        const nodes = [];
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const x = (c + .5 + rnd(-.32, .32)) * cw, y = (r + .5 + rnd(-.32, .32)) * ch;
+                if (inRect(x, y, P, 14) || words.some((a) => inRect(x, y, a, 8))) continue;
+                nodes.push({ x, y, d: Math.hypot(x - hub.x, y - hub.y), nb: [] });
+            }
+        }
+        // Links: each node to its three nearest, once.
+        const seen = new Set(), links = [];
         const gLn = mk('g', {}), gHalo = mk('g', {}), gNd = mk('g', {}), gPl = mk('g', {}), gTg = mk('g', {});
-        [0, 1].forEach((side) => {
-            const dir = side ? -1 : 1;            // left side runs right, toward the phone
-            const outer = side ? W - Math.max(14, room * .12) : Math.max(14, room * .12);
-            const edge = side ? prr + 4 : pl - 4;
-            const span = edge - outer;
-            const layers = small
-                ? [inputs[side].length, 0].map((n, i) => ({ n: n || 3, x: outer + span * [0, .55][i] }))
-                : [{ n: inputs[side].length, x: outer }, { n: 5, x: outer + span * .38 }, { n: 4, x: outer + span * .7 }];
-            const ys = (n, top, bot) => Array.from({ length: n }, (_, i) => top + (bot - top) * (n === 1 ? .5 : i / (n - 1)));
-            const top = pt + ph * .1, bot = pt + ph * .9;
-            const L = layers.map((ly, li) => ys(ly.n, top + li * ph * .05, bot - li * ph * .05).map((y) => ({ x: ly.x + (li === 0 ? (Math.random() - .5) * 6 : 0), y, li })));
-            // The output: points on the phone's edge.
-            L.push(ys(4, pt + ph * .3, pt + ph * .72).map((y) => ({ x: edge, y, li: L.length, out: true })));
-            const links = [];
-            for (let li = 0; li < L.length - 1; li++) {
-                L[li].forEach((a, ai) => L[li + 1].forEach((b, bi) => {
-                    // Not every link: a sparse net reads as a network, a full one as a mesh.
-                    if (L[li].length * L[li + 1].length > 12 && (ai + bi * 2) % 3 === 2) return;
+        const reach = Math.max(cw, ch) * 2.1;
+        nodes.forEach((a, i) => {
+            nodes.map((b, j) => [j, Math.hypot(a.x - b.x, a.y - b.y)]).filter(([j, dd]) => j !== i && dd < reach)
+                .sort((u, v) => u[1] - v[1]).slice(0, 3).forEach(([j]) => {
+                    const key = Math.min(i, j) + ':' + Math.max(i, j);
+                    if (seen.has(key)) return;
+                    seen.add(key);
+                    const b = nodes[j];
                     const el = mk('line', { x1: a.x.toFixed(1), y1: a.y.toFixed(1), x2: b.x.toFixed(1), y2: b.y.toFixed(1), class: 'ln' }, gLn);
-                    links.push({ a, b, el });
-                }));
-            }
-            L.forEach((layer) => layer.forEach((n) => {
-                if (n.out) return;
-                const r = n.li === 0 ? (small ? 4 : 5.5) : (small ? 3 : 4);
-                n.halo = mk('circle', { cx: n.x.toFixed(1), cy: n.y.toFixed(1), r: r * 2, class: 'halo' }, gHalo);
-                n.el = mk('circle', { cx: n.x.toFixed(1), cy: n.y.toFixed(1), r, class: 'nd' + (n.li === 0 ? ' is-in' : '') }, gNd);
-            }));
-            // The inputs' names, beside them on the outside... or above them where the side is narrow.
-            if (words) {
-                L[0].forEach((n, i) => {
-                    const label = inputs[side][i];
-                    if (!label) return;
-                    const g = mk('g', { class: 'tg' }, gTg);
-                    const t = mk('text', { y: (n.y - 11).toFixed(1), 'text-anchor': 'middle' }, g);
-                    t.textContent = label;
-                    const w = label.length * 6.2 + 14;
-                    const cx = Math.min(Math.max(n.x, w / 2 + 2), W - w / 2 - 2);
-                    t.setAttribute('x', cx.toFixed(1));
-                    const rect = mk('rect', { x: (cx - w / 2).toFixed(1), y: (n.y - 24).toFixed(1), width: w.toFixed(1), height: 18, rx: 9 }, g);
-                    g.insertBefore(rect, t);
-                    n.tag = g;
+                    const k = { a, b, el };
+                    links.push(k); a.nb.push([b, k]); b.nb.push([a, k]);
                 });
-            }
-            sides.push({ L, links, dir });
         });
-        net = { sides, gPl };
+        // The phone's edge, seen from a point: where a pulse goes in.
+        const edge = (n) => {
+            const dx = n.x - hub.x, dy = n.y - hub.y;
+            const hw = (P.r - P.l) / 2 + 4, hh = (P.b - P.t) / 2 + 4;
+            const f = Math.min(hw / Math.max(Math.abs(dx), 1e-6), hh / Math.max(Math.abs(dy), 1e-6));
+            return { x: hub.x + dx * f, y: hub.y + dy * f };
+        };
+        // Each node's next step: the neighbour closest to the phone, if it is
+        // closer than the node itself; nodes near the phone run straight in.
+        const near = Math.max(P.r - P.l, P.b - P.t) / 2 + Math.max(cw, ch) * 1.25;
+        nodes.forEach((n) => {
+            if (n.d < near) {
+                const e = edge(n);
+                n.next = 'in';
+                n.inLink = { a: n, b: { x: e.x, y: e.y, end: true }, el: mk('line', { x1: n.x.toFixed(1), y1: n.y.toFixed(1), x2: e.x.toFixed(1), y2: e.y.toFixed(1), class: 'ln is-in' }, gLn) };
+                return;
+            }
+            let best = null;
+            n.nb.forEach(([b, k]) => { if (b.d < n.d - 6 && (!best || b.d < best[0].d)) best = [b, k]; });
+            n.next = best;
+        });
+        // A node leads in when its chain reaches the phone.
+        const leads = (n) => { let m = n, i = 0; while (m && m.next && m.next !== 'in' && i++ < 60) m = m.next[0]; return !!(m && m.next === 'in'); };
+        nodes.forEach((n) => { n.leads = leads(n); });
+        nodes.forEach((n) => {
+            n.halo = mk('circle', { cx: n.x.toFixed(1), cy: n.y.toFixed(1), r: 7, class: 'halo' }, gHalo);
+            n.el = mk('circle', { cx: n.x.toFixed(1), cy: n.y.toFixed(1), r: small ? 2.4 : 3, class: 'nd' }, gNd);
+        });
+        // What she reads: the farthest leading node in each of eight directions round the phone.
+        const sources = [];
+        if (!small) {
+            const room = (n) => n.x > 60 && n.x < W - 60 && n.y > 40 && n.y < H - 40 && !words.some((a) => inRect(n.x, n.y, a, 34));
+            for (let k = 0; k < 8 && k < names.length; k++) {
+                const from = -Math.PI + (k / 8) * 2 * Math.PI, to = from + (2 * Math.PI) / 8;
+                let best = null;
+                nodes.forEach((n) => {
+                    if (!n.leads || n.src || !room(n)) return;
+                    const ang = Math.atan2(n.y - hub.y, n.x - hub.x);
+                    if (ang >= from && ang < to && (!best || n.d > best.d)) best = n;
+                });
+                if (!best) continue;
+                best.src = true;
+                best.el.setAttribute('class', 'nd is-src');
+                best.el.setAttribute('r', 5);
+                const label = names[sources.length % names.length];
+                const g = mk('g', { class: 'tg' }, gTg);
+                const w = label.length * 6.6 + 16;
+                const cx = Math.min(Math.max(best.x, w / 2 + 4), W - w / 2 - 4);
+                mk('rect', { x: (cx - w / 2).toFixed(1), y: (best.y - 27).toFixed(1), width: w.toFixed(1), height: 19, rx: 9.5 }, g);
+                const t = mk('text', { x: cx.toFixed(1), y: (best.y - 13.5).toFixed(1), 'text-anchor': 'middle' }, g);
+                t.textContent = label;
+                best.tag = g;
+                sources.push(best);
+            }
+        }
+        web = { nodes: nodes.filter((n) => n.leads), sources, gPl };
     };
     const heat = (el, cls, ms) => { if (!el) return; el.classList.add(cls); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove(cls), ms); };
+    const ping = (n) => { if (!n.halo) return; n.halo.classList.remove('is-on'); void n.halo.getBBox(); n.halo.classList.add('is-on'); };
     const spawn = () => {
-        const side = net.sides[Math.random() < .5 ? 0 : 1];
-        // A route: one node per layer, each step along a link that exists.
-        let n = side.L[0][Math.floor(Math.random() * side.L[0].length)];
+        if (!web || !web.nodes.length) return;
+        // Most pulses start where she reads; the rest anywhere on the web.
+        const pool = web.sources.length && Math.random() < .45 ? web.sources : web.nodes;
+        const n = pool[Math.floor(Math.random() * pool.length)];
         const hops = [];
-        while (true) {
-            const outs = side.links.filter((k) => k.a === n);
-            if (!outs.length) break;
-            const k = outs[Math.floor(Math.random() * outs.length)];
-            hops.push(k); n = k.b;
+        let m = n, guard = 0;
+        while (m && guard++ < 60) {
+            if (m.next === 'in') { hops.push(m.inLink); break; }
+            if (!m.next) break;
+            hops.push({ a: m, b: m.next[0], el: m.next[1].el }); m = m.next[0];
         }
-        if (!hops.length) return;
-        heat(hops[0].a.el, 'is-hot', 500); heat(hops[0].a.tag, 'is-hot', 900);
-        if (hops[0].a.halo) { hops[0].a.halo.classList.remove('is-on'); void hops[0].a.halo.getBBox(); hops[0].a.halo.classList.add('is-on'); }
-        pulses.push({ hops, i: 0, t: 0, dot: mk('circle', { r: 2.6, class: 'pl' }, net.gPl) });
+        if (!hops.length || hops[hops.length - 1].b.end !== true) return;
+        heat(n.el, 'is-hot', 520); heat(n.tag, 'is-hot', 1100); ping(n);
+        const tail = [mk('circle', { r: 2.1, class: 'tl', opacity: .45 }, web.gPl), mk('circle', { r: 1.6, class: 'tl', opacity: .25 }, web.gPl)];
+        pulses.push({ hops, i: 0, t: 0, trail: [], tail, dot: mk('circle', { r: 2.9, class: 'pl' }, web.gPl) });
     };
     const tick = (now) => {
         if (!on) { raf = 0; return; }
         const dt = Math.min(64, now - (last || now)); last = now;
-        if (now >= spawnAt) { spawn(); spawnAt = now + 260 + Math.random() * 260; }
+        if (now >= spawnAt && pulses.length < 28) { spawn(); spawnAt = now + rnd(150, 330); }
         pulses = pulses.filter((p) => {
             const k = p.hops[p.i];
             const len = Math.hypot(k.b.x - k.a.x, k.b.y - k.a.y) || 1;
-            p.t += dt * .16 / len;
+            p.t += dt * .17 / len;
             if (p.t >= 1) {
-                heat(k.el, 'is-hot', 300);
-                heat(k.b.el, 'is-hot', 420);
-                if (k.b.halo) { k.b.halo.classList.remove('is-on'); void k.b.halo.getBBox(); k.b.halo.classList.add('is-on'); }
+                heat(k.el, 'is-hot', 360);
+                if (k.b.el) { heat(k.b.el, 'is-hot', 420); ping(k.b); }
                 p.i++; p.t = 0;
-                if (p.i >= p.hops.length) { p.dot.remove(); return false; }
+                if (p.i >= p.hops.length) { p.dot.remove(); p.tail.forEach((c) => c.remove()); return false; }
                 return true;
             }
-            p.dot.setAttribute('cx', (k.a.x + (k.b.x - k.a.x) * p.t).toFixed(1));
-            p.dot.setAttribute('cy', (k.a.y + (k.b.y - k.a.y) * p.t).toFixed(1));
+            const x = k.a.x + (k.b.x - k.a.x) * p.t, y = k.a.y + (k.b.y - k.a.y) * p.t;
+            p.trail.unshift([x, y]); p.trail.length = Math.min(p.trail.length, 9);
+            p.dot.setAttribute('cx', x.toFixed(1)); p.dot.setAttribute('cy', y.toFixed(1));
+            p.tail.forEach((c, i) => { const q = p.trail[(i + 1) * 4] || p.trail[p.trail.length - 1]; c.setAttribute('cx', q[0].toFixed(1)); c.setAttribute('cy', q[1].toFixed(1)); });
             return true;
         });
         raf = requestAnimationFrame(tick);
     };
-    const start = () => { if (still || raf || !net) return; on = true; last = 0; raf = requestAnimationFrame(tick); };
+    const start = () => { if (still || raf || !web) return; on = true; last = 0; raf = requestAnimationFrame(tick); };
     const stop = () => { on = false; };
-    draw();
-    let rt = 0;
-    new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { const was = on; stop(); cancelAnimationFrame(raf); raf = 0; draw(); if (was) start(); }, 150); }).observe(stage);
-    if ('IntersectionObserver' in window) new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? start() : stop())), { threshold: .15 }).observe(stage);
-    else start();
+    // Drawn once the section's words have taken their places (the reveal moves them).
+    setTimeout(draw, 900);
+    let rt = 0, lastW = 0, lastH = 0;
+    new ResizeObserver(() => {
+        const W = sec.clientWidth, H = sec.clientHeight;
+        if (Math.abs(W - lastW) < 2 && Math.abs(H - lastH) < 40) return;
+        lastW = W; lastH = H;
+        clearTimeout(rt);
+        rt = setTimeout(() => { const was = on; stop(); cancelAnimationFrame(raf); raf = 0; draw(); if (was) start(); }, 200);
+    }).observe(sec);
+    if ('IntersectionObserver' in window) new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? (web ? start() : setTimeout(start, 1000)) : stop())), { threshold: .05 }).observe(sec);
+    else setTimeout(start, 1000);
 })();
 </script>
 <script>
