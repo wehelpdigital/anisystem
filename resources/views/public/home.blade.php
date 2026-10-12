@@ -434,33 +434,47 @@
 
     {{-- ================= THE SEASON IN EIGHT STEPS ================= --}}
     {{-- The answer, shown: How It Works' steps as tabs (eight since
-         2026-10-13: Anee Auto, the way to have her run the other seven). Each step lists
+         2026-10-13). Here Anee Auto, the easiest way, is step 1 (the owner,
+         2026-10-13), and a divider under it says the rest is the way to do it
+         by hand, from step 2 on. Each step lists
          its tools, and the phone plays the step's films (the same phone
          recordings the How It Works modal plays). The tabs walk on by
          themselves while the section is in view, until a visitor takes over. --}}
+    @php
+        // Anee Auto first, then the season by hand; on this page its small line says what it is.
+        $hpSteps = collect($stages)->sortBy(fn ($s) => $s['key'] === 'auto' ? 0 : 1)->values()
+            ->map(fn ($s) => $s['key'] === 'auto' ? array_replace($s, ['when' => 'The easiest way']) : $s)->all();
+    @endphp
     <section class="hp-sec bg-brand-mesh hp-steps" data-steps>
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">{{ $ph ? 'From pagtatanim to ani' : 'From planting to harvest' }}</p>
-                <h2 class="hp-h2">Your Whole Season in <em>{{ count($stages) }} <span class="hp-nw">Steps.<span class="hp-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.4 12.6l4.3 4.3 8.9-9.6" pathLength="1"/></svg></span></span></em></h2>
+                <h2 class="hp-h2">Your Whole Season in <em>{{ count($hpSteps) }} <span class="hp-nw">Steps.<span class="hp-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.4 12.6l4.3 4.3 8.9-9.6" pathLength="1"/></svg></span></span></em></h2>
                 <p class="hp-p"><b class="hp-st-count">{{ $tools->count() }} tools</b> for every part of the season, each step with its own, and Anee helps in every one. Tap a step, then a tool, to read what it does and watch it work on a real phone.</p>
             </div>
 
             <div class="hp-st reveal">
                 <div class="hp-st-list" role="tablist" aria-label="The steps of a season">
-                    @foreach ($stages as $i => $st)
-                        <button type="button" role="tab" class="hp-st-tab{{ $i === 0 ? ' is-on' : '' }}" data-step="{{ $i }}"
+                    @foreach ($hpSteps as $i => $st)
+                        <button type="button" role="tab" class="hp-st-tab{{ $i === 0 ? ' is-on' : '' }}{{ $st['key'] === 'auto' ? ' is-auto' : '' }}" data-step="{{ $i }}"
                                 id="hpTab{{ $i }}" aria-controls="hpPane{{ $i }}" aria-selected="{{ $i === 0 ? 'true' : 'false' }}">
                             <span class="hp-st-n">{{ $i + 1 }}</span>
                             <span class="hp-st-tt"><b>{{ $st['title'] }}</b><small>{{ $st['when'] }}</small></span>
+                            @if ($st['key'] === 'auto')<img class="hp-st-face" src="{{ $face }}" alt="" width="40" height="40" loading="lazy">@endif
                             <span class="hp-st-bar" aria-hidden="true"><i></i></span>
                         </button>
+                        @if ($st['key'] === 'auto' && $i === 0)
+                            <div class="hp-st-or" role="presentation">
+                                <b>Or do it yourself</b>
+                                <small>Prefer to do it by hand? Start with step 2 and go on from there.</small>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
 
                 <div class="hp-st-body">
                     <div class="hp-st-panes">
-                        @foreach ($stages as $i => $st)
+                        @foreach ($hpSteps as $i => $st)
                             <div class="hp-st-pane{{ $i === 0 ? ' is-on' : '' }}" role="tabpanel" id="hpPane{{ $i }}" aria-labelledby="hpTab{{ $i }}" data-pane="{{ $i }}">
                                 <p class="hp-st-when">Step {{ $i + 1 }} · {{ $st['when'] }}</p>
                                 <h3 class="hp-st-h">{{ $st['title'] }}</h3>
@@ -499,19 +513,25 @@
                                         </div>
                                     @endforeach
                                 </div>
+                                @if ($st['key'] === 'auto' && $i === 0)
+                                    <button type="button" class="hp-st-manual" data-go-step="1">
+                                        <span><b>Prefer to do it yourself?</b> Start with step 2, Plan the season.</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+                                    </button>
+                                @endif
                             </div>
                         @endforeach
                     </div>
 
                     <div class="hp-st-show">
-                        @php $first = $filmOf($stages[0]['items'][0]['key']); @endphp
+                        @php $first = $filmOf($hpSteps[0]['items'][0]['key']); @endphp
                         <div class="hp-phone">
                             <div class="hp-phone-scr">
-                                <video class="hp-film" data-step-film muted playsinline loop preload="none" poster="{{ $first['poster'] ?? '' }}" aria-label="{{ $stages[0]['items'][0]['name'] }} on a phone">
+                                <video class="hp-film" data-step-film muted playsinline loop preload="none" poster="{{ $first['poster'] ?? '' }}" aria-label="{{ $hpSteps[0]['items'][0]['name'] }} on a phone">
                                     @if ($first)<source src="{{ $first['src'] }}" type="video/mp4">@endif
                                 </video>
                             </div>
-                            <span class="hp-film-tag" data-step-tag>{{ $stages[0]['items'][0]['name'] }}</span>
+                            <span class="hp-film-tag" data-step-tag>{{ $hpSteps[0]['items'][0]['name'] }}</span>
                         </div>
                     </div>
                 </div>
@@ -540,7 +560,8 @@
         // On this page the chat shows what she reads, the same list as beside it.
         $chat['reading'] = ['Reading your photo', 'Checking Lot 2, its stage and your protocol', 'Checking the weather and your past seasons', 'Searching the latest research'];
         $aneeReads = [
-            ['Your lots', 'Each field, its crop, variety and growth stage today.', 'map'],
+            ['Your lots', 'Each field with its crop, variety and size.', 'map'],
+            ['Your growth stage', 'Where each lot is today, its DAS or DAT count, and what that stage needs now.', 'sprout'],
             ['Your protocol', 'Your plan, and what you already applied.', 'plan'],
             ['Weather and climate', 'The forecast for your farm and your town\'s climate record.', 'cloud'],
             ['Your history', 'Past seasons, harvests and the notes you kept.', 'chart'],
@@ -558,22 +579,11 @@
             ['Advice you can trust', 'shield', 'Hard to find one who is reliable and not there to sell you a product.', 'Unbiased. Her advice starts from what your field needs, not from a product to sell.', false],
             ['Always there', 'sun', 'Busy in planting season, when every farm needs help at once.', 'Always available, on weekends and holidays too.', false],
         ];
-        $svg = fn ($k, $w = '1.9') => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' . $w . '" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' . ['map' => 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7', 'plan' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01', 'cloud' => 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', 'chart' => 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', 'camera' => 'M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zM15 13a3 3 0 11-6 0 3 3 0 016 0z', 'search' => 'M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z', 'book' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', 'clock' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'peso' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'target' => 'M12 21a9 9 0 100-18 9 9 0 000 18zm0-4a5 5 0 100-10 5 5 0 000 10zm0-4a1 1 0 100-2 1 1 0 000 2z', 'bolt' => 'M13 10V3L4 14h7v7l9-11h-7z', 'user' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z', 'repeat' => 'M4 4v5h5M20 20v-5h-5M5.1 15a7.5 7.5 0 0013.4 2M18.9 9A7.5 7.5 0 005.5 7', 'shield' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'sun' => 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z'][$k] . '"/></svg>';
+        $svg = fn ($k, $w = '1.9') => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' . $w . '" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' . ['map' => 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7', 'plan' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01', 'cloud' => 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', 'chart' => 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', 'camera' => 'M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zM15 13a3 3 0 11-6 0 3 3 0 016 0z', 'search' => 'M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z', 'book' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', 'clock' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'peso' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'target' => 'M12 21a9 9 0 100-18 9 9 0 000 18zm0-4a5 5 0 100-10 5 5 0 000 10zm0-4a1 1 0 100-2 1 1 0 000 2z', 'bolt' => 'M13 10V3L4 14h7v7l9-11h-7z', 'user' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z', 'repeat' => 'M4 4v5h5M20 20v-5h-5M5.1 15a7.5 7.5 0 0013.4 2M18.9 9A7.5 7.5 0 005.5 7', 'shield' => 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', 'sun' => 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z', 'sprout' => 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z'][$k] . '"/></svg>';
         $xMark = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" aria-hidden="true"><path stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></svg>';
     @endphp
     <section class="hp-anee spark-field on-dark">
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
-        {{-- Anee herself, big and tilted, crossing the top edge of the
-             section (owner, 2026-10-07): the hello clip the app's chat
-             windows open with. --}}
-        <figure class="hp-anee-film" data-anee-film>
-            <video playsinline preload="none" poster="{{ asset('videos/anee-hello-poster.webp') }}" aria-label="Anee says hello">
-                <source src="{{ asset('videos/anee-hello.mp4') }}" type="video/mp4">
-            </video>
-            <button type="button" class="hp-anee-film-play" aria-label="Play Anee's hello">
-                <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
-            </button>
-        </figure>
             <div class="hp-anee-grid">
                 <div class="reveal hp-anee-copy">
                     <p class="hp-kick">Meet Anee</p>
@@ -698,7 +708,7 @@
         ];
     @endphp
     {{-- Anee Auto (2026-10-12): a section of its own, right after Meet Anee, so her
-         film (which crosses the top of her section) has the steps section above it again. --}}
+         section keeps the steps section right above it. --}}
     @include('public.partials.anee-auto-section', ['signup' => $signup])
 
     <section class="hp-sec hp-ak">
@@ -1975,7 +1985,7 @@
        every browser. */
     .hp-nw { white-space: nowrap; }
     .hp-tick { position: relative; display: inline-grid; place-items: center; width: 1.12em; height: 1.12em; margin-left: .3em;
-        vertical-align: -.2em; border-radius: 999px; background: var(--hp-green);
+        vertical-align: calc(-.2em + 5px); border-radius: 999px; background: var(--hp-green);
         box-shadow: 0 8px 18px -8px rgb(47 82 25 / .75); transform: scale(0) rotate(-35deg); }
     .hp-tick svg { width: 70%; height: 70%; overflow: visible; }
     .hp-tick path { fill: none; stroke: #fff; stroke-width: 3.1; stroke-linecap: round; stroke-linejoin: round;
@@ -2170,11 +2180,40 @@
     .hp-st-bar i { display: block; height: 100%; width: 100%; transform-origin: left; transform: scaleX(0); background: var(--hp-green); }
     .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: hpBar var(--hp-dwell, 9s) linear forwards; }
     @keyframes hpBar { to { transform: scaleX(1); } }
+    /* Step 1, Anee Auto: a warm card of its own, with her face. */
+    .hp-st-tab.is-auto { background: linear-gradient(135deg, #fffaf0 0%, #fff4cf 55%, #f1f8e6 100%); border-color: #f0dc95; }
+    .hp-st-tab.is-auto:hover { border-color: #e5c348; }
+    .hp-st-tab.is-auto.is-on { border-color: #d9ad12; background: linear-gradient(135deg, #fff8e1 0%, #ffefb8 55%, #eaf5dc 100%); box-shadow: 0 18px 36px -24px rgb(140 100 0 / .65); }
+    .hp-st-tab.is-auto .hp-st-n { color: var(--hp-ink); background: var(--hp-sun); box-shadow: 0 0 0 4px rgb(245 197 24 / .25); }
+    .hp-st-tab.is-auto .hp-st-tt small { color: #8a6a00; }
+    .hp-st-tab.is-auto .hp-st-bar i { background: #d9ad12; }
+    .hp-st-face { flex: none; width: 2.3rem; height: 2.3rem; margin-left: auto; border-radius: 999px; object-fit: cover; background: #fff;
+        box-shadow: 0 0 0 2px #fff, 0 8px 16px -8px rgb(120 90 0 / .6); animation: hpStFace 3.6s ease-in-out infinite; }
+    @keyframes hpStFace { 50% { transform: translateY(-3px) rotate(-4deg); } }
+    /* The divider: the way by hand starts at step 2. */
+    .hp-st-or { flex: none; display: flex; flex-direction: column; justify-content: center; gap: .3rem; width: 10.75rem; padding: .2rem .2rem .2rem .9rem;
+        border-left: 2px dashed #c9dcb4; }
+    .hp-st-or b { font-size: .7rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-green); }
+    .hp-st-or small { font-size: .76rem; font-weight: 600; line-height: 1.4; color: #55604a; }
+    @media (min-width: 1024px) {
+        .hp-st-or { width: auto; align-items: center; text-align: center; padding: .55rem 0 .35rem; border-left: 0; }
+        .hp-st-or b { display: flex; align-items: center; gap: .7rem; width: 100%; }
+        .hp-st-or b::before, .hp-st-or b::after { content: ''; flex: 1; height: 0; border-top: 2px dashed #c9dcb4; }
+        .hp-st-or small { max-width: 15rem; font-size: .8rem; }
+    }
+    .hp-st-manual { display: flex; align-items: center; gap: .7rem; width: 100%; margin-top: 1rem; padding: .85rem 1rem; border-radius: 1rem; text-align: left;
+        font-size: .9rem; color: #3f4b36; background: #f6f9f1; border: 1px dashed #b9d69a; cursor: pointer;
+        transition: background-color .28s var(--hp-ease), border-color .28s var(--hp-ease), transform .28s var(--hp-ease); }
+    .hp-st-manual b { color: var(--hp-ink); }
+    .hp-st-manual svg { flex: none; width: 1.2rem; height: 1.2rem; margin-left: auto; color: var(--hp-green); transition: transform .28s var(--hp-ease); }
+    .hp-st-manual:hover { background: #eef6e4; border-color: var(--hp-green); }
+    .hp-st-manual:hover svg { transform: translateX(3px); }
+    @media (prefers-reduced-motion: reduce) { .hp-st-face { animation: none; } .hp-st-manual, .hp-st-manual svg { transition: none; } }
     .hp-st-body { display: grid; gap: 2rem; align-items: center; border-radius: 1.75rem; padding: 1.4rem; background: #fff;
         border: 1px solid #e1ead6; box-shadow: 0 30px 60px -44px rgb(20 33 12 / .55); }
     @media (min-width: 768px) { .hp-st-body { grid-template-columns: minmax(0, 1fr) auto; padding: 2rem; gap: 2.4rem; } }
     .hp-st-panes { display: grid; }
-    .hp-st-pane { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(10px);
+    .hp-st-pane { grid-area: 1 / 1; scroll-margin-top: 6rem; opacity: 0; visibility: hidden; transform: translateY(10px);
         transition: opacity .45s var(--hp-ease), transform .45s var(--hp-ease), visibility .45s; }
     .hp-st-pane.is-on { opacity: 1; visibility: visible; transform: none; }
     .hp-st-when { font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-green); }
@@ -2238,7 +2277,7 @@
     .hp-st-show .hp-film-tag { bottom: -2.6rem; }
 
     /* ---- Anee ---- */
-    /* Clipped sideways only: Anee's film crosses the top edge (2026-10-07). */
+    /* Clipped sideways only (it held Anee's floating film until 2026-10-13). */
     .hp-anee { position: relative; z-index: 2; overflow-x: clip; overflow-y: visible; color: #e8efe1;
         background: radial-gradient(90% 120% at 85% 10%, #2d4a1a 0%, transparent 60%), linear-gradient(160deg, #10160c 0%, #1c2416 55%, #24301a 100%); }
     .hp-anee-grid { display: grid; gap: 3rem; align-items: center; }
@@ -2338,19 +2377,8 @@
     /* The window's own colour is the header's green at the top and the
        body's at the bottom: a white window showed through the rounded top
        corners as a thin white line (2026-10-06). */
-    /* Anee's hello, big and tilted, crossing the section's top edge into
-       the one above (owner, 2026-10-07). In the flow on a phone, at the
-       top; beside the chat's top on a desk. */
     .hp-anee-media { position: relative; max-width: 28rem; margin: 0 auto; width: 100%; }
-    .hp-anee-film { position: relative; z-index: 3; display: block; width: min(92%, 25rem); aspect-ratio: 16 / 9; margin: -7.6rem auto 2.4rem; border-radius: 1.3rem; overflow: hidden;
-        background: #0d1408; box-shadow: 0 34px 60px -24px rgb(0 0 0 / .8), 0 0 0 4px #f5c518, 0 0 0 9px rgb(245 197 24 / .18);
-        transform: rotate(-4deg); animation: hpFilmFloat 6s ease-in-out infinite; }
-    @media (min-width: 640px) { .hp-anee-film { width: 28rem; margin-top: -9.8rem; } }
-    @media (min-width: 1024px) {
-        .hp-anee-grid { align-items: start; }
-        .hp-anee-film { position: absolute; top: -6.2rem; right: .5rem; width: 31rem; margin: 0; }
-        .hp-anee-media { padding-top: 7.8rem; }
-    }
+    @media (min-width: 1024px) { .hp-anee-grid { align-items: start; } }
     /* The call after the proof: third in the stack on a phone (words, chat,
        call); on a desk it sits under the words in the first column while
        the chat spans both rows of the second. */
@@ -2361,22 +2389,6 @@
         .hp-anee-media { grid-column: 2; grid-row: 1 / span 2; }
         .hp-anee-cta.hp-cta { grid-column: 1; grid-row: 2; align-self: start; margin-top: 2rem; }
     }
-    /* Room above the edge for the film: the section before ends lower. */
-    .hp-steps.hp-sec { padding-bottom: 7.5rem; }
-    @media (min-width: 1024px) { .hp-steps.hp-sec { padding-bottom: 9.5rem; } }
-    .hp-anee-film video { width: 100%; height: 100%; display: block; object-fit: cover; }
-    .hp-anee-film-play { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: .5rem; padding: .8rem .9rem; border: 0; cursor: pointer;
-        background: linear-gradient(180deg, transparent 50%, rgb(9 14 6 / .6)); transition: background .28s var(--hp-ease); }
-    .hp-anee-film-play span { display: flex; align-items: center; justify-content: center; width: 3.4rem; height: 3.4rem; border-radius: 999px; background: #f5c518; color: #1a1a1a;
-        box-shadow: 0 0 0 6px rgb(245 197 24 / .25), 0 10px 22px -8px rgb(0 0 0 / .7); transition: transform .28s var(--hp-ease), opacity .28s var(--hp-ease); }
-    /* The triangle's own drawing sits a touch right of its box's middle, which is the optical centre: no extra nudge. */
-    .hp-anee-film-play span svg { display: block; width: 1.35rem; height: 1.35rem; }
-    .hp-anee-film:hover .hp-anee-film-play span { transform: scale(1.08); }
-    .hp-anee-film.is-playing { animation-play-state: paused; }
-    .hp-anee-film.is-playing .hp-anee-film-play { background: transparent; }
-    .hp-anee-film.is-playing .hp-anee-film-play span { opacity: 0; }
-    @keyframes hpFilmFloat { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-.6rem) rotate(-2.6deg); } }
-    @media (prefers-reduced-motion: reduce) { .hp-anee-film { animation: none; } }
 
     /* The anee.io song, under the farm business story (2026-10-07): the
        cover big with its own play button, the words and the bar beside it. */
@@ -3764,6 +3776,12 @@
             timer = setTimeout(() => go(at + 1, false), DWELL);
         };
         tabs.forEach((t, i) => t.addEventListener('click', () => go(i, true)));
+        // Anee Auto's "do it yourself" button: on to step 2, the pane brought into view if it is above.
+        steps.querySelectorAll('[data-go-step]').forEach((b) => b.addEventListener('click', () => {
+            go(Number(b.dataset.goStep) || 0, true);
+            const top = panes[at].getBoundingClientRect().top;
+            if (top < 70) panes[at].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        }));
         steps.addEventListener('keydown', (e) => {
             if (!e.target.classList.contains('hp-st-tab')) return;
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); go(at + 1, true); tabs[at].focus(); }
@@ -4028,22 +4046,4 @@
 })();
 </script>
 
-<script>
-(() => {
-    /* Anee's hello over the chat: tap to play with sound, tap to stop;
-       when it ends it returns to its still. */
-    const film = document.querySelector('[data-anee-film]');
-    if (film) {
-        const v = film.querySelector('video');
-        film.querySelector('.hp-anee-film-play').addEventListener('click', () => {
-            if (!v.paused) { v.pause(); return; }
-            document.querySelectorAll('[data-album] audio').forEach((a) => a.pause());
-            film.classList.add('is-playing');
-            v.play().catch(() => film.classList.remove('is-playing'));
-        });
-        v.addEventListener('pause', () => film.classList.remove('is-playing'));
-        v.addEventListener('ended', () => { film.classList.remove('is-playing'); v.load(); });
-    }
-})();
-</script>
 @endpush

@@ -380,7 +380,7 @@ class HowItWorks
                 'word' => 'Auto',
                 'when' => 'Or let Anee do it all',
                 'title' => 'Anee Auto',
-                'lede' => 'Rather not do all of this yourself? Tell Anee about your farm once. She analyzes everything, plans the whole season, tells you what to do each day, and moves the work herself when the rain comes or a worker cannot. You just follow.',
+                'lede' => 'Rather not plan it all yourself? Tell Anee about your farm once. She analyzes everything, plans the whole season, tells you what to do each day, and moves the work herself when the rain comes or a worker cannot. You just follow.',
                 'say' => null,
                 'face' => 'wink',
                 'pattern' => 'auto',
