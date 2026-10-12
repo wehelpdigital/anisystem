@@ -38,15 +38,15 @@ use Illuminate\Support\Str;
  *
  * Asked for by the cron address (/cron/news-roundup?key=...), by the mother
  * app's "Write one now", or by the scheduler. Every few days only
- * (news.every_days, 3): an earlier ask is skipped unless forced.
+ * (news.every_days, 1 since 2026-10-12: daily): an earlier ask is skipped unless forced.
  */
 class NewsRoundup
 {
-    public const MIN_STORIES = 3;
+    public const MIN_STORIES = 2;
 
     public const MAX_STORIES = 10;
 
-    public const WINDOW_DAYS = 10;
+    public const WINDOW_DAYS = 3;
 
     /** A run older than this that never finished is taken as dead. */
     public const STALE_MINUTES = 20;
@@ -92,7 +92,8 @@ class NewsRoundup
 
     public static function everyDays(): int
     {
-        return max(1, (int) AsSiteSetting::get('news.every_days', 3));
+        // Daily since 2026-10-12 (the owner): a roundup every day there is news.
+        return max(1, (int) AsSiteSetting::get('news.every_days', 1));
     }
 
     public static function ready(): bool
@@ -392,7 +393,8 @@ class NewsRoundup
         $byId = $items->keyBy('id');
         $from = Carbon::parse($items->min('publishedAt'))->timezone('Asia/Manila');
         $to = Carbon::parse($items->max('publishedAt'))->timezone('Asia/Manila');
-        $range = self::range($from, $to);
+        // A daily roundup is dated today, not by the span of its stories.
+        $range = self::today();
         $keywords = SeoKeywords::candidates($items->pluck('title')->implode(' ') . ' agriculture farm news philippines palay rice prices', 18)
             ->map(fn ($k) => $k->keyword . ' (' . number_format((int) $k->volume) . ' searches)')->all();
         $usedFocus = AsSitePage::query()->where('section', 'blog')->whereNotNull('focusKeyword')->pluck('focusKeyword')->map(fn ($f) => mb_strtolower($f))->unique()->values()->all();
@@ -430,6 +432,12 @@ class NewsRoundup
     }
 
     /** "September 28 to October 7, 2026", "October 1 to 7, 2026". */
+    /** Today in Manila, as a roundup is dated: "October 12, 2026". */
+    public static function today(): string
+    {
+        return now('Asia/Manila')->format('F j, Y');
+    }
+
     public static function range(Carbon $from, Carbon $to): string
     {
         if ($from->isSameDay($to)) {
@@ -453,7 +461,7 @@ class NewsRoundup
             'social' => $r->isSocial ? 'a social media video post' : null,
         ]), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))->implode("\n");
 
-        return "You are writing anee.io's \"Latest in Agriculture\" farm news roundup for farmers in the Philippines, covering {$range}.\n"
+        return "You are writing anee.io's \"Latest in Agriculture\" farm news roundup for farmers in the Philippines, for {$range}.\n"
             . "Below are the news stories our feeds collected (one JSON object per line). You only have each story's title, source, date and a short description: use nothing else as fact.\n\n"
             . $list . "\n\n"
             . "--- What to do ---\n"
@@ -461,12 +469,12 @@ class NewsRoundup
             . "2. Group them by theme, 2 to 5 themes, never one story per theme unless it stands alone. Each theme gets an H2 heading in Title Case that names the topic exactly (for example \"Palay Prices and Rice Supply\", \"Fuel and Farm Costs\", \"Weather and Typhoon Watch\", \"Help From the Government\", \"Exports and Markets\"). Order the themes by how much they matter to a farmer this week.\n"
             . "3. For every story: a headline in your own words (at most 12 words, Title Case), a summary of the core facts in your own words in 1 or 2 sentences (never copy the source's sentences), and the \"so what\": 2 or 3 sentences on why this news matters to a Filipino farmer and what they can do about it, in plain field terms (palay, cavans, hectares, inputs, the planting window, the harvest). The so what is our own commentary: it is what makes this page worth reading. Never add a number, name or claim that is not in the story given.\n"
             . "4. The title: lead with the most important story in specific words, then the rest (for example \"Palay Stocks Fall Before Harvest, Plus Fuel Prices and Typhoon Watch\"). Never a generic \"news roundup\" title. It must contain the focus keyphrase.\n"
-            . "5. The excerpt: the first paragraph, 2 or 3 sentences, naming the date range ({$range}) and the top story, with the focus keyphrase.\n"
-            . "6. The intro: one short paragraph on what this week means for farm work overall.\n"
-            . "7. actions: 3 to 5 short, concrete things a farmer can do this week because of this news.\n"
-            . "8. faq: 3 to 5 questions farmers would ask about this week's news, with direct answers drawn from the stories.\n"
+            . "5. The excerpt: the first paragraph, 2 or 3 sentences, naming today's date ({$range}) and the top story, with the focus keyphrase.\n"
+            . "6. The intro: one short paragraph on what today's news means for farm work.\n"
+            . "7. actions: 3 to 5 short, concrete things a farmer can do this week because of today's news.\n"
+            . "8. faq: 3 to 5 questions farmers would ask about today's news, with direct answers drawn from the stories.\n"
             . "9. links: 3 to 5 of our own related pages from the list below that a reader of these stories would want next.\n"
-            . "\n--- Focus keyphrase ---\nChoose one focus keyphrase a farmer would search for about the top story or this week's farm news, 2 to 5 words, preferably a keyword from the list below. Never one of these, already used: " . ($usedFocus ? implode(', ', array_slice($usedFocus, 0, 60)) : 'none') . ".\n"
+            . "\n--- Focus keyphrase ---\nChoose one focus keyphrase a farmer would search for about the top story or today's farm news, 2 to 5 words, preferably a keyword from the list below. Never one of these, already used: " . ($usedFocus ? implode(', ', array_slice($usedFocus, 0, 60)) : 'none') . ".\n"
             . PageWriter::voiceRules('en')
             . PageWriter::seoRules('', '900 to 1500', $keywords)
             . "\n--- Links ---\nInternal links go only in the links list (url from these pages):\n" . PageWriter::urlMap() . "\n"
@@ -578,11 +586,10 @@ class NewsRoundup
         }
 
         // Up top: what this is, before the first story.
-        $dates = collect($used)->map(fn ($id) => Carbon::parse($byId[$id]->publishedAt)->timezone('Asia/Manila'));
-        $range = $used ? self::range($dates->min(), $dates->max()) : '';
+        $range = self::today();
         $names = collect($used)->map(fn ($id) => $byId[$id]->source)->unique()->values();
         $from = $names->count() > 1 ? $names->slice(0, -1)->implode(', ') . ' and ' . $names->last() : $names->implode('');
-        $lead = [['type' => 'callout', 'tone' => 'info', 'title' => 'This roundup covers ' . $range,
+        $lead = [['type' => 'callout', 'tone' => 'info', 'title' => 'Farm news for ' . $range,
             'text' => count($used) . ' stories from ' . $from . '. Each one comes with what it means for your farm and a link to the full report.']];
         if (trim((string) ($d['intro'] ?? '')) !== '') {
             $lead[] = ['type' => 'text', 'text' => $c($d['intro'])];
