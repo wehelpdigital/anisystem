@@ -74,7 +74,7 @@ return [
             'Anee: AI chat, analyses and credits (Libre + Anee)',
             'Workers and inventory (Solo Farmer)',
             'Video recording, worker logins, Collab Room',
-            'Full weather, all reports, document uploads, offline mode',
+            'Full weather, all reports, document uploads',
         ],
     ],
 
@@ -129,7 +129,7 @@ return [
         'excludes' => [
             'Workers and inventory (Solo Farmer)',
             'Video recording, worker logins, Collab Room',
-            'Full weather, all reports, document uploads, offline mode',
+            'Full weather, all reports, document uploads',
         ],
     ],
 

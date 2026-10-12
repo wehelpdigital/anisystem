@@ -282,6 +282,7 @@ Route::get('/question/{slug}', [App\Http\Controllers\SitePageController::class, 
 // (2026-10-07): Reoon checks the email, a good one joins the Acumbamail list.
 Route::post('/tools/open', [App\Http\Controllers\ToolGateController::class, 'open'])->name('tools.open');
 Route::get('/sitemap.xml', [App\Http\Controllers\SitePageController::class, 'sitemap'])->name('site.sitemap');
+Route::get('/llms.txt', [App\Http\Controllers\SitePageController::class, 'llms'])->name('site.llms');
 // The mother app's builder preview: signed, never indexed, drafts included.
 Route::get('/site-preview/{id}', [App\Http\Controllers\SitePageController::class, 'preview'])->whereNumber('id')->name('site.preview');
 Route::post('/site-preview', [App\Http\Controllers\SitePageController::class, 'preview'])->name('site.preview.post')

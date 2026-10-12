@@ -179,6 +179,10 @@ terraces), /images/site/fields-aerial.jpg (aerial farm fields),
 
 ## 7. What anee.io really does (only claim these)
 
+The full, current list is How It Works (App\Support\HowItWorks, 50 tools in
+8 steps, Anee Auto among them) and config/tiers.php for the plans. Anee is a
+"smart farm technician": never write "AI farm technician" or "AI technician".
+
 anee.io is a mobile friendly web app for Filipino farmers to run a cropping
 season (a "cropping schedule"). It has:
 
@@ -368,7 +372,43 @@ Blog:
 /blog/ant-bait-and-termiticides, /blog/alamat-ng-palay, /blog/alamat-ng-mais,
 /blog/farm-words-in-tagalog, /blog/palay-price-philippines,
 /blog/palayan-nueva-ecija, /blog/ani-meaning,
-/blog/agriculture-in-the-philippine-economy, /blog/agricultural-engineer-career
+/blog/agriculture-in-the-philippine-economy, /blog/agricultural-engineer-career,
+/blog/farm-planning-app-philippines, /blog/farm-app-for-vegetable-growers,
+/blog/crop-disease-diagnosis-app,
+/blog/plant-disease-detection-for-fruit-growers,
+/blog/farm-labor-tracking-app, /blog/farm-expense-management-software,
+/blog/crop-growth-stage-monitoring,
+/blog/crop-monitoring-for-vegetable-farmers,
+/blog/filipino-farmer-community-online,
+/blog/online-marketplace-for-farmers-philippines,
+/blog/increase-rice-yield-per-hectare,
+/blog/increase-corn-yield-per-hectare,
+/blog/fertilizer-for-wet-season-rice, /blog/bags-of-fertilizer-per-hectare,
+/blog/fertilizer-calculator-app, /blog/nutrient-deficiency-in-rice,
+/blog/lower-fertilizer-cost, /blog/fertilizer-for-vegetables-philippines,
+/blog/fertilizer-timing-by-growth-stage, /blog/season-fertilizer-plan,
+/blog/best-time-to-plant-rice-philippines,
+/blog/what-crop-to-plant-this-season, /blog/best-rice-variety-for-my-area,
+/blog/how-to-make-a-cropping-calendar, /blog/staggered-planting-schedule,
+/blog/el-nino-la-nina-farming-tips, /blog/typhoon-preparation-for-farmers,
+/blog/free-farm-app-philippines, /blog/farm-app-without-internet,
+/blog/tagalog-farm-app, /blog/identify-rice-pests-from-a-photo,
+/blog/pest-or-disease-how-to-tell, /blog/early-pest-detection,
+/blog/yellow-rice-leaves, /blog/ask-an-agriculturist-online,
+/blog/ai-farm-advice-accuracy, /blog/avoid-buying-the-wrong-pesticide,
+/blog/monitor-crop-health-without-a-drone,
+/blog/satellite-crop-monitoring-philippines,
+/blog/cost-of-producing-rice-per-hectare, /blog/farm-profitability,
+/blog/farm-record-keeping, /blog/farm-workers-wages,
+/blog/share-the-farm-plan-with-workers, /blog/farm-inventory-tracking,
+/blog/farm-cash-flow, /blog/manage-a-farm-remotely,
+/blog/farm-records-for-loans-and-insurance, /blog/weather-app-for-farmers,
+/blog/rain-before-spraying, /blog/track-typhoons-near-my-farm,
+/blog/start-farming-with-no-experience, /blog/small-farm-ideas-philippines,
+/blog/modern-farming-techniques, /blog/precision-agriculture-philippines,
+/blog/what-to-do-on-my-farm-today, /blog/ai-for-filipino-farmers,
+/blog/digital-farming-tools, /blog/farm-management-app-philippines,
+/blog/reduce-crop-losses
 
 ## 9. Keywords per page
 

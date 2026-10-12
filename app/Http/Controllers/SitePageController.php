@@ -160,6 +160,64 @@ class SitePageController extends Controller
         return response()->view('public.site.sitemap', ['urls' => $urls])->header('Content-Type', 'application/xml; charset=UTF-8');
     }
 
+    /**
+     * /llms.txt (2026-10-13): the site in plain Markdown for AI assistants
+     * (the llmstxt.org convention): what anee.io is, its plans, its tools,
+     * and every live guide and post with its one line answer. Built from the
+     * same lists the pages use, so it never says what the site does not.
+     */
+    public function llms()
+    {
+        $line = fn (string $s) => trim(preg_replace('/\s+/u', ' ', strip_tags($s)));
+        $out = ['# anee.io', '',
+            '> anee.io is a farm management app for Filipino farmers. It plans and runs the cropping season (every task dated from each lot\'s own day zero), tracks workers, inventory, costs and harvests, reads the weather and the satellites for each lot, and includes Anee, a smart farm technician who answers in Tagalog, Bisaya, Ilocano or English and reads the farm\'s own records and photos before she answers. It runs in the browser of any phone, works without signal, and has a free plan.', '',
+            '## Plans', ''];
+        foreach (['libre', 'libreAnee', 'solo', 'owner'] as $t) {
+            $c = config('tiers.' . $t);
+            if (! $c) {
+                continue;
+            }
+            $price = $c['price'] ? 'PHP ' . $c['price'] . ' a month' : 'free';
+            $out[] = '- ' . $c['name'] . ' (' . $price . '): ' . implode('; ', $c['features'] ?? []);
+        }
+        $out[] = '- Prices and the full comparison: ' . url('/pricing');
+        $out[] = '';
+        $out[] = '## How the season works, step by step (' . \App\Support\HowItWorks::stepWord() . ' steps)';
+        $out[] = '';
+        foreach (\App\Support\HowItWorks::stages() as $i => $st) {
+            $out[] = '### ' . ($i + 1) . '. ' . $st['title'];
+            foreach ($st['items'] as $it) {
+                $page = ! empty($it['page']) ? ' (' . SitePages::url('features', $it['page']) . ')' : '';
+                $out[] = '- ' . $it['name'] . $page . ': ' . $line($it['what']);
+            }
+            $out[] = '';
+        }
+        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'features' => 'Feature pages'];
+        try {
+            $pages = AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'title', 'excerpt']);
+            foreach ($names as $section => $name) {
+                $rows = $pages->where('section', $section);
+                if ($rows->isEmpty()) {
+                    continue;
+                }
+                $out[] = '## ' . $name;
+                $out[] = '';
+                foreach ($rows as $p) {
+                    $out[] = '- [' . $line($p->title) . '](' . SitePages::url($p->section, $p->slug) . '): ' . \Illuminate\Support\Str::limit($line((string) $p->excerpt), 280);
+                }
+                $out[] = '';
+            }
+        } catch (\Throwable $e) {
+            // no pages table yet: the app's own story still goes out
+        }
+        $out[] = '## Contact';
+        $out[] = '';
+        $out[] = '- Sign up free: ' . url('/signup');
+        $out[] = '- Contact: ' . url('/contact');
+
+        return response(implode("\n", $out) . "\n", 200, ['Content-Type' => 'text/markdown; charset=UTF-8']);
+    }
+
     private function draw(AsSitePage $page, bool $preview)
     {
         $blocks = is_array($page->blocks) ? $page->blocks : [];
