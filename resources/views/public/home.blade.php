@@ -1195,12 +1195,12 @@
                     <p class="hp-kick">Field health from space</p>
                     <h3 class="hp-sky-h">Watch Your Fields From Space, <em>Even Through the Clouds.</em></h3>
                     <p class="hp-sky-p">
-                        anee.io is powered by advanced dual satellite technology. We combine high resolution satellite photos with
-                        cloud penetrating radar to give you an updated field health map every 5 to 10 days. Track your crops from
-                        above and spot hidden problems early, even during heavy monsoon rains, without buying an expensive drone.
+                        anee.io uses satellites and cloud penetrating radar to analyze the health of your farm from above. Every
+                        5 to 10 days you get a fresh reading of how each field is doing, so you spot hidden problems early, even
+                        during heavy monsoon rains, without buying an expensive drone.
                     </p>
                     <div class="hp-sky-stats">
-                        <div><b>Every 5 to 10 days</b><small>A fresh field health map of every lot you farm</small></div>
+                        <div><b>Every 5 to 10 days</b><small>A fresh health reading of every lot you farm</small></div>
                         <div><b>Through clouds</b><small>Radar sees your crop in the monsoon</small></div>
                         <div><b>No drone needed</b><small>Nothing to buy, nothing to fly, nothing to charge</small></div>
                     </div>

@@ -193,7 +193,8 @@
     @keyframes hpAutoPop { from { opacity: 0; transform: translateY(10px) scale(.97); } }
     .hp-auto-chat.is-fading .hp-auto-b, .hp-auto-chat.is-fading .hp-auto-day { opacity: 0; transform: translateY(-8px); }
 
-    .hp-auto-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .8rem 1.2rem; margin-top: 2.6rem; text-align: center; }
+    /* The line sits under the button (the owner, 2026-10-13). */
+    .hp-auto-cta { display: flex; flex-direction: column; align-items: center; gap: .75rem; margin-top: 2.6rem; text-align: center; }
     .hp-auto-cta span { font-size: .92rem; font-weight: 700; color: #55604a; }
     @media (prefers-reduced-motion: reduce) {
         .hp-auto-phone, .hp-auto-glow, .hp-auto-bub-in, .hp-auto-typing i { animation: none; }
