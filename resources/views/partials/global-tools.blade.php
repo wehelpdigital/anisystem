@@ -150,6 +150,9 @@
         @media (hover: hover) {.qa-draw:hover { border-color: #f5d3b3; } .qa-draw:hover .qa-go { color: #c2410c; } }
         html.dark .qa-draw .qa-ico { background: rgb(194 65 12 / .2); }
         .qa-tags .qa-ico { background: #e7f6f1; color: #0f766e; }
+        .qa-workers .qa-ico { background: #eaf4fb; color: #1e4b6b; }
+        @media (hover: hover) {.qa-workers:hover { border-color: #c6e0f2; } .qa-workers:hover .qa-go { color: #1e4b6b; } }
+        html.dark .qa-workers .qa-ico { background: rgb(30 75 107 / .3); }
         @media (hover: hover) {.qa-tags:hover { border-color: #bfe5d8; } .qa-tags:hover .qa-go { color: #0f766e; } }
         html.dark .qa-tags .qa-ico { background: rgb(15 118 110 / .24); color: #7dd3c0; }
         html.dark .qa-notes .qa-ico { background: rgb(180 83 9 / .18); color: #e0b457; }
