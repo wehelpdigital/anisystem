@@ -45,8 +45,27 @@
             const top = inner.bottom - (inner.height - 7) * h - box.top;
             return [r.left - box.left + r.width / 2, top - 9];
         });
-        const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
-        const [a, b] = [pts[pts.length - 2], pts[pts.length - 1]];
+        // A smooth curve through the tops: monotone cubic (Fritsch and Carlson),
+        // so it bends where the trend turns without overshooting a bar.
+        const n = pts.length, dx = [], sl = [], m = [];
+        for (let i = 0; i < n - 1; i++) { dx[i] = pts[i + 1][0] - pts[i][0]; sl[i] = (pts[i + 1][1] - pts[i][1]) / (dx[i] || 1); }
+        m[0] = sl[0]; m[n - 1] = sl[n - 2];
+        for (let i = 1; i < n - 1; i++) m[i] = sl[i - 1] * sl[i] <= 0 ? 0 : (sl[i - 1] + sl[i]) / 2;
+        for (let i = 0; i < n - 1; i++) {
+            if (sl[i] === 0) { m[i] = 0; m[i + 1] = 0; continue; }
+            const al = m[i] / sl[i], be = m[i + 1] / sl[i], tt = al * al + be * be;
+            if (tt > 9) { const k = 3 / Math.sqrt(tt); m[i] = k * al * sl[i]; m[i + 1] = k * be * sl[i]; }
+        }
+        const f1 = (v) => v.toFixed(1);
+        let d = 'M' + f1(pts[0][0]) + ' ' + f1(pts[0][1]);
+        let last = pts[n - 2];
+        for (let i = 0; i < n - 1; i++) {
+            const c1 = [pts[i][0] + dx[i] / 3, pts[i][1] + m[i] * dx[i] / 3], c2 = [pts[i + 1][0] - dx[i] / 3, pts[i + 1][1] - m[i + 1] * dx[i] / 3];
+            d += ' C' + f1(c1[0]) + ' ' + f1(c1[1]) + ' ' + f1(c2[0]) + ' ' + f1(c2[1]) + ' ' + f1(pts[i + 1][0]) + ' ' + f1(pts[i + 1][1]);
+            last = c2;
+        }
+        // The head points the way the curve leaves the last bar.
+        const [a, b] = [last, pts[n - 1]];
         const ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
         const head = (len, spread) => [ang + Math.PI - spread, ang + Math.PI + spread]
             .map((t) => (b[0] + Math.cos(t) * len).toFixed(1) + ' ' + (b[1] + Math.sin(t) * len).toFixed(1));

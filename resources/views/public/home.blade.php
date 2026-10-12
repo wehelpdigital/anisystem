@@ -3405,10 +3405,13 @@
        bright dash keeps running along it in the trend's direction. */
     .hp-sum-arrow { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
     .hp-sum-arrow path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-    .hp-sum-arrow .ln { stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s var(--hp-ease) .95s; }
+    /* Hidden, not merely dashed away, until it draws: a zero length dash with a
+       round cap showed as a white dot on phones before the arrow came (2026-10-12). */
+    .hp-sum-arrow .ln { stroke-width: 3; stroke-dasharray: 1 1.5; stroke-dashoffset: 1.25; opacity: 0;
+        transition: stroke-dashoffset 1.1s var(--hp-ease) .95s, opacity 0s linear .95s; }
     .hp-sum-arrow .hd { stroke-width: 3; opacity: 0; transform-box: fill-box; transition: opacity .3s ease 1.9s; }
     .hp-sum-arrow .fl { stroke-width: 3; stroke-dasharray: 10 70; opacity: 0; transition: opacity .3s ease 2.1s; animation: hpTrendFlow 2.4s linear infinite; }
-    .is-drawn .hp-sum-arrow .ln { stroke-dashoffset: 0; }
+    .is-drawn .hp-sum-arrow .ln { stroke-dashoffset: 0; opacity: 1; }
     .is-drawn .hp-sum-arrow .hd, .is-drawn .hp-sum-arrow .fl { opacity: 1; }
     @keyframes hpTrendFlow { from { stroke-dashoffset: 80; } to { stroke-dashoffset: 0; } }
     .is-up .hp-sum-arrow .ln, .is-up .hp-sum-arrow .hd { stroke: #991b1b; }
@@ -3423,17 +3426,18 @@
     .hp-sum-mark { position: absolute; top: 0; left: .5rem; font-family: var(--font-heading); font-size: .8rem; font-weight: 800; line-height: 1.2; color: #fff;
         opacity: 0; translate: 0 4px; transition: opacity .4s var(--hp-ease) 2.2s, translate .4s var(--hp-ease) 2.2s; }
     .is-drawn .hp-sum-mark { opacity: 1; translate: none; }
-    .hp-sum-arrow .mk { stroke: #fde68a; stroke-width: 2.2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .9s var(--hp-ease) 2.5s; }
+    .hp-sum-arrow .mk { stroke: #fde68a; stroke-width: 2.2; stroke-dasharray: 1 1.5; stroke-dashoffset: 1.25; opacity: 0;
+        transition: stroke-dashoffset .9s var(--hp-ease) 2.5s, opacity 0s linear 2.5s; }
     .hp-sum-arrow .mk-hd { stroke: #fde68a; stroke-width: 2.2; opacity: 0; transition: opacity .2s ease 3.3s; }
     .hp-sum-arrow .mk-dot { fill: #fff; stroke: #f5c518; stroke-width: 2.5; opacity: 0; transition: opacity .3s ease 3.3s; }
     .hp-sum-arrow .mk-ring { fill: none; stroke: #fde68a; stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; }
-    .is-drawn .hp-sum-arrow .mk { stroke-dashoffset: 0; }
+    .is-drawn .hp-sum-arrow .mk { stroke-dashoffset: 0; opacity: 1; }
     .is-drawn .hp-sum-arrow .mk-hd, .is-drawn .hp-sum-arrow .mk-dot { opacity: 1; }
     .is-drawn .hp-sum-arrow .mk-ring { animation: hpMarkPing 2.2s ease-out 3.5s infinite; }
     @keyframes hpMarkPing { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(3); } }
     @media (prefers-reduced-motion: reduce) {
         .hp-sum-mark, .hp-sum-arrow .mk, .hp-sum-arrow .mk-hd, .hp-sum-arrow .mk-dot { transition: none; }
-        .hp-sum-mark { opacity: 1; translate: none; } .hp-sum-arrow .mk { stroke-dashoffset: 0; } .hp-sum-arrow .mk-hd, .hp-sum-arrow .mk-dot { opacity: 1; }
+        .hp-sum-mark { opacity: 1; translate: none; } .hp-sum-arrow .mk { stroke-dashoffset: 0; opacity: 1; } .hp-sum-arrow .mk-hd, .hp-sum-arrow .mk-dot { opacity: 1; }
         .is-drawn .hp-sum-arrow .mk-ring { animation: none; }
     }
     .hp-sum-years { display: flex; gap: .4rem; padding: .35rem .5rem 0; }
@@ -3449,7 +3453,7 @@
     .is-up .hp-sum-trend small { color: #b91c1c; }
     .is-down .hp-sum-trend small { color: #92400e; }
     .hp-sum-trend.is-way small { color: #fde68a; }
-    @media (prefers-reduced-motion: reduce) { .hp-sum-arrow .ln { transition: none; stroke-dashoffset: 0; } .hp-sum-arrow .hd, .hp-sum-arrow .fl { transition: none; opacity: 1; } .hp-sum-arrow .fl { animation: none; opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .hp-sum-arrow .ln { transition: none; stroke-dashoffset: 0; opacity: 1; } .hp-sum-arrow .hd, .hp-sum-arrow .fl { transition: none; opacity: 1; } .hp-sum-arrow .fl { animation: none; opacity: 0; } }
     @media (prefers-reduced-motion: reduce) { .hp-sum-bars i { transition: none; transform: none; } }
     .hp-sum-p { margin-top: .7rem; font-size: .98rem; line-height: 1.6; color: #e4f0d6; }
     /* "higher yield." in the green card: gold, with an underline that
