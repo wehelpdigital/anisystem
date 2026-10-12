@@ -95,25 +95,7 @@
     <div class="card card-body" data-st-pane="offline" hidden>
         <div class="st-group">
             <h3>Offline Mode</h3>
-            <p class="st-why">For the field, where there is no signal. It starts off, and your choice is saved on this phone.</p>
-
-            @php $offlineLocked = ! \App\Support\Tier::farmCan('offline'); $offlineRung = \App\Support\Tier::farmUnlocksAt('offline'); @endphp
-            <button type="button" class="st-switch" id="stOffline" role="switch" aria-checked="false"
-                    @if ($offlineLocked) data-tier-lock="{{ $offlineRung }}" data-lock-say="{{ \App\Support\Tier::say($offlineRung, 'Offline mode comes with {plan}. Your farm stays on your phone when the signal drops, and your work syncs when it comes back.') }}" @endif>
-                <span class="st-switch-txt {{ $offlineLocked ? 'tl-dim' : '' }}">
-                    <b>Keep working without a signal</b>
-                    <span>When on, the app saves each page you visit on this phone, so it still opens
-                    with no internet. A yellow bar shows when you are offline.</span>
-                    @if ($offlineLocked)
-                        <span class="st-locked-say">🔒 Comes with {{ \App\Support\Tier::withPlan($offlineRung) }}{{ \App\Support\WorkerContext::inWorkerContext() ? ' for this farm' : '' }}. Tap to see the plans.</span>
-                    @endif
-                </span>
-                @if ($offlineLocked)
-                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:1.1rem;height:1.1rem"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
-                @else
-                    <span class="st-knob" aria-hidden="true"></span>
-                @endif
-            </button>
+            <p class="st-why">For the field, where there is no signal. It is always on, on every plan: the app saves each page you visit on this phone, so it still opens with no internet, and a yellow bar shows when you are offline.</p>
 
             <div class="st-offline-say">
                 <p><b>What works offline.</b> Your main pages open from a saved copy: the dashboard,
@@ -233,28 +215,6 @@
         });
     }));
 
-    /* ---- Offline Mode (state lives with window.aneeOffline in app.js) ---- */
-    const off = document.getElementById('stOffline');
-    if (off) {
-        const paintOff = () => {
-            const v = !!(window.aneeOffline && window.aneeOffline.on());
-            off.classList.toggle('is-on', v);
-            off.setAttribute('aria-checked', v ? 'true' : 'false');
-        };
-        off.addEventListener('click', () => {
-            if (!window.aneeOffline) { window.toast?.('The app is still loading. Try again.', 'error'); return; }
-            window.aneeOffline.set(!window.aneeOffline.on());
-            paintOff();
-            window.toast?.(window.aneeOffline.on()
-                ? 'Offline mode is on. Pages you visit are saved on this phone.'
-                : 'Offline mode is off. Saved copies were cleared.');
-        });
-        // app.js is a deferred module and may land after this block: paint
-        // now with what we can read directly, then again on its signal.
-        try { off.classList.toggle('is-on', localStorage.getItem('anee-offline-mode') === '1'); } catch (_) {}
-        document.addEventListener('anee:offline-mode', paintOff);
-        paintOff();
-    }
 })();
 </script>
 @endpush

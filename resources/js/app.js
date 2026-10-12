@@ -1763,7 +1763,11 @@ document.addEventListener('pointerdown', (e) => {
      * warm, and the service worker is told off. */
     const allowedMeta = () => document.querySelector('meta[name="anee-offline"]')?.getAttribute('content') || 'allowed';
     const ALLOWED = allowedMeta() === 'allowed';
-    const on = () => { try { return ALLOWED && localStorage.getItem(KEY) === '1'; } catch (_) { return false; } };
+    /* ALWAYS ON (2026-10-12, the owner): no switch any more. Offline mode
+       is on for every plan and every device; the stored flag is kept at '1'
+       so an older page or the service worker reading it agrees. */
+    const on = () => ALLOWED;
+    try { if (ALLOWED && localStorage.getItem(KEY) !== '1') localStorage.setItem(KEY, '1'); } catch (_) { /* private mode */ }
     const tellSw = (v) => {
         try {
             navigator.serviceWorker?.ready?.then((reg) => reg.active?.postMessage({ type: 'anee-offline', on: !!v }));
@@ -2612,6 +2616,15 @@ document.addEventListener('pointerdown', (e) => {
         allowed: isAllowedOffline,
         pending: () => outboxAll().then((r) => r.length),
     };
+
+    /* Logging out empties the shelf of pages (not the outbox: unsent work
+       still goes up next time someone signs in on this phone). */
+    document.addEventListener('submit', (e) => {
+        const f = e.target;
+        if (!(f instanceof HTMLFormElement) || !/\/logout\/?$/.test(new URL(f.action, location.href).pathname)) return;
+        try { navigator.serviceWorker?.controller?.postMessage({ type: 'anee-clear-shelf' }); } catch (_) { /* no SW */ }
+        try { caches.delete('anee-offline-runtime-v1'); } catch (_) { /* no Cache API */ }
+    }, true);
 
     /* The account-menu switch, wherever the app layout rendered one. */
     const menuBtn = document.getElementById('offlineModeToggle');

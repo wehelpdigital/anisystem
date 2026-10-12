@@ -37,8 +37,9 @@ class CheckoutController extends Controller
         if (! $order && $item['kind'] === 'credits' && ! $user->canUseAi()) {
             return redirect()->route('ai.credits', ['tab' => 'buy']);
         }
-        // An item page for something already waiting for a decision shows that order.
-        if (! $order && $item && ($waiting = $this->orders->inReview($user, $item['kind']))) {
+        // A plan page for a plan already waiting for a decision shows that
+        // order. Credits do not wait: a new pack can be bought meanwhile.
+        if (! $order && $item && $item['kind'] === 'plan' && ($waiting = $this->orders->inReview($user, 'plan'))) {
             $order = $waiting;
             $item = ManualPay::item($order->itemKey) ?? $item;
         }

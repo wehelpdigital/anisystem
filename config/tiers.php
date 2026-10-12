@@ -46,7 +46,7 @@ return [
         'docUploads'        => false,
         'collab'            => false,
         'reportsAll'        => false,   // labor report only
-        'offline'           => false,   // the field without a signal is a paid convenience
+        'offline'           => true,    // always on, every plan (2026-10-12)
         'auditLogs'         => false,   // the Logs diary is the Owner tier's story
         'discussionCreate'  => false,
         'discussionJoin'    => 1,
@@ -103,7 +103,7 @@ return [
         'docUploads'        => false,
         'collab'            => false,
         'reportsAll'        => false,
-        'offline'           => false,
+        'offline'           => true,
         'auditLogs'         => false,
         'discussionCreate'  => false,
         'discussionJoin'    => 1,

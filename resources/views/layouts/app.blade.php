@@ -452,25 +452,6 @@
                                     <span class="badge badge-green">{{ $openTickets }}</span>
                                 @endif
                             </a>
-                            {{-- The field has no signal; the phone still has
-                                 the farm. Off by default — see Settings for
-                                 the long explanation this row is too small
-                                 to hold. --}}
-                            @php $offlineLocked = ! \App\Support\Tier::farmCan('offline'); @endphp
-                            <button type="button" id="offlineModeToggle"
-                                class="w-full flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                                role="switch" aria-checked="false" title="Use your farm with no signal"
-                                @if ($offlineLocked) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('offline') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::farmUnlocksAt('offline'), 'Offline mode comes with {plan}. Your farm stays on your phone with no signal, and your work syncs when the signal returns.') }}" @endif>
-                                <span class="flex items-center gap-2 {{ $offlineLocked ? 'tl-dim' : '' }}">
-                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 8.82A15 15 0 0112 5a15 15 0 0110 3.82M5.5 12.05A10 10 0 0112 9.5c2.44 0 4.68.87 6.42 2.32M8.8 15.3A5.5 5.5 0 0112 14c1.18 0 2.28.37 3.18 1M12 19h.01"/></svg>
-                                    <span>Offline mode</span>
-                                </span>
-                                @if ($offlineLocked)
-                                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:1rem;height:1rem"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
-                                @else
-                                    <span class="theme-switch" aria-hidden="true"><span class="theme-switch-knob"></span></span>
-                                @endif
-                            </button>
                             <button type="button" id="themeToggle"
                                 class="w-full flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
                                 role="switch" aria-checked="false">

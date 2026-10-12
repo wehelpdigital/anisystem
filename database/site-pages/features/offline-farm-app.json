@@ -14,7 +14,7 @@
     "maisan",
     "corn seedling"
   ],
-  "excerpt": "anee.io works as an offline farm app when the signal drops at the far lot. Turn on offline mode once on your phone, and your recent seasons stay open with no internet. Tick tasks done and write notes out there. The changes wait on the phone, then sync by themselves when the signal comes back.",
+  "excerpt": "anee.io works as an offline farm app when the signal drops at the far lot. Offline mode is always on, on every plan, so your recent seasons stay open with no internet. Tick tasks done and write notes out there. The changes wait on the phone, then sync by themselves when the signal comes back.",
   "heroImage": {
     "src": "/images/site/app/how/offline.webp",
     "alt": "The anee.io account menu on a phone with the Offline mode switch, above the Activities board of a wet season palay plan",
@@ -33,11 +33,11 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "Turn it on once for each phone"
+      "text": "Always on, on every phone"
     },
     {
       "type": "text",
-      "text": "Offline mode is off at first. Switch it on from your account menu, or in Settings under the Offline Mode tab. The choice lives on that phone, so turn it on for each phone or tablet you take to the field.\n\nOnce it is on, anee.io fills the phone's shelf while you still have signal, and a loader shows how far along it is. It saves the pages a farm day needs, including your three most recently used seasons. After that, the phone keeps each page you open too. Let the loader finish before you leave the house, and the far lot is ready."
+      "text": "Offline mode is always on, with nothing to switch. Open anee.io on a phone with signal and it fills the phone's shelf, and a loader shows how far along it is. It saves the pages a farm day needs, including your three most recently used seasons. After that, the phone keeps each page you open too. Let the loader finish before you leave the house, and the far lot is ready."
     },
     {
       "type": "heading",
@@ -90,7 +90,7 @@
     },
     {
       "type": "text",
-      "text": "Offline mode comes with the Solo Farmer and Farm Owner plans. It follows the farm, not the person: a worker logged in to a paid farm has it, even if the worker's own account is on Libre. On the free Libre plan the switch shows with a lock.\n\nanee.io runs in your phone's browser, and you can add it to your home screen like an app. Turn offline mode off and the phone clears its saved copies. Do that before you hand the phone to someone else."
+      "text": "Offline mode comes with every plan, Libre included, and with every worker's login too.\n\nanee.io runs in your phone's browser, and you can add it to your home screen like an app. Before you hand the phone to someone else, log out: the saved copies belong to your account."
     },
     {
       "type": "heading",
@@ -104,7 +104,7 @@
     {
       "type": "cta",
       "title": "Take the farm where the signal is not",
-      "text": "Start free on Libre, then move to Solo Farmer when you need offline mode, workers and the full weather.",
+      "text": "Start free on Libre, offline mode included, and move to a bigger plan when you need workers and the full weather.",
       "label": "See the plans",
       "url": "/pricing"
     },
@@ -117,8 +117,8 @@
       "type": "faq",
       "items": [
         {
-          "q": "Do I need to turn it on every day?",
-          "a": "No. Turn it on once on each phone, and it stays on until you switch it off."
+          "q": "Do I need to turn it on?",
+          "a": "No. It is always on. Open the app once with signal on each phone, and it saves what the field needs."
         },
         {
           "q": "What if I lose signal before the loader finishes?",
@@ -134,7 +134,7 @@
         },
         {
           "q": "Which plans have offline mode?",
-          "a": "Solo Farmer and Farm Owner. A worker in a farm on one of those plans has it too."
+          "a": "Every plan, Libre included. A worker logged in to a farm has it too."
         }
       ]
     },

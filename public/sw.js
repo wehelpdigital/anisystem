@@ -54,6 +54,9 @@ const FLAG_URL = '/__offline-mode-on';
 
 self.addEventListener('message', (event) => {
     const d = event.data || {};
+    // Logging out empties the copies (2026-10-12): offline mode is always on,
+    // so this is how a shared phone stops holding the last person's farm.
+    if (d.type === 'anee-clear-shelf') { event.waitUntil(caches.delete(RUNTIME)); return; }
     if (d.type !== 'anee-offline') return;
     event.waitUntil(caches.open(FLAGS).then((c) => (d.on
         ? c.put(FLAG_URL, new Response('1'))

@@ -64,10 +64,12 @@ class OrderService
     {
         $this->expireStale($user);
 
-        if ($this->inReview($user, $item['kind'])) {
-            throw new RuntimeException($item['kind'] === 'plan'
-                ? 'Your payment for a plan is still being reviewed. You can buy again once it is decided.'
-                : 'Your payment for credits is still being reviewed. You can buy again once it is decided.');
+        // A plan waits for its decision (two plans paid at once would collide);
+        // credits never wait: a farmer may buy more while an earlier payment
+        // is still being checked (the owner, 2026-10-12). Each pack is
+        // decided on its own and adds its own credits.
+        if ($item['kind'] === 'plan' && $this->inReview($user, 'plan')) {
+            throw new RuntimeException('Your payment for a plan is still being reviewed. You can buy again once it is decided.');
         }
 
         $fee = ManualPay::fee($method);
