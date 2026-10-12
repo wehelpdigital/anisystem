@@ -6,7 +6,7 @@
   "category": "Weather",
   "title": "Satellite Weather: A Typhoon Tracker, Clouds and Rain Over Your Farm",
   "metaTitle": "Typhoon Tracker and Satellite Weather for Your Farm",
-  "metaDescription": "A typhoon tracker for Filipino farms: live clouds, rain radar, storm tracks and the distance of every storm to your farm, plus a 10 day forecast. Free.",
+  "metaDescription": "Typhoon tracker for Filipino farms: live clouds, rain radar, storm tracks, where the rain is headed and a 10 day forecast. A week pass in credits.",
   "focusKeyword": "typhoon tracker",
   "keywords": [
     "typhoon tracker",
@@ -90,12 +90,12 @@
     },
     {
       "type": "text",
-      "text": "The map, the typhoon tracker and the 10 day forecast are free with every anee.io account, Libre included. Anee's reading comes with Libre plus Anee, Solo Farmer and Farm Owner. It runs on credits and charges only when the reading is ready. Your past readings stay on the page, so you can open last week's again."
+      "text": "The map, the typhoon tracker, the rain tracks and the 10 day forecast open with a week pass: 30 credits for seven days, on any plan, and new accounts start with credits to try it. Anee's reading of the sky is priced on its own, comes with Libre plus Anee, Solo Farmer and Farm Owner, and charges only when the reading is ready. Your past readings stay on the page, so you can open last week's again."
     },
     {
       "type": "cta",
       "title": "Watch the sky over your own farm",
-      "text": "Sign up free. The typhoon tracker and the 10 day forecast come with the free Libre plan.",
+      "text": "Sign up free. A week of the typhoon tracker and the forecast is 30 credits, and a new account starts with credits to try it.",
       "label": "Start free",
       "url": "/signup"
     },
@@ -120,8 +120,8 @@
           "a": "It marks 300 km around your farm. A storm whose eye is inside it counts as a direct threat, and the badge at the top turns into a warning."
         },
         {
-          "q": "Is the typhoon tracker free?",
-          "a": "Yes. The map, the storm tracks and the forecast are free with any account. Only Anee's reading against a lot uses credits, on a plan with Anee."
+          "q": "What does the typhoon tracker cost?",
+          "a": "A week pass of 30 credits opens the map, the storm tracks, the rain tracks and the forecast for seven days, on any account. Anee's reading against a lot is priced on its own, on a plan with Anee."
         },
         {
           "q": "Can I use it before I add any lots?",

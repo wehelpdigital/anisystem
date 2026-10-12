@@ -238,7 +238,7 @@ class HowItWorks
                         'growth-stages-and-weather', 'sm.index'),
                     self::item('skyWeather', 'Satellite Weather', 'Clouds, rain and typhoons over your farm', 'icons/storm.svg', false,
                         'Watch the clouds and rain of the last hours over your farm, fast forward the forecast, and see every typhoon with its path, its cone and how far it is from your field.',
-                        ['Satellite clouds and rain radar, played back', 'Typhoon tracks with a warning inside 300 km', 'Ten days of forecast for your farm'],
+                        ['Satellite clouds and rain radar, played back', 'Typhoon tracks with the time at every forecast point', 'Where the rain clusters are headed, hour by hour'],
                         'satellite-weather', 'sky.page'),
                     self::item('realign', 'Realign by Anee', 'When a crop runs ahead or behind', 'user-refresh.png', true,
                         "Crops do not read calendars. Anee reads a lot's records, its weather and your notes, works out the stage it is truly in, and moves that lot's stage count to match.",

@@ -221,6 +221,7 @@
     html.dark .au-lot-h { background: linear-gradient(115deg, #1c2616, #161c12); border-color: #2b3a1c; }
     html.dark .au-lot-h input, html.dark .au-h, html.dark .au-sign b, html.dark .au-rl h4, html.dark .au-modal h3 { color: #eef3e8; }
     html.dark .au-sign[aria-pressed="true"] { background: #1c2616; }
+    html.dark .au-pill[aria-pressed="true"], html.dark .au-ltab.is-on { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
     html.dark .au-read { background: #17220f; border-color: #2b3a1c; color: #c7d8b4; } html.dark .au-read b { color: #e8efe1; }
     html.dark .au-note.is-warn, html.dark .au-lock { background: #2a2210; border-color: #5b4716; color: #f3d9a4; }
     html.dark .au-note.is-ok { background: #17220f; border-color: #2b3a1c; color: #c5e09f; }
@@ -230,6 +231,7 @@
     html.dark .au-facts div { background: #1a2114; border-color: #2b3a1c; } html.dark .au-facts b { color: #eef3e8; }
     html.dark .au-yield { background: #2a2410; border-color: #5b4d16; } html.dark .au-yield p { color: #f0dfa0; } html.dark .au-yield p b { color: #fff3c4; }
     html.dark .au-add { background: #1a2114; border-color: #3f5a2a; color: #c5e09f; }
+    html.dark .au-bar-t { background: #26301e; } html.dark .au-bar-t i { background: #f1f5e9; }
     @media (prefers-reduced-motion: reduce) {
         .au-top::after, .au-top img, .au-reading-cta img, .au-big, .au-step.is-on, .au-lot, .au-w, .au-rl, .au-reads div, .au-note, .au-risk { animation: none; }
         .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after { transition: none; }

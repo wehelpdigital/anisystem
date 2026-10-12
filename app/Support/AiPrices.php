@@ -38,6 +38,8 @@ final class AiPrices
         'npkproto' => 60,
         // 2026-10-12: Anee Auto, per lot, for the whole season.
         'auto' => 1000,
+        // Satellite Weather, a week of the page (App\Support\SkyPass keeps it above cost).
+        'skypass' => 30,
     ];
 
     public const NAMES = [
@@ -56,6 +58,7 @@ final class AiPrices
         'npkplan' => 'NPK Plus season check (Activities, per lot)',
         'npkproto' => 'NPK Plus protocol check (Protocol Builder)',
         'auto' => 'Anee Auto, per lot (a whole season planned and kept on track by Anee)',
+        'skypass' => 'Satellite Weather, a week pass (never sold below what a week costs the house)',
     ];
 
     /** @var array<string, int>|null */

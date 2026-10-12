@@ -102,6 +102,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // NPK Plus's Philippine products (2026-10-12): the FPA's registered
         // fertilizer list once a month, and at first while only the hand
         // checked products are in.
+        // Satellite Weather's batch (2026-10-12): the national grid once per 3 hour block, only while a pass runs.
+        $schedule->command('sky:batch')->cron('2 0,3,6,9,12,15,18,21 * * *')->timezone('UTC')->withoutOverlapping(20)->runInBackground();
         // Anee Auto's morning (2026-10-12): re-plan, brief and mail each running season.
         $schedule->command('auto:daily')->dailyAt('05:00')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
         $schedule->command('fertilizers:fpa-sync')->monthlyOn(3, '04:30')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();

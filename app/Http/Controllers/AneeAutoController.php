@@ -658,6 +658,20 @@ class AneeAutoController extends Controller
                     throw new \RuntimeException('The calendar for ' . (AsScheduleLot::find($al->lotId)?->lotName ?: 'a lot') . ' could not be written. Nothing is lost; please try again.');
                 }
                 AiUsage::record(self::KIND, (int) Auth::id(), (int) $this->payer()->id, $auto->id, $settings, $result, 0);
+                // A season is more than a handful of jobs: a short calendar is sent back once to be filled in.
+                $count = count((array) $result['data']['tasks']);
+                if ($al->method !== 'tree' && $count < 28) {
+                    $this->beat($auto, 'lot-' . ($i + 1), 2);
+                    $more = $this->ai->askForJson($settings, $prompt . "
+
+YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($t) => ($t['day'] ?? '?') . ' ' . ($t['title'] ?? ''), (array) $result['data']['tasks']), JSON_UNESCAPED_UNICODE)
+                        . ". A farmer following you day by day needs the whole season: return the COMPLETE list again, at least 32 tasks, keeping those and adding what is missing (the seedbed or seed preparation, each land preparation pass, every water stage, a scouting walk every week from planting to grain fill, each weeding, every fertilizer split, the preventive sprays the crop book calls for, harvest preparations and right after harvest).",
+                        24000, fn (string $t) => ($d = AutoBrain::parseObject($t, 'tasks')) && is_array($d['tasks']) && count($d['tasks']) > $count ? $d : null, ['timeout' => 360]);
+                    if ($more['ok'] ?? false) {
+                        AiUsage::record(self::KIND, (int) Auth::id(), (int) $this->payer()->id, $auto->id, $settings, $more, 0);
+                        $result = $more;
+                    }
+                }
                 $plans[(int) $al->lotId] = $result['data'];
             }
             $this->beat($auto, 'placing');
@@ -842,7 +856,8 @@ class AneeAutoController extends Controller
     private function eventRow(AsAutoEvent $e): array
     {
         $body = (string) $e->body;
-        $html = $e->role === 'farmer' ? nl2br(e($body)) : AneeEmoji::render(nl2br(e($body)));
+        // Anee writes a little markdown now and then: bold survives, the rest is plain words.
+        $html = $e->role === 'farmer' ? nl2br(e($body)) : AneeEmoji::render(nl2br((string) preg_replace('/\*\*(.+?)\*\*/s', '<b>$1</b>', e($body))));
 
         return ['id' => (int) $e->id, 'role' => $e->role, 'kind' => $e->kind, 'html' => $html, 'data' => $e->data, 'taskId' => $e->taskId,
             'media' => collect((array) $e->media)->map(fn ($m) => ['type' => $m['type'] ?? 'image', 'url' => MediaStore::url($m['path'] ?? null)])->filter(fn ($m) => $m['url'])->values(),

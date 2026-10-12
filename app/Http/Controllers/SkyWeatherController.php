@@ -15,6 +15,7 @@ use App\Support\CropCatalog;
 use App\Support\CropStages;
 use App\Support\EnsoOutlook;
 use App\Support\FieldContext;
+use App\Support\SkyPass;
 use App\Support\StormTracks;
 use App\Support\Tier;
 use App\Support\WorkerContext;
@@ -57,14 +58,50 @@ class SkyWeatherController extends Controller
         return view('sky-weather.index');
     }
 
+    /**
+     * The week pass (2026-10-12): the page's own reads (tiles, frames,
+     * storms, the forecast and its grid, Anee's reading) answer only a farm
+     * that holds one. Kept a minute per farm, so the tile stream does not
+     * ask the database for every square.
+     */
+    private function passOrRefuse(): ?\Illuminate\Http\JsonResponse
+    {
+        $payerId = (int) WorkerContext::effectiveOwnerId();
+        $ok = Cache::remember('skypass:ok:' . $payerId, 60, fn () => SkyPass::allows($payerId) ? 1 : 0);
+
+        return $ok ? null : $this->json(false, 'Satellite Weather needs a week pass.', ['needPass' => true], 402);
+    }
+
+    public function buyPass()
+    {
+        if (WorkerContext::inWorkerContext()) {
+            return $this->json(false, 'Only the farm owner can open Satellite Weather for the farm.', [], 403);
+        }
+        $payer = $this->payer();
+        $r = SkyPass::buy((int) $payer->id);
+        Cache::forget('skypass:ok:' . $payer->id);
+        if (! $r['ok']) {
+            return $this->json(false, $r['message'], ['outOfCredits' => ($r['status'] ?? 0) === 402], $r['status'] ?? 422);
+        }
+
+        return $this->json(true, $r['message'], ['pass' => SkyPass::state((int) $payer->id), 'balance' => round($this->credits->balance($payer->id), 2)]);
+    }
+
     public function options()
     {
         $payer = $this->payer();
         $settings = AiSetting::current();
         $canUse = $payer->canUseAi() && $settings->isUsable() && Tier::farmCan('aiAnalyses');
+        $pass = SkyPass::state((int) $payer->id);
+        if ($pass['active'] && ! $pass['unlimited']) {
+            SkyPass::opened((int) $payer->id);
+            $pass = SkyPass::state((int) $payer->id);
+        }
 
         return $this->json(true, 'ok', [
-            'mapsKey' => (string) config('services.google_maps.key'),
+            'pass' => $pass + ['canBuy' => ! WorkerContext::inWorkerContext()],
+            // No pass, no map: the map key goes out only when the page will be used.
+            'mapsKey' => $pass['active'] ? (string) config('services.google_maps.key') : '',
             'owm' => (string) config('services.openweather.key') !== '',
             'quote' => AiPrices::of(self::KIND),
             'balance' => round($this->credits->balance($payer->id), 2),
@@ -126,6 +163,9 @@ class SkyWeatherController extends Controller
     /** OpenWeatherMap's tiles, through our server so the key stays here. */
     public function tile(string $layer, int $z, int $x, int $y)
     {
+        if ($this->passOrRefuse()) {
+            abort(402);
+        }
         $key = (string) config('services.openweather.key');
         abort_unless($key !== '' && in_array($layer, self::LAYERS, true) && $z >= 0 && $z <= 12, 404);
         $png = Cache::remember("owm:$layer:$z:$x:$y", 600, function () use ($layer, $z, $x, $y, $key) {
@@ -148,6 +188,9 @@ class SkyWeatherController extends Controller
      */
     public function frames()
     {
+        if ($no = $this->passOrRefuse()) {
+            return $no;
+        }
         $data = Cache::remember('sky:frames', 300, function () {
             $him = [];
             $latest = $this->himawariLatest();
@@ -197,6 +240,9 @@ class SkyWeatherController extends Controller
     /** Active typhoons near a point: the service when connected, GDACS directly when not. */
     public function storms(Request $request)
     {
+        if ($no = $this->passOrRefuse()) {
+            return $no;
+        }
         $lat = is_numeric($request->query('lat')) ? (float) $request->query('lat') : null;
         $lng = is_numeric($request->query('lng')) ? (float) $request->query('lng') : null;
 
@@ -218,6 +264,9 @@ class SkyWeatherController extends Controller
     /** The farm's hourly forecast for five days and daily for ten. */
     public function forecast(Request $request)
     {
+        if ($no = $this->passOrRefuse()) {
+            return $no;
+        }
         $lat = (float) $request->query('lat');
         $lng = (float) $request->query('lng');
         abort_unless($lat >= -90 && $lat <= 90 && $lng >= -180 && $lng <= 180 && ($lat || $lng), 422);
@@ -233,19 +282,55 @@ class SkyWeatherController extends Controller
      */
     public function forecastGrid(Request $request)
     {
+        if ($no = $this->passOrRefuse()) {
+            return $no;
+        }
         $lat = (float) $request->query('lat');
         $lng = (float) $request->query('lng');
         abort_unless($lat >= -80 && $lat <= 80 && $lng >= -180 && $lng <= 180 && ($lat || $lng), 422);
-        $clat = (int) (round($lat / 2) * 2);
-        $clng = (int) (round($lng / 2) * 2);
+        // A farm in the Philippines reads the one national grid the batch keeps (sky:batch);
+        // elsewhere, a grid around the farm, kept the same way.
+        [$clat, $clng] = self::inPh($lat, $lng) ? self::PH_CENTER : [(int) (round($lat / 2) * 2), (int) (round($lng / 2) * 2)];
+
+        return $this->json(true, 'ok', self::grid($clat, $clng));
+    }
+
+    /** The national grid's middle: 13 by 15 points, 1.5 degrees apart, cover every island from Batanes to Tawi Tawi. */
+    public const PH_CENTER = [12, 122];
+
+    public static function inPh(float $lat, float $lng): bool
+    {
+        return $lat >= 3 && $lat <= 22 && $lng >= 114 && $lng <= 130;
+    }
+
+    /**
+     * The forecast grid around a centre, for this 3 hour block: from the
+     * cache the batch filled, or fetched once now (under a lock, so a crowd
+     * opening the page together makes one call) and kept for the block.
+     */
+    public static function grid(int $clat, int $clng, bool $refresh = false): array
+    {
         $rows = 13;
         $cols = 15;
         $step = 1.5;
         $lat0 = $clat - ($rows - 1) / 2 * $step;
         $lng0 = $clng - ($cols - 1) / 2 * $step;
         $block = now('UTC')->format('Ymd') . '-' . intdiv((int) now('UTC')->format('G'), 3);
+        $key = "sky:grid2:{$clat},{$clng}:{$block}";
+        if ($refresh) {
+            Cache::forget($key);
+        }
+        $grid = Cache::get($key);
+        if ($grid === null) {
+            $grid = Cache::lock('lock:' . $key, 40)->block(35, fn () => Cache::remember($key, 3 * 3600 + 900, fn () => self::fetchGrid($rows, $cols, $step, $lat0, $lng0)));
+        }
 
-        $grid = Cache::remember("sky:grid2:{$clat},{$clng}:{$block}", 3 * 3600, function () use ($rows, $cols, $step, $lat0, $lng0) {
+        return $grid ? ['lat0' => $lat0, 'lng0' => $lng0, 'step' => $step, 'rows' => $rows, 'cols' => $cols] + $grid : ['frames' => 0];
+    }
+
+    private static function fetchGrid(int $rows, int $cols, float $step, float $lat0, float $lng0): ?array
+    {
+        $grid = (function () use ($rows, $cols, $step, $lat0, $lng0) {
             $lats = [];
             $lngs = [];
             for ($r = 0; $r < $rows; $r++) {
@@ -285,9 +370,9 @@ class SkyWeatherController extends Controller
             }
 
             return ['start' => $times[$from] . ':00Z', 'stepHours' => 3, 'cloud' => $cloud, 'rain' => $rain];
-        });
+        })();
 
-        return $this->json(true, 'ok', $grid ? ['lat0' => $lat0, 'lng0' => $lng0, 'step' => $step, 'rows' => $rows, 'cols' => $cols] + $grid : ['frames' => 0]);
+        return $grid;
     }
 
     private function hourly(float $lat, float $lng): array
@@ -323,6 +408,9 @@ class SkyWeatherController extends Controller
 
     public function generate(Request $request)
     {
+        if ($no = $this->passOrRefuse()) {
+            return $no;
+        }
         if (! Tier::farmCan('aiAnalyses')) {
             Tier::farmDenyFor('aiAnalyses', 'Anee\'s weather reading comes with {plan}, and with every plan above it.');
         }

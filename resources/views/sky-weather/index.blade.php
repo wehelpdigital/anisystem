@@ -227,10 +227,54 @@
         .sk-panel, .sk-lay, .sk-run, .sk-play, .sk-read, .sk-place, .sk-srow { transition: none; }
     }
     html.sm-still .sk-badge.is-warn, html.sm-still .sk-eye::before, html.sm-still .sk-eye::after, html.sm-still .sk-day { animation: none; }
+
+    /* The week pass (2026-10-12): the wall in front of the map until the farm holds one. */
+    .sk-wall { position: absolute; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; padding: 1rem; overflow-y: auto;
+        background: radial-gradient(120% 120% at 50% 0%, rgb(30 58 138 / .55), rgb(2 6 23 / .92)), radial-gradient(60% 40% at 20% 80%, rgb(14 165 233 / .25), transparent), #0b1222; }
+    .sk-wall[hidden] { display: none; }
+    .sk-wall-card { width: 100%; max-width: 25rem; padding: 1.3rem 1.25rem; border-radius: 1.4rem; color: #e2e8f0; text-align: center;
+        background: rgb(15 23 42 / .78); border: 1px solid rgb(148 163 184 / .25); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: skWallIn .45s var(--sk-ease) both; }
+    @keyframes skWallIn { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+    .sk-wall-ico { width: 4rem; height: 4rem; margin: 0 auto .7rem; border-radius: 1.2rem; display: grid; place-items: center; font-size: 2rem; background: rgb(56 189 248 / .15); animation: skFloat 4s ease-in-out infinite; }
+    @keyframes skFloat { 50% { transform: translateY(-5px); } }
+    .sk-wall h2 { font-family: var(--font-heading); font-weight: 800; font-size: 1.25rem; color: #fff; }
+    .sk-wall p { margin-top: .4rem; font-size: .85rem; line-height: 1.55; color: #cbd5e1; }
+    .sk-wall ul { margin: .9rem 0; display: grid; gap: .35rem; text-align: left; font-size: .82rem; color: #e2e8f0; }
+    .sk-wall li { display: flex; gap: .5rem; }
+    .sk-wall-price { margin: .2rem 0 .9rem; font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: #f5c518; }
+    .sk-wall-price small { display: block; font-family: inherit; font-size: .76rem; font-weight: 700; color: #94a3b8; }
+    .sk-wall-go { width: 100%; padding: .85rem 1rem; border-radius: 999px; font-weight: 800; color: #0f172a; background: #f5c518; transition: transform .28s var(--sk-ease), opacity .28s; }
+    .sk-wall-go:disabled { opacity: .55; }
+    .sk-wall-go:not(:disabled):hover { transform: translateY(-2px); }
+    .sk-wall-fine { margin-top: .7rem; font-size: .74rem !important; color: #94a3b8 !important; }
+    .sk-wall-fine a { color: #f5c518; text-decoration: underline; font-weight: 800; }
+    .sk-passline { margin-top: .5rem; font-size: .74rem; color: var(--color-gray-500); }
+    /* Forecast tracks (Zoom Earth style): a time at every dot. */
+    .sk-tlab { position: absolute; transform: translate(8px, -50%); white-space: nowrap; pointer-events: none; padding: .08rem .38rem; border-radius: .4rem; font-size: .64rem; font-weight: 800;
+        color: #fff; background: rgb(15 23 42 / .72); box-shadow: 0 2px 6px rgb(0 0 0 / .35); }
+    .sk-tlab.is-storm { background: rgb(127 29 29 / .85); }
+    .sk-tlab.is-rain { background: rgb(30 64 175 / .82); }
+    @media (prefers-reduced-motion: reduce) { .sk-wall-card, .sk-wall-ico { animation: none; } }
 </style>
 
 <div class="sk-wrap">
     <div class="sk-stage">
+        <div class="sk-wall" id="skWall" hidden>
+            <div class="sk-wall-card">
+                <div class="sk-wall-ico" aria-hidden="true">🛰️</div>
+                <h2>Satellite Weather</h2>
+                <p>The sky over your farm, the way the weather watchers see it: live satellite clouds, rain radar, every typhoon's track and cone, and the next five days played on the map with the paths the rain clouds and storms are expected to take.</p>
+                <ul>
+                    <li><span>☁️</span>Himawari clouds and rain radar, played back</li>
+                    <li><span>🌀</span>Typhoon tracks with the time at every forecast point</li>
+                    <li><span>🧭</span>Where the rain clusters are headed, hour by hour</li>
+                    <li><span>📍</span>The distance from every storm to your farm</li>
+                </ul>
+                <div class="sk-wall-price"><span id="skWallPrice">30</span> credits<small id="skWallFor">for 7 days</small></div>
+                <button type="button" class="sk-wall-go" id="skWallGo">Open it for a week</button>
+                <p class="sk-wall-fine" id="skWallFine"></p>
+            </div>
+        </div>
         <div class="sk-map" id="skMap"></div>
         <div class="sk-top">
             <button type="button" class="sk-place sk-glass" id="skPlaceBtn" aria-expanded="false" aria-controls="skPanel">
@@ -245,6 +289,7 @@
             <button type="button" class="sk-lay sk-glass" data-anim="radar" title="Rain radar, the last hours"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 12l6-6M4.9 19.1a10 10 0 010-14.2M19.1 4.9a10 10 0 010 14.2M8 16a5.6 5.6 0 010-8M16 8a5.6 5.6 0 010 8"/></svg></b><span>Rain radar</span></button>
             <i class="sk-sep" aria-hidden="true"></i>
             <button type="button" class="sk-lay sk-glass is-on" data-storms title="Typhoon tracks and cones"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg></b><span>Typhoons</span></button>
+            <button type="button" class="sk-lay sk-glass is-on" data-tracks title="Where the rain clouds and storms are headed, with the time at each dot"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 18c3-1 4-5 7-6s5 1 9-4M16 8h4v4"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/><circle cx="11" cy="12" r="1.5" fill="currentColor"/></svg></b><span>Tracks</span></button>
             <button type="button" class="sk-lay sk-glass" data-owm="precipitation_new" title="Rain falling now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M8 19l-1 2M12 19l-1 2M16 19l-1 2M7 15a4 4 0 01-.6-8A6 6 0 0118 5.5 4.5 4.5 0 0117.5 15H7z"/></svg></b><span>Rain now</span></button>
             <button type="button" class="sk-lay sk-glass" data-owm="clouds_new" title="Cloud cover now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg></b><span>Cloud cover</span></button>
             <button type="button" class="sk-lay sk-glass" data-owm="wind_new" title="Wind now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 8h11a3 3 0 10-3-3M3 12h16a3 3 0 11-3 3M3 16h8"/></svg></b><span>Wind</span></button>
@@ -335,6 +380,7 @@
         options: @json(route('sky.options')), frames: @json(route('sky.frames')), storms: @json(route('sky.storms')), forecast: @json(route('sky.forecast')),
         tile: @json(url('/app/sky-weather/tile')), generate: @json(route('sky.generate')), job: (id) => @json(url('/app/sky-weather/job')) + '/' + id,
         list: @json(route('sky.list')), one: (id) => @json(url('/app/sky-weather/one')) + '/' + id, places: @json(route('sat.places')), grid: @json(route('sky.grid')),
+        pass: @json(route('sky.pass')), buy: @json(route('ai.credits') . '?tab=buy'),
     };
     const KEY = 'anee.skyPlace';
     let OPT = null, map = null, farm = null, farmMark = null, ring = null, FR = { clouds: [], radar: [] }, STORMS = [], FC = { hours: [], days: [] };
@@ -431,7 +477,7 @@
         }
         loadStorms();
         loadForecast();
-        if (mode === 'future') loadGrid().then(() => future(Number($('skSlider').value)));
+        loadGrid().then(() => { drawTracks(); if (mode === 'future') future(Number($('skSlider').value)); });
     };
     const panel = (on) => { $('skPanel').classList.toggle('is-on', on); $('skPlaceBtn').setAttribute('aria-expanded', String(on)); };
     $('skPlaceBtn').addEventListener('click', () => panel(!$('skPanel').classList.contains('is-on')));
@@ -502,6 +548,9 @@
             b.classList.toggle('is-on', on);
             stormShapes.forEach((s) => s.setMap(on ? map : null));
             eyeOverlays.forEach((o) => o.setMap(on ? map : null));
+        } else if ('tracks' in b.dataset) {
+            b.classList.toggle('is-on');
+            if (b.classList.contains('is-on') && !FG) loadGrid().then(drawTracks); else drawTracks();
         }
     });
 
@@ -711,6 +760,88 @@
             onRemove() { this.div?.remove(); this.div = null; }
         };
     };
+    /* A small label pinned to a point: the time at a forecast dot. */
+    let LabelOverlay = null;
+    const defineLabel = () => {
+        LabelOverlay = class extends google.maps.OverlayView {
+            constructor(pos, text, cls) { super(); this.pos = pos; this.text = text; this.cls = cls || ''; }
+            onAdd() { this.div = document.createElement('div'); this.div.className = 'sk-tlab ' + this.cls; this.div.textContent = this.text; this.getPanes().overlayLayer.appendChild(this.div); }
+            draw() { if (!this.div) return; const p = this.getProjection().fromLatLngToDivPixel(new google.maps.LatLng(this.pos.lat, this.pos.lng)); if (p) { this.div.style.left = p.x + 'px'; this.div.style.top = p.y + 'px'; } }
+            onRemove() { this.div?.remove(); this.div = null; }
+        };
+    };
+    const tWord = (ms) => new Date(ms).toLocaleString('en-PH', { timeZone: 'Asia/Manila', weekday: 'short', hour: 'numeric' });
+
+    /* ---- where the rain is headed (2026-10-12) ----
+       From the forecast grid itself, every 6 hours: each point weighs its
+       thick cloud (70% or more) and its rain, neighbouring heavy points are
+       gathered into clusters of three or more, each cluster's middle is
+       weighed by them, and a cluster is followed to the nearest one 6 hours
+       on (within 1.2 grid steps, about 200 km). One followed for 12 hours or
+       more, that moves, is drawn as a track: a line, a dot every 6 hours,
+       the time every 12, an arrow where it is headed. The next three days.
+       Tried on a real national grid (2026-10-12): the systems drift west
+       and north west at 50 to 150 km a day, as the easterlies carry them. */
+    let trackShapes = [];
+    const clusters = (R, rows, cols, min) => {
+        const seen = new Uint8Array(rows * cols), out = [];
+        for (let i = 0; i < rows * cols; i++) {
+            if (seen[i] || R[i] < min) continue;
+            const stack = [i]; seen[i] = 1; let w = 0, sr = 0, sc = 0, n = 0, peak = 0;
+            while (stack.length) {
+                const k = stack.pop(), r = Math.floor(k / cols), c = k % cols, v = R[k];
+                w += v; sr += r * v; sc += c * v; n++; peak = Math.max(peak, v);
+                [[r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]].forEach(([rr, cc]) => {
+                    if (rr < 0 || cc < 0 || rr >= rows || cc >= cols) return;
+                    const j = rr * cols + cc;
+                    if (!seen[j] && R[j] >= min) { seen[j] = 1; stack.push(j); }
+                });
+            }
+            if (n >= 2) out.push({ r: sr / w, c: sc / w, n, peak, w, rain: 0 });
+        }
+        return out;
+    };
+    const tracksFromGrid = () => {
+        if (!FG || !FG.rain || !FG.rain.length) return [];
+        const { rows, cols } = FG, upto = Math.min(FG.frames, 25);
+        const heft = (f) => FG.cloud[f].map((c, i) => (c >= 70 ? c / 100 : 0) + Math.min(FG.rain[f][i], 12) / 6);
+        let live = [], done = [];
+        for (let f = 0; f < upto; f += 2) {
+            const cs = clusters(heft(f), rows, cols, 1).filter((c) => c.n >= 3);
+            const used = new Set(), next = [];
+            live.forEach((tr) => {
+                const last = tr.pts[tr.pts.length - 1];
+                let best = -1, bd = 1.2;
+                cs.forEach((c, i) => { if (used.has(i)) return; const d = Math.hypot(c.r - last.r, c.c - last.c); if (d < bd) { bd = d; best = i; } });
+                if (best >= 0) { used.add(best); tr.pts.push({ ...cs[best], f }); next.push(tr); } else done.push(tr);
+            });
+            cs.forEach((c, i) => { if (!used.has(i)) next.push({ pts: [{ ...c, f }] }); });
+            live = next;
+        }
+        done = done.concat(live);
+        return done.filter((tr) => tr.pts.length >= 3 && Math.hypot(tr.pts[tr.pts.length - 1].r - tr.pts[0].r, tr.pts[tr.pts.length - 1].c - tr.pts[0].c) >= 0.8)
+            .sort((a, b) => b.pts.reduce((s, p) => s + p.w, 0) - a.pts.reduce((s, p) => s + p.w, 0)).slice(0, 8);
+    };
+    const drawTracks = () => {
+        trackShapes.forEach((s) => s.setMap(null));
+        trackShapes = [];
+        const btn = document.querySelector('.sk-lay[data-tracks]');
+        if (!map || !FG || !LabelOverlay || !btn || !btn.classList.contains('is-on')) return;
+        const ll = (p) => ({ lat: FG.lat0 + p.r * FG.step, lng: FG.lng0 + p.c * FG.step });
+        tracksFromGrid().forEach((tr) => {
+            const path = tr.pts.map(ll), heavy = Math.max(...tr.pts.map((p) => p.peak)) >= 2.2;
+            const color = heavy ? '#60a5fa' : '#93c5fd';
+            trackShapes.push(new google.maps.Polyline({ path, map, clickable: false, strokeColor: color, strokeOpacity: .9, strokeWeight: heavy ? 3 : 2,
+                icons: [{ icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale: 3, strokeColor: '#1e3a8a', strokeWeight: 1, fillColor: color, fillOpacity: 1 }, offset: '100%' }] }));
+            tr.pts.forEach((p, i) => {
+                const at = ll(p);
+                trackShapes.push(new google.maps.Marker({ position: at, map, zIndex: 15, clickable: false,
+                    icon: { path: google.maps.SymbolPath.CIRCLE, scale: 3.4, fillColor: color, fillOpacity: 1, strokeColor: '#1e3a8a', strokeWeight: 1 } }));
+                if (i % 2 === 0 || i === tr.pts.length - 1) { const o = new LabelOverlay(at, tWord(FG.startMs + p.f * FG.stepHours * 3.6e6) + (p.peak >= 2.2 ? ' · heavy rain' : ''), 'is-rain'); o.setMap(map); trackShapes.push(o); }
+            });
+        });
+    };
+
     const drawStorms = () => {
         stormShapes.forEach((s) => s.setMap(null)); eyeOverlays.forEach((o) => o.setMap(null));
         stormShapes = []; eyeOverlays = [];
@@ -727,7 +858,10 @@
             if (fut.length) {
                 const path = (past.length ? [past[past.length - 1]] : []).concat(fut);
                 stormShapes.push(new google.maps.Polyline({ path, strokeOpacity: 0, clickable: false, map: show ? map : null,
-                    icons: [{ icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, strokeColor: '#fca5a5', strokeWeight: 2.5, scale: 2.5 }, offset: '0', repeat: '12px' }] }));
+                    icons: [{ icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, strokeColor: '#fca5a5', strokeWeight: 2.5, scale: 2.5 }, offset: '0', repeat: '12px' },
+                        { icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale: 3.2, strokeColor: '#7f1d1d', strokeWeight: 1, fillColor: '#fca5a5', fillOpacity: 1 }, offset: '100%' }] }));
+                // The time it is expected at each forecast point, as the watchers draw it.
+                if (LabelOverlay) fut.forEach((p) => { if (!p.ph && !p.utc) return; const o = new LabelOverlay(p, tWord(p.utc ? Date.parse(p.utc) : Date.parse(p.ph)) + (p.cat ? ' · ' + p.cat : ''), 'is-storm'); if (show) o.setMap(map); stormShapes.push(o); });
             }
             pts.forEach((p) => stormShapes.push(new google.maps.Marker({ position: p, map: show ? map : null, zIndex: 20,
                 title: (p.forecast ? 'Forecast ' : '') + (p.ph ? new Date(p.ph).toLocaleString('en-PH', { month: 'short', day: 'numeric', hour: 'numeric' }) : '') + (p.cat ? ' · ' + p.cat : ''),
@@ -878,11 +1012,29 @@
     });
 
     /* ---- boot ---- */
+    /* ---- the week pass ---- */
+    const wall = (P) => {
+        $('skWall').hidden = false;
+        $('skWallPrice').textContent = P.price;
+        $('skWallFor').textContent = 'for ' + P.days + ' days, up to ' + P.fairOpens + ' openings';
+        const short = !P.unlimited && OPT && OPT.balance < P.price;
+        $('skWallGo').disabled = !P.canBuy || short;
+        $('skWallFine').innerHTML = !P.canBuy ? 'Ask the farm owner to open Satellite Weather for the farm.'
+            : 'You have ' + Number(Math.floor(OPT ? OPT.balance : 0)).toLocaleString() + ' credits.' + (short ? ' <a href="' + U.buy + '">Buy credits</a>' : ' Anee\'s reading of the sky is priced on its own.');
+    };
+    $('skWallGo').addEventListener('click', async () => {
+        $('skWallGo').disabled = true; $('skWallGo').textContent = 'Opening…';
+        try { const r = await window.api(U.pass, { method: 'POST' }); window.toast?.(r.message, 'success'); location.reload(); }
+        catch (err) { window.toast?.(err.message, 'error'); $('skWallGo').disabled = false; $('skWallGo').textContent = 'Open it for a week'; }
+    });
+
     const boot = async () => {
         try {
             const r = await window.api(U.options);
             OPT = r.data;
+            if (!OPT.pass || !OPT.pass.active) { wall(OPT.pass || { price: 30, days: 7, fairOpens: 40, canBuy: true }); return; }
             quote();
+            if (!OPT.pass.unlimited && OPT.pass.endsAt) $('skFine').insertAdjacentHTML('afterend', '<p class="sk-passline">Your week pass runs until ' + esc(OPT.pass.endsAt) + ' · ' + OPT.pass.opensLeft + ' openings left.</p>');
             setLot('');
             $('skLots').innerHTML = OPT.lots.filter((l) => (l.lat && l.lng) || l.place).map((l) => '<button type="button" class="sk-opt" data-lot="' + l.id + '"><span>' + esc(l.name) + '<small>' + esc(l.crop + (l.place ? ' · ' + l.place : '')) + '</small></span></button>').join('') || '<p class="text-xs text-gray-400">Pin a lot on its map and it shows here.</p>';
             $('skLots').addEventListener('click', (e) => {
@@ -902,6 +1054,7 @@
             try { const f = await window.api(U.frames); FR = f.data || FR; } catch (_) {}
             await initMap();
             defineEye();
+            defineLabel();
             defineFc();
             let saved = null;
             try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (_) {}

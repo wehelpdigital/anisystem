@@ -102,8 +102,17 @@
     .ac-tbtns { display: flex; gap: .45rem; margin-top: .8rem; }
     .ac-tbtns .btn { flex: 1; }
     .ac-done-btn { background: #4a7c2a !important; color: #fff !important; }
-    .ac-soon { display: grid; gap: .3rem; margin-top: .5rem; }
-    .ac-srow { display: flex; gap: .55rem; align-items: center; padding: .45rem .55rem; border-radius: .8rem; text-align: left; width: 100%; transition: background-color .28s var(--ac-ease); }
+    .ac-soon { display: grid; grid-template-columns: minmax(0, 1fr); gap: .3rem; margin-top: .5rem; }
+    .ac-tasks { grid-template-columns: minmax(0, 1fr); }
+    @media (max-width: 639.98px) {
+        .ac-today .ac-av { display: none; }
+        .ac-msg { max-width: 100%; }
+        .ac-ib, .ac-send { width: 2.45rem; height: 2.45rem; font-size: 1rem; }
+        .ac-crow { gap: .3rem; }
+        .ac-crow textarea { font-size: .9rem; min-height: 2.45rem; padding-top: .55rem; padding-bottom: .55rem; }
+        .ac-srow i { width: 3.3rem; }
+    }
+    .ac-srow { min-width: 0; display: flex; gap: .55rem; align-items: center; padding: .45rem .55rem; border-radius: .8rem; text-align: left; width: 100%; transition: background-color .28s var(--ac-ease); }
     .ac-srow:hover { background: var(--color-gray-50); }
     .ac-srow i { flex: none; font-style: normal; width: 3.8rem; font-size: .7rem; font-weight: 800; color: var(--color-gray-500); }
     .ac-srow b { flex: 1; min-width: 0; font-size: .82rem; font-weight: 700; color: var(--color-gray-800); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -205,7 +214,7 @@
             <button type="button" class="ac-ib" id="acPhoto" title="Take or add a photo" aria-label="Photo">📷</button>
             <button type="button" class="ac-ib" id="acVideo" title="Record or add a short video" aria-label="Video">🎥</button>
             <button type="button" class="ac-ib" id="acVoice" title="Record a voice note" aria-label="Voice">🎙️</button>
-            <textarea id="acText" class="form-textarea" rows="1" maxlength="2000" placeholder="Ask Anee anything about your season"></textarea>
+            <textarea id="acText" class="form-textarea" rows="1" maxlength="2000" placeholder="Ask Anee about your season"></textarea>
             <button type="button" class="ac-send" id="acSend" aria-label="Send"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
         </div>
         <input type="file" id="acPhotoIn" accept="image/*" capture="environment" multiple hidden>
@@ -375,7 +384,7 @@
     const setMode = (m) => {
         mode = m;
         document.querySelectorAll('.ac-mode').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
-        $('acText').placeholder = m === 'ask' ? 'Ask Anee anything about your season' : 'What do you see? Like: yellow leaves on the lower part, patches near the canal';
+        $('acText').placeholder = m === 'ask' ? 'Ask Anee about your season' : 'What do you see? Like: yellow leaves on the lower part, patches near the canal';
         $('acLotPick').hidden = m !== 'observe' || !(F && F.lots.length > 1);
     };
     document.querySelector('.ac-modes').addEventListener('click', (e) => { const b = e.target.closest('[data-mode]'); if (b) setMode(b.dataset.mode); });
@@ -445,7 +454,8 @@
     $('acText').addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && !matchMedia('(hover: none)').matches) { e.preventDefault(); $('acSend').click(); } });
     document.addEventListener('visibilitychange', () => { if (!document.hidden && F) load(true); });
 
-    load();
+    // app.js (window.api) may still be on its way when this runs.
+    if (window.api) load(); else window.addEventListener('load', () => load(), { once: true });
 })();
 </script>
 @endpush
