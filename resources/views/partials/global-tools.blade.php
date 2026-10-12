@@ -79,6 +79,20 @@
         .qa-tile .qa-txt b { font-size: .88rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
         .qa-tile .qa-txt i { font-style: normal; font-size: .72rem; font-weight: 500; line-height: 1.4;
             color: var(--color-gray-500); }
+        /* The Anee tag (2026-10-12): on the tools Anee runs, and a lighter
+           "+ Anee" on the ones where she can be asked inside. */
+        .qa-anee { display: inline-flex; align-items: center; gap: .22rem; margin-left: .4rem; padding: .08rem .45rem .08rem .12rem; border-radius: 999px;
+            font-size: .62rem; font-weight: 800; letter-spacing: .03em; line-height: 1.2; vertical-align: .12em; white-space: nowrap;
+            color: #4d3800; background: linear-gradient(115deg, #fde68a, #f5c518); box-shadow: 0 2px 6px -3px rgb(180 130 0 / .7);
+            position: relative; overflow: hidden; }
+        .qa-anee img { width: .95rem; height: .95rem; border-radius: 999px; background: #fff; object-fit: cover; flex: none; }
+        .qa-anee::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 35%, rgb(255 255 255 / .65) 50%, transparent 65%);
+            transform: translateX(-120%); animation: qaAneeShine 4.5s ease-in-out infinite; animation-delay: var(--qa-d, 0s); }
+        @keyframes qaAneeShine { 0%, 70% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
+        .qa-anee.is-soft { color: #7a5600; background: #fff8dc; box-shadow: inset 0 0 0 1px #f2d16b; }
+        .qa-anee.is-soft::after { display: none; }
+        html.dark .qa-anee.is-soft { color: #f5d34a; background: rgb(245 197 24 / .1); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45); }
+        @media (prefers-reduced-motion: reduce) { .qa-anee::after { animation: none; display: none; } }
         .qa-go { width: .95rem; height: .95rem; flex: none; color: var(--color-gray-300);
             transition: transform .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
         @media (hover: hover) {.qa-tile:hover .qa-go { transform: translateX(2px); } }
@@ -161,12 +175,18 @@
                  season, so it does not ask which one first. --}}
             {{-- On Libre these two stay in the row, wearing a lock where the
                  chevron sat — the tap opens the upgrade sheet, not the page. --}}
+            @php
+                // The Anee tag: "Anee" where she does the work, "+ Anee" where she can be asked inside.
+                $qAneeFace = \App\Models\AiSetting::current()->faceUrl();
+                $qAnee = fn (bool $soft = false, int $i = 0) => '<span class="qa-anee' . ($soft ? ' is-soft' : '') . '" style="--qa-d:' . ($i * 0.35) . 's" title="'
+                    . ($soft ? 'You can ask Anee inside this tool' : 'Anee, the smart farm technician, does this for you') . '"><img src="' . e($qAneeFace) . '" alt="">' . ($soft ? '+ Anee' : 'Anee') . '</span>';
+            @endphp
             @php $qWtpLocked = ! \App\Support\Tier::farmCan('aiAnalyses'); $qWtpRung = \App\Support\Tier::farmUnlocksAt('aiAnalyses'); $qWtpWith = \App\Support\Tier::withPlan($qWtpRung); @endphp
             <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The When to Plant analysis comes with {{ $qWtpWith }}. Anee reads your town's climate and the El Niño or La Niña outlook to find your safest time to plant." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>When to Plant Analysis</b>
+                    <b>When to Plant Analysis{!! $qAnee(false, 0) !!}</b>
                     <i>Find the best time to plant your crop, based on your location, past weather, climate and the forecast.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -179,7 +199,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The What to Plant analysis comes with {{ $qWtpWith }}. Anee looks at your location, the season's forecast and your soil to suggest the best crop." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>What to Plant Analysis</b>
+                    <b>What to Plant Analysis{!! $qAnee(false, 1) !!}</b>
                     <i>Find the best crop to plant in your area, based on climate, the forecast, past weather, season, soil and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -194,7 +214,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Variety research comes with {{ $qWtpWith }}. Anee studies the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids and ranks them for your soil, weather and priorities." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/biotechnology.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Variety Research & Comparison</b>
+                    <b>Variety Research & Comparison{!! $qAnee(false, 2) !!}</b>
                     <i>Not sure which variety to plant? Anee finds and ranks the best varieties for your location, weather, climate, season, soil and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -209,7 +229,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The Crop Protocol Analysis comes with {{ $qWtpWith }}. Anee writes your season stage by stage: which fertilizer and when, the sprays to have ready, the water, and the pests and weeds to watch." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/checklist.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Crop Protocol Analysis</b>
+                    <b>Crop Protocol Analysis{!! $qAnee(false, 3) !!}</b>
                     <i>Get a recommended protocol for your crop variety, stage by stage, based on your location, weather, soil, climate and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -225,7 +245,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Satellite Analysis comes with {{ $qWtpWith }}. Draw your field and Anee reads the newest satellite pictures and radar for crop health, weak spots and threats." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/satellite.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Satellite Analysis</b>
+                    <b>Satellite Analysis{!! $qAnee(false, 4) !!}</b>
                     <i>Draw your field and see its health from space: greenness, weak spots, radar through clouds, threats and soil.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -241,7 +261,7 @@
             <a href="{{ route('sky.page') }}" class="qa-tile qa-wtp">
                 <span class="qa-ico"><img src="{{ asset('images/icons/storm.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-txt">
-                    <b>Satellite Weather</b>
+                    <b>Satellite Weather{!! $qAnee(true) !!}</b>
                     <i>Watch clouds, rain and typhoon paths over your farm, see where the rain is headed, and ask Anee what it means for your lot. {{ \App\Support\SkyPass::price() }} credits a week.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -258,7 +278,7 @@
                    @if ($qCmpLocked) data-tier-lock="{{ $qCmpRung }}" data-lock-say="{{ \App\Support\Tier::say($qCmpRung, 'Compare Reports comes with {plan}. See any two saved reports side by side, like this season against the last.') }}" @endif>
                     <span class="qa-ico"><img src="{{ asset('images/icons/ab-testing.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt {{ $qCmpLocked ? 'tl-dim' : '' }}">
-                        <b>Compare Reports</b>
+                        <b>Compare Reports{!! $qAnee(true) !!}</b>
                         <i>Put two reports of the same kind side by side, see what changed, and let Anee explain it.</i>
                     </span>
                     @if ($qCmpLocked)
@@ -272,7 +292,7 @@
         <a href="{{ route('pb.page') }}" class="qa-tile qa-build">
             <span class="qa-ico"><img src="{{ asset('images/icons/bricks.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
             <span class="qa-txt">
-                <b>Protocol Builder</b>
+                <b>Protocol Builder{!! $qAnee(true) !!}</b>
                 <i>Write your own protocol ahead of time and save it. Turn it into a new cropping schedule later, or ask Anee to check it for problems and strong points.</i>
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -294,7 +314,7 @@
         <a href="{{ route('npk.page') }}" class="qa-tile qa-build">
             <span class="qa-ico"><img src="{{ asset('images/icons/npk.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
             <span class="qa-txt">
-                <b>NPK Plus Calculator</b>
+                <b>NPK Plus Calculator{!! $qAnee(true) !!}</b>
                 <i>Add up every nutrient in your fertilizer plan, as the element and the oxide, and see if it is enough for your crop and what yield it can feed. Free.</i>
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
