@@ -848,24 +848,6 @@
                         <span><b>The farmers behind anee.io</b><small>Made in the field, not in an office.</small></span>
                     </figcaption>
                 </figure>
-                {{-- The anee.io song (moved from Meet Anee, 2026-10-07): the farmers
-                     who built anee.io, singing it, under their own words. --}}
-                <div class="hp-song reveal" data-song>
-                    <div class="hp-song-body">
-                        <span class="hp-song-kick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>The anee.io song<span class="hp-song-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
-                        <h3 class="hp-song-h">Let&rsquo;s Plant With a Dream!</h3>
-                        <p class="hp-song-p">From the farmers who built anee.io, for every farmer who plants with a dream and harvests with a plan.</p>
-                        <div class="hp-song-row">
-                            <button type="button" class="hp-song-play" aria-label="Play the song">
-                                <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
-                                <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
-                            </button>
-                            <span class="hp-song-track"><input type="range" min="0" max="1000" value="0" step="1" aria-label="Move through the song"><i></i></span>
-                            <span class="hp-song-time">0:00</span>
-                        </div>
-                    </div>
-                    <audio preload="none" src="{{ asset('audio/anee-kay-anee-ang-ani-ay-high.mp3') }}"></audio>
-                </div>
             </div>
 
             <div class="hp-biz-copy">
@@ -934,6 +916,17 @@
             </div>
         </div>
     </section>
+
+    {{-- Bayani ng Lupa (2026-10-12): the anee.io album, in place of the one
+         song card. Anee on the art, seven songs, the first the main one. --}}
+    <section class="hp-sec hp-album" id="bayani-ng-lupa">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 reveal">
+            @include('partials.bayani-album', ['id' => 'hpAlbum', 'h' => 'h2'])
+        </div>
+    </section>
+    @push('head')
+    <script type="application/ld+json">{!! json_encode(\App\Support\BayaniAlbum::schema(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
+    @endpush
 
     {{-- ================= YOUR TEAM IN THE FIELD, YOUR FARM FROM SPACE ================= --}}
     {{-- For the farm owner (2026-10-06): be in the field without being in
@@ -2377,32 +2370,7 @@
 
     /* The anee.io song, under the farm business story (2026-10-07): the
        cover big with its own play button, the words and the bar beside it. */
-    .hp-song { position: relative; display: grid; gap: 1rem; margin-top: 1.4rem; padding: .8rem; border-radius: 1.4rem; color: #e8efe1; overflow: hidden;
-        background: radial-gradient(80% 120% at 100% 0%, #3f6a22 0%, transparent 60%), linear-gradient(140deg, #14210c 0%, #1f3312 60%, #2b4518 100%);
-        box-shadow: 0 50px 90px -50px rgb(20 33 12 / .9); }
-    .hp-song { padding: 1.3rem 1.4rem 1.35rem; }
-    .hp-song-body { min-width: 0; }
-    .hp-song-kick { display: inline-flex; align-items: center; gap: .4rem; font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-sun); }
-    .hp-song-kick svg { width: 1rem; height: 1rem; }
-    .hp-song-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: .9rem; margin-left: .3rem; }
-    .hp-song-eq i { width: 3px; height: 30%; border-radius: 2px; background: var(--hp-sun); animation: hpEq .9s ease-in-out infinite; animation-play-state: paused; }
-    .hp-song-eq i:nth-child(2) { animation-delay: -.3s; } .hp-song-eq i:nth-child(3) { animation-delay: -.6s; } .hp-song-eq i:nth-child(4) { animation-delay: -.15s; }
-    .hp-song.is-playing .hp-song-eq i { animation-play-state: running; }
-    @keyframes hpEq { 0%, 100% { height: 25%; } 50% { height: 100%; } }
-    .hp-song-h { margin-top: .35rem; font-family: var(--font-heading); font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 800; line-height: 1.1; letter-spacing: -.01em; color: #fff; }
-    .hp-song-p { margin-top: .45rem; font-size: .86rem; line-height: 1.55; color: #cbd8bd; }
-    .hp-song-row { display: flex; align-items: center; gap: .65rem; margin-top: .85rem; }
-    .hp-song-play { flex: none; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 999px; border: 0; cursor: pointer; background: #f5c518; color: #1a1a1a;
-        box-shadow: 0 10px 22px -10px rgb(245 197 24 / .8); transition: transform .28s var(--hp-ease); }
-    .hp-song-play:hover { transform: scale(1.06); }
-    .hp-song-play svg { width: 1.2rem; height: 1.2rem; }
-    .hp-song-play .i-pause, .hp-song.is-playing .hp-song-play .i-play { display: none; }
-    .hp-song.is-playing .hp-song-play .i-pause { display: block; }
-    .hp-song-track { position: relative; flex: 1 1 auto; height: .45rem; border-radius: 999px; background: rgb(255 255 255 / .18); }
-    .hp-song-track i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 999px; background: #f5c518; pointer-events: none; }
-    .hp-song-track input { position: absolute; inset: -.7rem 0; width: 100%; height: auto; opacity: 0; cursor: pointer; margin: 0; }
-    .hp-song-time { flex: none; min-width: 2.6rem; text-align: right; font-size: .8rem; font-weight: 700; color: #d3dec7; font-variant-numeric: tabular-nums; }
-    @media (prefers-reduced-motion: reduce) { .hp-song-eq i { animation: none; } }
+    .hp-album { padding-top: 0; }
     .hp-chat { position: relative; max-width: 28rem; margin: 0 auto; border-radius: 1.6rem; color: var(--hp-ink); overflow: hidden;
         background: linear-gradient(180deg, #34591c 50%, #f6f8f3 50%); box-shadow: 0 50px 90px -40px rgb(0 0 0 / .85); }
     .hp-chat-top { display: flex; align-items: center; gap: .7rem; padding: .9rem 1.1rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
@@ -4059,36 +4027,12 @@
         const v = film.querySelector('video');
         film.querySelector('.hp-anee-film-play').addEventListener('click', () => {
             if (!v.paused) { v.pause(); return; }
-            document.querySelectorAll('[data-song] audio').forEach((a) => a.pause());
+            document.querySelectorAll('[data-album] audio').forEach((a) => a.pause());
             film.classList.add('is-playing');
             v.play().catch(() => film.classList.remove('is-playing'));
         });
         v.addEventListener('pause', () => film.classList.remove('is-playing'));
         v.addEventListener('ended', () => { film.classList.remove('is-playing'); v.load(); });
-    }
-    /* The song: play and pause, a bar to drag, the time. */
-    const song = document.querySelector('[data-song]');
-    if (song) {
-        const a = song.querySelector('audio'), seek = song.querySelector('input'), fill = song.querySelector('.hp-song-track i'), time = song.querySelector('.hp-song-time');
-        const fmt = (t) => Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2, '0');
-        song.querySelectorAll('.hp-song-play').forEach((b) => b.addEventListener('click', () => {
-            if (a.paused) { if (film) film.querySelector('video').pause(); a.play(); } else a.pause();
-        }));
-        a.addEventListener('play', () => song.classList.add('is-playing'));
-        a.addEventListener('pause', () => song.classList.remove('is-playing'));
-        a.addEventListener('timeupdate', () => {
-            if (!a.duration) return;
-            const r = a.currentTime / a.duration;
-            fill.style.width = (r * 100) + '%';
-            seek.value = Math.round(r * 1000);
-            time.textContent = fmt(a.currentTime);
-        });
-        a.addEventListener('loadedmetadata', () => { time.textContent = fmt(a.duration); });
-        a.addEventListener('ended', () => { song.classList.remove('is-playing'); fill.style.width = '0'; seek.value = 0; });
-        seek.addEventListener('input', () => {
-            if (!a.duration) { a.preload = 'metadata'; a.load(); return; }
-            a.currentTime = seek.value / 1000 * a.duration;
-        });
     }
 })();
 </script>

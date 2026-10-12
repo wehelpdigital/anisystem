@@ -181,7 +181,9 @@ class AppController extends Controller
                 $blocks = collect((array) $newsPage->blocks);
                 $latestNews = [
                     'post' => $newsPost,
-                    'range' => preg_replace('/^This roundup covers\s+/i', '', (string) ($blocks->firstWhere('type', 'callout')['title'] ?? '')),
+                    // The day it went out (daily roundups since 2026-10-12, dated today).
+                    'range' => $newsPost->publishedAt ? $newsPost->publishedAt->copy()->timezone('Asia/Manila')->format('F j, Y')
+                        : preg_replace('/^(This roundup covers|Farm news for)\s+/i', '', (string) ($blocks->firstWhere('type', 'callout')['title'] ?? '')),
                     'stories' => $blocks->filter(fn ($b) => ($b['type'] ?? '') === 'heading' && (int) ($b['level'] ?? 2) === 3)->pluck('text')->take(5)->values()->all(),
                     'count' => $blocks->filter(fn ($b) => ($b['type'] ?? '') === 'heading' && (int) ($b['level'] ?? 2) === 3)->count(),
                 ];
