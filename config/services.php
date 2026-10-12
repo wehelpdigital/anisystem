@@ -111,6 +111,10 @@ return [
         // Without Earth Engine, read the same Sentinel pictures from Microsoft's
         // Planetary Computer (App\Services\PlanetarySatellite); false turns it off.
         'planetary' => (bool) env('FIELD_HEALTH_PLANETARY', true),
+        // The daily tile batch (services/field-health/batch.py) writes static
+        // PNG tiles to a Cloud Storage bucket with Cloudflare in front; when
+        // this is set, saved reports read their map tiles from there.
+        'tiles_cdn' => rtrim((string) env('FIELD_TILES_CDN', ''), '/'),
     ],
 
     // OpenWeatherMap: the cloud and rain map tiles on Satellite Weather.

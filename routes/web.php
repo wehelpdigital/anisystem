@@ -548,6 +548,8 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
 // The farm news roundup's cron address (Latest in Agriculture): key-checked
 // in the controller; it writes one only every few days and only when there is news.
 Route::get('/cron/news-roundup', [App\Http\Controllers\NewsCronController::class, 'run'])->name('cron.news-roundup');
+// The field health service's daily tile batch asks which fields to draw (its token, no session).
+Route::get('/svc/field-batch', [App\Http\Controllers\SatelliteController::class, 'batchFields'])->middleware('throttle:30,1')->name('svc.field-batch');
 
 // The mother app deciding an order: token-checked in the controller, no
 // session, no CSRF (it is a server calling a server).

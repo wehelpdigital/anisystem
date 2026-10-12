@@ -17,7 +17,9 @@ use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -393,12 +395,85 @@ class SatelliteController extends Controller
         }
         $rep = json_decode((string) $r->report, true) ?: [];
         $par = json_decode((string) $r->params, true) ?: [];
+        // The day's static tiles, when the batch has drawn this field (never rendered per view).
+        if ($cdn = $this->batchTiles((int) $r->id)) {
+            return $this->json(true, 'ok', ['tiles' => $cdn['tiles'], 'crops' => [], 'cropBounds' => null, 'batchDate' => $cdn['date']]);
+        }
         $res = $this->field->tiles((array) ($par['polygon'] ?? []), $rep['satellite']['sentinel2']['imageId'] ?? null, $rep['satellite']['sentinel1']['imageId'] ?? null);
         if (! $res['ok']) {
             return $this->json(false, 'The map layers could not be refreshed right now.', [], 502);
         }
 
         return $this->json(true, 'ok', ['tiles' => $res['data']['tiles'] ?? [], 'crops' => $res['data']['crops'] ?? [], 'cropBounds' => $res['data']['cropBounds'] ?? null]);
+    }
+
+    /**
+     * The batch's tiles for a field (2026-10-12): Cloudflare in front of the
+     * Cloud Storage bucket the daily batch fills. The field's latest.json
+     * says which day's look is newest; kept an hour here.
+     *
+     * @return array{tiles:array<string,string>,date:string}|null
+     */
+    private function batchTiles(int $analysisId): ?array
+    {
+        $cdn = (string) config('services.field_health.tiles_cdn');
+        if ($cdn === '') {
+            return null;
+        }
+        $m = Cache::remember('fieldtiles:' . $analysisId, 3600, function () use ($cdn, $analysisId) {
+            try {
+                $res = Http::timeout(6)->acceptJson()->get($cdn . '/tiles/a' . $analysisId . '/latest.json');
+
+                return $res->ok() ? ($res->json() ?: false) : false;
+            } catch (\Throwable $e) {
+                return false;
+            }
+        });
+        if (! is_array($m) || empty($m['date'])) {
+            return null;
+        }
+        $tiles = [];
+        foreach ((array) ($m['layers'] ?? []) as $layer) {
+            $tiles[$layer] = $cdn . '/tiles/a' . $analysisId . '/' . $m['date'] . '/' . $layer . '/{z}/{x}/{y}.png';
+        }
+
+        return $tiles ? ['tiles' => $tiles, 'date' => (string) $m['date']] : null;
+    }
+
+    /**
+     * The fields the daily batch draws (services/field-health/batch.py):
+     * only paying farms' fields, read in the last 120 days, one per field.
+     * The service asks with its token; nobody else gets an answer.
+     */
+    public function batchFields(Request $request)
+    {
+        $want = (string) config('services.field_health.token');
+        if ($want === '' || ! hash_equals($want, (string) $request->header('X-Service-Token'))) {
+            abort(401);
+        }
+        $rows = DB::table('as_plant_analyses')->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
+            ->where('created_at', '>', now()->subDays(120))->orderByDesc('id')->get(['id', 'userId', 'params']);
+        $users = \App\Models\User::whereIn('id', $rows->pluck('userId')->unique())->get()->keyBy('id');
+        $seen = [];
+        $fields = [];
+        foreach ($rows as $r) {
+            $u = $users->get($r->userId);
+            if (! $u || $u->planTier() === 'libre') {
+                continue;   // a paying farm's fields only
+            }
+            $poly = (json_decode((string) $r->params, true) ?: [])['polygon'] ?? null;
+            if (! is_array($poly) || empty($poly['coordinates'][0])) {
+                continue;
+            }
+            $sig = md5(json_encode($poly['coordinates']));
+            if (isset($seen[$sig])) {
+                continue;   // the same field read twice is drawn once, for its newest report
+            }
+            $seen[$sig] = true;
+            $fields[] = ['key' => 'a' . $r->id, 'polygon' => $poly];
+        }
+
+        return $this->json(true, 'ok', ['fields' => $fields]);
     }
 
     public function destroy(int $id)

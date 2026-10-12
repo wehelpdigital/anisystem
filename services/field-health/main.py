@@ -7,6 +7,9 @@ A small FastAPI app that the Laravel app (anee.io) calls from its jobs:
     POST /api/field-health             Sentinel-1 radar, with tile URLs
     POST /api/tiles                    fresh tile URLs for images read before
     GET  /api/storms                   active tropical cyclones near a point
+    POST /api/batch/run                the daily tile batch (batch.py): static
+                                       PNG tiles for paying farms' fields, to
+                                       Cloud Storage, served through Cloudflare
 
 Every /api call needs the header X-Service-Token = FIELD_HEALTH_TOKEN.
 
@@ -339,6 +342,27 @@ def tiles(body: dict = Body(...), x_service_token: str | None = Header(None)):
         img = img.addBands(img.select('VV').subtract(img.select('VH')).rename('VVminusVH'))
         out['sar'] = _tile(img.clip(geom.buffer(150)), SAR_VIS)
     return {'ok': True, 'tiles': out}
+
+
+# -------------------------------------------------------------- the batch
+
+def _newest_clear(geom: ee.Geometry, days: int = 20):
+    """The field's newest clear Sentinel-2 look, by the report's own rules, or None."""
+    end = ee.Date(int(time.time() * 1000))
+    col = (ee.ImageCollection(S2).filterBounds(geom).filterDate(end.advance(-days, 'day'), end)
+           .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', MAX_CLOUD))
+           .map(_with_clear(geom)).filter(ee.Filter.gte('fieldClear', MIN_CLEAR))
+           .sort('system:time_start', False))
+    return ee.Image(col.first()) if col.size().getInfo() else None
+
+
+@app.post('/api/batch/run')
+def batch_run(x_service_token: str | None = Header(None)):
+    """Cloud Scheduler, once a day: draw the new pictures for the fields anee.io lists. Never per visitor."""
+    _guard(x_service_token)
+    _init_ee()
+    import batch
+    return batch.run(_newest_clear, _mask_s2, NDVI_VIS, RGB_VIS, _geometry)
 
 
 # ------------------------------------------------------------------ storms
