@@ -954,8 +954,8 @@
     {{-- Bayani ng Lupa (2026-10-12): the anee.io album, in place of the one
          song card. Anee on the art, seven songs, the first the main one. --}}
     <section class="hp-sec hp-album" id="bayani-ng-lupa">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 reveal">
-            @include('partials.bayani-album', ['id' => 'hpAlbum', 'h' => 'h2'])
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 reveal">
+            @include('partials.bayani-album', ['id' => 'hpAlbum', 'h' => 'h2', 'compact' => true])
         </div>
     </section>
     @push('head')
@@ -1124,12 +1124,70 @@
                             <div class="hp-rc is-them" style="--k: 2"><span class="hp-feed-av" style="--h: 30">PR</span><p class="hp-rc-voice">{!! '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>' !!}<span class="hp-feed-wave">@for ($w = 0; $w < 12; $w++)<i style="--w: {{ [6, 11, 8, 14, 9, 12, 5, 13, 7, 10, 6, 9][$w] }}; --d: {{ $w * 0.08 }}s"></i>@endfor</span><b>0:12</b></p></div>
                             <div class="hp-rc is-them" style="--k: 3"><span class="hp-feed-av" style="--h: 205">JD</span><p>Canal is open po. Lot 2 is filling up now.</p></div>
                         </div>
-                        {{-- Group call --}}
+                        {{-- Group call: drawn Filipino farmers, not real people (2026-10-13,
+                             the owner): the owner in a cap, Juan in a salakot, Maria in a
+                             straw sun hat, Pedro with a bandana and a bimpo on his shoulder. --}}
+                        @php
+                            $farmer = function (array $o): string {
+                                $sk = $o['skin']; $sd = $o['skinDark']; $hr = $o['hair'];
+                                $svg = '<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" fill="' . $o['bg'] . '"/>';
+                                if (($o['hat'] ?? '') === 'sun') {
+                                    $svg .= '<path d="M19.5 30c0-9 5.5-14 12.5-14s12.5 5 12.5 14v13c-3 2-6 2.6-8.5 2.2V32H28v13.2c-2.5.4-5.5-.2-8.5-2.2z" fill="' . $hr . '"/>';
+                                }
+                                $svg .= '<path d="M8 64c1-11 11-18 24-18s23 7 24 18z" fill="' . $o['shirt'] . '"/>'
+                                    . '<path d="M26 46.5l6 7 6-7" fill="none" stroke="' . $o['shirtDark'] . '" stroke-width="1.6" stroke-linejoin="round"/>'
+                                    . '<path d="M27 38h10v8.5c0 2-2.2 3.5-5 3.5s-5-1.5-5-3.5z" fill="' . $sd . '"/>'
+                                    . '<circle cx="20.6" cy="31" r="2.6" fill="' . $sd . '"/><circle cx="43.4" cy="31" r="2.6" fill="' . $sd . '"/>'
+                                    . '<ellipse cx="32" cy="30" rx="11.5" ry="13" fill="' . $sk . '"/>';
+                                if (($o['hat'] ?? '') !== 'salakot') {
+                                    $svg .= '<path d="M20.5 29c-.6-9 4.8-14.5 11.5-14.5S44.2 20 43.5 29c-1.6-4.6-4.3-7.6-11.5-7.6S22.1 24.4 20.5 29z" fill="' . $hr . '"/>';
+                                }
+                                $svg .= '<path d="M25.6 27.8q2-1.2 4 0M34.4 27.8q2-1.2 4 0" fill="none" stroke="' . $hr . '" stroke-width="1.3" stroke-linecap="round"/>'
+                                    . '<ellipse cx="27.6" cy="31.4" rx="1.35" ry="1.6" fill="#24170f"/><ellipse cx="36.4" cy="31.4" rx="1.35" ry="1.6" fill="#24170f"/>'
+                                    . '<circle cx="25.4" cy="35.2" r="1.9" fill="#e07b5a" opacity=".3"/><circle cx="38.6" cy="35.2" r="1.9" fill="#e07b5a" opacity=".3"/>'
+                                    . '<path d="M28.6 36.8q3.4 2.6 6.8 0" fill="none" stroke="#6e3220" stroke-width="1.5" stroke-linecap="round"/>';
+                                if (! empty($o['mustache'])) {
+                                    $svg .= '<path d="M27.8 35q4.2-2 8.4 0q-1.3 1.1-4.2 1t-4.2-1z" fill="' . $hr . '"/>';
+                                }
+                                switch ($o['hat'] ?? '') {
+                                    case 'salakot':
+                                        $svg .= '<path d="M4 23 32 5l28 18c-6.5 3.3-16.5 4.8-28 4.8S10.5 26.3 4 23z" fill="#d8b46a"/>'
+                                            . '<path d="M32 5v22.6M18 14.2l14 5.2M46 14.2 32 19.4M11 19l21 4.6M53 19 32 23.6" stroke="#b48d45" stroke-width=".9" fill="none"/>'
+                                            . '<path d="M4 23c6.5 3.3 16.5 4.8 28 4.8S53.5 26.3 60 23" fill="none" stroke="#97743a" stroke-width="1.4"/>';
+                                        break;
+                                    case 'cap':
+                                        $svg .= '<path d="M20.4 24.6c0-7.6 5-12.1 11.6-12.1s11.6 4.5 11.6 12.1z" fill="' . $o['cap'] . '"/>'
+                                            . '<path d="M18.6 24h26.8c1.4 0 2.2 1.5 1.3 2.6-.7.8-1.6 1.2-2.6 1.2H19.9c-1 0-1.9-.4-2.6-1.2-.9-1.1-.1-2.6 1.3-2.6z" fill="' . $o['capDark'] . '"/>'
+                                            . '<circle cx="32" cy="19" r="2.3" fill="#f5c518"/>';
+                                        break;
+                                    case 'sun':
+                                        $svg .= '<ellipse cx="32" cy="21.8" rx="20.5" ry="4.8" fill="#d2a95c"/>'
+                                            . '<path d="M22.2 21.6c0-6.6 4.4-10.6 9.8-10.6s9.8 4 9.8 10.6z" fill="#e4c47c"/>'
+                                            . '<path d="M22.3 19.2h19.4v2.4H22.3z" fill="' . $o['ribbon'] . '"/>';
+                                        break;
+                                    case 'bandana':
+                                        $svg .= '<path d="M20.4 24.2c3.1-3.1 7.1-4.6 11.6-4.6s8.5 1.5 11.6 4.6l-.7 3.1c-3-2.6-6.7-3.9-10.9-3.9s-7.9 1.3-10.9 3.9z" fill="#c2412d"/>'
+                                            . '<path d="M42.6 23.6l4.6-1.6-1.2 3.4 2.4 2.8-4.9-.6z" fill="#a8341f"/>';
+                                        break;
+                                }
+                                if (! empty($o['towel'])) {
+                                    $svg .= '<path d="M13.4 53.5c4-4.3 9-6.6 13.4-6.9l-1.6 6.1c-4 .7-7.7 2.6-10.8 5.3z" fill="#f4efe2"/><path d="M15 55.6l10.9-6.4" stroke="#d9d1bd" stroke-width=".9"/>';
+                                }
+
+                                return $svg . '</svg>';
+                            };
+                            $callers = [
+                                ['You', 120, ['bg' => '#d9ecc7', 'skin' => '#c68f63', 'skinDark' => '#b07a50', 'hair' => '#2b1d16', 'shirt' => '#4a7c2a', 'shirtDark' => '#2f5219', 'hat' => 'cap', 'cap' => '#2f5219', 'capDark' => '#24400f']],
+                                ['Juan', 205, ['bg' => '#cfe3f3', 'skin' => '#a8714b', 'skinDark' => '#935f3c', 'hair' => '#3b2c22', 'shirt' => '#3b6ea8', 'shirtDark' => '#284f7c', 'hat' => 'salakot', 'mustache' => true]],
+                                ['Maria', 330, ['bg' => '#f6d6e0', 'skin' => '#b9825a', 'skinDark' => '#a26e48', 'hair' => '#1f1510', 'shirt' => '#d65a7e', 'shirtDark' => '#a8405f', 'hat' => 'sun', 'ribbon' => '#4a7c2a']],
+                                ['Pedro', 30, ['bg' => '#f8e2c4', 'skin' => '#9a6440', 'skinDark' => '#855332', 'hair' => '#20150f', 'shirt' => '#e59a2f', 'shirtDark' => '#b8761b', 'hat' => 'bandana', 'towel' => true]],
+                            ];
+                        @endphp
                         <div class="hp-room-pane" id="hpRoom-call" data-room-pane="call">
                             <div class="hp-call">
-                                @foreach ([['You', 120, 'ME'], ['Juan', 205, 'JD'], ['Maria', 330, 'MS'], ['Pedro', 30, 'PR']] as $k => [$cn, $ch, $ci])
+                                @foreach ($callers as $k => [$cn, $ch, $look])
                                     <div class="hp-call-tile{{ $k === 2 ? ' is-talking' : '' }}" style="--h: {{ $ch }}">
-                                        <span class="hp-call-av">{{ $ci }}</span><small>{{ $cn }}</small>
+                                        <span class="hp-call-av is-drawn">{!! $farmer($look) !!}</span><small>{{ $cn }}</small>
                                     </div>
                                 @endforeach
                             </div>
@@ -2696,6 +2754,8 @@
     .hp-call-av { width: 3rem; height: 3rem; border-radius: 999px; display: grid; place-items: center; font-weight: 800; font-size: .9rem;
         background: hsl(var(--h) 45% 45%); box-shadow: 0 0 0 0 rgb(74 222 128 / .7); }
     .hp-call-tile small { font-size: .74rem; font-weight: 700; color: #e2e8f0; }
+    .hp-call-av.is-drawn { width: 3.6rem; height: 3.6rem; overflow: hidden; background: none; border: 2px solid rgb(255 255 255 / .85); }
+    .hp-call-av.is-drawn svg { display: block; width: 100%; height: 100%; }
     .hp-room-pane.is-on .hp-call-tile.is-talking .hp-call-av { animation: hpTalk 1.4s ease-out infinite; }
     @keyframes hpTalk { 0% { box-shadow: 0 0 0 0 rgb(74 222 128 / .75); } 70%, 100% { box-shadow: 0 0 0 .7rem rgb(74 222 128 / 0); } }
     .hp-call-bar { margin-top: .7rem; display: flex; align-items: center; gap: .6rem; padding: .55rem .75rem; border-radius: .9rem; background: #fff;

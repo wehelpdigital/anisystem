@@ -3,13 +3,18 @@
      right; on a phone the picture on top), a player and the seven songs.
      The files wait for a press (preload none): nobody on mobile data pays
      for a card they scrolled past. Shared by the homepage and the dashboard.
-     Takes $id (unique on the page) and $h (the heading tag, h2 by default). --}}
+     Takes $id (unique on the page) and $h (the heading tag, h2 by default);
+     $compact true (the homepage, 2026-10-13: "really big and overwhelming")
+     draws it smaller, with three songs and the other four a tap away.
+     Under the songs: Listen on, the services it plays on. --}}
 @php
     $A = \App\Support\BayaniAlbum::class;
     $baTracks = $A::tracks();
     $baH = $h ?? 'h2';
     $baId = $id ?? 'ba';
     $art = asset($A::ART);
+    $baCompact = (bool) ($compact ?? false);
+    $baFirst = $baCompact ? 3 : count($baTracks);
 @endphp
 @once
 <style>
@@ -105,9 +110,43 @@
         .ba-play, .ba-skip, .ba-row { transition: none; }
     }
     html.sm-still .ba-art img, html.sm-still .ba-sparks i { animation: none; }
+    /* Listen on: the services, each in its own colour when touched. */
+    .ba-listen { margin-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; }
+    .ba-listen > span { margin-right: .2rem; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #a8cc7e; }
+    .ba-listen a { display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 999px; color: #f3f8ec; background: rgb(255 255 255 / .1);
+        border: 1px solid rgb(255 255 255 / .14); transition: background-color .28s var(--ba-ease), transform .28s var(--ba-ease), border-color .28s var(--ba-ease); }
+    .ba-listen a:hover, .ba-listen a:focus-visible { background: var(--c); border-color: var(--c); transform: translateY(-2px); }
+    .ba-listen svg { width: 1rem; height: 1rem; fill: currentColor; }
+    /* The smaller album (homepage). */
+    .ba.is-compact .ba-art { aspect-ratio: 16 / 8; }
+    .ba.is-compact .ba-ink { aspect-ratio: 16 / 8; }
+    .ba.is-compact .ba-h { font-size: clamp(1.6rem, 3.4vw, 2.15rem); }
+    .ba.is-compact .ba-p { font-size: .86rem; line-height: 1.55; }
+    .ba.is-compact .ba-now { margin-top: .85rem; padding: .5rem; gap: .6rem; }
+    .ba.is-compact .ba-play { width: 2.75rem; height: 2.75rem; }
+    .ba.is-compact .ba-play svg { width: 1.2rem; height: 1.2rem; }
+    .ba.is-compact .ba-now-t b { font-size: .92rem; }
+    .ba.is-compact .ba-list { margin-top: .6rem; gap: .1rem; }
+    .ba.is-compact .ba-row { padding: .38rem .5rem; }
+    .ba.is-compact .ba-t b { font-size: .86rem; }
+    @container ba (min-width: 900px) {
+        .ba.is-compact { min-height: 0; }
+        .ba.is-compact .ba-body { width: min(100%, 27rem); padding: 1.7rem 1.9rem 1.6rem; }
+    }
+    /* The other songs fold open on a tap. */
+    .ba-more { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .28s var(--ba-ease), opacity .28s var(--ba-ease); }
+    .ba-more > div { min-height: 0; overflow: hidden; }
+    .ba-more .ba-list { margin-top: .1rem; }
+    .ba.is-all .ba-more { grid-template-rows: 1fr; opacity: 1; }
+    .ba-all { margin-top: .35rem; display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 800;
+        color: #dceccb; background: rgb(255 255 255 / .08); transition: background-color .28s var(--ba-ease); }
+    .ba-all:hover { background: rgb(255 255 255 / .16); }
+    .ba-all svg { width: .9rem; height: .9rem; transition: transform .28s var(--ba-ease); }
+    .ba.is-all .ba-all svg { transform: rotate(180deg); }
+    @media (prefers-reduced-motion: reduce) { .ba-more, .ba-all svg, .ba-listen a { transition: none; } }
 </style>
 @endonce
-<div class="ba-c"><section class="ba" id="{{ $baId }}" data-album title="{{ $A::TITLE }}, the anee.io album" aria-labelledby="{{ $baId }}H" aria-describedby="{{ $baId }}P">
+<div class="ba-c"><section class="ba{{ $baCompact ? ' is-compact' : '' }}" id="{{ $baId }}" data-album title="{{ $A::TITLE }}, the anee.io album" aria-labelledby="{{ $baId }}H" aria-describedby="{{ $baId }}P">
     <div class="ba-art">
         <img src="{{ $art }}-1280.webp" srcset="{{ $art }}-800.webp 800w, {{ $art }}-1280.webp 1280w, {{ $art }}-1920.webp 1920w"
              sizes="(min-width: 1280px) 1216px, 100vw" width="1920" height="1072" alt="{{ $A::ALT }}" title="{{ $A::TITLE }}: Anee, a hero of the land" loading="lazy" decoding="async">
@@ -121,7 +160,7 @@
             <span class="ba-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         </span>
         <{{ $baH }} class="ba-h" id="{{ $baId }}H">Bayani ng <em>Lupa</em></{{ $baH }}>
-        <p class="ba-p" id="{{ $baId }}P">Seven songs for the heroes of the land, the Filipino farmers who feed the country. From the farmers who built anee.io, for every farmer who plants with a dream and harvests with a plan.</p>
+        <p class="ba-p" id="{{ $baId }}P">Seven songs for the heroes of the land, the Filipino farmers who feed the country.@unless ($baCompact) From the farmers who built anee.io, for every farmer who plants with a dream and harvests with a plan.@endunless</p>
         <div class="ba-now">
             <button type="button" class="ba-play" data-ba-play aria-label="Play {{ $baTracks[0]['title'] }}">
                 <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
@@ -133,15 +172,34 @@
         </div>
         <div class="ba-bar"><input type="range" min="0" max="1000" value="0" step="1" aria-label="Move through the song" data-ba-seek><span><i data-ba-fill></i></span></div>
         <div class="ba-times"><span data-ba-cur>0:00</span><span data-ba-dur>{{ $baTracks[0]['length'] }}</span></div>
+        @php
+            $baRow = fn ($i, $t) => '<li style="--k: ' . $i . '"><button type="button" class="ba-row" data-ba-i="' . $i . '" aria-current="' . ($i === 0 ? 'true' : 'false') . '" aria-label="Play ' . e($t['title']) . ', ' . e($t['length']) . '">'
+                . '<span class="ba-n">' . ($i + 1) . '</span><span class="ba-bars" aria-hidden="true"><i></i><i></i><i></i></span>'
+                . '<span class="ba-t"><b>' . e($t['title']) . '</b>' . ($t['main'] ? '<small>Main song</small>' : '') . '</span>'
+                . '<span class="ba-d">' . e($t['length']) . '</span></button></li>';
+        @endphp
         <ol class="ba-list" aria-label="The songs of {{ $A::TITLE }}">
-            @foreach ($baTracks as $i => $t)
-                <li style="--k: {{ $i }}"><button type="button" class="ba-row" data-ba-i="{{ $i }}" aria-current="{{ $i === 0 ? 'true' : 'false' }}" aria-label="Play {{ $t['title'] }}, {{ $t['length'] }}">
-                    <span class="ba-n">{{ $i + 1 }}</span><span class="ba-bars" aria-hidden="true"><i></i><i></i><i></i></span>
-                    <span class="ba-t"><b>{{ $t['title'] }}</b>@if ($t['main'])<small>Main song</small>@endif</span>
-                    <span class="ba-d">{{ $t['length'] }}</span>
-                </button></li>
-            @endforeach
+            @foreach (array_slice($baTracks, 0, $baFirst) as $i => $t){!! $baRow($i, $t) !!}@endforeach
         </ol>
+        @if ($baFirst < count($baTracks))
+            <div class="ba-more" id="{{ $baId }}More"><div>
+                <ol class="ba-list" start="{{ $baFirst + 1 }}" aria-label="More songs of {{ $A::TITLE }}">
+                    @foreach (array_slice($baTracks, $baFirst, null, true) as $i => $t){!! $baRow($i, $t) !!}@endforeach
+                </ol>
+            </div></div>
+            <button type="button" class="ba-all" data-ba-all aria-expanded="false" aria-controls="{{ $baId }}More">
+                <span>All {{ count($baTracks) }} songs</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
+        @endif
+        <div class="ba-listen">
+            <span>Listen on</span>
+            @foreach ($A::LISTEN as $baSvc => [$baName, $baUrl, $baColor, $baPath])
+                <a href="{{ $baUrl }}" target="_blank" rel="noopener" style="--c: {{ $baColor }}" aria-label="{{ $A::TITLE }} on {{ $baName }}" title="{{ $baName }}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $baPath }}"/></svg>
+                </a>
+            @endforeach
+        </div>
     </div>
     <audio preload="none" data-ba-audio></audio>
     <script type="application/json" data-ba-data>{!! json_encode(['tracks' => $baTracks, 'album' => $A::TITLE, 'art' => $art . '-800.webp'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
@@ -197,6 +255,16 @@
                 navigator.mediaSession.setActionHandler('previoustrack', () => go(i - 1));
             } catch (_) { /* not supported */ }
         }
+        const allBtn = root.querySelector('[data-ba-all]');
+        const unfold = (open) => {
+            if (!allBtn) return;
+            root.classList.toggle('is-all', open);
+            allBtn.setAttribute('aria-expanded', String(open));
+            allBtn.querySelector('span').textContent = open ? 'Fewer songs' : 'All ' + D.tracks.length + ' songs';
+        };
+        allBtn?.addEventListener('click', () => unfold(!root.classList.contains('is-all')));
+        // A song that plays from the folded part (the next one, or a skip) opens it.
+        a.addEventListener('play', () => { if (allBtn && rows[i] && rows[i].closest('.ba-more')) unfold(true); });
         // The songs rise in once the section is reached.
         if ('IntersectionObserver' in window) {
             const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { root.classList.add('is-in'); io.disconnect(); } }), { threshold: .2 });
