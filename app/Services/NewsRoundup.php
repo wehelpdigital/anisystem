@@ -199,7 +199,7 @@ class NewsRoundup
             'rangeFrom' => $out['range'][0]->toDateString(), 'rangeTo' => $out['range'][1]->toDateString()]);
         if ((int) ($out['result']['tokensIn'] ?? 0) > 0) {
             try {
-                AiUsage::record('news-roundup', 0, 0, $runId, AiSetting::current(), $out['result'], 0);
+                AiUsage::record('news-roundup', 0, 0, $runId, AiSetting::current()->fast(), $out['result'], 0);
             } catch (\Throwable $e) {
             }
         }
@@ -389,7 +389,8 @@ class NewsRoundup
      */
     public function write(Collection $items): array
     {
-        $settings = AiSetting::current()->forField('PH');
+        // Gemini Flash, not Pro (2026-10-12): a roundup rewrites the stories' own facts.
+        $settings = AiSetting::current()->forField('PH')->fast();
         $byId = $items->keyBy('id');
         $from = Carbon::parse($items->min('publishedAt'))->timezone('Asia/Manila');
         $to = Carbon::parse($items->max('publishedAt'))->timezone('Asia/Manila');

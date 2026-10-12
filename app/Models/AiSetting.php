@@ -298,6 +298,29 @@ class AiSetting extends BaseModel
      */
     public ?string $fieldCountry = null;
 
+    /**
+     * The quick model of each provider (2026-10-12, the owner's call): for the
+     * house's own simple writing, where the top model costs about four times
+     * as much for no difference a reader would see: the daily farm news
+     * roundup and the Ask Anee question check. Paid analyses, Anee Auto and
+     * the chat stay on the model set in the mother app. AI_FAST_MODEL in the
+     * environment overrides it.
+     */
+    public const FAST_MODELS = [
+        'gemini' => 'gemini-flash-latest',
+        'claude' => 'claude-haiku-5-5',
+        'openai' => 'gpt-4o-mini',
+    ];
+
+    /** A copy of these settings on the provider's quick model (never saved). */
+    public function fast(): static
+    {
+        $c = clone $this;
+        $c->model = (string) (config('services.ai_fast_model') ?: (self::FAST_MODELS[$this->provider] ?? $this->effectiveModel()));
+
+        return $c;
+    }
+
     /** A copy of these settings for an analysis of a field in another country. */
     public function forField(?string $country): static
     {
