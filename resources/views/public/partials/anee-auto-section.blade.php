@@ -1,8 +1,10 @@
 {{-- ANEE AUTO on the homepage (2026-10-12, the owner): a section of its own,
      for the farmer who does not want to build schedules and run analyses:
      answer once, then just follow what Anee says. How it works in five steps,
-     a real looking phone playing her day in a loop, with bubbles of her faces
-     rising behind it (she is busy with everything), and the door to sign up.
+     a real looking phone playing her day in a loop, a neural network at work
+     on both sides of it (2026-10-13, the owner: the faces gave way to "a
+     modern animation of AI deep thinking"): what she reads lights up, and
+     pulses run through the layers into the phone. Then the door to sign up.
      No prices here. Expects $signup.
 
      The ads landing page (/start, 2026-10-13) shows it too: there it passes
@@ -13,23 +15,8 @@
     $aaE = fn (string $n) => \App\Support\AneeEmoji::url($n);
     $aaSite = ($aaLook ?? 'home') === 'site';
     $aaSay = fn (string $k, string $own) => trim((string) (($aaText ?? [])[$k] ?? '')) !== '' ? trim((string) $aaText[$k]) : $own;
-    // [face, what she is doing, centre %, size rem, delay s, rise s, sway rem]: two columns, either side of the phone.
-    $aaBubbles = [
-        // Left of the phone: one every 2.5 s, all at one speed, so they never run into each other.
-        ['thinking', 'Reading the forecast', 5, 3.3, 0, 15, .6],
-        ['idea', null, 6.5, 2.4, 2.5, 15, .4],
-        ['starstruck', 'Looking up your variety', 5, 3, 5, 15, .6],
-        ['leaf', null, 6.5, 2.4, 7.5, 15, .4],
-        ['wink', 'Moving a task to a dry day', 5, 2.9, 10, 15, .6],
-        ['cheer', null, 6.5, 2.4, 12.5, 15, .4],
-        // Right of the phone, half a step behind.
-        ['thumbsup', 'Timing the fertilizer', 95, 3.2, 1.25, 15, -.6],
-        ['salute', null, 93.5, 2.3, 3.75, 15, -.4],
-        ['concerned', 'Watching for typhoons', 95, 3.1, 6.25, 15, -.6],
-        ['happy', null, 93.5, 2.3, 8.75, 15, -.4],
-        ['yes', 'Checking your soil', 95, 2.8, 11.25, 15, -.6],
-        ['grin', 'Emailing your workers', 95, 2.7, 13.75, 15, -.4],
-    ];
+    // What she reads, the network's inputs: left side, then right side.
+    $aaInputs = [['Forecast', 'El Niño', 'Your soil', 'Variety'], ['Crop stage', 'Fertilizer', 'Workers', 'Typhoons']];
 @endphp
 <section class="{{ $aaSite ? 'hp-auto is-site' : 'hp-sec hp-auto' }}" id="anee-auto" aria-labelledby="hpAutoH">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
@@ -42,6 +29,7 @@
                 <li>No analyses to run one by one</li>
                 <li>No guessing the weather</li>
                 <li>No missed fertilizer days</li>
+                <li>No guessing what to spray</li>
             </ul>
         </div>
 
@@ -57,13 +45,9 @@
             {{-- The stage: her faces rising behind a phone that plays her day. --}}
             <div class="hp-auto-stage reveal" aria-hidden="true">
                 <div class="hp-auto-glow"></div>
-                <div class="hp-auto-bubbles">
-                    @foreach ($aaBubbles as [$bf, $bl, $bx, $bs, $bd, $bt, $bw])
-                        <span class="hp-auto-bub{{ $bl ? ' has-say' : '' }}" style="--x:{{ $bx }};--s:{{ $bs }}rem;--d:{{ $bd }}s;--t:{{ $bt }}s;--w:{{ $bw }}rem">
-                            <span class="hp-auto-bub-in"><img src="{{ $aaE($bf) }}" alt="" loading="lazy">@if ($bl)<em>{{ $bl }}</em>@endif</span>
-                        </span>
-                    @endforeach
-                </div>
+                {{-- Drawn by the script to fit the stage; under reduced motion it stays still. --}}
+                <svg class="hp-auto-net" data-auto-net data-inputs='@json($aaInputs)'></svg>
+                <span class="hp-auto-ring"></span><span class="hp-auto-ring is-2"></span>
                 <div class="hp-auto-phone">
                     <i class="hp-auto-key is-power"></i><i class="hp-auto-key is-up"></i><i class="hp-auto-key is-down"></i>
                     <div class="hp-auto-screen">
@@ -124,26 +108,33 @@
     html.js .hp-auto-steps li { opacity: 0; translate: -1rem 0; transition: opacity .55s cubic-bezier(.22,1,.36,1), translate .55s cubic-bezier(.22,1,.36,1); transition-delay: calc(.15s + var(--k) * .14s); }
     html.js .hp-auto-steps.is-visible li { opacity: 1; translate: none; }
 
-    /* The stage: a glow, her faces rising like bubbles, and the phone in front. */
+    /* The stage: a glow, a neural network at work on both sides, and the phone in front. */
     .hp-auto-stage { position: relative; display: grid; place-items: center; min-height: 44rem; isolation: isolate; }
     @media (max-width: 639.98px) { .hp-auto-stage { min-height: 40rem; margin: 0 -1rem; } }
     .hp-auto-glow { position: absolute; inset: 8% 6%; z-index: -2; border-radius: 50%; filter: blur(30px);
         background: radial-gradient(closest-side, rgb(245 197 24 / .45), rgb(107 159 61 / .22) 60%, transparent); animation: hpAutoBreath 8s ease-in-out infinite; }
     @keyframes hpAutoBreath { 50% { transform: scale(1.08); opacity: .8; } }
-    /* The bubbles' box reaches 4rem past the stage on each side, so a word at the edge is not cut off by the fade; --x still counts across the stage. */
-    .hp-auto-bubbles { position: absolute; inset: 0 -4rem; z-index: -1;
-        -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 82%, transparent); mask-image: linear-gradient(180deg, transparent, #000 14%, #000 82%, transparent); }
-    .hp-auto-bub { position: absolute; left: calc(4rem + (100% - 8rem) * var(--x) / 100); bottom: -6rem; width: 6.6rem; margin-left: -3.3rem; display: flex; justify-content: center; animation: hpBubRise var(--t) linear var(--d) infinite both; }
-    .hp-auto-bub-in { display: inline-flex; flex-direction: column; align-items: center; gap: .3rem; animation: hpBubSway calc(var(--t) / 3) ease-in-out var(--d) infinite alternate; }
-    .hp-auto-bub img { width: var(--s); height: var(--s); flex: none; padding: .3rem; border-radius: 999px; background: rgb(255 255 255 / .85);
-        box-shadow: 0 10px 22px -12px rgb(70 55 0 / .55), inset 0 0 0 1px rgb(255 255 255 / .9); backdrop-filter: blur(4px); }
-    .hp-auto-bub em { font-style: normal; max-width: 6.6rem; text-align: center; line-height: 1.25; padding: .25rem .5rem; border-radius: .8rem; font-size: .64rem; font-weight: 800; color: #2d4a17;
-        background: rgb(255 255 255 / .9); box-shadow: 0 8px 18px -12px rgb(70 55 0 / .6); }
-    @keyframes hpBubRise { 0% { transform: translateY(0) scale(.6); opacity: 0; } 8% { opacity: 1; transform: translateY(-4rem) scale(1); } 85% { opacity: 1; } 100% { transform: translateY(-50rem) scale(1.02); opacity: 0; } }
-    @keyframes hpBubSway { from { transform: translateX(calc(var(--w) * -1)); } to { transform: translateX(var(--w)); } }
-    /* Two columns under 1200px leave the phone no room for words beside it: the faces alone. */
-    @media (min-width: 1024px) and (max-width: 1199.98px) { .hp-auto-bub em { display: none; } }
-    @media (max-width: 639.98px) { .hp-auto-bub em { display: none; } .hp-auto-bubbles { inset: 0; } .hp-auto-bub { left: clamp(2rem, calc(var(--x) * 1%), calc(100% - 2rem)); } }
+    /* The network: thin links, nodes that light when a pulse reaches them,
+       gold pulses running in toward the phone, the inputs named. */
+    .hp-auto-net { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; overflow: visible;
+        -webkit-mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent); }
+    .hp-auto-net .ln { stroke: rgb(74 124 42 / .2); stroke-width: 1; fill: none; transition: stroke .5s ease; }
+    .hp-auto-net .ln.is-hot { stroke: rgb(217 173 18 / .55); transition-duration: .12s; }
+    .hp-auto-net .nd { fill: #fff; stroke: #a9cc87; stroke-width: 1.5; transition: fill .5s ease, stroke .5s ease; }
+    .hp-auto-net .nd.is-in { fill: #f3f9ec; stroke: #4a7c2a; stroke-width: 2; }
+    .hp-auto-net .nd.is-hot { fill: #f5c518; stroke: #d9ad12; transition-duration: .1s; }
+    .hp-auto-net .halo { fill: rgb(245 197 24 / .35); opacity: 0; transform-box: fill-box; transform-origin: center; }
+    .hp-auto-net .halo.is-on { animation: hpNetHalo .8s ease-out; }
+    @keyframes hpNetHalo { from { opacity: 1; transform: scale(.6); } to { opacity: 0; transform: scale(2.4); } }
+    .hp-auto-net .pl { fill: #f5c518; filter: drop-shadow(0 0 4px rgb(245 197 24 / .9)); }
+    .hp-auto-net .tg rect { fill: rgb(255 255 255 / .92); stroke: #e3ead9; }
+    .hp-auto-net .tg text { font-size: 10.5px; font-weight: 800; fill: #2d4a17; font-family: inherit; }
+    .hp-auto-net .tg.is-hot rect { fill: #fff6d1; stroke: #e9c63e; }
+    /* Thinking rings: slow waves out from behind the phone. */
+    .hp-auto-ring { position: absolute; left: 50%; top: 50%; z-index: -1; width: 18rem; height: 18rem; margin: -9rem 0 0 -9rem; border-radius: 999px;
+        border: 1.5px solid rgb(74 124 42 / .28); opacity: 0; animation: hpAutoRing 6s cubic-bezier(.22,1,.36,1) infinite; pointer-events: none; }
+    .hp-auto-ring.is-2 { animation-delay: 3s; }
+    @keyframes hpAutoRing { 0% { opacity: .9; transform: scale(.6); } 100% { opacity: 0; transform: scale(2.1); } }
 
     /* The phone: frame, side keys, the island, the status bar, the home line. */
     .hp-auto-phone { position: relative; width: clamp(16rem, 74vw, 20.5rem); aspect-ratio: 9 / 19; padding: .62rem; border-radius: 3rem;
@@ -197,12 +188,135 @@
     .hp-auto-cta { display: flex; flex-direction: column; align-items: center; gap: .75rem; margin-top: 2.6rem; text-align: center; }
     .hp-auto-cta span { font-size: .92rem; font-weight: 700; color: #55604a; }
     @media (prefers-reduced-motion: reduce) {
-        .hp-auto-phone, .hp-auto-glow, .hp-auto-bub-in, .hp-auto-typing i { animation: none; }
-        .hp-auto-bub { animation: none; bottom: auto; top: calc(10% + var(--d) * 4%); opacity: .9; }
+        .hp-auto-phone, .hp-auto-glow, .hp-auto-typing i, .hp-auto-ring { animation: none; }
         html.js .hp-auto-steps li { opacity: 1; translate: none; transition: none; }
     }
 </style>
 @push('scripts')
+<script>
+(() => {
+    /* The network beside Anee's phone: inputs on the outside (what she
+       reads), two hidden layers, and the phone's edge as the output. Pulses
+       start at an input, hop layer by layer into the phone, and light every
+       node and link they pass. Drawn again when the stage changes size;
+       runs only while on screen; still under reduced motion. */
+    const svg = document.querySelector('[data-auto-net]');
+    if (!svg) return;
+    const stage = svg.parentElement, phone = stage.querySelector('.hp-auto-phone');
+    const NS = 'http://www.w3.org/2000/svg';
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let inputs = [[], []];
+    try { inputs = JSON.parse(svg.dataset.inputs || '[[],[]]'); } catch (_) {}
+    const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; };
+    let net = null, raf = 0, on = false, last = 0, spawnAt = 0, pulses = [];
+    const draw = () => {
+        const W = stage.clientWidth, H = stage.clientHeight;
+        if (!W || !H) return;
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        svg.textContent = '';
+        pulses = [];
+        const pr = phone.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+        const pl = pr.left - sr.left, prr = pr.right - sr.left, pt = pr.top - sr.top, ph = pr.height;
+        const room = pl;                       // the space beside the phone, each side
+        const small = room < 90, words = room >= 96;
+        const sides = [];
+        const gLn = mk('g', {}), gHalo = mk('g', {}), gNd = mk('g', {}), gPl = mk('g', {}), gTg = mk('g', {});
+        [0, 1].forEach((side) => {
+            const dir = side ? -1 : 1;            // left side runs right, toward the phone
+            const outer = side ? W - Math.max(14, room * .12) : Math.max(14, room * .12);
+            const edge = side ? prr + 4 : pl - 4;
+            const span = edge - outer;
+            const layers = small
+                ? [inputs[side].length, 0].map((n, i) => ({ n: n || 3, x: outer + span * [0, .55][i] }))
+                : [{ n: inputs[side].length, x: outer }, { n: 5, x: outer + span * .38 }, { n: 4, x: outer + span * .7 }];
+            const ys = (n, top, bot) => Array.from({ length: n }, (_, i) => top + (bot - top) * (n === 1 ? .5 : i / (n - 1)));
+            const top = pt + ph * .1, bot = pt + ph * .9;
+            const L = layers.map((ly, li) => ys(ly.n, top + li * ph * .05, bot - li * ph * .05).map((y) => ({ x: ly.x + (li === 0 ? (Math.random() - .5) * 6 : 0), y, li })));
+            // The output: points on the phone's edge.
+            L.push(ys(4, pt + ph * .3, pt + ph * .72).map((y) => ({ x: edge, y, li: L.length, out: true })));
+            const links = [];
+            for (let li = 0; li < L.length - 1; li++) {
+                L[li].forEach((a, ai) => L[li + 1].forEach((b, bi) => {
+                    // Not every link: a sparse net reads as a network, a full one as a mesh.
+                    if (L[li].length * L[li + 1].length > 12 && (ai + bi * 2) % 3 === 2) return;
+                    const el = mk('line', { x1: a.x.toFixed(1), y1: a.y.toFixed(1), x2: b.x.toFixed(1), y2: b.y.toFixed(1), class: 'ln' }, gLn);
+                    links.push({ a, b, el });
+                }));
+            }
+            L.forEach((layer) => layer.forEach((n) => {
+                if (n.out) return;
+                const r = n.li === 0 ? (small ? 4 : 5.5) : (small ? 3 : 4);
+                n.halo = mk('circle', { cx: n.x.toFixed(1), cy: n.y.toFixed(1), r: r * 2, class: 'halo' }, gHalo);
+                n.el = mk('circle', { cx: n.x.toFixed(1), cy: n.y.toFixed(1), r, class: 'nd' + (n.li === 0 ? ' is-in' : '') }, gNd);
+            }));
+            // The inputs' names, beside them on the outside... or above them where the side is narrow.
+            if (words) {
+                L[0].forEach((n, i) => {
+                    const label = inputs[side][i];
+                    if (!label) return;
+                    const g = mk('g', { class: 'tg' }, gTg);
+                    const t = mk('text', { y: (n.y - 11).toFixed(1), 'text-anchor': 'middle' }, g);
+                    t.textContent = label;
+                    const w = label.length * 6.2 + 14;
+                    const cx = Math.min(Math.max(n.x, w / 2 + 2), W - w / 2 - 2);
+                    t.setAttribute('x', cx.toFixed(1));
+                    const rect = mk('rect', { x: (cx - w / 2).toFixed(1), y: (n.y - 24).toFixed(1), width: w.toFixed(1), height: 18, rx: 9 }, g);
+                    g.insertBefore(rect, t);
+                    n.tag = g;
+                });
+            }
+            sides.push({ L, links, dir });
+        });
+        net = { sides, gPl };
+    };
+    const heat = (el, cls, ms) => { if (!el) return; el.classList.add(cls); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove(cls), ms); };
+    const spawn = () => {
+        const side = net.sides[Math.random() < .5 ? 0 : 1];
+        // A route: one node per layer, each step along a link that exists.
+        let n = side.L[0][Math.floor(Math.random() * side.L[0].length)];
+        const hops = [];
+        while (true) {
+            const outs = side.links.filter((k) => k.a === n);
+            if (!outs.length) break;
+            const k = outs[Math.floor(Math.random() * outs.length)];
+            hops.push(k); n = k.b;
+        }
+        if (!hops.length) return;
+        heat(hops[0].a.el, 'is-hot', 500); heat(hops[0].a.tag, 'is-hot', 900);
+        if (hops[0].a.halo) { hops[0].a.halo.classList.remove('is-on'); void hops[0].a.halo.getBBox(); hops[0].a.halo.classList.add('is-on'); }
+        pulses.push({ hops, i: 0, t: 0, dot: mk('circle', { r: 2.6, class: 'pl' }, net.gPl) });
+    };
+    const tick = (now) => {
+        if (!on) { raf = 0; return; }
+        const dt = Math.min(64, now - (last || now)); last = now;
+        if (now >= spawnAt) { spawn(); spawnAt = now + 260 + Math.random() * 260; }
+        pulses = pulses.filter((p) => {
+            const k = p.hops[p.i];
+            const len = Math.hypot(k.b.x - k.a.x, k.b.y - k.a.y) || 1;
+            p.t += dt * .16 / len;
+            if (p.t >= 1) {
+                heat(k.el, 'is-hot', 300);
+                heat(k.b.el, 'is-hot', 420);
+                if (k.b.halo) { k.b.halo.classList.remove('is-on'); void k.b.halo.getBBox(); k.b.halo.classList.add('is-on'); }
+                p.i++; p.t = 0;
+                if (p.i >= p.hops.length) { p.dot.remove(); return false; }
+                return true;
+            }
+            p.dot.setAttribute('cx', (k.a.x + (k.b.x - k.a.x) * p.t).toFixed(1));
+            p.dot.setAttribute('cy', (k.a.y + (k.b.y - k.a.y) * p.t).toFixed(1));
+            return true;
+        });
+        raf = requestAnimationFrame(tick);
+    };
+    const start = () => { if (still || raf || !net) return; on = true; last = 0; raf = requestAnimationFrame(tick); };
+    const stop = () => { on = false; };
+    draw();
+    let rt = 0;
+    new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { const was = on; stop(); cancelAnimationFrame(raf); raf = 0; draw(); if (was) start(); }, 150); }).observe(stage);
+    if ('IntersectionObserver' in window) new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? start() : stop())), { threshold: .15 }).observe(stage);
+    else start();
+})();
+</script>
 <script>
 (() => {
     /* Anee's day on the phone, in a loop: a message, her typing, the next,

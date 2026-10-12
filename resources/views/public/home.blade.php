@@ -604,7 +604,15 @@
                 </div>
 
                 <div class="reveal hp-anee-media">
+                    {{-- Her chat on a phone (2026-10-13, the owner: smaller, and like a
+                         phone), with her hello film back over its top corner, small. --}}
+                    <div class="hp-anee-phone">
+                    <i class="hp-anee-key is-power"></i><i class="hp-anee-key is-up"></i><i class="hp-anee-key is-down"></i>
                     <div class="hp-chat" data-chat>
+                        <div class="hp-chat-status" aria-hidden="true">
+                            <b>9:41</b><span class="hp-chat-island"></span>
+                            <span class="hp-chat-sig"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".35"/></svg><svg viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" fill="none" stroke="currentColor"/><rect x="2" y="2" width="15" height="8" rx="1.6"/><rect x="22.5" y="4" width="2" height="4" rx="1"/></svg></span>
+                        </div>
                         <div class="hp-chat-top">
                             <img src="{{ $face }}" alt="" class="hp-face is-lg">
                             <span><b>Anee</b><small><i class="hp-live"></i>Your smart farm technician</small></span>
@@ -627,6 +635,20 @@
                                 </ol>
                             </div>
                         </div>
+                        <div class="hp-chat-compose" aria-hidden="true">
+                            <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zM15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></i>
+                            <span>Ask about your crop</span><b>➤</b>
+                        </div>
+                        <span class="hp-chat-home" aria-hidden="true"></span>
+                    </div>
+                    <figure class="hp-anee-film" data-anee-film>
+                        <video playsinline preload="none" poster="{{ asset('videos/anee-hello-poster.webp') }}" aria-label="Anee says hello">
+                            <source src="{{ asset('videos/anee-hello.mp4') }}" type="video/mp4">
+                        </video>
+                        <button type="button" class="hp-anee-film-play" aria-label="Play Anee's hello">
+                            <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
+                        </button>
+                    </figure>
                     </div>
                 </div>
 
@@ -2264,7 +2286,7 @@
     .hp-st-show .hp-film-tag { bottom: -2.6rem; }
 
     /* ---- Anee ---- */
-    /* Clipped sideways only (it held Anee's floating film until 2026-10-13). */
+    /* Clipped sideways only: Anee's film may lean past the phone's edge. */
     .hp-anee { position: relative; z-index: 2; overflow-x: clip; overflow-y: visible; color: #e8efe1;
         background: radial-gradient(90% 120% at 85% 10%, #2d4a1a 0%, transparent 60%), linear-gradient(160deg, #10160c 0%, #1c2416 55%, #24301a 100%); }
     .hp-anee-grid { display: grid; gap: 3rem; align-items: center; }
@@ -2380,16 +2402,61 @@
     /* The anee.io song, under the farm business story (2026-10-07): the
        cover big with its own play button, the words and the bar beside it. */
     .hp-album { padding-top: 0; }
-    .hp-chat { position: relative; max-width: 28rem; margin: 0 auto; border-radius: 1.6rem; color: var(--hp-ink); overflow: hidden;
-        background: linear-gradient(180deg, #34591c 50%, #f6f8f3 50%); box-shadow: 0 50px 90px -40px rgb(0 0 0 / .85); }
-    .hp-chat-top { display: flex; align-items: center; gap: .7rem; padding: .9rem 1.1rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
-    .hp-chat-top b { display: block; font-size: 1rem; }
-    .hp-chat-top small { display: flex; align-items: center; font-size: .75rem; color: #dceccb; }
-    .hp-chat-body { display: flex; flex-direction: column; gap: .8rem; padding: 1.1rem; background: #f6f8f3; min-height: 26rem; }
-    .hp-msg { max-width: 88%; padding: .75rem .9rem; border-radius: 1.1rem; font-size: .88rem; line-height: 1.55;
+    /* Meet Anee's phone (2026-10-13): a real looking phone, smaller than the
+       old chat window; her chat is its screen. The chat grows from the
+       bottom as a real one does: what has not come yet takes no room, and
+       older messages scroll off the top. */
+    .hp-anee-phone { position: relative; width: min(19rem, 80vw); margin: 0 auto; aspect-ratio: 9 / 19; padding: .55rem; border-radius: 2.8rem;
+        background: linear-gradient(145deg, #2c3625, #0d120a); box-shadow: inset 0 0 0 2px #3b4832, 0 0 0 1px rgb(255 255 255 / .06), 0 50px 90px -40px rgb(0 0 0 / .9); }
+    .hp-anee-key { position: absolute; width: 3px; border-radius: 2px; background: #2a3322; }
+    .hp-anee-key.is-power { right: -3px; top: 25%; height: 4.4rem; }
+    .hp-anee-key.is-up { left: -3px; top: 20%; height: 2.5rem; }
+    .hp-anee-key.is-down { left: -3px; top: 29%; height: 2.5rem; }
+    .hp-chat { position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 2.3rem; color: var(--hp-ink); overflow: hidden;
+        background: linear-gradient(180deg, #2f5219 50%, #f6f8f3 50%); }
+    .hp-chat-status { position: relative; display: flex; align-items: center; justify-content: space-between; padding: .6rem 1.35rem .15rem; color: #fff; background: #2f5219; }
+    .hp-chat-status b { font-size: .72rem; font-weight: 800; }
+    .hp-chat-island { position: absolute; left: 50%; top: .42rem; width: 5rem; height: 1.3rem; margin-left: -2.5rem; border-radius: 999px; background: #070a05; }
+    .hp-chat-sig { display: flex; align-items: center; gap: .3rem; }
+    .hp-chat-sig svg { height: .62rem; width: auto; fill: currentColor; }
+    .hp-chat-top { display: flex; align-items: center; gap: .6rem; padding: .55rem .95rem .7rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
+    .hp-chat-top .hp-face.is-lg { width: 2.1rem; height: 2.1rem; }
+    .hp-chat-top b { display: block; font-size: .88rem; }
+    .hp-chat-top small { display: flex; align-items: center; font-size: .66rem; color: #dceccb; }
+    .hp-chat-body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: .55rem; padding: .75rem .7rem; overflow: hidden; background: #f6f8f3;
+        -webkit-mask-image: linear-gradient(180deg, transparent, #000 2.2rem); mask-image: linear-gradient(180deg, transparent, #000 2.2rem); }
+    .hp-chat-compose { display: flex; align-items: center; gap: .45rem; margin: .1rem .55rem .35rem; padding: .35rem .35rem .35rem .7rem; border-radius: 999px;
+        font-size: .7rem; color: #98a38e; background: #fff; box-shadow: inset 0 0 0 1px #e1e8d8; }
+    .hp-chat-compose i { display: flex; color: #4a7c2a; }
+    .hp-chat-compose i svg { width: .95rem; height: .95rem; }
+    .hp-chat-compose b { display: grid; place-items: center; width: 1.6rem; height: 1.6rem; margin-left: auto; border-radius: 999px; font-size: .62rem; color: #fff; background: #4a7c2a; }
+    .hp-chat-home { display: block; width: 34%; height: 4px; margin: .1rem auto .4rem; border-radius: 999px; background: #1f2a17; opacity: .75; }
+    .hp-msg { max-width: 90%; padding: .55rem .7rem; border-radius: 1rem; font-size: .74rem; line-height: 1.5;
         opacity: 0; transform: translateY(10px) scale(.98); transition: opacity .5s var(--hp-ease), transform .5s var(--hp-ease); }
     .hp-msg.is-me { align-self: flex-end; color: #fff; background: #4a7c2a; border-bottom-right-radius: .35rem; }
-    .hp-msg-photo { width: 100%; max-height: 8.5rem; object-fit: cover; border-radius: .7rem; margin-bottom: .55rem; }
+    .hp-msg-photo { width: 100%; max-height: 5.6rem; object-fit: cover; border-radius: .6rem; margin-bottom: .45rem; }
+    /* Not come yet: no room taken, so the chat rises as each one lands. */
+    .hp-chat:not(.s1) .hp-msg.is-me, .hp-chat:not(.s5) .hp-msg.is-anee, .hp-read:not(.is-shown) { display: none; }
+    .hp-chat.s1 .hp-msg.is-me, .hp-chat.s5 .hp-msg.is-anee, .hp-read.is-shown { animation: hpChatIn .5s var(--hp-ease) both; }
+    @keyframes hpChatIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+
+    /* Anee's hello, small and tilted, over the phone's top corner. */
+    .hp-anee-film { position: absolute; z-index: 3; top: -1.9rem; right: -1.4rem; width: 10rem; aspect-ratio: 16 / 9; margin: 0; border-radius: .95rem; overflow: hidden;
+        background: #0d1408; box-shadow: 0 24px 44px -18px rgb(0 0 0 / .85), 0 0 0 3px #f5c518, 0 0 0 7px rgb(245 197 24 / .18);
+        transform: rotate(5deg); animation: hpFilmFloat 6s ease-in-out infinite; }
+    @media (min-width: 640px) { .hp-anee-film { width: 12.5rem; top: -2.2rem; right: -4.5rem; } }
+    .hp-anee-film video { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .hp-anee-film-play { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-start; padding: .55rem .6rem; border: 0; cursor: pointer;
+        background: linear-gradient(180deg, transparent 45%, rgb(9 14 6 / .6)); transition: background .28s var(--hp-ease); }
+    .hp-anee-film-play span { display: flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border-radius: 999px; background: #f5c518; color: #1a1a1a;
+        box-shadow: 0 0 0 5px rgb(245 197 24 / .25), 0 8px 18px -8px rgb(0 0 0 / .7); transition: transform .28s var(--hp-ease), opacity .28s var(--hp-ease); }
+    .hp-anee-film-play span svg { display: block; width: 1rem; height: 1rem; }
+    .hp-anee-film:hover .hp-anee-film-play span { transform: scale(1.08); }
+    .hp-anee-film.is-playing { animation-play-state: paused; }
+    .hp-anee-film.is-playing .hp-anee-film-play { background: transparent; }
+    .hp-anee-film.is-playing .hp-anee-film-play span { opacity: 0; }
+    @keyframes hpFilmFloat { 0%, 100% { transform: translateY(0) rotate(5deg); } 50% { transform: translateY(-.45rem) rotate(3.5deg); } }
+    @media (prefers-reduced-motion: reduce) { .hp-anee-film { animation: none; } }
     .hp-msg.is-anee { align-self: flex-start; background: #fff; box-shadow: 0 8px 20px -14px rgb(0 0 0 / .4); border-bottom-left-radius: .35rem; }
     .hp-msg.is-anee > b { display: block; color: var(--hp-deep); }
     .hp-msg.is-anee li b { color: var(--hp-deep); }
@@ -2398,10 +2465,10 @@
     .hp-reading { display: flex; flex-direction: column; gap: .35rem; }
     .hp-chat-body > * { transition: opacity .4s var(--hp-ease); }
     .hp-chat.is-fading .hp-chat-body > * { opacity: 0 !important; }
-    .hp-read { display: inline-flex; align-items: center; gap: .5rem; align-self: flex-start; padding: .35rem .7rem; border-radius: 999px;
-        font-size: .76rem; font-weight: 700; color: #5b6b50; background: #fff; box-shadow: inset 0 0 0 1px #e4ecdb;
+    .hp-read { display: inline-flex; align-items: center; gap: .45rem; align-self: flex-start; padding: .28rem .6rem; border-radius: 999px;
+        font-size: .66rem; font-weight: 700; color: #5b6b50; background: #fff; box-shadow: inset 0 0 0 1px #e4ecdb;
         opacity: 0; transform: translateX(-8px); transition: opacity .4s var(--hp-ease), transform .4s var(--hp-ease); }
-    .hp-read i { width: .8rem; height: .8rem; border-radius: 999px; border: 2px solid #cfe3b8; border-top-color: var(--hp-green); animation: hpSpinner .7s linear infinite; }
+    .hp-read i { flex: none; width: .7rem; height: .7rem; border-radius: 999px; border: 2px solid #cfe3b8; border-top-color: var(--hp-green); animation: hpSpinner .7s linear infinite; }
     .hp-read.is-done i { animation: none; border-color: var(--hp-green); background: var(--hp-green); }
     @keyframes hpSpinner { to { transform: rotate(360deg); } }
     .hp-chat.s1 .hp-msg.is-me, .hp-chat.s5 .hp-msg.is-anee { opacity: 1; transform: none; }
@@ -4024,6 +4091,25 @@
         }));
     }
 
+})();
+</script>
+
+<script>
+(() => {
+    /* Anee's hello over the phone: tap to play with sound, tap to stop;
+       when it ends it returns to its still. */
+    const film = document.querySelector('[data-anee-film]');
+    if (film) {
+        const v = film.querySelector('video');
+        film.querySelector('.hp-anee-film-play').addEventListener('click', () => {
+            if (!v.paused) { v.pause(); return; }
+            document.querySelectorAll('[data-album] audio').forEach((a) => a.pause());
+            film.classList.add('is-playing');
+            v.play().catch(() => film.classList.remove('is-playing'));
+        });
+        v.addEventListener('pause', () => film.classList.remove('is-playing'));
+        v.addEventListener('ended', () => { film.classList.remove('is-playing'); v.load(); });
+    }
 })();
 </script>
 

@@ -164,7 +164,7 @@
            reads about 3px low against the links beside it. Lifted by its own
            height's 9%, the letters line up with the menu, the pill and the
            buttons (measured, 2026-10-01). */
-        .pub-logo { transform: translateY(-9%); }
+        .pub-logo { display: block; flex: none; width: 200px; max-width: none; height: auto; aspect-ratio: 940 / 144; transform: translateY(-9%); }
         @keyframes pmRow { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         @media (prefers-reduced-motion: reduce) {
             .pm-burger span, .pm-in, .pm-out { transition: none; }
@@ -246,7 +246,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <a href="{{ route('home') }}" class="flex items-center shrink-0">
-                    <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="pub-logo h-7 md:h-8 w-auto">
+                    <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="pub-logo" width="200" height="31">
                 </a>
 
                 <nav id="pubNav" class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
