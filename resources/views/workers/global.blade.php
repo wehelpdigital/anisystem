@@ -119,7 +119,7 @@
         one: (id) => @json(url('/app/workers')) + '/' + id, season: (id) => @json(url('/app/workers')) + '/' + id + '/season',
         seasonWorkers: (id) => @json(route('sm.workers')) + '?id=' + id,
     };
-    const SEASONS = @json($seasons->map(fn ($s) => ['id' => (int) $s->id, 'title' => $s->title])->values());
+    const SEASONS = @json($seasons->map(fn ($s) => ['id' => (int) $s->id, 'title' => $s->title, 'closed' => $s->isLocked()])->values());
     const SKILLS = @json($skills);
     const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const MONEY = @json(\App\Support\Region::symbol());
@@ -169,8 +169,9 @@
         seasonFor = g;
         $('gwSeasonTitle').textContent = 'Add ' + g.workerName + ' to a season';
         const inIds = (g.seasons || []).map((s) => s.id);
-        $('gwSeasonList').innerHTML = SEASONS.length ? SEASONS.map((s) => `<button type="button" class="gw-srow" data-season="${s.id}" ${inIds.includes(s.id) ? 'disabled' : ''}><b>${esc(s.title)}</b><em>${inIds.includes(s.id) ? 'Already in' : 'Add'}</em></button>`).join('')
-            : '<p class="text-sm text-gray-500">No seasons yet. Make a season first, then add your workers to it.</p>';
+        const open = SEASONS.filter((s) => !s.closed);
+        $('gwSeasonList').innerHTML = open.length ? open.map((s) => `<button type="button" class="gw-srow" data-season="${s.id}" ${inIds.includes(s.id) ? 'disabled' : ''}><b>${esc(s.title)}</b><em>${inIds.includes(s.id) ? 'Already in' : 'Add'}</em></button>`).join('')
+            : '<p class="text-sm text-gray-500">' + (SEASONS.length ? 'Your seasons are all closed. Reopen one or make a new season, then add your workers to it.' : 'No seasons yet. Make a season first, then add your workers to it.') + '</p>';
         window.openSheet('gwSeasonSheet');
     };
     $('gwSeasonList').addEventListener('click', async (e) => {

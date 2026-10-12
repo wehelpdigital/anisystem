@@ -38,7 +38,7 @@ class GlobalWorkerController extends Controller
 
         return view('workers.global', [
             'skills' => AsScheduleWorker::SKILLS,
-            'seasons' => AsCroppingSchedule::active()->where('anisystemUserId', Auth::id())->where('deleteStatus', 1)->orderByDesc('id')->get(['id', 'title', 'cropType']),
+            'seasons' => AsCroppingSchedule::active()->where('anisystemUserId', Auth::id())->where('deleteStatus', 1)->orderByDesc('id')->get(['id', 'title', 'cropType', 'status']),
         ]);
     }
 
@@ -132,7 +132,11 @@ class GlobalWorkerController extends Controller
         DB::transaction(function () use ($g, $f, $offChanged) {
             $g->update($f);
             // Who they are, on every season card that is them (pay stays each season's own).
-            $cardIds = AsScheduleWorker::active()->where('globalWorkerId', $g->id)->pluck('id');
+            // A closed season is a record: its cards stay as they were.
+            $cardIds = AsScheduleWorker::active()->where('globalWorkerId', $g->id)
+                ->whereIn('croppingScheduleId', AsCroppingSchedule::active()->where('anisystemUserId', Auth::id())
+                    ->whereNotIn('status', [AsCroppingSchedule::STATUS_COMPLETED, AsCroppingSchedule::STATUS_ARCHIVED])->pluck('id'))
+                ->pluck('id');
             AsScheduleWorker::whereIn('id', $cardIds)->update(['workerName' => $f['workerName'], 'email' => $f['email'], 'phone' => $f['phone'],
                 'skills' => $f['skills'] ? json_encode($f['skills']) : null, 'updated_at' => now()]);
             // Their usual weekdays off, too, when they changed here (the season sheets write them back the same way).
@@ -170,6 +174,9 @@ class GlobalWorkerController extends Controller
         }
         $g = AsGlobalWorker::where('id', $id)->where('userId', Auth::id())->where('deleteStatus', 1)->firstOrFail();
         $season = AsCroppingSchedule::active()->where('anisystemUserId', Auth::id())->where('id', (int) $request->input('scheduleId'))->firstOrFail();
+        if ($season->isLocked()) {
+            return response()->json(['success' => false, 'message' => $season->title . ' is closed. Reopen it to add workers.'], 423);
+        }
         // The season's Logs diary records the arrival.
         $request->attributes->set('auditScheduleId', (int) $season->id);
         if (! Tier::scheduleCan($season, 'workers')) {

@@ -776,6 +776,9 @@ const __init = () => {
         const onAccount = which === 'account';
         if (which === 'mine') gwLoad();
         document.getElementById('saveWorkerBtn').hidden = onAccount || which === 'mine';
+        // The roster is a tap per person: no button row under it.
+        const foot = document.getElementById('saveWorkerBtn').closest('.sheet-footer');
+        if (foot) foot.style.display = which === 'mine' ? 'none' : '';
         const addBtn = document.getElementById('addAccountBtn');
         addBtn.hidden = !onAccount;
         addBtn.disabled = !(waFound && waFound.found && !waFound.onRoster);
@@ -1034,7 +1037,7 @@ const __init = () => {
             box.closest('#workerMinePane').dataset.waiting = rows.length;
             box.innerHTML = rows.length ? rows.map((g, i) => `<button type="button" class="gw-row" data-gw="${g.id}" style="--i:${i}">
                     <span class="gw-av">${gwEsc((g.workerName || '?').trim().charAt(0).toUpperCase())}</span>
-                    <span class="gw-t"><b>${gwEsc(g.workerName)}</b><small>${gwEsc([g.phone, g.email].filter(Boolean).join(' · ') || 'No contact yet')}${Number(g.costPerHalfDay) ? ' · ' + gwEsc(Number(g.costPerHalfDay).toLocaleString()) + ' a half day' : ''}</small></span>
+                    <span class="gw-t"><b>${gwEsc(g.workerName)}</b><small>${gwEsc([g.phone, g.email].filter(Boolean).join(' · ') || 'No contact yet')}${Number(g.costPerHalfDay) ? ' · ' + gwEsc(@json(\App\Support\Region::symbol()) + Number(g.costPerHalfDay).toLocaleString()) + ' a half day' : ''}</small></span>
                     <span class="gw-add">Add</span></button>`).join('')
                 : '<p class="text-sm text-gray-500">Everyone on your roster is in this season already. Add someone new in the New worker tab.</p>';
         } catch (err) { box.innerHTML = '<p class="text-sm text-gray-500">' + gwEsc(err.message) + '</p>'; }
