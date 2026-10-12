@@ -513,12 +513,6 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                @if ($st['key'] === 'auto' && $i === 0)
-                                    <button type="button" class="hp-st-manual" data-go-step="1">
-                                        <span><b>Prefer to do it yourself?</b> Start with step 2, Plan the season.</span>
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
-                                    </button>
-                                @endif
                             </div>
                         @endforeach
                     </div>
@@ -2201,19 +2195,12 @@
         .hp-st-or b::before, .hp-st-or b::after { content: ''; flex: 1; height: 0; border-top: 2px dashed #c9dcb4; }
         .hp-st-or small { max-width: 15rem; font-size: .8rem; }
     }
-    .hp-st-manual { display: flex; align-items: center; gap: .7rem; width: 100%; margin-top: 1rem; padding: .85rem 1rem; border-radius: 1rem; text-align: left;
-        font-size: .9rem; color: #3f4b36; background: #f6f9f1; border: 1px dashed #b9d69a; cursor: pointer;
-        transition: background-color .28s var(--hp-ease), border-color .28s var(--hp-ease), transform .28s var(--hp-ease); }
-    .hp-st-manual b { color: var(--hp-ink); }
-    .hp-st-manual svg { flex: none; width: 1.2rem; height: 1.2rem; margin-left: auto; color: var(--hp-green); transition: transform .28s var(--hp-ease); }
-    .hp-st-manual:hover { background: #eef6e4; border-color: var(--hp-green); }
-    .hp-st-manual:hover svg { transform: translateX(3px); }
-    @media (prefers-reduced-motion: reduce) { .hp-st-face { animation: none; } .hp-st-manual, .hp-st-manual svg { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { .hp-st-face { animation: none; } }
     .hp-st-body { display: grid; gap: 2rem; align-items: center; border-radius: 1.75rem; padding: 1.4rem; background: #fff;
         border: 1px solid #e1ead6; box-shadow: 0 30px 60px -44px rgb(20 33 12 / .55); }
     @media (min-width: 768px) { .hp-st-body { grid-template-columns: minmax(0, 1fr) auto; padding: 2rem; gap: 2.4rem; } }
     .hp-st-panes { display: grid; }
-    .hp-st-pane { grid-area: 1 / 1; scroll-margin-top: 6rem; opacity: 0; visibility: hidden; transform: translateY(10px);
+    .hp-st-pane { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(10px);
         transition: opacity .45s var(--hp-ease), transform .45s var(--hp-ease), visibility .45s; }
     .hp-st-pane.is-on { opacity: 1; visibility: visible; transform: none; }
     .hp-st-when { font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-green); }
@@ -3776,12 +3763,6 @@
             timer = setTimeout(() => go(at + 1, false), DWELL);
         };
         tabs.forEach((t, i) => t.addEventListener('click', () => go(i, true)));
-        // Anee Auto's "do it yourself" button: on to step 2, the pane brought into view if it is above.
-        steps.querySelectorAll('[data-go-step]').forEach((b) => b.addEventListener('click', () => {
-            go(Number(b.dataset.goStep) || 0, true);
-            const top = panes[at].getBoundingClientRect().top;
-            if (top < 70) panes[at].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-        }));
         steps.addEventListener('keydown', (e) => {
             if (!e.target.classList.contains('hp-st-tab')) return;
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); go(at + 1, true); tabs[at].focus(); }
