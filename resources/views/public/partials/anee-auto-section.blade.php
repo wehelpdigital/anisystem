@@ -9,19 +9,19 @@
     // [face, what she is doing, centre %, size rem, delay s, rise s, sway rem]: two columns, either side of the phone.
     $aaBubbles = [
         // Left of the phone: one every 2.5 s, all at one speed, so they never run into each other.
-        ['thinking', 'Reading the forecast', 10.5, 3.3, 0, 15, .6],
-        ['idea', null, 9.5, 2.4, 2.5, 15, .4],
-        ['starstruck', 'Looking up your variety', 11, 3, 5, 15, .6],
-        ['leaf', null, 9.5, 2.4, 7.5, 15, .4],
-        ['wink', 'Moving a task to a dry day', 10.5, 2.9, 10, 15, .6],
-        ['cheer', null, 9.5, 2.4, 12.5, 15, .4],
+        ['thinking', 'Reading the forecast', 5, 3.3, 0, 15, .6],
+        ['idea', null, 6.5, 2.4, 2.5, 15, .4],
+        ['starstruck', 'Looking up your variety', 5, 3, 5, 15, .6],
+        ['leaf', null, 6.5, 2.4, 7.5, 15, .4],
+        ['wink', 'Moving a task to a dry day', 5, 2.9, 10, 15, .6],
+        ['cheer', null, 6.5, 2.4, 12.5, 15, .4],
         // Right of the phone, half a step behind.
-        ['thumbsup', 'Timing the fertilizer', 89.5, 3.2, 1.25, 15, -.6],
-        ['salute', null, 90.5, 2.3, 3.75, 15, -.4],
-        ['concerned', 'Watching for typhoons', 89, 3.1, 6.25, 15, -.6],
-        ['happy', null, 90.5, 2.3, 8.75, 15, -.4],
-        ['yes', 'Checking your soil', 89.5, 2.8, 11.25, 15, -.6],
-        ['grin', 'Emailing your workers', 90, 2.7, 13.75, 15, -.4],
+        ['thumbsup', 'Timing the fertilizer', 95, 3.2, 1.25, 15, -.6],
+        ['salute', null, 93.5, 2.3, 3.75, 15, -.4],
+        ['concerned', 'Watching for typhoons', 95, 3.1, 6.25, 15, -.6],
+        ['happy', null, 93.5, 2.3, 8.75, 15, -.4],
+        ['yes', 'Checking your soil', 95, 2.8, 11.25, 15, -.6],
+        ['grin', 'Emailing your workers', 95, 2.7, 13.75, 15, -.4],
     ];
 @endphp
 <section class="hp-sec hp-auto" id="anee-auto" aria-labelledby="hpAutoH">
@@ -52,7 +52,7 @@
                 <div class="hp-auto-glow"></div>
                 <div class="hp-auto-bubbles">
                     @foreach ($aaBubbles as [$bf, $bl, $bx, $bs, $bd, $bt, $bw])
-                        <span class="hp-auto-bub{{ $bl ? ' has-say' : '' }}" style="--x:{{ $bx }}%;--s:{{ $bs }}rem;--d:{{ $bd }}s;--t:{{ $bt }}s;--w:{{ $bw }}rem">
+                        <span class="hp-auto-bub{{ $bl ? ' has-say' : '' }}" style="--x:{{ $bx }};--s:{{ $bs }}rem;--d:{{ $bd }}s;--t:{{ $bt }}s;--w:{{ $bw }}rem">
                             <span class="hp-auto-bub-in"><img src="{{ $aaE($bf) }}" alt="" loading="lazy">@if ($bl)<em>{{ $bl }}</em>@endif</span>
                         </span>
                     @endforeach
@@ -121,9 +121,10 @@
     .hp-auto-glow { position: absolute; inset: 8% 6%; z-index: -2; border-radius: 50%; filter: blur(30px);
         background: radial-gradient(closest-side, rgb(245 197 24 / .45), rgb(107 159 61 / .22) 60%, transparent); animation: hpAutoBreath 8s ease-in-out infinite; }
     @keyframes hpAutoBreath { 50% { transform: scale(1.08); opacity: .8; } }
-    .hp-auto-bubbles { position: absolute; inset: 0; z-index: -1; clip-path: inset(0 -6rem);
+    /* The bubbles' box reaches 4rem past the stage on each side, so a word at the edge is not cut off by the fade; --x still counts across the stage. */
+    .hp-auto-bubbles { position: absolute; inset: 0 -4rem; z-index: -1;
         -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 82%, transparent); mask-image: linear-gradient(180deg, transparent, #000 14%, #000 82%, transparent); }
-    .hp-auto-bub { position: absolute; left: var(--x); bottom: -6rem; width: 6.6rem; margin-left: -3.3rem; display: flex; justify-content: center; animation: hpBubRise var(--t) linear var(--d) infinite both; }
+    .hp-auto-bub { position: absolute; left: calc(4rem + (100% - 8rem) * var(--x) / 100); bottom: -6rem; width: 6.6rem; margin-left: -3.3rem; display: flex; justify-content: center; animation: hpBubRise var(--t) linear var(--d) infinite both; }
     .hp-auto-bub-in { display: inline-flex; flex-direction: column; align-items: center; gap: .3rem; animation: hpBubSway calc(var(--t) / 3) ease-in-out var(--d) infinite alternate; }
     .hp-auto-bub img { width: var(--s); height: var(--s); flex: none; padding: .3rem; border-radius: 999px; background: rgb(255 255 255 / .85);
         box-shadow: 0 10px 22px -12px rgb(70 55 0 / .55), inset 0 0 0 1px rgb(255 255 255 / .9); backdrop-filter: blur(4px); }
@@ -131,7 +132,9 @@
         background: rgb(255 255 255 / .9); box-shadow: 0 8px 18px -12px rgb(70 55 0 / .6); }
     @keyframes hpBubRise { 0% { transform: translateY(0) scale(.6); opacity: 0; } 8% { opacity: 1; transform: translateY(-4rem) scale(1); } 85% { opacity: 1; } 100% { transform: translateY(-50rem) scale(1.02); opacity: 0; } }
     @keyframes hpBubSway { from { transform: translateX(calc(var(--w) * -1)); } to { transform: translateX(var(--w)); } }
-    @media (max-width: 639.98px) { .hp-auto-bub em { display: none; } }
+    /* Two columns under 1200px leave the phone no room for words beside it: the faces alone. */
+    @media (min-width: 1024px) and (max-width: 1199.98px) { .hp-auto-bub em { display: none; } }
+    @media (max-width: 639.98px) { .hp-auto-bub em { display: none; } .hp-auto-bubbles { inset: 0; } .hp-auto-bub { left: clamp(2rem, calc(var(--x) * 1%), calc(100% - 2rem)); } }
 
     /* The phone: frame, side keys, the island, the status bar, the home line. */
     .hp-auto-phone { position: relative; width: clamp(16rem, 74vw, 20.5rem); aspect-ratio: 9 / 19; padding: .62rem; border-radius: 3rem;
