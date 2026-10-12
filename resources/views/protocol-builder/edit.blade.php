@@ -601,10 +601,6 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg><span class="pb-tool-w">Redo</span>
         </button>
         <span class="pb-save" id="pbSaveState" aria-live="polite"></span>
-        {{-- NPK Plus (2026-10-07): the protocol's fertilizer added up, and Anee's reading (protocol-builder.partials.npk). --}}
-        <button type="button" class="pb-tool" id="pbNpkTop" data-for="tasks" title="NPK Plus: the fertilizer in this protocol, added up">
-            <img src="{{ asset('images/icons/npk.svg') }}" alt="" style="width:1.05rem;height:1.05rem"><span class="pb-tool-w">NPK</span>
-        </button>
         <button type="button" class="pb-tool is-add" id="pbAddTop" data-for="tasks">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Task
         </button>
@@ -1070,7 +1066,6 @@
 
 @include('partials.user-tags')
 @include('sm.partials.anee-wait')
-@include('protocol-builder.partials.npk', ['protocol' => $protocol])
 
 <script>
 (() => {

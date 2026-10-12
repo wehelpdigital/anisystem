@@ -3034,7 +3034,7 @@
             #actToolbar > #readinessBtn,
             #actToolbar > #searchToolbarBtn,
             #actHeaderBar > #todayTomorrowBtn,
-            #actHeaderBar > #npkPlanBtn,
+            #actHeaderBar > #harvestDatesBtn,
             #actHeaderBar > #addActivityWrap > .btn { width: 2.25rem;
                 padding-left: 0; padding-right: 0; }
         }
@@ -4305,12 +4305,11 @@
     <button type="button" id="manageVersionBtn" class="icon-btn shrink-0" title="Rename or delete the current version">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
     </button>
-    {{-- NPK Plus (2026-10-07): the season's fertilizer lot by lot, and
-         Anee's reading of it (sm.partials.npk-plan owns the sheet). --}}
-    <button type="button" id="npkPlanBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-            title="NPK Plus: the fertilizer in this season, lot by lot">
-        <img src="{{ asset('images/icons/npk.svg') }}" alt="" class="w-4 h-4" style="transform:scale(1.25)">
-        <span class="hidden sm:inline">NPK</span>
+    {{-- Harvest dates (2026-10-12, where NPK Plus was): each lot's harvest by
+         the calendar and as Anee realigned it (sm.partials.harvest-dates). --}}
+    <button type="button" id="harvestDatesBtn" class="btn btn-white btn-sm shrink-0" data-activities-only title="Harvest dates of every lot">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V3.5"/><path d="M5 4h13l-2.2 4L18 12H5"/><path d="M9.3 4v8M13.6 4v8M5 8h11.8" stroke-width="1.3"/></svg>
+        <span class="hidden sm:inline">Harvest</span>
     </button>
     <button type="button" id="todayTomorrowBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
             title="Scroll to today">
@@ -6584,7 +6583,7 @@
 @include('sm.partials.inventory-js', ['schedule' => $schedule, 'standalone' => false])
 {{-- The tag picker: one shared sheet for every form on the board. --}}
 @include('sm.partials.tag-picker')
-@include('sm.partials.npk-plan', ['schedule' => $schedule])
+@include('sm.partials.harvest-dates', ['schedule' => $schedule])
 @include('community.partials.lightbox-js')
 <script>
     // Filter-sheet extras: active-filter count badge on the toolbar button, and
