@@ -31,8 +31,8 @@ class AskAnee
     /** @param array{name?: string, farm?: string} $who the visitor and their farm, given before the question */
     public function classify(string $question, array $who = []): array
     {
-        // The quick model (2026-10-12): a yes or no and a few sentences.
-        $settings = AiSetting::current()->forField('PH')->fast();
+        // A visitor's question: the main model, like every answer to a person (AiSetting::fast).
+        $settings = AiSetting::current()->forField('PH');
         $candidates = $this->candidates($question);
         $list = $candidates->map(fn ($p) => $p->id . ': ' . $p->title)->implode("\n");
         $crops = collect(CropCatalog::CROPS)->map(fn ($c, $k) => $k . ' = ' . CropCatalog::label($k))->implode('; ');

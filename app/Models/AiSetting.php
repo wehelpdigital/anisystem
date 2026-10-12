@@ -299,12 +299,14 @@ class AiSetting extends BaseModel
     public ?string $fieldCountry = null;
 
     /**
-     * The quick model of each provider (2026-10-12, the owner's call): for the
-     * house's own simple writing, where the top model costs about four times
-     * as much for no difference a reader would see: the daily farm news
-     * roundup and the Ask Anee question check. Paid analyses, Anee Auto and
-     * the chat stay on the model set in the mother app. AI_FAST_MODEL in the
-     * environment overrides it.
+     * The quick model of each provider, for what the SYSTEM writes on its own
+     * (the owner's rule, 2026-10-12): the daily farm news roundup (cron) and
+     * the posts the mother app's writer drafts. Everything that answers a
+     * person stays on the model set in the mother app, for accuracy: the chat
+     * and every analysis members pay for, Anee Auto, Try and Ask Anee (its
+     * question check and its answer), the payment receipt reading. A new AI
+     * job uses fast() only if nobody is waiting on its answer. AI_FAST_MODEL
+     * in the environment overrides the model.
      */
     public const FAST_MODELS = [
         'gemini' => 'gemini-flash-latest',

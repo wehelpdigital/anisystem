@@ -37,7 +37,12 @@ class PageWriter
      */
     public function write(array $brief, ?callable $beat = null): array
     {
+        // `fast`: a post the system drafts on its own (the mother's writer) runs on the quick model;
+        // an answer to a person (Try and Ask Anee) does not (AiSetting::fast).
         $settings = AiSetting::current()->forField($brief['country'] ?? 'PH');
+        if (! empty($brief['fast'])) {
+            $settings = $settings->fast();
+        }
         $json = $this->jsonPrompt($brief);
         $parse = fn (string $t) => $this->parse($t);
         $result = ! empty($brief['research'])

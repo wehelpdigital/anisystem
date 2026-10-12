@@ -71,8 +71,9 @@ class MotherWriterController extends Controller
             $beat = fn (string $phase, int $try = 1) => DB::table('as_writer_jobs')->where('id', $id)
                 ->update(['phase' => $phase, 'try' => $try, 'updated_at' => now()]);
             try {
-                $done = app(PageWriter::class)->write($brief, $beat);
-                \App\Support\AiUsage::record('page-writer', 0, 0, $id, \App\Models\AiSetting::current(), $done['result'], 0);
+                // A post the system drafts: the quick model (AiSetting::fast).
+                $done = app(PageWriter::class)->write($brief + ['fast' => true], $beat);
+                \App\Support\AiUsage::record('page-writer', 0, 0, $id, \App\Models\AiSetting::current()->fast(), $done['result'], 0);
                 DB::table('as_writer_jobs')->where('id', $id)->update($done['ok']
                     ? ['status' => 'ready', 'result' => json_encode($done['page'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'updated_at' => now()]
                     : ['status' => 'failed', 'error' => Str::limit((string) $done['error'], 480, ''), 'updated_at' => now()]);
