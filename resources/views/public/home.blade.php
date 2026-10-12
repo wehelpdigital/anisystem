@@ -1554,6 +1554,53 @@
         </div>
     </section>
 
+    {{-- ================= FINAL CTA ================= --}}
+    <section class="hp-final" data-final>
+        <img src="{{ asset('images/site/photos/team-thumbs.jpg') }}" alt="Two farmers giving a thumbs up beside their rice field" class="hp-final-bg" loading="lazy">
+        <div class="hp-final-shade" aria-hidden="true"></div>
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
+            {{-- Where you are now, and where you could be (2026-10-07): the
+                 farmer's life today (money, debt, worry, risk, the next
+                 generation) and where it could be, an arrow between the two. --}}
+            <p class="hp-kick">Think about it, seriously</p>
+            <h2 class="hp-h2 hp-final-h"><span>Think About Where You Are Now.</span> <em>Versus Where You Could Be With anee.io in 5 Years.</em></h2>
+            <p class="hp-p">Same field, same hands, same rain. What changes is the life your farm gives back to you and your family.</p>
+            @php
+                // Not features: the life a farm gives you now, and the one it could (the owner's ask, 2026-10-07).
+                $ws = [
+                    ['Money is tight, and the season is hard to budget.', 'You know what the season will cost before you plant, and the money lasts to harvest.'],
+                    ['You borrow to finish the season, and the interest eats the harvest.', 'You pay for the next season from your own savings.'],
+                    ['You work from dawn to dark and still lie awake worrying.', 'You end each day knowing tomorrow is already planned.'],
+                    ['One bad season can wipe out years of hard work.', 'You see trouble coming early and protect what you have built.'],
+                    ['Your harvest stays the same, year after year.', 'Every season, your yield and your income grow.'],
+                    ['Your children see farming as a hard life to escape.', 'Your children see a farm worth taking over.'],
+                ];
+            @endphp
+            <div class="hp-ws" aria-label="Where your farm is now, and where it could be with anee.io">
+                <div class="hp-ws-head" aria-hidden="true">
+                    <span class="is-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0113 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Where you are now</span>
+                    <span></span>
+                    <span class="is-yes"><img src="{{ $face }}" alt="">Where you could be with anee.io</span>
+                </div>
+                @foreach ($ws as $i => [$no, $yes])
+                    <div class="hp-ws-row" style="--k: {{ $i }}">
+                        <div class="hp-ws-no"><span class="sr-only">Now: </span><p>{{ $no }}</p></div>
+                        <span class="hp-ws-to" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-5-5l5 5-5 5"/></svg></span>
+                        <div class="hp-ws-yes"><span class="sr-only">With anee.io: </span><i aria-hidden="true">{!! $tick !!}</i><p>{{ $yes }}</p></div>
+                    </div>
+                @endforeach
+            </div>
+            <p class="hp-ws-close">The distance between the two is <b>one free account.</b></p>
+            <div class="hp-cta">
+                <div class="hp-cta-row">
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
+                </div>
+                <p class="hp-cta-note">Free forever on Libre. No card needed. <a href="{{ route('contact') }}">Talk to us</a> if you have a question for a person.</p>
+            </div>
+        </div>
+    </section>
+
+    {{-- After Think about it (2026-10-13, the owner): the crops, the guides, then the questions. --}}
     {{-- ================= EVERY CROP YOU GROW (the Philippine face) ================= --}}
     @if ($ph)
     @php
@@ -1775,52 +1822,6 @@
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
     @endpush
     @endif
-
-    {{-- ================= FINAL CTA ================= --}}
-    <section class="hp-final" data-final>
-        <img src="{{ asset('images/site/photos/team-thumbs.jpg') }}" alt="Two farmers giving a thumbs up beside their rice field" class="hp-final-bg" loading="lazy">
-        <div class="hp-final-shade" aria-hidden="true"></div>
-        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
-            {{-- Where you are now, and where you could be (2026-10-07): the
-                 farmer's life today (money, debt, worry, risk, the next
-                 generation) and where it could be, an arrow between the two. --}}
-            <p class="hp-kick">Think about it, seriously</p>
-            <h2 class="hp-h2 hp-final-h"><span>Think About Where You Are Now.</span> <em>Versus Where You Could Be With anee.io in 5 Years.</em></h2>
-            <p class="hp-p">Same field, same hands, same rain. What changes is the life your farm gives back to you and your family.</p>
-            @php
-                // Not features: the life a farm gives you now, and the one it could (the owner's ask, 2026-10-07).
-                $ws = [
-                    ['Money is tight, and the season is hard to budget.', 'You know what the season will cost before you plant, and the money lasts to harvest.'],
-                    ['You borrow to finish the season, and the interest eats the harvest.', 'You pay for the next season from your own savings.'],
-                    ['You work from dawn to dark and still lie awake worrying.', 'You end each day knowing tomorrow is already planned.'],
-                    ['One bad season can wipe out years of hard work.', 'You see trouble coming early and protect what you have built.'],
-                    ['Your harvest stays the same, year after year.', 'Every season, your yield and your income grow.'],
-                    ['Your children see farming as a hard life to escape.', 'Your children see a farm worth taking over.'],
-                ];
-            @endphp
-            <div class="hp-ws" aria-label="Where your farm is now, and where it could be with anee.io">
-                <div class="hp-ws-head" aria-hidden="true">
-                    <span class="is-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0113 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Where you are now</span>
-                    <span></span>
-                    <span class="is-yes"><img src="{{ $face }}" alt="">Where you could be with anee.io</span>
-                </div>
-                @foreach ($ws as $i => [$no, $yes])
-                    <div class="hp-ws-row" style="--k: {{ $i }}">
-                        <div class="hp-ws-no"><span class="sr-only">Now: </span><p>{{ $no }}</p></div>
-                        <span class="hp-ws-to" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-5-5l5 5-5 5"/></svg></span>
-                        <div class="hp-ws-yes"><span class="sr-only">With anee.io: </span><i aria-hidden="true">{!! $tick !!}</i><p>{{ $yes }}</p></div>
-                    </div>
-                @endforeach
-            </div>
-            <p class="hp-ws-close">The distance between the two is <b>one free account.</b></p>
-            <div class="hp-cta">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
-                </div>
-                <p class="hp-cta-note">Free forever on Libre. No card needed. <a href="{{ route('contact') }}">Talk to us</a> if you have a question for a person.</p>
-            </div>
-        </div>
-    </section>
 
 @endsection
 
