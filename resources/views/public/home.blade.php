@@ -40,8 +40,21 @@
     // The hero phone, in turn: ask Anee, draw the farm on a map, move a job
     // to another day and tick it done, then answer in a discussion. Short
     // cuts made for this spot (the full films play in How It Works).
-    $heroFilms = collect([['hero-chat', 'Chat with Anee'], ['hero-maps', 'Draw your farm on a map'], ['hero-board', 'Move and finish activities'], ['hero-talk', 'Join the discussions']])
-        ->map(fn ($f) => $filmOf($f[0], $f[1]))->filter()->values();
+    // The hero phone's reel (2026-10-13, the owner: "smoother, and present
+    // better things"): the strongest tools, one crossfading into the next.
+    // Each plays only its best seconds, from and to: the question going in
+    // and Anee's answer, the job moved and ticked done, the radar moving,
+    // the field measured. The films' openings are mostly a screen loading.
+    $heroFilms = collect([
+        ['hero-chat', 'Ask Anee, even with a photo', 9, 19.5],
+        ['auto', 'Anee Auto plans your season', 0, 8.5],
+        ['hero-board', 'Your tasks, day by day', 4, 15.5],
+        ['skyWeather', 'Rain and typhoons over your farm', 3.5, 12.5],
+        ['pestFinder', 'Find the pest, and what to spray', 1, 10],
+        ['npk', 'Every nutrient in your fertilizer', 11.5, 18],
+        ['profit', 'Your profit, lot by lot', 0, 7.5],
+        ['hero-maps', 'Measure your field on a map', 11, 18.4],
+    ])->map(fn ($f) => ($film = $filmOf($f[0], $f[1])) ? $film + ['from' => $f[2], 'to' => $f[3]] : null)->filter()->values();
     $aneePrice = $R::priceTag($R::tierPrice('libreAnee', 'month'));
     $face = asset('images/anee/avatar-160.jpg');
     $faceLg = asset('images/anee/avatar-512.jpg');
@@ -111,10 +124,12 @@
                 <div class="hp-phone is-hero">
                     <div class="hp-phone-scr">
                         @if ($heroFilms->isNotEmpty())
-                            <video class="hp-film" data-hero-film muted playsinline preload="metadata"
-                                   poster="{{ $heroFilms[0]['poster'] }}" data-films="{{ json_encode($heroFilms) }}" aria-label="The anee.io app on a phone">
-                                <source src="{{ $heroFilms[0]['src'] }}" type="video/mp4">
-                            </video>
+                            {{-- Two players, one showing and one loading the next, so a
+                                 change is a crossfade, never a blank screen. --}}
+                            <video class="hp-film hp-reel is-on" data-hero-film data-films="{{ json_encode($heroFilms) }}" muted playsinline preload="auto"
+                                   poster="{{ $heroFilms[0]['poster'] }}" src="{{ $heroFilms[0]['src'] }}#t={{ $heroFilms[0]['from'] }}" aria-label="The anee.io app on a phone"></video>
+                            <video class="hp-film hp-reel" data-hero-film muted playsinline preload="auto" aria-hidden="true"></video>
+                            <span class="hp-reel-bars" aria-hidden="true">@foreach ($heroFilms as $hf)<i><b></b></i>@endforeach</span>
                         @endif
                     </div>
                     <span class="hp-film-tag" data-hero-tag>{{ $heroFilms[0]['name'] ?? 'anee.io' }}</span>
@@ -612,15 +627,11 @@
         $xMark = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" aria-hidden="true"><path stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></svg>';
     @endphp
     <section class="hp-anee spark-field on-dark">
-        {{-- Her section moves too (2026-10-13, the owner): two slow lights,
-             a field of dots with a reading line sweeping across it (she reads
-             the farm), and motes of data rising toward her. --}}
+        {{-- Her section moves too (2026-10-13, the owner: "a moving green
+             gradient, like the daily tip's background", no shine): soft green
+             glows drifting slowly across the dark ground. --}}
         <div class="hp-anee-bg" aria-hidden="true">
-            <i class="hp-anee-aura is-a"></i><i class="hp-anee-aura is-b"></i>
-            <span class="hp-anee-scan"></span>
-            @foreach ([[8, 0, 14], [19, 3.5, 17], [31, 7, 13], [46, 1.5, 19], [58, 5, 15], [69, 9, 18], [81, 2.5, 14], [92, 6.5, 16], [13, 11, 20], [74, 12.5, 17]] as [$mx, $md, $mt])
-                <b class="hp-anee-mote" style="--x: {{ $mx }}%; --d: {{ $md }}s; --t: {{ $mt }}s"></b>
-            @endforeach
+            <i class="hp-anee-aura is-a"></i><i class="hp-anee-aura is-b"></i><i class="hp-anee-aura is-c"></i>
         </div>
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
             <div class="hp-anee-grid">
@@ -663,6 +674,7 @@
                             <span><b>Anee</b><small><i class="hp-live"></i>Your smart farm technician</small></span>
                         </div>
                         <div class="hp-chat-body">
+                            <span class="hp-chat-day">Today</span>
                             <div class="hp-msg is-me">
                                 <img src="{{ asset($chat['photo']) }}" alt="A rice leaf with pale blotches that have brown edges" class="hp-msg-photo" loading="lazy">
                                 <p>{{ $chat['question'] }}</p>
@@ -2005,6 +2017,15 @@
     .hp-phone.is-sm .hp-phone-scr { border-radius: 1.7rem; }
     .hp-film { display: block; width: 100%; height: 100%; object-fit: cover; transition: opacity .35s var(--hp-ease); }
     .hp-film.is-swapping { opacity: 0; }
+    /* The hero reel: two stacked players crossfading, the incoming one easing
+       from a touch larger; story bars at the top fill with each film. */
+    .hp-reel { position: absolute; inset: 0; opacity: 0; transform: scale(1.04); transition: opacity .7s var(--hp-ease), transform 1.1s var(--hp-ease); }
+    .hp-reel.is-on { opacity: 1; transform: none; z-index: 1; }
+    .hp-reel-bars { position: absolute; z-index: 2; left: .7rem; right: .7rem; top: .45rem; display: flex; gap: 3px; padding-top: .1rem; }
+    .hp-reel-bars::before { content: ''; position: absolute; inset: -.45rem -.7rem -1.4rem; z-index: -1; background: linear-gradient(180deg, rgb(10 16 6 / .35), transparent); border-radius: 2rem 2rem 0 0; }
+    .hp-reel-bars i { flex: 1; height: 3px; border-radius: 3px; overflow: hidden; background: rgb(255 255 255 / .45); }
+    .hp-reel-bars b { display: block; height: 100%; width: 100%; background: #f5c518; transform: scaleX(0); transform-origin: left; will-change: transform; }
+    .hp-reel-bars i.is-done b { transform: none; }
     .hp-film-tag { position: absolute; left: 50%; bottom: -1.1rem; transform: translateX(-50%); white-space: nowrap;
         padding: .45rem .95rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--hp-ink);
         background: var(--hp-sun); box-shadow: 0 12px 26px -12px rgb(0 0 0 / .6);
@@ -2396,21 +2417,14 @@
     /* ---- Anee ---- */
     /* Clipped sideways only: Anee's film may lean past the phone's edge. */
     .hp-anee-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-    .hp-anee-bg::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgb(200 230 160 / .09) 1px, transparent 1.5px); background-size: 26px 26px;
-        -webkit-mask-image: radial-gradient(80% 70% at 60% 45%, #000, transparent); mask-image: radial-gradient(80% 70% at 60% 45%, #000, transparent); }
-    .hp-anee-aura { position: absolute; border-radius: 999px; filter: blur(70px); opacity: .32; }
-    .hp-anee-aura.is-a { width: 34rem; height: 34rem; left: -8rem; top: 10%; background: #4a7c2a; animation: hpAneeAuraA 22s ease-in-out infinite alternate; }
-    .hp-anee-aura.is-b { width: 28rem; height: 28rem; right: -6rem; bottom: 5%; background: #c99a0a; opacity: .2; animation: hpAneeAuraB 26s ease-in-out infinite alternate; }
-    @keyframes hpAneeAuraA { to { transform: translate(14rem, 6rem) scale(1.15); } }
-    @keyframes hpAneeAuraB { to { transform: translate(-12rem, -8rem) scale(.9); } }
-    /* Her reading line: a soft gold band sweeping across the dots. */
-    .hp-anee-scan { position: absolute; inset: -20% 0; background: linear-gradient(100deg, transparent 42%, rgb(245 197 24 / .07) 49%, rgb(245 197 24 / .12) 50%, rgb(245 197 24 / .07) 51%, transparent 58%);
-        background-size: 260% 100%; animation: hpAneeScan 11s cubic-bezier(.45,0,.55,1) infinite; }
-    @keyframes hpAneeScan { from { background-position: 130% 0; } to { background-position: -30% 0; } }
-    .hp-anee-mote { position: absolute; left: var(--x); bottom: -1rem; width: 4px; height: 4px; border-radius: 999px; background: #f4d778; box-shadow: 0 0 8px 2px rgb(245 197 24 / .5);
-        opacity: 0; animation: hpAneeMote var(--t) linear var(--d) infinite; }
-    @keyframes hpAneeMote { 0% { opacity: 0; transform: translateY(0); } 10% { opacity: .8; } 80% { opacity: .6; } 100% { opacity: 0; transform: translateY(-42rem) translateX(1.5rem); } }
-    @media (prefers-reduced-motion: reduce) { .hp-anee-aura, .hp-anee-scan, .hp-anee-mote { animation: none; } .hp-anee-mote { display: none; } }
+    .hp-anee-aura { position: absolute; border-radius: 50%; pointer-events: none; background: radial-gradient(closest-side, rgb(134 181 86 / .42), transparent 70%); }
+    .hp-anee-aura.is-a { width: 60rem; height: 44rem; left: -10%; top: -12%; animation: hpAneeGlowA 14s ease-in-out infinite; }
+    .hp-anee-aura.is-b { width: 54rem; height: 40rem; right: -12%; top: 30%; background: radial-gradient(closest-side, rgb(106 163 58 / .36), transparent 70%); animation: hpAneeGlowB 18s ease-in-out infinite; }
+    .hp-anee-aura.is-c { width: 46rem; height: 34rem; left: 25%; bottom: -18%; background: radial-gradient(closest-side, rgb(74 124 42 / .4), transparent 70%); animation: hpAneeGlowC 22s ease-in-out infinite; }
+    @keyframes hpAneeGlowA { 0%, 100% { transform: translateX(-12%) scale(.9); opacity: .55; } 50% { transform: translateX(22%) scale(1.1); opacity: .95; } }
+    @keyframes hpAneeGlowB { 0%, 100% { transform: translateX(10%) scale(1.05); opacity: .8; } 50% { transform: translateX(-24%) scale(.9); opacity: .5; } }
+    @keyframes hpAneeGlowC { 0%, 100% { transform: translate(-10%, 0) scale(.95); opacity: .5; } 50% { transform: translate(14%, -12%) scale(1.12); opacity: .9; } }
+    @media (prefers-reduced-motion: reduce) { .hp-anee-aura { animation: none; } }
     .hp-anee { position: relative; z-index: 2; overflow-x: clip; overflow-y: visible; color: #e8efe1;
         background: radial-gradient(90% 120% at 85% 10%, #2d4a1a 0%, transparent 60%), linear-gradient(160deg, #10160c 0%, #1c2416 55%, #24301a 100%); }
     .hp-anee-grid { display: grid; gap: 3rem; align-items: center; }
@@ -2543,19 +2557,24 @@
     .hp-anee-key.is-power { right: -3px; top: 25%; height: 4.4rem; }
     .hp-anee-key.is-up { left: -3px; top: 20%; height: 2.5rem; }
     .hp-anee-key.is-down { left: -3px; top: 29%; height: 2.5rem; }
-    .hp-chat { position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 2.3rem; color: var(--hp-ink); overflow: hidden;
-        background: linear-gradient(180deg, #2f5219 50%, #f6f8f3 50%); }
+    .hp-chat { position: relative; display: flex; flex-direction: column; height: 100%; border-radius: 2.3rem; color: var(--hp-ink); overflow: hidden; background: #f6f8f3; }
     .hp-chat-status { position: relative; display: flex; align-items: center; justify-content: space-between; padding: .6rem 1.35rem .15rem; color: #fff; background: #2f5219; }
     .hp-chat-status b { font-size: .72rem; font-weight: 800; }
     .hp-chat-island { position: absolute; left: 50%; top: .42rem; width: 5rem; height: 1.3rem; margin-left: -2.5rem; border-radius: 999px; background: #070a05; }
     .hp-chat-sig { display: flex; align-items: center; gap: .3rem; }
     .hp-chat-sig svg { height: .62rem; width: auto; fill: currentColor; }
-    .hp-chat-top { display: flex; align-items: center; gap: .6rem; padding: .55rem .95rem .7rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
+    .hp-chat-top { position: relative; z-index: 2; display: flex; align-items: center; gap: .6rem; padding: .55rem .95rem .7rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
+    .hp-chat-top::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 1.6rem; pointer-events: none; opacity: 0;
+        background: linear-gradient(180deg, #f6f8f3 15%, rgb(246 248 243 / 0)); transition: opacity .28s var(--hp-ease); }
+    .hp-chat.is-scrolled .hp-chat-top::after { opacity: 1; }
     .hp-chat-top .hp-face.is-lg { width: 2.1rem; height: 2.1rem; }
     .hp-chat-top b { display: block; font-size: .88rem; }
     .hp-chat-top small { display: flex; align-items: center; font-size: .66rem; color: #dceccb; }
-    .hp-chat-body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: .55rem; padding: .75rem .7rem; overflow: hidden; background: #f6f8f3;
-        -webkit-mask-image: linear-gradient(180deg, transparent, #000 2.2rem); mask-image: linear-gradient(180deg, transparent, #000 2.2rem); }
+    /* The chat starts at the top, like a fresh conversation, and scrolls
+       itself as her answer arrives (the script follows the newest line). */
+    .hp-chat-body { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-start; gap: .55rem; padding: .7rem .7rem 1rem; overflow: hidden; background: #f6f8f3; }
+    .hp-chat-body > * { flex: none; }
+    .hp-chat-day { align-self: center; padding: .15rem .6rem; border-radius: 999px; font-size: .6rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #7a8a6c; background: #e8efe0; }
     .hp-chat-compose { display: flex; align-items: center; gap: .45rem; margin: .1rem .55rem .35rem; padding: .35rem .35rem .35rem .7rem; border-radius: 999px;
         font-size: .7rem; color: #98a38e; background: #fff; box-shadow: inset 0 0 0 1px #e1e8d8; }
     .hp-chat-compose i { display: flex; color: #4a7c2a; }
@@ -2573,11 +2592,12 @@
 
     /* Anee's hello, small and tilted, on the phone's side: only its edge
        goes over the phone (2026-10-13, the owner). Below 1280 pixels, where
-       there is no room beside it, it sits on the phone's top edge. */
-    .hp-anee-film { --rot: -3deg; position: absolute; z-index: 3; top: -5.4rem; left: 50%; width: 13rem; margin: 0 0 0 -6.5rem; aspect-ratio: 16 / 9; border-radius: .95rem; overflow: hidden;
+       there is no room beside it, it sits on the phone's top edge, over the
+       frame only: lower, it covered the clock and the island. */
+    .hp-anee-film { --rot: -3deg; position: absolute; z-index: 3; top: -6.85rem; left: 50%; width: 13rem; margin: 0 0 0 -6.5rem; aspect-ratio: 16 / 9; border-radius: .95rem; overflow: hidden;
         background: #0d1408; box-shadow: 0 24px 44px -18px rgb(0 0 0 / .85), 0 0 0 3px #f5c518, 0 0 0 7px rgb(245 197 24 / .18);
         transform: rotate(var(--rot)); animation: hpFilmFloat 6s ease-in-out infinite; }
-    @media (max-width: 1023.98px) { .hp-anee-phone { margin-top: 6.4rem; } }
+    @media (max-width: 1279.98px) { .hp-anee-phone { margin-top: 7.4rem; } }
     /* Wide enough for room beside the phone: on its right side, the words' side kept clear. */
     @media (min-width: 1280px) { .hp-anee-film { --rot: 5deg; top: 26%; left: calc(100% - 2.5rem); width: 12.75rem; margin: 0; } }
     .hp-anee-film video { width: 100%; height: 100%; display: block; object-fit: cover; }
@@ -3738,6 +3758,7 @@
         .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down,
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs-group.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
+        .hp-reel { transition: none; transform: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box,
         .hp-go, .hp-alt, .hp-prec-row, .hp-prec-rights li, .hp-prec-old, .hp-prec-card, .hp-prec-checks li, .hp-prec-bar i, .hp-prec-on, .hp-st-tab, .hp-gain, .hp-q, .hc-card, .hg-shelf, .hg-lead img, .hg-row, .hg-row svg, .hg-all, .hg-all svg, .hg-read svg, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
@@ -3876,14 +3897,55 @@
         }
     }
 
-    /* The hero phone plays its films one after another while it is on screen. */
-    const hero = document.querySelector('[data-hero-film]');
-    if (hero) {
-        const films = JSON.parse(hero.dataset.films || '[]');
+    /* The hero reel: each film plays its best seconds (from, to), then the
+       next, already loaded and waiting at its own first frame in the second
+       player, fades in over it. The story bars fill frame by frame, not in
+       timeupdate's quarter second steps. Only while on screen. */
+    const reel = [...document.querySelectorAll('[data-hero-film]')];
+    if (reel.length === 2) {
+        const films = JSON.parse(reel[0].dataset.films || '[]');
         const tag = document.querySelector('[data-hero-tag]');
-        let n = 0;
-        hero.addEventListener('ended', () => { n = (n + 1) % films.length; const f = films[n]; swapFilm(hero, tag, f.src, f.poster, f.name); });
-        seen(hero, (on) => { hero.dataset.live = on ? '1' : '0'; on ? play(hero) : hero.pause(); }, { threshold: 0.2 });
+        const bars = [...document.querySelectorAll('.hp-reel-bars i')];
+        let cur = 0, n = 0, live = false, busy = false, raf = 0;
+        // A film shorter than its window (or a server that cannot seek) still ends cleanly.
+        const from = (f) => Number(f.from) || 0;
+        const to = (f, v) => Math.min(Number(f.to) || 8.5, v.duration || Infinity);
+        const load = (v, f) => { v.poster = f.poster || ''; v.src = f.src + '#t=' + from(f); v.load(); };
+        const fill = (i, k) => { const b = bars[i] && bars[i].firstChild; if (b) b.style.transform = 'scaleX(' + Math.max(0, Math.min(1, k)).toFixed(4) + ')'; };
+        const paint = () => bars.forEach((b, i) => { b.classList.toggle('is-done', i < n); fill(i, i < n ? 1 : 0); });
+        const next = () => {
+            if (busy || films.length < 2) return;
+            busy = true;
+            const out = reel[cur], inn = reel[1 - cur];
+            n = (n + 1) % films.length;
+            if (Math.abs(inn.currentTime - from(films[n])) > .3) inn.currentTime = from(films[n]);
+            if (live) play(inn);
+            inn.classList.add('is-on'); out.classList.remove('is-on');
+            inn.removeAttribute('aria-hidden'); out.setAttribute('aria-hidden', 'true');
+            if (tag) { tag.classList.add('is-swapping'); setTimeout(() => { tag.textContent = films[n].name; tag.classList.remove('is-swapping'); }, 300); }
+            paint();
+            setTimeout(() => { out.pause(); load(out, films[(n + 1) % films.length]); cur = 1 - cur; busy = false; }, 800);
+        };
+        const tick = () => {
+            raf = 0;
+            if (!live) return;
+            const v = reel[cur], f = films[n];
+            if (!busy && f) {
+                const a = from(f), b = to(f, v);
+                fill(n, (v.currentTime - a) / Math.max(.5, b - a));
+                if (v.currentTime >= b - .05) next();
+            }
+            raf = requestAnimationFrame(tick);
+        };
+        reel.forEach((v) => v.addEventListener('ended', () => { if (v === reel[cur]) next(); }));
+        if (films[1]) load(reel[1], films[1]);
+        paint();
+        seen(reel[0].closest('.hp-phone'), (on) => {
+            live = on;
+            reel.forEach((v) => { v.dataset.live = on ? '1' : '0'; });
+            if (on) { play(reel[cur]); if (!raf && !reduce) raf = requestAnimationFrame(tick); }
+            else { reel.forEach((v) => v.pause()); if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+        }, { threshold: 0.2 });
     }
 
     /* The phone leans toward the pointer, a little. */
@@ -4007,13 +4069,25 @@
     const chat = document.querySelector('[data-chat]');
     if (chat) {
         const reads = [...chat.querySelectorAll('.hp-read')];
+        const body = chat.querySelector('.hp-chat-body');
         let timers = [], live = false;
-        const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+        // After each step the chat follows its newest line, smoothly, as a phone does;
+        // an answer taller than the screen stops with its first line in view, to be read.
+        const follow = () => {
+            if (!body) return;
+            const shown = [...body.children].filter((c) => c.getClientRects().length);
+            const last = shown[shown.length - 1], max = body.scrollHeight - body.clientHeight;
+            const top = last ? Math.min(max, last.offsetTop - 14) : max;
+            body.scrollTo({ top: Math.max(0, top), behavior: reduce ? 'auto' : 'smooth' });
+        };
+        if (body) body.addEventListener('scroll', () => chat.classList.toggle('is-scrolled', body.scrollTop > 6), { passive: true });
+        const at = (ms, fn) => timers.push(setTimeout(() => { fn(); requestAnimationFrame(follow); }, ms));
         const stop = () => { timers.forEach(clearTimeout); timers = []; };
         const run = () => {
             stop();
             chat.classList.remove('s1', 's5', 'is-done', 'is-fading');
             reads.forEach((r) => r.classList.remove('is-shown', 'is-done'));
+            if (body) body.scrollTop = 0;
             if (reduce) { chat.classList.add('s1', 's5', 'is-done'); reads.forEach((r) => r.classList.add('is-shown', 'is-done')); return; }
             at(250, () => chat.classList.add('s1'));
             reads.forEach((r, i) => {
