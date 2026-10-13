@@ -49,6 +49,13 @@ class SitePageController extends Controller
                 'varieties' => \App\Support\RiceVarieties::all(),
             ]);
         }
+        // Crop varieties: the crops, each to its own finder (2026-10-13).
+        if ($section === 'crop-varieties') {
+            return view('public.site.crop-varieties-hub', [
+                'section' => $section,
+                'meta' => SitePages::SECTIONS[$section],
+            ]);
+        }
         // /problems: the door to pests, diseases and weeds.
         if ($section === 'problems') {
             return view('public.site.problems-hub', [
@@ -78,6 +85,15 @@ class SitePageController extends Controller
     {
         $section = (string) $request->route('section');
         $slug = (string) $request->route('slug');
+        // A crop's own variety finder: /crop-varieties/corn (2026-10-13).
+        if ($section === 'crop-varieties' && ($crop = \App\Support\CropVarieties::cropBySlug($slug))) {
+            return view('public.site.crop-varieties-crop', [
+                'section' => $section,
+                'meta' => SitePages::SECTIONS[$section],
+                'crop' => $crop,
+                'varieties' => \App\Support\CropVarieties::forCrop($crop['key']),
+            ]);
+        }
         $page = SitePages::find($section, $slug);
         if (! $page && ($sheet = $this->factSheet($request, $section, $slug))) {
             return $sheet;
@@ -148,7 +164,13 @@ class SitePageController extends Controller
 
     public function sitemap()
     {
-        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/land-preparation', '/rice-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
+        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
+        // Each crop's variety finder (2026-10-13).
+        foreach (\App\Support\CropVarieties::crops() as $c) {
+            if ($c['hasHub']) {
+                $static[] = '/crop-varieties/' . $c['slug'];
+            }
+        }
         $urls = array_map(fn ($p) => ['loc' => url($p), 'lastmod' => null], $static);
         try {
             foreach (AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'updated_at']) as $p) {
@@ -200,7 +222,7 @@ class SitePageController extends Controller
             }
             $out[] = '';
         }
-        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'rice-varieties' => 'Rice varieties (PhilRice data)', 'features' => 'Feature pages'];
+        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'rice-varieties' => 'Rice varieties (PhilRice data)', 'crop-varieties' => 'Crop varieties (NSIC registry and seed sellers)', 'features' => 'Feature pages'];
         try {
             $pages = AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'title', 'excerpt']);
             foreach ($names as $section => $name) {

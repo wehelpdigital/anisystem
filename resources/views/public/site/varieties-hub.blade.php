@@ -128,6 +128,7 @@
                 <div class="sp-tabs">
                     <a href="{{ $S::url('crops') }}">Crop guides</a>
                     <a href="{{ $S::url('rice-varieties') }}" class="is-on">Rice varieties</a>
+                    <a href="{{ $S::url('crop-varieties') }}">Crop varieties</a>
                     <a href="{{ $S::url('land-preparation') }}">Land preparation</a>
                     <a href="{{ $S::url('pests') }}">Crop pests</a>
                     <a href="{{ $S::url('diseases') }}">Crop diseases</a>

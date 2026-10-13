@@ -266,6 +266,9 @@ Route::get('/weeds/{slug}', [App\Http\Controllers\SitePageController::class, 'sh
 // Rice varieties (2026-10-13): the finder and one page per variety.
 Route::get('/rice-varieties', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'rice-varieties')->name('site.varieties');
 Route::get('/rice-varieties/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'rice-varieties')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.varieties.show');
+// Crop varieties (2026-10-13): the crops, a finder per crop, a page per variety.
+Route::get('/crop-varieties', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'crop-varieties')->name('site.cropvarieties');
+Route::get('/crop-varieties/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'crop-varieties')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.cropvarieties.show');
 Route::get('/blog', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'blog')->name('site.blog');
 Route::get('/blog/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'blog')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.blog.show');
 Route::get('/features/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'features')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.features.show');

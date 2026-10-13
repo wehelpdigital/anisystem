@@ -1,0 +1,237 @@
+{
+  "section": "crop-varieties",
+  "slug": "cucumber-explorer",
+  "sortOrder": 701,
+  "lang": "en",
+  "category": "Cucumber",
+  "profile": true,
+  "title": "Explorer cucumber: Yield, Maturity and Characteristics",
+  "metaTitle": "Explorer cucumber: Yield, Maturity and Characteristics",
+  "metaDescription": "Explorer cucumber is a cucumber variety. About 34 days to harvest, 33.6 t/ha in trials. See its pest ratings and traits.",
+  "focusKeyword": "Explorer cucumber",
+  "keywords": [
+    "Explorer cucumber",
+    "Explorer",
+    "Explorer cucumber variety",
+    "cucumber variety philippines",
+    "Philippine Seed Board"
+  ],
+  "excerpt": "Explorer is a registered cucumber variety. The Philippine Seed Board approved it in 1980. JMC Farms bred it. It takes about 34 days from sowing to the first harvest, with 33.62 tonnes per hectare on average in the trials.",
+  "heroImage": {
+    "src": "/images/site/land/cucurbit-land-preparation.webp",
+    "alt": "Ampalaya seedlings planted through plastic mulch on raised beds, the kind of farm where Explorer cucumber is grown",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [cucumber variety finder](/crop-varieties/cucumber), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for gourds and melons](/land-preparation/cucurbit-land-preparation)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Days to harvest:** about 34 days from sowing to the first harvest.",
+        "**Yield:** 33.62 tonnes per hectare on average in the trials.",
+        "**Recommended for:** the areas in its trials, in both the wet and the dry season."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about Explorer cucumber"
+    },
+    {
+      "type": "table",
+      "caption": "From the NSIC registry",
+      "rows": [
+        [
+          "Trait",
+          "What the record shows"
+        ],
+        [
+          "Registration",
+          "Philippine Seed Board"
+        ],
+        [
+          "Year approved",
+          "1980"
+        ],
+        [
+          "Breeder or owner",
+          "JMC Farms"
+        ],
+        [
+          "Days to harvest",
+          "about 34 days"
+        ],
+        [
+          "Average yield",
+          "33.62 t/ha"
+        ],
+        [
+          "Season",
+          "Both the wet and the dry season"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long does it take, and how much does it yield?"
+    },
+    {
+      "type": "text",
+      "text": "Explorer cucumber takes about 34 days from sowing to the first harvest. That is 5.2 days faster than the average of the 5 cucumber varieties with a day count, 39.2 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 33.62 t/ha beats the average of its group, 25. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "table",
+      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "rows": [
+        [
+          "Pest or disease",
+          "Rating",
+          "What it means"
+        ],
+        [
+          "Downey mildew",
+          "Resistant",
+          "Held up well"
+        ],
+        [
+          "Leaf spot",
+          "Resistant",
+          "Held up well"
+        ],
+        [
+          "Anthracnose",
+          "Resistant",
+          "Held up well"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "It showed no weak spot in the ratings on record. Still, a resistant variety can break down when a new strain or pest population comes, so keep scouting. Read up on [anthracnose](/diseases/anthracnose)."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit cucumber fields most often: [damping off](/diseases/damping-off), [downy mildew of cucurbits](/diseases/downy-mildew), [leafminer](/pests/leafminer), [melon fly](/pests/melon-fly), [powdery mildew](/diseases/powdery-mildew). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where and when to plant Explorer cucumber"
+    },
+    {
+      "type": "text",
+      "text": "It is recommended for both the wet and the dry season. Cucumber gives its first fruit fast, often in five to six weeks. Pick a variety bred to tolerate downy mildew if you plant near the rains. Before planting, get the field ready with our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before you buy seed"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy sealed packs or tagged sacks from an accredited dealer, and check the packing date and germination rate.",
+        "Ask your municipal agriculturist or nearby farmers how it did in your area last season.",
+        "Try it on a small area first, beside the variety you usually plant, before you switch the whole farm.",
+        "Write down the planting day, inputs and harvest, so you can compare varieties on your own ground. anee.io keeps these records for you."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next cucumber season",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Cucumber varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the cucumber varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Flurry](/crop-varieties/cucumber-flurry): 38 to 40 days, 15.32 t/ha, 1987",
+        "[Gynomite](/crop-varieties/cucumber-gynomite): 38 to 40 days, 15.46 t/ha, 1987",
+        "[UPL Cu 6](/crop-varieties/cucumber-upl-cu-6): about 40 days, 27 t/ha, 1984",
+        "[Panorama](/crop-varieties/cucumber-panorama): 39 to 49 days, 33.62 t/ha, 1984"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How long does it take to harvest?",
+          "a": "It takes about 34 days from sowing to the first harvest. Then the weather and your care decide the exact day."
+        },
+        {
+          "q": "What is its yield?",
+          "a": "The record shows 33.62 tonnes per hectare on average in the trials. Your own yield depends on the soil, water, fertilizer and pests on your farm."
+        },
+        {
+          "q": "Where can I buy seed of Explorer?",
+          "a": "Ask an accredited seed dealer in your province, the seller named on this page or your municipal agriculturist. Look for the certified seed tag or a sealed pack before you pay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every cucumber variety, side by side",
+          "url": "/crop-varieties/cucumber"
+        },
+        {
+          "label": "Crop varieties in the Philippines",
+          "url": "/crop-varieties"
+        },
+        {
+          "label": "Land preparation for gourds and melons",
+          "url": "/land-preparation/cucurbit-land-preparation"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Fertilizer for vegetables",
+          "url": "/blog/fertilizer-for-vegetables-philippines"
+        },
+        {
+          "label": "Rice varieties of the Philippines",
+          "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
+          "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Bureau of Plant Industry: seed and planting material certification",
+          "url": "https://bpi.da.gov.ph/"
+        }
+      ]
+    }
+  ]
+}

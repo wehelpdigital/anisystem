@@ -1,0 +1,301 @@
+{
+  "section": "crop-varieties",
+  "slug": "abaca-tangongon",
+  "sortOrder": 12,
+  "lang": "en",
+  "category": "Abaca",
+  "profile": true,
+  "title": "Tangongon abaca (NSIC Mt 03): Yield, Maturity and Characteristics",
+  "metaTitle": "Tangongon abaca: Yield, Maturity and Characteristics",
+  "metaDescription": "Tangongon abaca is an abaca variety from PhilFIDA. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "focusKeyword": "Tangongon abaca",
+  "keywords": [
+    "Tangongon abaca",
+    "Tangongon",
+    "NSIC Mt 03",
+    "Tangongon abaca variety",
+    "abaca variety philippines",
+    "NSIC 2017 Mt 03"
+  ],
+  "excerpt": "Tangongon is a registered abaca variety, also sold or known as NSIC Mt 03. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Mt 03. PHILFIDA bred it. It takes 18 to 21 months from planting to the first harvest.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-banana-farming-philippines.webp",
+    "alt": "Banana plants with bagged bunches along a farm road in Panabo City, the kind of farm where Tangongon abaca is grown",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you came here looking for NSIC Mt 03, this is the same abaca. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [abaca variety finder](/crop-varieties/abaca), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Days to harvest:** 18 to 21 months from planting to the first harvest.",
+        "**Recommended for:** Mindanao."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about Tangongon abaca"
+    },
+    {
+      "type": "table",
+      "caption": "From the NSIC registry and its seller",
+      "rows": [
+        [
+          "Trait",
+          "What the record shows"
+        ],
+        [
+          "Registration",
+          "NSIC 2017 Mt 03"
+        ],
+        [
+          "Year approved",
+          "2017"
+        ],
+        [
+          "Breeder or owner",
+          "PHILFIDA"
+        ],
+        [
+          "Also known as",
+          "NSIC Mt 03"
+        ],
+        [
+          "Months to harvest",
+          "18 to 21 months"
+        ],
+        [
+          "Recommended area",
+          "Mindanao"
+        ],
+        [
+          "Ave. fiber recovery (percent)",
+          "1.67 to 1.83"
+        ],
+        [
+          "Tensile strength (kgf/g m)",
+          "49 to 60"
+        ],
+        [
+          "Elongation (percent)",
+          "3.16"
+        ],
+        [
+          "Fruit no. of fruits",
+          "12"
+        ],
+        [
+          "Fruit shape",
+          "Straight or Slightly Curved"
+        ],
+        [
+          "Fruit immature fruit peel color",
+          "Light green"
+        ],
+        [
+          "Fruit mature fruit peel color",
+          "Yellow"
+        ],
+        [
+          "Fiber cell length (mm)",
+          "4.70 to 5.08"
+        ],
+        [
+          "Yield, per the seller",
+          "fiber yield listed as 1,590 to 1,700 per hectare"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long does it take, and how much does it yield?"
+    },
+    {
+      "type": "text",
+      "text": "Tangongon abaca takes 18 to 21 months from planting to the first harvest. That is 2 months faster than the average of the 3 abaca varieties with a day count, 21.5 months. Count the months from planting, and plan the harvest for a dry stretch when you can.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "table",
+      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "rows": [
+        [
+          "Pest or disease",
+          "Rating",
+          "What it means"
+        ],
+        [
+          "Abaca mosaic",
+          "Resistant",
+          "Held up well"
+        ],
+        [
+          "Fusarium",
+          "SR",
+          "As noted in the record"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "It showed no weak spot in the ratings on record. Still, a resistant variety can break down when a new strain or pest population comes, so keep scouting. Read up on [Fusarium wilt](/diseases/fusarium-wilt)."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit abaca fields most often: [Banana aphid](/pests/banana-aphid), [Banana bunchy top](/diseases/banana-bunchy-top), [Banana weevil](/pests/banana-weevil), [Fusarium wilt](/diseases/fusarium-wilt). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the harvest is like"
+    },
+    {
+      "type": "text",
+      "text": "It is straight or slightly curved."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Harvest:** Matures in about 18 to 21 months.",
+        "**Yield:** Fiber yield listed as 1,590 to 1,700 per hectare.",
+        "**Fruit:** Strong, heavy fiber, tensile strength about 49 to 60 kgf/g m.",
+        "**Where:** Mindanao, heavy clay soils.",
+        "**Uses:** Fiber: cordage, pulp.",
+        "Poor stooler but large, heavy stalks.",
+        "Drought resistant under Mindanao conditions."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: large, vigorous Mindanao abaca that tolerates drought and heavy clay, fiber strips easily. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where and when to plant Tangongon abaca"
+    },
+    {
+      "type": "text",
+      "text": "The registry recommends it for Mindanao. Abaca needs rain spread through the year and a little shade. Pick a variety by fiber yield and strength, and plant clean suckers or tissue cultured plantlets. A registered tree variety is a selection from one proven mother tree, and only grafted, budded or marcotted plants carry its traits. A seedling grown from its seed can turn out quite different. So buy from a nursery accredited by the Bureau of Plant Industry, and ask which mother tree the scions came from. Before planting, get the field ready with our guide: [Pagtatanim ng puno](/crops/pagtatanim-ng-puno)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before you buy planting material"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy grafted or budded plants from an accredited nursery, with the variety name on the tag.",
+        "Ask your municipal agriculturist or nearby farmers how it did in your area last season.",
+        "Plant a few trees first if the variety is new to your area, before you fill the whole farm.",
+        "Write down the planting day, inputs and harvest, so you can compare varieties on your own ground. anee.io keeps these records for you."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next abaca season",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Abaca varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the abaca varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Abuab](/crop-varieties/abaca-abuab): 20 to 24 months, 2017",
+        "[Inosa](/crop-varieties/abaca-inosa): about 23 months, 2017"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is NSIC Mt 03 the same as Tangongon?",
+          "a": "Yes. NSIC Mt 03 is another name for Tangongon, registered as NSIC 2017 Mt 03. Seed sellers use both, so ask for either one."
+        },
+        {
+          "q": "How long does it take to harvest?",
+          "a": "It takes 18 to 21 months from planting to the first harvest. Then the weather and your care decide the exact day."
+        },
+        {
+          "q": "Where does it grow best?",
+          "a": "The registry recommends it for Mindanao. Ask your municipal agriculturist how it has done in your town."
+        },
+        {
+          "q": "Where can I buy seed of Tangongon?",
+          "a": "Ask an accredited seed dealer in your province, the seller named on this page or your municipal agriculturist. Look for the certified seed tag or a sealed pack before you pay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every abaca variety, side by side",
+          "url": "/crop-varieties/abaca"
+        },
+        {
+          "label": "Crop varieties in the Philippines",
+          "url": "/crop-varieties"
+        },
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Pagtatanim ng puno",
+          "url": "/crops/pagtatanim-ng-puno"
+        },
+        {
+          "label": "Rice varieties of the Philippines",
+          "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
+          "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on Tangongon from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-fiber.xlsx"
+        },
+        {
+          "label": "Bureau of Plant Industry: seed and planting material certification",
+          "url": "https://bpi.da.gov.ph/"
+        }
+      ]
+    }
+  ]
+}

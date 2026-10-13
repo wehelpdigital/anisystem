@@ -101,6 +101,18 @@ class SitePages
             'intro' => 'Every rice variety in the PhilRice catalogue of released varieties, from PSB Rc 18 to the newest NSIC Rc releases. Filter by the kind of farm you have, how long you can wait for harvest and the pests you fear most.',
             'kicker' => 'Rice varieties',
         ],
+        // Crop varieties (2026-10-13): every other crop, from the NSIC
+        // registry and the varieties farmers buy; a finder per crop at
+        // /crop-varieties/{crop}. See App\Support\CropVarieties.
+        'crop-varieties' => [
+            'label' => 'Crop Varieties',
+            'crumb' => 'Crop varieties',
+            'hubTitle' => 'Crop Varieties in the Philippines',
+            'metaTitle' => 'Crop Varieties in the Philippines: Corn, Vegetables, Fruit',
+            'metaDescription' => 'Every registered variety of corn, vegetables, root crops, legumes, sugarcane and fruit trees in the Philippines, plus the seed farmers buy most.',
+            'intro' => 'Corn hybrids, vegetable seed, root crops, legumes, sugarcane and fruit trees: every variety on the national registry, plus the ones farmers buy most, each with its days to harvest, yield and where it grows best.',
+            'kicker' => 'Crop varieties',
+        ],
         'blog' => [
             // "Blog" until 2026-10-07: the address stays /blog, the name is
             // the section's job now, the farm news roundups first.

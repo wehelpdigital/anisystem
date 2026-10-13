@@ -20,6 +20,15 @@
     $seoTitle = trim((string) ($page->metaTitle ?: $page->title));
     $updated = $page->updated_at ?? now();
     $sectionUrl = $page->section === 'features' ? route('features') : $S::url($page->section);
+    // A crop variety sits under its crop's finder (2026-10-13).
+    $cropCrumb = null;
+    if ($page->section === 'crop-varieties') {
+        $cv = collect(\App\Support\CropVarieties::all())->firstWhere('slug', $page->slug);
+        $cc = $cv ? (\App\Support\CropVarieties::crops()[$cv['crop']] ?? null) : null;
+        if ($cc && $cc['hasHub']) {
+            $cropCrumb = ['name' => $cc['name'], 'url' => url('/crop-varieties/' . $cc['slug'])];
+        }
+    }
     $isFeature = $page->section === 'features';
     $isQuestion = $page->section === 'questions';
     $feat = $isFeature ? $S::feature($page) : null;
@@ -103,6 +112,10 @@
                     <a href="{{ url('/') }}">Home</a>
                     <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     <a href="{{ $sectionUrl }}">{{ $meta['crumb'] }}</a>
+                    @if ($cropCrumb)
+                        <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                        <a href="{{ $cropCrumb['url'] }}">{{ $cropCrumb['name'] }}</a>
+                    @endif
                     <span class="sp-here">
                         <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         <span class="truncate max-w-[14rem] sm:max-w-none" aria-current="page">{{ $S::shortTitle($page) }}</span>
@@ -285,6 +298,7 @@
                     <a href="{{ $S::url('questions') }}" class="{{ $isQuestion ? 'is-on' : '' }}">Farmers' questions</a>
                     <a href="{{ $S::url('crops') }}" class="{{ $page->section === 'crops' ? 'is-on' : '' }}">Crop guides</a>
                     <a href="{{ $S::url('rice-varieties') }}" class="{{ $page->section === 'rice-varieties' ? 'is-on' : '' }}">Rice varieties</a>
+                    <a href="{{ $S::url('crop-varieties') }}" class="{{ $page->section === 'crop-varieties' ? 'is-on' : '' }}">Crop varieties</a>
                     <a href="{{ $S::url('land-preparation') }}" class="{{ $page->section === 'land-preparation' ? 'is-on' : '' }}">Land preparation</a>
                     <a href="{{ $S::url('pests') }}" class="{{ $page->section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
                     <a href="{{ $S::url('diseases') }}" class="{{ $page->section === 'diseases' ? 'is-on' : '' }}">Crop diseases</a>

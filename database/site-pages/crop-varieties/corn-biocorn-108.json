@@ -1,0 +1,232 @@
+{
+  "section": "crop-varieties",
+  "slug": "corn-biocorn-108",
+  "sortOrder": 656,
+  "lang": "en",
+  "category": "Corn",
+  "profile": true,
+  "title": "BioCorn 108: Characteristics",
+  "metaTitle": "BioCorn 108: Characteristics",
+  "metaDescription": "BioCorn 108 is a yellow yellow GM hybrid corn variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "focusKeyword": "BioCorn 108",
+  "keywords": [
+    "BioCorn 108",
+    "Bioseed BioCorn 108",
+    "BC108",
+    "BC108G",
+    "B108G",
+    "BioCorn 108 corn variety",
+    "corn variety philippines"
+  ],
+  "excerpt": "BioCorn 108 is a yellow yellow GM hybrid corn variety, also sold or known as Bioseed BioCorn 108 or BC108. It is not on the NSIC registry, so the facts here come from its seller and farm sources. It comes from Bioseed Research Philippines.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
+    "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where BioCorn 108 is grown",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you came here looking for Bioseed BioCorn 108 or BC108, this is the same corn. The facts below come from its seller and from farm sources, each one listed at the end. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Type:** Yellow yellow GM hybrid."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about BioCorn 108"
+    },
+    {
+      "type": "table",
+      "caption": "From its seller and farm sources",
+      "rows": [
+        [
+          "Trait",
+          "What the record shows"
+        ],
+        [
+          "Breeder or owner",
+          "Bioseed Research Philippines"
+        ],
+        [
+          "Also known as",
+          "Bioseed BioCorn 108, BC108, BC108G, B108G"
+        ],
+        [
+          "Type",
+          "Yellow yellow GM hybrid"
+        ],
+        [
+          "Yield, per the seller",
+          "11 to 12 t/ha potential (company), 8.97 t/ha in a DA 10 derby"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long does it take, and how much does it yield?"
+    },
+    {
+      "type": "text",
+      "text": "The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "text",
+      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit corn fields most often: [Asian corn borer](/pests/asian-corn-borer), [banded leaf and sheath blight](/diseases/banded-leaf-and-sheath-blight), [Corn downy mildew](/diseases/corn-downy-mildew), [Corn ear rot](/diseases/corn-ear-rot), [Corn earworm](/pests/corn-earworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** 11 to 12 t/ha potential (company), 8.97 t/ha in a DA 10 derby.",
+        "**Traits in the seed:** Bag carries VT Double PRO (caterpillar protection) and Roundup Ready Corn 2 (glyphosate tolerance) marks.",
+        "**Where:** Mid to high elevations (company), DA trials in Bukidnon and Claveria highlands.",
+        "For middle to high elevation farms.",
+        "Dense planting, about 80,000 plants/ha.",
+        "Even ears, filled from base to tip."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: bioseed's best entry (8.97 t/ha) in a DA Northern Mindanao dry season derby and in the top five at DA 10's Claveria highland station. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where and when to plant BioCorn 108"
+    },
+    {
+      "type": "text",
+      "text": "Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before you buy seed"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy sealed packs or tagged sacks from an accredited dealer, and check the packing date and germination rate.",
+        "Ask your municipal agriculturist or nearby farmers how it did in your area last season.",
+        "Try it on a small area first, beside the variety you usually plant, before you switch the whole farm.",
+        "Write down the planting day, inputs and harvest, so you can compare varieties on your own ground. anee.io keeps these records for you."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next corn season",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Corn varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the corn varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[AH Ultra 357](/crop-varieties/corn-ah-ultra-357)",
+        "[B118G](/crop-varieties/corn-b118g)",
+        "[Bravado F1](/crop-varieties/corn-bravado-f1)",
+        "[CW 320](/crop-varieties/corn-cw-320)"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is Bioseed BioCorn 108 the same as BioCorn 108?",
+          "a": "Yes. Bioseed BioCorn 108 is another name for BioCorn 108. Seed sellers use both, so ask for either one."
+        },
+        {
+          "q": "Can I save its seed?",
+          "a": "No. It is a hybrid, so seed saved from it does not grow true and yields less. Buy new seed each season."
+        },
+        {
+          "q": "Where can I buy seed of BioCorn 108?",
+          "a": "Ask an accredited seed dealer in your province, the seller named on this page or your municipal agriculturist. Look for the certified seed tag or a sealed pack before you pay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every corn variety, side by side",
+          "url": "/crop-varieties/corn"
+        },
+        {
+          "label": "Crop varieties in the Philippines",
+          "url": "/crop-varieties"
+        },
+        {
+          "label": "Pagtatanim ng mais, step by step",
+          "url": "/crops/pagtatanim-ng-mais"
+        },
+        {
+          "label": "Land preparation for corn",
+          "url": "/land-preparation/corn-land-preparation"
+        },
+        {
+          "label": "How to raise corn yield per hectare",
+          "url": "/blog/increase-corn-yield-per-hectare"
+        },
+        {
+          "label": "Rice varieties of the Philippines",
+          "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Notes on BioCorn 108 from bioseed.com.ph",
+          "url": "https://www.bioseed.com.ph/products/"
+        },
+        {
+          "label": "Notes on BioCorn 108 from cagayandeoro.da.gov.ph",
+          "url": "https://cagayandeoro.da.gov.ph/?p=69898"
+        },
+        {
+          "label": "Notes on BioCorn 108 from cagayandeoro.da.gov.ph",
+          "url": "https://cagayandeoro.da.gov.ph/index.php/top-performing-seed-varieties-in-da-spearheaded-corn-derby-named/"
+        },
+        {
+          "label": "Bureau of Plant Industry: seed and planting material certification",
+          "url": "https://bpi.da.gov.ph/"
+        }
+      ]
+    }
+  ]
+}

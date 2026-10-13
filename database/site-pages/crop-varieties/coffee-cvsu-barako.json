@@ -1,0 +1,338 @@
+{
+  "section": "crop-varieties",
+  "slug": "coffee-cvsu-barako",
+  "sortOrder": 201,
+  "lang": "en",
+  "category": "Coffee",
+  "profile": true,
+  "title": "CvSU Barako coffee: Characteristics",
+  "metaTitle": "CvSU Barako coffee: Characteristics",
+  "metaDescription": "CvSU Barako coffee is a liberica coffee variety from Cavite State University. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "focusKeyword": "CvSU Barako coffee",
+  "keywords": [
+    "CvSU Barako coffee",
+    "CvSU Barako",
+    "CvSU Barako (Liberica)",
+    "Kapeng Barako",
+    "barako coffee",
+    "Batangas coffee",
+    "CvSU Barako coffee variety",
+    "coffee variety philippines",
+    "NSIC 2007 Cf L 01"
+  ],
+  "excerpt": "CvSU Barako coffee is a liberica coffee variety, also sold or known as CvSU Barako (Liberica) or Kapeng Barako. It was registered with the National Seed Industry Council (NSIC) in 2007 as NSIC 2007 Cf L 01. CvSU bred it.",
+  "heroImage": {
+    "src": "/images/site/land/fruit-tree-land-preparation.webp",
+    "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where CvSU Barako coffee is grown",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you came here looking for CvSU Barako (Liberica) or Kapeng Barako, this is the same coffee. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [coffee variety finder](/crop-varieties/coffee), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for tree crops](/land-preparation/fruit-tree-land-preparation)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Plant height:** about 1.6 meters.",
+        "**Type:** Liberica."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about CvSU Barako coffee"
+    },
+    {
+      "type": "table",
+      "caption": "From the NSIC registry and its seller",
+      "rows": [
+        [
+          "Trait",
+          "What the record shows"
+        ],
+        [
+          "Registration",
+          "NSIC 2007 Cf L 01"
+        ],
+        [
+          "Year approved",
+          "2007"
+        ],
+        [
+          "Breeder or owner",
+          "CvSU"
+        ],
+        [
+          "Also known as",
+          "CvSU Barako (Liberica), Kapeng Barako, barako coffee, Batangas coffee"
+        ],
+        [
+          "Type",
+          "Liberica"
+        ],
+        [
+          "Plant height",
+          "1.6 m"
+        ],
+        [
+          "Tree vigor",
+          "Strong"
+        ],
+        [
+          "Tree canopy diameter (cm)",
+          "340"
+        ],
+        [
+          "Tree length of longest lateral (cm)",
+          "1.1"
+        ],
+        [
+          "Tree yield tree (g)",
+          "2700"
+        ],
+        [
+          "Leaf color",
+          "Brownish Green"
+        ],
+        [
+          "Berry shape",
+          "Roundish"
+        ],
+        [
+          "Berry color (immature)",
+          "Green"
+        ],
+        [
+          "Berry color (ripe)",
+          "Dark Red"
+        ],
+        [
+          "Berry no. of berries/node",
+          "13"
+        ],
+        [
+          "Berry fresh weight of 100 fruits (g)",
+          "320"
+        ],
+        [
+          "Berry nipple characteristics",
+          "Rounded"
+        ],
+        [
+          "Bean shape",
+          "Flat"
+        ],
+        [
+          "Yield, per the seller",
+          "about 2.7 kg per tree"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When does it bear, and how much?"
+    },
+    {
+      "type": "text",
+      "text": "A registered tree variety is described from its mother tree, not from trial plots. It first bore fruit about 36 months after planting. Each tree gave about 2,700 grams in the records. A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "table",
+      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "rows": [
+        [
+          "Pest or disease",
+          "Rating",
+          "What it means"
+        ],
+        [
+          "Coffee/pod borer",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Aphids",
+          "Resistant",
+          "Held up well"
+        ],
+        [
+          "Mealy bugs",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Stem borer",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Anthracnose",
+          "Resistant",
+          "Held up well"
+        ],
+        [
+          "Coffee rust",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Coffee berry disease",
+          "Resistant",
+          "Held up well"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "It was weak against coffee/pod borer, mealy bugs, stem borer, coffee rust, so scout for them from the early weeks. Read up on [anthracnose](/diseases/anthracnose)."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit coffee fields most often: [coffee berry borer](/pests/coffee-berry-borer), [coffee leaf rust](/diseases/coffee-leaf-rust), [Cercospora leaf spot](/diseases/cercospora-leaf-spot), [mealybug](/pests/mealybug), [root knot nematode](/diseases/root-knot-nematode). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Harvest:** First flowers and fruit about 36 months after planting.",
+        "**Yield:** About 2.7 kg per tree.",
+        "**Fruit:** Large roundish berries, dark red when ripe, beans about 1.4 cm, Class A grade, strong aroma, heavy body.",
+        "**Where:** Batangas, Cavite.",
+        "**Uses:** Brewed coffee.",
+        "Wild Liberica trees can reach 20 m and need ladders to harvest.",
+        "Susceptible to coffee berry borer and coffee rust, resistant to anthracnose."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: kapeng barako is the strong Liberica coffee of Batangas and Cavite, planted since Spanish friars brought it to Lipa in the 1740s, CvSU's selection is the one Liberica in the NSIC list. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where and when to plant CvSU Barako coffee"
+    },
+    {
+      "type": "text",
+      "text": "Arabica wants cool highland air, robusta grows in the lowlands, and liberica, the barako, and excelsa are hardy in between. Pick the species for your elevation first, then a selection by yield and cup quality. A registered tree variety is a selection from one proven mother tree, and only grafted, budded or marcotted plants carry its traits. A seedling grown from its seed can turn out quite different. So buy from a nursery accredited by the Bureau of Plant Industry, and ask which mother tree the scions came from. Before planting, get the field ready with our guide: [Pagtatanim ng puno](/crops/pagtatanim-ng-puno)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before you buy planting material"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy grafted or budded plants from an accredited nursery, with the variety name on the tag.",
+        "Ask your municipal agriculturist or nearby farmers how it did in your area last season.",
+        "Plant a few trees first if the variety is new to your area, before you fill the whole farm.",
+        "Write down the planting day, inputs and harvest, so you can compare varieties on your own ground. anee.io keeps these records for you."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next coffee season",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Coffee varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the coffee varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[CvSU Kapeng Manipis](/crop-varieties/coffee-cvsu-kapeng-manipis): 2007",
+        "[BPI Baguio Arabica Caturra](/crop-varieties/coffee-bpi-baguio-arabica-caturra): 2008",
+        "[BPI Baguio Arabica Yellow Bourbon](/crop-varieties/coffee-bpi-baguio-arabica-yellow-bourbon): 2008",
+        "[BPI Baguio Red Bourbon](/crop-varieties/coffee-bpi-baguio-red-bourbon): 2008"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is CvSU Barako (Liberica) the same as CvSU Barako?",
+          "a": "Yes. CvSU Barako (Liberica) is another name for CvSU Barako, registered as NSIC 2007 Cf L 01. Seed sellers use both, so ask for either one."
+        },
+        {
+          "q": "Where can I buy planting material of CvSU Barako?",
+          "a": "Buy grafted, budded or marcotted trees from a nursery accredited by the Bureau of Plant Industry, so you get the true variety. Ask your provincial agriculture office for the nearest one."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every coffee variety, side by side",
+          "url": "/crop-varieties/coffee"
+        },
+        {
+          "label": "Crop varieties in the Philippines",
+          "url": "/crop-varieties"
+        },
+        {
+          "label": "Land preparation for tree crops",
+          "url": "/land-preparation/fruit-tree-land-preparation"
+        },
+        {
+          "label": "Pagtatanim ng puno",
+          "url": "/crops/pagtatanim-ng-puno"
+        },
+        {
+          "label": "Rice varieties of the Philippines",
+          "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
+          "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on CvSU Barako from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-plantation.xlsx"
+        },
+        {
+          "label": "Notes on CvSU Barako from en.wikipedia.org",
+          "url": "https://en.wikipedia.org/wiki/Kapeng_barako"
+        },
+        {
+          "label": "Notes on CvSU Barako from en.wikipedia.org",
+          "url": "https://en.wikipedia.org/wiki/Coffea_liberica"
+        },
+        {
+          "label": "Bureau of Plant Industry: seed and planting material certification",
+          "url": "https://bpi.da.gov.ph/"
+        }
+      ]
+    }
+  ]
+}

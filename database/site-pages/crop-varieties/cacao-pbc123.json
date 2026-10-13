@@ -1,0 +1,305 @@
+{
+  "section": "crop-varieties",
+  "slug": "cacao-pbc123",
+  "sortOrder": 55,
+  "lang": "en",
+  "category": "Cacao",
+  "profile": true,
+  "title": "PBC123 cacao (NSIC Cc 11): Characteristics",
+  "metaTitle": "PBC123 cacao: Characteristics",
+  "metaDescription": "PBC123 cacao is a cacao variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
+  "focusKeyword": "PBC123 cacao",
+  "keywords": [
+    "PBC123 cacao",
+    "PBC123",
+    "NSIC Cc 11",
+    "PBC123 cacao variety",
+    "cacao variety philippines",
+    "NSIC 2014 Cc 11"
+  ],
+  "excerpt": "PBC123 is a registered cacao variety, also sold or known as NSIC Cc 11. It was registered with the National Seed Industry Council (NSIC) in 2235 as NSIC 2014 Cc 11. Malaysia, PICRI USM bred it.",
+  "heroImage": {
+    "src": "/images/site/land/fruit-tree-land-preparation.webp",
+    "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where PBC123 cacao is grown",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you came here looking for NSIC Cc 11, this is the same cacao. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [cacao variety finder](/crop-varieties/cacao), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for tree crops](/land-preparation/fruit-tree-land-preparation)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Plant height:** about 480 cm."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about PBC123 cacao"
+    },
+    {
+      "type": "table",
+      "caption": "From the NSIC registry and its seller",
+      "rows": [
+        [
+          "Trait",
+          "What the record shows"
+        ],
+        [
+          "Registration",
+          "NSIC 2014 Cc 11"
+        ],
+        [
+          "Year approved",
+          "2235"
+        ],
+        [
+          "Breeder or owner",
+          "Malaysia, PICRI USM"
+        ],
+        [
+          "Also known as",
+          "NSIC Cc 11"
+        ],
+        [
+          "Plant height",
+          "480 cm"
+        ],
+        [
+          "Tree canopy diameter (cm)",
+          "345"
+        ],
+        [
+          "Pod index (cm)",
+          "22.21"
+        ],
+        [
+          "Pod length (cm)",
+          "12.37"
+        ],
+        [
+          "Pod width (cm)",
+          "8.1"
+        ],
+        [
+          "Pod color (young)",
+          "Red"
+        ],
+        [
+          "Pod color (mature)",
+          "Orange Red"
+        ],
+        [
+          "Pod wall thickness (cm)",
+          "1.12"
+        ],
+        [
+          "Pod shape",
+          "Angolata"
+        ],
+        [
+          "Bean color",
+          "Violet"
+        ],
+        [
+          "Bean no. of beans per pod",
+          "39.45"
+        ],
+        [
+          "Bean length (cm)",
+          "2.8"
+        ],
+        [
+          "Bean width (cm)",
+          "1.6"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When does it bear, and how much?"
+    },
+    {
+      "type": "text",
+      "text": "A registered tree variety is described from its mother tree, not from trial plots. It first bore pods about 24 months after planting. A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "table",
+      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "rows": [
+        [
+          "Pest or disease",
+          "Rating",
+          "What it means"
+        ],
+        [
+          "Coffee/pod borer",
+          "Moderately susceptible",
+          "Took clear damage"
+        ],
+        [
+          "Dieback",
+          "Resistant",
+          "Held up well"
+        ],
+        [
+          "Berry/ pod rot",
+          "Tolerant",
+          "Took damage but still yielded"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "It was weak against coffee/pod borer, so scout for it from the early weeks."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit cacao fields most often: [black pod of cacao](/diseases/cacao-black-pod), [cacao pod borer](/pests/cacao-pod-borer), [mealybug](/pests/mealybug). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the crop is like"
+    },
+    {
+      "type": "text",
+      "text": "Each pod holds about 39.45 beans."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Harvest:** First flowers about 24 months, pods about 30 months after planting.",
+        "**Fruit:** Red pods turning orange red, about 39 beans per pod, 100 dry beans about 125 g.",
+        "**Where:** Mindanao.",
+        "**Uses:** Cocoa beans, chocolate.",
+        "Resistant to dieback, tolerant to pod rot, moderately susceptible to pod borer."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: a Malaysian clone brought in through the University of Southern Mindanao, resistant to dieback. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where and when to plant PBC123 cacao"
+    },
+    {
+      "type": "text",
+      "text": "Plant grafted clones, and mix two or three, because many cacao clones need another clone nearby to set pods. Pick by pod yield and bean size. A registered tree variety is a selection from one proven mother tree, and only grafted, budded or marcotted plants carry its traits. A seedling grown from its seed can turn out quite different. So buy from a nursery accredited by the Bureau of Plant Industry, and ask which mother tree the scions came from. Before planting, get the field ready with our guide: [Pagtatanim ng puno](/crops/pagtatanim-ng-puno)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before you buy planting material"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy grafted or budded plants from an accredited nursery, with the variety name on the tag.",
+        "Ask your municipal agriculturist or nearby farmers how it did in your area last season.",
+        "Plant a few trees first if the variety is new to your area, before you fill the whole farm.",
+        "Write down the planting day, inputs and harvest, so you can compare varieties on your own ground. anee.io keeps these records for you."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next cacao season",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Cacao varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the cacao varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[ICS 40](/crop-varieties/cacao-ics-40): 2199",
+        "[USM CH 1](/crop-varieties/cacao-usm-ch-1): 2186",
+        "[USM CH 2](/crop-varieties/cacao-usm-ch-2): 2350",
+        "[S5](/crop-varieties/cacao-s5): 2413"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is NSIC Cc 11 the same as PBC123?",
+          "a": "Yes. NSIC Cc 11 is another name for PBC123, registered as NSIC 2014 Cc 11. Seed sellers use both, so ask for either one."
+        },
+        {
+          "q": "Where can I buy planting material of PBC123?",
+          "a": "Buy grafted, budded or marcotted trees from a nursery accredited by the Bureau of Plant Industry, so you get the true variety. Ask your provincial agriculture office for the nearest one."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every cacao variety, side by side",
+          "url": "/crop-varieties/cacao"
+        },
+        {
+          "label": "Crop varieties in the Philippines",
+          "url": "/crop-varieties"
+        },
+        {
+          "label": "Land preparation for tree crops",
+          "url": "/land-preparation/fruit-tree-land-preparation"
+        },
+        {
+          "label": "Pagtatanim ng puno",
+          "url": "/crops/pagtatanim-ng-puno"
+        },
+        {
+          "label": "Rice varieties of the Philippines",
+          "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
+          "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on PBC123 from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-plantation.xlsx"
+        },
+        {
+          "label": "Bureau of Plant Industry: seed and planting material certification",
+          "url": "https://bpi.da.gov.ph/"
+        }
+      ]
+    }
+  ]
+}

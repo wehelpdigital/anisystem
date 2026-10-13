@@ -1,0 +1,328 @@
+{
+  "section": "crop-varieties",
+  "slug": "corn-mmsu-glut-1",
+  "sortOrder": 393,
+  "lang": "en",
+  "category": "Corn",
+  "profile": true,
+  "title": "MMSU Glut 1 corn (MMSU Glutinous 1): Yield, Maturity and Characteristics",
+  "metaTitle": "MMSU Glut 1 corn: Yield, Maturity and Characteristics",
+  "metaDescription": "MMSU Glut 1 corn is a glutinous open pollinated corn variety for Luzon. 94 to 99 days to harvest, 5.6 t/ha in trials. See its ratings and traits.",
+  "focusKeyword": "MMSU Glut 1 corn",
+  "keywords": [
+    "MMSU Glut 1 corn",
+    "MMSU Glut 1",
+    "MMSU Glutinous 1",
+    "MMSU Glut 1 corn variety",
+    "corn variety philippines",
+    "NSIC 2010 Cn 251"
+  ],
+  "excerpt": "MMSU Glut 1 corn is a glutinous open pollinated corn variety, also sold or known as MMSU Glutinous 1. It was registered with the National Seed Industry Council (NSIC) in 2010 as NSIC 2010 Cn 251. MMSU bred it. It takes 94 to 99 days from planting to the harvest of dry grain, with 5.61 tonnes per hectare on average in the trials.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
+    "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where MMSU Glut 1 corn is grown",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you came here looking for MMSU Glutinous 1, this is the same corn. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Days to harvest:** 94 to 99 days from planting to the harvest of dry grain.",
+        "**Yield:** 5.61 tonnes per hectare on average in the trials.",
+        "**Plant height:** about 186.3 cm.",
+        "**Recommended for:** Luzon, in the dry season.",
+        "**Type:** Glutinous open pollinated."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about MMSU Glut 1 corn"
+    },
+    {
+      "type": "table",
+      "caption": "From the NSIC registry and its seller",
+      "rows": [
+        [
+          "Trait",
+          "What the record shows"
+        ],
+        [
+          "Registration",
+          "NSIC 2010 Cn 251"
+        ],
+        [
+          "Year approved",
+          "2010"
+        ],
+        [
+          "Breeder or owner",
+          "MMSU"
+        ],
+        [
+          "Also known as",
+          "MMSU Glutinous 1"
+        ],
+        [
+          "Type",
+          "Glutinous open pollinated"
+        ],
+        [
+          "Days to harvest",
+          "94 to 99 days"
+        ],
+        [
+          "Average yield",
+          "5.61 t/ha"
+        ],
+        [
+          "Plant height",
+          "186.3 cm"
+        ],
+        [
+          "Recommended area",
+          "Luzon"
+        ],
+        [
+          "Season",
+          "The dry season"
+        ],
+        [
+          "Ear length (cm)",
+          "14"
+        ],
+        [
+          "Shelling recovery (percent)",
+          "79 percent"
+        ],
+        [
+          "Lodging resistance",
+          "Resistant"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long does it take, and how much does it yield?"
+    },
+    {
+      "type": "text",
+      "text": "MMSU Glut 1 corn takes 94 to 99 days from planting to the harvest of dry grain. That is about the average of the 19 glutinous open pollinated corn varieties with a day count, 97.1 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 5.61 t/ha beats the average of its group, 5.09. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 90 days to harvest (MMSU), 94 to 99 days in NSIC trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "table",
+      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "rows": [
+        [
+          "Pest or disease",
+          "Rating",
+          "What it means"
+        ],
+        [
+          "Corn borer",
+          "Resistant",
+          "Held up well"
+        ],
+        [
+          "Rust",
+          "Resistant",
+          "Held up well"
+        ],
+        [
+          "Stalk rot",
+          "Resistant",
+          "Held up well"
+        ],
+        [
+          "Corn earworm",
+          "Resistant",
+          "Held up well"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "It showed no weak spot in the ratings on record. Still, a resistant variety can break down when a new strain or pest population comes, so keep scouting. Read up on [Asian corn borer](/pests/asian-corn-borer), [Corn rust](/diseases/corn-rust), [Corn stalk rot](/diseases/corn-stalk-rot), [Corn earworm](/pests/corn-earworm)."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit corn fields most often: [Asian corn borer](/pests/asian-corn-borer), [banded leaf and sheath blight](/diseases/banded-leaf-and-sheath-blight), [Corn downy mildew](/diseases/corn-downy-mildew), [Corn ear rot](/diseases/corn-ear-rot), [Corn planthopper](/pests/corn-planthopper). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the grain is like"
+    },
+    {
+      "type": "text",
+      "text": "Its ears grew about 14 cm long in the trials. The shelling recovery was 79 percent, the share of the ear weight that comes off as grain. A higher share means more grain from every sack of ears. Against lodging it rated resistant, so it stood up well when wind and rain pushed the plants."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** Up to 6 to 7 t/ha (MMSU), 5.61 t/ha in NSIC trials.",
+        "**Season:** Wet and dry.",
+        "**Where:** Luzon.",
+        "Plants about 176 cm.",
+        "Ear about 14 cm, shelling about 79 percent.",
+        "Registry rates it resistant to lodging, corn borer, rust, stalk rot and earworm.",
+        "Suited to kornik/chichacorn and green corn."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: mMSU's pick for the Ilocos kornik industry: the 2018 push with three state colleges and a 2023 farmer training in Ilocos Norte both centred on it. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where and when to plant MMSU Glut 1 corn"
+    },
+    {
+      "type": "text",
+      "text": "The registry recommends it for Luzon in the dry season. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before you buy seed"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy sealed packs or tagged sacks from an accredited dealer, and check the packing date and germination rate.",
+        "Ask your municipal agriculturist or nearby farmers how it did in your area last season.",
+        "Try it on a small area first, beside the variety you usually plant, before you switch the whole farm.",
+        "Write down the planting day, inputs and harvest, so you can compare varieties on your own ground. anee.io keeps these records for you."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next corn season",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Corn varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the corn varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[MMSU Glut 3](/crop-varieties/corn-mmsu-glut-3): 96 to 98 days, 5.2 t/ha, 2018",
+        "[IES Glut 7](/crop-varieties/corn-ies-glut-7): about 98 days, 5.54 t/ha, 2005",
+        "[IES Glut 4](/crop-varieties/corn-ies-glut-4): about 98 days, 5.3 t/ha, 2004",
+        "[IES Glut 6](/crop-varieties/corn-ies-glut-6): about 98 days, 5.31 t/ha, 2005"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is MMSU Glutinous 1 the same as MMSU Glut 1?",
+          "a": "Yes. MMSU Glutinous 1 is another name for MMSU Glut 1, registered as NSIC 2010 Cn 251. Seed sellers use both, so ask for either one."
+        },
+        {
+          "q": "How long does it take to harvest?",
+          "a": "It takes 94 to 99 days from planting to the harvest of dry grain. Then the weather and your care decide the exact day."
+        },
+        {
+          "q": "What is its yield?",
+          "a": "The record shows 5.61 tonnes per hectare on average in the trials. Your own yield depends on the soil, water, fertilizer and pests on your farm."
+        },
+        {
+          "q": "Can I save its seed?",
+          "a": "Yes. It is open pollinated, so seed from a clean, isolated field grows true. Still, certified seed gives the best start every few seasons."
+        },
+        {
+          "q": "Where does it grow best?",
+          "a": "The registry recommends it for Luzon in the dry season. Ask your municipal agriculturist how it has done in your town."
+        },
+        {
+          "q": "Where can I buy seed of MMSU Glut 1?",
+          "a": "Ask an accredited seed dealer in your province, the seller named on this page or your municipal agriculturist. Look for the certified seed tag or a sealed pack before you pay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every corn variety, side by side",
+          "url": "/crop-varieties/corn"
+        },
+        {
+          "label": "Crop varieties in the Philippines",
+          "url": "/crop-varieties"
+        },
+        {
+          "label": "Pagtatanim ng mais, step by step",
+          "url": "/crops/pagtatanim-ng-mais"
+        },
+        {
+          "label": "Land preparation for corn",
+          "url": "/land-preparation/corn-land-preparation"
+        },
+        {
+          "label": "How to raise corn yield per hectare",
+          "url": "/blog/increase-corn-yield-per-hectare"
+        },
+        {
+          "label": "Rice varieties of the Philippines",
+          "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
+          "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on MMSU Glut 1 from mmsu.edu.ph",
+          "url": "https://www.mmsu.edu.ph/news/mmsu-leads-3-sucs-to-hike-glutinous-corn-production-in-region-i-car"
+        },
+        {
+          "label": "Notes on MMSU Glut 1 from extension.mmsu.edu.ph",
+          "url": "https://extension.mmsu.edu.ph/news/show/335/ilocos-norte-farmers-to-plant-glutinous-corn"
+        },
+        {
+          "label": "Notes on MMSU Glut 1 from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
+        },
+        {
+          "label": "Bureau of Plant Industry: seed and planting material certification",
+          "url": "https://bpi.da.gov.ph/"
+        }
+      ]
+    }
+  ]
+}

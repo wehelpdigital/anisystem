@@ -55,6 +55,12 @@
         html.dark .fh-body .rv-year { background: #22301a; color: #cfe3b8; }
         html.dark .fh-body .rv-bar { background: #22301a; }
         html.dark .fh-body .rv-more, html.dark .fh-body .rv-reset { color: #cfe3b8; }
+        /* The variety finder's crop row (2026-10-13): one line that scrolls on a phone. */
+        .fh-body .fh-crops { margin: 0 0 1rem; padding: 0 0 .2rem; max-width: 100%; }
+        .fh-crops a { text-decoration: none; }
+        html.dark .fh-body .rv-chip small { color: #9fb58a; }
+        html.dark .fh-body .rv-nodata { background: #1c2616; color: #b9caa8; }
+        html.dark .fh-body .rv-trade { color: #e3c25a; }
         @media (prefers-reduced-motion: reduce) { .fh-hero img { animation: none; } .fh-switch a, .fh-more a { transition: none; } }
     </style>
 @endpush
@@ -63,7 +69,7 @@
 <div class="max-w-6xl mx-auto">
     <div class="fh-hero">
         <img src="{{ asset('images/icons/' . $fhIcon . '.svg') }}" alt="">
-        <div><h2>{{ $fhName }}</h2><p>{{ $fhLead }}. {{ $tool === 'varieties' ? 'From the PhilRice seed database.' : 'Active ingredients only, never brands.' }} Free with your account.</p></div>
+        <div><h2>{{ $fhName }}</h2><p>{{ $fhLead }}. {{ $tool === 'varieties' ? 'From PhilRice and the NSIC registry.' : 'Active ingredients only, never brands.' }} Free with your account.</p></div>
     </div>
     <nav class="fh-switch" aria-label="Field helpers">
         @foreach ($tools as $k => [$n, $l, $i])
@@ -74,14 +80,25 @@
         @if ($tool === 'weeds')
             @include('public.site.partials.weed-helper', ['gate' => false, 'defaultCrop' => $defaultCrop])
         @elseif ($tool === 'varieties')
-            @include('public.site.partials.variety-finder', ['varieties' => $varieties, 'cardTarget' => '_blank'])
+            {{-- Which crop: rice first, then every crop with a finder of its own. --}}
+            <nav class="rv-chips fh-crops" aria-label="Crop">
+                <a href="{{ route('fh.page', 'varieties') }}?crop=rice" class="rv-chip {{ ! $vCrop ? 'is-on' : '' }}">Rice</a>
+                @foreach ($vCrops as $k => $c)
+                    <a href="{{ route('fh.page', 'varieties') }}?crop={{ $k }}" class="rv-chip {{ $vCrop === $k ? 'is-on' : '' }}">{{ $c['name'] }} <small>{{ $c['count'] }}</small></a>
+                @endforeach
+            </nav>
+            @if ($vCrop)
+                @include('public.site.partials.crop-variety-finder', ['varieties' => $varieties, 'crop' => $vCrops[$vCrop], 'cardTarget' => '_blank'])
+            @else
+                @include('public.site.partials.variety-finder', ['varieties' => $varieties, 'cardTarget' => '_blank'])
+            @endif
         @else
             @include('public.site.partials.problem-finder', $facts + ['gate' => false, 'defaultCrop' => $defaultCrop])
         @endif
     </div>
     <div class="fh-more">
         @if ($tool === 'varieties')
-            <a href="{{ url('/rice-varieties') }}">Every variety on the public site ›</a>
+            <a href="{{ $vCrop ? url('/crop-varieties/' . $vCrops[$vCrop]['slug']) : url('/rice-varieties') }}">Every variety on the public site ›</a>
             @if (\Illuminate\Support\Facades\Route::has('vary.page'))<a href="{{ route('vary.page') }}">Ask Anee to research varieties for your town ›</a>@endif
         @elseif ($tool === 'weeds')
             <a href="{{ url('/weeds') }}#catalogue">Every weed, with pictures ›</a>

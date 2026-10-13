@@ -44,10 +44,10 @@ TRANSITIONS = [
     "in other words", "for this reason", "that means", "this means", "above", "besides that", "on top of that",
 ]
 
-SECTIONS = {"crops", "pests", "diseases", "weeds", "land-preparation", "blog", "features", "rice-varieties"}
+SECTIONS = {"crops", "pests", "diseases", "weeds", "land-preparation", "blog", "features", "rice-varieties", "crop-varieties"}
 BLOCK_TYPES = {"heading", "text", "list", "steps", "table", "callout", "image", "quote", "faq", "cta", "links", "sources"}
 
-SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/land-preparation", "/blog", "/rice-varieties"}
+SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/land-preparation", "/blog", "/rice-varieties", "/crop-varieties"}
 
 
 def url_map():
@@ -56,7 +56,18 @@ def url_map():
     # The rice variety pages (2026-10-13) are too many to list by hand: every
     # page that exists in this folder counts as a link target too.
     pages = set("/%s/%s" % (os.path.basename(os.path.dirname(f)), os.path.basename(f)[:-5]) for f in glob.glob(os.path.join(HERE, "*", "*.json")))
-    return SITE_URLS | pages | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|land-preparation|blog|rice-varieties)/[a-z0-9\-]+)", part))
+    # The crop variety hubs (2026-10-13), one per crop with three or more
+    # varieties, drawn by the app from database/crop-varieties.
+    hubs = set()
+    vf = os.path.join(HERE, "..", "crop-varieties", "varieties.json")
+    if os.path.exists(vf):
+        from collections import Counter
+        slugs = {"stringbean": "sitao", "snapbean": "snap-bean", "chinesecabbage": "chinese-cabbage", "limabean": "lima-bean",
+                 "wingedbean": "winged-bean", "bellpepper": "bell-pepper", "sweetpotato": "sweet-potato", "ubi": "ube",
+                 "starapple": "star-apple", "pigeonpea": "pigeon-pea"}
+        n = Counter(v["crop"] for v in json.load(open(vf, encoding="utf-8")))
+        hubs = set("/crop-varieties/%s" % slugs.get(k, k) for k, c in n.items() if c >= 3)
+    return SITE_URLS | pages | hubs | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|land-preparation|blog|rice-varieties|crop-varieties)/[a-z0-9\-]+)", part))
 
 
 LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
@@ -226,7 +237,7 @@ def check(path, urls, focus_seen):
     # ingredient table by rice age adds about 250 words (2026-10-06).
     profile = (sec == "weeds" and page.get("category") in ("Grasses", "Sedges", "Broadleaves")) or (sec in ("pests", "diseases") and page.get("profile"))
     # A rice variety page is a spec sheet with its meaning spelled out (2026-10-13).
-    lo, hi = (600, 1100) if sec == "features" else (450, 1200) if sec == "rice-varieties" else (650, 1700) if profile else (900, 1800)
+    lo, hi = (600, 1100) if sec == "features" else (450, 1200) if sec in ("rice-varieties", "crop-varieties") else (650, 1700) if profile else (900, 1800)
     if all_words < lo:
         errs.append("only %d words (at least %d)" % (all_words, lo))
     elif all_words > hi:

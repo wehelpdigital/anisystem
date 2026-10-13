@@ -20,20 +20,38 @@ class FieldHelperController extends Controller
         'weeds' => ['Weed Control Helper', 'What to do first and what to spray, by your crop and its age', 'weed'],
         'pests' => ['Pest Finder', 'Find the pest from the damage you see on any crop, and what to spray', 'pest'],
         'diseases' => ['Disease Finder', 'Find the disease from the signs you see on any crop, and what to spray', 'disease'],
-        // Every rice variety in PhilRice's seed database (2026-10-13), the finder of /rice-varieties.
-        'varieties' => ['Rice Variety Finder', 'Every NSIC rice variety with its days to harvest, yield and resistance', 'rice-variety'],
+        // Every rice variety in PhilRice's seed database (2026-10-13), the finder of /rice-varieties,
+        // and every other crop's since the same day, the finders of /crop-varieties/{crop}.
+        'varieties' => ['Variety Finder', 'Every registered variety of rice, corn, vegetables, root crops and fruit trees, with days to harvest, yield and resistance', 'rice-variety'],
     ];
 
     public function page(string $tool)
     {
         abort_unless(isset(self::TOOLS[$tool]), 404);
+        $defaultCrop = $this->newestCrop();
+        // The variety finder's crop: the one asked for, else the newest season's.
+        $vCrop = null;
+        $vCrops = [];
+        if ($tool === 'varieties') {
+            $vCrops = collect(\App\Support\CropVarieties::crops())->filter(fn ($c) => $c['hasHub'])->sortByDesc('count')->all();
+            $want = (string) request()->query('crop', '');
+            $fromSeason = $defaultCrop ? (str_starts_with($defaultCrop, 'corn') ? 'corn' : $defaultCrop) : null;
+            foreach ([$want, $fromSeason] as $k) {
+                if ($k && isset($vCrops[$k])) {
+                    $vCrop = $k;
+                    break;
+                }
+            }
+        }
 
         return view('field-helpers.index', [
             'tool' => $tool,
             'tools' => self::TOOLS,
             'facts' => in_array($tool, ['weeds', 'varieties'], true) ? [] : ProblemCatalogue::finderFacts($tool),
-            'varieties' => $tool === 'varieties' ? \App\Support\RiceVarieties::all() : [],
-            'defaultCrop' => $this->newestCrop(),
+            'varieties' => $tool === 'varieties' ? ($vCrop ? \App\Support\CropVarieties::forCrop($vCrop) : \App\Support\RiceVarieties::all()) : [],
+            'vCrop' => $vCrop,
+            'vCrops' => $vCrops,
+            'defaultCrop' => $defaultCrop,
         ]);
     }
 

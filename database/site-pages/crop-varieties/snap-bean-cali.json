@@ -1,0 +1,282 @@
+{
+  "section": "crop-varieties",
+  "slug": "snap-bean-cali",
+  "sortOrder": 941,
+  "lang": "en",
+  "category": "Snap bean",
+  "profile": true,
+  "title": "Cali snap bean: Yield, Maturity and Characteristics",
+  "metaTitle": "Cali snap bean: Yield, Maturity and Characteristics",
+  "metaDescription": "Cali snap bean is a bush snap bean variety. About 52 days to harvest, 8.5 t/ha in trials. See its pest ratings and traits.",
+  "focusKeyword": "Cali snap bean",
+  "keywords": [
+    "Cali snap bean",
+    "Cali",
+    "Cali snap bean variety",
+    "snap bean variety philippines",
+    "NSIC 2015 BSBn 03"
+  ],
+  "excerpt": "Cali snap bean is a bush snap bean variety. It was registered with the National Seed Industry Council (NSIC) in 2015 as NSIC 2015 BSBn 03. BSU Uplbca bred it. It takes about 52 days from sowing to the first harvest, with 8.46 tonnes per hectare on average in the trials.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-vegetables-philippines.webp",
+    "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet, the kind of farm where Cali snap bean is grown",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [snap bean variety finder](/crop-varieties/snap-bean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Days to harvest:** about 52 days from sowing to the first harvest.",
+        "**Yield:** 8.46 tonnes per hectare on average in the trials.",
+        "**Type:** Bush snap bean."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about Cali snap bean"
+    },
+    {
+      "type": "table",
+      "caption": "From the NSIC registry",
+      "rows": [
+        [
+          "Trait",
+          "What the record shows"
+        ],
+        [
+          "Registration",
+          "NSIC 2015 BSBn 03"
+        ],
+        [
+          "Year approved",
+          "2015"
+        ],
+        [
+          "Breeder or owner",
+          "BSU Uplbca"
+        ],
+        [
+          "Type",
+          "Bush snap bean"
+        ],
+        [
+          "Days to harvest",
+          "about 52 days"
+        ],
+        [
+          "Average yield",
+          "8.46 t/ha"
+        ],
+        [
+          "Number of flower cluster per plant",
+          "9"
+        ],
+        [
+          "Number of pods cluster",
+          "5"
+        ],
+        [
+          "Days to flower (DAP)",
+          "42"
+        ],
+        [
+          "Maturity (days to last harvest)",
+          "76"
+        ],
+        [
+          "Pod color",
+          "Green"
+        ],
+        [
+          "Pod length (cm)",
+          "13.6"
+        ],
+        [
+          "Pod width (cm)",
+          "0.9"
+        ],
+        [
+          "Seed color",
+          "Black"
+        ],
+        [
+          "Seed number per pod",
+          "5"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long does it take, and how much does it yield?"
+    },
+    {
+      "type": "text",
+      "text": "Cali snap bean takes about 52 days from sowing to the first harvest. That is about the average of the 11 snap bean varieties with a day count, 53.2 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8.46 t/ha trails the average of its group, 12.46. It sits in the lower quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "table",
+      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "rows": [
+        [
+          "Pest or disease",
+          "Rating",
+          "What it means"
+        ],
+        [
+          "Bean rust",
+          "Moderately resistant",
+          "Took some damage but held up"
+        ],
+        [
+          "Pod borer",
+          "Moderately resistant",
+          "Took some damage but held up"
+        ],
+        [
+          "Weevil",
+          "Moderately resistant",
+          "Took some damage but held up"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "It showed no weak spot in the ratings on record. Still, a resistant variety can break down when a new strain or pest population comes, so keep scouting. Read up on [legume pod borer](/pests/legume-pod-borer)."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit snap bean fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [legume pod borer](/pests/legume-pod-borer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the pod is like"
+    },
+    {
+      "type": "text",
+      "text": "Its pods grew about 13.6 cm long. The seed coat is black."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where and when to plant Cali snap bean"
+    },
+    {
+      "type": "text",
+      "text": "Baguio beans like cool weather, so most come from the highlands of Benguet and Mountain Province. Pole types bear longer, and bush types fit a short cropping gap. Before planting, get the field ready with our guide: [Vegetables in the Philippines](/crops/vegetables-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before you buy seed"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy sealed packs or tagged sacks from an accredited dealer, and check the packing date and germination rate.",
+        "Ask your municipal agriculturist or nearby farmers how it did in your area last season.",
+        "Try it on a small area first, beside the variety you usually plant, before you switch the whole farm.",
+        "Write down the planting day, inputs and harvest, so you can compare varieties on your own ground. anee.io keeps these records for you."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next snap bean season",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Snap bean varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the snap bean varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Bokod](/crop-varieties/snap-bean-bokod): about 50 days, 8.71 t/ha, 2009",
+        "[Sablan](/crop-varieties/snap-bean-sablan): about 50 days, 8.22 t/ha, 2009",
+        "[Kibungan](/crop-varieties/snap-bean-kibungan): about 52 days, 14.4 t/ha, 2014",
+        "[Kabayan](/crop-varieties/snap-bean-kabayan): about 51 days, 15.47 t/ha, 2014"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How long does it take to harvest?",
+          "a": "It takes about 52 days from sowing to the first harvest. Then the weather and your care decide the exact day."
+        },
+        {
+          "q": "What is its yield?",
+          "a": "The record shows 8.46 tonnes per hectare on average in the trials. Your own yield depends on the soil, water, fertilizer and pests on your farm."
+        },
+        {
+          "q": "Where can I buy seed of Cali?",
+          "a": "Ask an accredited seed dealer in your province, the seller named on this page or your municipal agriculturist. Look for the certified seed tag or a sealed pack before you pay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every snap bean variety, side by side",
+          "url": "/crop-varieties/snap-bean"
+        },
+        {
+          "label": "Crop varieties in the Philippines",
+          "url": "/crop-varieties"
+        },
+        {
+          "label": "Land preparation for legumes",
+          "url": "/land-preparation/legume-land-preparation"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Rice varieties of the Philippines",
+          "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
+          "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Bureau of Plant Industry: seed and planting material certification",
+          "url": "https://bpi.da.gov.ph/"
+        }
+      ]
+    }
+  ]
+}
