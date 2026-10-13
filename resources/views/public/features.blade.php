@@ -169,22 +169,34 @@
         .fz-step.is-auto .fz-ico { margin-top: 0; }
         .fz-step.is-auto .fz-what { font-size: .9rem; }
     }
-    @media (max-width: 559.98px) { .fz-step.is-auto .fz-what { display: block; font-size: .8rem; } }
     .fz-or { display: flex; align-items: center; gap: .8rem; margin-top: 2.4rem; font-size: .76rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #4a7c2a; }
     .fz-or::before, .fz-or::after { content: ''; flex: 1; border-top: 2px dashed #c9dcb4; }
-    /* A phone: two to a row, the screen, the name and the short line. */
+    /* A phone (2026-10-13, the owner: it felt cluttered): one tool to a row,
+       its icon, its name and its line, and a play button that opens its film
+       full size. The little screens were too small to read, so they go. */
     @media (max-width: 559.98px) {
-        .fz-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
-        .fz-shot { height: 7.5rem; }
-        .fz-shot img { width: 70%; top: .8rem; }
-        .fz-play { width: 2rem; height: 2rem; right: .55rem; top: .55rem; }
-        .fz-tool-body { padding: 0 .75rem .85rem; gap: .25rem; }
-        .fz-ico { width: 2.5rem; height: 2.5rem; margin-top: -1.25rem; }
-        .fz-ico img { width: 1.6rem; height: 1.6rem; }
-        .fz-tool h4 { font-size: .9rem; }
-        .fz-short { font-size: .76rem; line-height: 1.4; }
+        .fz-tools { grid-template-columns: minmax(0, 1fr); gap: .55rem; }
+        .fz-tool { flex-direction: row; align-items: center; border-radius: 1.1rem; }
+        .fz-tool:hover { transform: none; }
+        .fz-shot { order: 2; flex: none; width: auto; height: auto; padding: 0 .85rem 0 .3rem; background: none; overflow: visible; }
+        .fz-shot img, .fz-shot::after { display: none; }
+        .fz-play { position: static; width: 2.6rem; height: 2.6rem; box-shadow: 0 0 0 4px rgb(245 197 24 / .22), 0 8px 16px -8px rgb(0 0 0 / .45); }
+        .fz-tool-body { order: 1; flex: 1; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .75rem; row-gap: .12rem;
+            align-items: center; padding: .8rem .2rem .8rem .8rem; }
+        .fz-ico { grid-row: 1 / span 3; align-self: start; width: 2.7rem; height: 2.7rem; margin-top: 0; border-radius: .85rem; }
+        .fz-ico img { width: 1.7rem; height: 1.7rem; }
+        .fz-tool h4 { margin-top: 0; font-size: .95rem; }
+        .fz-short { font-size: .8rem; line-height: 1.4; }
         .fz-what { display: none; }
-        .fz-go { font-size: .74rem; }
+        .fz-go { grid-column: 2; padding-top: .2rem; font-size: .76rem; }
+        .fz-new { left: auto; right: 4.1rem; top: .5rem; font-size: .55rem; padding: .1rem .45rem; }
+        /* Anee Auto keeps its six steps under the words. */
+        .fz-step.is-auto .fz-tool { flex-direction: column; align-items: stretch; }
+        .fz-step.is-auto .fz-shot { order: 0; position: absolute; right: .3rem; top: .9rem; z-index: 2; }
+        .fz-step.is-auto .fz-tool-body { padding: .9rem .9rem 1rem; }
+        .fz-step.is-auto .fz-tool h4 { padding-right: 3.2rem; }
+        .fz-auto-steps { grid-column: 1 / -1; }
+        .fz-step.is-auto .fz-what { display: block; grid-column: 1 / -1; margin-top: .4rem; font-size: .84rem; }
         .fz-step-head { gap: .75rem; }
         .fz-step-n { width: 2.3rem; height: 2.3rem; font-size: 1rem; }
     }
@@ -271,7 +283,7 @@
             <div class="max-w-2xl reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Everything in one farm app</p>
                 <h2 class="mt-2 font-heading text-2xl sm:text-3xl font-bold text-ink text-balance">{{ $fCount }} Tools for Your Whole Season, Step by Step</h2>
-                <p class="mt-3 text-gray-600">Each step of the season has its own tools, and they work together: plan it, run it, record it, and ask Anee from the same phone. Tap a screen to watch the tool at work.</p>
+                <p class="mt-3 text-gray-600">Each step of the season has its own tools, and they work together: plan it, run it, record it, and ask Anee from the same phone. Tap play on any tool to watch it at work.</p>
             </div>
         </div>
         {{-- The steps, always at hand while reading. --}}

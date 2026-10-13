@@ -25,6 +25,13 @@
 @php
     $hwMode = $hwMode ?? 'site';
     $hwStages = \App\Support\HowItWorks::stages();
+    // On the public site Anee Auto is step 1, the easiest way, as on the
+    // homepage and the features page (2026-10-13), and the season by hand
+    // follows from step 2; the dashboard's tour keeps the season's own order.
+    if ($hwMode === 'site') {
+        $hwStages = collect($hwStages)->sortBy(fn ($s) => $s['key'] === 'auto' ? 0 : 1)->values()
+            ->map(fn ($s) => $s['key'] === 'auto' ? array_replace($s, ['when' => 'The easiest way']) : $s)->all();
+    }
     $hwPhone = \App\Support\HowItWorks::phone();
     $hwPings = \App\Support\HowItWorks::pings();
     // The season the film opens after the dashboard, and its dates.
@@ -603,6 +610,10 @@
     .hw-line { fill: none; stroke: rgb(255 255 255 / .3); stroke-width: 2; stroke-dasharray: .002 .012; stroke-linecap: round; }
     .hw-line-flow { fill: none; stroke: var(--acc); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: .12 .88; animation: hwRun 2.2s linear infinite; }
 
+    /* After Anee Auto (step 1 on the site): the way by hand starts here. */
+    .hw-or { position: relative; z-index: 1; display: flex; align-items: center; gap: .9rem; max-width: 34rem; margin: 3.2rem auto 0; padding: 0 1rem;
+        font-size: .76rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: var(--acc, #f5c518); text-align: center; }
+    .hw-or::before, .hw-or::after { content: ''; flex: 1; border-top: 2px dashed rgb(168 204 126 / .35); }
     .hw-stage { position: relative; isolation: isolate; scroll-margin-top: 6rem; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: .8rem;
         padding: 2.4rem 0 2.6rem; }
     .hw-svg { position: absolute; left: 0; top: 0; z-index: -1; overflow: visible; pointer-events: none; }
@@ -1010,7 +1021,7 @@
                 @if ($hwMode === 'site')
                     <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free</a>
                 @endif
-                <button type="button" class="hw-ghost" data-hw-go="plan">See the {{ \App\Support\HowItWorks::stepWord() }} steps
+                <button type="button" class="hw-ghost" data-hw-go="{{ $hwStages[0]['key'] }}">See the {{ \App\Support\HowItWorks::stepWord() }} steps
                     <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
                 </button>
             </div>
@@ -1318,7 +1329,9 @@
             </section>
             {{-- After setting up: a phone on the activities board. After the
                  count: a phone asking Anee about a crop, before problems. --}}
-            @if ($st['key'] === 'plant')
+            @if ($st['key'] === 'auto' && $n === 0)
+                <p class="hw-or"><span>Or do it yourself, step by step</span></p>
+            @elseif ($st['key'] === 'plant')
                 @include('public.how.board-band')
             @elseif ($st['key'] === 'grow')
                 @include('public.how.chat-band')
@@ -1331,7 +1344,7 @@
             <{{ $hwHead }} class="hw-h2">The next season starts smarter</{{ $hwHead }}>
             <p>Your best lot becomes next season's protocol, Compare Reports shows what changed, and Anee reads it all with you. Every season you record makes the next one easier to plan.</p>
             <div class="hw-btns">
-                <button type="button" class="hw-ghost" data-hw-go="plan">Back to step 1
+                <button type="button" class="hw-ghost" data-hw-go="{{ $hwStages[0]['key'] }}">Back to step 1
                     <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true" style="transform: rotate(180deg)"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
                 </button>
                 {{-- On the site the page's own way in follows right below, so no second sign up button here. --}}

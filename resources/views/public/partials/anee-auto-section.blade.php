@@ -116,15 +116,15 @@
     .hp-auto-glow { position: absolute; inset: 8% 6%; z-index: -2; border-radius: 50%; filter: blur(30px);
         background: radial-gradient(closest-side, rgb(245 197 24 / .45), rgb(107 159 61 / .22) 60%, transparent); animation: hpAutoBreath 8s ease-in-out infinite; }
     @keyframes hpAutoBreath { 50% { transform: scale(1.08); opacity: .8; } }
-    /* The web: a mesh of nodes over the whole section, every path leading to
-       Anee's phone. Thin links, nodes that light as a pulse passes, gold
-       pulses with a tail, the things she reads named at the far ends. */
+    /* The web: two fans of curves gathering into Anee's phone, nodes in arcs
+       across them that light as a pulse passes, gold pulses with a tail, the
+       things she reads named near the outer ends. */
     .hp-auto > .max-w-6xl { position: relative; z-index: 1; }
     .hp-auto-web { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none;
         -webkit-mask-image: linear-gradient(180deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(180deg, transparent, #000 7%, #000 93%, transparent); }
-    .hp-auto-web .ln { stroke: rgb(74 124 42 / .17); stroke-width: 1; fill: none; transition: stroke .6s ease, stroke-width .6s ease; }
-    .hp-auto-web .ln.is-in { stroke: rgb(74 124 42 / .26); stroke-dasharray: 3 4; }
-    .hp-auto-web .ln.is-hot { stroke: rgb(217 173 18 / .7); stroke-width: 1.6; transition-duration: .12s; }
+    .hp-auto-web .fl { fill: none; stroke-width: 1.3; stroke-linecap: round; opacity: var(--o, 1); transition: opacity .6s ease, stroke-width .6s ease; }
+    .hp-auto-web .fl.is-hot { stroke-width: 2; transition-duration: .12s; }
+    .hp-auto-web .ly { fill: none; stroke: rgb(74 124 42 / .16); stroke-width: 1; stroke-dasharray: 2 6; stroke-linecap: round; }
     .hp-auto-web .nd { fill: #fbfdf7; stroke: #b3d293; stroke-width: 1.4; transition: fill .6s ease, stroke .6s ease; }
     .hp-auto-web .nd.is-src { fill: #f3f9ec; stroke: #4a7c2a; stroke-width: 2; }
     .hp-auto-web .nd.is-hot { fill: #f5c518; stroke: #d9ad12; transition-duration: .1s; }
@@ -217,13 +217,15 @@
 @push('scripts')
 <script>
 (() => {
-    /* The web across the section: nodes on a loose grid over the whole of
-       it (none on the words, none on the phone), each joined to its nearest
-       neighbours. Every node knows its next step toward Anee's phone, so a
-       pulse that starts anywhere, often at one of the things she reads (named
-       at the far ends), hops node by node and runs into the phone. Drawn
-       again when the section changes size; runs only while on screen; still
-       under reduced motion. */
+    /* The web (2026-10-13, the owner: "curved lines, balanced"): two fans of
+       smooth curves, one from each side of the section, gathering into
+       Anee's phone like threads into the eye of a needle. Every curve has the
+       same shape, level at both ends with one bend between, and the top half
+       mirrors the bottom. Nodes stand on the curves in arcs (none on the
+       words); gold pulses with fading tails run along them into the phone,
+       lighting each node they pass; the things she reads are named near the
+       outer ends. Drawn again when the section changes size; runs only while
+       on screen; still under reduced motion. */
     const svg = document.querySelector('[data-auto-net]');
     if (!svg) return;
     const sec = svg.closest('section'), phone = sec.querySelector('.hp-auto-phone');
@@ -234,6 +236,12 @@
     const names = [...(inputs[0] || []), ...(inputs[1] || [])];
     const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; };
     const rnd = (a, b) => a + Math.random() * (b - a);
+    const f1 = (v) => v.toFixed(1);
+    // A point on a cubic curve [x0, y0, x1, y1, x2, y2, x3, y3] at t.
+    const bez = (c, t) => {
+        const u = 1 - t, a = u * u * u, b = 3 * u * u * t, d = 3 * u * t * t, e = t * t * t;
+        return [a * c[0] + b * c[2] + d * c[4] + e * c[6], a * c[1] + b * c[3] + d * c[5] + e * c[7]];
+    };
     let web = null, raf = 0, on = false, last = 0, spawnAt = 0, pulses = [], cometN = 0;
     const draw = () => {
         const W = sec.clientWidth, H = sec.clientHeight;
@@ -248,152 +256,153 @@
         const hub = { x: (P.l + P.r) / 2, y: (P.t + P.b) / 2 };
         const words = [...sec.querySelectorAll('.hp-head > *, .hp-auto-steps li, .hp-auto-cta > *')].map(rel);
         const inRect = (x, y, a, pad) => x > a.l - pad && x < a.r + pad && y > a.t - pad && y < a.b + pad;
+        const hits = (l, t, r, b) => words.some((a) => l < a.r + 4 && r > a.l - 4 && t < a.b + 4 && b > a.t - 4);
         const small = W < 640;
-        const cell = small ? 74 : 104;
-        const cols = Math.max(3, Math.round(W / cell)), rows = Math.max(3, Math.round(H / cell));
-        const cw = W / cols, ch = H / rows;
-        const nodes = [];
-        for (let r = 0; r < rows; r++) {
-            for (let c = 0; c < cols; c++) {
-                const x = (c + .5 + rnd(-.32, .32)) * cw, y = (r + .5 + rnd(-.32, .32)) * ch;
-                if (inRect(x, y, P, 14) || words.some((a) => inRect(x, y, a, 8))) continue;
-                nodes.push({ x, y, d: Math.hypot(x - hub.x, y - hub.y), nb: [] });
-            }
-        }
-        // Links: each node to its three nearest, once.
-        const seen = new Set(), links = [];
-        const gLn = mk('g', {}), gHalo = mk('g', {}), gNd = mk('g', {}), gPl = mk('g', {}), gTg = mk('g', {});
-        const reach = Math.max(cw, ch) * 2.1;
-        nodes.forEach((a, i) => {
-            nodes.map((b, j) => [j, Math.hypot(a.x - b.x, a.y - b.y)]).filter(([j, dd]) => j !== i && dd < reach)
-                .sort((u, v) => u[1] - v[1]).slice(0, 3).forEach(([j]) => {
-                    const key = Math.min(i, j) + ':' + Math.max(i, j);
-                    if (seen.has(key)) return;
-                    seen.add(key);
-                    const b = nodes[j];
-                    const el = mk('line', { x1: a.x.toFixed(1), y1: a.y.toFixed(1), x2: b.x.toFixed(1), y2: b.y.toFixed(1), class: 'ln' }, gLn);
-                    const k = { a, b, el };
-                    links.push(k); a.nb.push([b, k]); b.nb.push([a, k]);
-                });
-        });
-        // The phone's edge, seen from a point: where a pulse goes in.
-        const edge = (n) => {
-            const dx = n.x - hub.x, dy = n.y - hub.y;
-            const hw = (P.r - P.l) / 2 + 4, hh = (P.b - P.t) / 2 + 4;
-            const f = Math.min(hw / Math.max(Math.abs(dx), 1e-6), hh / Math.max(Math.abs(dy), 1e-6));
-            return { x: hub.x + dx * f, y: hub.y + dy * f };
+        // How far up and down the curves spread at the edges: under the heading
+        // to the foot of the section, the same both ways from the phone.
+        const head = sec.querySelector('.hp-head');
+        const top0 = head ? rel(head).b + 30 : H * .2;
+        const half = small ? (P.b - P.t) * .34 : Math.max(120, Math.min(hub.y - top0, H - 30 - hub.y));
+        const n = small ? 5 : 9;
+        // Each fan fades in from its edge and is strongest where it meets the phone.
+        const fade = (id, x1, x2) => {
+            const g = mk('linearGradient', { id, gradientUnits: 'userSpaceOnUse', x1: f1(x1), y1: 0, x2: f1(x2), y2: 0 }, defs);
+            mk('stop', { offset: '0', 'stop-color': '#4a7c2a', 'stop-opacity': '0' }, g);
+            mk('stop', { offset: '.3', 'stop-color': '#4a7c2a', 'stop-opacity': '.2' }, g);
+            mk('stop', { offset: '1', 'stop-color': '#4a7c2a', 'stop-opacity': '.42' }, g);
         };
-        // Each node's next step: the neighbour closest to the phone, if it is
-        // closer than the node itself; nodes near the phone run straight in.
-        const near = Math.max(P.r - P.l, P.b - P.t) / 2 + Math.max(cw, ch) * 1.25;
-        nodes.forEach((n) => {
-            if (n.d < near) {
-                const e = edge(n);
-                n.next = 'in';
-                n.inLink = { a: n, b: { x: e.x, y: e.y, end: true }, el: mk('line', { x1: n.x.toFixed(1), y1: n.y.toFixed(1), x2: e.x.toFixed(1), y2: e.y.toFixed(1), class: 'ln is-in' }, gLn) };
-                return;
-            }
-            let best = null;
-            n.nb.forEach(([b, k]) => { if (b.d < n.d - 6 && (!best || b.d < best[0].d)) best = [b, k]; });
-            n.next = best;
-        });
-        // A node leads in when its chain reaches the phone.
-        const leads = (n) => { let m = n, i = 0; while (m && m.next && m.next !== 'in' && i++ < 60) m = m.next[0]; return !!(m && m.next === 'in'); };
-        nodes.forEach((n) => { n.leads = leads(n); });
-        nodes.forEach((n) => {
-            n.halo = mk('circle', { cx: n.x.toFixed(1), cy: n.y.toFixed(1), r: 7, class: 'halo' }, gHalo);
-            n.el = mk('circle', { cx: n.x.toFixed(1), cy: n.y.toFixed(1), r: small ? 2.4 : 3, class: 'nd' }, gNd);
-        });
-        // What she reads: the farthest leading node in each of eight directions round the phone.
-        const sources = [];
-        if (!small) {
-            const room = (n) => n.x > 60 && n.x < W - 60 && n.y > 40 && n.y < H - 40 && !words.some((a) => inRect(n.x, n.y, a, 34));
-            for (let k = 0; k < 8 && k < names.length; k++) {
-                const from = -Math.PI + (k / 8) * 2 * Math.PI, to = from + (2 * Math.PI) / 8;
-                let best = null;
-                nodes.forEach((n) => {
-                    if (!n.leads || n.src || !room(n)) return;
-                    const ang = Math.atan2(n.y - hub.y, n.x - hub.x);
-                    if (ang >= from && ang < to && (!best || n.d > best.d)) best = n;
+        fade('hpAutoFL', 0, P.l); fade('hpAutoFR', W, P.r);
+        const gLy = mk('g', {}), gLn = mk('g', {}), gHalo = mk('g', {}), gNd = mk('g', {}), gPl = mk('g', {}), gTg = mk('g', {});
+        const curves = [], sources = [];
+        [-1, 1].forEach((side) => {
+            // On a phone the fans start out of sight, so the little that shows bends gently.
+            const out = small ? 70 : 8;
+            const x0 = side < 0 ? -out : W + out, x3 = side < 0 ? P.l + 12 : P.r - 12, span = x3 - x0;
+            if (Math.abs(span) < 36) return;
+            // Node layers: as many as the fan's width has room for, at the same
+            // places on every curve, so the nodes stand in arcs.
+            const L = Math.max(1, Math.min(5, Math.round(Math.abs(span) / 150)));
+            const ts = Array.from({ length: L }, (_, k) => L === 1 ? .5 : .14 + (k / (L - 1)) * .7);
+            const layers = ts.map(() => []);
+            for (let i = 0; i < n; i++) {
+                const f = (i / (n - 1)) * 2 - 1;
+                const y0 = hub.y + f * half, y3 = hub.y + f * (P.b - P.t) * .2;
+                // Level at both ends, one smooth bend between: every curve the same shape, the top half mirroring the bottom.
+                const c = [x0, y0, x0 + span * .42, y0, x0 + span * .62, y3, x3, y3];
+                const el = mk('path', { d: 'M' + f1(c[0]) + ' ' + f1(c[1]) + 'C' + c.slice(2).map(f1).join(' '), class: 'fl', stroke: 'url(#' + (side < 0 ? 'hpAutoFL' : 'hpAutoFR') + ')',
+                    style: '--o: ' + (1 - Math.abs(f) * .4).toFixed(2) }, gLn);
+                let len = 0, prev = bez(c, 0);
+                for (let k = 1; k <= 24; k++) { const q = bez(c, k / 24); len += Math.hypot(q[0] - prev[0], q[1] - prev[1]); prev = q; }
+                const cv = { c, el, len, nodes: [], side, i };
+                ts.forEach((t, li) => {
+                    const [x, y] = bez(c, t);
+                    if (x < 4 || x > W - 4 || inRect(x, y, P, 12) || words.some((a) => inRect(x, y, a, 6))) return;
+                    const nd = { x, y, t, halo: mk('circle', { cx: f1(x), cy: f1(y), r: 7, class: 'halo' }, gHalo), el: mk('circle', { cx: f1(x), cy: f1(y), r: small ? 2.2 : 2.8, class: 'nd' }, gNd) };
+                    cv.nodes.push(nd); layers[li].push(nd);
                 });
-                if (!best) continue;
-                best.src = true;
-                best.el.setAttribute('class', 'nd is-src');
-                best.el.setAttribute('r', 5);
-                const label = names[sources.length % names.length];
-                const g = mk('g', { class: 'tg' }, gTg);
-                const w = label.length * 6.6 + 16;
-                const cx = Math.min(Math.max(best.x, w / 2 + 4), W - w / 2 - 4);
-                mk('rect', { x: (cx - w / 2).toFixed(1), y: (best.y - 27).toFixed(1), width: w.toFixed(1), height: 19, rx: 9.5 }, g);
-                const t = mk('text', { x: cx.toFixed(1), y: (best.y - 13.5).toFixed(1), 'text-anchor': 'middle' }, g);
-                t.textContent = label;
-                best.tag = g;
-                sources.push(best);
+                curves.push(cv);
             }
+            // The arcs: a faint dashed thread through each layer's nodes, top to bottom.
+            layers.forEach((ly) => {
+                if (ly.length < 3) return;
+                let d = 'M' + f1(ly[0].x) + ' ' + f1(ly[0].y);
+                for (let k = 1; k < ly.length - 1; k++) d += 'Q' + f1(ly[k].x) + ' ' + f1(ly[k].y) + ' ' + f1((ly[k].x + ly[k + 1].x) / 2) + ' ' + f1((ly[k].y + ly[k + 1].y) / 2);
+                d += 'L' + f1(ly[ly.length - 1].x) + ' ' + f1(ly[ly.length - 1].y);
+                mk('path', { d, class: 'ly' }, gLy);
+            });
+        });
+        // What she reads, named near the outer ends: every other curve first,
+        // then the rest; on the side with room when the other has none (a
+        // narrow window leaves no room beside the words), never two on top of
+        // each other.
+        if (!small) {
+            const placed = [];
+            const free = (l, t, r, b) => !hits(l, t, r, b) && !placed.some((q) => l < q[2] + 6 && r > q[0] - 6 && t < q[3] + 4 && b > q[1] - 4);
+            const tryLabel = (cv, label) => {
+                const w = label.length * 6.6 + 16;
+                for (let t = .04; t < .9; t += .02) {
+                    const [x, y] = bez(cv.c, t);
+                    const cx = Math.min(Math.max(x, w / 2 + 6), W - w / 2 - 6);
+                    if (x < 6 || x > W - 6 || inRect(x, y, P, 18) || !free(cx - w / 2, y - 28, cx + w / 2, y + 6)) continue;
+                    placed.push([cx - w / 2, y - 28, cx + w / 2, y + 6]);
+                    const g = mk('g', { class: 'tg' }, gTg);
+                    mk('rect', { x: f1(cx - w / 2), y: f1(y - 27), width: f1(w), height: 19, rx: 9.5 }, g);
+                    const tx = mk('text', { x: f1(cx), y: f1(y - 13.5), 'text-anchor': 'middle' }, g);
+                    tx.textContent = label;
+                    const src = { x, y, t, tag: g, halo: mk('circle', { cx: f1(x), cy: f1(y), r: 8, class: 'halo' }, gHalo), el: mk('circle', { cx: f1(x), cy: f1(y), r: 4.5, class: 'nd is-src' }, gNd) };
+                    cv.src = src; cv.nodes.push(src); cv.nodes.sort((p, q) => p.t - q.t);
+                    sources.push(cv);
+                    return true;
+                }
+                return false;
+            };
+            const order = (side) => {
+                const mine = curves.filter((cv) => cv.side === side), mid = (n - 1) / 2;
+                return [...mine.filter((cv) => cv.i % 2 === 1), ...mine.filter((cv) => cv.i % 2 === 0 && cv.i !== mid)];
+            };
+            const queue = [[...(inputs[0] || [])], [...(inputs[1] || [])]];
+            [-1, 1].forEach((side, k) => {
+                const own = queue[k], other = queue[1 - k];
+                order(side).forEach((cv) => { if (!cv.src && own.length && tryLabel(cv, own[0])) own.shift(); });
+                // Names this side had no room for go to the other side's curves.
+                if (own.length) other.push(...own.splice(0));
+            });
+            // A second pass, for the names that moved across.
+            [-1, 1].forEach((side, k) => order(side).forEach((cv) => { if (!cv.src && queue[k].length && tryLabel(cv, queue[k][0])) queue[k].shift(); }));
         }
-        web = { nodes: nodes.filter((n) => n.leads), sources, gPl, defs };
+        web = { curves, sources, gPl, defs };
     };
     const heat = (el, cls, ms) => { if (!el) return; el.classList.add(cls); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove(cls), ms); };
     const ping = (n) => { if (!n.halo) return; n.halo.classList.remove('is-on'); void n.halo.getBBox(); n.halo.classList.add('is-on'); };
     const spawn = () => {
-        if (!web || !web.nodes.length) return;
-        // Most pulses start where she reads; the rest anywhere on the web.
-        const pool = web.sources.length && Math.random() < .45 ? web.sources : web.nodes;
-        const n = pool[Math.floor(Math.random() * pool.length)];
-        const hops = [];
-        let m = n, guard = 0;
-        while (m && guard++ < 60) {
-            if (m.next === 'in') { hops.push(m.inLink); break; }
-            if (!m.next) break;
-            hops.push({ a: m, b: m.next[0], el: m.next[1].el }); m = m.next[0];
-        }
-        if (!hops.length || hops[hops.length - 1].b.end !== true) return;
-        heat(n.el, 'is-hot', 520); heat(n.tag, 'is-hot', 1100); ping(n);
-        // A comet: a bright head and a fading tail drawn through where it has been.
-        // Each tail has its own gradient, laid along it from its end to the head, so it fades the right way whichever way it runs.
+        if (!web || !web.curves.length) return;
+        // Most pulses start where she reads; the rest at the edge, on any curve.
+        const cv = web.sources.length && Math.random() < .45 ? web.sources[Math.floor(Math.random() * web.sources.length)] : web.curves[Math.floor(Math.random() * web.curves.length)];
+        const t0 = cv.src && Math.random() < .7 ? cv.src.t : 0;
+        if (cv.src && t0) { heat(cv.src.el, 'is-hot', 520); heat(cv.src.tag, 'is-hot', 1100); ping(cv.src); }
+        // A comet: a bright head and a tail that fades the way it came, on a gradient of its own.
         const gid = 'hpAutoC' + (++cometN);
         const grad = mk('linearGradient', { id: gid, gradientUnits: 'userSpaceOnUse' }, web.defs);
         mk('stop', { offset: '0', 'stop-color': '#f5c518', 'stop-opacity': '0' }, grad);
         mk('stop', { offset: '1', 'stop-color': '#f5c518', 'stop-opacity': '.9' }, grad);
-        pulses.push({ hops, i: 0, t: 0, trail: [], grad, tail: mk('polyline', { class: 'tl', stroke: 'url(#' + gid + ')' }, web.gPl), dot: mk('circle', { r: 3, class: 'pl' }, web.gPl) });
+        pulses.push({ cv, t: t0, next: cv.nodes.findIndex((nd) => nd.t > t0 + .001), trail: [], grad,
+            tail: mk('polyline', { class: 'tl', stroke: 'url(#' + gid + ')' }, web.gPl), dot: mk('circle', { r: 3, class: 'pl' }, web.gPl) });
     };
     const tick = (now) => {
         if (!on) { raf = 0; return; }
         const dt = Math.min(64, now - (last || now)); last = now;
-        if (now >= spawnAt && pulses.length < 28) { spawn(); spawnAt = now + rnd(150, 330); }
+        if (now >= spawnAt && pulses.length < 18) { spawn(); spawnAt = now + rnd(220, 480); }
         pulses = pulses.filter((p) => {
-            const k = p.hops[p.i];
-            const len = Math.hypot(k.b.x - k.a.x, k.b.y - k.a.y) || 1;
-            p.t += dt * .17 / len;
-            if (p.t >= 1) {
-                heat(k.el, 'is-hot', 360);
-                if (k.b.el) { heat(k.b.el, 'is-hot', 420); ping(k.b); }
-                p.i++; p.t = 0;
-                if (p.i >= p.hops.length) {
-                    // It reached the phone: a ripple where it went in, and the phone's edge lights.
-                    const r = mk('circle', { cx: k.b.x.toFixed(1), cy: k.b.y.toFixed(1), r: 6, class: 'rip' }, web.gPl);
-                    setTimeout(() => r.remove(), 950);
-                    phone.classList.add('is-fed'); clearTimeout(phone._fed); phone._fed = setTimeout(() => phone.classList.remove('is-fed'), 260);
-                    p.dot.remove(); p.tail.remove(); p.grad.remove(); return false;
-                }
-                return true;
+            p.t = Math.min(1, p.t + dt * .16 / p.cv.len);
+            // The nodes it passes light up, and the curve warms for a moment.
+            while (p.next > -1 && p.next < p.cv.nodes.length && p.cv.nodes[p.next].t <= p.t) {
+                const nd = p.cv.nodes[p.next]; heat(nd.el, 'is-hot', 420); ping(nd); p.next++;
             }
-            const x = k.a.x + (k.b.x - k.a.x) * p.t, y = k.a.y + (k.b.y - k.a.y) * p.t;
-            p.trail.unshift([x, y]); p.trail.length = Math.min(p.trail.length, 14);
-            p.dot.setAttribute('cx', x.toFixed(1)); p.dot.setAttribute('cy', y.toFixed(1));
-            // Oldest point first, so the gradient fades toward the tail.
+            if (p.t >= 1) {
+                // It reached the phone: a ripple where it went in, and the phone's edge lights.
+                const [ex, ey] = bez(p.cv.c, 1);
+                const r = mk('circle', { cx: f1(ex), cy: f1(ey), r: 6, class: 'rip' }, web.gPl);
+                setTimeout(() => r.remove(), 950);
+                heat(p.cv.el, 'is-hot', 380);
+                phone.classList.add('is-fed'); clearTimeout(phone._fed); phone._fed = setTimeout(() => phone.classList.remove('is-fed'), 260);
+                p.dot.remove(); p.tail.remove(); p.grad.remove(); return false;
+            }
+            const [x, y] = bez(p.cv.c, p.t);
+            p.trail.unshift([x, y]); p.trail.length = Math.min(p.trail.length, 16);
+            p.dot.setAttribute('cx', f1(x)); p.dot.setAttribute('cy', f1(y));
             const pts = p.trail.slice().reverse();
             if (pts.length > 1) {
-                p.tail.setAttribute('points', pts.map((q) => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' '));
-                p.grad.setAttribute('x1', pts[0][0].toFixed(1)); p.grad.setAttribute('y1', pts[0][1].toFixed(1));
-                p.grad.setAttribute('x2', x.toFixed(1)); p.grad.setAttribute('y2', y.toFixed(1));
+                p.tail.setAttribute('points', pts.map((q) => f1(q[0]) + ',' + f1(q[1])).join(' '));
+                p.grad.setAttribute('x1', f1(pts[0][0])); p.grad.setAttribute('y1', f1(pts[0][1]));
+                p.grad.setAttribute('x2', f1(x)); p.grad.setAttribute('y2', f1(y));
             }
             return true;
         });
         // Now and then a node twinkles.
-        if (web.nodes.length && Math.random() < dt / 260) {
-            const n = web.nodes[Math.floor(Math.random() * web.nodes.length)];
-            if (n.el && !n.el.classList.contains('is-hot')) { n.el.classList.remove('tw'); void n.el.getBBox(); n.el.classList.add('tw'); }
+        if (Math.random() < dt / 300) {
+            const cv = web.curves[Math.floor(Math.random() * web.curves.length)];
+            const nd = cv && cv.nodes[Math.floor(Math.random() * cv.nodes.length)];
+            if (nd && nd.el && !nd.el.classList.contains('is-hot')) { nd.el.classList.remove('tw'); void nd.el.getBBox(); nd.el.classList.add('tw'); }
         }
         raf = requestAnimationFrame(tick);
     };

@@ -20,7 +20,8 @@
             '@type' => 'HowTo',
             'name' => 'How a cropping season runs on anee.io',
             'description' => \App\Support\HowItWorks::stepWord(true) . ' steps from the first plan to the last sack, with Anee, your smart farm technician, at every step.',
-            'step' => collect(\App\Support\HowItWorks::stages())->values()->map(fn ($s, $i) => [
+            // In the page's own order: Anee Auto first (public/how/journey).
+            'step' => collect(\App\Support\HowItWorks::stages())->sortBy(fn ($s) => $s['key'] === 'auto' ? 0 : 1)->values()->map(fn ($s, $i) => [
                 '@type' => 'HowToStep',
                 'position' => $i + 1,
                 'name' => $s['title'],

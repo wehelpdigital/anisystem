@@ -129,7 +129,6 @@
                             <video class="hp-film hp-reel is-on" data-hero-film data-films="{{ json_encode($heroFilms) }}" muted playsinline preload="auto"
                                    poster="{{ $heroFilms[0]['poster'] }}" src="{{ $heroFilms[0]['src'] }}#t={{ $heroFilms[0]['from'] }}" aria-label="The anee.io app on a phone"></video>
                             <video class="hp-film hp-reel" data-hero-film muted playsinline preload="auto" aria-hidden="true"></video>
-                            <span class="hp-reel-bars" aria-hidden="true">@foreach ($heroFilms as $hf)<i><b></b></i>@endforeach</span>
                         @endif
                     </div>
                     <span class="hp-film-tag" data-hero-tag>{{ $heroFilms[0]['name'] ?? 'anee.io' }}</span>
@@ -164,6 +163,18 @@
             <video controls playsinline preload="none" poster="{{ asset('images/top-yield.webp') }}" data-tour-video>
                 <source src="{{ asset('videos/how-it-works.mp4') }}" type="video/mp4">
             </video>
+        </div>
+    </div>
+
+    {{-- A tool's film on a phone, over the page (the steps' Watch buttons on a phone). --}}
+    <div class="hp-fm" data-fm role="dialog" aria-modal="true" aria-labelledby="hpFmName" hidden>
+        <div class="hp-fm-veil" data-fm-close></div>
+        <div class="hp-fm-box">
+            <button type="button" class="hp-modal-x" data-fm-close aria-label="Close the film">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+            <div class="hp-fm-phone"><video muted playsinline loop preload="none"></video></div>
+            <p class="hp-fm-name" id="hpFmName"></p>
         </div>
     </div>
 
@@ -279,7 +290,7 @@
                 </p>
             </div>
 
-            <div class="mt-12 grid gap-5 md:grid-cols-2">
+            <div class="mt-12 grid gap-5 md:grid-cols-2" data-swipe>
                 @foreach ([
                     {{-- Every peso range is "up to n%" of a hectare that earns
                          ₱60,000 to ₱100,000 (the note under the cards says so):
@@ -410,7 +421,7 @@
                 </div>
             </div>
 
-            <div class="hp-prec-rows">
+            <div class="hp-prec-rows" data-swipe>
                 <div class="hp-prec-cols" aria-hidden="true"><span>When this happens</span><span>What anee.io does</span></div>
                 @foreach ([
                     ['The weather changes.', 'A dry spell goes on, or rain comes right before your spray day.',
@@ -510,7 +521,7 @@
                                      picked opens its whole explanation below (2026-10-06,
                                      the owner: "see the explanation for each feature"). All
                                      of them are in the page; only the picked one shows. --}}
-                                <div class="hp-tools">
+                                <div class="hp-tools{{ count($st['items']) === 1 ? ' is-one' : '' }}">
                                     @foreach ($st['items'] as $j => $it)
                                         @php $f = $filmOf($it['key']); @endphp
                                         <button type="button" class="hp-tool{{ $j === 0 ? ' is-on' : '' }}" style="--j: {{ $j }}" data-tool="{{ $it['key'] }}"
@@ -536,6 +547,13 @@
                                             <ul class="hp-info-g">
                                                 @foreach ($it['gets'] as $g)<li><span class="hp-info-ok">{!! $tick !!}</span><span>{{ $g }}</span></li>@endforeach
                                             </ul>
+                                            @php $wf = $filmOf($it['key']); @endphp
+                                            @if ($wf)
+                                                {{-- On a phone the film is not beside the words (there is no room), so it opens over the page. --}}
+                                                <button type="button" class="hp-info-watch" data-fm-src="{{ $wf['src'] }}" data-fm-poster="{{ $wf['poster'] }}" data-fm-name="{{ $it['name'] }}">
+                                                    <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>Watch it on a phone
+                                                </button>
+                                            @endif
                                             <a href="{{ $toolUrl($it) }}" class="hp-info-more">Read more about it {!! $arrow !!}</a>
                                         </div>
                                     @endforeach
@@ -758,6 +776,7 @@
                         </div>
                     @endforeach
                 </div>
+                <div class="hp-tvs-more"><button type="button" data-tvs-more>See all {{ count($aneeVs) }} differences</button></div>
             </div>
         </div>
     </section>
@@ -1091,7 +1110,7 @@
                     </ol>
                 </div>
 
-                <div class="hp-team-cards">
+                <div class="hp-team-cards" data-swipe>
                     @foreach ([
                         ['Collab Room', 'A room for each season: chat with photos and voice notes, a shared whiteboard, live cameras, and Anee answering your whole team.', 'M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z'],
                         ['Plan on the map', 'Trace each field on a satellite view, measure it, and pin the pump, the gate or the spot that floods.', 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7'],
@@ -1541,7 +1560,7 @@
                     </div>
                 </div>
 
-                <div class="hp-comm-feats">
+                <div class="hp-comm-feats" data-swipe>
                     @foreach ([
                         ['News feed', 'Share photos, videos and wins from your field, and see what other farmers are doing.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>'],
                         ['Discussion rooms', 'Join rooms by crop or topic. A room can be open to all, behind a password or by approval.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>'],
@@ -1762,7 +1781,7 @@
                 <h2 class="hp-h2">One Cropping Calendar Works for <em>Every Crop You Grow.</em></h2>
                 <p class="hp-p">anee.io knows 85 Philippine crops, from palay and mais to gulay and fruit trees. Set the day you sow, transplant or plant, and every task after it gets its day count.</p>
             </div>
-            <div class="mt-12 grid gap-5 sm:grid-cols-2">
+            <div class="mt-12 grid gap-5 sm:grid-cols-2" data-swipe>
                 @foreach ($crops as $i => [$name, $icon, $hue, [$pic, $alt], $text, $links])
                     <div class="hc-card reveal" style="--h: {{ $hue }}; --reveal-delay: {{ ($i % 2) * 0.06 }}s">
                         <div class="hc-pic">
@@ -1818,6 +1837,7 @@
                     <a href="{{ url($href) }}" class="hp-topic" style="--h: {{ ($i * 41) % 150 + 30 }}">{{ $label }}</a>
                 @endforeach
             </div>
+            <div class="hp-topics-more"><button type="button" data-topics-more>More topics</button></div>
             {{-- Four shelves, two by two (2026-10-07): each section's newest guide
                  as a picture card, then four more with small pictures, and
                  the way to the whole shelf. --}}
@@ -1845,7 +1865,7 @@
                     'blog' => ['Latest in Agriculture', 'Farm news with what it means for you, and more', 205, 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z', 'All the latest'],
                 ];
             @endphp
-            <div class="hg-shelves">
+            <div class="hg-shelves" data-swipe>
                 @foreach ($guides as $sec => $pages)
                     @php
                         [$shName, $shSub, $shHue, $shIcon, $shAll] = $shelf[$sec] ?? [$SP::SECTIONS[$sec]['label'], '', 100, 'M5 13l4 4L19 7', 'See all'];
@@ -2002,13 +2022,15 @@
     .hp-tour-dot svg { width: 1rem; height: 1rem; margin-left: .15rem; color: var(--hp-sun); }
     .hp-tour:hover .hp-tour-dot { transform: scale(1.08); background: rgb(255 255 255 / .22); }
 
-    .hp-hero-stage { position: relative; display: grid; place-items: center; padding: 1.5rem 0;
+    .hp-hero-stage { position: relative; display: grid; place-items: center; padding: 1.5rem 0 4rem;
         --rx: 0deg; --ry: 0deg; perspective: 1200px; }
     .hp-stage-ring { position: absolute; width: min(28rem, 92%); aspect-ratio: 1; border-radius: 999px;
         border: 1px dashed rgb(255 255 255 / .16); animation: hpSpin 60s linear infinite; }
     .hp-stage-ring::before { content: ''; position: absolute; inset: 12%; border-radius: inherit; border: 1px solid rgb(168 204 126 / .18); }
     @keyframes hpSpin { to { transform: rotate(360deg); } }
     .hp-phone.is-hero { transform: rotateX(var(--rx)) rotateY(var(--ry)); transition: transform .5s var(--hp-ease); }
+    /* The film's name under the phone, clear of its frame (it used to lap onto the screen). */
+    .hp-phone.is-hero .hp-film-tag { bottom: -3.2rem; }
 
     /* ---- the phone that plays the films ---- */
     .hp-phone { position: relative; width: min(16.5rem, 64vw); aspect-ratio: 390 / 844; padding: .5rem; border-radius: 2.5rem;
@@ -2020,14 +2042,9 @@
     .hp-film { display: block; width: 100%; height: 100%; object-fit: cover; transition: opacity .35s var(--hp-ease); }
     .hp-film.is-swapping { opacity: 0; }
     /* The hero reel: two stacked players crossfading, the incoming one easing
-       from a touch larger; story bars at the top fill with each film. */
+       from a touch larger. No story bars over the film (the owner, 2026-10-13). */
     .hp-reel { position: absolute; inset: 0; opacity: 0; transform: scale(1.04); transition: opacity .7s var(--hp-ease), transform 1.1s var(--hp-ease); }
     .hp-reel.is-on { opacity: 1; transform: none; z-index: 1; }
-    .hp-reel-bars { position: absolute; z-index: 2; left: .7rem; right: .7rem; top: .45rem; display: flex; gap: 3px; padding-top: .1rem; }
-    .hp-reel-bars::before { content: ''; position: absolute; inset: -.45rem -.7rem -1.4rem; z-index: -1; background: linear-gradient(180deg, rgb(10 16 6 / .35), transparent); border-radius: 2rem 2rem 0 0; }
-    .hp-reel-bars i { flex: 1; height: 3px; border-radius: 3px; overflow: hidden; background: rgb(255 255 255 / .45); }
-    .hp-reel-bars b { display: block; height: 100%; width: 100%; background: #f5c518; transform: scaleX(0); transform-origin: left; will-change: transform; }
-    .hp-reel-bars i.is-done b { transform: none; }
     .hp-film-tag { position: absolute; left: 50%; bottom: -1.1rem; transform: translateX(-50%); white-space: nowrap;
         padding: .45rem .95rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--hp-ink);
         background: var(--hp-sun); box-shadow: 0 12px 26px -12px rgb(0 0 0 / .6);
@@ -3798,6 +3815,108 @@
         .hp-tick { transform: none; }
         .hp-tick path { stroke-dashoffset: 0; }
     }
+
+    /* ================= ON A PHONE (2026-10-13) =================
+       The owner: the page felt long and odd on a phone, the films sat far
+       from what they show. So: the hero is the words and one clean phone;
+       long lists of cards are a row to swipe through, with dots; each step's
+       film opens over the page from its tool; Anee's film is a small picture
+       on her phone's corner; the topic chips show twelve at first. */
+    .hp-swipe-dots { display: none; }
+    .hp-info-watch { display: none; }
+    .hp-topics-more, .hp-tvs-more { display: none; }
+    .hp-tools.is-one { display: none; }
+    .hp-tools.is-one + .hp-infos { margin-top: 1.3rem; }
+    @media (max-width: 767.98px) {
+        .hp-st-show { display: none; }
+        .hp-st-body { gap: 0; }
+        .hp-info-watch { display: inline-flex; align-items: center; gap: .55rem; align-self: flex-start; margin-top: 1rem; padding: .5rem 1rem .5rem .5rem;
+            border: 0; border-radius: 999px; font-size: .88rem; font-weight: 800; color: var(--hp-ink); background: var(--hp-sun); cursor: pointer;
+            box-shadow: 0 10px 22px -12px rgb(140 100 0 / .7); transition: transform .28s var(--hp-ease); }
+        .hp-info-watch span { display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 999px; color: var(--hp-sun); background: var(--hp-ink); }
+        .hp-info-watch svg { width: .8rem; height: .8rem; margin-left: 2px; }
+        .hp-info-watch:active { transform: scale(.97); }
+        .hp-info-watch + .hp-info-more { margin-top: 0; }
+    }
+    @media (max-width: 1023.98px) {
+        /* The steps strip: a hint at its right edge that more steps follow; the divider is a slim marker. */
+        .hp-st-list { -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); mask-image: linear-gradient(90deg, #000 82%, transparent); }
+        .hp-st-tab { min-width: 12.5rem; padding: .75rem .85rem; }
+        .hp-st-or { width: 5.6rem; padding: .2rem .1rem .2rem .7rem; }
+        .hp-st-or small { display: none; }
+        .hp-st-or b { font-size: .66rem; line-height: 1.3; }
+    }
+    @media (max-width: 639.98px) {
+        /* The hero: the words, then one phone with its film's name under it. */
+        .hp-float, .hp-stage-ring, .hp-down { display: none; }
+        .hp-hero-in { gap: 1.5rem; padding-bottom: 2.5rem; }
+        .hp-hero-stage { padding: .5rem 0 3.6rem; }
+        .hp-phone.is-hero { width: min(15rem, 62vw); }
+
+        /* Rows to swipe through: the next card peeks in at the edge, dots under. */
+        [data-swipe] { display: flex !important; gap: .8rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 1rem;
+            margin-inline: -1rem; padding: .35rem 1rem 1rem; scrollbar-width: none; position: relative; align-items: stretch; }
+        [data-swipe]::-webkit-scrollbar { display: none; }
+        [data-swipe] > * { flex: 0 0 84%; min-width: 0; scroll-snap-align: start; margin: 0 !important; }
+        [data-swipe] > [aria-hidden="true"] { display: none; }
+        html.js [data-swipe] > .reveal { opacity: 1; transform: none; }
+        .hp-team-cards[data-swipe] > *, .hp-comm-feats[data-swipe] > * { flex-basis: 78%; }
+        .hp-swipe-dots { display: flex; justify-content: center; align-items: center; gap: .4rem; margin-top: .2rem; color: var(--hp-green); }
+        .on-dark .hp-swipe-dots { color: var(--hp-sun); }
+        .hp-swipe-dots i { width: .45rem; height: .45rem; border-radius: 999px; background: currentColor; opacity: .3; cursor: pointer;
+            transition: width .28s var(--hp-ease), opacity .28s var(--hp-ease); }
+        .hp-swipe-dots i.is-on { width: 1.35rem; opacity: .95; }
+        /* A loss card stands up: its photo on top, the numbers under it. */
+        [data-swipe] .loss-card2 { flex-direction: column; }
+        [data-swipe] .loss-img { width: 100%; height: 8.5rem; }
+        [data-swipe] .loss-img::after { background: linear-gradient(180deg, transparent 55%, rgb(185 28 28 / .2)); }
+        .hp-prec-rows[data-swipe], .hg-shelves[data-swipe] { align-items: flex-start; }
+        .hg-shelves[data-swipe] > * { flex-basis: 88%; }
+
+        /* A technician or Anee: four rows, the rest on a tap. */
+        .hp-tvs-t:not(.is-all) .hp-tvs-row:nth-child(n+6) { display: none; }
+        .hp-tvs-more { display: flex; justify-content: center; margin-top: 1rem; }
+        .hp-tvs-t.is-all + .hp-tvs-more { display: none; }
+        .hp-tvs-more button { padding: .55rem 1.15rem; border-radius: 999px; font-size: .86rem; font-weight: 800; color: var(--hp-sun);
+            background: rgb(255 255 255 / .06); border: 1px solid rgb(245 197 24 / .45); cursor: pointer; }
+        .hp-prec-rows { margin-top: 3rem; }
+
+        /* Meet Anee: what she reads, two to a row, names only; her phone a little smaller,
+           and her hello a small picture on its top corner. */
+        .hp-anee-reads { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; }
+        .hp-anee-reads li { padding: .5rem .55rem; gap: .5rem; }
+        .hp-anee-reads small { display: none; }
+        .hp-anee-reads b { font-size: .8rem; }
+        .hp-anee-ri { width: 1.9rem; height: 1.9rem; border-radius: .6rem; }
+        .hp-anee-ri svg { width: 1rem; height: 1rem; }
+        .hp-anee-phone { width: min(17rem, 76vw); margin-top: 3.4rem; }
+        .hp-anee-film { --rot: 4deg; top: -2.9rem; left: auto; right: -1.6rem; width: 9.5rem; margin: 0; border-radius: .8rem; }
+        .hp-anee-film-play { padding: .4rem .45rem; }
+        .hp-anee-film-play span { width: 2rem; height: 2rem; }
+
+        /* The topic chips: twelve, then the rest on a tap. */
+        .hp-topics:not(.is-all) .hp-topic:nth-child(n+13) { display: none; }
+        .hp-topics-more { display: flex; justify-content: center; margin-top: .9rem; }
+        .hp-topics.is-all + .hp-topics-more { display: none; }
+        .hp-topics-more button { padding: .5rem 1.1rem; border-radius: 999px; font-size: .85rem; font-weight: 800; color: var(--hp-green);
+            background: #fff; border: 1px solid #cfe1bb; cursor: pointer; }
+    }
+
+    /* The film window. */
+    .hp-fm { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 1rem;
+        visibility: hidden; opacity: 0; transition: opacity .3s var(--hp-ease), visibility .3s; }
+    .hp-fm[hidden] { display: grid !important; }
+    .hp-fm.is-open { visibility: visible; opacity: 1; }
+    .hp-fm-veil { position: absolute; inset: 0; background: rgb(6 10 4 / .82); backdrop-filter: blur(6px); }
+    .hp-fm-box { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1rem; transform: scale(.94) translateY(12px); transition: transform .4s var(--hp-ease); }
+    .hp-fm.is-open .hp-fm-box { transform: none; }
+    .hp-fm-box .hp-modal-x { top: -.6rem; right: -3rem; }
+    .hp-fm-phone { width: min(17rem, 68vw, calc((100vh - 9rem) * 390 / 844)); aspect-ratio: 390 / 844; padding: .5rem; border-radius: 2.5rem;
+        background: linear-gradient(155deg, #2a3820, #0b1207 60%); box-shadow: 0 50px 90px -40px rgb(0 0 0 / .9), 0 0 0 1px rgb(255 255 255 / .12) inset; }
+    .hp-fm-phone video { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 2rem; background: #eef2ea; }
+    .hp-fm-name { padding: .45rem 1rem; border-radius: 999px; font-size: .9rem; font-weight: 800; color: var(--hp-ink); background: var(--hp-sun); }
+    @media (max-width: 420px) { .hp-fm-box .hp-modal-x { right: -.4rem; top: -3.2rem; } }
+    @media (prefers-reduced-motion: reduce) { .hp-fm, .hp-fm-box, .hp-swipe-dots i, .hp-info-watch { transition: none !important; } }
 </style>
 @endpush
 
@@ -3909,6 +4028,7 @@
         const tag = document.querySelector('[data-hero-tag]');
         const bars = [...document.querySelectorAll('.hp-reel-bars i')];
         let cur = 0, n = 0, live = false, busy = false, raf = 0;
+        // (No story bars now; bars is empty and fill() does nothing.)
         // A film shorter than its window (or a server that cannot seek) still ends cleanly.
         const from = (f) => Number(f.from) || 0;
         const to = (f, v) => Math.min(Number(f.to) || 8.5, v.duration || Infinity);
@@ -4288,6 +4408,71 @@
         };
         seen(comm, (on) => { live = on; if (on && !timers.length) run(); if (!on) stop(); }, { threshold: 0.3 });
     }
+
+    /* On a phone, a long list of cards is a row to swipe through: dots under
+       it say which card is in view, and a tap on a dot goes there. */
+    document.querySelectorAll('[data-swipe]').forEach((row) => {
+        const items = [...row.children].filter((c) => c.getAttribute('aria-hidden') !== 'true');
+        if (items.length < 2) return;
+        const dots = document.createElement('div');
+        dots.className = 'hp-swipe-dots';
+        dots.setAttribute('aria-hidden', 'true');
+        items.forEach((it, i) => {
+            const d = document.createElement('i');
+            if (i === 0) d.className = 'is-on';
+            d.addEventListener('click', () => row.scrollTo({ left: it.offsetLeft - parseFloat(getComputedStyle(row).paddingLeft || 0), behavior: reduce ? 'auto' : 'smooth' }));
+            dots.appendChild(d);
+        });
+        row.after(dots);
+        let raf = 0;
+        row.addEventListener('scroll', () => {
+            if (raf) return;
+            raf = requestAnimationFrame(() => {
+                raf = 0;
+                const mid = row.scrollLeft + row.clientWidth / 2;
+                let best = 0, gap = Infinity;
+                items.forEach((it, i) => { const d = Math.abs(it.offsetLeft + it.offsetWidth / 2 - mid); if (d < gap) { gap = d; best = i; } });
+                [...dots.children].forEach((d, i) => d.classList.toggle('is-on', i === best));
+            });
+        }, { passive: true });
+    });
+
+    /* A tool's film on a phone, over the page (the steps' Watch buttons). */
+    const fm = document.querySelector('[data-fm]');
+    if (fm) {
+        const fv = fm.querySelector('video');
+        let back = null;
+        const shut = () => {
+            fm.classList.remove('is-open');
+            fv.pause();
+            document.documentElement.style.overflow = '';
+            setTimeout(() => { if (!fm.classList.contains('is-open')) { fm.hidden = true; fv.removeAttribute('src'); fv.load(); } }, reduce ? 0 : 300);
+            back?.focus?.();
+        };
+        document.querySelectorAll('[data-fm-src]').forEach((b) => b.addEventListener('click', () => {
+            back = b;
+            fv.poster = b.dataset.fmPoster || '';
+            fv.src = b.dataset.fmSrc;
+            fm.querySelector('.hp-fm-name').textContent = b.dataset.fmName || '';
+            fm.hidden = false;
+            requestAnimationFrame(() => fm.classList.add('is-open'));
+            document.documentElement.style.overflow = 'hidden';
+            fm.querySelector('.hp-modal-x').focus();
+            const p = fv.play(); if (p && p.catch) p.catch(() => {});
+        }));
+        fm.querySelectorAll('[data-fm-close]').forEach((b) => b.addEventListener('click', shut));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && fm.classList.contains('is-open')) shut(); });
+    }
+
+    /* A technician or Anee: every row on a tap (a phone shows four first). */
+    document.querySelector('[data-tvs-more]')?.addEventListener('click', (e) => {
+        e.currentTarget.closest('.hp-tvs-more')?.previousElementSibling?.classList.add('is-all');
+    });
+
+    /* The topic chips: all of them on a tap (a phone shows twelve first). */
+    document.querySelector('[data-topics-more]')?.addEventListener('click', (e) => {
+        e.currentTarget.closest('.hp-topics-more')?.previousElementSibling?.classList.add('is-all');
+    });
 
     /* Traditional vs anee.io: each part's title folds it and opens it. On a
        phone only the first part starts open (the whole list was eight
