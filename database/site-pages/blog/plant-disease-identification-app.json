@@ -1,0 +1,266 @@
+{
+  "section": "blog",
+  "slug": "plant-disease-identification-app",
+  "sortOrder": 910,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "What Is the Best Plant Disease Identification App, and Is There a Free One?",
+  "metaTitle": "Plant Disease Identification App: Accuracy and Free Options",
+  "metaDescription": "A plant disease identification app is a first opinion, not a verdict. See what field tests found, what to look for, the free options and how to confirm.",
+  "focusKeyword": "plant disease identification app",
+  "keywords": [
+    "plant disease identification app",
+    "free plant disease identification app",
+    "app to identify plant disease",
+    "app to scan plant disease",
+    "app to detect plant disease",
+    "best plant disease identification app",
+    "plant disease identifier app",
+    "plant disease id app",
+    "free plant disease app",
+    "plant disease app free",
+    "free tree disease identification app",
+    "plant app diagnosis"
+  ],
+  "excerpt": "The best plant disease identification app covers your crop, reads the photo with the crop's age and weather, and tells you how to confirm. No app is right every time. In a field test, PlantVillage Nuru named cassava disease symptoms correctly 65 percent of the time, and 74 to 88 percent when it read six leaves per plant. For a free start, anee.io, a farm app built for Filipino farmers, has a free Disease Finder and Pest Finder, and Anee, its smart farm technician, reads your photo with your season's records.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-plant-disease-identification-app.webp",
+    "alt": "An eggplant leaf covered in small pale spots of Cercospora leaf spot, the kind of photo a plant disease identification app is asked to name",
+    "credit": "Scot Nelson, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Search for an app to identify plant disease and you get hundreds. A 2022 review in the journal Agronomy found 606 plant disease detection apps in three app stores and kept 17 that fit its criteria. Most scored well on looks and ease of use, but poorly on the AI that reads the leaf. So the real question is which app helps you reach the right answer before you spend on a spray."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "No app is right every time, and mild, early signs fool apps most.",
+        "Send several photos. Six leaves per plant gave the Nuru app its best results.",
+        "Pick an app that covers your crop, asks its age and place, and tells you how to confirm.",
+        "Free options: the anee.io [Disease Finder](/diseases#finder) and [Pest Finder](/pests#finder).",
+        "Confirm with a field check, a technician or a lab before you spray."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What kinds of plant disease apps are there?"
+    },
+    {
+      "type": "text",
+      "text": "Apps to scan plant disease are one of four kinds of help, and most farmers use a mix."
+    },
+    {
+      "type": "table",
+      "caption": "Four kinds of help for a sick plant",
+      "rows": [
+        ["Kind", "How it works", "Good for", "Watch out for"],
+        ["Photo identification app", "AI names the likely disease from your photo", "A fast first guess on clear spots", "Mild signs, look alikes, crops it does not know"],
+        ["Symptom finder", "You pick the crop and signs, and it lists what fits", "Seeing every likely cause", "You must read the signs well"],
+        ["Assistant that knows your farm", "Reads your photo with your crop's age, weather and inputs", "Answers that fit your season", "Needs internet, often paid"],
+        ["Hotline or lab", "A person or a lab test checks it", "Viruses, bacteria, hard cases", "Office hours and days of waiting"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Photo apps and hotlines you may already know"
+    },
+    {
+      "type": "text",
+      "text": "Whatever the store calls it, a plant disease identifier app or a plant disease ID app, the idea is the same: a model that learned from photos of sick leaves. Plantix, for example, says on its own site that you take a photo of your sick crop and get a free diagnosis and treatment suggestions. In the 2022 review, it was the only app that could identify plants from images, detect diseases and suggest treatments. PlantVillage Nuru gives its diagnosis and advice even offline.\n\nFor rice, see our guide to [crop disease diagnosis apps](/blog/crop-disease-diagnosis-app). To ask a person, text the PhilRice Text Center at 0917 111 7423, or see how to [ask an agriculturist online](/blog/ask-an-agriculturist-online)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How accurate is a plant disease identification app?"
+    },
+    {
+      "type": "text",
+      "text": "A 2020 study in Frontiers in Plant Science tested PlantVillage Nuru on cassava farms in Tanzania and Kenya. Nuru named the symptoms of cassava diseases correctly 65 percent of the time. That beat the extension agents, at 40 to 58 percent, and the farmers, at 18 to 31 percent.\n\nTwo findings matter for every grower. First, one leaf is not enough. When Nuru read six leaves per plant, three upper and three lower, its accuracy rose to 74 to 88 percent. Second, early signs are hard. On leaves with mild symptoms, Nuru was right only 13 to 37 percent of the time."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why a photo can fool the app"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Mild signs.** The first spots are faint, just when you most want an answer.",
+        "**Look alikes.** The Nuru study warns that some symptoms can pass for mineral deficiency.",
+        "**Unknown crops.** An app names only what it learned, so check its crop list.",
+        "**Hidden infections.** Some virus infections show few or no symptoms, the study notes."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So treat every diagnosis from a plant app as a first opinion. Our page on [AI farm advice](/blog/ai-farm-advice-accuracy) explains how to check one."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should you look for in the best plant disease identification app?"
+    },
+    {
+      "type": "text",
+      "text": "Compare any app with this table. Then test it on a problem you know."
+    },
+    {
+      "type": "table",
+      "caption": "A checklist for any app to detect plant disease",
+      "rows": [
+        ["What to look for", "Why it matters"],
+        ["It covers your crop, trees included", "It cannot name a disease on a crop it never learned"],
+        ["It asks for several photos", "Six leaves per plant gave Nuru better answers"],
+        ["It asks your crop's age, place and weather", "The same spot can mean different things at different stages"],
+        ["It tells you how to confirm", "Mild signs and look alikes fool a photo"],
+        ["It names active ingredients, not brands", "One ingredient sells under many brands, and the label sets the rate"],
+        ["It says when no spray helps", "No spray cures a virus"],
+        ["It speaks your language and fits your budget", "Advice you cannot read or pay for does not help"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is there a free plant disease identification app?"
+    },
+    {
+      "type": "text",
+      "text": "Yes, and a free plant disease app is a good first stop. The [Disease Finder](/diseases#finder) on anee.io asks your crop and what you see, from spots and wilting to rot and mottled leaves. Then it names the diseases that fit, what to do first and the active ingredients with their FRAC groups, or why no spray helps.\n\nThe [Pest Finder](/pests#finder) does the same for pests, and the [Weed Control Helper](/weeds#control) covers weeds. On the public pages, each asks for your name and email once. Inside the app they open straight away on every plan, Libre included, and [pricing](/pricing) shows what each plan adds."
+    },
+    {
+      "type": "table",
+      "caption": "What the anee.io tools for a sick plant cost",
+      "rows": [
+        ["Option", "Cost", "What you get"],
+        ["The finders and Weed Control Helper", "Free", "Causes that fit, first steps, active ingredients"],
+        ["Libre plan", "Free, with a few ads", "One active season, notes, photos and growth stages"],
+        ["Libre plus Anee", "PHP 70 a month or PHP 700 a year", "Chat with Anee and show her a photo, using credits"],
+        ["Solo Farmer or Farm Owner", "PHP 200 or PHP 600 a month", "Anee with 30 or 100 credits each renewal, no ads"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io read a photo of a sick plant?"
+    },
+    {
+      "type": "text",
+      "text": "A finder sorts the signs, while Anee, the [smart farm technician](/features/ai-agricultural-technician) inside anee.io, goes one step further. Send her a photo in Tagalog, Bisaya, Ilocano, Taglish or English. First, she reads the lot, its growth stage, the weather and what you already applied. Then she tells you what it most likely is and what to check next."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Where Anee stops"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Anee needs internet and uses credits, on Libre plus Anee and the paid plans.",
+        "She cannot run a lab test, so for a suspected virus she tells you how to confirm it.",
+        "The free Libre plan has the finders but not the chat, shows a few ads and holds one active season."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Find the disease in a few taps, free",
+      "text": "Pick your crop and what you see in the Disease Finder. When you need a second look, send Anee a photo.",
+      "label": "Open the finders",
+      "url": "/features/pest-and-disease-finders"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you confirm before you spray?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Photograph more than one leaf",
+          "text": "Take three upper and three lower leaves, then the whole plant and the patch around it."
+        },
+        {
+          "title": "Compare two answers",
+          "text": "Run the Disease Finder, then compare its list with a photo app or with Anee."
+        },
+        {
+          "title": "Do the field check",
+          "text": "Look for ooze, mold, insects at the base or rot in the stem. Our guide to telling a [pest or disease](/blog/pest-or-disease-how-to-tell) apart shows how."
+        },
+        {
+          "title": "Send a sample when in doubt",
+          "text": "The DA's Regional Crop Protection Center in Caraga lists plant disease diagnosis as free. You bring a fresh sample, and the lab work takes about four days. Ask your municipal agriculturist which center serves you."
+        },
+        {
+          "title": "Decide, then record",
+          "text": "Pick a product registered with the FPA for your crop and follow its label. Then save the photos as a note."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not spray on a guess",
+      "text": "An app that is right 65 percent of the time is wrong about one time in three. Also, no fungicide stops a virus. So confirm first, then follow the product label and its FPA registration."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about plant disease identification apps"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can an app identify plant disease from one photo?",
+          "a": "Sometimes, when the signs are clear. Still, in the Nuru study, reading six leaves per plant raised the app's accuracy to 74 to 88 percent. So send several photos."
+        },
+        {
+          "q": "What is the best free plant disease identification app?",
+          "a": "The best free one covers your crop and tells you how to confirm. The anee.io finders are free, and Plantix describes its photo diagnosis as free. Try two and compare."
+        },
+        {
+          "q": "Is there a free tree disease identification app?",
+          "a": "Yes, for farm trees. The anee.io Disease Finder covers mango, banana, coconut, cacao, coffee and durian. Our guide to [plant disease detection for fruit growers](/blog/plant-disease-detection-for-fruit-growers) covers more."
+        },
+        {
+          "q": "Do plant disease apps work offline?",
+          "a": "Some do, such as Nuru. In anee.io, Anee needs a signal, but your notes and photos keep working offline and sync later."
+        },
+        {
+          "q": "Which plant disease app is free and tells me what to spray?",
+          "a": "The anee.io finders are free and name active ingredients with their groups, never brands, or say when no spray helps. For the rate, follow the product label."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        { "label": "What is wrong with my plant?", "url": "/blog/app-to-identify-plant-problems" },
+        { "label": "Crop disease diagnosis apps", "url": "/blog/crop-disease-diagnosis-app" },
+        { "label": "Plant disease detection for fruit growers", "url": "/blog/plant-disease-detection-for-fruit-growers" },
+        { "label": "Pest or disease: how to tell", "url": "/blog/pest-or-disease-how-to-tell" },
+        { "label": "Identify rice pests from a photo", "url": "/blog/identify-rice-pests-from-a-photo" },
+        { "label": "Plant diseases in the Philippines", "url": "/diseases/plant-diseases-philippines" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "Mrisho and others (2020), Accuracy of a smartphone based object detection model, PlantVillage Nuru, in identifying the foliar symptoms of the viral diseases of cassava, Frontiers in Plant Science", "url": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2020.590889/full" },
+        { "label": "Siddiqua and others (2022), Evaluating plant disease detection mobile applications: quality and limitations, Agronomy", "url": "https://arxiv.org/abs/2208.02446" },
+        { "label": "Plantix: crop diagnosis app", "url": "https://plantix.net/en/" },
+        { "label": "DA Caraga: Citizen's Charter 2020, Regional Crop Protection Center plant diagnosis", "url": "https://caraga.da.gov.ph/wp-content/uploads/Services/laboratory/laboratory-7.pdf" },
+        { "label": "PhilRice: Text Center and info services", "url": "https://www.philrice.gov.ph/services/infotxt-e-info/" }
+      ]
+    }
+  ]
+}

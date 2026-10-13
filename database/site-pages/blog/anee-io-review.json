@@ -1,0 +1,327 @@
+{
+  "section": "blog",
+  "slug": "anee-io-review",
+  "sortOrder": 950,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "anee.io Review: What Is anee.io, What Does It Do Well, and Who Is It For?",
+  "metaTitle": "anee.io Review: Our Own Honest Look at the Farm App",
+  "metaDescription": "Our own anee.io review, by the anee.io team: what the farm app does, its standout tools, plans from free to PHP 600 a month, and who it suits best.",
+  "focusKeyword": "anee.io review",
+  "keywords": [
+    "anee.io review",
+    "anee.io reviews",
+    "is anee.io good",
+    "anee.io features",
+    "anee.io pricing",
+    "anee.io app"
+  ],
+  "excerpt": "This anee.io review is our own overview, written by the anee.io team, not an independent test. In short, anee.io is a farm app built for Filipino farmers to plan and run a cropping season on any phone. Anee, its smart farm technician, answers in Tagalog, Bisaya, Ilocano, Taglish or English. It suits crop farms from one lot to a full team, and it starts free.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-anee-io-review.webp",
+    "alt": "Five anee.io app screens on phones, from Satellite Weather and Growth Stages to the Activities board, the Pest Finder and NPK Plus, the tools this anee.io review covers",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Farmers ask us two things before they sign up. What does anee.io really do, and is it good for a farm like mine? This anee.io review answers both, with what it costs and where it falls short. Because we wrote it about our own app, it carries no star ratings, scores or quotes."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "anee.io runs a cropping season from the first plan to the profit report: 50 tools in eight steps, on any phone.",
+        "Standouts: Anee, Anee Auto, a calendar that counts days, free finders, satellite and typhoon tools, money reports, offline mode.",
+        "Libre is free. Libre plus Anee costs PHP 70 a month, Solo Farmer PHP 200 and Farm Owner PHP 600.",
+        "It is built for crop farms in the Philippines. It is not for livestock, and it is not a marketplace."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is the anee.io app?"
+    },
+    {
+      "type": "text",
+      "text": "The anee.io app is a mobile friendly web app for running a cropping season. It works in the browser of any phone, tablet or computer, and you can install it to your home screen. Its name comes from ani, the Filipino word for harvest, as our page on the [ani meaning](/blog/ani-meaning) explains.\n\nInside, 50 tools follow the season in eight steps, from the first plan to the reports. The eighth step, Anee Auto, is for farmers who want Anee to run it all. Every tool is on the [features page](/features)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Who built anee.io, and why?"
+    },
+    {
+      "type": "text",
+      "text": "It started as the system our own agronomists and technicians use on client farms. They built it as a cropping schedule manager, where tasks count from day zero and every peso goes on record.\n\nWe opened it to every farmer because small farms share the same problems. The PSA puts the average cost of producing palay in 2024 at PHP 59,695 per hectare. The PalayCheck System of PhilRice cites economists who say Filipino rice farmers must cut their cost per kilo by 30 percent to match Vietnam and Thailand. And FAO estimates that pests take up to 40 percent of global crop production each year. So the app is built around timing, records and catching problems early."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which anee.io features stand out?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Anee, the smart farm technician"
+    },
+    {
+      "type": "text",
+      "text": "Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English. Before she answers, she reads your lots, their stage, your protocol and the weather. She can also look at a photo of a sick plant. Her answers use credits. Meet [Anee, the smart farm technician](/features/ai-agricultural-technician)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Anee Auto"
+    },
+    {
+      "type": "text",
+      "text": "If you would rather not plan, Anee Auto asks about your lots, crop, soil, water, fertilizer and workers once. Then Anee writes every task from land preparation to harvest and keeps the plan on track. If a task cannot happen today, she moves it to the best day near it. Anee Auto uses credits."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "A cropping calendar that counts days"
+    },
+    {
+      "type": "text",
+      "text": "The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero, so lots sown a week apart keep their own timing. The app knows the growth stages of 85 Philippine crops. Each lot shows what to do now and what to watch for, and Count the days shows how far apart two dates are."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Free finders and NPK Plus"
+    },
+    {
+      "type": "text",
+      "text": "The Pest Finder, Disease Finder and Weed Control Helper are free. They name the likely problem and the active ingredients that control it, by group, never by brand. The free [NPK Plus calculator](/features/npk-plus-calculator) adds up the nutrients in your fertilizer plan. See the [pest and disease finders](/features/pest-and-disease-finders)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Satellite and typhoon tools"
+    },
+    {
+      "type": "text",
+      "text": "With [Satellite Analysis](/features/satellite-analysis), Anee reads Sentinel 2 pictures of your field, plus Sentinel 1 radar that sees through typhoon clouds. It uses credits. [Satellite Weather](/features/satellite-weather) plays back the clouds and rain over your farm. It also shows every typhoon with its path, its cone and its distance from your field."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Workers, stock and money"
+    },
+    {
+      "type": "text",
+      "text": "Add each worker once in Global Workers and tick who came. The shed counts its own stock as tasks get done, and Cash to prepare shows what a day will cost. At season end, the labor, expenses and profit reports add up from those records. See the [farm reports](/features/farm-reports)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Offline mode and the morning email"
+    },
+    {
+      "type": "text",
+      "text": "Offline mode is always on, on every plan. Your changes wait on the phone and sync when the signal returns. Each morning at 6 AM, the day's plan also goes to the team by email, so everyone starts on the same page."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is anee.io pricing, plan by plan?"
+    },
+    {
+      "type": "text",
+      "text": "All prices are in Philippine pesos. You pay by GCash or bank transfer, and the full list is on the [pricing page](/pricing)."
+    },
+    {
+      "type": "table",
+      "caption": "anee.io plans and prices",
+      "rows": [
+        [
+          "Plan",
+          "Price",
+          "Best for",
+          "What it adds"
+        ],
+        [
+          "Libre",
+          "Free, with a few ads",
+          "Building the habit on one lot",
+          "1 active season, activities, notes, tags, growth stages, two days of weather, labor report, 1 GB"
+        ],
+        [
+          "Libre plus Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "One lot with Anee beside you",
+          "Anee chat with photos, four analyses, Realign by Anee, credit packs, a few ads"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200 a month or PHP 1,800 a year",
+          "A family farm with hired help",
+          "3 active seasons of up to 5 lots, workers, inventory, full weather, all reports, 30 AI credits each renewal, 6 GB, no ads"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600 a month or PHP 6,500 a year",
+          "A farm with a manager and a team",
+          "Everything unlimited, worker logins, Collab Room, 100 AI credits each renewal, 15 GB, no ads"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is anee.io good for a small farm, and who is it best for?"
+    },
+    {
+      "type": "text",
+      "text": "The app fits best where the work follows a crop calendar and money goes out in many small amounts."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Rice, corn and vegetable farmers** who want every fertilizer and spray on its right day.",
+        "**Family farms with hired help** who pay daily wages. Solo Farmer fits them.",
+        "**Owners who live away from the farm**, with a foreman on site. Farm Owner adds worker logins, and our guide to [managing a farm remotely](/blog/manage-a-farm-remotely) shows how.",
+        "**Farmers who would rather not plan**, who can hand the season to Anee Auto."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "It is the wrong fit for livestock records or tax bookkeeping. It also does not sell inputs or buy harvests."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should you know before you sign up?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Anee needs internet.** The board, notes and records work offline, but her answers wait for a signal.",
+        "**Anee uses credits.** Solo Farmer comes with 30 each renewal and Farm Owner with 100, and you can buy more.",
+        "**Libre shows a few ads and holds one active season** with one lot. Libre plus Anee keeps those limits and the ads.",
+        "**Workers and inventory start at Solo Farmer.** Worker logins and the Collab Room start at Farm Owner."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you try anee.io on your own farm?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Sign up free and add one lot",
+          "text": "Give the lot its crop, variety, size and planting day. Every task you add then counts from that day."
+        },
+        {
+          "title": "Tick the work for two weeks",
+          "text": "Mark tasks done, add photos and note who worked. Then check that the board matches the field."
+        },
+        {
+          "title": "Decide what you need next",
+          "text": "Add Anee with Libre plus Anee, or move to Solo Farmer for workers and every report. If Libre does the job, stay on it."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Looking for anee.io reviews from other farmers?",
+      "text": "This page is ours, so read it as the maker's own description. For other farmers' views, ask in the [farmer community](/features/farmer-community) inside the app. Or try Libre on one lot for a season and judge it in your own field."
+    },
+    {
+      "type": "cta",
+      "title": "Try anee.io free on one lot",
+      "text": "Sign up for Libre, add a lot and its planting day, and see if the app fits the way you farm.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about this anee.io review"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is this an independent anee.io review?",
+          "a": "No. The anee.io team wrote it about our own app, and we say so at the top. It has no ratings, scores or customer quotes. To judge the app yourself, use the free Libre plan on one lot for a season."
+        },
+        {
+          "q": "Is anee.io free?",
+          "a": "Yes, the Libre plan is free, with a few ads. It covers one active season with the activities board, notes, growth stages and the labor report. Anee starts at Libre plus Anee, for PHP 70 a month."
+        },
+        {
+          "q": "Does the anee.io app need internet?",
+          "a": "Not for the daily records. Offline mode is on for every plan, and your changes sync when the signal returns. Anee, the weather and the community still need a connection."
+        },
+        {
+          "q": "What languages does Anee speak?",
+          "a": "Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English. Ask in the language you farm in, and send a photo if words are not enough. Our guide to the [Tagalog farm app](/blog/tagalog-farm-app) shows how."
+        },
+        {
+          "q": "Which crops does anee.io know?",
+          "a": "It knows the growth stages of 85 Philippine crops, from palay and mais to gulay and fruit trees, annual and perennial. Each lot can grow a different crop. It does not keep livestock records."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Plans and prices",
+          "url": "/pricing"
+        },
+        {
+          "label": "All features",
+          "url": "/features"
+        },
+        {
+          "label": "Farm management software for small farms",
+          "url": "/blog/farm-management-software"
+        },
+        {
+          "label": "Farm record keeping app or notebook",
+          "url": "/blog/farm-record-keeping-app"
+        },
+        {
+          "label": "Best free farm app",
+          "url": "/blog/free-farm-app-philippines"
+        },
+        {
+          "label": "AI for Filipino farmers",
+          "url": "/blog/ai-for-filipino-farmers"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PSA: 2024 Costs and Returns of Palay Production",
+          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
+        },
+        {
+          "label": "PhilRice: PalayCheck System 2022 Revised Edition (foreword on yield and cost targets)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "FAO: Climate change fans spread of pests and threatens plants and crops, 2021",
+          "url": "https://www.fao.org/newsroom/detail/Climate-change-fans-spread-of-pests-and-threatens-plants-and-crops-new-FAO-study/en"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,248 @@
+{
+  "section": "blog",
+  "slug": "app-to-identify-plant-problems",
+  "sortOrder": 920,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "Is There an App to Identify Plant Problems and Tell You What Is Wrong?",
+  "metaTitle": "App to Identify Plant Problems: What Is Wrong With My Plant?",
+  "metaDescription": "An app to identify plant problems helps, but pests, nutrients, water and weeds look alike. Find what is wrong with this step by step method first.",
+  "focusKeyword": "app to identify plant problems",
+  "keywords": [
+    "app to identify plant problems",
+    "app that tells you whats wrong with plants",
+    "best app to identify plant problems",
+    "apps to diagnose plant problems",
+    "diagnose plant problems free",
+    "diagnose plant problems app",
+    "plant problem identifier app",
+    "app to identify sick plants",
+    "sick plant app free",
+    "free plant app for sick plants",
+    "plant sickness app free",
+    "app to diagnose plants",
+    "plant problem app free"
+  ],
+  "excerpt": "Yes. An app to identify plant problems can name a likely cause from a photo or from the signs you pick. But one yellow leaf can come from a pest, a disease, hunger, water or weeds. So use the app inside a simple method: read the pattern, the whole plant, the timing and your records, then confirm. anee.io, a farm app built for Filipino farmers, has a free Pest Finder, Disease Finder and Weed Control Helper, and Anee, its smart farm technician, reads your photo with your season's records.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-app-to-identify-plant-problems.webp",
+    "alt": "A hand holds a citrus leaf with blotchy yellow patches, here from citrus greening, the kind of sign an app to identify plant problems is asked to explain",
+    "credit": "Lance Cheung, USDA, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Many apps that promise to tell you what's wrong with plants were built to name diseases. Yet a sick plant often has no disease at all. Penn State Extension notes that a majority of the plant problems diagnosed are abiotic, which means the cause is not alive: weather, water, soil, fertilizer or a spray.\n\nNC State Extension adds a simple rule. Living problems generally start small and spread, while nonliving problems do not spread. Also, insects and pathogens rarely attack healthy plant tissue. So the first question is not which disease it is, but which kind of problem it is."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The cause can be water, weather, nutrients, pests, disease or weeds.",
+        "Read the pattern first: spreading patches are usually alive, even damage usually is not.",
+        "Check the whole plant, roots included, and your records.",
+        "Confirm before you spend.",
+        "In anee.io, three free tools sort the signs, and Anee reads your photo."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What can an app to identify plant problems tell you?"
+    },
+    {
+      "type": "text",
+      "text": "Apps to diagnose plant problems come in three kinds. Photo apps name a likely cause from a picture, and our guide to choosing a [plant disease identification app](/blog/plant-disease-identification-app) shows how often they get it right. Symptom finders ask your crop and the signs, then list every cause that fits. Assistants such as Anee read your photo with your farm's records.\n\nAn app to identify sick plants is only as good as the questions it asks. If a plant problem identifier app knows only diseases, it can only give you a disease, even when the real cause is dry soil. A plant problem app that is free makes a good start, as long as it also asks about insects, water, fertilizer and weeds."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why do so many plant problems look the same?"
+    },
+    {
+      "type": "text",
+      "text": "A plant has only a few ways to show stress. It yellows, wilts, spots, stunts or loses leaves, whatever the cause. NC State Extension notes that underwatering causes wilting and marginal leaf burn. Too much rain can lead to root rot. Also, uniform patterns between the veins usually point to nutrition, while vein clearing can come from certain pesticides and some viruses."
+    },
+    {
+      "type": "table",
+      "caption": "One sign, many causes",
+      "rows": [
+        ["What you see", "Water or weather", "Nutrients", "Pests", "Disease", "Weeds"],
+        ["Yellow leaves", "Flooded or dry soil", "Too little nitrogen, iron or zinc", "Sap feeders such as planthoppers", "Viruses such as tungro", "Thick weeds taking the nitrogen"],
+        ["Wilting", "Dry soil, heat, rotting roots", "Salt damage from too much fertilizer", "Borers or grubs in stems and roots", "Bacterial or Fusarium wilt", "Rarely the cause"],
+        ["Spots or burned edges", "Sunscald, sprays in the heat", "Potassium shortage at leaf edges", "Mites and thrips leave pale specks", "Fungal and bacterial leaf spots", "Herbicide drift from weed sprays"],
+        ["Stunted plants", "Compacted or flooded soil", "Too little phosphorus or zinc", "Nematodes on the roots", "Viruses such as grassy stunt", "Weeds crowding young plants"],
+        ["Holes or torn leaves", "Strong wind or heavy rain", "Not a nutrient sign", "Caterpillars, beetles, snails, rats", "Some leaf spots fall out as holes", "Not a weed sign"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you find what is wrong with your plant, step by step?"
+    },
+    {
+      "type": "text",
+      "text": "NC State Extension teaches a ten step diagnosis. Here it is, cut down for a farm and your phone."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Name the plant and its age",
+          "text": "Write the crop, the variety and the days after planting. NC State calls this the key to diagnosis, since each crop has its own problems."
+        },
+        {
+          "title": "Compare it with a healthy plant",
+          "text": "Find a healthy plant of the same age. Note what differs: color, size, spots, holes or wilting."
+        },
+        {
+          "title": "Read the pattern in the field",
+          "text": "Even damage over the whole field, or on several crops, usually points to weather, water, fertilizer or a spray. Patches that grow week by week usually point to a pest or a disease."
+        },
+        {
+          "title": "Check the whole plant, roots too",
+          "text": "Note whether old or new leaves show it first. Then dig up one plant, since rotten or knotted roots can hide below a wilting top."
+        },
+        {
+          "title": "Look for the culprit",
+          "text": "Turn the leaves over for insects, eggs and droppings, or mold, ooze and rust. A sign makes a suspect, not a proof."
+        },
+        {
+          "title": "Check the timing and your records",
+          "text": "When did it start? What was the weather, and what did you apply last? A problem two days after a spray or a flood has its answer in your records."
+        },
+        {
+          "title": "Ask the app, then confirm",
+          "text": "Now run a finder or send a photo to Anee. Then confirm with a field check, a technician or a lab before you spend."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which is it: water, nutrients, pests, disease or weeds?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Water and weather"
+    },
+    {
+      "type": "text",
+      "text": "Feel the soil first. Dry, cracked soil means too little water, while standing water around wilting plants points to the roots. A hot spell or a spray in the heat of the day can also burn leaves. Our guide on [rain before spraying](/blog/rain-before-spraying) helps you time sprays."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Nutrients"
+    },
+    {
+      "type": "text",
+      "text": "Hunger shows as even color changes, often on many plants at once. For palay, see our guides to [yellow rice leaves](/blog/yellow-rice-leaves) and [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice). The free [NPK Plus Calculator](/features/npk-plus-calculator) tells you if your fertilizer plan is short, right or too much."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Pests and diseases"
+    },
+    {
+      "type": "text",
+      "text": "Pests leave chewed tissue, droppings and eggs. Diseases leave spots with borders, ooze, mold or rot. The free [Pest Finder](/pests#finder) and [Disease Finder](/diseases#finder) sort these signs by crop. When you still cannot tell, read how to tell a [pest or disease](/blog/pest-or-disease-how-to-tell) apart."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Weeds"
+    },
+    {
+      "type": "text",
+      "text": "Weeds rarely make one plant look sick up close. Instead, you see a thin, pale crop under grasses, sedges or broadleaves that take its light, water and nutrients. The [Weed Control Helper](/weeds#control) asks your crop, its age and the weeds you see, then tells you what works at that age."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Photos that get a better answer",
+      "text": "Take the damage up close, the whole plant and the patch around it. Add a coin or your thumb for size, as NC State Extension advises. Also shoot the underside of the leaf and the stem base, in daylight."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help you find what is wrong?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, each lot shows its [growth stage](/features/growth-stages-and-weather) and what to watch for, with your farm's weather beside it. So you already know the lot's age and the last rain when a problem shows.\n\nThen send a photo to Anee, the [smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog, Bisaya, Ilocano, Taglish or English. She reads the lot, its stage, the weather and what you applied, then names the likely cause and what to check next. Quick Capture saves your photos as notes with tags such as Lot 2, so next season you see when the problem came."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Anee needs internet and uses credits, on Libre plus Anee (PHP 70 a month) and the paid plans.",
+        "The finders, the Weed Control Helper and NPK Plus are free.",
+        "The free Libre plan shows a few ads and holds one active season."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Keep every lot's age and records in one place",
+      "text": "Sign up free and add your lots and planting dates. Next time a plant looks sick, the answer starts from your own records.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about apps that identify plant problems"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the best app to identify plant problems?",
+          "a": "The best one checks more than disease. It asks your crop, its age and what you see, then tells you how to confirm. In anee.io, the free finders do this for pests, diseases and weeds, and Anee reads your photo with your records."
+        },
+        {
+          "q": "Is there a free plant app for sick plants?",
+          "a": "Yes. The anee.io finders and Weed Control Helper are free on the public site after you give your name and email once. Inside the app they are free on every plan. Like any plant sickness app, free or paid, treat the answer as a first opinion."
+        },
+        {
+          "q": "How can I diagnose plant problems for free?",
+          "a": "Follow the steps above with a free finder, then ask a person. The PhilRice Text Center answers rice questions by text at 0917 111 7423. For a lab test, the Visayas State University plant disease lab lists routine diagnosis for farmers at PHP 50 a sample."
+        },
+        {
+          "q": "Can an app tell a nutrient deficiency from a disease?",
+          "a": "Sometimes, but they often look alike. Deficiencies tend to show as even changes over many plants, while disease starts in spots and spreads. Your fertilizer records and a soil test settle it better than a photo."
+        },
+        {
+          "q": "What should I send an app to diagnose plants?",
+          "a": "Send three sharp daylight photos: the damage, the whole plant and the patch. Add the crop, its age and what you applied last. In anee.io, Anee already reads these from your season."
+        },
+        {
+          "q": "When should I call a technician instead?",
+          "a": "Call when the problem spreads fast, kills plants, or points to a virus or a bacterial wilt. Your municipal agriculturist can check the field or send a sample to a lab. See how to [ask an agriculturist online](/blog/ask-an-agriculturist-online) for free channels."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        { "label": "Plant disease identification apps", "url": "/blog/plant-disease-identification-app" },
+        { "label": "Pest or disease: how to tell", "url": "/blog/pest-or-disease-how-to-tell" },
+        { "label": "Nutrient deficiency in rice", "url": "/blog/nutrient-deficiency-in-rice" },
+        { "label": "Yellow rice leaves", "url": "/blog/yellow-rice-leaves" },
+        { "label": "Types of weeds", "url": "/weeds/types-of-weeds" },
+        { "label": "Early pest detection", "url": "/blog/early-pest-detection" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "NC State Extension: North Carolina Extension Gardener Handbook, chapter 7, Diagnostics", "url": "https://content.ces.ncsu.edu/7-diagnostics" },
+        { "label": "Penn State Extension: Overview of plant diagnostics", "url": "https://extension.psu.edu/overview-of-plant-diagnostics" },
+        { "label": "Visayas State University: Plant Disease Diagnostic Laboratory", "url": "https://www.vsu.edu.ph/21-content-main/informational/373-plant-disease-diagnostic-laboratory" },
+        { "label": "PhilRice (2018): New farmers' helpline launched", "url": "https://www.philrice.gov.ph/new-farmers-helpline-launched/" }
+      ]
+    }
+  ]
+}

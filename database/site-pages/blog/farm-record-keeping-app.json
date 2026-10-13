@@ -1,0 +1,335 @@
+{
+  "section": "blog",
+  "slug": "farm-record-keeping-app",
+  "sortOrder": 940,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "Is a Farm Record Keeping App Better Than Writing Records in a Notebook?",
+  "metaTitle": "Farm Record Keeping App or Notebook: Which Is Better?",
+  "metaDescription": "Is a farm record keeping app better than a notebook? A fair look at paper, spreadsheets and apps, when paper is enough, and how to switch safely.",
+  "focusKeyword": "farm record keeping app",
+  "keywords": [
+    "farm record keeping app",
+    "farm record keeping software",
+    "free farm record keeping software",
+    "farm app vs notebook",
+    "writing farm records by hand"
+  ],
+  "excerpt": "A farm record keeping app beats a notebook once you hire workers, plant more than one lot or want your real profit, because it adds up labor, expenses and sales for you. For one family lot with few inputs, a notebook kept every day is still enough. Built for Filipino farmers, anee.io keeps records on the phone even without signal and turns them into reports, starting with a free plan.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-record-keeping-app.webp",
+    "alt": "A farmer checks a tablet while standing in a soybean field at sunset, the kind of device a farm record keeping app runs on",
+    "credit": "United Soybean Board, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The notebook is not the enemy. PhilRice's PalayCheck System tells farmers to use the forms provided or a field notebook, and not to rely on memory. What matters is that the record exists, written on the day.\n\nThe real difference shows after you write. A notebook holds the facts, but it does not add them up, warn you or keep a photo. An FAO farm management manual also notes that the number of records a farmer needs grows as the farm sells more. So the right tool depends on your farm, not on what is new. For what to record in the first place, start with our guide to [farm record keeping](/blog/farm-record-keeping)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A notebook works for one lot, family labor and a few inputs, if you write in it every day.",
+        "A spreadsheet adds up for you, but it usually gets filled in at night, from memory.",
+        "A farm record keeping app adds up labor, expenses and profit on its own, keeps photos and works offline.",
+        "Switch at the start of a season, and carry over only the numbers you will compare."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Farm app vs notebook: how do they compare?"
+    },
+    {
+      "type": "text",
+      "text": "Here is a fair comparison of the three common ways to keep records, on the points that matter in the field."
+    },
+    {
+      "type": "table",
+      "caption": "Notebook, spreadsheet or farm record keeping app, side by side",
+      "rows": [
+        [
+          "What matters",
+          "Notebook",
+          "Spreadsheet",
+          "Farm record keeping app"
+        ],
+        [
+          "Cost to start",
+          "A few pesos",
+          "Free, if you own a computer or phone",
+          "Free plans exist, paid plans add more"
+        ],
+        [
+          "Needs signal or power",
+          "No",
+          "Power, and usually a laptop",
+          "A charged phone, and good apps work offline"
+        ],
+        [
+          "Adds up labor and costs",
+          "By hand, with a calculator",
+          "With formulas you set up",
+          "On its own, into reports"
+        ],
+        [
+          "Photos and voice notes",
+          "No",
+          "Links at best",
+          "On the task, the day you take them"
+        ],
+        [
+          "Rain, flood or a lost bag",
+          "The season can go with it",
+          "Safe if you back it up",
+          "Saved online once it syncs"
+        ],
+        [
+          "Your foreman or partner",
+          "Only whoever holds the book",
+          "Whoever gets the file",
+          "Logins or a shared plan link, by plan"
+        ],
+        [
+          "Ease for anyone",
+          "Very easy",
+          "Needs computer skills",
+          "Needs a phone and some practice"
+        ],
+        [
+          "Season against season",
+          "Flip through old pages",
+          "Copy and compare sheets",
+          "Two seasons side by side"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The University of Wisconsin Extension puts the trade plainly. Paper needs no computer and costs little, but it limits what you can analyze unless you spend a lot of time. Software saves time because it does the math for you. Even so, you need basic computer skills and time to learn it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When is writing farm records by hand good enough?"
+    },
+    {
+      "type": "text",
+      "text": "Writing farm records by hand still works well on many Filipino farms. Keep the notebook if all of these are true."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "You farm one lot, mostly with family labor.",
+        "You buy inputs a few times a season and pay in cash.",
+        "Someone reads the book every week, not only at harvest.",
+        "At harvest, you already work out what each cavan cost you."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Signs you have outgrown the notebook"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "You hire a crew paid by the day, and pay day takes an hour of adding.",
+        "You plant two or more lots on different days, so their tasks no longer line up.",
+        "Inputs come on credit, and you lose track of what you owe the store.",
+        "You run the farm from town. Our guide to [managing a farm remotely](/blog/manage-a-farm-remotely) covers that.",
+        "A lender or insurer asks for proof. See [farm records for loans and insurance](/blog/farm-records-for-loans-and-insurance)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does a farm record keeping app add?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Records that add up by themselves"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, each task on the board carries its lot, date, workers and materials. When you tick it done, the labor cost adds itself up, and on Solo Farmer the shed also takes the fertilizer out of stock. The [labor report](/features/labor-report) comes with the free plan, and Solo Farmer adds the expenses and profit reports. All of them build from those ticks, so you never type a cost twice.\n\nThat sum matters more than it looks. The PSA puts the average cost of producing palay in 2024 at PHP 59,695 per hectare, or PHP 14.52 per kilogram. Your own records show if your farm spends more or less than that, and on what."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Photos and video on the task"
+    },
+    {
+      "type": "text",
+      "text": "Quick Capture saves a photo, Quick Voice saves what you say as a note, and Quick Record takes a video. Each one lands with the season, so you find it later. Photos come with every plan, while video recording comes with Solo Farmer."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "It works where the signal does not"
+    },
+    {
+      "type": "text",
+      "text": "Offline mode is on for every plan, the free one too. You tick tasks and write notes in the paddy, and the app keeps the changes on the phone until the signal returns. Our guide to a [farm app without internet](/blog/farm-app-without-internet) tells you what to test."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The plan comes to you each morning"
+    },
+    {
+      "type": "text",
+      "text": "At 6 AM each day, the day's plan goes to the team by email: what to do and on which lot. A notebook only reminds you if you open it. With Cash to prepare, you can also tap any day and see the wages, materials and stock to buy, so the money is ready before the work."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Nothing gets lost"
+    },
+    {
+      "type": "text",
+      "text": "Once your records sync, a wet bag or a lost phone does not take the season with it. Sign in on another phone and the season is there. Your own tags, such as Buyer or Lot 2, then find any task, note or photo in one tap."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I switch from a notebook to an app without losing old records?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Keep the old notebooks",
+          "text": "Store them somewhere dry. Then photograph every page, so a copy also lives on your phone."
+        },
+        {
+          "title": "Pull out the numbers you will compare",
+          "text": "For each past season, write down the yield per lot, the price, the buyer and the main costs. Those few lines matter more than every page."
+        },
+        {
+          "title": "Start at the beginning of a season",
+          "text": "Add your lots with their crop, variety, size and planting day. If you start halfway, the season ends up half on paper and half in the app."
+        },
+        {
+          "title": "Save last season's totals in a note",
+          "text": "Type the numbers from step 2 into a note in the new season. Then your first reports have something to compare with."
+        },
+        {
+          "title": "Run both for two weeks",
+          "text": "Write in the notebook and tick in the app. At the end of each week, check that they match, then let the app take over."
+        },
+        {
+          "title": "Name one person to keep the records",
+          "text": "Pick who ticks the tasks each day, you or the foreman. When everyone is in charge of the records, nobody keeps them."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Photograph the notebook every Sunday",
+      "text": "Even if you stay with paper, take a photo of the week's pages every Sunday. Then a flood, a fire or a lost bag cannot take the whole season. It costs nothing, and it is the first step toward records on the phone."
+    },
+    {
+      "type": "cta",
+      "title": "Move this season's records to your phone",
+      "text": "Sign up free, add your lots, and let each task you tick become a record that adds itself up.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm record keeping apps"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is a farm app better than writing records by hand?",
+          "a": "It is better once you hire workers, farm more than one lot or want a profit figure, because it adds up the numbers for you. For one family lot with few inputs, a notebook kept every day works fine. The best tool is the one you will use on the same day as the work."
+        },
+        {
+          "q": "Is there free farm record keeping software?",
+          "a": "Yes. The Libre plan of anee.io is free, with the activities board, notes, tags, harvest observations and the labor report, and it works offline. The PalayCheck App from PhilRice is free on Google Play for rice farmers. A spreadsheet costs nothing if you already own a computer."
+        },
+        {
+          "q": "What happens to my records if I lose my phone?",
+          "a": "Records that have synced stay safe online, so you sign in on another phone and keep going. Changes made offline wait on the phone until they sync. So open the app where there is signal at the end of each day."
+        },
+        {
+          "q": "Can my workers keep records in the app too?",
+          "a": "On the Farm Owner plan, each worker or partner gets a login, and you choose none, view or edit for each module. A diary records every change and who made it. On Solo Farmer, you keep workers and their pay, but they do not log in."
+        },
+        {
+          "q": "Do I still need to keep receipts?",
+          "a": "Yes. An app records what you spent, but a receipt proves it to a lender or a buyer. In anee.io, Solo Farmer and Farm Owner let you keep receipts and other files with the season in Documentation."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Farm record keeping: which records to keep",
+          "url": "/blog/farm-record-keeping"
+        },
+        {
+          "label": "Farm management software for small farms",
+          "url": "/blog/farm-management-software"
+        },
+        {
+          "label": "Farm records for loans and insurance",
+          "url": "/blog/farm-records-for-loans-and-insurance"
+        },
+        {
+          "label": "How to know if your farm is really profitable",
+          "url": "/blog/farm-profitability"
+        },
+        {
+          "label": "A farm app that works without internet",
+          "url": "/blog/farm-app-without-internet"
+        },
+        {
+          "label": "Farm reports in anee.io",
+          "url": "/features/farm-reports"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System 2022 Revised Edition (monitoring: observe, measure and record)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "FAO: Farm Management and Marketing Manual, Session 1, Keeping Farm Records",
+          "url": "https://www.fao.org/4/an732e/an732e00.pdf"
+        },
+        {
+          "label": "University of Wisconsin Extension: Recordkeeping for your food or farm business",
+          "url": "https://farms.extension.wisc.edu/articles/recordkeeping-for-your-food-or-farm-business"
+        },
+        {
+          "label": "PSA: 2024 Costs and Returns of Palay Production",
+          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
+        },
+        {
+          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App), 2024",
+          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
+        }
+      ]
+    }
+  ]
+}

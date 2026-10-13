@@ -408,7 +408,9 @@ Blog:
 /blog/modern-farming-techniques, /blog/precision-agriculture-philippines,
 /blog/what-to-do-on-my-farm-today, /blog/ai-for-filipino-farmers,
 /blog/digital-farming-tools, /blog/farm-management-app-philippines,
-/blog/reduce-crop-losses
+/blog/reduce-crop-losses,
+/blog/plant-disease-identification-app, /blog/app-to-identify-plant-problems,
+/blog/farm-management-software, /blog/farm-record-keeping-app, /blog/anee-io-review
 
 ## 9. Keywords per page
 

@@ -1,0 +1,332 @@
+{
+  "section": "blog",
+  "slug": "farm-management-software",
+  "sortOrder": 930,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "What Is the Best Farm Management Software, and Is There a Free One for Small Farms?",
+  "metaTitle": "Farm Management Software for Small Farms: Free Options",
+  "metaDescription": "Farm management software explained: the five kinds, what a small farm really needs, free options like the PalayCheck App, and where anee.io fits.",
+  "focusKeyword": "farm management software",
+  "keywords": [
+    "farm management software",
+    "best farm management software",
+    "farm management software free",
+    "small farm management software",
+    "crop management software",
+    "agriculture management software",
+    "farm business management software",
+    "farm management application",
+    "best farm management app"
+  ],
+  "excerpt": "The best farm management software for a small farm dates every task from planting and adds up costs, labor and harvest by itself, on an ordinary phone. You do not need costly precision tools to start. Built for Filipino farmers, anee.io has a free Libre plan for one season. For rice, PhilRice's PalayCheck App is also free.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-management-software.webp",
+    "alt": "A farmer works at a computer in the open air office of his farm as a utility vehicle crosses the field behind him, the daily setting of farm management software",
+    "credit": "Preston Keres for the USDA, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Farm management software is a wide label. It covers a simple digital farm diary, but it also covers platforms that read drone maps and steer tractors. Most of it was built for large farms abroad and priced in dollars per acre.\n\nA farm in the Philippines is usually far smaller. In its 2012 Census of Agriculture, the PSA counted 5.56 million farms with an average of 1.29 hectares. Three in every five were below 1 hectare. So the useful question is not which program has the most features. It is which one fits a farm of one or two hectares, run from a phone."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "There are five kinds: record keepers, crop management, farm business, precision agriculture and livestock software.",
+        "A small crop farm needs the first two most: a plan dated by day count, and records that add up.",
+        "Free options exist: a notebook, a spreadsheet, the PalayCheck App for rice, and the Libre plan of anee.io.",
+        "anee.io plans and records crops, with workers, stock and money reports. It keeps no livestock records."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does farm management software do?"
+    },
+    {
+      "type": "text",
+      "text": "At its core, the software keeps three things together: the plan, what really happened, and what it cost. A good farm management application also tells you what is due today. Then, after harvest, it turns the season into numbers you can set beside the next one.\n\nThat is the loop PhilRice teaches in its PalayCheck System: observe, measure and record, then compare the results and act next season. Software does not replace the walk through the field. It only makes the recording and comparing faster."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What kinds of farm management software are there?"
+    },
+    {
+      "type": "text",
+      "text": "Sellers sort their programs in many ways, and some call the whole group agriculture management software. For a farmer, five kinds are worth telling apart."
+    },
+    {
+      "type": "table",
+      "caption": "Five kinds of farm software and who each one suits",
+      "rows": [
+        [
+          "Kind",
+          "What it does",
+          "Who it suits"
+        ],
+        [
+          "Record keepers",
+          "A digital farm diary: tasks, inputs, workers, harvest",
+          "Any farm"
+        ],
+        [
+          "Crop management software",
+          "Dates tasks from planting, follows growth stages, plans fertilizer and sprays",
+          "Crop farms, from one lot up"
+        ],
+        [
+          "Farm business management software",
+          "Bookkeeping, payroll, invoices, loans, taxes",
+          "Farm businesses with an accountant"
+        ],
+        [
+          "Precision agriculture platforms",
+          "Drone and satellite maps, soil sensors, machine guidance",
+          "Large mechanized farms"
+        ],
+        [
+          "Livestock software",
+          "Animal records, breeding, feed, health",
+          "Hog, poultry and cattle farms"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Many programs mix two or three kinds. A small crop farm gets the most from the first two, because they cover the daily work. Still, some precision tools need no drone, as our guide to [precision agriculture in the Philippines](/blog/precision-agriculture-philippines) shows."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does a small farm need from farm management software?"
+    },
+    {
+      "type": "text",
+      "text": "Good small farm management software does a few things well instead of everything at once. Here is what to look for, and a free way to start on each."
+    },
+    {
+      "type": "table",
+      "caption": "What a small crop farm needs, a free start, and the anee.io plan that covers it",
+      "rows": [
+        [
+          "What you need",
+          "Why it matters",
+          "Free way to start",
+          "In anee.io"
+        ],
+        [
+          "Tasks dated from planting",
+          "A dose a week late costs grain",
+          "A notebook calendar, or the PalayCheck App",
+          "Each lot's day count and growth stage, on Libre"
+        ],
+        [
+          "Weather beside the plan",
+          "Rain right after a spray wastes it",
+          "A weather app",
+          "Two days on Libre, the full forecast on Solo Farmer"
+        ],
+        [
+          "Labor and pay",
+          "Daily wages add up fast",
+          "One notebook page per pay day",
+          "Labor report on Libre, payroll on Solo Farmer"
+        ],
+        [
+          "Stock in the shed",
+          "Uncounted bags go missing",
+          "A list on the shed door",
+          "Inventory that deducts itself, on Solo Farmer"
+        ],
+        [
+          "Expenses and profit",
+          "Only sales against costs show if it paid",
+          "A spreadsheet",
+          "Expenses and profit reports, on Solo Farmer"
+        ],
+        [
+          "Works without signal",
+          "Many fields have weak signal",
+          "Paper",
+          "Offline mode on every plan"
+        ],
+        [
+          "Help when a crop looks wrong",
+          "Pests cost most when found late",
+          "Free pest and disease finders",
+          "Free finders, and Anee from Libre plus Anee"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is there free farm management software?"
+    },
+    {
+      "type": "text",
+      "text": "Yes, and for a small farm the free options go a long way. Start with one of these."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**A notebook or a spreadsheet.** Both cost nothing, but neither reminds you what is due. Our comparison of a [farm record keeping app and a notebook](/blog/farm-record-keeping-app) weighs them fairly.",
+        "**PalayCheck App from PhilRice.** Free on Google Play for Android. It builds a rice calendar from your variety, establishment method and nutrient option, records expenses and harvest, and sums up cost and net income at season end. It covers rice only.",
+        "**anee.io Libre.** Free for good, with a few ads: one active season with one lot, the activities board, notes, tags, growth stages, harvest observations and the labor report, offline too."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "PhilRice is upgrading its app to a PalayCheck App 2.0, with offline use among the planned changes. Our list of the [best free farm app for Filipino farmers](/blog/free-farm-app-philippines) compares the free tools in more detail."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where does anee.io fit among farm management software?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io is crop management software with record keeping and money reports built in. It runs in the browser of any phone, tablet or computer. Its [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. The [farm reports](/features/farm-reports) then add up from the tasks you tick, so you never type a cost twice. Here is what each plan adds."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Libre, free:** the season basics above, with a few ads.",
+        "**Libre plus Anee, PHP 70 a month or PHP 700 a year:** adds Anee, the smart farm technician, with chat, photos and four analyses, such as What to Plant. Her answers use credits.",
+        "**Solo Farmer, PHP 200 a month or PHP 1,800 a year:** 3 active seasons of up to 5 lots, workers, inventory, all reports, 30 AI credits each renewal, no ads.",
+        "**Farm Owner, PHP 600 a month or PHP 6,500 a year:** everything unlimited, plus worker logins, the Collab Room and 100 AI credits each renewal."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Would you rather not plan at all? With Anee Auto, you answer a few questions about your farm once. Then Anee plans the whole season and keeps it on track, using credits. See the [pricing page](/pricing) for the full list. You pay by GCash or bank transfer."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Test it on one lot for a full season",
+      "text": "Before you move every field into any new program, run it on one lot from land preparation to harvest. If you still open it on day 60, it fits your habits. If you stop after a week, a simpler tool will serve you better, and that is fine."
+    },
+    {
+      "type": "cta",
+      "title": "Start with one lot, free",
+      "text": "Sign up for the Libre plan, add a lot and its planting day, and see your season dated task by task.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What can anee.io not do?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "It is for crops. It keeps no herd, feed or breeding records for hogs, poultry or cattle.",
+        "It keeps farm costs and sales, but it is not bookkeeping software for taxes.",
+        "It does not connect to soil sensors, drones or machines. Its precision side is your lot maps and [Satellite Analysis](/features/satellite-analysis), where Anee reads Sentinel pictures of your field.",
+        "Anee needs internet and uses credits. The board and your records work offline and sync later."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Our guide to the [best farm management app in the Philippines](/blog/farm-management-app-philippines) covers workers, stock and team logins in detail."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm management software"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the best farm management software for a small farm?",
+          "a": "Look for one that dates each task from planting, adds up labor and costs, and works on a phone without signal. It should also cost little in pesos. On anee.io, the free Libre plan covers the basics, and Solo Farmer at PHP 200 a month adds workers, inventory and every report."
+        },
+        {
+          "q": "Is any farm management software free?",
+          "a": "Yes. The PalayCheck App from PhilRice is free on Google Play for rice farmers. The Libre plan of anee.io is free too, with a few ads and one active season. A spreadsheet also costs nothing if you own a phone or computer."
+        },
+        {
+          "q": "What is the difference between crop management software and farm accounting software?",
+          "a": "Crop management software plans and records the field work: tasks, stages, inputs and harvest. Farm business management software handles the books: payroll, invoices, loans and taxes. A small farm needs the first, and can keep the second simple until it grows."
+        },
+        {
+          "q": "Can I use anee.io for livestock?",
+          "a": "No. It plans and records crops, with growth stages for 85 Philippine crops, from palay and mais to gulay and fruit trees. Keep hog or poultry records in a tool made for animals."
+        },
+        {
+          "q": "Does farm management software work without signal?",
+          "a": "It depends on the program, so test it in airplane mode before you commit. In anee.io, offline mode is on for every plan, and your changes sync when the signal returns. Anee and the weather still need a connection."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Best farm management app in the Philippines",
+          "url": "/blog/farm-management-app-philippines"
+        },
+        {
+          "label": "Farm record keeping app or notebook",
+          "url": "/blog/farm-record-keeping-app"
+        },
+        {
+          "label": "Best free farm app for Filipino farmers",
+          "url": "/blog/free-farm-app-philippines"
+        },
+        {
+          "label": "Farm expense management software",
+          "url": "/blog/farm-expense-management-software"
+        },
+        {
+          "label": "Precision agriculture in the Philippines",
+          "url": "/blog/precision-agriculture-philippines"
+        },
+        {
+          "label": "anee.io review",
+          "url": "/blog/anee-io-review"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PSA: Highlights of the 2012 Census of Agriculture (number and area of farms)",
+          "url": "https://psa.gov.ph/statistics/caf/node/51722"
+        },
+        {
+          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App), 2024",
+          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
+        },
+        {
+          "label": "PhilRice: PalayCheck App",
+          "url": "https://palaycheckapp.philrice.gov.ph/"
+        },
+        {
+          "label": "PhilRice: Digital rice farm tools upgraded to support LGU, 2026",
+          "url": "https://www.philrice.gov.ph/digital-rice-farm-tools-upgraded-to-support-lgu/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System 2022 Revised Edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        }
+      ]
+    }
+  ]
+}
