@@ -728,6 +728,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // ranked by the farmer's own priorities.
     Route::get('/app/variety-research', [App\Http\Controllers\VarietyAnalysisController::class, 'page'])->name('vary.page');
     Route::get('/app/variety-research/options', [App\Http\Controllers\VarietyAnalysisController::class, 'options'])->name('vary.options');
+    Route::get('/app/variety-research/book', [App\Http\Controllers\VarietyAnalysisController::class, 'book'])->name('vary.book');
     Route::post('/app/variety-research/generate', [App\Http\Controllers\VarietyAnalysisController::class, 'generate'])->name('vary.generate');
     Route::get('/app/variety-research/list', [App\Http\Controllers\VarietyAnalysisController::class, 'list'])->name('vary.list');
     Route::get('/app/variety-research/one/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'one'])->whereNumber('id')->name('vary.one');

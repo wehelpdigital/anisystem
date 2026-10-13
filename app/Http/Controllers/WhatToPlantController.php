@@ -456,11 +456,13 @@ class WhatToPlantController extends Controller
             return $this->json(false, $r->error ?: 'The analysis failed and nothing was charged. Please try again.', ['status' => 'failed'], 502);
         }
 
+        $params = json_decode($r->params, true) ?: [];
+
         return $this->json(true, 'Analysis ready.', [
             'status' => 'ready',
             'savedId' => (int) $r->id,
-            'report' => json_decode($r->report, true),
-            'params' => json_decode($r->params, true),
+            'report' => self::withVarieties(json_decode($r->report, true) ?: [], $params),
+            'params' => $params,
             'charged' => (float) $r->credits,
             'balance' => round($this->credits->balance($this->payer()->id), 2),
         ]);
@@ -499,13 +501,73 @@ class WhatToPlantController extends Controller
             return $this->json(false, 'That analysis is gone.', [], 404);
         }
 
+        $params = json_decode($r->params, true) ?: [];
+
         return $this->json(true, 'ok', [
             'id' => $r->id,
             'title' => $r->title,
-            'params' => json_decode($r->params, true),
-            'report' => json_decode($r->report, true),
+            'params' => $params,
+            'report' => self::withVarieties(json_decode($r->report, true) ?: [], $params),
             'credits' => (float) $r->credits,
         ]);
+    }
+
+    /**
+     * Each crop of a report with the registered varieties that fit the field
+     * (2026-10-14): its top three from anee.io's variety records, how many are
+     * on file, the crop's finder, and the crop key for Variety Research. Plain
+     * arithmetic on the records (App\Support\VarietyBook), done on every
+     * read, so reports written before the records get them too.
+     */
+    public static function withVarieties(array $report, array $p): array
+    {
+        $B = \App\Support\VarietyBook::class;
+        if (! VarietyAnalysisController::onRecord($p)) {
+            return $report;   // the records are the Philippines' registry
+        }
+        $island = $B::island($p['location'] ?? '');
+        $problems = array_values(array_filter((array) ($p['problems'] ?? []), 'is_string'));
+        $soilExtra = self::picks(self::SOIL_EXTRAS, $p['soilExtra'] ?? null);
+        if (array_intersect($soilExtra, ['saline', 'salt', 'salty'])) {
+            $problems[] = 'sea';
+        }
+        $month = (int) substr((string) ($p['startMonth'] ?? ''), 5, 2);
+        $add = function ($x) use ($B, $island, $problems, $p, $month) {
+            if (! is_array($x)) {
+                return $x;
+            }
+            $key = $B::cropKeyFor((string) ($x['crop'] ?? ''));
+            $rows = $key ? $B::rows($key) : [];
+            if (! $rows) {
+                return $x;
+            }
+            $m = (int) ($x['plantMonth'] ?? $month);
+            $case = [
+                'island' => $island,
+                'envs' => $B::envsFor($key, $problems, $p['water'] ?? null, $p['elevation'] ?? null),
+                'elevation' => $p['elevation'] ?? null,
+                'season' => $m ? (($m >= 5 && $m <= 10) ? 'wet' : 'dry') : null,
+                'problems' => $problems,
+            ];
+            $x['varieties'] = [
+                'cropKey' => $key,
+                'count' => count($rows),
+                'finder' => $B::finderUrl($key),
+                'top' => array_map(fn ($r) => $B::brief($r), $B::candidates($key, $case, 3)),
+            ];
+
+            return $x;
+        };
+        foreach (['recommendations', 'surprises'] as $k) {
+            if (! empty($report[$k]) && is_array($report[$k])) {
+                $report[$k] = array_map($add, $report[$k]);
+            }
+        }
+        if (! empty($report['topPick']) && is_array($report['topPick'])) {
+            $report['topPick'] = $add($report['topPick']);
+        }
+
+        return $report;
     }
 
     /** What Anee reads when a what-to-plant report is attached. */
@@ -709,12 +771,42 @@ class WhatToPlantController extends Controller
         // whole book. She picks from this pool, so a Philippine field is never
         // told to sow wheat and every pick has a calendar behind it.
         $book = \App\Support\Region::as($fc, fn () => \App\Support\CropCatalog::visible());
+        // anee.io's variety records (2026-10-14), at home: how many varieties
+        // of each crop are registered, and the spread of their days.
+        $onFile = function (string $k) use ($fieldPH): string {
+            $rows = $fieldPH ? \App\Support\VarietyBook::rows($k) : [];
+            if (count($rows) < 2) {
+                return '';
+            }
+            $days = array_filter(array_map(fn ($r) => $r['daysUnit'] === 'days' ? $r['days'] : null, $rows));
+
+            return '; ' . count($rows) . ' varieties on record' . (count($days) >= 3 ? ', ' . (int) min($days) . ' to ' . (int) max($days) . ' d' : '');
+        };
         $pool = implode(', ', array_map(
             fn (array $c, string $k) => (string) $c['label'] . (\App\Support\CropCatalog::isPerennial($k)
-                ? ' [bears at ' . (int) ($c['bearingAt'] ?? 0) . ' months]'
-                : (! empty($c['maturity']) ? ' [' . (int) $c['maturity'] . ' d]' : '')),
+                ? ' [bears at ' . (int) ($c['bearingAt'] ?? 0) . ' months' . $onFile($k) . ']'
+                : (! empty($c['maturity']) ? ' [' . (int) $c['maturity'] . ' d' . $onFile($k) . ']' : '')),
             $book, array_keys($book)
         ));
+        // The registered varieties bred for this field's hard ground.
+        $hard = [];
+        if ($fieldPH) {
+            $probs = (array) ($p['problems'] ?? []);
+            $want = array_values(array_filter([
+                in_array('sea', $probs, true) || array_intersect(self::picks(self::SOIL_EXTRAS, $p['soilExtra'] ?? null), ['saline', 'salt', 'salty']) ? 'saline' : null,
+                in_array('floods', $probs, true) ? 'flood' : null,
+                ($p['water'] ?? '') !== 'irrigated' ? 'drought' : null,
+                ($p['elevation'] ?? '') === 'highland' ? 'cool' : null,
+            ]));
+            $words = ['saline' => 'salt tolerant', 'flood' => 'flood tolerant', 'drought' => 'drought or rainfed', 'cool' => 'cool highland'];
+            foreach ($want as $w) {
+                $n = count(array_filter(\App\Support\VarietyBook::rows('rice'), fn ($r) => in_array($w, $r['envs'], true) || ($w === 'drought' && array_intersect(['rainfed-tpr', 'rainfed-dsr', 'upland'], $r['envs']))));
+                if ($n) {
+                    $hard[] = $n . ' registered ' . $words[$w] . ' rice varieties';
+                }
+            }
+        }
+        $hardLine = $hard ? '- Varieties on record bred for this ground: ' . implode('; ', $hard) . ". Where a crop has varieties bred for the field's hard ground, that lifts its fit.survival; say so in its why.\n" : '';
         // The crops the farmer has in mind, by the book's name, plus their own words.
         $askedNames = array_map(fn ($k) => (string) ($book[$k]['label'] ?? $k), self::picks($book, $p['cropsAsked'] ?? []));
         $asked = ($askedNames ? implode('; ', $askedNames) : '')
@@ -759,10 +851,10 @@ FACTS GIVEN
 - Crops the farmer has in mind (each must be analysed and ranked, honestly): {$asked}
 - Crop families the farmer does NOT want at all: {$excludedLine}. Families still in play: {$familiesLeft}.
 - What matters most to the farmer, in their order, with the weight each carries in the score: {$prioLine}
-{$ensoBlock}
+{$ensoBlock}{$hardLine}
 GROUND RULES
 - BE REALISTIC ABOUT THE PLACE. Recommend only crops that are actually grown commercially and sold in {$countryName}, and that really grow in the climate of the region and elevation named — the climate decides, not the wish list. Concretely: {$realism}. A crop that cannot grow in that climate is simply left out; it is not a recommendation and not padding for the avoid list.
-- CANDIDATE POOL. Choose the top pick and every recommendation from these crops, which this app keeps a calendar for in {$countryName} (days to harvest in brackets): {$pool}. If a crop that is genuinely important in the region named is missing from the pool, you may add it only when it is really grown commercially there, and you must say so in dataGaps.
+- CANDIDATE POOL. Choose the top pick and every recommendation from these crops, which this app keeps a calendar for in {$countryName} (days to harvest in brackets, and where the app keeps variety records, how many varieties are registered and the spread of their days, so a crop's daysToHarvest can reflect its early and late varieties): {$pool}. If a crop that is genuinely important in the region named is missing from the pool, you may add it only when it is really grown commercially there, and you must say so in dataGaps.
 - THE FARMER'S OWN CROPS. Every crop listed under "crops the farmer has in mind" must appear in recommendations with farmerAsked true, scored and ranked as honestly as your own picks: if it fits this ground poorly, say so plainly in its why and rank it low — never drop it, never flatter it. A name there that is not a real crop grown in {$countryName} goes in avoid instead, with the reason.
 - THE FARMER'S PRIORITIES. Score every crop on the six fits (fit.profit, fit.survival, fit.ease, fit.speed, fit.market, fit.food, each 0-100 for THIS ground and farmer), then make score the weighted average of those six using the weights given above (the farmer's first priority weighs most). Rank by score. When a priority decided a placing, say so in the why.
 - HARVEST DAY. A fine planting window is not enough: the crop must also come off the field safely. For every recommendation give plantMonth (1-12, the month its window opens), daysToHarvest (days from planting to first harvest for this crop in this climate, from its real maturity — for a tree crop, months to first bearing times 30), harvestWindow in words (e.g. "late February – mid March"), harvestMonth (1-12, when most of the harvest lands), and harvestRisk: what the region's climate typically does in that harvest month — floods, typhoons/storms, drought, heat, frost — as score 0-100 (0 = calm, 100 = a harvest very likely lost or delayed), kind (one of "flood", "storm", "drought", "heat", "frost", "none") and a note of at most 20 words. A crop whose harvest lands in the flood or typhoon peak must say so, and that risk must pull down fit.survival and the score.

@@ -32,6 +32,12 @@ use Illuminate\Support\Facades\Validator;
  * on each of the four, and the ranking is weighed by the farmer's own
  * order, recomputed here so it honours what they said matters.
  *
+ * The variety records (2026-10-14): before Anee writes, she is handed the
+ * registered varieties of the crop that best fit the field, from anee.io's own
+ * NSIC and PhilRice records (App\Support\VarietyBook), with their trial days,
+ * yields and ratings; and every variety in her answer is linked back to its
+ * record, with a "by the numbers" shortlist beside her ranking.
+ *
  * Same shelf (as_plant_analyses, kind 'variety'), same job walk, same
  * honest ledger as its sisters: the price is said before anything is
  * spent and charged exactly as said. Web search costs the house a flat
@@ -403,11 +409,13 @@ class VarietyAnalysisController extends Controller
             return $this->json(false, $r->error ?: 'The analysis failed and nothing was charged. Please try again.', ['status' => 'failed'], 502);
         }
 
+        $params = json_decode($r->params, true) ?: [];
+
         return $this->json(true, 'Analysis ready.', [
             'status' => 'ready',
             'savedId' => (int) $r->id,
-            'report' => json_decode($r->report, true),
-            'params' => json_decode($r->params, true),
+            'report' => self::withRecords(json_decode($r->report, true) ?: [], $params),
+            'params' => $params,
             'charged' => (float) $r->credits,
             'balance' => round($this->credits->balance($this->payer()->id), 2),
         ]);
@@ -439,13 +447,110 @@ class VarietyAnalysisController extends Controller
             return $this->json(false, 'That analysis is gone.', [], 404);
         }
 
+        $params = json_decode($r->params, true) ?: [];
+
         return $this->json(true, 'ok', [
             'id' => $r->id,
             'title' => $r->title,
-            'params' => json_decode($r->params, true),
-            'report' => json_decode($r->report, true),
+            'params' => $params,
+            'report' => self::withRecords(json_decode($r->report, true) ?: [], $params),
             'credits' => (float) $r->credits,
         ]);
+    }
+
+    /**
+     * The varieties on record for a crop, for the wizard (2026-10-14): every
+     * name to type from (registered names and the names sold under), and the
+     * ones that best fit the field said so far, to add with a tap.
+     */
+    public function book(Request $request)
+    {
+        $crop = (string) $request->query('crop', '');
+        $rows = self::onRecord(['country' => $request->query('country')]) ? \App\Support\VarietyBook::rows($crop) : [];
+        if (! $rows) {
+            return $this->json(true, 'ok', ['count' => 0, 'names' => [], 'picks' => []]);
+        }
+        $case = self::bookCase([
+            'crop' => $crop,
+            'location' => (string) $request->query('location', ''),
+            'elevation' => (string) $request->query('elevation', ''),
+            'season' => (string) $request->query('season', ''),
+            'problems' => array_values(array_filter((array) $request->query('problems', []), 'is_string')),
+        ]);
+        $names = [];
+        foreach ($rows as $r) {
+            $names[] = $r['name'];
+            foreach (array_slice($r['aliases'], 0, 2) as $a) {
+                $names[] = $a;
+            }
+        }
+
+        return $this->json(true, 'ok', [
+            'count' => count($rows),
+            'finder' => \App\Support\VarietyBook::finderUrl($crop),
+            'names' => array_values(array_unique($names)),
+            'picks' => array_map(fn ($r) => \App\Support\VarietyBook::brief($r), \App\Support\VarietyBook::candidates($crop, $case, 8)),
+        ]);
+    }
+
+    /** The records are the Philippines' registry: they speak only for a field there. */
+    public static function onRecord(array $p): bool
+    {
+        $c = \App\Support\Region::valid($p['country'] ?? null) ?: \App\Support\Region::code();
+
+        return $c === \App\Support\Region::HOME;
+    }
+
+    /** The field as the variety records read it. */
+    public static function bookCase(array $p): array
+    {
+        $season = (string) ($p['season'] ?? '');
+
+        return [
+            'island' => \App\Support\VarietyBook::island($p['location'] ?? ''),
+            'envs' => \App\Support\VarietyBook::envsFor($p['crop'] ?? '', (array) ($p['problems'] ?? []), null, $p['elevation'] ?? null),
+            'elevation' => ($p['elevation'] ?? '') ?: null,
+            'season' => in_array($season, ['wet', 'dry'], true) ? $season : null,
+            'problems' => (array) ($p['problems'] ?? []),
+        ];
+    }
+
+    /**
+     * A report with its varieties linked to their records: each ranked,
+     * given and newest variety gets its record (trial days, yield, ratings,
+     * page), and the report a "by the numbers" shortlist from the records.
+     * Done on every read, so reports written before the records still get
+     * them.
+     */
+    public static function withRecords(array $report, array $p): array
+    {
+        $crop = (string) ($p['crop'] ?? '');
+        $B = \App\Support\VarietyBook::class;
+        if (! self::onRecord($p) || ! $B::rows($crop)) {
+            return $report;
+        }
+        $link = function (array $x) use ($B, $crop) {
+            $m = $B::match($crop, (string) ($x['variety'] ?? ''));
+            if ($m) {
+                $x['record'] = $B::brief($m);
+            }
+
+            return $x;
+        };
+        foreach (['ranking', 'givenVarieties', 'newest'] as $k) {
+            if (! empty($report[$k]) && is_array($report[$k])) {
+                $report[$k] = array_map(fn ($x) => is_array($x) ? $link($x) : $x, $report[$k]);
+            }
+        }
+        $named = array_filter(array_map(fn ($x) => $x['record']['name'] ?? null, (array) ($report['ranking'] ?? [])));
+        $report['records'] = [
+            'count' => count($B::rows($crop)),
+            'finder' => $B::finderUrl($crop),
+            'shortlist' => array_map(fn ($r) => $B::brief($r) + ['inRanking' => in_array($r['name'], $named, true)],
+                $B::candidates($crop, self::bookCase($p), 6)),
+        ];
+
+        return $report;
     }
 
     /** What Anee reads when a variety analysis is attached to a chat. */
@@ -588,6 +693,11 @@ class VarietyAnalysisController extends Controller
         $regionLine = \App\Support\Region::promptBlock($fc, \App\Support\Region::code());
         $plan = ! empty($p['season']) ? \App\Support\Region::as($fc, fn () => \App\Support\Region::seasonWords($p['season'], (int) ($p['year'] ?: $year))) : 'not stated';
         $land = self::ELEVATIONS[$p['elevation'] ?? ''] ?? 'not stated';
+        // The records on file that fit this field: the search checks them first.
+        $onFile = self::onRecord($p) ? \App\Support\VarietyBook::namedThenFit($p['crop'], $p['varieties'] ?? [], self::bookCase($p), 14) : [];
+        $onFileLine = $onFile
+            ? "\n5. These {$cropLabel} varieties are on anee.io's own records (NSIC registry, PhilRice) and fit this field on paper: " . implode(', ', array_map(fn ($r) => $r['name'] . ($r['aliases'] ? ' (' . $r['aliases'][0] . ')' : ''), $onFile)) . '. For each, look for anything newer than its registration: regional trial results near the farmer, seed availability this season, field reports of how it did.'
+            : '';
         $hybridHouses = $fieldPH
             ? '(for rice: SL Agritech / SL-8H and its line, Bayer Arize, Syngenta, Corteva-Pioneer, Bioseed, Longping High-Tech; for corn: Pioneer, Bayer-Dekalb, Syngenta NK, Bioseed; for vegetables: East-West Seed, Allied Botanical, Known-You, Condor, Ramgo — whichever apply to this crop), and the NSIC-registered public hybrids (e.g. Mestiso / Mestizo lines for rice)'
             : '(the top seed companies and public breeding programs actually selling this crop in ' . $countryName . ' — name them from what you find, never from memory)';
@@ -606,9 +716,9 @@ FIND, IN THIS ORDER
 2. For each of the farmer's named varieties AND for 4–6 top-yielding released INBRED or open-pollinated varieties suited to this soil and these troubles: documented yield (trial or published figure, with unit and source), days to maturity, pest and disease resistance ratings, stress tolerance (drought, submergence, salinity, heat, acidity, alkalinity, lodging), grain or fruit quality notes, and any regional trial results in or near the farmer's region.
 2b. The same for 3–5 HYBRID varieties of {$cropLabel} sold in {$countryName} by the top seed companies {$hybridHouses}: yield, maturity, resistance, seed cost and availability per hectare where published, and whether the seed must be bought fresh each season.
 3. The seasonal climate outlook from {$met} for the farmer's region for the PLANTING SEASON named above (rainfall, ENSO state, severe-weather expectation across the months the crop will stand in the field).
-4. Anything published about which of these varieties do well or poorly on this soil type, at this elevation, in this season and with these troubles — which are bred for the wet season and which for the dry, which stand the highland's cool nights or the lowland's heat.
+4. Anything published about which of these varieties do well or poorly on this soil type, at this elevation, in this season and with these troubles — which are bred for the wet season and which for the dry, which stand the highland's cool nights or the lowland's heat.{$onFileLine}
 
-Prefer {$sources}. Where a variety cannot be found online, say so plainly. Write plain prose notes under the four headings, at most 900 words, no JSON, no markdown tables.
+Prefer {$sources}. Where a variety cannot be found online, say so plainly. Write plain prose notes under the headings, at most 1000 words, no JSON, no markdown tables.
 PROMPT;
     }
 
@@ -636,6 +746,12 @@ PROMPT;
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
         $forecast = $this->forecastLines($p['location']);
         $year = now('Asia/Manila')->year;
+        // anee.io's own variety records that best fit this field (2026-10-14).
+        $B = \App\Support\VarietyBook::class;
+        $records = self::onRecord($p) ? $B::namedThenFit($p['crop'], $p['varieties'] ?? [], self::bookCase($p), 22) : [];
+        $recordsBlock = $records ? "\nVARIETY RECORDS ON FILE\nanee.io keeps the official records of " . CropCatalog::label($p['crop']) . ' varieties: the NSIC registry of the Bureau of Plant Industry and PhilRice seed data (days to maturity and yields from the national trials, pest and disease ratings, the growing environment and area each is recommended for). These ' . count($records) . ' fit this field best on paper (the farmer\'s own varieties first, where they are on file), out of' . count($B::rows($p['crop'])) . " on file:\n"
+            . $B::promptLines($records) . "\n"
+            . "How to use them: draw most of the ranking from these records where they fit, and add a variety from the research notes only when it is newer or plainly better here. For a variety on this list, take maturityDays and yieldPotential from its record and name 'NSIC registry' or 'PhilRice' in its sources (a newer figure from the notes may stand beside it, with its own source). Write each variety's registered name first, exactly as written here, with the name it is sold under in brackets when it has one, e.g. 'NSIC Rc 666H (Jackpot 102)'. A record marked 'seller figures' holds the seller's own claims, not trial results: say so where it matters.\n" : '';
 
         // The FIELD's country, which may not be the farmer's.
         $fc = $p['country'] ?? \App\Support\Region::code();
@@ -662,7 +778,7 @@ FACTS GIVEN
 - Varieties: {$given}
 - The farmer's own notes: {$notes}
 - Weather now: {$forecast}
-{$ensoBlock}
+{$ensoBlock}{$recordsBlock}
 WHAT TO READ FROM
 Research notes gathered from the web just now follow at the end of this brief (the newest registrations and releases of {$cropLabel} in {$countryName} in {$year} and the two years before, trial yields, resistance ratings, days to maturity, the seasonal outlook). Rely on them first, over memory; note the year of each finding. Where a claim is neither in the notes nor established agronomy, say so in dataGaps rather than inventing it.
 

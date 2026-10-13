@@ -275,6 +275,39 @@
     .va-pm .is-minus li { list-style: '✗ '; color: #92400e; }
     .wp-why { font-size: .8rem; color: var(--color-gray-600); line-height: 1.55; margin-top: .45rem; }
     .va-src { font-size: .68rem; color: var(--color-gray-400); margin-top: .3rem; }
+    /* The variety records (2026-10-14): a ranked variety's own record, the
+       by-the-numbers shortlist, and the wizard's picks from the records. */
+    .va-onfile { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .45rem; margin-top: .5rem; padding: .45rem .6rem; border-radius: .7rem;
+        font-size: .72rem; line-height: 1.45; color: var(--color-gray-600); background: #f4f9ee; border: 1px solid #e1edd3; text-decoration: none;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1); }
+    .va-onfile:hover { border-color: #a8cc7e; }
+    .va-onfile b { color: #2d5016; font-weight: 800; }
+    .va-onfile i { margin-left: auto; font-style: normal; font-weight: 800; color: var(--color-brand-700); white-space: nowrap; }
+    .va-file { display: grid; gap: .5rem; margin-top: .7rem; }
+    @media (min-width: 640px) { .va-file { grid-template-columns: 1fr 1fr; } }
+    .va-file-row { display: flex; flex-direction: column; gap: .25rem; padding: .65rem .75rem; border-radius: .9rem; background: #fff; border: 1px solid var(--color-gray-100);
+        text-decoration: none; color: inherit; transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .va-file-row:hover { border-color: #a8cc7e; transform: translateY(-2px); }
+    .va-file-row b { font-size: .86rem; color: var(--color-gray-900); }
+    .va-file-row small { font-size: .7rem; color: var(--color-gray-500); }
+    .va-file-row .f-in { align-self: flex-start; font-size: .6rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .1rem .45rem; border-radius: 999px; color: #2d5016; background: #e4f1d6; }
+    .va-file-all { display: inline-block; margin-top: .7rem; font-size: .78rem; font-weight: 800; color: var(--color-brand-700); text-decoration: underline; text-underline-offset: 3px; }
+    .va-book-h { margin-top: .9rem; font-size: .78rem; font-weight: 800; color: var(--color-gray-700); }
+    .va-book-h small { display: block; font-weight: 600; color: var(--color-gray-500); }
+    .va-book { display: grid; gap: .4rem; margin-top: .5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
+    .va-book-c { display: flex; flex-direction: column; align-items: flex-start; gap: .1rem; padding: .5rem .65rem; border-radius: .8rem; text-align: left;
+        background: #fff; border: 1px dashed #cfe1bb; cursor: pointer; transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .va-book-c:hover { border-color: #86b556; background: #f6faf1; }
+    .va-book-c b { font-size: .8rem; color: var(--color-gray-900); }
+    .va-book-c small { font-size: .68rem; font-weight: 700; color: #8a6a00; }
+    .va-book-c span { font-size: .66rem; color: var(--color-gray-500); }
+    html.dark .va-onfile { background: #1a2414; border-color: #2b3a1c; color: #b7c2ad; }
+    html.dark .va-onfile b { color: #a5c97e; }
+    html.dark .va-file-row, html.dark .va-book-c { background: #151b12; border-color: #2b3a1c; }
+    html.dark .va-file-row b, html.dark .va-book-c b { color: #e8efe1; }
+    html.dark .va-file-row .f-in { background: #22301a; color: #cfe3b8; }
+    html.dark .va-book-h { color: #d5e3c5; }
+    @media (prefers-reduced-motion: reduce) { .va-onfile, .va-file-row, .va-book-c { transition: none; } .va-file-row:hover { transform: none; } }
     html.dark .va-rec { border-color: #222b1a; }
     html.dark .va-rec-top .v-name b { color: #e8efe1; }
     html.dark .va-fact { background: #222b1a; color: #93a684; }
@@ -447,10 +480,12 @@
                 <p class="wtp-q">Which varieties are you comparing?</p>
                 <p class="wtp-sub">Type each name as sold and tap Add, up to eight. Leave it empty and Anee picks the top yielding ones.</p>
                 <div class="va-add">
-                    <input type="text" id="vaVarietyIn" class="form-input" maxlength="60" placeholder="e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222, NK6414' : 'Pioneer P1197, DKC64-34' }}" autocomplete="off">
+                    <input type="text" id="vaVarietyIn" class="form-input" maxlength="60" list="vaNames" placeholder="e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222, NK6414' : 'Pioneer P1197, DKC64-34' }}" autocomplete="off">
                     <button type="button" class="btn btn-primary" id="vaVarietyAdd">Add</button>
                 </div>
+                <datalist id="vaNames"></datalist>
                 <div class="va-chips" id="vaChips"></div>
+                <div id="vaBook" hidden></div>
                 <div class="va-anee" id="vaAneePicks"><span id="vaAneeFaceSlot">🤖</span><span>No varieties yet. <b>Anee will pick the top yielding released varieties</b> for your crop and field, and compare them.</span></div>
             </section>
             {{-- Step 6: the priorities --}}
@@ -545,6 +580,7 @@
         job: (id) => '{{ url('/app/variety-research/job') }}/' + id,
         del: (id) => '{{ url('/app/variety-research') }}/' + id,
         anee: '{{ route('ai.index') }}',
+        book: '{{ route('vary.book') }}',
     };
     const VA_META_URL = '{{ route('vary.meta') }}';
 
@@ -568,6 +604,8 @@
             const res = await api(U.options, { method: 'GET' });
             OPT = res.data;
             paintOptions();
+            const pre = new URLSearchParams(location.search).get('crop');
+            if (pre && (OPT.crops || []).some((c) => c.key === pre)) setCrop(pre);
         } catch (err) { toast(err.message, 'error'); }
         // Painted: the price card and the wizard arrive together, once.
         const gen = $id('vaGen');
@@ -774,17 +812,61 @@
             setTimeout(() => $id('vaCropSearch')?.focus(), 280);
         }
     });
-    $id('vaCropSheet').addEventListener('click', (e) => {
-        const row = e.target.closest('.crop-row');
-        if (!row) return;
-        state.crop = row.getAttribute('data-crop');
+    function setCrop(key) {
+        state.crop = key;
         const c = OPT.crops.find((x) => x.key === state.crop) || {};
         $id('vaCropIcon').textContent = c.icon || '🌱';
         const now = $id('vaCropNow');
         now.textContent = c.label || 'Choose the crop';
         now.classList.remove('is-none');
+        loadBook();
+    }
+    $id('vaCropSheet').addEventListener('click', (e) => {
+        const row = e.target.closest('.crop-row');
+        if (!row) return;
+        setCrop(row.getAttribute('data-crop'));
         closeSheet('vaCropSheet');
         setTimeout(() => show(4), 220);
+    });
+
+    /* ---- the variety records (2026-10-14): every name on file to type
+       from, and the ones that fit the field said so far, to add with a tap ---- */
+    let BOOK = { crop: '', names: [], picks: [], count: 0, finder: null };
+    const fmtN = (x) => String(Math.round(Number(x) * 100) / 100);
+    async function loadBook() {
+        const crop = state.crop;
+        if (!crop) return;
+        const q = new URLSearchParams({ crop, country: state.country || '', location: state.location || '', elevation: state.elevation || '', season: state.season || '' });
+        try {
+            const res = await api(U.book + '?' + q.toString(), { method: 'GET' });
+            if (state.crop !== crop) return;
+            BOOK = Object.assign({ crop }, res.data || {});
+        } catch (err) {
+            BOOK = { crop, names: [], picks: [], count: 0, finder: null };
+        }
+        paintBook();
+    }
+    const asAdded = (r) => r.alias && (r.name + ' (' + r.alias + ')').length <= 60 ? r.name + ' (' + r.alias + ')' : r.name;
+    function paintBook() {
+        $id('vaNames').innerHTML = (BOOK.names || []).map((n) => `<option value="${esc(n)}"></option>`).join('');
+        const have = state.varieties.map((v) => v.toLowerCase());
+        const picks = (BOOK.picks || []).filter((r) => !have.some((v) => v.startsWith(r.name.toLowerCase()) || (r.alias && v.includes(r.alias.toLowerCase()))));
+        const box = $id('vaBook');
+        box.hidden = !picks.length || state.varieties.length >= 8;
+        box.innerHTML = picks.length ? `
+            <p class="va-book-h">On record and suited to your field<small>${esc(String(BOOK.count))} ${esc(((OPT.crops.find((x) => x.key === state.crop) || {}).label || 'crop').split(' (')[0].split(' — ')[0].toLowerCase())} varieties on file. Tap one to compare it.</small></p>
+            <div class="va-book">${picks.map((r) => `
+                <button type="button" class="va-book-c" data-book-add="${esc(asAdded(r))}">
+                    <b>${esc(r.name)}</b>${r.alias ? `<small>${esc(r.alias)}</small>` : ''}
+                    <span>${esc([r.type === 'hybrid' ? 'Hybrid' : '', r.days ? Math.round(r.days) + ' ' + (r.daysUnit || 'days') : '', r.yield ? fmtN(r.yield) + ' ' + (r.yieldUnit || 't/ha') : '', r.where || ''].filter(Boolean).join(' · '))}</span>
+                </button>`).join('')}</div>` : '';
+    }
+    $id('vaBook').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-book-add]');
+        if (!b) return;
+        if (state.varieties.length >= 8) { toast('You can add up to eight.', 'error'); return; }
+        state.varieties.push(b.getAttribute('data-book-add'));
+        paintChips();
     });
     const cropSift = () => {
         const q = ($id('vaCropSearch').value || '').trim().toLowerCase();
@@ -825,6 +907,7 @@
         $id('vaChips').innerHTML = state.varieties.map((v, i) => `
             <span class="va-chip">${esc(v)}<button type="button" data-drop="${i}" aria-label="Remove ${esc(v)}">✕</button></span>`).join('');
         $id('vaAneePicks').hidden = state.varieties.length > 0;
+        if (typeof paintBook === 'function' && BOOK.crop === state.crop) paintBook();
     }
     $id('vaVarietyAdd').addEventListener('click', () => { addVariety(); $id('vaVarietyIn').focus(); });
     $id('vaVarietyIn').addEventListener('keydown', (e) => {
@@ -977,6 +1060,14 @@
         const weightOf = (k) => (r.weights && r.weights[k] != null) ? Math.round(r.weights[k] * 100) : Math.round(((OPT && OPT.weights[order.indexOf(k)]) || 0) * 100);
         const topKey = order[0];
         const list = (xs) => (Array.isArray(xs) ? xs : []).filter((x) => x && String(x).trim());
+        // A variety's record in a line: its year, days, trial yield and where it is for.
+        const recLine = (f) => [f.type === 'hybrid' ? 'Hybrid' : (f.kind ? f.kind.charAt(0).toUpperCase() + f.kind.slice(1) : ''),
+            f.year ? 'registered ' + f.year : (f.registered === false ? 'not registered' : ''),
+            f.days ? Math.round(f.days) + ' ' + (f.daysUnit || 'days') : '',
+            f.yield ? (Math.round(f.yield * 100) / 100) + ' ' + (f.yieldUnit || 't/ha') + (f.registered === false ? ' (seller)' : ' in trials') : '',
+            f.where || ''].filter(Boolean).join(' · ');
+        const goodAgainst = (f) => Object.entries(f.ratings || {}).filter(([, c]) => ['HR', 'R', 'MR', 'T'].includes(c)).slice(0, 3).map(([k]) => k).join(', ');
+        const onFile = (f) => `<a class="va-onfile" href="${esc(f.url)}" target="_blank" rel="noopener"><b>📋 On record:</b><span>${esc(recLine(f))}</span><i>See its record ›</i></a>`;
 
         hostEl.innerHTML = `
             <div class="wtp-hero">
@@ -1037,6 +1128,7 @@
                                 ${list(x.weaknesses).length ? `<ul class="is-minus">${list(x.weaknesses).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
                             </div>` : ''}
                             ${x.fitNotes ? `<p class="wp-why">${esc(sweep(x.fitNotes))}</p>` : ''}
+                            ${x.record ? onFile(x.record) : ''}
                             ${list(x.sources).length ? `<p class="va-src">Sources: ${esc(list(x.sources).join(' · '))}</p>` : ''}
                         </div>`;
                     }).join('')}
@@ -1047,14 +1139,28 @@
             <div class="wtp-card">
                 <h3>Your varieties, one by one</h3>
                 ${(r.givenVarieties || []).map((g) => `
-                    <div class="wtp-win-row is-note"><b>${esc(g.variety || '')}:</b><span>${esc(sweep(g.verdict))}</span></div>`).join('')}
+                    <div class="wtp-win-row is-note"><b>${esc(g.variety || '')}:</b><span>${esc(sweep(g.verdict))}${g.record ? ` <a class="va-file-all" href="${esc(g.record.url)}" target="_blank" rel="noopener">Its record ›</a>` : ''}</span></div>`).join('')}
             </div>` : ''}
 
             ${(r.newest || []).length ? `
             <div class="wtp-card">
                 <h3>Newest in ${(window.ANEE_REGION || {}).ph === false ? (window.ANEE_REGION.name || 'your country') : 'the Philippines'}</h3>
                 ${(r.newest || []).map((n) => `
-                    <div class="wtp-win-row is-new"><b>🆕 ${esc(n.variety || '')}${n.year ? ' (' + esc(n.year) + ')' : ''}${n.by ? ' · ' + esc(n.by) : ''}:</b><span>${esc(sweep(n.note))}</span></div>`).join('')}
+                    <div class="wtp-win-row is-new"><b>🆕 ${esc(n.variety || '')}${n.year ? ' (' + esc(n.year) + ')' : ''}${n.by ? ' · ' + esc(n.by) : ''}:</b><span>${esc(sweep(n.note))}${n.record ? ` <a class="va-file-all" href="${esc(n.record.url)}" target="_blank" rel="noopener">Its record ›</a>` : ''}</span></div>`).join('')}
+            </div>` : ''}
+
+            ${r.records && (r.records.shortlist || []).length ? `
+            <div class="wtp-card">
+                <h3>📋 By the numbers, from the variety records</h3>
+                <p class="va-group-sub">The ${esc(String(r.records.shortlist.length))} varieties on file that fit your field best by trial days, yield, ratings and where they are recommended. A plain count from the NSIC and PhilRice records, set beside Anee's ranking.</p>
+                <div class="va-file">${r.records.shortlist.map((f) => `
+                    <a class="va-file-row" href="${esc(f.url)}" target="_blank" rel="noopener">
+                        ${f.inRanking ? '<span class="f-in">In Anee\'s ranking</span>' : ''}
+                        <b>${esc(f.name)}${f.alias ? ' · ' + esc(f.alias) : ''}</b>
+                        <small>${esc(recLine(f))}</small>
+                        ${goodAgainst(f) ? `<small>Holds up against ${esc(goodAgainst(f))}</small>` : ''}
+                    </a>`).join('')}</div>
+                ${r.records.finder ? `<a class="va-file-all" href="${esc(r.records.finder)}" target="_blank" rel="noopener">All ${esc(String(r.records.count))} varieties on record ›</a>` : ''}
             </div>` : ''}
 
             ${r.conditions ? `

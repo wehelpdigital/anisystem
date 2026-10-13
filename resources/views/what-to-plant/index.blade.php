@@ -154,6 +154,22 @@
     .wtp-report.is-drawn .wp-fill { transform: scaleX(1); }
     .wp-why { font-size: .8rem; color: var(--color-gray-600); line-height: 1.55; }
     .wp-watch { font-size: .74rem; color: #92610e; margin-top: .15rem; }
+    /* The varieties on record that fit, under each crop (2026-10-14). */
+    .wp-vars { margin-top: .5rem; padding: .5rem .6rem; border-radius: .8rem; background: #f4f9ee; border: 1px solid #e1edd3; }
+    .wp-vars-h { display: block; font-size: .64rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #4a7c2a; }
+    .wp-vars-l { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .35rem; }
+    .wp-vars-l a { display: inline-flex; flex-direction: column; padding: .3rem .55rem; border-radius: .6rem; background: #fff; border: 1px solid #dbe8cc;
+        font-size: .74rem; font-weight: 800; color: #1f3410; text-decoration: none; transition: border-color .28s cubic-bezier(.22,1,.36,1); }
+    .wp-vars-l a:hover { border-color: #86b556; }
+    .wp-vars-l a small { font-size: .64rem; font-weight: 600; color: var(--color-gray-500); }
+    .wp-vars-a { display: flex; flex-wrap: wrap; gap: .3rem .9rem; margin-top: .4rem; }
+    .wp-vars-a a { font-size: .72rem; font-weight: 800; color: var(--color-brand-700); text-decoration: underline; text-underline-offset: 3px; }
+    .h-vars { margin-top: .5rem; font-size: .78rem; opacity: .95; }
+    .h-vars a { color: inherit; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+    html.dark .wp-vars { background: #1a2414; border-color: #2b3a1c; }
+    html.dark .wp-vars-h { color: #a5c97e; }
+    html.dark .wp-vars-l a { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .wp-vars-l a { transition: none; } }
     html.dark .wp-rec { border-color: #222b1a; }
     html.dark .wp-rec-top b { color: #e8efe1; }
     html.dark .wp-cat { background: #222b1a; color: #93a684; }
@@ -616,6 +632,7 @@
         job: (id) => '{{ url('/app/what-to-plant/job') }}/' + id,
         del: (id) => '{{ url('/app/what-to-plant') }}/' + id,
         anee: '{{ route('ai.index') }}',
+        vary: '{{ route('vary.page') }}',
     };
     const WP_META_URL = '{{ route('whatp.meta') }}';
     const CAT_E = { 'Grain': '🌾', 'Vegetable': '🥬', 'Root crop': '🍠', 'Legume': '🫘', 'Fruit / tree': '🌳' };
@@ -1065,6 +1082,20 @@
         const sweep = (t) => { const s = String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/(^|[.!?]\s+)(aray|naku|hala|grabe|whoa|wow|ooh|oh no|hay naku|sus|ay)\b[,!.]*\s*/gi, '$1').replace(/\s{2,}/g, ' ').trim(); return s.charAt(0).toUpperCase() + s.slice(1); };
         const top = r.topPick || {};
         const month = (OPT ? (OPT.months.find((m) => m.key === p.startMonth) || {}).label : '') || p.startMonth || '';
+        /* The registered varieties that fit, under a crop (2026-10-14): its
+           top three from the variety records, all of them on the public
+           site, and Variety Research opened on the crop. */
+        const varFacts = (f) => [f.type === 'hybrid' ? 'hybrid' : '', f.days ? Math.round(f.days) + ' ' + (f.daysUnit || 'days') : '',
+            f.yield ? (Math.round(f.yield * 100) / 100) + ' ' + (f.yieldUnit || 't/ha') : ''].filter(Boolean).join(' · ');
+        const varLine = (x) => {
+            const v = x.varieties;
+            if (!v || !(v.top || []).length) return '';
+            return `<div class="wp-vars">
+                <span class="wp-vars-h">Varieties on record that fit your field</span>
+                <div class="wp-vars-l">${v.top.map((f) => `<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name)}${f.alias ? ' · ' + esc(f.alias) : ''}${varFacts(f) ? `<small>${esc(varFacts(f))}</small>` : ''}</a>`).join('')}</div>
+                <div class="wp-vars-a"><a href="${esc(U.vary)}?crop=${encodeURIComponent(v.cropKey)}">Compare varieties with Anee ›</a>${v.finder ? `<a href="${esc(v.finder)}" target="_blank" rel="noopener">All ${esc(String(v.count))} on record ›</a>` : ''}</div>
+            </div>`;
+        };
         // The farmer's priorities in their order (older rows have none: no fit bars, no line).
         const prio = (Array.isArray(p.priorities) && p.priorities.length && (r.recommendations || []).some((x) => x.fit)) ? p.priorities : [];
 
@@ -1072,6 +1103,7 @@
             <div class="wtp-hero">
                 <h2>${esc(CAT_E[top.category] || '🌱')} Best for your field</h2>
                 <p class="h-win">${esc(top.crop || '')}</p>
+                ${top.varieties && (top.varieties.top || []).length ? `<p class="h-vars">Varieties to try: ${top.varieties.top.map((f) => `<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name)}${f.alias ? ' (' + esc(f.alias) + ')' : ''}</a>`).join(', ')}</p>` : ''}
                 <p class="h-why">${esc(sweep(top.why))}${top.window ? ' Plant it ' + esc(top.window) + '.' : ''}${top.daysToHarvest ? ' Harvest in about ' + esc(String(Math.round(Number(top.daysToHarvest)))) + ' days' + (top.harvestWindow ? ' (' + esc(top.harvestWindow) + ')' : '') + (top.harvestRisk && top.harvestRisk.note ? '. ' + esc(sweep(top.harvestRisk.note)) : '.') : ''}</p>
                 <div class="wtp-chips">
                     ${top.harvestRisk && top.harvestRisk.score != null ? `<span class="wtp-chip">${riskWord(top.harvestRisk.score)} risk at harvest</span>` : ''}
@@ -1109,6 +1141,7 @@
                         </div>
                         ${x.harvestRisk && x.harvestRisk.note ? `<p class="wp-hr-note">${esc(sweep(x.harvestRisk.note))}</p>` : ''}` : ''}
                         ${x.fit && prio.length ? `<div class="wp-fit">${prio.map((k) => `<span class="wp-fit-k" title="${esc(shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}: ${esc(String(Math.round(Number(x.fit[k]) || 0)))}/100"><i style="--v:${Math.max(0, Math.min(100, Number(x.fit[k]) || 0))}%"></i><small>${PRIO_E[k] || ''} ${esc(PRIO_SHORT[k] || shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}</small><b>${esc(String(Math.round(Number(x.fit[k]) || 0)))}</b></span>`).join('')}</div>` : ''}
+                        ${varLine(x)}
                     </div>`).join('')}
             </div>
 
@@ -1130,6 +1163,7 @@
                             ${x.harvestRisk && x.harvestRisk.score != null ? `<span class="wp-hr is-${riskBand(x.harvestRisk.score)}">${riskIcon(x.harvestRisk.kind)} ${riskWord(x.harvestRisk.score)} risk at harvest${x.harvestRisk.kind && x.harvestRisk.kind !== 'none' ? ' · ' + esc(x.harvestRisk.kind) : ''}</span>` : ''}
                         </div>
                         ${x.harvestRisk && x.harvestRisk.note ? `<p class="wp-hr-note">${esc(sweep(x.harvestRisk.note))}</p>` : ''}` : ''}
+                        ${varLine(x)}
                     </div>`).join('')}
             </div>` : ''}
 
