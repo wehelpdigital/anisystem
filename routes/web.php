@@ -263,6 +263,9 @@ Route::get('/land-preparation', [App\Http\Controllers\SitePageController::class,
 Route::get('/land-preparation/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'land-preparation')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.land.show');
 Route::get('/weeds', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'weeds')->name('site.weeds');
 Route::get('/weeds/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'weeds')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.weeds.show');
+// Rice varieties (2026-10-13): the finder and one page per variety.
+Route::get('/rice-varieties', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'rice-varieties')->name('site.varieties');
+Route::get('/rice-varieties/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'rice-varieties')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.varieties.show');
 Route::get('/blog', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'blog')->name('site.blog');
 Route::get('/blog/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'blog')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.blog.show');
 Route::get('/features/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'features')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.features.show');
@@ -751,7 +754,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/stash/{partner}/{type}', [App\Http\Controllers\StashController::class, 'shelf'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.shelf');
     Route::get('/app/stash/{partner}/{type}/items', [App\Http\Controllers\StashController::class, 'items'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.items');
     // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.
-    Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases')->name('fh.page');
+    Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases|varieties')->name('fh.page');
     // NPK Plus (2026-10-07): the free fertilizer calculator, and Anee's reading of a plan.
     Route::get('/app/npk-plus', [App\Http\Controllers\NpkPlusController::class, 'page'])->name('npk.page');
     Route::get('/app/npk-plus/options', [App\Http\Controllers\NpkPlusController::class, 'options'])->name('npk.options');

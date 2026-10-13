@@ -1,0 +1,359 @@
+{
+  "section": "rice-varieties",
+  "slug": "nsic-rc-234h",
+  "sortOrder": 294,
+  "lang": "en",
+  "category": "Hybrid rice",
+  "profile": true,
+  "title": "NSIC Rc 234H (Mestiso 27) Rice Variety: Yield, Maturity and Characteristics",
+  "metaTitle": "NSIC Rc 234H (Mestiso 27): Yield, Maturity, Characteristics",
+  "metaDescription": "NSIC Rc 234H is a hybrid rice for irrigated lowland: about 115 days and 6.5 tonnes per hectare on average. See its pest ratings and grain quality.",
+  "focusKeyword": "NSIC Rc 234H",
+  "keywords": [
+    "NSIC Rc 234H",
+    "rice variety 234H",
+    "rc 234H",
+    "234H rice variety characteristics",
+    "Mestiso 27"
+  ],
+  "excerpt": "NSIC Rc 234H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 27. The NSIC approved it in 2010. Syngenta bred it. It matures in about 115 days and averages 6.5 tonnes per hectare, with a top yield of 9.8 tonnes in trials.",
+  "heroImage": {
+    "src": "/images/site/photos/palay-heads.jpg",
+    "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 234H is bred to fill",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you came here looking for rice variety 234H, or Rc 234H, this is the one. The facts below come from PhilRice's catalogue of released varieties, its Binhing Palay app, and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Maturity:** about 115 days after sowing.",
+        "**Yield:** 6.5 tonnes per hectare on average, or about 130 cavans of 50 kilograms. The best trial reached 9.8 tonnes.",
+        "**Season:** Dry season and wet season.",
+        "**Watch out for:** tungro, green leafhopper.",
+        "**Cooked rice:** low amylose, so soft and tender."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about NSIC Rc 234H"
+    },
+    {
+      "type": "table",
+      "caption": "From PhilRice's catalogue of released varieties (t/ha means tonnes per hectare)",
+      "rows": [
+        [
+          "Trait",
+          "What PhilRice lists"
+        ],
+        [
+          "Year approved",
+          "2010"
+        ],
+        [
+          "Bred by",
+          "Syngenta"
+        ],
+        [
+          "Local name",
+          "Mestiso 27"
+        ],
+        [
+          "Type",
+          "Hybrid"
+        ],
+        [
+          "Growing environment",
+          "Irrigated lowland"
+        ],
+        [
+          "Recommended season",
+          "Dry season and wet season"
+        ],
+        [
+          "How to plant it",
+          "Dry direct seeded, transplanted, wet direct seeded"
+        ],
+        [
+          "Recommended for",
+          "The whole country"
+        ],
+        [
+          "Maturity",
+          "115 days after sowing"
+        ],
+        [
+          "Average yield",
+          "6.5 t/ha"
+        ],
+        [
+          "Top yield in trials",
+          "9.8 t/ha"
+        ],
+        [
+          "Plant height",
+          "119 cm"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much does NSIC Rc 234H yield?"
+    },
+    {
+      "type": "text",
+      "text": "On average it gives 6.5 tonnes per hectare. That is about 130 cavans of 50 kilograms of palay. It sits above the average of the 110 irrigated lowland hybrids in PhilRice's list, which is 6.3 tonnes. But the top yield, 9.8 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How many days does it take to mature?"
+    },
+    {
+      "type": "text",
+      "text": "It takes about 115 days from sowing to harvest. IRRI groups varieties of 100 to 120 days as short duration and 120 to 140 days as medium, so this one counts as short duration. Then harvest when 85 to 90 percent of the grains turn golden yellow, as PalayCheck advises. Because the day count drives every task, anee.io counts it for you from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "table",
+      "caption": "Reactions in PhilRice's tests: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets, as PhilRice lists them.",
+      "rows": [
+        [
+          "Pest or disease",
+          "PhilRice rating",
+          "What it means"
+        ],
+        [
+          "Rice blast",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Bacterial leaf blight",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Tungro",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Brown planthopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Green leafhopper",
+          "Moderately susceptible",
+          "Took clear damage"
+        ],
+        [
+          "Stem borer",
+          "Intermediate",
+          "Took a middling share of damage"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So scout early for [tungro](/diseases/rice-tungro), [green leafhopper](/pests/green-leafhopper). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Grain and eating quality"
+    },
+    {
+      "type": "table",
+      "caption": "Grain quality in PhilRice's seed database",
+      "rows": [
+        [
+          "Measure",
+          "Value",
+          "Class"
+        ],
+        [
+          "Amylose",
+          "12.7 percent",
+          "Low"
+        ],
+        [
+          "Milling recovery",
+          "65.9 percent",
+          "Grade 1"
+        ],
+        [
+          "Head rice",
+          "49.5 percent",
+          "Grade 1"
+        ],
+        [
+          "Chalky grains",
+          "15.8 percent",
+          "Not graded"
+        ],
+        [
+          "Grain length",
+          "6.5 mm",
+          "Medium"
+        ],
+        [
+          "Grain shape, length to width",
+          "3.2",
+          "Slender"
+        ],
+        [
+          "Protein",
+          "5.8 percent",
+          ""
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Amylose decides how rice cooks. With low amylose, expect rice that is soft. In fact, PhilRice notes that Filipino taste moved from high to intermediate and low amylose rice, because people want it softer. Head rice is the share of whole grains after milling. So a higher number means fewer broken grains and a better price at the mill."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where should you plant it?"
+    },
+    {
+      "type": "text",
+      "text": "It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant at the same time as your neighbors, one of the PalayCheck key checks, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step. PhilRice recommends it for the dry season and the wet season. You can plant it dry direct seeded, transplanted or wet direct seeded. For the right month in your province, see [the best time to plant rice](/blog/best-time-to-plant-rice-philippines)."
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next season of NSIC Rc 234H",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These come from the same kind of farm and grow about as long. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[NSIC Rc 268H](/rice-varieties/nsic-rc-268h): 115 days, 6.5 tonnes per hectare on average, 2011",
+        "[NSIC Rc 588H](/rice-varieties/nsic-rc-588h): 115 days, 6.6 tonnes per hectare on average, 2019",
+        "[NSIC Rc 544H](/rice-varieties/nsic-rc-544h): 115 days, 6.6 tonnes per hectare on average, 2018",
+        "[NSIC Rc 262H](/rice-varieties/nsic-rc-262h): 114 days, 6.4 tonnes per hectare on average, 2011"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the local name of NSIC Rc 234H?",
+          "a": "It is known as Mestiso 27. Seed sellers and agriculturists use both names, so ask for either one."
+        },
+        {
+          "q": "How many days does NSIC Rc 234H take to harvest?",
+          "a": "About 115 days after sowing. Then harvest when 85 to 90 percent of the grains are golden yellow."
+        },
+        {
+          "q": "What is the average yield of NSIC Rc 234H?",
+          "a": "PhilRice lists 6.5 tonnes per hectare on average, about 130 cavans of 50 kilograms. The best trial reached 9.8 tonnes. Your own yield depends on water, seed, fertilizer and timing."
+        },
+        {
+          "q": "In which season should I plant it?",
+          "a": "PhilRice recommends it for the dry season and the wet season. Then pick the month with our planting calendar guide and the forecast for your town."
+        },
+        {
+          "q": "Is this variety a hybrid?",
+          "a": "Yes. So buy new seed each season, because seed saved from a hybrid crop does not grow true and yields less."
+        },
+        {
+          "q": "What should I watch for when I plant it?",
+          "a": "In PhilRice's tests it was weak against tungro, green leafhopper. So scout from the early weeks and act at the first signs."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every rice variety, side by side",
+          "url": "/rice-varieties"
+        },
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "The best rice variety for your area",
+          "url": "/blog/best-rice-variety-for-my-area"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Palay: growth stages and harvest",
+          "url": "/crops/palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Binhing Palay, its catalogue of released rice varieties (Google Play)",
+          "url": "https://play.google.com/store/apps/details?id=ph.gov.philrice.binhi"
+        },
+        {
+          "label": "PhilRice seed database: NSIC Rc 234H variety characteristics",
+          "url": "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=156"
+        },
+        {
+          "label": "BPI: NSIC registry of rice varieties",
+          "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "PhilRice: The Binhing Palay app and what it lists",
+          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
+          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
+        },
+        {
+          "label": "FAO: Rice in human nutrition, amylose classes of milled rice",
+          "url": "https://www.fao.org/4/T0567E/T0567E0b.htm"
+        },
+        {
+          "label": "PhilRice: Rice in health and nutrition, by Dr Bienvenido O. Juliano (2013)",
+          "url": "https://www.philrice.gov.ph/rice-in-health-and-nutrition/"
+        },
+        {
+          "label": "Wikipedia: Hybrid rice, and why its seed is bought each season",
+          "url": "https://en.wikipedia.org/wiki/Hybrid_rice"
+        }
+      ]
+    }
+  ]
+}

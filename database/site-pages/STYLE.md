@@ -223,7 +223,16 @@ season (a "cropping schedule"). It has:
 ## 8. URL map (link only to these)
 
 Site: / (home), /features, /pricing, /about, /tutorial, /contact, /signup,
-/crops, /problems, /pests, /diseases, /weeds, /land-preparation, /blog
+/crops, /problems, /pests, /diseases, /weeds, /land-preparation, /blog,
+/rice-varieties
+
+Rice varieties (2026-10-13): /rice-varieties is the variety finder, and every
+NSIC variety in PhilRice's seed database has a page at
+/rice-varieties/{slug}, for example /rice-varieties/nsic-rc-222,
+/rice-varieties/nsic-rc-216, /rice-varieties/psb-rc-18 (the slug is the name
+in lower case, spaces as hyphens). These pages are made by
+database/rice-varieties/build_pages.py: change the generator, not the files.
+check.py accepts a link to any page that exists in this folder.
 
 Features:
 /features/ai-agricultural-technician, /features/cropping-calendar,

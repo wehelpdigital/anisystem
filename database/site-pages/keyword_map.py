@@ -55,6 +55,8 @@ P = {
     'livestock': 'blog/farm-app-for-livestock-and-crops', 'sensors': 'blog/farm-sensors-philippines',
     'multi': 'blog/multiple-cropping', 'palaycheck': 'blog/palaycheck-key-checks',
     'palayisda': 'blog/palayisdaan', 'drying': 'blog/palay-drying', 'drawing': 'blog/palay-drawing',
+    # One page per rice variety (2026-10-13), from PhilRice's seed database.
+    'rv216': 'rice-varieties/nsic-rc-216', 'rv222': 'rice-varieties/nsic-rc-222', 'rv402': 'rice-varieties/nsic-rc-402',
 }
 
 # keyword -> page keys, primary first
@@ -250,7 +252,7 @@ MAP = {
     'method of fertilizer application': ['apply', 'frice'],
     'english ng palay': ['palay', 'words'],
     '16 20 fertilizer': ['p1620', 'veg'],
-    'rice variety 216': ['var', 'pnp'],
+    'rice variety 216': ['rv216', 'var', 'pnp'],
     'fertilizer eggs': ['organic'],
     'rice ear bug': ['ricebug', 'riceins'],
     'sheath blight disease': ['sb', 'fungi'],
@@ -282,9 +284,9 @@ MAP = {
     'fertilizer high in phosphorus': ['p1620', 'fplants'],
     'when fertilization occurs': ['kernel', 'cseeds'],
     'fertilizer names list': ['inorg', 'fplants'],
-    '402 rice variety characteristics': ['var'],
+    '402 rice variety characteristics': ['rv402', 'var'],
     'alamat ng mais': ['alamatmais', 'alamat'],
-    'rice variety 222': ['var'],
+    'rice variety 222': ['rv222', 'var'],
     'crop yields meaning': ['ani', 'reports'],
     'fertilizer for coconut tree in philippines': ['coco'],
     'rice breed': ['var'],

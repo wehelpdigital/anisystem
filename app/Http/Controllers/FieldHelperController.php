@@ -20,6 +20,8 @@ class FieldHelperController extends Controller
         'weeds' => ['Weed Control Helper', 'What to do first and what to spray, by your crop and its age', 'weed'],
         'pests' => ['Pest Finder', 'Find the pest from the damage you see on any crop, and what to spray', 'pest'],
         'diseases' => ['Disease Finder', 'Find the disease from the signs you see on any crop, and what to spray', 'disease'],
+        // Every rice variety in PhilRice's seed database (2026-10-13), the finder of /rice-varieties.
+        'varieties' => ['Rice Variety Finder', 'Every NSIC rice variety with its days to harvest, yield and resistance', 'rice-variety'],
     ];
 
     public function page(string $tool)
@@ -29,7 +31,8 @@ class FieldHelperController extends Controller
         return view('field-helpers.index', [
             'tool' => $tool,
             'tools' => self::TOOLS,
-            'facts' => $tool === 'weeds' ? [] : ProblemCatalogue::finderFacts($tool),
+            'facts' => in_array($tool, ['weeds', 'varieties'], true) ? [] : ProblemCatalogue::finderFacts($tool),
+            'varieties' => $tool === 'varieties' ? \App\Support\RiceVarieties::all() : [],
             'defaultCrop' => $this->newestCrop(),
         ]);
     }

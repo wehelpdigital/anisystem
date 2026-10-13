@@ -89,6 +89,18 @@ class SitePages
             'intro' => 'A good season starts before planting. Each guide shows how to plow, harrow, level and shape the field for one crop, following IRRI, PhilRice and DA practice, and what to change on sodic, acidic or saline ground.',
             'kicker' => 'Land preparation',
         ],
+        // Rice varieties (2026-10-13): one page per variety in PhilRice's
+        // catalogue of released varieties, and a finder at /rice-varieties.
+        // See App\Support\RiceVarieties and database/rice-varieties.
+        'rice-varieties' => [
+            'label' => 'Rice Varieties',
+            'crumb' => 'Rice varieties',
+            'hubTitle' => 'Philippine Rice Variety List and Finder',
+            'metaTitle' => 'Philippine Rice Variety List: Every NSIC Rice Variety',
+            'metaDescription' => 'Find the right rice variety: every NSIC variety in PhilRice data with its maturity, yield, pest ratings and grain quality, by farm type.',
+            'intro' => 'Every rice variety in the PhilRice catalogue of released varieties, from PSB Rc 18 to the newest NSIC Rc releases. Filter by the kind of farm you have, how long you can wait for harvest and the pests you fear most.',
+            'kicker' => 'Rice varieties',
+        ],
         'blog' => [
             // "Blog" until 2026-10-07: the address stays /blog, the name is
             // the section's job now, the farm news roundups first.

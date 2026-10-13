@@ -44,16 +44,19 @@ TRANSITIONS = [
     "in other words", "for this reason", "that means", "this means", "above", "besides that", "on top of that",
 ]
 
-SECTIONS = {"crops", "pests", "diseases", "weeds", "land-preparation", "blog", "features"}
+SECTIONS = {"crops", "pests", "diseases", "weeds", "land-preparation", "blog", "features", "rice-varieties"}
 BLOCK_TYPES = {"heading", "text", "list", "steps", "table", "callout", "image", "quote", "faq", "cta", "links", "sources"}
 
-SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/land-preparation", "/blog"}
+SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/land-preparation", "/blog", "/rice-varieties"}
 
 
 def url_map():
     text = open(os.path.join(HERE, "STYLE.md"), encoding="utf-8").read()
     part = text.split("## 8. URL map", 1)[1]
-    return SITE_URLS | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|land-preparation|blog)/[a-z0-9\-]+)", part))
+    # The rice variety pages (2026-10-13) are too many to list by hand: every
+    # page that exists in this folder counts as a link target too.
+    pages = set("/%s/%s" % (os.path.basename(os.path.dirname(f)), os.path.basename(f)[:-5]) for f in glob.glob(os.path.join(HERE, "*", "*.json")))
+    return SITE_URLS | pages | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|land-preparation|blog|rice-varieties)/[a-z0-9\-]+)", part))
 
 
 LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
@@ -222,7 +225,8 @@ def check(path, urls, focus_seen):
     # A weed in the catalogue is a profile, not a long guide, though its
     # ingredient table by rice age adds about 250 words (2026-10-06).
     profile = (sec == "weeds" and page.get("category") in ("Grasses", "Sedges", "Broadleaves")) or (sec in ("pests", "diseases") and page.get("profile"))
-    lo, hi = (600, 1100) if sec == "features" else (650, 1700) if profile else (900, 1800)
+    # A rice variety page is a spec sheet with its meaning spelled out (2026-10-13).
+    lo, hi = (600, 1100) if sec == "features" else (450, 1200) if sec == "rice-varieties" else (650, 1700) if profile else (900, 1800)
     if all_words < lo:
         errs.append("only %d words (at least %d)" % (all_words, lo))
     elif all_words > hi:

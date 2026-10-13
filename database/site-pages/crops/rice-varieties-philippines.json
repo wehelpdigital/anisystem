@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice also gives its inbreds local names by environment. For example, Tubigan varieties suit irrigated lowland, while Sahod Ulan varieties suit rainfed lowland. Its Binhing Palay app lets you search registered varieties and their traits, so it works as a Philippine rice variety list in your pocket."
+      "text": "PhilRice also gives its inbreds local names by environment. For example, Tubigan varieties suit irrigated lowland, while Sahod Ulan varieties suit rainfed lowland. Its Binhing Palay app lets you search registered varieties and their traits, so it works as a Philippine rice variety list in your pocket. To compare every NSIC variety side by side, with its days, yield and pest ratings, open our [rice variety finder](/rice-varieties)."
     },
     {
       "type": "heading",
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice calls Rc 216 early maturing, at 112 days transplanted and 104 days direct seeded. In PhilRice trials it averaged 6.0 t/ha transplanted, with a top yield of 9.7 t/ha. It is moderately resistant to brown planthopper, green leafhopper and yellow stem borer. Still, PhilRice rates it susceptible to blast, so scout for blast closely."
+      "text": "PhilRice calls Rc 216 early maturing, at 112 days transplanted and 104 days direct seeded. In PhilRice trials it averaged 6.0 t/ha transplanted, with a top yield of 9.7 t/ha. It is moderately resistant to brown planthopper, green leafhopper and yellow stem borer. Still, PhilRice rates it susceptible to blast, so scout for blast closely. Its full numbers are on the [NSIC Rc 216 page](/rice-varieties/nsic-rc-216)."
     },
     {
       "type": "heading",
@@ -140,7 +140,7 @@
     },
     {
       "type": "text",
-      "text": "Rc 222 was bred by IRRI and is now one of the most planted inbreds. It matures in 114 days transplanted and 106 days direct seeded. It averaged 6.1 t/ha transplanted, up to 10.0 t/ha. PhilRice notes a yield edge in the wet season and good adaptation to both irrigated and rainfed fields. That is why PalayCheck recommends it for both seasons in Central Luzon."
+      "text": "Rc 222 was bred by IRRI and is now one of the most planted inbreds. It matures in 114 days transplanted and 106 days direct seeded. It averaged 6.1 t/ha transplanted, up to 10.0 t/ha. PhilRice notes a yield edge in the wet season and good adaptation to both irrigated and rainfed fields. That is why PalayCheck recommends it for both seasons in Central Luzon. Its full numbers are on the [NSIC Rc 222 page](/rice-varieties/nsic-rc-222)."
     },
     {
       "type": "heading",
@@ -149,7 +149,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice released Rc 402 in 2015 and recommends it for direct seeding in Luzon. It averages 5.5 t/ha and matures in 107 days direct seeded, or 114 days transplanted. The plant stands about 95 cm tall. Its grain is long and slender, and milling recovery reached 70.3 percent in trials, a grade PhilRice rates premium."
+      "text": "PhilRice released Rc 402 in 2015 and recommends it for direct seeding in Luzon. It averages 5.5 t/ha and matures in 107 days direct seeded, or 114 days transplanted. The plant stands about 95 cm tall. Its grain is long and slender, and milling recovery reached 70.3 percent in trials, a grade PhilRice rates premium. Its full numbers are on the [NSIC Rc 402 page](/rice-varieties/nsic-rc-402)."
     },
     {
       "type": "heading",
@@ -280,8 +280,8 @@
           "url": "/blog/palay-price-philippines"
         },
         {
-          "label": "Fertilizer for rice",
-          "url": "/blog/fertilizer-for-rice"
+          "label": "Every rice variety, side by side",
+          "url": "/rice-varieties"
         },
         {
           "label": "Brown planthopper",

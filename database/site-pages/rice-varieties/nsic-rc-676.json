@@ -1,0 +1,305 @@
+{
+  "section": "rice-varieties",
+  "slug": "nsic-rc-676",
+  "sortOrder": 41,
+  "lang": "en",
+  "category": "Irrigated lowland",
+  "profile": true,
+  "title": "NSIC Rc 676 (Tubigan 59) Rice Variety: Characteristics and Grain Quality",
+  "metaTitle": "NSIC Rc 676 Rice Variety: Characteristics and Grain Quality",
+  "metaDescription": "NSIC Rc 676 (Tubigan 59) is an inbred rice for irrigated lowland, approved in 2022. See its pest and disease ratings, grain quality and where it grows best.",
+  "focusKeyword": "NSIC Rc 676",
+  "keywords": [
+    "NSIC Rc 676",
+    "rice variety 676",
+    "rc 676",
+    "676 rice variety characteristics",
+    "Tubigan 59"
+  ],
+  "excerpt": "NSIC Rc 676 is an inbred rice variety for irrigated lowland, known locally as Tubigan 59. The NSIC approved it in 2022. IRRI bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "heroImage": {
+    "src": "/images/site/palay.jpg",
+    "alt": "An irrigated palay field in the Philippines, where NSIC Rc 676 is meant to grow",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you came here looking for rice variety 676, or Rc 676, this is the one. The facts below come from PhilRice's catalogue of released varieties, its Binhing Palay app, and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Watch out for:** tungro.",
+        "**Cooked rice:** high amylose, so firm and fluffy."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about NSIC Rc 676"
+    },
+    {
+      "type": "table",
+      "caption": "From PhilRice's catalogue of released varieties (t/ha means tonnes per hectare)",
+      "rows": [
+        [
+          "Trait",
+          "What PhilRice lists"
+        ],
+        [
+          "Year approved",
+          "2022"
+        ],
+        [
+          "Bred by",
+          "IRRI"
+        ],
+        [
+          "Local name",
+          "Tubigan 59"
+        ],
+        [
+          "Type",
+          "Inbred"
+        ],
+        [
+          "Growing environment",
+          "Irrigated lowland"
+        ],
+        [
+          "How to plant it",
+          "Wet direct seeded"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How many days does it take, and how much does it yield?"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice has not published this variety's days to harvest and trial yields in its catalogue yet. So ask the seed seller or your municipal agriculturist for the figures from the trials in your region before you plan the season. Once you know the day count, anee.io dates every task from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it. Meanwhile, our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare) covers the habits that matter with any variety."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "table",
+      "caption": "Reactions in PhilRice's tests: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets, as PhilRice lists them.",
+      "rows": [
+        [
+          "Pest or disease",
+          "PhilRice rating",
+          "What it means"
+        ],
+        [
+          "Rice blast",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Bacterial leaf blight",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Tungro",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Sheath blight",
+          "Intermediate",
+          "Took a middling share of damage"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So scout early for [tungro](/diseases/rice-tungro). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Grain and eating quality"
+    },
+    {
+      "type": "table",
+      "caption": "Grain quality in PhilRice's seed database",
+      "rows": [
+        [
+          "Measure",
+          "Value",
+          "Class"
+        ],
+        [
+          "Amylose",
+          "22.1 percent",
+          "High"
+        ],
+        [
+          "Milling recovery",
+          "69.5 percent",
+          "Grade 1"
+        ],
+        [
+          "Head rice",
+          "50.6 percent",
+          "Grade 1"
+        ],
+        [
+          "Chalky grains",
+          "28.9 percent",
+          "Not graded"
+        ],
+        [
+          "Grain length",
+          "7 mm",
+          "Long"
+        ],
+        [
+          "Grain shape, length to width",
+          "3.4",
+          "Slender"
+        ],
+        [
+          "Protein",
+          "5.9 percent",
+          ""
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Amylose decides how rice cooks. With high amylose, expect rice that is firm and dry, and it hardens as it cools. In fact, PhilRice notes that Filipino taste moved from high to intermediate and low amylose rice, because people want it softer. Head rice is the share of whole grains after milling. So a higher number means fewer broken grains and a better price at the mill."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where should you plant it?"
+    },
+    {
+      "type": "text",
+      "text": "It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant at the same time as your neighbors, one of the PalayCheck key checks, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step. You can plant it wet direct seeded. For the right month in your province, see [the best time to plant rice](/blog/best-time-to-plant-rice-philippines)."
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next season of NSIC Rc 676",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These come from the same kind of farm, and PhilRice lists their days and yields. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[NSIC Rc 622](/rice-varieties/nsic-rc-622): 103 days, 5.6 tonnes per hectare on average, 2021",
+        "[NSIC Rc 624](/rice-varieties/nsic-rc-624): 103 days, 5.6 tonnes per hectare on average, 2021",
+        "[NSIC Rc 626](/rice-varieties/nsic-rc-626): 105 days, 5.2 tonnes per hectare on average, 2021",
+        "[NSIC Rc 628](/rice-varieties/nsic-rc-628): 106 days, 5.5 tonnes per hectare on average, 2021"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the local name of NSIC Rc 676?",
+          "a": "It is known as Tubigan 59. Seed sellers and agriculturists use both names, so ask for either one."
+        },
+        {
+          "q": "When was NSIC Rc 676 approved?",
+          "a": "The NSIC approved it in 2022. IRRI bred it. PhilRice has not listed its days to harvest and trial yield yet, so ask for the regional trial figures before you plant."
+        },
+        {
+          "q": "Is this variety a hybrid?",
+          "a": "No, it is an inbred. So the seed you buy grows true, but certified seed still gives the best start, as PalayCheck advises."
+        },
+        {
+          "q": "What should I watch for when I plant it?",
+          "a": "In PhilRice's tests it was weak against tungro. So scout from the early weeks and act at the first signs."
+        },
+        {
+          "q": "Is it soft when cooked?",
+          "a": "It has high amylose, 22.1 percent. So it cooks firm and fluffy, and hardens as it cools."
+        },
+        {
+          "q": "Where can I buy certified seed of this variety?",
+          "a": "Ask accredited seed growers in your province, your municipal agriculturist or the nearest PhilRice station. Look for the certified seed tag on the sack before you pay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every rice variety, side by side",
+          "url": "/rice-varieties"
+        },
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "The best rice variety for your area",
+          "url": "/blog/best-rice-variety-for-my-area"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Palay: growth stages and harvest",
+          "url": "/crops/palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Binhing Palay, its catalogue of released rice varieties (Google Play)",
+          "url": "https://play.google.com/store/apps/details?id=ph.gov.philrice.binhi"
+        },
+        {
+          "label": "BPI: NSIC registry of rice varieties",
+          "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "PhilRice: The Binhing Palay app and what it lists",
+          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
+          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
+        },
+        {
+          "label": "FAO: Rice in human nutrition, amylose classes of milled rice",
+          "url": "https://www.fao.org/4/T0567E/T0567E0b.htm"
+        },
+        {
+          "label": "PhilRice: Rice in health and nutrition, by Dr Bienvenido O. Juliano (2013)",
+          "url": "https://www.philrice.gov.ph/rice-in-health-and-nutrition/"
+        }
+      ]
+    }
+  ]
+}

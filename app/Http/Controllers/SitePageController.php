@@ -41,6 +41,14 @@ class SitePageController extends Controller
                 'pages' => SitePages::inSection($section),
             ]);
         }
+        // Rice varieties: the finder over every variety (2026-10-13).
+        if ($section === 'rice-varieties') {
+            return view('public.site.varieties-hub', [
+                'section' => $section,
+                'meta' => SitePages::SECTIONS[$section],
+                'varieties' => \App\Support\RiceVarieties::all(),
+            ]);
+        }
         // /problems: the door to pests, diseases and weeds.
         if ($section === 'problems') {
             return view('public.site.problems-hub', [
@@ -140,7 +148,7 @@ class SitePageController extends Controller
 
     public function sitemap()
     {
-        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/land-preparation', '/blog', '/ask-anee', '/questions', '/legal'];
+        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/land-preparation', '/rice-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
         $urls = array_map(fn ($p) => ['loc' => url($p), 'lastmod' => null], $static);
         try {
             foreach (AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'updated_at']) as $p) {
@@ -192,7 +200,7 @@ class SitePageController extends Controller
             }
             $out[] = '';
         }
-        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'features' => 'Feature pages'];
+        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'rice-varieties' => 'Rice varieties (PhilRice data)', 'features' => 'Feature pages'];
         try {
             $pages = AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'title', 'excerpt']);
             foreach ($names as $section => $name) {

@@ -1480,6 +1480,7 @@
  "rice variety 216": {
   "volume": 320,
   "pages": [
+   "rice-varieties/nsic-rc-216",
    "crops/rice-varieties-philippines",
    "crops/pagtatanim-ng-palay"
   ]
@@ -1798,6 +1799,7 @@
  "402 rice variety characteristics": {
   "volume": 140,
   "pages": [
+   "rice-varieties/nsic-rc-402",
    "crops/rice-varieties-philippines"
   ]
  },
@@ -1849,6 +1851,7 @@
  "rice variety 222": {
   "volume": 110,
   "pages": [
+   "rice-varieties/nsic-rc-222",
    "crops/rice-varieties-philippines"
   ]
  },

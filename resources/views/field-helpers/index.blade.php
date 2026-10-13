@@ -18,7 +18,7 @@
         @keyframes fhBob { 50% { transform: translateY(-3px) rotate(-2deg); } }
         .fh-hero h2 { font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; color: #fff; }
         .fh-hero p { margin-top: .2rem; font-size: .84rem; line-height: 1.5; color: #c9dcb5; }
-        .fh-switch { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .25rem; margin: .9rem 0 1.1rem; padding: .25rem; border-radius: 1rem;
+        .fh-switch { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .25rem; margin: .9rem 0 1.1rem; padding: .25rem; border-radius: 1rem;
             background: var(--color-white); border: 1px solid var(--color-gray-200); }
         .fh-switch a { display: flex; align-items: center; justify-content: center; gap: .4rem; padding: .55rem .4rem; border-radius: .8rem; font-size: .82rem; font-weight: 800; text-align: center;
             color: var(--color-gray-600); text-decoration: none; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
@@ -45,6 +45,16 @@
         html.dark .fh-body .wc-note { background: #241d10; border-color: #5c4a24; color: #f3d9a4; }
         html.dark .fh-body .wc-note.ok { background: #17220f; border-color: #2b3a1c; color: #d5e3c5; }
         html.dark .fh-body .fd-no { color: #f3d9a4; }
+        /* The rice variety finder (2026-10-13), dressed for the night too. */
+        html.dark .fh-body .rv-tools, html.dark .fh-body .rv-card, html.dark .fh-body .rv-none, html.dark .fh-body .rv-more { background: #151b12; border-color: #2b3a1c; box-shadow: none; }
+        html.dark .fh-body .rv-card.is-hybrid { background: linear-gradient(160deg, #241d10, #151b12 60%); border-color: #5c4a24; }
+        html.dark .fh-body .rv-name, html.dark .fh-body .rv-count b, html.dark .fh-body .rv-nums b { color: #e8efe1; }
+        html.dark .fh-body .rv-count, html.dark .fh-body .rv-none { color: #b9caa8; }
+        html.dark .fh-body .rv-nums > span, html.dark .fh-body .rv-tag, html.dark .fh-body .rv-chip, html.dark .fh-body .rv-sel, html.dark .fh-body .wk-search input { background: #1c2616; border-color: #2b3a1c; color: #d5e3c5; }
+        html.dark .fh-body .rv-chip.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+        html.dark .fh-body .rv-year { background: #22301a; color: #cfe3b8; }
+        html.dark .fh-body .rv-bar { background: #22301a; }
+        html.dark .fh-body .rv-more, html.dark .fh-body .rv-reset { color: #cfe3b8; }
         @media (prefers-reduced-motion: reduce) { .fh-hero img { animation: none; } .fh-switch a, .fh-more a { transition: none; } }
     </style>
 @endpush
@@ -53,22 +63,27 @@
 <div class="max-w-6xl mx-auto">
     <div class="fh-hero">
         <img src="{{ asset('images/icons/' . $fhIcon . '.svg') }}" alt="">
-        <div><h2>{{ $fhName }}</h2><p>{{ $fhLead }}. Active ingredients only, never brands. Free with your account.</p></div>
+        <div><h2>{{ $fhName }}</h2><p>{{ $fhLead }}. {{ $tool === 'varieties' ? 'From the PhilRice seed database.' : 'Active ingredients only, never brands.' }} Free with your account.</p></div>
     </div>
     <nav class="fh-switch" aria-label="Field helpers">
         @foreach ($tools as $k => [$n, $l, $i])
-            <a href="{{ route('fh.page', $k) }}" class="{{ $k === $tool ? 'is-on' : '' }}" @if ($k === $tool) aria-current="page" @endif><img src="{{ asset('images/icons/' . $i . '.svg') }}" alt="">{{ str_replace([' Control Helper', ' Finder'], ['s', 's'], $n) }}</a>
+            <a href="{{ route('fh.page', $k) }}" class="{{ $k === $tool ? 'is-on' : '' }}" @if ($k === $tool) aria-current="page" @endif><img src="{{ asset('images/icons/' . $i . '.svg') }}" alt="">{{ $k === 'varieties' ? 'Varieties' : str_replace([' Control Helper', ' Finder'], ['s', 's'], $n) }}</a>
         @endforeach
     </nav>
     <div class="fh-body">
         @if ($tool === 'weeds')
             @include('public.site.partials.weed-helper', ['gate' => false, 'defaultCrop' => $defaultCrop])
+        @elseif ($tool === 'varieties')
+            @include('public.site.partials.variety-finder', ['varieties' => $varieties, 'cardTarget' => '_blank'])
         @else
             @include('public.site.partials.problem-finder', $facts + ['gate' => false, 'defaultCrop' => $defaultCrop])
         @endif
     </div>
     <div class="fh-more">
-        @if ($tool === 'weeds')
+        @if ($tool === 'varieties')
+            <a href="{{ url('/rice-varieties') }}">Every variety on the public site ›</a>
+            @if (\Illuminate\Support\Facades\Route::has('vary.page'))<a href="{{ route('vary.page') }}">Ask Anee to research varieties for your town ›</a>@endif
+        @elseif ($tool === 'weeds')
             <a href="{{ url('/weeds') }}#catalogue">Every weed, with pictures ›</a>
             <a href="{{ url('/weeds/herbicides-for-rice-weeds') }}">The herbicide groups explained ›</a>
         @else
