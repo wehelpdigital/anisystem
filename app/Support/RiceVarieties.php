@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Cache;
 
 /**
  * The rice variety catalogue (2026-10-13): every variety in PhilRice's
- * catalogue of released varieties (the data file inside its Binhing Palay
- * app, facts only, and its public seed database at
+ * catalogue of released varieties (its data file, facts only, and its
+ * public seed database at
  * https://dbmp.philrice.gov.ph/seeds), as database/rice-varieties/varieties.json. Each one has
  * a page at /rice-varieties/{slug} (database/site-pages/rice-varieties, made
  * by database/rice-varieties/build_pages.py); the finder at /rice-varieties

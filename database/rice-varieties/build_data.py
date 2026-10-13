@@ -1,20 +1,24 @@
 """Builds varieties.json, the rice variety catalogue behind /rice-varieties.
 
-The facts come from PhilRice: the variety list inside its free Binhing Palay
-app (the owner downloaded the app, 2026-10-13; only the bundled data file
-assets/varieties.json and assets/regions.json are read, never its pictures,
-words or code), and PhilRice's public seed database at
+The facts come from PhilRice: its data file of released varieties
+(varieties.json and regions.json, supplied by the owner 2026-10-13; facts
+only, never pictures, words or code), and PhilRice's public seed database at
 https://dbmp.philrice.gov.ph/seeds, crawled the same day, which fills what
 the app leaves blank and links each variety to a public record. Only facts
 are kept (names, years, numbers, ratings, places); every sentence on the
 pages is anee.io's own, written by build_pages.py.
 
-    python database/rice-varieties/build_data.py <app data folder> <crawl folder>
+    python database/rice-varieties/build_data.py <app data folder> <crawl folder> [<trade names folder>]
+
+The trade names folder (2026-10-13) holds tradenames*.json: the names
+farmers and sellers use for a variety (Jackpot 102 for NSIC Rc 666H, SL-8H
+for NSIC Rc 132H), each tied to its NSIC number by a source.
 
 The app data folder holds varieties.json and regions.json from the app; the
 crawl folder holds index_rows.json, dbmp.json and research.json (local names
 and growing environments from the NSIC registry, each with its source).
 """
+import glob
 import json
 import os
 import re
@@ -23,6 +27,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = sys.argv[1] if len(sys.argv) > 1 else HERE
 CRAWL = sys.argv[2] if len(sys.argv) > 2 else HERE
+TRADE = sys.argv[3] if len(sys.argv) > 3 else None
 
 TAB_ENV = {'Irrigated': 'irrigated', 'Rainfed_TPR': 'rainfed-tpr', 'Rainfed_DSR': 'rainfed-dsr', 'Upland': 'upland',
            'Saline_Prone': 'saline', 'Flood_Prone': 'flood', 'Drought_Prone': 'drought', 'Cool_Elevated': 'cool'}
@@ -40,7 +45,6 @@ BREEDER = {'PHILRICE': 'PhilRice', 'SYNGENTA': 'Syngenta', 'BAYER': 'Bayer', 'PH
            'Methahelix': 'Metahelix', 'ADVANTA': 'Advanta', 'SEEDWORKS': 'Seedworks', 'PIONEER': 'Pioneer', 'PhilsCAT/Long Ping': 'PhilSCAT and Long Ping'}
 ACRONYMS = {'GSR', 'PJ7', 'IR65', 'BPI', 'UPL', 'MS', 'NSIC', 'PSB'}
 LOCAL_FIX = {'PE�ARANDA': 'Peñaranda', 'Pe�aranda': 'Peñaranda', 'Mestio 88': 'Mestiso 88'}
-APP_SOURCE = 'https://play.google.com/store/apps/details?id=ph.gov.philrice.binhi'
 
 
 def num(v):
@@ -110,6 +114,21 @@ def main():
             rec['glutinous'] = True
         rec['ids'].append(vid)
         rec['rows'].append((c, detail.get(vid, {})))
+
+    # Trade names, by NSIC name; a name only when its source ties it to the number.
+    trade = {}
+    if TRADE and os.path.isdir(TRADE):
+        for f in sorted(glob.glob(os.path.join(TRADE, 'tradenames*.json'))):
+            for t in json.load(open(f, encoding='utf-8')):
+                if not t.get('nsic') or not t.get('tradeNames') or not t.get('sources'):
+                    continue
+                key = display(t['nsic'])
+                e = trade.setdefault(key, {'names': [], 'sources': []})
+                for nm in t['tradeNames']:
+                    nm = re.sub(r'\s+', ' ', str(nm)).strip()
+                    if nm and nm.lower() not in [x.lower() for x in e['names']] and nm.lower() != key.lower():
+                        e['names'].append(nm)
+                e['sources'] += [u for u in t['sources'] if u not in e['sources'] and not any(b in u for b in ('pinoyrice.com',))]
 
     out, seen = [], set()
     for a in app:
@@ -225,10 +244,16 @@ def main():
         }
         if direct:
             rec['direct'] = direct
+        if name in trade:
+            local_l = (local or '').lower()
+            rec['tradeNames'] = [t for t in trade[name]['names'] if t.lower() != local_l][:4]
+            rec['tradeSources'] = trade[name]['sources'][:3]
+            if not rec['tradeNames']:
+                del rec['tradeNames'], rec['tradeSources']
         out.append(rec)
     out.sort(key=lambda v: (-(v['year'] or 0), v['name']))
     json.dump(out, open(os.path.join(HERE, 'varieties.json'), 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
-    print(len(out), 'varieties;', sum(1 for v in out if v['maturity']), 'with trial results;', sum(1 for v in out if v['environments']),
+    print(sum(1 for v in out if v.get('tradeNames')), 'with a trade name;', len(out), 'varieties;', sum(1 for v in out if v['maturity']), 'with trial results;', sum(1 for v in out if v['environments']),
           'with an environment;', sum(1 for v in out if v['localName']), 'with a local name;', sum(1 for v in out if v['sources']), 'with a public record')
 
 

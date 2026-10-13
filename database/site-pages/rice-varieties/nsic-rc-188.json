@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 188, or Rc 188, this is the one. The facts below come from PhilRice's catalogue of released varieties, its Binhing Palay app, and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for rice variety 188, or Rc 188, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -313,8 +313,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: Binhing Palay, its catalogue of released rice varieties (Google Play)",
-          "url": "https://play.google.com/store/apps/details?id=ph.gov.philrice.binhi"
+          "label": "PhilRice: Seed information on released rice varieties",
+          "url": "https://dbmp.philrice.gov.ph/seeds/"
         },
         {
           "label": "PhilRice seed database: NSIC Rc 188 variety characteristics",
@@ -323,10 +323,6 @@
         {
           "label": "BPI: NSIC registry of rice varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "PhilRice: The Binhing Palay app and what it lists",
-          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
         },
         {
           "label": "PhilRice: PalayCheck System, 2022 revised edition",

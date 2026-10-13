@@ -4,7 +4,7 @@ see build_data.py). The facts are PhilRice's: names, years, numbers, ratings,
 seasons and regions. Every sentence around them is anee.io's own: what the
 numbers mean for a farmer, how the variety compares with others of its kind,
 and which pests, diseases and guides matter for it. No picture from PhilRice
-or its app is used; the heroes are anee.io's own farm photos. Pages follow
+is used; the heroes are anee.io's own farm photos. Pages follow
 database/site-pages/STYLE.md and pass check.py.
 
     python database/rice-varieties/build_pages.py
@@ -64,9 +64,8 @@ SRC_PALAYCHECK = {'label': 'PhilRice: PalayCheck System, 2022 revised edition', 
 SRC_IRRI_STAGES = {'label': 'IRRI Rice Knowledge Bank: Growth stages of the rice plant', 'url': 'http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm'}
 SRC_FAO = {'label': 'FAO: Rice in human nutrition, amylose classes of milled rice', 'url': 'https://www.fao.org/4/T0567E/T0567E0b.htm'}
 SRC_JULIANO = {'label': 'PhilRice: Rice in health and nutrition, by Dr Bienvenido O. Juliano (2013)', 'url': 'https://www.philrice.gov.ph/rice-in-health-and-nutrition/'}
-SRC_APP = {'label': 'PhilRice: Binhing Palay, its catalogue of released rice varieties (Google Play)', 'url': 'https://play.google.com/store/apps/details?id=ph.gov.philrice.binhi'}
+SRC_PHILRICE = {'label': 'PhilRice: Seed information on released rice varieties', 'url': 'https://dbmp.philrice.gov.ph/seeds/'}
 SRC_NSIC = {'label': 'BPI: NSIC registry of rice varieties', 'url': 'https://nsic.buplant.da.gov.ph/registry.php'}
-SRC_APP_NEWS = {'label': 'PhilRice: The Binhing Palay app and what it lists', 'url': 'https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/'}
 SRC_HYBRID = {'label': 'Wikipedia: Hybrid rice, and why its seed is bought each season', 'url': 'https://en.wikipedia.org/wiki/Hybrid_rice'}
 
 
@@ -134,10 +133,23 @@ def build(v, allv, stats):
     local = v.get('localName')
     if local and '-' in local:
         local = None   # a hyphen in the name (Ma-ayon): STYLE.md allows none in text
+    # The names it is sold and searched under (Jackpot 102 for NSIC Rc 666H);
+    # a name written with a hyphen (SL-8H) is written with a space instead.
+    trades = [re.sub(r'(?<=[A-Za-z0-9])-(?=[A-Za-z0-9])', ' ', t) for t in v.get('tradeNames') or []]
+    trades = [t for t in trades if not re.search(r'[;&%]', t)]
+    trade = trades[0] if trades else None
 
     # ---- the head of the page
     title = '%s%s Rice Variety: %s' % (n, (' (%s)' % local) if local else '', 'Yield, Maturity and Characteristics' if has else 'Characteristics and Grain Quality')
+    if trade:
+        title = '%s (%s) %s Rice: %s' % (trade, n, 'Hybrid' if kind == 'hybrid' else 'Inbred', 'Yield, Maturity and Characteristics' if has else 'Characteristics and Grain Quality')
     meta_title = next((t for t in ([
+        '%s (%s): Yield, Maturity and Characteristics' % (trade, n) if trade else '',
+        '%s (%s) Rice: Yield and Maturity' % (trade, n) if trade else '',
+    ] if has else [
+        '%s (%s): Characteristics and Grain Quality' % (trade, n) if trade else '',
+        '%s (%s) Rice Variety' % (trade, n) if trade else '',
+    ]) + ([
         '%s Rice Variety: Yield, Maturity and Characteristics' % n,
         '%s (%s): Yield, Maturity, Characteristics' % (n, local) if local else '',
         '%s: Yield, Maturity and Characteristics' % n,
@@ -165,8 +177,13 @@ def build(v, allv, stats):
             meta_desc = meta_desc[:-1] + ', in plain words.'
     approved = ('The NSIC approved it in %s.' % yr if n.startswith('NSIC') else 'The Philippine Seed Board approved it in %s.' % yr if n.startswith('PSB') else 'PhilRice lists it from %s.' % yr)
     bred = ('It is a traditional variety. ' if v.get('traditional') or by == 'Traditional variety' else '%s bred it. ' % by)
+    known = []
+    if trade:
+        known.append('sold as %s' % (' or '.join(trades[:2])))
+    if local:
+        known.append('known locally as %s' % local)
     excerpt = '%s is %s %s rice variety for %s%s. %s %s' % (
-        n, article(kind_txt), kind_txt, env_short, (', known locally as %s' % local) if local else '', approved, bred)
+        n, article(kind_txt), kind_txt, env_short, (', ' + ' and '.join(known)) if known else '', approved, bred)
     if has:
         excerpt += 'It matures in about %d days and averages %s tonnes per hectare%s.' % (mat, fmt(avg), (', with a top yield of %s tonnes in trials' % fmt(top)) if top else '')
     else:
@@ -178,11 +195,13 @@ def build(v, allv, stats):
 
     # ---- why it matters, then the key points
     g = stats.get(group_of(v), {'avg': 0, 'count': 0})
-    if num != n and re.match(r'^\d', num):
+    if trade and num != n and re.match(r'^\d', num):
+        search = 'If you came here looking for %s, or rice variety %s, this is the one. ' % (' or '.join(trades[:2]), num)
+    elif num != n and re.match(r'^\d', num):
         search = 'If you came here looking for rice variety %s, or Rc %s, this is the one. ' % (num, num)
     else:
         search = ''
-    T(search + 'The facts below come from PhilRice\'s catalogue of released varieties, its Binhing Palay app, and its public seed database. '
+    T(search + 'The facts below come from sources that include PhilRice and its public seed database. '
       'So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. '
       'Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ.')
     pts = []
@@ -207,6 +226,8 @@ def build(v, allv, stats):
     rows = [['Trait', 'What PhilRice lists']]
     rows.append(['Year approved', str(yr)])
     rows.append(['Bred by', by])
+    if trades:
+        rows.append(['Sold as', ', '.join(trades)])
     if local:
         rows.append(['Local name', local])
     rows.append(['Type', kind_txt.capitalize()])
@@ -361,6 +382,10 @@ def build(v, allv, stats):
 
     # ---- questions
     faq = []
+    if trade:
+        faq.append({'q': 'Is %s the same as %s?' % (trade, n),
+                    'a': 'Yes. %s is the name it is sold under, and %s is its registration with the National Seed Industry Council%s. The numbers on this page are PhilRice\'s for %s.' % (
+                        trade, n, (', where its local name is %s' % local) if local else '', n)})
     if local:
         faq.append({'q': 'What is the local name of %s?' % n,
                     'a': 'It is known as %s. Seed sellers and agriculturists use both names, so ask for either one.' % local})
@@ -397,9 +422,10 @@ def build(v, allv, stats):
         {'label': 'Pagtatanim ng palay', 'url': '/crops/pagtatanim-ng-palay'},
         {'label': 'Palay: growth stages and harvest', 'url': '/crops/palay'},
     ]})
-    sources = [SRC_APP]
+    sources = [SRC_PHILRICE]
+    sources += [{'label': 'Where %s is named as %s' % (trade, n), 'url': u} for u in (v.get('tradeSources') or [])[:2]] if trade else []
     sources += [{'label': 'PhilRice seed database: %s variety characteristics%s' % (n, ', second record' if i else ''), 'url': u} for i, u in enumerate(v['sources'][:2])]
-    sources += [SRC_NSIC, SRC_APP_NEWS, SRC_PALAYCHECK, SRC_IRRI_STAGES]
+    sources += [SRC_NSIC, SRC_PALAYCHECK, SRC_IRRI_STAGES]
     if am:
         sources += [SRC_FAO, SRC_JULIANO]
     if kind == 'hybrid':
@@ -407,7 +433,7 @@ def build(v, allv, stats):
     blocks.append({'type': 'sources', 'items': sources})
 
     hero = HERO['hybrid'] if kind == 'hybrid' and e == 'irrigated' else HERO.get(e, HERO[None])
-    kw = [n, 'rice variety %s' % num if num != n else n, 'rc %s' % num if num != n else n, '%s rice variety characteristics' % num if num != n else n] + ([local] if local else [])
+    kw = [n, 'rice variety %s' % num if num != n else n, 'rc %s' % num if num != n else n, '%s rice variety characteristics' % num if num != n else n] + ([local] if local else []) + trades
     page = {
         'section': 'rice-varieties', 'slug': slug, 'sortOrder': 10 + allv.index(v), 'lang': 'en',
         'category': ('Hybrid rice' if kind == 'hybrid' else 'Glutinous rice' if v['special'] == 'glutinous' else (ENV[e][1] if e else 'Inbred rice')),

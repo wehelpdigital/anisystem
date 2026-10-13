@@ -1,8 +1,8 @@
 @extends('layouts.public')
 
 {{-- /rice-varieties (2026-10-13): the rice variety finder. Every variety in
-     PhilRice's catalogue of released varieties (facts from its Binhing Palay
-     app's data and its public seed database), each card a link to its own page; filter by the kind of farm, the
+     PhilRice's catalogue of released varieties (facts from PhilRice, among
+     other sources, and its public seed database), each card a link to its own page; filter by the kind of farm, the
      days to harvest and the pests and diseases it holds up against, sort by
      year, yield or maturity. All the cards are in the page (so search
      engines read every link); the script only hides and orders them. --}}
@@ -22,13 +22,20 @@
     $saline = $avgOf(fn ($v) => in_array('saline', $v['environments'], true));
     $popular = ['nsic-rc-222', 'nsic-rc-216', 'nsic-rc-160', 'nsic-rc-402', 'psb-rc-18', 'psb-rc-82', 'nsic-rc-238', 'nsic-rc-300', 'nsic-rc-354', 'nsic-rc-436', 'nsic-rc-440', 'nsic-rc-480'];
     $popular = $all->whereIn('slug', $popular)->sortBy(fn ($v) => array_search($v['slug'], $popular))->values();
+    // The names on the seed bag (Jackpot 102 is NSIC Rc 666H), hybrids first.
+    $tradeName = fn ($t) => preg_replace('/(?<=[A-Za-z0-9])-(?=[A-Za-z0-9])/', ' ', $t);
+    $brands = $all->filter(fn ($v) => ! empty($v['tradeNames']))
+        ->sortBy(fn ($v) => [$v['type'] === 'hybrid' ? 0 : 1, strtolower($tradeName($v['tradeNames'][0]))])->values();
     $faq = [
         ['What is the best rice variety in the Philippines?', 'There is no single best one. The best variety is the one bred for your kind of farm, your season and the pests in your area. Start with the filters above: pick your farm type, how many days you can wait for harvest and the problems you fear most, then compare the average yields. Your municipal agriculturist knows which ones do well in your town.'],
         ['What do the NSIC and PSB numbers mean?', 'NSIC is the National Seed Industry Council, which approves rice varieties for planting in the Philippines. Before it, the Philippine Seed Board (PSB) did the job. Rc stands for rice, and a number ending in H marks a hybrid. So NSIC Rc 222 is an inbred, and NSIC Rc 204H is a hybrid.'],
-        ['Where does this rice variety list come from?', 'Every fact comes from PhilRice: its catalogue of released varieties in the free Binhing Palay app, and its public seed database. PhilRice lists each variety\'s maturity, yields, pest and disease ratings, grain quality, season and regions. The words on our pages are our own, and each page links to its PhilRice record where there is one.'],
+        ['Where does this rice variety list come from?', 'Our sources include PhilRice and its public seed database' . ($brands->count() ? ', the National Seed Industry Council registry, and seed company pages for the brand names. ' : ', and the National Seed Industry Council registry. ') . 'PhilRice lists each variety\'s maturity, yields, pest and disease ratings, grain quality, season and regions. The words on our pages are our own, and each page links to its PhilRice record where there is one.'],
         ['Are hybrid rice varieties better than inbreds?', 'In PhilRice\'s table the irrigated hybrids average ' . $irrHybrid . ' tonnes per hectare, against ' . $irrInbred . ' for the irrigated inbreds. But you must buy new hybrid seed every season, and hybrids need good water and fertilizer to give that much. Inbreds cost less, and their seed grows true. Compare both kinds above with the Type filter.'],
         ['Which rice varieties are for saline or flood prone fields?', 'Use the Kind of farm filter. Saline prone varieties are bred to stand salt in the soil, and flood prone ones to survive a spell under water. They yield less than irrigated varieties on good land: the saline prone ones in PhilRice\'s table average ' . $saline . ' tonnes per hectare, because they are bred to survive where others fail.'],
     ];
+    if ($brands->count()) {
+        array_splice($faq, 4, 0, [['Why does my seed bag show a brand name and not an NSIC number?', 'Seed companies sell their varieties under their own brand names, while PhilRice and the National Seed Industry Council list them by their NSIC number. They are the same seed. Type the brand name into the search box above, and the card shows the NSIC number with the PhilRice numbers for it.']]);
+    }
 @endphp
 
 @section('title_full', $meta['metaTitle'] . ' | anee.io')
@@ -151,6 +158,18 @@
                     </div>
                 </div>
             @endif
+
+            @if ($brands->count())
+                <div class="mt-12" id="brands" style="scroll-margin-top: 5rem">
+                    <div class="wk-sec-h"><h2>Rice Varieties by Brand Name</h2>
+                        <p>Seed bags often carry the company's brand name, not the NSIC number. Here is the NSIC variety behind each name, so you can read PhilRice's numbers for the seed you were offered.</p></div>
+                    <div class="rv-pop rv-brands">
+                        @foreach ($brands as $v)
+                            <a href="{{ $S::url('rice-varieties', $v['slug']) }}">{{ $tradeName($v['tradeNames'][0]) }} <small>{{ $v['name'] }}</small></a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
     </section>
 
@@ -191,8 +210,9 @@
                     </details>
                 @endforeach
             </div></div>
-            <p class="rv-src">Source: PhilRice's catalogue of released rice varieties in its free <a href="https://play.google.com/store/apps/details?id=ph.gov.philrice.binhi" rel="noopener" target="_blank">Binhing Palay app</a>,
-                and the <a href="https://dbmp.philrice.gov.ph/seeds/" rel="noopener" target="_blank">PhilRice seed information database</a>. The facts are PhilRice's; the words and pictures are anee.io's own.
+            <p class="rv-src">Sources include <a href="https://www.philrice.gov.ph/" rel="noopener" target="_blank">PhilRice</a>,
+                its <a href="https://dbmp.philrice.gov.ph/seeds/" rel="noopener" target="_blank">seed information database</a>
+                and the <a href="https://nsic.buplant.da.gov.ph/registry.php" rel="noopener" target="_blank">NSIC registry</a>. The words and pictures are anee.io's own.
                 Some of the newest releases, up to {{ $years->max() }}, have no days to harvest or yield listed yet: ask your municipal agriculturist for their regional trial results.</p>
         </div>
     </section>
