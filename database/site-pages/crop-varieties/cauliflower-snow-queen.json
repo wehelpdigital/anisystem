@@ -1,7 +1,7 @@
 {
   "section": "crop-varieties",
   "slug": "cauliflower-snow-queen",
-  "sortOrder": 129,
+  "sortOrder": 158,
   "lang": "en",
   "category": "Cauliflower",
   "profile": true,
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [cauliflower variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
+      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [cauliflower variety finder](/crop-varieties/cauliflower), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
     },
     {
       "type": "list",
@@ -136,7 +136,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Early Patna](/crop-varieties/cauliflower-early-patna): 57 to 63 days, 6.93 t/ha, 1970"
+        "[Early Patna](/crop-varieties/cauliflower-early-patna): 57 to 63 days, 6.93 t/ha, 1970",
+        "[Albarich 45 Days](/crop-varieties/cauliflower-albarich-45-days)",
+        "[Meigetsu Select](/crop-varieties/cauliflower-meigetsu-select)",
+        "[Milky Way](/crop-varieties/cauliflower-milky-way)"
       ]
     },
     {
@@ -160,6 +163,10 @@
       "type": "links",
       "title": "Read next",
       "items": [
+        {
+          "label": "Every cauliflower variety, side by side",
+          "url": "/crop-varieties/cauliflower"
+        },
         {
           "label": "Crop varieties in the Philippines",
           "url": "/crop-varieties"

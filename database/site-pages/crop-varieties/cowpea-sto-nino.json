@@ -1,22 +1,25 @@
 {
   "section": "crop-varieties",
   "slug": "cowpea-sto-nino",
-  "sortOrder": 686,
+  "sortOrder": 733,
   "lang": "en",
   "category": "Cowpea",
   "profile": true,
-  "title": "Sto. Nino cowpea: Yield, Maturity and Characteristics",
+  "title": "Sto. Nino cowpea (Sto. Niño): Yield, Maturity and Characteristics",
   "metaTitle": "Sto. Nino cowpea: Yield, Maturity and Characteristics",
-  "metaDescription": "Sto. Nino cowpea is a cowpea variety from IPB UPLB, Laguna. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Sto. Nino cowpea is a cowpea variety from IPB UPLB. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Sto. Nino cowpea",
   "keywords": [
     "Sto. Nino cowpea",
     "Sto. Nino",
+    "Sto. Niño",
+    "Santo Niño cowpea",
+    "Sto. Nino paayap",
     "Sto. Nino cowpea variety",
     "cowpea variety philippines",
     "NSIC 1995 Cp 06"
   ],
-  "excerpt": "Sto. Nino is a registered cowpea variety. It was registered with the National Seed Industry Council (NSIC) in 1995 as NSIC 1995 Cp 06. IPB UPLB, Laguna bred it. It takes 46 to 48 days from sowing to the first harvest, with 7.56 tonnes per hectare on average in the trials.",
+  "excerpt": "Sto. Nino is a registered cowpea variety, also sold or known as Sto. Niño or Santo Niño cowpea. It was registered with the National Seed Industry Council (NSIC) in 1995 as NSIC 1995 Cp 06. IPB UPLB, Laguna bred it. It takes 46 to 48 days from sowing to the first harvest, with 7.56 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where Sto. Nino cowpea is grown",
@@ -25,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [cowpea variety finder](/crop-varieties/cowpea), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for Sto. Niño or Santo Niño cowpea, this is the same cowpea. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [cowpea variety finder](/crop-varieties/cowpea), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -60,6 +63,10 @@
         [
           "Breeder or owner",
           "IPB UPLB, Laguna"
+        ],
+        [
+          "Also known as",
+          "Sto. Niño, Santo Niño cowpea, Sto. Nino paayap"
         ],
         [
           "Days to harvest",
@@ -122,7 +129,7 @@
     },
     {
       "type": "text",
-      "text": "Sto. Nino cowpea takes 46 to 48 days from sowing to the first harvest. That is 6.3 days faster than the average of the 13 cowpea varieties with a day count, 53.3 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 7.56 t/ha beats the average of its group, 5.44. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Sto. Nino cowpea takes 46 to 48 days from sowing to the first harvest. That is 6.3 days faster than the average of the 13 cowpea varieties with a day count, 53.3 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 7.56 t/ha beats the average of its group, 5.44. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives first harvest 46 to 48 days, last harvest about 74 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -185,6 +192,27 @@
     {
       "type": "heading",
       "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** 7.4 t/ha dry season, 7.8 t/ha wet season in registration trials.",
+        "**Fruit:** Dark green pods about 20 cm, light brown seeds, about 15 to 16 g per 100 seeds.",
+        "**Season:** Wet and dry.",
+        "Spreading growth.",
+        "Highly tolerant to fusarium wilt, rust and mosaic virus.",
+        "Moderately tolerant to aphids and cutworm."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: iPB UPLB cowpea in the NSIC registry, listed for both wet and dry seasons, current seed sellers not confirmed. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+    },
+    {
+      "type": "heading",
+      "level": 2,
       "text": "Where and when to plant Sto. Nino cowpea"
     },
     {
@@ -236,6 +264,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Sto. Niño the same as Sto. Nino?",
+          "a": "Yes. Sto. Niño is another name for Sto. Nino, registered as NSIC 1995 Cp 06. Seed sellers use both, so ask for either one."
+        },
+        {
           "q": "How long does it take to harvest?",
           "a": "It takes 46 to 48 days from sowing to the first harvest. Then the weather and your care decide the exact day."
         },
@@ -281,6 +313,10 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on Sto. Nino from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

@@ -1,22 +1,23 @@
 {
   "section": "crop-varieties",
   "slug": "cowpea-rlv",
-  "sortOrder": 685,
+  "sortOrder": 732,
   "lang": "en",
   "category": "Cowpea",
   "profile": true,
-  "title": "RLV cowpea: Yield, Maturity and Characteristics",
+  "title": "RLV cowpea (RLV paayap): Yield, Maturity and Characteristics",
   "metaTitle": "RLV cowpea: Yield, Maturity and Characteristics",
-  "metaDescription": "RLV cowpea is a cowpea variety from IPB UPLB, Laguna. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "RLV cowpea is a cowpea variety from IPB UPLB. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "RLV cowpea",
   "keywords": [
     "RLV cowpea",
     "RLV",
+    "RLV paayap",
     "RLV cowpea variety",
     "cowpea variety philippines",
     "NSIC 1995 Cp 07"
   ],
-  "excerpt": "RLV is a registered cowpea variety. It was registered with the National Seed Industry Council (NSIC) in 1995 as NSIC 1995 Cp 07. IPB UPLB, Laguna bred it. It takes 45 to 47 days from sowing to the first harvest, with 8.38 tonnes per hectare on average in the trials.",
+  "excerpt": "RLV is a registered cowpea variety, also sold or known as RLV paayap. It was registered with the National Seed Industry Council (NSIC) in 1995 as NSIC 1995 Cp 07. IPB UPLB, Laguna bred it. It takes 45 to 47 days from sowing to the first harvest, with 8.38 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where RLV cowpea is grown",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [cowpea variety finder](/crop-varieties/cowpea), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for RLV paayap, this is the same cowpea. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [cowpea variety finder](/crop-varieties/cowpea), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -60,6 +61,10 @@
         [
           "Breeder or owner",
           "IPB UPLB, Laguna"
+        ],
+        [
+          "Also known as",
+          "RLV paayap"
         ],
         [
           "Days to harvest",
@@ -122,7 +127,7 @@
     },
     {
       "type": "text",
-      "text": "RLV cowpea takes 45 to 47 days from sowing to the first harvest. That is 7.3 days faster than the average of the 13 cowpea varieties with a day count, 53.3 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8.38 t/ha beats the average of its group, 5.44. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "RLV cowpea takes 45 to 47 days from sowing to the first harvest. That is 7.3 days faster than the average of the 13 cowpea varieties with a day count, 53.3 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8.38 t/ha beats the average of its group, 5.44. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives first harvest 45 to 47 days, last harvest about 74 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -190,6 +195,27 @@
     {
       "type": "heading",
       "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** 8.3 t/ha dry season, 8.5 t/ha wet season in registration trials.",
+        "**Fruit:** Dark green pods about 22 cm, maroon seeds, about 17 to 18 g per 100 seeds.",
+        "**Season:** Wet and dry.",
+        "Spreading growth.",
+        "Highly tolerant to fusarium wilt, rust and mosaic virus.",
+        "Moderately tolerant to aphids, pod borer and cutworm."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: iPB UPLB cowpea in the NSIC registry with the highest yields of the 1995 cowpea releases, current seed sellers not confirmed. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+    },
+    {
+      "type": "heading",
+      "level": 2,
       "text": "Where and when to plant RLV cowpea"
     },
     {
@@ -241,6 +267,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is RLV paayap the same as RLV?",
+          "a": "Yes. RLV paayap is another name for RLV, registered as NSIC 1995 Cp 07. Seed sellers use both, so ask for either one."
+        },
+        {
           "q": "How long does it take to harvest?",
           "a": "It takes 45 to 47 days from sowing to the first harvest. Then the weather and your care decide the exact day."
         },
@@ -286,6 +316,10 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on RLV from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

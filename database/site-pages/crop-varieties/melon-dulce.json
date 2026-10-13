@@ -1,7 +1,7 @@
 {
   "section": "crop-varieties",
   "slug": "melon-dulce",
-  "sortOrder": 803,
+  "sortOrder": 874,
   "lang": "en",
   "category": "Melon",
   "profile": true,
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [melon variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for gourds and melons](/land-preparation/cucurbit-land-preparation)."
+      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [melon variety finder](/crop-varieties/melon), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for gourds and melons](/land-preparation/cucurbit-land-preparation)."
     },
     {
       "type": "list",
@@ -153,7 +153,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Tam Dew](/crop-varieties/melon-tam-dew): 90 to 120 days, 22.5 t/ha, 1976"
+        "[Tam Dew](/crop-varieties/melon-tam-dew): 90 to 120 days, 22.5 t/ha, 1976",
+        "[Glamour](/crop-varieties/melon-glamour)",
+        "[Brilliant](/crop-varieties/melon-brilliant)",
+        "[Fantasista](/crop-varieties/melon-fantasista)"
       ]
     },
     {
@@ -177,6 +180,10 @@
       "type": "links",
       "title": "Read next",
       "items": [
+        {
+          "label": "Every melon variety, side by side",
+          "url": "/crop-varieties/melon"
+        },
         {
           "label": "Crop varieties in the Philippines",
           "url": "/crop-varieties"

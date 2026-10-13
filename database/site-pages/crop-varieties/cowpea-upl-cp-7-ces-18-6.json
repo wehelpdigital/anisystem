@@ -1,22 +1,24 @@
 {
   "section": "crop-varieties",
   "slug": "cowpea-upl-cp-7-ces-18-6",
-  "sortOrder": 690,
+  "sortOrder": 737,
   "lang": "en",
   "category": "Cowpea",
   "profile": true,
-  "title": "UPL Cp 7 (CES 18 6) cowpea: Yield, Maturity and Characteristics",
+  "title": "UPL Cp 7 (CES 18 6) cowpea (UPL Cp 7): Yield, Maturity and Characteristics",
   "metaTitle": "UPL Cp 7 (CES 18 6) cowpea: Yield and Maturity",
   "metaDescription": "UPL Cp 7 (CES 18 6) cowpea is a cowpea variety. 48 to 50 days to harvest, 10.7 t/ha in trials. See its ratings and traits.",
   "focusKeyword": "UPL Cp 7 (CES 18 6) cowpea",
   "keywords": [
     "UPL Cp 7 (CES 18 6) cowpea",
     "UPL Cp 7 (CES 18 6)",
+    "UPL Cp 7",
+    "CES 18 6",
     "UPL Cp 7 (CES 18 6) cowpea variety",
     "cowpea variety philippines",
     "Philippine Seed Board"
   ],
-  "excerpt": "UPL Cp 7 (CES 18 6) is a registered cowpea variety. The Philippine Seed Board approved it in 1987. IPB UPLB, Laguna bred it. It takes 48 to 50 days from sowing to the first harvest, with 10.74 tonnes per hectare on average in the trials.",
+  "excerpt": "UPL Cp 7 (CES 18 6) is a registered cowpea variety, also sold or known as UPL Cp 7 or CES 18 6. The Philippine Seed Board approved it in 1987. IPB UPLB, Laguna bred it. It takes 48 to 50 days from sowing to the first harvest, with 10.74 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where UPL Cp 7 (CES 18 6) cowpea is grown",
@@ -25,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [cowpea variety finder](/crop-varieties/cowpea), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for UPL Cp 7 or CES 18 6, this is the same cowpea. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [cowpea variety finder](/crop-varieties/cowpea), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -42,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -59,6 +61,10 @@
         [
           "Breeder or owner",
           "IPB UPLB, Laguna"
+        ],
+        [
+          "Also known as",
+          "UPL Cp 7, CES 18 6"
         ],
         [
           "Days to harvest",
@@ -97,7 +103,7 @@
     },
     {
       "type": "text",
-      "text": "UPL Cp 7 (CES 18 6) cowpea takes 48 to 50 days from sowing to the first harvest. That is 4.3 days faster than the average of the 13 cowpea varieties with a day count, 53.3 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 10.74 t/ha beats the average of its group, 5.44. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "UPL Cp 7 (CES 18 6) cowpea takes 48 to 50 days from sowing to the first harvest. That is 4.3 days faster than the average of the 13 cowpea varieties with a day count, 53.3 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 10.74 t/ha beats the average of its group, 5.44. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives first harvest 48 to 50 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -146,6 +152,24 @@
     {
       "type": "text",
       "text": "Its pods grew about 20 cm long. The seed coat is light brown."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** 11.1 t/ha dry season, 10.4 t/ha wet season.",
+        "**Fruit:** Dark green pods about 20 cm, light brown seeds.",
+        "Registry lists it as susceptible to fusarium wilt, rust and mosaic virus."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: seed Board cowpea from IPB UPLB with the highest listed yield in the cowpea registry, current seed sellers not confirmed. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -201,6 +225,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is UPL Cp 7 the same as UPL Cp 7 (CES 18 6)?",
+          "a": "Yes. UPL Cp 7 is another name for UPL Cp 7 (CES 18 6). Seed sellers use both, so ask for either one."
+        },
+        {
           "q": "How long does it take to harvest?",
           "a": "It takes 48 to 50 days from sowing to the first harvest. Then the weather and your care decide the exact day."
         },
@@ -246,6 +274,10 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on UPL Cp 7 (CES 18 6) from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

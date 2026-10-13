@@ -1,22 +1,25 @@
 {
   "section": "crop-varieties",
   "slug": "garlic-mexican-sanikua",
-  "sortOrder": 736,
+  "sortOrder": 799,
   "lang": "en",
   "category": "Garlic",
   "profile": true,
-  "title": "Mexican (Sanikua) garlic: Yield, Maturity and Characteristics",
+  "title": "Mexican (Sanikua) garlic (Mexican): Yield, Maturity and Characteristics",
   "metaTitle": "Mexican (Sanikua) garlic: Yield and Maturity",
-  "metaDescription": "Mexican (Sanikua) garlic is a garlic variety from DA RFO I. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Mexican (Sanikua) garlic is a garlic variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Mexican (Sanikua) garlic",
   "keywords": [
     "Mexican (Sanikua) garlic",
     "Mexican (Sanikua)",
+    "Mexican",
+    "Sanikua",
+    "Mexican garlic",
     "Mexican (Sanikua) garlic variety",
     "garlic variety philippines",
     "NSIC 2017 Gr 04"
   ],
-  "excerpt": "Mexican (Sanikua) is a registered garlic variety. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Gr 04. DA RFO I bred it. It takes about 111 days from planting to harvest, with 8,050 kilograms per hectare on average in the trials.",
+  "excerpt": "Mexican (Sanikua) is a registered garlic variety, also sold or known as Mexican or Sanikua. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Gr 04. DA RFO I bred it. It takes about 111 days from planting to harvest, with 8,050 kilograms per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/onion-garlic-land-preparation.webp",
     "alt": "Onion plants in beds separated by grassy paths on a Philippine farm, the kind of farm where Mexican (Sanikua) garlic is grown",
@@ -25,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
+      "text": "If you came here looking for Mexican or Sanikua, this is the same garlic. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -60,6 +63,10 @@
         [
           "Breeder or owner",
           "DA RFO I"
+        ],
+        [
+          "Also known as",
+          "Mexican, Sanikua, Mexican garlic"
         ],
         [
           "Days to harvest",
@@ -114,7 +121,7 @@
     },
     {
       "type": "text",
-      "text": "Mexican (Sanikua) garlic takes about 111 days from planting to harvest. That is about the average of the 7 garlic varieties with a day count, 113.7 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8,050 kg/ha beats the average of its group, 5817.14. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Mexican (Sanikua) garlic takes about 111 days from planting to harvest. That is about the average of the 7 garlic varieties with a day count, 113.7 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8,050 kg/ha beats the average of its group, 5817.14. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 111 days after planting.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -182,6 +189,26 @@
     {
       "type": "heading",
       "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** 8.05 t/ha on raised beds, 4.98 t/ha with minimum tillage (NSIC trials).",
+        "**Fruit:** Globe shaped bulb with several layers of cloves, beige clove skin, cream outer skin.",
+        "**Season:** Dry season, needs cool, windy weather during the growing period.",
+        "Moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot (NSIC).",
+        "Only slight thrips, leaf folder and mite damage in the NSIC trials."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: registered with NSIC in 2017, second highest raised bed yield among the NSIC garlic entries. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+    },
+    {
+      "type": "heading",
+      "level": 2,
       "text": "Where and when to plant Mexican (Sanikua) garlic"
     },
     {
@@ -233,6 +260,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Mexican the same as Mexican (Sanikua)?",
+          "a": "Yes. Mexican is another name for Mexican (Sanikua), registered as NSIC 2017 Gr 04. Seed sellers use both, so ask for either one."
+        },
+        {
           "q": "How long does it take to harvest?",
           "a": "It takes about 111 days from planting to harvest. Then the weather and your care decide the exact day."
         },
@@ -282,6 +313,10 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on Mexican (Sanikua) from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

@@ -1,7 +1,7 @@
 {
   "section": "crop-varieties",
   "slug": "lima-bean-upl-lb1",
-  "sortOrder": 769,
+  "sortOrder": 839,
   "lang": "en",
   "category": "Lima bean",
   "profile": true,
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [lima bean variety finder](/crop-varieties/lima-bean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [lima bean variety finder](/crop-varieties/lima-bean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -86,7 +86,7 @@
     },
     {
       "type": "text",
-      "text": "UPL LB1 lima bean takes about 73 days from sowing to harvest. That is 4 days longer than the average of the 5 lima bean varieties with a day count, 69 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 9.43 t/ha trails the average of its group, 10.18. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "UPL LB1 lima bean takes about 73 days from sowing to harvest. That is 4 days longer than the average of the 5 lima bean varieties with a day count, 69 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 9.43 t/ha trails the average of its group, 10.18. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 73 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -130,6 +130,25 @@
     {
       "type": "text",
       "text": "The seed coat is brown seeded."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** About 9.4 t/ha.",
+        "**Fruit:** Dark green pods, medium brown seeds.",
+        "Strongly determinate, erect bush about 46 cm tall (no trellis).",
+        "Highly susceptible to anthracnose, moderately resistant to fusarium."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: uPLB bush type lima bean on the Seed Board list, current seed sellers not confirmed. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -230,6 +249,10 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on UPL LB1 from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

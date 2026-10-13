@@ -1,22 +1,23 @@
 {
   "section": "crop-varieties",
   "slug": "pechay-black-behi",
-  "sortOrder": 871,
+  "sortOrder": 969,
   "lang": "en",
   "category": "Pechay",
   "profile": true,
   "title": "Black Behi pechay: Yield, Maturity and Characteristics",
   "metaTitle": "Black Behi pechay: Yield, Maturity and Characteristics",
-  "metaDescription": "Black Behi pechay is a pechay variety from B.M. Domingo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Black Behi pechay is a pechay variety. 30 to 35 days to harvest. See its ratings and traits. Compare it with others. Free guide.",
   "focusKeyword": "Black Behi pechay",
   "keywords": [
     "Black Behi pechay",
     "Black Behi",
+    "Black Behi White Stem",
     "Black Behi pechay variety",
     "pechay variety philippines",
     "Philippine Seed Board"
   ],
-  "excerpt": "Black Behi is a registered pechay variety. The Philippine Seed Board approved it in 1970. B.M. Domingo bred it. It takes 30 to 35 days from sowing to harvest.",
+  "excerpt": "Black Behi is a registered pechay variety, also sold or known as Black Behi White Stem. The Philippine Seed Board approved it in 1970. B.M. Domingo bred it. It takes 30 to 35 days from sowing to harvest.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-gulay.webp",
     "alt": "A farmer watering vegetable beds in Pulilan, Bulacan, the kind of farm where Black Behi pechay is grown",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [pechay variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [organic fertilizer for pechay](/blog/organic-fertilizer-for-pechay)."
+      "text": "If you came here looking for Black Behi White Stem, this is the same pechay. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [pechay variety finder](/crop-varieties/pechay), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [organic fertilizer for pechay](/blog/organic-fertilizer-for-pechay)."
     },
     {
       "type": "list",
@@ -41,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -60,8 +61,16 @@
           "B.M. Domingo"
         ],
         [
+          "Also known as",
+          "Black Behi White Stem"
+        ],
+        [
           "Days to harvest",
           "30 to 35 days"
+        ],
+        [
+          "Yield, per the seller",
+          "Ramgo states a potential of about 30 t/ha"
         ]
       ]
     },
@@ -72,7 +81,7 @@
     },
     {
       "type": "text",
-      "text": "Black Behi pechay takes 30 to 35 days from sowing to harvest. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Black Behi pechay takes 30 to 35 days from sowing to harvest. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more. Its seller gives 30 to 35 days in the Seed Board record, Ramgo gives 25 to 30 days after sowing and Allied 25 to 30 days after transplanting.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -86,6 +95,27 @@
     {
       "type": "text",
       "text": "The pests and diseases that hit pechay fields most often: [bacterial soft rot](/diseases/soft-rot), [black rot of cabbage](/diseases/black-rot), [cabbage webworm](/pests/cabbage-webworm), [clubroot](/diseases/clubroot), [diamondback moth](/pests/diamondback-moth). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** Ramgo states a potential of about 30 t/ha.",
+        "**Fruit:** Leaves: dark green blades on white, juicy stalks, Allied describes heavy, even plants with thick stalks rising from a broad, compact base.",
+        "**Season:** All year (Allied recommends it for the dry season).",
+        "**Where:** Lowland to midland, the Seed Board row also rates it for high elevation.",
+        "Early maturing.",
+        "Ramgo claims good tolerance to diamondback moth, leafminer, damping off and soft rot."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: the only pechay on the old Philippine Seed Board list, first in the list of varieties in the IPB UPLB/PCARRD pechay guide reprinted by DA Caraga, and still carried by both Ramgo and Allied Botanical (as Black Behi White Stem). These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual pechay on the same ground."
     },
     {
       "type": "heading",
@@ -119,8 +149,31 @@
       "url": "/signup"
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "Pechay varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the pechay varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Anahaw](/crop-varieties/pechay-anahaw)",
+        "[Baby White](/crop-varieties/pechay-baby-white)",
+        "[Genghis Khan](/crop-varieties/pechay-genghis-khan)",
+        "[Green Shingkang](/crop-varieties/pechay-green-shingkang)"
+      ]
+    },
+    {
       "type": "faq",
       "items": [
+        {
+          "q": "Is Black Behi White Stem the same as Black Behi?",
+          "a": "Yes. Black Behi White Stem is another name for Black Behi. Seed sellers use both, so ask for either one."
+        },
         {
           "q": "How long does it take to harvest?",
           "a": "It takes 30 to 35 days from sowing to harvest. Then the weather and your care decide the exact day."
@@ -135,6 +188,10 @@
       "type": "links",
       "title": "Read next",
       "items": [
+        {
+          "label": "Every pechay variety, side by side",
+          "url": "/crop-varieties/pechay"
+        },
         {
           "label": "Crop varieties in the Philippines",
           "url": "/crop-varieties"
@@ -163,6 +220,18 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on Black Behi from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
+        },
+        {
+          "label": "Notes on Black Behi from ramgoseeds.com",
+          "url": "https://www.ramgoseeds.com/pechay-1/black-behi"
+        },
+        {
+          "label": "Notes on Black Behi from alliedbotanical.com",
+          "url": "https://alliedbotanical.com/project/black-behi-white-stem-pechay/"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

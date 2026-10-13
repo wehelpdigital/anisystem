@@ -162,14 +162,12 @@ class PageSchema
             }
         }
 
+        // A variety page: Home > Crop varieties > its crop > the page.
+        $crumbs = array_merge([['Home', $site . '/']], CropVarieties::trail($page->section, $page->slug) ?? [[$meta['label'] ?? 'Guides', $sectionUrl]], [[$page->title, $canonical]]);
         $graph[] = [
             '@type' => 'BreadcrumbList',
             '@id' => $crumbId,
-            'itemListElement' => [
-                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => $site . '/'],
-                ['@type' => 'ListItem', 'position' => 2, 'name' => $meta['label'] ?? 'Guides', 'item' => $sectionUrl],
-                ['@type' => 'ListItem', 'position' => 3, 'name' => $page->title, 'item' => $canonical],
-            ],
+            'itemListElement' => array_map(fn ($c, $i) => ['@type' => 'ListItem', 'position' => $i + 1, 'name' => $c[0], 'item' => $c[1]], $crumbs, array_keys($crumbs)),
         ];
 
         if ($faq) {

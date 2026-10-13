@@ -1,7 +1,7 @@
 {
   "section": "crop-varieties",
   "slug": "tomato-animax-1",
-  "sortOrder": 1082,
+  "sortOrder": 1209,
   "lang": "en",
   "category": "Tomato",
   "profile": true,
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [tomato variety finder](/crop-varieties/tomato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for tomatoes, stage by stage](/blog/fertilizer-for-tomatoes)."
+      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [tomato variety finder](/crop-varieties/tomato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for tomatoes, stage by stage](/blog/fertilizer-for-tomatoes)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -115,7 +115,7 @@
     },
     {
       "type": "text",
-      "text": "AniMax 1 tomato takes 59 to 63 days from transplanting to the first harvest. That is 9.6 days faster than the average of the 20 tomato varieties with a day count, 70.6 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 22.82 t/ha beats the average of its group, 20.91. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "AniMax 1 tomato takes 59 to 63 days from transplanting to the first harvest. That is 9.6 days faster than the average of the 20 tomato varieties with a day count, 70.6 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 22.82 t/ha beats the average of its group, 20.91. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives first harvest 59 days after transplanting in the dry season, 63 in the wet.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -164,6 +164,26 @@
     {
       "type": "text",
       "text": "It grew about 7 cm long. It is rounded."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** 36 t/ha in the dry season but under 10 t/ha in the wet season in registration trials.",
+        "**Fruit:** Rounded, about 7 cm long and 4 to 4.6 cm across.",
+        "**Season:** Dry season.",
+        "**Where:** Selected regions of Luzon.",
+        "Moderately resistant to fruitworm, leaf miner and bacterial wilt."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: nSIC registered DA BPI tomato, no current seller found. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -272,6 +292,10 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on AniMax 1 from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

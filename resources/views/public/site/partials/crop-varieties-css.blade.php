@@ -54,7 +54,6 @@
         .cv-crop b { font-size: 1rem; }
         .cv-crop .d { font-size: .76rem; line-height: 1.4; }
         .cv-crop .d .h { display: none; }
-        .cv-crop.is-rice .d { display: none; }
     }
 
     /* The search over every crop. */

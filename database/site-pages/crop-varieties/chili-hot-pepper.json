@@ -1,7 +1,7 @@
 {
   "section": "crop-varieties",
   "slug": "chili-hot-pepper",
-  "sortOrder": 141,
+  "sortOrder": 178,
   "lang": "en",
   "category": "Chili",
   "profile": true,
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [chili variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
+      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [chili variety finder](/crop-varieties/chili), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
     },
     {
       "type": "list",
@@ -166,6 +166,25 @@
       "url": "/signup"
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "Chili varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the chili varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Bicol Express](/crop-varieties/chili-bicol-express)",
+        "[Cindy Gang](/crop-varieties/chili-cindy-gang)",
+        "[Cordelia](/crop-varieties/chili-cordelia)",
+        "[Django](/crop-varieties/chili-django)"
+      ]
+    },
+    {
       "type": "faq",
       "items": [
         {
@@ -186,6 +205,10 @@
       "type": "links",
       "title": "Read next",
       "items": [
+        {
+          "label": "Every chili variety, side by side",
+          "url": "/crop-varieties/chili"
+        },
         {
           "label": "Crop varieties in the Philippines",
           "url": "/crop-varieties"

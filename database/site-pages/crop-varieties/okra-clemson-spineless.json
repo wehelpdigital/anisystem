@@ -1,13 +1,13 @@
 {
   "section": "crop-varieties",
   "slug": "okra-clemson-spineless",
-  "sortOrder": 839,
+  "sortOrder": 921,
   "lang": "en",
   "category": "Okra",
   "profile": true,
   "title": "Clemson Spineless okra: Yield, Maturity and Characteristics",
   "metaTitle": "Clemson Spineless okra: Yield, Maturity and Characteristics",
-  "metaDescription": "Clemson Spineless okra is an okra variety from B.M. Domingo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Clemson Spineless okra is an okra variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Clemson Spineless okra",
   "keywords": [
     "Clemson Spineless okra",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [okra variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [okra variety finder](/crop-varieties/okra), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
     },
     {
       "type": "list",
@@ -41,7 +41,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "Clemson Spineless okra takes 50 to 70 days from sowing to the first harvest. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Clemson Spineless okra takes 50 to 70 days from sowing to the first harvest. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more. Its seller gives 50 to 70 days in the 1970 Seed Board row.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -86,6 +86,22 @@
     {
       "type": "text",
       "text": "The pests and diseases that hit okra fields most often: [Cercospora leaf spot](/diseases/cercospora-leaf-spot), [Corn earworm](/pests/corn-earworm), [eggplant leafhopper](/pests/eggplant-leafhopper), [powdery mildew](/diseases/powdery-mildew), [root knot nematode](/diseases/root-knot-nematode). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Fruit:** Spineless pods, as the name says."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: on the Philippine Seed Board list since 1970, no current Philippine seller page was found in this check. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -131,7 +147,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Lavelna](/crop-varieties/okra-lavelna): 45 to 60 days, 1970"
+        "[Lavelna](/crop-varieties/okra-lavelna): 45 to 60 days, 1970",
+        "[Camiling Smooth](/crop-varieties/okra-camiling-smooth)",
+        "[Hagibis Verde](/crop-varieties/okra-hagibis-verde)",
+        "[Greenie](/crop-varieties/okra-greenie)"
       ]
     },
     {
@@ -151,6 +170,10 @@
       "type": "links",
       "title": "Read next",
       "items": [
+        {
+          "label": "Every okra variety, side by side",
+          "url": "/crop-varieties/okra"
+        },
         {
           "label": "Crop varieties in the Philippines",
           "url": "/crop-varieties"
@@ -179,6 +202,10 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on Clemson Spineless from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

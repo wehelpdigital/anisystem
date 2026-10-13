@@ -20,15 +20,9 @@
     $seoTitle = trim((string) ($page->metaTitle ?: $page->title));
     $updated = $page->updated_at ?? now();
     $sectionUrl = $page->section === 'features' ? route('features') : $S::url($page->section);
-    // A crop variety sits under its crop's finder (2026-10-13).
-    $cropCrumb = null;
-    if ($page->section === 'crop-varieties') {
-        $cv = collect(\App\Support\CropVarieties::all())->firstWhere('slug', $page->slug);
-        $cc = $cv ? (\App\Support\CropVarieties::crops()[$cv['crop']] ?? null) : null;
-        if ($cc && $cc['hasHub']) {
-            $cropCrumb = ['name' => $cc['name'], 'url' => url('/crop-varieties/' . $cc['slug'])];
-        }
-    }
+    // A variety, rice or any other crop, sits under Crop varieties and its
+    // crop's finder (2026-10-14); every other page under its section.
+    $trail = \App\Support\CropVarieties::trail($page->section, $page->slug) ?? [[$meta['crumb'], $sectionUrl]];
     $isFeature = $page->section === 'features';
     $isQuestion = $page->section === 'questions';
     $feat = $isFeature ? $S::feature($page) : null;
@@ -111,11 +105,10 @@
                 <nav class="sp-crumbs" aria-label="Breadcrumb">
                     <a href="{{ url('/') }}">Home</a>
                     <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    <a href="{{ $sectionUrl }}">{{ $meta['crumb'] }}</a>
-                    @if ($cropCrumb)
-                        <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                        <a href="{{ $cropCrumb['url'] }}">{{ $cropCrumb['name'] }}</a>
-                    @endif
+                    @foreach ($trail as $i => [$crumbName, $crumbUrl])
+                        @if ($i)<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>@endif
+                        <a href="{{ $crumbUrl }}">{{ $crumbName }}</a>
+                    @endforeach
                     <span class="sp-here">
                         <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         <span class="truncate max-w-[14rem] sm:max-w-none" aria-current="page">{{ $S::shortTitle($page) }}</span>

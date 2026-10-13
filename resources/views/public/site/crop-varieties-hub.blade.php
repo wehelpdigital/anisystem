@@ -17,18 +17,29 @@
     $byCrop = $all->groupBy('crop');
     $groups = collect($book['groups'] ?? [])->sortBy('order');
     $registered = $all->filter(fn ($v) => ! empty($v['reg']))->count();
-    $riceCount = count(\App\Support\RiceVarieties::all());
+    // Rice is one of the crops too (2026-10-14): its own finder at
+    // /rice-varieties, counted and searched here with the rest.
+    $rice = collect(\App\Support\RiceVarieties::all());
+    $riceCount = $rice->count();
+    $riceDays = $rice->pluck('maturity')->filter();
+    $total = $all->count() + $riceCount;
     $fmt = fn ($x) => number_format((float) $x, 0, '.', '');
     // The search index: every variety's names, its crop and its page.
-    $index = $all->map(fn ($v) => [
+    $index = $rice->map(fn ($v) => [
+        'n' => $v['name'],
+        'a' => implode(', ', array_slice(array_filter(array_merge($v['tradeNames'] ?? [], [$v['localName'] ?? ''])), 0, 3)),
+        'c' => 'Rice',
+        'u' => '/rice-varieties/' . $v['slug'],
+        'q' => strtolower($v['name'] . ' ' . implode(' ', $v['tradeNames'] ?? []) . ' ' . ($v['localName'] ?? '') . ' ' . ($v['breeder'] ?? '') . ' rice palay'),
+    ])->concat($all->map(fn ($v) => [
         'n' => $v['name'],
         'a' => implode(', ', array_slice($v['aliases'] ?? [], 0, 3)),
         'c' => $crops[$v['crop']]['name'] ?? ucfirst($v['crop']),
         'u' => '/crop-varieties/' . $v['slug'],
         'q' => strtolower($v['name'] . ' ' . implode(' ', $v['aliases'] ?? []) . ' ' . ($v['localName'] ?? '') . ' ' . ($v['owner'] ?? '')),
-    ])->values();
+    ]))->values();
     $faq = [
-        ['How many crop varieties are registered in the Philippines?', 'This list holds ' . $all->count() . ' varieties of ' . $crops->count() . ' crops, ' . $registered . ' of them on the national registry of the National Seed Industry Council, plus ' . $riceCount . ' rice varieties on our rice list. Corn has the most, with ' . ($crops['corn']['count'] ?? 0) . '.'],
+        ['How many crop varieties are registered in the Philippines?', 'This list holds ' . number_format($total) . ' varieties of ' . ($crops->count() + 1) . ' crops, ' . number_format($registered + $riceCount) . ' of them on the national registry of the National Seed Industry Council. Corn has the most, with ' . ($crops['corn']['count'] ?? 0) . ', then rice with ' . $riceCount . '.'],
         ['What is the NSIC?', 'The National Seed Industry Council approves new crop varieties after trials in several places, and the Bureau of Plant Industry keeps the registry. A registered variety has passed those trials, so its numbers are more than a seller\'s promise.'],
         ['Why is a variety I buy not on the list of registered ones?', 'Many vegetable hybrids sold by seed companies are never registered with the NSIC. We list the popular ones too, with the facts their sellers give, and mark them as not on the registry.'],
         ['How do I choose the right variety?', 'Pick by your buyer first, then by your season and your area. Compare days to harvest and yield within the same type, check the pest and disease ratings, and plant a small area of a new variety before you switch the whole farm.'],
@@ -90,9 +101,9 @@
                     </div>
                 </div>
                 <div class="rv-stats" aria-label="The list in numbers">
-                    <div class="rv-stat"><b>{{ number_format($all->count()) }}</b><span>varieties, each with its own page</span></div>
-                    <div class="rv-stat is-gold"><b>{{ $crops->count() }}</b><span>crops, from corn and tomato to mango and cacao</span></div>
-                    <div class="rv-stat"><b>{{ number_format($registered) }}</b><span>on the national NSIC registry</span></div>
+                    <div class="rv-stat"><b>{{ number_format($total) }}</b><span>varieties, each with its own page</span></div>
+                    <div class="rv-stat is-gold"><b>{{ $crops->count() + 1 }}</b><span>crops, from rice and corn to mango and cacao</span></div>
+                    <div class="rv-stat"><b>{{ number_format($registered + $riceCount) }}</b><span>on the national NSIC registry</span></div>
                     <div class="rv-stat"><b>{{ $all->count() - $registered }}</b><span>sold by seed companies, never registered</span></div>
                 </div>
             </div>
@@ -116,7 +127,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
             <div class="wk-sec-h">
                 <h2>Search Any Crop Variety by Name or Brand</h2>
-                <p>Type the name on the seed pack or the tag, like DK 8899S, Lakatan or Macho, and open its page.</p>
+                <p>Type the name on the seed pack or the tag, like Jackpot 102, DK 8899S, Diamante Max or Lakatan, and open its page.</p>
             </div>
             <div class="cv-find">
                 <label class="wk-search" style="max-width: none">
@@ -148,7 +159,7 @@
                                     <a class="cv-crop is-rice" href="{{ $S::url('rice-varieties') }}">
                                         <span class="cv-crop-top"><b>Rice</b><span class="n">{{ $riceCount }}</span></span>
                                         <span class="l">palay</span>
-                                        <span class="d">Every NSIC rice variety, inbred and hybrid, with the brand names on the sack.</span>
+                                        <span class="d">{{ $riceDays->count() >= 2 ? $fmt($riceDays->min()) . ' to ' . $fmt($riceDays->max()) . ' days to harvest. ' : '' }}<span class="h">Inbred, hybrid and special rice, from PSB Rc 18 to the newest NSIC releases, with the brand names on the sack.</span></span>
                                     </a>
                                 @endif
                                 @foreach ($inGroup as $c)

@@ -66,7 +66,7 @@ def safe(s):
     s = re.sub(r'(?<=\d)\s*[-–]\s*(?=\d)', ' to ', s)
     s = re.sub(r'(?<=\w)[-–](?=\w)', ' ', s)
     # A source named in brackets in a note: the sources list names it already.
-    s = re.sub(r'\s*\([^()]*\b(?:wikipedia|registry|study|paper|report|news|journal|survey|pcaarrd|ciat|agris|company post|\d{4})\b[^()]*\)', '', s, flags=re.I)
+    s = re.sub(r'\s*\([^()]*\b(?:wikipedia|registry|study|paper|report|news|journal|survey|pcaarrd|ciat|agris|guide|catalog|catalogue|brochure|website|region|company post|\d{4})\b[^()]*\)', '', s, flags=re.I)
     s = s.replace(' - ', ', ').replace(' – ', ', ').replace('—', ', ').replace('%', ' percent').replace('&', 'and').replace(';', ',')
     s = s.replace('‘', '').replace('’', "'").replace('“', '').replace('”', '').replace('"', '').replace('…', '.')
     s = s.replace('->', 'to').replace('~', 'about ').replace('°', ' degrees ')

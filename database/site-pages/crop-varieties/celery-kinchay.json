@@ -1,0 +1,209 @@
+{
+  "section": "crop-varieties",
+  "slug": "celery-kinchay",
+  "sortOrder": 164,
+  "lang": "en",
+  "category": "Celery",
+  "profile": true,
+  "title": "Kinchay celery (kintsay): Characteristics",
+  "metaTitle": "Kinchay celery: Characteristics",
+  "metaDescription": "Kinchay celery is a local name for Chinese celery variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "focusKeyword": "Kinchay celery",
+  "keywords": [
+    "Kinchay celery",
+    "Kinchay",
+    "kintsay",
+    "Chinese celery",
+    "Kinchay celery variety",
+    "celery variety philippines"
+  ],
+  "excerpt": "Kinchay celery is a local name for Chinese celery variety, also sold or known as kintsay or Chinese celery. It is not on the NSIC registry, so the facts here come from its seller and farm sources. It comes from Ramgo (garden packet).",
+  "heroImage": {
+    "src": "/images/site/guides/crops-vegetables-philippines.webp",
+    "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet, the kind of farm where Kinchay celery is grown",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you came here looking for kintsay or Chinese celery, this is the same celery. The facts below come from its seller and from farm sources, each one listed at the end. Compare it with the others in our [celery variety finder](/crop-varieties/celery), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Type:** Local name for Chinese celery."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about Kinchay celery"
+    },
+    {
+      "type": "table",
+      "caption": "From its seller and farm sources",
+      "rows": [
+        [
+          "Trait",
+          "What the record shows"
+        ],
+        [
+          "Breeder or owner",
+          "Ramgo (garden packet)"
+        ],
+        [
+          "Also known as",
+          "kintsay, Chinese celery"
+        ],
+        [
+          "Type",
+          "Local name for Chinese celery"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long does it take, and how much does it yield?"
+    },
+    {
+      "type": "text",
+      "text": "The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "text",
+      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit celery fields most often: [bacterial soft rot](/diseases/soft-rot), [Cercospora leaf spot](/diseases/cercospora-leaf-spot), [cutworm](/pests/cutworm), [damping off](/diseases/damping-off), [leafminer](/pests/leafminer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Fruit:** Leaves: aromatic and feathery, used for soups and stews.",
+        "Prefers cool to moderate weather and steady soil moisture."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: sold under its Filipino name as a Ramgo garden packet, the only evidence found is Ramgo's listing. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual celery on the same ground."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where and when to plant Kinchay celery"
+    },
+    {
+      "type": "text",
+      "text": "Kintsay grows best in cool weather, so most of it comes from the highlands. Pick a variety by stalk or leaf: the big stalk celery for the market, or the small leafy Chinese kind for soups. Before planting, get the field ready with our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before you buy seed"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy sealed packs or tagged sacks from an accredited dealer, and check the packing date and germination rate.",
+        "Ask your municipal agriculturist or nearby farmers how it did in your area last season.",
+        "Try it on a small area first, beside the variety you usually plant, before you switch the whole farm.",
+        "Write down the planting day, inputs and harvest, so you can compare varieties on your own ground. anee.io keeps these records for you."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next celery season",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Celery varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the celery varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Stetham](/crop-varieties/celery-stetham)",
+        "[Tall Utah](/crop-varieties/celery-tall-utah)"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is kintsay the same as Kinchay?",
+          "a": "Yes. kintsay is another name for Kinchay. Seed sellers use both, so ask for either one."
+        },
+        {
+          "q": "Where can I buy seed of Kinchay?",
+          "a": "Ask an accredited seed dealer in your province, the seller named on this page or your municipal agriculturist. Look for the certified seed tag or a sealed pack before you pay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every celery variety, side by side",
+          "url": "/crop-varieties/celery"
+        },
+        {
+          "label": "Crop varieties in the Philippines",
+          "url": "/crop-varieties"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Fertilizer for vegetables",
+          "url": "/blog/fertilizer-for-vegetables-philippines"
+        },
+        {
+          "label": "Rice varieties of the Philippines",
+          "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Notes on Kinchay from ramgoseeds.com",
+          "url": "https://www.ramgoseeds.com/seeds/kinchay"
+        },
+        {
+          "label": "Bureau of Plant Industry: seed and planting material certification",
+          "url": "https://bpi.da.gov.ph/"
+        }
+      ]
+    }
+  ]
+}

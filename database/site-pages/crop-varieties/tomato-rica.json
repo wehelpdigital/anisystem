@@ -1,22 +1,23 @@
 {
   "section": "crop-varieties",
   "slug": "tomato-rica",
-  "sortOrder": 1085,
+  "sortOrder": 1212,
   "lang": "en",
   "category": "Tomato",
   "profile": true,
-  "title": "Rica tomato: Yield, Maturity and Characteristics",
+  "title": "Rica tomato (Rica kamatis): Yield, Maturity and Characteristics",
   "metaTitle": "Rica tomato: Yield, Maturity and Characteristics",
   "metaDescription": "Rica tomato is a tomato variety from IPB UPLB. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Rica tomato",
   "keywords": [
     "Rica tomato",
     "Rica",
+    "Rica kamatis",
     "Rica tomato variety",
     "tomato variety philippines",
     "NSIC 2005 Tm 12"
   ],
-  "excerpt": "Rica is a registered tomato variety. It was registered with the National Seed Industry Council (NSIC) in 2005 as NSIC 2005 Tm 12. IPB UPLB bred it. It takes 63 to 65 days from transplanting to the first harvest, with 13.85 tonnes per hectare on average in the trials.",
+  "excerpt": "Rica is a registered tomato variety, also sold or known as Rica kamatis. It was registered with the National Seed Industry Council (NSIC) in 2005 as NSIC 2005 Tm 12. IPB UPLB bred it. It takes 63 to 65 days from transplanting to the first harvest, with 13.85 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-tomatoes.webp",
     "alt": "Young tomato plants on silver plastic mulch beds with bamboo stakes in San Ildefonso, Bulacan, the kind of farm where Rica tomato is grown",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [tomato variety finder](/crop-varieties/tomato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for tomatoes, stage by stage](/blog/fertilizer-for-tomatoes)."
+      "text": "If you came here looking for Rica kamatis, this is the same tomato. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [tomato variety finder](/crop-varieties/tomato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for tomatoes, stage by stage](/blog/fertilizer-for-tomatoes)."
     },
     {
       "type": "list",
@@ -43,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -60,6 +61,10 @@
         [
           "Breeder or owner",
           "IPB UPLB"
+        ],
+        [
+          "Also known as",
+          "Rica kamatis"
         ],
         [
           "Days to harvest",
@@ -98,7 +103,7 @@
     },
     {
       "type": "text",
-      "text": "Rica tomato takes 63 to 65 days from transplanting to the first harvest. That is 6.6 days faster than the average of the 20 tomato varieties with a day count, 70.6 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 13.85 t/ha trails the average of its group, 20.91. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Rica tomato takes 63 to 65 days from transplanting to the first harvest. That is 6.6 days faster than the average of the 20 tomato varieties with a day count, 70.6 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 13.85 t/ha trails the average of its group, 20.91. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives first harvest 63 to 65 days after transplanting in registration trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -121,6 +126,25 @@
     {
       "type": "text",
       "text": "A fruit weighs about 28.6 grams."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** About 10 t/ha in the dry season and 17.5 t/ha in the wet season in registration trials.",
+        "**Fruit:** Small, about 19 to 29 g.",
+        "**Season:** Trial yields were higher in the wet season.",
+        "**Where:** The registry says it suits a wide range of growing conditions."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: nSIC registered public tomato from IPB UPLB, no current DA promotion or seller found. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -176,6 +200,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Rica kamatis the same as Rica?",
+          "a": "Yes. Rica kamatis is another name for Rica, registered as NSIC 2005 Tm 12. Seed sellers use both, so ask for either one."
+        },
+        {
           "q": "How long does it take to harvest?",
           "a": "It takes 63 to 65 days from transplanting to the first harvest. Then the weather and your care decide the exact day."
         },
@@ -225,6 +253,10 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on Rica from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

@@ -1,22 +1,23 @@
 {
   "section": "crop-varieties",
   "slug": "lima-bean-habas",
-  "sortOrder": 770,
+  "sortOrder": 840,
   "lang": "en",
   "category": "Lima bean",
   "profile": true,
-  "title": "Habas lima bean: Yield, Maturity and Characteristics",
+  "title": "Habas lima bean (Habas patani): Yield, Maturity and Characteristics",
   "metaTitle": "Habas lima bean: Yield, Maturity and Characteristics",
-  "metaDescription": "Habas lima bean is a lima bean variety from UPCA. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Habas lima bean is a lima bean variety from UPCA (now UPLB). See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Habas lima bean",
   "keywords": [
     "Habas lima bean",
     "Habas",
+    "Habas patani",
     "Habas lima bean variety",
     "lima bean variety philippines",
     "Philippine Seed Board"
   ],
-  "excerpt": "Habas is a registered lima bean variety. The Philippine Seed Board approved it in 1972. UPCA bred it. It takes 50 to 60 days from sowing to harvest.",
+  "excerpt": "Habas is a registered lima bean variety, also sold or known as Habas patani. The Philippine Seed Board approved it in 1972. UPCA bred it. It takes 50 to 60 days from sowing to harvest.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where Habas lima bean is grown",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [lima bean variety finder](/crop-varieties/lima-bean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for Habas patani, this is the same lima bean. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [lima bean variety finder](/crop-varieties/lima-bean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -41,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -60,6 +61,10 @@
           "UPCA"
         ],
         [
+          "Also known as",
+          "Habas patani"
+        ],
+        [
           "Days to harvest",
           "50 to 60 days"
         ]
@@ -72,7 +77,7 @@
     },
     {
       "type": "text",
-      "text": "Habas lima bean takes 50 to 60 days from sowing to harvest. That is 14 days faster than the average of the 5 lima bean varieties with a day count, 69 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Habas lima bean takes 50 to 60 days from sowing to harvest. That is 14 days faster than the average of the 5 lima bean varieties with a day count, 69 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more. Its seller gives 50 to 60 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -86,6 +91,15 @@
     {
       "type": "text",
       "text": "The pests and diseases that hit lima bean fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [powdery mildew](/diseases/powdery-mildew). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: one of the first two lima beans on the Philippine Seed Board list, current seed sellers not confirmed (note: habas is also a common word for broad bean). Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -141,6 +155,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Habas patani the same as Habas?",
+          "a": "Yes. Habas patani is another name for Habas. Seed sellers use both, so ask for either one."
+        },
+        {
           "q": "How long does it take to harvest?",
           "a": "It takes 50 to 60 days from sowing to harvest. Then the weather and your care decide the exact day."
         },
@@ -182,6 +200,10 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on Habas from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

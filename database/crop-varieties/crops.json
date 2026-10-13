@@ -1,397 +1,1623 @@
 {
   "_about": "The crops of /crop-varieties (2026-10-13): names, the words each crop's pages share, the hero photo, the guides to link and the field catalogue keys whose pests and diseases a variety page names. Read by build_pages.py and App\\Support\\CropVarieties. A crop with three or more varieties gets its own hub at /crop-varieties/{slug}.",
   "groups": {
-    "cereal": {"label": "Corn and grains", "order": 1},
-    "fruitveg": {"label": "Fruiting vegetables", "order": 2},
-    "cucurbit": {"label": "Gourds and melons", "order": 3},
-    "beanveg": {"label": "Beans and peas", "order": 4},
-    "leafy": {"label": "Leafy vegetables", "order": 5},
-    "bulb": {"label": "Onion, garlic and root vegetables", "order": 6},
-    "rootcrop": {"label": "Root crops", "order": 7},
-    "legume": {"label": "Grain legumes", "order": 8},
-    "industrial": {"label": "Sugarcane and fiber crops", "order": 9},
-    "plantation": {"label": "Coconut, coffee and cacao", "order": 10},
-    "fruit": {"label": "Fruit trees", "order": 11}
+    "cereal": {
+      "label": "Corn and grains",
+      "order": 1
+    },
+    "fruitveg": {
+      "label": "Fruiting vegetables",
+      "order": 2
+    },
+    "cucurbit": {
+      "label": "Gourds and melons",
+      "order": 3
+    },
+    "beanveg": {
+      "label": "Beans and peas",
+      "order": 4
+    },
+    "leafy": {
+      "label": "Leafy vegetables",
+      "order": 5
+    },
+    "bulb": {
+      "label": "Onion, garlic and root vegetables",
+      "order": 6
+    },
+    "rootcrop": {
+      "label": "Root crops",
+      "order": 7
+    },
+    "legume": {
+      "label": "Grain legumes",
+      "order": 8
+    },
+    "industrial": {
+      "label": "Sugarcane and fiber crops",
+      "order": 9
+    },
+    "plantation": {
+      "label": "Coconut, coffee and cacao",
+      "order": 10
+    },
+    "fruit": {
+      "label": "Fruit trees",
+      "order": 11
+    }
   },
   "heroes": {
-    "corn": ["/images/site/guides/crops-pagtatanim-ng-mais.webp", "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest"],
-    "cornyoung": ["/images/site/land/corn-land-preparation.webp", "Young corn seedlings in rows on freshly plowed ground in Bulacan"],
-    "tomato": ["/images/site/guides/blog-fertilizer-for-tomatoes.webp", "Young tomato plants on silver plastic mulch beds with bamboo stakes in San Ildefonso, Bulacan"],
-    "vegrows": ["/images/site/land/vegetable-land-preparation.webp", "Rows of young eggplant on furrowed beds in Norzagaray, Bulacan"],
-    "cucurbit": ["/images/site/land/cucurbit-land-preparation.webp", "Ampalaya seedlings planted through plastic mulch on raised beds"],
-    "highland": ["/images/site/guides/crops-vegetables-philippines.webp", "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet"],
-    "garden": ["/images/site/guides/crops-pagtatanim-ng-gulay.webp", "A farmer watering vegetable beds in Pulilan, Bulacan"],
-    "legume": ["/images/site/land/legume-land-preparation.webp", "Young mungbean rows beside paddy fields in Candaba, Pampanga"],
-    "bulb": ["/images/site/land/onion-garlic-land-preparation.webp", "Onion plants in beds separated by grassy paths on a Philippine farm"],
-    "rootcrop": ["/images/site/land/root-crop-land-preparation.webp", "Kamote vines on long raised ridges in San Rafael, Bulacan"],
-    "sugarcane": ["/images/site/land/sugarcane-land-preparation.webp", "Cane setts laid in deep furrows on red soil, the start of a sugarcane crop"],
-    "banana": ["/images/site/guides/crops-banana-farming-philippines.webp", "Banana plants with bagged bunches along a farm road in Panabo City"],
-    "coconut": ["/images/site/guides/crops-coconut-fertilizer.webp", "Tall coconut palms over a grassy field in Sipocot, Camarines Sur"],
-    "orchard": ["/images/site/land/fruit-tree-land-preparation.webp", "Young fruit trees planted in straight rows on cleared red soil"],
-    "citrus": ["/images/site/guides/blog-fertilizer-for-fruit-trees.webp", "Rows of young calamansi trees in an orchard in Victoria, Tarlac"]
+    "corn": [
+      "/images/site/guides/crops-pagtatanim-ng-mais.webp",
+      "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest"
+    ],
+    "cornyoung": [
+      "/images/site/land/corn-land-preparation.webp",
+      "Young corn seedlings in rows on freshly plowed ground in Bulacan"
+    ],
+    "tomato": [
+      "/images/site/guides/blog-fertilizer-for-tomatoes.webp",
+      "Young tomato plants on silver plastic mulch beds with bamboo stakes in San Ildefonso, Bulacan"
+    ],
+    "vegrows": [
+      "/images/site/land/vegetable-land-preparation.webp",
+      "Rows of young eggplant on furrowed beds in Norzagaray, Bulacan"
+    ],
+    "cucurbit": [
+      "/images/site/land/cucurbit-land-preparation.webp",
+      "Ampalaya seedlings planted through plastic mulch on raised beds"
+    ],
+    "highland": [
+      "/images/site/guides/crops-vegetables-philippines.webp",
+      "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet"
+    ],
+    "garden": [
+      "/images/site/guides/crops-pagtatanim-ng-gulay.webp",
+      "A farmer watering vegetable beds in Pulilan, Bulacan"
+    ],
+    "legume": [
+      "/images/site/land/legume-land-preparation.webp",
+      "Young mungbean rows beside paddy fields in Candaba, Pampanga"
+    ],
+    "bulb": [
+      "/images/site/land/onion-garlic-land-preparation.webp",
+      "Onion plants in beds separated by grassy paths on a Philippine farm"
+    ],
+    "rootcrop": [
+      "/images/site/land/root-crop-land-preparation.webp",
+      "Kamote vines on long raised ridges in San Rafael, Bulacan"
+    ],
+    "sugarcane": [
+      "/images/site/land/sugarcane-land-preparation.webp",
+      "Cane setts laid in deep furrows on red soil, the start of a sugarcane crop"
+    ],
+    "banana": [
+      "/images/site/guides/crops-banana-farming-philippines.webp",
+      "Banana plants with bagged bunches along a farm road in Panabo City"
+    ],
+    "coconut": [
+      "/images/site/guides/crops-coconut-fertilizer.webp",
+      "Tall coconut palms over a grassy field in Sipocot, Camarines Sur"
+    ],
+    "orchard": [
+      "/images/site/land/fruit-tree-land-preparation.webp",
+      "Young fruit trees planted in straight rows on cleared red soil"
+    ],
+    "citrus": [
+      "/images/site/guides/blog-fertilizer-for-fruit-trees.webp",
+      "Rows of young calamansi trees in an orchard in Victoria, Tarlac"
+    ]
   },
   "crops": {
-    "corn": {"name": "Corn", "local": "mais", "group": "cereal", "hero": "corn", "catalogue": ["corn_yellow", "corn_glutinous", "corn_sweet"],
+    "corn": {
+      "name": "Corn",
+      "local": "mais",
+      "group": "cereal",
+      "hero": "corn",
+      "catalogue": [
+        "corn_yellow",
+        "corn_glutinous",
+        "corn_sweet"
+      ],
       "harvest": "days from planting to the harvest of dry grain",
-      "guides": [["/crops/pagtatanim-ng-mais", "Pagtatanim ng mais, step by step"], ["/land-preparation/corn-land-preparation", "Land preparation for corn"], ["/blog/increase-corn-yield-per-hectare", "How to raise corn yield per hectare"], ["/crops/corn-seeds", "Corn seeds: what to buy"]],
+      "guides": [
+        [
+          "/crops/pagtatanim-ng-mais",
+          "Pagtatanim ng mais, step by step"
+        ],
+        [
+          "/land-preparation/corn-land-preparation",
+          "Land preparation for corn"
+        ],
+        [
+          "/blog/increase-corn-yield-per-hectare",
+          "How to raise corn yield per hectare"
+        ],
+        [
+          "/crops/corn-seeds",
+          "Corn seeds: what to buy"
+        ]
+      ],
       "unitNote": "One tonne of shelled corn fills about 20 sacks of 50 kilograms.",
       "choose": "Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners.",
-      "hub": "Yellow and white hybrids, GM hybrids, open pollinated corn and glutinous lagkitan, each with its days to harvest, its yield in the national trials and where it is recommended."},
-    "sorghum": {"name": "Sorghum", "local": "batad", "group": "cereal", "hero": "cornyoung", "catalogue": ["sorghum"],
+      "hub": "Yellow and white hybrids, GM hybrids, open pollinated corn and glutinous lagkitan, each with its days to harvest, its yield in the national trials and where it is recommended."
+    },
+    "sorghum": {
+      "name": "Sorghum",
+      "local": "batad",
+      "group": "cereal",
+      "hero": "cornyoung",
+      "catalogue": [
+        "sorghum"
+      ],
       "harvest": "days from planting to harvest",
-      "guides": [["/land-preparation/corn-land-preparation", "Land preparation for corn and grains"]],
+      "guides": [
+        [
+          "/land-preparation/corn-land-preparation",
+          "Land preparation for corn and grains"
+        ]
+      ],
       "choose": "Sorghum stands drought better than corn, so it fits the dry season and dry uplands. Pick by use: grain for food and feed, or sweet sorghum for juice and syrup.",
-      "hub": "Sorghum varieties registered for the Philippines, for grain and for sweet stalks."},
-    "tomato": {"name": "Tomato", "local": "kamatis", "group": "fruitveg", "hero": "tomato", "catalogue": ["tomato"],
+      "hub": "Sorghum varieties registered for the Philippines, for grain and for sweet stalks."
+    },
+    "tomato": {
+      "name": "Tomato",
+      "local": "kamatis",
+      "group": "fruitveg",
+      "hero": "tomato",
+      "catalogue": [
+        "tomato"
+      ],
       "harvest": "days from transplanting to the first harvest",
-      "guides": [["/blog/fertilizer-for-tomatoes", "Fertilizer for tomatoes, stage by stage"], ["/land-preparation/vegetable-land-preparation", "Land preparation for vegetables"], ["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"]],
+      "guides": [
+        [
+          "/blog/fertilizer-for-tomatoes",
+          "Fertilizer for tomatoes, stage by stage"
+        ],
+        [
+          "/land-preparation/vegetable-land-preparation",
+          "Land preparation for vegetables"
+        ],
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ]
+      ],
       "choose": "Bacterial wilt kills more lowland tomato than any other disease, so in the wet season pick a variety rated resistant to it. Choose a firm, oblong fruit if you sell to a far market, and a round, juicy one for fresh sale nearby. Heat tolerant hybrids set fruit in the hot months, when open pollinated tomatoes often drop their flowers.",
-      "hub": "Open pollinated and hybrid tomatoes for the lowlands and the highlands, with days to first harvest, fruit size, yield and disease ratings."},
-    "eggplant": {"name": "Eggplant", "local": "talong", "group": "fruitveg", "hero": "vegrows", "catalogue": ["eggplant"],
+      "hub": "Open pollinated and hybrid tomatoes for the lowlands and the highlands, with days to first harvest, fruit size, yield and disease ratings."
+    },
+    "eggplant": {
+      "name": "Eggplant",
+      "local": "talong",
+      "group": "fruitveg",
+      "hero": "vegrows",
+      "catalogue": [
+        "eggplant"
+      ],
       "harvest": "days from transplanting to the first harvest",
-      "guides": [["/land-preparation/vegetable-land-preparation", "Land preparation for vegetables"], ["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"], ["/blog/fertilizer-for-vegetables-philippines", "Fertilizer for vegetables"]],
+      "guides": [
+        [
+          "/land-preparation/vegetable-land-preparation",
+          "Land preparation for vegetables"
+        ],
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ],
+        [
+          "/blog/fertilizer-for-vegetables-philippines",
+          "Fertilizer for vegetables"
+        ]
+      ],
       "choose": "Buyers in each market want their own talong: long and slim and dark purple in most of Luzon, rounder or striped in some towns. Pick a variety with bacterial wilt resistance, and plan for the fruit and shoot borer whatever you plant, because no variety on the market resists it.",
-      "hub": "Long purple, green and striped eggplants, open pollinated and hybrid, with days to first harvest, yield and fruit color."},
-    "chili": {"name": "Chili", "local": "sili", "group": "fruitveg", "hero": "garden", "catalogue": ["chili"],
+      "hub": "Long purple, green and striped eggplants, open pollinated and hybrid, with days to first harvest, yield and fruit color."
+    },
+    "chili": {
+      "name": "Chili",
+      "local": "sili",
+      "group": "fruitveg",
+      "hero": "garden",
+      "catalogue": [
+        "chili"
+      ],
       "harvest": "days from transplanting to the first harvest",
-      "guides": [["/land-preparation/vegetable-land-preparation", "Land preparation for vegetables"], ["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"]],
+      "guides": [
+        [
+          "/land-preparation/vegetable-land-preparation",
+          "Land preparation for vegetables"
+        ],
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ]
+      ],
       "choose": "Decide first between siling haba, the long green finger chili for cooking, and siling labuyo, the small hot one. Hybrids bear more and for longer, while open pollinated labuyo keeps its heat and lets you save seed.",
-      "hub": "Siling haba and siling labuyo varieties, with days to first harvest, fruit size and heat."},
-    "bellpepper": {"name": "Bell pepper", "local": "atsal", "group": "fruitveg", "hero": "highland", "catalogue": ["bellpepper"],
+      "hub": "Siling haba and siling labuyo varieties, with days to first harvest, fruit size and heat."
+    },
+    "bellpepper": {
+      "name": "Bell pepper",
+      "local": "atsal",
+      "group": "fruitveg",
+      "hero": "highland",
+      "catalogue": [
+        "bellpepper"
+      ],
       "harvest": "days from transplanting to the first harvest",
-      "guides": [["/land-preparation/vegetable-land-preparation", "Land preparation for vegetables"], ["/crops/vegetables-philippines", "Vegetables in the Philippines"]],
+      "guides": [
+        [
+          "/land-preparation/vegetable-land-preparation",
+          "Land preparation for vegetables"
+        ],
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ]
+      ],
       "choose": "Bell pepper does best in cool places such as Benguet and Bukidnon. In the lowlands, pick a heat tolerant hybrid and grow it in the dry season under some shade.",
-      "hub": "Sweet and bell pepper varieties for the highlands and the lowlands."},
-    "okra": {"name": "Okra", "local": "okra", "group": "fruitveg", "hero": "garden", "catalogue": ["okra"],
+      "hub": "Sweet and bell pepper varieties for the highlands and the lowlands."
+    },
+    "okra": {
+      "name": "Okra",
+      "local": "okra",
+      "group": "fruitveg",
+      "hero": "garden",
+      "catalogue": [
+        "okra"
+      ],
       "harvest": "days from sowing to the first harvest",
-      "guides": [["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"], ["/land-preparation/vegetable-land-preparation", "Land preparation for vegetables"]],
+      "guides": [
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ],
+        [
+          "/land-preparation/vegetable-land-preparation",
+          "Land preparation for vegetables"
+        ]
+      ],
       "choose": "Buyers want smooth, dark green pods picked young. Pick a variety that stays tender a day longer on the plant, because okra turns woody fast in the heat.",
-      "hub": "Okra varieties with days to first harvest, pod color and yield."},
-    "ampalaya": {"name": "Ampalaya", "local": "ampalaya, bitter gourd", "group": "cucurbit", "hero": "cucurbit", "catalogue": ["ampalaya"],
+      "hub": "Okra varieties with days to first harvest, pod color and yield."
+    },
+    "ampalaya": {
+      "name": "Ampalaya",
+      "local": "ampalaya, bitter gourd",
+      "group": "cucurbit",
+      "hero": "cucurbit",
+      "catalogue": [
+        "ampalaya"
+      ],
       "harvest": "days from sowing to the first harvest",
-      "guides": [["/land-preparation/cucurbit-land-preparation", "Land preparation for gourds and melons"], ["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"]],
+      "guides": [
+        [
+          "/land-preparation/cucurbit-land-preparation",
+          "Land preparation for gourds and melons"
+        ],
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ]
+      ],
       "choose": "Pick by fruit: long and light green for most markets, short and dark for the bitter lovers. Hybrids yield more on a trellis, and some are bred to tolerate the downy mildew of the wet season.",
-      "hub": "Ampalaya varieties with days to first harvest, fruit length and color, and yield."},
-    "squash": {"name": "Squash", "local": "kalabasa", "group": "cucurbit", "hero": "cucurbit", "catalogue": ["squash"],
+      "hub": "Ampalaya varieties with days to first harvest, fruit length and color, and yield."
+    },
+    "squash": {
+      "name": "Squash",
+      "local": "kalabasa",
+      "group": "cucurbit",
+      "hero": "cucurbit",
+      "catalogue": [
+        "squash"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/land-preparation/cucurbit-land-preparation", "Land preparation for gourds and melons"], ["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"]],
+      "guides": [
+        [
+          "/land-preparation/cucurbit-land-preparation",
+          "Land preparation for gourds and melons"
+        ],
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ]
+      ],
       "choose": "Choose a fruit size your buyer wants, from small round ones for households to big flat ones for the market. A thick, deep orange flesh keeps longer and sells better.",
-      "hub": "Kalabasa varieties with days to harvest, fruit size and flesh color."},
-    "cucumber": {"name": "Cucumber", "local": "pipino", "group": "cucurbit", "hero": "cucurbit", "catalogue": ["cucumber"],
+      "hub": "Kalabasa varieties with days to harvest, fruit size and flesh color."
+    },
+    "cucumber": {
+      "name": "Cucumber",
+      "local": "pipino",
+      "group": "cucurbit",
+      "hero": "cucurbit",
+      "catalogue": [
+        "cucumber"
+      ],
       "harvest": "days from sowing to the first harvest",
-      "guides": [["/land-preparation/cucurbit-land-preparation", "Land preparation for gourds and melons"], ["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"]],
+      "guides": [
+        [
+          "/land-preparation/cucurbit-land-preparation",
+          "Land preparation for gourds and melons"
+        ],
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ]
+      ],
       "choose": "Cucumber gives its first fruit fast, often in five to six weeks. Pick a variety bred to tolerate downy mildew if you plant near the rains.",
-      "hub": "Cucumber varieties with days to first harvest, fruit size and yield."},
-    "watermelon": {"name": "Watermelon", "local": "pakwan", "group": "cucurbit", "hero": "cucurbit", "catalogue": ["watermelon"],
+      "hub": "Cucumber varieties with days to first harvest, fruit size and yield."
+    },
+    "watermelon": {
+      "name": "Watermelon",
+      "local": "pakwan",
+      "group": "cucurbit",
+      "hero": "cucurbit",
+      "catalogue": [
+        "watermelon"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/land-preparation/cucurbit-land-preparation", "Land preparation for gourds and melons"]],
+      "guides": [
+        [
+          "/land-preparation/cucurbit-land-preparation",
+          "Land preparation for gourds and melons"
+        ]
+      ],
       "choose": "Watermelon pays best in the dry season on sandy, well drained ground. Choose by fruit size and flesh: a sweet red flesh and a rind thick enough for the trip to market.",
-      "hub": "Pakwan varieties with days to harvest, fruit size and sweetness."},
-    "melon": {"name": "Melon", "local": "melon", "group": "cucurbit", "hero": "cucurbit", "catalogue": ["melon"],
+      "hub": "Pakwan varieties with days to harvest, fruit size and sweetness."
+    },
+    "melon": {
+      "name": "Melon",
+      "local": "melon",
+      "group": "cucurbit",
+      "hero": "cucurbit",
+      "catalogue": [
+        "melon"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/land-preparation/cucurbit-land-preparation", "Land preparation for gourds and melons"]],
+      "guides": [
+        [
+          "/land-preparation/cucurbit-land-preparation",
+          "Land preparation for gourds and melons"
+        ]
+      ],
       "choose": "Muskmelon and honeydew need dry weather near harvest, or the fruit cracks and loses its sweetness. Plant so that the fruit ripens before the rains.",
-      "hub": "Muskmelon and honeydew varieties with days to harvest and sweetness."},
-    "upo": {"name": "Upo", "local": "upo, bottle gourd", "group": "cucurbit", "hero": "cucurbit", "catalogue": ["upo"],
+      "hub": "Muskmelon and honeydew varieties with days to harvest and sweetness."
+    },
+    "upo": {
+      "name": "Upo",
+      "local": "upo, bottle gourd",
+      "group": "cucurbit",
+      "hero": "cucurbit",
+      "catalogue": [
+        "upo"
+      ],
       "harvest": "days from sowing to the first harvest",
-      "guides": [["/land-preparation/cucurbit-land-preparation", "Land preparation for gourds and melons"]],
+      "guides": [
+        [
+          "/land-preparation/cucurbit-land-preparation",
+          "Land preparation for gourds and melons"
+        ]
+      ],
       "choose": "Upo grows fast on a trellis. Pick a variety with a smooth, even fruit that stays tender, and harvest it young.",
-      "hub": "Upo varieties with days to first harvest and fruit size."},
-    "patola": {"name": "Patola", "local": "patola, sponge gourd", "group": "cucurbit", "hero": "cucurbit", "catalogue": ["patola"],
+      "hub": "Upo varieties with days to first harvest and fruit size."
+    },
+    "patola": {
+      "name": "Patola",
+      "local": "patola, sponge gourd",
+      "group": "cucurbit",
+      "hero": "cucurbit",
+      "catalogue": [
+        "patola"
+      ],
       "harvest": "days from sowing to the first harvest",
-      "guides": [["/land-preparation/cucurbit-land-preparation", "Land preparation for gourds and melons"]],
+      "guides": [
+        [
+          "/land-preparation/cucurbit-land-preparation",
+          "Land preparation for gourds and melons"
+        ]
+      ],
       "choose": "Patola comes ridged or smooth. Pick the one your market buys, and a variety that keeps setting fruit on the trellis for weeks.",
-      "hub": "Patola varieties with days to first harvest and fruit type."},
-    "sayote": {"name": "Sayote", "local": "sayote, chayote", "group": "cucurbit", "hero": "highland", "catalogue": ["sayote"],
+      "hub": "Patola varieties with days to first harvest and fruit type."
+    },
+    "sayote": {
+      "name": "Sayote",
+      "local": "sayote, chayote",
+      "group": "cucurbit",
+      "hero": "highland",
+      "catalogue": [
+        "sayote"
+      ],
       "harvest": "days from planting to the first harvest",
-      "guides": [["/crops/vegetables-philippines", "Vegetables in the Philippines"]],
+      "guides": [
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ]
+      ],
       "choose": "Sayote grows best in the cool highlands, planted from a whole fruit. Pick the smooth or the spiny kind your market buys.",
-      "hub": "Sayote types grown in the highlands."},
-    "stringbean": {"name": "Sitao", "local": "sitaw, string beans", "group": "beanveg", "hero": "garden", "catalogue": ["stringbean"],
+      "hub": "Sayote types grown in the highlands."
+    },
+    "stringbean": {
+      "name": "Sitao",
+      "local": "sitaw, string beans",
+      "group": "beanveg",
+      "hero": "garden",
+      "catalogue": [
+        "stringbean"
+      ],
       "harvest": "days from sowing to the first harvest",
-      "guides": [["/land-preparation/legume-land-preparation", "Land preparation for legumes"], ["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"]],
+      "guides": [
+        [
+          "/land-preparation/legume-land-preparation",
+          "Land preparation for legumes"
+        ],
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ]
+      ],
       "choose": "Pole sitao climbs a trellis and bears for weeks, while bush sitao needs no trellis and comes in at once. Pick long, dark green pods that snap cleanly, and a variety rated against the bean fly and rust if you can.",
-      "hub": "Pole and bush sitao varieties with days to first harvest, pod length and yield."},
-    "snapbean": {"name": "Snap bean", "local": "Baguio beans", "group": "beanveg", "hero": "highland", "catalogue": ["stringbean"],
+      "hub": "Pole and bush sitao varieties with days to first harvest, pod length and yield."
+    },
+    "snapbean": {
+      "name": "Snap bean",
+      "local": "Baguio beans",
+      "group": "beanveg",
+      "hero": "highland",
+      "catalogue": [
+        "stringbean"
+      ],
       "harvest": "days from sowing to the first harvest",
-      "guides": [["/land-preparation/legume-land-preparation", "Land preparation for legumes"], ["/crops/vegetables-philippines", "Vegetables in the Philippines"]],
+      "guides": [
+        [
+          "/land-preparation/legume-land-preparation",
+          "Land preparation for legumes"
+        ],
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ]
+      ],
       "choose": "Baguio beans like cool weather, so most come from the highlands of Benguet and Mountain Province. Pole types bear longer, and bush types fit a short cropping gap.",
-      "hub": "Pole and bush snap beans, the Baguio beans of the highlands, with days to harvest and pod size."},
-    "cowpea": {"name": "Cowpea", "local": "paayap, kibal", "group": "beanveg", "hero": "legume", "catalogue": ["cowpea"],
+      "hub": "Pole and bush snap beans, the Baguio beans of the highlands, with days to harvest and pod size."
+    },
+    "cowpea": {
+      "name": "Cowpea",
+      "local": "paayap, kibal",
+      "group": "beanveg",
+      "hero": "legume",
+      "catalogue": [
+        "cowpea"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/land-preparation/legume-land-preparation", "Land preparation for legumes"]],
+      "guides": [
+        [
+          "/land-preparation/legume-land-preparation",
+          "Land preparation for legumes"
+        ]
+      ],
       "choose": "Cowpea fits the dry season after rice, on the moisture the paddy keeps. Pick by use: green pods for vegetables, or dry seed.",
-      "hub": "Cowpea varieties for pods and dry seed, with days to harvest and yield."},
-    "limabean": {"name": "Lima bean", "local": "patani", "group": "beanveg", "hero": "legume", "catalogue": ["limabean"],
+      "hub": "Cowpea varieties for pods and dry seed, with days to harvest and yield."
+    },
+    "limabean": {
+      "name": "Lima bean",
+      "local": "patani",
+      "group": "beanveg",
+      "hero": "legume",
+      "catalogue": [
+        "limabean"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/land-preparation/legume-land-preparation", "Land preparation for legumes"]],
+      "guides": [
+        [
+          "/land-preparation/legume-land-preparation",
+          "Land preparation for legumes"
+        ]
+      ],
       "choose": "Patani climbs and bears for a long time. Pick a variety by seed size and color, and give it a strong trellis.",
-      "hub": "Patani varieties with seed size and days to harvest."},
-    "wingedbean": {"name": "Winged bean", "local": "sigarilyas", "group": "beanveg", "hero": "garden", "catalogue": ["wingedbean"],
+      "hub": "Patani varieties with seed size and days to harvest."
+    },
+    "wingedbean": {
+      "name": "Winged bean",
+      "local": "sigarilyas",
+      "group": "beanveg",
+      "hero": "garden",
+      "catalogue": [
+        "wingedbean"
+      ],
       "harvest": "days from sowing to the first harvest",
-      "guides": [["/land-preparation/legume-land-preparation", "Land preparation for legumes"]],
+      "guides": [
+        [
+          "/land-preparation/legume-land-preparation",
+          "Land preparation for legumes"
+        ]
+      ],
       "choose": "Sigarilyas needs short days to flower well, so plant it in the second half of the year. Pick young, tender pods.",
-      "hub": "Sigarilyas varieties."},
-    "pea": {"name": "Garden pea", "local": "sitsaro", "group": "beanveg", "hero": "highland", "catalogue": [],
+      "hub": "Sigarilyas varieties."
+    },
+    "pea": {
+      "name": "Garden pea",
+      "local": "sitsaro",
+      "group": "beanveg",
+      "hero": "highland",
+      "catalogue": [],
       "harvest": "days from sowing to the first harvest",
-      "guides": [["/land-preparation/legume-land-preparation", "Land preparation for legumes"]],
+      "guides": [
+        [
+          "/land-preparation/legume-land-preparation",
+          "Land preparation for legumes"
+        ]
+      ],
       "choose": "Sitsaro needs cool weather, so it is a highland crop. Pick flat pod types for vegetables.",
-      "hub": "Garden pea varieties for the highlands."},
-    "pechay": {"name": "Pechay", "local": "pechay", "group": "leafy", "hero": "garden", "catalogue": ["pechay"],
+      "hub": "Garden pea varieties for the highlands."
+    },
+    "pechay": {
+      "name": "Pechay",
+      "local": "pechay",
+      "group": "leafy",
+      "hero": "garden",
+      "catalogue": [
+        "pechay"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/blog/organic-fertilizer-for-pechay", "Organic fertilizer for pechay"], ["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"]],
+      "guides": [
+        [
+          "/blog/organic-fertilizer-for-pechay",
+          "Organic fertilizer for pechay"
+        ],
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ]
+      ],
       "choose": "Pechay is ready in about a month, so it fits small plots and quick cash. Pick a variety that bolts late in the heat and stands rain.",
-      "hub": "Pechay varieties with days to harvest and leaf type."},
-    "chinesecabbage": {"name": "Chinese cabbage", "local": "pechay Baguio, wombok", "group": "leafy", "hero": "highland", "catalogue": ["pechay", "cabbage"],
+      "hub": "Pechay varieties with days to harvest and leaf type."
+    },
+    "chinesecabbage": {
+      "name": "Chinese cabbage",
+      "local": "pechay Baguio, wombok",
+      "group": "leafy",
+      "hero": "highland",
+      "catalogue": [
+        "pechay",
+        "cabbage"
+      ],
       "harvest": "days from transplanting to harvest",
-      "guides": [["/crops/vegetables-philippines", "Vegetables in the Philippines"]],
+      "guides": [
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ]
+      ],
       "choose": "Pechay Baguio heads best in cool places. In the lowlands, pick a heat tolerant hybrid and plant in the cool months.",
-      "hub": "Chinese cabbage varieties for the highlands and lowlands."},
-    "cabbage": {"name": "Cabbage", "local": "repolyo", "group": "leafy", "hero": "highland", "catalogue": ["cabbage"],
+      "hub": "Chinese cabbage varieties for the highlands and lowlands."
+    },
+    "cabbage": {
+      "name": "Cabbage",
+      "local": "repolyo",
+      "group": "leafy",
+      "hero": "highland",
+      "catalogue": [
+        "cabbage"
+      ],
       "harvest": "days from transplanting to harvest",
-      "guides": [["/crops/vegetables-philippines", "Vegetables in the Philippines"], ["/land-preparation/vegetable-land-preparation", "Land preparation for vegetables"]],
+      "guides": [
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ],
+        [
+          "/land-preparation/vegetable-land-preparation",
+          "Land preparation for vegetables"
+        ]
+      ],
       "choose": "Most repolyo comes from the highlands, where it heads well. Lowland growers need a heat tolerant hybrid and a cool month. Pick a firm head that keeps on the trip to market.",
-      "hub": "Cabbage varieties for the highlands and lowlands, with days to harvest and head weight."},
-    "cauliflower": {"name": "Cauliflower", "local": "cauliflower", "group": "leafy", "hero": "highland", "catalogue": ["cauliflower"],
+      "hub": "Cabbage varieties for the highlands and lowlands, with days to harvest and head weight."
+    },
+    "cauliflower": {
+      "name": "Cauliflower",
+      "local": "cauliflower",
+      "group": "leafy",
+      "hero": "highland",
+      "catalogue": [
+        "cauliflower"
+      ],
       "harvest": "days from transplanting to harvest",
-      "guides": [["/crops/vegetables-philippines", "Vegetables in the Philippines"]],
+      "guides": [
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ]
+      ],
       "choose": "Cauliflower needs cool nights to form a tight white curd, so it is a highland crop.",
-      "hub": "Cauliflower varieties for the highlands."},
-    "broccoli": {"name": "Broccoli", "local": "broccoli", "group": "leafy", "hero": "highland", "catalogue": ["broccoli"],
+      "hub": "Cauliflower varieties for the highlands."
+    },
+    "broccoli": {
+      "name": "Broccoli",
+      "local": "broccoli",
+      "group": "leafy",
+      "hero": "highland",
+      "catalogue": [
+        "broccoli"
+      ],
       "harvest": "days from transplanting to harvest",
-      "guides": [["/crops/vegetables-philippines", "Vegetables in the Philippines"]],
+      "guides": [
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ]
+      ],
       "choose": "Broccoli is a cool weather crop for the highlands. Pick a variety with a tight, even head.",
-      "hub": "Broccoli varieties for the highlands."},
-    "lettuce": {"name": "Lettuce", "local": "litsugas", "group": "leafy", "hero": "highland", "catalogue": ["lettuce"],
+      "hub": "Broccoli varieties for the highlands."
+    },
+    "lettuce": {
+      "name": "Lettuce",
+      "local": "litsugas",
+      "group": "leafy",
+      "hero": "highland",
+      "catalogue": [
+        "lettuce"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/crops/vegetables-philippines", "Vegetables in the Philippines"]],
+      "guides": [
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ]
+      ],
       "choose": "Loose leaf lettuce grows in the lowlands, while heading types need the highlands. Pick a variety slow to bolt in the heat.",
-      "hub": "Loose leaf and heading lettuce varieties."},
-    "kangkong": {"name": "Kangkong", "local": "kangkong", "group": "leafy", "hero": "garden", "catalogue": ["kangkong"],
+      "hub": "Loose leaf and heading lettuce varieties."
+    },
+    "kangkong": {
+      "name": "Kangkong",
+      "local": "kangkong",
+      "group": "leafy",
+      "hero": "garden",
+      "catalogue": [
+        "kangkong"
+      ],
       "harvest": "days from sowing to the first harvest",
-      "guides": [["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"]],
+      "guides": [
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ]
+      ],
       "choose": "Upland kangkong grows from seed on dry beds, and lowland kangkong from cuttings in wet ground. Both regrow after each cutting.",
-      "hub": "Kangkong varieties."},
-    "mustard": {"name": "Mustard", "local": "mustasa", "group": "leafy", "hero": "garden", "catalogue": ["mustard"],
+      "hub": "Kangkong varieties."
+    },
+    "mustard": {
+      "name": "Mustard",
+      "local": "mustasa",
+      "group": "leafy",
+      "hero": "garden",
+      "catalogue": [
+        "mustard"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"]],
+      "guides": [
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ]
+      ],
       "choose": "Mustasa is quick and easy. Pick a variety by leaf: broad and mild, or curly and sharp.",
-      "hub": "Mustasa varieties."},
-    "onion": {"name": "Onion", "local": "sibuyas", "group": "bulb", "hero": "bulb", "catalogue": ["onion"],
+      "hub": "Mustasa varieties."
+    },
+    "onion": {
+      "name": "Onion",
+      "local": "sibuyas",
+      "group": "bulb",
+      "hero": "bulb",
+      "catalogue": [
+        "onion"
+      ],
       "harvest": "days from transplanting to harvest",
-      "guides": [["/land-preparation/onion-garlic-land-preparation", "Land preparation for onion and garlic"]],
+      "guides": [
+        [
+          "/land-preparation/onion-garlic-land-preparation",
+          "Land preparation for onion and garlic"
+        ]
+      ],
       "choose": "Red onion stores longer, while yellow onion yields more. Pick a variety that bulbs in the short days of the Philippine dry season, and plant it after the rains so the bulbs dry well.",
-      "hub": "Red and yellow onion varieties with days to harvest and storage life."},
-    "garlic": {"name": "Garlic", "local": "bawang", "group": "bulb", "hero": "bulb", "catalogue": ["garlic"],
+      "hub": "Red and yellow onion varieties with days to harvest and storage life."
+    },
+    "garlic": {
+      "name": "Garlic",
+      "local": "bawang",
+      "group": "bulb",
+      "hero": "bulb",
+      "catalogue": [
+        "garlic"
+      ],
       "harvest": "days from planting to harvest",
-      "guides": [["/land-preparation/onion-garlic-land-preparation", "Land preparation for onion and garlic"]],
+      "guides": [
+        [
+          "/land-preparation/onion-garlic-land-preparation",
+          "Land preparation for onion and garlic"
+        ]
+      ],
       "choose": "Native Ilocos garlic is small but strong in flavor and keeps well. Plant cloves from a clean, local source after the rains, because garlic needs the cool, dry months.",
-      "hub": "Garlic varieties registered in the Philippines, most of them native selections."},
-    "carrot": {"name": "Carrot", "local": "karot", "group": "bulb", "hero": "highland", "catalogue": ["carrot"],
+      "hub": "Garlic varieties registered in the Philippines, most of them native selections."
+    },
+    "carrot": {
+      "name": "Carrot",
+      "local": "karot",
+      "group": "bulb",
+      "hero": "highland",
+      "catalogue": [
+        "carrot"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/crops/vegetables-philippines", "Vegetables in the Philippines"]],
+      "guides": [
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ]
+      ],
       "choose": "Carrot is a highland crop in the Philippines. Pick a root length your soil can hold: short types for heavy soil.",
-      "hub": "Carrot varieties for the highlands."},
-    "radish": {"name": "Radish", "local": "labanos", "group": "bulb", "hero": "garden", "catalogue": ["radish"],
+      "hub": "Carrot varieties for the highlands."
+    },
+    "radish": {
+      "name": "Radish",
+      "local": "labanos",
+      "group": "bulb",
+      "hero": "garden",
+      "catalogue": [
+        "radish"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/crops/pagtatanim-ng-gulay", "Pagtatanim ng gulay"]],
+      "guides": [
+        [
+          "/crops/pagtatanim-ng-gulay",
+          "Pagtatanim ng gulay"
+        ]
+      ],
       "choose": "Labanos is fast. Pick a variety that stays crisp and does not turn pithy in the heat.",
-      "hub": "Labanos varieties."},
-    "potato": {"name": "Potato", "local": "patatas", "group": "bulb", "hero": "highland", "catalogue": ["potato"],
+      "hub": "Labanos varieties."
+    },
+    "potato": {
+      "name": "Potato",
+      "local": "patatas",
+      "group": "bulb",
+      "hero": "highland",
+      "catalogue": [
+        "potato"
+      ],
       "harvest": "days from planting to harvest",
-      "guides": [["/crops/vegetables-philippines", "Vegetables in the Philippines"], ["/land-preparation/root-crop-land-preparation", "Land preparation for root crops"]],
+      "guides": [
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ],
+        [
+          "/land-preparation/root-crop-land-preparation",
+          "Land preparation for root crops"
+        ]
+      ],
       "choose": "Potato grows in the cool highlands of Benguet, Mountain Province and Bukidnon. Plant clean seed tubers, and pick a variety rated against late blight for the wet season.",
-      "hub": "Potato varieties for the highlands, with days to harvest, yield and tuber color."},
-    "sweetpotato": {"name": "Sweet potato", "local": "kamote", "group": "rootcrop", "hero": "rootcrop", "catalogue": ["sweetpotato"],
+      "hub": "Potato varieties for the highlands, with days to harvest, yield and tuber color."
+    },
+    "sweetpotato": {
+      "name": "Sweet potato",
+      "local": "kamote",
+      "group": "rootcrop",
+      "hero": "rootcrop",
+      "catalogue": [
+        "sweetpotato"
+      ],
       "harvest": "days from planting to harvest",
-      "guides": [["/land-preparation/root-crop-land-preparation", "Land preparation for root crops"]],
+      "guides": [
+        [
+          "/land-preparation/root-crop-land-preparation",
+          "Land preparation for root crops"
+        ]
+      ],
       "choose": "Pick by use and market: yellow or orange flesh for snacks and fries, purple for processing, white for boiling. Weevils are the main enemy, so plant clean cuttings and harvest on time.",
-      "hub": "Kamote varieties with days to harvest, yield, flesh color and dry matter."},
-    "cassava": {"name": "Cassava", "local": "kamoteng kahoy", "group": "rootcrop", "hero": "rootcrop", "catalogue": ["cassava"],
+      "hub": "Kamote varieties with days to harvest, yield, flesh color and dry matter."
+    },
+    "cassava": {
+      "name": "Cassava",
+      "local": "kamoteng kahoy",
+      "group": "rootcrop",
+      "hero": "rootcrop",
+      "catalogue": [
+        "cassava"
+      ],
       "harvest": "months from planting to harvest",
-      "guides": [["/land-preparation/root-crop-land-preparation", "Land preparation for root crops"]],
+      "guides": [
+        [
+          "/land-preparation/root-crop-land-preparation",
+          "Land preparation for root crops"
+        ]
+      ],
       "choose": "Pick by buyer first. Starch and feed plants pay for yield and starch content, while the table wants a sweet, low cyanide variety that boils soft. A high starch variety needs a buyer within a day of harvest, because the roots spoil fast.",
-      "hub": "Cassava varieties for food, feed and starch, with months to harvest, yield, starch content and cyanide level."},
-    "taro": {"name": "Taro", "local": "gabi", "group": "rootcrop", "hero": "rootcrop", "catalogue": ["taro"],
+      "hub": "Cassava varieties for food, feed and starch, with months to harvest, yield, starch content and cyanide level."
+    },
+    "taro": {
+      "name": "Taro",
+      "local": "gabi",
+      "group": "rootcrop",
+      "hero": "rootcrop",
+      "catalogue": [
+        "taro"
+      ],
       "harvest": "months from planting to harvest",
-      "guides": [["/land-preparation/root-crop-land-preparation", "Land preparation for root crops"]],
+      "guides": [
+        [
+          "/land-preparation/root-crop-land-preparation",
+          "Land preparation for root crops"
+        ]
+      ],
       "choose": "Gabi grows in wet lowland or on upland beds. Pick a variety for the land you have, and for the corm, the leaves or both.",
-      "hub": "Gabi varieties with months to harvest and corm traits."},
-    "ubi": {"name": "Ube", "local": "ube, ubi", "group": "rootcrop", "hero": "rootcrop", "catalogue": ["ubi"],
+      "hub": "Gabi varieties with months to harvest and corm traits."
+    },
+    "ubi": {
+      "name": "Ube",
+      "local": "ube, ubi",
+      "group": "rootcrop",
+      "hero": "rootcrop",
+      "catalogue": [
+        "ubi"
+      ],
       "harvest": "months from planting to harvest",
-      "guides": [["/land-preparation/root-crop-land-preparation", "Land preparation for root crops"]],
+      "guides": [
+        [
+          "/land-preparation/root-crop-land-preparation",
+          "Land preparation for root crops"
+        ]
+      ],
       "choose": "Processors pay for a deep purple flesh that stays purple when cooked. Pick a registered variety for color and yield, and plant whole small tubers or setts.",
-      "hub": "Purple yam varieties with months to harvest, yield and flesh color."},
-    "tugi": {"name": "Lesser yam", "local": "tugi", "group": "rootcrop", "hero": "rootcrop", "catalogue": [],
+      "hub": "Purple yam varieties with months to harvest, yield and flesh color."
+    },
+    "tugi": {
+      "name": "Lesser yam",
+      "local": "tugi",
+      "group": "rootcrop",
+      "hero": "rootcrop",
+      "catalogue": [],
       "harvest": "months from planting to harvest",
-      "guides": [["/land-preparation/root-crop-land-preparation", "Land preparation for root crops"]],
+      "guides": [
+        [
+          "/land-preparation/root-crop-land-preparation",
+          "Land preparation for root crops"
+        ]
+      ],
       "choose": "Tugi is a hardy yam for backyards and uplands. Pick by tuber size and taste.",
-      "hub": "Tugi varieties."},
-    "mungbean": {"name": "Mungbean", "local": "munggo", "group": "legume", "hero": "legume", "catalogue": ["mungbean"],
+      "hub": "Tugi varieties."
+    },
+    "mungbean": {
+      "name": "Mungbean",
+      "local": "munggo",
+      "group": "legume",
+      "hero": "legume",
+      "catalogue": [
+        "mungbean"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/land-preparation/legume-land-preparation", "Land preparation for legumes"]],
+      "guides": [
+        [
+          "/land-preparation/legume-land-preparation",
+          "Land preparation for legumes"
+        ]
+      ],
       "choose": "Munggo is ready in about two months, so it fits the gap after rice. Pick a variety that ripens its pods together, which saves picking rounds, and one rated against cercospora leaf spot and powdery mildew.",
-      "hub": "Munggo varieties with days to harvest, yield and seed color."},
-    "peanut": {"name": "Peanut", "local": "mani", "group": "legume", "hero": "legume", "catalogue": ["peanut"],
+      "hub": "Munggo varieties with days to harvest, yield and seed color."
+    },
+    "peanut": {
+      "name": "Peanut",
+      "local": "mani",
+      "group": "legume",
+      "hero": "legume",
+      "catalogue": [
+        "peanut"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/land-preparation/legume-land-preparation", "Land preparation for legumes"]],
+      "guides": [
+        [
+          "/land-preparation/legume-land-preparation",
+          "Land preparation for legumes"
+        ]
+      ],
       "choose": "Mani needs loose, well drained soil to fill its pods. Pick a variety by seed size for your buyer, and one rated against rust and leaf spot for the wet season.",
-      "hub": "Mani varieties with days to harvest, yield and seed size."},
-    "soybean": {"name": "Soybean", "local": "utaw, balatong", "group": "legume", "hero": "legume", "catalogue": ["soybean"],
+      "hub": "Mani varieties with days to harvest, yield and seed size."
+    },
+    "soybean": {
+      "name": "Soybean",
+      "local": "utaw, balatong",
+      "group": "legume",
+      "hero": "legume",
+      "catalogue": [
+        "soybean"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/land-preparation/legume-land-preparation", "Land preparation for legumes"]],
+      "guides": [
+        [
+          "/land-preparation/legume-land-preparation",
+          "Land preparation for legumes"
+        ]
+      ],
       "choose": "Grain soybean goes to feed and food processors, while vegetable soybean, or edamame, is picked green. Pick a variety rated against rust, the main soybean disease here.",
-      "hub": "Grain and vegetable soybean varieties with days to harvest and yield."},
-    "pigeonpea": {"name": "Pigeon pea", "local": "kadyos", "group": "legume", "hero": "legume", "catalogue": ["pigeonpea"],
+      "hub": "Grain and vegetable soybean varieties with days to harvest and yield."
+    },
+    "pigeonpea": {
+      "name": "Pigeon pea",
+      "local": "kadyos",
+      "group": "legume",
+      "hero": "legume",
+      "catalogue": [
+        "pigeonpea"
+      ],
       "harvest": "days from sowing to harvest",
-      "guides": [["/land-preparation/legume-land-preparation", "Land preparation for legumes"]],
+      "guides": [
+        [
+          "/land-preparation/legume-land-preparation",
+          "Land preparation for legumes"
+        ]
+      ],
       "choose": "Kadyos stands drought and poor soil. Pick a short duration type for a single harvest.",
-      "hub": "Kadyos varieties."},
-    "sugarcane": {"name": "Sugarcane", "local": "tubo", "group": "industrial", "hero": "sugarcane", "catalogue": ["sugarcane"],
+      "hub": "Kadyos varieties."
+    },
+    "sugarcane": {
+      "name": "Sugarcane",
+      "local": "tubo",
+      "group": "industrial",
+      "hero": "sugarcane",
+      "catalogue": [
+        "sugarcane"
+      ],
       "harvest": "months from planting to harvest",
-      "guides": [["/land-preparation/sugarcane-land-preparation", "Land preparation for sugarcane"]],
+      "guides": [
+        [
+          "/land-preparation/sugarcane-land-preparation",
+          "Land preparation for sugarcane"
+        ]
+      ],
       "unitNote": "Sugar yield is counted in LKg, bags of 50 kilograms of raw sugar per hectare.",
       "choose": "Mills pay for sugar, not cane, so compare the sugar yield in LKg per hectare as well as the tonnes of cane. Pick a variety that ratoons well, and one rated against smut and downy mildew, the diseases that cut a ratoon crop short.",
-      "hub": "Phil sugarcane varieties from the Sugar Regulatory Administration, with months to harvest, sugar yield and disease ratings."},
-    "cotton": {"name": "Cotton", "local": "bulak", "group": "industrial", "hero": "orchard", "catalogue": ["cotton"],
+      "hub": "Phil sugarcane varieties from the Sugar Regulatory Administration, with months to harvest, sugar yield and disease ratings."
+    },
+    "cotton": {
+      "name": "Cotton",
+      "local": "bulak",
+      "group": "industrial",
+      "hero": "orchard",
+      "catalogue": [
+        "cotton"
+      ],
       "harvest": "days from sowing to harvest",
       "guides": [],
       "choose": "Cotton needs a long dry spell at boll opening. Pick a variety by lint yield and fiber quality.",
-      "hub": "Cotton varieties registered in the Philippines."},
-    "abaca": {"name": "Abaca", "local": "abaka", "group": "industrial", "hero": "banana", "catalogue": ["abaca"],
+      "hub": "Cotton varieties registered in the Philippines."
+    },
+    "abaca": {
+      "name": "Abaca",
+      "local": "abaka",
+      "group": "industrial",
+      "hero": "banana",
+      "catalogue": [
+        "abaca"
+      ],
       "harvest": "months from planting to the first harvest",
       "guides": [],
       "choose": "Abaca needs rain spread through the year and a little shade. Pick a variety by fiber yield and strength, and plant clean suckers or tissue cultured plantlets.",
-      "hub": "Abaca varieties with fiber yield and strength."},
-    "rubber": {"name": "Rubber", "local": "goma", "group": "industrial", "hero": "orchard", "catalogue": ["rubber"],
+      "hub": "Abaca varieties with fiber yield and strength."
+    },
+    "rubber": {
+      "name": "Rubber",
+      "local": "goma",
+      "group": "industrial",
+      "hero": "orchard",
+      "catalogue": [
+        "rubber"
+      ],
       "harvest": "years from planting to the first tapping",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for tree crops"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for tree crops"
+        ]
+      ],
       "choose": "Rubber clones differ in latex yield and in how they take tapping and wind. Plant budded clones from an accredited nursery.",
-      "hub": "Rubber clones registered in the Philippines, with latex traits."},
-    "coconut": {"name": "Coconut", "local": "niyog", "group": "plantation", "hero": "coconut", "catalogue": ["coconut"],
+      "hub": "Rubber clones registered in the Philippines, with latex traits."
+    },
+    "coconut": {
+      "name": "Coconut",
+      "local": "niyog",
+      "group": "plantation",
+      "hero": "coconut",
+      "catalogue": [
+        "coconut"
+      ],
       "harvest": "years from planting to the first nuts",
-      "guides": [["/crops/coconut-fertilizer", "Coconut fertilizer by age"], ["/land-preparation/fruit-tree-land-preparation", "Land preparation for tree crops"]],
+      "guides": [
+        [
+          "/crops/coconut-fertilizer",
+          "Coconut fertilizer by age"
+        ],
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for tree crops"
+        ]
+      ],
       "choose": "Talls live long and stand typhoons, dwarfs bear early and are easy to harvest, and hybrids between the two give the most copra. Pick by use: copra, buko, or both. Get seednuts from a PCA accredited source.",
-      "hub": "Coconut talls, dwarfs and hybrids from the Philippine Coconut Authority, with nuts per palm and copra yield."},
-    "coffee": {"name": "Coffee", "local": "kape", "group": "plantation", "hero": "orchard", "catalogue": ["coffee"],
+      "hub": "Coconut talls, dwarfs and hybrids from the Philippine Coconut Authority, with nuts per palm and copra yield."
+    },
+    "coffee": {
+      "name": "Coffee",
+      "local": "kape",
+      "group": "plantation",
+      "hero": "orchard",
+      "catalogue": [
+        "coffee"
+      ],
       "harvest": "months from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for tree crops"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for tree crops"
+        ]
+      ],
       "choose": "Arabica wants cool highland air, robusta grows in the lowlands, and liberica, the barako, and excelsa are hardy in between. Pick the species for your elevation first, then a selection by yield and cup quality.",
-      "hub": "Arabica, robusta, liberica and excelsa coffee selections, with tree and cup traits."},
-    "cacao": {"name": "Cacao", "local": "kakaw", "group": "plantation", "hero": "orchard", "catalogue": ["cacao"],
+      "hub": "Arabica, robusta, liberica and excelsa coffee selections, with tree and cup traits."
+    },
+    "cacao": {
+      "name": "Cacao",
+      "local": "kakaw",
+      "group": "plantation",
+      "hero": "orchard",
+      "catalogue": [
+        "cacao"
+      ],
       "harvest": "months from planting to the first pods",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for tree crops"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for tree crops"
+        ]
+      ],
       "choose": "Plant grafted clones, and mix two or three, because many cacao clones need another clone nearby to set pods. Pick by pod yield and bean size.",
-      "hub": "Cacao clones registered in the Philippines, with pod and bean traits."},
-    "banana": {"name": "Banana", "local": "saging", "group": "fruit", "hero": "banana", "catalogue": ["banana"],
+      "hub": "Cacao clones registered in the Philippines, with pod and bean traits."
+    },
+    "banana": {
+      "name": "Banana",
+      "local": "saging",
+      "group": "fruit",
+      "hero": "banana",
+      "catalogue": [
+        "banana"
+      ],
       "harvest": "months from planting to the first bunch",
-      "guides": [["/crops/banana-farming-philippines", "Banana farming in the Philippines"], ["/land-preparation/banana-land-preparation", "Land preparation for banana"]],
+      "guides": [
+        [
+          "/crops/banana-farming-philippines",
+          "Banana farming in the Philippines"
+        ],
+        [
+          "/land-preparation/banana-land-preparation",
+          "Land preparation for banana"
+        ]
+      ],
       "choose": "Lakatan and latundan sell fresh, saba goes to cooking and banana cue, and Cavendish goes to export. Fusarium wilt and bunchy top end many farms, so plant clean tissue cultured plantlets, and a tolerant selection where wilt is known.",
-      "hub": "Banana cultivars and selections, from lakatan and saba to Cavendish, with bunch and fruit traits."},
-    "mango": {"name": "Mango", "local": "mangga", "group": "fruit", "hero": "orchard", "catalogue": ["mango"],
+      "hub": "Banana cultivars and selections, from lakatan and saba to Cavendish, with bunch and fruit traits."
+    },
+    "mango": {
+      "name": "Mango",
+      "local": "mangga",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "mango"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"], ["/crops/pagtatanim-ng-puno", "Pagtatanim ng puno"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ],
+        [
+          "/crops/pagtatanim-ng-puno",
+          "Pagtatanim ng puno"
+        ]
+      ],
       "choose": "The Carabao mango is the one the market wants, and the registered strains are its best trees, picked for size, sweetness and steady bearing. Buy grafted seedlings from a BPI accredited nursery so you get the strain you paid for.",
-      "hub": "Carabao and other mango strains registered in the Philippines, with fruit weight, sweetness and bearing."},
-    "papaya": {"name": "Papaya", "local": "papaya", "group": "fruit", "hero": "orchard", "catalogue": ["papaya"],
+      "hub": "Carabao and other mango strains registered in the Philippines, with fruit weight, sweetness and bearing."
+    },
+    "papaya": {
+      "name": "Papaya",
+      "local": "papaya",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "papaya"
+      ],
       "harvest": "months from planting to the first harvest",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Ringspot virus is the papaya killer, so start with clean seedlings and a tolerant variety. Pick by fruit size: small solo types for households, bigger ones for the market.",
-      "hub": "Papaya varieties with fruit size and sweetness."},
-    "pineapple": {"name": "Pineapple", "local": "pinya", "group": "fruit", "hero": "orchard", "catalogue": ["pineapple"],
+      "hub": "Papaya varieties with fruit size and sweetness."
+    },
+    "pineapple": {
+      "name": "Pineapple",
+      "local": "pinya",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "pineapple"
+      ],
       "harvest": "months from planting to harvest",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Queen types such as Formosa are small and sweet, and Smooth Cayenne is big and juicy for processing. Plant suckers or slips of one type so the field ripens together.",
-      "hub": "Pineapple varieties grown in the Philippines."},
-    "calamansi": {"name": "Calamansi", "local": "kalamansi", "group": "fruit", "hero": "citrus", "catalogue": ["calamansi"],
+      "hub": "Pineapple varieties grown in the Philippines."
+    },
+    "calamansi": {
+      "name": "Calamansi",
+      "local": "kalamansi",
+      "group": "fruit",
+      "hero": "citrus",
+      "catalogue": [
+        "calamansi"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/blog/fertilizer-for-fruit-trees", "Fertilizer for fruit trees"]],
+      "guides": [
+        [
+          "/blog/fertilizer-for-fruit-trees",
+          "Fertilizer for fruit trees"
+        ]
+      ],
       "choose": "Plant budded or marcotted trees from an accredited nursery, which bear sooner than seedlings. Pick a selection with juicy fruit that bears through the year.",
-      "hub": "Calamansi selections registered in the Philippines."},
-    "citrus": {"name": "Citrus", "local": "dalandan, dalanghita and orange", "group": "fruit", "hero": "citrus", "catalogue": ["citrus"],
+      "hub": "Calamansi selections registered in the Philippines."
+    },
+    "citrus": {
+      "name": "Citrus",
+      "local": "dalandan, dalanghita and orange",
+      "group": "fruit",
+      "hero": "citrus",
+      "catalogue": [
+        "citrus"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/blog/fertilizer-for-fruit-trees", "Fertilizer for fruit trees"]],
+      "guides": [
+        [
+          "/blog/fertilizer-for-fruit-trees",
+          "Fertilizer for fruit trees"
+        ]
+      ],
       "choose": "Sweet oranges and mandarins grow best in the cooler, drier parts of the country. Buy budded trees on a tested rootstock from an accredited nursery, and keep out greening disease.",
-      "hub": "Sweet orange, navel orange and mandarin selections registered in the Philippines."},
-    "pomelo": {"name": "Pomelo", "local": "suha", "group": "fruit", "hero": "citrus", "catalogue": ["pomelo"],
+      "hub": "Sweet orange, navel orange and mandarin selections registered in the Philippines."
+    },
+    "pomelo": {
+      "name": "Pomelo",
+      "local": "suha",
+      "group": "fruit",
+      "hero": "citrus",
+      "catalogue": [
+        "pomelo"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/blog/fertilizer-for-fruit-trees", "Fertilizer for fruit trees"]],
+      "guides": [
+        [
+          "/blog/fertilizer-for-fruit-trees",
+          "Fertilizer for fruit trees"
+        ]
+      ],
       "choose": "Davao is the home of suha. Pick a registered selection by flesh color and sweetness, and plant marcotted trees.",
-      "hub": "Suha selections with flesh color and sweetness."},
-    "durian": {"name": "Durian", "local": "durian", "group": "fruit", "hero": "orchard", "catalogue": ["durian"],
+      "hub": "Suha selections with flesh color and sweetness."
+    },
+    "durian": {
+      "name": "Durian",
+      "local": "durian",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "durian"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Davao growers plant named clones such as Puyat and Arancillo for their thick, creamy flesh and small seeds. Plant grafted trees of a known clone, and mix clones for better fruit set.",
-      "hub": "Durian clones registered in the Philippines, with fruit weight, flesh and bearing."},
-    "lanzones": {"name": "Lanzones", "local": "lansones", "group": "fruit", "hero": "orchard", "catalogue": ["lanzones"],
+      "hub": "Durian clones registered in the Philippines, with fruit weight, flesh and bearing."
+    },
+    "lanzones": {
+      "name": "Lanzones",
+      "local": "lansones",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "lanzones"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Paete and Camiguin lanzones are prized for sweet, seedless segments. Plant grafted trees, which bear years sooner than seedlings.",
-      "hub": "Lanzones selections registered in the Philippines."},
-    "rambutan": {"name": "Rambutan", "local": "rambutan", "group": "fruit", "hero": "orchard", "catalogue": ["rambutan"],
+      "hub": "Lanzones selections registered in the Philippines."
+    },
+    "rambutan": {
+      "name": "Rambutan",
+      "local": "rambutan",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "rambutan"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Pick a registered selection whose flesh comes off the seed cleanly, which buyers pay more for. Plant budded trees.",
-      "hub": "Rambutan selections with fruit size, sweetness and flesh."},
-    "mangosteen": {"name": "Mangosteen", "local": "manggustin", "group": "fruit", "hero": "orchard", "catalogue": ["mangosteen"],
+      "hub": "Rambutan selections with fruit size, sweetness and flesh."
+    },
+    "mangosteen": {
+      "name": "Mangosteen",
+      "local": "manggustin",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "mangosteen"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Mangosteen is slow, often seven years or more to bear. Plant in deep, moist soil with some shade while young.",
-      "hub": "Mangosteen selections."},
-    "jackfruit": {"name": "Jackfruit", "local": "langka", "group": "fruit", "hero": "orchard", "catalogue": ["jackfruit"],
+      "hub": "Mangosteen selections."
+    },
+    "jackfruit": {
+      "name": "Jackfruit",
+      "local": "langka",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "jackfruit"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Pick a selection by flesh: firm and crisp for fresh eating and processing, or soft and sweet. Grafted trees of a named selection bear true.",
-      "hub": "Langka selections with fruit weight and flesh."},
-    "guyabano": {"name": "Guyabano", "local": "guyabano, soursop", "group": "fruit", "hero": "orchard", "catalogue": ["guyabano"],
+      "hub": "Langka selections with fruit weight and flesh."
+    },
+    "guyabano": {
+      "name": "Guyabano",
+      "local": "guyabano, soursop",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "guyabano"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Pick a selection with big, evenly shaped fruit and few seeds. Hand pollination helps fruit set.",
-      "hub": "Guyabano selections."},
-    "avocado": {"name": "Avocado", "local": "abukado", "group": "fruit", "hero": "orchard", "catalogue": ["avocado"],
+      "hub": "Guyabano selections."
+    },
+    "avocado": {
+      "name": "Avocado",
+      "local": "abukado",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "avocado"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Grafted avocado bears sooner and true to type. Pick a selection by fruit size and flesh, and plant two kinds that flower at different times of day for better fruit set.",
-      "hub": "Avocado selections registered in the Philippines."},
-    "chico": {"name": "Chico", "local": "tsiko", "group": "fruit", "hero": "orchard", "catalogue": ["chico"],
+      "hub": "Avocado selections registered in the Philippines."
+    },
+    "chico": {
+      "name": "Chico",
+      "local": "tsiko",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "chico"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Pick a selection with big, sweet fruit and few seeds, and plant marcotted or grafted trees.",
-      "hub": "Chico selections with fruit size and sweetness."},
-    "cashew": {"name": "Cashew", "local": "kasoy", "group": "fruit", "hero": "orchard", "catalogue": ["cashew"],
+      "hub": "Chico selections with fruit size and sweetness."
+    },
+    "cashew": {
+      "name": "Cashew",
+      "local": "kasoy",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "cashew"
+      ],
       "harvest": "years from planting to the first nuts",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Kasoy stands drought and poor soil, which is why Palawan grows so much of it. Pick a selection by nut weight and shelling recovery, which decide the kernel you sell.",
-      "hub": "Kasoy selections with nut weight and kernel traits."},
-    "pili": {"name": "Pili", "local": "pili", "group": "fruit", "hero": "orchard", "catalogue": [],
+      "hub": "Kasoy selections with nut weight and kernel traits."
+    },
+    "pili": {
+      "name": "Pili",
+      "local": "pili",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
       "harvest": "years from planting to the first nuts",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Bicol grows most of the pili. Pick a registered selection by kernel weight and the share of kernel in the nut, and plant grafted trees, because seedlings can turn out male.",
-      "hub": "Pili selections from Bicol and beyond, with nut and kernel traits."},
-    "santol": {"name": "Santol", "local": "santol", "group": "fruit", "hero": "orchard", "catalogue": ["santol"],
+      "hub": "Pili selections from Bicol and beyond, with nut and kernel traits."
+    },
+    "santol": {
+      "name": "Santol",
+      "local": "santol",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "santol"
+      ],
       "harvest": "years from planting to the first fruit",
-      "guides": [["/land-preparation/fruit-tree-land-preparation", "Land preparation for fruit trees"]],
+      "guides": [
+        [
+          "/land-preparation/fruit-tree-land-preparation",
+          "Land preparation for fruit trees"
+        ]
+      ],
       "choose": "Bangkok santol is big and sweet. Pick a selection by fruit size and a thick, sweet rind.",
-      "hub": "Santol selections."},
-    "starapple": {"name": "Star apple", "local": "kaimito", "group": "fruit", "hero": "orchard", "catalogue": ["starapple"], "harvest": "years from planting to the first fruit", "guides": [], "hub": "Kaimito selections."},
-    "atis": {"name": "Sugar apple", "local": "atis", "group": "fruit", "hero": "orchard", "catalogue": ["atis"], "harvest": "years from planting to the first fruit", "guides": [], "hub": "Atis selections."},
-    "guava": {"name": "Guava", "local": "bayabas", "group": "fruit", "hero": "orchard", "catalogue": ["guava"], "harvest": "years from planting to the first fruit", "guides": [], "hub": "Bayabas selections."},
-    "tamarind": {"name": "Tamarind", "local": "sampalok", "group": "fruit", "hero": "orchard", "catalogue": ["tamarind"], "harvest": "years from planting to the first fruit", "guides": [], "hub": "Sampalok selections."},
-    "dragonfruit": {"name": "Dragon fruit", "local": "dragon fruit", "group": "fruit", "hero": "orchard", "catalogue": ["dragonfruit"], "harvest": "months from planting to the first fruit", "guides": [], "hub": "Dragon fruit types."},
-    "abiu": {"name": "Abiu", "local": "abiu", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "atemoya": {"name": "Atemoya", "local": "atemoya", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "balimbing": {"name": "Star fruit", "local": "balimbing", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "bignay": {"name": "Bignay", "local": "bignay", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "bitungol": {"name": "Governor's plum", "local": "bitungol", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "breadfruit": {"name": "Breadfruit", "local": "rimas", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "camachile": {"name": "Camachile", "local": "kamatsile", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "chesa": {"name": "Chesa", "local": "tiesa", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "duhat": {"name": "Java plum", "local": "duhat", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "hagis": {"name": "Hagis", "local": "hagis", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "katmon": {"name": "Katmon", "local": "katmon", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "longan": {"name": "Longan", "local": "longan", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "mabolo": {"name": "Mabolo", "local": "mabolo", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []},
-    "macadamia": {"name": "Macadamia", "local": "macadamia", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first nuts", "guides": []},
-    "marang": {"name": "Marang", "local": "marang", "group": "fruit", "hero": "orchard", "catalogue": [], "harvest": "years from planting to the first fruit", "guides": []}
+      "hub": "Santol selections."
+    },
+    "starapple": {
+      "name": "Star apple",
+      "local": "kaimito",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "starapple"
+      ],
+      "harvest": "years from planting to the first fruit",
+      "guides": [],
+      "hub": "Kaimito selections."
+    },
+    "atis": {
+      "name": "Sugar apple",
+      "local": "atis",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "atis"
+      ],
+      "harvest": "years from planting to the first fruit",
+      "guides": [],
+      "hub": "Atis selections."
+    },
+    "guava": {
+      "name": "Guava",
+      "local": "bayabas",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "guava"
+      ],
+      "harvest": "years from planting to the first fruit",
+      "guides": [],
+      "hub": "Bayabas selections."
+    },
+    "tamarind": {
+      "name": "Tamarind",
+      "local": "sampalok",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "tamarind"
+      ],
+      "harvest": "years from planting to the first fruit",
+      "guides": [],
+      "hub": "Sampalok selections."
+    },
+    "dragonfruit": {
+      "name": "Dragon fruit",
+      "local": "dragon fruit",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [
+        "dragonfruit"
+      ],
+      "harvest": "months from planting to the first fruit",
+      "guides": [],
+      "hub": "Dragon fruit types."
+    },
+    "abiu": {
+      "name": "Abiu",
+      "local": "abiu",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "atemoya": {
+      "name": "Atemoya",
+      "local": "atemoya",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "balimbing": {
+      "name": "Star fruit",
+      "local": "balimbing",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "bignay": {
+      "name": "Bignay",
+      "local": "bignay",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "bitungol": {
+      "name": "Governor's plum",
+      "local": "bitungol",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "breadfruit": {
+      "name": "Breadfruit",
+      "local": "rimas",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "camachile": {
+      "name": "Camachile",
+      "local": "kamatsile",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "chesa": {
+      "name": "Chesa",
+      "local": "tiesa",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "duhat": {
+      "name": "Java plum",
+      "local": "duhat",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "hagis": {
+      "name": "Hagis",
+      "local": "hagis",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "katmon": {
+      "name": "Katmon",
+      "local": "katmon",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "longan": {
+      "name": "Longan",
+      "local": "longan",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "mabolo": {
+      "name": "Mabolo",
+      "local": "mabolo",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "macadamia": {
+      "name": "Macadamia",
+      "local": "macadamia",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first nuts",
+      "guides": []
+    },
+    "marang": {
+      "name": "Marang",
+      "local": "marang",
+      "group": "fruit",
+      "hero": "orchard",
+      "catalogue": [],
+      "harvest": "years from planting to the first fruit",
+      "guides": []
+    },
+    "celery": {
+      "name": "Celery",
+      "local": "kintsay",
+      "group": "leafy",
+      "hero": "highland",
+      "catalogue": [
+        "celery"
+      ],
+      "harvest": "days from transplanting to harvest",
+      "guides": [
+        [
+          "/crops/vegetables-philippines",
+          "Vegetables in the Philippines"
+        ]
+      ],
+      "choose": "Kintsay grows best in cool weather, so most of it comes from the highlands. Pick a variety by stalk or leaf: the big stalk celery for the market, or the small leafy Chinese kind for soups.",
+      "hub": "Celery and kintsay varieties for the highlands and lowlands."
+    }
   }
 }

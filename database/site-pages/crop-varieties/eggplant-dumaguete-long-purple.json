@@ -1,7 +1,7 @@
 {
   "section": "crop-varieties",
   "slug": "eggplant-dumaguete-long-purple",
-  "sortOrder": 728,
+  "sortOrder": 783,
   "lang": "en",
   "category": "Eggplant",
   "profile": true,
@@ -12,11 +12,13 @@
   "keywords": [
     "Dumaguete Long Purple eggplant",
     "Dumaguete Long Purple",
+    "Dumaguete Long Purple OP",
+    "DLP eggplant",
     "Dumaguete Long Purple eggplant variety",
     "eggplant variety philippines",
     "Philippine Seed Board"
   ],
-  "excerpt": "Dumaguete Long Purple is a registered eggplant variety. The Philippine Seed Board approved it in 1970. UPCA bred it. It takes 95 to 105 days from transplanting to the first harvest, with 27.66 tonnes per hectare on average in the trials.",
+  "excerpt": "Dumaguete Long Purple is a registered eggplant variety, also sold or known as Dumaguete Long Purple OP or DLP eggplant. The Philippine Seed Board approved it in 1970. UPCA bred it. It takes 95 to 105 days from transplanting to the first harvest, with 27.66 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/vegetable-land-preparation.webp",
     "alt": "Rows of young eggplant on furrowed beds in Norzagaray, Bulacan, the kind of farm where Dumaguete Long Purple eggplant is grown",
@@ -25,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [eggplant variety finder](/crop-varieties/eggplant), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
+      "text": "If you came here looking for Dumaguete Long Purple OP or DLP eggplant, this is the same eggplant. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [eggplant variety finder](/crop-varieties/eggplant), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
     },
     {
       "type": "list",
@@ -42,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -59,6 +61,10 @@
         [
           "Breeder or owner",
           "UPCA"
+        ],
+        [
+          "Also known as",
+          "Dumaguete Long Purple OP, DLP eggplant"
         ],
         [
           "Days to harvest",
@@ -81,7 +87,7 @@
     },
     {
       "type": "text",
-      "text": "Dumaguete Long Purple eggplant takes 95 to 105 days from transplanting to the first harvest. That is 17.5 days longer than the average of the 9 eggplant varieties with a day count, 82.5 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 27.66 t/ha beats the average of its group, 20.34. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Dumaguete Long Purple eggplant takes 95 to 105 days from transplanting to the first harvest. That is 17.5 days longer than the average of the 9 eggplant varieties with a day count, 82.5 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 27.66 t/ha beats the average of its group, 20.34. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 100 days to first harvest (95 to 105 in the Seed Board record), DA Region 2 lists 70 to 72 days after transplanting.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -95,6 +101,28 @@
     {
       "type": "text",
       "text": "The pests and diseases that hit eggplant fields most often: [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), [bacterial wilt](/diseases/bacterial-wilt), [cutworm](/pests/cutworm), [damping off](/diseases/damping-off), [eggplant leafhopper](/pests/eggplant-leafhopper). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** 20 to 25 t/ha (Agriculture Monthly), 27.7 t/ha in the Seed Board record.",
+        "**Fruit:** Large, long and slightly tapering, shiny, greenish purple.",
+        "**Season:** All year, best yields in the cool dry months.",
+        "**Where:** Lowland to midland.",
+        "Tolerates waterlogging and long flooding.",
+        "Highly tolerant to bacterial wilt.",
+        "Used as a rootstock for grafted rainy season tomato."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: old public variety still on DA Region 2's recommended list, Agriculture Monthly featured it as a waterlogging tolerant eggplant. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -150,6 +178,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Dumaguete Long Purple OP the same as Dumaguete Long Purple?",
+          "a": "Yes. Dumaguete Long Purple OP is another name for Dumaguete Long Purple. Seed sellers use both, so ask for either one."
+        },
+        {
           "q": "How long does it take to harvest?",
           "a": "It takes 95 to 105 days from transplanting to the first harvest. Then the weather and your care decide the exact day."
         },
@@ -199,6 +231,18 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on Dumaguete Long Purple from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
+        },
+        {
+          "label": "Notes on Dumaguete Long Purple from agriculture.com.ph",
+          "url": "https://agriculture.com.ph/2019/06/24/dumaguete-long-purple-a-waterlogging-tolerant-eggplant/"
+        },
+        {
+          "label": "Notes on Dumaguete Long Purple from cagayanvalley.da.gov.ph",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Eggplant.pdf"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

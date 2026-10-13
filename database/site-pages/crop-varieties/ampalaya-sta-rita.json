@@ -1,0 +1,237 @@
+{
+  "section": "crop-varieties",
+  "slug": "ampalaya-sta-rita",
+  "sortOrder": 20,
+  "lang": "en",
+  "category": "Ampalaya",
+  "profile": true,
+  "title": "Sta. Rita ampalaya: Characteristics",
+  "metaTitle": "Sta. Rita ampalaya: Characteristics",
+  "metaDescription": "Sta. Rita ampalaya is an IPB UPLB bred open pollinated ampalaya variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "focusKeyword": "Sta. Rita ampalaya",
+  "keywords": [
+    "Sta. Rita ampalaya",
+    "Sta. Rita",
+    "Santa Rita ampalaya",
+    "Sta. Rita OPV",
+    "Sta. Rita strain",
+    "Sta. Rita ampalaya variety",
+    "ampalaya variety philippines"
+  ],
+  "excerpt": "Sta. Rita ampalaya is an IPB UPLB bred open pollinated ampalaya variety, also sold or known as Santa Rita ampalaya or Sta. Rita OPV. It is not on the NSIC registry, so the facts here come from its seller and farm sources. It comes from IPB UPLB.",
+  "heroImage": {
+    "src": "/images/site/land/cucurbit-land-preparation.webp",
+    "alt": "Ampalaya seedlings planted through plastic mulch on raised beds, the kind of farm where Sta. Rita ampalaya is grown",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you came here looking for Santa Rita ampalaya or Sta. Rita OPV, this is the same ampalaya. The facts below come from its seller and from farm sources, each one listed at the end. Compare it with the others in our [ampalaya variety finder](/crop-varieties/ampalaya), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for gourds and melons](/land-preparation/cucurbit-land-preparation)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Type:** IPB UPLB bred open pollinated."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about Sta. Rita ampalaya"
+    },
+    {
+      "type": "table",
+      "caption": "From its seller and farm sources",
+      "rows": [
+        [
+          "Trait",
+          "What the record shows"
+        ],
+        [
+          "Breeder or owner",
+          "IPB UPLB"
+        ],
+        [
+          "Also known as",
+          "Santa Rita ampalaya, Sta. Rita OPV, Sta. Rita strain"
+        ],
+        [
+          "Type",
+          "IPB UPLB bred open pollinated"
+        ],
+        [
+          "Days to harvest, per the seller",
+          "first harvest about 50 days after transplanting (Allied sheet)"
+        ],
+        [
+          "Yield, per the seller",
+          "about 7.7 t/ha in a 2006 wet season trial in La Union, tied for the highest of five entries"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long does it take, and how much does it yield?"
+    },
+    {
+      "type": "text",
+      "text": "The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "text",
+      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit ampalaya fields most often: [downy mildew of cucurbits](/diseases/downy-mildew), [melon fly](/pests/melon-fly), [squash beetle](/pests/squash-beetle), [anthracnose](/diseases/anthracnose), [Cercospora leaf spot](/diseases/cercospora-leaf-spot). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Days to harvest:** First harvest about 50 days after transplanting (Allied sheet).",
+        "**Yield:** About 7.7 t/ha in a 2006 wet season trial in La Union, tied for the highest of five entries.",
+        "**Fruit:** Cylindrical, dark green, thick fleshed, about 33 to 35 cm long.",
+        "**Season:** Dry season (Allied sheet).",
+        "**Where:** Lowland.",
+        "Vigorous vines and many fruits.",
+        "Fruits travel well."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: an IPB UPLB open pollinated ampalaya, one of the two top yielders in a 2006 DMMMSU wet season trial, and still packed by Allied Botanical (Condor). These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual ampalaya on the same ground."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where and when to plant Sta. Rita ampalaya"
+    },
+    {
+      "type": "text",
+      "text": "Pick by fruit: long and light green for most markets, short and dark for the bitter lovers. Hybrids yield more on a trellis, and some are bred to tolerate the downy mildew of the wet season. Before planting, get the field ready with our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before you buy seed"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy sealed packs or tagged sacks from an accredited dealer, and check the packing date and germination rate.",
+        "Ask your municipal agriculturist or nearby farmers how it did in your area last season.",
+        "Try it on a small area first, beside the variety you usually plant, before you switch the whole farm.",
+        "Write down the planting day, inputs and harvest, so you can compare varieties on your own ground. anee.io keeps these records for you."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next ampalaya season",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ampalaya varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the ampalaya varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Galaxy](/crop-varieties/ampalaya-galaxy)",
+        "[Jade Star](/crop-varieties/ampalaya-jade-star)",
+        "[Jadeite](/crop-varieties/ampalaya-jadeite)",
+        "[Mestisa](/crop-varieties/ampalaya-mestisa)"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is Santa Rita ampalaya the same as Sta. Rita?",
+          "a": "Yes. Santa Rita ampalaya is another name for Sta. Rita. Seed sellers use both, so ask for either one."
+        },
+        {
+          "q": "Can I save its seed?",
+          "a": "Yes. It is open pollinated, so seed from a clean, isolated field grows true. Still, certified seed gives the best start every few seasons."
+        },
+        {
+          "q": "Where can I buy seed of Sta. Rita?",
+          "a": "Ask an accredited seed dealer in your province, the seller named on this page or your municipal agriculturist. Look for the certified seed tag or a sealed pack before you pay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every ampalaya variety, side by side",
+          "url": "/crop-varieties/ampalaya"
+        },
+        {
+          "label": "Crop varieties in the Philippines",
+          "url": "/crop-varieties"
+        },
+        {
+          "label": "Land preparation for gourds and melons",
+          "url": "/land-preparation/cucurbit-land-preparation"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Fertilizer for vegetables",
+          "url": "/blog/fertilizer-for-vegetables-philippines"
+        },
+        {
+          "label": "Rice varieties of the Philippines",
+          "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Notes on Sta. Rita from alliedbotanical.com",
+          "url": "https://alliedbotanical.com/project/sta-rita-ampalaya-open-pollinated/"
+        },
+        {
+          "label": "Notes on Sta. Rita from lakasa.dmmmsu.edu.ph",
+          "url": "https://lakasa.dmmmsu.edu.ph/handle/123456789/775"
+        },
+        {
+          "label": "Notes on Sta. Rita from ukdr.uplb.edu.ph",
+          "url": "https://www.ukdr.uplb.edu.ph/etd-undergrad/2774"
+        },
+        {
+          "label": "Bureau of Plant Industry: seed and planting material certification",
+          "url": "https://bpi.da.gov.ph/"
+        }
+      ]
+    }
+  ]
+}

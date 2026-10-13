@@ -281,7 +281,7 @@
                         </button>
                         <div x-show="g" x-cloak x-transition.opacity.duration.200ms class="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-72">
                             <div class="rounded-2xl bg-white shadow-card-lg ring-1 ring-black/5 p-2">
-                                @foreach ([['crops', 'Crop guides', 'Palay, mais, gulay, coconut, banana'], ['rice-varieties', 'Rice varieties', 'Every NSIC variety: days, yield, resistance'], ['crop-varieties', 'Crop varieties', 'Corn, vegetables, root crops, fruit trees'], ['land-preparation', 'Land preparation', 'Per crop, and for sodic, acid and saline soil'], ['pests', 'Crop pests', 'Insects, kuhol, rats and birds on every crop'], ['diseases', 'Crop diseases', 'Fungi, bacteria and viruses on every crop'], ['weeds', 'Weeds and grasses', 'Grasses, sedges, broadleaves and their control'], ['blog', 'Latest in Agriculture', 'Farm news roundups, prices, fertilizer, farm words']] as [$sec, $lab, $sub])
+                                @foreach ([['crops', 'Crop guides', 'Palay, mais, gulay, coconut, banana'], ['rice-varieties', 'Rice varieties', 'Every NSIC variety: days, yield, resistance'], ['crop-varieties', 'Crop varieties', 'Rice, corn, vegetables, root crops, fruit trees'], ['land-preparation', 'Land preparation', 'Per crop, and for sodic, acid and saline soil'], ['pests', 'Crop pests', 'Insects, kuhol, rats and birds on every crop'], ['diseases', 'Crop diseases', 'Fungi, bacteria and viruses on every crop'], ['weeds', 'Weeds and grasses', 'Grasses, sedges, broadleaves and their control'], ['blog', 'Latest in Agriculture', 'Farm news roundups, prices, fertilizer, farm words']] as [$sec, $lab, $sub])
                                     <a href="{{ url('/' . $sec) }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50">
                                         <span class="block text-sm font-bold text-gray-900">{{ $lab }}</span>
                                         <span class="block text-xs font-medium text-gray-500">{{ $sub }}</span>
@@ -356,7 +356,7 @@
             $pmGuides = [
                 ['crops', 'Crop guides', 'Palay, mais, gulay, coconut, banana', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 100],
                 ['rice-varieties', 'Rice varieties', 'Every NSIC variety, side by side', 'M12 21V9m0 0c-2.5-3-5.5-3.5-8-3 .5 3 3 5.5 8 3zm0 0c2.5-3 5.5-3.5 8-3-.5 3-3 5.5-8 3zM12 9V3', 45],
-                ['crop-varieties', 'Crop varieties', 'Corn, vegetables, root crops, fruit', 'M12 21V10m0 0a4 4 0 100-8 4 4 0 000 8zm0 0c-3 0-6 2-7 5m7-5c3 0 6 2 7 5', 120],
+                ['crop-varieties', 'Crop varieties', 'Rice, corn, vegetables, fruit trees', 'M12 21V10m0 0a4 4 0 100-8 4 4 0 000 8zm0 0c-3 0-6 2-7 5m7-5c3 0 6 2 7 5', 120],
                 ['land-preparation', 'Land preparation', 'Per crop and per soil', 'M3 17l4-4 4 4 4-6 6 6M3 21h18M12 3v4m-4-2l1.5 1.5M16 5l-1.5 1.5', 60],
                 ['pests', 'Crop pests', 'Insects, kuhol, rats and birds', 'M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z', 30],
                 ['diseases', 'Crop diseases', 'Fungi, bacteria and viruses', 'M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3zM9 12l2 2 4-4', 0],

@@ -108,9 +108,9 @@ class SitePages
             'label' => 'Crop Varieties',
             'crumb' => 'Crop varieties',
             'hubTitle' => 'Crop Varieties in the Philippines',
-            'metaTitle' => 'Crop Varieties in the Philippines: Corn, Vegetables, Fruit',
-            'metaDescription' => 'Every registered variety of corn, vegetables, root crops, legumes, sugarcane and fruit trees in the Philippines, plus the seed farmers buy most.',
-            'intro' => 'Corn hybrids, vegetable seed, root crops, legumes, sugarcane and fruit trees: every variety on the national registry, plus the ones farmers buy most, each with its days to harvest, yield and where it grows best.',
+            'metaTitle' => 'Crop Varieties in the Philippines: Rice, Corn, Vegetables',
+            'metaDescription' => 'Every registered variety of rice, corn, vegetables, root crops, legumes, sugarcane and fruit trees in the Philippines, plus the seed farmers buy most.',
+            'intro' => 'Rice and corn hybrids, vegetable seed, root crops, legumes, sugarcane and fruit trees: every variety on the national registry, plus the ones farmers buy most, each with its days to harvest, yield and where it grows best.',
             'kicker' => 'Crop varieties',
         ],
         'blog' => [

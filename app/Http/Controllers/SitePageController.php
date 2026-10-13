@@ -85,6 +85,10 @@ class SitePageController extends Controller
     {
         $section = (string) $request->route('section');
         $slug = (string) $request->route('slug');
+        // Rice is a crop variety too; its finder lives at /rice-varieties (2026-10-14).
+        if ($section === 'crop-varieties' && $slug === 'rice') {
+            return redirect(SitePages::url('rice-varieties'), 301);
+        }
         // A crop's own variety finder: /crop-varieties/corn (2026-10-13).
         if ($section === 'crop-varieties' && ($crop = \App\Support\CropVarieties::cropBySlug($slug))) {
             return view('public.site.crop-varieties-crop', [

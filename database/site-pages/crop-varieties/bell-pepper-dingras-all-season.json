@@ -1,7 +1,7 @@
 {
   "section": "crop-varieties",
   "slug": "bell-pepper-dingras-all-season",
-  "sortOrder": 40,
+  "sortOrder": 50,
   "lang": "en",
   "category": "Bell pepper",
   "profile": true,
@@ -137,7 +137,9 @@
       "ordered": false,
       "items": [
         "[Yolo Wonder](/crop-varieties/bell-pepper-yolo-wonder): 90 to 110 days, 14.67 t/ha, 1970",
-        "[California Wonder](/crop-varieties/bell-pepper-california-wonder): 90 to 100 days, 11.63 t/ha, 1970"
+        "[California Wonder](/crop-varieties/bell-pepper-california-wonder): 90 to 100 days, 11.63 t/ha, 1970",
+        "[Kayen Premium Select](/crop-varieties/bell-pepper-kayen-premium-select)",
+        "[Coralee](/crop-varieties/bell-pepper-coralee)"
       ]
     },
     {

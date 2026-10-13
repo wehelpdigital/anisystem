@@ -1,7 +1,7 @@
 {
   "section": "crop-varieties",
   "slug": "bell-pepper-california-wonder",
-  "sortOrder": 39,
+  "sortOrder": 49,
   "lang": "en",
   "category": "Bell pepper",
   "profile": true,
@@ -12,11 +12,12 @@
   "keywords": [
     "California Wonder bell pepper",
     "California Wonder",
+    "California Wonder sweet pepper",
     "California Wonder bell pepper variety",
     "bell pepper variety philippines",
     "Philippine Seed Board"
   ],
-  "excerpt": "California Wonder is a registered bell pepper variety. The Philippine Seed Board approved it in 1970. Seed bred it. It takes 90 to 100 days from transplanting to the first harvest, with 11.63 tonnes per hectare on average in the trials.",
+  "excerpt": "California Wonder is a registered bell pepper variety, also sold or known as California Wonder sweet pepper. The Philippine Seed Board approved it in 1970. Seed bred it. It takes 90 to 100 days from transplanting to the first harvest, with 11.63 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-vegetables-philippines.webp",
     "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet, the kind of farm where California Wonder bell pepper is grown",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [bell pepper variety finder](/crop-varieties/bell-pepper), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
+      "text": "If you came here looking for California Wonder sweet pepper, this is the same bell pepper. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [bell pepper variety finder](/crop-varieties/bell-pepper), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
     },
     {
       "type": "list",
@@ -42,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -61,6 +62,10 @@
           "Seed"
         ],
         [
+          "Also known as",
+          "California Wonder sweet pepper"
+        ],
+        [
           "Days to harvest",
           "90 to 100 days"
         ],
@@ -77,7 +82,7 @@
     },
     {
       "type": "text",
-      "text": "California Wonder bell pepper takes 90 to 100 days from transplanting to the first harvest. That is 3.3 days faster than the average of the 3 bell pepper varieties with a day count, 98.3 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 11.63 t/ha trails the average of its group, 13.63. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "California Wonder bell pepper takes 90 to 100 days from transplanting to the first harvest. That is 3.3 days faster than the average of the 3 bell pepper varieties with a day count, 98.3 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 11.63 t/ha trails the average of its group, 13.63. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives first harvest 70 to 75 days after transplanting (Allied, Ramgo says 75), the 1970 Seed Board row gives 90 to 100 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -91,6 +96,27 @@
     {
       "type": "text",
       "text": "The pests and diseases that hit bell pepper fields most often: [anthracnose](/diseases/anthracnose), [bacterial wilt](/diseases/bacterial-wilt), [Cercospora leaf spot](/diseases/cercospora-leaf-spot), [Corn earworm](/pests/corn-earworm), [cutworm](/pests/cutworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** 11.6 t/ha in the Seed Board data.",
+        "**Fruit:** Large, blocky, thick walled, green ripening to red, 150 to 200 g.",
+        "**Season:** All year in the uplands, dry season in the lowlands (Seed Board: plant October to December at low elevation).",
+        "**Where:** Lowland to highland.",
+        "Can be grown in the wet season under a rain shelter (Allied).",
+        "Tolerant to leaf spot and whitefly (Ramgo)."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: the classic bell pepper: on the Philippine Seed Board list since 1970 and still sold by both Ramgo and Allied Botanical. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual bell pepper on the same ground."
     },
     {
       "type": "heading",
@@ -137,12 +163,18 @@
       "ordered": false,
       "items": [
         "[Dingras All Season](/crop-varieties/bell-pepper-dingras-all-season): 90 to 110 days, 14.6 t/ha, 1970",
-        "[Yolo Wonder](/crop-varieties/bell-pepper-yolo-wonder): 90 to 110 days, 14.67 t/ha, 1970"
+        "[Yolo Wonder](/crop-varieties/bell-pepper-yolo-wonder): 90 to 110 days, 14.67 t/ha, 1970",
+        "[Kayen Premium Select](/crop-varieties/bell-pepper-kayen-premium-select)",
+        "[Coralee](/crop-varieties/bell-pepper-coralee)"
       ]
     },
     {
       "type": "faq",
       "items": [
+        {
+          "q": "Is California Wonder sweet pepper the same as California Wonder?",
+          "a": "Yes. California Wonder sweet pepper is another name for California Wonder. Seed sellers use both, so ask for either one."
+        },
         {
           "q": "How long does it take to harvest?",
           "a": "It takes 90 to 100 days from transplanting to the first harvest. Then the weather and your care decide the exact day."
@@ -193,6 +225,18 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on California Wonder from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
+        },
+        {
+          "label": "Notes on California Wonder from alliedbotanical.com",
+          "url": "https://alliedbotanical.com/project/california-wonder-bell-pepper-open-pollinated/"
+        },
+        {
+          "label": "Notes on California Wonder from ramgoseeds.com",
+          "url": "https://www.ramgoseeds.com/pepper-bell-1/california-wonder"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

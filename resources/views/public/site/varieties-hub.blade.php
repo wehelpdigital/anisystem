@@ -65,7 +65,8 @@
                 '@type' => 'BreadcrumbList',
                 'itemListElement' => [
                     ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
-                    ['@type' => 'ListItem', 'position' => 2, 'name' => $meta['crumb'], 'item' => $S::url($section)],
+                    ['@type' => 'ListItem', 'position' => 2, 'name' => 'Crop varieties', 'item' => $S::url('crop-varieties')],
+                    ['@type' => 'ListItem', 'position' => 3, 'name' => 'Rice', 'item' => $S::url($section)],
                 ],
             ],
         ],
@@ -105,7 +106,9 @@
             <nav class="sp-crumbs" aria-label="Breadcrumb">
                 <a href="{{ url('/') }}">Home</a>
                 <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                <span>{{ $meta['crumb'] }}</span>
+                <a href="{{ $S::url('crop-varieties') }}">Crop varieties</a>
+                <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                <span>Rice</span>
             </nav>
             <div class="wk-hero mt-5">
                 <div>

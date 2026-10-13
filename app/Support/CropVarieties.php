@@ -81,6 +81,26 @@ class CropVarieties
         return array_values(array_filter(self::all(), fn ($v) => $v['crop'] === $key));
     }
 
+    /**
+     * The crumbs between Home and a variety page (2026-10-14): rice is one of
+     * the crop varieties too, so both sections read Crop varieties, then the
+     * crop's finder. Null for any other section. [[name, url], ...]
+     */
+    public static function trail(string $section, ?string $slug = null): ?array
+    {
+        $top = ['Crop varieties', url('/crop-varieties')];
+        if ($section === 'rice-varieties') {
+            return [$top, ['Rice', url('/rice-varieties')]];
+        }
+        if ($section !== 'crop-varieties') {
+            return null;
+        }
+        $v = $slug ? collect(self::all())->firstWhere('slug', $slug) : null;
+        $c = $v ? (self::crops()[$v['crop']] ?? null) : null;
+
+        return $c && $c['hasHub'] ? [$top, [$c['name'], url('/crop-varieties/' . $c['slug'])]] : [$top];
+    }
+
     /** The hero photo of a crop: [src, alt]. */
     public static function hero(string $key): array
     {

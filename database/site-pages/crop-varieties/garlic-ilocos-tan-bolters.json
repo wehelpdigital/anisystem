@@ -1,22 +1,23 @@
 {
   "section": "crop-varieties",
   "slug": "garlic-ilocos-tan-bolters",
-  "sortOrder": 733,
+  "sortOrder": 796,
   "lang": "en",
   "category": "Garlic",
   "profile": true,
-  "title": "Ilocos Tan Bolters garlic: Yield, Maturity and Characteristics",
+  "title": "Ilocos Tan Bolters garlic (Tan Bolters): Yield, Maturity and Characteristics",
   "metaTitle": "Ilocos Tan Bolters garlic: Yield and Maturity",
-  "metaDescription": "Ilocos Tan Bolters garlic is a garlic variety from MMSU. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Ilocos Tan Bolters garlic is a garlic variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Ilocos Tan Bolters garlic",
   "keywords": [
     "Ilocos Tan Bolters garlic",
     "Ilocos Tan Bolters",
+    "Tan Bolters",
     "Ilocos Tan Bolters garlic variety",
     "garlic variety philippines",
     "NSIC 2017 Gr 06"
   ],
-  "excerpt": "Ilocos Tan Bolters is a registered garlic variety. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Gr 06. MMSU bred it. It takes about 110 days from planting to harvest, with 3,530 kilograms per hectare on average in the trials.",
+  "excerpt": "Ilocos Tan Bolters is a registered garlic variety, also sold or known as Tan Bolters. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Gr 06. MMSU bred it. It takes about 110 days from planting to harvest, with 3,530 kilograms per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/onion-garlic-land-preparation.webp",
     "alt": "Onion plants in beds separated by grassy paths on a Philippine farm, the kind of farm where Ilocos Tan Bolters garlic is grown",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
+      "text": "If you came here looking for Tan Bolters, this is the same garlic. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -60,6 +61,10 @@
         [
           "Breeder or owner",
           "MMSU"
+        ],
+        [
+          "Also known as",
+          "Tan Bolters"
         ],
         [
           "Days to harvest",
@@ -110,7 +115,7 @@
     },
     {
       "type": "text",
-      "text": "Ilocos Tan Bolters garlic takes about 110 days from planting to harvest. That is 3.7 days faster than the average of the 7 garlic varieties with a day count, 113.7 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 3,530 kg/ha trails the average of its group, 5817.14. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Ilocos Tan Bolters garlic takes about 110 days from planting to harvest. That is 3.7 days faster than the average of the 7 garlic varieties with a day count, 113.7 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 3,530 kg/ha trails the average of its group, 5817.14. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 110 days after planting (NSIC), BPI gives 105 to 120 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -178,6 +183,27 @@
     {
       "type": "heading",
       "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** 3.53 t/ha in the NSIC data.",
+        "**Fruit:** Globe bulb, brown clove skin, white outer skin with brown stripes, cloves bigger than Ilocos White (BPI).",
+        "**Season:** Dry season.",
+        "Moderately resistant to purple blotch, Cercospora leaf spot, Fusarium bulb rot, thrips, leaf folder and mites (NSIC).",
+        "Keeps well (BPI).",
+        "BPI's guide had not yet recommended it officially for commercial planting."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: mMSU variety registered with NSIC in 2017, BPI's guide notes its cloves are bigger than Ilocos White's. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+    },
+    {
+      "type": "heading",
+      "level": 2,
       "text": "Where and when to plant Ilocos Tan Bolters garlic"
     },
     {
@@ -229,6 +255,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Tan Bolters the same as Ilocos Tan Bolters?",
+          "a": "Yes. Tan Bolters is another name for Ilocos Tan Bolters, registered as NSIC 2017 Gr 06. Seed sellers use both, so ask for either one."
+        },
+        {
           "q": "How long does it take to harvest?",
           "a": "It takes about 110 days from planting to harvest. Then the weather and your care decide the exact day."
         },
@@ -278,6 +308,14 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on Ilocos Tan Bolters from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
+        },
+        {
+          "label": "Notes on Ilocos Tan Bolters from buplant.da.gov.ph",
+          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Garlic-Production-Guide.pdf"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

@@ -1,13 +1,13 @@
 {
   "section": "crop-varieties",
   "slug": "garlic-batanes-red",
-  "sortOrder": 731,
+  "sortOrder": 794,
   "lang": "en",
   "category": "Garlic",
   "profile": true,
   "title": "Batanes Red garlic: Yield, Maturity and Characteristics",
   "metaTitle": "Batanes Red garlic: Yield, Maturity and Characteristics",
-  "metaDescription": "Batanes Red garlic is a garlic variety from DA RFO I. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Batanes Red garlic is a garlic variety. About 150 days to harvest. See its ratings and traits. Compare it with others. Free guide.",
   "focusKeyword": "Batanes Red garlic",
   "keywords": [
     "Batanes Red garlic",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
+      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "From the NSIC registry and its seller",
       "rows": [
         [
           "Trait",
@@ -114,7 +114,7 @@
     },
     {
       "type": "text",
-      "text": "Batanes Red garlic takes about 150 days from planting to harvest. That is 36.3 days longer than the average of the 7 garlic varieties with a day count, 113.7 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8,440 kg/ha beats the average of its group, 5817.14. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Batanes Red garlic takes about 150 days from planting to harvest. That is 36.3 days longer than the average of the 7 garlic varieties with a day count, 113.7 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8,440 kg/ha beats the average of its group, 5817.14. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 150 days after planting.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -178,6 +178,26 @@
     {
       "type": "text",
       "text": "It is rhomboid."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield:** 8.44 t/ha on raised beds, 6.70 t/ha with minimum tillage (NSIC trials).",
+        "**Fruit:** Rhomboid bulb with a prominent base plate, violet cloves and violet outer skin.",
+        "**Season:** Dry season, needs cool, windy weather during the growing period.",
+        "Moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot (NSIC).",
+        "Only slight thrips, leaf folder and mite damage in the NSIC trials."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: registered with NSIC in 2017, the highest raised bed yield among the seven NSIC garlic entries, but the slowest to mature. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -282,6 +302,10 @@
         {
           "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
           "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "Notes on Batanes Red from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",
