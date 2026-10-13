@@ -1,0 +1,319 @@
+{
+  "section": "blog",
+  "slug": "farm-app-for-android",
+  "sortOrder": 1190,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "Where Can I Download a Farm Management App for Android?",
+  "metaTitle": "Farm App for Android: Where to Get It and How to Install",
+  "metaDescription": "Need a farm app for Android? Get PhilRice's rice apps on Google Play, or add anee.io to your home screen from Chrome. Steps, checks and costs here.",
+  "focusKeyword": "farm app for android",
+  "keywords": [
+    "farm app for android",
+    "farm management app"
+  ],
+  "excerpt": "You can download a farm app for Android from Google Play, where PhilRice lists rice apps such as the PalayCheck App and Binhing Palay. anee.io, a farm app built for Filipino farmers, works another way. It is a web app, so you open anee.io in Chrome and install it to your home screen. It then opens like any other app, offline mode included, but it is not in the Play Store.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-app-for-android.webp",
+    "alt": "A farm app for Android on three phone screens: Quick Capture taking a photo of the crop, Anee saying hello, and a farm map centred on the phone's location",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Most farmers look for apps in the Play Store first, and that works for many tools. But some farm apps, anee.io among them, are web apps. They live on the web and install from the browser instead of a store.\n\nBoth kinds run on Android phones. So the better question is whether an app fits your phone, your signal and your farm. Here is where to get farm apps, how to install anee.io step by step, and what to check before you install anything."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "PhilRice's rice apps are on Google Play, and its Rice Apps page also offers APK files.",
+        "anee.io is not in the Play Store. Open it in Chrome, log in, then choose Install from the menu.",
+        "Before you install any farm app, check its permissions, storage, offline use, data use and language.",
+        "anee.io's Libre plan is free, with a few ads. Paid plans start at PHP 70 a month."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where can I download a farm management app for Android?"
+    },
+    {
+      "type": "text",
+      "text": "There are four ways a farm management app reaches an Android phone. Whichever way you choose, get the app from its maker."
+    },
+    {
+      "type": "table",
+      "caption": "Four ways to get a farm app on an Android phone",
+      "rows": [
+        [
+          "Where",
+          "What you get",
+          "Examples you can check"
+        ],
+        [
+          "Google Play Store",
+          "An app installed and updated by the store",
+          "The PalayCheck App and Binhing Palay from PhilRice"
+        ],
+        [
+          "An official APK file",
+          "The same app as a file, for phones without Google Play",
+          "The APK links on PhilRice's Rice Apps page"
+        ],
+        [
+          "A web app, installed from Chrome",
+          "An app icon on your home screen, with updates coming from the web",
+          "anee.io"
+        ],
+        [
+          "A web page",
+          "A tool you open in the browser each time",
+          "The Rice Crop Manager Advisory Service of the DA and PhilRice"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "On Google Play, the PalayCheck App shows a price of zero and more than 10,000 downloads. It builds a rice calendar from your variety and planting method, and it logs expenses and harvest. Our guide to the [best free farm app](/blog/free-farm-app-philippines) compares the free tools in more detail."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I install anee.io on an Android phone?"
+    },
+    {
+      "type": "text",
+      "text": "It takes about a minute with signal. These steps follow Google's own Chrome Help."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Open Chrome",
+          "text": "Use Chrome on your Android phone, then type anee.io in the address bar."
+        },
+        {
+          "title": "Sign up or log in",
+          "text": "Create a free account on the [sign up page](/signup), or log in. The app then opens on your own farm."
+        },
+        {
+          "title": "Tap the menu",
+          "text": "Tap More, the three dots on the right of the address bar."
+        },
+        {
+          "title": "Tap Install",
+          "text": "Choose Install and create shortcut, then Install. The words can differ by phone, so look for Install or Add to Home screen if you do not see it."
+        },
+        {
+          "title": "Open it from your home screen",
+          "text": "The anee.io icon now sits with your other apps. It opens in its own window, without the browser's address bar."
+        },
+        {
+          "title": "Open your season once with signal",
+          "text": "anee.io then keeps your recent seasons on the phone, so the board opens in the field with no signal."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Offline mode is on for every plan, the free one too. You tick tasks and write notes in the paddy, and the changes sync when the signal returns. Our guide to a [farm app without internet](/blog/farm-app-without-internet) explains how that works."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Install APK files only from the maker",
+      "text": "If your phone has no Google Play, an APK file is the other way in. Download it only from the maker's own page, such as PhilRice's Rice Apps page. Never install one that a stranger forwards in a group chat, because nobody can tell what someone changed inside it."
+    },
+    {
+      "type": "cta",
+      "title": "Put anee.io on your home screen",
+      "text": "Sign up free in Chrome, then tap Install. Your season opens like any other app, even with no signal.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should I check before installing a farm app for Android?"
+    },
+    {
+      "type": "text",
+      "text": "Read the store page or the website first. Then test the app for a week on one lot before you put the whole farm in it."
+    },
+    {
+      "type": "table",
+      "caption": "Checks before you install a farm app, and how anee.io answers each",
+      "rows": [
+        [
+          "Check",
+          "What to look for",
+          "anee.io"
+        ],
+        [
+          "Permissions",
+          "Camera, microphone and location only when you use them",
+          "Chrome asks the first time, and you can allow it once, every visit or never"
+        ],
+        [
+          "Storage",
+          "Room on your phone for the app and its saved data",
+          "No store download, and photos count toward your plan's online storage, 1 GB on Libre"
+        ],
+        [
+          "Works offline",
+          "Turn on airplane mode and try to tick a task",
+          "The board and notes work, while Anee and the weather wait for signal"
+        ],
+        [
+          "Data use",
+          "Photos and videos use far more data than text",
+          "Ticks and notes are small, so keep video clips short"
+        ],
+        [
+          "Language",
+          "Words your family and crew can read",
+          "Screens in English, and Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English"
+        ],
+        [
+          "Who answers you",
+          "A real contact, and a recent update",
+          "Email support@anee.io, answered by a person, usually within a business day"
+        ],
+        [
+          "Price",
+          "Free, with ads, or paid, and how you pay",
+          "Libre is free with a few ads, and paid plans go by GCash or bank transfer"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What Android permissions mean"
+    },
+    {
+      "type": "text",
+      "text": "Android Help lists the choices for camera, microphone and location. You can allow them only while you use the app, have the phone ask every time, or not allow them. To change a store app later, go to Settings, Apps, pick the app, then Permissions. For a web app, open Chrome's Settings, then Site settings."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which farm apps do Filipino farmers use?"
+    },
+    {
+      "type": "text",
+      "text": "We found no official count of farm app users in the Philippines. So here are the kinds of apps farmers use, with examples you can check yourself."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Rice advisory apps:** PhilRice lists Binhing Palay, the PalayCheck App, the MOET app, the LCC app and the RCM Advisory Service on its Rice Apps page.",
+        "**Planning and record apps:** they date the work and add up costs and harvests. anee.io is one, built for Filipino farmers, and our guide to the [best farm management app](/blog/farm-management-app-philippines) shows what to expect.",
+        "**Pest and disease photo apps:** you take a photo and get a likely cause. See our guide to the [plant disease identification app](/blog/plant-disease-identification-app).",
+        "**Weather apps:** forecasts, rain radar and typhoon warnings for your town.",
+        "**Chat and community apps:** where growers trade advice and prices with each other."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "You do not need one app for everything. A rice farmer might keep the PhilRice apps for advice, a weather app for rain, and one app for the season's plan and records."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is a web app as good as a Play Store app?"
+    },
+    {
+      "type": "text",
+      "text": "For daily farm work, it does the same job. It has an icon on your home screen, opens in its own window and keeps working offline. Still, there are two differences to know. First, you will not find anee.io by searching the Play Store. Second, offline changes that have not synced yet live in Chrome. So do not clear Chrome's data for anee.io before you reach signal."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm apps for Android"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is anee.io on the Google Play Store?",
+          "a": "No. anee.io is a web app, so you install it from Chrome instead. Open anee.io, log in, tap the menu and choose Install, and it sits on your home screen like any other app."
+        },
+        {
+          "q": "How do I remove a web app from my Android phone?",
+          "a": "Google's Chrome Help says to open Settings, then Apps, then See all apps. Tap the web app and choose Uninstall. Sync your changes first, because records already synced stay in your account."
+        },
+        {
+          "q": "Do I need mobile data every day?",
+          "a": "No. Offline mode keeps the board, notes and growth stages working without signal, on every plan. Your changes sync when you reach signal. Anee, the weather and the community still need a connection."
+        },
+        {
+          "q": "Can I use the same account on a computer?",
+          "a": "Yes. anee.io runs in the browser of any phone, tablet or computer, and the same account works on each. You can plan on a laptop at home and tick tasks on the phone in the field."
+        },
+        {
+          "q": "Is it safe to install an APK file?",
+          "a": "Only from the maker's own page, such as the APK links on PhilRice's Rice Apps page. A file passed around in a chat group may not be the original. When in doubt, use the Play Store or a web app instead."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "A farm app that works without internet",
+          "url": "/blog/farm-app-without-internet"
+        },
+        {
+          "label": "Best free farm app for Filipino farmers",
+          "url": "/blog/free-farm-app-philippines"
+        },
+        {
+          "label": "A Tagalog farm app",
+          "url": "/blog/tagalog-farm-app"
+        },
+        {
+          "label": "Best rice farming app",
+          "url": "/blog/rice-farming-app"
+        },
+        {
+          "label": "Offline mode in anee.io",
+          "url": "/features/offline-farm-app"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Google Chrome Help: Use web apps on an Android phone",
+          "url": "https://support.google.com/chrome/answer/9658361?hl=en&co=GENIE.Platform%3DAndroid"
+        },
+        {
+          "label": "Google Chrome Help: Change site settings permissions on Android",
+          "url": "https://support.google.com/chrome/answer/114662?hl=en&co=GENIE.Platform%3DAndroid"
+        },
+        {
+          "label": "Android Help: Change app permissions on your Android phone",
+          "url": "https://support.google.com/android/answer/9431959?hl=en"
+        },
+        {
+          "label": "PhilRice: Rice Apps (Google Play and APK links)",
+          "url": "https://www.philrice.gov.ph/rice-apps/"
+        },
+        {
+          "label": "Google Play: PalayCheck App by PhilRice",
+          "url": "https://play.google.com/store/apps/details?id=com.philrice.palaycheckapp"
+        }
+      ]
+    }
+  ]
+}

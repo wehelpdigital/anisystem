@@ -45,7 +45,10 @@
     "banghay ng alamat ng palay",
     "rice breed",
     "jackpot rice variety maturity",
-    "402 rice variety characteristics"
+    "402 rice variety characteristics",
+    "palay at bigas",
+    "palay drawing",
+    "palay scientific name"
   ],
   "excerpt": "Palay is rice that still wears its husk. It is the grain you harvest, dry and sell before any mill touches it. This guide explains what palay means in English and names the parts of the grain. It also follows the plant from seed to harvest and shows how the grain turns into the rice on your table.",
   "heroImage": {
@@ -56,7 +59,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "In the field, three words name the same grain at different steps. Palay is the crop and the unmilled grain, bigas is milled rice, and kanin is cooked rice. The price changes at each step, so a farmer who knows seed class and moisture sells better and loses less."
+      "text": "In the field, three words name the same grain at different steps. Palay is the crop and the unmilled grain, bigas is milled rice, and kanin is cooked rice. So palay at bigas are two goods with two prices, not one. Because the price changes at each step, a farmer who knows seed class and moisture sells better and loses less."
     },
     {
       "type": "heading",
@@ -133,7 +136,7 @@
     },
     {
       "type": "text",
-      "text": "Palay to rice takes three steps: drying, hulling and polishing. First dry the grain to 12 to 14 percent moisture within 12 to 24 hours after threshing, as PalayCheck advises. Wet grain left in a pile heats up, turns yellow and mills badly.\n\nThen the mill removes the hull, and a polisher strips off the bran. The share of milled rice you get back is the milling recovery. In November 2024 the PSA Board approved 63.0 percent as the official rate, effective from 2025. Before that, the rate was 65.4 percent."
+      "text": "Palay to rice takes three steps: drying, hulling and polishing. First [dry the grain](/blog/palay-drying) to 12 to 14 percent moisture within 12 to 24 hours after threshing, as PalayCheck advises. Wet grain left in a pile heats up, turns yellow and mills badly.\n\nThen the mill removes the hull, and a polisher strips off the bran. The share of milled rice you get back is the milling recovery. In November 2024 the PSA Board approved 63.0 percent as the official rate, effective from 2025. Before that, the rate was 65.4 percent."
     },
     {
       "type": "table",
@@ -227,7 +230,7 @@
     },
     {
       "type": "text",
-      "text": "If you need to draw one instead, a palayan drawing usually shows these paddies with dikes, a carabao, a small hut and mountains behind. Our [Palayan, Nueva Ecija page](/blog/palayan-nueva-ecija) has a simple palayan drawing guide you can follow."
+      "text": "If you need to draw one instead, a palayan drawing usually shows these paddies with dikes, a carabao, a small hut and mountains behind. Our [Palayan, Nueva Ecija page](/blog/palayan-nueva-ecija) has a simple palayan drawing guide you can follow. For the plant alone, follow our [palay drawing guide](/blog/palay-drawing)."
     },
     {
       "type": "callout",
@@ -242,7 +245,7 @@
     },
     {
       "type": "text",
-      "text": "Our Filipino guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) walks through every step, from punla to pag aani ng palay. It covers the seedbed, direct seeding with tools like the palatak palay seeder, water, abono timing and the treser ng palay at harvest.\n\nWeeds and pests can eat into your yield if you let them. PalayCheck says to control weeds in the first 45 days, so watch for grasses, broadleaves and any sedge weed such as Cyperus iria. After that, watch for the [rice insects](/pests/rice-insects) that come with each stage. For nutrients, start with our guide to [fertilizer for rice](/blog/fertilizer-for-rice)."
+      "text": "Our Filipino guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) walks through every step, from punla to pag aani ng palay. It covers the seedbed, direct seeding with tools like the palatak palay seeder, water, abono timing and the treser ng palay at harvest. To score your season, use the nine [PalayCheck key checks](/blog/palaycheck-key-checks).\n\nWeeds and pests can eat into your yield if you let them. PalayCheck says to control weeds in the first 45 days, so watch for grasses, broadleaves and any sedge weed such as Cyperus iria. After that, watch for the [rice insects](/pests/rice-insects) that come with each stage. For nutrients, start with our guide to [fertilizer for rice](/blog/fertilizer-for-rice)."
     },
     {
       "type": "cta",
@@ -262,6 +265,10 @@
         {
           "q": "What is palay in English?",
           "a": "Palay in English is paddy, rough rice or unhusked rice. Bigas is milled rice and kanin is cooked rice."
+        },
+        {
+          "q": "What is the scientific name of palay?",
+          "a": "The scientific name of palay is Oryza sativa, known as Asian cultivated rice. The only other cultivated rice species is Oryza glaberrima, or African rice."
         },
         {
           "q": "What is the difference between palay and rice?",
@@ -294,20 +301,20 @@
           "url": "/crops/rice-varieties-philippines"
         },
         {
-          "label": "Palay price today",
-          "url": "/blog/palay-price-philippines"
+          "label": "PalayCheck key checks",
+          "url": "/blog/palaycheck-key-checks"
         },
         {
-          "label": "Fertilizer for rice",
-          "url": "/blog/fertilizer-for-rice"
+          "label": "Palay drying",
+          "url": "/blog/palay-drying"
         },
         {
-          "label": "Rice insects and how to spot them",
-          "url": "/pests/rice-insects"
+          "label": "Palayisdaan: rice and fish farming",
+          "url": "/blog/palayisdaan"
         },
         {
-          "label": "Growth stages and weather in anee.io",
-          "url": "/features/growth-stages-and-weather"
+          "label": "Palay drawing",
+          "url": "/blog/palay-drawing"
         }
       ]
     },
@@ -337,6 +344,10 @@
         {
           "label": "Narra, Palawan and its Palay Festival",
           "url": "https://en.wikipedia.org/wiki/Narra,_Palawan"
+        },
+        {
+          "label": "Wikipedia: Oryza sativa, Asian cultivated rice",
+          "url": "https://en.wikipedia.org/wiki/Oryza_sativa"
         }
       ]
     }

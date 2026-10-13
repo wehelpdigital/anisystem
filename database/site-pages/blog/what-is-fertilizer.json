@@ -1,0 +1,476 @@
+{
+  "section": "blog",
+  "slug": "what-is-fertilizer",
+  "sortOrder": 1130,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "What Is Fertilizer? Definition, Types, Components and Examples with Pictures",
+  "metaTitle": "Fertilizer Definition: Types, Components and Examples",
+  "metaDescription": "Fertilizer definition in plain words: what fertilizer is, how to say it, what is inside the bag, how it feeds plants, and the main types with pictures.",
+  "focusKeyword": "fertilizer definition",
+  "keywords": [
+    "fertilizer definition",
+    "fertilizer",
+    "fertilizer meaning",
+    "fertilizer synonym",
+    "fertilizer pronunciation",
+    "fertilizer components",
+    "fertilizer research",
+    "fertilizer effect on plant growth",
+    "fertilizer images with names",
+    "fertilizer types",
+    "what is fertilizer for plants",
+    "fertilizer name",
+    "fertilizer tagalog",
+    "fertilizer clipart",
+    "fertilizer drawing easy",
+    "fertilizer ingredients",
+    "fertilizer for plants",
+    "fertilizer of plants",
+    "fertilizer soil"
+  ],
+  "excerpt": "Fertilizer is any material, natural or factory made, that supplies the nutrients plants need to grow, usually through the soil. That is the fertilizer definition FAO uses, and Philippine law says much the same. Its main nutrients are nitrogen, phosphorus and potassium, the three numbers on every bag. anee.io, a farm app built for Filipino farmers, adds them up for your crop with its free NPK Plus Calculator.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-what-is-fertilizer.webp",
+    "alt": "Granules of a bulk blend fertilizer in several colors spilling from a small bottle",
+    "credit": "Wee Hong, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "This guide covers the word, the bag, the types with photos and a short history. For which bag suits which crop, see [fertilizer for plants](/blog/fertilizer-for-plants)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Fertilizer is plant food: it supplies nutrients the soil lacks.",
+        "Say it FUR tuh ly zer. In Tagalog, it is abono or pataba.",
+        "The three numbers on a bag are percent nitrogen, phosphate and potash.",
+        "Main types: inorganic, organic, biofertilizer, water soluble, controlled release.",
+        "Every fertilizer sold in the Philippines must be FPA registered."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer definition: what the word means"
+    },
+    {
+      "type": "text",
+      "text": "Merriam Webster defines fertilizer as a substance, such as manure or a chemical mixture, used to make soil more fertile. The FAO fertilizer definition is wider: any chemical or natural material that provides nutrients to plants, usually through the soil, but also through leaves or paddy water.\n\nIn the Philippines, the legal fertilizer definition comes from Presidential Decree 1144 of 1977. It covers any substance, organic or inorganic, applied to the soil to promote growth, raise yield or improve quality. So the fertilizer meaning, in farm words, is plant food you add because the soil alone falls short."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer definition in brief",
+      "rows": [
+        [
+          "Question",
+          "Answer"
+        ],
+        [
+          "How to say it",
+          "FUR tuh ly zer, stress on the first part"
+        ],
+        [
+          "Other spelling",
+          "Fertiliser"
+        ],
+        [
+          "Synonyms",
+          "Plant food, manure, dressing, compost"
+        ],
+        [
+          "In Tagalog",
+          "Abono or pataba"
+        ],
+        [
+          "First known use in English",
+          "About 1661, by Merriam Webster's record"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Fertilizer pronunciation, synonyms and the word in Tagalog"
+    },
+    {
+      "type": "text",
+      "text": "Merriam Webster gives the fertilizer pronunciation as FUR tuh ly zer. The most common fertilizer synonym is plant food. In Tagalog, fertilizer is abono or pataba, and most farmers say abono. Our [farm words in Tagalog](/blog/farm-words-in-tagalog) list has more."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer components: what is inside the bag?"
+    },
+    {
+      "type": "text",
+      "text": "Every bag shows three numbers, the grade: the percent of nitrogen (N), phosphate (P2O5) and potash (K2O), in that order. So a 50 kg bag of complete 14 14 14 holds 7 kg of each. Each fertilizer name on a bag pairs a common name, such as urea, with its grade.\n\nBehind those numbers sit fertilizer ingredients such as urea, ammonium phosphate and potassium chloride. The University of Georgia notes that phosphate times 0.44 gives actual phosphorus, and potash times 0.83 gives potassium. The rest of the weight is secondary nutrients, the other parts of each compound, and in some products filler for easier spreading."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer components: the nutrients plants need",
+      "rows": [
+        [
+          "Group",
+          "Nutrients",
+          "Where you meet them"
+        ],
+        [
+          "Primary nutrients",
+          "Nitrogen, phosphorus, potassium",
+          "The three grade numbers on every bag"
+        ],
+        [
+          "Secondary nutrients",
+          "Sulfur, calcium, magnesium",
+          "Ammonium sulfate, lime, dolomite"
+        ],
+        [
+          "Micronutrients",
+          "Zinc, boron, iron, manganese, copper, molybdenum, chlorine and others",
+          "Zinc sulfate, foliar mixes, compost"
+        ],
+        [
+          "Other parts",
+          "Filler, granule coatings, organic matter",
+          "Blends, controlled release granules, compost"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The fertilizer effect on plant growth"
+    },
+    {
+      "type": "text",
+      "text": "Plants need these nutrients to build leaves, roots and grain, and the one in shortest supply holds growth back. IRRI explains each for rice."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Nitrogen** speeds growth and raises yield through more tillers, leaf area and grain filling. Without enough, plants stay small and yellowish green.",
+        "**Phosphorus** builds roots and drives tillering, flowering and ripening. Without enough, plants are stunted and dark green.",
+        "**Potassium** strengthens roots, helps prevent lodging and raises resistance to pests and diseases. Without enough, older leaves brown at the tips and edges."
+      ]
+    },
+    {
+      "type": "image",
+      "src": "/images/site/guides/fertilizer-types-test-field-1942.webp",
+      "alt": "A 1942 test field with signs reading Starved by lack of plant food and Nourished on phosphate and lime, showing the fertilizer effect on plant growth",
+      "caption": "A 1942 test field: one side starved of plant food, the other fed phosphate and lime. Tennessee Valley Authority, public domain, via Wikimedia Commons."
+    },
+    {
+      "type": "text",
+      "text": "More is not always better. FAO's fertilizer code warns against overuse as well as underuse, since nitrogen and phosphorus lost from fields pollute water."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer types, with pictures"
+    },
+    {
+      "type": "text",
+      "text": "Fertilizer types differ in where they come from and how they work. The FPA list of registered fertilizers, updated September 15, 2026, sorts products by type, including biofertilizer, biostimulant and controlled release fertilizer."
+    },
+    {
+      "type": "table",
+      "caption": "The main fertilizer types",
+      "rows": [
+        [
+          "Type",
+          "What it is",
+          "Examples"
+        ],
+        [
+          "Inorganic",
+          "Factory made or mined, rich, fast",
+          "Urea, complete 14 14 14, ammophos, muriate of potash"
+        ],
+        [
+          "Organic",
+          "From plants and animals, slow, builds soil",
+          "Compost, manure, vermicast, rice straw"
+        ],
+        [
+          "Biofertilizer",
+          "Living microbes that fix nitrogen or free up nutrients",
+          "Azospirillum inoculants, azolla"
+        ],
+        [
+          "Water soluble",
+          "Dissolves fully, for leaf sprays or drip lines",
+          "NPK powders such as 19 19 19"
+        ],
+        [
+          "Controlled release",
+          "Coated granules that release slowly",
+          "Polymer coated NPK"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These fertilizer images with names show what the common types look like."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Inorganic fertilizer"
+    },
+    {
+      "type": "text",
+      "text": "Inorganic fertilizer is what most farmers mean by abono. Straight fertilizers like urea carry one main nutrient, while compound and blended fertilizers carry two or three. A compound comes as round granules of one color. A bulk blend, like the one at the top of this page, mixes different granules, so it shows several colors.\n\nRead our guides to [urea 46 0 0](/blog/urea-fertilizer), [complete 14 14 14](/blog/complete-fertilizer-14-14-14), [16 20 0](/blog/16-20-0-fertilizer), [ammonium sulfate 21 0 0](/blog/ammonium-sulfate-21-0-0), [potash](/blog/potash-fertilizer) and more [inorganic fertilizer examples](/blog/inorganic-fertilizer-examples)."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/guides/fertilizer-types-compound.webp",
+      "alt": "Round brown granules of a compound NPK fertilizer spilling from a small bottle",
+      "caption": "Compound fertilizer in round granules. Photo by Wee Hong, CC BY SA 4.0, via Wikimedia Commons."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Organic fertilizer"
+    },
+    {
+      "type": "text",
+      "text": "Organic fertilizer comes from plants and animals. FAO describes it as carbon rich, made from manure, compost, vermicompost and similar materials. The Philippine standard, PNS/BAFS 183:2023, asks it for 5 to 10 percent total NPK. Our [organic fertilizer examples](/blog/organic-fertilizer-examples) show how to make and use each one."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/guides/fertilizer-types-manure.webp",
+      "alt": "A heap of dried cow dung piled for use as organic fertilizer",
+      "caption": "Cow manure, an organic fertilizer. Compost it before use on food crops. Photo by Yahuzaishat, CC BY 4.0, via Wikimedia Commons."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/guides/fertilizer-types-compost.webp",
+      "alt": "Long piles of compost made from crop waste lying in a field",
+      "caption": "Compost piles made from crop waste. Photo by SuSanA Secretariat, CC BY 2.0, via Wikimedia Commons."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Biofertilizer"
+    },
+    {
+      "type": "text",
+      "text": "A biofertilizer carries living or dormant microbes, such as bacteria, fungi or algae. In FAO's words, they fix nitrogen from the air or free up soil nutrients. For rice in the Philippines, Azospirillum bacteria and the water fern azolla are the best known. Their gains are real but modest, as our page on [organic vs inorganic fertilizer](/blog/organic-vs-inorganic-fertilizer) explains."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/guides/fertilizer-types-biofertilizer.webp",
+      "alt": "Green cyanobacteria grown in a glass flask for use as a biofertilizer",
+      "caption": "Blue green algae, a biofertilizer that fixes nitrogen from the air. Photo by Joydeep, CC BY SA 3.0, via Wikimedia Commons."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Water soluble, foliar and controlled release fertilizer"
+    },
+    {
+      "type": "text",
+      "text": "Water soluble fertilizer dissolves completely, so it can be sprayed on leaves or sent through a drip line. Leaves take in only small amounts, so a spray only tops up the soil program. See our [foliar fertilizer](/blog/foliar-fertilizer) guide.\n\nControlled release fertilizer has a coating on each granule that lets nutrients out slowly. It costs more per kilo of nutrient, so it suits pots and nurseries more than a hectare of palay."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/guides/fertilizer-types-water-soluble.webp",
+      "alt": "Pink water soluble NPK 19 19 19 fertilizer powder in a dish",
+      "caption": "Water soluble NPK 19 19 19 powder for leaf sprays and drip lines. Photo by Suyash Dwivedi, CC BY SA 4.0, via Wikimedia Commons."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Fertilizer clipart and an easy drawing for school"
+    },
+    {
+      "type": "text",
+      "text": "Students often need a picture of fertilizer for school work. A simple, easy fertilizer drawing for a poster is a sack with its grade on the front, such as 14 14 14. Clipart of a fertilizer sack works the same way, and the photos here show the real thing."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A short history of fertilizer"
+    },
+    {
+      "type": "text",
+      "text": "Farmers used manure, ash and compost long before anyone measured why they worked. Fertilizer science is much younger."
+    },
+    {
+      "type": "table",
+      "caption": "Milestones in fertilizer history",
+      "rows": [
+        [
+          "Year",
+          "What happened"
+        ],
+        [
+          "1843",
+          "Lawes and Gilbert start the Broadbalk experiment at Rothamsted, England. One strip has had no fertilizer since"
+        ],
+        [
+          "1918",
+          "Fritz Haber wins the Nobel Prize in Chemistry for making ammonia from its elements, the base of urea"
+        ],
+        [
+          "1962",
+          "IRRI starts its long term continuous cropping experiment in Los Baños, Laguna"
+        ],
+        [
+          "1977",
+          "Presidential Decree 1144 creates the FPA and requires fertilizer registration"
+        ],
+        [
+          "2019",
+          "FAO publishes its code of conduct on fertilizer use"
+        ],
+        [
+          "2023",
+          "The Philippines updates its organic fertilizer standard, PNS/BAFS 183:2023"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What fertilizer research shows today"
+    },
+    {
+      "type": "text",
+      "text": "Long experiments still teach the most. Broadbalk's unfertilized strip shows what the soil gives on its own. Since 1968, IRRI's field in Los Baños has grown three rice crops a year while testing four nitrogen rates. PhilRice turns fertilizer research into bag plans and product trials, which our page on [rice growth enhancers](/blog/rice-growth-enhancers) reviews."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Count your fertilizer with anee.io"
+    },
+    {
+      "type": "text",
+      "text": "Knowing the fertilizer definition helps you read a bag. Next comes knowing what your crop needs. The free [NPK Plus Calculator](/features/npk-plus-calculator) in anee.io adds up the nutrients in the fertilizers you pick and checks them against your crop. Then the [Protocol Builder](/features/protocol-builder) puts each dose on its day. Anee, the [smart farm technician](/features/ai-agricultural-technician), explains any label in Tagalog or English, using credits."
+    },
+    {
+      "type": "cta",
+      "title": "Add up the nutrients in your plan",
+      "text": "Pick your fertilizers and see the nitrogen, phosphorus and potassium per hectare, free.",
+      "label": "Try NPK Plus",
+      "url": "/features/npk-plus-calculator"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fertilizer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is fertilizer for plants, in simple words?",
+          "a": "It is plant food. Fertilizer adds nitrogen, phosphorus, potassium and other nutrients that the soil cannot supply in full."
+        },
+        {
+          "q": "What is the fertilizer definition in Philippine law?",
+          "a": "Presidential Decree 1144 defines fertilizer as any substance, organic or inorganic, applied to the soil to promote growth, raise yield or improve quality. It must be FPA registered before sale."
+        },
+        {
+          "q": "What do the numbers on a fertilizer bag mean?",
+          "a": "They are the percent of nitrogen, phosphate and potash. A 50 kg bag of 16 20 0 holds 8 kg of nitrogen, 10 kg of phosphate and no potash."
+        },
+        {
+          "q": "How do you say fertilizer in Tagalog?",
+          "a": "Abono or pataba. Most farmers say abono, as in abono para sa palay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Fertilizer guides by grade",
+      "items": [
+        {
+          "label": "Fertilizer for plants",
+          "url": "/blog/fertilizer-for-plants"
+        },
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "16 20 0 fertilizer",
+          "url": "/blog/16-20-0-fertilizer"
+        },
+        {
+          "label": "Ammonium sulfate 21 0 0",
+          "url": "/blog/ammonium-sulfate-21-0-0"
+        },
+        {
+          "label": "Potash fertilizer",
+          "url": "/blog/potash-fertilizer"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Merriam Webster: Fertilizer, definition and pronunciation",
+          "url": "https://www.merriam-webster.com/dictionary/fertilizer"
+        },
+        {
+          "label": "Merriam Webster Thesaurus: Fertilizer",
+          "url": "https://www.merriam-webster.com/thesaurus/fertilizer"
+        },
+        {
+          "label": "FAO (2019): The International Code of Conduct for the Sustainable Use and Management of Fertilizers",
+          "url": "https://www.fao.org/3/ca5253en/ca5253en.pdf"
+        },
+        {
+          "label": "Official Gazette: Presidential Decree No. 1144, s. 1977",
+          "url": "https://mirror.officialgazette.gov.ph/1977/05/30/presidential-decree-no-1144-s-1977/"
+        },
+        {
+          "label": "University of Georgia Extension: Understand the numbers on a fertilizer bag",
+          "url": "https://fieldreport.caes.uga.edu/news/understand-the-numbers-on-a-fertilizer-bag/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Nitrogen",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Phosphorus",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/phosphorus"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Potassium",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
+        },
+        {
+          "label": "FPA: Registered products, including the list of registered fertilizers as of September 15, 2026",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "BAFS: PNS/BAFS 183:2023 Organic soil amendments and plant supplements",
+          "url": "https://philippines.controlunion.com/wp-content/uploads/sites/55/2026/04/FL_20251210021315_PNSBAFS_183-2023_OSAPS_Product_Standard_Specifications.pdf"
+        },
+        {
+          "label": "Rothamsted Research e RA: Broadbalk",
+          "url": "https://www.era.rothamsted.ac.uk/Broadbalk"
+        },
+        {
+          "label": "Nobel Prize: The Nobel Prize in Chemistry 1918",
+          "url": "https://www.nobelprize.org/prizes/chemistry/1918/summary/"
+        },
+        {
+          "label": "IRRI: Long term continuous cropping experiment",
+          "url": "https://lte.irri.org/ltcce"
+        }
+      ]
+    }
+  ]
+}

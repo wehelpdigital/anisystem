@@ -15,7 +15,9 @@
     "panicles per square meter",
     "certified seed",
     "rice yield Philippines",
-    "cavans per hectare"
+    "cavans per hectare",
+    "crop yield increase",
+    "crop yield"
   ],
   "excerpt": "To increase rice yield per hectare, find and fix the weakest link of your season instead of only adding fertilizer. PhilRice's PalayCheck System names nine key checks, from certified seed and a level field to steady water and a harvest on time. PhilRice trials that followed these practices reached about 7 tons per hectare in the dry season, while the national average stood near 4. anee.io, a farm app built for Filipino farmers, puts each check on a dated calendar for every lot and keeps the records that show which one held your yield back.",
   "heroImage": {
@@ -46,7 +48,7 @@
     },
     {
       "type": "text",
-      "text": "For most farms the gap is in management, not in the variety. In a PhilRice evaluation of rice integrated crop management, stations in Nueva Ecija, Isabela and Albay hit 7 tons per hectare in the dry season. That was far above the 4 ton national average PhilRice cited at the time.\n\nFeeding often falls short too. A PhilRice survey of irrigated farms in 2016 and 2017 found about 9 kg of phosphorus per hectare in the wet season. The general recommendation calls for 28 kg. Potassium was near 17 kg against 43 kg, and dry season nitrogen averaged 96 kg against 139 kg. Because cash runs short and habits are strong, many fields simply never get what the crop needs."
+      "text": "For most farms the gap is in management, not in the variety. In a PhilRice evaluation of rice integrated crop management, stations in Nueva Ecija, Isabela and Albay hit 7 tons per hectare in the dry season. That was far above the 4 ton national average PhilRice cited at the time.\n\nFeeding often falls short too. A PhilRice survey of irrigated farms in 2016 and 2017 found about 9 kg of phosphorus per hectare in the wet season. The general recommendation calls for 28 kg. Potassium was near 17 kg against 43 kg, and dry season nitrogen averaged 96 kg against 139 kg. Because cash runs short and habits are strong, many fields simply never get what the crop needs. So on most farms, a crop yield increase starts with closing these gaps, not with a new variety."
     },
     {
       "type": "heading",

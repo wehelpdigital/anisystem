@@ -11,7 +11,9 @@
   "keywords": [
     "agriculture in economy",
     "agricultural engineer hiring",
-    "fertilizer in agriculture"
+    "fertilizer in agriculture",
+    "why farm is important",
+    "crop production roadmap"
   ],
   "excerpt": "Agriculture in the economy of the Philippines is small in pesos but huge in people. It makes less than a tenth of the country's output, yet it employs about one in five working Filipinos. Here are the latest PSA numbers, the crops that carry the sector, the problems that hold farms back, and what a farmer can control on the ground.",
   "heroImage": {
@@ -34,8 +36,13 @@
       "text": "The PSA counts farming, forestry and fishing together as one industry, AFF for short. In 2025, AFF produced about PHP 2.41 trillion out of a PHP 28.01 trillion economy at current prices. By our own sum of PSA's four quarterly figures, that is about 8.6 percent of GDP, down from about 9.1 percent in 2024.\n\nThe share keeps sliding partly because the rest of the economy grows faster, not because farms produce less. At constant 2018 prices, farm output grew about 3.1 percent in 2025, while the whole economy grew about 4.4 percent. In the second quarter of 2026, for example, AFF still grew 2.7 percent year on year. Even so, at constant 2018 prices it made up only 7.5 percent of GDP in that quarter, the smallest of the three major industries. That figure uses constant prices, so do not set it beside the 8.6 percent at current prices."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Farm jobs and why they matter"
+    },
+    {
       "type": "text",
-      "text": "Jobs tell a different story. In the July 2026 Labor Force Survey, agriculture employed 19.7 percent of the 49.21 million working Filipinos, or roughly 9.7 million people.\n\nSo about a fifth of workers produce less than a tenth of the output. That means output per farm worker sits well below the national average. It also means that every peso of extra yield or saved cost on a farm reaches a large share of Filipino households."
+      "text": "Jobs tell a different story. In the July 2026 Labor Force Survey, agriculture employed 19.7 percent of the 49.21 million working Filipinos, or roughly 9.7 million people.\n\nSo about a fifth of workers produce less than a tenth of the output. That means output per farm worker sits well below the national average. It also means that every peso of extra yield or saved cost on a farm reaches a large share of Filipino households. That is why farm work is important even as agriculture's share of GDP shrinks."
     },
     {
       "type": "table",
@@ -94,7 +101,7 @@
     },
     {
       "type": "text",
-      "text": "Weather comes first. Typhoons, floods and dry spells hit the same months that farmers plant and harvest, and a single storm can flatten a field a week before harvest. Some crops also slipped in 2026. In the second quarter, sugarcane fell 22.5 percent, rubber 16.4 percent and banana 4.0 percent from a year earlier.\n\nNext come costs. Fertilizer, fuel, seed and hired labor are all paid in cash, often on credit, long before the harvest comes in. Then the farmer sells at the farmgate price, which swings from season to season and is usually far below the retail price of rice. Our page on [palay prices in the Philippines](/blog/palay-price-philippines) tracks those swings.\n\nFinally, timing matters. PSA projects that palay output for July to September 2026 may drop 15.0 percent from a year earlier, mostly because the harvested area may shrink by 15.8 percent. Yield per hectare, on the other hand, may rise slightly. In other words, fewer hectares, not weaker plants, drive most of that dip."
+      "text": "Weather comes first. Typhoons, floods and dry spells hit the same months that farmers plant and harvest, and a single storm can flatten a field a week before harvest. Some crops also slipped in 2026. In the second quarter, sugarcane fell 22.5 percent, rubber 16.4 percent and banana 4.0 percent from a year earlier.\n\nNext come costs. Fertilizer, fuel, seed and hired labor are all paid in cash, often on credit, long before the harvest comes in. Then the farmer sells at the farmgate price, which swings from season to season and is usually far below the retail price of rice. Our page on [palay prices in the Philippines](/blog/palay-price-philippines) tracks those swings.\n\nFinally, timing matters. PSA projects that palay output for July to September 2026 may drop 15.0 percent from a year earlier, mostly because the harvested area may shrink by 15.8 percent. Yield per hectare, on the other hand, may rise slightly. In other words, fewer hectares, not weaker plants, drive most of that dip.\n\nPlanning happens at the national level too. For palay, the crop production roadmap in force is the Philippine Rice Industry Roadmap 2025 to 2035. The DA launched it in Davao City on November 27, 2025. It sets a long term frame for a resilient, competitive and sustainable rice industry."
     },
     {
       "type": "heading",
@@ -231,6 +238,10 @@
         {
           "label": "Republic Act 10915, Philippine Agricultural and Biosystems Engineering Act of 2016 (Lawphil)",
           "url": "https://lawphil.net/statutes/repacts/ra2016/ra_10915_2016.html"
+        },
+        {
+          "label": "DA Philippine Council for Agriculture and Fisheries: Philippine Rice Industry Roadmap 2025 to 2035 launched (2025)",
+          "url": "https://pcaf.da.gov.ph/index.php/2025/12/01/philippine-rice-industry-roadmap-2021-2035-launched-at-national-stakeholders-conference/"
         }
       ]
     }

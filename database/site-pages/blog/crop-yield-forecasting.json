@@ -1,0 +1,319 @@
+{
+  "section": "blog",
+  "slug": "crop-yield-forecasting",
+  "sortOrder": 1220,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Crop Yield Forecasting: Can a Farm App Predict My Harvest Before I Cut?",
+  "metaTitle": "Crop Yield Forecasting: What a Farm App Can and Cannot Do",
+  "metaDescription": "Crop yield forecasting for Filipino farmers: what crop yield means, how to estimate palay yield from panicle counts, and what apps and satellites can tell.",
+  "focusKeyword": "crop yield forecasting",
+  "keywords": [
+    "crop yield forecasting",
+    "crop yield",
+    "crop yields",
+    "what is crop yield",
+    "crop yield increase"
+  ],
+  "excerpt": "Crop yield forecasting can give you a fair range before harvest, but no app can promise an exact number. Once the grains fill, count panicles and grains in a few small samples for a field estimate. A crop cut at harvest then gives the true figure. Built for Filipino farmers, the anee.io farm app does not predict an exact yield. Instead, it keeps each lot's past harvests and shows the yield your fertilizer plan can feed.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-crop-yield-forecasting.webp",
+    "alt": "Ripe rice panicles heavy with grain in a field near harvest, the stage for crop yield forecasting",
+    "credit": "Derk29, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Every farmer wants to know the harvest early. The buyer asks, the lender asks, and reaping and drying need cash. So know what you can measure before harvest, and what an app can honestly add.\n\nThis guide uses palay, because IRRI and PhilRice have studied its yield closely. The same idea works for mais and gulay too: weigh a measured sample, then scale it up."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Crop yield is harvest per area**, usually kilos, tons or cavans per hectare.",
+        "**Rice yield has four parts:** panicles per square meter, grains per panicle, the share that fill, and grain weight.",
+        "**A count after the grains fill gives a range.** A crop cut at harvest gives the true number.",
+        "**Satellites and weather show health and risk.** They do not count grains.",
+        "**Your past harvests per lot** are the best base for any forecast."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is crop yield?"
+    },
+    {
+      "type": "text",
+      "text": "Crop yield is how much you harvest from a given area of land. FAO, the United Nations food agency, defines it as the harvested production per hectare of the area under cultivation. Filipino farmers say it in kilos, tons or cavans per hectare.\n\nThe per hectare part makes crop yields useful. For example, 50 cavans from half a hectare is 100 cavans per hectare. So a small lot compares fairly with a big one. Our page on [ani meaning](/blog/ani-meaning) explains the Filipino word.\n\nFor rice, the IRRI textbook by Shouichi Yoshida says the usual way to report yield is as palay at 14 percent moisture. It adds that grain yield usually ranges from 3 to 10 tons per hectare per crop, unless the crop lodges."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you estimate crop yield before harvest?"
+    },
+    {
+      "type": "text",
+      "text": "Break the yield into its parts. Yoshida splits rice yield into four, and the crop settles each one at a different stage. That is why a count after the grains fill tells you more than an early one."
+    },
+    {
+      "type": "table",
+      "caption": "The four parts of rice yield. Source: Yoshida, Fundamentals of Rice Crop Science, IRRI.",
+      "rows": [
+        [
+          "Yield part",
+          "When the crop settles it",
+          "What can still change it"
+        ],
+        [
+          "Panicles per square meter",
+          "About 10 days after maximum tillering in transplanted rice",
+          "Tillering, spacing and lost hills"
+        ],
+        [
+          "Grains per panicle",
+          "The reproductive stage, before heading",
+          "Nutrients and weather in those weeks"
+        ],
+        [
+          "Share of filled grains",
+          "Before, at and after heading",
+          "Heat or cold at flowering, bad weather in ripening"
+        ],
+        [
+          "Weight of 1,000 grains",
+          "Mostly the variety, since the hull limits grain size",
+          "Very little"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Count and compute, step by step"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Take three small samples",
+          "text": "PalayCheck, the rice crop management system of PhilRice, counts three samples of 4 hills, 2 by 2. At 20 by 20 cm spacing, 4 hills cover 0.16 square meters."
+        },
+        {
+          "title": "Count the panicles",
+          "text": "Add the panicles of the 4 hills, then divide by 0.16 to get panicles per square meter."
+        },
+        {
+          "title": "Count the grains",
+          "text": "Thresh the sample and count filled and unfilled grains per panicle. Write the filled share as a decimal, like 0.85."
+        },
+        {
+          "title": "Get the grain weight",
+          "text": "PalayCheck weighs 1,000 dry filled grains. Without a fine scale, ask your seed source for the variety's figure."
+        },
+        {
+          "title": "Multiply and average",
+          "text": "Multiply panicles per square meter, grains per panicle, the filled share and the 1,000 grain weight in grams. Divide by 100 for kilos per hectare, then average the three samples."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Yoshida shows the sum for IR8, an older variety. It assumes 250 panicles per square meter, 100 grains each, 85 percent filled and 29 grams per 1,000 grains. That gave 6.16 tons per hectare in the cloudy wet season. With 375 panicles in the sunny dry season, it gave 9.24 tons.\n\nTreat it as a range, since PalayCheck says yield parts only partly explain why one field outyields another."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "A count on your best patch flatters the field",
+      "text": "Samples from the best looking spots read high. PalayCheck picks crop cut areas with a good stand, and for a whole parcel it has you record the share of missing hills. Walk the weak spots too, and plan your cash on the lower figure."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you measure the real yield at harvest?"
+    },
+    {
+      "type": "text",
+      "text": "Weigh it. PalayCheck has two ways, and both correct the weight to 14 percent moisture, because wet palay weighs more."
+    },
+    {
+      "type": "table",
+      "caption": "Two PalayCheck ways to measure palay yield, with PhilRice's own sample numbers",
+      "rows": [
+        [
+          "Method",
+          "What you do",
+          "PhilRice sample"
+        ],
+        [
+          "Crop cut",
+          "Harvest three areas of 5 square meters (2 by 2.5 m). Thresh, clean, dry, weigh, read moisture",
+          "2.03 kg from 5 square meters at 14.1 percent moisture, about 4.1 tons per hectare"
+        ],
+        [
+          "Whole parcel",
+          "Measure the parcel, count the sacks, weigh five random sacks and read moisture",
+          "13 sacks of 51.8 kg from 1,250 square meters at 22.3 percent moisture, about 4.9 tons per hectare"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The sum is the same for both. Divide the kilos by the square meters and multiply by 10,000. Then multiply by 100 minus the moisture, and divide by 86.\n\nNotice those sacks weighed 51.8 kg, not an even 50. So weigh a few before you sell by the cavan, as our [palay price](/blog/palay-price-philippines) guide explains. For safe moisture, see [palay drying](/blog/palay-drying)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Do farm management apps have crop yield forecasting tools?"
+    },
+    {
+      "type": "text",
+      "text": "Some do, mostly big farm platforms that mix satellite pictures, weather and crop models. But none can see your grains, so check any app forecast against a field count.\n\nThe government runs its own system for whole provinces. PRISM, the Philippine Rice Information System at PhilRice, lists rice area mapping and yield estimation among its work. It uses remote sensing and crop modeling, with the DA, PAGASA and IRRI among its partners. Its numbers help the DA plan, not one farmer manage a lot."
+    },
+    {
+      "type": "table",
+      "caption": "What each tool can tell you about yield",
+      "rows": [
+        [
+          "Tool",
+          "What it tells you",
+          "What it misses"
+        ],
+        [
+          "Panicle and grain count",
+          "A fair estimate once grains fill",
+          "Later losses from rats, lodging or rain"
+        ],
+        [
+          "Crop cut or sack weighing",
+          "The true yield",
+          "Only at harvest"
+        ],
+        [
+          "Satellite greenness",
+          "Weak and strong zones",
+          "Grain counts, and fields under cloud"
+        ],
+        [
+          "Weather forecast",
+          "Risk at flowering and ripening",
+          "A number in kilos"
+        ],
+        [
+          "Past harvest records",
+          "Your normal range per lot",
+          "Nothing, if kept well"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Weather matters most around flowering. Yoshida found that sunlight in the reproductive stage has the biggest effect on rice yield. IRRI also warns that drought at flowering leaves more empty grains. So the forecast for those weeks tells you more than any greenness map.\n\nA satellite picture still shows where to walk, as our guides on [satellite images of your farm](/blog/satellite-crop-monitoring-philippines) and [crop health without a drone](/blog/monitor-crop-health-without-a-drone) explain."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help with crop yield forecasting?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io does not predict an exact yield. Instead, it gives you the pieces for an honest estimate.\n\nFirst, the free [NPK Plus Calculator](/features/npk-plus-calculator) adds up the nutrients in your fertilizer plan. It shows the harvest that fertilizer alone can feed and the nutrient that runs out first. Your soil adds its own share, so treat that line as a balance check.\n\nNext, [harvest records](/features/harvest-records) keep each lot's yield, moisture, wet or dry weight and area harvested. Then [Compare Reports](/features/compare-reports) sets two seasons side by side, and Anee, the smart farm technician inside anee.io, explains what changed.\n\nDuring the season, [Satellite Analysis](/features/satellite-analysis) reads Sentinel 2 pictures and Sentinel 1 radar of a field you draw, and Anee names the weak spots. Growth stages show when each lot should flower, so you know which weeks to watch. Satellite Analysis uses credits on Libre plus Anee, Solo Farmer and Farm Owner. Compare Reports also uses credits and needs Solo Farmer or Farm Owner."
+    },
+    {
+      "type": "cta",
+      "title": "Keep every harvest, lot by lot",
+      "text": "Sign up free and record each lot's harvest with its moisture and area.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about crop yield forecasting"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How accurate is a yield estimate from panicle counts?",
+          "a": "It gives a fair range, not an exact figure. Rats, lodging and late rain can still cut the harvest, so confirm it by weighing."
+        },
+        {
+          "q": "Why is my wet season yield lower than my dry season yield?",
+          "a": "Cloudy weeks give the crop less sunlight. In Yoshida's IRRI model for IR8, that meant 250 panicles per square meter in the wet season against 375 in the dry season."
+        },
+        {
+          "q": "Should I record my harvest wet or dry?",
+          "a": "Record the weight with its moisture. PalayCheck corrects every yield to 14 percent moisture, so seasons compare fairly. The anee.io harvest record asks for both."
+        },
+        {
+          "q": "Is the yield line in NPK Plus my expected harvest?",
+          "a": "No. It is the harvest your fertilizer alone can feed. Your soil gives its own share, and the weather, variety and timing still decide the harvest."
+        },
+        {
+          "q": "Can a forecast help me get a crop yield increase next season?",
+          "a": "Yes, if you act on it. Few panicles point back to tillering, and many empty grains to stress at flowering. A crop yield increase starts by fixing that weak part. Our guides to [rice yield per hectare](/blog/increase-rice-yield-per-hectare) and [corn yield per hectare](/blog/increase-corn-yield-per-hectare) cover the fixes."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Increase rice yield per hectare",
+          "url": "/blog/increase-rice-yield-per-hectare"
+        },
+        {
+          "label": "Increase corn yield per hectare",
+          "url": "/blog/increase-corn-yield-per-hectare"
+        },
+        {
+          "label": "Satellite images of my farm",
+          "url": "/blog/satellite-crop-monitoring-philippines"
+        },
+        {
+          "label": "Palay drying",
+          "url": "/blog/palay-drying"
+        },
+        {
+          "label": "Farm record keeping",
+          "url": "/blog/farm-record-keeping"
+        },
+        {
+          "label": "Harvest records",
+          "url": "/features/harvest-records"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System 2022, Annexes 19 to 21, measuring grain yield and yield components",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "IRRI: Yoshida, Fundamentals of Rice Crop Science, yield and yield components",
+          "url": "http://books.irri.org/9711040522_content.pdf"
+        },
+        {
+          "label": "FAO: Crop production, yield and harvested area (FAOSTAT dataset description)",
+          "url": "https://data.fao.org/catalog/iso/d24a448b-3b62-4c09-8c1d-4a39bb599876"
+        },
+        {
+          "label": "PhilRice: PRISM, Philippine Rice Information System",
+          "url": "https://prism.philrice.gov.ph/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Water management",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/water-management"
+        }
+      ]
+    }
+  ]
+}

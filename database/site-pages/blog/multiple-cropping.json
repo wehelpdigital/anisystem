@@ -1,0 +1,325 @@
+{
+  "section": "blog",
+  "slug": "multiple-cropping",
+  "sortOrder": 1250,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Multiple Cropping: How Do I Plan Several Crops on One Farm in the Same Year?",
+  "metaTitle": "Multiple Cropping: Plan Several Crops on One Farm a Year",
+  "metaDescription": "Multiple cropping for Filipino farms: palay then munggo or mais, relay and intercropping, why rotation helps, and how to plan each lot's dates and water.",
+  "focusKeyword": "multiple cropping",
+  "keywords": [
+    "multiple cropping",
+    "palay at mais"
+  ],
+  "excerpt": "Multiple cropping means growing two or more crops on the same land in one year, one after another or side by side. In rice areas, PhilRice suggests planting munggo, mais or melon after the palay harvest. Plan it lot by lot: give each crop its own day zero, check the water for each window, and give rice pests a break. Built for Filipino farmers, the anee.io app keeps each lot's own crop and day count, so every task lands on the right date.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-multiple-cropping.webp",
+    "alt": "Munggo growing in rows beside dry harvested rice paddies in Candaba, Pampanga, an example of multiple cropping",
+    "credit": "Judgefloro, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A field that grows only one crop a year sits idle for months. Yet that idle time still holds soil moisture, sunlight and spare labor. A second crop, and sometimes a third, puts them to work.\n\nEach extra crop also means one more calendar, more water to plan and more cash up front. So the plan matters as much as the seed. Here is how to build it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Multiple cropping** covers sequential cropping, relay cropping, intercropping and ratoon cropping.",
+        "**PhilRice's Palayamanan Plus** suggests munggo, mais or melon after the palay harvest, and vegetables on the dikes.",
+        "**Munggo fits well after rice.** The DA guide allows zero or minimum tillage after rice, with harvest 60 to 70 days after planting.",
+        "**A break from rice helps.** PhilRice advises synchronous planting with a 1 to 2 month fallow to break the brown planthopper's life cycle.",
+        "**Plan lot by lot**, each crop with its own day zero, water window and budget."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is multiple cropping?"
+    },
+    {
+      "type": "text",
+      "text": "Multiple cropping is the practice of growing more than one crop on the same land in one year. That is how the glossary of FAO Soils Bulletin 72 defines it. It then names the patterns below."
+    },
+    {
+      "type": "table",
+      "caption": "Kinds of multiple cropping, from the FAO glossary, with Philippine examples",
+      "rows": [
+        [
+          "Pattern",
+          "What it means",
+          "Example"
+        ],
+        [
+          "Sequential cropping",
+          "The next crop goes in after the last one is harvested",
+          "Palay, then munggo on the same field"
+        ],
+        [
+          "Relay cropping",
+          "The next crop goes in after the first one flowers, before its harvest",
+          "Munggo, which the DA lists as a relay crop"
+        ],
+        [
+          "Intercropping",
+          "Two or more crops on one area at one time, in a pattern",
+          "Vegetables on the dikes of a rice field"
+        ],
+        [
+          "Ratoon cropping",
+          "A second crop from the regrowth of stubble after harvest",
+          "Rice that regrows from its stubble"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The same glossary gives a simple score, the multiple cropping index. Add up the areas planted to crops harvested during the year, then divide by the total cultivated area. One hectare of palay followed by one hectare of munggo scores 2."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why grow more than one crop in a year?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**The soil moisture is already there.** The DA mungbean guide says munggo planted in September or October needs no extra irrigation if residual rain and soil moisture are enough. Planting from January to March, though, needs irrigation at the critical stages.",
+        "**The soil gains.** Munggo gets nitrogen through bacteria in its roots. PhilRice also reported that munggo after rice restores the natural fertility of the soil.",
+        "**Pests lose their food.** PhilRice advises synchronous planting with a 1 to 2 month fallow to break the planthopper's life cycle. A crop that is not rice keeps the field earning during that break.",
+        "**Diseases build up less.** The DA guide warns that growing one crop again and again lets pathogens multiply, and it advises rotating munggo with crops that are not legumes.",
+        "**Cash comes between rice harvests.** In 2014, PhilRice reported that 7,500 hectares of munggo after rice in San Mateo, Isabela, could earn 350 million pesos a year."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Munggo residue also feeds animals, since the DA guide notes it can serve as fodder. So on a farm with a carabao or goats, one crop helps the next and the herd too."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I plan multiple crops on one farm, step by step?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Map your year",
+          "text": "Mark the rainy months, the irrigation release and the typhoon weeks. Our guide on [how to make a cropping calendar](/blog/how-to-make-a-cropping-calendar) shows how."
+        },
+        {
+          "title": "Fix the main crop first",
+          "text": "Put palay where water is surest. See the [best time to plant rice](/blog/best-time-to-plant-rice-philippines) for your area."
+        },
+        {
+          "title": "Fit the next crop in the gap",
+          "text": "Count its days to harvest forward from the palay harvest. Munggo, for example, is ready for its first picking 60 to 70 days after planting."
+        },
+        {
+          "title": "Give each crop its own day zero",
+          "text": "Date every task from that crop's sowing or planting day, not from the month."
+        },
+        {
+          "title": "Check the overlaps",
+          "text": "Harvest of one crop and planting of the next often land in the same week. Line up hands, machines and cash for it."
+        },
+        {
+          "title": "Keep each crop's records apart",
+          "text": "Track costs and harvest per crop, so you can see which one truly pays."
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "caption": "A sample year on one lowland lot, built from the DA and PhilRice guides",
+      "rows": [
+        [
+          "Window",
+          "Crop",
+          "What sets the dates"
+        ],
+        [
+          "Wet season",
+          "Palay",
+          "Day zero when water is sure, harvest by the variety's days to maturity"
+        ],
+        [
+          "Early dry season, September to October",
+          "Munggo on residual moisture, with zero or minimum tillage",
+          "Picking starts 60 to 70 days after planting and repeats every 3 to 5 days"
+        ],
+        [
+          "Late dry season, January to March",
+          "Mais or vegetables, which are not legumes",
+          "Only where irrigation reaches the lot"
+        ],
+        [
+          "Before the next palay",
+          "At least 1 to 2 months with no rice",
+          "PhilRice's break against planthoppers"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Keep munggo harvest out of the rain",
+      "text": "The DA guide warns that high humidity from continuous rain can severely reduce the quality of harvested munggo seed. Time the planting so picking falls in drier weeks."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I choose the best farm planning tool for multiple crop types?"
+    },
+    {
+      "type": "text",
+      "text": "Pick a tool that treats each field as its own lot, with its own crop and its own count. A single calendar for the whole farm breaks the moment two crops run at once. Check these points."
+    },
+    {
+      "type": "table",
+      "caption": "What a planning tool needs for multiple crops, and how anee.io meets it",
+      "rows": [
+        [
+          "Need",
+          "Why it matters",
+          "anee.io"
+        ],
+        [
+          "A different crop on each lot",
+          "Palay in the paddies, mais on the upland block",
+          "Yes, the crop belongs to the lot"
+        ],
+        [
+          "Each lot's own day zero",
+          "Crops planted weeks apart keep their own timing",
+          "Yes, DAS, DAT or DAP per lot"
+        ],
+        [
+          "Many crop types",
+          "Palay, mais, munggo, gulay and fruit trees",
+          "Growth stages for 85 Philippine crops, munggo included"
+        ],
+        [
+          "Several seasons",
+          "The next crop starts while the last one's records stay",
+          "Libre 1 active season, Solo Farmer 3, Farm Owner unlimited"
+        ],
+        [
+          "Busy weeks in view",
+          "Harvest and planting often collide",
+          "One board, Count the days and Cash to prepare"
+        ],
+        [
+          "Costs per crop",
+          "To see which crop pays",
+          "Expenses and profit reports, from Solo Farmer"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io handle multiple cropping?"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io the crop belongs to the lot, not the season. So one season can carry palay in the paddies and mais on the upland block, each on its own growth stages. Every task on the [cropping calendar](/features/cropping-calendar) falls on that lot's own count.\n\nChoose the crop with care, because a lot's crop and day count cannot change after you save. For munggo after palay on the same field, open the next season and add the field again as a new lot with the new crop. You can attach the same field map to it.\n\nLots planted on different days work the same way, as our guide to a [staggered planting schedule](/blog/staggered-planting-schedule) shows. Not sure what to plant in the gap? The [What to Plant Analysis](/features/what-to-plant-analysis) has Anee, the smart farm technician inside anee.io, weigh your climate, forecast, soil and water, then rank the crops. That analysis uses credits. Our guide on [what crop to plant this season](/blog/what-crop-to-plant-this-season) covers the same checks by hand.\n\nKnow the plan limits. Libre and Libre plus Anee allow one lot per season. Solo Farmer allows up to five lots and three active seasons, and Farm Owner has no limit."
+    },
+    {
+      "type": "cta",
+      "title": "Give every lot its own crop and day zero",
+      "text": "Add your fields as lots, pick a crop for each, and let the calendar date every task.",
+      "label": "See farm lots",
+      "url": "/features/farm-lots"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about multiple cropping"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the difference between multiple cropping and crop rotation?",
+          "a": "Multiple cropping counts how many crops a field grows in one year. Crop rotation is about changing which crop a field grows from one season to the next. Palay followed by munggo is both."
+        },
+        {
+          "q": "What can I plant after rice in the dry season?",
+          "a": "PhilRice's Palayamanan Plus names munggo, mais and melon. The DA mungbean guide says munggo grows best in rotation with rice or corn. Our guide on [what crop to plant this season](/blog/what-crop-to-plant-this-season) helps you choose."
+        },
+        {
+          "q": "Do I need to plow before planting munggo after rice?",
+          "a": "Not always. The DA guide says zero or minimum tillage can work after rice. It also says to flood the paddy 1 to 2 days before planting, then drain it before broadcasting the seeds."
+        },
+        {
+          "q": "Can I grow palay at mais in the same year?",
+          "a": "Yes. Palay at mais, rice and corn, can share a year if the mais goes in after the palay harvest. PhilRice lists mais among the crops to plant after palay. See [pagtatanim ng mais](/crops/pagtatanim-ng-mais) for growing it."
+        },
+        {
+          "q": "How long should a field rest between rice crops?",
+          "a": "PhilRice advises a 1 to 2 month fallow with synchronous planting to break the brown planthopper's life cycle. A crop that is not rice can use that time."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Staggered planting schedule",
+          "url": "/blog/staggered-planting-schedule"
+        },
+        {
+          "label": "How to make a cropping calendar",
+          "url": "/blog/how-to-make-a-cropping-calendar"
+        },
+        {
+          "label": "What crop to plant this season",
+          "url": "/blog/what-crop-to-plant-this-season"
+        },
+        {
+          "label": "Palayisdaan, rice with fish",
+          "url": "/blog/palayisdaan"
+        },
+        {
+          "label": "Pagtatanim ng mais",
+          "url": "/crops/pagtatanim-ng-mais"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FAO Soils Bulletin 72: Glossary (multiple, sequential, relay and ratoon cropping)",
+          "url": "https://www.fao.org/4/v9926e/v9926e0a.htm"
+        },
+        {
+          "label": "DA High Value Crops Development Program: Mungbean Production Guide",
+          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
+        },
+        {
+          "label": "PhilRice: Palayamanan Plus",
+          "url": "https://www.philrice.gov.ph/palayamanan-plus"
+        },
+        {
+          "label": "PhilRice: PhilRice chief lauds Isabela farmers (munggo after rice in San Mateo)",
+          "url": "https://www.philrice.gov.ph/philrice-chief-lauds-isabela-farmers/"
+        },
+        {
+          "label": "PhilRice: Experts reveal ways to control rice damaging pest (fallow against planthoppers)",
+          "url": "https://www.philrice.gov.ph/philrice-experts-reveal-ways-control-rice-damaging-pest/"
+        }
+      ]
+    }
+  ]
+}

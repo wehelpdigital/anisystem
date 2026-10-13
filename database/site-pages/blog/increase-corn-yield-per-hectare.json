@@ -14,7 +14,8 @@
     "hybrid corn plant population",
     "corn fertilizer recommendation",
     "side dressing corn",
-    "mais"
+    "mais",
+    "fertilizer application in corn"
   ],
   "excerpt": "To increase corn yield, get three things right before you spend more on fertilizer: enough plants per hectare, nutrients matched to your soil test and a weed free first month. The DA corn guide for Cagayan Valley aims certified hybrid corn at 8 tons per hectare with at least 75,000 plants. It puts all the phosphorus and potassium at planting and the second half of the nitrogen when plants are knee high. anee.io, a farm app built for Filipino farmers, dates each of these tasks for every lot and keeps the harvest records that show what worked.",
   "heroImage": {
@@ -88,7 +89,7 @@
     },
     {
       "type": "text",
-      "text": "It depends on your soil test. The DA Cagayan Valley guide gives these rates in kilograms per hectare, as it prints them. Then it adds at least ten bags of organic fertilizer per hectare at the last harrowing, before furrowing."
+      "text": "It depends on your soil test. The DA Cagayan Valley guide gives these rates in kilograms per hectare, as it prints them. Then it adds at least ten bags of organic fertilizer per hectare at the last harrowing, before furrowing. Fertilizer application in corn then follows the steps above: a band at planting and a side dress at knee high."
     },
     {
       "type": "table",

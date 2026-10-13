@@ -21,7 +21,8 @@
     "fertilizer calculation",
     "fertilizer in tagalog",
     "top dressing fertilizer",
-    "fertilizer for rice"
+    "fertilizer for rice",
+    "fertilizer high in nitrogen"
   ],
   "excerpt": "Urea fertilizer is the white abono sold in 50 kg bags marked 46 0 0. It carries 46 percent nitrogen, the most of any common solid fertilizer. That makes it the main nitrogen source for palay and mais in the Philippines. Below, you will see what it does, when to apply it, how to stop losses and what a bag costs.",
   "heroImage": {
@@ -36,7 +37,7 @@
     },
     {
       "type": "text",
-      "text": "Fertilizer nitrogen comes in several forms, and urea carries the most of it: 46 kilos in every 100."
+      "text": "Of every fertilizer high in nitrogen in the store, urea carries the most: 46 kilos in every 100. Our [NPK ratio for rice](/blog/npk-ratio-for-rice) guide shows where it fits."
     },
     {
       "type": "heading",
@@ -142,7 +143,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Check the price for your own region",
-      "text": "The FPA weekly price list gives the average dealer price per region and per province. Look it up before you buy, so you know if a quote from your dealer is fair."
+      "text": "The FPA weekly list gives the average dealer price per region and province. Check it so you know if your dealer's quote is fair."
     },
     {
       "type": "heading",
@@ -220,7 +221,7 @@
       "items": [
         {
           "title": "Know your nitrogen target",
-          "text": "Start from a soil test, the Rice Crop Manager, MOET or your technician. As a general guide only, the modified general recommendation of PhilRice lists 97 kg of nitrogen per hectare for irrigated lowland rice in the wet season and 139 kg in the dry season. Your own target may differ."
+          "text": "Start from a soil test, the Rice Crop Manager, MOET or your technician. As a general guide only, the modified general recommendation of PhilRice lists 97 kg of nitrogen per hectare for irrigated lowland rice in the wet season and 139 kg in the dry season."
         },
         {
           "title": "Subtract the nitrogen from other fertilizers",

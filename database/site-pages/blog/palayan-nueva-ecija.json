@@ -13,7 +13,8 @@
     "palayan",
     "palayan in english",
     "palayan drawing",
-    "philippine rice variety"
+    "philippine rice variety",
+    "palay festival in nueva ecija"
   ],
   "excerpt": "Palayan, Nueva Ecija is the capital of the country's rice granary, and its name says so: palayan means rice field. Here is how the city got its name and why Nueva Ecija grows so much palay. You will also learn what palayan means in English and how to draw a palayan scene for school.",
   "heroImage": {
@@ -63,6 +64,15 @@
     {
       "type": "text",
       "text": "The province is also home to the national rice research institute. Executive Order 1061 created PhilRice on 5 November 1985, as a government corporation attached to the DA. Its headquarters and central experiment station sit in Maligaya, in the Science City of Muñoz. The station took that role in March 1990, and a grant from JICA of 15.7 million US dollars equipped its labs and training halls.\n\nThe next Philippine rice variety you plant may well come from that work. For example, NSIC Rc 216 (Tubigan 17) and NSIC Rc 402 (Tubigan 36) are PhilRice bred. PhilRice also wrote the PalayCheck System, the crop management guide that farmers and technicians follow across the country. Our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) compares these and the popular hybrids."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Is there a palay festival in Nueva Ecija?"
+    },
+    {
+      "type": "text",
+      "text": "We found no festival by that exact name in the province. Most people who search for a palay festival in Nueva Ecija mean Lakbay Palay. It is a field day that PhilRice holds twice a year, in the dry and wet seasons. It takes place at the PhilRice Central Experiment Station in the Science City of Muñoz. Farmers and students come to see new rice varieties, farm machinery and rice based farming systems. In 2023, PhilRice said about 50,000 farmers learned new technologies from it. That edition ran at the station, at seven branch stations and online.\n\nIf you want a true Palay Festival, Narra in Palawan holds one every mid or late October. Narra is known as the rice granary of Palawan, as our [palay guide](/crops/palay) notes."
     },
     {
       "type": "heading",
@@ -223,6 +233,18 @@
         {
           "label": "PhilRice: PalayCheck System, 2022 revised edition",
           "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: PhilRice's Lakbay Palay showcases wet season technologies (2018)",
+          "url": "https://www.philrice.gov.ph/philrices-lakbay-palay-showcases-wet-season-technologies/"
+        },
+        {
+          "label": "PhilRice: Lakbay Palay reaches 50K farmers (2023)",
+          "url": "https://www.philrice.gov.ph/lakbay-palay-reaches-50k-farmers/"
+        },
+        {
+          "label": "Narra, Palawan and its Palay Festival",
+          "url": "https://en.wikipedia.org/wiki/Narra,_Palawan"
         }
       ]
     }

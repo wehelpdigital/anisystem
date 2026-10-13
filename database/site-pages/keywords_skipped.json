@@ -1,0 +1,70 @@
+{
+ "ani ma": {
+  "volume": 5400,
+  "why": "not the farm word ani; an unrelated name search"
+ },
+ "animalis": {
+  "volume": 2900,
+  "why": "unrelated (a Latin word and a brand name), not about farming"
+ },
+ "palay restaurant": {
+  "volume": 1000,
+  "why": "a restaurant name, not about the crop"
+ },
+ "fertilized egg": {
+  "volume": 880,
+  "why": "biology (an egg cell), not crop fertilizer"
+ },
+ "palay maiden": {
+  "volume": 480,
+  "why": "not about the crop; no farm meaning found"
+ },
+ "fertilized egg chicken": {
+  "volume": 260,
+  "why": "biology (an egg cell), not crop fertilizer"
+ },
+ "fertilized egg of ascaris lumbricoides": {
+  "volume": 260,
+  "why": "biology (a parasite egg), not crop fertilizer"
+ },
+ "fertilized egg is called": {
+  "volume": 210,
+  "why": "biology (an egg cell), not crop fertilizer"
+ },
+ "fertilizer fund scam": {
+  "volume": 210,
+  "why": "a 2004 political case, not farm advice; naming people there is legal risk"
+ },
+ "palais royal": {
+  "volume": 170,
+  "why": "the Paris landmark, not palay"
+ },
+ "palayain": {
+  "volume": 170,
+  "why": "the Tagalog verb to set free, not palay"
+ },
+ "play emulator github": {
+  "volume": 110,
+  "why": "software, not farming"
+ },
+ "fertilizer stardew": {
+  "volume": 110,
+  "why": "a video game item"
+ },
+ "fertilized egg cell": {
+  "volume": 110,
+  "why": "biology (an egg cell), not crop fertilizer"
+ },
+ "farm raised salmon": {
+  "volume": 90,
+  "why": "salmon aquaculture abroad, not a Philippine crop"
+ },
+ "fertilizer terraria": {
+  "volume": 70,
+  "why": "a video game item"
+ },
+ "nearest nuat thai": {
+  "volume": 50,
+  "why": "a massage chain"
+ }
+}

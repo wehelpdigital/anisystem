@@ -14,7 +14,8 @@
     "RSBSA registration",
     "PAGASA agri weather",
     "Rice Crop Manager",
-    "farm records app"
+    "farm records app",
+    "crop production tools"
   ],
   "excerpt": "A modern Filipino farm needs six digital farming tools: a planning and records app, a weather and typhoon tracker, a fertilizer adviser, a variety guide, a pest and disease helper, and a way to check prices and reach buyers. Most of them are free and run on an ordinary smartphone. Built for Filipino farmers, the anee.io farm app covers planning, records, weather and pest help in one place. It works best beside free government tools such as RCMAS, Binhing Palay and PAGASA's agri weather.",
   "heroImage": {
@@ -175,7 +176,7 @@
     },
     {
       "type": "text",
-      "text": "Not to start. Satellites already pass over Philippine farms, and an app can read them for you. In anee.io, Satellite Analysis has Anee read the newest Sentinel 2 picture and Sentinel 1 radar of your drawn field. Radar sees through typhoon clouds, so the reading still works in the rainy season. It uses credits.\n\nRead more in our guides to [satellite images of your farm](/blog/satellite-crop-monitoring-philippines) and [monitoring crop health without a drone](/blog/monitor-crop-health-without-a-drone). A drone or a soil sensor can come later, once your records show where the money is lost."
+      "text": "Not to start. Satellites already pass over Philippine farms, and an app can read them for you. In anee.io, Satellite Analysis has Anee read the newest Sentinel 2 picture and Sentinel 1 radar of your drawn field. Radar sees through typhoon clouds, so the reading still works in the rainy season. It uses credits.\n\nRead more in our guides to [satellite images of your farm](/blog/satellite-crop-monitoring-philippines) and [monitoring crop health without a drone](/blog/monitor-crop-health-without-a-drone). A drone or a soil sensor can come later, once your records show where the money is lost. Most of the crop production tools above are free. When you are ready for hardware, see our guide to [farm sensors in the Philippines](/blog/farm-sensors-philippines)."
     },
     {
       "type": "heading",

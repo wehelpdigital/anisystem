@@ -111,7 +111,7 @@
     },
     {
       "type": "text",
-      "text": "From panicle initiation, heading follows in about 23 to 25 days, IRRI's Fundamentals of Rice Crop Science says. PalayCheck warns that too much nitrogen during panicle initiation and flowering raises the share of unfilled grains. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) gives the bag amounts for each dose."
+      "text": "From panicle initiation, heading follows in about 23 to 25 days, IRRI's Fundamentals of Rice Crop Science says. PalayCheck warns that too much nitrogen during panicle initiation and flowering raises the share of unfilled grains. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) gives the bag amounts for each dose. For a closer look at two stages, read [fertilizer for rice tillering](/blog/fertilizer-for-rice-tillering) and [fertilizer for rice grain filling](/blog/fertilizer-for-rice-grain-filling)."
     },
     {
       "type": "callout",
@@ -189,8 +189,12 @@
           "url": "/blog/fertilizer-application-methods"
         },
         {
-          "label": "Staggered planting schedule",
-          "url": "/blog/staggered-planting-schedule"
+          "label": "Fertilizer for rice tillering",
+          "url": "/blog/fertilizer-for-rice-tillering"
+        },
+        {
+          "label": "Fertilizer for rice grain filling",
+          "url": "/blog/fertilizer-for-rice-grain-filling"
         },
         {
           "label": "Plan fertilizer for a whole season",

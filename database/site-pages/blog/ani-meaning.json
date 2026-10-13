@@ -12,7 +12,9 @@
     "ani",
     "crop yields meaning",
     "palay meaning",
-    "agriculture in economy"
+    "agriculture in economy",
+    "ani ng palay in english",
+    "pang ani ng palay"
   ],
   "excerpt": "Ani is the Filipino word for harvest: the crop you gather and the act of gathering it. This page explains the ani meaning and what crop yield means. It also shows how to compute your yield per hectare, and the habits that raise it season after season.",
   "heroImage": {
@@ -28,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "As a noun, ani means a harvest or a crop, the yield you gather, and most often the rice harvest. As a verb it means to harvest. So you will hear umani (to harvest), inani (harvested), aanihin (will harvest) and anihan (harvest time). Farmers also use the word loosely, to mean reaping the reward of hard work.\n\nThe word is old. Wiktionary traces it to Proto Malayo Polynesian qanih, which also meant harvest. In English, then, ani is harvest or yield.\n\nThe palay meaning works the same way. Palay is rice still in its husk, so ani ng palay is the rice harvest before milling. Our [palay guide](/crops/palay) explains the grain, its growth stages and how it becomes rice."
+      "text": "As a noun, ani means a harvest or a crop, the yield you gather, and most often the rice harvest. As a verb it means to harvest. So you will hear umani (to harvest), inani (harvested), aanihin (will harvest) and anihan (harvest time). Farmers also use the word loosely, to mean reaping the reward of hard work.\n\nThe word is old. Wiktionary traces it to Proto Malayo Polynesian qanih, which also meant harvest. In English, then, ani is harvest or yield.\n\nThe palay meaning works the same way. Palay is rice still in its husk, so ani ng palay in English is the rice harvest before milling. With the prefix pang, which forms the names of tools, pang ani ng palay means the tools for harvesting rice. IRRI lists the common ones as the sickle or karit, the reaper and the combine harvester. Our [palay guide](/crops/palay) explains the grain, its growth stages and how it becomes rice."
     },
     {
       "type": "heading",
@@ -37,7 +39,7 @@
     },
     {
       "type": "text",
-      "text": "Crop yield means how much harvest you get from a given area. For rice in the Philippines, we usually count it in tonnes or cavans of palay per hectare. But yield is not the same as production. Production is your total harvest, while yield divides that harvest by the area.\n\nThat is why yield is the fair way to compare farms. For example, a 3 hectare farm will outproduce a 1 hectare farm, but it may still have the lower yield. For scale, the PSA put the national average palay yield at 4.14 tonnes per hectare in 2025, up from 4.11 in 2024."
+      "text": "Crop yield means how much harvest you get from a given area. For rice in the Philippines, we usually count it in tonnes or cavans of palay per hectare. But yield is not the same as production. Production is your total harvest, while yield divides that harvest by the area.\n\nThat is why yield is the fair way to compare farms. For example, a 3 hectare farm will outproduce a 1 hectare farm, but it may still have the lower yield. For scale, the PSA put the national average palay yield at 4.14 tonnes per hectare in 2025, up from 4.11 in 2024. To estimate your own yield before harvest, see our guide to [crop yield forecasting](/blog/crop-yield-forecasting)."
     },
     {
       "type": "table",
@@ -208,8 +210,8 @@
           "url": "/blog/fertilizer-for-rice"
         },
         {
-          "label": "Agriculture in the Philippine economy",
-          "url": "/blog/agriculture-in-the-philippine-economy"
+          "label": "Crop yield forecasting",
+          "url": "/blog/crop-yield-forecasting"
         },
         {
           "label": "Farm reports in anee.io",
@@ -235,6 +237,18 @@
         {
           "label": "PhilRice: All season rice varieties for transplanting and direct wet seeding",
           "url": "https://dbmp.philrice.gov.ph/dms_records/docs/PhilRice_Issuances/13082CES.pdf"
+        },
+        {
+          "label": "Wiktionary: pang (Tagalog prefix)",
+          "url": "https://en.wiktionary.org/wiki/pang-"
+        },
+        {
+          "label": "Wiktionary: karit (Tagalog), sickle",
+          "url": "https://en.wiktionary.org/wiki/karit"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Harvesting systems",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/postharvest/harvesting/harvesting-systems"
         }
       ]
     }

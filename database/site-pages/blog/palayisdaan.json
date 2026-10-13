@@ -1,0 +1,257 @@
+{
+  "section": "blog",
+  "slug": "palayisdaan",
+  "sortOrder": 1270,
+  "lang": "en",
+  "category": "Palay",
+  "title": "What Is Palayisdaan, and How Does Rice Fish Farming Work?",
+  "metaTitle": "Palayisdaan: How Rice Fish Farming Works in the Philippines",
+  "metaDescription": "Palayisdaan is rice fish farming: tilapia or carp raised in the paddy with a refuge trench. How it works, its benefits and limits, and how to start.",
+  "focusKeyword": "palayisdaan",
+  "keywords": [
+    "palayisdaan",
+    "palay sa bukid"
+  ],
+  "excerpt": "Palayisdaan is rice fish farming: you raise tilapia or carp in the flooded paddy with your palay, plus a deeper trench where the fish shelter when the water drops. The name comes from a 1979 Department of Agriculture program that joined palay with palaisdaan, the fishpond. It needs steady water, no sprays that kill fish and fingerlings on time. anee.io, a farm app built for Filipino farmers, keeps both sides of the season in one record.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-palayisdaan.webp",
+    "alt": "Young tilapia swimming in the flooded channel between rows of rice, a rice fish field like a palayisdaan, in Yogyakarta, Indonesia",
+    "credit": "Kembangraps, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The idea fits in a few words of Tagalog: palay sa bukid, isda sa kanal. While the water is up, fish graze among the rice. When it goes down, they retreat to the trench. At the end you harvest both."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A palayisdaan raises fish, usually tilapia or common carp, inside a flooded rice field.",
+        "The field needs higher dikes, screens on the water gates and a refuge deeper than the paddy.",
+        "Fish eat weeds, insects and snails, but most insecticides kill fish.",
+        "Water must stay up most of the season, and fingerlings must be ready at transplanting.",
+        "Studies show more work but often lower spending on fertilizer and pesticide."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where does the word palayisdaan come from?"
+    },
+    {
+      "type": "text",
+      "text": "In 1979 the Department of Agriculture launched a National Rice Fish Culture Program called Palay isdaan, an FAO report on Philippine aquaculture explains. The name joins palay with palaisdaan, the fishpond, and the Freshwater Aquaculture Center supplied the technology.\n\nFarmers dug a half meter deep trench lengthwise across the field and made the dikes a little higher and wider, with a screened gate. They stocked Nile tilapia or common carp at 5,500 to 9,900 per hectare. On average, the farms harvested 4,825 kg of rice and 232 kg of fish per hectare.\n\nStill, the program faded, from 1,397 hectares in 1982 to 185 hectares by 1986. A status report blamed modern varieties that needed heavy fertilizer and pesticide use."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does rice fish farming work?"
+    },
+    {
+      "type": "text",
+      "text": "For part of the year, the paddy becomes a shallow pond. Fish feed on plankton, weeds, insects and snails, and their droppings return nutrients to the field. According to FAO and the WorldFish Center, the refuge is where fish go when the water dries up. It also serves as the catch basin at harvest."
+    },
+    {
+      "type": "table",
+      "caption": "The parts of a palayisdaan field, from FAO and WorldFish, Culture of Fish in Rice Fields (2004)",
+      "rows": [
+        ["Part", "What it does", "What FAO reports"],
+        ["Raised dikes", "Hold deeper water and keep fish in during floods", "Usually 40 to 50 cm high and about as wide"],
+        ["Screens on inlet and outlet", "Keep your fish in and outside predators out", "Bamboo slats, a basket or fish net"],
+        ["Refuge trench or pond", "Shelter when water drops, catch basin at harvest", "A refuge 50 cm below the field gives 65 to 70 cm of water. One Philippine model sets aside at least 500 square meters of pond per hectare."],
+        ["Standing water", "Room for fish to graze among the rice", "About 15 to 20 cm, from transplanting to about two weeks before harvest"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Tilapia or carp?"
+    },
+    {
+      "type": "text",
+      "text": "In the Philippines, tilapia is the usual choice because carp sells well only in a few places, FAO notes. Common carp has its own strength, though. In Philippine tests it was the better hunter of [golden apple snails](/pests/golden-apple-snail), eating up to 1,000 young snails a day. That is why many farms stock both."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What are the benefits of palayisdaan?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**A second harvest.** Fish for the table or the market come from a field that would grow only rice.",
+        "**Fewer stem borers.** In Philippine test plots, whiteheads reached 11 percent with tilapia against 18 percent without fish.",
+        "**Weeds and snails eaten.** Carp stir up the mud and eat young weeds and snails.",
+        "**Lower input spending.** In Bangladesh, Indonesia and the Philippines, rice fish fields spent 4 to 14 percent less on fertilizer and 44 to 86 percent less on pesticide."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "What about the rice? Philippine trials with tilapia found rice yields on average no lower than in rice only plots. But FAO warns that farmers who take up rice fish farming may simply be better farmers to begin with. So count the fish as the extra, not a promise of more palay."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What are the limits?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Water.** Alternate wetting and drying saves water for rice alone, but it forces the fish into the trench at every dry spell.",
+        "**Sprays.** Insecticides are the main danger, and a neighbor's spray water can reach your field too.",
+        "**Short varieties.** Many modern varieties mature in about 100 days, so fish come out small unless you stock big fingerlings.",
+        "**Fingerlings.** Without a nearby hatchery or your own breeding pond, stocking slips behind transplanting.",
+        "**Labor, theft and permission.** Dikes and trenches take hard work, fish tempt poachers, and a leaseholder needs the landowner's consent to dig."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Before any spray, move the fish",
+      "text": "FAO notes that most experts advise driving the fish into the refuge and closing it off with a temporary dike until the chemical breaks down. Choose the product least toxic to fish, follow the label and the FPA registration, and try [integrated pest management](/pests/integrated-pest-management) first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I start a palayisdaan?"
+    },
+    {
+      "type": "text",
+      "text": "These steps follow FAO's guidance and the case of Mang Isko, a rice fish farmer in Cavite whom FAO studied."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Check water and permission",
+          "text": "Pick a field with water all season that does not flood over the dikes. If you lease, ask the owner first."
+        },
+        {
+          "title": "Ask for training and fingerlings",
+          "text": "Talk to your municipal agriculturist and the BFAR regional office. The Agricultural Training Institute has run rice fish courses, and BFAR has helped farmer groups start tilapia with fingerlings, feed and training."
+        },
+        {
+          "title": "Raise the dikes and screen the gates",
+          "text": "Build the dikes to about 40 to 50 cm and screen every inlet and outlet. Mang Isko lined his dikes with plastic to stop rats burrowing."
+        },
+        {
+          "title": "Dig the refuge",
+          "text": "He dug side trenches a month after transplanting, pulling three rows of rice, and used those seedlings to fill gaps."
+        },
+        {
+          "title": "Stock after transplanting",
+          "text": "He stocked about 1 tilapia per square meter and 1 carp per 5 square meters. If you use a herbicide right after transplanting, FAO says fish go in 10 to 14 days later."
+        },
+        {
+          "title": "Feed lightly and drain slowly",
+          "text": "He fed rice bran twice a week. Then he drained the field 3 days before the rice harvest, so the fish gathered in the refuge to be caught by hand."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What costs and work should I expect?"
+    },
+    {
+      "type": "text",
+      "text": "Prices change by town, so here are the cost lines instead of pesos. In most country studies FAO reviewed, total labor rose by 10 to 234 percent with fish. In Thailand, the first year investment even left rice fish fields earning less than rice alone."
+    },
+    {
+      "type": "table",
+      "caption": "Cost lines and work in a palayisdaan season",
+      "rows": [
+        ["Cost line", "When", "What to plan for"],
+        ["Dikes and trenches", "Around transplanting", "The heaviest labor, mostly in the first season"],
+        ["Screens and gates", "Before stocking", "Bamboo, net or pipe at every inlet and outlet"],
+        ["Fingerlings", "At or after transplanting", "From a hatchery or your own breeding pond"],
+        ["Feed", "During the season", "Rice bran or other feed, only as needed"],
+        ["Water", "All season", "More water held in the field, and fuel if you pump"],
+        ["Guarding and harvest", "As fish grow, then at the end", "Watching for poachers, then draining, catching and selling"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can anee.io record both the rice and the fish?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io is built around crops. It has no fish module and does not track fish growth for you, but the season's records still fit."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Add the paddy as a [lot](/features/farm-lots) and drop pins on the trench and the gates on its [farm map](/features/farm-maps).",
+        "Put stocking, feeding, dike checks and draining on the [cropping calendar](/features/cropping-calendar) beside the rice work.",
+        "Keep photos, voice notes and fish counts as notes tagged Isda.",
+        "Note the rice yield, moisture, buyer and price in your [harvest records](/features/harvest-records), and keep fingerling suppliers and fish buyers in the Contact List.",
+        "When you ask Anee, the smart farm technician, about a pest, tell her the field holds fish."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Keep rice and fish on one record",
+      "text": "Sign up free, add your paddy as a lot, and put every stocking, feeding and spray decision on one dated calendar.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about palayisdaan"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is palayisdaan profitable?",
+          "a": "It can be. An FAO review cites a Philippine study with 27 percent higher net returns than a single rice crop. A Thai study, however, found lower returns because of the high first investment, so try one field first."
+        },
+        {
+          "q": "What fish is best for a palayisdaan?",
+          "a": "Nile tilapia is the common choice in the Philippines because it sells everywhere. Common carp is the better snail eater, and many farmers stock both."
+        },
+        {
+          "q": "Can I still spray insecticide in a rice fish field?",
+          "a": "Only with care. Drive the fish into the refuge, close it off, choose the product least toxic to fish, and follow the label and the FPA registration. Let the fish back only after the chemical breaks down."
+        },
+        {
+          "q": "Can I do rice fish farming in a rainfed field?",
+          "a": "It is risky. The fish need water all season, and FAO's review of Philippine rice fish farming lists poor water supply among the reasons farmers gave it up. A field with a reliable canal or pump is a safer start."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        { "label": "Palay: meaning, parts and growth stages", "url": "/crops/palay" },
+        { "label": "Golden apple snail", "url": "/pests/golden-apple-snail" },
+        { "label": "Integrated pest management", "url": "/pests/integrated-pest-management" },
+        { "label": "Multiple cropping", "url": "/blog/multiple-cropping" },
+        { "label": "Small farm ideas in the Philippines", "url": "/blog/small-farm-ideas-philippines" },
+        { "label": "Lots in anee.io", "url": "/features/farm-lots" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "FAO: Rural Aquaculture in the Philippines, section 8 (National Rice Fish Farming Program, Palay isdaan)", "url": "https://www.fao.org/3/x6943e/x6943e0c.htm" },
+        { "label": "FAO and WorldFish Center: Culture of Fish in Rice Fields (2004)", "url": "https://www.fao.org/3/a0823e/a0823e.pdf" },
+        { "label": "FAO: Integrated agriculture aquaculture primer, the case of rice fish farmer Mang Isko, Cavite", "url": "https://www.fao.org/4/y1187e/y1187e25.htm" },
+        { "label": "ATI Ilocos: Field extensionists trained in rice fish integration (2023)", "url": "https://ati2.da.gov.ph/ati-1/content/article/jacquelyn-r-rafanan-jeimelie-c-constantino/ati-ilocos-mobilizes-field-extensionists-rice" },
+        { "label": "BFAR Region 10: Alubijid fisherfolk harvest 188 kg of fresh tilapia", "url": "https://r10.bfar.da.gov.ph/%f0%9d%90%80%f0%9d%90%a5%f0%9d%90%ae%f0%9d%90%9b%f0%9d%90%a2%f0%9d%90%a3%f0%9d%90%a2%f0%9d%90%9d-%f0%9d%90%9f%f0%9d%90%a2%f0%9d%90%ac%f0%9d%90%a1%f0%9d%90%9e%f0%9d%90%ab%f0%9d%90%9f%f0%9d%90%a8/" }
+      ]
+    }
+  ]
+}

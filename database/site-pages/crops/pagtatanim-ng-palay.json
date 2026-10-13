@@ -26,7 +26,9 @@
     "broadleaves",
     "sedges weeds",
     "common weeds in the philippines",
-    "sofit"
+    "sofit",
+    "palay farming",
+    "pang ani ng palay"
   ],
   "excerpt": "Ang pagtatanim ng palay ay hindi lang pagbaon ng punla sa putik. Sunod sunod na desisyon ito mula sa binhi hanggang sa pag aani, at bawat mali ay bawas sa ani. Heto ang buong proseso, hakbang hakbang, batay sa PalayCheck System ng PhilRice.",
   "heroImage": {
@@ -37,7 +39,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Galing sa PalayCheck 2022 revised edition ng PhilRice at sa IRRI ang mga numero dito. Iba iba ang lupa at tubig sa bawat bayan, kaya gamitin ito bilang gabay sa pagtatanim ng palay, pero itanong pa rin sa inyong municipal agriculturist kung ano ang bagay sa lugar ninyo."
+      "text": "Galing sa PalayCheck 2022 revised edition ng PhilRice at sa IRRI ang mga numero dito. Iba iba ang lupa at tubig sa bawat bayan, kaya gamitin ito bilang gabay sa pagtatanim ng palay (palay farming), pero itanong pa rin sa inyong municipal agriculturist kung ano ang bagay sa lugar ninyo."
     },
     {
       "type": "heading",
@@ -208,7 +210,7 @@
     },
     {
       "type": "text",
-      "text": "Patuyuin ang bukid 1 hanggang 2 linggo bago ang takdang ani. Anihin kapag 85 hanggang 90 percent ng butil ay kulay ginto kung kamay ang gagapas, o 90 hanggang 95 percent kung combine harvester.\n\nKapag masyadong maaga, hilaw ang butil at puwedeng bumaba sa 53 percent ang milling recovery. Kapag masyadong huli, lalagas ang butil. Karaniwang moisture ng bagong aning palay ay 18 hanggang 21 percent sa dry season at 20 hanggang 25 percent sa wet season."
+      "text": "Patuyuin ang bukid 1 hanggang 2 linggo bago ang takdang ani. Anihin kapag 85 hanggang 90 percent ng butil ay kulay ginto kung kamay ang gagapas, o 90 hanggang 95 percent kung combine harvester. Ayon sa IRRI, ang karaniwang pang ani ng palay ay karit, reaper, o combine harvester na gumagapas at gumigiik nang sabay.\n\nKapag masyadong maaga, hilaw ang butil at puwedeng bumaba sa 53 percent ang milling recovery. Kapag masyadong huli, lalagas ang butil. Karaniwang moisture ng bagong aning palay ay 18 hanggang 21 percent sa dry season at 20 hanggang 25 percent sa wet season."
     },
     {
       "type": "heading",
@@ -226,7 +228,7 @@
     },
     {
       "type": "text",
-      "text": "Patuyuin nang pantay sa loob ng 12 hanggang 24 oras pagkatapos igiik, hanggang 12 hanggang 14 percent moisture. Kung sa semento magbibilad, haluin kada 30 minuto. Ilagay ang sako sa ibabaw ng pallet, at huwag itabi kasama ng abono, kemikal o semento sa bodega."
+      "text": "[Patuyuin nang pantay](/blog/palay-drying) sa loob ng 12 hanggang 24 oras pagkatapos igiik, hanggang 12 hanggang 14 percent moisture. Kung sa semento magbibilad, haluin kada 30 minuto. Ilagay ang sako sa ibabaw ng pallet, at huwag itabi kasama ng abono, kemikal o semento sa bodega."
     },
     {
       "type": "heading",
@@ -235,7 +237,7 @@
     },
     {
       "type": "text",
-      "text": "Ang PalayCheck System, na hinahanap din bilang Palay Check System, ay rice integrated crop management system ng PhilRice para sa pagtatanim ng palay. Sa halip na hiwa hiwalay na payo, pinagsasama nito ang binhi, lupa, tubig, abono, peste, ani at postharvest. Learning, checking and sharing ang tawag dito ng PhilRice: ikinukumpara mo ang gawi mo sa pinakamainam na gawi, sinusukat ang resulta, at ibinabahagi sa kapwa magsasaka.\n\nSa 2022 revised edition, may siyam na Key Checks:"
+      "text": "Ang PalayCheck System, na hinahanap din bilang Palay Check System, ay rice integrated crop management system ng PhilRice para sa pagtatanim ng palay. Sa halip na hiwa hiwalay na payo, pinagsasama nito ang binhi, lupa, tubig, abono, peste, ani at postharvest. Learning, checking and sharing ang tawag dito ng PhilRice: ikinukumpara mo ang gawi mo sa pinakamainam na gawi, sinusukat ang resulta, at ibinabahagi sa kapwa magsasaka.\n\nSa 2022 revised edition, may siyam na [Key Checks](/blog/palaycheck-key-checks):"
     },
     {
       "type": "list",
@@ -281,7 +283,7 @@
         },
         {
           "q": "Ano ang Palay Check System?",
-          "a": "Ito ang PalayCheck System ng PhilRice, isang rice integrated crop management system na may siyam na Key Checks mula binhi hanggang pag iimbak. Ikinukumpara mo ang gawi mo sa bawat Key Check at sinusukat ang resulta bawat season."
+          "a": "Ito ang PalayCheck System ng PhilRice, isang rice integrated crop management system na may siyam na Key Checks mula binhi hanggang pag iimbak."
         },
         {
           "q": "Ano ang palatak palay seeder?",
@@ -294,7 +296,7 @@
       "title": "Basahin din",
       "items": [
         {
-          "label": "Palay: meaning, growth stages at palay to rice",
+          "label": "Palay: meaning at growth stages",
           "url": "/crops/palay"
         },
         {
@@ -306,15 +308,15 @@
           "url": "/blog/fertilizer-for-rice"
         },
         {
-          "label": "Common weeds sa palayan",
-          "url": "/weeds/common-weeds-philippines"
+          "label": "PalayCheck Key Checks",
+          "url": "/blog/palaycheck-key-checks"
         },
         {
-          "label": "Rice insects",
-          "url": "/pests/rice-insects"
+          "label": "Pagpapatuyo ng palay",
+          "url": "/blog/palay-drying"
         },
         {
-          "label": "Cropping calendar ng anee.io",
+          "label": "anee.io cropping calendar",
           "url": "/features/cropping-calendar"
         }
       ]
@@ -349,6 +351,14 @@
         {
           "label": "IRRI Rice Knowledge Bank: The dirty dozen of weeds",
           "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/weed-management/the-dirty-dozen-of-weeds"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Harvesting systems",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/postharvest/harvesting/harvesting-systems"
+        },
+        {
+          "label": "Wiktionary: karit (Tagalog), sickle",
+          "url": "https://en.wiktionary.org/wiki/karit"
         }
       ]
     }

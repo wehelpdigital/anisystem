@@ -1,0 +1,321 @@
+{
+  "section": "blog",
+  "slug": "organic-vs-inorganic-fertilizer",
+  "sortOrder": 1100,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Organic vs Inorganic Fertilizer for Palay: Which Is Better?",
+  "metaTitle": "Organic vs Inorganic Fertilizer for Palay: Which Is Better?",
+  "metaDescription": "Organic vs inorganic fertilizer for palay: nutrients, speed, cost per kilo of nitrogen and soil health compared, and why most rice farms do best with both.",
+  "focusKeyword": "organic vs inorganic fertilizer",
+  "keywords": [
+    "organic vs inorganic fertilizer",
+    "fertilizer organic",
+    "organic fertilizer for farming",
+    "fertilizer homemade",
+    "fertilizer diy",
+    "fertilizer ingredients"
+  ],
+  "excerpt": "Neither one wins alone. In the organic vs inorganic fertilizer question, inorganic fertilizer feeds palay fast and costs the least per kilo of nitrogen. Organic fertilizer builds the soil but carries far less nutrient per sack, so PhilRice advises combining the two. anee.io, a farm app built for Filipino farmers, puts both on one calendar and shows what each one cost.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-organic-vs-inorganic-fertilizer.webp",
+    "alt": "Azolla, a water fern used as organic fertilizer, covering the water of a rice paddy in Miagao, Iloilo",
+    "credit": "Retdar, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Farmers hear two stories. One says chemical abono ruins the soil. The other says organic farming cannot feed a hectare of rice. Both miss the point, because rice takes up nitrogen, phosphorus and potassium in the same mineral forms whatever the source. What differs is how much nutrient each sack holds, how fast it works and what it does to the soil.\n\nOur guides to [organic fertilizer examples](/blog/organic-fertilizer-examples) and [inorganic fertilizer examples](/blog/inorganic-fertilizer-examples) describe each product. This page puts the two side by side for palay."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Inorganic fertilizer** is fast, and urea gives nitrogen at about PHP 97 a kilo.",
+        "**Organic fertilizer** is slow and weak per sack, but it feeds soil life and holds water.",
+        "**Straw and azolla** can each supply about 30 kg of nitrogen per hectare, PhilRice says.",
+        "**Homemade fertilizer** is a supplement, since a hectare needs tons of it.",
+        "**Most farms do best with both**, which PhilRice calls balanced fertilization."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Organic vs inorganic fertilizer for palay: the comparison"
+    },
+    {
+      "type": "text",
+      "text": "Figures come from the national standard for organic fertilizer, the FPA weekly price report and IRRI."
+    },
+    {
+      "type": "table",
+      "caption": "Organic vs inorganic fertilizer compared for palay",
+      "rows": [
+        [
+          "Point",
+          "Organic fertilizer",
+          "Inorganic fertilizer"
+        ],
+        [
+          "Nutrient content",
+          "5 to 10 percent total NPK under PNS/BAFS 183:2023, with nitrogen above 1.5 percent",
+          "Urea is 46 percent nitrogen, and complete 14 14 14 is 42 percent NPK"
+        ],
+        [
+          "Speed",
+          "Slow, because soil microbes must break it down first",
+          "Fast, because it dissolves quickly in moist soil"
+        ],
+        [
+          "Cost per kilo of nitrogen",
+          "Usually higher if bought, since a 50 kg bag at 2 percent nitrogen holds only 1 kg",
+          "About PHP 97 from prilled urea, FPA national average for October 5 to 9, 2026"
+        ],
+        [
+          "Soil health",
+          "Adds organic matter, feeds soil life and helps the soil hold water",
+          "Feeds the crop only, and ammonium sulfate makes soil more acid over time"
+        ],
+        [
+          "Labor",
+          "Heavy, with tons to haul and spread, or compost to make",
+          "Light, with one or two bags per hectare at each dose"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What a kilo of nitrogen really costs"
+    },
+    {
+      "type": "text",
+      "text": "A 50 kg bag of urea holds 23 kg of nitrogen. The FPA national average for prilled urea from October 5 to 9, 2026 was PHP 2,241.41 a bag. So each kilo of nitrogen cost about PHP 97.\n\nAn organic fertilizer needs only more than 1.5 percent nitrogen to pass the national standard. Say the label shows 2 percent. Then a 50 kg bag holds just 1 kg of nitrogen, and the whole bag price buys that one kilo. To match one bag of urea, you would need about 23 such bags.\n\nIRRI puts it plainly: bought inorganic nitrogen usually pays better than bought organic nitrogen. But manure and compost already on the farm can pay their way for part of the crop's need."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What organic fertilizer options work for palay?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice straw incorporation"
+    },
+    {
+      "type": "text",
+      "text": "Straw is the cheapest fertilizer you own. PhilRice nutrient expert Wilfredo Collado notes that a 5 ton harvest, about 100 cavans, leaves about 5 tons of straw. Decomposed back in the field, it can supply about 30 kg of nitrogen, equal to 1.3 bags of urea. IRRI adds that each ton of straw holds about 16.8 kg of potash (K2O). So burning straw throws away nutrients you already grew."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Azolla"
+    },
+    {
+      "type": "text",
+      "text": "Azolla is a small water fern that floats on paddy water. A blue green alga in its leaves fixes nitrogen from the air. PhilRice researcher Cielo Luz Mondejar says a full azolla cover on one hectare can supply about 30 kg of nitrogen. That can replace at least half of the crop's inorganic nitrogen without lowering the yield. It needs standing water, so it suits irrigated fields."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Green manure"
+    },
+    {
+      "type": "text",
+      "text": "Green manure means plants you plow under, such as sesbania, or the leftover plants of a legume crop like mungbean. In a Philippine field study by Alam and Garrity, published in 1991, these replaced 60 kg of nitrogen per hectare in the next rice crop. Sesbania released its nitrogen fast, so keep the gap between plowing it under and transplanting short."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Compost and chicken manure"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice's Abonong Swak plans add 10 bags of decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost per hectare at 14 days after transplanting. That goes on top of the inorganic bags, not instead of them. Compost manure first, since fresh droppings can burn roots."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Biofertilizers"
+    },
+    {
+      "type": "text",
+      "text": "Biofertilizers carry living microbes that fix nitrogen or free up soil nutrients. A common one for rice is an Azospirillum biofertilizer developed at UPLB BIOTECH.\n\nIn four seasons of Philippine trials reported by Banayo and others in 2012, the best biofertilizer raised irrigated rice yields by 5 to 18 percent a season. Yet the gain was usually below 0.5 ton per hectare. So it can trim the urea bill a little, but it cannot carry the crop alone. Buy only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority)."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Count what the farm already gives",
+      "text": "Before you buy the second bag of urea, count what you already have. By PhilRice's estimates, 5 tons of decomposed straw give about 30 kg of nitrogen, and a full azolla cover gives about 30 kg more."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Can you make homemade or DIY fertilizer for rice?"
+    },
+    {
+      "type": "text",
+      "text": "Yes, but know its limits. Homemade fertilizer is anything you make from farm and kitchen waste: compost, vermicast, fish amino acid or ash. The fertilizer ingredients cost little, and they return organic matter to the soil.\n\nThe catch is volume. Most homemade fertilizer carries only a few percent of nutrients, so a hectare of palay needs tons of it. A DIY fertilizer spray such as fish amino acid goes on well diluted, so it is a light supplement. Use DIY fertilizer for the soil and the seedbed, and keep the measured bags for the main feeding."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sustainable fertilization for rice paddies: use both"
+    },
+    {
+      "type": "text",
+      "text": "For most farms, the best practice is to combine them. At the 2022 Lakbay Palay, PhilRice and BSWM experts said farmers could save PHP 2,000 to 4,000 by adding organic sources to inorganic fertilizer. BSWM assistant director Gina Nilo added that organic fertilizer improves soil fertility over the long term. See [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) for the full program."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Test the soil",
+          "text": "Ask your municipal agriculturist about a soil test, or use a BSWM soil test kit."
+        },
+        {
+          "title": "Return the straw",
+          "text": "Let the last crop's straw decompose in the field instead of burning it."
+        },
+        {
+          "title": "Add organic matter early",
+          "text": "Work in compost or manure, grow azolla, or plow under a green manure before transplanting."
+        },
+        {
+          "title": "Feed the crop with measured bags",
+          "text": "Apply complete fertilizer and urea by [growth stage](/blog/fertilizer-timing-by-growth-stage), trimmed for the nitrogen your organic sources give."
+        },
+        {
+          "title": "Write it down",
+          "text": "Record every sack with its cost and date, so you can compare seasons."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Alternatives to synthetic fertilizers: can palay go fully organic?"
+    },
+    {
+      "type": "text",
+      "text": "It can, but expect a slow start. In a PhilRice study, rice fed only by azolla for three seasons reached 4 to 5.3 tons per hectare. Still, the big gain came only after the third crop. Organic fertilizer for farming at this scale has to come mostly from the farm itself, because buying it by the ton costs too much. Selling rice as certified organic has its own rules, covered in our [organic fertilizer examples](/blog/organic-fertilizer-examples) guide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan and price both in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "Mixing the two only pays if you track both. In anee.io, the [Protocol Builder](/features/protocol-builder) puts each task on its day: the straw, the compost, the basal dose and each top dressing. The free [NPK Plus Calculator](/features/npk-plus-calculator) adds up the nutrients from every fertilizer you pick, biofertilizers too, and says if the crop is short, right or over.\n\nThe [farm inventory](/features/farm-inventory-and-expenses) records each sack of urea or manure with its cost. Next season, [Compare Reports](/features/compare-reports) puts two seasons side by side."
+    },
+    {
+      "type": "cta",
+      "title": "Plan straw, manure and urea on one calendar",
+      "text": "Sign up free, add your lots, and let anee.io date every fertilizer task, organic or inorganic.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about organic and inorganic fertilizer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Does inorganic fertilizer ruin the soil?",
+          "a": "Not at the right rate. Trouble comes from overuse, imbalance, or acid forming kinds like ammonium sulfate on acid soil. Pair the bags with organic matter and a soil test."
+        },
+        {
+          "q": "How many bags of organic fertilizer equal one bag of urea?",
+          "a": "At 2 percent nitrogen, about 23 bags of 50 kg give the 23 kg of nitrogen in one bag of urea. Check the label, because the standard allows just over 1.5 percent."
+        },
+        {
+          "q": "What is the best organic fertilizer for palay?",
+          "a": "Start with your own rice straw, then azolla in irrigated fields or a green manure before planting. Add decomposed chicken manure or vermicompost where you can get it."
+        },
+        {
+          "q": "Can a biofertilizer replace urea?",
+          "a": "Not fully. In Philippine trials, the best one raised yields by 5 to 18 percent a season, usually less than half a ton per hectare. Use it with a trimmed urea program, and buy only FPA registered products."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related fertilizer guides",
+      "items": [
+        {
+          "label": "Balanced fertilization for rice",
+          "url": "/blog/balanced-fertilization-for-rice"
+        },
+        {
+          "label": "Examples of organic fertilizer",
+          "url": "/blog/organic-fertilizer-examples"
+        },
+        {
+          "label": "Examples of inorganic fertilizer",
+          "url": "/blog/inorganic-fertilizer-examples"
+        },
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Fertilizer for sandy soil",
+          "url": "/blog/fertilizer-for-sandy-soil"
+        },
+        {
+          "label": "How to lower fertilizer cost",
+          "url": "/blog/lower-fertilizer-cost"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K, experts (Abonong Swak, 2022)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "PhilRice: Azolla lessens fertilizer cost in rice production, study (2021)",
+          "url": "https://www.philrice.gov.ph/azolla-lessens-fertilizer-cost-in-rice-production-study/"
+        },
+        {
+          "label": "PhilRice: Azolla fertilized rice yields 5t/ha (2023)",
+          "url": "https://www.philrice.gov.ph/azolla-fertilized-rice-yields-5t-ha/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Nitrogen",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Potassium",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
+        },
+        {
+          "label": "FPA: Prices of major fertilizer grades, October 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_.pdf"
+        },
+        {
+          "label": "BAFS: PNS/BAFS 183:2023 Organic soil amendments and plant supplements",
+          "url": "https://philippines.controlunion.com/wp-content/uploads/sites/55/2026/04/FL_20251210021315_PNSBAFS_183-2023_OSAPS_Product_Standard_Specifications.pdf"
+        },
+        {
+          "label": "Banayo and others (2012): Evaluation of biofertilizers in irrigated rice, effects on grain yield at different fertilizer rates",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2316"
+        },
+        {
+          "label": "UPLB BIOTECH: Azospirillum biofertilizer for rice, corn and vegetables (2022)",
+          "url": "https://biotech.uplb.edu.ph/news/uplb-biotechs-bio-n-may-help-ease-ph-farmers-fertilizer-woes/"
+        },
+        {
+          "label": "FAO AGRIS: Alam and Garrity (1991), Effect of pre rice legume and residue incorporation on rice yield in the Philippines",
+          "url": "https://agris.fao.org/search/ar/records/6471f3f677fd37171a71a2a4"
+        }
+      ]
+    }
+  ]
+}

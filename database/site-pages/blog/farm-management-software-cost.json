@@ -1,0 +1,348 @@
+{
+  "section": "blog",
+  "slug": "farm-management-software-cost",
+  "sortOrder": 1200,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "How Much Does Farm Management Software Cost, and What Support Should I Expect?",
+  "metaTitle": "Farm Management Software Cost: Prices, Plans and Support",
+  "metaDescription": "Farm management software cost explained: free, monthly, yearly and credit pricing, the costs people forget, the support to ask for, and anee.io's prices.",
+  "focusKeyword": "farm management software cost",
+  "keywords": [
+    "farm management software cost",
+    "farm management software"
+  ],
+  "excerpt": "Farm management software cost runs from free to a monthly or yearly fee, and some tools charge by area, by user or in credits for AI work. Count the hidden costs too: a phone, mobile data and your time to learn it. anee.io, a farm app built for Filipino farmers, is free on its Libre plan, and paid plans run from PHP 70 to PHP 600 a month by GCash or bank transfer. Help comes by email and from inside the app.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-management-software-cost.webp",
+    "alt": "The four anee.io plans with their prices in pesos, from the free Libre plan to Farm Owner at PHP 600 a month, the farm management software cost a farmer weighs before paying",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A Filipino farmer needs a plain answer about software prices. What will this cost each season, in pesos, and who helps when it does not work?\n\nThe price tag is only part of it. The UW Madison Division of Extension notes that software can save time over paper. Still, you need basic computer skills and time to learn the tool and set it up. Below are the pricing models, the forgotten costs, the support to ask for, and the real prices of anee.io."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Prices come in six forms: free, one time, monthly, yearly, per hectare or user, and credits for AI.",
+        "Add the costs that do not show on the price tag: phone, data, storage and your time.",
+        "Ask how support works before you pay: email, in app help, videos, and how fast a person answers.",
+        "anee.io starts free. Libre plus Anee costs PHP 70 a month, Solo Farmer PHP 200 and Farm Owner PHP 600."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How is farm management software priced?"
+    },
+    {
+      "type": "text",
+      "text": "Sellers use a few pricing models, and many mix two of them. Know which one you are buying, because it decides what the bill looks like as your farm grows."
+    },
+    {
+      "type": "table",
+      "caption": "Common pricing models for farm management software",
+      "rows": [
+        [
+          "Pricing model",
+          "How it works",
+          "Watch out for",
+          "An example you can check"
+        ],
+        [
+          "Free",
+          "No fee at all",
+          "Ads, or limits on seasons, lots or reports",
+          "PalayCheck App on Google Play, anee.io Libre"
+        ],
+        [
+          "One time purchase",
+          "Pay once in the app store",
+          "Updates and support may stop later",
+          "PhilRice LCC App Pro, listed at PHP 90 on Google Play"
+        ],
+        [
+          "Monthly",
+          "Pay each month, stop when you like",
+          "Costs more per year than paying yearly",
+          "anee.io, from PHP 70 a month"
+        ],
+        [
+          "Yearly",
+          "Pay for twelve months ahead",
+          "A bigger payment up front",
+          "anee.io Solo Farmer, PHP 1,800 a year"
+        ],
+        [
+          "Per hectare or per user",
+          "The price grows with your area or your team",
+          "Each new worker or field raises the bill",
+          "Ask for the full price for your area and team"
+        ],
+        [
+          "Credits for AI work",
+          "Pay for each answer or analysis",
+          "Heavy use in a bad season adds up",
+          "Anee's chat and analyses in anee.io"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "How much does advanced farm analytics software cost?"
+    },
+    {
+      "type": "text",
+      "text": "There is no fair typical price to quote. Some platforms charge by area, and some give a price only after a demo, so one tool can cost two farms very different amounts. Before any demo, ask for the full yearly price in pesos for your hectares and your team.\n\nIn anee.io, the analytics side runs on credits. Each analysis, such as What to Plant or Satellite Analysis, shows its price in credits before it runs. Solo Farmer comes with 30 AI credits each renewal and Farm Owner with 100, and you can buy more. Credits do not expire."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does farm management software cost in pesos at anee.io?"
+    },
+    {
+      "type": "table",
+      "caption": "anee.io plans in Philippine pesos, as listed on the pricing page",
+      "rows": [
+        [
+          "Plan",
+          "Monthly",
+          "Yearly",
+          "What it adds"
+        ],
+        [
+          "Libre",
+          "Free",
+          "Free",
+          "1 active season, the board, notes, growth stages, labor report, 1 GB, a few ads"
+        ],
+        [
+          "Libre plus Anee",
+          "PHP 70",
+          "PHP 700, you save PHP 140",
+          "Anee chat with photos, four analyses, credit packs, a few ads"
+        ],
+        [
+          "Solo Farmer",
+          "PHP 200",
+          "PHP 1,800, you save PHP 600",
+          "3 active seasons of up to 5 lots, workers, inventory, all reports, 30 credits each renewal, 6 GB, no ads"
+        ],
+        [
+          "Farm Owner",
+          "PHP 600",
+          "PHP 6,500, you save PHP 700",
+          "Everything unlimited, worker logins, Collab Room, 100 credits each renewal, 15 GB, no ads"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Offline mode comes with every plan. On Farm Owner, your workers log in under your plan and pay nothing themselves. The full list is on the [pricing page](/pricing).\n\nFor scale, the PSA puts the 2024 average cost of producing palay at PHP 59,695 per hectare. So a year of Solo Farmer comes to about 3 percent of one hectare's cost for one season. Our guide to [farm expense management software](/blog/farm-expense-management-software) works it out per crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What costs do farmers forget?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**A phone that can run it.** anee.io works in the browser of any phone, tablet or computer.",
+        "**Mobile data.** Ticks and notes use little, while photos and video use the most.",
+        "**Storage.** Ask what happens when the space runs out. Libre holds 1 GB and Solo Farmer 6 GB, and paid plans can add more.",
+        "**AI credits beyond the ones included.** Check the price shown before each analysis.",
+        "**Your time.** Plan a few evenings to set up lots, workers and stock.",
+        "**Leaving later.** Moving records between programs takes work, so read how to [digitize farm records](/blog/digitize-farm-records) before you start."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Pay monthly first, then yearly",
+      "text": "Try a paid plan for one month during a busy part of the season, such as top dressing or harvest. If you still open it every day after that month, switch to yearly and keep the savings. If you do not, step back to Libre and you lose nothing you recorded."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I subscribe to a paid plan?"
+    },
+    {
+      "type": "text",
+      "text": "Many apps sell their paid features from a page inside the app, called Plans, Billing or Subscription. In anee.io it works like this."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Open My Subscription",
+          "text": "Inside the app, open My Subscription and pick a plan, monthly or yearly."
+        },
+        {
+          "title": "Pay by GCash or bank transfer",
+          "text": "Pay the amount shown, in pesos. You do not need a credit card."
+        },
+        {
+          "title": "Send the receipt",
+          "text": "Upload a screenshot of the receipt on the same screen."
+        },
+        {
+          "title": "Your plan turns on",
+          "text": "A GCash receipt usually clears in about a minute, and other payments usually within 24 hours. Your plan starts once the payment clears."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Plans never renew or charge you by themselves. The app shows when your plan is about to end, and you renew by paying again. If you renew early, the new days go on top of the old ones. When a plan ends, your account returns to Libre, and you can still read your records."
+    },
+    {
+      "type": "cta",
+      "title": "Start free, pay only when the farm needs more",
+      "text": "Sign up for Libre, run one season, and upgrade from inside the app when you hire workers or want Anee.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What customer support should farm software include?"
+    },
+    {
+      "type": "text",
+      "text": "Sellers of farm tracking software offer some mix of help pages, videos, email, chat, phone lines and training. Ask which of these your plan includes, and how fast a real person answers."
+    },
+    {
+      "type": "table",
+      "caption": "Kinds of support to ask about, and what anee.io offers",
+      "rows": [
+        [
+          "Kind of support",
+          "What to ask the seller",
+          "anee.io"
+        ],
+        [
+          "Email or ticket",
+          "Who answers, and how fast?",
+          "support@anee.io, answered by the team, Monday to Saturday, usually within a business day"
+        ],
+        [
+          "Help inside the app",
+          "Can I ask without leaving the app?",
+          "Help and Support sends a request with your account details attached"
+        ],
+        [
+          "Guides and videos",
+          "Is there a guide for setup and payment?",
+          "A tutorial on plans, payments and your first season, and a short video of each tool"
+        ],
+        [
+          "Farming questions",
+          "Does support answer crop questions?",
+          "Anee answers them on paid plans, using credits"
+        ],
+        [
+          "Other users",
+          "Is there a community to ask?",
+          "The farmer community, with a feed and discussion rooms"
+        ],
+        [
+          "Phone line",
+          "Is there a number to call?",
+          "The contact page lists no phone number"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Before you write, read the [tutorial](/tutorial), which answers most setup and payment questions. The [contact page](/contact) then lists the quickest way for each kind of question. A photo of the screen helps more than a long description."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm management software cost"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there free farm management software?",
+          "a": "Yes. The Libre plan of anee.io is free with no end date and shows a few ads. PhilRice's PalayCheck App also shows a price of zero on Google Play, for rice. Our guide to [farm management software](/blog/farm-management-software) compares the free options."
+        },
+        {
+          "q": "Does anee.io charge me automatically every month?",
+          "a": "No. Plans never renew or charge you by themselves. You pay in advance by GCash or bank transfer, and you renew by paying again."
+        },
+        {
+          "q": "What happens to my records when my plan ends?",
+          "a": "Your account returns to Libre, and your records stay where you can read them. Features beyond Libre lock until you renew. Renew any time and pick up where the season left off."
+        },
+        {
+          "q": "Can I get a refund?",
+          "a": "anee.io refunds or corrects a payment made twice, a wrong amount, or one it could not confirm. If a serious problem on its side blocks you, it gives a fair refund or extra time. Apart from those cases, a started plan period and bought credits are not refundable. Email support@anee.io within 30 days of the payment, with your reference number."
+        },
+        {
+          "q": "Do AI credits expire?",
+          "a": "No. Credits stay on your account until you spend them, across seasons. If your plan ends, unused credits wait for you until you renew."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Farm management software for small farms",
+          "url": "/blog/farm-management-software"
+        },
+        {
+          "label": "Farm expense management software",
+          "url": "/blog/farm-expense-management-software"
+        },
+        {
+          "label": "Best free farm app for Filipino farmers",
+          "url": "/blog/free-farm-app-philippines"
+        },
+        {
+          "label": "How to digitize farm records",
+          "url": "/blog/digitize-farm-records"
+        },
+        {
+          "label": "anee.io plans and prices",
+          "url": "/pricing"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "UW Madison Division of Extension: Recordkeeping for your food or farm business",
+          "url": "https://farms.extension.wisc.edu/articles/recordkeeping-for-your-food-or-farm-business"
+        },
+        {
+          "label": "PSA: 2024 Costs and Returns of Palay Production",
+          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
+        },
+        {
+          "label": "Google Play: PalayCheck App by PhilRice",
+          "url": "https://play.google.com/store/apps/details?id=com.philrice.palaycheckapp"
+        },
+        {
+          "label": "Google Play: PhilRice LCC App Pro",
+          "url": "https://play.google.com/store/apps/details?id=ph.gov.philrice.lcc.pro"
+        }
+      ]
+    }
+  ]
+}

@@ -410,12 +410,29 @@ Blog:
 /blog/digital-farming-tools, /blog/farm-management-app-philippines,
 /blog/reduce-crop-losses,
 /blog/plant-disease-identification-app, /blog/app-to-identify-plant-problems,
-/blog/farm-management-software, /blog/farm-record-keeping-app, /blog/anee-io-review
+/blog/farm-management-software, /blog/farm-record-keeping-app, /blog/anee-io-review,
+/blog/best-fertilizer-for-palay, /blog/fertilizer-store-near-me,
+/blog/fertilizer-price-philippines, /blog/fertilizer-subsidy-philippines,
+/blog/npk-ratio-for-rice, /blog/balanced-fertilization-for-rice,
+/blog/micronutrients-for-rice, /blog/fertilizer-for-rice-tillering,
+/blog/fertilizer-for-rice-grain-filling,
+/blog/organic-vs-inorganic-fertilizer, /blog/fertilizer-for-sandy-soil,
+/blog/rice-growth-enhancers, /blog/what-is-fertilizer,
+/blog/fertilizer-for-tomatoes, /blog/fertilizer-for-fruit-trees,
+/blog/organic-fertilizer-for-pechay, /blog/fertilizer-for-orchids,
+/blog/rice-farming-app, /blog/farm-app-for-android,
+/blog/farm-management-software-cost, /blog/digitize-farm-records,
+/blog/crop-yield-forecasting, /blog/farm-app-for-livestock-and-crops,
+/blog/farm-sensors-philippines, /blog/multiple-cropping,
+/blog/palaycheck-key-checks, /blog/palayisdaan, /blog/palay-drying,
+/blog/palay-drawing
 
 ## 9. Keywords per page
 
 `keywords_by_page.json` lists, for every page, the keywords from the owner's
-keyword research that must appear on it. The one marked `*` is a keyword this
+keyword research (every CSV in Downloads/keywords plus the first list, mapped
+in `keyword_map.py`; the few left out on purpose are in
+`keywords_skipped.json` with the reason) that must appear on it. The one marked `*` is a keyword this
 page is the main home for; the rest are keywords whose main home is another
 page but which also belong here. Every listed keyword must appear on the page
 at least once, naturally and grammatically: all of its words inside one

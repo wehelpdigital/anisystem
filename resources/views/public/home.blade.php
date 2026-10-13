@@ -1805,12 +1805,14 @@
             <div class="hp-topics reveal">
                 @foreach ([
                     ['/crops/palay', 'Palay'], ['/crops/pagtatanim-ng-palay', 'Pagtatanim ng palay'], ['/blog/palayan-nueva-ecija', 'Palayan in Nueva Ecija'],
+                    ['/blog/what-is-fertilizer', 'What is fertilizer'], ['/blog/best-fertilizer-for-palay', 'Best fertilizer for palay'], ['/blog/palay-drawing', 'Palay drawing'],
                     ['/blog/ani-meaning', 'Ani meaning'], ['/blog/urea-fertilizer', 'Fertilizer urea'], ['/blog/complete-fertilizer-14-14-14', 'Fertilizer 14 14 14'],
                     ['/blog/16-20-0-fertilizer', '16 20 0 fertilizer'], ['/blog/ammonium-sulfate-21-0-0', '21 0 0 fertilizer'], ['/blog/foliar-fertilizer', 'Foliar fertilizer'], ['/blog/organic-fertilizer-examples', 'Examples of organic fertilizer'],
                     ['/blog/fertilizer-for-plants', 'Fertilizer for plants'], ['/blog/fungicides', 'Fungicide guide'], ['/blog/fertilizer-and-pesticide-authority', 'Fertilizer and Pesticide Authority'], ['/pests/rice-bug', 'Rice bug'],
                     ['/pests/rice-black-bug', 'Rice black bug'], ['/pests/thrips', 'Thrips insect'], ['/pests/fall-armyworm', 'Fall armyworm'], ['/pests/cutworm', 'Cutworm'],
                     ['/weeds/common-weeds-philippines', 'Common weeds in the Philippines'], ['/weeds/purple-nutsedge', 'Purple nutsedge'], ['/weeds/makahiya', 'Makahiya'],
                     ['/crops/rice-varieties-philippines', 'Rice varieties in the Philippines'], ['/blog/palay-price-philippines', 'Palay price in the Philippines'],
+                    ['/blog/fertilizer-price-philippines', 'Fertilizer price in the Philippines'], ['/blog/palaycheck-key-checks', 'PalayCheck key checks 1 to 9'],
                     ['/crops/corn-kernel', 'Corn kernel'], ['/crops/corn-seeds', 'Corn seeds'], ['/crops/vegetables-philippines', 'Vegetables in the Philippines'],
                 ] as $i => [$href, $label])
                     <a href="{{ url($href) }}" class="hp-topic" style="--h: {{ ($i * 41) % 150 + 30 }}">{{ $label }}</a>

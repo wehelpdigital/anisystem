@@ -5,6 +5,7 @@
   "alamat ng palay",
   "palayan",
   "*palay in english",
+  "palay drawing",
   "*rice seed",
   "rice seeds",
   "rice palay price philippines",
@@ -31,7 +32,14 @@
   "pag aani ng palay",
   "*palay meaning",
   "palay seedlings",
-  "*palay seeds"
+  "*palay seeds",
+  "palay seeder",
+  "*palay plant",
+  "palay bigas kanin",
+  "*palay grains",
+  "palay at bigas",
+  "*palay scientific name",
+  "*palay in the philippines"
  ],
  "crops/pagtatanim-ng-palay": [
   "palay",
@@ -51,7 +59,11 @@
   "fertilizer for rice",
   "*palay check system",
   "*pag aani ng palay",
-  "*palay seedlings"
+  "*palay seedlings",
+  "*palay seeder",
+  "*palay sa bukid",
+  "pang ani ng palay",
+  "*palay farming"
  ],
  "blog/palay-price-philippines": [
   "palay",
@@ -65,7 +77,8 @@
   "*cavan rice",
   "*palay price per kilo today",
   "palay rice",
-  "palay to rice"
+  "palay to rice",
+  "*palay price per kilo today 2025"
  ],
  "crops/rice-varieties-philippines": [
   "palay",
@@ -97,17 +110,91 @@
   "*palayan",
   "*palayan drawing",
   "*palayan in english",
-  "philippine rice variety"
+  "philippine rice variety",
+  "*palay festival in nueva ecija"
  ],
  "blog/ani-meaning": [
   "*ani",
   "agriculture in economy",
+  "crop yield",
+  "crop yields",
   "palay meaning",
-  "*crop yields meaning"
+  "*crop yields meaning",
+  "*ani ng palay",
+  "*pang ani ng palay",
+  "*ani ng palay in english"
  ],
  "features/farm-reports": [
   "ani",
-  "crop yields meaning"
+  "crop yields meaning",
+  "what is crop yield"
+ ],
+ "blog/what-is-fertilizer": [
+  "*fertilizer",
+  "fertilizer for plants",
+  "fertilizer of plants",
+  "*fertilizer types",
+  "*fertilizer meaning",
+  "fertilizer soil",
+  "*fertilizer definition",
+  "*fertilizer images with names",
+  "*fertilizer clipart",
+  "*fertilizer name",
+  "fertilizer tagalog",
+  "*fertilizer pronunciation",
+  "*fertilizer research",
+  "*fertilizer synonym",
+  "*what is fertilizer for plants",
+  "*fertilizer drawing easy",
+  "*fertilizer ingredients",
+  "*fertilizer effect on plant growth",
+  "*fertilizer components"
+ ],
+ "blog/fertilizer-for-plants": [
+  "fertilizer",
+  "fertilizer organic",
+  "*fertilizer plants",
+  "*fertilizer for plants",
+  "*fertilizer of plants",
+  "*organic fertilizer for plants",
+  "examples of organic fertilizer",
+  "best fertilizer for vegetables",
+  "fertilizer with phosphorus",
+  "fertilizer liquid",
+  "egg shell fertilizer",
+  "fertilizer for orchids",
+  "*osmocote fertilizer",
+  "*fertilizer for flowering plants",
+  "examples of inorganic fertilizer",
+  "*fertilizer for plants and flowers",
+  "organic fertilizer benefits",
+  "fertilizer example",
+  "*fertilizer in agriculture",
+  "fertilizer high in phosphorus",
+  "fertilizer names list",
+  "why farm is important",
+  "*why fertilizer is important",
+  "*what fertilizer for plants",
+  "what is fertilizer for plants"
+ ],
+ "blog/fertilizer-for-rice": [
+  "fertilizer",
+  "fertilizer urea",
+  "fertilizer 14 14 14",
+  "16 20 0 fertilizer",
+  "21 0 0 fertilizer",
+  "nitrogen fertilizer",
+  "fertilizer application",
+  "fertilizer applicator",
+  "fertilizer calculation",
+  "fertilizer spreader",
+  "fertilizer computation",
+  "fertilizer for top dressing",
+  "method of fertilizer application",
+  "*fertilizer for rice",
+  "palay check system",
+  "*fertilizer application for rice",
+  "why fertilizer is important"
  ],
  "crops/corn-kernel": [
   "*corn kernel",
@@ -154,11 +241,13 @@
   "*alamat ng palay buod",
   "*banghay ng alamat ng palay",
   "*palay festival",
-  "alamat ng mais"
+  "alamat ng mais",
+  "ani ng palay"
  ],
  "blog/alamat-ng-mais": [
   "alamat ng palay",
-  "*alamat ng mais"
+  "*alamat ng mais",
+  "palay at mais"
  ],
  "blog/farm-words-in-tagalog": [
   "palayan",
@@ -181,9 +270,18 @@
   "*fertilizer in tagalog",
   "*pesticide in tagalog",
   "*pest in tagalog",
-  "english ng palay"
+  "fertilizer meaning",
+  "english ng palay",
+  "*palay bigas kanin",
+  "fertilizer name",
+  "*palay in tagalog",
+  "*fertilizer tagalog",
+  "*palay at bigas",
+  "ani ng palay in english",
+  "*palay plant in english"
  ],
  "blog/organic-fertilizer-examples": [
+  "*fertilizer organic",
   "*palaya natural farm",
   "fertilizer plants",
   "maggots in tagalog",
@@ -204,7 +302,18 @@
   "*fertilizer eggs",
   "*humus fertilizer",
   "*fish emulsion fertilizer",
-  "fertilizer examples"
+  "fertilizer examples",
+  "*fertilizer homemade",
+  "organic fertilizer for farming",
+  "*fertilizer diy",
+  "*organic fertilizer for vegetables"
+ ],
+ "blog/organic-vs-inorganic-fertilizer": [
+  "fertilizer organic",
+  "fertilizer homemade",
+  "*organic fertilizer for farming",
+  "fertilizer diy",
+  "fertilizer ingredients"
  ],
  "crops/vegetables-philippines": [
   "palaya natural farm",
@@ -222,7 +331,8 @@
   "pagtatanim ng gulay",
   "*fertilizer for vegetables",
   "16 20 fertilizer",
-  "fertilizer 16 16 16"
+  "fertilizer 16 16 16",
+  "fertilizer for pechay"
  ],
  "blog/urea-fertilizer": [
   "*fertilizer urea",
@@ -236,24 +346,9 @@
   "*46 0 0 fertilizer",
   "fertilizer in tagalog",
   "top dressing fertilizer",
-  "fertilizer for rice"
- ],
- "blog/fertilizer-for-rice": [
-  "fertilizer urea",
-  "fertilizer 14 14 14",
-  "16 20 0 fertilizer",
-  "21 0 0 fertilizer",
-  "nitrogen fertilizer",
-  "fertilizer application",
-  "fertilizer calculation",
-  "fertilizer applicator",
-  "fertilizer spreader",
-  "fertilizer computation",
-  "fertilizer for top dressing",
-  "method of fertilizer application",
-  "*fertilizer for rice",
-  "palay check system",
-  "why fertilizer is important"
+  "fertilizer for rice",
+  "fertilizer high in nitrogen",
+  "fertilizer price philippines"
  ],
  "blog/fertilizer-calculation": [
   "fertilizer urea",
@@ -264,7 +359,8 @@
   "fertilizer 46 0 0",
   "*fertilizer calculation",
   "*fertilizer computation",
-  "*fertilizer calculation formula"
+  "*fertilizer calculation formula",
+  "fertilizer with phosphorus and potassium"
  ],
  "crops/pagtatanim-ng-mais": [
   "corn husk",
@@ -279,24 +375,16 @@
   "grasses weeds",
   "*pagtatanim ng mais"
  ],
- "blog/fertilizer-for-plants": [
-  "*fertilizer plants",
-  "examples of organic fertilizer",
-  "best fertilizer for vegetables",
-  "fertilizer with phosphorus",
-  "fertilizer liquid",
-  "egg shell fertilizer",
-  "*osmocote fertilizer",
-  "*fertilizer for flowering plants",
-  "examples of inorganic fertilizer",
-  "*fertilizer for plants and flowers",
-  "organic fertilizer benefits",
-  "fertilizer example",
-  "*fertilizer in agriculture",
-  "fertilizer high in phosphorus",
-  "fertilizer names list",
-  "*why fertilizer is important",
-  "*what fertilizer for plants"
+ "blog/fertilizer-for-orchids": [
+  "fertilizer for plants",
+  "*fertilizer for orchids",
+  "*fertilizer for bougainvillea",
+  "*fertilizer for roses",
+  "*fertilizer bonsai",
+  "*fertilizer for snake plant",
+  "*fertilizer for bermuda grass",
+  "*fertilizer for hydrangeas",
+  "*fertilizer for indoor plants"
  ],
  "weeds/common-weeds-philippines": [
   "weeds in tagalog",
@@ -320,9 +408,9 @@
   "rice bug",
   "rice bugs",
   "rice black bug",
+  "brown planthopper",
   "*philippines insects",
   "planthopper",
-  "brown planthopper",
   "brown plant hopper symptoms",
   "rice black bugs",
   "*rice insect",
@@ -347,7 +435,8 @@
   "fish amino acid fertilizer",
   "fertilizer for vegetables",
   "fertilizer application methods",
-  "mais na gulay"
+  "mais na gulay",
+  "palay sa bukid"
  ],
  "crops/pagtatanim-ng-puno": [
   "pagtatanim",
@@ -379,15 +468,17 @@
   "*biostimulants",
   "*foliar application fertilizer",
   "fertilizer 20 20 20",
-  "fish emulsion fertilizer"
+  "fish emulsion fertilizer",
+  "*fertilizer spray"
  ],
  "blog/fertilizer-application-methods": [
   "foliar fertilizer",
   "complete fertilizer",
   "fertilizer 21 0 0",
+  "fertilizer types",
   "*fertilizer application",
-  "*fertilizer drawing",
   "*fertilizer applicator",
+  "*fertilizer drawing",
   "*fertilizer spreader",
   "*top dressing fertilizer",
   "*fertilizer for top dressing",
@@ -395,7 +486,29 @@
   "*fertilizer picture",
   "*method of fertilizer application",
   "fertilizer granules",
-  "*fertilizer application methods"
+  "*fertilizer application methods",
+  "fertilizer application for rice",
+  "*fertilizer machine",
+  "*fertilizer spreader machine"
+ ],
+ "blog/palay-drawing": [
+  "*palay drawing",
+  "*palay clipart",
+  "*palay png",
+  "*palay picture drawing",
+  "*palay background",
+  "*palay cartoon",
+  "*palay props",
+  "*palay easy drawing",
+  "*palay logo",
+  "palay plant",
+  "*palay festival costume",
+  "*palay animated",
+  "*palay poster",
+  "*palay drawing with color",
+  "*palay cartoon images",
+  "*palay painting",
+  "palay plant in english"
  ],
  "pests/rice-bug": [
   "*alitangya",
@@ -432,15 +545,18 @@
   "*atlas fertilizer",
   "urea fertilizer price",
   "*yara winner fertilizer",
-  "commercial fertilizer"
+  "commercial fertilizer",
+  "fertilizer price",
+  "*fertilizer brands",
+  "fertilizer company in the philippines"
  ],
  "blog/rice-insecticides-alika-virtako-chess": [
   "fertilizer and pesticide authority",
   "*syngenta philippines",
   "*alika insecticide",
   "*virtako insecticide",
-  "plant hopper",
   "brown planthopper",
+  "plant hopper",
   "*chess insecticide",
   "telluride insecticide"
  ],
@@ -468,7 +584,8 @@
   "*complete fertilizer 14 14 14",
   "fertilizer picture",
   "*fertilizer 16 16 16",
-  "*fertilizer 20 20 20"
+  "*fertilizer 20 20 20",
+  "fertilizer with zinc"
  ],
  "pests/rice-black-bug": [
   "rice bug",
@@ -482,7 +599,10 @@
   "atlas fertilizer",
   "*fertilizer with phosphorus",
   "*16 20 fertilizer",
-  "*fertilizer high in phosphorus"
+  "*fertilizer high in phosphorus",
+  "fertilizer for corn",
+  "fertilizer application in corn",
+  "fertilizer rich in phosphorus"
  ],
  "blog/fungicides": [
   "*fungicide",
@@ -512,6 +632,7 @@
  ],
  "blog/inorganic-fertilizer-examples": [
   "fertilizer complete",
+  "organic fertilizer for plants",
   "ammonium sulfate fertilizer",
   "*fertilizer chemical",
   "fertilizer drawing",
@@ -526,10 +647,20 @@
   "*fertilizer examples",
   "*fertilizer names list"
  ],
+ "blog/organic-fertilizer-for-pechay": [
+  "organic fertilizer for plants",
+  "*organic fertilizer for pechay",
+  "*fertilizer for pechay",
+  "fertilizer homemade",
+  "organic fertilizer for vegetables"
+ ],
  "blog/agriculture-in-the-philippine-economy": [
   "*agriculture in economy",
   "agricultural engineer hiring",
-  "fertilizer in agriculture"
+  "fertilizer in agriculture",
+  "*why farm is important",
+  "*crop production roadmap",
+  "palay in the philippines"
  ],
  "blog/ant-bait-and-termiticides": [
   "*ant bait",
@@ -541,6 +672,25 @@
   "*fertilizer 21 0 0",
   "fertilizer nitrogen",
   "*ammonia nitrate fertilizer"
+ ],
+ "blog/npk-ratio-for-rice": [
+  "*fertilizer npk",
+  "*fertilizer high in nitrogen",
+  "*fertilizer rich in nitrogen",
+  "*fertilizer ratio",
+  "*fertilizer with phosphorus and potassium",
+  "fertilizer components",
+  "*fertilizer rich in phosphorus"
+ ],
+ "blog/best-fertilizer-for-palay": [
+  "fertilizer npk",
+  "fertilizer types",
+  "fertilizer application for rice",
+  "fertilizer brands"
+ ],
+ "blog/bags-of-fertilizer-per-hectare": [
+  "fertilizer npk",
+  "*fertilizer bag"
  ],
  "pests/fall-armyworm": [
   "*fall armyworm",
@@ -563,7 +713,8 @@
   "*fertilizer with potassium",
   "fertilizer for coconut plants",
   "fertilizer for flowering plants",
-  "*fertilizer with high potassium"
+  "*fertilizer with high potassium",
+  "*fertilizer 0 0 50"
  ],
  "crops/banana-farming-philippines": [
   "potash fertilizer",
@@ -573,9 +724,9 @@
   "fertilizer with high potassium"
  ],
  "pests/brown-planthopper": [
+  "*brown planthopper",
   "*planthopper",
   "*plant hopper",
-  "*brown planthopper",
   "*brown plant hopper symptoms",
   "chess insecticide"
  ],
@@ -589,5 +740,92 @@
   "*agricultural engineer hiring",
   "*agricultural engineer course",
   "*agricultural engineer pay"
+ ],
+ "blog/crop-yield-forecasting": [
+  "*crop yield",
+  "*crop yields",
+  "*what is crop yield",
+  "crop yield increase"
+ ],
+ "blog/increase-rice-yield-per-hectare": [
+  "crop yield",
+  "*crop yield increase"
+ ],
+ "blog/fertilizer-for-tomatoes": [
+  "*fertilizer for tomatoes",
+  "fertilizer vegetables",
+  "fertilizer for eggplant",
+  "*fertilizer for potatoes"
+ ],
+ "blog/fertilizer-for-vegetables-philippines": [
+  "fertilizer for tomatoes",
+  "*fertilizer vegetables",
+  "*fertilizer for eggplant",
+  "fertilizer for potatoes",
+  "organic fertilizer for vegetables"
+ ],
+ "blog/fertilizer-for-sandy-soil": [
+  "*fertilizer soil",
+  "*fertilizer for soil"
+ ],
+ "blog/balanced-fertilization-for-rice": [
+  "fertilizer for soil"
+ ],
+ "blog/fertilizer-price-philippines": [
+  "*fertilizer price",
+  "*fertilizer price philippines"
+ ],
+ "blog/rice-growth-enhancers": [
+  "fertilizer spray"
+ ],
+ "blog/palayisdaan": [
+  "*palayisdaan"
+ ],
+ "blog/fertilizer-store-near-me": [
+  "fertilizer bag",
+  "*fertilizer store near me",
+  "*fertilizer company in the philippines"
+ ],
+ "blog/fertilizer-for-fruit-trees": [
+  "*fertilizer for calamansi",
+  "*fertilizer for fruit trees",
+  "*fertilizer for fruit bearing trees"
+ ],
+ "blog/palaycheck-key-checks": [
+  "*palay key check 1 to 9",
+  "palay farming"
+ ],
+ "blog/cost-of-producing-rice-per-hectare": [
+  "fertilizer machine",
+  "palay harvester"
+ ],
+ "blog/micronutrients-for-rice": [
+  "*fertilizer with zinc"
+ ],
+ "blog/increase-corn-yield-per-hectare": [
+  "*fertilizer for corn",
+  "*fertilizer application in corn"
+ ],
+ "blog/fertilizer-for-rice-grain-filling": [
+  "fertilizer with phosphorus and potassium",
+  "palay grains"
+ ],
+ "blog/palay-drying": [
+  "palay grains",
+  "*palay dryer",
+  "*palay dryer machine",
+  "*palay harvester"
+ ],
+ "blog/rice-farming-app": [
+  "palay farming"
+ ],
+ "blog/farm-sensors-philippines": [
+  "*crop production tools"
+ ],
+ "blog/digital-farming-tools": [
+  "crop production tools"
+ ],
+ "blog/multiple-cropping": [
+  "*palay at mais"
  ]
 }

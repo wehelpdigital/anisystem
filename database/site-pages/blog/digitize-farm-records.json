@@ -1,0 +1,320 @@
+{
+  "section": "blog",
+  "slug": "digitize-farm-records",
+  "sortOrder": 1210,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "How Do I Digitize Farm Records From a Notebook or Spreadsheet Into a Farm App?",
+  "metaTitle": "Digitize Farm Records: From Notebook or Spreadsheet to App",
+  "metaDescription": "Digitize farm records step by step: what to bring from a notebook or spreadsheet, where each record goes in a farm app, and how to keep paper as a backup.",
+  "focusKeyword": "digitize farm records",
+  "keywords": [
+    "digitize farm records",
+    "farm record keeping"
+  ],
+  "excerpt": "To digitize farm records, do not copy every old page. Bring over the few numbers you will compare, start fresh with the current season, and keep the notebook as a backup for one season. anee.io, a farm app built for Filipino farmers, has no spreadsheet import. So you type the key records in and photograph the old pages into the season. On a paid plan, Anee can also read a photo of a page for you.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-digitize-farm-records.webp",
+    "alt": "Three phone screens used to digitize farm records: adding a worker with pay and days off, tags such as Buyer and Fertilizer Dealer, and the seed and fertilizer on hand checked against a rice protocol",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "PhilRice calls farm records tools for deciding. They show you the costs, the yields and what worked in past seasons. An FAO farm management manual adds that the records a farmer needs grow as the farm sells more. It lists seven kinds, from a plot history for each piece of land to a cash book.\n\nMoving those records into an app is a chance to keep only what helps you decide. If you are still choosing between paper and a phone, read our fair comparison of a [farm record keeping app and a notebook](/blog/farm-record-keeping-app) first. This guide is about the move itself."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Bring over only what you will compare: lots, past yields and prices, main costs, workers and buyers.",
+        "Start the app with the current season. The past goes in as short totals, not page by page.",
+        "Photograph every old page, so a copy lives with the season even if the notebook gets wet.",
+        "Keep the notebook beside the app for one season, then let the app take over."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should I bring over from my notebook or spreadsheet?"
+    },
+    {
+      "type": "text",
+      "text": "Use this table as a moving list. It shows each kind of old record, what is worth bringing, and where it goes in anee.io."
+    },
+    {
+      "type": "table",
+      "caption": "Where each old record goes when you digitize farm records in anee.io",
+      "rows": [
+        [
+          "Old record",
+          "What to bring over",
+          "Where it goes in anee.io",
+          "Plan"
+        ],
+        [
+          "Your fields",
+          "Name, size, crop, variety and place of each lot",
+          "Lots, with a map traced over the satellite view",
+          "Lots on every plan, maps from Libre plus Anee"
+        ],
+        [
+          "Past harvests",
+          "Yield, moisture, price and buyer per lot, and the problems you saw",
+          "A note with the totals, or a past season with its Observations",
+          "Every plan"
+        ],
+        [
+          "Past costs",
+          "Season totals for seed, fertilizer, labor and services",
+          "A note now, while this season's costs build from the board",
+          "Expenses report on Solo Farmer"
+        ],
+        [
+          "Workers",
+          "Name, pay rate, skills and days off",
+          "Global Workers, added once for every season",
+          "Solo Farmer"
+        ],
+        [
+          "Buyers and suppliers",
+          "Name, number and a short note",
+          "Contact List, with tags such as Buyer",
+          "Every plan"
+        ],
+        [
+          "Stock in the shed",
+          "What is there now, in bags, liters or kilos",
+          "Inventory, as your opening stock",
+          "Solo Farmer"
+        ],
+        [
+          "Your usual way of farming",
+          "The tasks and rates you repeat each season",
+          "Protocol Builder, one version for wet season and one for dry",
+          "Every plan"
+        ],
+        [
+          "Receipts and papers",
+          "Photos or files",
+          "A gallery album, or files in Documentation",
+          "Files from Solo Farmer"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I digitize farm records, step by step?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Pick your start day",
+          "text": "Begin with the season you are planting now, or the next one. A season that starts on paper and ends in the app is hard to add up."
+        },
+        {
+          "title": "Set up the farm once",
+          "text": "Add your lots and your buyers and suppliers in the Contact List. On Solo Farmer, add your workers and the stock in the shed too. Your contacts and your worker roster carry over to every season."
+        },
+        {
+          "title": "Start the current season",
+          "text": "Give each lot its day zero, then build the tasks in the [Protocol Builder](/features/protocol-builder) or straight on the [cropping calendar](/features/cropping-calendar)."
+        },
+        {
+          "title": "Bring in last season's numbers",
+          "text": "The quick way is one note with the yield, price, buyer and main costs of each lot. To put an old harvest in [Observations](/features/harvest-records), add that season, record its harvest, then archive it."
+        },
+        {
+          "title": "Photograph the old notebook",
+          "text": "Quick Capture takes or uploads a photo straight into the season. Put the pages in a gallery album called Old records, and tag them the same way."
+        },
+        {
+          "title": "Run both for one season",
+          "text": "Write in the notebook and tick in the app. Each Sunday, check that they match, and after harvest let the app take over."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What about a spreadsheet?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io has no spreadsheet import, so plan to type the numbers you need. If your spreadsheet holds a few season totals, those fit in one note. Keep the file itself as your archive.\n\nOn a paid plan, you can also send Anee a photo of an old page or the spreadsheet file in the chat. Ask her to sum up the yield, the costs and the buyers of each season. It uses credits, and her reading of messy handwriting can be wrong, so check her numbers against the page before you type them in."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "The next 30 days matter more than the last 3 years",
+      "text": "Typing in every old page takes weeks, and the season will not wait. So put in last season's totals, then spend your energy on ticking today's tasks. After one season of daily ticks, you will have a full season of clean records to compare against."
+    },
+    {
+      "type": "cta",
+      "title": "Start this season's records free",
+      "text": "Sign up for Libre, add your lot and its planting day, and let each task you tick become a record that adds itself up.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do farm record keeping platforms compare?"
+    },
+    {
+      "type": "text",
+      "text": "Farm record keeping tools come in five kinds. Each one fits a different farm, so compare the kind before you compare the price."
+    },
+    {
+      "type": "table",
+      "caption": "Five kinds of farm record keeping, side by side",
+      "rows": [
+        [
+          "Kind",
+          "Good at",
+          "Watch for"
+        ],
+        [
+          "Notebook",
+          "Costs little, needs no signal",
+          "No sums, no photos, and a flood can take it"
+        ],
+        [
+          "Spreadsheet",
+          "Adds up for you",
+          "Needs a computer, and is easy to fill in later from memory"
+        ],
+        [
+          "Free government app, such as the PalayCheck App",
+          "A rice calendar, expenses, harvest and a season summary of costs and income",
+          "Rice only, on Android"
+        ],
+        [
+          "Subscription farm app, such as anee.io",
+          "Tasks per lot, workers, stock, photos and reports that add up, offline too",
+          "A monthly or yearly fee for workers, stock and all reports"
+        ],
+        [
+          "Accounting app",
+          "Books, invoices and taxes",
+          "It does not know your lots, crops or growth stages"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to ask before you subscribe"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Can I bring my old records in, and how? In anee.io you type them, or have Anee read a photo.",
+        "Does it work without signal? anee.io's offline mode is on for every plan.",
+        "Can my foreman record too? On Farm Owner, each worker gets a login with view or edit per module.",
+        "What happens to my records if I stop paying? In anee.io, your account returns to Libre and you can still read them.",
+        "What does it cost in pesos, and how do I pay? See our guide to [farm management software cost](/blog/farm-management-software-cost)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What are the limits of moving to anee.io?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "There is no spreadsheet import. Old records go in by hand or through Anee, who needs a paid plan and credits.",
+        "Libre holds one active season with one lot, plus one archived season, so old seasons fit better on Solo Farmer.",
+        "Workers, inventory and file uploads in Documentation start at Solo Farmer.",
+        "Your data stays yours. anee.io never sells your content, and you keep it even if you go back to Libre."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about digitizing farm records"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I import my spreadsheet into anee.io?",
+          "a": "No. anee.io has no spreadsheet import, so you type the totals you need into a note or a season. On a paid plan, Anee can read a photo of the sheet in the chat and sum it up for you, using credits. Check her numbers before you type them in."
+        },
+        {
+          "q": "Should I type in all my old notebooks?",
+          "a": "No. Type only the numbers you will compare: yield, price, buyer and the main costs of each lot for the last season or two. Photograph the rest of the pages into a gallery album, so you can still look them up."
+        },
+        {
+          "q": "What if my old records are messy or missing?",
+          "a": "Use what you have, and mark a number as an estimate when you are not sure. One season of clean records in the app soon matters more than old gaps. Our guide to [farm record keeping](/blog/farm-record-keeping) lists what to write from now on."
+        },
+        {
+          "q": "How long should I keep the paper notebook?",
+          "a": "Keep writing in it for one full season beside the app, then keep it somewhere dry. Keep land papers, receipts and insurance papers for as long as they apply."
+        },
+        {
+          "q": "Who owns my farm records in the app?",
+          "a": "You do. anee.io's terms say your records stay yours and are never sold. Your seasons, notes and money figures stay private unless you post something to the community."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Farm record keeping: which records to keep",
+          "url": "/blog/farm-record-keeping"
+        },
+        {
+          "label": "Farm record keeping app or notebook",
+          "url": "/blog/farm-record-keeping-app"
+        },
+        {
+          "label": "Farm records for loans and insurance",
+          "url": "/blog/farm-records-for-loans-and-insurance"
+        },
+        {
+          "label": "Farm inventory tracking",
+          "url": "/blog/farm-inventory-tracking"
+        },
+        {
+          "label": "Notes, photos and voice in anee.io",
+          "url": "/features/notes-photos-and-voice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Keep farm records, PhilRice OIC urges farmers",
+          "url": "https://www.philrice.gov.ph/keep-farm-records-philrice-oic-urges-farmers/"
+        },
+        {
+          "label": "FAO: Farm Management and Marketing Manual, Session 1, Keeping Farm Records",
+          "url": "https://www.fao.org/4/an732e/an732e00.pdf"
+        },
+        {
+          "label": "UW Madison Division of Extension: Recordkeeping for your food or farm business",
+          "url": "https://farms.extension.wisc.edu/articles/recordkeeping-for-your-food-or-farm-business"
+        },
+        {
+          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App), 2024",
+          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
+        }
+      ]
+    }
+  ]
+}

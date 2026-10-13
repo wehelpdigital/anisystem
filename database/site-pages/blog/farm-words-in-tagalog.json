@@ -29,7 +29,9 @@
     "alitangya",
     "tayangaw",
     "hanip insect",
-    "alibangbang insect"
+    "alibangbang insect",
+    "palay at bigas",
+    "ani ng palay in english"
   ],
   "excerpt": "Weeds in Tagalog is damo, the same word Filipinos use for grass. So when a farmer says the field is full of damo, they mean the unwanted plants, not a lawn. This glossary gives the Tagalog farm words that matter in the field, checked against Tagalog.com, Wiktionary and PhilRice handouts, plus the local names of the bugs that attack palay.",
   "heroImage": {
@@ -234,7 +236,7 @@
     },
     {
       "type": "text",
-      "text": "Palay in English is the rice plant, or rice grain still in its husk. In trade and statistics it is called unhusked rice or paddy. Students who search for the English ng palay usually need exactly those words. Once milled, palay becomes bigas, and once cooked it becomes kanin. Our page on [palay](/crops/palay) explains each stage of the crop.\n\nPalayan in English is a rice field or rice paddy. The dike around each paddy is the pilapil, and the grain head is the uhay. For a real example, read about the [palayan of Nueva Ecija](/blog/palayan-nueva-ecija). Corn in Tagalog is mais, the same word for the plant, the ear and the grain."
+      "text": "Palay in English is the rice plant, or rice grain still in its husk. In trade and statistics it is called unhusked rice or paddy. Students who search for the English ng palay usually need exactly those words. Once milled, palay becomes bigas, and once cooked it becomes kanin. So palay at bigas means the grain before and after the mill, and each has its own price. In the same way, ani ng palay in English is the rice harvest, as our page on [ani meaning](/blog/ani-meaning) shows. Our page on [palay](/crops/palay) explains each stage of the crop.\n\nPalayan in English is a rice field or rice paddy. The dike around each paddy is the pilapil, and the grain head is the uhay. For a real example, read about the [palayan of Nueva Ecija](/blog/palayan-nueva-ecija). Corn in Tagalog is mais, the same word for the plant, the ear and the grain."
     },
     {
       "type": "table",
@@ -468,6 +470,10 @@
         {
           "label": "PhilRice: Pamamahala ng mga damo sa palayan, rice handout (2023)",
           "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/12/weedhandout_2023_1q.pdf"
+        },
+        {
+          "label": "Wiktionary: ani (Tagalog)",
+          "url": "https://en.wiktionary.org/wiki/ani"
         }
       ]
     }

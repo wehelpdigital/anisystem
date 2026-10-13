@@ -1,0 +1,279 @@
+{
+  "section": "blog",
+  "slug": "farm-sensors-philippines",
+  "sortOrder": 1240,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "Do Farm Apps Connect to Farm Sensors and Equipment in the Philippines?",
+  "metaTitle": "Farm Sensors in the Philippines: What They Do, What Pays",
+  "metaDescription": "Farm sensors for Filipino farms: water level, soil moisture and weather stations, their upkeep, PhilRice and DOST projects, and which apps link to them.",
+  "focusKeyword": "farm sensors",
+  "keywords": [
+    "farm sensors",
+    "crop production tools"
+  ],
+  "excerpt": "Some farm apps connect to farm sensors such as weather stations, soil moisture probes and water level meters, mostly on big farms. In the Philippines, public projects like PhilRice's AutoMonPH and UPLB's SARAI send their own text advisories instead. For a small rice farm, a plastic AWD tube and a good forecast do much of the same job. Built for Filipino farmers, the anee.io app does not connect to sensors or machines. It works from forecast weather, satellite pictures and your own field notes.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-sensors-philippines.webp",
+    "alt": "Weather station with farm sensors beside rice paddies at IRRI in Los Banos, Laguna",
+    "credit": "Africa Rice Center, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A sensor measures one thing in one spot, again and again: water depth, soil moisture, rain or heat. Then it logs the reading or sends it to your phone. That sounds like the future, but the decisions it serves are old ones. When do I irrigate? Is rain coming before I spray?\n\nSo the real question is not whether sensors are modern. It is whether a reading you cannot take by eye will change what you do, often enough to pay for the device and its upkeep."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Farm sensors measure one thing in one place**, like water depth, soil moisture or rainfall.",
+        "**The cheapest water sensor is a simple tube.** IRRI's field water tube shows when a paddy needs water under alternate wetting and drying (AWD).",
+        "**Philippine projects exist:** PhilRice's AutoMonPH water level sensor, and UPLB's SARAI weather stations and soil moisture system, funded by DOST PCAARRD.",
+        "**Sensors need batteries, signal and someone who acts on them.** They pay best when a group shares them.",
+        "**anee.io does not connect to sensors or machines.** It uses forecasts, satellite pictures and your notes."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What farm sensors exist, and what do they measure?"
+    },
+    {
+      "type": "text",
+      "text": "Most farm sensors fall into four groups. Each has a low tech cousin that many Filipino farmers already use."
+    },
+    {
+      "type": "table",
+      "caption": "Common farm sensors and their low tech versions",
+      "rows": [
+        [
+          "Sensor",
+          "What it measures",
+          "Upkeep",
+          "Low tech version"
+        ],
+        [
+          "Water level sensor",
+          "Paddy water depth, sent by text",
+          "Battery, signal, cleaning",
+          "AWD field water tube read by eye"
+        ],
+        [
+          "Soil moisture sensor",
+          "Water in the root zone",
+          "Battery or solar panel, a logger",
+          "Digging and feeling the soil"
+        ],
+        [
+          "Automatic weather station",
+          "Rain, humidity, wind, soil heat and moisture",
+          "Power, cleaning, a data link",
+          "A rain gauge and a forecast"
+        ],
+        [
+          "Machine sensors",
+          "Area covered and flow on tractors, drones and harvesters",
+          "Comes with the machine",
+          "Measuring the field and counting sacks"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is the low tech version for rice water?"
+    },
+    {
+      "type": "text",
+      "text": "It is a field water tube for AWD, a water saving method from IRRI. The tube sits in the paddy so you can see the water level even below the soil surface. IRRI's Rice Knowledge Bank gives the rule."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Start after transplanting",
+          "text": "Begin AWD 1 to 2 weeks after transplanting. If many weeds are present, wait 2 to 3 more weeks so the ponded water can hold them back."
+        },
+        {
+          "title": "Let the water drop",
+          "text": "Irrigate, then let the water in the tube drop to 15 cm below the soil surface."
+        },
+        {
+          "title": "Flood again",
+          "text": "When it reaches 15 cm, flood the field to 5 cm above the surface, then repeat."
+        },
+        {
+          "title": "Keep it flooded around flowering",
+          "text": "Keep water in the field from one week before to one week after flowering. Drought at flowering leaves more empty grains."
+        },
+        {
+          "title": "Ease off in ripening",
+          "text": "After flowering, the water can again drop to 15 cm before you flood."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "That tube is a sensor you read yourself. Electronic water level sensors do the same job, but they send the reading by text so you need not walk out to every paddy."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which Philippine farm sensor projects can you learn from?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "AutoMonPH: water level by text message"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice describes AutoMonPH as an electronic device that measures paddy water level, based on AWD. It came from the WateRice project of PhilRice, IRRI, the National Irrigation Administration and the Bureau of Soils and Water Management. Farmers receive their field's water level and irrigation timing advice by SMS. Meanwhile, a central database tells the irrigators association which areas need water.\n\nIt started in 2016 with the Bantug Bakal Irrigators Association in the Science City of Munoz, Nueva Ecija. Later, PhilRice put two improved sensors on each member's farm, covering 252.85 hectares. The first battery lasted only four days, and a low battery gave wrong readings. The improved sensor reportedly runs more than 60 days."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "SARAI: weather stations and soil moisture"
+    },
+    {
+      "type": "text",
+      "text": "Project SARAI of UPLB, funded by DOST PCAARRD, began in 2013. Its automatic weather station measures rainfall, humidity, wind speed and direction, soil temperature and soil moisture. In August 2026, PCAARRD said SARAI is rolling out nationwide through its regional hub program, SARAI CeNTRO.\n\nSARAI also built WAISS, a water advisory system for irrigation scheduling. Its field unit has soil moisture sensors, a data logger that transmits, and a 5 volt solar panel. The logger sends readings to the software by text message."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Ask before you buy",
+      "text": "We found no published peso price for these Philippine devices. If your irrigators association or town wants to try one, ask PhilRice, the SARAI team at UPLB or your municipal agriculture office about current pilots."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When do farm sensors pay off for a small farm?"
+    },
+    {
+      "type": "text",
+      "text": "They pay off when a decision depends on a reading you cannot easily take by eye, and when someone acts on it every time. Sharing the cost helps. AutoMonPH served a whole irrigators association, not one paddy. So did the central database that told the system manager which areas needed water."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Worth a look:** a group sharing one irrigation system, high value crops under irrigation where water timing decides the harvest, or a farm you run from far away.",
+        "**Probably not yet:** one or two paddies within walking distance, where a tube, a rain gauge and a daily walk give the same answer.",
+        "**Plan the upkeep:** batteries or solar panels, phone signal for the texts, cleaning after floods, and protection from theft."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Treat sensors as one group of crop production tools, and rarely the first one to buy. Our guides to [precision agriculture](/blog/precision-agriculture-philippines) and [monitoring crop health without a drone](/blog/monitor-crop-health-without-a-drone) cover the cheaper tools that come first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which farm apps work with farm sensors and equipment?"
+    },
+    {
+      "type": "text",
+      "text": "Some farm platforms, mostly built for large farms abroad, link to weather stations, soil probes or machine data. Before you buy a device or an app, check the maker's own list of devices it supports. Both must speak to each other, and many do not.\n\nThe Philippine projects above do not need a separate farm app. AutoMonPH and WAISS send their own advice by text message, which works on any phone."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io work without sensors?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io does not connect to sensors, weather stations, tractors or drones. Instead, it works from data any farmer can get, plus what you see in the field.\n\nFirst, the [farm weather forecast](/features/farm-weather-forecast) shows rain and heat for each lot's location beside your plan, with a reminder when rain falls on a spray day. Next, [Satellite Weather](/features/satellite-weather) plays back clouds and rain radar and tracks every typhoon near your farm.\n\nFor crop health, [Satellite Analysis](/features/satellite-analysis) reads Sentinel 2 pictures and Sentinel 1 radar of a field you draw. Anee, the smart farm technician inside anee.io, then names the weak spots to walk first. That uses credits. Our guide to [satellite images of your farm](/blog/satellite-crop-monitoring-philippines) explains what those pictures can and cannot show.\n\nYour own readings count too. Write your AWD tube depth or rain gauge reading as a note on the day, even offline. Over a season, those notes become the record a sensor would have kept."
+    },
+    {
+      "type": "cta",
+      "title": "Plan around the weather, not a gadget",
+      "text": "Sign up free and see the forecast for each lot beside your cropping calendar.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm sensors"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Does anee.io connect to soil sensors or weather stations?",
+          "a": "No. anee.io does not connect to sensors or machines. It uses forecast weather, satellite pictures and the notes, photos and readings you record yourself."
+        },
+        {
+          "q": "What is the cheapest sensor for a rice farm?",
+          "a": "A field water tube for AWD. It shows the water below the soil surface, and IRRI's rule is to flood again when it drops 15 cm."
+        },
+        {
+          "q": "How long do sensor batteries last?",
+          "a": "It depends on the device. PhilRice's first AutoMonPH sensors lasted only four days on battery, while the improved ones reportedly run more than 60 days. Ask about battery life before you buy any sensor."
+        },
+        {
+          "q": "Do I need a sensor to save irrigation water?",
+          "a": "No. Safe AWD with a simple tube is the method behind the electronic sensors. Our guide to [precision agriculture](/blog/precision-agriculture-philippines) lists other low cost tools."
+        },
+        {
+          "q": "Can our irrigators association get water level sensors?",
+          "a": "PhilRice tested AutoMonPH with an irrigators association in Nueva Ecija. Ask PhilRice, your irrigation office or your municipal agriculture office about current pilots in your area."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Monitor crop health without a drone",
+          "url": "/blog/monitor-crop-health-without-a-drone"
+        },
+        {
+          "label": "Satellite images of my farm",
+          "url": "/blog/satellite-crop-monitoring-philippines"
+        },
+        {
+          "label": "Precision agriculture in the Philippines",
+          "url": "/blog/precision-agriculture-philippines"
+        },
+        {
+          "label": "Digital farming tools",
+          "url": "/blog/digital-farming-tools"
+        },
+        {
+          "label": "Weather app for farmers",
+          "url": "/blog/weather-app-for-farmers"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Water management, safe alternate wetting and drying",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/water-management"
+        },
+        {
+          "label": "PhilRice: Sensing water levels made digital (AutoMonPH)",
+          "url": "https://www.philrice.gov.ph/sensing-water-levels-made-digital/"
+        },
+        {
+          "label": "DOST PCAARRD: Introducing SARAI's smart irrigation technology (WAISS)",
+          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/wiser-with-waiss-introducing-sarai-s-smart-irrigation-technology"
+        },
+        {
+          "label": "DOST PCAARRD: Climate smart agricultural innovations, SARAI automatic weather station",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/dost-pcaarrd-brings-climate-smart-agricultural-innovations-closer-to-the-public-through-t2p-media-conference"
+        }
+      ]
+    }
+  ]
+}

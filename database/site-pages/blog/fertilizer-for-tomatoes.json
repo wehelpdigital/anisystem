@@ -1,0 +1,270 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-for-tomatoes",
+  "sortOrder": 1140,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "What Is the Best Fertilizer for Tomatoes in the Philippines?",
+  "metaTitle": "Fertilizer for Tomatoes: What to Apply at Each Stage",
+  "metaDescription": "Fertilizer for tomatoes, stage by stage: manure and 14 14 14 at planting, urea and potash side dressings, then potassium and calcium for sound fruit.",
+  "focusKeyword": "fertilizer for tomatoes",
+  "keywords": [
+    "fertilizer for tomatoes",
+    "fertilizer vegetables",
+    "fertilizer for eggplant",
+    "fertilizer for potatoes"
+  ],
+  "excerpt": "The best fertilizer for tomatoes in the Philippines is a program by stage, not one bag. Work decomposed manure into the field and put a tablespoon of complete fertilizer 14 14 14 in each planting hole. Then side dress urea and muriate of potash at about 2 weeks and at 30 days after transplanting, as the DA and ATI guides do. Once fruit sets, potassium and steady water matter more than extra nitrogen. anee.io, a farm app built for Filipino farmers, dates each dose from your own transplanting day.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-tomatoes.webp",
+    "alt": "Young tomato plants on silver plastic mulch beds with bamboo stakes in San Ildefonso, Bulacan, ready for their first fertilizer for tomatoes",
+    "credit": "Judgefloro, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Tomato, or kamatis, punishes a careless feeding plan in two ways. Too little potassium and the fruit colors unevenly. Too much urea and you get big vines and fruit with black bottoms. So the goal is the right nutrient at the right stage.\n\nThe rates below come from the DA tomato guide for Cagayan Valley and the ATI Cordillera leaflet built from it. Both are for fields without a soil test. If you can, have your soil tested first. The DA guide says the right amount depends on soil fertility and on the crop that came before."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Before planting:** 20 bags of decomposed manure or commercial organic fertilizer per hectare.",
+        "**At transplanting:** 1 tablespoon of 14 14 14 in each hole, covered with a handful of compost.",
+        "**Side dress twice:** 1 tablespoon each of urea and muriate of potash per plant, at about 2 weeks and at 30 days after transplanting (DAT).",
+        "**At flowering and fruiting:** keep the root zone evenly moist and lean on potassium, not extra urea.",
+        "**Blossom end rot** is a calcium problem inside the fruit, and uneven watering is the usual cause."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is the best fertilizer for tomatoes at each stage?"
+    },
+    {
+      "type": "text",
+      "text": "Here is the whole program in one table. DAT means days after transplanting, and DAE means days after the seedlings emerge."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer for tomatoes without a soil test, from the DA Cagayan Valley tomato guide and the ATI Cordillera leaflet",
+      "rows": [
+        [
+          "Stage",
+          "What to apply",
+          "How much and how"
+        ],
+        [
+          "Seedlings, 10 DAE",
+          "Urea or ammonium sulfate as a starter drench",
+          "1 tablespoon in 4 liters of water, then water the seedlings right away"
+        ],
+        [
+          "Before land preparation",
+          "Decomposed animal manure or commercial organic fertilizer",
+          "20 bags per hectare"
+        ],
+        [
+          "Transplanting, seedlings 25 to 30 days old",
+          "Complete fertilizer 14 14 14",
+          "1 tablespoon in the hole, covered with a handful of compost"
+        ],
+        [
+          "10 to 15 DAT",
+          "Urea 46 0 0 and muriate of potash 0 0 60",
+          "1 tablespoon of each per plant, buried 1 inch deep and 3 to 4 inches from the stem"
+        ],
+        [
+          "30 DAT",
+          "Urea and muriate of potash again",
+          "Same rate and method"
+        ],
+        [
+          "Flowering to last harvest",
+          "Water, potassium and calcium, not more urea",
+          "Water just enough to moisten the root zone"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "One tablespoon, not ten",
+      "text": "Some side dressing cells in the DA Cagayan Valley table print 10 tablespoons per plant. But the ATI leaflet, which names that guide as its source, uses 1 tablespoon of urea and 1 of potash. Follow the leaflet, and when unsure, start low."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why do tomatoes need more potassium than nitrogen?"
+    },
+    {
+      "type": "text",
+      "text": "Leaves run on nitrogen, but fruit needs potassium as it fills and colors. A 2019 survey of tomato growers in Ilocos, published in the Philippine Journal of Crop Science, shows it. It compared farm rates with a PCAARRD blanket recommendation of 165 95 215 kilograms of NPK per hectare, which is more potassium than nitrogen. Yet table tomato growers averaged only 106 21 68 in Ilocos Norte and 120 36 109 in Ilocos Sur.\n\nShort potassium shows in the fruit. The University of Maryland Extension links blotchy ripening and yellow shoulder, where fruit colors unevenly, to low potassium in the fruit. It is worst under a heavy fruit load, and it can happen after weeks of rain even when the soil tests fine. So pair each urea dose with potash, as the DA program does. Our [potash fertilizer](/blog/potash-fertilizer) guide explains the grades."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What should I feed tomatoes at flowering and fruiting?"
+    },
+    {
+      "type": "text",
+      "text": "Feed potassium and calcium through steady water, and skip heavy urea. The last soil dose in the DA program falls at 30 DAT. Since the guide puts the first harvest at 55 to 65 DAT, or 15 to 20 days from flowering, that dose lands just before bloom. After that, it says to water only enough to moisten the root zone, because tomato is very sensitive to flooding.\n\nMany growers add a leaf spray at this stage. In fact, the Ilocos survey found that over 80 percent of processing tomato farmers sprayed foliar fertilizer at flowering. If you do, follow the product label. For organic plots, the ATI leaflet switches at flowering to fermented fruit juice (FFJ), CalPhos or oriental herbal nutrient (OHN). Our guide to [foliar fertilizer](/blog/foliar-fertilizer) explains what a spray can and cannot do."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I stop blossom end rot?"
+    },
+    {
+      "type": "text",
+      "text": "Blossom end rot is a calcium shortage in the developing fruit, not a disease. Iowa State University Extension says swings in soil moisture and heavy nitrogen both feed it. It also says adding calcium to the soil is generally ineffective. So fix the water first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Mulch the beds with rice straw or plastic so the soil stays evenly moist.",
+        "Water on a regular schedule during dry spells.",
+        "Hold back extra urea once fruit sets.",
+        "Pick and throw away affected fruit, so the plant feeds the rest.",
+        "Check soil pH. The DA guide grows tomato at pH 5.5 to 8.0, so very acidic fields need lime first, as our [acidic soil guide](/land-preparation/acidic-soil-preparation) explains."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What about fertilizer for eggplant and potatoes?"
+    },
+    {
+      "type": "text",
+      "text": "Eggplant (talong) and potato belong to the same nightshade family as tomato. Both feed in a similar pattern: organic matter, a basal dose, then nitrogen and potassium. But the timing and balance differ."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Fertilizer for eggplant"
+    },
+    {
+      "type": "text",
+      "text": "Eggplant bears for months, so the DA Cagayan Valley guide side dresses it many times. On beds with plastic mulch, each hill gets 170 ml of a liquid feed, about one small sardine can. The urea mix is 3 tablespoons in 15 liters of water, at 3, 5, 9, 13 and 17 weeks after transplanting. The potash mix, also 3 tablespoons in 15 liters, follows at 7, 11, 15 and 19 weeks.\n\nFor beds without mulch, see our guide to [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines). Also watch for the [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Fertilizer for potatoes"
+    },
+    {
+      "type": "text",
+      "text": "Potato wants far more phosphorus and potassium than nitrogen. The DA Region 2 white potato guide sets a general rate of 120 kg nitrogen, 240 kg phosphate and 240 kg potash per hectare. First it works in 20 bags of processed chicken manure or other organic fertilizer. Then it adds 3 bags of 14 14 14 per hectare as basal. The rest of the nitrogen and potassium goes on at hilling up, about one month after planting.\n\nThe guide also warns that excess nitrogen delays maturity and causes skinning and blackspot bruising. For the field work, see our [root crop land preparation](/land-preparation/root-crop-land-preparation) guide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io keep a tomato feeding plan on schedule?"
+    },
+    {
+      "type": "text",
+      "text": "Every dose above counts from transplanting, so the dates move with each planting. In anee.io you write the program once in the [Protocol Builder](/features/protocol-builder), each task on its DAT count. Then the [cropping calendar](/features/cropping-calendar) dates every dose from each lot's own day zero.\n\nThe free [NPK Plus calculator](/features/npk-plus-calculator) adds up the N, P and K in your plan, so you see if potash falls short. If leaves curl or fruit rots, the free [Pest and Disease Finders](/features/pest-and-disease-finders) help you tell hunger from sickness. Our pages on [tomato leaf curl](/diseases/tomato-leaf-curl), [bacterial wilt](/diseases/bacterial-wilt) and [late blight](/diseases/late-blight) go deeper. Or send a photo to Anee, the smart farm technician inside anee.io, who answers in Tagalog or English and uses credits."
+    },
+    {
+      "type": "cta",
+      "title": "Put every tomato feeding on a date",
+      "text": "Sign up free, add your tomato lots and transplanting days, and let anee.io date each dose.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fertilizer for tomatoes"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How often should I fertilize tomatoes?",
+          "a": "Without a soil test, the DA and ATI program feeds tomato four times. Seedlings get a starter drench and transplants get 14 14 14. Then the plants get urea and muriate of potash at about 2 weeks and at 30 days after transplanting."
+        },
+        {
+          "q": "Is 14 14 14 enough for tomatoes?",
+          "a": "No. It is a good basal dose at 1 tablespoon per plant, but it gives equal nitrogen, phosphorus and potassium. Tomato needs extra potassium as the fruit fills, so the DA program adds muriate of potash at each side dressing."
+        },
+        {
+          "q": "Do eggshells stop blossom end rot?",
+          "a": "Not by themselves. Blossom end rot is a calcium shortage inside the fruit, usually from uneven watering. Iowa State University Extension says adding calcium to the soil is generally ineffective, so mulch, water regularly and go easy on urea."
+        },
+        {
+          "q": "Can I grow tomatoes with organic fertilizer only?",
+          "a": "Yes, in a home garden or a small plot. The ATI Cordillera leaflet puts a handful of compost, vermicast or manure in each hole. Then it applies vermitea, FAA or FPJ weekly while plants grow, and FFJ, CalPhos or OHN at flowering."
+        },
+        {
+          "q": "What is the best fertilizer for potatoes in the Philippines?",
+          "a": "The DA Region 2 guide works 20 bags of organic fertilizer into the field during land preparation and adds 3 bags of 14 14 14 per hectare as basal. The rest of the nitrogen and potassium goes on at hilling up, one month after planting."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer for vegetables like ampalaya and eggplant",
+          "url": "/blog/fertilizer-for-vegetables-philippines"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Potash fertilizer",
+          "url": "/blog/potash-fertilizer"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "Tomato leaf curl",
+          "url": "/diseases/tomato-leaf-curl"
+        },
+        {
+          "label": "Organic fertilizer for pechay",
+          "url": "/blog/organic-fertilizer-for-pechay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA Regional Field Office 2: Tomato Production Guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
+        },
+        {
+          "label": "ATI Cordillera: Tomato production for urban and home gardening",
+          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/tomato_production_guide_leaflet.pdf"
+        },
+        {
+          "label": "Magnaye and others (2019), Nutrient management practices of tomato farmers in the Ilocos provinces, Philippine Journal of Crop Science, via FAO AGRIS",
+          "url": "https://agris.fao.org/search/ar/records/647473a82d3f560f80ab9468"
+        },
+        {
+          "label": "University of Maryland Extension: Tomato ripening problems and the role of potassium",
+          "url": "https://extension.umd.edu/resource/tomato-ripening-problems-and-role-potassium-0"
+        },
+        {
+          "label": "Iowa State University Extension: Blossom end rot",
+          "url": "https://yardandgarden.extension.iastate.edu/encyclopedia/blossom-end-rot"
+        },
+        {
+          "label": "DA Regional Field Office 2: Eggplant Production Guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Eggplant.pdf"
+        },
+        {
+          "label": "DA Regional Field Office 2: White Potato Production Guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/White-Potato-Production-Guide.pdf"
+        }
+      ]
+    }
+  ]
+}

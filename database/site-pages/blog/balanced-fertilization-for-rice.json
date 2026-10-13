@@ -1,0 +1,281 @@
+{
+  "section": "blog",
+  "slug": "balanced-fertilization-for-rice",
+  "sortOrder": 1060,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "What Is Balanced Fertilization for Rice, and What Does the DA Recommend?",
+  "metaTitle": "Balanced Fertilization for Rice: What the DA Recommends",
+  "metaDescription": "Balanced fertilization joins organic and inorganic fertilizer in the right amount and timing. See the DA plan, PhilRice tools and steps for your palay.",
+  "focusKeyword": "balanced fertilization",
+  "keywords": [
+    "balanced fertilization",
+    "fertilizer application for rice",
+    "fertilizer for soil"
+  ],
+  "excerpt": "Balanced fertilization means giving rice the nutrients it lacks in the right amount, proportion and timing. It uses organic and inorganic fertilizer together. The DA adopted it in 1997 and promotes it for palay through the Abonong Swak plans of PhilRice and BSWM. Get a soil reading first, set a yield target, then split nitrogen by growth stage. In anee.io, a farm app built for Filipino farmers, the Protocol Builder holds that plan and the free NPK Plus calculator checks it.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-balanced-fertilization-for-rice.webp",
+    "alt": "A farmer walks through a green rice field broadcasting fertilizer from a basin, one step of balanced fertilization",
+    "credit": "kiran kumar from Bangalore, India, CC BY SA 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Many farmers hear balanced fertilization and think of a special product. It is not one. It is a way of feeding the crop. Find out what the soil lacks, fill only that gap, and keep the soil alive with organic matter.\n\nThe DA, PhilRice and the Bureau of Soils and Water Management (BSWM) all teach it, each with its own tools. Here is what each one says, and how to use it on your own farm."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**It is organic plus inorganic.** Organic matter builds the soil, while the bags feed this season's crop.",
+        "**The DA adopted it in 1997,** and in 2020 told its offices to adopt Adaptive Balanced Fertilization Management for rice farmers.",
+        "**PhilRice turns it into three combos** for 3 to 4, 5 to 6 and 7 to 8 tons per hectare.",
+        "**Start with a soil reading** from MOET, a soil test kit or a soils laboratory.",
+        "**Split nitrogen by growth stage,** and read the leaf color chart between doses."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is balanced fertilization?"
+    },
+    {
+      "type": "text",
+      "text": "The DA describes the Balanced Fertilization Strategy as giving plant nutrients in the best amounts and the right proportion. They go on by the right method, at the time that suits the crop and the local climate. BSWM adopted it in 1997 through Presidential Proclamation No. 1071. The DA circular calls it nutrient management fitted to each site, which researchers see as the key to using fertilizer well.\n\nIn 2020, DA Memorandum Circular No. 20 told all DA offices to adopt Adaptive Balanced Fertilization Management for rice farmers, with BSWM as the technical lead. It joins rice straw and inorganic fertilizer in the proper amounts and timing. It also asks for legumes or other short crops after rice, and for watching leaf color, weeds, roots and yield."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why mix organic and inorganic fertilizer?"
+    },
+    {
+      "type": "text",
+      "text": "At the 2022 Lakbay Palay, BSWM assistant director Gina Nilo said organic fertilizer has a long term benefit because it improves soil fertility. So think of straw, compost and manure as fertilizer for soil, and of the bags as food for this season's crop.\n\nThe straw alone is worth a lot. PhilRice says straw from a 5 ton harvest, worked back into the field, gives about 30 kg of nitrogen as it decomposes. That equals 1.3 bags of urea you do not have to buy."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does the DA recommend for palay?"
+    },
+    {
+      "type": "text",
+      "text": "For palay, the DA and PhilRice promote the Abonong Swak plans, short for Swak sa budget, swak sa palay. There are three combos, one for each yield target. Each joins rice straw and 10 bags of organic fertilizer with a few bags of inorganic fertilizer. PhilRice experts say this can save farmers PHP 2,000 to 4,000."
+    },
+    {
+      "type": "table",
+      "caption": "PhilRice Abonong Swak combos per hectare of transplanted rice. Organic fertilizer means decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost, applied at 14 days after transplanting (DAT).",
+      "rows": [
+        [
+          "Target yield",
+          "Organic part",
+          "Inorganic bags"
+        ],
+        [
+          "3 to 4 tons",
+          "3 to 4 tons of rice straw, 10 bags of organic fertilizer",
+          "1 bag 14 14 14, 1 bag urea, half a bag 0 0 60"
+        ],
+        [
+          "5 to 6 tons",
+          "5 to 6 tons of rice straw, 10 bags of organic fertilizer, 1 to 2 kg zinc sulfate in the seedbed",
+          "2 bags 14 14 14 or 16 20 0, 2 bags urea, half a bag 0 0 60"
+        ],
+        [
+          "7 to 8 tons",
+          "7 to 8 tons of rice straw, 10 bags of organic fertilizer, 1 to 2 kg zinc sulfate in the seedbed",
+          "2 bags 14 14 14, 4 bags urea, half a bag 0 0 60"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The days for each dose follow the maturity of your variety. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) lists them for 100 to 130 day varieties, and [bags of fertilizer per hectare](/blog/bags-of-fertilizer-per-hectare) prices each combo. To see what ratio of nutrients these bags make, read [the NPK ratio for rice](/blog/npk-ratio-for-rice)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which tools give a recommendation for my own field?"
+    },
+    {
+      "type": "text",
+      "text": "A general plan is only a start. PalayCheck, the crop management system of PhilRice, asks farmers to choose the right element, amount and timing with care. That means watching the crop and using diagnostic tools. These are the ones you can reach in the Philippines."
+    },
+    {
+      "type": "table",
+      "caption": "Tools for balanced fertilization in rice, from PhilRice PalayCheck and BSWM",
+      "rows": [
+        [
+          "Tool",
+          "What it tells you",
+          "How to reach it"
+        ],
+        [
+          "MOET kit and app",
+          "Which nutrients your soil lacks, from rice grown in pots of your own soil, and how much fertilizer a target yield needs",
+          "Ask your municipal agriculturist or the nearest PhilRice station"
+        ],
+        [
+          "Soil test kit or laboratory",
+          "Nutrient levels and a fertilizer recommendation for your crop",
+          "Soil test kits through your Municipal Agriculture Office, BSWM soil laboratories and its Mobile Soil Laboratory"
+        ],
+        [
+          "Leaf color chart or LCC app",
+          "When the crop needs nitrogen, from the color of its leaves",
+          "A four color ruler, or a phone app that reads leaf photos"
+        ],
+        [
+          "Rice Crop Manager Advisory Service",
+          "Nutrient and crop management advice for your field",
+          "Ask your agriculturist or extension worker"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "BSWM also trains farmers on soil sampling and its FertRight mobile app. Its Mobile Soil Laboratory is part of the DA National Soil Health Program. It tests soil for up to 44 parameters and gives fertilizer recommendations to farmers in the towns it visits."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I follow balanced fertilization on my farm?"
+    },
+    {
+      "type": "text",
+      "text": "Balanced fertilization changes fertilizer application for rice in three ways: you test first, you add organic matter, and you split the nitrogen. Here is the order, based on PalayCheck and the Abonong Swak plans."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Get a soil reading",
+          "text": "Use a MOET kit, a soil test kit or a laboratory test. Do it before land preparation, so the results come in time to buy."
+        },
+        {
+          "title": "Set a yield target you can reach",
+          "text": "Pick the Abonong Swak combo that matches your best recent harvest on that field. Aim lower for wet season or rainfed fields."
+        },
+        {
+          "title": "Put the organic part in first",
+          "text": "Work the rice straw back into the soil. Then apply the 10 bags of organic fertilizer at 14 days after transplanting."
+        },
+        {
+          "title": "Give phosphorus and the first potassium at basal",
+          "text": "PalayCheck puts them at 0 to 14 days after transplanting. For direct wet seeded rice, it is 7 to 10 days after sowing."
+        },
+        {
+          "title": "Split nitrogen by stage",
+          "text": "Give only 30 percent of the total nitrogen in the first dose. Top dress the rest at tillering and near panicle initiation, or when the leaf color chart calls for it."
+        },
+        {
+          "title": "Watch, record and adjust",
+          "text": "Note leaf color, weeds, roots and yield, as the DA circular asks. Then change next season's plan from real numbers."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Top dress on low water and a cool afternoon",
+      "text": "PalayCheck advises top dressing at a water depth of 2 to 5 cm, and after 3 PM, to cut nitrogen losses. At basal, mix granular fertilizer into the soil for the same reason. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) shows when each dose is due."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help with balanced fertilization?"
+    },
+    {
+      "type": "text",
+      "text": "anee.io is not a DA or PhilRice tool, and it does not replace MOET or a soil test. What it does is hold the plan you make from their advice. In the [Protocol Builder](/features/protocol-builder), write each dose on its day after transplanting or sowing. That covers the organic part, the basal and every nitrogen split. Keep one version for the wet season and one for the dry.\n\nThe free [NPK Plus calculator](/features/npk-plus-calculator) adds up the nutrients in your mix, micronutrients included. It shows what is short or too much. Anee, the smart farm technician inside anee.io, can then review the protocol, using credits. She flags a rate that looks too high or a stage with nothing planned. After harvest, write your yield in Observations, so next season's target comes from real numbers."
+    },
+    {
+      "type": "cta",
+      "title": "Write your balanced plan once, reuse it every season",
+      "text": "Build the organic and inorganic doses into a protocol, then turn it into a dated cropping calendar when you plant.",
+      "label": "See the Protocol Builder",
+      "url": "/features/protocol-builder"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about balanced fertilization"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is balanced fertilization the same as organic farming?",
+          "a": "No. It joins organic and inorganic fertilizer. The organic part builds the soil, and the inorganic bags give the crop what the soil cannot supply in time."
+        },
+        {
+          "q": "Does balanced fertilization lower my fertilizer cost?",
+          "a": "It can. PhilRice experts say the Abonong Swak combos can save PHP 2,000 to 4,000. Straw and organic fertilizer supply part of the nutrients you would otherwise buy. Your own saving depends on what you used before."
+        },
+        {
+          "q": "Where can I get a soil test for my rice field?",
+          "a": "Ask your Municipal Agriculture Office about soil test kits and MOET. BSWM also runs soil laboratories and a Mobile Soil Laboratory that test soil and give fertilizer recommendations."
+        },
+        {
+          "q": "What if I cannot get a soil test this season?",
+          "a": "Use the PhilRice combo for your yield target as a guide. Read the leaf color chart before each nitrogen dose, and get the soil tested before the next season."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer for rice: a season plan by days",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "What is the best NPK ratio for rice?",
+          "url": "/blog/npk-ratio-for-rice"
+        },
+        {
+          "label": "Organic vs inorganic fertilizer",
+          "url": "/blog/organic-vs-inorganic-fertilizer"
+        },
+        {
+          "label": "How to lower fertilizer cost",
+          "url": "/blog/lower-fertilizer-cost"
+        },
+        {
+          "label": "PalayCheck key checks",
+          "url": "/blog/palaycheck-key-checks"
+        },
+        {
+          "label": "Fertilizer subsidy in the Philippines",
+          "url": "/blog/fertilizer-subsidy-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA Memorandum Circular No. 20, Series of 2020: Adoption of the Adaptive Balanced Fertilization Management (FAOLEX copy)",
+          "url": "https://faolex.fao.org/docs/pdf/phi196922.pdf"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (Abonong Swak recommendations)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "DA: DA BSWM turns over results of pilot deployment of Mobile Soil Lab in Tarlac",
+          "url": "https://www.da.gov.ph/da-bswm-turns-over-results-of-pilot-deployment-of-mobile-soil-lab-in-tarlac/"
+        },
+        {
+          "label": "BSWM: Soil health initiatives through Mobile Soil Laboratory operations",
+          "url": "https://www.bswm.da.gov.ph/?p=19093"
+        }
+      ]
+    }
+  ]
+}

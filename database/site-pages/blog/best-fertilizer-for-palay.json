@@ -1,0 +1,321 @@
+{
+  "section": "blog",
+  "slug": "best-fertilizer-for-palay",
+  "sortOrder": 1010,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "What Is the Best Fertilizer for Palay in the Philippines?",
+  "metaTitle": "Best Fertilizer for Palay: Grades, Timing and Price per Kilo",
+  "metaDescription": "The best fertilizer for palay is the right grade at the right stage for your soil. See the PhilRice bag plan and how to compare brands by nutrient cost.",
+  "focusKeyword": "best fertilizer for palay",
+  "keywords": [
+    "best fertilizer for palay",
+    "fertilizer for palay",
+    "fertilizer types",
+    "fertilizer brands",
+    "fertilizer npk",
+    "fertilizer application for rice"
+  ],
+  "excerpt": "There is no single best fertilizer for palay. The best one is the right grade, at the right growth stage, in the amount your soil needs. In PhilRice plans, that means complete 14 14 14 or 16 20 0 at basal, urea for top dressing and muriate of potash with the last dose. On anee.io, a farm app built for Filipino farmers, each dose gets a date on your lots, and the free NPK Plus calculator checks the nutrients first.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-best-fertilizer-for-palay.webp",
+    "alt": "A farmer broadcasts fertilizer by hand over a green rice field at dusk",
+    "credit": "Kang Ngolek Rai, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Every agri supply sells bags in many colors and names. The names change from store to store, but the three numbers on each bag do not. That grade tells you what your palay really gets.\n\nPhilRice sums up good fertilizer use in its PalayCheck System as Make EAT right: the right Element, Amount and Timing. So the best fertilizer for palay is a plan, not a brand."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Read the grade, not the brand.** Bags with the same grade carry the same nutrients.",
+        "**Match the stage.** Complete or 16 20 0 at basal, urea for top dressing, potash with the last dose.",
+        "**Size it to your field** with a soil test, MOET or the Rice Crop Manager.",
+        "**Compare the price per kilo of nutrient,** not per bag."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What are the best types of fertilizer for palay?"
+    },
+    {
+      "type": "text",
+      "text": "Five inorganic fertilizer types cover most palay plans here. The Fertilizer and Pesticide Authority (FPA) also checks the price of each one every week, so they are easy to compare."
+    },
+    {
+      "type": "table",
+      "caption": "Nutrients per bag are the grade times 50 kg. Timing follows PhilRice plans.",
+      "rows": [
+        [
+          "Fertilizer",
+          "Grade (N P K)",
+          "Nutrients in a 50 kg bag",
+          "Main job in palay"
+        ],
+        [
+          "Urea",
+          "46 0 0",
+          "23 kg N",
+          "Top dressing for tillers and panicles"
+        ],
+        [
+          "Complete",
+          "14 14 14",
+          "7 kg each of N, P2O5 and K2O",
+          "Basal dose at 0 to 14 DAT"
+        ],
+        [
+          "Ammophos",
+          "16 20 0",
+          "8 kg N and 10 kg P2O5",
+          "Basal dose, in place of complete"
+        ],
+        [
+          "Ammonium sulfate (ammosul)",
+          "21 0 0",
+          "10.5 kg N plus sulfur",
+          "Nitrogen where the soil also lacks sulfur"
+        ],
+        [
+          "Muriate of potash",
+          "0 0 60",
+          "30 kg K2O",
+          "With the last nitrogen dose, for fuller grain"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Complete 14 14 14 and 16 20 0 put phosphorus in early, when PalayCheck says it helps roots and tillers grow. Urea then feeds the tillers and panicles. Potash goes in with the last nitrogen, because PalayCheck links it to grain size and filled grains. Each grade has its own guide: [urea](/blog/urea-fertilizer), [14 14 14](/blog/complete-fertilizer-14-14-14), [16 20 0](/blog/16-20-0-fertilizer), [ammonium sulfate](/blog/ammonium-sulfate-21-0-0) and [potash](/blog/potash-fertilizer)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What fertilizer plan do the DA and PhilRice recommend for palay?"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice turned the PalayCheck rules into bag plans per hectare for its Abonong Swak campaign in 2022. Here is the plan for 5 to 6 tons with a 100 to 110 day variety. DAT means days after transplanting, and longer varieties move each top dressing a few days later."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Basal, 0 to 14 DAT",
+          "text": "Apply 2 bags of 14 14 14 or 16 20 0 per hectare and mix them into the mud. Direct seeded rice gets it at 10 to 14 days after sowing (DAS)."
+        },
+        {
+          "title": "First top dressing, 18 to 22 DAT",
+          "text": "Apply 1 bag of urea per hectare, or at 24 to 28 DAS in direct seeded rice."
+        },
+        {
+          "title": "Second top dressing, 28 to 32 DAT",
+          "text": "Apply 1 more bag of urea with half a bag of 0 0 60, or at 38 to 42 DAS."
+        },
+        {
+          "title": "Organic matter",
+          "text": "Work 5 to 6 tons of rice straw back in, then add 10 bags of decomposed chicken manure, commercial organic fertilizer or vermicompost at 14 DAT."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For 3 to 4 tons, the plan drops to 1 bag of complete, then 1 bag of urea with half a bag of 0 0 60. For 7 to 8 tons, each urea dose doubles to 2 bags. Treat these as starting points only. PalayCheck sets the amount from MOET, the leaf color chart or the Rice Crop Manager Advisory Service, as our [fertilizer for rice](/blog/fertilizer-for-rice) guide explains."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Fertilizer application for rice: habits that keep nutrients in your field"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Mix granular fertilizer into the soil, PalayCheck says, so fewer nutrients leach away or escape as gas.",
+        "Give only 30 percent of the total nitrogen at the first application.",
+        "Top dress into shallow water, 2 to 5 cm deep, in the cooler hours after 3 PM.",
+        "Work last season's rice straw into the soil instead of burning it. More in [fertilizer application methods](/blog/fertilizer-application-methods)."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Let the leaves decide the last nitrogen",
+      "text": "Own a leaf color chart? PalayCheck says to read it every 7 days from 14 DAT until early flowering. Apply nitrogen only when 6 or more of 10 leaves read below 4, or below 3 in direct seeded rice."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which fertilizer brands are best for palay?"
+    },
+    {
+      "type": "text",
+      "text": "We do not rank or review fertilizer brands, and a ranking would not help your crop. Any registered 50 kg bag of 46 0 0 should hold 23 kg of nitrogen, whoever made it.\n\nThe FPA list of registered fertilizer products shows each product's company, grade, target crops, registration number and expiry date. A trusted brand is on that list and sold sealed by a licensed dealer. See [where to buy fertilizer near you](/blog/fertilizer-store-near-me) for what to check in the store."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What about reviews and top selling fertilizers?"
+    },
+    {
+      "type": "text",
+      "text": "We know of no official sales ranking or rating for palay fertilizer in the Philippines. Online stars cannot tell you if your soil lacks potash. What raises yield is the nutrient your field is short of, given on time."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I compare prices across fertilizer brands?"
+    },
+    {
+      "type": "text",
+      "text": "Divide the bag price by the kilos of nutrient inside. Kilos of nutrient equal the bag weight times the grade number, divided by 100. Here is that arithmetic at the FPA national average prices for October 5 to 9, 2026."
+    },
+    {
+      "type": "table",
+      "caption": "FPA national average retail prices, October 5 to 9, 2026. Price per kilo is our own arithmetic. Prices change every week.",
+      "rows": [
+        [
+          "Grade",
+          "Average price per 50 kg bag",
+          "Nutrient in the bag",
+          "Price per kg of nutrient"
+        ],
+        [
+          "Urea 46 0 0, prilled",
+          "PHP 2,241.41",
+          "23 kg N",
+          "PHP 97.45 per kg N"
+        ],
+        [
+          "Ammosul 21 0 0",
+          "PHP 1,238.95",
+          "10.5 kg N",
+          "PHP 118.00 per kg N"
+        ],
+        [
+          "Complete 14 14 14",
+          "PHP 1,897.00",
+          "21 kg of N, P2O5 and K2O",
+          "PHP 90.33 per kg, all three together"
+        ],
+        [
+          "Muriate of potash 0 0 60",
+          "PHP 1,673.88",
+          "30 kg K2O",
+          "PHP 55.80 per kg K2O"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Now two brands of the same grade, at example prices only. Brand A 14 14 14 costs PHP 1,850 and brand B costs PHP 1,950. Each bag holds 21 kg of nutrient, so brand A costs PHP 88.10 per kilo and brand B PHP 92.86. If both are on the FPA list, brand A is the better buy.\n\nCompare like with like, though: nitrogen in urea against nitrogen in ammosul. This week's numbers are in our guide to the [fertilizer price in the Philippines](/blog/fertilizer-price-philippines)."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "A grade is a promise, so check it",
+      "text": "Buy only sealed bags that show the grade and the FPA registration number. The FPA asks buyers to avoid, and to report, sellers of unregistered or smuggled products. Our guide to the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) shows how to check a product in a few minutes."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help me use the right fertilizer for palay?"
+    },
+    {
+      "type": "text",
+      "text": "Start with the free [NPK Plus calculator](/features/npk-plus-calculator). Tap the fertilizers you plan to use, and it adds up the nitrogen, phosphorus and potassium, then says if that is short, right or too much for your crop. Next, write the doses into the [Protocol Builder](/features/protocol-builder). The [cropping calendar](/features/cropping-calendar) then dates each one from every lot's own day zero.\n\nNot sure which grade fits a yellowing lot? Send a photo to Anee, the [smart farm technician](/features/ai-agricultural-technician), in Tagalog or English. She reads the lot's stage, weather and past doses before she answers, and her answers use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Plan every bag before you buy it",
+      "text": "Sign up free, add your lots and let anee.io put a date on each fertilizer dose. The NPK Plus calculator is free.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the best fertilizer for palay"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is urea the best fertilizer for palay?",
+          "a": "Urea gave the cheapest nitrogen per kilo of the straight nitrogen grades in the FPA prices for October 5 to 9, 2026. But it has no phosphorus or potassium. So PhilRice plans pair it with 14 14 14 or 16 20 0 at basal and potash with the last dose."
+        },
+        {
+          "q": "What is the best fertilizer for palay at tillering?",
+          "a": "Urea, as the first top dressing. The PhilRice plan for 5 to 6 tons uses 1 bag per hectare at 18 to 22 DAT for a 100 to 110 day variety. See [fertilizer for rice tillering](/blog/fertilizer-for-rice-tillering)."
+        },
+        {
+          "q": "Are expensive fertilizer brands better for palay?",
+          "a": "Not if the grade is the same. Two registered bags of the same grade hold the same kilos of nutrient, so buy the one with the lower price per kilo from a licensed dealer."
+        },
+        {
+          "q": "What do the NPK numbers on a fertilizer bag mean?",
+          "a": "They are the percent of nitrogen (N), phosphate (P2O5) and potash (K2O), in that order. A 50 kg bag of 16 20 0 holds 8 kg of nitrogen and 10 kg of phosphate. Our guide to the [NPK ratio for rice](/blog/npk-ratio-for-rice) explains more."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related fertilizer guides",
+      "items": [
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "16 20 0 fertilizer",
+          "url": "/blog/16-20-0-fertilizer"
+        },
+        {
+          "label": "Balanced fertilization for rice",
+          "url": "/blog/balanced-fertilization-for-rice"
+        },
+        {
+          "label": "Fertilizer price in the Philippines",
+          "url": "/blog/fertilizer-price-philippines"
+        },
+        {
+          "label": "NPK Plus calculator",
+          "url": "/features/npk-plus-calculator"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System 2022 revised edition, Key Check 5, nutrient management",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K (Abonong Swak plans, April 8, 2022)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "FPA: Current average retail prices of major fertilizer grades, October 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_-1.pdf"
+        },
+        {
+          "label": "FPA: Registered products, fertilizer list",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "FPA: Frequently asked questions",
+          "url": "https://fpa.da.gov.ph/faqs/"
+        }
+      ]
+    }
+  ]
+}

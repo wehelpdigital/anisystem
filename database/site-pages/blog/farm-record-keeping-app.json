@@ -209,7 +209,7 @@
       "items": [
         {
           "title": "Keep the old notebooks",
-          "text": "Store them somewhere dry. Then photograph every page, so a copy also lives on your phone."
+          "text": "Store them somewhere dry. Then photograph every page, so a copy also lives on your phone. Our guide on how to [digitize farm records](/blog/digitize-farm-records) goes further."
         },
         {
           "title": "Pull out the numbers you will compare",
@@ -297,8 +297,8 @@
           "url": "/blog/farm-profitability"
         },
         {
-          "label": "A farm app that works without internet",
-          "url": "/blog/farm-app-without-internet"
+          "label": "How to digitize farm records",
+          "url": "/blog/digitize-farm-records"
         },
         {
           "label": "Farm reports in anee.io",

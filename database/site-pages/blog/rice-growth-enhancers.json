@@ -1,0 +1,291 @@
+{
+  "section": "blog",
+  "slug": "rice-growth-enhancers",
+  "sortOrder": 1120,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "Does a Growth Enhancer for Rice or a Foliar Booster Really Increase Yield?",
+  "metaTitle": "Growth Enhancer for Rice: Does It Really Increase Yield?",
+  "metaDescription": "Does a growth enhancer for rice raise yield? What biostimulants and foliar boosters can and cannot do, how the FPA registers them, and how to test one.",
+  "focusKeyword": "growth enhancer for rice",
+  "keywords": [
+    "growth enhancer for rice",
+    "foliar fertilizer",
+    "fertilizer spray"
+  ],
+  "excerpt": "Sometimes, by a modest amount, and only on top of a sound NPK program. A growth enhancer for rice, whether a biostimulant, a foliar booster or a plant growth regulator, cannot replace the nitrogen, phosphorus and potassium the crop takes from the soil, and results vary from field to field. The only way to know if one pays on your farm is a fair side by side test. anee.io, a farm app built for Filipino farmers, keeps the records of both strips so the harvest decides.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-rice-growth-enhancers.webp",
+    "alt": "Side by side rice plots in a field trial, the fair way to test a growth enhancer for rice",
+    "credit": "Amrut Morade, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Walk into any agri supply and you will see bottles and sachets that promise greener leaves, more tillers and heavier grain. Some have real evidence behind them. Many have little. This guide sorts out what these boosters are, what the research shows, and how to test one yourself. It names no product, because the label and your own harvest matter more than the brand."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Growth enhancers include biostimulants, foliar fertilizers, biofertilizers and plant growth regulators, and each works differently.",
+        "None of them replaces urea, complete or potash, because leaves cannot take in a season's worth of NPK.",
+        "In PhilRice trials, biostimulants added to inorganic fertilizer gave high yields, and two products cut fertilizer use by 25 to 50 percent.",
+        "A review of 180 field studies found an average gain of 17.9 percent, but mostly on poor soils and stressed crops.",
+        "Buy only FPA registered products, then test one strip against a check strip before you spray the whole farm."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is a growth enhancer for rice?"
+    },
+    {
+      "type": "text",
+      "text": "A growth enhancer is any product sold to make the crop do better than the basic fertilizer alone. The FPA list of registered fertilizers, updated September 15, 2026, sorts products by type, and four of those types are sold as boosters."
+    },
+    {
+      "type": "table",
+      "caption": "Kinds of growth enhancer for rice",
+      "rows": [
+        [
+          "Kind",
+          "What it is",
+          "What it can do"
+        ],
+        [
+          "Biostimulant",
+          "Seaweed extract, amino acids, humic substances and the like. FAO says it works apart from its nutrient content",
+          "Help the plant use nutrients better or cope with stress such as drought"
+        ],
+        [
+          "Foliar fertilizer",
+          "Soluble nutrients sprayed on the leaves, often with micronutrients",
+          "Fix a small shortage fast, such as zinc, but not feed the whole crop"
+        ],
+        [
+          "Biofertilizer",
+          "Living microbes that fix nitrogen or free up soil nutrients",
+          "Add a little nitrogen, usually worth a small yield gain"
+        ],
+        [
+          "Plant growth regulator",
+          "A hormone or similar compound. PD 1144 lists plant regulators with pesticides",
+          "Change one growth process, at the label rate and stage only"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Many bottles mix these, such as a little NPK with seaweed, or microbes with humic acid. Read the guaranteed analysis on the label to see what you are paying for."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Do growth enhancers really increase rice yield?"
+    },
+    {
+      "type": "text",
+      "text": "The honest answer is sometimes, by a modest amount, under the right conditions.\n\nPhilRice ran a derby of biostimulants and biofertilizers, mostly from private companies, for three to four seasons. Combined with inorganic fertilizer, the three best products gave 6.35 to 7 tons per hectare, while the other entries averaged 5.83 to 6.25 tons. All three did best in the dry season, at 7.91 tons on average, and fell to 5.22 tons in the wet season. Two of them let farmers cut inorganic fertilizer by 25 to 50 percent. The products cost PHP 900 to 6,900 per hectare, depending on the number of sprays.\n\nThe PhilRice report gives no yield for inorganic fertilizer alone. So it shows the products can sit in a high yielding program, not how many cavans the products themselves added."
+    },
+    {
+      "type": "text",
+      "text": "A 2022 review in Frontiers in Plant Science pooled 180 field studies of non microbial biostimulants. The average yield gain was 17.9 percent. But the effect was strongest on poor soils and under stress such as drought, and legumes responded better than cereals. The authors also note that published studies tend to lean positive.\n\nSo a growth enhancer is most likely to pay in a stressed or poorly fed crop. In a well fed field in a good season, there may be little left for it to fix."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why a booster cannot replace NPK"
+    },
+    {
+      "type": "text",
+      "text": "A 5 ton palay crop takes up about 80 kg of nitrogen and 95 kg of potash, by IRRI's count. A foliar fertilizer spray adds grams of nutrient per hectare, not kilos, as our [foliar fertilizer](/blog/foliar-fertilizer) guide works out. Leaves also take in only part of what lands on them. So the nitrogen, phosphorus and potassium still have to come from the soil, the bags and the straw. Our guide to [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) shows that base program."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is the product registered with the FPA?"
+    },
+    {
+      "type": "text",
+      "text": "Check before you buy. Under Presidential Decree 1144, no fertilizer or pesticide may be sold in the Philippines unless the FPA has registered it. The same decree bars claims that differ from what the product was registered for or from how well it really works. The FPA posts its lists of registered products, each with its type, guaranteed analysis or active ingredient, and registration number. Our page on the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) shows how to search them."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The FPA registration number, matched on the FPA list",
+        "The product type: biostimulant, foliar fertilizer, biofertilizer or plant growth regulator",
+        "The guaranteed analysis or active ingredient, with the amount in each liter or kilo",
+        "The crop, stage and rate on the label, with the safety directions",
+        "The expiry date and an unbroken seal"
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Ask for the check plot",
+      "text": "If a seller promises a fixed jump in cavans, ask for the trial behind it: where it ran, for how many seasons, and what the untreated check plot gave. A yield claim without a check plot proves nothing."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to test a growth enhancer for rice on your own farm"
+    },
+    {
+      "type": "text",
+      "text": "A fair test compares two strips that differ in one thing only, the product. Everything else stays the same."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Pick a uniform part of the field",
+          "text": "Choose an even area with the same soil, water and history. Avoid the edges, the low wet corner and the spot by the pump."
+        },
+        {
+          "title": "Mark two strips side by side",
+          "text": "Make them the same size. One gets the product. The other, the check strip, gets no product."
+        },
+        {
+          "title": "Keep everything else equal",
+          "text": "Use the same variety, planting date, fertilizer, weeding and pest control. If you spray the product, spray the check strip with plain water on the same day."
+        },
+        {
+          "title": "Follow the label",
+          "text": "Use the rate, stage and number of sprays on the label, and note each date."
+        },
+        {
+          "title": "Harvest and weigh each strip apart",
+          "text": "Cut, thresh and dry each strip on its own, then weigh it. Dry both to the same moisture before you compare."
+        },
+        {
+          "title": "Do the math",
+          "text": "Subtract the check strip's yield from the treated strip's, and multiply by the palay price. Then subtract the cost of the product and the spraying. If the gain does not pay, stop."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "One season can fool you. Weather, pests or a wet corner can move a strip's yield more than any bottle. So repeat the test next season, and swap which side gets the product."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Record both strips in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "anee.io keeps a fair test fair. Add each strip as its own [lot](/features/farm-lots) with the same crop, variety and day zero. Put the spray dates on the [cropping calendar](/features/cropping-calendar), and log the product in the [farm inventory](/features/farm-inventory-and-expenses) with its cost.\n\nAt harvest, [Observations](/features/harvest-records) record the yield and moisture of each lot, so the two numbers sit side by side. Run the test again next season, and [Compare Reports](/features/compare-reports) shows the two seasons together, with Anee explaining what changed."
+    },
+    {
+      "type": "cta",
+      "title": "Let the harvest decide",
+      "text": "Sign up free, set up a treated strip and a check strip as two lots, and record each harvest.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which companies offer foliar fertilizer for rice, and which reviews to trust?"
+    },
+    {
+      "type": "text",
+      "text": "We do not rank or review brands. Many companies sell foliar fertilizer and growth enhancers in the Philippines, and the FPA lists show every registered product with its type and analysis. Compare products by what is in them and what they cost per hectare, not by the name on the bottle.\n\nFor reviews, trust trials over testimonials. A PhilRice or university trial with a check plot counts, and so does your own strip test. Ask your municipal agriculturist which products local trials have tested. Before any fertilizer spray, also check the forecast, as our page on [rain before spraying](/blog/rain-before-spraying) explains."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about rice growth enhancers"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Do biostimulants work on rice?",
+          "a": "They can, modestly. In PhilRice trials, biostimulants paired with inorganic fertilizer gave high yields, and some cut fertilizer use, but results changed with the season. A fair strip test on your own field is the best proof."
+        },
+        {
+          "q": "Can a foliar fertilizer replace urea?",
+          "a": "No. A 5 ton palay crop takes up about 80 kg of nitrogen by IRRI's count, and leaves cannot absorb that much. Use foliar sprays only to top up a soil program."
+        },
+        {
+          "q": "Are plant growth regulators safe to use?",
+          "a": "Use them only as the label directs. Philippine law lists plant regulators with pesticides, so follow the label and the FPA registration, wear protection, and keep to the crop and stage on the label."
+        },
+        {
+          "q": "How do I know if a growth enhancer is fake?",
+          "a": "Check the FPA registration number on the label against the FPA list, and buy from a licensed dealer. Look for an unbroken seal and a clear expiry date."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Foliar fertilizer",
+          "url": "/blog/foliar-fertilizer"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        },
+        {
+          "label": "Balanced fertilization for rice",
+          "url": "/blog/balanced-fertilization-for-rice"
+        },
+        {
+          "label": "Increase rice yield per hectare",
+          "url": "/blog/increase-rice-yield-per-hectare"
+        },
+        {
+          "label": "Avoid buying the wrong pesticide",
+          "url": "/blog/avoid-buying-the-wrong-pesticide"
+        },
+        {
+          "label": "Organic vs inorganic fertilizer",
+          "url": "/blog/organic-vs-inorganic-fertilizer"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Balanced use of chemical and bio fertilizers, stimulants trim costs, yields higher (2022)",
+          "url": "https://www.philrice.gov.ph/balanced-use-of-chemical-and-bio-fertilizers-stimulants-trim-costs-yields-higher/"
+        },
+        {
+          "label": "Li, Van Gerrewey and Geelen (2022): A meta analysis of biostimulant yield effectiveness in field trials, Frontiers in Plant Science",
+          "url": "https://www.frontiersin.org/articles/10.3389/fpls.2022.836702/full"
+        },
+        {
+          "label": "FAO (2019): The International Code of Conduct for the Sustainable Use and Management of Fertilizers",
+          "url": "https://www.fao.org/3/ca5253en/ca5253en.pdf"
+        },
+        {
+          "label": "Official Gazette: Presidential Decree No. 1144, s. 1977",
+          "url": "https://mirror.officialgazette.gov.ph/1977/05/30/presidential-decree-no-1144-s-1977/"
+        },
+        {
+          "label": "FPA: Registered products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Nitrogen",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Potassium",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
+        },
+        {
+          "label": "Banayo and others (2012): Evaluation of biofertilizers in irrigated rice, effects on grain yield at different fertilizer rates",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2316"
+        }
+      ]
+    }
+  ]
+}

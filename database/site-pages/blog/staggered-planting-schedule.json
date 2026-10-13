@@ -196,7 +196,7 @@
     },
     {
       "type": "text",
-      "text": "For gulay, the goal is the opposite of rice: a harvest that never stops. The BPI ampalaya guide says the first fruits come 45 to 75 days from planting. Then picking runs 2 to 3 times a week for 2 to 3 months. So start the next planting early enough that it bears as the first one slows. For more crops, see [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+      "text": "For gulay, the goal is the opposite of rice: a harvest that never stops. The BPI ampalaya guide says the first fruits come 45 to 75 days from planting. Then picking runs 2 to 3 times a week for 2 to 3 months. So start the next planting early enough that it bears as the first one slows. For more crops, see [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay). Our guide to [multiple cropping](/blog/multiple-cropping) looks at growing more than one crop on the same land."
     },
     {
       "type": "cta",
@@ -267,6 +267,10 @@
         {
           "label": "Rice field rats",
           "url": "/pests/rice-field-rats"
+        },
+        {
+          "label": "Multiple cropping",
+          "url": "/blog/multiple-cropping"
         }
       ]
     },

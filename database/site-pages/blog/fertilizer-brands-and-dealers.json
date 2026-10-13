@@ -16,7 +16,8 @@
     "atlas fertilizer",
     "urea fertilizer price",
     "commercial fertilizer",
-    "fertilizer pesticide authority"
+    "fertilizer pesticide authority",
+    "fertilizer company in the philippines"
   ],
   "excerpt": "Your fertilizer dealer is often your first source of farm advice and your lender in a tight season. It is also where a big share of your input money goes. A good one sells registered products at a fair price and gives a receipt. This guide covers the license every fertilizer dealer needs and two brands, Yara and Atlas, that you may see on the shelf. It also shows a simple way to tell which bag is really cheaper.",
   "heroImage": {
@@ -82,7 +83,7 @@
     },
     {
       "type": "text",
-      "text": "Yara and Atlas are two names among many on the FPA list, and this page does not rank them. What matters more is the grade, the price per kilogram of nutrient, and a licensed store."
+      "text": "Yara and Atlas are two names among many on the FPA list. This page does not rank any fertilizer company in the Philippines. What matters more is the grade, the price per kilogram of nutrient, and a licensed store. To find a licensed seller close to you, see our [fertilizer store near me](/blog/fertilizer-store-near-me) guide."
     },
     {
       "type": "heading",
@@ -91,7 +92,7 @@
     },
     {
       "type": "text",
-      "text": "The FPA posts retail fertilizer prices every week. For September 14 to 18, 2026, the national weighted average urea fertilizer price was PHP 2,320.69 per 50 kg bag of prilled urea. Granular urea averaged PHP 2,322.28. Regional averages for prilled urea ran from about PHP 2,156 in the Cordillera to about PHP 2,678 in Zamboanga Peninsula. Prices move with global oil and gas prices, the exchange rate and the season, so check the latest report before you buy. For more on the product itself, see our [urea fertilizer](/blog/urea-fertilizer) guide."
+      "text": "The FPA posts retail fertilizer prices every week. For September 14 to 18, 2026, the national weighted average urea fertilizer price was PHP 2,320.69 per 50 kg bag of prilled urea. Granular urea averaged PHP 2,322.28. Regional averages for prilled urea ran from about PHP 2,156 in the Cordillera to about PHP 2,678 in Zamboanga Peninsula. Prices move with global oil and gas prices, the exchange rate and the season, so check the latest report before you buy. For more on the product itself, see our [urea fertilizer](/blog/urea-fertilizer) guide. For the prices of other grades, see our [fertilizer price guide](/blog/fertilizer-price-philippines)."
     },
     {
       "type": "heading",
@@ -238,6 +239,10 @@
         {
           "label": "Fertilizer and Pesticide Authority",
           "url": "/blog/fertilizer-and-pesticide-authority"
+        },
+        {
+          "label": "Fertilizer prices in the Philippines",
+          "url": "/blog/fertilizer-price-philippines"
         }
       ]
     },

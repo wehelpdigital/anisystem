@@ -1,0 +1,323 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-for-fruit-trees",
+  "sortOrder": 1150,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "What Fertilizer Should I Use for Fruit Trees Like Mango and Calamansi?",
+  "metaTitle": "Fertilizer for Fruit Trees: Mango, Calamansi and More",
+  "metaDescription": "Fertilizer for fruit trees by age: DA rates for young and bearing mango, calamansi timing around flowering and harvest, and the ring under the canopy.",
+  "focusKeyword": "fertilizer for fruit trees",
+  "keywords": [
+    "fertilizer for fruit trees",
+    "fertilizer for fruit bearing trees",
+    "fertilizer for calamansi",
+    "pagtatanim ng puno"
+  ],
+  "excerpt": "The right fertilizer for fruit trees depends on the tree's age. Young trees get small, split doses of urea or ammonium sulfate to grow their frame. Bearing trees get complete fertilizer 14 14 14 plus compost, more each year, in a ring under the edge of the canopy. The DA splits each year's dose between the start and end of the rains, while older calamansi gets three doses, the last after harvest. anee.io, a farm app built for Filipino farmers, keeps every orchard dose on a dated calendar.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-fruit-trees.webp",
+    "alt": "Rows of young calamansi trees in an orchard in Victoria, Tarlac, the kind of planting that needs fertilizer for fruit trees by age",
+    "credit": "Judgefloro, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A mango or calamansi tree feeds from the same ground for decades, and its needs change as it grows. So the DA guides feed young trees and bearing trees differently.\n\nThe rates below are for orchards without a soil test. If you can, send soil and leaf samples to a DA soils laboratory or the Bureau of Soils and Water Management (BSWM) first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Young trees:** small, split doses of nitrogen, such as 100 to 200 grams of urea a year for a mango one or two years old.",
+        "**Bearing trees:** complete fertilizer 14 14 14 plus compost, rising with age, up to 10 kg a year for a mango over 20 years old.",
+        "**Timing:** half at the start of the rainy season and half toward its end. Older calamansi gets three doses a year, the last after harvest.",
+        "**Placement:** in a ring under the outer edge of the canopy, moving outward as the tree grows.",
+        "**Banana and coconut** follow their own programs: potash first for banana, salt for coconut."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How is fertilizer for fruit bearing trees different from young trees?"
+    },
+    {
+      "type": "text",
+      "text": "A young tree mostly needs nitrogen to grow leaves, shoots and roots. Once it bears, it also needs phosphorus and potassium to flower and fill fruit. So the guides switch to complete fertilizer. The DA Bureau of Agriculture and Fisheries Standards (BAFS) gives a full schedule by age in its code of good practices for mango."
+    },
+    {
+      "type": "table",
+      "caption": "Mango fertilizer per tree per year without soil or leaf analysis, from the DA BAFS code of good agricultural practices for mango. Complete means 14 14 14. Split each year's amount into two applications.",
+      "rows": [
+        [
+          "Age of tree",
+          "Inorganic only",
+          "Or organic fertilizer plus inorganic"
+        ],
+        [
+          "1 year",
+          "100 g urea",
+          "200 g organic plus 100 g urea"
+        ],
+        [
+          "2 years",
+          "200 g urea",
+          "500 g organic plus 200 g urea"
+        ],
+        [
+          "3 years",
+          "300 g complete",
+          "1 to 2 kg organic plus 300 g complete"
+        ],
+        [
+          "4 years",
+          "400 g complete",
+          "2 to 3 kg organic plus 400 g complete"
+        ],
+        [
+          "5 to 6 years",
+          "0.5 to 1 kg complete",
+          "3 to 4 kg organic plus 0.5 to 1 kg complete"
+        ],
+        [
+          "7 to 8 years",
+          "2 kg complete",
+          "4 to 5 kg organic plus 2 kg complete"
+        ],
+        [
+          "9 to 10 years",
+          "3 kg complete",
+          "5 to 6 kg organic plus 3 kg complete"
+        ],
+        [
+          "11 to 15 years",
+          "5 kg complete",
+          "10 kg organic alone"
+        ],
+        [
+          "16 to 20 years",
+          "Not given",
+          "12 kg organic plus 6 to 7 kg complete"
+        ],
+        [
+          "Over 20 years",
+          "Not given",
+          "15 to 20 kg organic plus 10 kg complete"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Feeding a newly planted tree"
+    },
+    {
+      "type": "text",
+      "text": "The first dose goes in at planting. For example, the DA mangosteen guide puts 200 to 250 grams of complete fertilizer three inches below the roots and five inches to the side. For digging and early care, read our Tagalog guide to [pagtatanim ng puno](/crops/pagtatanim-ng-puno) and our [fruit tree land preparation](/land-preparation/fruit-tree-land-preparation) guide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where do I put fertilizer for fruit trees?"
+    },
+    {
+      "type": "text",
+      "text": "Put it in a ring under the outer edge of the canopy, where rain drips off the leaves. For young mango, the DA code starts the ring about 10 cm from the base and moves it out to about 50 cm by year four. For trees 10 years and older, it uses a shallow canal or 6 to 8 holes, 2 to 4 meters from the trunk. Cover it, so it does not escape into the air or wash away in heavy rain, as the DA mangosteen guide explains."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Weed the ring first",
+          "text": "Clear the weeds under the canopy before each application. The DA durian guide makes ring weeding a rule before every fertilizer run."
+        },
+        {
+          "title": "Find the edge of the canopy",
+          "text": "Mark the circle where the outermost leaves end. It moves outward every year, and so should your fertilizer."
+        },
+        {
+          "title": "Dig holes or a shallow trench",
+          "text": "Dig 4 to 6 holes along the circle, as the DA mangosteen guide does. For an old mango, dig 6 to 8 holes or a canal 15 to 30 cm deep."
+        },
+        {
+          "title": "Fill and cover",
+          "text": "Divide the dose among the holes, mix it with soil, and cover it."
+        },
+        {
+          "title": "Mulch the ring",
+          "text": "Cover the soil around the tree with dry leaves to keep moisture in, as the ATI calamansi guide advises."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "On sloping land, use holes",
+      "text": "Spread fertilizer washes downhill. On hilly land, PCA divides coconut fertilizer among 8 to 10 small holes. Also, the DA banana guide applies it on the uphill side of the plant."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When should I fertilize mango, around flowering or after harvest?"
+    },
+    {
+      "type": "text",
+      "text": "Feed mango with the rains. The DA code puts half of the year's fertilizer in at the start of the rainy season and half toward its end. Pruning comes after harvest, and flowering gets its own support. At 18 to 25 days after flower induction, before bagging, the code adds a foliar fertilizer with zinc, boron, magnesium and calcium.\n\nFor flower induction itself, the code sprays nitrate products such as potassium nitrate at 1 to 3 percent. The applicator must hold an FPA license, and potassium nitrate also needs a special permit from the PNP. So follow the product label and the FPA registration."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is the best fertilizer for calamansi?"
+    },
+    {
+      "type": "text",
+      "text": "Calamansi gets nitrogen while young and complete fertilizer once it bears, says the ATI MIMAROPA calamansi guide."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "**One month after planting:** 50 to 100 g of ammonium sulfate or urea around each tree, repeated every four months.",
+        "**Second year:** 200 to 300 g per tree every four months.",
+        "**From the fourth year, when it bears:** complete fertilizer, or ammophos with potash, 500 g per tree.",
+        "**At 8 to 10 years:** 2 to 3 kg per tree, three times a year: in the rains before flowering, two months after flowering, and after harvest."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Mix each dose into the soil and keep weeding. Also drain the orchard well, since calamansi cannot stand waterlogged soil. We could not open a DA rate sheet for dalandan, dayap or pomelo. So ask your DA office before you copy the calamansi rates to other citrus."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What about banana, coconut and mangosteen?"
+    },
+    {
+      "type": "table",
+      "caption": "Other fruit crops in DA and PCA guides, for fields without a soil test",
+      "rows": [
+        [
+          "Crop",
+          "What the guide uses"
+        ],
+        [
+          "Mangosteen",
+          "Bearing trees: 1.5 to 3 kg of complete 14 14 14 or 12 24 12 plus 200 to 300 g muriate of potash a year, in two doses"
+        ],
+        [
+          "Banana",
+          "A general rate of 90 30 120 NPK without a soil test, best given monthly on moist soil"
+        ],
+        [
+          "Coconut",
+          "Common salt for chlorine, often with a nitrogen fertilizer. 1.5 kg of salt per palm a year from five years old"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Banana is the hungriest for potassium. A 30 ton harvest removes 175 to 225 kg of potash per hectare, says the DA banana guide, so read our [banana farming](/crops/banana-farming-philippines) guide before you buy. Coconut is the odd one out, because PCA found at least 40 provinces severely short of chlorine. Our [coconut fertilizer](/crops/coconut-fertilizer) guide has the PCA rates by age."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help you feed an orchard on time?"
+    },
+    {
+      "type": "text",
+      "text": "Orchard doses come months apart, so they are easy to forget. In anee.io, each block of trees becomes a lot, and you can trace it on the [farm maps](/features/farm-maps). Then the [cropping calendar](/features/cropping-calendar) dates each split dose of fertilizer for fruit trees. The growth stages cover 85 Philippine crops, fruit trees among them.\n\nThe free [NPK Plus calculator](/features/npk-plus-calculator) adds up the N, P and K in your mix. If leaves yellow or fruit drops, send a photo to Anee, the smart farm technician inside anee.io. She answers in Tagalog or English and uses credits."
+    },
+    {
+      "type": "cta",
+      "title": "Never miss a split dose again",
+      "text": "Sign up free, add your orchard as a lot, and let anee.io date every fertilizer run.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fertilizer for fruit trees"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How much fertilizer does a mango tree need?",
+          "a": "It depends on age. Without a soil test, the DA code for mango gives a tree of 7 to 8 years 2 kg of complete fertilizer a year. A tree over 20 years old gets 10 kg plus 15 to 20 kg of organic fertilizer, split in two."
+        },
+        {
+          "q": "When is the best time to fertilize fruit trees?",
+          "a": "At the start and toward the end of the rainy season, while the soil is moist. Older calamansi gets a third dose after harvest."
+        },
+        {
+          "q": "Can I use only organic fertilizer on fruit trees?",
+          "a": "Yes, at some ages. The DA code for mango allows 10 kg of organic fertilizer alone for trees 11 to 15 years old. For other ages it pairs compost with 14 14 14, because organic fertilizer carries less nutrient per kilo."
+        },
+        {
+          "q": "What fertilizer makes calamansi bear more fruit?",
+          "a": "Complete fertilizer once the tree bears. The ATI MIMAROPA guide gives 500 g per tree from the fourth year. At 8 to 10 years old, it gives 2 to 3 kg per tree, three times a year."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Pagtatanim ng puno",
+          "url": "/crops/pagtatanim-ng-puno"
+        },
+        {
+          "label": "Fruit tree land preparation",
+          "url": "/land-preparation/fruit-tree-land-preparation"
+        },
+        {
+          "label": "Fertilizer for coconut tree",
+          "url": "/crops/coconut-fertilizer"
+        },
+        {
+          "label": "Banana farming in the Philippines",
+          "url": "/crops/banana-farming-philippines"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "Plant disease detection for fruit growers",
+          "url": "/blog/plant-disease-detection-for-fruit-growers"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA BAFS: Code of Good Agricultural Practices for Mango, explanatory manual (PNS/BAFPS 45:2009)",
+          "url": "https://bafs.da.gov.ph/wp-content/uploads/2025/05/2025_EM-GAP-Mango_compressed.pdf"
+        },
+        {
+          "label": "DA High Value Crops Development Program: Mangosteen Production Guide",
+          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
+        },
+        {
+          "label": "DA High Value Crops Development Program: Durian Production Guide",
+          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Durian-Production-Guide-koronadal-new.pdf"
+        },
+        {
+          "label": "ATI MIMAROPA: Calamansi production guide",
+          "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-12/calamansi_final.pdf"
+        },
+        {
+          "label": "DA High Value Crops Development Program: Banana Production Guide",
+          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
+        },
+        {
+          "label": "PCA and ATI Cagayan Valley: Common Salt Fertilization on Coconut",
+          "url": "https://ati2.da.gov.ph/ati-2/content/sites/default/files/2023-07/Common%20Salt%20Fertlization%20on%20Coconuts%20FINAL.pdf"
+        }
+      ]
+    }
+  ]
+}

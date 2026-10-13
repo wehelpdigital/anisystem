@@ -77,7 +77,7 @@
         },
         {
           "title": "Ask about government vouchers",
-          "text": "DA regional offices have handed out fertilizer discount vouchers to registered rice farmers in past seasons. Ask your municipal agriculturist which ones run this season."
+          "text": "DA regional offices have handed out fertilizer discount vouchers to registered rice farmers in past seasons. Ask your municipal agriculturist which ones run this season. See also our guide to [fertilizer subsidies in the Philippines](/blog/fertilizer-subsidy-philippines)."
         }
       ]
     },
@@ -88,7 +88,7 @@
     },
     {
       "type": "text",
-      "text": "Divide the bag price by the kilos of nutrient inside. Compare nitrogen with nitrogen and potassium with potassium, because each nutrient does a different job. Our [fertilizer dealer guide](/blog/fertilizer-brands-and-dealers) explains the method in more detail."
+      "text": "Divide the bag price by the kilos of nutrient inside. Compare nitrogen with nitrogen and potassium with potassium, because each nutrient does a different job. Our [fertilizer dealer guide](/blog/fertilizer-brands-and-dealers) explains the method in more detail. For bag prices, see our [fertilizer price guide](/blog/fertilizer-price-philippines)."
     },
     {
       "type": "table",
@@ -193,6 +193,14 @@
           "url": "/blog/fertilizer-brands-and-dealers"
         },
         {
+          "label": "Fertilizer prices in the Philippines",
+          "url": "/blog/fertilizer-price-philippines"
+        },
+        {
+          "label": "Fertilizer subsidies in the Philippines",
+          "url": "/blog/fertilizer-subsidy-philippines"
+        },
+        {
           "label": "Urea fertilizer 46 0 0",
           "url": "/blog/urea-fertilizer"
         },
@@ -203,10 +211,6 @@
         {
           "label": "Cost of producing rice per hectare",
           "url": "/blog/cost-of-producing-rice-per-hectare"
-        },
-        {
-          "label": "Farm inventory tracking",
-          "url": "/blog/farm-inventory-tracking"
         }
       ]
     },

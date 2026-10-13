@@ -1,0 +1,333 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-price-philippines",
+  "sortOrder": 1030,
+  "lang": "en",
+  "category": "Farm inputs",
+  "title": "What Is the Fertilizer Price in the Philippines, and How Do I Check Today's Price?",
+  "metaTitle": "Fertilizer Price Philippines: Check Today's Price per Bag",
+  "metaDescription": "Fertilizer price Philippines guide: where the FPA posts weekly prices per province, what moves them, and how to compare bags by the price per kilo.",
+  "focusKeyword": "fertilizer price philippines",
+  "keywords": [
+    "fertilizer price philippines",
+    "fertilizer price",
+    "fertilizer bag"
+  ],
+  "excerpt": "Fertilizer prices Philippine farmers pay change every week, so check the latest Fertilizer and Pesticide Authority (FPA) list before you buy. For October 5 to 9, 2026, the FPA national average was PHP 2,241.41 for a 50 kg bag of prilled urea and PHP 1,897.00 for complete 14 14 14. Compare bags by the price per kilo of nutrient, not per bag. On anee.io, a farm app built for Filipino farmers, you record what you paid for each bag, so next season you know your real cost.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-price-philippines.webp",
+    "alt": "Granules of a mineral complex fertilizer piled beside a small coin, the price per kilo a farmer pays",
+    "credit": "Dr. Eugen Lehle, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Ask three dealers the price of urea and you may get three answers. The public yardstick is the weekly FPA survey of average retail prices, per region and per province. It is free, it covers the major grades, and it tells you if a quote is fair."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Check the FPA weekly prices** on fpa.da.gov.ph before you buy.",
+        "**Urea rose about 31 percent in a year,** from PHP 1,710.13 to PHP 2,241.41 a bag, comparing the national averages of October 2025 and October 2026.",
+        "**Prices differ by region,** so compare with your own province.",
+        "**Compare by the kilo of nutrient,** not by the bag."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer prices: Philippine averages for October 2026"
+    },
+    {
+      "type": "text",
+      "text": "The FPA survey for October 5 to 9, 2026 gives these national averages per 50 kg bag. Beside them is the same week a year earlier, from the FPA report for October 6 to 10, 2025."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer prices, Philippine national averages per 50 kg bag, from the FPA weekly surveys. The 2025 report calls it the average price and the 2026 report the national weighted average.",
+      "rows": [
+        [
+          "Grade",
+          "October 6 to 10, 2025",
+          "October 5 to 9, 2026",
+          "Change"
+        ],
+        [
+          "Urea, prilled, 46 0 0",
+          "PHP 1,710.13",
+          "PHP 2,241.41",
+          "up PHP 531.28"
+        ],
+        [
+          "Urea, granular, 46 0 0",
+          "PHP 1,644.06",
+          "PHP 2,260.39",
+          "up PHP 616.33"
+        ],
+        [
+          "Ammosul, 21 0 0",
+          "PHP 850.58",
+          "PHP 1,238.95",
+          "up PHP 388.37"
+        ],
+        [
+          "Complete, 14 14 14",
+          "PHP 1,652.91",
+          "PHP 1,897.00",
+          "up PHP 244.09"
+        ],
+        [
+          "Ammophos, 16 20 0",
+          "PHP 1,447.54",
+          "PHP 1,749.58",
+          "up PHP 302.04"
+        ],
+        [
+          "Muriate of potash, 0 0 60",
+          "PHP 1,752.29",
+          "PHP 1,673.88",
+          "down PHP 78.41"
+        ],
+        [
+          "Diammonium phosphate, 18 46 0",
+          "PHP 2,629.06",
+          "PHP 2,960.63",
+          "up PHP 331.57"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So in one year, the nitrogen grades jumped the most. Ammosul rose about 46 percent and prilled urea about 31 percent. Complete rose about 15 percent, while muriate of potash fell by about PHP 78 a bag."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What does granular fertilizer for palay cost per hectare?"
+    },
+    {
+      "type": "text",
+      "text": "Granular urea averaged PHP 2,260.39 a bag that week, and prilled urea PHP 2,241.41. Both are 46 0 0 with the same nitrogen, so buy whichever costs less.\n\nFor a whole hectare, the PhilRice Abonong Swak plan for 5 to 6 tons uses 2 bags of complete and 2 bags of urea. It adds half a bag of muriate of potash. At the October 2026 averages, that comes to PHP 9,113.76 per hectare, before labor and hauling."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I check today's fertilizer price?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Open the FPA weekly prices page",
+          "text": "Go to fpa.da.gov.ph and open the weekly prices page. Each week has its own PDF, listed by year under Fertilizer."
+        },
+        {
+          "title": "Pick the latest week",
+          "text": "Each list comes out after the week it covers, so read the dates at the top before you use it."
+        },
+        {
+          "title": "Find your province",
+          "text": "Page 1 gives the regional averages. The pages after it list each province the FPA surveyed, and some provinces show no price that week."
+        },
+        {
+          "title": "Compare your dealer's quote",
+          "text": "Set the quote beside your province's average. A small gap is normal, because stores differ in hauling and supply. A big gap is a reason to ask, or to compare with the next town."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Can I get a palay fertilizer price list from local distributors?"
+    },
+    {
+      "type": "text",
+      "text": "Ask your dealer or cooperative for a written price per grade, and keep it with your receipts. The FPA list is the public one, but a dealer's own list tells you what you will really pay this week. Our guide to finding a [fertilizer store near me](/blog/fertilizer-store-near-me) covers what else to check."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What moves the fertilizer price in the Philippines?"
+    },
+    {
+      "type": "text",
+      "text": "Most of it is set far from your farm. An FPA study by Myer Mula and Kimberly Coronado notes that the Philippines is a net importer of fertilizer, so local prices follow the global market. It cites research finding the international market a stronger driver of monthly prices than local swings in demand."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Global urea prices.** Natural gas is the main production cost of nitrogen fertilizers. In May 2026, economists John Baffes and Kaltrina Temaj reported urea above USD 850 a ton in April, up 80 percent since February, after export disruptions that followed the closure of the Strait of Hormuz.",
+        "**The peso.** The study's price matrix starts from the import price per ton in US dollars and converts it at the exchange rate, so a weaker peso raises the cost of each bag.",
+        "**Hauling between islands.** The same study found prices generally lower in regions near major seaports.",
+        "**Company and brand.** Dealer prices also differ by company, brand and logistics cost, the study says, even for the same grade.",
+        "**Local demand.** It matters, but the study found it weaker than the international market as a driver of monthly prices."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Grades do not move together, either. Between October 2025 and October 2026, urea rose by almost a third while potash dipped. So check each grade you need, not just urea."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I compare prices between fertilizer brands?"
+    },
+    {
+      "type": "text",
+      "text": "Compare by the price per kilo of nutrient. A 50 kg fertilizer bag holds half a kilo of nutrient for each point of its grade, so urea at 46 holds 23 kg of nitrogen. Divide the bag price by those kilos. The example below uses example prices only."
+    },
+    {
+      "type": "table",
+      "caption": "Worked example with example prices, not real quotes",
+      "rows": [
+        [
+          "Item",
+          "Urea 46 0 0",
+          "Ammosul 21 0 0"
+        ],
+        [
+          "Example price per bag",
+          "PHP 2,300",
+          "PHP 1,250"
+        ],
+        [
+          "Nitrogen in a 50 kg bag",
+          "23 kg",
+          "10.5 kg"
+        ],
+        [
+          "Price per kg of nitrogen",
+          "PHP 100.00",
+          "PHP 119.05"
+        ],
+        [
+          "Cost of 46 kg of nitrogen",
+          "PHP 4,600 (2 bags)",
+          "about PHP 5,476 (4.4 bags)"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So in this example, urea is the cheaper nitrogen, even though each ammosul bag costs less. Ammosul still makes sense where the soil also lacks sulfur.\n\nThe same rule settles brands. Two registered bags of the same grade carry the same nutrients, so the one with the lower price per kilo is the better buy. Our guide to the [best fertilizer for palay](/blog/best-fertilizer-for-palay) shows which grade goes on at each stage."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "The bag price is not the whole cost",
+      "text": "Add hauling, and any interest on credit, before you compare stores. A cheaper bag from a far town can cost more once it reaches your field."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can I spend less on fertilizer?"
+    },
+    {
+      "type": "text",
+      "text": "Cut waste before you cut nutrients. Test the soil, return the straw, and let a leaf color chart time the nitrogen. Our guide to [lower fertilizer cost](/blog/lower-fertilizer-cost) covers each step. If you farm rice, [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) shows how to match the bags to your soil."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io track what I really paid?"
+    },
+    {
+      "type": "text",
+      "text": "A list gives averages, but your real cost is what you paid, bag by bag. On the Solo Farmer plan, each bag of urea or complete goes into the [farm inventory](/features/farm-inventory-and-expenses) with its unit and price. When you tick a fertilizer task done, the bags leave stock and their cost flows into the [expenses report](/features/expenses-report).\n\nAfter harvest, the [profit report](/features/profit-report) sets your sales against those costs. Before each stretch of work, tap the money on any day to see the cash to prepare, stock to buy included. Next season, you plan from your own numbers."
+    },
+    {
+      "type": "cta",
+      "title": "Know your real fertilizer cost next season",
+      "text": "Sign up free, plan your season, and keep every bag you buy on record.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the fertilizer price"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How much is a bag of urea in the Philippines today?",
+          "a": "It changes every week. For October 5 to 9, 2026, the FPA national average was PHP 2,241.41 for prilled urea and PHP 2,260.39 for granular urea, per 50 kg bag. Check the latest FPA list for your province before you buy."
+        },
+        {
+          "q": "Does the government set fertilizer prices?",
+          "a": "No. The FPA says it cannot regulate or control fertilizer prices, a power it gave up in 1986. It still monitors prices and posts them every week."
+        },
+        {
+          "q": "Why is fertilizer cheaper in some provinces?",
+          "a": "Hauling and supply play a part. An FPA study of 2022 prices found most grades cheaper in regions near major seaports. In the October 5 to 9, 2026 survey, prilled urea averaged PHP 2,041.79 in Region XII and PHP 2,830.00 in Region IX."
+        },
+        {
+          "q": "Is granular urea better value than prilled urea?",
+          "a": "Both are 46 0 0 and carry 23 kg of nitrogen per 50 kg bag. So buy whichever costs less at your store. In October 2026, the two national averages were less than PHP 20 apart."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Lower your fertilizer cost",
+          "url": "/blog/lower-fertilizer-cost"
+        },
+        {
+          "label": "Best fertilizer for palay",
+          "url": "/blog/best-fertilizer-for-palay"
+        },
+        {
+          "label": "Where to buy fertilizer near you",
+          "url": "/blog/fertilizer-store-near-me"
+        },
+        {
+          "label": "Fertilizer subsidy for palay",
+          "url": "/blog/fertilizer-subsidy-philippines"
+        },
+        {
+          "label": "Expenses report",
+          "url": "/features/expenses-report"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FPA: Weekly prices (fertilizer and pesticide lists by week)",
+          "url": "https://fpa.da.gov.ph/weekly-prices/"
+        },
+        {
+          "label": "FPA: Current average retail prices of major fertilizer grades, October 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_-1.pdf"
+        },
+        {
+          "label": "FPA: Current prices of major fertilizer grades, October 6 to 10, 2025",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/10/WFP-OCTOBER-06-10-2025.pdf"
+        },
+        {
+          "label": "FPA: Philippine fertilizer price outlook, a reality for farmers and fishers (Mula and Coronado)",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2024/06/Philippine-fertilizer-price-outlook-A-reality-for-farmers-and-fishers.pdf"
+        },
+        {
+          "label": "Baffes and Temaj, WBG Data Blog: Fertilizer prices surge as Strait of Hormuz disruptions tighten supplies, May 14, 2026",
+          "url": "https://blogs.worldbank.org/en/opendata/fertilizer-prices-surge-as-strait-of-hormuz-disruptions-tighten-"
+        },
+        {
+          "label": "FPA: Frequently asked questions (price setting)",
+          "url": "https://fpa.da.gov.ph/faqs/"
+        }
+      ]
+    }
+  ]
+}

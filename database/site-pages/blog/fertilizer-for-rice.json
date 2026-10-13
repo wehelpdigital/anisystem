@@ -76,7 +76,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice turned those rules into bags per hectare for its Abonong Swak campaign. Below is its plan for a target of 5 to 6 tons per hectare. Check the days to harvest on your seed bag, because the dates follow variety maturity."
+      "text": "PhilRice turned those rules into bags per hectare for its Abonong Swak campaign of [balanced fertilization](/blog/balanced-fertilization-for-rice). Below is its plan for a target of 5 to 6 tons per hectare. Check the days to harvest on your seed bag, because the dates follow variety maturity."
     },
     {
       "type": "table",
@@ -156,7 +156,7 @@
       "items": [
         {
           "title": "Read the grade",
-          "text": "Each number is a percent. A 50 kg bag of fertilizer 14 14 14 holds 7 kg each of nitrogen, phosphate and potash. A bag of urea holds 23 kg of nitrogen. Half a bag of 0 0 60 holds 15 kg of potash."
+          "text": "Each number is a percent, and the three make up the bag's [NPK ratio](/blog/npk-ratio-for-rice). A 50 kg bag of fertilizer 14 14 14 holds 7 kg each of nitrogen, phosphate and potash. A bag of urea holds 23 kg of nitrogen. Half a bag of 0 0 60 holds 15 kg of potash."
         },
         {
           "title": "Add up the nutrients",
@@ -174,7 +174,7 @@
     },
     {
       "type": "text",
-      "text": "For a nutrient target, the fertilizer calculation formula is to divide the kilos of nutrient you need by the percent in the grade. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows each step.\n\nThis plan gives less nitrogen from the bag than the general recommendation. It counts on the straw and manure for part of the rest. Straw and manure also return some nutrients as they decompose."
+      "text": "For a nutrient target, the fertilizer calculation formula is to divide the kilos of nutrient you need by the percent in the grade. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows each step.\n\nThis plan gives less nitrogen from the bag than the general recommendation. It counts on the straw and manure for part of the rest."
     },
     {
       "type": "heading",
@@ -183,7 +183,7 @@
     },
     {
       "type": "text",
-      "text": "The method of fertilizer application matters as much as the amount. For the basal dose, IRRI advises spreading evenly and mixing it into the soil just before transplanting or seeding. In a puddled field, do it during the last harrowing. In dry direct seeding, the basal can go in through the seed drill.\n\nFor each top dressing, spread the nitrogen fertilizer evenly across the whole paddy. Then keep the bunds and outlets closed so the dissolved nutrients stay in your field. Our page on [fertilizer application methods](/blog/fertilizer-application-methods) compares broadcasting, banding and more."
+      "text": "The method of fertilizer application matters as much as the amount. For the basal dose, IRRI advises spreading evenly and mixing it into the soil just before transplanting or seeding. In a puddled field, do it during the last harrowing.\n\nFor each top dressing, spread the nitrogen fertilizer evenly across the whole paddy. Then keep the bunds and outlets closed so the dissolved nutrients stay in your field. Our page on [fertilizer application methods](/blog/fertilizer-application-methods) compares broadcasting, banding and more."
     },
     {
       "type": "heading",
@@ -220,7 +220,7 @@
       "items": [
         {
           "q": "What is the best fertilizer for rice?",
-          "a": "There is no single best fertilizer for rice. PhilRice plans use 14 14 14 or 16 20 0 at basal and urea for top dressing. Muriate of potash goes on near panicle initiation. Adjust the amounts with a soil test, MOET or the Rice Crop Manager."
+          "a": "There is no single best fertilizer for rice. PhilRice plans use 14 14 14 or 16 20 0 at basal and urea for top dressing. Muriate of potash goes on near panicle initiation. Adjust the amounts with a soil test, MOET or the Rice Crop Manager. Read more in our [best fertilizer for palay](/blog/best-fertilizer-for-palay) guide."
         },
         {
           "q": "How many bags of fertilizer do I need per hectare of palay?",
@@ -253,16 +253,16 @@
           "url": "/blog/complete-fertilizer-14-14-14"
         },
         {
-          "label": "16 20 0 fertilizer",
-          "url": "/blog/16-20-0-fertilizer"
+          "label": "Best fertilizer for palay",
+          "url": "/blog/best-fertilizer-for-palay"
         },
         {
-          "label": "Ammonium sulfate 21 0 0",
-          "url": "/blog/ammonium-sulfate-21-0-0"
+          "label": "NPK ratio for rice",
+          "url": "/blog/npk-ratio-for-rice"
         },
         {
-          "label": "Potash fertilizer",
-          "url": "/blog/potash-fertilizer"
+          "label": "Balanced fertilization for rice",
+          "url": "/blog/balanced-fertilization-for-rice"
         },
         {
           "label": "Fertilizer application methods",

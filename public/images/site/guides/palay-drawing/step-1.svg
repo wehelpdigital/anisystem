@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" role="img">
+<title>How to draw palay, step 1</title>
+<desc>Step 1: draw the ground line, the soil clump and the roots.</desc>
+<style>
+  .ln path,.ln ellipse{fill:#fff;stroke:#2b2b2b;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+  .ln .soil,.ln .root,.ln .rootlet,.ln .axis,.ln .branch,.ln .midrib,.ln .node,.ln .seam,.ln .pebble,.ln .water{fill:none}
+  .ln .root{stroke-width:1.9}
+  .ln .rootlet{stroke-width:1.2}
+  .ln .branch{stroke-width:1.7}
+  .ln .grain{stroke-width:1.5}
+  .ln .midrib{stroke-width:1.1}
+  .ln .node,.ln .water{stroke-width:1.4}
+  .ln .seam{stroke-width:.8}
+  .ln .pebble{stroke-width:1.2}
+  .ln .was path,.ln .was ellipse{stroke:#bfbfbf}
+  .ln.sk path,.ln.sk ellipse{stroke:#6b6b6b}
+</style>
+<g class="ln">
+  <g id="ground-and-roots" class="now">
+    <path class="soil" d="M108 484 C150 470 236 466 300 468 C366 466 452 472 492 486 C502 530 484 574 440 588 C364 602 236 602 160 588 C116 574 98 530 108 484 Z"/>
+    <path class="root" d="M300 478 C292 506 262 530 232 566"/>
+    <path class="root" d="M300 478 C296 512 282 548 270 584"/>
+    <path class="root" d="M300 478 C302 516 300 552 304 590"/>
+    <path class="root" d="M300 478 C306 512 322 548 336 584"/>
+    <path class="root" d="M300 478 C310 506 340 530 370 564"/>
+    <path class="root" d="M298 478 C284 494 244 506 204 532"/>
+    <path class="root" d="M302 478 C318 494 358 506 398 530"/>
+    <path class="root" d="M298 478 C290 500 276 520 254 540"/>
+    <path class="root" d="M302 478 C312 500 326 520 346 542"/>
+    <path class="rootlet" d="M277.8 514.8 L264.1 517.7"/>
+    <path class="rootlet" d="M258.4 536.4 L256.3 550.2"/>
+    <path class="rootlet" d="M289.6 524.9 L278.2 533"/>
+    <path class="rootlet" d="M281 551.7 L284.7 565.2"/>
+    <path class="rootlet" d="M301.2 528.4 L292.7 539.6"/>
+    <path class="rootlet" d="M301.8 556.2 L310 567.6"/>
+    <path class="rootlet" d="M313.1 524.9 L308.7 538.2"/>
+    <path class="rootlet" d="M323.2 551.7 L334.7 559.6"/>
+    <path class="rootlet" d="M323.8 514.6 L324.6 528.6"/>
+    <path class="rootlet" d="M343.5 535.7 L357.2 538.6"/>
+    <path class="rootlet" d="M265.7 498.8 L252 496"/>
+    <path class="rootlet" d="M239.3 511.9 L232.5 524.1"/>
+    <path class="rootlet" d="M336 498.6 L342.2 511.2"/>
+    <path class="rootlet" d="M362.6 511.2 L376.5 509.2"/>
+    <path class="rootlet" d="M283.4 506.7 L270.1 511"/>
+    <path class="rootlet" d="M271.7 521.9 L270.1 535.8"/>
+    <path class="rootlet" d="M318.1 506.8 L317.1 520.8"/>
+    <path class="rootlet" d="M329.6 522.6 L342.9 526.9"/>
+  </g>
+</g>
+<g id="step-badge">
+  <circle cx="44" cy="44" r="26" fill="#2f7d32"/>
+  <text x="44" y="53" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="700" fill="#fff">1</text>
+</g>
+</svg>

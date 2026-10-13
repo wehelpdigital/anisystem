@@ -17,7 +17,8 @@
     "14 14 14 fertilizer",
     "16 20 0 fertilizer",
     "fertilizer urea price",
-    "fertilizer application"
+    "fertilizer application",
+    "fertilizer with phosphorus and potassium"
   ],
   "excerpt": "Fertilizer calculation comes down to one line. Kilos of product equal kilos of nutrient needed, divided by that nutrient's share in the bag. With this fertilizer calculation formula you can turn any recommendation into bags of urea, 14 14 14 or 16 20 0. You can also price the whole season before you buy, as the worked examples for a hectare of palay and a small vegetable plot show.",
   "heroImage": {
@@ -99,7 +100,7 @@
       "items": [
         {
           "title": "Cover phosphate and potash first",
-          "text": "Both need 30 kg, and complete fertilizer carries 14 percent of each. So 30 divided by 0.14 is 214 kg, about 4.3 bags of 14 14 14 fertilizer."
+          "text": "Both need 30 kg. Complete is a fertilizer with phosphorus and potassium at 14 percent each, plus the same share of nitrogen. So 30 divided by 0.14 is 214 kg, about 4.3 bags of 14 14 14 fertilizer."
         },
         {
           "title": "Count the nitrogen you already have",

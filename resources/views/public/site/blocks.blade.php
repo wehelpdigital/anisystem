@@ -80,7 +80,8 @@
             @if ($src = $S::img($b['src'] ?? ($b['url'] ?? null)))
                 {{-- A news photo (a roundup's, from the original report) sits in a 16 by 9 frame,
                      and goes away quietly if the newsroom stops serving it. --}}
-                <figure class="sp-img {{ ($b['style'] ?? '') === 'news' ? 'is-news' : '' }}">
+                {{-- "small" (2026-10-13): a step picture or a diagram that needs no full width. --}}
+                <figure class="sp-img {{ ['news' => 'is-news', 'small' => 'is-small'][$b['style'] ?? ''] ?? '' }}">
                     <img src="{{ $src }}" alt="{{ $b['alt'] ?? '' }}" loading="lazy" referrerpolicy="no-referrer" @if (($b['style'] ?? '') === 'news') onerror="this.closest('figure').remove()" @endif>
                     @if (trim((string) ($b['caption'] ?? '')) !== '')<figcaption>{!! $S::inline($b['caption']) !!}</figcaption>@endif
                 </figure>

@@ -1,0 +1,213 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-for-rice-tillering",
+  "sortOrder": 1080,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "Fertilizer for Tillering: What Helps Palay Produce More Tillers?",
+  "metaTitle": "Fertilizer for Tillering: How Palay Makes More Good Tillers",
+  "metaDescription": "The best fertilizer for tillering is nitrogen on time, with all the phosphorus at basal. See the days, the spacing and water, and why late tillers fail.",
+  "focusKeyword": "fertilizer for tillering",
+  "keywords": [
+    "fertilizer for tillering",
+    "fertilizer application for rice",
+    "fertilizer urea"
+  ],
+  "excerpt": "Nitrogen is the main fertilizer for tillering. Palay makes more tillers when about 30 percent of its nitrogen goes in the basal dose by 14 days after transplanting, with all the phosphorus, and urea or ammonium sulfate follows at active tillering. But fertilizer alone does not make productive tillers. Young seedlings, the right spacing and shallow water matter as much, and late tillers may bear no panicle. anee.io, a farm app built for Filipino farmers, shows each lot's growth stage on any date, so the tillering dose lands on time.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-rice-tillering.webp",
+    "alt": "Young rice hills in a wet paddy, each a dense clump of new tillers, the stage when fertilizer for tillering goes on",
+    "credit": "Aerospectra, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Tillers are the side shoots that grow from the base of each hill. Each one that survives can carry a panicle, so tillers set how many panicles you harvest. In transplanted rice, IRRI's Fundamentals of Rice Crop Science says panicle number depends largely on tillering, settled by about 10 days after the peak tiller count.\n\nSo the goal is not the most tillers. It is the most tillers that turn into panicles."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Nitrogen drives tillering.** PalayCheck says it raises tiller number, leaf size and panicles per hill.",
+        "**Phosphorus helps roots and tillers,** so all of it goes in the basal dose.",
+        "**Timing beats amount.** Early tillers usually bear panicles, while late ones may not.",
+        "**Seedlings, spacing and water count too.** Old seedlings, crowded hills and deep water all cut tillering.",
+        "**Aim for panicles,** at least 300 per square meter at dough stage in transplanted rice."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which fertilizer improves palay tillering?"
+    },
+    {
+      "type": "text",
+      "text": "Nitrogen matters most. PalayCheck lists more tillers, taller plants, bigger leaves and more panicles per hill among its effects. IRRI's nitrogen fact sheet adds that nitrogen raises yield through higher tillering, leaf growth and grain filling.\n\nPhosphorus comes second. PalayCheck says it promotes vigorous roots and tillering, and a crop short of phosphorus shows greatly reduced tillering. Sulfur shortage also means fewer tillers, while zinc shortage leaves young plants stunted. Our guide to [micronutrients for rice](/blog/micronutrients-for-rice) covers both."
+    },
+    {
+      "type": "table",
+      "caption": "What drives productive tillers in transplanted rice, from PhilRice PalayCheck",
+      "rows": [
+        ["Factor", "What PalayCheck advises", "Why it matters"],
+        ["Nitrogen", "About 30 percent of the total at basal, the rest split from tillering to panicle initiation", "Raises tiller number and panicles per hill"],
+        ["Phosphorus", "All of it at 0 to 14 days after transplanting", "Feeds roots and early tillering"],
+        ["Seedling age", "18 to 21 day old seedlings, 2 to 3 per hill, for manual transplanting", "Seedlings older than 25 days recover slowly and make fewer tillers"],
+        ["Spacing", "20 by 20 cm in the wet season, 20 by 15 cm in the dry season", "Close spacing shades the hills and cuts tillers"],
+        ["Water depth", "3 to 5 cm from early tillering", "Over 5 cm for a week or more can cut tillering below 10 per hill"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When should fertilizer for tillering go on?"
+    },
+    {
+      "type": "text",
+      "text": "Tillering may start once the main stem has 5 or 6 leaves, and it runs through the vegetative stage until panicle initiation. IRRI notes that a 110 day variety like IR64 has a vegetative stage of about 45 days, while longer varieties tiller for longer. So the doses follow your variety's maturity.\n\nPalayCheck puts the first dose, with all the phosphorus and about 30 percent of the nitrogen, at 0 to 14 days after transplanting (DAT). For direct wet seeded rice, it is 7 to 10 days after sowing (DAS). Varieties longer than 110 days get a second nitrogen dose at mid tillering. The PhilRice Abonong Swak plan for 5 to 6 tons times its first urea top dress by maturity."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**100 to 110 day varieties:** 18 to 22 DAT, or 24 to 28 DAS",
+        "**111 to 120 day varieties:** 22 to 26 DAT, or 32 to 36 DAS",
+        "**121 to 130 day varieties:** 26 to 31 DAT, or 36 to 40 DAS"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The last nitrogen goes near panicle initiation, and it feeds the panicle more than the tillers. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) shows how to spot that stage, and [fertilizer for rice](/blog/fertilizer-for-rice) has the bags for each dose."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Urea or ammonium sulfate?"
+    },
+    {
+      "type": "text",
+      "text": "Urea fertilizer, 46 0 0, is the usual top dress for tillering. Ammonium sulfate, 21 0 0, carries 21 percent nitrogen plus 24 percent sulfur, so it suits fields short of sulfur. You need about 2.2 bags of it to match the nitrogen in one bag of urea. See our pages on [urea](/blog/urea-fertilizer) and [ammonium sulfate](/blog/ammonium-sulfate-21-0-0)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why do some tillers never make a panicle?"
+    },
+    {
+      "type": "text",
+      "text": "Not every tiller pays. Yoshida's Fundamentals of Rice Crop Science explains that tiller number peaks, then falls. Tillers that form early normally produce panicles, while those that form later may or may not.\n\nDirect seeded rice behaves differently. Yoshida notes that a direct seeded plant usually makes 2 to 5 tillers, against 10 to 30 for a transplanted one, so tillering matters much less there. Its panicle number depends mostly on seeding rate and emergence.\n\nLate, heavy nitrogen also feeds weak shoots and soft leaves. PalayCheck warns that too much nitrogen during panicle initiation and flowering makes rice prone to lodging and pests. It also raises the share of unfilled grains."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "More tillers is not always more rice",
+      "text": "Crowded hills shade each other, and an overfed crop lodges easily. Aim for the PalayCheck target instead: at least 300 panicles per square meter at dough stage in transplanted rice, or 350 in direct wet seeded rice."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I get more productive tillers, step by step?"
+    },
+    {
+      "type": "text",
+      "text": "Good fertilizer application for rice at tillering starts before the first bag opens. These steps follow PalayCheck for transplanted rice."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Plant young, healthy seedlings",
+          "text": "Use 18 to 21 day old seedlings, 2 to 3 per hill, for manual transplanting. Replant missing hills within 7 days after transplanting."
+        },
+        {
+          "title": "Space the hills",
+          "text": "Use 20 by 20 cm in the wet season and 20 by 15 cm in the dry season, for at least 25 hills per square meter."
+        },
+        {
+          "title": "Give the basal dose",
+          "text": "Apply all the phosphorus and about 30 percent of the nitrogen by 14 days after transplanting, mixed into the soil."
+        },
+        {
+          "title": "Read the leaves",
+          "text": "From 14 days after transplanting, compare 10 leaves with a leaf color chart every 7 days. Apply nitrogen when 6 or more read below 4."
+        },
+        {
+          "title": "Top dress at active tillering",
+          "text": "Spread the urea when the water is 2 to 5 cm deep, and after 3 PM if you can."
+        },
+        {
+          "title": "Keep the water shallow",
+          "text": "Hold 3 to 5 cm of water from early tillering. More than 5 cm for seven days or more cuts tillering."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "src": "/images/site/app/growth.png",
+      "alt": "The Growth Stages screen in anee.io, showing a rice lot's current stage with what to do now and what to watch for",
+      "caption": "Growth Stages in anee.io: pick a date and each lot shows its stage, what to do now and what to watch for."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io time the tillering dose?"
+    },
+    {
+      "type": "text",
+      "text": "[Growth stages](/features/growth-stages-and-weather) in anee.io show each lot's stage on any date you pick. Every lot counts from its own day zero, so a lot transplanted a week later gets its tillering dose a week later. If a lot runs behind after drought or a late transplant, [Realign by Anee](/features/realign-by-anee) reads its records and weather, then moves its stage count to match the crop. That reading uses credits.\n\nWrite the doses once in the [Protocol Builder](/features/protocol-builder), and they land on the cropping calendar with the right dates. On Solo Farmer and Farm Owner, each urea task you tick done takes its bags out of stock."
+    },
+    {
+      "type": "cta",
+      "title": "See which lot is due for its tillering dose",
+      "text": "Pick any date and see each lot's growth stage, what to do now and what to watch for.",
+      "label": "See growth stages",
+      "url": "/features/growth-stages-and-weather"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fertilizer for tillering"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many days after transplanting does tillering start?",
+          "a": "Tillering may start once the main stem has 5 or 6 leaves. In practice, PhilRice times the first urea for tillering at 18 to 31 days after transplanting, depending on variety maturity."
+        },
+        {
+          "q": "Should I add more urea if my palay has few tillers?",
+          "a": "Check the cause first. Old seedlings, deep water, close spacing, or a shortage of phosphorus, zinc or sulfur can all cut tillers, and extra urea fixes none of them. Let the leaf color chart decide the nitrogen."
+        },
+        {
+          "q": "Does direct seeded rice need a tillering dose?",
+          "a": "Yes, but tillering matters less there. Each direct seeded plant makes only 2 to 5 tillers, so the seeding rate counts more. PhilRice times the first urea at 24 to 40 days after sowing, by variety maturity."
+        },
+        {
+          "q": "Is ammonium sulfate a better fertilizer for tillering than urea?",
+          "a": "Both supply nitrogen. Ammonium sulfate also carries sulfur, so it helps where the soil lacks sulfur. Use about 2.2 bags of it for each bag of urea you replace."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        { "label": "Fertilizer timing by growth stage", "url": "/blog/fertilizer-timing-by-growth-stage" },
+        { "label": "Fertilizer for rice: a season plan by days", "url": "/blog/fertilizer-for-rice" },
+        { "label": "Urea fertilizer 46 0 0", "url": "/blog/urea-fertilizer" },
+        { "label": "Crop growth stage monitoring", "url": "/blog/crop-growth-stage-monitoring" },
+        { "label": "Fertilizer for palay grain filling", "url": "/blog/fertilizer-for-rice-grain-filling" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
+        { "label": "IRRI: Fundamentals of Rice Crop Science (Yoshida, 1981)", "url": "http://books.irri.org/9711040522_content.pdf" },
+        { "label": "PhilRice: Balanced fertilization cuts fertilizer costs (Abonong Swak recommendations)", "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/" },
+        { "label": "IRRI Rice Knowledge Bank: Nitrogen (N)", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen" },
+        { "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant", "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm" }
+      ]
+    }
+  ]
+}

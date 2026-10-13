@@ -157,7 +157,7 @@
     },
     {
       "type": "text",
-      "text": "No. They help on large farms, but small farms get most of the gain from the steps above. If you hire a spraying drone, check the product first. The Fertilizer and Pesticide Authority keeps a separate list of pesticide products registered for drone use, apart from its main list. Follow the label and the FPA registration.\n\nSatellites are cheaper than drones, because the Sentinel data are free. They show weak zones across a field about every five days when clouds allow. PhilRice also runs PRISM, a satellite based system that maps rice areas, planting dates and flood or drought damage for planning. Our guide to [satellite images of my farm](/blog/satellite-crop-monitoring-philippines) explains what a picture can and cannot show."
+      "text": "No. They help on large farms, but small farms get most of the gain from the steps above. Our guide to [farm sensors in the Philippines](/blog/farm-sensors-philippines) covers them for when you are ready. If you hire a spraying drone, check the product first. The Fertilizer and Pesticide Authority keeps a separate list of pesticide products registered for drone use, apart from its main list. Follow the label and the FPA registration.\n\nSatellites are cheaper than drones, because the Sentinel data are free. They show weak zones across a field about every five days when clouds allow. PhilRice also runs PRISM, a satellite based system that maps rice areas, planting dates and flood or drought damage for planning. Our guide to [satellite images of my farm](/blog/satellite-crop-monitoring-philippines) explains what a picture can and cannot show."
     },
     {
       "type": "heading",
@@ -243,6 +243,10 @@
         {
           "label": "NPK Plus Calculator",
           "url": "/features/npk-plus-calculator"
+        },
+        {
+          "label": "Farm sensors in the Philippines",
+          "url": "/blog/farm-sensors-philippines"
         }
       ]
     },

@@ -1,0 +1,291 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-for-sandy-soil",
+  "sortOrder": 1110,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "Fertilizer for Sandy Soil: What Is Best for Palay, and How to Match Fertilizer to Your Soil Type",
+  "metaTitle": "Fertilizer for Sandy Soil: Best Choices for Palay",
+  "metaDescription": "Fertilizer for sandy soil growing palay: split nitrogen and potash into smaller doses, add organic matter, test first, and match fertilizer to your soil.",
+  "focusKeyword": "fertilizer for sandy soil",
+  "keywords": [
+    "fertilizer for sandy soil",
+    "fertilizer soil",
+    "fertilizer for soil"
+  ],
+  "excerpt": "The best fertilizer for sandy soil growing palay is the usual complete, urea and potash, given in more and smaller doses, with organic matter every season. Sand holds little water or nutrient, so one big dose washes below the roots before the crop can use it. Test the soil, split the nitrogen and the potash, and return the straw. anee.io, a farm app built for Filipino farmers, dates every split dose on each lot's calendar.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-sandy-soil.webp",
+    "alt": "Young rice plants growing on a pale, sandy field in Kaset Wisai, Isan, northeast Thailand, where fertilizer for sandy soil must be split",
+    "credit": "All Fronts Quiet, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Sandy fields drain fast and dry fast. You know one by feel: moist soil falls apart in your hand instead of holding together. The same coarse grains that let water through also let dissolved fertilizer through. That is why a crop on sand can look hungry a week after a full bag."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Sand holds little nutrient or water, so nitrogen and potassium wash down quickly.",
+        "Split nitrogen into more, smaller doses, as FAO papers on tropical sandy soils advise.",
+        "Split potash into at least two doses on sandy, leaching soil, IRRI says.",
+        "Add organic matter every season: straw, compost or manure.",
+        "Test first. BSWM mobile soil labs now serve all 17 regional field offices, free for farmers."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why is sandy soil hard to feed?"
+    },
+    {
+      "type": "text",
+      "text": "Soil holds nutrients on clay and organic matter, and sand has little of either. An FAO paper on the sandy rice soils of Northeast Thailand found that their low organic matter gives them a low cation exchange capacity, which is the soil's power to hold nutrients. It also found that much of the chemical nitrogen applied there is lost before the crop can use it.\n\nA second paper in the same FAO book adds that sandy soils need organic manures because they hold so little. But it warns that the manure breaks down fast in them, so one dose is never enough."
+    },
+    {
+      "type": "text",
+      "text": "IRRI lists what this means for rice. Nitrogen deficiency is common on coarse textured soils low in organic matter. Potassium is often short on sandy soils. Phosphorus is often short on sandy soils low in organic matter, too. So a palay crop on sand can run short of all three main nutrients."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is the best fertilizer for sandy soil growing palay?"
+    },
+    {
+      "type": "text",
+      "text": "There is no special bag for sand. The best fertilizer for sandy soil is the same set of nutrients your soil test calls for, given in a way the soil can hold. Four changes make the difference."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Split the nitrogen into more, smaller doses"
+    },
+    {
+      "type": "text",
+      "text": "The FAO paper on sandy soils puts it plainly: the best management uses frequent but small doses of inorganic fertilizer. For palay, keep the season total of urea the same, but divide it into one or two more top dressings than usual, between early tillering and panicle initiation. Each small dose gets used before the next heavy rain carries it down."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Split the potash too"
+    },
+    {
+      "type": "text",
+      "text": "IRRI advises splitting potassium into at least two doses where the soil is sandy and leaches. Its usual split, for rates above 30 kg of potash per hectare, is half at basal and half at early panicle initiation. Our guide to [potash fertilizer](/blog/potash-fertilizer) covers the sources."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Build organic matter every season"
+    },
+    {
+      "type": "text",
+      "text": "Organic matter is the sponge that sand lacks. Return the straw, add compost or decomposed manure, and grow azolla where the field holds water. In a long term paddy trial at Surin, Northeast Thailand, compost raised both the rice yield and the soil's organic matter, the FAO paper reports. Our page on [organic vs inorganic fertilizer](/blog/organic-vs-inorganic-fertilizer) shows what each organic source supplies."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Keep the water steady"
+    },
+    {
+      "type": "text",
+      "text": "On sand, water and fertilizer leave together. Puddle well, keep the bunds tight, and put each dose on a field that will stay wet. Our [rice land preparation](/land-preparation/rice-land-preparation) guide notes that sandy soil drains quickly and needs steady water during puddling."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not put it all on at planting",
+      "text": "A season's urea in one basal dose is money down the drain on sand. The roots are still small, and the first heavy rain carries much of the nitrogen below them. Split it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I match fertilizer to my soil type?"
+    },
+    {
+      "type": "text",
+      "text": "Start with a soil test, then match the program to the problem. This table covers the soils palay farmers meet most."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer for soil types: the problem and what to do",
+      "rows": [
+        [
+          "Soil type",
+          "Main problem",
+          "What to do"
+        ],
+        [
+          "Sandy",
+          "Holds little water or nutrient, so N and K leach. Often short of N, P and K",
+          "Split N and K into smaller doses and add organic matter every season"
+        ],
+        [
+          "Heavy clay",
+          "Holds water and nutrients, but cracks when dry and is slow to work",
+          "Usual splits work. Prepare the land at the right moisture"
+        ],
+        [
+          "Acidic",
+          "Low pH locks up nutrients, and heavy nitrogen use makes it worse",
+          "Test the pH, lime by the test, go easy on ammonium sulfate"
+        ],
+        [
+          "Saline",
+          "Salt in the root zone stops seeds and burns leaves. Often short of P",
+          "Flush the salt, fix drainage, plant a salt tolerant variety"
+        ],
+        [
+          "Sodic or alkaline",
+          "Sodium seals the surface, and urea loses nitrogen to the air as ammonia",
+          "Gypsum and leaching for sodic soil, and work urea into the soil"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Each problem soil has its own guide: [acidic soil preparation](/land-preparation/acidic-soil-preparation), [saline soil preparation](/land-preparation/saline-soil-preparation) and [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation). All three start the same way, with a test."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to choose the right fertilizer for your palay soil"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Get a soil test",
+          "text": "Ask your municipal agriculturist when the BSWM mobile soil laboratory visits. The DA now runs these units from all 17 regional field offices, free for farmers of rice, corn, vegetables and other crops."
+        },
+        {
+          "title": "Or use a soil test kit",
+          "text": "A BSWM soil test kit reads the pH, nitrogen, phosphorus and potassium in the field. You can get one at the BSWM Laboratory Services Division or a regional soils laboratory."
+        },
+        {
+          "title": "Feel the texture",
+          "text": "Rub moist soil between your fingers. Gritty soil that will not hold a ribbon is sandy, while sticky soil that holds a long ribbon is clay."
+        },
+        {
+          "title": "Set the total from the test",
+          "text": "Let the test, or the local recommendation, set the kilos of N, P and K per hectare. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) turns kilos into bags."
+        },
+        {
+          "title": "Set the timing from the soil",
+          "text": "On sand, split into more doses. On clay, the usual splits work. Then note the yield per lot at harvest, so next season starts from your own numbers."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan split doses with anee.io"
+    },
+    {
+      "type": "text",
+      "text": "More doses mean more dates to remember, and anee.io keeps them for you. Write the split program once in the [Protocol Builder](/features/protocol-builder), each dose on its day after transplanting. The [cropping calendar](/features/cropping-calendar) then dates every dose from each lot's own day zero.\n\nNext, the free [NPK Plus Calculator](/features/npk-plus-calculator) adds up the nitrogen, phosphorus and potassium across all your doses and tells you if the crop is short or over. Also, the [weather forecast](/features/farm-weather-forecast) beside the plan shows the rain coming, so you can move a dose away from a downpour. Unsure about your soil test? Ask Anee, the [smart farm technician](/features/ai-agricultural-technician), in Tagalog or English. She reads your lots and their stage before she answers, and her answers use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Put every split dose on the calendar",
+      "text": "Sign up free, add your lots, and let anee.io date each fertilizer dose for sandy and heavy soils alike.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fertilizer for sandy soil"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the best fertilizer for sandy soil?",
+          "a": "No special product. Use the grades your soil test calls for, usually complete fertilizer, urea and muriate of potash for palay, in more and smaller doses. Add organic matter every season so the soil holds more of what you apply."
+        },
+        {
+          "q": "Does organic fertilizer help sandy soil?",
+          "a": "Yes. Organic matter holds water and nutrients that sand cannot. In a long term trial on sandy paddy soil in Northeast Thailand, reported by FAO, compost raised both rice yield and soil organic matter."
+        },
+        {
+          "q": "How often should I apply urea on sandy soil?",
+          "a": "More often, in smaller amounts. Keep the season total your soil test calls for, but divide it into one or two more top dressings than you would on heavier soil."
+        },
+        {
+          "q": "Where can I get my soil tested in the Philippines?",
+          "a": "Ask your municipal agriculturist about the BSWM mobile soil laboratory, which the DA offers free to farmers, or a regional soils laboratory. A BSWM soil test kit also gives a quick field reading."
+        },
+        {
+          "q": "Do I need a different fertilizer for soil that is heavy clay?",
+          "a": "Usually not a different bag, but a different rhythm. Clay holds nutrients longer, so the usual splits work. Acid, saline or sodic clay needs its problem fixed first."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Rice land preparation",
+          "url": "/land-preparation/rice-land-preparation"
+        },
+        {
+          "label": "Acidic soil preparation",
+          "url": "/land-preparation/acidic-soil-preparation"
+        },
+        {
+          "label": "Saline soil preparation",
+          "url": "/land-preparation/saline-soil-preparation"
+        },
+        {
+          "label": "Sodic and alkaline soil preparation",
+          "url": "/land-preparation/sodic-alkaline-soil-preparation"
+        },
+        {
+          "label": "Organic vs inorganic fertilizer",
+          "url": "/blog/organic-vs-inorganic-fertilizer"
+        },
+        {
+          "label": "Potash fertilizer",
+          "url": "/blog/potash-fertilizer"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FAO: Wada, Managing sandy soils in Northeast Thailand, in Management of Tropical Sandy Soils for Sustainable Agriculture (2005)",
+          "url": "https://www.fao.org/4/ag125e/AG125E11.htm"
+        },
+        {
+          "label": "FAO: Hartemink and Huting, Sandy soils in Southern and Eastern Africa, extent, properties and management (2005)",
+          "url": "https://www.fao.org/4/ag125e/AG125E08.htm"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Potassium",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Nitrogen",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Phosphorus",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/phosphorus"
+        },
+        {
+          "label": "Philstar (2025): Government deploys more mobile soil laboratories",
+          "url": "https://www.philstar.com/business/2025/10/15/2479878/government-deploys-more-mobile-soil-laboratories"
+        },
+        {
+          "label": "DA BSWM: Soil Test Kit leaflet, via ATI",
+          "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-11/Soil-Test-Kit.pdf"
+        }
+      ]
+    }
+  ]
+}

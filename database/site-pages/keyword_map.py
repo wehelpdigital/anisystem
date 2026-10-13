@@ -1,9 +1,16 @@
-"""Where each keyword from anisenso_keywords.csv lives: its primary page first,
-then the pages that also use it naturally. Writes keywords.json.
+"""Where each keyword from the owner's keyword research lives: its primary
+page first, then the pages that also use it naturally. Writes keywords.json
+(and keywords_by_page.json); the keywords left out on purpose, with the
+reason, go to keywords_skipped.json.
+
+The research is every CSV export in Downloads/keywords (Ubersuggest: the
+anisenso list and the two Rhizocote lists, 2026-10-13) plus the first list,
+Downloads/anisenso_keywords.csv.
 
     python database/site-pages/keyword_map.py
 """
 import csv
+import glob
 import json
 import os
 
@@ -30,6 +37,24 @@ P = {
     'price': 'blog/palay-price-philippines', 'palayan': 'blog/palayan-nueva-ecija', 'ani': 'blog/ani-meaning',
     'econ': 'blog/agriculture-in-the-philippine-economy', 'career': 'blog/agricultural-engineer-career',
     'ai': 'features/ai-agricultural-technician', 'reports': 'features/farm-reports',
+    'vegf': 'blog/fertilizer-for-vegetables-philippines', 'bags': 'blog/bags-of-fertilizer-per-hectare',
+    'ricey': 'blog/increase-rice-yield-per-hectare', 'cornyield': 'blog/increase-corn-yield-per-hectare',
+    'cost': 'blog/cost-of-producing-rice-per-hectare', 'digital': 'blog/digital-farming-tools',
+    # The 2026-10-13 batch, written for these keywords and the AI prompts in Downloads/contents.
+    'bestpalay': 'blog/best-fertilizer-for-palay', 'store': 'blog/fertilizer-store-near-me',
+    'fprice': 'blog/fertilizer-price-philippines', 'subsidy': 'blog/fertilizer-subsidy-philippines',
+    'npkratio': 'blog/npk-ratio-for-rice', 'balanced': 'blog/balanced-fertilization-for-rice',
+    'micro': 'blog/micronutrients-for-rice', 'tiller': 'blog/fertilizer-for-rice-tillering',
+    'grainfill': 'blog/fertilizer-for-rice-grain-filling', 'orgvs': 'blog/organic-vs-inorganic-fertilizer',
+    'sandy': 'blog/fertilizer-for-sandy-soil', 'enhancer': 'blog/rice-growth-enhancers',
+    'whatfert': 'blog/what-is-fertilizer', 'tomato': 'blog/fertilizer-for-tomatoes',
+    'fruit': 'blog/fertilizer-for-fruit-trees', 'pechay': 'blog/organic-fertilizer-for-pechay',
+    'orchid': 'blog/fertilizer-for-orchids', 'riceapp': 'blog/rice-farming-app',
+    'android': 'blog/farm-app-for-android', 'swcost': 'blog/farm-management-software-cost',
+    'digitize': 'blog/digitize-farm-records', 'yieldfc': 'blog/crop-yield-forecasting',
+    'livestock': 'blog/farm-app-for-livestock-and-crops', 'sensors': 'blog/farm-sensors-philippines',
+    'multi': 'blog/multiple-cropping', 'palaycheck': 'blog/palaycheck-key-checks',
+    'palayisda': 'blog/palayisdaan', 'drying': 'blog/palay-drying', 'drawing': 'blog/palay-drawing',
 }
 
 # keyword -> page keys, primary first
@@ -267,19 +292,154 @@ MAP = {
     'why fertilizer is important': ['fplants', 'frice'],
     'what fertilizer for plants': ['fplants'],
     'corn breed': ['cseeds', 'kernel'],
+    # ---- 2026-10-13: the Downloads/keywords lists ----
+    'fertilizer': ['whatfert', 'fplants', 'frice'],
+    'fertilizer organic': ['organic', 'orgvs', 'fplants'],
+    'fertilizer for plants': ['fplants', 'whatfert', 'orchid'],
+    'fertilizer of plants': ['fplants', 'whatfert'],
+    'what is fertilizer for plants': ['whatfert', 'fplants'],
+    'organic fertilizer for plants': ['fplants', 'pechay', 'inorg'],
+    'fertilizer npk': ['npkratio', 'bestpalay', 'bags'],
+    'fertilizer types': ['whatfert', 'bestpalay', 'apply'],
+    'fertilizer meaning': ['whatfert', 'words'],
+    'fertilizer definition': ['whatfert'],
+    'fertilizer synonym': ['whatfert'],
+    'fertilizer pronunciation': ['whatfert'],
+    'fertilizer research': ['whatfert'],
+    'fertilizer components': ['whatfert', 'npkratio'],
+    'fertilizer ingredients': ['whatfert', 'orgvs'],
+    'fertilizer effect on plant growth': ['whatfert'],
+    'fertilizer images with names': ['whatfert'],
+    'fertilizer clipart': ['whatfert'],
+    'fertilizer drawing easy': ['whatfert'],
+    'fertilizer name': ['whatfert', 'words'],
+    'fertilizer tagalog': ['words', 'whatfert'],
+    'fertilizer ratio': ['npkratio'],
+    'fertilizer high in nitrogen': ['npkratio', 'urea'],
+    'fertilizer rich in nitrogen': ['npkratio'],
+    'fertilizer rich in phosphorus': ['npkratio', 'p1620'],
+    'fertilizer with phosphorus and potassium': ['npkratio', 'grainfill', 'calc'],
+    'fertilizer with zinc': ['micro', 'complete'],
+    'fertilizer soil': ['sandy', 'whatfert'],
+    'fertilizer for soil': ['sandy', 'balanced'],
+    'fertilizer spray': ['foliar', 'enhancer'],
+    'fertilizer bag': ['bags', 'store'],
+    'fertilizer brands': ['brands', 'bestpalay'],
+    'fertilizer price': ['fprice', 'brands'],
+    'fertilizer price philippines': ['fprice', 'urea'],
+    'fertilizer store near me': ['store'],
+    'fertilizer company in the philippines': ['store', 'brands'],
+    'fertilizer machine': ['apply', 'cost'],
+    'fertilizer spreader machine': ['apply'],
+    'fertilizer application for rice': ['frice', 'apply', 'bestpalay'],
+    'fertilizer homemade': ['organic', 'orgvs', 'pechay'],
+    'fertilizer diy': ['organic', 'orgvs'],
+    'organic fertilizer for farming': ['orgvs', 'organic'],
+    'organic fertilizer for vegetables': ['organic', 'pechay', 'vegf'],
+    'fertilizer vegetables': ['vegf', 'tomato'],
+    'fertilizer for tomatoes': ['tomato', 'vegf'],
+    'fertilizer for eggplant': ['vegf', 'tomato'],
+    'fertilizer for potatoes': ['tomato', 'vegf'],
+    'organic fertilizer for pechay': ['pechay'],
+    'fertilizer for pechay': ['pechay', 'veg'],
+    'fertilizer for corn': ['cornyield', 'p1620'],
+    'fertilizer application in corn': ['cornyield', 'p1620'],
+    'fertilizer 0 0 50': ['potash'],
+    'fertilizer for fruit trees': ['fruit'],
+    'fertilizer for fruit bearing trees': ['fruit'],
+    'fertilizer for calamansi': ['fruit'],
+    'fertilizer for orchids': ['orchid', 'fplants'],
+    'fertilizer for bougainvillea': ['orchid'],
+    'fertilizer for roses': ['orchid'],
+    'fertilizer for hydrangeas': ['orchid'],
+    'fertilizer for snake plant': ['orchid'],
+    'fertilizer for indoor plants': ['orchid'],
+    'fertilizer bonsai': ['orchid'],
+    'fertilizer for bermuda grass': ['orchid'],
+    'crop yield': ['yieldfc', 'ani', 'ricey'],
+    'crop yields': ['yieldfc', 'ani'],
+    'what is crop yield': ['yieldfc', 'reports'],
+    'crop yield increase': ['ricey', 'yieldfc'],
+    'crop production tools': ['sensors', 'digital'],
+    'crop production roadmap': ['econ'],
+    'why farm is important': ['econ', 'fplants'],
+    'palay drawing': ['drawing', 'palay'],
+    'palay easy drawing': ['drawing'],
+    'palay picture drawing': ['drawing'],
+    'palay drawing with color': ['drawing'],
+    'palay clipart': ['drawing'],
+    'palay png': ['drawing'],
+    'palay cartoon': ['drawing'],
+    'palay cartoon images': ['drawing'],
+    'palay animated': ['drawing'],
+    'palay background': ['drawing'],
+    'palay poster': ['drawing'],
+    'palay painting': ['drawing'],
+    'palay props': ['drawing'],
+    'palay logo': ['drawing'],
+    'palay festival costume': ['drawing'],
+    'palay festival in nueva ecija': ['palayan'],
+    'palay plant': ['palay', 'drawing'],
+    'palay plant in english': ['words', 'drawing'],
+    'palay scientific name': ['palay'],
+    'palay in the philippines': ['palay', 'econ'],
+    'palay grains': ['palay', 'grainfill', 'drying'],
+    'palay at bigas': ['words', 'palay'],
+    'palay bigas kanin': ['words', 'palay'],
+    'palay in tagalog': ['words'],
+    'palay sa bukid': ['pnp', 'png'],
+    'palay at mais': ['multi', 'alamatmais'],
+    'palay farming': ['pnp', 'riceapp', 'palaycheck'],
+    'palay seeder': ['pnp', 'palay'],
+    'palay harvester': ['drying', 'cost'],
+    'palay dryer': ['drying'],
+    'palay dryer machine': ['drying'],
+    'palay key check 1 to 9': ['palaycheck'],
+    'palayisdaan': ['palayisda'],
+    'palay price per kilo today 2025': ['price'],
+    'ani ng palay': ['ani', 'alamat'],
+    'ani ng palay in english': ['ani', 'words'],
+    'pang ani ng palay': ['ani', 'pnp'],
+}
+
+# In the research, not on the site, on purpose: searches for something else
+# that only shares a word with farming. Writing for them would be off topic.
+SKIP = {
+    'ani ma': 'not the farm word ani; an unrelated name search',
+    'animalis': 'unrelated (a Latin word and a brand name), not about farming',
+    'palay restaurant': 'a restaurant name, not about the crop',
+    'palay maiden': 'not about the crop; no farm meaning found',
+    'palais royal': 'the Paris landmark, not palay',
+    'palayain': 'the Tagalog verb to set free, not palay',
+    'play emulator github': 'software, not farming',
+    'fertilizer stardew': 'a video game item',
+    'fertilizer terraria': 'a video game item',
+    'farm raised salmon': 'salmon aquaculture abroad, not a Philippine crop',
+    'nearest nuat thai': 'a massage chain',
+    'fertilized egg': 'biology (an egg cell), not crop fertilizer',
+    'fertilized egg chicken': 'biology (an egg cell), not crop fertilizer',
+    'fertilized egg cell': 'biology (an egg cell), not crop fertilizer',
+    'fertilized egg is called': 'biology (an egg cell), not crop fertilizer',
+    'fertilized egg of ascaris lumbricoides': 'biology (a parasite egg), not crop fertilizer',
+    'fertilizer fund scam': 'a 2004 political case, not farm advice; naming people there is legal risk',
 }
 
 
 def main():
-    rows = list(csv.DictReader(open(os.path.join(os.path.expanduser('~'), 'Downloads', 'anisenso_keywords.csv'), encoding='utf-8-sig')))
+    down = os.path.join(os.path.expanduser('~'), 'Downloads')
     vol = {}
-    for r in rows:
-        k = r['Keyword'].strip().lower()
-        vol[k] = max(vol.get(k, 0), int(r['Volume'] or 0))
-    missing = [k for k in vol if k not in MAP]
-    extra = [k for k in MAP if k not in vol]
+    for f in [os.path.join(down, 'anisenso_keywords.csv')] + sorted(glob.glob(os.path.join(down, 'keywords', '*.csv'))):
+        for r in csv.DictReader(open(f, encoding='utf-8-sig')):
+            k = ' '.join(r['Keyword'].strip().lower().split())
+            if k:
+                vol[k] = max(vol.get(k, 0), int(float(r['Volume'] or 0)))
+    missing = [k for k in vol if k not in MAP and k not in SKIP]
+    extra = [k for k in list(MAP) + list(SKIP) if k not in vol]
     if missing or extra:
         raise SystemExit('unmapped: %s | not in csv: %s' % (missing, extra))
+    json.dump({k: {'volume': vol[k], 'why': SKIP[k]} for k in sorted(SKIP, key=lambda k: -vol[k])},
+              open(os.path.join(HERE, 'keywords_skipped.json'), 'w', encoding='utf-8'), indent=1)
+    vol = {k: v for k, v in vol.items() if k not in SKIP}
     out = {k: {'volume': vol[k], 'pages': [P[p] for p in MAP[k]]} for k in sorted(vol, key=lambda k: -vol[k])}
     json.dump(out, open(os.path.join(HERE, 'keywords.json'), 'w', encoding='utf-8'), indent=1)
     by_page = {}

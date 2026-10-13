@@ -1,0 +1,201 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-for-rice-grain-filling",
+  "sortOrder": 1090,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "Which Fertilizer Improves Palay Grain Filling and Grain Quality?",
+  "metaTitle": "Grain Filling in Palay: Fertilizer, Water and Harvest Timing",
+  "metaDescription": "Good grain filling starts before heading: the panicle initiation dose, enough potassium, no late heavy nitrogen, water at flowering and a timely harvest.",
+  "focusKeyword": "grain filling",
+  "keywords": [
+    "grain filling",
+    "palay grains",
+    "fertilizer with phosphorus and potassium"
+  ],
+  "excerpt": "The fertilizer that fills palay grains goes on before heading, not during grain filling. Give the last nitrogen and the second potassium dose around panicle initiation, keep enough potassium for heavy grains and strong stems, and skip heavy nitrogen late in the season. After that, water at flowering, a harvest at 85 to 90 percent golden grains and quick drying protect grain quality. anee.io, a farm app built for Filipino farmers, dates the panicle initiation dose from each lot's own day zero.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-rice-grain-filling.webp",
+    "alt": "Rice panicles bending under filling grains that are starting to turn golden, the grain filling stage in a paddy",
+    "credit": "Undeka 11, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Grain filling is the stretch after flowering when each spikelet fills with starch, from milk to dough to hard grain. In the tropics, ripening takes about 30 days. Yoshida, in IRRI's Fundamentals of Rice Crop Science, measured an effective grain filling period of about 23 days for IR20 at Los Baños.\n\nMost of what fills the grain comes from the leaves during those weeks. Yoshida found that starch stored before heading supplies 0 to 40 percent of the grain in most conditions. The rest comes from photosynthesis after heading, so green, healthy upper leaves are the real grain fillers."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Feed the panicle at panicle initiation,** about 25 days before heading, not at milk stage.",
+        "**Potassium raises grain size, weight and filled grains,** and keeps stems standing.",
+        "**Heavy nitrogen late** brings lodging, pests and more unfilled grains.",
+        "**Keep 5 to 7 cm of water at flowering,** because drought then leaves many spikelets empty.",
+        "**Harvest and dry on time,** or good palay grains turn into broken rice at the mill."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which fertilizers improve palay grain quality?"
+    },
+    {
+      "type": "text",
+      "text": "No single bag does it. Grain quality comes from the right nitrogen and potassium at the right stage, then from the water and the harvest. The table shows what each nutrient does for the grain and when it belongs."
+    },
+    {
+      "type": "table",
+      "caption": "Nutrients and grain filling in rice, from PhilRice PalayCheck and Yoshida",
+      "rows": [
+        ["Nutrient", "What it does for the grain", "When to give it"],
+        ["Nitrogen", "Raises spikelets per panicle, filled spikelets and grain protein, and keeps leaves green after heading", "Last dose within 5 to 7 days of panicle initiation, guided by the leaf color chart until early flowering"],
+        ["Potassium", "Raises grain size, weight and filled grains, and helps the crop resist lodging", "First dose at 0 to 14 days after transplanting, second within 5 to 7 days of panicle initiation"],
+        ["Phosphorus", "Supports early flowering and ripening", "All at basal, 0 to 14 days after transplanting"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A fertilizer with phosphorus and potassium, like 14 14 14, belongs at basal. The potassium you add near panicle initiation, usually as muriate of potash, is the one that works on the grain. PhilRice adds muriate of potash before or after panicle initiation in sunny areas such as Nueva Ecija, Bicol and Isabela, for bigger and heavier grains. Our guide to [potash fertilizer](/blog/potash-fertilizer) covers the grade."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Should I give potash at flowering?"
+    },
+    {
+      "type": "text",
+      "text": "Usually not. IRRI says potassium at flowering can raise resistance to lodging and diseases in dense, high yielding crops, but it may not raise yield. The split that counts is basal and early panicle initiation. IRRI divides it half and half when the total is over 30 kg of K2O per hectare."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does the panicle initiation dose help grain filling?"
+    },
+    {
+      "type": "text",
+      "text": "Yoshida describes panicle initiation as the stage about 25 days before heading, when the young panicle is about 1 mm long. Nitrogen taken up then raises the number of spikelets, and so the size of the panicle. It also keeps the leaves green after heading, when they make most of the starch for the grain. In Japan, farmers call this dose the panicle fertilizer.\n\nTiming matters for the stem too. Yoshida notes that top dressing about 20 days before heading gave the heaviest panicles and also raised lodging resistance. To find panicle initiation in your own field, see [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why does late heavy nitrogen hurt grain filling?"
+    },
+    {
+      "type": "text",
+      "text": "PalayCheck warns that too much nitrogen during panicle initiation and flowering makes rice prone to lodging and pests. It also raises the share of unfilled spikelets, and it costs money you will not get back.\n\nDisease follows heavy nitrogen as well. IRRI lists high nitrogen among the conditions that favor [sheath blight](/diseases/sheath-blight), along with a warm, humid canopy and close spacing. Sheath blight kills leaves in the canopy, the same leaves that should be filling the grain."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Yellow lower leaves during ripening are normal",
+      "text": "Yoshida describes ripening as a time of leaf senescence, while the plant moves food into the grain. Do not answer it with urea. PalayCheck stops reading the leaf color chart at early flowering."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What else protects grain filling and milling quality?"
+    },
+    {
+      "type": "text",
+      "text": "Once the panicles are out, water and timing do the rest. These steps follow PalayCheck from flowering to the drying floor."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Keep water at flowering",
+          "text": "Hold 5 to 7 cm of water during flowering. PalayCheck says drought from panicle initiation to grain filling leaves many unfilled spikelets."
+        },
+        {
+          "title": "Drain before harvest",
+          "text": "Drain the field 1 to 2 weeks before harvest, so the crop ripens evenly and the grains stay dry."
+        },
+        {
+          "title": "Harvest at the right time",
+          "text": "Cut when 85 to 90 percent of the grains are golden yellow, or 90 to 95 percent with a combine. Harvesting too early can drop milling recovery to as low as 53 percent."
+        },
+        {
+          "title": "Do not wait too long",
+          "text": "Late harvest brings shattering, and head rice recovery can fall to as low as 32 percent with manual harvest."
+        },
+        {
+          "title": "Thresh fast",
+          "text": "Thresh within one day of manual harvest in the wet season, or two days in the dry season. Cut palay piled in the field heats up and discolors."
+        },
+        {
+          "title": "Dry within a day",
+          "text": "Dry the palay evenly within 12 to 24 hours to 12 to 14 percent moisture. On a concrete pavement, stir it at least every 30 minutes and keep it out of the rain."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Our guide to [palay drying](/blog/palay-drying) covers dryers and sun drying in more detail."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does anee.io help with grain filling?"
+    },
+    {
+      "type": "text",
+      "text": "[Growth stages](/features/growth-stages-and-weather) in anee.io show when each lot nears panicle initiation and flowering, counted from its own day zero. The [Protocol Builder](/features/protocol-builder) puts the last urea and potash dose on its day. Anee, the smart farm technician inside anee.io, can review the protocol for a rate that looks too high or a stage with nothing planned. That review uses credits.\n\n[Weather for your farm](/features/farm-weather-forecast) shows rain and heat for the coming days beside the stages, which helps you plan the drain and the harvest. After harvest, record yield, moisture, buyer and price in [harvest records](/features/harvest-records). Next season you can see which lot filled best."
+    },
+    {
+      "type": "cta",
+      "title": "Plan the panicle dose before the season starts",
+      "text": "Sign up free, add your lots and their transplanting dates, and see every task dated from each lot's own day zero.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about grain filling"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I spray fertilizer at milk stage to fill the grains?",
+          "a": "PalayCheck has no nitrogen dose after early flowering, and Yoshida shows most grain starch comes from photosynthesis after heading. Healthy leaves and enough water do more at that stage. If you still try a foliar product, follow its label and FPA registration."
+        },
+        {
+          "q": "How long does grain filling take in palay?",
+          "a": "Ripening takes about 30 days in the tropics, from flowering to maturity. Yoshida measured an effective grain filling period of about 23 days for IR20 at Los Baños."
+        },
+        {
+          "q": "Why are many of my grains empty?",
+          "a": "Empty grains can come from drought at flowering, too much nitrogen late, potassium shortage, or very hot or cold weather at flowering. Pests and diseases can also cause them. Check your water and fertilizer dates first, then the leaves and panicles."
+        },
+        {
+          "q": "When should I harvest for the best milling quality?",
+          "a": "Harvest when 85 to 90 percent of the grains are golden yellow, or 90 to 95 percent with a combine. Then thresh within a day or two and dry the grain within 12 to 24 hours."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        { "label": "Fertilizer timing by growth stage", "url": "/blog/fertilizer-timing-by-growth-stage" },
+        { "label": "Potash fertilizer", "url": "/blog/potash-fertilizer" },
+        { "label": "Palay drying", "url": "/blog/palay-drying" },
+        { "label": "Fertilizer for palay tillering", "url": "/blog/fertilizer-for-rice-tillering" },
+        { "label": "Sheath blight", "url": "/diseases/sheath-blight" },
+        { "label": "How to increase rice yield per hectare", "url": "/blog/increase-rice-yield-per-hectare" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
+        { "label": "IRRI: Fundamentals of Rice Crop Science (Yoshida, 1981)", "url": "http://books.irri.org/9711040522_content.pdf" },
+        { "label": "IRRI Rice Knowledge Bank: Potassium (K)", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k" },
+        { "label": "IRRI Rice Knowledge Bank: Sheath blight", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight" },
+        { "label": "PhilRice: Rice Science for Decision Makers Vol. 11, Reinforcing Right EAT for improved fertilizer application (2022)", "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf" }
+      ]
+    }
+  ]
+}

@@ -22,7 +22,9 @@
     "fertilizer applicator",
     "fertilizer spreader",
     "fertilizer drawing",
-    "fertilizer picture"
+    "fertilizer picture",
+    "fertilizer spreader machine",
+    "fertilizer machine"
   ],
   "excerpt": "Fertilizer application methods decide how much of what you paid for actually reaches the roots. The same sack of urea can feed the crop or wash away, depending on where and when it lands. This guide covers the methods Filipino farmers use, from broadcasting and basal incorporation to side dressing, foliar sprays, fertigation and urea deep placement, with the tools and timing for each.",
   "heroImage": {
@@ -182,7 +184,7 @@
         "**Chest or hand crank spreader.** A bag on the chest over a spinning disc you turn by hand. It throws wider and more evenly than bare hands.",
         "**Push spreader.** A hopper on wheels for dry, level ground such as upland corn and vegetable fields.",
         "**Motorized knapsack mist blower.** Some models can blow granules as well as sprays, covering a paddy quickly.",
-        "**Tractor mounted spinner spreader.** Twin discs throw fertilizer granules across a wide strip on large fields.",
+        "**Tractor mounted spinner spreader.** This fertilizer spreader machine has twin discs that throw fertilizer granules across a wide strip on large fields.",
         "**UDP applicator.** A push tool that presses urea briquettes into the mud as you walk.",
         "**Drip injector.** A venturi or small pump that feeds dissolved fertilizer into drip lines."
       ]
@@ -286,7 +288,7 @@
         },
         {
           "q": "Do small farms need a fertilizer spreader?",
-          "a": "Not always. A steady hand with a measured scoop works on small lots if you calibrate it. A hand crank spreader pays off when you fertilize several hectares or want a more even spread."
+          "a": "Not always. A steady hand with a measured scoop works on small lots if you calibrate it. A hand crank spreader pays off when you fertilize several hectares or want a more even spread. Only large fields need a tractor mounted fertilizer machine."
         },
         {
           "q": "Is foliar fertilizer enough on its own?",

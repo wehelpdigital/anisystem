@@ -155,6 +155,8 @@
     .sp-img { margin: 0; }
     .sp-img img { width: 100%; border-radius: 1rem; }
     .sp-img figcaption { margin-top: .45rem; font-size: .8rem; color: #6b7280; }
+    .sp-img.is-small { max-width: 24rem; margin-inline: auto; }
+    .sp-img.is-small figcaption { text-align: center; }
     .sp-img.is-news { position: relative; }
     .sp-img.is-news img { aspect-ratio: 16 / 9; object-fit: cover; border-radius: 1.1rem; background: #eef2ea; box-shadow: 0 18px 40px -30px rgb(20 33 12 / .55); }
     .sp-img.is-news figcaption { position: absolute; left: .7rem; bottom: .7rem; margin: 0; max-width: calc(100% - 1.4rem); padding: .3rem .65rem; border-radius: 999px;

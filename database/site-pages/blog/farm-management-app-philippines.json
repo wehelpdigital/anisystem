@@ -191,7 +191,7 @@
     },
     {
       "type": "text",
-      "text": "See the full list on the [pricing page](/pricing). If you run the farm from the city, read [how to manage a farm remotely](/blog/manage-a-farm-remotely), and for the crew side see [farm workers and payroll](/features/farm-workers-and-payroll)."
+      "text": "See the full list on the [pricing page](/pricing). If you run the farm from the city, read [how to manage a farm remotely](/blog/manage-a-farm-remotely), and for the crew side see [farm workers and payroll](/features/farm-workers-and-payroll). Growing palay? Read our [rice farming app](/blog/rice-farming-app) guide. On an Android phone? See our [farm app for Android](/blog/farm-app-for-android) guide."
     },
     {
       "type": "cta",
@@ -254,8 +254,12 @@
           "url": "/blog/farm-planning-app-philippines"
         },
         {
-          "label": "Digital farming tools",
-          "url": "/blog/digital-farming-tools"
+          "label": "Rice farming app",
+          "url": "/blog/rice-farming-app"
+        },
+        {
+          "label": "Farm app for Android",
+          "url": "/blog/farm-app-for-android"
         },
         {
           "label": "Farm labor tracking app",

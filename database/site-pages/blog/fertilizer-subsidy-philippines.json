@@ -1,0 +1,276 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-subsidy-philippines",
+  "sortOrder": 1040,
+  "lang": "en",
+  "category": "Farm inputs",
+  "title": "How Do I Get a Government Fertilizer Subsidy for Palay in the Philippines?",
+  "metaTitle": "Fertilizer Subsidy for Palay: RSBSA, Vouchers and RCEF",
+  "metaDescription": "How to get a fertilizer subsidy for palay: register in the RSBSA at your MAO, see what DA vouchers and RCEF have covered, and check FPA registration.",
+  "focusKeyword": "fertilizer subsidy",
+  "keywords": [
+    "fertilizer subsidy",
+    "fertilizer and pesticide authority"
+  ],
+  "excerpt": "DA help for rice farmers, a fertilizer subsidy included, usually starts with one step: registering in the RSBSA at your Municipal Agriculture Office (MAO). The DA has given fertilizer discount vouchers to rice farmers in some years, such as the 2022 national program for farmers in the RSBSA and a 2025 round in Central Visayas. Programs change every year and no amount is promised, so ask your MAO what runs this season. Government approved fertilizer means a product registered with the FPA.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-subsidy-philippines.webp",
+    "alt": "The sign of the Municipal Agriculture Office in Sison, Pangasinan, the first stop for a fertilizer subsidy",
+    "credit": "Judgefloro, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Every peso saved on fertilizer counts, so many palay farmers ask about government help. But aid programs come and go with each year's budget. This guide covers only programs we could confirm on official government pages, with their years, and the doors that stay the same from season to season."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Register in the RSBSA first.** The DA uses this registry to find who may receive its programs, fertilizer included.",
+        "**Fertilizer vouchers have run in some years,** such as the DA program for the 2022 wet season and the 2022 to 2023 dry season.",
+        "**RCEF now runs until 2031,** with PHP 30 billion a year for seeds, machines, training, credit and soil improvement.",
+        "**Ask your MAO every season,** because programs, amounts and rules change.",
+        "**Government approved fertilizer means FPA registered.**"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do I qualify for a fertilizer subsidy?"
+    },
+    {
+      "type": "text",
+      "text": "Start with the Registry System for Basic Sectors in Agriculture, the RSBSA. A DA regional FAQ calls it a registry of farmers, fisherfolk and farm laborers that the government uses to identify who receives its agriculture programs. Among those programs, it lists loans, crop insurance, seeds, fertilizers, farm inputs, technical assistance and soil analysis.\n\nThe same FAQ says registration is voluntary, has no fee and lasts a lifetime. It makes you eligible to apply for DA help. But it does not promise you any program or amount."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "How to register in the RSBSA"
+    },
+    {
+      "type": "text",
+      "text": "You must be a Filipino citizen, at least 18 years old, and a farmer, farm worker, fisherfolk or agri youth. Then follow these steps."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Prepare your documents",
+          "text": "Bring a valid government ID with its number. Owners bring proof of the land, such as a title, tax declaration or CLOA. Tenants bring proof of tenancy, and lessees the lease agreement."
+        },
+        {
+          "title": "Get the form from your MAO",
+          "text": "Ask the City or Municipal Agriculture Office for the RSBSA enrollment form, and fill it out."
+        },
+        {
+          "title": "Submit it and keep the stub",
+          "text": "Hand in the form with your copies. You get a stub with a temporary RSBSA control number and a DA stamp, your proof of registration."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What fertilizer assistance has the DA given rice farmers?"
+    },
+    {
+      "type": "text",
+      "text": "These are the programs we confirmed on DA pages, with their years. They show how the help has worked, but none of them is a promise for this season."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer help for rice farmers confirmed on official DA and ATI pages. Amounts and rules differ by program and year.",
+      "rows": [
+        [
+          "Year",
+          "Program",
+          "What farmers received",
+          "For whom"
+        ],
+        [
+          "2022 wet season and 2022 to 2023 dry season",
+          "Fertilizer discount vouchers, DA Memorandum Order 22, a PHP 5.85 billion program",
+          "PHP 1,131 per hectare for inbred rice or PHP 2,262 for hybrid rice, for complete, urea, ammonium sulfate, ammonium phosphate or muriate of potash",
+          "Rice farmers in the RSBSA, in selected rice towns"
+        ],
+        [
+          "April 8, 2025, for the dry season crop",
+          "Fertilizer discount vouchers from DA Central Visayas, funded under the Rice Program",
+          "14 14 14 fertilizer worth PHP 1,113,232 in all, for 498 farmers",
+          "Rice farmers of Toledo City and Pinamungajan, Cebu"
+        ],
+        [
+          "Extended in December 2024 to run until 2031",
+          "Rice Competitiveness Enhancement Fund (RCEF), RA 11203 as amended by RA 12078",
+          "Seeds, machines, credit and training, now PHP 30 billion a year, with soil improvement in a PHP 15 billion share",
+          "Rice farmers in the RSBSA and DA accredited farmer groups, in covered towns"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "RCEF itself did not start as a fertilizer program. RA 11203 split its PHP 10 billion a year into machines (50 percent), seeds (30 percent), credit (10 percent) and extension (10 percent). Since RA 12078, part of the bigger fund can go to soil improvement, so ask your MAO what that means in your town."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "No amount is guaranteed",
+      "text": "Programs, amounts and rules change with each year's budget, and many cover only selected towns. When we checked in October 2026, we could not find national fertilizer voucher rules for 2026 on DA pages. So ask your MAO what runs this season. RSBSA registration is free, so never pay anyone to put you on a list."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does government approved fertilizer mean?"
+    },
+    {
+      "type": "text",
+      "text": "It means a product registered with the Fertilizer and Pesticide Authority (FPA). The FPA registers fertilizers before they reach the market, and it licenses the businesses that make and sell them.\n\nTo check a bag yourself, open the Registered Products page on the FPA website and download the fertilizer list. Match the company, product name, grade and registration number on your bag, and see that the registration has not expired. Our guide to the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) walks through it, and [where to buy fertilizer near you](/blog/fertilizer-store-near-me) covers licensed dealers."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does the DA recommend for fertilizing rice?"
+    },
+    {
+      "type": "text",
+      "text": "The DA rice institute, PhilRice, teaches nutrient management through its PalayCheck System. Its rule is Make EAT right: the right Element, Amount and Timing. PalayCheck bases the amount on MOET, the leaf color chart or the Rice Crop Manager Advisory Service, not on habit.\n\nThose tools tell you which nutrient your soil lacks, so a voucher or your own cash goes to the right bag. For the bag plans by growth stage, see the [best fertilizer for palay](/blog/best-fertilizer-for-palay) and [balanced fertilization for rice](/blog/balanced-fertilization-for-rice)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where can palay farmers get free farm advice?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Your MAO.** It handles RSBSA registration, and the RSBSA FAQ lists technical assistance and soil analysis among the services registered farmers can apply for.",
+        "**The Agricultural Training Institute (ATI).** It leads the extension part of RCEF, with training programs, farm schools and a training scholarship scheme.",
+        "**ATI online courses and helpdesk.** Its online learning portal has self paced courses on crops, and its Farmers' Contact Center takes calls, texts and emails.",
+        "**PhilRice Text Center.** Text your rice questions to 0917 111 7423."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "You can also ask an agriculturist online, as our guide to [asking an agriculturist online](/blog/ask-an-agriculturist-online) explains. Bring photos and your records, because a technician can help faster when you show what you applied and when."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can anee.io help when I ask for assistance?"
+    },
+    {
+      "type": "text",
+      "text": "To be clear, anee.io does not give out aid or apply for programs for you. What it does is keep your farm's records in one place. Each lot carries its crop, variety, size and place in [farm lots](/features/farm-lots). The [cropping calendar](/features/cropping-calendar) dates every fertilizer task, and on Solo Farmer the [expenses report](/features/expenses-report) shows what each season cost.\n\nSave your MAO technician's number in the Contact List, too. When a program asks about your farm, you have the answers ready, and our guide to [farm records for loans and insurance](/blog/farm-records-for-loans-and-insurance) shows more ways to use them."
+    },
+    {
+      "type": "cta",
+      "title": "Keep your farm records ready",
+      "text": "Sign up free and keep your lots, season plan and fertilizer tasks in one place.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about a fertilizer subsidy"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a fertilizer subsidy for palay this season?",
+          "a": "It depends on the year and your town. The DA ran fertilizer discount vouchers for the 2022 wet season and the 2022 to 2023 dry season, and DA Central Visayas handed out vouchers in April 2025. Ask your MAO what runs now."
+        },
+        {
+          "q": "How much is the DA fertilizer voucher?",
+          "a": "It has differed by program. Under the 2022 national rules, it was PHP 1,131 per hectare for inbred rice and PHP 2,262 for hybrid rice. Later rounds can set other amounts, so check the current rules with your MAO."
+        },
+        {
+          "q": "Do I need to own my land to register in the RSBSA?",
+          "a": "No. The DA FAQ accepts proof of tenancy from tenants and proof of agreement from lessees, besides ownership papers from owners. Farm workers can also register."
+        },
+        {
+          "q": "Does RCEF give free fertilizer?",
+          "a": "Not as one of its original parts, which were machines, seeds, credit and extension. Since RA 12078 was signed in December 2024, part of the fund also covers soil improvement. Ask your MAO what your town receives."
+        },
+        {
+          "q": "Who regulates fertilizer in the Philippines?",
+          "a": "The Fertilizer and Pesticide Authority, an agency under the DA. It registers fertilizers and pesticides and licenses the businesses that handle them."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        },
+        {
+          "label": "Lower your fertilizer cost",
+          "url": "/blog/lower-fertilizer-cost"
+        },
+        {
+          "label": "Fertilizer price in the Philippines",
+          "url": "/blog/fertilizer-price-philippines"
+        },
+        {
+          "label": "Where to buy fertilizer near you",
+          "url": "/blog/fertilizer-store-near-me"
+        },
+        {
+          "label": "Farm records for loans and insurance",
+          "url": "/blog/farm-records-for-loans-and-insurance"
+        },
+        {
+          "label": "Ask an agriculturist online",
+          "url": "/blog/ask-an-agriculturist-online"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA Cordillera: RSBSA frequently asked questions (2024)",
+          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
+        },
+        {
+          "label": "DA: DA issues rules for fertilizer aid scheme (from BusinessMirror, March 10, 2022)",
+          "url": "https://www.da.gov.ph/?p=55765"
+        },
+        {
+          "label": "DA Central Visayas: Agri CV distributes fertilizer vouchers for rice farmers (April 8, 2025 distribution)",
+          "url": "https://rfo7.da.gov.ph/?p=4828"
+        },
+        {
+          "label": "DA: New law extends RCEF until 2031, triples budget (December 9, 2024)",
+          "url": "https://da.gov.ph/?p=86219"
+        },
+        {
+          "label": "ATI: Rice Competitiveness Enhancement Fund, components and beneficiaries",
+          "url": "https://ati2.da.gov.ph/ati-9/content/rcef"
+        },
+        {
+          "label": "ATI: Information services (e Extension, Farmers' Contact Center, Rice Crop Manager)",
+          "url": "https://ati2.da.gov.ph/ati-main/content/information_services"
+        },
+        {
+          "label": "FPA: Registered products, fertilizer list",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Contact us (Text Center number)",
+          "url": "https://www.philrice.gov.ph/contact-us/"
+        }
+      ]
+    }
+  ]
+}

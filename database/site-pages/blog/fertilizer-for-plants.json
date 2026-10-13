@@ -26,7 +26,8 @@
     "examples of inorganic fertilizer",
     "fertilizer names list",
     "fertilizer example",
-    "best fertilizer for vegetables"
+    "best fertilizer for vegetables",
+    "fertilizer for orchids"
   ],
   "excerpt": "Fertilizer for plants puts back the nitrogen, phosphorus and potassium that each harvest carries away. Pick the wrong mix and you get leafy plants with no fruit, or weak plants that never fill. This guide explains why fertilizer is important, how to choose fertilizer for plants grown for leaves, fruit or flowers, and how to use organic and inorganic kinds at home or on the farm.",
   "heroImage": {
@@ -37,7 +38,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Which fertilizer plants need depends on what you want from them: leaves, fruit or flowers."
+      "text": "Which fertilizer plants need depends on what you want from them: leaves, fruit or flowers. New to the subject? Start with our guide to [what fertilizer is](/blog/what-is-fertilizer)."
     },
     {
       "type": "heading",
@@ -108,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "Start with the part of the plant you harvest. Leaves want nitrogen, fruit and grain want potassium, and every young root wants phosphorus. Then let a soil test or your municipal agriculturist fine tune the rates."
+      "text": "Start with the part of the plant you harvest. Leaves want nitrogen, fruit and grain want potassium, and every young root wants phosphorus. Then let a soil test or your municipal agriculturist fine tune the rates. For calamansi and other fruit bearing trees, read our guide to [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
     },
     {
       "type": "heading",
@@ -154,6 +155,10 @@
         "**Fertilizer liquid feeds.** A water soluble grade such as 20 20 20, or fish emulsion, mixed at the label rate and poured on moist soil. It acts quickly, but you must repeat it.",
         "**Organic mix.** Vermicast or compost in the potting mix, plus egg shell fertilizer for calcium. Grind the shells to powder, because large pieces take a year or more to break down."
       ]
+    },
+    {
+      "type": "text",
+      "text": "Our guide to [fertilizer for orchids](/blog/fertilizer-for-orchids) also covers bougainvillea, roses and indoor plants."
     },
     {
       "type": "heading",
@@ -309,12 +314,12 @@
           "url": "/crops/vegetables-philippines"
         },
         {
-          "label": "16 20 0 fertilizer",
-          "url": "/blog/16-20-0-fertilizer"
+          "label": "What is fertilizer",
+          "url": "/blog/what-is-fertilizer"
         },
         {
-          "label": "Potash fertilizer",
-          "url": "/blog/potash-fertilizer"
+          "label": "Fertilizer for fruit trees",
+          "url": "/blog/fertilizer-for-fruit-trees"
         },
         {
           "label": "Foliar fertilizer",

@@ -1,0 +1,298 @@
+{
+  "section": "blog",
+  "slug": "farm-app-for-livestock-and-crops",
+  "sortOrder": 1230,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "Is There a Livestock Farm App for Mixed Crop and Poultry Farms?",
+  "metaTitle": "Livestock Farm App: What a Mixed Crop and Poultry Farm Needs",
+  "metaDescription": "Looking for a livestock farm app for a mixed farm? The animal and flock records to keep, free government tools, and how anee.io fits the crop side honestly.",
+  "focusKeyword": "livestock farm app",
+  "keywords": [
+    "livestock farm app"
+  ],
+  "excerpt": "A livestock farm app keeps herd and flock records: each animal or batch, breeding, vaccinations, medicines, feed and deaths. A crop app keeps the season, from land preparation to harvest. If no single app does both well for your farm, two tools work fine. Built for Filipino farmers, anee.io runs the crop side only and has no animal or flock records. So keep the animals in a livestock app, a spreadsheet or a notebook.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-app-for-livestock-and-crops.webp",
+    "alt": "A flock of ducklings foraging in a harvested rice field in Candaba, Pampanga, a mixed crop and poultry farm that needs a livestock farm app",
+    "credit": "Judgefloro, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Many Filipino farms keep both crops and animals. Ducks feed in the paddy after harvest and a carabao eats the straw. A few pigs or a layer flock pay the bills between harvests. PhilRice builds a whole system on this idea, called Palayamanan Plus.\n\nSo the question is fair. Can one app hold the animals and the crops? Here is what each side needs, the free tools that exist, and where anee.io fits, limits included."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key points"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**anee.io is built for crops.** It has no animal IDs, breeding, vaccination or flock records.",
+        "**Animal records have their own list:** identity, breeding, health treatments with withdrawal periods, feed and production.",
+        "**Free government help exists**, such as the BAI app for reporting animal disease and RSBSA registration for programs like livestock insurance.",
+        "**A notebook or spreadsheet** is a fair free flock record, if you fill it in every day.",
+        "**Two tools are fine** on a mixed farm, as long as each one is kept up."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How do you choose a livestock farm app for a mixed crop farm?"
+    },
+    {
+      "type": "text",
+      "text": "List the records each side needs, then test each app against that list. For the animal side, the Bureau of Agriculture and Fisheries Standards (BAFS) lists them. Its guide is the Good Animal Husbandry Practices standard, PNS/BAFS 60:2008."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Which records does a livestock or poultry farm need?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Identification:** every animal, or every batch for poultry, so you can track each one.",
+        "**Breeding and selection:** which animals to keep and breed.",
+        "**Production:** what the herd or flock gives you, such as eggs or weights.",
+        "**Animal health:** vaccination, deworming, disease, diagnosis and treatment.",
+        "**Medicines:** what you bought, with batch and expiry, and what you gave, to which animals, on what date, with its withdrawal period and who gave it.",
+        "**Feed:** the supplier and its registration number, the type, the quantity and the delivery date.",
+        "**Money:** costs and sales."
+      ]
+    },
+    {
+      "type": "table",
+      "caption": "What a mixed farm needs, and where anee.io stands",
+      "rows": [
+        [
+          "Need",
+          "What to look for",
+          "anee.io"
+        ],
+        [
+          "Animal or flock records",
+          "One record per head, or per batch of birds",
+          "No"
+        ],
+        [
+          "Breeding",
+          "Heat, service, due and birth dates",
+          "No"
+        ],
+        [
+          "Animal health",
+          "Vaccine and deworming dates, treatments, withdrawal periods",
+          "No"
+        ],
+        [
+          "Feed and production",
+          "Feed used, eggs, weights, deaths",
+          "No"
+        ],
+        [
+          "Crop season",
+          "Every task dated from each lot's planting day",
+          "Yes, the cropping calendar"
+        ],
+        [
+          "Workers and pay",
+          "Rates, attendance, labor cost",
+          "Yes, from Solo Farmer"
+        ],
+        [
+          "Crop inputs",
+          "Fertilizer, seed and chemicals in stock",
+          "Yes, from Solo Farmer"
+        ],
+        [
+          "Harvest and sales",
+          "Yield, buyer and price per lot",
+          "Yes, harvest records"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What are the top rated livestock tracking apps in the Philippines?"
+    },
+    {
+      "type": "text",
+      "text": "We found no independent rating of livestock apps for Philippine farms, so we will not rank any. Instead, here are the kinds of tools Filipino raisers can use, and what to check in each."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Herd and flock record apps:** made for animals first. Check that they work offline, count in pesos and let you export your records.",
+        "**Farm apps with crop and livestock parts:** one login for both. Test each side on a free trial before you pay, because one side is often thinner.",
+        "**Government apps:** the DA Bureau of Animal Industry offers BAI ADIR on Google Play. It lets farmers report animal disease incidents with photos and GPS location, and it sends early warnings. For carabao, the DA Philippine Carabao Center built the KBGAN apps iHealth and iFeed with Grameen Foundation Philippines, mainly for extension workers.",
+        "**A spreadsheet or notebook:** free, works anywhere, and enough for a small flock or a few head."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Test the export before you commit",
+      "text": "Whatever you choose, enter one week of real records, then try to get them out as a file or a printout. Records you cannot take with you are records you can lose."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Are there free farm management tools for poultry farmers?"
+    },
+    {
+      "type": "text",
+      "text": "Yes. A daily flock notebook or a spreadsheet costs nothing, and it covers what the BAFS guide asks for. Set it up like this."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Open a page for each batch",
+          "text": "Write the date the birds came in, how many, the source and the breed."
+        },
+        {
+          "title": "Add one line a day",
+          "text": "Note deaths, feed used and eggs collected. A missed day is hard to rebuild later."
+        },
+        {
+          "title": "Log every treatment",
+          "text": "Write the vaccine or medicine, its batch, the dose, the birds treated and the date the withdrawal period ends."
+        },
+        {
+          "title": "Keep the money beside it",
+          "text": "Record feed bought and every sale, so each batch shows its own result."
+        },
+        {
+          "title": "Close the batch",
+          "text": "Add up birds sold, deaths, feed and income before the next batch starts."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The government adds free help around that record. The BAI website posts disease reports, such as avian influenza and African swine fever. It also posts prices of livestock, poultry and feed ingredients. Registration in the RSBSA, the DA farmer registry, is free and lifelong. It makes you eligible for programs that include crop and livestock insurance and livestock and poultry travel certificates. Ask your municipal agriculture office for the form."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Write the withdrawal date where everyone sees it",
+      "text": "The BAFS guide asks you to record the withdrawal period with every treatment. Write the end date on the pen or cage card too, so no worker sells eggs or birds before it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How can a mixed farm use anee.io for its crops?"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice's Palayamanan Plus shows how the two sides feed each other. Straw feeds carabao, cattle and goats. Leftover palay grains feed chickens and ducks, and ducks and fish can live in the paddy. Then manure and crop residue go back to the field as organic fertilizer.\n\nanee.io handles the crop half of that loop. The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. [Workers and payroll](/features/farm-workers-and-payroll) count labor cost, and the inventory keeps fertilizer and seed in stock. After harvest, the records keep yield, buyer and price per lot.\n\nThe free [NPK Plus Calculator](/features/npk-plus-calculator) also counts chicken and carabao manure in a crop's fertilizer plan. So the manure from your animals shows up as nutrients, not guesswork. The [Contact List](/features/farm-contact-list) keeps your buyers, suppliers and the nearest veterinarian in one phonebook.\n\nBe clear on the limits. anee.io and Anee, its smart farm technician, are built around crops and seasons. They will not track doses, due dates or feed per bird. For a sick animal, call your city or municipal agriculture or veterinary office, or report it through BAI ADIR."
+    },
+    {
+      "type": "cta",
+      "title": "Run the crop side of your mixed farm",
+      "text": "Sign up free for one active season with a few ads. Solo Farmer, at PHP 200 a month, adds workers, inventory and all reports.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "text",
+      "text": "For a wider look, read our guides to choosing a [farm management app](/blog/farm-management-app-philippines) and to a [free farm app](/blog/free-farm-app-philippines). Our page on [farm record keeping](/blog/farm-record-keeping) covers the habit that makes any tool work."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about livestock farm apps"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Does anee.io keep livestock or poultry records?",
+          "a": "No. anee.io is built for crops, so it has no animal IDs, breeding, vaccination or flock records. Use it for your crops, workers and costs, and keep the animals in a livestock app, a spreadsheet or a notebook."
+        },
+        {
+          "q": "Can I track feed costs in anee.io?",
+          "a": "Not as a feed record. Its inventory and reports follow crop seasons, so it will not show feed per bird or per head. Keep feed in your flock or herd record."
+        },
+        {
+          "q": "Is there a free app for poultry records?",
+          "a": "A spreadsheet or a notebook is the honest free choice for most small flocks. The government apps we found serve disease reporting and extension work, not daily flock records."
+        },
+        {
+          "q": "Where do I report a sick animal or an outbreak?",
+          "a": "Use BAI ADIR, the official DA Bureau of Animal Industry app, to send a report with photos and the exact location. Also call your city or municipal agriculture or veterinary office."
+        },
+        {
+          "q": "Can I insure my livestock or poultry?",
+          "a": "Register in the RSBSA first, which is free. The DA registry makes you eligible for programs that include livestock insurance, so ask your municipal agriculture office what covers your animals."
+        },
+        {
+          "q": "Can manure from my animals count in my fertilizer plan?",
+          "a": "Yes. The free NPK Plus Calculator in anee.io counts chicken and carabao manure with your other fertilizers. Our guide to [organic fertilizer examples](/blog/organic-fertilizer-examples) covers more sources."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Farm management app in the Philippines",
+          "url": "/blog/farm-management-app-philippines"
+        },
+        {
+          "label": "Free farm app in the Philippines",
+          "url": "/blog/free-farm-app-philippines"
+        },
+        {
+          "label": "Digitize farm records",
+          "url": "/blog/digitize-farm-records"
+        },
+        {
+          "label": "Small farm ideas",
+          "url": "/blog/small-farm-ideas-philippines"
+        },
+        {
+          "label": "Organic fertilizer examples",
+          "url": "/blog/organic-fertilizer-examples"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "BAFS: Good Animal Husbandry Practices, PNS/BAFS 60:2008, illustrative guide (record keeping)",
+          "url": "https://bafs.da.gov.ph/wp-content/uploads/2025/04/GAHP_Illustrative-Guide_revise12.10.2020.pdf"
+        },
+        {
+          "label": "DA Bureau of Animal Industry: services, disease situation and price reports",
+          "url": "https://www.bai.gov.ph/"
+        },
+        {
+          "label": "DA Bureau of Animal Industry: BAI ADIR app on Google Play",
+          "url": "https://play.google.com/store/apps/details?id=gov.bai.adir"
+        },
+        {
+          "label": "DA: RSBSA frequently asked questions",
+          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
+        },
+        {
+          "label": "PhilRice: Palayamanan Plus",
+          "url": "https://www.philrice.gov.ph/palayamanan-plus"
+        },
+        {
+          "label": "DA Philippine Carabao Center: KBGAN mobile apps for carabao farmers",
+          "url": "https://www.pcc.gov.ph/bohol-eps-join-forces-with-da-pcc-to-support-small-scale-farmers-via-kbgan-mobile-apps/"
+        }
+      ]
+    }
+  ]
+}

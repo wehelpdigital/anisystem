@@ -23,6 +23,14 @@
    "features/farm-reports"
   ]
  },
+ "fertilizer": {
+  "volume": 9900,
+  "pages": [
+   "blog/what-is-fertilizer",
+   "blog/fertilizer-for-plants",
+   "blog/fertilizer-for-rice"
+  ]
+ },
  "corn kernel": {
   "volume": 8100,
   "pages": [
@@ -45,6 +53,14 @@
    "blog/palayan-nueva-ecija",
    "crops/palay",
    "blog/farm-words-in-tagalog"
+  ]
+ },
+ "fertilizer organic": {
+  "volume": 6600,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "blog/organic-vs-inorganic-fertilizer",
+   "blog/fertilizer-for-plants"
   ]
  },
  "palay in english": {
@@ -90,6 +106,14 @@
    "blog/organic-fertilizer-examples"
   ]
  },
+ "fertilizer for plants": {
+  "volume": 3600,
+  "pages": [
+   "blog/fertilizer-for-plants",
+   "blog/what-is-fertilizer",
+   "blog/fertilizer-for-orchids"
+  ]
+ },
  "weeds in tagalog": {
   "volume": 2900,
   "pages": [
@@ -133,6 +157,20 @@
    "blog/foliar-fertilizer",
    "blog/fertilizer-application-methods",
    "crops/vegetables-philippines"
+  ]
+ },
+ "palay drawing": {
+  "volume": 2900,
+  "pages": [
+   "blog/palay-drawing",
+   "crops/palay"
+  ]
+ },
+ "fertilizer of plants": {
+  "volume": 2900,
+  "pages": [
+   "blog/fertilizer-for-plants",
+   "blog/what-is-fertilizer"
   ]
  },
  "alitangya": {
@@ -291,6 +329,14 @@
    "crops/pagtatanim-ng-gulay"
   ]
  },
+ "organic fertilizer for plants": {
+  "volume": 1600,
+  "pages": [
+   "blog/fertilizer-for-plants",
+   "blog/organic-fertilizer-for-pechay",
+   "blog/inorganic-fertilizer-examples"
+  ]
+ },
  "mite in tagalog": {
   "volume": 1300,
   "pages": [
@@ -370,6 +416,14 @@
    "crops/pagtatanim-ng-gulay"
   ]
  },
+ "fertilizer npk": {
+  "volume": 1300,
+  "pages": [
+   "blog/npk-ratio-for-rice",
+   "blog/best-fertilizer-for-palay",
+   "blog/bags-of-fertilizer-per-hectare"
+  ]
+ },
  "fall armyworm": {
   "volume": 1000,
   "pages": [
@@ -425,6 +479,13 @@
   "pages": [
    "blog/rice-insecticides-alika-virtako-chess",
    "pests/rice-bug"
+  ]
+ },
+ "cymbush insecticide": {
+  "volume": 1000,
+  "pages": [
+   "blog/karate-cymbush-selecron-insecticides",
+   "pests/cutworm"
   ]
  },
  "rice black bug": {
@@ -490,6 +551,14 @@
   "pages": [
    "diseases/fusarium-wilt",
    "crops/banana-farming-philippines"
+  ]
+ },
+ "brown planthopper": {
+  "volume": 880,
+  "pages": [
+   "pests/brown-planthopper",
+   "blog/rice-insecticides-alika-virtako-chess",
+   "pests/rice-insects"
   ]
  },
  "variety of rice in the philippines": {
@@ -569,13 +638,6 @@
    "blog/rice-insecticides-alika-virtako-chess"
   ]
  },
- "cymbush insecticide": {
-  "volume": 880,
-  "pages": [
-   "blog/karate-cymbush-selecron-insecticides",
-   "pests/cutworm"
-  ]
- },
  "broadleaves weeds": {
   "volume": 880,
   "pages": [
@@ -590,6 +652,14 @@
    "blog/palay-price-philippines"
   ]
  },
+ "fertilizer types": {
+  "volume": 880,
+  "pages": [
+   "blog/what-is-fertilizer",
+   "blog/best-fertilizer-for-palay",
+   "blog/fertilizer-application-methods"
+  ]
+ },
  "karate insecticide": {
   "volume": 720,
   "pages": [
@@ -602,14 +672,6 @@
   "pages": [
    "crops/rice-varieties-philippines",
    "crops/palay"
-  ]
- },
- "brown planthopper": {
-  "volume": 720,
-  "pages": [
-   "pests/brown-planthopper",
-   "blog/rice-insecticides-alika-virtako-chess",
-   "pests/rice-insects"
   ]
  },
  "brown plant hopper symptoms": {
@@ -818,6 +880,13 @@
    "crops/vegetables-philippines"
   ]
  },
+ "fertilizer applicator": {
+  "volume": 590,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "blog/fertilizer-for-rice"
+  ]
+ },
  "liquid fertilizer": {
   "volume": 590,
   "pages": [
@@ -880,6 +949,19 @@
   "pages": [
    "blog/urea-fertilizer",
    "blog/complete-fertilizer-14-14-14"
+  ]
+ },
+ "palay clipart": {
+  "volume": 590,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer for orchids": {
+  "volume": 590,
+  "pages": [
+   "blog/fertilizer-for-orchids",
+   "blog/fertilizer-for-plants"
   ]
  },
  "selecron insecticide": {
@@ -1001,13 +1083,6 @@
    "blog/organic-fertilizer-examples"
   ]
  },
- "fertilizer applicator": {
-  "volume": 480,
-  "pages": [
-   "blog/fertilizer-application-methods",
-   "blog/fertilizer-for-rice"
-  ]
- },
  "sl agritech corporation": {
   "volume": 480,
   "pages": [
@@ -1096,6 +1171,34 @@
   "pages": [
    "blog/agricultural-engineer-career",
    "blog/agriculture-in-the-philippine-economy"
+  ]
+ },
+ "fertilizer for bougainvillea": {
+  "volume": 480,
+  "pages": [
+   "blog/fertilizer-for-orchids"
+  ]
+ },
+ "crop yield": {
+  "volume": 480,
+  "pages": [
+   "blog/crop-yield-forecasting",
+   "blog/ani-meaning",
+   "blog/increase-rice-yield-per-hectare"
+  ]
+ },
+ "fertilizer for tomatoes": {
+  "volume": 480,
+  "pages": [
+   "blog/fertilizer-for-tomatoes",
+   "blog/fertilizer-for-vegetables-philippines"
+  ]
+ },
+ "crop yields": {
+  "volume": 480,
+  "pages": [
+   "blog/crop-yield-forecasting",
+   "blog/ani-meaning"
   ]
  },
  "aphids scientific name": {
@@ -1305,6 +1408,19 @@
    "blog/fertilizer-application-methods"
   ]
  },
+ "fertilizer meaning": {
+  "volume": 390,
+  "pages": [
+   "blog/what-is-fertilizer",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "organic fertilizer for pechay": {
+  "volume": 390,
+  "pages": [
+   "blog/organic-fertilizer-for-pechay"
+  ]
+ },
  "organic fertilizer benefits": {
   "volume": 320,
   "pages": [
@@ -1417,6 +1533,26 @@
    "crops/vegetables-philippines"
   ]
  },
+ "fertilizer soil": {
+  "volume": 320,
+  "pages": [
+   "blog/fertilizer-for-sandy-soil",
+   "blog/what-is-fertilizer"
+  ]
+ },
+ "fertilizer for roses": {
+  "volume": 320,
+  "pages": [
+   "blog/fertilizer-for-orchids"
+  ]
+ },
+ "fertilizer for soil": {
+  "volume": 320,
+  "pages": [
+   "blog/fertilizer-for-sandy-soil",
+   "blog/balanced-fertilization-for-rice"
+  ]
+ },
  "fertilizer in agriculture": {
   "volume": 260,
   "pages": [
@@ -1458,6 +1594,13 @@
   "pages": [
    "blog/inorganic-fertilizer-examples",
    "blog/fertilizer-application-methods"
+  ]
+ },
+ "fertilizer vegetables": {
+  "volume": 260,
+  "pages": [
+   "blog/fertilizer-for-vegetables-philippines",
+   "blog/fertilizer-for-tomatoes"
   ]
  },
  "fertilizer application methods": {
@@ -1515,6 +1658,31 @@
    "blog/ani-meaning"
   ]
  },
+ "fertilizer price": {
+  "volume": 210,
+  "pages": [
+   "blog/fertilizer-price-philippines",
+   "blog/fertilizer-brands-and-dealers"
+  ]
+ },
+ "palay png": {
+  "volume": 210,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer bonsai": {
+  "volume": 210,
+  "pages": [
+   "blog/fertilizer-for-orchids"
+  ]
+ },
+ "fertilizer definition": {
+  "volume": 210,
+  "pages": [
+   "blog/what-is-fertilizer"
+  ]
+ },
  "mais na gulay": {
   "volume": 170,
   "pages": [
@@ -1532,6 +1700,51 @@
   "volume": 170,
   "pages": [
    "crops/rice-varieties-philippines"
+  ]
+ },
+ "palay picture drawing": {
+  "volume": 170,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer spray": {
+  "volume": 170,
+  "pages": [
+   "blog/foliar-fertilizer",
+   "blog/rice-growth-enhancers"
+  ]
+ },
+ "fertilizer high in nitrogen": {
+  "volume": 170,
+  "pages": [
+   "blog/npk-ratio-for-rice",
+   "blog/urea-fertilizer"
+  ]
+ },
+ "palay background": {
+  "volume": 170,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "palayisdaan": {
+  "volume": 170,
+  "pages": [
+   "blog/palayisdaan"
+  ]
+ },
+ "palay cartoon": {
+  "volume": 170,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer bag": {
+  "volume": 170,
+  "pages": [
+   "blog/bags-of-fertilizer-per-hectare",
+   "blog/fertilizer-store-near-me"
   ]
  },
  "palay seedlings": {
@@ -1595,10 +1808,92 @@
    "blog/alamat-ng-palay"
   ]
  },
+ "fertilizer images with names": {
+  "volume": 140,
+  "pages": [
+   "blog/what-is-fertilizer"
+  ]
+ },
+ "fertilizer for eggplant": {
+  "volume": 140,
+  "pages": [
+   "blog/fertilizer-for-vegetables-philippines",
+   "blog/fertilizer-for-tomatoes"
+  ]
+ },
+ "palay seeder": {
+  "volume": 140,
+  "pages": [
+   "crops/pagtatanim-ng-palay",
+   "crops/palay"
+  ]
+ },
+ "fertilizer store near me": {
+  "volume": 140,
+  "pages": [
+   "blog/fertilizer-store-near-me"
+  ]
+ },
+ "palay props": {
+  "volume": 140,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer for calamansi": {
+  "volume": 140,
+  "pages": [
+   "blog/fertilizer-for-fruit-trees"
+  ]
+ },
  "rice variety 222": {
   "volume": 110,
   "pages": [
    "crops/rice-varieties-philippines"
+  ]
+ },
+ "palay easy drawing": {
+  "volume": 110,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer price philippines": {
+  "volume": 110,
+  "pages": [
+   "blog/fertilizer-price-philippines",
+   "blog/urea-fertilizer"
+  ]
+ },
+ "fertilizer clipart": {
+  "volume": 110,
+  "pages": [
+   "blog/what-is-fertilizer"
+  ]
+ },
+ "fertilizer for fruit trees": {
+  "volume": 110,
+  "pages": [
+   "blog/fertilizer-for-fruit-trees"
+  ]
+ },
+ "palay logo": {
+  "volume": 110,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "palay key check 1 to 9": {
+  "volume": 110,
+  "pages": [
+   "blog/palaycheck-key-checks"
+  ]
+ },
+ "fertilizer for pechay": {
+  "volume": 110,
+  "pages": [
+   "blog/organic-fertilizer-for-pechay",
+   "crops/vegetables-philippines"
   ]
  },
  "crop yields meaning": {
@@ -1606,6 +1901,99 @@
   "pages": [
    "blog/ani-meaning",
    "features/farm-reports"
+  ]
+ },
+ "fertilizer for snake plant": {
+  "volume": 90,
+  "pages": [
+   "blog/fertilizer-for-orchids"
+  ]
+ },
+ "fertilizer application for rice": {
+  "volume": 90,
+  "pages": [
+   "blog/fertilizer-for-rice",
+   "blog/fertilizer-application-methods",
+   "blog/best-fertilizer-for-palay"
+  ]
+ },
+ "fertilizer rich in nitrogen": {
+  "volume": 90,
+  "pages": [
+   "blog/npk-ratio-for-rice"
+  ]
+ },
+ "palay plant": {
+  "volume": 90,
+  "pages": [
+   "crops/palay",
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer machine": {
+  "volume": 90,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "blog/cost-of-producing-rice-per-hectare"
+  ]
+ },
+ "why farm is important": {
+  "volume": 90,
+  "pages": [
+   "blog/agriculture-in-the-philippine-economy",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "fertilizer ratio": {
+  "volume": 90,
+  "pages": [
+   "blog/npk-ratio-for-rice"
+  ]
+ },
+ "fertilizer with zinc": {
+  "volume": 90,
+  "pages": [
+   "blog/micronutrients-for-rice",
+   "blog/complete-fertilizer-14-14-14"
+  ]
+ },
+ "fertilizer for corn": {
+  "volume": 90,
+  "pages": [
+   "blog/increase-corn-yield-per-hectare",
+   "blog/16-20-0-fertilizer"
+  ]
+ },
+ "palay festival costume": {
+  "volume": 90,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer for fruit bearing trees": {
+  "volume": 90,
+  "pages": [
+   "blog/fertilizer-for-fruit-trees"
+  ]
+ },
+ "palay bigas kanin": {
+  "volume": 90,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "crops/palay"
+  ]
+ },
+ "palay sa bukid": {
+  "volume": 90,
+  "pages": [
+   "crops/pagtatanim-ng-palay",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "palay price per kilo today 2025": {
+  "volume": 90,
+  "pages": [
+   "blog/palay-price-philippines"
   ]
  },
  "fertilizer for coconut tree in philippines": {
@@ -1618,6 +2006,197 @@
   "volume": 70,
   "pages": [
    "crops/rice-varieties-philippines"
+  ]
+ },
+ "palay animated": {
+  "volume": 70,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer for bermuda grass": {
+  "volume": 70,
+  "pages": [
+   "blog/fertilizer-for-orchids"
+  ]
+ },
+ "fertilizer with phosphorus and potassium": {
+  "volume": 70,
+  "pages": [
+   "blog/npk-ratio-for-rice",
+   "blog/fertilizer-for-rice-grain-filling",
+   "blog/fertilizer-calculation"
+  ]
+ },
+ "palay grains": {
+  "volume": 70,
+  "pages": [
+   "crops/palay",
+   "blog/fertilizer-for-rice-grain-filling",
+   "blog/palay-drying"
+  ]
+ },
+ "fertilizer name": {
+  "volume": 70,
+  "pages": [
+   "blog/what-is-fertilizer",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "palay in tagalog": {
+  "volume": 70,
+  "pages": [
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "ani ng palay": {
+  "volume": 70,
+  "pages": [
+   "blog/ani-meaning",
+   "blog/alamat-ng-palay"
+  ]
+ },
+ "fertilizer spreader machine": {
+  "volume": 70,
+  "pages": [
+   "blog/fertilizer-application-methods"
+  ]
+ },
+ "crop production roadmap": {
+  "volume": 70,
+  "pages": [
+   "blog/agriculture-in-the-philippine-economy"
+  ]
+ },
+ "fertilizer homemade": {
+  "volume": 70,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "blog/organic-vs-inorganic-fertilizer",
+   "blog/organic-fertilizer-for-pechay"
+  ]
+ },
+ "organic fertilizer for farming": {
+  "volume": 70,
+  "pages": [
+   "blog/organic-vs-inorganic-fertilizer",
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "fertilizer tagalog": {
+  "volume": 70,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "blog/what-is-fertilizer"
+  ]
+ },
+ "fertilizer brands": {
+  "volume": 70,
+  "pages": [
+   "blog/fertilizer-brands-and-dealers",
+   "blog/best-fertilizer-for-palay"
+  ]
+ },
+ "palay at bigas": {
+  "volume": 70,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "crops/palay"
+  ]
+ },
+ "fertilizer pronunciation": {
+  "volume": 70,
+  "pages": [
+   "blog/what-is-fertilizer"
+  ]
+ },
+ "palay poster": {
+  "volume": 70,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "palay drawing with color": {
+  "volume": 70,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer for hydrangeas": {
+  "volume": 70,
+  "pages": [
+   "blog/fertilizer-for-orchids"
+  ]
+ },
+ "pang ani ng palay": {
+  "volume": 70,
+  "pages": [
+   "blog/ani-meaning",
+   "crops/pagtatanim-ng-palay"
+  ]
+ },
+ "fertilizer for indoor plants": {
+  "volume": 70,
+  "pages": [
+   "blog/fertilizer-for-orchids"
+  ]
+ },
+ "palay scientific name": {
+  "volume": 70,
+  "pages": [
+   "crops/palay"
+  ]
+ },
+ "palay dryer": {
+  "volume": 70,
+  "pages": [
+   "blog/palay-drying"
+  ]
+ },
+ "palay dryer machine": {
+  "volume": 70,
+  "pages": [
+   "blog/palay-drying"
+  ]
+ },
+ "palay farming": {
+  "volume": 70,
+  "pages": [
+   "crops/pagtatanim-ng-palay",
+   "blog/rice-farming-app",
+   "blog/palaycheck-key-checks"
+  ]
+ },
+ "fertilizer research": {
+  "volume": 70,
+  "pages": [
+   "blog/what-is-fertilizer"
+  ]
+ },
+ "fertilizer synonym": {
+  "volume": 70,
+  "pages": [
+   "blog/what-is-fertilizer"
+  ]
+ },
+ "crop production tools": {
+  "volume": 70,
+  "pages": [
+   "blog/farm-sensors-philippines",
+   "blog/digital-farming-tools"
+  ]
+ },
+ "palay harvester": {
+  "volume": 70,
+  "pages": [
+   "blog/palay-drying",
+   "blog/cost-of-producing-rice-per-hectare"
+  ]
+ },
+ "palay festival in nueva ecija": {
+  "volume": 70,
+  "pages": [
+   "blog/palayan-nueva-ecija"
   ]
  },
  "fertilizer with high potassium": {
@@ -1638,6 +2217,142 @@
   "volume": 50,
   "pages": [
    "blog/fertilizer-for-plants"
+  ]
+ },
+ "what is fertilizer for plants": {
+  "volume": 50,
+  "pages": [
+   "blog/what-is-fertilizer",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "ani ng palay in english": {
+  "volume": 50,
+  "pages": [
+   "blog/ani-meaning",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "palay cartoon images": {
+  "volume": 50,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer application in corn": {
+  "volume": 50,
+  "pages": [
+   "blog/increase-corn-yield-per-hectare",
+   "blog/16-20-0-fertilizer"
+  ]
+ },
+ "fertilizer for potatoes": {
+  "volume": 50,
+  "pages": [
+   "blog/fertilizer-for-tomatoes",
+   "blog/fertilizer-for-vegetables-philippines"
+  ]
+ },
+ "palay painting": {
+  "volume": 50,
+  "pages": [
+   "blog/palay-drawing"
+  ]
+ },
+ "fertilizer drawing easy": {
+  "volume": 50,
+  "pages": [
+   "blog/what-is-fertilizer"
+  ]
+ },
+ "fertilizer 0 0 50": {
+  "volume": 50,
+  "pages": [
+   "blog/potash-fertilizer"
+  ]
+ },
+ "fertilizer diy": {
+  "volume": 50,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "blog/organic-vs-inorganic-fertilizer"
+  ]
+ },
+ "fertilizer ingredients": {
+  "volume": 50,
+  "pages": [
+   "blog/what-is-fertilizer",
+   "blog/organic-vs-inorganic-fertilizer"
+  ]
+ },
+ "organic fertilizer for vegetables": {
+  "volume": 50,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "blog/organic-fertilizer-for-pechay",
+   "blog/fertilizer-for-vegetables-philippines"
+  ]
+ },
+ "fertilizer effect on plant growth": {
+  "volume": 50,
+  "pages": [
+   "blog/what-is-fertilizer"
+  ]
+ },
+ "palay plant in english": {
+  "volume": 50,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "blog/palay-drawing"
+  ]
+ },
+ "palay in the philippines": {
+  "volume": 50,
+  "pages": [
+   "crops/palay",
+   "blog/agriculture-in-the-philippine-economy"
+  ]
+ },
+ "palay at mais": {
+  "volume": 50,
+  "pages": [
+   "blog/multiple-cropping",
+   "blog/alamat-ng-mais"
+  ]
+ },
+ "what is crop yield": {
+  "volume": 50,
+  "pages": [
+   "blog/crop-yield-forecasting",
+   "features/farm-reports"
+  ]
+ },
+ "fertilizer components": {
+  "volume": 50,
+  "pages": [
+   "blog/what-is-fertilizer",
+   "blog/npk-ratio-for-rice"
+  ]
+ },
+ "fertilizer rich in phosphorus": {
+  "volume": 50,
+  "pages": [
+   "blog/npk-ratio-for-rice",
+   "blog/16-20-0-fertilizer"
+  ]
+ },
+ "fertilizer company in the philippines": {
+  "volume": 50,
+  "pages": [
+   "blog/fertilizer-store-near-me",
+   "blog/fertilizer-brands-and-dealers"
+  ]
+ },
+ "crop yield increase": {
+  "volume": 50,
+  "pages": [
+   "blog/increase-rice-yield-per-hectare",
+   "blog/crop-yield-forecasting"
   ]
  },
  "corn breed": {
