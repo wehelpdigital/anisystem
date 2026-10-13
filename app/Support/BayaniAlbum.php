@@ -12,9 +12,13 @@ final class BayaniAlbum
 {
     public const TITLE = 'Bayani ng Lupa';
 
+    /** The album's cover (2026-10-13): a square photo, files {COVER}-480/800/1200.webp, -1200.jpg and -bg.webp (a tiny blurred copy). */
+    public const COVER = 'images/site/album/bayani-ng-lupa-cover';
+
+    /** The old wide artwork, kept for any link that still points at it. */
     public const ART = 'images/site/album/bayani-ng-lupa-anee';
 
-    public const ALT = 'Anee, the anee.io smart farm technician, as a hero of the land in a Philippine rice field, a green glow rising from a rice seedling while farmers cheer behind her';
+    public const ALT = 'Bayani ng Lupa, the anee.io album cover: a band of young Filipino farmers playing guitars, drums and a tambourine on a bamboo stage in a green rice field, a woman singing into the microphone and a farmer in a salakot laughing beside her';
 
     public const DESCRIPTION = 'Bayani ng Lupa, the anee.io album: seven songs for the Filipino farmers who feed the country, from the farmers who built anee.io.';
 
@@ -58,7 +62,7 @@ final class BayaniAlbum
             '@type' => 'MusicAlbum',
             'name' => self::TITLE,
             'description' => self::DESCRIPTION,
-            'image' => asset(self::ART . '-1200.jpg'),
+            'image' => asset(self::COVER . '-1200.jpg'),
             'byArtist' => ['@type' => 'MusicGroup', 'name' => 'anee.io'],
             'numTracks' => count(self::TRACKS),
             'track' => array_map(fn ($t, $i) => ['@type' => 'MusicRecording', 'position' => $i + 1, 'name' => $t['title'], 'url' => $t['src'],

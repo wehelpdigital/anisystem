@@ -134,7 +134,7 @@
             </div>
         </div>
 
-        <a href="#hp-truth" class="hp-down" aria-label="Scroll to read more">
+        <a href="#bayani-ng-lupa" class="hp-down" aria-label="Scroll to read more">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
         </a>
     </section>
@@ -151,6 +151,18 @@
             </video>
         </div>
     </div>
+
+    {{-- ================= BAYANI NG LUPA ================= --}}
+    {{-- The anee.io album, featured right after the hero (2026-10-13, the
+         owner): its own cover, seven songs, the first the main one. --}}
+    <section class="hp-sec hp-album" id="bayani-ng-lupa">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 reveal">
+            @include('partials.bayani-album', ['id' => 'hpAlbum', 'h' => 'h2', 'compact' => true])
+        </div>
+    </section>
+    @push('head')
+    <script type="application/ld+json">{!! json_encode(\App\Support\BayaniAlbum::schema(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
+    @endpush
 
     {{-- ================= THE TRUTH ================= --}}
     {{-- The owner's thesis, said first (2026-10-06): traditional farming does
@@ -974,16 +986,6 @@
         </div>
     </section>
 
-    {{-- Bayani ng Lupa (2026-10-12): the anee.io album, in place of the one
-         song card. Anee on the art, seven songs, the first the main one. --}}
-    <section class="hp-sec hp-album" id="bayani-ng-lupa">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 reveal">
-            @include('partials.bayani-album', ['id' => 'hpAlbum', 'h' => 'h2', 'compact' => true])
-        </div>
-    </section>
-    @push('head')
-    <script type="application/ld+json">{!! json_encode(\App\Support\BayaniAlbum::schema(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
-    @endpush
 
     {{-- ================= YOUR TEAM IN THE FIELD, YOUR FARM FROM SPACE ================= --}}
     {{-- For the farm owner (2026-10-06): be in the field without being in
@@ -2497,7 +2499,8 @@
 
     /* The anee.io song, under the farm business story (2026-10-07): the
        cover big with its own play button, the words and the bar beside it. */
-    .hp-album { padding-top: 0; }
+    /* The album, right under the hero: a warm ground that leads into The Truth. */
+    .hp-album { background: radial-gradient(60% 70% at 15% 0%, rgb(245 197 24 / .12), transparent 70%), linear-gradient(180deg, #f6f3ea 0%, #ffffff 100%); }
     /* Meet Anee's phone (2026-10-13): a real looking phone, smaller than the
        old chat window; her chat is its screen. The chat grows from the
        bottom as a real one does: what has not come yet takes no room, and
