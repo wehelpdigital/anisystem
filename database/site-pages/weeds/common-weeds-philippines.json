@@ -33,11 +33,11 @@
     },
     {
       "type": "text",
-      "text": "Weeds take the sunlight, nutrients and water that should go to the palay, as PhilRice puts it. PhilRice adds that weeds shelter insects, rats and diseases. For example, Ischaemum rugosum is an alternate host of the tungro virus.\n\nTiming decides the damage. PhilRice advises keeping the rice field free of weeds from planting or sowing up to about 40 days, the critical age when young palay competes poorly. In corn, the Department of Agriculture's Cagayan Valley corn guide puts the most destructive period in the first 30 days."
+      "text": "Weeds take the sunlight, nutrients and water that should go to the palay, as PhilRice puts it. PhilRice adds that weeds shelter insects, rats and diseases. For example, IRRI's fact sheet on Ischaemum rugosum lists it as an alternate host of tungro.\n\nTiming decides the damage. PhilRice advises keeping the rice field free of weeds from planting or sowing up to about 40 days, the critical age when young palay competes poorly. In corn, the Department of Agriculture's Cagayan Valley corn guide puts the most destructive period in the first 30 days."
     },
     {
       "type": "text",
-      "text": "The losses add up fast. PhilRice notes that just 5 plants of Ischaemum rugosum per square meter cut rice yield by 15 percent, while 80 plants per square meter cut it by 82 percent. So a few weeks of neglect early in the season can cost more than the herbicide or the weeding labor you tried to save."
+      "text": "The losses add up fast. PhilRice notes that Ischaemum rugosum left uncontrolled can cut rice yield by as much as 60 percent. Chinese sprangletop can cut it by as much as 48 percent when 16 plants compete in each square meter. So a few weeks of neglect early in the season can cost more than the herbicide or the weeding labor you tried to save."
     },
     {
       "type": "heading",
@@ -62,10 +62,10 @@
       "ordered": false,
       "items": [
         "**[Barnyard grass](/weeds/barnyard-grass), Echinochloa crus galli.** A tall grass whose seed head rises above the rice. PhilRice's weed guide gives the local names telebisyon, antena and bayakibok. In Iloilo and Nueva Ecija, some populations already resist butachlor and propanil, with cross resistance to pretilachlor.",
-        "**[Chinese sprangletop](/weeds/chinese-sprangletop), Leptochloa chinensis.** Called pawa, palay maya or ikog kuring. It is a growing problem in wet seeded rice, it contaminates rice seed, and PhilRice notes that Nominee (bispyribac sodium) does not control it.",
-        "**Ischaemum rugosum.** Called bulo bulo, limba limba or aguingay sa basak. It is aggressive in wet direct seeded rice, tolerates shade, and is one of the commonest seed contaminants.",
+        "**[Chinese sprangletop](/weeds/chinese-sprangletop), Leptochloa chinensis.** Called kuring kuring, salay maya or palay maya. It is a growing problem in wet seeded rice and it contaminates rice seed. PhilRice's herbicide table for direct seeded rice also lists bispyribac sodium for annual grasses except this one.",
+        "**Ischaemum rugosum.** Called bulo bulo, limba limba or tinitrigo. It is aggressive in wet direct seeded rice, tolerates shade, and is one of the commonest seed contaminants.",
         "**Weedy rice, or damong palay.** A wild type of rice that looks like the crop but shatters its grain early. PhilRice recommends the stale seedbed technique against it.",
-        "**Itchgrass or aguingay, Rottboellia cochinchinensis.** A main grass weed of corn. The DA corn guide controls it with recommended pre emergence herbicides. Do not confuse it with aguingay sa basak, the name PhilRice gives to Ischaemum rugosum in wet rice."
+        "**Itchgrass or aguingay, Rottboellia cochinchinensis.** A main grass weed of corn. The DA corn guide controls it with recommended pre emergence herbicides."
       ]
     },
     {
@@ -81,14 +81,14 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**[Purple nutsedge](/weeds/purple-nutsedge), Cyperus rotundus.** Called mutha, sudsud or onod onod. It spreads by underground tubers. PhilRice warns that it has adapted from dry uplands to flooded lowlands, so flooding alone no longer controls it.",
+        "**[Purple nutsedge](/weeds/purple-nutsedge), Cyperus rotundus.** Called mutha, sudsud or barsanga. It spreads by underground tubers. PhilRice warns that it has adapted from dry uplands to flooded lowlands, so flooding alone no longer controls it.",
         "**[Smallflower umbrella sedge](/weeds/smallflower-umbrella-sedge), Cyperus difformis.** PhilRice's weed guide gives the local names payong payong and siraw siraw. It grows thick in wet rice fields.",
         "**[Globe fringerush](/weeds/globe-fringerush), Fimbristylis miliacea.** Called gumi or bungot bungot. Another sedge weed of wet rice fields, with fine, grasslike leaves."
       ]
     },
     {
       "type": "text",
-      "text": "For mutha, PhilRice suggests dry tillage during the dry season, which exposes the tubers to the sun until they dry out. It also describes a pre plant glyphosate spray about 1 to 2 weeks after the tubers sprout, since the effect shows only after two weeks."
+      "text": "For mutha, PhilRice recommends the stale seedbed method. Plow the field again and again during the fallow period so the weed sprouts, then kill the new shoots. PhilRice also warns that herbicides reach only some of the tubers, and new shoots grow from the rest. If you spray, its weed guide lists glyphosate among the pre plant herbicides, used before the rice is transplanted or sown."
     },
     {
       "type": "heading",
@@ -128,7 +128,7 @@
         [
           "Grass",
           "Leptochloa chinensis",
-          "pawa, palay maya, ikog kuring",
+          "kuring kuring, salay maya, palay maya",
           "Rice"
         ],
         [
@@ -146,7 +146,7 @@
         [
           "Sedge",
           "Cyperus rotundus",
-          "mutha, sudsud, onod onod",
+          "mutha, sudsud, barsanga",
           "Rice, corn"
         ],
         [
@@ -275,7 +275,7 @@
         },
         {
           "q": "What is weeds in Tagalog?",
-          "a": "Damo. The same word means grass, so farmers use local names like mutha, gabi gabi and pawa for each weed."
+          "a": "Damo. The same word means grass, so farmers use local names like mutha, gabi gabi and palay maya for each weed."
         }
       ]
     },
@@ -337,20 +337,20 @@
           "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
         },
         {
-          "label": "PhilRice: Pamamahala ng damo, mga karaniwang damo sa Pilipinas",
-          "url": "https://www.pinoyrice.com/wp-content/uploads/damo.pdf"
+          "label": "IRRI: Rice weed fact sheet, Ischaemum rugosum (Catindig, Lubigan and Johnson)",
+          "url": "https://keyserver.lucidcentral.org/key-server/data/08050103-0a0e-4e01-8a03-040d0c020e0a/media/Html/Ischaemum_rugosum.htm"
         },
         {
-          "label": "PhilRice: Weeds to watch out (Cyperus rotundus, Ischaemum rugosum, Leptochloa chinensis)",
-          "url": "https://www.pinoyrice.com/wp-content/uploads/weeds-to-watch-out.pdf"
+          "label": "PhilRice: Ancient weed goes to the lowland (mutha, Cyperus rotundus)",
+          "url": "https://www.philrice.gov.ph/ancient-weed-goes-lowland/"
         },
         {
-          "label": "PhilRice: Herbicide resistance in rice weeds",
-          "url": "https://www.pinoyrice.com/wp-content/uploads/herbicide-resistance.pdf"
+          "label": "ACIAR and PhilRice: Herbicide use strategies and weed management options, final report (2009)",
+          "url": "https://www.aciar.gov.au/sites/default/files/2022-09/SMCN-2003-011-final-report.pdf"
         },
         {
-          "label": "PhilRice: Pamamahala ng mga damo sa palayan",
-          "url": "https://www.pinoyrice.com/wp-content/uploads/pamamahala-ng-mga-damo-sa-palayan.pdf"
+          "label": "PhilRice: Pamamahala ng mga damo sa palayan, rice handout (2023)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/12/weedhandout_2023_1q.pdf"
         },
         {
           "label": "IRRI Rice Knowledge Bank: Chemical weed control",

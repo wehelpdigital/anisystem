@@ -130,7 +130,7 @@
     },
     {
       "type": "text",
-      "text": "PalayCheck, the crop management system of PhilRice, sets a simple rule. Read the chart every 7 days from 14 days after transplanting, or 21 days after sowing, until early flowering. Apply nitrogen when 6 or more of 10 leaves read below 4 for transplanted rice, or below 3.5 for direct seeded rice. PalayCheck also warns that too much nitrogen at panicle initiation and flowering invites lodging and pests."
+      "text": "PalayCheck, the crop management system of PhilRice, sets a simple rule. Read the chart every 7 days from 14 days after transplanting, or 21 days after sowing, until early flowering. Apply nitrogen when 6 or more of 10 leaves read below 4 for transplanted rice, or below 3 for direct seeded rice. PalayCheck also warns that too much nitrogen at panicle initiation and flowering invites lodging and pests."
     },
     {
       "type": "heading",
@@ -245,8 +245,8 @@
           "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
         },
         {
-          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck Key Check 5, Nutrient Management",
-          "url": "https://www.pinoyrice.com/palaycheck/nutrient-management/"
+          "label": "PhilRice: PalayCheck System 2022, Key Check 5, nutrient management",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
         }
       ]
     }

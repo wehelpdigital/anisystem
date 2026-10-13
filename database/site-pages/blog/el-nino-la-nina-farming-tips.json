@@ -6,7 +6,7 @@
   "category": "Weather",
   "title": "How Do I Plan My Planting Around El Nino and La Nina? Farming Tips for Filipino Farmers",
   "metaTitle": "El Nino Farming Tips and La Nina Planting Advice",
-  "metaDescription": "El Nino farming tips for the 2026 to 2027 dry season: what PAGASA expects, the varieties and crops PhilRice suggests, saving water, and La Nina steps.",
+  "metaDescription": "El Nino farming tips for Filipino farmers: how to read PAGASA's ENSO alert, the varieties and crops PhilRice suggests, saving water, and La Nina steps.",
   "focusKeyword": "El Nino farming tips",
   "keywords": [
     "El Nino farming tips",
@@ -16,7 +16,7 @@
     "crops for dry season",
     "ENSO alert"
   ],
-  "excerpt": "These El Nino farming tips matter now: on 7 October 2026, PAGASA reported a strong to very strong El Nino that may last until mid 2027. Plant rice only where water is sure, choose drought tolerant or early varieties, and move dry fields to low water crops such as munggo. For La Nina, use flood tolerant rice and keep flowering and harvest away from storms. The When to Plant Analysis in anee.io, a farm app built for Filipino farmers, reads that outlook for your town.",
+  "excerpt": "These El Nino farming tips start with PAGASA's monthly ENSO alert: when it calls an El Nino, plan the dry season around the water you are sure of. Plant rice only where water is sure, choose drought tolerant or early varieties, and move dry fields to low water crops such as munggo. For La Nina, use flood tolerant rice and keep flowering and harvest away from storms. The When to Plant Analysis in anee.io, a farm app built for Filipino farmers, reads the latest outlook for your town.",
   "heroImage": {
     "src": "/images/site/guides/blog-el-nino-la-nina-farming-tips.webp",
     "alt": "Rice plants drying out at the cracked edge of a paddy during a drought, the damage El Nino farming tips aim to prevent",
@@ -36,7 +36,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "PAGASA's October 2026 update says El Nino may peak before the end of 2026 and last until the first half of 2027.",
+        "PAGASA updates its ENSO alert every month. As of 7 October 2026, it expected El Nino to peak before the end of 2026 and last until the first half of 2027.",
         "In a dry year, plant rice only where water is sure, and use drought tolerant or early maturing varieties.",
         "Where water is short, PhilRice suggests munggo, root crops, cucurbits or vegetables instead of rice.",
         "In a La Nina year, use flood tolerant rice, repair dikes and time harvest away from storms."
@@ -45,11 +45,11 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "What does PAGASA expect for 2026 and 2027?"
+      "text": "What is PAGASA's latest El Nino outlook?"
     },
     {
       "type": "text",
-      "text": "In September 2026, PAGASA said about 45 provinces may face dry conditions beginning October, and 8 provinces may face drought. PhilRice and PAGASA then signed an agreement to share weather and rice data, including 10 day forecasts. PhilRice's executive director also urged farmers to align the rice cropping calendar with the weather and the water on hand.\n\nHistory shows why this matters. An IRRI and PhilRice satellite study looked at the 2016 drought in Mindanao. It found almost no rice planted from March to mid May. Creeks dried up and irrigation came late, so most planting moved to June. Expect the same pattern wherever water comes late this season."
+      "text": "PAGASA posts its ENSO alert status every month on its El Nino and La Nina monitoring page, listed in the sources below, so check it before each season. As of September 2026, PAGASA said about 45 provinces may face dry conditions beginning October, and 8 provinces may face drought. PhilRice and PAGASA then signed an agreement to share weather and rice data, including 10 day forecasts. PhilRice's executive director also urged farmers to align the rice cropping calendar with the weather and the water on hand.\n\nHistory shows why this matters. An IRRI and PhilRice satellite study looked at the 2016 drought in Mindanao. It found almost no rice planted from March to mid May. Creeks dried up and irrigation came late, so most planting moved to June. Expect the same pattern in any El Nino year wherever water comes late."
     },
     {
       "type": "heading",
@@ -198,7 +198,7 @@
         },
         {
           "q": "How long does El Nino last?",
-          "a": "PhilRice says an episode usually lasts 9 months to 2 years and returns every 2 to 7 years. As of 7 October 2026, PAGASA expects the current El Nino to last until the first half of 2027."
+          "a": "PhilRice says an episode usually lasts 9 months to 2 years and returns every 2 to 7 years. As of 7 October 2026, PAGASA expected the El Nino then present to last until the first half of 2027. Check its monthly ENSO alert for the latest."
         },
         {
           "q": "Should I still plant rice during El Nino?",

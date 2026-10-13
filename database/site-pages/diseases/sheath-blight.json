@@ -124,7 +124,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice promotes biological control. Its Tagalog guide recommends Trichoderma harzianum, a friendly fungus, and its English guide lists other antagonists such as Trichoderma viride, Bacillus subtilis and Pseudomonas fluorescens. A PhilRice and UPLB study also found an Aspergillus fungus from organically fertilized soil that slowed Rhizoctonia solani in small plots. It is still a research lead, though, and not yet a product you can buy."
+      "text": "PhilRice promotes biological control, the use of friendly microbes against the disease. Philippine researchers have tested Trichoderma harzianum, a soil fungus that coils along the threads of Rhizoctonia solani and attacks them with enzymes, according to a review from the University of the Philippines Los Baños. The same review notes that most Trichoderma trials in the country ran in the laboratory or greenhouse and rarely in the field. A PhilRice and UPLB study also found an Aspergillus fungus from organically fertilized soil that slowed Rhizoctonia solani in small plots. It is still a research lead, though, and not yet a product you can buy."
     },
     {
       "type": "heading",
@@ -236,16 +236,20 @@
           "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight"
         },
         {
-          "label": "PhilRice Pinoy Rice Knowledge Bank: Sheath blight",
-          "url": "https://www.pinoyrice.com/sheath-blight/"
+          "label": "PhilRice: Field guide on major disorders of the rice plant, sheath blight",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Major-Disorders-of-the-rice-plant-Diseases-and-Nutritional-Deficiencies.pdf"
         },
         {
-          "label": "PhilRice Pinoy Rice Knowledge Bank: Pamamahala ng sheath blight",
-          "url": "https://www.pinoyrice.com/pamamahala-ng-sheath-blight/"
+          "label": "PhilRice: Diseases of the rice plant in the Philippines, flash cards (sheath blight)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Diseases-of-the-rice-plant-in-the-Philippines-flash-cards.pdf"
         },
         {
           "label": "PhilRice: Fungi found to control sheath blight",
           "url": "https://www.philrice.gov.ph/fungi-found-to-control-sheath-blight/"
+        },
+        {
+          "label": "Cumagun (2012), Managing plant diseases and promoting sustainability and productivity with Trichoderma, the Philippine experience, Journal of Agricultural Science and Technology",
+          "url": "https://jast.modares.ac.ir/article_15113.html"
         },
         {
           "label": "Syngenta Philippines: Armure 300 EC",
