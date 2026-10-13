@@ -91,7 +91,6 @@
             <div class="mt-8">
                 <div class="sp-tabs">
                     <a href="{{ $S::url('crops') }}">Crop guides</a>
-                    <a href="{{ $S::url('rice-varieties') }}">Rice varieties</a>
                     <a href="{{ $S::url('crop-varieties') }}">Crop varieties</a>
                     <a href="{{ $S::url('land-preparation') }}">Land preparation</a>
                     <a href="{{ $S::url('pests') }}" class="{{ $section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
