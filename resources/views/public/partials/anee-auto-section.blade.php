@@ -131,8 +131,22 @@
     .hp-auto-web .halo { fill: rgb(245 197 24 / .32); opacity: 0; transform-box: fill-box; transform-origin: center; }
     .hp-auto-web .halo.is-on { animation: hpNetHalo .9s ease-out; }
     @keyframes hpNetHalo { from { opacity: 1; transform: scale(.5); } to { opacity: 0; transform: scale(2.6); } }
-    .hp-auto-web .pl { fill: #f5c518; filter: drop-shadow(0 0 5px rgb(245 197 24 / .95)); }
-    .hp-auto-web .tl { fill: #f5c518; }
+    .hp-auto-web .pl { fill: #fff7d1; filter: drop-shadow(0 0 4px rgb(245 197 24)) drop-shadow(0 0 10px rgb(245 197 24 / .7)); }
+    .hp-auto-web .tl { fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+    .hp-auto-web .rip { fill: none; stroke: #f5c518; stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: hpNetRip .9s cubic-bezier(.22,1,.36,1) forwards; }
+    @keyframes hpNetRip { from { opacity: .9; transform: scale(.3); } to { opacity: 0; transform: scale(3.2); } }
+    .hp-auto-web .nd.tw { animation: hpNetTw 2.4s ease-in-out; }
+    @keyframes hpNetTw { 50% { fill: #fff3c4; stroke: #e9c63e; } }
+    /* The web leans a little toward the pointer, as if it is listening. */
+    .hp-auto-web { translate: var(--wx, 0) var(--wy, 0); transition: translate .6s cubic-bezier(.22,1,.36,1); }
+    /* Each pulse that reaches the phone lights its edge for a moment. */
+    .hp-auto-phone { transition: box-shadow .5s ease; }
+    .hp-auto-phone.is-fed { box-shadow: 0 0 0 2px rgb(245 197 24 / .55), 0 0 40px 6px rgb(245 197 24 / .35), 0 40px 80px -40px rgb(20 33 12 / .6); transition-duration: .12s; }
+    /* A field of faint dots drifting behind the web. */
+    .hp-auto::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .55;
+        background-image: radial-gradient(rgb(74 124 42 / .18) 1px, transparent 1.6px); background-size: 22px 22px; animation: hpAutoDots 40s linear infinite;
+        -webkit-mask-image: radial-gradient(70% 70% at 50% 55%, #000, transparent); mask-image: radial-gradient(70% 70% at 50% 55%, #000, transparent); }
+    @keyframes hpAutoDots { to { background-position: 220px 110px; } }
     .hp-auto-web .tg rect { fill: rgb(255 255 255 / .94); stroke: #dfe9d3; }
     .hp-auto-web .tg text { font-size: 11px; font-weight: 800; fill: #2d4a17; font-family: inherit; }
     .hp-auto-web .tg.is-hot rect { fill: #fff3c4; stroke: #e2b72a; }
@@ -195,7 +209,8 @@
     .hp-auto-cta { display: flex; flex-direction: column; align-items: center; gap: .75rem; margin-top: 2.6rem; text-align: center; }
     .hp-auto-cta span { font-size: .92rem; font-weight: 700; color: #55604a; }
     @media (prefers-reduced-motion: reduce) {
-        .hp-auto-phone, .hp-auto-glow, .hp-auto-typing i, .hp-auto-ring { animation: none; }
+        .hp-auto-phone, .hp-auto-glow, .hp-auto-typing i, .hp-auto-ring, .hp-auto::before { animation: none; }
+        .hp-auto-web { translate: none; transition: none; }
         html.js .hp-auto-steps li { opacity: 1; translate: none; transition: none; }
     }
 </style>
@@ -219,13 +234,14 @@
     const names = [...(inputs[0] || []), ...(inputs[1] || [])];
     const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; };
     const rnd = (a, b) => a + Math.random() * (b - a);
-    let web = null, raf = 0, on = false, last = 0, spawnAt = 0, pulses = [];
+    let web = null, raf = 0, on = false, last = 0, spawnAt = 0, pulses = [], cometN = 0;
     const draw = () => {
         const W = sec.clientWidth, H = sec.clientHeight;
         if (!W || !H || !phone) return;
         svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
         svg.textContent = '';
         pulses = [];
+        const defs = mk('defs', {});
         const sr = sec.getBoundingClientRect();
         const rel = (el) => { const r = el.getBoundingClientRect(); return { l: r.left - sr.left, t: r.top - sr.top, r: r.right - sr.left, b: r.bottom - sr.top }; };
         const P = rel(phone);
@@ -315,7 +331,7 @@
                 sources.push(best);
             }
         }
-        web = { nodes: nodes.filter((n) => n.leads), sources, gPl };
+        web = { nodes: nodes.filter((n) => n.leads), sources, gPl, defs };
     };
     const heat = (el, cls, ms) => { if (!el) return; el.classList.add(cls); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove(cls), ms); };
     const ping = (n) => { if (!n.halo) return; n.halo.classList.remove('is-on'); void n.halo.getBBox(); n.halo.classList.add('is-on'); };
@@ -333,8 +349,13 @@
         }
         if (!hops.length || hops[hops.length - 1].b.end !== true) return;
         heat(n.el, 'is-hot', 520); heat(n.tag, 'is-hot', 1100); ping(n);
-        const tail = [mk('circle', { r: 2.1, class: 'tl', opacity: .45 }, web.gPl), mk('circle', { r: 1.6, class: 'tl', opacity: .25 }, web.gPl)];
-        pulses.push({ hops, i: 0, t: 0, trail: [], tail, dot: mk('circle', { r: 2.9, class: 'pl' }, web.gPl) });
+        // A comet: a bright head and a fading tail drawn through where it has been.
+        // Each tail has its own gradient, laid along it from its end to the head, so it fades the right way whichever way it runs.
+        const gid = 'hpAutoC' + (++cometN);
+        const grad = mk('linearGradient', { id: gid, gradientUnits: 'userSpaceOnUse' }, web.defs);
+        mk('stop', { offset: '0', 'stop-color': '#f5c518', 'stop-opacity': '0' }, grad);
+        mk('stop', { offset: '1', 'stop-color': '#f5c518', 'stop-opacity': '.9' }, grad);
+        pulses.push({ hops, i: 0, t: 0, trail: [], grad, tail: mk('polyline', { class: 'tl', stroke: 'url(#' + gid + ')' }, web.gPl), dot: mk('circle', { r: 3, class: 'pl' }, web.gPl) });
     };
     const tick = (now) => {
         if (!on) { raf = 0; return; }
@@ -348,17 +369,43 @@
                 heat(k.el, 'is-hot', 360);
                 if (k.b.el) { heat(k.b.el, 'is-hot', 420); ping(k.b); }
                 p.i++; p.t = 0;
-                if (p.i >= p.hops.length) { p.dot.remove(); p.tail.forEach((c) => c.remove()); return false; }
+                if (p.i >= p.hops.length) {
+                    // It reached the phone: a ripple where it went in, and the phone's edge lights.
+                    const r = mk('circle', { cx: k.b.x.toFixed(1), cy: k.b.y.toFixed(1), r: 6, class: 'rip' }, web.gPl);
+                    setTimeout(() => r.remove(), 950);
+                    phone.classList.add('is-fed'); clearTimeout(phone._fed); phone._fed = setTimeout(() => phone.classList.remove('is-fed'), 260);
+                    p.dot.remove(); p.tail.remove(); p.grad.remove(); return false;
+                }
                 return true;
             }
             const x = k.a.x + (k.b.x - k.a.x) * p.t, y = k.a.y + (k.b.y - k.a.y) * p.t;
-            p.trail.unshift([x, y]); p.trail.length = Math.min(p.trail.length, 9);
+            p.trail.unshift([x, y]); p.trail.length = Math.min(p.trail.length, 14);
             p.dot.setAttribute('cx', x.toFixed(1)); p.dot.setAttribute('cy', y.toFixed(1));
-            p.tail.forEach((c, i) => { const q = p.trail[(i + 1) * 4] || p.trail[p.trail.length - 1]; c.setAttribute('cx', q[0].toFixed(1)); c.setAttribute('cy', q[1].toFixed(1)); });
+            // Oldest point first, so the gradient fades toward the tail.
+            const pts = p.trail.slice().reverse();
+            if (pts.length > 1) {
+                p.tail.setAttribute('points', pts.map((q) => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' '));
+                p.grad.setAttribute('x1', pts[0][0].toFixed(1)); p.grad.setAttribute('y1', pts[0][1].toFixed(1));
+                p.grad.setAttribute('x2', x.toFixed(1)); p.grad.setAttribute('y2', y.toFixed(1));
+            }
             return true;
         });
+        // Now and then a node twinkles.
+        if (web.nodes.length && Math.random() < dt / 260) {
+            const n = web.nodes[Math.floor(Math.random() * web.nodes.length)];
+            if (n.el && !n.el.classList.contains('is-hot')) { n.el.classList.remove('tw'); void n.el.getBBox(); n.el.classList.add('tw'); }
+        }
         raf = requestAnimationFrame(tick);
     };
+    // The web leans toward the pointer (a few pixels, desk only).
+    if (!still && matchMedia('(pointer: fine)').matches) {
+        sec.addEventListener('pointermove', (e) => {
+            const r = sec.getBoundingClientRect();
+            svg.style.setProperty('--wx', (((e.clientX - r.left) / r.width - .5) * 14).toFixed(1) + 'px');
+            svg.style.setProperty('--wy', (((e.clientY - r.top) / r.height - .5) * 10).toFixed(1) + 'px');
+        });
+        sec.addEventListener('pointerleave', () => { svg.style.setProperty('--wx', '0px'); svg.style.setProperty('--wy', '0px'); });
+    }
     const start = () => { if (still || raf || !web) return; on = true; last = 0; raf = requestAnimationFrame(tick); };
     const stop = () => { on = false; };
     // Drawn once the section's words have taken their places (the reveal moves them).

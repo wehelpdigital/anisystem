@@ -612,6 +612,16 @@
         $xMark = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" aria-hidden="true"><path stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></svg>';
     @endphp
     <section class="hp-anee spark-field on-dark">
+        {{-- Her section moves too (2026-10-13, the owner): two slow lights,
+             a field of dots with a reading line sweeping across it (she reads
+             the farm), and motes of data rising toward her. --}}
+        <div class="hp-anee-bg" aria-hidden="true">
+            <i class="hp-anee-aura is-a"></i><i class="hp-anee-aura is-b"></i>
+            <span class="hp-anee-scan"></span>
+            @foreach ([[8, 0, 14], [19, 3.5, 17], [31, 7, 13], [46, 1.5, 19], [58, 5, 15], [69, 9, 18], [81, 2.5, 14], [92, 6.5, 16], [13, 11, 20], [74, 12.5, 17]] as [$mx, $md, $mt])
+                <b class="hp-anee-mote" style="--x: {{ $mx }}%; --d: {{ $md }}s; --t: {{ $mt }}s"></b>
+            @endforeach
+        </div>
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
             <div class="hp-anee-grid">
                 <div class="reveal hp-anee-copy">
@@ -1632,7 +1642,7 @@
             @php $vsX = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>'; @endphp
             <div class="hp-vs" data-vs>
                 <div class="hp-vs-head" aria-hidden="true">
-                    <span class="is-n">{{ $vsCount }} things that change</span>
+                    <span class="is-n">{{ $vsCount }} Things that Change</span>
                     <span class="is-old"><i class="hp-vs-key">{!! $vsX !!}</i>By Memory and Paper</span>
                     <span class="is-new"><i class="hp-vs-key">{!! $tick !!}</i><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">With anee.io</span>
                 </div>
@@ -2385,6 +2395,22 @@
 
     /* ---- Anee ---- */
     /* Clipped sideways only: Anee's film may lean past the phone's edge. */
+    .hp-anee-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .hp-anee-bg::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgb(200 230 160 / .09) 1px, transparent 1.5px); background-size: 26px 26px;
+        -webkit-mask-image: radial-gradient(80% 70% at 60% 45%, #000, transparent); mask-image: radial-gradient(80% 70% at 60% 45%, #000, transparent); }
+    .hp-anee-aura { position: absolute; border-radius: 999px; filter: blur(70px); opacity: .32; }
+    .hp-anee-aura.is-a { width: 34rem; height: 34rem; left: -8rem; top: 10%; background: #4a7c2a; animation: hpAneeAuraA 22s ease-in-out infinite alternate; }
+    .hp-anee-aura.is-b { width: 28rem; height: 28rem; right: -6rem; bottom: 5%; background: #c99a0a; opacity: .2; animation: hpAneeAuraB 26s ease-in-out infinite alternate; }
+    @keyframes hpAneeAuraA { to { transform: translate(14rem, 6rem) scale(1.15); } }
+    @keyframes hpAneeAuraB { to { transform: translate(-12rem, -8rem) scale(.9); } }
+    /* Her reading line: a soft gold band sweeping across the dots. */
+    .hp-anee-scan { position: absolute; inset: -20% 0; background: linear-gradient(100deg, transparent 42%, rgb(245 197 24 / .07) 49%, rgb(245 197 24 / .12) 50%, rgb(245 197 24 / .07) 51%, transparent 58%);
+        background-size: 260% 100%; animation: hpAneeScan 11s cubic-bezier(.45,0,.55,1) infinite; }
+    @keyframes hpAneeScan { from { background-position: 130% 0; } to { background-position: -30% 0; } }
+    .hp-anee-mote { position: absolute; left: var(--x); bottom: -1rem; width: 4px; height: 4px; border-radius: 999px; background: #f4d778; box-shadow: 0 0 8px 2px rgb(245 197 24 / .5);
+        opacity: 0; animation: hpAneeMote var(--t) linear var(--d) infinite; }
+    @keyframes hpAneeMote { 0% { opacity: 0; transform: translateY(0); } 10% { opacity: .8; } 80% { opacity: .6; } 100% { opacity: 0; transform: translateY(-42rem) translateX(1.5rem); } }
+    @media (prefers-reduced-motion: reduce) { .hp-anee-aura, .hp-anee-scan, .hp-anee-mote { animation: none; } .hp-anee-mote { display: none; } }
     .hp-anee { position: relative; z-index: 2; overflow-x: clip; overflow-y: visible; color: #e8efe1;
         background: radial-gradient(90% 120% at 85% 10%, #2d4a1a 0%, transparent 60%), linear-gradient(160deg, #10160c 0%, #1c2416 55%, #24301a 100%); }
     .hp-anee-grid { display: grid; gap: 3rem; align-items: center; }
@@ -2548,12 +2574,12 @@
     /* Anee's hello, small and tilted, on the phone's side: only its edge
        goes over the phone (2026-10-13, the owner). Below 1280 pixels, where
        there is no room beside it, it sits on the phone's top edge. */
-    .hp-anee-film { --rot: -3deg; position: absolute; z-index: 3; top: -4.6rem; left: 50%; width: 11rem; margin: 0 0 0 -5.5rem; aspect-ratio: 16 / 9; border-radius: .95rem; overflow: hidden;
+    .hp-anee-film { --rot: -3deg; position: absolute; z-index: 3; top: -5.4rem; left: 50%; width: 13rem; margin: 0 0 0 -6.5rem; aspect-ratio: 16 / 9; border-radius: .95rem; overflow: hidden;
         background: #0d1408; box-shadow: 0 24px 44px -18px rgb(0 0 0 / .85), 0 0 0 3px #f5c518, 0 0 0 7px rgb(245 197 24 / .18);
         transform: rotate(var(--rot)); animation: hpFilmFloat 6s ease-in-out infinite; }
-    @media (max-width: 1023.98px) { .hp-anee-phone { margin-top: 5.2rem; } }
+    @media (max-width: 1023.98px) { .hp-anee-phone { margin-top: 6.4rem; } }
     /* Wide enough for room beside the phone: on its right side, the words' side kept clear. */
-    @media (min-width: 1280px) { .hp-anee-film { --rot: 5deg; top: 28%; left: calc(100% - 1.75rem); width: 10.5rem; margin: 0; } }
+    @media (min-width: 1280px) { .hp-anee-film { --rot: 5deg; top: 26%; left: calc(100% - 2.5rem); width: 12.75rem; margin: 0; } }
     .hp-anee-film video { width: 100%; height: 100%; display: block; object-fit: cover; }
     .hp-anee-film-play { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-start; padding: .55rem .6rem; border: 0; cursor: pointer;
         background: linear-gradient(180deg, transparent 45%, rgb(9 14 6 / .6)); transition: background .28s var(--hp-ease); }
