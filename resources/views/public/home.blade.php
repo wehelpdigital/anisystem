@@ -2502,7 +2502,11 @@
     /* The album, right under the hero: a warm ground that leads into The Truth. */
     .hp-album.hp-sec { padding-top: 2.5rem; padding-bottom: 2.5rem; }
     @media (min-width: 1024px) { .hp-album.hp-sec { padding-top: 3.25rem; padding-bottom: 3.25rem; } }
-    .hp-album { background: radial-gradient(60% 70% at 15% 0%, rgb(245 197 24 / .12), transparent 70%), linear-gradient(180deg, #f6f3ea 0%, #ffffff 100%); }
+    /* Its own band, tinted all the way down, so The Truth below starts as a
+       section of its own (2026-10-13, the owner): a hairline and a soft
+       shadow mark where one ends and the next begins. */
+    .hp-album { position: relative; z-index: 1; background: radial-gradient(60% 80% at 12% 0%, rgb(245 197 24 / .16), transparent 70%), linear-gradient(180deg, #f3eedf 0%, #ece6d2 100%);
+        border-bottom: 1px solid #ddd3b5; box-shadow: 0 18px 30px -24px rgb(90 70 20 / .35); }
     /* Meet Anee's phone (2026-10-13): a real looking phone, smaller than the
        old chat window; her chat is its screen. The chat grows from the
        bottom as a real one does: what has not come yet takes no room, and
@@ -3490,6 +3494,9 @@
 
     /* ---- the truth: costs up, plus prices down, equals one way out ---- */
     .hp-truth2 { background: linear-gradient(180deg, #ffffff 0%, #fbf8f1 100%); }
+    /* A small mark at the top of The Truth, where the album's band ends. */
+    .hp-truth2 { position: relative; }
+    .hp-truth2::before { content: ''; position: absolute; left: 50%; top: 0; width: 4.5rem; height: 4px; margin-left: -2.25rem; border-radius: 0 0 4px 4px; background: #dc2626; opacity: .85; }
     .hp-h2 em.is-red { color: #b91c1c; }
     .hp-sum { margin-top: 3rem; display: grid; gap: .8rem; justify-items: stretch; }
     @media (min-width: 960px) { .hp-sum { grid-template-columns: 1fr auto 1fr auto 1.2fr; gap: 1.1rem; align-items: stretch; } }

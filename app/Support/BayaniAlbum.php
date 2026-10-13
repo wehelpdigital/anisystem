@@ -24,12 +24,13 @@ final class BayaniAlbum
 
     /** [file under public/audio, title, length in seconds, the main song]. */
     public const TRACKS = [
+        // In the owner's order (2026-10-13); the files keep their first numbers.
         ['bayani-ng-lupa/01-sulong-mga-bayani-ng-lupa.mp3', 'Sulong, Mga Bayani ng Lupa', 223, true],
-        ['bayani-ng-lupa/02-tuloy-ang-laban.mp3', 'Tuloy Ang Laban', 242, false],
-        ['bayani-ng-lupa/03-ugat-ng-bansa.mp3', 'Ugat ng Bansa', 228, false],
-        ['bayani-ng-lupa/04-laban-lang.mp3', 'Laban Lang', 268, false],
         ['bayani-ng-lupa/05-kami-ang-palay.mp3', 'Kami Ang Palay', 224, false],
+        ['bayani-ng-lupa/03-ugat-ng-bansa.mp3', 'Ugat ng Bansa', 228, false],
+        ['bayani-ng-lupa/02-tuloy-ang-laban.mp3', 'Tuloy Ang Laban', 242, false],
         ['bayani-ng-lupa/06-aangat-din.mp3', 'Aangat Din', 196, false],
+        ['bayani-ng-lupa/04-laban-lang.mp3', 'Laban Lang', 268, false],
         ['anee-kay-anee-ang-ani-ay-high.mp3', 'Let\'s Plant With a Dream', 225, false],
     ];
 

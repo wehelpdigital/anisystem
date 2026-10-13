@@ -40,18 +40,19 @@
         .ba-in { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-areas: "cover head" "cover player" "cover songs"; align-content: center; padding: 2.2rem; }
     }
     /* Compact: smaller and wider. */
-    .ba.is-compact .ba-in { grid-template-columns: 6.5rem minmax(0, 1fr); grid-template-areas: "cover head" "player player" "songs songs"; gap: 1rem 1.1rem; padding: 1.1rem; align-items: center; }
+    .ba.is-compact .ba-in { grid-template-columns: 9rem minmax(0, 1fr); grid-template-areas: "cover head" "player player" "songs songs"; gap: 1rem 1.1rem; padding: 1.1rem; align-items: center; }
     @container ba (min-width: 620px) {
-        .ba.is-compact .ba-in { grid-template-columns: 11rem minmax(0, 1fr); grid-template-areas: "cover head" "cover player" "songs songs"; padding: 1.5rem; gap: .9rem 1.6rem; }
+        .ba.is-compact .ba-in { grid-template-columns: 15rem minmax(0, 1fr); grid-template-areas: "cover head" "cover player" "songs songs"; padding: 1.5rem; gap: .9rem 1.6rem; }
     }
     @container ba (min-width: 980px) {
-        .ba.is-compact .ba-in { grid-template-columns: 12.5rem minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "cover head songs" "cover player songs"; align-items: center; padding: 1.6rem 1.9rem; gap: .6rem 2rem; }
+        .ba.is-compact .ba-in { grid-template-columns: 16.5rem minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "cover head songs" "cover player songs"; align-items: center; padding: 1.6rem 1.9rem; gap: .6rem 2rem; }
     }
-    .ba.is-compact .ba-sleeve { width: 100%; padding-right: 0; margin: 0; }
-    .ba.is-compact .ba-disc { display: none; }
-    .ba.is-compact .ba-cover { border-radius: 1rem; transform: none; }
+    .ba.is-compact .ba-sleeve { width: 100%; padding: 0 0 0 34%; margin: 0; }
+    .ba.is-compact .ba-disc { display: block; top: 3%; left: 0; right: auto; width: 62%; transform: translateX(45%); }
+    .ba.is-compact.is-in .ba-disc { transform: translateX(0); }
+    .ba.is-compact .ba-cover { border-radius: .45rem; transform: none; }
     .ba.is-compact .ba-cover-tag { left: .45rem; bottom: .45rem; padding: .2rem .5rem; font-size: .6rem; }
-    @container ba (max-width: 619.98px) { .ba.is-compact .ba-cover-tag { display: none; } .ba.is-compact .ba-cover { border-radius: .8rem; } }
+    @container ba (max-width: 619.98px) { .ba.is-compact .ba-cover-tag { display: none; } .ba.is-compact .ba-cover { border-radius: .35rem; } }
     .ba.is-compact .ba-h { margin-top: .3rem; font-size: clamp(1.6rem, 3vw, 2.2rem); }
     .ba.is-compact .ba-p { margin-top: .4rem; font-size: .86rem; line-height: 1.5; }
     .ba.is-compact .ba-meta { margin-top: .5rem; }
@@ -67,7 +68,7 @@
     .ba.is-compact .ba-listen { margin-top: .6rem; padding-top: .6rem; }
     .ba.is-compact .ba-listen a { width: 2rem; height: 2rem; }
     .ba.is-compact .ba-listen svg { width: .9rem; height: .9rem; }
-    @container ba (max-width: 619.98px) { .ba.is-compact .ba-p, .ba.is-compact .ba-meta { display: none; } .ba.is-compact .ba-h { font-size: 1.7rem; } }
+    @container ba (max-width: 619.98px) { .ba.is-compact .ba-p, .ba.is-compact .ba-meta { display: none; } .ba.is-compact .ba-h { font-size: 1.7rem; } .ba.is-compact .ba-kick { font-size: .6rem; letter-spacing: .07em; white-space: nowrap; } }
 
     /* The sleeve and its record. */
     .ba-sleeve { position: relative; width: min(100%, 26rem); margin: 0 auto; padding-right: 0; align-self: center; }
@@ -80,9 +81,10 @@
     .ba-disc::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: conic-gradient(from 30deg, transparent 0 20%, rgb(255 255 255 / .1) 25%, transparent 32% 70%, rgb(255 255 255 / .07) 75%, transparent 82%); }
     .ba.is-in .ba-disc { transform: translateX(0); }
     @container ba (max-width: 759.98px) { .ba-disc { display: none; } }
-    .ba.is-playing .ba-disc { animation: baSpin 4s linear infinite; }
+    .ba-disc { animation: baSpin 18s linear infinite; }
+    .ba.is-playing .ba-disc { animation-duration: 3.5s; }
     @keyframes baSpin { from { rotate: 0deg; } to { rotate: 360deg; } }
-    .ba-cover { position: relative; z-index: 1; display: block; width: 100%; aspect-ratio: 1; border-radius: 1.2rem; overflow: hidden;
+    .ba-cover { position: relative; z-index: 1; display: block; width: 100%; aspect-ratio: 1; border-radius: .6rem; overflow: hidden;
         box-shadow: 0 30px 60px -26px rgb(0 0 0 / .85), 0 0 0 1px rgb(255 255 255 / .12); transform: rotate(-1.5deg); transition: transform .5s var(--ba-ease); }
     .ba-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
     .ba-sleeve:hover .ba-cover { transform: rotate(0deg) translateY(-4px); }
@@ -169,12 +171,12 @@
     .ba-listen svg { width: 1rem; height: 1rem; fill: currentColor; }
 
     @media (prefers-reduced-motion: reduce) {
-        .ba-wash, .ba-play::after, .ba.is-playing .ba-eq i, .ba.is-playing .ba-disc, .ba.is-playing .ba-row[aria-current="true"] .ba-bars i { animation: none; }
+        .ba-wash, .ba-play::after, .ba.is-playing .ba-eq i, .ba-disc, .ba.is-playing .ba-disc, .ba.is-playing .ba-row[aria-current="true"] .ba-bars i { animation: none; }
         .ba-list li { opacity: 1; transform: none; transition: none; }
         .ba-disc { transform: none; transition: none; }
         .ba-play, .ba-skip, .ba-row, .ba-more, .ba-all svg, .ba-listen a, .ba-cover { transition: none; }
     }
-    html.sm-still .ba-wash, html.sm-still .ba.is-playing .ba-disc { animation: none; }
+    html.sm-still .ba-wash, html.sm-still .ba-disc { animation: none; }
 </style>
 @endonce
 <div class="ba-c"><section class="ba{{ $baCompact ? ' is-compact' : '' }}" id="{{ $baId }}" data-album aria-labelledby="{{ $baId }}H" aria-describedby="{{ $baId }}P">
