@@ -54,8 +54,8 @@
     .ba.is-compact .ba-sleeve { position: static; width: 100%; padding: 0 0 0 22%; margin: 0; }
     .ba.is-compact .ba-cover { position: relative; z-index: 2; }
     .ba.is-compact .ba-disc { display: block; z-index: 0; top: 50%; left: 0; right: auto; width: 25rem; opacity: .95;
-        transform: translate(-100%, -50%); box-shadow: 0 0 0 1px rgb(255 255 255 / .04), 12px 0 50px -10px rgb(0 0 0 / .6); }
-    .ba.is-compact.is-in .ba-disc { transform: translate(-50%, -50%); }
+        translate: -100% -50%; box-shadow: 0 0 0 1px rgb(255 255 255 / .04), 12px 0 50px -10px rgb(0 0 0 / .6); }
+    .ba.is-compact.is-in .ba-disc { translate: -50% -50%; }
     @container ba (min-width: 620px) and (max-width: 979.98px) { .ba.is-compact .ba-disc { top: 9.5rem; width: 22rem; } }
     @container ba (max-width: 619.98px) { .ba.is-compact .ba-disc { top: 5.6rem; width: 15rem; } .ba.is-compact .ba-sleeve { padding-left: 18%; } }
     /* Everything else in the card stays above the record. */
@@ -87,9 +87,12 @@
         background: radial-gradient(circle at 50% 50%, #f5c518 0 9%, #1a1a1a 9.5% 11%, transparent 11.5%),
             repeating-radial-gradient(circle at 50% 50%, #161616 0 1.2px, #232323 1.6px 3px), #111;
         box-shadow: 0 20px 40px -18px rgb(0 0 0 / .9), inset 0 0 0 2px rgb(255 255 255 / .05);
-        transform: translateX(-18%); transition: transform .9s var(--ba-ease); }
+        /* Moved with the translate property, never transform: the spin (rotate) is
+           applied inside translate, so the record turns in place instead of
+           swinging its offset round in a circle (2026-10-13). */
+        translate: -18% 0; transition: translate .9s var(--ba-ease); }
     .ba-disc::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: conic-gradient(from 30deg, transparent 0 20%, rgb(255 255 255 / .1) 25%, transparent 32% 70%, rgb(255 255 255 / .07) 75%, transparent 82%); }
-    .ba.is-in .ba-disc { transform: translateX(0); }
+    .ba.is-in .ba-disc { translate: 0 0; }
     @container ba (max-width: 759.98px) { .ba-disc { display: none; } }
     .ba-disc { animation: baSpin 18s linear infinite; }
     .ba.is-playing .ba-disc { animation-duration: 3.5s; }
@@ -183,7 +186,9 @@
     @media (prefers-reduced-motion: reduce) {
         .ba-wash, .ba-play::after, .ba.is-playing .ba-eq i, .ba-disc, .ba.is-playing .ba-disc, .ba.is-playing .ba-row[aria-current="true"] .ba-bars i { animation: none; }
         .ba-list li { opacity: 1; transform: none; transition: none; }
-        .ba-disc { transform: none; transition: none; }
+        .ba-disc { transition: none; }
+        .ba:not(.is-compact) .ba-disc { translate: 0 0; }
+        .ba.is-compact .ba-disc { translate: -50% -50%; }
         .ba-play, .ba-skip, .ba-row, .ba-more, .ba-all svg, .ba-listen a, .ba-cover { transition: none; }
     }
     html.sm-still .ba-wash, html.sm-still .ba-disc { animation: none; }
