@@ -1,13 +1,13 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-766",
-  "sortOrder": 16,
+  "sortOrder": 40,
   "lang": "en",
   "category": "Saline prone",
   "profile": true,
-  "title": "NSIC Rc 766 (Salinas 40) Rice Variety: Characteristics and Grain Quality",
-  "metaTitle": "NSIC Rc 766 Rice Variety: Characteristics and Grain Quality",
-  "metaDescription": "NSIC Rc 766 is an inbred rice for saline prone fields, approved in 2024. See its pest and disease ratings, grain quality and where it grows best.",
+  "title": "NSIC Rc 766 (Salinas 40) Rice Variety: Yield, Maturity and Characteristics",
+  "metaTitle": "NSIC Rc 766 (Salinas 40): Yield, Maturity, Characteristics",
+  "metaDescription": "NSIC Rc 766 is an inbred rice for saline prone fields: about 116 days and 4 tonnes per hectare on average. See its pest ratings and grain quality.",
   "focusKeyword": "NSIC Rc 766",
   "keywords": [
     "NSIC Rc 766",
@@ -16,7 +16,7 @@
     "766 rice variety characteristics",
     "Salinas 40"
   ],
-  "excerpt": "NSIC Rc 766 is an inbred rice variety for saline prone fields, known locally as Salinas 40. The NSIC approved it in 2024. PhilRice bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 766 is an inbred rice variety for saline prone fields, known locally as Salinas 40. The NSIC approved it in 2024. PhilRice bred it. It matures in about 116 days and averages 4 tonnes per hectare, with a top yield of 4 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/transplant.jpg",
     "alt": "Farmers transplanting rice, as on the saline prone fields NSIC Rc 766 is bred for",
@@ -31,7 +31,9 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Watch out for:** rice blast, tungro, sheath blight.",
+        "**Maturity:** about 116 days after sowing.",
+        "**Yield:** 4 tonnes per hectare on average, or about 81 cavans of 50 kilograms. The best trial reached 4 tonnes.",
+        "**Watch out for:** rice blast, tungro, sheath blight, stem borer.",
         "**Cooked rice:** intermediate amylose, so soft but not sticky."
       ]
     },
@@ -67,17 +69,42 @@
         [
           "Growing environment",
           "Saline prone"
+        ],
+        [
+          "Maturity",
+          "116 days after sowing"
+        ],
+        [
+          "Average yield",
+          "4 t/ha"
+        ],
+        [
+          "Top yield in trials",
+          "4 t/ha"
+        ],
+        [
+          "Plant height",
+          "92 cm"
         ]
       ]
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "How many days does it take, and how much does it yield?"
+      "text": "How much does NSIC Rc 766 yield?"
     },
     {
       "type": "text",
-      "text": "PhilRice has not published this variety's days to harvest and trial yields in its catalogue yet. So ask the seed seller or your municipal agriculturist for the figures from the trials in your region before you plan the season. Once you know the day count, anee.io dates every task from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it. Meanwhile, our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare) covers the habits that matter with any variety."
+      "text": "On average it gives 4 tonnes per hectare. That is about 81 cavans of 50 kilograms of palay. It sits above the average of the 48 saline prone fields inbreds in PhilRice's list, which is 2.9 tonnes. But the top yield, 4 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How many days does it take to mature?"
+    },
+    {
+      "type": "text",
+      "text": "It takes about 116 days from sowing to harvest. IRRI groups varieties of 100 to 120 days as short duration and 120 to 140 days as medium, so this one counts as short duration. Then harvest when 85 to 90 percent of the grains turn golden yellow, as PalayCheck advises. Because the day count drives every task, anee.io counts it for you from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -112,12 +139,27 @@
           "Sheath blight",
           "Susceptible",
           "Took heavy damage"
+        ],
+        [
+          "Green leafhopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Brown planthopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Stem borer",
+          "Moderately susceptible",
+          "Took clear damage"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "So scout early for [rice blast](/diseases/rice-blast), [tungro](/diseases/rice-tungro), [sheath blight](/diseases/sheath-blight). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+      "text": "So scout early for [rice blast](/diseases/rice-blast), [tungro](/diseases/rice-tungro), [sheath blight](/diseases/sheath-blight), [stem borer](/pests/rice-stem-borer). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -197,16 +239,16 @@
     },
     {
       "type": "text",
-      "text": "These come from the same kind of farm, and PhilRice lists their days and yields. So if seed of this one is hard to find, compare these first."
+      "text": "These come from the same kind of farm and grow about as long. So if seed of this one is hard to find, compare these first."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "[NSIC Rc 604](/rice-varieties/nsic-rc-604): 104 days, 3.2 tonnes per hectare on average, 2020",
-        "[NSIC Rc 606](/rice-varieties/nsic-rc-606): 109 days, 3 tonnes per hectare on average, 2020",
-        "[NSIC Rc 608](/rice-varieties/nsic-rc-608): 110 days, 3 tonnes per hectare on average, 2020",
-        "[NSIC Rc 610](/rice-varieties/nsic-rc-610): 107 days, 3 tonnes per hectare on average, 2020"
+        "[NSIC Rc 390](/rice-varieties/nsic-rc-390): 112 days, 4 tonnes per hectare on average, 2014",
+        "[NSIC Rc 290](/rice-varieties/nsic-rc-290): 113 days, 3.6 tonnes per hectare on average, 2011",
+        "[NSIC Rc 466](/rice-varieties/nsic-rc-466): 115 days, 3.2 tonnes per hectare on average, 2016",
+        "[NSIC Rc 296](/rice-varieties/nsic-rc-296): 117 days, 3.2 tonnes per hectare on average, 2011"
       ]
     },
     {
@@ -217,8 +259,12 @@
           "a": "It is known as Salinas 40. Seed sellers and agriculturists use both names, so ask for either one."
         },
         {
-          "q": "When was NSIC Rc 766 approved?",
-          "a": "The NSIC approved it in 2024. PhilRice bred it. PhilRice has not listed its days to harvest and trial yield yet, so ask for the regional trial figures before you plant."
+          "q": "How many days does NSIC Rc 766 take to harvest?",
+          "a": "About 116 days after sowing. Then harvest when 85 to 90 percent of the grains are golden yellow."
+        },
+        {
+          "q": "What is the average yield of NSIC Rc 766?",
+          "a": "PhilRice lists 4 tonnes per hectare on average, about 81 cavans of 50 kilograms. The best trial reached 4 tonnes. Your own yield depends on water, seed, fertilizer and timing."
         },
         {
           "q": "Is this variety a hybrid?",
@@ -226,15 +272,11 @@
         },
         {
           "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against rice blast, tungro, sheath blight. So scout from the early weeks and act at the first signs."
+          "a": "In PhilRice's tests it was weak against rice blast, tungro, sheath blight, stem borer. So scout from the early weeks and act at the first signs."
         },
         {
           "q": "Is it soft when cooked?",
           "a": "It has intermediate amylose, 20 percent. So it cooks soft but not sticky."
-        },
-        {
-          "q": "Where can I buy certified seed of this variety?",
-          "a": "Ask accredited seed growers in your province, your municipal agriculturist or the nearest PhilRice station. Look for the certified seed tag on the sack before you pay."
         }
       ]
     },
@@ -270,6 +312,10 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "NSIC registry of rice varieties: NSIC Rc 766",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
         },
         {
           "label": "BPI: NSIC registry of rice varieties",

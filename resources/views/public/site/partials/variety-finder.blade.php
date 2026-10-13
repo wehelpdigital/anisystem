@@ -11,6 +11,10 @@
     $envCount = fn ($k) => $all->filter(fn ($v) => in_array($k, $v['environments'], true))->count();
     $fmt = fn ($x) => rtrim(rtrim(number_format((float) $x, 1, '.', ''), '0'), '.');
     $cardTarget = $cardTarget ?? null;
+    // A company's seed brand finds its varieties too: "arize" finds every Bayer hybrid.
+    $brandWords = fn ($breeder) => collect(['bayer' => 'arize', 'syngenta' => 'nk', 'long ping' => 'longping lp', 'longping' => 'longping lp', 'sl agritech' => 'sl',
+        'leads' => 'jackpot leads', 'bioseed' => 'biorice', 'seedworks' => 'us th', 'pioneer' => 'phb', 'advanta' => 'pac'])
+        ->filter(fn ($w, $k) => str_contains(strtolower($breeder), $k))->implode(' ');
 @endphp
 @include('public.site.partials.variety-finder-css')
 
@@ -59,7 +63,7 @@
                         $envs = collect($v['environments'])->map(fn ($e) => $RV::ENVIRONMENTS[$e][0] ?? null)->filter()->implode(', ');
                     @endphp
                     <a href="{{ $S::url('rice-varieties', $v['slug']) }}" @if ($cardTarget) target="{{ $cardTarget }}" @endif class="rv-card {{ $v['type'] === 'hybrid' ? 'is-hybrid' : '' }}"
-                       data-i="{{ $i }}" data-q="{{ strtolower($v['name'] . ' ' . str_replace(' ', '', $v['name']) . ' ' . ($v['localName'] ?? '') . ' ' . ($v['breeder'] ?? '') . ' ' . implode(' ', $v['tradeNames'] ?? []) . ' ' . str_replace([' ', '-'], '', implode(' ', $v['tradeNames'] ?? []))) }}"
+                       data-i="{{ $i }}" data-q="{{ strtolower($v['name'] . ' ' . str_replace(' ', '', $v['name']) . ' ' . ($v['localName'] ?? '') . ' ' . ($v['breeder'] ?? '') . ' ' . implode(' ', $v['tradeNames'] ?? []) . ' ' . str_replace([' ', '-'], '', implode(' ', $v['tradeNames'] ?? [])) . ' ' . $brandWords($v['breeder'] ?? '')) }}"
                        data-env="{{ implode(' ', $v['environments']) }}{{ $v['special'] === 'glutinous' ? ' glutinous' : '' }}" data-type="{{ $v['type'] }}"
                        data-days="{{ $v['maturity'] ? (int) $v['maturity'] : '' }}" data-yield="{{ $v['yieldAvg'] ?? 0 }}" data-year="{{ $v['year'] }}" data-res="{{ $okRes }}"
                        @if ($i >= 24) hidden @endif>

@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-9",
-  "sortOrder": 361,
+  "sortOrder": 393,
   "lang": "en",
   "category": "Upland",
   "profile": true,
@@ -162,6 +162,11 @@
           "Stem borer",
           "Moderately resistant",
           "Took some damage but held up"
+        ],
+        [
+          "Sheath blight",
+          "Intermediate",
+          "Took a middling share of damage"
         ]
       ]
     },

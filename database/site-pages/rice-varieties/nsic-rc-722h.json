@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-722h",
-  "sortOrder": 63,
+  "sortOrder": 88,
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
@@ -33,7 +33,7 @@
       "ordered": false,
       "items": [
         "**Holds up against:** rice blast.",
-        "**Watch out for:** bacterial leaf blight, tungro, sheath blight.",
+        "**Watch out for:** bacterial leaf blight, tungro, sheath blight, green leafhopper, brown planthopper.",
         "**Cooked rice:** intermediate amylose, so soft but not sticky."
       ]
     },
@@ -73,6 +73,10 @@
         [
           "Growing environment",
           "Irrigated lowland"
+        ],
+        [
+          "Plant height",
+          "108 cm"
         ]
       ]
     },
@@ -118,12 +122,27 @@
           "Sheath blight",
           "Susceptible",
           "Took heavy damage"
+        ],
+        [
+          "Green leafhopper",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Brown planthopper",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Stem borer",
+          "Intermediate",
+          "Took a middling share of damage"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro), [sheath blight](/diseases/sheath-blight). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro), [sheath blight](/diseases/sheath-blight), [green leafhopper](/pests/green-leafhopper), [brown planthopper](/pests/brown-planthopper). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -209,10 +228,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[NSIC Rc 614H](/rice-varieties/nsic-rc-614h): 112 days, 6.1 tonnes per hectare on average, 2020",
-        "[NSIC Rc 616H](/rice-varieties/nsic-rc-616h): 108 days, 6.5 tonnes per hectare on average, 2020",
-        "[NSIC Rc 618H](/rice-varieties/nsic-rc-618h): 115 days, 6.1 tonnes per hectare on average, 2020",
-        "[NSIC Rc 550H](/rice-varieties/nsic-rc-550h): 112 days, 6 tonnes per hectare on average, 2019"
+        "[NSIC Rc 688H](/rice-varieties/nsic-rc-688h): 114 days, 8 tonnes per hectare on average, 2022",
+        "[NSIC Rc 690H](/rice-varieties/nsic-rc-690h): 114 days, 7.1 tonnes per hectare on average, 2022",
+        "[NSIC Rc 692H](/rice-varieties/nsic-rc-692h): 114 days, 5.6 tonnes per hectare on average, 2022",
+        "[NSIC Rc 694H](/rice-varieties/nsic-rc-694h): 112 days, 7.2 tonnes per hectare on average, 2022"
       ]
     },
     {
@@ -236,7 +255,7 @@
         },
         {
           "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro, sheath blight. So scout from the early weeks and act at the first signs."
+          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro, sheath blight, green leafhopper, brown planthopper. So scout from the early weeks and act at the first signs."
         },
         {
           "q": "Is it soft when cooked?",
@@ -279,6 +298,10 @@
         },
         {
           "label": "Where SL 201H is named as NSIC Rc 722H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+        },
+        {
+          "label": "NSIC registry of rice varieties: NSIC Rc 722H",
           "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
         },
         {

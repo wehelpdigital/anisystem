@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-104",
-  "sortOrder": 357,
+  "sortOrder": 389,
   "lang": "en",
   "category": "Cool elevated",
   "profile": true,
@@ -162,6 +162,11 @@
           "Stem borer",
           "Susceptible",
           "Took heavy damage"
+        ],
+        [
+          "Sheath blight",
+          "Intermediate",
+          "Took a middling share of damage"
         ]
       ]
     },

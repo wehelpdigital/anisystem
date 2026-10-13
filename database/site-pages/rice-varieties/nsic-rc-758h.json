@@ -1,13 +1,13 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-758h",
-  "sortOrder": 37,
+  "sortOrder": 61,
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "SL 222H (NSIC Rc 758H) Hybrid Rice: Characteristics and Grain Quality",
-  "metaTitle": "SL 222H (NSIC Rc 758H): Characteristics and Grain Quality",
-  "metaDescription": "SL 222H is NSIC Rc 758H, a hybrid rice for irrigated lowland approved in 2023. See its pest ratings, grain quality and where it grows best.",
+  "title": "SL 22H (NSIC Rc 758H) Hybrid Rice: Yield, Maturity and Characteristics",
+  "metaTitle": "SL 22H (NSIC Rc 758H): Yield, Maturity and Characteristics",
+  "metaDescription": "SL 22H is NSIC Rc 758H, a hybrid rice for irrigated lowland: about 111 days and 8 tonnes per hectare on average. See its ratings.",
   "focusKeyword": "NSIC Rc 758H",
   "keywords": [
     "NSIC Rc 758H",
@@ -15,9 +15,9 @@
     "rc 758H",
     "758H rice variety characteristics",
     "Mestiso 148",
-    "SL 222H"
+    "SL 22H"
   ],
-  "excerpt": "NSIC Rc 758H is a hybrid rice variety for irrigated lowland, sold as SL 222H and known locally as Mestiso 148. The NSIC approved it in 2023. SL Agritech bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 758H is a hybrid rice variety for irrigated lowland, sold as SL 22H and known locally as Mestiso 148. The NSIC approved it in 2023. SL Agritech bred it. It matures in about 111 days and averages 8 tonnes per hectare, with a top yield of 8 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 758H is bred to fill",
@@ -26,12 +26,14 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for SL 222H, or rice variety 758H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for SL 22H, or rice variety 758H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
+        "**Maturity:** about 111 days after sowing.",
+        "**Yield:** 8 tonnes per hectare on average, or about 160 cavans of 50 kilograms. The best trial reached 8 tonnes.",
         "**Holds up against:** rice blast.",
         "**Watch out for:** tungro.",
         "**Cooked rice:** low amylose, so soft and tender."
@@ -60,7 +62,7 @@
         ],
         [
           "Sold as",
-          "SL 222H"
+          "SL 22H"
         ],
         [
           "Local name",
@@ -73,17 +75,42 @@
         [
           "Growing environment",
           "Irrigated lowland"
+        ],
+        [
+          "Maturity",
+          "111 days after sowing"
+        ],
+        [
+          "Average yield",
+          "8 t/ha"
+        ],
+        [
+          "Top yield in trials",
+          "8 t/ha"
+        ],
+        [
+          "Plant height",
+          "104 cm"
         ]
       ]
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "How many days does it take, and how much does it yield?"
+      "text": "How much does NSIC Rc 758H yield?"
     },
     {
       "type": "text",
-      "text": "PhilRice has not published this variety's days to harvest and trial yields in its catalogue yet. So ask the seed seller or your municipal agriculturist for the figures from the trials in your region before you plan the season. Once you know the day count, anee.io dates every task from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it. Meanwhile, our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare) covers the habits that matter with any variety."
+      "text": "On average it gives 8 tonnes per hectare. That is about 160 cavans of 50 kilograms of palay. It sits above the average of the 180 irrigated lowland hybrids in PhilRice's list, which is 6.9 tonnes. But the top yield, 8 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How many days does it take to mature?"
+    },
+    {
+      "type": "text",
+      "text": "It takes about 111 days from sowing to harvest. IRRI groups varieties of 100 to 120 days as short duration and 120 to 140 days as medium, so this one counts as short duration. Then harvest when 85 to 90 percent of the grains turn golden yellow, as PalayCheck advises. Because the day count drives every task, anee.io counts it for you from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -116,6 +143,21 @@
         ],
         [
           "Sheath blight",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Green leafhopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Brown planthopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Stem borer",
           "Intermediate",
           "Took a middling share of damage"
         ]
@@ -203,32 +245,36 @@
     },
     {
       "type": "text",
-      "text": "These come from the same kind of farm, and PhilRice lists their days and yields. So if seed of this one is hard to find, compare these first."
+      "text": "These come from the same kind of farm and grow about as long. So if seed of this one is hard to find, compare these first."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "[NSIC Rc 614H](/rice-varieties/nsic-rc-614h): 112 days, 6.1 tonnes per hectare on average, 2020",
-        "[NSIC Rc 616H](/rice-varieties/nsic-rc-616h): 108 days, 6.5 tonnes per hectare on average, 2020",
-        "[NSIC Rc 618H](/rice-varieties/nsic-rc-618h): 115 days, 6.1 tonnes per hectare on average, 2020",
-        "[NSIC Rc 550H](/rice-varieties/nsic-rc-550h): 112 days, 6 tonnes per hectare on average, 2019"
+        "[NSIC Rc 654H](/rice-varieties/nsic-rc-654h): 112 days, 8 tonnes per hectare on average, 2021",
+        "[NSIC Rc 774H](/rice-varieties/nsic-rc-774h): 112 days, 7.8 tonnes per hectare on average, 2024",
+        "[NSIC Rc 662H](/rice-varieties/nsic-rc-662h): 112 days, 7.8 tonnes per hectare on average, 2021",
+        "[NSIC Rc 820H](/rice-varieties/nsic-rc-820h): 112 days, 8.2 tonnes per hectare on average, 2026"
       ]
     },
     {
       "type": "faq",
       "items": [
         {
-          "q": "Is SL 222H the same as NSIC Rc 758H?",
-          "a": "Yes. SL 222H is the name it is sold under, and NSIC Rc 758H is its registration with the National Seed Industry Council, where its local name is Mestiso 148. The numbers on this page are PhilRice's for NSIC Rc 758H."
+          "q": "Is SL 22H the same as NSIC Rc 758H?",
+          "a": "Yes. SL 22H is the name it is sold under, and NSIC Rc 758H is its registration with the National Seed Industry Council, where its local name is Mestiso 148. The numbers on this page are PhilRice's for NSIC Rc 758H."
         },
         {
           "q": "What is the local name of NSIC Rc 758H?",
           "a": "It is known as Mestiso 148. Seed sellers and agriculturists use both names, so ask for either one."
         },
         {
-          "q": "When was NSIC Rc 758H approved?",
-          "a": "The NSIC approved it in 2023. SL Agritech bred it. PhilRice has not listed its days to harvest and trial yield yet, so ask for the regional trial figures before you plant."
+          "q": "How many days does NSIC Rc 758H take to harvest?",
+          "a": "About 111 days after sowing. Then harvest when 85 to 90 percent of the grains are golden yellow."
+        },
+        {
+          "q": "What is the average yield of NSIC Rc 758H?",
+          "a": "PhilRice lists 8 tonnes per hectare on average, about 160 cavans of 50 kilograms. The best trial reached 8 tonnes. Your own yield depends on water, seed, fertilizer and timing."
         },
         {
           "q": "Is this variety a hybrid?",
@@ -237,10 +283,6 @@
         {
           "q": "What should I watch for when I plant it?",
           "a": "In PhilRice's tests it was weak against tungro. So scout from the early weeks and act at the first signs."
-        },
-        {
-          "q": "Is it soft when cooked?",
-          "a": "It has low amylose, 16.8 percent. So it cooks soft."
         }
       ]
     },
@@ -278,11 +320,7 @@
           "url": "https://dbmp.philrice.gov.ph/seeds/"
         },
         {
-          "label": "Where SL 222H is named as NSIC Rc 758H",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf"
-        },
-        {
-          "label": "Where SL 222H is named as NSIC Rc 758H",
+          "label": "NSIC registry of rice varieties: NSIC Rc 758H",
           "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
         },
         {

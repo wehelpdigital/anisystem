@@ -1,5 +1,1176 @@
 [
  {
+  "slug": "nsic-rc-784",
+  "name": "NSIC Rc 784",
+  "localName": "Tubigan 64",
+  "year": 2026,
+  "breeder": "IRRI and PhilRice and UPLB",
+  "type": "inbred",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 114,
+  "yieldAvg": 6.13,
+  "yieldMax": 6.39,
+  "height": 108,
+  "reactions": {
+   "glh": "I",
+   "bph": "I",
+   "sb": "MR",
+   "blast": "I",
+   "blb": "R",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    19.6,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-786h",
+  "name": "NSIC Rc 786H",
+  "localName": "Mestiso 157",
+  "year": 2026,
+  "breeder": "Philippine Dadi Agricultural Technology",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 112,
+  "yieldAvg": null,
+  "yieldMax": null,
+  "height": 120,
+  "reactions": {
+   "glh": "S",
+   "bph": "S",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    12.7,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "DADI-1H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-788h",
+  "name": "NSIC Rc 788H",
+  "localName": "Mestiso 158",
+  "year": 2026,
+  "breeder": "Philippine Dadi Agricultural Technology",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 112,
+  "yieldAvg": null,
+  "yieldMax": null,
+  "height": 114,
+  "reactions": {
+   "glh": "I",
+   "bph": "MS",
+   "sb": "MS",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    12.4,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "DADI-2H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-790h",
+  "name": "NSIC Rc 790H",
+  "localName": "Mestiso 159",
+  "year": 2026,
+  "breeder": "Philippine Dadi Agricultural Technology",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 110,
+  "yieldAvg": 8.86,
+  "yieldMax": 9.99,
+  "height": 110,
+  "reactions": {
+   "glh": "I",
+   "bph": "I",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    15.8,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "DADI-3H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-792h",
+  "name": "NSIC Rc 792H",
+  "localName": "Mestiso 160",
+  "year": 2026,
+  "breeder": "Green and Grow Teknologies",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 110,
+  "yieldAvg": 9.31,
+  "yieldMax": null,
+  "height": 120,
+  "reactions": {
+   "glh": "I",
+   "bph": "MS",
+   "sb": "MS",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    18.7,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "H380"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit"
+  ]
+ },
+ {
+  "slug": "nsic-rc-794h",
+  "name": "NSIC Rc 794H",
+  "localName": "Mestiso 161",
+  "year": 2026,
+  "breeder": "Bayer Crop Science",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 114,
+  "yieldAvg": 9.04,
+  "yieldMax": 10.54,
+  "height": 122,
+  "reactions": {
+   "glh": "MS",
+   "bph": "S",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    21.8,
+    "I"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "AZ8445DT"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-796h",
+  "name": "NSIC Rc 796H",
+  "localName": "Mestiso 162",
+  "year": 2026,
+  "breeder": "Bayer Crop Science",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 114,
+  "yieldAvg": 9.09,
+  "yieldMax": 10.65,
+  "height": 125,
+  "reactions": {
+   "glh": "I",
+   "bph": "MS",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    19.8,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "AZ2241ST"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-798h",
+  "name": "NSIC Rc 798H",
+  "localName": "Mestiso 163",
+  "year": 2026,
+  "breeder": "Bayer Crop Science",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 110,
+  "yieldAvg": 8.43,
+  "yieldMax": 9.73,
+  "height": 115,
+  "reactions": {
+   "glh": "S",
+   "bph": "MS",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    23.1,
+    "I"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "AZ5532ST"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-800h",
+  "name": "NSIC Rc 800H",
+  "localName": "Mestiso 164",
+  "year": 2026,
+  "breeder": "IRRI",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 109,
+  "yieldAvg": 8.81,
+  "yieldMax": 9.78,
+  "height": 114,
+  "reactions": {
+   "glh": "MS",
+   "bph": "S",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    19.8,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "IR138982H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-802h",
+  "name": "NSIC Rc 802H",
+  "localName": "Mestiso 165",
+  "year": 2026,
+  "breeder": "Longping High Tech",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 112,
+  "yieldAvg": 9.18,
+  "yieldMax": 10.19,
+  "height": 116,
+  "reactions": {
+   "glh": "S",
+   "bph": "S",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    14.5,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "LP 756"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-804h",
+  "name": "NSIC Rc 804H",
+  "localName": "Mestiso 166",
+  "year": 2026,
+  "breeder": "Longping High Tech",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 112,
+  "yieldAvg": 9.3,
+  "yieldMax": 10.4,
+  "height": 116,
+  "reactions": {
+   "glh": "MS",
+   "bph": "I",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    13.8,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "LP 757"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-806h",
+  "name": "NSIC Rc 806H",
+  "localName": "Mestiso 167",
+  "year": 2026,
+  "breeder": "Longping High Tech",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 110,
+  "yieldAvg": 8.91,
+  "yieldMax": 10.66,
+  "height": 116,
+  "reactions": {
+   "glh": "MS",
+   "bph": "MS",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    13.2,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "LP 794"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-808h",
+  "name": "NSIC Rc 808H",
+  "localName": "Mestiso 168",
+  "year": 2026,
+  "breeder": "Mahyco International Philippines",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 110,
+  "yieldAvg": 8.7,
+  "yieldMax": 10.06,
+  "height": 118,
+  "reactions": {
+   "glh": "MS",
+   "bph": "MS",
+   "sb": "MS",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    23.4,
+    "I"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "MIP 5053"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-810h",
+  "name": "NSIC Rc 810H",
+  "localName": "Mestiso 169",
+  "year": 2026,
+  "breeder": "Mahyco International Philippines",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 108,
+  "yieldAvg": 8.49,
+  "yieldMax": 9.54,
+  "height": 117,
+  "reactions": {
+   "glh": "MS",
+   "bph": "MS",
+   "sb": "MS",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    19.8,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "MIP 5057"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-812h",
+  "name": "NSIC Rc 812H",
+  "localName": "Mestiso 170",
+  "year": 2026,
+  "breeder": "Mahyco International Philippines",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 104,
+  "yieldAvg": 8.68,
+  "yieldMax": 9.38,
+  "height": 110,
+  "reactions": {
+   "glh": "MS",
+   "bph": "MS",
+   "sb": "I",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    24.4,
+    "I"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "MIP 5065"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-814h",
+  "name": "NSIC Rc 814H",
+  "localName": "Mestiso 171",
+  "year": 2026,
+  "breeder": "Mahyco International Philippines",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 94,
+  "yieldAvg": 7.98,
+  "yieldMax": null,
+  "height": 104,
+  "reactions": {
+   "glh": "MS",
+   "bph": "MS",
+   "sb": "MS",
+   "blast": "I",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    18.3,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "TH3-5"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-816h",
+  "name": "NSIC Rc 816H",
+  "localName": "Mestiso 172",
+  "year": 2026,
+  "breeder": "CLSU and PhilSCAT",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 112,
+  "yieldAvg": 9.5,
+  "yieldMax": null,
+  "height": 118,
+  "reactions": {
+   "glh": "I",
+   "bph": "MS",
+   "sb": "I",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    14.3,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "PhilSCAT 21"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-818h",
+  "name": "NSIC Rc 818H",
+  "localName": "Mestiso 173",
+  "year": 2026,
+  "breeder": "CLSU and PhilSCAT",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 115,
+  "yieldAvg": 9.19,
+  "yieldMax": null,
+  "height": 122,
+  "reactions": {
+   "glh": "MS",
+   "bph": "MS",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    18.2,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "PhilSCAT 22"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-820h",
+  "name": "NSIC Rc 820H",
+  "localName": "Mestiso 174",
+  "year": 2026,
+  "breeder": "PhilRice and UPLB",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 112,
+  "yieldAvg": 8.19,
+  "yieldMax": null,
+  "height": 123,
+  "reactions": {
+   "glh": "I",
+   "bph": "I",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    22.0,
+    "I"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "PRUP 15"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-822h",
+  "name": "NSIC Rc 822H",
+  "localName": "Mestiso 175",
+  "year": 2026,
+  "breeder": "RiceTec",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 107,
+  "yieldAvg": 8.68,
+  "yieldMax": 10.05,
+  "height": 114,
+  "reactions": {
+   "glh": "R",
+   "bph": "MR",
+   "sb": "MS",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    17.7,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "RTP740FP"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-824h",
+  "name": "NSIC Rc 824H",
+  "localName": "Mestiso 176",
+  "year": 2026,
+  "breeder": "RiceTec",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 108,
+  "yieldAvg": 8.31,
+  "yieldMax": 8.73,
+  "height": 118,
+  "reactions": {
+   "glh": "R",
+   "bph": "I",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    13.1,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "RTP750FP"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-826h",
+  "name": "NSIC Rc 826H",
+  "localName": "Mestiso 177",
+  "year": 2026,
+  "breeder": "Universal Harvester",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 106,
+  "yieldAvg": 8.8,
+  "yieldMax": null,
+  "height": 113,
+  "reactions": {
+   "glh": "I",
+   "bph": "MS",
+   "sb": "MS",
+   "blast": "R",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    19.1,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "UH 309"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-828h",
+  "name": "NSIC Rc 828H",
+  "localName": "Mestiso 178",
+  "year": 2026,
+  "breeder": "Winall Agristar",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 108,
+  "yieldAvg": 9.02,
+  "yieldMax": 9.85,
+  "height": 118,
+  "reactions": {
+   "glh": "I",
+   "bph": "MS",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    19.8,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "WSTAR-78"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-830h",
+  "name": "NSIC Rc 830H",
+  "localName": "Mestiso 179",
+  "year": 2026,
+  "breeder": "Winall Agristar",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 116,
+  "yieldAvg": 10.13,
+  "yieldMax": null,
+  "height": 118,
+  "reactions": {
+   "glh": "MS",
+   "bph": "I",
+   "sb": "MR",
+   "blast": "R",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    21.9,
+    "I"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "WSTAR-98"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
   "slug": "nsic-rc-780h",
   "name": "NSIC Rc 780H",
   "localName": "Mestiso 155",
@@ -11,15 +1182,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 110,
+  "yieldAvg": 8.4,
+  "yieldMax": 8.67,
+  "height": 114,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "MS",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -64,7 +1238,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "Milagros Harvester 101"
   ],
@@ -85,15 +1261,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 108,
+  "yieldAvg": 8.13,
+  "yieldMax": 8.23,
+  "height": 112,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -138,7 +1317,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "Buena 299",
    "Buenas 299 F1",
@@ -171,7 +1352,10 @@
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -230,15 +1414,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 6.11,
+  "yieldMax": 6.63,
+  "height": 112,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "I",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -283,7 +1470,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-762sr",
@@ -297,15 +1486,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 6.36,
+  "yieldMax": 6.99,
+  "height": 111,
   "reactions": {
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -350,7 +1542,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-764sr",
@@ -364,15 +1558,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 111,
+  "yieldAvg": 6.14,
+  "yieldMax": 6.69,
+  "height": 114,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -417,7 +1614,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-766",
@@ -431,15 +1630,18 @@
   "environments": [
    "saline"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 116,
+  "yieldAvg": 4.04,
+  "yieldMax": 4.05,
+  "height": 92,
   "reactions": {
    "blast": "S",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -484,7 +1686,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-768h",
@@ -498,15 +1702,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 109,
+  "yieldAvg": 7.22,
+  "yieldMax": 8.07,
+  "height": 110,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "MR"
   },
   "grain": {
    "amylose": [
@@ -551,7 +1758,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-770h",
@@ -565,15 +1774,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 108,
+  "yieldAvg": 8.0,
+  "yieldMax": 9.29,
+  "height": 109,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "MR"
   },
   "grain": {
    "amylose": [
@@ -618,7 +1830,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 894H"
   ],
@@ -638,15 +1852,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 108,
+  "yieldAvg": 7.63,
+  "yieldMax": 8.88,
+  "height": 112,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -691,7 +1908,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 994H"
   ],
@@ -711,15 +1930,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 7.83,
+  "yieldMax": 8.88,
+  "height": 126,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -764,7 +1986,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "SL-27H"
   ],
@@ -784,15 +2008,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 106,
+  "yieldAvg": 8.46,
+  "yieldMax": 9.29,
+  "height": 114,
   "reactions": {
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "MS",
+   "bph": "I",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -837,7 +2064,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "SL-771H"
   ],
@@ -857,15 +2086,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 108,
+  "yieldAvg": 8.39,
+  "yieldMax": 8.61,
+  "height": 107,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -910,7 +2142,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "Vanbee 75"
   ],
@@ -929,15 +2163,18 @@
   "special": "special",
   "traditional": false,
   "environments": [],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 6.77,
+  "yieldMax": 7.12,
+  "height": 116,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -982,7 +2219,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-732",
@@ -996,15 +2235,18 @@
   "environments": [
    "rainfed-tpr"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 110,
+  "yieldAvg": 4.8,
+  "yieldMax": 6.98,
+  "height": 109,
   "reactions": {
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -1049,7 +2291,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-734",
@@ -1063,15 +2307,18 @@
   "environments": [
    "rainfed-tpr"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 104,
+  "yieldAvg": 5.36,
+  "yieldMax": 7.74,
+  "height": 107,
   "reactions": {
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -1116,7 +2363,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-736",
@@ -1130,15 +2379,18 @@
   "environments": [
    "rainfed-tpr"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 105,
+  "yieldAvg": 5.38,
+  "yieldMax": 8.35,
+  "height": 113,
   "reactions": {
    "blast": "R",
    "blb": "S",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -1183,7 +2435,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-738",
@@ -1197,15 +2451,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 110,
+  "yieldAvg": 5.93,
+  "yieldMax": 5.99,
+  "height": 102,
   "reactions": {
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -1252,7 +2509,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-740",
@@ -1266,15 +2525,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 110,
+  "yieldAvg": 5.91,
+  "yieldMax": 6.07,
+  "height": 101,
   "reactions": {
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -1321,7 +2583,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-742h",
@@ -1335,15 +2599,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
+  "maturity": 112,
+  "yieldAvg": 8.28,
   "yieldMax": null,
-  "height": null,
+  "height": 110,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -1388,7 +2655,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "BioRice Bonus"
   ],
@@ -1410,15 +2679,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
+  "maturity": 116,
+  "yieldAvg": 6.76,
   "yieldMax": null,
-  "height": null,
+  "height": 107,
   "reactions": {
    "blast": "R",
    "blb": "S",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -1463,7 +2735,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "BioRice Bounty"
   ],
@@ -1485,15 +2759,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
+  "maturity": 112,
+  "yieldAvg": 8.68,
   "yieldMax": null,
-  "height": null,
+  "height": 106,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -1538,7 +2815,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "Harvest King 158"
   ],
@@ -1560,15 +2839,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 111,
+  "yieldAvg": 8.96,
+  "yieldMax": 9.8,
+  "height": 111,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -1613,7 +2895,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "Arize 6585",
    "AZ 6585"
@@ -1636,15 +2920,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 8.39,
+  "yieldMax": 9.21,
+  "height": 106,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -1689,7 +2976,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 777"
   ],
@@ -1710,15 +2999,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 8.22,
+  "yieldMax": 9.22,
+  "height": 109,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -1763,7 +3055,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 924"
   ],
@@ -1784,15 +3078,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 9.19,
+  "yieldMax": 10.66,
+  "height": 110,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -1837,7 +3134,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "PHB 91"
   ],
@@ -1858,15 +3157,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 8.51,
+  "yieldMax": 8.87,
+  "height": 106,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -1911,7 +3213,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "SL-203H"
   ],
@@ -1932,15 +3236,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 111,
+  "yieldAvg": 7.99,
+  "yieldMax": 8.0,
+  "height": 104,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -1985,14 +3292,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
-  "tradeNames": [
-   "SL-222H"
-  ],
-  "tradeSources": [
-   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf",
+  "sources": [
    "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
-  ]
+  ],
+  "tradeNames": [
+   "SL-22H"
+  ],
+  "tradeSources": []
  },
  {
   "slug": "nsic-rc-670",
@@ -2014,7 +3320,10 @@
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -2083,7 +3392,10 @@
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -2152,7 +3464,10 @@
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -2221,7 +3536,10 @@
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -2290,7 +3608,10 @@
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -2359,7 +3680,10 @@
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -2409,6 +3733,57 @@
   "sources": []
  },
  {
+  "slug": "nsic-rc-682gr2e",
+  "name": "NSIC Rc 682GR2E",
+  "localName": "Malusog 1",
+  "year": 2022,
+  "breeder": "PhilRice and IRRI",
+  "type": "inbred",
+  "special": null,
+  "traditional": false,
+  "environments": [],
+  "maturity": 118,
+  "yieldAvg": 5.57,
+  "yieldMax": 5.81,
+  "height": 120,
+  "reactions": {
+   "glh": "S",
+   "bph": "I",
+   "sb": "I",
+   "blast": "R",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    18.5,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
+  "tradeNames": [
+   "Golden Rice",
+   "Malusog Rice",
+   "Malusog 1"
+  ],
+  "tradeSources": [
+   "https://www.philrice.gov.ph/?p=22786",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf",
+   "https://www.philstar.com/business/2023/01/05/2235326/golden-rice-harvest-reaches-100-tons/amp/"
+  ]
+ },
+ {
   "slug": "nsic-rc-684",
   "name": "NSIC Rc 684",
   "localName": "Zinc Rice 3",
@@ -2420,15 +3795,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 5.4,
+  "yieldMax": 6.06,
+  "height": 105,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -2473,7 +3851,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-686",
@@ -2487,15 +3867,18 @@
   "environments": [
    "saline"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 115,
+  "yieldAvg": 3.07,
+  "yieldMax": 3.33,
+  "height": 100,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "S",
+   "bph": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -2540,7 +3923,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-688h",
@@ -2554,15 +3939,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 7.95,
+  "yieldMax": 9.85,
+  "height": 120,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -2607,7 +3995,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "Arize AZ 8433 DT",
    "AZ 8433 DT"
@@ -2630,15 +4020,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 7.12,
+  "yieldMax": 8.46,
+  "height": 120,
   "reactions": {
    "blast": "R",
    "blb": "S",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -2683,7 +4076,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-692h",
@@ -2697,15 +4092,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 5.63,
+  "yieldMax": 8.38,
+  "height": 118,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -2750,7 +4148,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-694h",
@@ -2764,15 +4164,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 7.17,
+  "yieldMax": 11.24,
+  "height": 111,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -2817,7 +4220,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "Leads 143",
    "LAV 107"
@@ -2840,15 +4245,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 5.97,
+  "yieldMax": 9.12,
+  "height": 114,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -2893,13 +4301,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
-   "LP 906"
+   "LP 908",
+   "Longping 908"
   ],
   "tradeSources": [
-   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf",
-   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+   "https://ilocos.da.gov.ph/?p=46408"
   ]
  },
  {
@@ -2914,15 +4324,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 110,
+  "yieldAvg": 7.41,
+  "yieldMax": 10.77,
+  "height": 108,
   "reactions": {
    "blast": "R",
    "blb": "S",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -2967,7 +4380,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 996"
   ],
@@ -2988,15 +4403,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 103,
+  "yieldAvg": 5.24,
+  "yieldMax": 7.01,
+  "height": 107,
   "reactions": {
    "blast": "R",
    "blb": "S",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -3041,7 +4459,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "PhilSCAT 10"
   ],
@@ -3063,15 +4483,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 7.32,
+  "yieldMax": 8.59,
+  "height": 113,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -3116,7 +4539,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "PhilSCAT 17"
   ],
@@ -3138,15 +4563,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 6.83,
+  "yieldMax": 8.2,
+  "height": 116,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -3191,7 +4619,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "PhilSCAT 18"
   ],
@@ -3213,15 +4643,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 7.13,
+  "yieldMax": 8.86,
+  "height": 119,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -3266,7 +4699,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "PhilSCAT 20"
   ],
@@ -3288,15 +4723,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 116,
+  "yieldAvg": 8.05,
+  "yieldMax": 10.46,
+  "height": 119,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -3341,7 +4779,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-710h",
@@ -3355,15 +4795,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 115,
+  "yieldAvg": 9.75,
+  "yieldMax": 10.92,
+  "height": 124,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -3408,7 +4851,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "PHB 87"
   ],
@@ -3430,15 +4875,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 113,
+  "yieldAvg": 7.76,
+  "yieldMax": 10.95,
+  "height": 130,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -3483,7 +4931,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "PHB 89"
   ],
@@ -3503,15 +4953,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 109,
+  "yieldAvg": 7.14,
+  "yieldMax": 9.31,
+  "height": 109,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "S",
+   "bph": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -3556,7 +5009,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-716h",
@@ -3637,15 +5092,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 6.22,
+  "yieldMax": 10.53,
+  "height": 116,
   "reactions": {
    "blast": "R",
    "blb": "S",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -3690,7 +5148,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "SL-39H"
   ],
@@ -3710,15 +5170,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 6.75,
+  "yieldMax": 8.55,
+  "height": 127,
   "reactions": {
    "blast": "R",
    "blb": "S",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -3763,7 +5226,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "SL-43H"
   ],
@@ -3783,15 +5248,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
+  "maturity": 104,
   "yieldAvg": null,
   "yieldMax": null,
-  "height": null,
+  "height": 108,
   "reactions": {
    "blast": "R",
    "blb": "S",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -3836,7 +5304,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "SL-201H"
   ],
@@ -3856,15 +5326,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 113,
+  "yieldAvg": 5.85,
+  "yieldMax": 8.78,
+  "height": 114,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -3909,7 +5382,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "SL-422H"
   ],
@@ -3929,15 +5404,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 6.71,
+  "yieldMax": 9.41,
+  "height": 125,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -3982,7 +5460,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "SL-606H"
   ],
@@ -4002,15 +5482,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 114,
+  "yieldAvg": 7.11,
+  "yieldMax": 9.48,
+  "height": 118,
   "reactions": {
    "blast": "R",
    "blb": "S",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -4055,7 +5538,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "SL-631H"
   ],
@@ -4075,15 +5560,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 6.82,
+  "yieldMax": 9.55,
+  "height": 102,
   "reactions": {
    "blast": "I",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4127,7 +5615,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "Hyvar S26"
   ],
@@ -4159,7 +5649,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4233,7 +5724,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4306,7 +5798,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4380,7 +5873,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4454,7 +5948,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -4528,7 +6023,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4602,7 +6098,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4677,7 +6174,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4751,7 +6249,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4827,7 +6326,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4903,7 +6403,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -4979,7 +6480,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5055,7 +6557,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5131,7 +6634,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5207,7 +6711,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5273,15 +6778,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 6.25,
+  "yieldMax": 10.67,
+  "height": 112,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5326,7 +6834,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 624"
   ],
@@ -5347,15 +6857,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 7.95,
+  "yieldMax": 10.78,
+  "height": 106,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5400,7 +6913,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 862"
   ],
@@ -5421,15 +6936,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 111,
+  "yieldAvg": 7.63,
+  "yieldMax": 10.86,
+  "height": 112,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5474,7 +6992,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 524"
   ],
@@ -5496,15 +7016,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 6.34,
+  "yieldMax": 10.75,
+  "height": 108,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5549,7 +7072,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 616"
   ],
@@ -5570,15 +7095,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 6.96,
+  "yieldMax": 9.92,
+  "height": 112,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "S"
   },
   "grain": {
    "amylose": [
@@ -5623,7 +7151,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 763"
   ],
@@ -5644,15 +7174,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 7.81,
+  "yieldMax": 10.84,
+  "height": 109,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5697,7 +7230,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "LP 869"
   ],
@@ -5718,15 +7253,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 112,
+  "yieldAvg": 7.55,
+  "yieldMax": 11.24,
+  "height": 122,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "I",
+   "bph": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -5771,7 +7309,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "PHB 85"
   ],
@@ -5792,15 +7332,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 110,
+  "yieldAvg": 5.23,
+  "yieldMax": 8.51,
+  "height": 108,
   "reactions": {
    "blast": "R",
    "blb": "S",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5845,7 +7388,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "Jackpot 102"
   ],
@@ -5867,15 +7412,18 @@
   "environments": [
    "irrigated"
   ],
-  "maturity": null,
-  "yieldAvg": null,
-  "yieldMax": null,
-  "height": null,
+  "maturity": 109,
+  "yieldAvg": 5.98,
+  "yieldMax": 6.39,
+  "height": 106,
   "reactions": {
    "blast": "R",
    "blb": "I",
    "tungro": "S",
-   "shb": "I"
+   "shb": "I",
+   "glh": "S",
+   "bph": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -5920,7 +7468,9 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": [],
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ],
   "tradeNames": [
    "PAC 801 Elite"
   ],
@@ -5950,7 +7500,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -6021,7 +7572,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "R",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -6098,7 +7650,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -6175,7 +7728,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -6252,7 +7806,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -6329,7 +7884,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -6402,7 +7958,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -6475,7 +8032,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -6553,7 +8111,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -6630,7 +8189,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -6707,7 +8267,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -6785,7 +8346,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -6863,7 +8425,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -6942,7 +8505,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -7021,7 +8585,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -7093,7 +8658,15 @@
   "yieldAvg": 6.0,
   "yieldMax": 10.2,
   "height": 98.0,
-  "reactions": {},
+  "reactions": {
+   "glh": "I",
+   "bph": "I",
+   "sb": "I",
+   "blast": "I",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "S"
+  },
   "grain": {
    "amylose": [
     13.9,
@@ -7164,7 +8737,15 @@
   "yieldAvg": 6.6,
   "yieldMax": 11.4,
   "height": 103.0,
-  "reactions": {},
+  "reactions": {
+   "glh": "I",
+   "bph": "I",
+   "sb": "I",
+   "blast": "I",
+   "blb": "S",
+   "shb": "S",
+   "tungro": "S"
+  },
   "grain": {
    "amylose": [
     18.6,
@@ -7463,7 +9044,10 @@
    "blast": "I",
    "blb": "S",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "MS",
+   "bph": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -7531,7 +9115,10 @@
    "blast": "I",
    "blb": "S",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -7599,7 +9186,10 @@
    "blast": "I",
    "blb": "S",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "MS",
+   "bph": "MS",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -7667,7 +9257,10 @@
    "blast": "I",
    "blb": "S",
    "tungro": "S",
-   "shb": "S"
+   "shb": "S",
+   "glh": "MS",
+   "bph": "MS",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -7738,7 +9331,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -7815,7 +9409,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -7892,7 +9487,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -7969,7 +9565,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -8046,7 +9643,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -8123,7 +9721,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -8200,7 +9799,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -8275,7 +9875,8 @@
    "tungro": "I",
    "bph": "I",
    "glh": "I",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -8398,6 +9999,49 @@
   ]
  },
  {
+  "slug": "nsic-rc-584sr",
+  "name": "NSIC Rc 584SR",
+  "localName": "Japonica 7",
+  "year": 2019,
+  "breeder": "IRRI",
+  "type": "inbred",
+  "special": "special",
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 112,
+  "yieldAvg": 3.33,
+  "yieldMax": 4.07,
+  "height": 91,
+  "reactions": {
+   "glh": "S",
+   "bph": "I",
+   "sb": "I",
+   "blast": "I",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    12.1,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
   "slug": "nsic-rc-586h",
   "name": "NSIC Rc 586H",
   "localName": "Mestiso 104",
@@ -8413,7 +10057,15 @@
   "yieldAvg": 6.6,
   "yieldMax": 11.3,
   "height": 107.0,
-  "reactions": {},
+  "reactions": {
+   "glh": "I",
+   "bph": "I",
+   "sb": "R",
+   "blast": "I",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
   "grain": {
    "amylose": [
     14.4,
@@ -8477,7 +10129,15 @@
   "yieldAvg": 6.6,
   "yieldMax": 12.7,
   "height": 110.0,
-  "reactions": {},
+  "reactions": {
+   "glh": "I",
+   "bph": "I",
+   "sb": "I",
+   "blast": "I",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "S"
+  },
   "grain": {
    "amylose": [
     16.5,
@@ -9833,7 +11493,8 @@
    "tungro": "S",
    "bph": "S",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -9913,7 +11574,15 @@
   "yieldAvg": 6.5,
   "yieldMax": 12.3,
   "height": 108.0,
-  "reactions": {},
+  "reactions": {
+   "glh": "I",
+   "bph": "I",
+   "sb": "I",
+   "blast": "I",
+   "blb": "S",
+   "shb": "S",
+   "tungro": "S"
+  },
   "grain": {
    "amylose": [
     22.1,
@@ -9985,7 +11654,15 @@
   "yieldAvg": 5.9,
   "yieldMax": 8.3,
   "height": 105.0,
-  "reactions": {},
+  "reactions": {
+   "glh": "S",
+   "bph": "S",
+   "sb": "I",
+   "blast": "I",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "S"
+  },
   "grain": {
    "amylose": [
     18.1,
@@ -10055,7 +11732,15 @@
   "yieldAvg": 6.6,
   "yieldMax": 10.6,
   "height": 112.0,
-  "reactions": {},
+  "reactions": {
+   "glh": "I",
+   "bph": "I",
+   "sb": "I",
+   "blast": "I",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "S"
+  },
   "grain": {
    "amylose": [
     17.5,
@@ -10118,7 +11803,15 @@
   "yieldAvg": 6.4,
   "yieldMax": 12.9,
   "height": 106.0,
-  "reactions": {},
+  "reactions": {
+   "glh": "S",
+   "bph": "S",
+   "sb": "I",
+   "blast": "R",
+   "blb": "S",
+   "shb": "S",
+   "tungro": "S"
+  },
   "grain": {
    "amylose": [
     21.5,
@@ -10182,7 +11875,15 @@
   "yieldAvg": 5.7,
   "yieldMax": 9.8,
   "height": 114.0,
-  "reactions": {},
+  "reactions": {
+   "glh": "S",
+   "bph": "S",
+   "sb": "S",
+   "blast": "I",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
   "grain": {
    "amylose": [
     20.5,
@@ -12536,7 +14237,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "S",
-   "shb": "S"
+   "shb": "S",
+   "sb": "S"
   },
   "grain": {
    "amylose": [
@@ -12613,7 +14315,8 @@
    "tungro": "S",
    "bph": "S",
    "glh": "S",
-   "shb": "S"
+   "shb": "S",
+   "sb": "R"
   },
   "grain": {
    "amylose": [
@@ -12690,7 +14393,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -12767,7 +14471,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -12845,7 +14550,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -16646,7 +18352,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MS",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -16723,7 +18430,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -16776,6 +18484,49 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=263"
+  ]
+ },
+ {
+  "slug": "nsic-2103-rc-342sr",
+  "name": "NSIC 2103 Rc 342SR",
+  "localName": "Mabango 4",
+  "year": 2013,
+  "breeder": "PhilRice",
+  "type": "inbred",
+  "special": "special",
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 114,
+  "yieldAvg": 4.33,
+  "yieldMax": 4.75,
+  "height": 103,
+  "reactions": {
+   "glh": "MR",
+   "bph": "I",
+   "sb": "I",
+   "blast": "S",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    20.7,
+    "I"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
   ]
  },
  {
@@ -16868,6 +18619,49 @@
    "yieldAvg": 5.5,
    "yieldMax": 8.0
   }
+ },
+ {
+  "slug": "nsic-rc-310",
+  "name": "NSIC Rc 310",
+  "localName": "Mestiso 44",
+  "year": 2013,
+  "breeder": "Bayer Crop Science",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 112,
+  "yieldAvg": 5.73,
+  "yieldMax": 5.92,
+  "height": 103,
+  "reactions": {
+   "glh": "I",
+   "bph": "I",
+   "sb": "I",
+   "blast": "I",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    19.7,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-310h",
@@ -17458,7 +19252,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -17535,7 +19330,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -17613,7 +19409,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -17691,7 +19488,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "shb": "I"
+   "shb": "I",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -17769,7 +19567,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -17846,7 +19645,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -17923,7 +19723,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -18001,7 +19802,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -18079,7 +19881,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -18976,7 +20779,9 @@
    "blb": "I",
    "tungro": "S",
    "sb": "I",
-   "shb": "S"
+   "shb": "S",
+   "glh": "I",
+   "bph": "I"
   },
   "grain": {
    "amylose": [
@@ -19295,7 +21100,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MS"
   },
   "grain": {
    "amylose": [
@@ -20810,7 +22616,8 @@
    "tungro": "S",
    "glh": "I",
    "sb": "I",
-   "shb": "S"
+   "shb": "S",
+   "bph": "I"
   },
   "grain": {
    "amylose": [
@@ -21199,7 +23006,8 @@
    "tungro": "S",
    "bph": "MR",
    "glh": "MR",
-   "shb": "S"
+   "shb": "S",
+   "sb": "MR"
   },
   "grain": {
    "amylose": [
@@ -21276,7 +23084,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MS",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -21354,7 +23163,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "shb": "S"
+   "shb": "S",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -21432,7 +23242,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "shb": "I"
+   "shb": "I",
+   "sb": "I"
   },
   "grain": {
    "amylose": [
@@ -21509,7 +23320,8 @@
    "tungro": "S",
    "bph": "MR",
    "glh": "MR",
-   "sb": "I"
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -21591,7 +23403,8 @@
    "tungro": "S",
    "bph": "MR",
    "glh": "MR",
-   "sb": "I"
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -21679,7 +23492,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "sb": "MS"
+   "sb": "MS",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -21757,7 +23571,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "sb": "I"
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -21835,7 +23650,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "I",
-   "sb": "MS"
+   "sb": "MS",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -21913,7 +23729,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MS",
-   "sb": "I"
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -22000,7 +23817,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "I",
-   "sb": "I"
+   "sb": "I",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -22086,7 +23904,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "S",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -22163,7 +23982,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "R"
+   "sb": "R",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -22241,7 +24061,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "MS"
+   "sb": "MS",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -22318,7 +24139,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "I"
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -22395,7 +24217,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "I",
-   "sb": "MS"
+   "sb": "MS",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -22473,7 +24296,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "S",
-   "sb": "R"
+   "sb": "R",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -22546,7 +24370,11 @@
   "yieldAvg": 3.5,
   "yieldMax": null,
   "height": 97.0,
-  "reactions": {},
+  "reactions": {
+   "glh": "MR",
+   "blb": "MR",
+   "tungro": "S"
+  },
   "grain": {
    "amylose": [
     22.6,
@@ -22603,7 +24431,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "sb": "MS"
+   "sb": "MS",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -22681,7 +24510,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "I",
-   "sb": "I"
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -22759,7 +24589,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -22844,7 +24675,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "sb": "R"
+   "sb": "R",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -22921,7 +24753,8 @@
    "tungro": "S",
    "bph": "MR",
    "glh": "MR",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -22998,7 +24831,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MR",
-   "sb": "R"
+   "sb": "R",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -23075,7 +24909,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "S",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -23128,6 +24963,56 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=92"
+  ],
+  "tradeNames": [
+   "NK 6401",
+   "NK6401"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
+  "slug": "nsic-rc-210",
+  "name": "NSIC Rc 210",
+  "localName": "Mestiso 23",
+  "year": 2009,
+  "breeder": "Pioneer Hi bred",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 113,
+  "yieldAvg": 6.36,
+  "yieldMax": 6.86,
+  "height": 114,
+  "reactions": {
+   "glh": "MS",
+   "bph": "I",
+   "sb": "MS",
+   "blast": "I",
+   "blb": "S",
+   "shb": "S",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    19.7,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
   ]
  },
  {
@@ -23238,7 +25123,8 @@
    "tungro": "S",
    "bph": "MR",
    "glh": "MR",
-   "sb": "R"
+   "sb": "R",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -23322,7 +25208,8 @@
    "tungro": "S",
    "bph": "MR",
    "glh": "MR",
-   "sb": "R"
+   "sb": "R",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -23408,7 +25295,8 @@
    "tungro": "S",
    "bph": "MR",
    "glh": "MR",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -23491,7 +25379,9 @@
    "blb": "I",
    "tungro": "S",
    "bph": "I",
-   "glh": "MS"
+   "glh": "MS",
+   "sb": "MS",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -23571,7 +25461,9 @@
    "blb": "I",
    "tungro": "S",
    "bph": "MS",
-   "glh": "S"
+   "glh": "S",
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -23647,7 +25539,8 @@
    "tungro": "S",
    "bph": "MR",
    "glh": "MR",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -23797,6 +25690,49 @@
   ]
  },
  {
+  "slug": "nsic-rc-170sr",
+  "name": "NSIC Rc 170SR",
+  "localName": "MS 11",
+  "year": 2008,
+  "breeder": "IRRI",
+  "type": "inbred",
+  "special": "special",
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 112,
+  "yieldAvg": 4.54,
+  "yieldMax": 4.82,
+  "height": 90,
+  "reactions": {
+   "glh": "MS",
+   "bph": "S",
+   "sb": "MS",
+   "blast": "R",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "I"
+  },
+  "grain": {
+   "amylose": [
+    15.3,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
   "slug": "nsic-rc-172",
   "name": "NSIC Rc 172",
   "localName": "MS 13",
@@ -23875,6 +25811,49 @@
   ]
  },
  {
+  "slug": "nsic-rc-172sr",
+  "name": "NSIC Rc 172SR",
+  "localName": "MS 13",
+  "year": 2008,
+  "breeder": "IRRI",
+  "type": "inbred",
+  "special": "special",
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 114,
+  "yieldAvg": 4.82,
+  "yieldMax": 5.45,
+  "height": 75,
+  "reactions": {
+   "glh": "MS",
+   "bph": "S",
+   "sb": "I",
+   "blast": "I",
+   "blb": "I",
+   "shb": "S",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    16.4,
+    "L"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
+ },
+ {
   "slug": "nsic-rc-174h",
   "name": "NSIC Rc 174H",
   "localName": "Mestiso 12",
@@ -23896,7 +25875,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "I",
-   "sb": "R"
+   "sb": "R",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -23982,7 +25962,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -24068,7 +26049,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "I"
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -24153,7 +26135,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -24242,7 +26225,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "sb": "S"
+   "sb": "S",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -24320,7 +26304,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "R"
+   "sb": "R",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -24403,7 +26388,9 @@
    "blb": "I",
    "tungro": "S",
    "bph": "MS",
-   "glh": "I"
+   "glh": "I",
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -24486,7 +26473,9 @@
    "blb": "I",
    "tungro": "S",
    "bph": "I",
-   "glh": "I"
+   "glh": "I",
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -24564,7 +26553,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MS",
-   "sb": "R"
+   "sb": "R",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -24647,7 +26637,9 @@
    "blb": "I",
    "tungro": "S",
    "bph": "MS",
-   "glh": "I"
+   "glh": "I",
+   "sb": "MS",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -24727,7 +26719,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "I",
-   "sb": "R"
+   "sb": "R",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -24811,7 +26804,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -24897,7 +26891,9 @@
    "blb": "S",
    "tungro": "S",
    "bph": "MS",
-   "glh": "I"
+   "glh": "I",
+   "sb": "MS",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -24981,7 +26977,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "I",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -25058,7 +27055,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "sb": "R"
+   "sb": "R",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -25144,7 +27142,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -25221,7 +27220,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -25304,7 +27304,8 @@
    "tungro": "I",
    "bph": "I",
    "glh": "I",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -25388,7 +27389,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -25471,7 +27473,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -25555,7 +27558,8 @@
    "tungro": "S",
    "bph": "S",
    "glh": "MS",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -25639,7 +27643,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -25723,7 +27728,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "protein": 7.4,
@@ -25797,7 +27803,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "I"
+   "sb": "I",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -25884,7 +27891,8 @@
    "tungro": "I",
    "bph": "MS",
    "glh": "I",
-   "sb": "S"
+   "sb": "S",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -25970,7 +27978,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "R"
+   "sb": "R",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -26047,7 +28056,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "I"
+   "sb": "I",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -26124,7 +28134,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "I",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -26207,7 +28218,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "I",
-   "sb": "MS"
+   "sb": "MS",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -26293,7 +28305,8 @@
    "tungro": "S",
    "bph": "S",
    "glh": "MS",
-   "sb": "I"
+   "sb": "I",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -26371,7 +28384,8 @@
    "tungro": "I",
    "bph": "MS",
    "glh": "MS",
-   "sb": "I"
+   "sb": "I",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -26449,7 +28463,8 @@
    "tungro": "I",
    "bph": "S",
    "glh": "S",
-   "sb": "S"
+   "sb": "S",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -26528,7 +28543,8 @@
    "tungro": "R",
    "bph": "MR",
    "glh": "MR",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "S"
   },
   "grain": {
    "amylose": [
@@ -26607,7 +28623,8 @@
    "tungro": "I",
    "bph": "I",
    "glh": "I",
-   "sb": "R"
+   "sb": "R",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -26685,7 +28702,8 @@
    "tungro": "I",
    "bph": "MS",
    "glh": "S",
-   "sb": "I"
+   "sb": "I",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -26763,7 +28781,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "sb": "I"
+   "sb": "I",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -26817,6 +28836,49 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=26"
+  ]
+ },
+ {
+  "slug": "nsic-rc-114",
+  "name": "NSIC Rc 114",
+  "localName": "Mestiso 2",
+  "year": 2002,
+  "breeder": "IRRI",
+  "type": "hybrid",
+  "special": null,
+  "traditional": false,
+  "environments": [
+   "irrigated"
+  ],
+  "maturity": 106,
+  "yieldAvg": 5.79,
+  "yieldMax": 5.85,
+  "height": 98,
+  "reactions": {
+   "glh": "MS",
+   "bph": "MS",
+   "sb": "I",
+   "blast": "I",
+   "blb": "I",
+   "shb": "I",
+   "tungro": "S"
+  },
+  "grain": {
+   "amylose": [
+    21.7,
+    "I"
+   ]
+  },
+  "seasons": [],
+  "establishment": [],
+  "domain": null,
+  "location": null,
+  "regions": [],
+  "remarks": null,
+  "preferred": false,
+  "new": true,
+  "sources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
   ]
  },
  {
@@ -26919,7 +28981,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "I",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -26997,7 +29060,8 @@
    "tungro": "S",
    "bph": "I",
    "glh": "MS",
-   "sb": "S"
+   "sb": "S",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -27075,7 +29139,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "R"
+   "sb": "R",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -27153,7 +29218,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "MS",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -27231,7 +29297,8 @@
    "tungro": "S",
    "bph": "S",
    "glh": "S",
-   "sb": "R"
+   "sb": "R",
+   "shb": "I"
   },
   "grain": {
    "amylose": [
@@ -27308,7 +29375,8 @@
    "tungro": "S",
    "bph": "MS",
    "glh": "S",
-   "sb": "MR"
+   "sb": "MR",
+   "shb": "I"
   },
   "grain": {
    "amylose": [

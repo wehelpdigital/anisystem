@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-212",
-  "sortOrder": 311,
+  "sortOrder": 340,
   "lang": "en",
   "category": "Irrigated lowland",
   "profile": true,
@@ -35,7 +35,7 @@
         "**Yield:** 6 tonnes per hectare on average, or about 120 cavans of 50 kilograms. The best trial reached 10 tonnes.",
         "**Season:** Dry season and wet season.",
         "**Holds up against:** brown planthopper, green leafhopper, stem borer.",
-        "**Watch out for:** tungro."
+        "**Watch out for:** tungro, sheath blight."
       ]
     },
     {
@@ -116,7 +116,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 6 tonnes per hectare. That is about 120 cavans of 50 kilograms of palay. It sits above the average of the 107 irrigated lowland inbreds in PhilRice's list, which is 5.1 tonnes. But the top yield, 10 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 6 tonnes per hectare. That is about 120 cavans of 50 kilograms of palay. It sits above the average of the 118 irrigated lowland inbreds in PhilRice's list, which is 5.2 tonnes. But the top yield, 10 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -170,12 +170,17 @@
           "Stem borer",
           "Resistant",
           "Held up well in the tests"
+        ],
+        [
+          "Sheath blight",
+          "Susceptible",
+          "Took heavy damage"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "So scout early for [tungro](/diseases/rice-tungro). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+      "text": "So scout early for [tungro](/diseases/rice-tungro), [sheath blight](/diseases/sheath-blight). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -263,8 +268,8 @@
       "items": [
         "[NSIC Rc 214](/rice-varieties/nsic-rc-214): 116 days, 6 tonnes per hectare on average, 2009",
         "[NSIC Rc 222](/rice-varieties/nsic-rc-222): 114 days, 6.1 tonnes per hectare on average, 2009",
-        "[NSIC Rc 638SR](/rice-varieties/nsic-rc-638sr): 115 days, 5.7 tonnes per hectare on average, 2021",
-        "[NSIC Rc 300](/rice-varieties/nsic-rc-300): 115 days, 5.7 tonnes per hectare on average, 2012"
+        "[NSIC Rc 784](/rice-varieties/nsic-rc-784): 114 days, 6.1 tonnes per hectare on average, 2026",
+        "[NSIC Rc 638SR](/rice-varieties/nsic-rc-638sr): 115 days, 5.7 tonnes per hectare on average, 2021"
       ]
     },
     {
@@ -292,7 +297,7 @@
         },
         {
           "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against tungro. So scout from the early weeks and act at the first signs."
+          "a": "In PhilRice's tests it was weak against tungro, sheath blight. So scout from the early weeks and act at the first signs."
         }
       ]
     },

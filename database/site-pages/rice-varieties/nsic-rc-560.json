@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-560",
-  "sortOrder": 112,
+  "sortOrder": 137,
   "lang": "en",
   "category": "Cool elevated",
   "profile": true,
@@ -33,7 +33,7 @@
       "items": [
         "**Maturity:** about 143 days after sowing.",
         "**Yield:** 4 tonnes per hectare on average, or about 80 cavans of 50 kilograms. The best trial reached 6.6 tonnes.",
-        "**Watch out for:** bacterial leaf blight, tungro, sheath blight.",
+        "**Watch out for:** bacterial leaf blight, tungro, sheath blight, green leafhopper, brown planthopper, stem borer.",
         "**Cooked rice:** low amylose, so soft and tender."
       ]
     },
@@ -139,12 +139,27 @@
           "Sheath blight",
           "Susceptible",
           "Took heavy damage"
+        ],
+        [
+          "Green leafhopper",
+          "Moderately susceptible",
+          "Took clear damage"
+        ],
+        [
+          "Brown planthopper",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Stem borer",
+          "Moderately susceptible",
+          "Took clear damage"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro), [sheath blight](/diseases/sheath-blight). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro), [sheath blight](/diseases/sheath-blight), [green leafhopper](/pests/green-leafhopper), [brown planthopper](/pests/brown-planthopper), [stem borer](/pests/rice-stem-borer). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -252,7 +267,7 @@
         },
         {
           "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro, sheath blight. So scout from the early weeks and act at the first signs."
+          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro, sheath blight, green leafhopper, brown planthopper, stem borer. So scout from the early weeks and act at the first signs."
         },
         {
           "q": "Is it soft when cooked?",

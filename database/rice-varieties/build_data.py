@@ -102,6 +102,92 @@ def rating(v):
     return v if v and v not in ('-',) else None
 
 
+REGISTRY_URL = 'https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx'
+# Brand names the owner corrected (2026-10-14): Rc 758H is sold as SL-22H (the
+# registry's SL-222H is its line name), and Rc 696H as LP 908 (its line LP906).
+TRADE_FIX = {
+    'NSIC Rc 758H': (['SL-22H'], []),
+    'NSIC Rc 696H': (['LP 908', 'Longping 908'], ['https://ilocos.da.gov.ph/?p=46408']),
+    # Syngenta's NK line, sold under its registry name.
+    'NSIC Rc 208H': (['NK 6401', 'NK6401'], [REGISTRY_URL]),
+}
+
+
+def codes(v):
+    """The rating a registry cell gives most often: 'PhilRice CES - I, Midsayap - I, UPLB - S' -> 'I'."""
+    found = re.findall(r'\b(HR|MR|MS|HS|R|I|S)\b', v or '')
+    return max(set(found), key=found.count) if found else None
+
+
+def first_num(v):
+    m = re.search(r'\d+(?:\.\d+)?', v or '')
+    return float(m.group(0)) if m else None
+
+
+INSTITUTES = [('International Rice Research Institute', 'IRRI'), ('Philippine Rice Research Institute', 'PhilRice'),
+              ('University of the Philippines Los Baños', 'UPLB'), ('University of the Philippines-Los Baños', 'UPLB'),
+              ('University of the Philippines - Los Baños', 'UPLB'), ('Central Luzon State University', 'CLSU'),
+              ('Philippine Sino Agricultural Technology', 'PhilSCAT'), ('Longping High-Tech Philippine R&D Center', 'Longping High Tech'),
+              ('Long Ping High Tech', 'Longping High Tech')]
+
+
+def short_breeder(v):
+    """'Philippine Rice Research Institute and University of the Philippines - Los Banos' -> 'PhilRice and UPLB'."""
+    v = re.sub(r'\s+', ' ', (v or '').replace('�', 'ñ')).strip()
+    for a, b in INSTITUTES:
+        v = re.sub(re.escape(a), b, v, flags=re.I)
+    v = re.sub(r'(?i),?\s*\b(Inc|Corp|Corporation|Phils)\b\.?', '', v)
+    v = re.sub(r'\s+-\s+|,\s*', ' and ', v).replace('&', 'and')
+    v = re.sub(r'(?<=\w)-(?=\w)', ' ', v)
+    return re.sub(r'\s+', ' ', v).strip(' ,.') or None
+
+
+def registry_rows(path):
+    """The NSIC rice registry (a tab separated copy of nsic-registered_rice.xlsx):
+    each variety's trial days, yields, height and ratings, and the name it is
+    sold under when the registry writes it in brackets."""
+    out = []
+    if not os.path.exists(path):
+        return out
+    for r in (l.rstrip('\n').split('\t') for l in open(path, encoding='utf-8')):
+        if len(r) < 36 or not re.search(r'\b(NSIC|PSB)\b', r[2]) or not re.match(r'^\d{4}$', r[1].strip()):
+            continue
+        name = display(r[2])
+        vname = re.sub(r'\s+', ' ', r[3]).strip()
+        m = re.match(r'^(.*?)\s*\((.*)\)\s*$', vname)
+        local, trade = (m.group(1), m.group(2).strip()) if m else (vname, None)
+        if trade and (re.match(r'(?i)nsic|rc\b', trade) or len(trade) > 24):
+            trade = None
+        if trade:
+            trade = re.sub(r'\s*-\s*', '-', trade)   # DADI - 1H -> DADI-1H
+        kg = lambda cells: [x for c in cells for x in (float(n) for n in re.findall(r'\d{4,5}(?:\.\d+)?', c)) if 1500 <= x <= 16000]
+        tpr = kg([r[7], r[8]])
+        dws = kg([r[9], r[10]])
+        mt = [first_num(r[i]) for i in (11, 12) if first_num(r[i])]
+        md = [first_num(r[i]) for i in (13, 14) if first_num(r[i])]
+        ht = [first_num(r[i]) for i in (16, 17) if first_num(r[i])]
+        am = first_num(r[39])
+        rec = {
+            'name': name, 'year': int(r[1]), 'local': local_title(local), 'trade': trade, 'line': r[4].strip(),
+            'type': 'hybrid' if 'hybrid' in r[5].lower() or re.search(r'\d+H$', name.replace(' ', '')) else 'inbred',
+            'breeder': short_breeder(r[6]),
+            'maturity': round(sum(mt) / len(mt)) if mt else None,
+            'yieldAvg': round(sum(tpr) / len(tpr) / 1000, 2) if tpr else (round(sum(dws) / len(dws) / 1000, 2) if dws else None),
+            'yieldMax': round(max(tpr) / 1000, 2) if len(tpr) > 1 else None,
+            'height': round(sum(ht) / len(ht)) if ht else None,
+            'direct': {'maturity': round(sum(md) / len(md)), 'yieldAvg': round(sum(dws) / len(dws) / 1000, 2) if dws else None, 'yieldMax': None} if md and tpr else None,
+            'reactions': {k: c for k, c in (('glh', codes(r[25])), ('bph', codes(r[26])), ('sb', codes(r[27]) or codes(r[30])),
+                                            ('blast', codes(r[32])), ('blb', codes(r[33])), ('shb', codes(r[34])), ('tungro', codes(r[35]))) if c},
+            'amylose': round(am * 100, 1) if am and am < 1 else am,
+            'irrigated': 'irrigated' in (r[40] or '').lower(),
+            'rainfed': 'rainfed' in (r[40] or '').lower(),
+            'upland': 'upland' in (r[40] or '').lower(),
+            'saline': 'saline' in (r[40] or '').lower(),
+        }
+        out.append(rec)
+    return out
+
+
 def main():
     app = json.load(open(os.path.join(APP, 'varieties.json'), encoding='utf-8'))
     regions = {r['regCode']: r['regDesc'] for r in json.load(open(os.path.join(APP, 'regions.json'), encoding='utf-8'))}
@@ -267,6 +353,63 @@ def main():
             if not rec['tradeNames']:
                 del rec['tradeNames'], rec['tradeSources']
         out.append(rec)
+    # The NSIC registry (2026-10-14): the trial days, yields and heights the
+    # app leaves blank for its newest varieties, and the varieties registered
+    # after the app's list (2026), with the names they are sold under.
+    byname = {r['name']: r for r in out}
+    added = filled = 0
+    for g in registry_rows(os.path.join(CRAWL, 'registry_rice.tsv')):
+        r = byname.get(g['name'])
+        if r is not None:
+            if r['maturity'] is None and g['maturity']:
+                r['maturity'], r['yieldAvg'], r['yieldMax'] = g['maturity'], g['yieldAvg'], g['yieldMax']
+                if r.get('height') is None:
+                    r['height'] = g['height']
+                if g['direct'] and not r.get('direct'):
+                    r['direct'] = g['direct']
+                if REGISTRY_URL not in r['sources']:
+                    r['sources'].append(REGISTRY_URL)
+                filled += 1
+            for k, c in g['reactions'].items():
+                r['reactions'].setdefault(k, c)
+            if g['trade'] and not r.get('tradeNames'):
+                r['tradeNames'], r['tradeSources'] = [g['trade']], [REGISTRY_URL]
+            continue
+        if g['year'] < 2001 or '-' in g['name'] or g['name'] in byname:
+            continue   # the old NSIC numbers repeat the PSB varieties under their PSB names
+        compact = g['name'].replace(' ', '')
+        envs = [e for e, on in (('irrigated', g['irrigated'] or g['type'] == 'hybrid'), ('rainfed-tpr', g['rainfed']), ('upland', g['upland']), ('saline', g['saline'])) if on]
+        local = g['local'] if g['local'] and g['local'] != g['name'] else None
+        if not envs and local:
+            envs = [e for k, e in NAME_ENV if local.lower().startswith(k)][:1]
+        am = g['amylose']
+        rec = {
+            'slug': slugify(g['name']), 'name': g['name'], 'localName': local, 'year': g['year'],
+            'breeder': BREEDER.get(g['breeder'], g['breeder']), 'type': g['type'],
+            'special': 'special' if compact.endswith('SR') else ('glutinous' if (local or '').lower().startswith('malagkit') else None),
+            'traditional': False, 'environments': envs,
+            'maturity': g['maturity'], 'yieldAvg': g['yieldAvg'], 'yieldMax': g['yieldMax'], 'height': g['height'],
+            'reactions': g['reactions'],
+            'grain': {'amylose': [am, 'VL' if am < 10 else 'L' if am < 20 else 'I' if am <= 25 else 'H']} if am else {},
+            'seasons': [], 'establishment': ['transplanted', 'wet direct seeded'] if g['direct'] else [],
+            'domain': None, 'location': None, 'regions': [], 'remarks': None,
+            'preferred': False, 'new': True, 'sources': [REGISTRY_URL],
+        }
+        if g['direct']:
+            rec['direct'] = g['direct']
+        if g['trade']:
+            rec['tradeNames'], rec['tradeSources'] = [g['trade']], [REGISTRY_URL]
+        if g['name'] in trade:
+            rec['tradeNames'] = list(dict.fromkeys((rec.get('tradeNames') or []) + trade[g['name']]['names']))[:4]
+            rec['tradeSources'] = list(dict.fromkeys((rec.get('tradeSources') or []) + trade[g['name']]['sources']))[:3]
+        out.append(rec)
+        byname[g['name']] = rec
+        added += 1
+    for name, (names, srcs) in TRADE_FIX.items():
+        if name in byname:
+            byname[name]['tradeNames'] = names
+            byname[name]['tradeSources'] = srcs
+    print(filled, 'filled from the NSIC registry,', added, 'added from it')
     out.sort(key=lambda v: (-(v['year'] or 0), v['name']))
     json.dump(out, open(os.path.join(HERE, 'varieties.json'), 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
     print(sum(1 for v in out if v.get('tradeNames')), 'with a trade name;', len(out), 'varieties;', sum(1 for v in out if v['maturity']), 'with trial results;', sum(1 for v in out if v['environments']),

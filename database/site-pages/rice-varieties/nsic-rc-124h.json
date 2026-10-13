@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-124h",
-  "sortOrder": 342,
+  "sortOrder": 373,
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
@@ -114,7 +114,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 5.7 tonnes per hectare. That is about 114 cavans of 50 kilograms of palay. It sits below the average of the 110 irrigated lowland hybrids in PhilRice's list, which is 6.3 tonnes. But the top yield, 9.1 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 5.7 tonnes per hectare. That is about 114 cavans of 50 kilograms of palay. It sits below the average of the 180 irrigated lowland hybrids in PhilRice's list, which is 6.9 tonnes. But the top yield, 9.1 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -166,6 +166,11 @@
         ],
         [
           "Stem borer",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Sheath blight",
           "Intermediate",
           "Took a middling share of damage"
         ]

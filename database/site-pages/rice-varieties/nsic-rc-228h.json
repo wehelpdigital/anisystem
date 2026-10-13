@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-228h",
-  "sortOrder": 291,
+  "sortOrder": 319,
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
@@ -34,7 +34,7 @@
         "**Maturity:** about 108 days after sowing.",
         "**Yield:** 7.3 tonnes per hectare on average, or about 146 cavans of 50 kilograms. The best trial reached 10.3 tonnes.",
         "**Season:** Dry season and wet season.",
-        "**Watch out for:** bacterial leaf blight, tungro, stem borer.",
+        "**Watch out for:** bacterial leaf blight, tungro, stem borer, sheath blight.",
         "**Cooked rice:** intermediate amylose, so soft but not sticky."
       ]
     },
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 7.3 tonnes per hectare. That is about 146 cavans of 50 kilograms of palay. It sits above the average of the 110 irrigated lowland hybrids in PhilRice's list, which is 6.3 tonnes. But the top yield, 10.3 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 7.3 tonnes per hectare. That is about 146 cavans of 50 kilograms of palay. It sits above the average of the 180 irrigated lowland hybrids in PhilRice's list, which is 6.9 tonnes. But the top yield, 10.3 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -162,12 +162,17 @@
           "Stem borer",
           "Moderately susceptible",
           "Took clear damage"
+        ],
+        [
+          "Sheath blight",
+          "Susceptible",
+          "Took heavy damage"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro), [stem borer](/pests/rice-stem-borer). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro), [stem borer](/pests/rice-stem-borer), [sheath blight](/diseases/sheath-blight). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -254,9 +259,9 @@
       "ordered": false,
       "items": [
         "[NSIC Rc 248H](/rice-varieties/nsic-rc-248h): 108 days, 7.1 tonnes per hectare on average, 2011",
-        "[NSIC Rc 498H](/rice-varieties/nsic-rc-498h): 108 days, 6.9 tonnes per hectare on average, 2017",
-        "[NSIC Rc 246H](/rice-varieties/nsic-rc-246h): 106 days, 7.2 tonnes per hectare on average, 2011",
-        "[NSIC Rc 252H](/rice-varieties/nsic-rc-252h): 108 days, 6.8 tonnes per hectare on average, 2011"
+        "[NSIC Rc 768H](/rice-varieties/nsic-rc-768h): 109 days, 7.2 tonnes per hectare on average, 2024",
+        "[NSIC Rc 772H](/rice-varieties/nsic-rc-772h): 108 days, 7.6 tonnes per hectare on average, 2024",
+        "[NSIC Rc 714H](/rice-varieties/nsic-rc-714h): 109 days, 7.1 tonnes per hectare on average, 2022"
       ]
     },
     {
@@ -284,7 +289,7 @@
         },
         {
           "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro, stem borer. So scout from the early weeks and act at the first signs."
+          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro, stem borer, sheath blight. So scout from the early weeks and act at the first signs."
         }
       ]
     },

@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "psb-rc-52",
-  "sortOrder": 380,
+  "sortOrder": 412,
   "lang": "en",
   "category": "Irrigated lowland",
   "profile": true,
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 5.3 tonnes per hectare. That is about 106 cavans of 50 kilograms of palay. It sits above the average of the 107 irrigated lowland inbreds in PhilRice's list, which is 5.1 tonnes. But the top yield, 5.3 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 5.3 tonnes per hectare. That is about 106 cavans of 50 kilograms of palay. It sits close to the average of the 118 irrigated lowland inbreds in PhilRice's list, which is 5.2 tonnes. But the top yield, 5.3 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -253,9 +253,9 @@
       "ordered": false,
       "items": [
         "[PSB Rc 56](/rice-varieties/psb-rc-56): 114 days, 5.3 tonnes per hectare on average, 1997",
+        "[NSIC Rc 684](/rice-varieties/nsic-rc-684): 114 days, 5.4 tonnes per hectare on average, 2022",
         "[NSIC Rc 358](/rice-varieties/nsic-rc-358): 114 days, 5.4 tonnes per hectare on average, 2014",
-        "[PSB Rc 74](/rice-varieties/psb-rc-74): 114 days, 5.2 tonnes per hectare on average, 1998",
-        "[NSIC Rc 638SR](/rice-varieties/nsic-rc-638sr): 115 days, 5.7 tonnes per hectare on average, 2021"
+        "[PSB Rc 74](/rice-varieties/psb-rc-74): 114 days, 5.2 tonnes per hectare on average, 1998"
       ]
     },
     {

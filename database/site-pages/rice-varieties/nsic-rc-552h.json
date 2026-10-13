@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-552h",
-  "sortOrder": 108,
+  "sortOrder": 133,
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
@@ -33,6 +33,7 @@
       "items": [
         "**Maturity:** about 110 days after sowing.",
         "**Yield:** 6.6 tonnes per hectare on average, or about 132 cavans of 50 kilograms. The best trial reached 11.4 tonnes.",
+        "**Watch out for:** bacterial leaf blight, sheath blight, tungro.",
         "**Cooked rice:** low amylose, so soft and tender."
       ]
     },
@@ -94,7 +95,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 6.6 tonnes per hectare. That is about 132 cavans of 50 kilograms of palay. It sits above the average of the 110 irrigated lowland hybrids in PhilRice's list, which is 6.3 tonnes. But the top yield, 11.4 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 6.6 tonnes per hectare. That is about 132 cavans of 50 kilograms of palay. It sits below the average of the 180 irrigated lowland hybrids in PhilRice's list, which is 6.9 tonnes. But the top yield, 11.4 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -111,8 +112,54 @@
       "text": "Is it resistant to pests and diseases?"
     },
     {
+      "type": "table",
+      "caption": "Reactions in PhilRice's tests: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets, as PhilRice lists them.",
+      "rows": [
+        [
+          "Pest or disease",
+          "PhilRice rating",
+          "What it means"
+        ],
+        [
+          "Green leafhopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Brown planthopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Stem borer",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Rice blast",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Bacterial leaf blight",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Sheath blight",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Tungro",
+          "Susceptible",
+          "Took heavy damage"
+        ]
+      ]
+    },
+    {
       "type": "text",
-      "text": "PhilRice's table gives no pest and disease ratings for this variety. So treat it as untested and scout every week, above all for [rice blast](/diseases/rice-blast), [tungro](/diseases/rice-tungro) and the [brown planthopper](/pests/brown-planthopper). Our [pest and disease finders](/features/pest-and-disease-finders) help you name what you see."
+      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [sheath blight](/diseases/sheath-blight), [tungro](/diseases/rice-tungro). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -224,12 +271,12 @@
           "a": "Yes. So buy new seed each season, because seed saved from a hybrid crop does not grow true and yields less."
         },
         {
-          "q": "Is it soft when cooked?",
-          "a": "It has low amylose, 18.6 percent. So it cooks soft."
+          "q": "What should I watch for when I plant it?",
+          "a": "In PhilRice's tests it was weak against bacterial leaf blight, sheath blight, tungro. So scout from the early weeks and act at the first signs."
         },
         {
-          "q": "Where can I buy certified seed of this variety?",
-          "a": "Ask accredited seed growers in your province, your municipal agriculturist or the nearest PhilRice station. Look for the certified seed tag on the sack before you pay."
+          "q": "Is it soft when cooked?",
+          "a": "It has low amylose, 18.6 percent. So it cooks soft."
         }
       ]
     },

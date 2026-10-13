@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-294",
-  "sortOrder": 287,
+  "sortOrder": 315,
   "lang": "en",
   "category": "Saline prone",
   "profile": true,
@@ -112,7 +112,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 2.9 tonnes per hectare. That is about 58 cavans of 50 kilograms of palay. It sits close to the average of the 46 saline prone fields inbreds in PhilRice's list, which is 2.9 tonnes. But the top yield, 3.5 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 2.9 tonnes per hectare. That is about 58 cavans of 50 kilograms of palay. It sits close to the average of the 48 saline prone fields inbreds in PhilRice's list, which is 2.9 tonnes. But the top yield, 3.5 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -166,6 +166,11 @@
           "Sheath blight",
           "Susceptible",
           "Took heavy damage"
+        ],
+        [
+          "Stem borer",
+          "Intermediate",
+          "Took a middling share of damage"
         ]
       ]
     },

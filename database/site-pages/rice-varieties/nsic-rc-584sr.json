@@ -1,0 +1,313 @@
+{
+  "section": "rice-varieties",
+  "slug": "nsic-rc-584sr",
+  "sortOrder": 150,
+  "lang": "en",
+  "category": "Irrigated lowland",
+  "profile": true,
+  "title": "NSIC Rc 584SR (Japonica 7) Rice Variety: Yield, Maturity and Characteristics",
+  "metaTitle": "NSIC Rc 584SR (Japonica 7): Yield, Maturity, Characteristics",
+  "metaDescription": "NSIC Rc 584SR is a special inbred rice for irrigated lowland: about 112 days and 3.3 tonnes per hectare on average. See its pest ratings and grain quality.",
+  "focusKeyword": "NSIC Rc 584SR",
+  "keywords": [
+    "NSIC Rc 584SR",
+    "rice variety 584SR",
+    "rc 584SR",
+    "584SR rice variety characteristics",
+    "Japonica 7"
+  ],
+  "excerpt": "NSIC Rc 584SR is a special inbred rice variety for irrigated lowland, known locally as Japonica 7. The NSIC approved it in 2019. IRRI bred it. It matures in about 112 days and averages 3.3 tonnes per hectare, with a top yield of 4.1 tonnes in trials.",
+  "heroImage": {
+    "src": "/images/site/palay.jpg",
+    "alt": "An irrigated palay field in the Philippines, where NSIC Rc 584SR is meant to grow",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you came here looking for rice variety 584SR, or Rc 584SR, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Maturity:** about 112 days after sowing.",
+        "**Yield:** 3.3 tonnes per hectare on average, or about 67 cavans of 50 kilograms. The best trial reached 4.1 tonnes.",
+        "**Watch out for:** green leafhopper, sheath blight, tungro.",
+        "**Cooked rice:** low amylose, so soft and tender."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about NSIC Rc 584SR"
+    },
+    {
+      "type": "table",
+      "caption": "From PhilRice's catalogue of released varieties (t/ha means tonnes per hectare)",
+      "rows": [
+        [
+          "Trait",
+          "What PhilRice lists"
+        ],
+        [
+          "Year approved",
+          "2019"
+        ],
+        [
+          "Bred by",
+          "IRRI"
+        ],
+        [
+          "Local name",
+          "Japonica 7"
+        ],
+        [
+          "Type",
+          "Special inbred"
+        ],
+        [
+          "Growing environment",
+          "Irrigated lowland"
+        ],
+        [
+          "Maturity",
+          "112 days after sowing"
+        ],
+        [
+          "Average yield",
+          "3.3 t/ha"
+        ],
+        [
+          "Top yield in trials",
+          "4.1 t/ha"
+        ],
+        [
+          "Plant height",
+          "91 cm"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much does NSIC Rc 584SR yield?"
+    },
+    {
+      "type": "text",
+      "text": "On average it gives 3.3 tonnes per hectare. That is about 67 cavans of 50 kilograms of palay. It sits below the average of the 118 irrigated lowland inbreds in PhilRice's list, which is 5.2 tonnes. But the top yield, 4.1 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How many days does it take to mature?"
+    },
+    {
+      "type": "text",
+      "text": "It takes about 112 days from sowing to harvest. IRRI groups varieties of 100 to 120 days as short duration and 120 to 140 days as medium, so this one counts as short duration. Then harvest when 85 to 90 percent of the grains turn golden yellow, as PalayCheck advises. Because the day count drives every task, anee.io counts it for you from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "table",
+      "caption": "Reactions in PhilRice's tests: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets, as PhilRice lists them.",
+      "rows": [
+        [
+          "Pest or disease",
+          "PhilRice rating",
+          "What it means"
+        ],
+        [
+          "Green leafhopper",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Brown planthopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Stem borer",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Rice blast",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Bacterial leaf blight",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Sheath blight",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Tungro",
+          "Susceptible",
+          "Took heavy damage"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So scout early for [green leafhopper](/pests/green-leafhopper), [sheath blight](/diseases/sheath-blight), [tungro](/diseases/rice-tungro). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Grain and eating quality"
+    },
+    {
+      "type": "table",
+      "caption": "Grain quality in PhilRice's seed database",
+      "rows": [
+        [
+          "Measure",
+          "Value",
+          "Class"
+        ],
+        [
+          "Amylose",
+          "12.1 percent",
+          "Low"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Amylose decides how rice cooks. With low amylose, expect rice that is soft. In fact, PhilRice notes that Filipino taste moved from high to intermediate and low amylose rice, because people want it softer."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where should you plant it?"
+    },
+    {
+      "type": "text",
+      "text": "It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant at the same time as your neighbors, one of the PalayCheck key checks, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step. For the right month in your province, see [the best time to plant rice](/blog/best-time-to-plant-rice-philippines)."
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next season of NSIC Rc 584SR",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These come from the same kind of farm and grow about as long. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[NSIC Rc 584](/rice-varieties/nsic-rc-584): 112 days, 3.3 tonnes per hectare on average, 2019",
+        "[NSIC Rc 304SR](/rice-varieties/nsic-rc-304sr): 113 days, 3.2 tonnes per hectare on average, 2012",
+        "[NSIC Rc 242SR](/rice-varieties/nsic-rc-242sr): 109 days, 3.7 tonnes per hectare on average, 2011",
+        "[NSIC Rc 482SR](/rice-varieties/nsic-rc-482sr): 117 days, 3.5 tonnes per hectare on average, 2017"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the local name of NSIC Rc 584SR?",
+          "a": "It is known as Japonica 7. Seed sellers and agriculturists use both names, so ask for either one."
+        },
+        {
+          "q": "How many days does NSIC Rc 584SR take to harvest?",
+          "a": "About 112 days after sowing. Then harvest when 85 to 90 percent of the grains are golden yellow."
+        },
+        {
+          "q": "What is the average yield of NSIC Rc 584SR?",
+          "a": "PhilRice lists 3.3 tonnes per hectare on average, about 67 cavans of 50 kilograms. The best trial reached 4.1 tonnes. Your own yield depends on water, seed, fertilizer and timing."
+        },
+        {
+          "q": "Is this variety a hybrid?",
+          "a": "No, it is an inbred. So the seed you buy grows true, but certified seed still gives the best start, as PalayCheck advises."
+        },
+        {
+          "q": "What should I watch for when I plant it?",
+          "a": "In PhilRice's tests it was weak against green leafhopper, sheath blight, tungro. So scout from the early weeks and act at the first signs."
+        },
+        {
+          "q": "Is it soft when cooked?",
+          "a": "It has low amylose, 12.1 percent. So it cooks soft."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every rice variety, side by side",
+          "url": "/rice-varieties"
+        },
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "The best rice variety for your area",
+          "url": "/blog/best-rice-variety-for-my-area"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Palay: growth stages and harvest",
+          "url": "/crops/palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Seed information on released rice varieties",
+          "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "NSIC registry of rice varieties: NSIC Rc 584SR",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+        },
+        {
+          "label": "BPI: NSIC registry of rice varieties",
+          "url": "https://nsic.buplant.da.gov.ph/registry.php"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
+          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
+        },
+        {
+          "label": "FAO: Rice in human nutrition, amylose classes of milled rice",
+          "url": "https://www.fao.org/4/T0567E/T0567E0b.htm"
+        },
+        {
+          "label": "PhilRice: Rice in health and nutrition, by Dr Bienvenido O. Juliano (2013)",
+          "url": "https://www.philrice.gov.ph/rice-in-health-and-nutrition/"
+        }
+      ]
+    }
+  ]
+}

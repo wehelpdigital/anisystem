@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-218sr",
-  "sortOrder": 314,
+  "sortOrder": 343,
   "lang": "en",
   "category": "Irrigated lowland",
   "profile": true,
@@ -34,7 +34,7 @@
         "**Maturity:** about 120 days after sowing.",
         "**Yield:** 3.8 tonnes per hectare on average, or about 76 cavans of 50 kilograms. The best trial reached 8 tonnes.",
         "**Season:** Dry season and wet season.",
-        "**Watch out for:** rice blast, tungro, green leafhopper.",
+        "**Watch out for:** rice blast, tungro, green leafhopper, stem borer.",
         "**Cooked rice:** low amylose, so soft and tender."
       ]
     },
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 3.8 tonnes per hectare. That is about 76 cavans of 50 kilograms of palay. It sits below the average of the 107 irrigated lowland inbreds in PhilRice's list, which is 5.1 tonnes. But the top yield, 8 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 3.8 tonnes per hectare. That is about 76 cavans of 50 kilograms of palay. It sits below the average of the 118 irrigated lowland inbreds in PhilRice's list, which is 5.2 tonnes. But the top yield, 8 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -157,12 +157,22 @@
           "Green leafhopper",
           "Moderately susceptible",
           "Took clear damage"
+        ],
+        [
+          "Stem borer",
+          "Moderately susceptible",
+          "Took clear damage"
+        ],
+        [
+          "Sheath blight",
+          "Intermediate",
+          "Took a middling share of damage"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "So scout early for [rice blast](/diseases/rice-blast), [tungro](/diseases/rice-tungro), [green leafhopper](/pests/green-leafhopper). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+      "text": "So scout early for [rice blast](/diseases/rice-blast), [tungro](/diseases/rice-tungro), [green leafhopper](/pests/green-leafhopper), [stem borer](/pests/rice-stem-borer). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -279,7 +289,7 @@
         },
         {
           "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against rice blast, tungro, green leafhopper. So scout from the early weeks and act at the first signs."
+          "a": "In PhilRice's tests it was weak against rice blast, tungro, green leafhopper, stem borer. So scout from the early weeks and act at the first signs."
         }
       ]
     },

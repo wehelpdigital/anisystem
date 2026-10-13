@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-590",
-  "sortOrder": 92,
+  "sortOrder": 117,
   "lang": "en",
   "category": "Flood prone",
   "profile": true,
@@ -33,6 +33,7 @@
       "items": [
         "**Maturity:** about 144 days after sowing.",
         "**Yield:** 3.9 tonnes per hectare on average, or about 78 cavans of 50 kilograms. The best trial reached 4.4 tonnes.",
+        "**Holds up against:** stem borer.",
         "**Watch out for:** tungro.",
         "**Cooked rice:** low amylose, so soft and tender."
       ]
@@ -149,6 +150,11 @@
           "Sheath blight",
           "Intermediate",
           "Took a middling share of damage"
+        ],
+        [
+          "Stem borer",
+          "Resistant",
+          "Held up well in the tests"
         ]
       ]
     },

@@ -1,13 +1,13 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-666h",
-  "sortOrder": 90,
+  "sortOrder": 115,
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "Jackpot 102 (NSIC Rc 666H) Hybrid Rice: Characteristics and Grain Quality",
-  "metaTitle": "Jackpot 102 (NSIC Rc 666H) Rice Variety",
-  "metaDescription": "Jackpot 102 is NSIC Rc 666H, a hybrid rice for irrigated lowland approved in 2021. See its pest ratings, grain quality and where it grows best.",
+  "title": "Jackpot 102 (NSIC Rc 666H) Hybrid Rice: Yield, Maturity and Characteristics",
+  "metaTitle": "Jackpot 102 (NSIC Rc 666H) Rice: Yield and Maturity",
+  "metaDescription": "Jackpot 102 is NSIC Rc 666H, a hybrid rice for irrigated lowland: about 110 days and 5.2 tonnes per hectare on average. See its ratings.",
   "focusKeyword": "NSIC Rc 666H",
   "keywords": [
     "NSIC Rc 666H",
@@ -17,7 +17,7 @@
     "Mestiso 117",
     "Jackpot 102"
   ],
-  "excerpt": "NSIC Rc 666H is a hybrid rice variety for irrigated lowland, sold as Jackpot 102 and known locally as Mestiso 117. The NSIC approved it in 2021. Leads Agriventures bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 666H is a hybrid rice variety for irrigated lowland, sold as Jackpot 102 and known locally as Mestiso 117. The NSIC approved it in 2021. Leads Agriventures bred it. It matures in about 110 days and averages 5.2 tonnes per hectare, with a top yield of 8.5 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 666H is bred to fill",
@@ -32,8 +32,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "**Maturity:** about 110 days after sowing.",
+        "**Yield:** 5.2 tonnes per hectare on average, or about 105 cavans of 50 kilograms. The best trial reached 8.5 tonnes.",
         "**Holds up against:** rice blast.",
-        "**Watch out for:** bacterial leaf blight, tungro.",
+        "**Watch out for:** bacterial leaf blight, tungro, green leafhopper, brown planthopper.",
         "**Cooked rice:** low amylose, so soft and tender."
       ]
     },
@@ -73,17 +75,42 @@
         [
           "Growing environment",
           "Irrigated lowland"
+        ],
+        [
+          "Maturity",
+          "110 days after sowing"
+        ],
+        [
+          "Average yield",
+          "5.2 t/ha"
+        ],
+        [
+          "Top yield in trials",
+          "8.5 t/ha"
+        ],
+        [
+          "Plant height",
+          "108 cm"
         ]
       ]
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "How many days does it take, and how much does it yield?"
+      "text": "How much does NSIC Rc 666H yield?"
     },
     {
       "type": "text",
-      "text": "PhilRice has not published this variety's days to harvest and trial yields in its catalogue yet. So ask the seed seller or your municipal agriculturist for the figures from the trials in your region before you plan the season. Once you know the day count, anee.io dates every task from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it. Meanwhile, our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare) covers the habits that matter with any variety."
+      "text": "On average it gives 5.2 tonnes per hectare. That is about 105 cavans of 50 kilograms of palay. It sits below the average of the 180 irrigated lowland hybrids in PhilRice's list, which is 6.9 tonnes. But the top yield, 8.5 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How many days does it take to mature?"
+    },
+    {
+      "type": "text",
+      "text": "It takes about 110 days from sowing to harvest. IRRI groups varieties of 100 to 120 days as short duration and 120 to 140 days as medium, so this one counts as short duration. Then harvest when 85 to 90 percent of the grains turn golden yellow, as PalayCheck advises. Because the day count drives every task, anee.io counts it for you from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -118,12 +145,27 @@
           "Sheath blight",
           "Intermediate",
           "Took a middling share of damage"
+        ],
+        [
+          "Green leafhopper",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Brown planthopper",
+          "Susceptible",
+          "Took heavy damage"
+        ],
+        [
+          "Stem borer",
+          "Intermediate",
+          "Took a middling share of damage"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro), [green leafhopper](/pests/green-leafhopper), [brown planthopper](/pests/brown-planthopper). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -203,16 +245,16 @@
     },
     {
       "type": "text",
-      "text": "These come from the same kind of farm, and PhilRice lists their days and yields. So if seed of this one is hard to find, compare these first."
+      "text": "These come from the same kind of farm and grow about as long. So if seed of this one is hard to find, compare these first."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "[NSIC Rc 614H](/rice-varieties/nsic-rc-614h): 112 days, 6.1 tonnes per hectare on average, 2020",
-        "[NSIC Rc 616H](/rice-varieties/nsic-rc-616h): 108 days, 6.5 tonnes per hectare on average, 2020",
-        "[NSIC Rc 618H](/rice-varieties/nsic-rc-618h): 115 days, 6.1 tonnes per hectare on average, 2020",
-        "[NSIC Rc 550H](/rice-varieties/nsic-rc-550h): 112 days, 6 tonnes per hectare on average, 2019"
+        "[NSIC Rc 372H](/rice-varieties/nsic-rc-372h): 108 days, 5.3 tonnes per hectare on average, 2014",
+        "[PSB Rc 26H](/rice-varieties/psb-rc-26h): 110 days, 5.6 tonnes per hectare on average, 1994",
+        "[NSIC Rc 378H](/rice-varieties/nsic-rc-378h): 110 days, 5.7 tonnes per hectare on average, 2014",
+        "[NSIC Rc 162H](/rice-varieties/nsic-rc-162h): 111 days, 5.8 tonnes per hectare on average, 2007"
       ]
     },
     {
@@ -227,8 +269,12 @@
           "a": "It is known as Mestiso 117. Seed sellers and agriculturists use both names, so ask for either one."
         },
         {
-          "q": "When was NSIC Rc 666H approved?",
-          "a": "The NSIC approved it in 2021. Leads Agriventures bred it. PhilRice has not listed its days to harvest and trial yield yet, so ask for the regional trial figures before you plant."
+          "q": "How many days does NSIC Rc 666H take to harvest?",
+          "a": "About 110 days after sowing. Then harvest when 85 to 90 percent of the grains are golden yellow."
+        },
+        {
+          "q": "What is the average yield of NSIC Rc 666H?",
+          "a": "PhilRice lists 5.2 tonnes per hectare on average, about 105 cavans of 50 kilograms. The best trial reached 8.5 tonnes. Your own yield depends on water, seed, fertilizer and timing."
         },
         {
           "q": "Is this variety a hybrid?",
@@ -236,11 +282,7 @@
         },
         {
           "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro. So scout from the early weeks and act at the first signs."
-        },
-        {
-          "q": "Is it soft when cooked?",
-          "a": "It has low amylose, 14.8 percent. So it cooks soft."
+          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro, green leafhopper, brown planthopper. So scout from the early weeks and act at the first signs."
         }
       ]
     },
@@ -284,6 +326,10 @@
         {
           "label": "Where Jackpot 102 is named as NSIC Rc 666H",
           "url": "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit"
+        },
+        {
+          "label": "NSIC registry of rice varieties: NSIC Rc 666H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
         },
         {
           "label": "BPI: NSIC registry of rice varieties",

@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-110",
-  "sortOrder": 353,
+  "sortOrder": 384,
   "lang": "en",
   "category": "Irrigated lowland",
   "profile": true,
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 4.8 tonnes per hectare. That is about 96 cavans of 50 kilograms of palay. It sits below the average of the 107 irrigated lowland inbreds in PhilRice's list, which is 5.1 tonnes. But the top yield, 6.6 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 4.8 tonnes per hectare. That is about 96 cavans of 50 kilograms of palay. It sits below the average of the 118 irrigated lowland inbreds in PhilRice's list, which is 5.2 tonnes. But the top yield, 6.6 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -160,6 +160,11 @@
         ],
         [
           "Stem borer",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Sheath blight",
           "Intermediate",
           "Took a middling share of damage"
         ]
@@ -253,10 +258,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[NSIC Rc 172SR](/rice-varieties/nsic-rc-172sr): 114 days, 4.8 tonnes per hectare on average, 2008",
         "[PSB Rc 54](/rice-varieties/psb-rc-54): 113 days, 5 tonnes per hectare on average, 1997",
         "[NSIC Rc 634](/rice-varieties/nsic-rc-634): 112 days, 4.9 tonnes per hectare on average, 2021",
-        "[NSIC Rc 172](/rice-varieties/nsic-rc-172): 112 days, 4.6 tonnes per hectare on average, 2008",
-        "[PSB Rc 80](/rice-varieties/psb-rc-80): 112 days, 5 tonnes per hectare on average, 2000"
+        "[NSIC Rc 172](/rice-varieties/nsic-rc-172): 112 days, 4.6 tonnes per hectare on average, 2008"
       ]
     },
     {

@@ -1,13 +1,13 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-664h",
-  "sortOrder": 89,
+  "sortOrder": 114,
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "PHB 85 (NSIC Rc 664H) Hybrid Rice: Characteristics and Grain Quality",
-  "metaTitle": "PHB 85 (NSIC Rc 664H): Characteristics and Grain Quality",
-  "metaDescription": "PHB 85 is NSIC Rc 664H, a hybrid rice for irrigated lowland approved in 2021. See its pest ratings, grain quality and where it grows best.",
+  "title": "PHB 85 (NSIC Rc 664H) Hybrid Rice: Yield, Maturity and Characteristics",
+  "metaTitle": "PHB 85 (NSIC Rc 664H): Yield, Maturity and Characteristics",
+  "metaDescription": "PHB 85 is NSIC Rc 664H, a hybrid rice for irrigated lowland: about 112 days and 7.5 tonnes per hectare on average. See its ratings.",
   "focusKeyword": "NSIC Rc 664H",
   "keywords": [
     "NSIC Rc 664H",
@@ -17,7 +17,7 @@
     "Mestiso 116",
     "PHB 85"
   ],
-  "excerpt": "NSIC Rc 664H is a hybrid rice variety for irrigated lowland, sold as PHB 85 and known locally as Mestiso 116. The NSIC approved it in 2021. Corteva bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 664H is a hybrid rice variety for irrigated lowland, sold as PHB 85 and known locally as Mestiso 116. The NSIC approved it in 2021. Corteva bred it. It matures in about 112 days and averages 7.5 tonnes per hectare, with a top yield of 11.2 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 664H is bred to fill",
@@ -32,7 +32,9 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Holds up against:** rice blast.",
+        "**Maturity:** about 112 days after sowing.",
+        "**Yield:** 7.5 tonnes per hectare on average, or about 151 cavans of 50 kilograms. The best trial reached 11.2 tonnes.",
+        "**Holds up against:** rice blast, stem borer.",
         "**Watch out for:** tungro.",
         "**Cooked rice:** intermediate amylose, so soft but not sticky."
       ]
@@ -73,17 +75,42 @@
         [
           "Growing environment",
           "Irrigated lowland"
+        ],
+        [
+          "Maturity",
+          "112 days after sowing"
+        ],
+        [
+          "Average yield",
+          "7.5 t/ha"
+        ],
+        [
+          "Top yield in trials",
+          "11.2 t/ha"
+        ],
+        [
+          "Plant height",
+          "122 cm"
         ]
       ]
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "How many days does it take, and how much does it yield?"
+      "text": "How much does NSIC Rc 664H yield?"
     },
     {
       "type": "text",
-      "text": "PhilRice has not published this variety's days to harvest and trial yields in its catalogue yet. So ask the seed seller or your municipal agriculturist for the figures from the trials in your region before you plan the season. Once you know the day count, anee.io dates every task from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it. Meanwhile, our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare) covers the habits that matter with any variety."
+      "text": "On average it gives 7.5 tonnes per hectare. That is about 151 cavans of 50 kilograms of palay. It sits above the average of the 180 irrigated lowland hybrids in PhilRice's list, which is 6.9 tonnes. But the top yield, 11.2 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How many days does it take to mature?"
+    },
+    {
+      "type": "text",
+      "text": "It takes about 112 days from sowing to harvest. IRRI groups varieties of 100 to 120 days as short duration and 120 to 140 days as medium, so this one counts as short duration. Then harvest when 85 to 90 percent of the grains turn golden yellow, as PalayCheck advises. Because the day count drives every task, anee.io counts it for you from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -118,6 +145,21 @@
           "Sheath blight",
           "Intermediate",
           "Took a middling share of damage"
+        ],
+        [
+          "Green leafhopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Brown planthopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Stem borer",
+          "Resistant",
+          "Held up well in the tests"
         ]
       ]
     },
@@ -203,16 +245,16 @@
     },
     {
       "type": "text",
-      "text": "These come from the same kind of farm, and PhilRice lists their days and yields. So if seed of this one is hard to find, compare these first."
+      "text": "These come from the same kind of farm and grow about as long. So if seed of this one is hard to find, compare these first."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "[NSIC Rc 614H](/rice-varieties/nsic-rc-614h): 112 days, 6.1 tonnes per hectare on average, 2020",
-        "[NSIC Rc 616H](/rice-varieties/nsic-rc-616h): 108 days, 6.5 tonnes per hectare on average, 2020",
-        "[NSIC Rc 618H](/rice-varieties/nsic-rc-618h): 115 days, 6.1 tonnes per hectare on average, 2020",
-        "[NSIC Rc 550H](/rice-varieties/nsic-rc-550h): 112 days, 6 tonnes per hectare on average, 2019"
+        "[NSIC Rc 656H](/rice-varieties/nsic-rc-656h): 111 days, 7.6 tonnes per hectare on average, 2021",
+        "[NSIC Rc 662H](/rice-varieties/nsic-rc-662h): 112 days, 7.8 tonnes per hectare on average, 2021",
+        "[NSIC Rc 774H](/rice-varieties/nsic-rc-774h): 112 days, 7.8 tonnes per hectare on average, 2024",
+        "[NSIC Rc 712H](/rice-varieties/nsic-rc-712h): 113 days, 7.8 tonnes per hectare on average, 2022"
       ]
     },
     {
@@ -227,8 +269,12 @@
           "a": "It is known as Mestiso 116. Seed sellers and agriculturists use both names, so ask for either one."
         },
         {
-          "q": "When was NSIC Rc 664H approved?",
-          "a": "The NSIC approved it in 2021. Corteva bred it. PhilRice has not listed its days to harvest and trial yield yet, so ask for the regional trial figures before you plant."
+          "q": "How many days does NSIC Rc 664H take to harvest?",
+          "a": "About 112 days after sowing. Then harvest when 85 to 90 percent of the grains are golden yellow."
+        },
+        {
+          "q": "What is the average yield of NSIC Rc 664H?",
+          "a": "PhilRice lists 7.5 tonnes per hectare on average, about 151 cavans of 50 kilograms. The best trial reached 11.2 tonnes. Your own yield depends on water, seed, fertilizer and timing."
         },
         {
           "q": "Is this variety a hybrid?",
@@ -237,10 +283,6 @@
         {
           "q": "What should I watch for when I plant it?",
           "a": "In PhilRice's tests it was weak against tungro. So scout from the early weeks and act at the first signs."
-        },
-        {
-          "q": "Is it soft when cooked?",
-          "a": "It has intermediate amylose, 20.7 percent. So it cooks soft but not sticky."
         }
       ]
     },
@@ -284,6 +326,10 @@
         {
           "label": "Where PHB 85 is named as NSIC Rc 664H",
           "url": "https://www.corteva.com/ph/Media-Center/field-tours-activities/ilocos-norte-nrtf.html"
+        },
+        {
+          "label": "NSIC registry of rice varieties: NSIC Rc 664H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
         },
         {
           "label": "BPI: NSIC registry of rice varieties",

@@ -433,7 +433,8 @@ def build(v, allv, stats):
     ]})
     sources = [SRC_PHILRICE]
     sources += [{'label': 'Where %s is named as %s' % (trade, n), 'url': u} for u in (v.get('tradeSources') or [])[:2]] if trade else []
-    sources += [{'label': 'PhilRice seed database: %s variety characteristics%s' % (n, ', second record' if i else ''), 'url': u} for i, u in enumerate(v['sources'][:2])]
+    sources += [{'label': ('PhilRice seed database: %s variety characteristics%s' % (n, ', second record' if i else '')) if 'dbmp' in u else 'NSIC registry of rice varieties: %s' % n, 'url': u}
+                for i, u in enumerate([x for x in v['sources'] if 'dbmp' in x][:2] + [x for x in v['sources'] if 'dbmp' not in x][:1])]
     sources += [SRC_NSIC, SRC_PALAYCHECK, SRC_IRRI_STAGES]
     if am:
         sources += [SRC_FAO, SRC_JULIANO]

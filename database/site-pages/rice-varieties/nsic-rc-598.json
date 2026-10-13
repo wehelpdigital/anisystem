@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-598",
-  "sortOrder": 96,
+  "sortOrder": 121,
   "lang": "en",
   "category": "Rainfed lowland, direct seeded",
   "profile": true,
@@ -160,6 +160,11 @@
         ],
         [
           "Sheath blight",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Stem borer",
           "Intermediate",
           "Took a middling share of damage"
         ]

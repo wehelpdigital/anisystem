@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-194",
-  "sortOrder": 302,
+  "sortOrder": 330,
   "lang": "en",
   "category": "Rainfed lowland, transplanted",
   "profile": true,
@@ -34,7 +34,8 @@
         "**Maturity:** about 112 days after sowing.",
         "**Yield:** 3.5 tonnes per hectare on average, or about 70 cavans of 50 kilograms.",
         "**Season:** Dry season and wet season.",
-        "**Cooked rice:** intermediate amylose, so soft but not sticky."
+        "**Holds up against:** green leafhopper, bacterial leaf blight.",
+        "**Watch out for:** tungro."
       ]
     },
     {
@@ -103,7 +104,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 3.5 tonnes per hectare. That is about 70 cavans of 50 kilograms of palay. It sits above the average of the 22 rainfed lowland inbreds in PhilRice's list, which is 3.2 tonnes. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 3.5 tonnes per hectare. That is about 70 cavans of 50 kilograms of palay. It sits close to the average of the 25 rainfed lowland inbreds in PhilRice's list, which is 3.4 tonnes. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -120,8 +121,34 @@
       "text": "Is it resistant to pests and diseases?"
     },
     {
+      "type": "table",
+      "caption": "Reactions in PhilRice's tests: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets, as PhilRice lists them.",
+      "rows": [
+        [
+          "Pest or disease",
+          "PhilRice rating",
+          "What it means"
+        ],
+        [
+          "Green leafhopper",
+          "Moderately resistant",
+          "Took some damage but held up"
+        ],
+        [
+          "Bacterial leaf blight",
+          "Moderately resistant",
+          "Took some damage but held up"
+        ],
+        [
+          "Tungro",
+          "Susceptible",
+          "Took heavy damage"
+        ]
+      ]
+    },
+    {
       "type": "text",
-      "text": "PhilRice's table gives no pest and disease ratings for this variety. So treat it as untested and scout every week, above all for [rice blast](/diseases/rice-blast), [tungro](/diseases/rice-tungro) and the [brown planthopper](/pests/brown-planthopper). Our [pest and disease finders](/features/pest-and-disease-finders) help you name what you see."
+      "text": "So scout early for [tungro](/diseases/rice-tungro). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -217,8 +244,8 @@
           "a": "No, it is an inbred. So the seed you buy grows true, but certified seed still gives the best start, as PalayCheck advises."
         },
         {
-          "q": "Is it soft when cooked?",
-          "a": "It has intermediate amylose, 22.6 percent. So it cooks soft but not sticky."
+          "q": "What should I watch for when I plant it?",
+          "a": "In PhilRice's tests it was weak against tungro. So scout from the early weeks and act at the first signs."
         }
       ]
     },

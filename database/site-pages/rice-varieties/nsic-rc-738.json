@@ -1,13 +1,13 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-738",
-  "sortOrder": 27,
+  "sortOrder": 51,
   "lang": "en",
   "category": "Irrigated lowland",
   "profile": true,
-  "title": "NSIC Rc 738 (Tubigan 62) Rice Variety: Characteristics and Grain Quality",
-  "metaTitle": "NSIC Rc 738 Rice Variety: Characteristics and Grain Quality",
-  "metaDescription": "NSIC Rc 738 (Tubigan 62) is an inbred rice for irrigated lowland, approved in 2023. See its pest and disease ratings, grain quality and where it grows best.",
+  "title": "NSIC Rc 738 (Tubigan 62) Rice Variety: Yield, Maturity and Characteristics",
+  "metaTitle": "NSIC Rc 738 (Tubigan 62): Yield, Maturity, Characteristics",
+  "metaDescription": "NSIC Rc 738 is an inbred rice for irrigated lowland: about 110 days and 5.9 tonnes per hectare on average. See its pest ratings and grain quality.",
   "focusKeyword": "NSIC Rc 738",
   "keywords": [
     "NSIC Rc 738",
@@ -16,7 +16,7 @@
     "738 rice variety characteristics",
     "Tubigan 62"
   ],
-  "excerpt": "NSIC Rc 738 is an inbred rice variety for irrigated lowland, known locally as Tubigan 62. The NSIC approved it in 2023. PhilRice bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 738 is an inbred rice variety for irrigated lowland, known locally as Tubigan 62. The NSIC approved it in 2023. PhilRice bred it. It matures in about 110 days and averages 5.9 tonnes per hectare, with a top yield of 6 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 738 is meant to grow",
@@ -31,6 +31,8 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "**Maturity:** about 110 days after sowing.",
+        "**Yield:** 5.9 tonnes per hectare on average, or about 119 cavans of 50 kilograms. The best trial reached 6 tonnes.",
         "**Watch out for:** tungro.",
         "**Cooked rice:** intermediate amylose, so soft but not sticky."
       ]
@@ -71,17 +73,42 @@
         [
           "How to plant it",
           "Transplanted"
+        ],
+        [
+          "Maturity",
+          "110 days after sowing"
+        ],
+        [
+          "Average yield",
+          "5.9 t/ha"
+        ],
+        [
+          "Top yield in trials",
+          "6 t/ha"
+        ],
+        [
+          "Plant height",
+          "102 cm"
         ]
       ]
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "How many days does it take, and how much does it yield?"
+      "text": "How much does NSIC Rc 738 yield?"
     },
     {
       "type": "text",
-      "text": "PhilRice has not published this variety's days to harvest and trial yields in its catalogue yet. So ask the seed seller or your municipal agriculturist for the figures from the trials in your region before you plan the season. Once you know the day count, anee.io dates every task from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it. Meanwhile, our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare) covers the habits that matter with any variety."
+      "text": "On average it gives 5.9 tonnes per hectare. That is about 119 cavans of 50 kilograms of palay. It sits above the average of the 118 irrigated lowland inbreds in PhilRice's list, which is 5.2 tonnes. But the top yield, 6 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How many days does it take to mature?"
+    },
+    {
+      "type": "text",
+      "text": "It takes about 110 days from sowing to harvest. IRRI groups varieties of 100 to 120 days as short duration and 120 to 140 days as medium, so this one counts as short duration. Then harvest when 85 to 90 percent of the grains turn golden yellow, as PalayCheck advises. Because the day count drives every task, anee.io counts it for you from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -114,6 +141,21 @@
         ],
         [
           "Sheath blight",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Green leafhopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Brown planthopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Stem borer",
           "Intermediate",
           "Took a middling share of damage"
         ]
@@ -201,16 +243,16 @@
     },
     {
       "type": "text",
-      "text": "These come from the same kind of farm, and PhilRice lists their days and yields. So if seed of this one is hard to find, compare these first."
+      "text": "These come from the same kind of farm and grow about as long. So if seed of this one is hard to find, compare these first."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "[NSIC Rc 622](/rice-varieties/nsic-rc-622): 103 days, 5.6 tonnes per hectare on average, 2021",
-        "[NSIC Rc 624](/rice-varieties/nsic-rc-624): 103 days, 5.6 tonnes per hectare on average, 2021",
-        "[NSIC Rc 626](/rice-varieties/nsic-rc-626): 105 days, 5.2 tonnes per hectare on average, 2021",
-        "[NSIC Rc 628](/rice-varieties/nsic-rc-628): 106 days, 5.5 tonnes per hectare on average, 2021"
+        "[NSIC Rc 740](/rice-varieties/nsic-rc-740): 110 days, 5.9 tonnes per hectare on average, 2023",
+        "[NSIC Rc 154](/rice-varieties/nsic-rc-154): 110 days, 5.9 tonnes per hectare on average, 2007",
+        "[NSIC Rc 508](/rice-varieties/nsic-rc-508): 110 days, 6 tonnes per hectare on average, 2018",
+        "[NSIC Rc 506](/rice-varieties/nsic-rc-506): 111 days, 5.9 tonnes per hectare on average, 2018"
       ]
     },
     {
@@ -221,8 +263,12 @@
           "a": "It is known as Tubigan 62. Seed sellers and agriculturists use both names, so ask for either one."
         },
         {
-          "q": "When was NSIC Rc 738 approved?",
-          "a": "The NSIC approved it in 2023. PhilRice bred it. PhilRice has not listed its days to harvest and trial yield yet, so ask for the regional trial figures before you plant."
+          "q": "How many days does NSIC Rc 738 take to harvest?",
+          "a": "About 110 days after sowing. Then harvest when 85 to 90 percent of the grains are golden yellow."
+        },
+        {
+          "q": "What is the average yield of NSIC Rc 738?",
+          "a": "PhilRice lists 5.9 tonnes per hectare on average, about 119 cavans of 50 kilograms. The best trial reached 6 tonnes. Your own yield depends on water, seed, fertilizer and timing."
         },
         {
           "q": "Is this variety a hybrid?",
@@ -235,10 +281,6 @@
         {
           "q": "Is it soft when cooked?",
           "a": "It has intermediate amylose, 20.8 percent. So it cooks soft but not sticky."
-        },
-        {
-          "q": "Where can I buy certified seed of this variety?",
-          "a": "Ask accredited seed growers in your province, your municipal agriculturist or the nearest PhilRice station. Look for the certified seed tag on the sack before you pay."
         }
       ]
     },
@@ -274,6 +316,10 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "NSIC registry of rice varieties: NSIC Rc 738",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
         },
         {
           "label": "BPI: NSIC registry of rice varieties",

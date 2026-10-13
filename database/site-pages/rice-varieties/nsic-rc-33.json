@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-33",
-  "sortOrder": 12,
+  "sortOrder": 36,
   "lang": "en",
   "category": "Upland",
   "profile": true,
@@ -31,7 +31,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Holds up against:** rice blast.",
+        "**Holds up against:** rice blast, stem borer.",
         "**Watch out for:** tungro.",
         "**Cooked rice:** intermediate amylose, so soft but not sticky."
       ]
@@ -113,6 +113,21 @@
           "Sheath blight",
           "Intermediate",
           "Took a middling share of damage"
+        ],
+        [
+          "Green leafhopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Brown planthopper",
+          "Intermediate",
+          "Took a middling share of damage"
+        ],
+        [
+          "Stem borer",
+          "Resistant",
+          "Held up well in the tests"
         ]
       ]
     },

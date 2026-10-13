@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-160",
-  "sortOrder": 329,
+  "sortOrder": 360,
   "lang": "en",
   "category": "Irrigated lowland",
   "profile": true,
@@ -33,7 +33,7 @@
       "items": [
         "**Season:** Dry season and wet season.",
         "**Holds up against:** stem borer.",
-        "**Watch out for:** tungro, brown planthopper.",
+        "**Watch out for:** tungro, brown planthopper, sheath blight.",
         "**Cooked rice:** low amylose, so soft and tender."
       ]
     },
@@ -136,12 +136,17 @@
           "Stem borer",
           "Resistant",
           "Held up well in the tests"
+        ],
+        [
+          "Sheath blight",
+          "Susceptible",
+          "Took heavy damage"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "So scout early for [tungro](/diseases/rice-tungro), [brown planthopper](/pests/brown-planthopper). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+      "text": "So scout early for [tungro](/diseases/rice-tungro), [brown planthopper](/pests/brown-planthopper), [sheath blight](/diseases/sheath-blight). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -254,7 +259,7 @@
         },
         {
           "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against tungro, brown planthopper. So scout from the early weeks and act at the first signs."
+          "a": "In PhilRice's tests it was weak against tungro, brown planthopper, sheath blight. So scout from the early weeks and act at the first signs."
         },
         {
           "q": "Is it soft when cooked?",

@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-342sr",
-  "sortOrder": 247,
+  "sortOrder": 275,
   "lang": "en",
   "category": "Irrigated lowland",
   "profile": true,
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 4.3 tonnes per hectare. That is about 86 cavans of 50 kilograms of palay. It sits below the average of the 107 irrigated lowland inbreds in PhilRice's list, which is 5.1 tonnes. But the top yield, 7.3 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 4.3 tonnes per hectare. That is about 86 cavans of 50 kilograms of palay. It sits below the average of the 118 irrigated lowland inbreds in PhilRice's list, which is 5.2 tonnes. But the top yield, 7.3 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -258,10 +258,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[NSIC 2103 Rc 342SR](/rice-varieties/nsic-2103-rc-342sr): 114 days, 4.3 tonnes per hectare on average, 2013",
+        "[NSIC Rc 172SR](/rice-varieties/nsic-rc-172sr): 114 days, 4.8 tonnes per hectare on average, 2008",
         "[NSIC Rc 170](/rice-varieties/nsic-rc-170): 112 days, 4.5 tonnes per hectare on average, 2008",
-        "[NSIC Rc 460](/rice-varieties/nsic-rc-460): 115 days, 4.7 tonnes per hectare on average, 2016",
-        "[IR65](/rice-varieties/ir65): 115 days, 4.7 tonnes per hectare on average, 1985",
-        "[NSIC Rc 17](/rice-varieties/nsic-rc-17): 117 days, 4.2 tonnes per hectare on average, 2004"
+        "[NSIC Rc 460](/rice-varieties/nsic-rc-460): 115 days, 4.7 tonnes per hectare on average, 2016"
       ]
     },
     {

@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-206h",
-  "sortOrder": 308,
+  "sortOrder": 336,
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
@@ -35,7 +35,7 @@
         "**Yield:** 6.4 tonnes per hectare on average, or about 128 cavans of 50 kilograms. The best trial reached 11.3 tonnes.",
         "**Season:** Dry season and wet season.",
         "**Holds up against:** green leafhopper, stem borer.",
-        "**Watch out for:** bacterial leaf blight, tungro."
+        "**Watch out for:** bacterial leaf blight, tungro, sheath blight."
       ]
     },
     {
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 6.4 tonnes per hectare. That is about 128 cavans of 50 kilograms of palay. It sits close to the average of the 110 irrigated lowland hybrids in PhilRice's list, which is 6.3 tonnes. But the top yield, 11.3 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 6.4 tonnes per hectare. That is about 128 cavans of 50 kilograms of palay. It sits below the average of the 180 irrigated lowland hybrids in PhilRice's list, which is 6.9 tonnes. But the top yield, 11.3 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -162,12 +162,17 @@
           "Stem borer",
           "Resistant",
           "Held up well in the tests"
+        ],
+        [
+          "Sheath blight",
+          "Susceptible",
+          "Took heavy damage"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
+      "text": "So scout early for [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro), [sheath blight](/diseases/sheath-blight). When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage."
     },
     {
       "type": "heading",
@@ -279,7 +284,7 @@
         },
         {
           "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro. So scout from the early weeks and act at the first signs."
+          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro, sheath blight. So scout from the early weeks and act at the first signs."
         }
       ]
     },

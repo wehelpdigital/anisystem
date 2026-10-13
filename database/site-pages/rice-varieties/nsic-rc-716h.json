@@ -1,7 +1,7 @@
 {
   "section": "rice-varieties",
   "slug": "nsic-rc-716h",
-  "sortOrder": 60,
+  "sortOrder": 85,
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
@@ -204,10 +204,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[NSIC Rc 614H](/rice-varieties/nsic-rc-614h): 112 days, 6.1 tonnes per hectare on average, 2020",
-        "[NSIC Rc 616H](/rice-varieties/nsic-rc-616h): 108 days, 6.5 tonnes per hectare on average, 2020",
-        "[NSIC Rc 618H](/rice-varieties/nsic-rc-618h): 115 days, 6.1 tonnes per hectare on average, 2020",
-        "[NSIC Rc 550H](/rice-varieties/nsic-rc-550h): 112 days, 6 tonnes per hectare on average, 2019"
+        "[NSIC Rc 688H](/rice-varieties/nsic-rc-688h): 114 days, 8 tonnes per hectare on average, 2022",
+        "[NSIC Rc 690H](/rice-varieties/nsic-rc-690h): 114 days, 7.1 tonnes per hectare on average, 2022",
+        "[NSIC Rc 692H](/rice-varieties/nsic-rc-692h): 114 days, 5.6 tonnes per hectare on average, 2022",
+        "[NSIC Rc 694H](/rice-varieties/nsic-rc-694h): 112 days, 7.2 tonnes per hectare on average, 2022"
       ]
     },
     {
