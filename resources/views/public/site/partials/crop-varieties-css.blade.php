@@ -56,18 +56,7 @@
         .cv-crop .d .h { display: none; }
     }
 
-    /* The search over every crop. */
-    .cv-find { margin-top: 1.4rem; padding: 1.1rem; border-radius: 1.4rem; background: #fff; border: 1px solid #e1ecd3; box-shadow: 0 24px 50px -40px rgb(20 33 12 / .6); }
-    .cv-res { margin-top: .9rem; display: grid; gap: .45rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
-    .cv-res a { display: flex; flex-direction: column; padding: .6rem .8rem; border-radius: .9rem; background: #f7faf3; border: 1px solid #e6efdb; text-decoration: none;
-        opacity: 0; translate: 0 6px; animation: cvIn .28s cubic-bezier(.22,1,.36,1) forwards; }
-    .cv-res a b { font-weight: 800; color: #14210c; }
-    .cv-res a span { font-size: .76rem; font-weight: 700; color: #6b7f5a; }
-    .cv-res a:hover { border-color: #b9d69a; }
-    .cv-res-none { margin-top: .9rem; font-size: .9rem; color: #6b7280; }
-    @keyframes cvIn { to { opacity: 1; translate: 0 0; } }
     @media (prefers-reduced-motion: reduce) {
         .rv-pop a, .rv-links a, .cv-crop { transition: none; }
-        .cv-res a { animation: none; opacity: 1; translate: none; }
     }
 </style>

@@ -2,8 +2,8 @@
 
 {{-- /crop-varieties (2026-10-13): every crop with its varieties, grouped,
      each crop to its own finder (or, for a crop with only a variety or two,
-     straight to their pages), with a search over every variety of every
-     crop. Rice has its own finder at /rice-varieties. See
+     straight to their pages). Rice has its own finder at /rice-varieties.
+     Each crop's finder has its own search. See
      App\Support\CropVarieties. --}}
 @include('public.partials.site-css')
 @include('public.site.css')
@@ -18,26 +18,12 @@
     $groups = collect($book['groups'] ?? [])->sortBy('order');
     $registered = $all->filter(fn ($v) => ! empty($v['reg']))->count();
     // Rice is one of the crops too (2026-10-14): its own finder at
-    // /rice-varieties, counted and searched here with the rest.
+    // /rice-varieties, counted here with the rest.
     $rice = collect(\App\Support\RiceVarieties::all());
     $riceCount = $rice->count();
     $riceDays = $rice->pluck('maturity')->filter();
     $total = $all->count() + $riceCount;
     $fmt = fn ($x) => number_format((float) $x, 0, '.', '');
-    // The search index: every variety's names, its crop and its page.
-    $index = $rice->map(fn ($v) => [
-        'n' => $v['name'],
-        'a' => implode(', ', array_slice(array_filter(array_merge($v['tradeNames'] ?? [], [$v['localName'] ?? ''])), 0, 3)),
-        'c' => 'Rice',
-        'u' => '/rice-varieties/' . $v['slug'],
-        'q' => strtolower($v['name'] . ' ' . implode(' ', $v['tradeNames'] ?? []) . ' ' . ($v['localName'] ?? '') . ' ' . ($v['breeder'] ?? '') . ' rice palay'),
-    ])->concat($all->map(fn ($v) => [
-        'n' => $v['name'],
-        'a' => implode(', ', array_slice($v['aliases'] ?? [], 0, 3)),
-        'c' => $crops[$v['crop']]['name'] ?? ucfirst($v['crop']),
-        'u' => '/crop-varieties/' . $v['slug'],
-        'q' => strtolower($v['name'] . ' ' . implode(' ', $v['aliases'] ?? []) . ' ' . ($v['localName'] ?? '') . ' ' . ($v['owner'] ?? '')),
-    ]))->values();
     $faq = [
         ['How many crop varieties are registered in the Philippines?', 'This list holds ' . number_format($total) . ' varieties of ' . ($crops->count() + 1) . ' crops, ' . number_format($registered + $riceCount) . ' of them on the national registry of the National Seed Industry Council. Corn has the most, with ' . ($crops['corn']['count'] ?? 0) . ', then rice with ' . $riceCount . '.'],
         ['What is the NSIC?', 'The National Seed Industry Council approves new crop varieties after trials in several places, and the Bureau of Plant Industry keeps the registry. A registered variety has passed those trials, so its numbers are more than a seller\'s promise.'],
@@ -96,8 +82,8 @@
                     <h1 class="sp-h1 mt-3">{{ $meta['hubTitle'] }}</h1>
                     <p class="sp-lead mt-4">{{ $meta['intro'] }}</p>
                     <div class="wk-jump mt-6">
-                        <a href="#search"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Search a variety</a>
                         <a href="#crops"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10"/></svg>Browse by crop</a>
+                        <a href="#read"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2m0-13c1.5-1.5 4-2 8-2v13c-4 0-6.5.5-8 2m0-13v13"/></svg>How to read a record</a>
                     </div>
                 </div>
                 <div class="rv-stats" aria-label="The list in numbers">
@@ -117,25 +103,6 @@
                     <a href="{{ $S::url('weeds') }}">Weeds and grasses</a>
                     <a href="{{ $S::url('blog') }}">Latest in Agriculture</a>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    {{-- One search over every variety of every crop --}}
-    <section class="bg-[#fbfcf9] border-b border-[#eef3e8]" id="search" style="scroll-margin-top: 5rem">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-            <div class="wk-sec-h">
-                <h2>Search Any Crop Variety by Name or Brand</h2>
-                <p>Type the name on the seed pack or the tag, like Jackpot 102, DK 8899S, Diamante Max or Lakatan, and open its page.</p>
-            </div>
-            <div class="cv-find">
-                <label class="wk-search" style="max-width: none">
-                    <span class="sr-only">Search every crop variety</span>
-                    <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>
-                    <input type="search" data-cvf-q placeholder="Search a variety, brand or company" autocomplete="off">
-                </label>
-                <div class="cv-res" data-cvf-res aria-live="polite"></div>
-                <p class="cv-res-none" data-cvf-none hidden>No variety by that name yet. Try fewer letters, or browse the crops below.</p>
             </div>
         </div>
     </section>
@@ -192,7 +159,7 @@
                 @endforeach
             </div>
 
-            <div class="mt-14 wk-sec-h"><h2>How to Read a Variety's Record</h2>
+            <div class="mt-14 wk-sec-h" id="read" style="scroll-margin-top: 5rem"><h2>How to Read a Variety's Record</h2>
                 <p>Every variety page shows the same few things. Here is what each one tells you before you buy seed or planting material.</p></div>
             <div class="rv-how">
                 <div><h3>Days to harvest</h3><p>Counted from sowing or transplanting, or in months for root crops and sugarcane. Fruit trees count years to the first fruit instead.</p></div>
@@ -228,29 +195,3 @@
         </div>
     </section>
 @endsection
-
-@push('scripts')
-<script>
-(() => {
-    /* One search over every crop variety: the names come in the page as a
-       small list, and the first 24 matches show as links. */
-    const index = @json($index);
-    const q = document.querySelector('[data-cvf-q]'), out = document.querySelector('[data-cvf-res]'), none = document.querySelector('[data-cvf-none]');
-    if (!q || !out) return;
-    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-    const flat = (s) => s.toLowerCase().replace(/[\s-]/g, '');
-    index.forEach((v) => { v.f = flat(v.q); });
-    let t = 0;
-    const run = () => {
-        const s = q.value.trim().toLowerCase();
-        if (s.length < 2) { out.innerHTML = ''; none.hidden = true; return; }
-        const fs = flat(s);
-        const hits = index.filter((v) => v.q.includes(s) || v.f.includes(fs))
-            .sort((a, b) => (flat(a.n).startsWith(fs) ? 0 : 1) - (flat(b.n).startsWith(fs) ? 0 : 1)).slice(0, 24);
-        out.innerHTML = hits.map((v, i) => '<a href="' + esc(v.u) + '" style="animation-delay:' + Math.min(i, 10) * 25 + 'ms"><b>' + esc(v.n) + '</b><span>' + esc(v.c) + (v.a ? ' · ' + esc(v.a) : '') + '</span></a>').join('');
-        none.hidden = hits.length > 0;
-    };
-    q.addEventListener('input', () => { clearTimeout(t); t = setTimeout(run, 120); });
-})();
-</script>
-@endpush
