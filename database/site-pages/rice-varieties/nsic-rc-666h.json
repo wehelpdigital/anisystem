@@ -5,18 +5,19 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 666H (Mestiso 117) Rice Variety: Characteristics and Grain Quality",
-  "metaTitle": "NSIC Rc 666H Rice Variety: Characteristics and Grain Quality",
-  "metaDescription": "NSIC Rc 666H is a hybrid rice for irrigated lowland, approved in 2021. See its pest and disease ratings, grain quality and where it grows best.",
+  "title": "Jackpot 102 (NSIC Rc 666H) Hybrid Rice: Characteristics and Grain Quality",
+  "metaTitle": "Jackpot 102 (NSIC Rc 666H) Rice Variety",
+  "metaDescription": "Jackpot 102 is NSIC Rc 666H, a hybrid rice for irrigated lowland approved in 2021. See its pest ratings, grain quality and where it grows best.",
   "focusKeyword": "NSIC Rc 666H",
   "keywords": [
     "NSIC Rc 666H",
     "rice variety 666H",
     "rc 666H",
     "666H rice variety characteristics",
-    "Mestiso 117"
+    "Mestiso 117",
+    "Jackpot 102"
   ],
-  "excerpt": "NSIC Rc 666H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 117. The NSIC approved it in 2021. Leads Agriventures bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 666H is a hybrid rice variety for irrigated lowland, sold as Jackpot 102 and known locally as Mestiso 117. The NSIC approved it in 2021. Leads Agriventures bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 666H is bred to fill",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 666H, or Rc 666H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for Jackpot 102, or rice variety 666H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -56,6 +57,10 @@
         [
           "Bred by",
           "Leads Agriventures"
+        ],
+        [
+          "Sold as",
+          "Jackpot 102"
         ],
         [
           "Local name",
@@ -214,6 +219,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Jackpot 102 the same as NSIC Rc 666H?",
+          "a": "Yes. Jackpot 102 is the name it is sold under, and NSIC Rc 666H is its registration with the National Seed Industry Council, where its local name is Mestiso 117. The numbers on this page are PhilRice's for NSIC Rc 666H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 666H?",
           "a": "It is known as Mestiso 117. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -232,10 +241,6 @@
         {
           "q": "Is it soft when cooked?",
           "a": "It has low amylose, 14.8 percent. So it cooks soft."
-        },
-        {
-          "q": "Where can I buy certified seed of this variety?",
-          "a": "Ask accredited seed growers in your province, your municipal agriculturist or the nearest PhilRice station. Look for the certified seed tag on the sack before you pay."
         }
       ]
     },
@@ -271,6 +276,14 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where Jackpot 102 is named as NSIC Rc 666H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/catalogue2021.pdf"
+        },
+        {
+          "label": "Where Jackpot 102 is named as NSIC Rc 666H",
+          "url": "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit"
         },
         {
           "label": "BPI: NSIC registry of rice varieties",

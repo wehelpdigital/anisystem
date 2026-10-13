@@ -28,6 +28,16 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 APP = sys.argv[1] if len(sys.argv) > 1 else HERE
 CRAWL = sys.argv[2] if len(sys.argv) > 2 else HERE
 TRADE = sys.argv[3] if len(sys.argv) > 3 else None
+# A brand word alone names no one variety.
+GENERIC_TRADE = {'jackpot', 'hatao', 'mestizo', 'hyvar', 'frontline', 'kimbee', 'biorice'}
+# Trade names whose sources disagree on the NSIC number (2026-10-13): kept on
+# the better supported number only, or left off when the registry names the
+# number for another variety.
+DOUBTFUL_TRADE = {('NSIC Rc 548H', 'arizebiganteplus'), ('NSIC Rc 548H', 'biganteplus'),
+                  ('NSIC Rc 410H', 'arizehabilisplus'), ('NSIC Rc 410H', 'habilisplus'),
+                  ('NSIC Rc 176H', 'phb73'), ('NSIC Rc 656H', 'lav777'), ('NSIC Rc 406H', 'bataraindra01'),
+                  ('NSIC Rc 406H', 'batariindra01'), ('NSIC Rc 692H', 'pompyang2323'),
+                  ('NSIC Rc 408H', 'sl68'), ('NSIC Rc 408H', 'sl68h')}
 
 TAB_ENV = {'Irrigated': 'irrigated', 'Rainfed_TPR': 'rainfed-tpr', 'Rainfed_DSR': 'rainfed-dsr', 'Upland': 'upland',
            'Saline_Prone': 'saline', 'Flood_Prone': 'flood', 'Drought_Prone': 'drought', 'Cool_Elevated': 'cool'}
@@ -117,6 +127,7 @@ def main():
 
     # Trade names, by NSIC name; a name only when its source ties it to the number.
     trade = {}
+    flat = lambda s: re.sub(r'[\s\-]', '', s.lower())
     if TRADE and os.path.isdir(TRADE):
         for f in sorted(glob.glob(os.path.join(TRADE, 'tradenames*.json'))):
             for t in json.load(open(f, encoding='utf-8')):
@@ -126,8 +137,11 @@ def main():
                 e = trade.setdefault(key, {'names': [], 'sources': []})
                 for nm in t['tradeNames']:
                     nm = re.sub(r'\s+', ' ', str(nm)).strip()
-                    if nm and nm.lower() not in [x.lower() for x in e['names']] and nm.lower() != key.lower():
-                        e['names'].append(nm)
+                    if (not nm or flat(nm) in [flat(x) for x in e['names']] or nm.lower() == key.lower() or len(nm) < 4
+                            or re.match(r'(?i)^(nsic\s*)?rc\s*\d', nm) or nm.lower() in GENERIC_TRADE
+                            or (key, flat(nm)) in DOUBTFUL_TRADE):
+                        continue
+                    e['names'].append(nm)
                 e['sources'] += [u for u in t['sources'] if u not in e['sources'] and not any(b in u for b in ('pinoyrice.com',))]
 
     out, seen = [], set()
@@ -246,7 +260,9 @@ def main():
             rec['direct'] = direct
         if name in trade:
             local_l = (local or '').lower()
-            rec['tradeNames'] = [t for t in trade[name]['names'] if t.lower() != local_l][:4]
+            # Mestizo 30 is Mestiso 30, the local name, spelled the other way.
+            sz = lambda x: re.sub(r'[\s\-]', '', x.lower().replace('z', 's'))
+            rec['tradeNames'] = [t for t in trade[name]['names'] if sz(t) != sz(local_l) and not re.search(r'\d-\d', t)][:4]
             rec['tradeSources'] = trade[name]['sources'][:3]
             if not rec['tradeNames']:
                 del rec['tradeNames'], rec['tradeSources']

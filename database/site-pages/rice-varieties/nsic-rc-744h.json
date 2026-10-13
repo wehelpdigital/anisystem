@@ -5,18 +5,19 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 744H (Mestiso 141) Rice Variety: Characteristics and Grain Quality",
-  "metaTitle": "NSIC Rc 744H Rice Variety: Characteristics and Grain Quality",
-  "metaDescription": "NSIC Rc 744H is a hybrid rice for irrigated lowland, approved in 2023. See its pest and disease ratings, grain quality and where it grows best.",
+  "title": "BioRice Bounty (NSIC Rc 744H) Hybrid Rice: Characteristics and Grain Quality",
+  "metaTitle": "BioRice Bounty (NSIC Rc 744H) Rice Variety",
+  "metaDescription": "BioRice Bounty is NSIC Rc 744H, a hybrid rice for irrigated lowland approved in 2023. See its pest ratings, grain quality and where it grows best.",
   "focusKeyword": "NSIC Rc 744H",
   "keywords": [
     "NSIC Rc 744H",
     "rice variety 744H",
     "rc 744H",
     "744H rice variety characteristics",
-    "Mestiso 141"
+    "Mestiso 141",
+    "BioRice Bounty"
   ],
-  "excerpt": "NSIC Rc 744H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 141. The NSIC approved it in 2023. Bioseed bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 744H is a hybrid rice variety for irrigated lowland, sold as BioRice Bounty and known locally as Mestiso 141. The NSIC approved it in 2023. Bioseed bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 744H is bred to fill",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 744H, or Rc 744H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for BioRice Bounty, or rice variety 744H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -56,6 +57,10 @@
         [
           "Bred by",
           "Bioseed"
+        ],
+        [
+          "Sold as",
+          "BioRice Bounty"
         ],
         [
           "Local name",
@@ -214,6 +219,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is BioRice Bounty the same as NSIC Rc 744H?",
+          "a": "Yes. BioRice Bounty is the name it is sold under, and NSIC Rc 744H is its registration with the National Seed Industry Council, where its local name is Mestiso 141. The numbers on this page are PhilRice's for NSIC Rc 744H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 744H?",
           "a": "It is known as Mestiso 141. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -232,10 +241,6 @@
         {
           "q": "Is it soft when cooked?",
           "a": "It has intermediate amylose, 20.5 percent. So it cooks soft but not sticky."
-        },
-        {
-          "q": "Where can I buy certified seed of this variety?",
-          "a": "Ask accredited seed growers in your province, your municipal agriculturist or the nearest PhilRice station. Look for the certified seed tag on the sack before you pay."
         }
       ]
     },
@@ -271,6 +276,14 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where BioRice Bounty is named as NSIC Rc 744H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf"
+        },
+        {
+          "label": "Where BioRice Bounty is named as NSIC Rc 744H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx"
         },
         {
           "label": "BPI: NSIC registry of rice varieties",

@@ -5,18 +5,20 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 124H (Mestiso 4) Rice Variety: Yield, Maturity and Characteristics",
-  "metaTitle": "NSIC Rc 124H (Mestiso 4): Yield, Maturity, Characteristics",
-  "metaDescription": "NSIC Rc 124H is a hybrid rice for irrigated lowland: about 118 days and 5.7 tonnes per hectare on average. See its pest ratings and grain quality.",
+  "title": "Arize Bigante (NSIC Rc 124H) Hybrid Rice: Yield, Maturity and Characteristics",
+  "metaTitle": "Arize Bigante (NSIC Rc 124H) Rice: Yield and Maturity",
+  "metaDescription": "Arize Bigante is NSIC Rc 124H, a hybrid rice for irrigated lowland: about 118 days and 5.7 tonnes per hectare on average. See its ratings.",
   "focusKeyword": "NSIC Rc 124H",
   "keywords": [
     "NSIC Rc 124H",
     "rice variety 124H",
     "rc 124H",
     "124H rice variety characteristics",
-    "Mestiso 4"
+    "Mestiso 4",
+    "Arize Bigante",
+    "Bigante"
   ],
-  "excerpt": "NSIC Rc 124H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 4. The NSIC approved it in 2004. Bayer bred it. It matures in about 118 days and averages 5.7 tonnes per hectare, with a top yield of 9.1 tonnes in trials.",
+  "excerpt": "NSIC Rc 124H is a hybrid rice variety for irrigated lowland, sold as Arize Bigante or Bigante and known locally as Mestiso 4. The NSIC approved it in 2004. Bayer bred it. It matures in about 118 days and averages 5.7 tonnes per hectare, with a top yield of 9.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 124H is bred to fill",
@@ -25,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 124H, or Rc 124H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for Arize Bigante or Bigante, or rice variety 124H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -58,6 +60,10 @@
         [
           "Bred by",
           "Bayer"
+        ],
+        [
+          "Sold as",
+          "Arize Bigante, Bigante"
         ],
         [
           "Local name",
@@ -263,6 +269,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Arize Bigante the same as NSIC Rc 124H?",
+          "a": "Yes. Arize Bigante is the name it is sold under, and NSIC Rc 124H is its registration with the National Seed Industry Council, where its local name is Mestiso 4. The numbers on this page are PhilRice's for NSIC Rc 124H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 124H?",
           "a": "It is known as Mestiso 4. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -281,10 +291,6 @@
         {
           "q": "Is this variety a hybrid?",
           "a": "Yes. So buy new seed each season, because seed saved from a hybrid crop does not grow true and yields less."
-        },
-        {
-          "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against tungro, brown planthopper, green leafhopper. So scout from the early weeks and act at the first signs."
         }
       ]
     },
@@ -320,6 +326,14 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where Arize Bigante is named as NSIC Rc 124H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+        },
+        {
+          "label": "Where Arize Bigante is named as NSIC Rc 124H",
+          "url": "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=74"
         },
         {
           "label": "PhilRice seed database: NSIC Rc 124H variety characteristics",

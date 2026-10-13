@@ -5,18 +5,19 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 246H (Mestiso 30) Rice Variety: Yield, Maturity and Characteristics",
-  "metaTitle": "NSIC Rc 246H (Mestiso 30): Yield, Maturity, Characteristics",
-  "metaDescription": "NSIC Rc 246H is a hybrid rice for irrigated lowland: about 106 days and 7.2 tonnes per hectare on average. See its pest ratings and grain quality.",
+  "title": "ADV 8112 (NSIC Rc 246H) Hybrid Rice: Yield, Maturity and Characteristics",
+  "metaTitle": "ADV 8112 (NSIC Rc 246H): Yield, Maturity and Characteristics",
+  "metaDescription": "ADV 8112 is NSIC Rc 246H, a hybrid rice for irrigated lowland: about 106 days and 7.2 tonnes per hectare on average. See its ratings.",
   "focusKeyword": "NSIC Rc 246H",
   "keywords": [
     "NSIC Rc 246H",
     "rice variety 246H",
     "rc 246H",
     "246H rice variety characteristics",
-    "Mestiso 30"
+    "Mestiso 30",
+    "ADV 8112"
   ],
-  "excerpt": "NSIC Rc 246H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 30. The NSIC approved it in 2011. IRRI bred it. It matures in about 106 days and averages 7.2 tonnes per hectare, with a top yield of 11.4 tonnes in trials.",
+  "excerpt": "NSIC Rc 246H is a hybrid rice variety for irrigated lowland, sold as ADV 8112 and known locally as Mestiso 30. The NSIC approved it in 2011. IRRI bred it. It matures in about 106 days and averages 7.2 tonnes per hectare, with a top yield of 11.4 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 246H is bred to fill",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 246H, or Rc 246H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for ADV 8112, or rice variety 246H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -58,6 +59,10 @@
         [
           "Bred by",
           "IRRI"
+        ],
+        [
+          "Sold as",
+          "ADV 8112"
         ],
         [
           "Local name",
@@ -268,6 +273,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is ADV 8112 the same as NSIC Rc 246H?",
+          "a": "Yes. ADV 8112 is the name it is sold under, and NSIC Rc 246H is its registration with the National Seed Industry Council, where its local name is Mestiso 30. The numbers on this page are PhilRice's for NSIC Rc 246H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 246H?",
           "a": "It is known as Mestiso 30. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -286,10 +295,6 @@
         {
           "q": "Is this variety a hybrid?",
           "a": "Yes. So buy new seed each season, because seed saved from a hybrid crop does not grow true and yields less."
-        },
-        {
-          "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against rice blast, bacterial leaf blight, tungro, sheath blight. So scout from the early weeks and act at the first signs."
         }
       ]
     },
@@ -325,6 +330,14 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where ADV 8112 is named as NSIC Rc 246H",
+          "url": "https://ilocos.da.gov.ph/over-300-farmers-join-in-das-rice-techno-forum-in-bantay-ilocos-sur/"
+        },
+        {
+          "label": "Where ADV 8112 is named as NSIC Rc 246H",
+          "url": "https://hrdc.irri.org/hybrids-licensing/"
         },
         {
           "label": "PhilRice seed database: NSIC Rc 246H variety characteristics",

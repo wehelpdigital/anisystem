@@ -170,6 +170,15 @@ def build(v, allv, stats):
             '%s is %s %s rice for %s, approved in %s. See its pest and disease ratings, grain quality and where it grows best.' % (n, article(kind_txt), kind_txt, env_short, yr),
             '%s is %s %s rice approved in %s. See its pest and disease ratings, its grain quality and where it grows best.' % (n, article(kind_txt), kind_txt, yr),
         ]
+    # The name on the sack comes first when there is one (Jackpot 102).
+    if trade:
+        desc_opts = ([
+            '%s is %s, %s %s rice for %s: about %d days and %s tonnes per hectare on average. See its ratings.' % (trade, n, article(kind_txt), kind_txt, env_short, mat, fmt(avg)),
+            '%s is %s, %s %s rice: about %d days and %s tonnes per hectare on average. See its pest ratings and grain.' % (trade, n, article(kind_txt), kind_txt, mat, fmt(avg)),
+        ] if has else [
+            '%s is %s, %s %s rice for %s approved in %s. See its pest ratings, grain quality and where it grows best.' % (trade, n, article(kind_txt), kind_txt, env_short, yr),
+            '%s is %s, %s %s rice approved in %s. See its pest and disease ratings, grain quality and where it grows best.' % (trade, n, article(kind_txt), kind_txt, yr),
+        ]) + desc_opts
     meta_desc = next((x for x in desc_opts if 120 <= len(x) <= 156), None)
     if not meta_desc:
         meta_desc = desc_opts[-1]

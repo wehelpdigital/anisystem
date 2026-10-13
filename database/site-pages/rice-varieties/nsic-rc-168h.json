@@ -5,18 +5,19 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 168H (Mestiso 11) Rice Variety: Yield, Maturity and Characteristics",
-  "metaTitle": "NSIC Rc 168H (Mestiso 11): Yield, Maturity, Characteristics",
-  "metaDescription": "NSIC Rc 168H is a hybrid rice for irrigated lowland: about 113 days and 6.5 tonnes per hectare on average. See its pest ratings and grain quality.",
+  "title": "Arize H64 (NSIC Rc 168H) Hybrid Rice: Yield, Maturity and Characteristics",
+  "metaTitle": "Arize H64 (NSIC Rc 168H) Rice: Yield and Maturity",
+  "metaDescription": "Arize H64 is NSIC Rc 168H, a hybrid rice for irrigated lowland: about 113 days and 6.5 tonnes per hectare on average. See its ratings.",
   "focusKeyword": "NSIC Rc 168H",
   "keywords": [
     "NSIC Rc 168H",
     "rice variety 168H",
     "rc 168H",
     "168H rice variety characteristics",
-    "Mestiso 11"
+    "Mestiso 11",
+    "Arize H64"
   ],
-  "excerpt": "NSIC Rc 168H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 11. The NSIC approved it in 2007. Bayer bred it. It matures in about 113 days and averages 6.5 tonnes per hectare, with a top yield of 10.5 tonnes in trials.",
+  "excerpt": "NSIC Rc 168H is a hybrid rice variety for irrigated lowland, sold as Arize H64 and known locally as Mestiso 11. The NSIC approved it in 2007. Bayer bred it. It matures in about 113 days and averages 6.5 tonnes per hectare, with a top yield of 10.5 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 168H is bred to fill",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 168H, or Rc 168H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for Arize H64, or rice variety 168H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -58,6 +59,10 @@
         [
           "Bred by",
           "Bayer"
+        ],
+        [
+          "Sold as",
+          "Arize H64"
         ],
         [
           "Local name",
@@ -263,6 +268,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Arize H64 the same as NSIC Rc 168H?",
+          "a": "Yes. Arize H64 is the name it is sold under, and NSIC Rc 168H is its registration with the National Seed Industry Council, where its local name is Mestiso 11. The numbers on this page are PhilRice's for NSIC Rc 168H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 168H?",
           "a": "It is known as Mestiso 11. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -281,10 +290,6 @@
         {
           "q": "Is this variety a hybrid?",
           "a": "Yes. So buy new seed each season, because seed saved from a hybrid crop does not grow true and yields less."
-        },
-        {
-          "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro. So scout from the early weeks and act at the first signs."
         }
       ]
     },
@@ -320,6 +325,14 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where Arize H64 is named as NSIC Rc 168H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+        },
+        {
+          "label": "Where Arize H64 is named as NSIC Rc 168H",
+          "url": "https://www.sbc.edu/live/files/2793-glover-et-al-2020-golden-rice-adoptionpdf"
         },
         {
           "label": "PhilRice seed database: NSIC Rc 168H variety characteristics",

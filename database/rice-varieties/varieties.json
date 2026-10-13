@@ -64,7 +64,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "Milagros Harvester 101"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/SeedCatalogue2025.pdf",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit"
+  ]
  },
  {
   "slug": "nsic-rc-782h",
@@ -131,7 +138,18 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "Buena 299",
+   "Buenas 299 F1",
+   "Buena 299 F1",
+   "KRHP299"
+  ],
+  "tradeSources": [
+   "https://enviroscopesynergyinc.com/rice-seeds-hybrid-rice-seed",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit",
+   "https://nsic.buplant.da.gov.ph/downloadables/SeedCatalogue2025.pdf"
+  ]
  },
  {
   "slug": "nsic-rc-33",
@@ -600,7 +618,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 894H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-772h",
@@ -667,7 +691,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 994H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-774h",
@@ -734,7 +764,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "SL-27H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-776h",
@@ -801,7 +837,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "SL-771H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-778h",
@@ -868,7 +910,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "Vanbee 75"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/SeedCatalogue2024.pdf",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit"
+  ]
  },
  {
   "slug": "nsic-rc-730sr",
@@ -1339,7 +1388,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "BioRice Bonus"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit"
+  ]
  },
  {
   "slug": "nsic-rc-744h",
@@ -1406,7 +1463,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "BioRice Bounty"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit"
+  ]
  },
  {
   "slug": "nsic-rc-746h",
@@ -1473,7 +1538,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "Harvest King 158"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit"
+  ]
  },
  {
   "slug": "nsic-rc-748h",
@@ -1540,7 +1613,16 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "Arize 6585",
+   "AZ 6585"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf",
+   "https://ilocos.da.gov.ph/?p=46408"
+  ]
  },
  {
   "slug": "nsic-rc-750h",
@@ -1607,7 +1689,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 777"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-752h",
@@ -1674,7 +1763,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 924"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-754h",
@@ -1741,7 +1837,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "PHB 91"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf"
+  ]
  },
  {
   "slug": "nsic-rc-756h",
@@ -1808,7 +1911,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "SL-203H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-758h",
@@ -1875,7 +1985,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "SL-222H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-670",
@@ -2490,7 +2607,16 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "Arize AZ 8433 DT",
+   "AZ 8433 DT"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf",
+   "https://agriculture.com.ph/2019/12/15/bayers-dual-trait-arize-az-8433-dt-hybrid-rice-combats-insect-pests-as-well-as-diseases/"
+  ]
  },
  {
   "slug": "nsic-rc-690h",
@@ -2691,7 +2817,16 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "Leads 143",
+   "LAV 107"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit",
+   "https://www.leadsfarmex.com/products"
+  ]
  },
  {
   "slug": "nsic-rc-696h",
@@ -2758,7 +2893,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 906"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-698h",
@@ -2825,7 +2967,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 996"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-700h",
@@ -2892,7 +3041,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "PhilSCAT 10"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf"
+  ]
  },
  {
   "slug": "nsic-rc-702h",
@@ -2959,7 +3116,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "PhilSCAT 17"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf"
+  ]
  },
  {
   "slug": "nsic-rc-704h",
@@ -3026,7 +3191,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "PhilSCAT 18"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf"
+  ]
  },
  {
   "slug": "nsic-rc-706h",
@@ -3093,7 +3266,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "PhilSCAT 20"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf"
+  ]
  },
  {
   "slug": "nsic-rc-708h",
@@ -3227,7 +3408,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "PHB 87"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf",
+   "https://www.corteva.com/content/dam/dpagco/corteva/as/ph/ph/files/PHB87%20BVC_2021.pdf",
+   "https://ilocos.da.gov.ph/?p=37062"
+  ]
  },
  {
   "slug": "nsic-rc-712h",
@@ -3294,7 +3483,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "PHB 89"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf"
+  ]
  },
  {
   "slug": "nsic-rc-714h",
@@ -3495,7 +3690,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "SL-39H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-720h",
@@ -3562,7 +3763,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "SL-43H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-722h",
@@ -3629,7 +3836,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "SL-201H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-724h",
@@ -3696,7 +3909,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "SL-422H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-726h",
@@ -3763,7 +3982,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "SL-606H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-728h",
@@ -3830,7 +4055,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "SL-631H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-620h",
@@ -3896,7 +4127,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "Hyvar S26"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2021.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/2024_NSIC_Applications_Database_Upload.xlsx",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit"
+  ]
  },
  {
   "slug": "nsic-rc-622",
@@ -5087,7 +5326,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 624"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2021.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-654h",
@@ -5154,7 +5400,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 862"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2021.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-656h",
@@ -5221,7 +5474,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 524"
+  ],
+  "tradeSources": [
+   "https://www.leadsfarmex.com/products",
+   "https://leadsagri.com/17th-nrtf-puts-spotlight-on-jackpot-102-and-lav777/",
+   "https://ilocos.da.gov.ph/over-300-farmers-join-in-das-rice-techno-forum-in-bantay-ilocos-sur/"
+  ]
  },
  {
   "slug": "nsic-rc-658h",
@@ -5288,7 +5549,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 616"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2021.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-660h",
@@ -5355,7 +5623,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 763"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2021.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-662h",
@@ -5422,7 +5697,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "LP 869"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2021.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+  ]
  },
  {
   "slug": "nsic-rc-664h",
@@ -5489,7 +5771,14 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "PHB 85"
+  ],
+  "tradeSources": [
+   "https://www.corteva.com/content/dam/dpagco/corteva/as/ph/ph/files/PHB85%20BVC_2021.pdf",
+   "https://www.corteva.com/ph/Media-Center/field-tours-activities/ilocos-norte-nrtf.html"
+  ]
  },
  {
   "slug": "nsic-rc-666h",
@@ -5556,7 +5845,15 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "Jackpot 102"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2021.pdf",
+   "https://docs.google.com/spreadsheets/d/1YpI6R8h-kDGjUk8nVZL5wArDgj8bZYUn/edit",
+   "https://www.leadsfarmex.com/products"
+  ]
  },
  {
   "slug": "nsic-rc-668h",
@@ -5623,7 +5920,13 @@
   "remarks": null,
   "preferred": false,
   "new": true,
-  "sources": []
+  "sources": [],
+  "tradeNames": [
+   "PAC 801 Elite"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2021.pdf"
+  ]
  },
  {
   "slug": "nsic-rc-590",
@@ -6607,6 +6910,14 @@
   "new": true,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=344"
+  ],
+  "tradeNames": [
+   "LP 488"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2020.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=344"
   ]
  },
  {
@@ -6678,6 +6989,14 @@
   "new": true,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=345"
+  ],
+  "tradeNames": [
+   "LP 702"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2020.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=345"
   ]
  },
  {
@@ -6748,6 +7067,14 @@
   "new": true,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=346"
+  ],
+  "tradeNames": [
+   "LP 727"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2020.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=346"
   ]
  },
  {
@@ -6810,6 +7137,14 @@
   "preferred": false,
   "new": true,
   "sources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=308"
+  ],
+  "tradeNames": [
+   "LP 412"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2019.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=308"
   ]
  },
@@ -8653,6 +8988,14 @@
   "new": true,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=296"
+  ],
+  "tradeNames": [
+   "LP 402"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2018.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=296"
   ]
  },
  {
@@ -8889,6 +9232,15 @@
   "new": true,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=299"
+  ],
+  "tradeNames": [
+   "BioRice 453",
+   "Bio 453"
+  ],
+  "tradeSources": [
+   "https://www.bioseed.com.ph/our-products/department-of-agriculture-rfo1-biorice-allocation-delivery-details-09-2026/",
+   "https://www.bioseed.com.ph/our-products/biorice-453/",
+   "https://ilocos.da.gov.ph/over-300-farmers-join-in-das-rice-techno-forum-in-bantay-ilocos-sur/"
   ]
  },
  {
@@ -8968,6 +9320,14 @@
   "new": true,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=300"
+  ],
+  "tradeNames": [
+   "Arize Habilis Plus",
+   "Habilis Plus"
+  ],
+  "tradeSources": [
+   "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
   ]
  },
  {
@@ -9046,6 +9406,14 @@
   "preferred": false,
   "new": true,
   "sources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=301"
+  ],
+  "tradeNames": [
+   "LPP 952"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2018.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=301"
   ]
  },
@@ -9519,6 +9887,14 @@
   "new": true,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=302"
+  ],
+  "tradeNames": [
+   "LPP 507"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2018.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=302"
   ]
  },
  {
@@ -9583,6 +9959,14 @@
   "new": true,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=303"
+  ],
+  "tradeNames": [
+   "SL-20H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2018.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=303"
   ]
  },
  {
@@ -9646,6 +10030,13 @@
   "new": true,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=304"
+  ],
+  "tradeNames": [
+   "Rashmi"
+  ],
+  "tradeSources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=304",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue%202016-2020.pdf"
   ]
  },
  {
@@ -10151,6 +10542,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=286"
+  ],
+  "tradeNames": [
+   "LP 534",
+   "Longping 534"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2017.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=286"
   ]
  },
  {
@@ -10229,6 +10629,15 @@
   "preferred": false,
   "new": false,
   "sources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=287"
+  ],
+  "tradeNames": [
+   "SL-19H",
+   "SL19"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2017.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=287"
   ]
  },
@@ -10309,6 +10718,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=288"
+  ],
+  "tradeNames": [
+   "Hatao Dinorado",
+   "PhilSCAT 9"
+  ],
+  "tradeSources": [
+   "https://mafar.bangsamoro.gov.ph/tao-food-company-meets-mafar-to-discuss-partnership-on-rice-to-rise-program/",
+   "https://extension.mmsu.edu.ph/news/show/304/presidents-farm-is-verdant-green-with-the-newly-released-high-yielding-rice-varieties",
+   "https://ppmu.bohol.gov.ph/notice-to-proceed-for-jedeco-trading-corporation-opa-crops-2022-0228-pr2022-0570-procurement-of-hybrid-rice-seeds-nsic-rc-490h-hatao-548h-bigante-plus-for-distribution-to-ri"
   ]
  },
  {
@@ -10388,6 +10806,12 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=289"
+  ],
+  "tradeNames": [
+   "PHB 77"
+  ],
+  "tradeSources": [
+   "https://www.corteva.com/content/dam/dpagco/corteva/as/ph/ph/files/PHB77%20BVC_2021.pdf"
   ]
  },
  {
@@ -10467,6 +10891,13 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=290"
+  ],
+  "tradeNames": [
+   "Arize AZ 7888",
+   "AZ 7888"
+  ],
+  "tradeSources": [
+   "https://sunstar.com.ph/article/1866672/Bacolod/Business/DA-completes-hybrid-seeds-distribution-in-Western-Visayas"
   ]
  },
  {
@@ -10862,6 +11293,14 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=295"
+  ],
+  "tradeNames": [
+   "Hatao Sinandomeng"
+  ],
+  "tradeSources": [
+   "https://ilocos.da.gov.ph/over-300-farmers-join-in-das-rice-techno-forum-in-bantay-ilocos-sur/",
+   "https://hrdc.irri.org/hybrids-licensing/",
+   "https://www.irri.org/news-and-events/news/irri-tao-corporation-sign-pact-commercialization-and-distribution-elite-hybrid"
   ]
  },
  {
@@ -11898,6 +12337,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=284"
+  ],
+  "tradeNames": [
+   "LP 937",
+   "Long Ping 937"
+  ],
+  "tradeSources": [
+   "https://extension.mmsu.edu.ph/news/show/304/presidents-farm-is-verdant-green-with-the-newly-released-high-yielding-rice-varieties",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2016.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
   ]
  },
  {
@@ -11976,6 +12424,14 @@
   "preferred": false,
   "new": false,
   "sources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=285"
+  ],
+  "tradeNames": [
+   "LP 357"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2016.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=285"
   ]
  },
@@ -12838,6 +13294,14 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=320"
+  ],
+  "tradeNames": [
+   "Green Super Rice"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue%202016-2020.pdf",
+   "https://news.irri.org/2021/01/philippine-rice-farmers-receive-46k.html",
+   "https://news.irri.org/2020/12/green-super-rice-variety-surpasses-44.html"
   ]
  },
  {
@@ -13341,6 +13805,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=233"
+  ],
+  "tradeNames": [
+   "LP 2096",
+   "Longping 2096"
+  ],
+  "tradeSources": [
+   "https://extension.mmsu.edu.ph/news/show/304/presidents-farm-is-verdant-green-with-the-newly-released-high-yielding-rice-varieties",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2015.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
   ]
  },
  {
@@ -13653,6 +14126,14 @@
   "preferred": false,
   "new": false,
   "sources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=237"
+  ],
+  "tradeNames": [
+   "LP 205"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2015.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=237"
   ]
  },
@@ -15083,6 +15564,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=219"
+  ],
+  "tradeNames": [
+   "RH 9000",
+   "Frontline RH 9000"
+  ],
+  "tradeSources": [
+   "https://agriculture.com.ph/2019/01/31/syngentas-hybrid-rice-tops-rice-derby/",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://www.syngenta.com.ph/rh-9000"
   ]
  },
  {
@@ -15634,6 +16124,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=226"
+  ],
+  "tradeNames": [
+   "S6003",
+   "Frontline S6003"
+  ],
+  "tradeSources": [
+   "https://agriculture.com.ph/2019/01/31/syngentas-hybrid-rice-tops-rice-derby/",
+   "https://ilocos.da.gov.ph/?p=46408",
+   "https://www.syngenta.com.ph/product/seed/rice/s6003"
   ]
  },
  {
@@ -15712,6 +16211,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=227"
+  ],
+  "tradeNames": [
+   "PAC 801",
+   "Advanta 801"
+  ],
+  "tradeSources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=227",
+   "https://www.da.gov.ph/zamboanga-peninsula-hosts-6th-national-rice-techno-forum/",
+   "https://www.da.gov.ph/from-manila-standard-da-unit-launches-hybrid-rice-contest/"
   ]
  },
  {
@@ -15947,6 +16455,14 @@
   "preferred": false,
   "new": false,
   "sources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=230"
+  ],
+  "tradeNames": [
+   "LP 106"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2014.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=230"
   ]
  },
@@ -16588,6 +17104,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=213"
+  ],
+  "tradeNames": [
+   "Arize Bigante Plus",
+   "Bigante Plus"
+  ],
+  "tradeSources": [
+   "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html",
+   "https://ilocos.da.gov.ph/?p=46408",
+   "https://sunstar.com.ph/article/1866672/Bacolod/Business/DA-completes-hybrid-seeds-distribution-in-Western-Visayas"
   ]
  },
  {
@@ -16903,6 +17428,12 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=217"
+  ],
+  "tradeNames": [
+   "PHB 79"
+  ],
+  "tradeSources": [
+   "https://www.corteva.com/content/dam/dpagco/corteva/as/ph/ph/files/PHB79%20BVC_2021.pdf"
   ]
  },
  {
@@ -17995,6 +18526,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=218"
+  ],
+  "tradeNames": [
+   "TH 82",
+   "Tatag Hybrid"
+  ],
+  "tradeSources": [
+   "https://cagayandeoro.da.gov.ph/index.php/demo-farm-showcases-drought-tolerant-hybrid-rice-variety-in-buknon-upland-area/",
+   "https://businessmirror.com.ph/2022/09/18/rice-ing-up-for-food-security/",
+   "https://ilocos.da.gov.ph/over-300-farmers-join-in-das-rice-techno-forum-in-bantay-ilocos-sur/"
   ]
  },
  {
@@ -18967,6 +19507,14 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=180"
+  ],
+  "tradeNames": [
+   "ADV 8112"
+  ],
+  "tradeSources": [
+   "https://ilocos.da.gov.ph/over-300-farmers-join-in-das-rice-techno-forum-in-bantay-ilocos-sur/",
+   "https://hrdc.irri.org/hybrids-licensing/",
+   "https://www.da.gov.ph/zamboanga-peninsula-hosts-6th-national-rice-techno-forum/"
   ]
  },
  {
@@ -19204,6 +19752,12 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=177"
+  ],
+  "tradeNames": [
+   "PAC 809"
+  ],
+  "tradeSources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=177"
   ]
  },
  {
@@ -19282,6 +19836,12 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=176"
+  ],
+  "tradeNames": [
+   "PAC 835"
+  ],
+  "tradeSources": [
+   "https://un-csam.org/sites/default/files/2021-01/ph_1.pdf"
   ]
  },
  {
@@ -19518,6 +20078,14 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=173"
+  ],
+  "tradeNames": [
+   "Quadro Alas"
+  ],
+  "tradeSources": [
+   "https://businessmirror.com.ph/2022/09/18/rice-ing-up-for-food-security/",
+   "https://seedworksphil.com/our-products/",
+   "https://manilastandard.net/lgu/luzon/287101/new-rice-hybrid-is-quadro-ace-up-farmers-sleeves.html"
   ]
  },
  {
@@ -21399,6 +21967,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=156"
+  ],
+  "tradeNames": [
+   "NK 5017",
+   "Frontline NK5017"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2010.pdf",
+   "https://ilocos.da.gov.ph/?p=46408"
   ]
  },
  {
@@ -21477,6 +22054,14 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=157"
+  ],
+  "tradeNames": [
+   "US 88"
+  ],
+  "tradeSources": [
+   "https://businessmirror.com.ph/2022/09/18/rice-ing-up-for-food-security/",
+   "https://bicol.da.gov.ph/%ef%bb%bfgenaro-tamon-shares-secret-for-bountiful-harvest/",
+   "https://ilocos.da.gov.ph/over-300-farmers-join-in-das-rice-techno-forum-in-bantay-ilocos-sur/"
   ]
  },
  {
@@ -22228,6 +22813,13 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=88"
+  ],
+  "tradeNames": [
+   "Arize Tej"
+  ],
+  "tradeSources": [
+   "https://www.sbc.edu/live/files/2793-glover-et-al-2020-golden-rice-adoptionpdf",
+   "https://www.philstar.com/business/2013/04/08/928077/bayer-cropscience-launches-new-rice-variety"
   ]
  },
  {
@@ -22614,6 +23206,14 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=93"
+  ],
+  "tradeNames": [
+   "PHB 71"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2009.pdf",
+   "https://www.pioneer.com/CMRoot/International/Philippines/FTT_TAGUMPAYSAPALAY_AprilArticle.pdf"
   ]
  },
  {
@@ -23107,7 +23707,16 @@
    "maturity": 106.0,
    "yieldAvg": 5.7,
    "yieldMax": 7.9
-  }
+  },
+  "tradeNames": [
+   "Super Triple 2",
+   "Super Triple Two"
+  ],
+  "tradeSources": [
+   "https://www.philrice.gov.ph/?p=7497",
+   "https://news.irri.org/2021/01/philippine-rice-farmers-receive-46k.html",
+   "https://www.philrice.gov.ph/?p=7338"
+  ]
  },
  {
   "slug": "nsic-rc-170",
@@ -23341,6 +23950,14 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=82"
+  ],
+  "tradeNames": [
+   "LP 0331"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2008.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=82"
   ]
  },
  {
@@ -23419,6 +24036,14 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=83"
+  ],
+  "tradeNames": [
+   "LP 0353"
+  ],
+  "tradeSources": [
+   "https://www.corteva.com/content/dam/dpagco/corteva/as/ph/ph/files/PHB73%20BVC_2021.pdf",
+   "https://gsr.irri.org/presidents-farm-feature-newly-released-and-high-yielding-rice-varieties/",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2008.pdf"
   ]
  },
  {
@@ -23495,6 +24120,14 @@
   "preferred": false,
   "new": false,
   "sources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=84"
+  ],
+  "tradeNames": [
+   "LP 0330"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2008.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=84"
   ]
  },
@@ -23574,6 +24207,17 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=85"
+  ],
+  "tradeNames": [
+   "BioRice 650",
+   "Bioseed Rice 650",
+   "BR 650",
+   "Bio 650"
+  ],
+  "tradeSources": [
+   "https://gsr.irri.org/presidents-farm-feature-newly-released-and-high-yielding-rice-varieties/",
+   "https://ilocos.da.gov.ph/over-300-farmers-join-in-das-rice-techno-forum-in-bantay-ilocos-sur/",
+   "https://www.bioseed.com.ph/our-products/biorice-650/"
   ]
  },
  {
@@ -24221,6 +24865,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=78"
+  ],
+  "tradeNames": [
+   "BioRice Zarap",
+   "BioZarap"
+  ],
+  "tradeSources": [
+   "https://ilocos.da.gov.ph/over-300-farmers-join-in-das-rice-techno-forum-in-bantay-ilocos-sur/",
+   "https://www.bioseed.com.ph/our-products/biorice-zarap/",
+   "https://ilocos.da.gov.ph/?p=46478"
   ]
  },
  {
@@ -24297,6 +24950,13 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=79"
+  ],
+  "tradeNames": [
+   "Rizalina 28"
+  ],
+  "tradeSources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=79",
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2006.pdf"
   ]
  },
  {
@@ -24452,6 +25112,14 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=81"
+  ],
+  "tradeNames": [
+   "Arize H64"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://www.sbc.edu/live/files/2793-glover-et-al-2020-golden-rice-adoptionpdf",
+   "https://www.philstar.com/business/2006/06/19/342713/bayer-cropscience-introduce-2-new-hybrid-rice-varieties-rp"
   ]
  },
  {
@@ -25183,6 +25851,15 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=74"
+  ],
+  "tradeNames": [
+   "Arize Bigante",
+   "Bigante"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=74",
+   "https://www.philstar.com/business/2013/04/08/928077/bayer-cropscience-launches-new-rice-variety"
   ]
  },
  {
@@ -25261,6 +25938,14 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=75"
+  ],
+  "tradeNames": [
+   "Magilas"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://www.philstar.com/business/agriculture/2004/12/19/267323/8-new-rice-varieties-approved-release",
+   "https://www.philstar.com/business/2003/03/24/200135/monsanto-backs-da-study-145freak146-rice-harvest"
   ]
  },
  {
@@ -25575,6 +26260,14 @@
   "preferred": false,
   "new": false,
   "sources": [
+   "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=76"
+  ],
+  "tradeNames": [
+   "SL-8H"
+  ],
+  "tradeSources": [
+   "https://nsic.buplant.da.gov.ph/downloadables/catalogue2004.pdf",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=76"
   ]
  },

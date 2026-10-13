@@ -5,18 +5,20 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 688H (Mestiso 119) Rice Variety: Characteristics and Grain Quality",
-  "metaTitle": "NSIC Rc 688H Rice Variety: Characteristics and Grain Quality",
-  "metaDescription": "NSIC Rc 688H is a hybrid rice for irrigated lowland, approved in 2022. See its pest and disease ratings, grain quality and where it grows best.",
+  "title": "Arize AZ 8433 DT (NSIC Rc 688H) Hybrid Rice: Characteristics and Grain Quality",
+  "metaTitle": "Arize AZ 8433 DT (NSIC Rc 688H) Rice Variety",
+  "metaDescription": "Arize AZ 8433 DT is NSIC Rc 688H, a hybrid rice for irrigated lowland approved in 2022. See its pest ratings, grain quality and where it grows best.",
   "focusKeyword": "NSIC Rc 688H",
   "keywords": [
     "NSIC Rc 688H",
     "rice variety 688H",
     "rc 688H",
     "688H rice variety characteristics",
-    "Mestiso 119"
+    "Mestiso 119",
+    "Arize AZ 8433 DT",
+    "AZ 8433 DT"
   ],
-  "excerpt": "NSIC Rc 688H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 119. The NSIC approved it in 2022. Bayer bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 688H is a hybrid rice variety for irrigated lowland, sold as Arize AZ 8433 DT or AZ 8433 DT and known locally as Mestiso 119. The NSIC approved it in 2022. Bayer bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 688H is bred to fill",
@@ -25,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 688H, or Rc 688H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for Arize AZ 8433 DT or AZ 8433 DT, or rice variety 688H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -56,6 +58,10 @@
         [
           "Bred by",
           "Bayer"
+        ],
+        [
+          "Sold as",
+          "Arize AZ 8433 DT, AZ 8433 DT"
         ],
         [
           "Local name",
@@ -214,6 +220,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Arize AZ 8433 DT the same as NSIC Rc 688H?",
+          "a": "Yes. Arize AZ 8433 DT is the name it is sold under, and NSIC Rc 688H is its registration with the National Seed Industry Council, where its local name is Mestiso 119. The numbers on this page are PhilRice's for NSIC Rc 688H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 688H?",
           "a": "It is known as Mestiso 119. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -232,10 +242,6 @@
         {
           "q": "Is it soft when cooked?",
           "a": "It has intermediate amylose, 22 percent. So it cooks soft but not sticky."
-        },
-        {
-          "q": "Where can I buy certified seed of this variety?",
-          "a": "Ask accredited seed growers in your province, your municipal agriculturist or the nearest PhilRice station. Look for the certified seed tag on the sack before you pay."
         }
       ]
     },
@@ -271,6 +277,14 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where Arize AZ 8433 DT is named as NSIC Rc 688H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+        },
+        {
+          "label": "Where Arize AZ 8433 DT is named as NSIC Rc 688H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf"
         },
         {
           "label": "BPI: NSIC registry of rice varieties",

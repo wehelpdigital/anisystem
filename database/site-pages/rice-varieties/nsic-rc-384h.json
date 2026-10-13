@@ -5,18 +5,19 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 384H (Mestiso 63) Rice Variety: Yield, Maturity and Characteristics",
-  "metaTitle": "NSIC Rc 384H (Mestiso 63): Yield, Maturity, Characteristics",
-  "metaDescription": "NSIC Rc 384H is a hybrid rice for irrigated lowland: about 111 days and 6 tonnes per hectare on average. See its pest ratings and grain quality.",
+  "title": "LP 106 (NSIC Rc 384H) Hybrid Rice: Yield, Maturity and Characteristics",
+  "metaTitle": "LP 106 (NSIC Rc 384H): Yield, Maturity and Characteristics",
+  "metaDescription": "LP 106 is NSIC Rc 384H, a hybrid rice for irrigated lowland: about 111 days and 6 tonnes per hectare on average. See its ratings.",
   "focusKeyword": "NSIC Rc 384H",
   "keywords": [
     "NSIC Rc 384H",
     "rice variety 384H",
     "rc 384H",
     "384H rice variety characteristics",
-    "Mestiso 63"
+    "Mestiso 63",
+    "LP 106"
   ],
-  "excerpt": "NSIC Rc 384H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 63. The NSIC approved it in 2014. Long Ping bred it. It matures in about 111 days and averages 6 tonnes per hectare, with a top yield of 10.2 tonnes in trials.",
+  "excerpt": "NSIC Rc 384H is a hybrid rice variety for irrigated lowland, sold as LP 106 and known locally as Mestiso 63. The NSIC approved it in 2014. Long Ping bred it. It matures in about 111 days and averages 6 tonnes per hectare, with a top yield of 10.2 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 384H is bred to fill",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 384H, or Rc 384H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for LP 106, or rice variety 384H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -58,6 +59,10 @@
         [
           "Bred by",
           "Long Ping"
+        ],
+        [
+          "Sold as",
+          "LP 106"
         ],
         [
           "Local name",
@@ -268,6 +273,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is LP 106 the same as NSIC Rc 384H?",
+          "a": "Yes. LP 106 is the name it is sold under, and NSIC Rc 384H is its registration with the National Seed Industry Council, where its local name is Mestiso 63. The numbers on this page are PhilRice's for NSIC Rc 384H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 384H?",
           "a": "It is known as Mestiso 63. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -286,10 +295,6 @@
         {
           "q": "Is this variety a hybrid?",
           "a": "Yes. So buy new seed each season, because seed saved from a hybrid crop does not grow true and yields less."
-        },
-        {
-          "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against tungro, sheath blight. So scout from the early weeks and act at the first signs."
         }
       ]
     },
@@ -325,6 +330,14 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where LP 106 is named as NSIC Rc 384H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/catalogue2014.pdf"
+        },
+        {
+          "label": "Where LP 106 is named as NSIC Rc 384H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
         },
         {
           "label": "PhilRice seed database: NSIC Rc 384H variety characteristics",

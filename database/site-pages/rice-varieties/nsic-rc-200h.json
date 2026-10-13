@@ -5,18 +5,19 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 200H (Mestiso 18) Rice Variety: Yield, Maturity and Characteristics",
-  "metaTitle": "NSIC Rc 200H (Mestiso 18): Yield, Maturity, Characteristics",
-  "metaDescription": "NSIC Rc 200H is a hybrid rice for irrigated lowland: about 111 days and 6.5 tonnes per hectare on average. See its pest ratings and grain quality.",
+  "title": "Arize Tej (NSIC Rc 200H) Hybrid Rice: Yield, Maturity and Characteristics",
+  "metaTitle": "Arize Tej (NSIC Rc 200H) Rice: Yield and Maturity",
+  "metaDescription": "Arize Tej is NSIC Rc 200H, a hybrid rice for irrigated lowland: about 111 days and 6.5 tonnes per hectare on average. See its ratings.",
   "focusKeyword": "NSIC Rc 200H",
   "keywords": [
     "NSIC Rc 200H",
     "rice variety 200H",
     "rc 200H",
     "200H rice variety characteristics",
-    "Mestiso 18"
+    "Mestiso 18",
+    "Arize Tej"
   ],
-  "excerpt": "NSIC Rc 200H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 18. The NSIC approved it in 2009. Bayer bred it. It matures in about 111 days and averages 6.5 tonnes per hectare, with a top yield of 10.6 tonnes in trials.",
+  "excerpt": "NSIC Rc 200H is a hybrid rice variety for irrigated lowland, sold as Arize Tej and known locally as Mestiso 18. The NSIC approved it in 2009. Bayer bred it. It matures in about 111 days and averages 6.5 tonnes per hectare, with a top yield of 10.6 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 200H is bred to fill",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 200H, or Rc 200H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for Arize Tej, or rice variety 200H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -58,6 +59,10 @@
         [
           "Bred by",
           "Bayer"
+        ],
+        [
+          "Sold as",
+          "Arize Tej"
         ],
         [
           "Local name",
@@ -263,6 +268,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Arize Tej the same as NSIC Rc 200H?",
+          "a": "Yes. Arize Tej is the name it is sold under, and NSIC Rc 200H is its registration with the National Seed Industry Council, where its local name is Mestiso 18. The numbers on this page are PhilRice's for NSIC Rc 200H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 200H?",
           "a": "It is known as Mestiso 18. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -281,10 +290,6 @@
         {
           "q": "Is this variety a hybrid?",
           "a": "Yes. So buy new seed each season, because seed saved from a hybrid crop does not grow true and yields less."
-        },
-        {
-          "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro, brown planthopper, green leafhopper. So scout from the early weeks and act at the first signs."
         }
       ]
     },
@@ -320,6 +325,14 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where Arize Tej is named as NSIC Rc 200H",
+          "url": "https://www.sbc.edu/live/files/2793-glover-et-al-2020-golden-rice-adoptionpdf"
+        },
+        {
+          "label": "Where Arize Tej is named as NSIC Rc 200H",
+          "url": "https://www.philstar.com/business/2013/04/08/928077/bayer-cropscience-launches-new-rice-variety"
         },
         {
           "label": "PhilRice seed database: NSIC Rc 200H variety characteristics",

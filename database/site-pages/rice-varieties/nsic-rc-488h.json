@@ -5,18 +5,20 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 488H (Mestiso 81) Rice Variety: Yield, Maturity and Characteristics",
-  "metaTitle": "NSIC Rc 488H (Mestiso 81): Yield, Maturity, Characteristics",
-  "metaDescription": "NSIC Rc 488H is a hybrid rice for irrigated lowland: about 113 days and 6.1 tonnes per hectare on average. See its pest ratings and grain quality.",
+  "title": "SL 19H (NSIC Rc 488H) Hybrid Rice: Yield, Maturity and Characteristics",
+  "metaTitle": "SL 19H (NSIC Rc 488H): Yield, Maturity and Characteristics",
+  "metaDescription": "SL 19H is NSIC Rc 488H, a hybrid rice for irrigated lowland: about 113 days and 6.1 tonnes per hectare on average. See its ratings.",
   "focusKeyword": "NSIC Rc 488H",
   "keywords": [
     "NSIC Rc 488H",
     "rice variety 488H",
     "rc 488H",
     "488H rice variety characteristics",
-    "Mestiso 81"
+    "Mestiso 81",
+    "SL 19H",
+    "SL19"
   ],
-  "excerpt": "NSIC Rc 488H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 81. The NSIC approved it in 2017. SL Agritech bred it. It matures in about 113 days and averages 6.1 tonnes per hectare, with a top yield of 12.3 tonnes in trials.",
+  "excerpt": "NSIC Rc 488H is a hybrid rice variety for irrigated lowland, sold as SL 19H or SL19 and known locally as Mestiso 81. The NSIC approved it in 2017. SL Agritech bred it. It matures in about 113 days and averages 6.1 tonnes per hectare, with a top yield of 12.3 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 488H is bred to fill",
@@ -25,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 488H, or Rc 488H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for SL 19H or SL19, or rice variety 488H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -58,6 +60,10 @@
         [
           "Bred by",
           "SL Agritech"
+        ],
+        [
+          "Sold as",
+          "SL 19H, SL19"
         ],
         [
           "Local name",
@@ -268,6 +274,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is SL 19H the same as NSIC Rc 488H?",
+          "a": "Yes. SL 19H is the name it is sold under, and NSIC Rc 488H is its registration with the National Seed Industry Council, where its local name is Mestiso 81. The numbers on this page are PhilRice's for NSIC Rc 488H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 488H?",
           "a": "It is known as Mestiso 81. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -286,10 +296,6 @@
         {
           "q": "Is this variety a hybrid?",
           "a": "Yes. So buy new seed each season, because seed saved from a hybrid crop does not grow true and yields less."
-        },
-        {
-          "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against bacterial leaf blight, tungro, brown planthopper, green leafhopper, sheath blight. So scout from the early weeks and act at the first signs."
         }
       ]
     },
@@ -325,6 +331,14 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where SL 19H is named as NSIC Rc 488H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/catalogue2017.pdf"
+        },
+        {
+          "label": "Where SL 19H is named as NSIC Rc 488H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
         },
         {
           "label": "PhilRice seed database: NSIC Rc 488H variety characteristics",

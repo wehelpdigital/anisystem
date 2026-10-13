@@ -5,18 +5,19 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 726H (Mestiso 138) Rice Variety: Characteristics and Grain Quality",
-  "metaTitle": "NSIC Rc 726H Rice Variety: Characteristics and Grain Quality",
-  "metaDescription": "NSIC Rc 726H is a hybrid rice for irrigated lowland, approved in 2022. See its pest and disease ratings, grain quality and where it grows best.",
+  "title": "SL 606H (NSIC Rc 726H) Hybrid Rice: Characteristics and Grain Quality",
+  "metaTitle": "SL 606H (NSIC Rc 726H): Characteristics and Grain Quality",
+  "metaDescription": "SL 606H is NSIC Rc 726H, a hybrid rice for irrigated lowland approved in 2022. See its pest ratings, grain quality and where it grows best.",
   "focusKeyword": "NSIC Rc 726H",
   "keywords": [
     "NSIC Rc 726H",
     "rice variety 726H",
     "rc 726H",
     "726H rice variety characteristics",
-    "Mestiso 138"
+    "Mestiso 138",
+    "SL 606H"
   ],
-  "excerpt": "NSIC Rc 726H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 138. The NSIC approved it in 2022. SL Agritech bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 726H is a hybrid rice variety for irrigated lowland, sold as SL 606H and known locally as Mestiso 138. The NSIC approved it in 2022. SL Agritech bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 726H is bred to fill",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 726H, or Rc 726H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for SL 606H, or rice variety 726H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -56,6 +57,10 @@
         [
           "Bred by",
           "SL Agritech"
+        ],
+        [
+          "Sold as",
+          "SL 606H"
         ],
         [
           "Local name",
@@ -214,6 +219,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is SL 606H the same as NSIC Rc 726H?",
+          "a": "Yes. SL 606H is the name it is sold under, and NSIC Rc 726H is its registration with the National Seed Industry Council, where its local name is Mestiso 138. The numbers on this page are PhilRice's for NSIC Rc 726H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 726H?",
           "a": "It is known as Mestiso 138. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -232,10 +241,6 @@
         {
           "q": "Is it soft when cooked?",
           "a": "It has low amylose, 13.7 percent. So it cooks soft."
-        },
-        {
-          "q": "Where can I buy certified seed of this variety?",
-          "a": "Ask accredited seed growers in your province, your municipal agriculturist or the nearest PhilRice station. Look for the certified seed tag on the sack before you pay."
         }
       ]
     },
@@ -271,6 +276,10 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where SL 606H is named as NSIC Rc 726H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
         },
         {
           "label": "BPI: NSIC registry of rice varieties",

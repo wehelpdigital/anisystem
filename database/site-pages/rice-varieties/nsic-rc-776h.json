@@ -5,18 +5,19 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 776H (Mestiso 153) Rice Variety: Characteristics and Grain Quality",
-  "metaTitle": "NSIC Rc 776H Rice Variety: Characteristics and Grain Quality",
-  "metaDescription": "NSIC Rc 776H is a hybrid rice for irrigated lowland, approved in 2024. See its pest and disease ratings, grain quality and where it grows best.",
+  "title": "SL 771H (NSIC Rc 776H) Hybrid Rice: Characteristics and Grain Quality",
+  "metaTitle": "SL 771H (NSIC Rc 776H): Characteristics and Grain Quality",
+  "metaDescription": "SL 771H is NSIC Rc 776H, a hybrid rice for irrigated lowland approved in 2024. See its pest ratings, grain quality and where it grows best.",
   "focusKeyword": "NSIC Rc 776H",
   "keywords": [
     "NSIC Rc 776H",
     "rice variety 776H",
     "rc 776H",
     "776H rice variety characteristics",
-    "Mestiso 153"
+    "Mestiso 153",
+    "SL 771H"
   ],
-  "excerpt": "NSIC Rc 776H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 153. The NSIC approved it in 2024. SL Agritech bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 776H is a hybrid rice variety for irrigated lowland, sold as SL 771H and known locally as Mestiso 153. The NSIC approved it in 2024. SL Agritech bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 776H is bred to fill",
@@ -25,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 776H, or Rc 776H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for SL 771H, or rice variety 776H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -55,6 +56,10 @@
         [
           "Bred by",
           "SL Agritech"
+        ],
+        [
+          "Sold as",
+          "SL 771H"
         ],
         [
           "Local name",
@@ -213,6 +218,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is SL 771H the same as NSIC Rc 776H?",
+          "a": "Yes. SL 771H is the name it is sold under, and NSIC Rc 776H is its registration with the National Seed Industry Council, where its local name is Mestiso 153. The numbers on this page are PhilRice's for NSIC Rc 776H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 776H?",
           "a": "It is known as Mestiso 153. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -231,10 +240,6 @@
         {
           "q": "Is it soft when cooked?",
           "a": "It has low amylose, 12.2 percent. So it cooks soft."
-        },
-        {
-          "q": "Where can I buy certified seed of this variety?",
-          "a": "Ask accredited seed growers in your province, your municipal agriculturist or the nearest PhilRice station. Look for the certified seed tag on the sack before you pay."
         }
       ]
     },
@@ -270,6 +275,10 @@
         {
           "label": "PhilRice: Seed information on released rice varieties",
           "url": "https://dbmp.philrice.gov.ph/seeds/"
+        },
+        {
+          "label": "Where SL 771H is named as NSIC Rc 776H",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
         },
         {
           "label": "BPI: NSIC registry of rice varieties",
