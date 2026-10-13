@@ -41,11 +41,13 @@
         $pageTitle = trim($__env->yieldContent('title_full'));
         if ($pageTitle === '') {
             $pageTitle = trim($__env->yieldContent('title', 'anee.io'));
-            $pageTitle = $pageTitle === 'anee.io' ? $pageTitle : $pageTitle . ' | anee.io';
+            // The brand once: a title that already names anee.io does not repeat it.
+            $pageTitle = str_contains(mb_strtolower($pageTitle), 'anee.io') ? $pageTitle : $pageTitle . ' | anee.io';
         }
         // A long title drops the brand at its end rather than run past what a
-        // results page shows (2026-10-07 SEO audit): the page's own words matter more.
-        if (mb_strlen(html_entity_decode($pageTitle)) > 65 && str_ends_with($pageTitle, ' | anee.io')) {
+        // results page shows (2026-10-07 SEO audit; 60 characters since the
+        // 2026-10-13 audit): the page's own words matter more.
+        if (mb_strlen(html_entity_decode($pageTitle)) > 60 && str_ends_with($pageTitle, ' | anee.io')) {
             $pageTitle = mb_substr($pageTitle, 0, -10);
         }
     @endphp

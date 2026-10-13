@@ -55,7 +55,7 @@ class LandingPage
     public const DEFAULTS = [
         // The browser tab and the link preview; a blank description is the hero's sub.
         'meta' => [
-            'title' => 'Precision agriculture on your phone',
+            'title' => 'Start Precision Farming on Your Phone, Free',
             'description' => 'Precision agriculture on your phone: the right spray, fertilizer and water on the right day, planned around your weather. Less waste, more harvest, higher income.',
         ],
         'hero' => [

@@ -1,6 +1,17 @@
 @extends('layouts.public')
 
-@section('title', $page->title)
+{{-- A title that tells a search what the page is (2026-10-13 audit: the
+     bare names were too short). Pages the mother app adds later keep their
+     own name, with the app's name after it when it is short. --}}
+@php
+    $legalSeo = [
+        'privacy' => 'Privacy Policy: How anee.io Protects Your Farm Data',
+        'terms' => 'Terms of Service for the anee.io Farm App',
+        'cookies' => 'Cookie Policy: How anee.io Uses Cookies',
+        'about' => 'About anee.io: The Farm App Built by Farmers',
+    ][$page->slug] ?? (mb_strlen($page->title) < 30 ? $page->title . ' for the anee.io Farm App' : $page->title);
+@endphp
+@section('title', $legalSeo)
 @section('meta_description', \App\Support\CommunityText::plain($page->body, 155))
 
 {{-- A member who reads the Privacy Policy from the app's footer at night

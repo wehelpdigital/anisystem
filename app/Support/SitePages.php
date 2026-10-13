@@ -36,7 +36,7 @@ class SitePages
             'label' => 'Crop Guides',
             'crumb' => 'Crop guides',
             'hubTitle' => 'Crop Guides for Filipino Farmers',
-            'metaTitle' => 'Crop Guides for Filipino Farmers: Palay, Mais and Gulay',
+            'metaTitle' => 'Crops Guide for Filipino Farmers: Palay, Mais and Gulay',
             'metaDescription' => 'Practical crop guides for Filipino farmers: palay, mais, vegetables, coconut and banana. How to plant, feed, protect and harvest each one.',
             'intro' => 'How to plant, feed and harvest the crops Filipino farms live on, from palay and mais to vegetables, coconut and banana. Written for the field, in English and Tagalog.',
             'kicker' => 'Crop guides',
