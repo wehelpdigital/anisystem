@@ -1,0 +1,232 @@
+{
+  "section": "blog",
+  "slug": "alternate-wetting-and-drying",
+  "sortOrder": 1320,
+  "lang": "en",
+  "category": "Palay",
+  "title": "Alternate Wetting and Drying: How to Save Irrigation Water in Palay",
+  "metaTitle": "Alternate Wetting and Drying in Rice: A Field Guide",
+  "metaDescription": "Alternate wetting and drying saves irrigation water in palay. Learn to make the observation well, when to start, when to irrigate and when to stop.",
+  "focusKeyword": "alternate wetting and drying",
+  "keywords": [
+    "alternate wetting and drying",
+    "AWD",
+    "observation well",
+    "controlled irrigation",
+    "water management in rice",
+    "save irrigation water"
+  ],
+  "excerpt": "Alternate wetting and drying, or AWD, is a way to irrigate palay only when the field needs it. Instead of keeping the paddy flooded all season, you let the water sink below the soil surface, then flood again. A simple tube in the field, the observation well, tells you when. PhilRice says it can cut irrigation water by up to half when done right.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-wet-season-rice.webp",
+    "alt": "Tillering palay beside an irrigation canal at PhilRice in Muñoz, Nueva Ecija, the kind of irrigated field where alternate wetting and drying saves water",
+    "credit": "Judgefloro, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "AWD belongs to Key Check 6 of PalayCheck: no stress from too little or too much water. It fits irrigated lowland fields where you decide when water comes in, from a pump, a canal or a shallow tube well.\n\nFarmers who pump with diesel or electricity feel the savings first. One Zambales farmer told PhilRice that AWD cut his fuel use by up to 25 percent. Our list of the [PalayCheck key checks](/blog/palaycheck-key-checks) shows where water fits in the season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why alternate wetting and drying helps the crop"
+    },
+    {
+      "type": "text",
+      "text": "Drying the soil for a few days at a time does more than save water. PhilRice lists these gains for the plant itself:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "More roots, growing deeper as they follow the sinking water.",
+        "More tillers, and sturdier stems with a firmer hold on the soil.",
+        "A better balance of nutrients, and fewer toxic substances building up in soil that never dries.",
+        "Less water pumped, so less fuel or power spent."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "IRRI's Rice Knowledge Bank says farmers can cut irrigation water this way without lowering yield. PalayCheck also warns that a field kept too wet costs more to irrigate, upsets the nutrient balance and gives off more greenhouse gas."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to make an observation well"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Cut the tube",
+          "text": "Take a piece of PVC pipe or a bamboo section 25 cm long and about 10 cm across. A wide tube lets you see the water and scoop out mud easily."
+        },
+        {
+          "title": "Mark WS and DS",
+          "text": "Measure 5 cm down from the top and draw a ring around the tube. Label it WS, for wet season. Next, measure another 5 cm down, draw a second ring and label it DS, for dry season."
+        },
+        {
+          "title": "Drill the holes",
+          "text": "With a 3 to 5 mm drill bit, make holes all around the tube, about 5 cm apart, down to the bottom. Water has to flow in and out freely, so do not skimp on holes."
+        },
+        {
+          "title": "Pick the spot",
+          "text": "Choose a paddy that shows how most of your field behaves, not a high or low corner. Set the well 1 to 2 meters from the bund, so you can look into it without walking into the crop."
+        },
+        {
+          "title": "Push it in",
+          "text": "Press the tube straight down until the WS ring sits level with the soil in the wet season, or the DS ring in the dry season. Then scoop out the mud inside until you can see the bottom."
+        },
+        {
+          "title": "Test it",
+          "text": "After the next irrigation, check that the water inside the tube stands at the same level as outside. If it stays lower for hours, mud has blocked the holes, so pull the tube and set it again."
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "caption": "How the observation well sits in each season, from PhilRice's field advice",
+      "rows": [
+        ["Season", "Mark at soil level", "Tube above the soil", "Tube below the soil", "Irrigate up to"],
+        ["Wet season", "WS", "5 cm", "20 cm", "The top of the tube, about 5 cm of water"],
+        ["Dry season", "DS", "10 cm", "15 cm", "The WS mark, about 5 cm of water"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So in the wet season, the soil can dry to about 20 cm down before you irrigate. In the dry season, when sun and wind dry a field faster, the tube stops at 15 cm. That is the same safe depth IRRI uses for its field water tube."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When to start alternate wetting and drying"
+    },
+    {
+      "type": "text",
+      "text": "Do not start right after planting. Start AWD 21 to 30 days after transplanting or sowing, and only once your weed control is done. Until then, keep the usual shallow water, because standing water holds down young weeds. Our guide to [weed management in rice](/weeds/weed-management-in-rice) shows that timing.\n\nIRRI's Rice Knowledge Bank allows an earlier start, 1 to 2 weeks after transplanting. But it also says to wait 2 to 3 more weeks where weeds are many."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When to irrigate"
+    },
+    {
+      "type": "text",
+      "text": "From then on, the well decides. Look into it every day or two. While you can still see water inside the tube, wait. Once the tube is dry to the bottom, irrigate.\n\nRefill to about 5 cm of standing water. That is the top of the tube in the wet season, or the WS mark in the dry season. Then let it sink again. PhilRice's field advice puts the usual wait at about 3 to 5 days after the surface water disappears. IRRI notes that the dry spell can run from 1 to more than 10 days, depending on soil, weather and crop stage."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "On fertilizer days"
+    },
+    {
+      "type": "text",
+      "text": "Pause AWD when you top dress. PhilRice advises a shallow 2 to 3 cm of water in the paddy as you spread urea, so the fertilizer dissolves and stays in the field. IRRI offers another way: spread the nitrogen on the drained soil just before you irrigate, so the water carries it down. Our [rice fertilizer schedule](/blog/rice-fertilizer-schedule) gives the days for each dose."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When to stop and keep 5 cm of water"
+    },
+    {
+      "type": "text",
+      "text": "Stop AWD when the crop starts to flower. From flowering through grain filling, keep about 5 cm of water standing in the paddy. A dry field at this stage brings tulyapis, the empty or half filled grains that cut your harvest.\n\nPalayCheck asks for 5 to 7 cm at flowering. IRRI keeps the field flooded from a week before to a week after flowering. Either way, flowering is the one stage when you should never let the well run dry."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Signs you let it dry too far",
+      "text": "Deep cracks in the soil for more than three days, rolled leaves, dry leaf tips, stunted plants and fewer than 10 tillers per hill all point to drought stress, PalayCheck says. Irrigate right away, and check the well. Too much water hurts as well. More than 5 cm for a week or longer leaves fewer tillers, smaller leaves and dark roots."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Draining before harvest"
+    },
+    {
+      "type": "text",
+      "text": "Near the end of the season, stop irrigating so the field is firm and dry at harvest. How early depends on your soil and the season."
+    },
+    {
+      "type": "table",
+      "caption": "When to stop irrigating before harvest, from PhilRice's PalayCheck System",
+      "rows": [
+        ["Soil or season", "Stop irrigating"],
+        ["Sandy or medium soil, or the dry season", "1 week before the expected harvest"],
+        ["Clay soil, or the wet season", "2 weeks before the expected harvest"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Do not drain earlier than this. The grains at the base of the panicle fill last, and they still need water. Our guide on [when to harvest rice](/blog/when-to-harvest-rice) covers the cutting and threshing that follow."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan your AWD irrigations in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, irrigation sits on the Activities board like any other task. Add the AWD start at 21 DAT, the flowering hold and the final drain to your [cropping calendar](/features/cropping-calendar). Each lot then gets its own dates from its own day zero.\n\nThe [weather forecast](/features/farm-weather-forecast) for each lot's location shows when rain is coming, so you can skip a pumping that the rain will do for free. If a lot looks stressed, ask Anee, the smart farm technician, in Tagalog or English, and send her a photo."
+    },
+    {
+      "type": "cta",
+      "title": "Put every irrigation on the calendar",
+      "text": "Sign up free, add your lots, and anee.io dates the AWD start, the flowering hold and the drain.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about alternate wetting and drying"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is AWD in rice?",
+          "a": "AWD stands for alternate wetting and drying. You let the paddy water sink below the soil surface, then irrigate again, instead of keeping the field flooded all season. An observation well shows you when to irrigate."
+        },
+        {
+          "q": "Does AWD lower the yield?",
+          "a": "Not when you follow the rules. IRRI says farmers can cut irrigation water without lowering yield. Keep the field flooded around flowering, and never let the water drop below the bottom of the well."
+        },
+        {
+          "q": "How deep do I set the observation well?",
+          "a": "Push it in until the WS ring is level with the soil in the wet season, leaving 20 cm underground. In the dry season, stop at the DS ring, leaving 15 cm underground."
+        },
+        {
+          "q": "Can I use AWD in a rainfed field?",
+          "a": "AWD works where you control when the water comes in. In a rainfed field you cannot refill on time, so put your effort into good bunds that hold the rain instead."
+        },
+        {
+          "q": "When do I stop AWD?",
+          "a": "At flowering. Keep about 5 cm of water from flowering to grain filling, then drain 1 to 2 weeks before harvest, depending on your soil and season."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related palay guides",
+      "items": [
+        { "label": "Rice fertilizer schedule by target yield", "url": "/blog/rice-fertilizer-schedule" },
+        { "label": "When to harvest rice", "url": "/blog/when-to-harvest-rice" },
+        { "label": "Weed management in rice", "url": "/weeds/weed-management-in-rice" },
+        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
+        { "label": "El Niño and La Niña farming tips", "url": "/blog/el-nino-la-nina-farming-tips" },
+        { "label": "Cropping calendar in anee.io", "url": "/features/cropping-calendar" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Check 6, water management)", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
+        { "label": "PhilRice: Save water, cut cost (alternate wetting and drying, October 2018)", "url": "https://www.philrice.gov.ph/save-water-cut-cost/" },
+        { "label": "IRRI Rice Knowledge Bank: Saving water with Alternate Wetting Drying (AWD)", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/water-management/saving-water-alternate-wetting-drying-awd" },
+        { "label": "IRRI Rice Knowledge Bank: Water management", "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/water-management" }
+      ]
+    }
+  ]
+}

@@ -58,7 +58,7 @@
     },
     {
       "type": "text",
-      "text": "For wet direct seeding, PalayCheck says to prepare the field with the same land preparation and leveling steps as transplanted rice. That means plowing or rotovating 21 to 30 days before planting, harrowing every 7 days, then a final harrowing and leveling with 5 cm of water.\n\nThe leveling matters even more here, because a seed on the surface has no way to survive a pool. Water that is too deep drowns the seed, and bare high spots dry out and let weeds in. PalayCheck's test is simple. After final leveling, no part of the field should have water deeper than 5 cm, and no soil mound should show above the water."
+      "text": "For wet direct seeding, PalayCheck says to prepare the field with the same land preparation and leveling steps as transplanted rice. That means plowing or rotovating 21 to 30 days before sowing, then letting the soil soften for about a week. Next you harrow three times, 5 to 7 days apart: lengthwise, crosswise, then a final pass, and you level with a board under about 5 cm of water. For broadcast seed, PhilRice advises finishing that last harrowing and leveling one day before sowing.\n\nThe leveling matters even more here, because a seed on the surface has no way to survive a pool. Water that is too deep drowns the seed, and bare high spots dry out and let weeds in. PalayCheck's test is simple. After final leveling, no part of the field should have water deeper than 5 cm, and no soil mound should show above the water."
     },
     {
       "type": "heading",
@@ -68,6 +68,15 @@
     {
       "type": "text",
       "text": "PalayCheck tells wet direct seeding farmers to dig small canals, 25 cm wide and 5 cm deep, around the field near the dikes and through the middle of the field. They give excess water a path out. They also help you collect snails and work in the field for replanting and weeding.\n\nA 2025 study of Philippine farmers in Frontiers in Sustainable Food Systems reports one more danger. Wet direct seeding is hard when heavy rain falls right after sowing, because the seeds wash away easily. Good canals let you drain the field quickly."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Soak the seed, then sow"
+    },
+    {
+      "type": "text",
+      "text": "Soak the seed in clean water for 24 hours. Then lift it out and keep it covered for another 24 hours in a shaded, airy place. Sow once most seeds show a small sprout, and air them briefly first so they spread evenly instead of clumping. Broadcast by hand, or use a drum seeder, a seed spreader or a drone if you have one.\n\nFrom that day on, guard the seed against rats, birds, snails and weeds. Our pages on [rice field rats](/pests/rice-field-rats) and the [golden apple snail](/pests/golden-apple-snail) cover the first weeks."
     },
     {
       "type": "heading",
@@ -82,7 +91,7 @@
         "Broadcasting pre germinated seed: 60 to 80 kg per hectare.",
         "Keep an extra 1 kg of pre germinated seed at the side of the field for replanting.",
         "Replant bald areas wider than a 10 cm radius within 7 to 10 days after sowing so the crop matures evenly.",
-        "Suspend irrigation for 0 to 14 days after sowing, unless severe drought symptoms appear."
+        "Keep standing water off for the first 10 to 14 days after sowing, unless severe drought symptoms appear. From about day 10, bring the water to 2 to 3 cm and replant bare spots at the same time."
       ]
     },
     {
@@ -125,10 +134,43 @@
       ]
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Weed control in the first days after sowing"
+    },
+    {
+      "type": "text",
+      "text": "The stale seedbed lowers the weed load, but it does not end it. PhilRice advises a pre emergence herbicide 0 to 3 days after sowing, chosen and applied by its label. If many weeds still come up, an early post emergence herbicide can follow 6 to 9 days after sowing, and you pull the rest by hand. Our guide to [herbicides for rice weeds](/weeds/herbicides-for-rice-weeds) lists the active ingredients."
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Not for every field",
       "text": "IRRI says not to grow dry seeded rice in fields with a history of heavy weed infestation. If your field has a weedy rice or sedge problem, read the [weed management in rice](/weeds/weed-management-in-rice) guide first and consider transplanting."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A direct seeding checklist for the wall"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**30 to 21 days before sowing:** repair the dikes and canals, then plow.",
+        "**14 days before:** first harrowing, lengthwise.",
+        "**7 to 9 days before:** second harrowing, crosswise.",
+        "**2 days before:** soak the seed in clean water for 24 hours.",
+        "**1 day before:** last harrowing and leveling under about 5 cm of water. Dig the small drainage canals once the field is level, and keep the soaked seed covered.",
+        "**Sowing day:** sow the sprouted seed by hand or by machine.",
+        "**0 to 3 days after:** a pre emergence herbicide, by the label.",
+        "**6 to 9 days after:** an early post emergence herbicide, only if weeds are many.",
+        "**About 10 days after:** water at 2 to 3 cm, and replant bare spots."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The list counts from plowing 21 days ahead. You can also skip the counting, because [anee.io dates every step back from your planting day](/features/land-preparation-planner) for each lot."
     },
     {
       "type": "cta",

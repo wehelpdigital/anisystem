@@ -1,0 +1,204 @@
+{
+  "section": "blog",
+  "slug": "when-to-harvest-rice",
+  "sortOrder": 1340,
+  "lang": "en",
+  "category": "Palay",
+  "title": "When to Harvest Rice: Ripeness, Draining and Threshing on Time",
+  "metaTitle": "When to Harvest Rice: Ripeness Signs and Threshing Timing",
+  "metaDescription": "When to harvest rice: drain 1 to 2 weeks before, cut at 85 to 90 percent golden grains, wait out the dew and thresh within one or two days.",
+  "focusKeyword": "when to harvest rice",
+  "keywords": [
+    "when to harvest rice",
+    "rice harvesting",
+    "palay harvest",
+    "threshing",
+    "grain moisture",
+    "combine harvester"
+  ],
+  "excerpt": "When to harvest rice comes down to the grains. Cut by hand when 85 to 90 percent of them have turned golden yellow, or wait for 90 to 95 percent if a combine will do the work. Drain the field 1 to 2 weeks before, cut only after the dew dries, and thresh within a day in the wet season or two in the dry season. These are the targets of Key Check 8 in PhilRice's PalayCheck System.",
+  "heroImage": {
+    "src": "/images/site/photos/palay-heads.jpg",
+    "alt": "Palay heads turning golden and bending over in a rice field, close to the time to harvest rice",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Timing matters because the grain keeps changing in the field. Cut too early, and you get immature grains and more broken rice at the mill. Cut too late, and ripe grains shatter onto the ground. Our list of the [PalayCheck key checks](/blog/palaycheck-key-checks) shows where harvest fits in the season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Signs your palay is ready"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Grain color.** Most grains on the panicles have turned golden yellow. Judge the whole field, not one hill, and look at the grains near the base of the panicle, which ripen last.",
+        "**Days after heading.** IRRI's Rice Knowledge Bank puts the best harvest at 28 to 35 days after heading in the dry season, and 32 to 38 days in the wet season.",
+        "**Variety maturity.** The days to maturity on your seed bag give you the expected date. Our [rice varieties](/rice-varieties) finder lists them for every NSIC variety.",
+        "**Grain moisture.** PalayCheck gives a typical moisture at harvest of 18 to 21 percent in the dry season, and 20 to 25 percent in the wet season. Use a moisture meter if your cooperative has one.",
+        "**Bite test.** IRRI says a ripe grain feels firm, but not brittle, when you bite it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Drain the field before harvest"
+    },
+    {
+      "type": "text",
+      "text": "Stop irrigating ahead of harvest, so the crop ripens evenly and the field firms up. Draining also keeps the grain dry while you cut, and it makes reaping and hauling easier. How early you drain depends on the soil and the season."
+    },
+    {
+      "type": "table",
+      "caption": "When to drain the field before harvest, from PhilRice's PalayCheck System",
+      "rows": [
+        ["Soil or season", "Drain or stop irrigating"],
+        ["Sandy or medium soil, or the dry season", "1 week before the expected harvest"],
+        ["Clay soil, or the wet season", "2 weeks before the expected harvest"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Do not drain earlier than this. The grains at the base of the panicle fill last, and they still need water. If you practice [alternate wetting and drying](/blog/alternate-wetting-and-drying), this final drain closes that plan."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When to harvest rice by hand or by combine"
+    },
+    {
+      "type": "text",
+      "text": "The share of golden grains you wait for depends on how you will cut. Hand reaping starts a little earlier, because the cut palay still waits for the thresher. A combine reaps and threshes in one pass, so the grain can ripen a little more in the field."
+    },
+    {
+      "type": "table",
+      "caption": "Ripeness targets for Key Check 8 of PhilRice's PalayCheck System",
+      "rows": [
+        ["Harvest method", "Cut when this share of grains is golden", "Then"],
+        ["Hand reaping", "85 to 90 percent", "Thresh within 1 day in the wet season, or 2 days in the dry season"],
+        ["Combine harvester", "90 to 95 percent", "Dry the grain within 12 to 24 hours"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What an early or late harvest costs"
+    },
+    {
+      "type": "text",
+      "text": "PalayCheck puts numbers on both mistakes. Harvest too early, and field losses stay small, under 1 to 1.5 percent, but milling recovery can drop as low as 53 percent. Harvest too late, and shattering pushes losses past 3 percent with hand harvesting.\n\nLate grain also breaks more at the mill. Head rice, the whole grains that sell best, can fall to 32 percent with hand harvesting or 38 percent with machines. So a few days either way shows up in your price per kilo."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Wait for the dew to dry"
+    },
+    {
+      "type": "text",
+      "text": "Do not start cutting while dew still wets the field. Wet panicles weigh more to haul, thresh poorly and take longer to dry. IRRI advises harvesting when the crop carries the least surface moisture from dew or rain. So start once the sun has dried the leaves, and stop if rain comes in."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Thresh fast and never leave palay piled"
+    },
+    {
+      "type": "text",
+      "text": "Cut palay starts to spoil if it waits. Thresh within 1 day of cutting in the wet season, or within 2 days in the dry season. Also, do not leave cut palay piled in the field for more than a day. The pile heats up inside, the grains turn dark, and the milled rice comes out poor."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Run an engine driven thresher at a drum speed of about 800 rpm, the PalayCheck setting for most machines.",
+        "Do not push for speed. A faster drum moves more palay, but you lose more grain through the blower and in poor separation.",
+        "Do not feed dripping wet palay into a thresher, because it cleans and separates poorly.",
+        "Bag the threshed grain in clean sacks, and label each sack inside and out."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Book the thresher or combine early",
+      "text": "In a synchronized area, every farm wants the same machine in the same week. Book it as soon as you know your expected harvest date, and plan the drain backward from that day."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Dry and store the grain"
+    },
+    {
+      "type": "text",
+      "text": "Threshed palay still holds a lot of water. Dry it evenly within 12 to 24 hours to 12 to 14 percent moisture, the PalayCheck target for Key Check 9. While it waits for cleaning, keep the dried grain on pallets, away from damp floors, and clean it 2 to 3 days after drying.\n\nOur guide to [palay drying](/blog/palay-drying) compares sun drying with a mechanical dryer. The [palay price](/blog/palay-price-philippines) page shows how buyers pay more for dry palay than for wet."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Know your harvest date in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, [growth stages](/features/growth-stages-and-weather) show each lot's stage on any date, so you see which lot nears harvest first. Put the drain day, the harvest and the threshing on the [cropping calendar](/features/cropping-calendar). Each lot then gets its own dates from its own day zero.\n\nThe [weather forecast](/features/farm-weather-forecast) for each lot's location helps you pick a dry week for cutting. After harvest, write the sacks, weight and buyer in your [harvest records](/features/harvest-records), and the reports show your yield and profit per lot."
+    },
+    {
+      "type": "cta",
+      "title": "See your harvest week coming",
+      "text": "Sign up free, add your lots and their planting dates, and anee.io dates the drain, the harvest and the threshing for each one.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about when to harvest rice"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many days after flowering is rice ready to harvest?",
+          "a": "IRRI puts the best time at 28 to 35 days after heading in the dry season, and 32 to 38 days in the wet season. Confirm it with the grain color before you cut."
+        },
+        {
+          "q": "Can I harvest rice early in the morning?",
+          "a": "Wait until the dew has dried. Wet panicles slow down threshing and drying, and the grain spoils faster."
+        },
+        {
+          "q": "How long can I leave cut palay before threshing?",
+          "a": "Thresh within 1 day in the wet season and 2 days in the dry season. Never leave it piled in the field for more than a day."
+        },
+        {
+          "q": "What thresher speed should I use?",
+          "a": "About 800 rpm at the drum for most engine driven threshers, PalayCheck says. A faster drum loses more grain."
+        },
+        {
+          "q": "Why drain the field before harvest?",
+          "a": "So the crop ripens evenly, the grain stays dry while you cut, and the work goes faster. Drain 1 week before on sandy soil or in the dry season, and 2 weeks before on clay soil or in the wet season."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related palay guides",
+      "items": [
+        { "label": "How to dry palay properly", "url": "/blog/palay-drying" },
+        { "label": "The PalayCheck key checks", "url": "/blog/palaycheck-key-checks" },
+        { "label": "Alternate wetting and drying", "url": "/blog/alternate-wetting-and-drying" },
+        { "label": "Cost of producing rice per hectare", "url": "/blog/cost-of-producing-rice-per-hectare" },
+        { "label": "Palay price in the Philippines", "url": "/blog/palay-price-philippines" },
+        { "label": "Harvest records in anee.io", "url": "/features/harvest-records" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Checks 6, 8 and 9)", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
+        { "label": "IRRI Rice Knowledge Bank: Harvesting", "url": "http://www.knowledgebank.irri.org/step-by-step-production/postharvest/harvesting" }
+      ]
+    }
+  ]
+}

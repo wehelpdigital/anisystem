@@ -679,6 +679,19 @@
 
 <div class="space-y-5 md:space-y-6">
 
+    {{-- The guide a guest was reading when they joined (2026-10-14, App\Support\ContentGate). --}}
+    @if ($__reading = \App\Support\ContentGate::waiting())
+        <div class="card card-body flex flex-wrap items-center gap-3 border-brand-200 dash-reading">
+            <span class="text-2xl" aria-hidden="true">📖</span>
+            <div class="min-w-0 flex-1">
+                <p class="text-xs font-extrabold uppercase tracking-wider text-brand-700">Pick up where you left off</p>
+                <p class="font-bold text-gray-900 dark:text-gray-100 truncate">{{ $__reading['title'] }}</p>
+            </div>
+            <a href="{{ route('gate.continue') }}" class="btn btn-primary btn-sm">Keep reading</a>
+            <a href="{{ route('gate.continue') }}?drop=1" class="text-xs font-bold text-gray-500 hover:text-gray-700">Not now</a>
+        </div>
+    @endif
+
     {{-- The greeting, in the same language as every other page: a calm card
          with the hour drawn on it, not a slab of green. --}}
     @php

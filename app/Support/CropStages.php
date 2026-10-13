@@ -96,7 +96,7 @@ class CropStages
                 [50, 'Booting & heading', 'The flag leaf swells; panicles push out.', 'Never let the field dry. Watch for stem borer.'],
                 [60, 'Flowering', 'Pollination: a few days that set the grain.', 'Keep water on. Do not spray at midday.'],
                 [73, 'Grain filling', 'Grains fill from milk to dough.', 'Water to the dough stage. Guard against rats and birds.'],
-                [90, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Drain 7 to 10 days before cutting. Harvest at 80 to 85% golden.'],
+                [90, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Drain 7 to 10 days before cutting. Harvest at 85 to 90% golden.'],
             ],
             // Direct seeded (DSR), from sowing — the wet crop's own table.
             'stagesDirect' => self::DSR_WET,

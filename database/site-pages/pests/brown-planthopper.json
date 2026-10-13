@@ -140,9 +140,11 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "Where BPH is attacking, plant a resistant variety and transplant. PhilRice advises against broadcasting the seed during an attack.",
         "Plant together with your neighbors and leave a one to two month fallow between crops to break the BPH life cycle.",
         "Use 20 by 20 centimeter spacing, because dense planting raises planthopper numbers.",
         "Split nitrogen into three applications, as in our guide to [fertilizer for rice](/blog/fertilizer-for-rice).",
+        "Irrigate by alternate wetting and drying, or AWD. PhilRice lists it with split nitrogen against BPH. Start it 21 to 30 days after transplanting, and add water only when the observation well, a perforated bamboo or PVC tube set in the paddy, has run dry.",
         "Keep potassium adequate. PhilRice notes that more [potash](/blog/potash-fertilizer) makes the plant less susceptible.",
         "Keep seedbeds far from lights.",
         "Raise the water from time to time to drown eggs at the base, and alternate drying and flooding at the milk stage.",
@@ -158,6 +160,41 @@
     {
       "type": "text",
       "text": "PhilRice advises no spraying in the first 30 days after transplanting or 40 days after seeding. The plants recover from early damage by making new leaves and tillers. Early sprays also stop friendly insects from settling in the field."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When to spray for brown planthopper"
+    },
+    {
+      "type": "table",
+      "caption": "Brown planthopper counts and what PhilRice advises",
+      "rows": [
+        [
+          "Count",
+          "Crop stage",
+          "What to do"
+        ],
+        [
+          "1 hopper per tiller or fewer",
+          "Any stage",
+          "No insecticide. Keep scouting every week"
+        ],
+        [
+          "25 or more hoppers per hill",
+          "Booting to ripening",
+          "A recommended insecticide may be used, by its label"
+        ],
+        [
+          "Any count",
+          "First 30 days after transplanting",
+          "No insecticide at all"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Between those two counts, keep scouting each week and let the predators work. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) puts these numbers next to the other rice pests, so you can plan the whole season."
     },
     {
       "type": "callout",
@@ -260,6 +297,10 @@
     {
       "type": "sources",
       "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
         {
           "label": "IRRI Rice Knowledge Bank: Planthopper",
           "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"

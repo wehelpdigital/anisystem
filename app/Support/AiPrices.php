@@ -40,6 +40,8 @@ final class AiPrices
         'auto' => 1000,
         // Satellite Weather, a week of the page (App\Support\SkyPass keeps it above cost).
         'skypass' => 30,
+        // 2026-10-14: the LCC Checker, Anee reading leaf photos against the leaf color chart.
+        'lcc' => 30,
     ];
 
     public const NAMES = [
@@ -59,6 +61,7 @@ final class AiPrices
         'npkproto' => 'NPK Plus protocol check (Protocol Builder)',
         'auto' => 'Anee Auto, per lot (a whole season planned and kept on track by Anee)',
         'skypass' => 'Satellite Weather, a week pass (never sold below what a week costs the house)',
+        'lcc' => 'LCC Checker (Anee reads rice leaf photos against the leaf color chart)',
     ];
 
     /** @var array<string, int>|null */

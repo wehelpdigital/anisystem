@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "A fungicide makes sense only when a susceptible variety meets wet, cloudy weather near heading. It also makes sense when the field had neck blast before. For neck blast, PhilRice advises two sprays: one as the panicles start to come out and another when about half have emerged. Follow the FPA registered label for the rate."
+      "text": "A fungicide makes sense only in three cases: a susceptible variety meeting wet, cloudy weather near heading, a field that had neck blast before, or leaf blast that already showed up at tillering. Then PhilRice advises two sprays to protect the neck and the panicle: one as the panicles start to come out and another when about half have emerged. Use a fungicide only when it is needed, and follow the FPA registered label for the rate. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) sets this timing next to other rice problems."
     },
     {
       "type": "table",
@@ -155,6 +155,11 @@
           "Benomyl",
           "FRAC 1",
           "named by PhilRice for blast, rotate it with another group"
+        ],
+        [
+          "Pyroquilon",
+          "FRAC 16.1",
+          "named by PhilRice for blast, a melanin inhibitor like tricyclazole, so do not rotate between the two"
         ],
         [
           "Azoxystrobin plus difenoconazole",
@@ -179,7 +184,7 @@
       "items": [
         "Choose a blast resistant variety, and ask your local agriculture office for the current list.",
         "Use clean, healthy seed, as PhilRice advises.",
-        "Destroy or plow under infected straw and stubble after harvest, since spores survive there.",
+        "Right after harvesting a blast hit field, plow under or burn the stubble, as PhilRice advises, so the fungus dies and the stubble rots faster.",
         "Rotate the field with mungo, pakwan, talong or mais when you can, as PhilRice suggests.",
         "Feed the crop in split doses and keep the field flooded, instead of letting the soil dry out."
       ]
@@ -218,7 +223,7 @@
         },
         {
           "q": "When should I spray a fungicide for rice blast?",
-          "a": "Only when the risk is high: a susceptible variety, a history of blast and wet, cloudy weather. IRRI says a spray at heading can work, and PhilRice suggests two sprays for neck blast."
+          "a": "Only when the risk is high: a susceptible variety, a history of blast, leaf blast seen at tillering, or wet, cloudy weather near heading. PhilRice suggests two sprays, at the start of heading and when about half the panicles are out."
         },
         {
           "q": "Are my round brown spots blast too?",
@@ -263,6 +268,10 @@
     {
       "type": "sources",
       "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
         {
           "label": "IRRI Rice Knowledge Bank: Blast (leaf and collar)",
           "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar"

@@ -134,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "A molluscicide comes last, after hand picking and water control. PhilRice notes that controlled irrigation costs less than the P400 to P500 per hectare that farmers spend on synthetic molluscicide. If you still need one, use only a product registered with the FPA. Follow the label and the safety advice, since these chemicals can harm fish and ducks."
+      "text": "A molluscicide comes last, after hand picking and water control. PhilRice notes that controlled irrigation costs less than the P400 to P500 per hectare that farmers spend on synthetic molluscicide. If you still need one, use only a product registered with the FPA. Follow the label and the safety advice, since these chemicals can harm fish and ducks.\n\nPhilRice field advice sets the timing and the choice. Treat only where the snails will cause damage, and do it the day after transplanting, while the seedlings are smallest. Then pick the active ingredient by your water. Where irrigation runs strong and is hard to control, or sudden rain is likely, PhilRice points to metaldehyde. Where water is scarce and no rain is expected, it points to niclosamide. Apply either one only on a field with standing water, in the morning or the late afternoon. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) has the timing for the rest of the season."
     },
     {
       "type": "table",
@@ -148,12 +148,12 @@
         [
           "Niclosamide",
           "Molluscicide",
-          "listed among the registered molluscicides in the PhilRice guide to snail management"
+          "PhilRice picks it where water is scarce and no rain is expected. Listed among the registered molluscicides in its snail guide"
         ],
         [
           "Metaldehyde",
           "Molluscicide",
-          "listed among the registered molluscicides in the same guide, sold as pellets and as a flowable"
+          "PhilRice picks it where irrigation is strong and hard to control, or sudden rain is likely. Sold as pellets and as a flowable"
         ]
       ]
     },
@@ -211,7 +211,7 @@
         },
         {
           "q": "Should I spray a molluscicide first?",
-          "a": "No. Hand picking, egg removal, ducks and water control come first. A molluscicide is the last step, and it must be FPA registered and used by the label."
+          "a": "No. Hand picking, egg removal, ducks and water control come first. A molluscicide is the last step, and it must be FPA registered and used by the label. PhilRice times it for the day after transplanting, on a field with standing water."
         },
         {
           "q": "Can I use the snails for something?",
@@ -256,6 +256,10 @@
     {
       "type": "sources",
       "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
         {
           "label": "PhilRice: Golden apple snail management options",
           "url": "https://applesnail.net/pestalert/management_guide/pest_management.htm"

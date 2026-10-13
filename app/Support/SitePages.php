@@ -196,6 +196,8 @@ class SitePages
         'pest-and-disease-finders' => ['Pest and Disease Finders', 'M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z', 'From the damage you see to the active ingredient to spray, with its group, for every crop, and weed control by the age of your crop.', 0],
         'the-stash' => ['The Stash', 'M4 7h16M4 7l1 12h14l1-12M4 7l2-3h12l2 3M9 11h6', 'Magazines and guides shared by anee.io\'s partners, starting with every PhilRice Magazine issue.', 45],
         'view-as-protocol' => ['View as Protocol', 'M9 5h11M9 12h11M9 19h11M4.5 5h.01M4.5 12h.01M4.5 19h.01', 'Your best lot\'s finished season as a step by step recipe for the next one.', 150],
+        'lcc-checker' => ['LCC Checker', 'M5 21c0-9 5-15 14-17-1 9-6 15-14 17zm0 0l7-8', 'Read your rice leaves against the leaf color chart, or let Anee read your photos, and know if urea is due and how much.', 95],
+        'land-preparation-planner' => ['Land Prep Planner', 'M3 20h18M5 20V10l7-5 7 5v10M9 20v-5h6v5', 'Every step of getting your field ready, dated back from your planting day, for any crop. Free.', 30],
     ];
 
     /** A feature page as a product card: name, icon path, blurb, hue. */

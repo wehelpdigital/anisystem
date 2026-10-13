@@ -39,10 +39,12 @@ class CropStageTips
                     'First nitrogen goes on now, on a field with only a film of water so it does not run off.',
                     'Weed before day 15. Weeds taken out later have already cost you the tillers they crowded out.',
                     'Hold water at 2 to 3 cm to suppress the next flush of weeds.',
+                    'From day 14, read ten leaves against a leaf color chart once a week. The LCC Checker in Tools does the counting and the urea sums.',
                 ],
                 'watch' => [
                     'Whorl maggot damage looks like ragged, chewed leaf edges; the crop usually grows past it.',
                     'Patches that stay stunted after fertiliser are often zinc deficiency, not nitrogen.',
+                    'Hold off insecticide for the first 30 days unless the damage is heavy. The spiders and bugs that eat hoppers are settling in now, and a spray takes them first.',
                 ],
             ],
             2 => [
@@ -50,6 +52,7 @@ class CropStageTips
                     'Second nitrogen split. This is the fertiliser that decides how many stems you carry.',
                     'Raise water to 3 to 5 cm now that the plant is established.',
                     'Count tillers on a few hills. Under 15 by day 35 means the field is behind.',
+                    'Short of water? Once the weeds are under control, from about day 21 to 30, you can let the water sink below the soil before flooding again (alternate wetting and drying). Keep the field flooded the week before and after flowering.',
                 ],
                 'watch' => [
                     'Rice black bug and green leafhopper build up here; check at night with a torch.',
@@ -61,6 +64,7 @@ class CropStageTips
                     'The panicle initiation fertiliser. This is usually the biggest single decision of the season.',
                     'Never let the field dry between now and flowering.',
                     'Split the top dress if the leaves are already dark; the plant cannot use it all at once.',
+                    'Spread fertiliser on 2 to 3 cm of water, late in the afternoon, and keep the water in for a few days so the nitrogen is not lost to the air.',
                 ],
                 'watch' => [
                     'Water stress here shows up as fewer grains per panicle, and nothing later fixes it.',
@@ -102,7 +106,7 @@ class CropStageTips
             ],
             7 => [
                 'do' => [
-                    'Harvest when 80 to 85% of the grains have gone golden, usually 30 to 35 days after flowering.',
+                    'Harvest when 85 to 90% of the grains have gone golden (90 to 95% if a combine will cut), usually 30 to 35 days after flowering.',
                     'Thresh the same day, and get the grain under a dryer or on a mat within a day.',
                     'Dry down to 14% for selling, 12% if it is going into storage.',
                 ],

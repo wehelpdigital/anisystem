@@ -40,6 +40,7 @@ class PageSchema
         $seoTitle = trim((string) ($page->metaTitle ?: $page->title));
         $description = (string) ($page->metaDescription ?: Str::limit(SitePages::plain($page->excerpt), 155));
         $sectionUrl = $isFeature ? route('features') : SitePages::url($page->section);
+        $gated = ContentGate::gatedSection($page->section) && ContentGate::cut($blocks) !== null;
 
         $graph = [[
             '@type' => 'Organization',
@@ -143,7 +144,10 @@ class PageSchema
                 'keywords' => $keywords ? implode(', ', $keywords) : null,
                 'wordCount' => SitePages::wordCount($page),
                 'citation' => $sources ?: null,
-                'isAccessibleForFree' => true,
+                // The members' gate (2026-10-14): the part behind it, named for
+                // search engines the way a registration wall is.
+                'isAccessibleForFree' => ! $gated,
+                'hasPart' => $gated ? ['@type' => 'WebPageElement', 'isAccessibleForFree' => false, 'cssSelector' => ContentGate::SELECTOR] : null,
                 'copyrightHolder' => ['@id' => $org],
                 'copyrightYear' => (int) $published->format('Y'),
                 // The reports a roundup covers, each one's own page.

@@ -18,7 +18,7 @@
         @keyframes fhBob { 50% { transform: translateY(-3px) rotate(-2deg); } }
         .fh-hero h2 { font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; color: #fff; }
         .fh-hero p { margin-top: .2rem; font-size: .84rem; line-height: 1.5; color: #c9dcb5; }
-        .fh-switch { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .25rem; margin: .9rem 0 1.1rem; padding: .25rem; border-radius: 1rem;
+        .fh-switch { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .25rem; margin: .9rem 0 1.1rem; padding: .25rem; border-radius: 1rem;
             background: var(--color-white); border: 1px solid var(--color-gray-200); }
         .fh-switch a { display: flex; align-items: center; justify-content: center; gap: .4rem; padding: .55rem .4rem; border-radius: .8rem; font-size: .82rem; font-weight: 800; text-align: center;
             color: var(--color-gray-600); text-decoration: none; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
@@ -69,16 +69,18 @@
 <div class="max-w-6xl mx-auto">
     <div class="fh-hero">
         <img src="{{ asset('images/icons/' . $fhIcon . '.svg') }}" alt="">
-        <div><h2>{{ $fhName }}</h2><p>{{ $fhLead }}. {{ $tool === 'varieties' ? 'From PhilRice and the NSIC registry.' : 'Active ingredients only, never brands.' }} Free with your account.</p></div>
+        <div><h2>{{ $fhName }}</h2><p>{{ $fhLead }}. {{ $tool === 'varieties' ? 'From PhilRice and the NSIC registry.' : ($tool === 'landprep' ? 'Following PhilRice and DA practice.' : 'Active ingredients only, never brands.') }} Free with your account.</p></div>
     </div>
     <nav class="fh-switch" aria-label="Field helpers">
         @foreach ($tools as $k => [$n, $l, $i])
-            <a href="{{ route('fh.page', $k) }}" class="{{ $k === $tool ? 'is-on' : '' }}" @if ($k === $tool) aria-current="page" @endif><img src="{{ asset('images/icons/' . $i . '.svg') }}" alt="">{{ $k === 'varieties' ? 'Varieties' : str_replace([' Control Helper', ' Finder'], ['s', 's'], $n) }}</a>
+            <a href="{{ route('fh.page', $k) }}" class="{{ $k === $tool ? 'is-on' : '' }}" @if ($k === $tool) aria-current="page" @endif><img src="{{ asset('images/icons/' . $i . '.svg') }}" alt="">{{ ['varieties' => 'Varieties', 'landprep' => 'Land prep'][$k] ?? str_replace([' Control Helper', ' Finder'], ['s', 's'], $n) }}</a>
         @endforeach
     </nav>
     <div class="fh-body">
         @if ($tool === 'weeds')
             @include('public.site.partials.weed-helper', ['gate' => false, 'defaultCrop' => $defaultCrop])
+        @elseif ($tool === 'landprep')
+            @include('field-helpers.land-prep', ['book' => $landBook, 'defaultCrop' => $defaultCrop])
         @elseif ($tool === 'varieties')
             {{-- Which crop: rice first, then every crop with a finder of its own. --}}
             <nav class="rv-chips fh-crops" aria-label="Crop">
@@ -97,7 +99,9 @@
         @endif
     </div>
     <div class="fh-more">
-        @if ($tool === 'varieties')
+        @if ($tool === 'landprep')
+            <a href="{{ url('/land-preparation') }}">Every land preparation guide ›</a>
+        @elseif ($tool === 'varieties')
             <a href="{{ $vCrop ? url('/crop-varieties/' . $vCrops[$vCrop]['slug']) : url('/rice-varieties') }}">Every variety on the public site ›</a>
             @if (\Illuminate\Support\Facades\Route::has('vary.page'))<a href="{{ route('vary.page') }}">Ask Anee to research varieties for your town ›</a>@endif
         @elseif ($tool === 'weeds')

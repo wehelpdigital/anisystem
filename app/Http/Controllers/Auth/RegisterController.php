@@ -22,6 +22,8 @@ class RegisterController extends Controller
     {
         // An ad may point here directly: its tags are kept for the account.
         \App\Support\SignupSource::remember($request);
+        // A guide's gate sent them: the dashboard offers the page back (App\Support\ContentGate).
+        \App\Support\ContentGate::remember($request->query('read'));
 
         return view('auth.signup', [
             'plan' => $request->query('plan'),

@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "Stem borers can destroy rice at any growth stage, from seedling to maturity. Deadhearts take away tillers that would have carried grain. Whiteheads take away the panicle itself, so the grain is lost completely.\n\nThe sources we read give no percent yield loss and no action threshold for the Philippines, so we do not state one. Check your own fields instead. Count the deadhearts and whiteheads in each lot every week, write them in your notes and compare season with season."
+      "text": "Stem borers can destroy rice at any growth stage, from seedling to maturity. Deadhearts take away tillers that would have carried grain. Whiteheads take away the panicle itself, so the grain is lost completely.\n\nWe found no official percent yield loss for the Philippines, so we do not state one. Timing still matters. PhilRice notes that rice hit during the vegetative and tillering stages can still recover, while a whitehead after flowering is lost for good. For the spray decision, use the light trap and the egg jar test below. Count the deadhearts and whiteheads in each lot every week, write them in your notes and compare season with season."
     },
     {
       "type": "heading",
@@ -121,10 +121,36 @@
       "items": [
         "Prepare the land well. Plow and flood the field, and remove stubble and volunteer rice so the larvae have nowhere to wait.",
         "Plant at the same time as your neighbors. Synchronous planting with the right timing breaks the supply of tillers for the moths.",
-        "Cut the leaf tops of the seedlings before transplanting. This removes eggs, so fewer of them reach the main field.",
+        "Check the seedlings before you pull them. If the leaves carry many egg masses, collect the eggs by hand before transplanting. Do not cut the leaf tops instead, because PhilRice warns that cut leaves let disease organisms in.",
         "Handpick and destroy egg masses in the seedbed and at transplanting. Raise the irrigation water now and then to drown eggs laid on the lower part of the plant.",
         "Split the nitrogen fertilizer into doses as recommended, and harvest at ground level so less stubble remains.",
         "Protect the natural enemies. Many wasps, lady beetles, ground beetles, earwigs, spiders and dragonflies feed on eggs and larvae, so avoid early spraying. See our guide on [integrated pest management](/pests/integrated-pest-management)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When to Act: the Light Trap and the Egg Jar Test"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Watch the moths",
+          "text": "From panicle initiation on, run a light trap at night and count the stem borer moths it catches. A rising catch tells you that egg laying is under way."
+        },
+        {
+          "title": "Collect egg masses",
+          "text": "If the moths are many from booting to flowering, many eggs are likely in the field too. Collect some stem borer egg masses from the leaves, put them in a jar, cover it and wait for them to hatch."
+        },
+        {
+          "title": "Read the jar",
+          "text": "If more borer larvae than tiny wasps come out, PhilRice says a contact or stomach insecticide is needed. If the wasps outnumber the larvae, the natural enemies are winning, so hold the spray."
+        },
+        {
+          "title": "Help hit plants recover",
+          "text": "After deadhearts, keep the field free of drought stress and weeds. PhilRice also advises adding fertilizer so the crop recovers."
+        }
       ]
     },
     {
@@ -134,7 +160,7 @@
     },
     {
       "type": "text",
-      "text": "Rice stem borers are best held down by resistant varieties and the steps above. If a spray is truly needed, ask your agricultural technician first, use only a product registered for rice, and never spray in the first 30 to 40 days after transplanting unless the pest is at outbreak level. Early sprays kill spiders and wasps and invite planthopper outbreaks."
+      "text": "Rice stem borers are best held down by resistant varieties and the steps above. If a spray is truly needed, ask your agricultural technician first, use only a product registered for rice, and never spray in the first 30 to 40 days after transplanting unless the pest is at outbreak level. Early sprays kill spiders and wasps and invite planthopper outbreaks. Let the jar test, not the look of the damage, make that call. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) puts the stem borer next to the other rice pests."
     },
     {
       "type": "table",
@@ -212,7 +238,11 @@
         },
         {
           "q": "Should I spray as soon as I see deadhearts?",
-          "a": "No. Spraying early kills the spiders and wasps that feed on borers. Handpick egg masses, manage the water, and ask a technician before you spray."
+          "a": "No. Spraying early kills the spiders and wasps that feed on borers. Handpick egg masses, manage the water, do the egg jar test, and ask a technician before you spray."
+        },
+        {
+          "q": "What is the egg jar test for stem borer?",
+          "a": "Collect stem borer egg masses from the field, keep them in a covered jar and let them hatch. If more larvae than wasps come out, PhilRice says a spray is needed. If more wasps come out, the natural enemies have the borer in hand."
         }
       ]
     },
@@ -253,6 +283,10 @@
     {
       "type": "sources",
       "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
         {
           "label": "IRRI Rice Knowledge Bank: Stem borer fact sheet (Lucid key)",
           "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Stem_borer.htm"

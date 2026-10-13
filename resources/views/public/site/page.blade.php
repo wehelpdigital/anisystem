@@ -23,6 +23,9 @@
     // A variety, rice or any other crop, sits under Crop varieties and its
     // crop's finder (2026-10-14); every other page under its section.
     $trail = \App\Support\CropVarieties::trail($page->section, $page->slug) ?? [[$meta['crumb'], $sectionUrl]];
+    // The members' gate (2026-10-14): a guest reads the opening of a field
+    // guide; the rest is in the page for search engines, blurred for them.
+    $gateCut = (! ($preview ?? false) && \App\Support\ContentGate::applies($page->section)) ? \App\Support\ContentGate::cut($blocks) : null;
     $isFeature = $page->section === 'features';
     $isQuestion = $page->section === 'questions';
     $feat = $isFeature ? $S::feature($page) : null;
@@ -200,7 +203,12 @@
             @endif
             <div class="sp-wrap">
                 <div class="sp-body" id="spBody">
-                    @include('public.site.blocks', ['blocks' => $blocks])
+                    @if ($gateCut !== null)
+                        @include('public.site.blocks', ['blocks' => array_slice($blocks, 0, $gateCut, true)])
+                        @include('public.site.partials.content-gate', ['gated' => array_slice($blocks, $gateCut, null, true)])
+                    @else
+                        @include('public.site.blocks', ['blocks' => $blocks])
+                    @endif
                 </div>
                 <aside class="sp-side {{ $isQuestion ? 'is-question' : '' }}">
                     @if ($isQuestion)

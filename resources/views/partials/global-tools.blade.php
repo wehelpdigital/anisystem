@@ -354,6 +354,16 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        {{-- The LCC Checker (2026-10-14): the leaf color chart read free from
+             the farmer's own chart, or by Anee from leaf photos for credits. --}}
+        <a href="{{ route('lcc.page') }}" class="qa-tile qa-build">
+            <span class="qa-ico"><img src="{{ asset('images/icons/leaf-color.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+            <span class="qa-txt">
+                <b>LCC Checker</b>
+                <i>Is it time for nitrogen? Photograph your rice leaves and Anee reads their color, or tap your own leaf color chart free, and see how much urea your area needs.</i>
+            </span>
+            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
 
             </div></div></div>
             {{-- Three: the farm tools, no Anee in them. --}}

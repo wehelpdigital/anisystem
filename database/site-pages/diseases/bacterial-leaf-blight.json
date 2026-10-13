@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI puts the loss at up to 70 percent when susceptible varieties grow in weather that favors the disease. The earlier it starts, the bigger the loss. If infection comes only at booting, the yield holds, but grain quality drops and more kernels break at milling. Besides that, heavy nitrogen on a susceptible variety makes it severe.\n\nThere is no spray threshold to watch for. PhilRice says chemical control of BLB is neither economical nor effective. So your real decisions happen before planting and in how you handle water and fertilizer. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to keep nitrogen balanced. PhilRice also warns that excess nitrogen and too little phosphorus and potassium raise infection."
+      "text": "IRRI puts the loss at up to 70 percent when susceptible varieties grow in weather that favors the disease. The earlier it starts, the bigger the loss. If infection comes only at booting, the yield holds, but grain quality drops and more kernels break at milling. Besides that, heavy nitrogen on a susceptible variety makes it severe.\n\nThere is only one spray line to know. PhilRice says chemical control of BLB is neither economical nor effective as a routine, and its field advice keeps a copper based fungicide for fields where about 30 percent or more of the crop is hit. So your real decisions happen before planting and in how you handle water and fertilizer. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to keep nitrogen balanced. PhilRice also warns that excess nitrogen and too little phosphorus and potassium raise infection."
     },
     {
       "type": "heading",
@@ -120,9 +120,10 @@
       "ordered": true,
       "items": [
         "Plant a resistant variety. IRRI calls it the most efficient, reliable and cheapest control, and PhilRice names NSIC Rc242 among varieties resistant to BLB.",
-        "Use clean seed or seed from healthy plants, and handle seedlings gently, since wounds from pulling and transplanting let the bacteria in.",
+        "Use certified seed of a resistant variety, or seed from healthy plants. Handle seedlings gently and do not cut their leaf tips at transplanting, since wounds let the bacteria in.",
         "Keep beds and fields from flooding. PhilRice advises a shallow water level of 2 to 3 cm, and IRRI stresses good drainage in seedbeds and fields.",
-        "Apply fertilizer at proper rates and avoid excess nitrogen, which feeds the disease.",
+        "When the infection is heavy and spread across the field, lower the water or drain the field. Never let irrigation water flow from a sick field into a healthy one.",
+        "Apply fertilizer at proper rates and split the nitrogen into several doses, since excess nitrogen feeds the disease.",
         "Weed regularly, and remove weed hosts on the bunds along with ratoons and volunteer seedlings.",
         "After harvest, plow under the stubble and straw, then leave the field fallow and let it dry."
       ]
@@ -134,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice says chemicals to control bacterial leaf blight are neither economical nor effective, so no active ingredient is recommended here. Put the money into resistant seed, water control and balanced fertilizer instead, and ask your local agriculture office before you buy any product sold for it."
+      "text": "PhilRice says chemicals to control bacterial leaf blight are neither economical nor effective as a routine, so prevention carries the load. Its field advice keeps one exception: a copper based fungicide, only if needed, once about 30 percent or more of the field is hit. Pick a product whose FPA label lists rice, follow the label, and ask your local agriculture office before you buy. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) shows how this line compares with other rice problems."
     },
     {
       "type": "callout",
@@ -187,7 +188,7 @@
         },
         {
           "q": "Is there a spray that cures bacterial leaf blight?",
-          "a": "No reliable one. PhilRice says chemicals for BLB are neither economical nor effective. So resistant varieties, clean seed, water control and balanced fertilizer carry the load instead."
+          "a": "No reliable one. PhilRice says chemicals for BLB are neither economical nor effective as a routine, and it keeps a copper based fungicide for fields where about 30 percent or more is hit. So resistant varieties, clean seed, water control and balanced fertilizer carry the load instead."
         },
         {
           "q": "How do I tell kresek from stem borer damage?",
@@ -236,6 +237,10 @@
     {
       "type": "sources",
       "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
         {
           "label": "IRRI Rice Knowledge Bank: Bacterial blight",
           "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight"

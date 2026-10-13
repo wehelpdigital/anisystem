@@ -23,6 +23,8 @@ class FieldHelperController extends Controller
         // Every rice variety in PhilRice's seed database (2026-10-13), the finder of /rice-varieties,
         // and every other crop's since the same day, the finders of /crop-varieties/{crop}.
         'varieties' => ['Variety Finder', 'Every registered variety of rice, corn, vegetables, root crops and fruit trees, with days to harvest, yield and resistance', 'rice-variety'],
+        // Every land preparation step, dated back from the planting day (2026-10-14, App\Support\LandPrep).
+        'landprep' => ['Land Prep Planner', 'Every step of getting your field ready, dated back from your planting day', 'land-prep'],
     ];
 
     public function page(string $tool)
@@ -47,7 +49,8 @@ class FieldHelperController extends Controller
         return view('field-helpers.index', [
             'tool' => $tool,
             'tools' => self::TOOLS,
-            'facts' => in_array($tool, ['weeds', 'varieties'], true) ? [] : ProblemCatalogue::finderFacts($tool),
+            'facts' => in_array($tool, ['weeds', 'varieties', 'landprep'], true) ? [] : ProblemCatalogue::finderFacts($tool),
+            'landBook' => $tool === 'landprep' ? \App\Support\LandPrep::book() : null,
             'varieties' => $tool === 'varieties' ? ($vCrop ? \App\Support\CropVarieties::forCrop($vCrop) : \App\Support\RiceVarieties::all()) : [],
             'vCrop' => $vCrop,
             'vCrops' => $vCrops,

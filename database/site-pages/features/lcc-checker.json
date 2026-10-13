@@ -1,0 +1,56 @@
+{
+  "section": "features",
+  "slug": "lcc-checker",
+  "sortOrder": 425,
+  "lang": "en",
+  "category": "Planning",
+  "title": "LCC Checker: Read Your Rice Leaves and Know When to Apply Nitrogen",
+  "metaTitle": "LCC Checker: Leaf Color Chart Reading for Rice Nitrogen",
+  "metaDescription": "The LCC Checker in anee.io reads your rice leaves like a leaf color chart, from photos or your own chart, and tells you if it is time for urea and how much.",
+  "focusKeyword": "LCC checker",
+  "keywords": ["LCC checker", "leaf color chart", "LCC rice", "when to apply urea", "rice nitrogen", "leaf color chart rice"],
+  "excerpt": "The LCC Checker in anee.io answers one question every rice farmer asks from the third week on: is it time for nitrogen? Tap your own leaf color chart readings for free, or photograph ten leaves and let Anee, your smart farm technician, read their color. The checker then tells you if urea is due and how many kilos your area needs.",
+  "heroImage": {"src": "/images/site/photos/palay-heads.jpg", "alt": "Rice plants close up in a Philippine field, the leaves a farmer reads against a leaf color chart", "credit": ""},
+  "blocks": [
+    {"type": "heading", "level": 2, "text": "How the LCC checker works"},
+    {"type": "steps", "items": [
+      {"title": "Tell it about the field", "text": "Pick how the rice was planted, transplanted or direct seeded, and the season. Add the days since transplanting or sowing, your area in hectares and, if you know it, how long your variety takes to mature."},
+      {"title": "Read the leaves", "text": "Have a chart? Tap the panel each of ten leaves matches, free. No chart? Photograph ten leaves on white paper and Anee reads them for a few credits."},
+      {"title": "Get the answer", "text": "The checker counts the leaves below the critical panel. When more than half fall below it, nitrogen is due, and it shows the urea per hectare, in bags, and for your own area."}
+    ]},
+    {"type": "text", "text": "A [leaf color chart](/blog/leaf-color-chart-rice) is a strip of four green panels that PhilRice and IRRI give rice farmers to time their nitrogen. The leaf tells you how much nitrogen the plant holds right now, so you feed it when it needs it instead of on a fixed day. The LCC checker keeps that rule and does the counting for you."},
+    {"type": "heading", "level": 2, "text": "Anee reads your leaf photos"},
+    {"type": "text", "text": "Many farmers have never held a leaf color chart. So the checker also works from photos. Lay each leaf flat on white paper, shade it with your body, and take the picture. Before the photos leave your phone, the app measures each leaf's dark green color index, a number from the leaf's own pixels, so Anee reads the color with a measurement beside the picture."},
+    {"type": "text", "text": "Anee gives each leaf its panel, from 2 for a pale leaf to 5 for a deep green one. She also looks for what else can pale a leaf: insect bites, disease spots, a potassium or zinc shortage, a field gone dry. If she sees one, she says so, because more urea will not fix it."},
+    {"type": "callout", "tone": "info", "title": "The rule decides, not a guess", "text": "Anee reads the color. The decision itself is plain arithmetic from her readings: the critical panel is 4 for transplanted rice and 3 for direct wet seeded rice, and nitrogen is due when more than half of the leaves read below it."},
+    {"type": "heading", "level": 2, "text": "How much urea, for your field"},
+    {"type": "text", "text": "When nitrogen is due, the checker follows the PhilRice rates: about 23 kg of nitrogen per hectare in the wet season and 30 kg in the dry season, when the crop can use more. That is about 50 kg or 65 kg of urea per hectare. Type your area and the checker gives the kilos for your own field, so you buy and carry only what you need."},
+    {"type": "list", "ordered": false, "items": [
+      "Apply on 2 to 3 cm of water, late in the afternoon, so less nitrogen is lost to the air.",
+      "Check again in a week, every week, until the first flowers.",
+      "Too early, before about two weeks after transplanting, and the checker tells you to wait: young leaves are pale anyway.",
+      "Past flowering, it tells you to stop: nitrogen then feeds leaves, not grain."
+    ]},
+    {"type": "heading", "level": 2, "text": "Keep every check"},
+    {"type": "text", "text": "Every reading is saved with its date and its answer, so you can see the field get greener or paler week by week. Put the urea on your [cropping calendar](/features/cropping-calendar) as a task, and check the season's whole fertilizer plan with the free [NPK Plus calculator](/features/npk-plus-calculator). For the full schedule by target yield, read our [rice fertilizer schedule](/blog/rice-fertilizer-schedule)."},
+    {"type": "cta", "title": "Check your rice leaves this week", "text": "Sign up free. Reading your own chart is free on every plan, and Anee's photo reading uses a few credits.", "label": "Start free", "url": "/signup"},
+    {"type": "heading", "level": 2, "text": "Questions about the LCC checker"},
+    {"type": "faq", "items": [
+      {"q": "Is the LCC checker free?", "a": "Reading your own chart is free on every plan, Libre included. Anee reading your leaf photos uses a few credits for each check."},
+      {"q": "Do I need a leaf color chart?", "a": "No. Photograph ten leaves on white paper and Anee reads them. A chart gives the steadiest reading, so ask your municipal agriculturist or the nearest PhilRice station for one."},
+      {"q": "Does it work for corn?", "a": "Not yet. The critical panels and the nitrogen rates here are the ones for rice."},
+      {"q": "Why did it say to wait?", "a": "Before about 14 days after transplanting, or 21 after sowing, young leaves are naturally pale, and after flowering nitrogen no longer helps the grain. The checker tells you when to read again."}
+    ]},
+    {"type": "links", "title": "Related pages", "items": [
+      {"label": "How to use a leaf color chart", "url": "/blog/leaf-color-chart-rice"},
+      {"label": "Rice fertilizer schedule", "url": "/blog/rice-fertilizer-schedule"},
+      {"label": "Urea fertilizer", "url": "/blog/urea-fertilizer"},
+      {"label": "NPK Plus calculator", "url": "/features/npk-plus-calculator"}
+    ]},
+    {"type": "sources", "items": [
+      {"label": "PhilRice: PalayCheck System, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"},
+      {"label": "IRRI Rice Knowledge Bank: Leaf color chart", "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility/leaf-color-chart"},
+      {"label": "Karcher and Richardson (2003): Quantifying turfgrass color using digital image analysis (the dark green color index)", "url": "https://acsess.onlinelibrary.wiley.com/doi/10.2135/cropsci2003.9430"}
+    ]}
+  ]
+}

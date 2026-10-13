@@ -123,7 +123,9 @@ class AiClient
         // A JSON document is a report: written, not spoken (see AiSetting::forDocument).
         $settings = $settings->forDocument();
         $onPhase = is_callable($opts['onPhase'] ?? null) ? $opts['onPhase'] : null;
-        unset($opts['onPhase']);
+        // A picture to read with the document (2026-10-14: the LCC Checker's leaves).
+        $image = $opts['image'] ?? null;
+        unset($opts['onPhase'], $opts['image']);
         $sum = ['tokensIn' => 0, 'tokensOut' => 0, 'searched' => false, 'sources' => []];
         $fold = function (array $r) use (&$sum): void {
             $sum['tokensIn'] += (int) ($r['tokensIn'] ?? 0);
@@ -141,7 +143,7 @@ class AiClient
         if ($onPhase) {
             $onPhase('document', 1);
         }
-        $result = $this->ask($settings, [], $prompt, null, $maxOut, $opts);
+        $result = $this->ask($settings, [], $prompt, $image, $maxOut, $opts);
         $fold($result);
         if (! ($result['ok'] ?? false)) {
             // A transport blip (the provider timing out once) gets a second try.
@@ -149,7 +151,7 @@ class AiClient
             if ($onPhase) {
                 $onPhase('document', 2);
             }
-            $result = $this->ask($settings, [], $prompt, null, $maxOut, $opts);
+            $result = $this->ask($settings, [], $prompt, $image, $maxOut, $opts);
             $fold($result);
         }
         if (! ($result['ok'] ?? false)) {

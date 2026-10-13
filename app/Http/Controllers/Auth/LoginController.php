@@ -13,8 +13,11 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
+        // A guide's gate sent them: the dashboard offers the page back (App\Support\ContentGate).
+        \App\Support\ContentGate::remember($request->query('read'));
+
         return view('auth.login');
     }
 

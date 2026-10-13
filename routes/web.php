@@ -580,6 +580,13 @@ Route::post('/admin/return', [App\Http\Controllers\Admin\AdminPanelController::c
 
 Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app', [App\Http\Controllers\AppController::class, 'dashboard'])->name('app.dashboard');
+    // The guide a guest was reading when they joined: back to it once, or let go (2026-10-14).
+    Route::get('/app/continue-reading', function (\Illuminate\Http\Request $request) {
+        $to = \App\Support\ContentGate::waiting();
+        $request->session()->forget('gate.read');
+
+        return $to && ! $request->boolean('drop') ? redirect()->to($to['url']) : redirect()->route('app.dashboard');
+    })->name('gate.continue');
     // What Offline Mode keeps on the shelf: the handful of pages a farm day
     // actually opens. app.js fetches each through the service worker while
     // the mode is on and the line is up, so their copies are cached BEFORE
@@ -726,6 +733,13 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/what-to-plant/{id}', [App\Http\Controllers\WhatToPlantController::class, 'destroy'])->whereNumber('id')->name('whatp.delete');
     // Variety research — the third: which VARIETY, searched on the web and
     // ranked by the farmer's own priorities.
+    // The LCC Checker (2026-10-14): the leaf color chart, read free from the farmer's own chart or by Anee from photos.
+    Route::get('/app/lcc-checker', [App\Http\Controllers\LccCheckerController::class, 'page'])->name('lcc.page');
+    Route::get('/app/lcc-checker/options', [App\Http\Controllers\LccCheckerController::class, 'options'])->name('lcc.options');
+    Route::post('/app/lcc-checker/manual', [App\Http\Controllers\LccCheckerController::class, 'manual'])->name('lcc.manual');
+    Route::post('/app/lcc-checker/generate', [App\Http\Controllers\LccCheckerController::class, 'generate'])->name('lcc.generate');
+    Route::get('/app/lcc-checker/job/{id}', [App\Http\Controllers\LccCheckerController::class, 'job'])->whereNumber('id')->name('lcc.job');
+    Route::delete('/app/lcc-checker/{id}', [App\Http\Controllers\LccCheckerController::class, 'destroy'])->whereNumber('id')->name('lcc.delete');
     Route::get('/app/variety-research', [App\Http\Controllers\VarietyAnalysisController::class, 'page'])->name('vary.page');
     Route::get('/app/variety-research/options', [App\Http\Controllers\VarietyAnalysisController::class, 'options'])->name('vary.options');
     Route::get('/app/variety-research/book', [App\Http\Controllers\VarietyAnalysisController::class, 'book'])->name('vary.book');
@@ -758,7 +772,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/stash/{partner}/{type}', [App\Http\Controllers\StashController::class, 'shelf'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.shelf');
     Route::get('/app/stash/{partner}/{type}/items', [App\Http\Controllers\StashController::class, 'items'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.items');
     // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.
-    Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases|varieties')->name('fh.page');
+    Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases|varieties|landprep')->name('fh.page');
     // NPK Plus (2026-10-07): the free fertilizer calculator, and Anee's reading of a plan.
     Route::get('/app/npk-plus', [App\Http\Controllers\NpkPlusController::class, 'page'])->name('npk.page');
     Route::get('/app/npk-plus/options', [App\Http\Controllers\NpkPlusController::class, 'options'])->name('npk.options');

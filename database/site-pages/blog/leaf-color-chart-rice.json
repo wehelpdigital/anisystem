@@ -1,0 +1,241 @@
+{
+  "section": "blog",
+  "slug": "leaf-color-chart-rice",
+  "sortOrder": 1300,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "Leaf Color Chart for Rice: How to Read It and When to Add Urea",
+  "metaTitle": "Leaf Color Chart for Rice: How to Read It Step by Step",
+  "metaDescription": "Use a leaf color chart to time urea on palay: when to start, which leaf to read, the critical value of 4 or 3, and how much urea to add each season.",
+  "focusKeyword": "leaf color chart",
+  "keywords": [
+    "leaf color chart",
+    "leaf color chart for rice",
+    "LCC",
+    "how to use a leaf color chart",
+    "urea top dressing",
+    "nitrogen for rice"
+  ],
+  "excerpt": "A leaf color chart is a plastic strip with four shades of green that tells you when palay needs nitrogen. You hold a rice leaf against it, match the color, and add urea only when most leaves read too pale. PhilRice and IRRI teach it as a cheap way to feed the crop by what it shows you, not by habit.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-nutrient-deficiency-in-rice.webp",
+    "alt": "A farmer stands on a bund in the middle of her green rice field in Bohol, the kind of crop you check with a leaf color chart",
+    "credit": "Øyvind Holmstad, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Farmers call it the LCC. PhilRice describes it as a fast, handy field tool that measures how green a leaf is, and that greenness follows the plant's nitrogen. The panels run from number 2, a yellowish green, to number 5, a dark green. So a pale reading on enough leaves means the crop is running short, and a top dressing of [urea fertilizer](/blog/urea-fertilizer) will pay.\n\nThe chart does one job only. It reads nitrogen, not phosphorus, potassium or zinc. For the whole season, start from our [rice fertilizer schedule](/blog/rice-fertilizer-schedule), then let the chart fine tune each urea dose."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When to start reading the leaf color chart"
+    },
+    {
+      "type": "text",
+      "text": "Take the first reading 14 days after transplanting (DAT). In direct wet seeded rice, start at 21 days after sowing (DAS). If you put 14 14 14 with sulfur into the soil or as a top dressing at 14 DAT, PhilRice says to wait and begin at 21 DAT instead.\n\nAfter that, read the field every 7 days until the first flowers appear. IRRI's Rice Knowledge Bank gives a range of every 7 to 10 days, up to 5 to 10 days after panicle initiation. Both stop around flowering, because heavy nitrogen late in the season invites lodging, pests and unfilled grains, as PalayCheck warns."
+    },
+    {
+      "type": "table",
+      "caption": "Leaf color chart readings for one season, from PhilRice's PalayCheck System and its field guide to the chart",
+      "rows": [
+        ["Crop", "First reading", "Then", "Last reading"],
+        ["Transplanted rice", "14 DAT, or 21 DAT if 14 14 14 with sulfur went on at 14 DAT", "Every 7 days", "First flowering"],
+        ["Direct wet seeded rice", "21 DAS", "Every 7 days", "First flowering"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to read a leaf color chart, step by step"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Choose 10 healthy hills",
+          "text": "Walk into a part of the lot where the stand looks even and pick 10 hills at random, away from the bund. Skip plants with disease spots or insect damage. Some guides use 12 hills, and more hills give a steadier average."
+        },
+        {
+          "title": "Pick the right leaf",
+          "text": "On each hill, take the topmost leaf that has fully opened. It is the youngest full leaf, and it shows the plant's nitrogen best. Keep it on the plant, since you only need to lay it on the chart."
+        },
+        {
+          "title": "Lay the middle of the leaf on the chart",
+          "text": "Place the middle part of the leaf over the color strips and find the closest panel. If it falls between two panels, write the average, so a leaf between 3 and 4 reads 3.5."
+        },
+        {
+          "title": "Shade it with your body",
+          "text": "Stand with the sun at your back so your body shades both the leaf and the chart. Direct sunlight changes how the green looks. PhilRice advises reading between 8 and 10 in the morning."
+        },
+        {
+          "title": "Same reader, same hour",
+          "text": "Let one person take every reading at about the same time of day, all season. Then use a fresh set of 10 leaves each week."
+        },
+        {
+          "title": "Count the low leaves",
+          "text": "Write down all 10 readings. After that, count how many fall below the critical value for your crop."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The critical value: 4 for transplanted rice, 3 for direct seeded"
+    },
+    {
+      "type": "text",
+      "text": "The critical value is the line between enough nitrogen and too little. PalayCheck sets it at 4 for transplanted rice, inbred or hybrid, and at 3 for direct wet seeded rice.\n\nThe rule itself is simple. If 6 or more of your 10 leaves read below the critical value, top dress nitrogen. If 5 or fewer fall below it, skip the urea this week and read again in 7 days. That one habit stops you from feeding a crop that is still green enough."
+    },
+    {
+      "type": "table",
+      "caption": "Nitrogen to add when 6 or more of 10 leaves read below the critical value, from PhilRice's leaf color chart guide. A 50 kg bag of urea holds 23 kg of nitrogen, and PhilRice rounds the dry season dose up to 1.5 bags.",
+      "rows": [
+        ["Season", "Nitrogen per hectare", "Urea per hectare", "Urea for a quarter hectare"],
+        ["Dry season", "30 kg", "1.5 bags (75 kg)", "About 19 kg"],
+        ["Wet season", "23 kg", "1 bag (50 kg)", "About 12.5 kg"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why the dry season gets more"
+    },
+    {
+      "type": "text",
+      "text": "The dry season brings more sunshine, so a healthy crop can turn more nitrogen into grain. A wet season crop gets less light, and extra nitrogen then mostly adds leaves, lodging and disease. That is why the wet season dose is smaller, and our guide to [fertilizer for wet season rice](/blog/fertilizer-for-wet-season-rice) goes further."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "How to apply the urea"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Keep a shallow 2 to 3 cm of water in the paddy as you spread it, and close the outlets so the fertilizer stays in your field.",
+        "Spread it in the afternoon, after 3 PM, when cooler air means less nitrogen escapes as gas, as PalayCheck advises.",
+        "Broadcast evenly so no corner gets a double dose.",
+        "Use urea for these doses. PhilRice's chart guide leaves out ammonium sulfate here, since the basal 14 14 14 with sulfur already gives the crop enough sulfur."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Check that the yellow really comes from nitrogen"
+    },
+    {
+      "type": "text",
+      "text": "A pale leaf does not always mean hunger. Before you buy urea, walk the lot and rule out these other causes. Our guide to [yellow rice leaves](/blog/yellow-rice-leaves) goes deeper."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Brown planthopper.** Round patches turn yellow, then brown and dry, with insects crowded at the base of the hills. See [brown planthopper](/pests/brown-planthopper).",
+        "**Tungro.** Leaves turn yellow to orange from the tip down, and stunted plants show up in patches. See [rice tungro](/diseases/rice-tungro).",
+        "**Zinc shortage.** Dusty brown spots appear on the upper leaves of stunted plants, 2 to 4 weeks after transplanting.",
+        "**Sulfur shortage.** The young leaves yellow first, while nitrogen shortage yellows the older, lower leaves first.",
+        "**Potassium shortage.** Plants stay dark green, but older leaves get yellowish brown edges or dark brown spots near the tips.",
+        "**Water stress.** Drought rolls the leaves and dries the tips. Deep water for a week or more leaves few tillers and dark roots."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Our page on [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice) shows each sign side by side. If pests or disease explain the color, urea will not fix it, and it can even make the problem worse."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common leaf color chart mistakes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Reading in full sun, which changes the shade you see.",
+        "Picking an old lower leaf, or a torn and spotted one, instead of the youngest full leaf.",
+        "Sampling only beside the bund, where plants do not show the field's average.",
+        "Reading 3 or 4 leaves instead of 10, so one odd plant decides the dose.",
+        "Adding urea when only 4 or 5 leaves read low. The rule asks for 6 or more.",
+        "Changing readers, or reading at noon one week and at 4 PM the next.",
+        "Reading on after flowering, when PalayCheck has already stopped.",
+        "Expecting the chart to show phosphorus, potassium or zinc. It reads nitrogen only."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Keep a small notebook",
+      "text": "Write the date, the lot and all 10 readings every week. After two or three seasons, you will see how each lot behaves, and you will buy urea with more confidence."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Let Anee read the leaves for you"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, the [LCC Checker](/features/lcc-checker) brings the chart to your phone. Take photos of your leaves, and Anee, the smart farm technician, reads the color and tells you how much urea to add. If you prefer the plastic chart, write the readings in a note on the lot.\n\nThe weekly reading also fits your season plan. On the [cropping calendar](/features/cropping-calendar), add a leaf check every 7 days from 14 DAT, and each lot gets its own dates from its own transplanting day. When you top dress, the [farm inventory](/features/farm-inventory-and-expenses) takes the bags of urea out of stock and adds their cost to your expenses."
+    },
+    {
+      "type": "cta",
+      "title": "Put a leaf check on every lot's calendar",
+      "text": "Sign up free, set each lot's transplanting date, and anee.io dates every leaf reading and urea dose for you.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the leaf color chart"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does a leaf color chart reading of 4 mean?",
+          "a": "It means the leaf matches panel 4, a medium dark green. In transplanted rice, 4 is the critical value. A leaf below it is short of nitrogen, while a leaf at 4 or above has enough for now."
+        },
+        {
+          "q": "How many leaves do I need to read?",
+          "a": "Read 10 leaves, one from each of 10 healthy hills chosen at random. Top dress only when 6 or more of them read below the critical value."
+        },
+        {
+          "q": "Can I use a leaf color chart on hybrid rice?",
+          "a": "Yes. Transplanted hybrid rice uses the same critical value of 4 as transplanted inbred rice. Direct wet seeded rice uses 3."
+        },
+        {
+          "q": "When should I stop reading the chart?",
+          "a": "Stop at first flowering. PalayCheck and PhilRice both end the weekly readings there."
+        },
+        {
+          "q": "What if I have no leaf color chart?",
+          "a": "Ask your municipal agriculturist or the nearest PhilRice station, since their trainings use it. Until then, follow PhilRice's general plan that splits nitrogen by variety maturity, as our [rice fertilizer schedule](/blog/rice-fertilizer-schedule) shows, or let the LCC Checker in anee.io read your leaves from photos."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related rice guides",
+      "items": [
+        { "label": "Rice fertilizer schedule by target yield", "url": "/blog/rice-fertilizer-schedule" },
+        { "label": "Urea fertilizer 46 0 0", "url": "/blog/urea-fertilizer" },
+        { "label": "Yellow rice leaves", "url": "/blog/yellow-rice-leaves" },
+        { "label": "Fertilizer for rice tillering", "url": "/blog/fertilizer-for-rice-tillering" },
+        { "label": "The PalayCheck key checks", "url": "/blog/palaycheck-key-checks" },
+        { "label": "LCC Checker in anee.io", "url": "/features/lcc-checker" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Check 5, nutrient management)", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
+        { "label": "IRRI Rice Knowledge Bank: Leaf Color Chart", "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility/leaf-color-chart" },
+        { "label": "IRRI Rice Knowledge Bank: Soil fertility", "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility" }
+      ]
+    }
+  ]
+}

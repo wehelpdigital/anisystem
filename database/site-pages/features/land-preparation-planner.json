@@ -1,0 +1,54 @@
+{
+  "section": "features",
+  "slug": "land-preparation-planner",
+  "sortOrder": 430,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Land Preparation Planner: Every Step Dated Back From Your Planting Day",
+  "metaTitle": "Land Preparation Planner: Dated Steps for Any Crop",
+  "metaDescription": "The land preparation planner in anee.io dates every step of getting your field ready, from plowing to planting, back from your planting day, for any crop.",
+  "focusKeyword": "land preparation planner",
+  "keywords": ["land preparation planner", "land preparation", "paghahanda ng lupa", "rice land preparation", "when to plow", "land preparation schedule"],
+  "excerpt": "Most of a season's mistakes are made before the first seed goes in: a field plowed too late, harrowed once instead of three times, or never leveled. The land preparation planner in anee.io takes your crop and your planting day and dates every step back from it, so you know what to do this week and what comes next.",
+  "heroImage": {"src": "/images/site/land/rice-land-preparation.webp", "alt": "A farmer puddles a flooded paddy with a hand tractor in Bulacan, one of the dated steps in the land preparation planner", "credit": ""},
+  "blocks": [
+    {"type": "heading", "level": 2, "text": "How the land preparation planner works"},
+    {"type": "steps", "items": [
+      {"title": "Pick the crop", "text": "Choose from the same crop list your lots use: transplanted or direct seeded rice, corn, vegetables, gourds, legumes, root crops, onion and garlic, sugarcane, banana and fruit trees."},
+      {"title": "Set the planting day", "text": "The day you plan to transplant, sow or plant. Every step is counted back from it."},
+      {"title": "Say what is wrong with the soil", "text": "Acidic, salty, sodic or acid sulfate soil adds its own steps, such as liming two weeks ahead or flushing the salt before planting."}
+    ]},
+    {"type": "text", "text": "The planner then lists every step with its own dates, from the first cleaning of the dikes to the days after planting, sorted in order. Each step says what to do and how, in plain words. The step due this week is marked, a missed one is flagged, and a tick marks each one done."},
+    {"type": "heading", "level": 2, "text": "Rice, step by step"},
+    {"type": "text", "text": "For transplanted rice the planner follows PhilRice practice: plow three to four weeks before transplanting and let the field rest about a week, harrow three times five to seven days apart, then level the field with a board under about 5 cm of water. The seedbed, the seed soaking and the sowing are dated too, so the seedlings are 18 to 21 days old on transplanting day, or 14 to 18 days for a mechanical transplanter."},
+    {"type": "text", "text": "Direct seeded rice gets its own plan, with the careful leveling it needs, a field kept wet but not flooded for the first ten days, and the herbicide window right after sowing. Read the full guides to [rice land preparation](/land-preparation/rice-land-preparation) and [direct seeded rice land preparation](/land-preparation/direct-seeded-rice-land-preparation) for the reasons behind each step."},
+    {"type": "heading", "level": 2, "text": "Every other crop too"},
+    {"type": "list", "ordered": false, "items": [
+      "Corn and sorghum: clearing, plowing, harrowing and furrows 75 cm apart, with drainage for the wet season.",
+      "Vegetables: the nursery dated so the seedlings are ready, then raised beds, compost and mulch.",
+      "Root crops: deep plowing and ridges, and clean planting material.",
+      "Onion and garlic: a fine bed, the onion seedbed dated 40 to 45 days ahead, and straw mulch.",
+      "Sugarcane, banana and fruit trees: deep plowing, holes filled ahead with compost, and planting at the start of the rains."
+    ]},
+    {"type": "callout", "tone": "tip", "title": "Problem soil comes first", "text": "Lime and gypsum need time to work. On acidic or sodic ground the planner puts the soil test and the amendment weeks before the first plowing. Read our guides to [acidic soil preparation](/land-preparation/acidic-soil-preparation) and [saline soil preparation](/land-preparation/saline-soil-preparation)."},
+    {"type": "heading", "level": 2, "text": "From the plan to the season"},
+    {"type": "text", "text": "Once the field is ready, the same planting day starts your [cropping calendar](/features/cropping-calendar), which dates every task after planting, from fertilizer to harvest. The planner sits with the free field helpers in anee.io, beside the pest, disease and weed finders and the [variety finder](/crop-varieties)."},
+    {"type": "cta", "title": "Plan your next land preparation", "text": "Sign up free and the planner is yours on every plan, Libre included.", "label": "Start free", "url": "/signup"},
+    {"type": "heading", "level": 2, "text": "Questions about the land preparation planner"},
+    {"type": "faq", "items": [
+      {"q": "Is the land preparation planner free?", "a": "Yes, on every plan. It has no Anee in it and no limit."},
+      {"q": "Can I change the planting day?", "a": "Yes. Change the date and every step moves with it. Your ticks are kept for each crop and planting day on your phone."},
+      {"q": "Where do the steps come from?", "a": "From Philippine extension practice: PhilRice for rice, and DA and state university guides for the other crops. Each plan links to its full guide."}
+    ]},
+    {"type": "links", "title": "Related pages", "items": [
+      {"label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines"},
+      {"label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation"},
+      {"label": "Corn land preparation", "url": "/land-preparation/corn-land-preparation"},
+      {"label": "Cropping calendar", "url": "/features/cropping-calendar"}
+    ]},
+    {"type": "sources", "items": [
+      {"label": "PhilRice: PalayCheck System, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"},
+      {"label": "IRRI Rice Knowledge Bank: Land preparation", "url": "http://www.knowledgebank.irri.org/step-by-step-production/pre-planting/land-preparation"}
+    ]}
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "section": "blog",
+  "slug": "when-to-spray-rice-pests",
+  "sortOrder": 1330,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "When to Spray Rice Pests: Action Thresholds for Palay",
+  "metaTitle": "When to Spray Rice Pests: Simple Thresholds for Palay",
+  "metaDescription": "Learn when to spray palay and when to wait: the counts for planthopper, black bug, stem borer, leaffolder, blight, blast, snails and rats.",
+  "focusKeyword": "when to spray",
+  "keywords": [
+    "when to spray",
+    "action threshold",
+    "rice pests",
+    "brown planthopper",
+    "rice black bug",
+    "insecticide for rice",
+    "integrated pest management"
+  ],
+  "excerpt": "Knowing when to spray palay saves money and keeps pests from coming back stronger. The answer is rarely the moment you see an insect. PhilRice's rule is to count first, let natural enemies work, and spray only when a pest crosses its action threshold. Below are those thresholds for eight common rice pests and diseases.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-rice-insecticides-alika-virtako-chess.webp",
+    "alt": "A farmer with a knapsack sprayer working across a young rice paddy, a reminder to count pests and know when to spray",
+    "credit": "T. R. Shankar Raman, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "An action threshold is the count or damage level at which a pest starts to cost more than the spray. Below it, the crop outgrows the damage, and the spiders, wasps and beetles in your field keep the pest down for free. Our guide to [integrated pest management](/pests/integrated-pest-management) explains the idea, and this page puts the numbers for when to spray in one place."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "First rule: no insecticide in the first 30 days"
+    },
+    {
+      "type": "text",
+      "text": "Do not spray insecticide in the first 30 days after transplanting, or 40 days after sowing for direct seeded rice. PalayCheck gives this rule for leaf eating pests, and a 2021 PhilRice advisory repeats it for brown planthopper.\n\nThere are two reasons. Young rice makes up for early leaf damage by growing new leaves and tillers. And an early spray kills the spiders, mirid bugs and wasps that feed on planthoppers. IRRI's Rice Knowledge Bank names early season spraying as one cause of planthopper outbreaks, because the surviving hoppers multiply once nothing eats them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to count before you decide when to spray"
+    },
+    {
+      "type": "text",
+      "text": "Walk each lot along a diagonal and check 10 hills spread across it. Count insects early in the morning, from 5 to 7, or late in the afternoon around 5, as PalayCheck advises. For planthoppers, tap each hill three times so they drop onto the water, then count them. Write the numbers down every week, so you judge the trend and not one bad day."
+    },
+    {
+      "type": "table",
+      "caption": "Action thresholds for palay from PhilRice field advice, the PalayCheck System and IRRI. Always confirm with your local agriculturist.",
+      "rows": [
+        ["Problem", "Leave it while", "Act when", "First step"],
+        ["Brown planthopper", "Fewer than 1 per tiller", "1 or more per tiller, or about 25 to 30 per hill", "Drain the field for about a week"],
+        ["Rice black bug", "5 or fewer per hill", "More than 5 per hill", "Metarhizium at low counts, deep water and a spray above 5"],
+        ["Leaffolder", "First 30 to 40 days, and while natural enemies keep up", "Rarely, and only on your technician's advice", "Trim shade trees, fertilize at the right rate"],
+        ["Stem borer", "Damage during tillering", "The jar test hatches more larvae than wasps", "Contact or stomach insecticide"],
+        ["Bacterial leaf blight", "Scattered infection", "About 30 percent or more of the field", "Drain, then copper fungicide if needed"],
+        ["Blast", "No blast before heading", "Leaf blast during tillering", "Fungicide at early heading and half heading"],
+        ["Golden apple snail", "Past tillering", "Snails feed on seedlings", "Saturated soil, then a matched molluscicide"],
+        ["Rats", "Never", "Any fresh burrow or cut tiller", "Community burrow work and sealed bait"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Brown planthopper"
+    },
+    {
+      "type": "text",
+      "text": "If you find no more than 1 brown planthopper per tiller, leave your sprayer in the shed. PhilRice treats 1 or more per tiller, or about 30 per hill, as a high count that calls for action. Even then, start by draining the field completely for about a week, then irrigate only as needed. From booting to ripening, PhilRice's field advice allows a recommended insecticide once counts reach about 25 per hill.\n\nIRRI adds one more check: if spiders, mirid bugs and other natural enemies outnumber the hoppers, do not spray, even with some hopperburn. For the long run, plant a resistant variety, keep nitrogen to the recommended rate and practice [alternate wetting and drying](/blog/alternate-wetting-and-drying). Avoid broadcast seeding while planthoppers are attacking your area. Our [brown planthopper](/pests/brown-planthopper) profile has the details."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice black bug"
+    },
+    {
+      "type": "text",
+      "text": "At 5 or fewer black bugs per hill, spray the fungus Metarhizium anisopliae, a biological control. Above 5 per hill, a recommended insecticide becomes an option. First raise the water to about 15 cm so the bugs climb up the stems, then spray in cool weather while they sit on top of the plants.\n\nFlooding also works on the eggs. PhilRice found that eggs kept under water for more than 24 hours do not hatch, so keep water in the field from tillering to ripening. In heavy attacks, light traps with bright bulbs pull in huge numbers, best run around the full moon. Plow under any field the bugs have ruined right away. Read more on the [rice black bug](/pests/rice-black-bug)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice leaffolder"
+    },
+    {
+      "type": "text",
+      "text": "Do not rush to spray leaffolders. The larva hides inside the folded leaf, so most sprays never reach it, while they do kill the spiders and wasps that hunt it. Let those friendly insects work, and spray nothing in the first 30 to 40 days. Trim tree branches that shade the paddy, since the moths like to rest there, and fertilize at the right rate, not more. The [rice leaffolder](/pests/rice-leaffolder) page shows why the flag leaf matters most."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Stem borer"
+    },
+    {
+      "type": "text",
+      "text": "Young rice can recover from stem borer damage during tillering, so do not spray at the first deadheart. Keep the field free of weeds and drought stress, and give enough fertilizer to help the plants replace lost tillers. Before transplanting, pick off any egg masses you find on the seedlings.\n\nFrom panicle initiation to heading, run a light trap to watch the moth numbers. If moths swarm from booting to flowering, try the jar test. Collect egg masses from the field, put them in a covered jar and wait for them to hatch. If more larvae than tiny wasps come out, the natural enemies are losing, and a contact or stomach insecticide makes sense. Our [rice stem borer](/pests/rice-stem-borer) page shows deadhearts and whiteheads."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Bacterial leaf blight"
+    },
+    {
+      "type": "text",
+      "text": "No spray cures bacterial leaf blight, and IRRI calls resistant varieties the cheapest and most reliable control. So the first steps are water and hygiene. Drain the field when you see infection, and never let water from a sick paddy flow into healthy ones. Do not walk from sick plants into healthy ones while the leaves are wet.\n\nPhilRice's field advice allows a copper based fungicide only when about 30 percent or more of the field shows the disease, and only if needed. Next season, plant a resistant variety and split your nitrogen, as our [bacterial leaf blight](/diseases/bacterial-leaf-blight) guide explains."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice blast"
+    },
+    {
+      "type": "text",
+      "text": "Blast, or mata mata, shows as diamond shaped spots with grey centers and reddish brown edges. If leaf blast appears during tillering, protect the panicles. PhilRice advises a fungicide at the start of heading, then again when about half the panicles are out, to head off neck and panicle blast. Tricyclazole and pyroquilon are among the active ingredients it names.\n\nKeep the field irrigated, because blast strikes water short fields hardest, and avoid too much nitrogen. After harvest, plow under infected stubble right away so it rots fast. The [rice blast](/diseases/rice-blast) guide shows each form of the disease."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Golden apple snail"
+    },
+    {
+      "type": "text",
+      "text": "Golden apple snails eat young rice, so the danger runs from seedling to tillering. Keep the soil saturated but not flooded up to 15 DAT or 25 DAS, as PalayCheck advises. Snails cannot swim through mud to reach the seedlings, and a PhilRice study found this the most practical control.\n\nIf you still need a molluscicide, match the active ingredient to your water. Choose metaldehyde where water flows in strongly or sudden rain is likely, and niclosamide where water is scarce and no rain is expected. Apply it to a paddy with water, early in the morning or late in the afternoon. More on the [golden apple snail](/pests/golden-apple-snail)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice field rats"
+    },
+    {
+      "type": "text",
+      "text": "Rats do not wait for a threshold, so start at least a month before sowing and work as a community. Clean the bunds so you can see the burrows. Dig out small, shallow burrows or pour a mix of mud and water into them, and drive rats out of big, deep ones with a flame thrower.\n\nThen keep up sustained baiting through the season, with the bait inside burrows where rain cannot spoil it. Use only rat poison sold in sealed packs, and follow the directions on the pack. See [rice field rats](/pests/rice-field-rats) for the signs."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Before any spray",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and read the label for the rate and the waiting days before harvest. Wear gloves, a mask and long sleeves. Check the forecast too, because rain soon after spraying washes the product off, as our page on [rain before spraying](/blog/rain-before-spraying) explains."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep your pest counts in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, scouting goes on the calendar like any other task. Add a weekly pest walk to the [cropping calendar](/features/cropping-calendar), and each lot gets its own dates, so you also see when a lot passes 30 DAT. If you find something you cannot name, the [pest and disease finders](/features/pest-and-disease-finders) narrow it down by crop and signs.\n\nYou can also send a photo to Anee, the smart farm technician. She answers in Tagalog or English, and she checks your lot's stage and weather before she says whether to spray."
+    },
+    {
+      "type": "cta",
+      "title": "Scout on schedule, spray only when it pays",
+      "text": "Sign up free, add your lots, and anee.io dates every pest walk from each lot's own planting day.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about when to spray rice pests"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many days after transplanting can I spray insecticide?",
+          "a": "Wait until the crop is past 30 days after transplanting, or 40 days after sowing for direct seeded rice. Even then, spray only if a pest crosses its threshold."
+        },
+        {
+          "q": "Should I spray insecticide to prevent pests?",
+          "a": "No. PalayCheck treats insecticide as a last resort, for when cultural, biological and physical controls fail. A spray with no pest to hit only kills the natural enemies that keep planthoppers down."
+        },
+        {
+          "q": "What time of day is best for spraying rice?",
+          "a": "Spray when it is cool and calm, in the early morning or late afternoon, with no rain expected for the time on the label. For black bugs, spray while they sit on top of the plants."
+        },
+        {
+          "q": "What is an action threshold?",
+          "a": "It is the pest count or damage level at which control starts to pay. Below it, natural enemies and the crop's own regrowth handle the pest."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related crop health guides",
+      "items": [
+        { "label": "Integrated pest management", "url": "/pests/integrated-pest-management" },
+        { "label": "Rice insects", "url": "/pests/rice-insects" },
+        { "label": "Rice diseases", "url": "/diseases/rice-diseases" },
+        { "label": "Identify rice pests from a photo", "url": "/blog/identify-rice-pests-from-a-photo" },
+        { "label": "Avoid buying the wrong pesticide", "url": "/blog/avoid-buying-the-wrong-pesticide" },
+        { "label": "Pest and disease finders in anee.io", "url": "/features/pest-and-disease-finders" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Check 7, pest management, Tables 1 to 4)", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
+        { "label": "PhilRice: Check population to determine counter action against BPH, rice pest expert (September 2021)", "url": "https://www.philrice.gov.ph/check-population-to-determine-counter-action-against-bph-rice-pest-expert/" },
+        { "label": "PhilRice: Control rice black bugs the natural way (December 2013)", "url": "https://www.philrice.gov.ph/control-rice-black-bugs-the-natural-way/" },
+        { "label": "PhilRice: Controlled irrigation, most practical strategy vs kuhol (May 2019)", "url": "https://www.philrice.gov.ph/controlled-irrigation-most-practical-strategy-vs-kuhol/" },
+        { "label": "PhilRice: Use baits properly, rice farmers warned (January 2011)", "url": "https://www.philrice.gov.ph/use-baits-properly-rice-farmers-warned/" },
+        { "label": "PhilRice: Pamamahala ng mata mata (rice blast handout, 2023)", "url": "https://www.philrice.gov.ph/pamamahala-ng-mata-mata" },
+        { "label": "IRRI Rice Knowledge Bank: Planthopper", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper" },
+        { "label": "IRRI Rice Knowledge Bank: Bacterial blight", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight" }
+      ]
+    }
+  ]
+}

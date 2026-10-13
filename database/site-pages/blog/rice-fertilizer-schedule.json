@@ -1,0 +1,401 @@
+{
+  "section": "blog",
+  "slug": "rice-fertilizer-schedule",
+  "sortOrder": 1310,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "Rice Fertilizer Schedule by Target Yield, in Bags per Hectare",
+  "metaTitle": "Rice Fertilizer Schedule: Bags per Hectare by Target Yield",
+  "metaDescription": "A rice fertilizer schedule for palay with no soil test: the bags per hectare and the day of each dose for 3 to 8 tons, by variety maturity, from PhilRice.",
+  "focusKeyword": "rice fertilizer schedule",
+  "keywords": [
+    "rice fertilizer schedule",
+    "fertilizer schedule for palay",
+    "fertilizer for rice",
+    "bags of fertilizer per hectare",
+    "urea top dressing",
+    "hybrid rice fertilizer",
+    "14 14 14 fertilizer"
+  ],
+  "excerpt": "A rice fertilizer schedule tells you what to apply, how many 50 kg bags per hectare, and on which day. The plan below is PhilRice's general recommendation for fields with no soil test. Pick the table for your target yield and the column for your variety's maturity. Then count the days from transplanting (DAT) or sowing (DAS).",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-rice.webp",
+    "alt": "A farmer broadcasting fertilizer by hand over a young green paddy, one dose in a rice fertilizer schedule",
+    "credit": "Soumya B, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A general plan is a starting point, not a soil test. It assumes an average irrigated lowland field. Your own soil may hold more of one nutrient and less of another. So let a [leaf color chart](/blog/leaf-color-chart-rice) adjust the urea, and test the soil before next season.\n\nEvery bag here is a 50 kg bag, and every rate is per hectare. For a smaller lot, multiply by its size in hectares. A quarter hectare takes a quarter of each number."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Choose your target yield and maturity group"
+    },
+    {
+      "type": "text",
+      "text": "IRRI's Rice Knowledge Bank explains that the yield you aim for sets how much nutrient the crop must take up. So pick a target you have reached before on the same field, not the best harvest you have heard about. Then check the seed bag for the variety's days to maturity, or look it up in our [rice varieties](/rice-varieties) finder.\n\nPhilRice sets three targets for inbred rice: 3 to 4, 5 to 6 and 7 to 8 tons per hectare. Hybrid rice gets its own plan for 6 to 7 tons. Each target then splits by maturity into 100 to 110 days, 111 to 120 days and 121 to 130 days. Longer varieties get their top dressings later, because they reach tillering and panicle initiation later."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Organic matter and the seedbed come first"
+    },
+    {
+      "type": "text",
+      "text": "The schedule starts before transplanting. Return the straw from your last crop, about one ton for every ton of target yield. Plow it in 30 days before transplanting so it has time to rot. Then, two weeks before transplanting, spread 10 bags of chicken manure or vermicompost and mix it into the mud."
+    },
+    {
+      "type": "table",
+      "caption": "Steps before and around sowing, per hectare, from PhilRice's general plan",
+      "rows": [
+        [
+          "Step",
+          "3 to 4 tons",
+          "5 to 6 tons",
+          "7 to 8 tons",
+          "Hybrid, 6 to 7 tons"
+        ],
+        [
+          "Rice straw, plowed in 30 days before transplanting",
+          "3 to 4 tons",
+          "5 to 6 tons",
+          "7 to 8 tons",
+          "6 to 7 tons"
+        ],
+        [
+          "Chicken manure or vermicompost, 14 days before transplanting",
+          "10 bags",
+          "10 bags",
+          "10 bags",
+          "Not in the plan"
+        ],
+        [
+          "Zinc sulfate on the seedbed, 7 to 10 DAS",
+          "Not in the plan",
+          "1 to 2 kg",
+          "1 to 2 kg",
+          "1 to 2 kg"
+        ],
+        [
+          "14 14 14 on the seedbed, 10 to 14 DAS",
+          "2 to 4 kg",
+          "2 to 4 kg",
+          "2 to 4 kg",
+          "4 kg"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Add zinc only where the soil lacks it. PalayCheck describes the sign: dusty brown spots on the upper leaves of stunted plants, 2 to 4 weeks after transplanting. For a mild shortage, it puts 0.5 kg of zinc sulfate on a 400 square meter seedbed. A severe one gets 2 kg. Our page on [micronutrients for rice](/blog/micronutrients-for-rice) covers zinc in full."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice fertilizer schedule for 3 to 4 tons per hectare"
+    },
+    {
+      "type": "text",
+      "text": "This is the lightest plan, with one basal dose and one top dressing, for fields that usually give 60 to 80 cavans of 50 kg."
+    },
+    {
+      "type": "table",
+      "caption": "Per hectare, in 50 kg bags. DAS in brackets is for direct seeded rice.",
+      "rows": [
+        [
+          "Dose",
+          "100 to 110 days",
+          "111 to 120 days",
+          "121 to 130 days"
+        ],
+        [
+          "Basal: 1.5 bags 14 14 14",
+          "0 to 14 DAT (10 to 14 DAS)",
+          "Same",
+          "Same"
+        ],
+        [
+          "Top dressing: 1 bag urea and half a bag 0 0 60",
+          "28 to 32 DAT (38 to 42 DAS)",
+          "32 to 36 DAT (48 to 53 DAS)",
+          "36 to 40 DAT (58 to 62 DAS)"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice fertilizer schedule for 5 to 6 tons per hectare"
+    },
+    {
+      "type": "text",
+      "text": "Here the urea splits into two top dressings, the first at tillering and the second near panicle initiation. For the basal dose, you can use either 14 14 14 or 16 20 0."
+    },
+    {
+      "type": "table",
+      "caption": "Per hectare, in 50 kg bags. DAS in brackets is for direct seeded rice.",
+      "rows": [
+        [
+          "Dose",
+          "100 to 110 days",
+          "111 to 120 days",
+          "121 to 130 days"
+        ],
+        [
+          "Basal: 2 bags 14 14 14 or 16 20 0",
+          "0 to 14 DAT (10 to 14 DAS)",
+          "Same",
+          "Same"
+        ],
+        [
+          "First top dressing: 1 bag urea",
+          "18 to 22 DAT (24 to 28 DAS)",
+          "22 to 26 DAT (32 to 36 DAS)",
+          "26 to 31 DAT (36 to 40 DAS)"
+        ],
+        [
+          "Second top dressing: 1 bag urea and half a bag 0 0 60",
+          "28 to 32 DAT (38 to 42 DAS)",
+          "32 to 36 DAT (48 to 53 DAS)",
+          "36 to 40 DAT (58 to 62 DAS)"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "For 7 to 8 tons per hectare"
+    },
+    {
+      "type": "table",
+      "caption": "Per hectare, in 50 kg bags. DAS in brackets is for direct seeded rice.",
+      "rows": [
+        [
+          "Dose",
+          "100 to 110 days",
+          "111 to 120 days",
+          "121 to 130 days"
+        ],
+        [
+          "Basal: 4 bags 14 14 14",
+          "0 to 14 DAT (10 to 14 DAS)",
+          "Same",
+          "Same"
+        ],
+        [
+          "First top dressing: 2 bags urea",
+          "18 to 22 DAT (24 to 28 DAS)",
+          "22 to 26 DAT (32 to 36 DAS)",
+          "26 to 31 DAT (36 to 40 DAS)"
+        ],
+        [
+          "Second top dressing: 2 bags urea and 1 bag 0 0 60",
+          "28 to 32 DAT (38 to 42 DAS)",
+          "32 to 36 DAT (48 to 53 DAS)",
+          "36 to 40 DAT (58 to 62 DAS)"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "For hybrid rice, 6 to 7 tons per hectare"
+    },
+    {
+      "type": "text",
+      "text": "The hybrid plan uses 16 20 0 for the basal dose. Note that for 100 to 110 day hybrids, the basal window closes earlier, at 10 DAT."
+    },
+    {
+      "type": "table",
+      "caption": "Per hectare, in 50 kg bags. DAS in brackets is for direct seeded rice.",
+      "rows": [
+        [
+          "Dose",
+          "100 to 110 days",
+          "111 to 120 days",
+          "121 to 130 days"
+        ],
+        [
+          "Basal: 3 bags 16 20 0",
+          "0 to 10 DAT (10 to 14 DAS)",
+          "0 to 14 DAT (10 to 14 DAS)",
+          "0 to 14 DAT (10 to 14 DAS)"
+        ],
+        [
+          "First top dressing: 1 bag urea",
+          "18 to 22 DAT (24 to 28 DAS)",
+          "22 to 26 DAT (32 to 36 DAS)",
+          "26 to 31 DAT (36 to 40 DAS)"
+        ],
+        [
+          "Second top dressing: 1 bag urea and half a bag 0 0 60",
+          "28 to 32 DAT (38 to 42 DAS)",
+          "32 to 36 DAT (48 to 52 DAS)",
+          "36 to 40 DAT (58 to 62 DAS)"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What the bags add up to"
+    },
+    {
+      "type": "table",
+      "caption": "Our sum of the inorganic bags above, in kg of nutrient per hectare. Straw and manure add more on top.",
+      "rows": [
+        [
+          "Plan",
+          "Nitrogen (N)",
+          "Phosphate (P2O5)",
+          "Potash (K2O)"
+        ],
+        [
+          "3 to 4 tons",
+          "33.5",
+          "10.5",
+          "25.5"
+        ],
+        [
+          "5 to 6 tons, with 14 14 14",
+          "60",
+          "14",
+          "29"
+        ],
+        [
+          "7 to 8 tons",
+          "120",
+          "28",
+          "58"
+        ],
+        [
+          "Hybrid, 6 to 7 tons",
+          "70",
+          "30",
+          "15"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to apply each dose"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Mix the basal dose into the mud during the final harrowing or by 14 DAT, so it sits where the young roots grow.",
+        "Keep the first dose light on nitrogen. PalayCheck puts only about 30 percent of the season's nitrogen in the first application.",
+        "Top dress into a shallow 2 to 3 cm of water, and close the outlets so the fertilizer stays in your paddy.",
+        "Spread in the afternoon, after 3 PM, because cooler air means less nitrogen lost as gas.",
+        "If you practice [alternate wetting and drying](/blog/alternate-wetting-and-drying), pause it on fertilizer days."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Why some PhilRice lists show fewer bags",
+      "text": "PhilRice's 2022 Abonong Swak news release prints the same 5 to 6 ton plan, but its other two are lighter. Its 3 to 4 ton plan uses 1 bag of 14 14 14. Its 7 to 8 ton plan uses 2 bags of 14 14 14 and half a bag of potash. It also dates the manure at 14 days after transplanting instead of before. Both are general plans, so treat the gap as one more reason to test your soil. Our page on [bags of fertilizer per hectare](/blog/bags-of-fertilizer-per-hectare) compares them with the Nueva Ecija quick guide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Adjust the schedule with a leaf color chart and NPK Plus"
+    },
+    {
+      "type": "text",
+      "text": "The urea rows are the part most worth adjusting. From 14 DAT, read a leaf color chart every 7 days. If 6 or more of 10 leaves read below the critical value, the crop needs nitrogen, even if the schedule says wait. If the leaves stay dark green, you can hold a dose and save the bag.\n\nBefore you buy, run your plan through [NPK Plus](/features/npk-plus-calculator), the free fertilizer calculator in anee.io. Pick palay and your bags, and it adds up the nitrogen, phosphorus and potassium per hectare. Then it holds them against the usual rate for rice. If something comes out short or too much, ask Anee, the smart farm technician, what to change."
+    },
+    {
+      "type": "text",
+      "text": "Once the plan is set, put it on your [cropping calendar](/features/cropping-calendar). In anee.io, every dose gets its date from each lot's own transplanting or sowing day. A lot planted a week late gets its urea a week late too."
+    },
+    {
+      "type": "cta",
+      "title": "Put this fertilizer schedule on your calendar",
+      "text": "Sign up free, add your lots with their variety and transplanting date, and anee.io dates every bag for you.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the rice fertilizer schedule"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the fertilizer schedule for 5 to 6 tons of palay?",
+          "a": "PhilRice's general plan uses 2 bags of 14 14 14 or 16 20 0 per hectare by 14 DAT. Then comes 1 bag of urea between 18 and 31 DAT. The last dose, 1 bag of urea with half a bag of 0 0 60, lands between 28 and 40 DAT. The exact days follow your variety's maturity."
+        },
+        {
+          "q": "Can I use this schedule for direct seeded rice?",
+          "a": "Yes. Use the DAS dates in brackets. Direct seeded rice gets its top dressings later in the count, because the days start at sowing instead of transplanting."
+        },
+        {
+          "q": "Do I really need the straw and manure?",
+          "a": "The plan counts on them to supply part of the nutrients and to build the soil. Without them, the bags alone may fall short of the target, so watch the leaf color chart closely."
+        },
+        {
+          "q": "How do I scale the schedule down for a small lot?",
+          "a": "Multiply by the area in hectares. On the 5 to 6 ton plan, 2,500 square meters takes half a bag of 14 14 14 at basal. Each top dressing then takes a quarter bag of urea, plus about 6 kg of 0 0 60 with the second."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related fertilizer guides",
+      "items": [
+        {
+          "label": "Leaf color chart for rice",
+          "url": "/blog/leaf-color-chart-rice"
+        },
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "Bags of fertilizer per hectare",
+          "url": "/blog/bags-of-fertilizer-per-hectare"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "NPK Plus fertilizer calculator",
+          "url": "/features/npk-plus-calculator"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Check 5, nutrient management)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K, experts (Abonong Swak, April 2022)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Leaf Color Chart",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility/leaf-color-chart"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Soil fertility",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility"
+        }
+      ]
+    }
+  ]
+}
