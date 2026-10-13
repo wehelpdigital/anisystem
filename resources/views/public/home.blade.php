@@ -156,7 +156,7 @@
     {{-- The anee.io album, featured right after the hero (2026-10-13, the
          owner): its own cover, seven songs, the first the main one. --}}
     <section class="hp-sec hp-album" id="bayani-ng-lupa">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 reveal">
             @include('partials.bayani-album', ['id' => 'hpAlbum', 'h' => 'h2', 'compact' => true])
         </div>
     </section>
@@ -2500,6 +2500,8 @@
     /* The anee.io song, under the farm business story (2026-10-07): the
        cover big with its own play button, the words and the bar beside it. */
     /* The album, right under the hero: a warm ground that leads into The Truth. */
+    .hp-album.hp-sec { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+    @media (min-width: 1024px) { .hp-album.hp-sec { padding-top: 3.25rem; padding-bottom: 3.25rem; } }
     .hp-album { background: radial-gradient(60% 70% at 15% 0%, rgb(245 197 24 / .12), transparent 70%), linear-gradient(180deg, #f6f3ea 0%, #ffffff 100%); }
     /* Meet Anee's phone (2026-10-13): a real looking phone, smaller than the
        old chat window; her chat is its screen. The chat grows from the

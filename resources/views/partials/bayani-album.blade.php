@@ -29,11 +29,48 @@
         background: radial-gradient(70% 90% at 0% 0%, rgb(245 197 24 / .16), transparent 60%), linear-gradient(110deg, rgb(18 24 10 / .38) 0%, rgb(18 24 10 / .68) 45%, rgb(14 18 8 / .84) 100%); }
     .ba-grain { position: absolute; inset: 0; z-index: -1; opacity: .5; pointer-events: none;
         background-image: radial-gradient(rgb(255 255 255 / .05) 1px, transparent 1.4px); background-size: 4px 4px; }
-    .ba-in { display: grid; gap: 1.6rem; padding: 1.3rem; }
-    @container ba (min-width: 760px) { .ba-in { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 2.4rem; padding: 2.2rem; align-items: center; } }
+    /* The body's three parts (head, player, songs) are the card's own grid
+       items, placed by area: in rows beside the cover on the dashboard, and
+       (compact, the homepage, 2026-10-13: "smaller but wider") the cover,
+       the head and player, and the songs side by side. */
+    .ba-body { display: contents; }
+    .ba-in { display: grid; gap: 1.1rem 2.2rem; padding: 1.3rem; grid-template-areas: "cover" "head" "player" "songs"; }
+    .ba-sleeve { grid-area: cover; } .ba-head { grid-area: head; min-width: 0; } .ba-player { grid-area: player; min-width: 0; } .ba-songs { grid-area: songs; min-width: 0; }
+    @container ba (min-width: 760px) {
+        .ba-in { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-areas: "cover head" "cover player" "cover songs"; align-content: center; padding: 2.2rem; }
+    }
+    /* Compact: smaller and wider. */
+    .ba.is-compact .ba-in { grid-template-columns: 6.5rem minmax(0, 1fr); grid-template-areas: "cover head" "player player" "songs songs"; gap: 1rem 1.1rem; padding: 1.1rem; align-items: center; }
+    @container ba (min-width: 620px) {
+        .ba.is-compact .ba-in { grid-template-columns: 11rem minmax(0, 1fr); grid-template-areas: "cover head" "cover player" "songs songs"; padding: 1.5rem; gap: .9rem 1.6rem; }
+    }
+    @container ba (min-width: 980px) {
+        .ba.is-compact .ba-in { grid-template-columns: 12.5rem minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "cover head songs" "cover player songs"; align-items: center; padding: 1.6rem 1.9rem; gap: .6rem 2rem; }
+    }
+    .ba.is-compact .ba-sleeve { width: 100%; padding-right: 0; margin: 0; }
+    .ba.is-compact .ba-disc { display: none; }
+    .ba.is-compact .ba-cover { border-radius: 1rem; transform: none; }
+    .ba.is-compact .ba-cover-tag { left: .45rem; bottom: .45rem; padding: .2rem .5rem; font-size: .6rem; }
+    @container ba (max-width: 619.98px) { .ba.is-compact .ba-cover-tag { display: none; } .ba.is-compact .ba-cover { border-radius: .8rem; } }
+    .ba.is-compact .ba-h { margin-top: .3rem; font-size: clamp(1.6rem, 3vw, 2.2rem); }
+    .ba.is-compact .ba-p { margin-top: .4rem; font-size: .86rem; line-height: 1.5; }
+    .ba.is-compact .ba-meta { margin-top: .5rem; }
+    .ba.is-compact .ba-meta span { font-size: .68rem; padding: .16rem .5rem; }
+    .ba.is-compact .ba-now { margin-top: 0; padding: .5rem; gap: .6rem; }
+    .ba.is-compact .ba-play { width: 2.7rem; height: 2.7rem; }
+    .ba.is-compact .ba-play svg { width: 1.15rem; height: 1.15rem; }
+    .ba.is-compact .ba-now-t b { font-size: .9rem; }
+    .ba.is-compact .ba-bar { margin-top: .45rem; }
+    .ba.is-compact .ba-list { margin-top: 0; }
+    .ba.is-compact .ba-row { padding: .36rem .55rem; }
+    .ba.is-compact .ba-t b { font-size: .86rem; }
+    .ba.is-compact .ba-listen { margin-top: .6rem; padding-top: .6rem; }
+    .ba.is-compact .ba-listen a { width: 2rem; height: 2rem; }
+    .ba.is-compact .ba-listen svg { width: .9rem; height: .9rem; }
+    @container ba (max-width: 619.98px) { .ba.is-compact .ba-p, .ba.is-compact .ba-meta { display: none; } .ba.is-compact .ba-h { font-size: 1.7rem; } }
 
     /* The sleeve and its record. */
-    .ba-sleeve { position: relative; width: min(100%, 26rem); margin: 0 auto; padding-right: 0; }
+    .ba-sleeve { position: relative; width: min(100%, 26rem); margin: 0 auto; padding-right: 0; align-self: center; }
     @container ba (min-width: 760px) { .ba-sleeve { margin: 0; padding-right: 12%; } }
     .ba-disc { position: absolute; z-index: 0; top: 4%; right: 2%; width: 88%; aspect-ratio: 1; border-radius: 999px;
         background: radial-gradient(circle at 50% 50%, #f5c518 0 9%, #1a1a1a 9.5% 11%, transparent 11.5%),
@@ -54,7 +91,6 @@
     .ba-cover-tag svg { width: .85rem; height: .85rem; }
 
     /* The words. */
-    .ba-body { min-width: 0; }
     .ba-kick { display: inline-flex; align-items: center; gap: .45rem; font-size: .72rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: #f5c518; }
     .ba-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: .8rem; }
     .ba-eq i { width: 3px; height: 30%; border-radius: 2px; background: currentColor; }
@@ -155,10 +191,13 @@
             </span>
         </div>
         <div class="ba-body">
+            <div class="ba-head">
             <span class="ba-kick">The anee.io album <span class="ba-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
             <{{ $baH }} class="ba-h" id="{{ $baId }}H">Bayani ng <em>Lupa</em></{{ $baH }}>
             <p class="ba-p" id="{{ $baId }}P">Seven songs for the heroes of the land, the Filipino farmers who feed the country.@unless ($baCompact) From the farmers who built anee.io, for every farmer who plants with a dream and harvests with a plan.@endunless</p>
             <div class="ba-meta"><span>{{ count($baTracks) }} songs</span><span>{{ intdiv(array_sum(array_column($baTracks, 'seconds')), 60) }} minutes</span><span>Free to play</span></div>
+            </div>
+            <div class="ba-player">
             <div class="ba-now">
                 <button type="button" class="ba-play" data-ba-play aria-label="Play {{ $baTracks[0]['title'] }}">
                     <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
@@ -170,6 +209,8 @@
             </div>
             <div class="ba-bar"><input type="range" min="0" max="1000" value="0" step="1" aria-label="Move through the song" data-ba-seek><span><i data-ba-fill></i></span></div>
             <div class="ba-times"><span data-ba-cur>0:00</span><span data-ba-dur>{{ $baTracks[0]['length'] }}</span></div>
+            </div>
+            <div class="ba-songs">
             @php
                 $baRow = fn ($i, $t) => '<li style="--k: ' . $i . '"><button type="button" class="ba-row" data-ba-i="' . $i . '" aria-current="' . ($i === 0 ? 'true' : 'false') . '" aria-label="Play ' . e($t['title']) . ', ' . e($t['length']) . '">'
                     . '<span class="ba-n">' . ($i + 1) . '</span><span class="ba-bars" aria-hidden="true"><i></i><i></i><i></i></span>'
@@ -197,6 +238,7 @@
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $baPath }}"/></svg>
                     </a>
                 @endforeach
+            </div>
             </div>
         </div>
     </div>
