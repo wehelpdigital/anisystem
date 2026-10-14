@@ -166,12 +166,6 @@
                 'here' => '/' . $section,
                 'title' => 'See all ' . $all->count() . ' rice varieties, and the ones that fit your farm',
                 'lead' => 'Register for free to compare every variety side by side: its yield, its strengths and weaknesses, and how it will do on your farm, in your season and your soil.',
-                'behind' => array_values(array_filter([
-                    'All ' . $all->count() . ' varieties with their days to harvest, average and top yields',
-                    'Strengths and weaknesses: the pests and diseases each one stands up to, and the ones that hurt it',
-                    $brands->count() ? 'The NSIC variety behind ' . $brands->count() . ' seed bag brand names' : null,
-                    'Which fit your farm: Anee compares them for your town, your season and your field',
-                ])),
             ] : null])
 
             @if ($popular->count())

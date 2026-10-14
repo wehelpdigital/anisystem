@@ -203,12 +203,6 @@
                     'here' => '/' . $section,
                     'title' => 'See all ' . $weeds->count() . ' weeds and how to control each one',
                     'lead' => 'Register for free to open every weed: how to tell it from your crop, and what to do and spray at every age of your crop.',
-                    'behind' => array_values(array_filter([
-                        $weeds->count() . ' weeds of ' . count($wkCrops) . ' Philippine crops, with photos and their local names',
-                        'How to tell each one apart, even as a seedling',
-                        "The weed control helper: what to do first and what to spray at your crop's age",
-                        $guides->count() ? $guides->count() . ' longer guides on weeds and herbicides' : null,
-                    ])),
                 ])
             </div>
             @endif
@@ -287,7 +281,8 @@
     const cropTag = document.querySelector('#wkCrop .cp-tag');
     const norm = (s) => s.toLowerCase().replace(/[^a-z0-9ñ ]+/g, ' ').replace(/\s+/g, ' ').trim();
     const rise = (c, i) => { c.classList.remove('is-in'); c.style.animationDelay = Math.min(i, 12) * 25 + 'ms'; void c.offsetWidth; c.classList.add('is-in'); };
-    const apply = () => {
+    let booted = false;
+    const paint = () => {
         const words = norm(q.value).split(' ').filter(Boolean);
         const capped = !gated && !all && !group && !crop && !words.length && cards.length > cap();
         // The group chips count the weeds of the chosen crop.
@@ -312,6 +307,8 @@
         if (elsewhere) elseB.textContent = 'See the ' + elsewhere + ' found in all crops and groups';
         window.aneeHubGate?.(grid);
     };
+    // After the first paint every change moves the cards (partials/hub-gate).
+    const apply = () => (booted && window.aneeFlip ? window.aneeFlip(grid, paint) : paint());
     const elseP = empty.querySelector('.wk-else'), elseB = document.getElementById('wkElse');
     elseB.addEventListener('click', () => { if (crop) { crop = ''; window.cropPickSet?.(cropTag, ''); } setGroup(''); });
     cropTag?.addEventListener('croppick', (e) => { crop = e.detail.crop; apply(); });
@@ -338,6 +335,7 @@
     const wantCrop = new URLSearchParams(location.search).get('crop');
     if (wantCrop && window.cropPickSet?.(cropTag, wantCrop)) crop = wantCrop;
     if (want && cats.querySelector('[data-group="' + CSS.escape(want) + '"]')) setGroup(want); else apply();
+    booted = true;
 })();
 </script>
 @endpush

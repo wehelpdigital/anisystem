@@ -126,7 +126,8 @@
     const gated = !!grid.closest('[data-hg]'), FIRST = gated ? 1e9 : STEP;
     let env = '', want = new Set(), shown = FIRST;
     const norm = (s) => s.toLowerCase().replace(/\s+/g, ' ').trim();
-    const apply = () => {
+    let booted = false;
+    const paint = () => {
         const t = norm(q.value), tc = t.replace(/\s/g, ''), ty = type.value, d = Number(days.value || 0);
         const ok = cards.filter((c) => {
             if (t && !(c.dataset.q.includes(t) || c.dataset.q.includes(tc))) return false;
@@ -152,6 +153,8 @@
         reset.hidden = !(t || env || ty || d || want.size || by !== 'year');
         window.aneeHubGate?.(grid);
     };
+    // After the first paint every change moves the cards (partials/hub-gate).
+    const apply = () => (booted && window.aneeFlip ? window.aneeFlip(grid, paint) : paint());
     envs.forEach((b) => b.addEventListener('click', () => { env = b.dataset.rvEnv; envs.forEach((x) => x.classList.toggle('is-on', x === b)); shown = FIRST; apply(); }));
     ress.forEach((b) => b.addEventListener('click', () => {
         const k = b.dataset.rvRes;
@@ -169,6 +172,7 @@
         shown = FIRST; apply();
     });
     apply();
+    booted = true;
 })();
 </script>
 @endpush

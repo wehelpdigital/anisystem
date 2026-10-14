@@ -17,13 +17,9 @@
     .sp-gate-lock svg { width: 1.35rem; height: 1.35rem; }
     .sp-gate-card h2 { margin: 0 !important; font-family: var(--font-heading); font-size: clamp(1.25rem, 2.6vw, 1.55rem) !important; font-weight: 800; line-height: 1.2; color: #14210c; }
     .sp-gate-card > p { margin: .55rem auto 0; max-width: 34rem; font-size: .95rem; line-height: 1.6; color: #4b5563; }
-    .sp-gate-in { margin: 1rem auto 0; max-width: 30rem; display: grid; gap: .35rem; text-align: left; }
-    .sp-gate-in span { display: flex; align-items: flex-start; gap: .5rem; padding: .45rem .7rem; border-radius: .75rem; background: #fff; border: 1px solid #e3ecd8;
-        font-size: .86rem; font-weight: 700; color: #1f3410; line-height: 1.35; }
-    .sp-gate-in span::before { content: ''; flex: none; width: .95rem; height: .95rem; margin-top: .1rem; border-radius: 999px; background: #e4f1d6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232d5016' stroke-width='3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / .6rem no-repeat; }
-    .sp-gate-in small { font-size: .78rem; font-weight: 700; color: #6b7f5a; padding-left: .3rem; }
-    .sp-gate-in small:empty { display: none; }
-    .sp-gate-perks { display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem .9rem; margin-top: .9rem; font-size: .78rem; font-weight: 800; color: #3d6823; }
+    .sp-gate-foot { margin: .8rem auto 0 !important; font-size: .85rem !important; font-weight: 800; color: #3d6823 !important; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .sp-gate-foot:empty { display: none; }
+    .sp-gate-free { margin: .7rem auto 0 !important; font-size: .78rem !important; font-weight: 700; color: #6b7f5a !important; }
     .sp-gate-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-top: 1.1rem; }
     .sp-gate-acts .btn { min-width: 11rem; }
     .sp-gate-tools { margin-top: .9rem; font-size: .8rem; line-height: 1.55; color: #6b7280; }

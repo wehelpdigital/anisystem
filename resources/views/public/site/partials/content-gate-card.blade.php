@@ -1,11 +1,10 @@
-{{-- The members' gate's card: the invitation to join anee.io free. Needs
-     $title, $here (the path a new member comes back to) and may take $lead,
-     $behind (what waits behind the gate), $foot (the line under that list;
-     data-gate-foot lets a hub's script rewrite it) and $tl (Tagalog).
-     Styles in content-gate-assets. --}}
+{{-- The members' gate's card: the invitation to register. Needs $title and
+     $here (the path a new member comes back to), and may take $lead, $foot
+     (one line of what waits: "And 459 more varieties waiting for you";
+     data-gate-foot lets a hub's script rewrite it) and $tl (Tagalog). No
+     check lists (the owner, 2026-10-14). Styles in content-gate-assets. --}}
 @php
     $tl = $tl ?? false;
-    $behind = $behind ?? [];
     $foot = $foot ?? '';
     $lead = $lead ?? ($tl
         ? 'Mag-register nang libre sa anee.io para mabasa ang buong pahina, pati ang bawat gabay sa pananim, binhi, paghahanda ng lupa, peste, sakit at damo.'
@@ -19,21 +18,12 @@
     <div class="sp-gate-lock" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg></div>
     <h2>{{ $title }}</h2>
     <p>{{ $lead }}</p>
-    @if ($behind || $foot !== '')
-        <div class="sp-gate-in">
-            @foreach ($behind as $h)<span>{{ $h }}</span>@endforeach
-            <small data-gate-foot>{{ $foot }}</small>
-        </div>
-    @endif
-    <div class="sp-gate-perks">
-        <span>✓ {{ $tl ? 'Libre ang pag-register' : 'Free to register' }}</span>
-        <span>✓ {{ $tl ? 'Walang credit card' : 'No credit card' }}</span>
-        <span>✓ {{ $tl ? 'Gumagana sa kahit anong phone' : 'Works on any phone' }}</span>
-    </div>
+    <p class="sp-gate-foot" data-gate-foot>{{ $foot }}</p>
     <div class="sp-gate-acts">
         <a href="{{ route('signup') }}?read={{ urlencode($here) }}" class="btn btn-accent">{{ $tl ? 'Mag-register nang libre' : 'Register for free' }}</a>
         <a href="{{ route('login') }}?read={{ urlencode($here) }}" class="btn btn-outline">{{ $tl ? 'May account na ako' : 'I have an account' }}</a>
     </div>
+    <p class="sp-gate-free">{{ $tl ? 'Libre ang pag-register. Walang credit card. Gumagana sa kahit anong phone.' : 'Free to register. No credit card. Works on any phone.' }}</p>
     <p class="sp-gate-tools">{{ $tl
         ? 'Nasa anee.io din ang kalendaryo na nagtatakda ng bawat gawain, ang pest, disease at variety finder, at si Anee, ang smart farm technician na sumasagot sa Tagalog.'
         : 'Inside anee.io you also find a cropping calendar that dates every task, the pest, disease and variety finders, and Anee, the smart farm technician who answers in Tagalog or English.' }}</p>

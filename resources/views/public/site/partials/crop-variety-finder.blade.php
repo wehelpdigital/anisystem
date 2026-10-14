@@ -160,7 +160,8 @@
     const t1 = ds[Math.floor(ds.length / 3)] || 0, t2 = ds[Math.floor(ds.length * 2 / 3)] || 0;
     let chip = '', shown = FIRST;
     const norm = (s) => s.toLowerCase().replace(/\s+/g, ' ').trim();
-    const apply = () => {
+    let booted = false;
+    const paint = () => {
         const t = norm(q.value), tc = t.replace(/[\s-]/g, ''), d = days ? days.value : '', a = dom ? dom.value : '';
         const ok = cards.filter((c) => {
             if (t && !(c.dataset.q.includes(t) || c.dataset.q.includes(tc))) return false;
@@ -185,6 +186,8 @@
         reset.hidden = !(t || chip || d || a || by !== 'year');
         window.aneeHubGate?.(grid);
     };
+    // After the first paint every change moves the cards (partials/hub-gate).
+    const apply = () => (booted && window.aneeFlip ? window.aneeFlip(grid, paint) : paint());
     chips.forEach((b) => b.addEventListener('click', () => { chip = b.dataset.cvChip; chips.forEach((x) => x.classList.toggle('is-on', x === b)); shown = FIRST; apply(); }));
     [dom, days, sort].filter(Boolean).forEach((s) => s.addEventListener('change', () => { shown = FIRST; apply(); }));
     let qt = 0;
@@ -201,6 +204,7 @@
     const pre = new URLSearchParams(location.search).get('q');
     if (pre) q.value = pre;
     apply();
+    booted = true;
 })();
 </script>
 @endpush

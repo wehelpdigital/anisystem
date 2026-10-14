@@ -198,13 +198,6 @@
                     'lead' => $isPests
                         ? 'Register for free to open every pest: how to be sure which one you have, the damage it does, when it pays to act and what to spray.'
                         : 'Register for free to open every disease: how to tell it from look alikes, what makes it spread, and what to spray and when.',
-                    'behind' => array_values(array_filter([
-                        $items->count() . ' ' . $words['nouns'] . ' of ' . count($finder['crops']) . ' Philippine crops, with photos and their local names',
-                        $isPests ? 'The signs, the damage and when it pays to spray' : 'The signs, the look alikes and the weather that spreads it',
-                        'What to spray against each one, by active ingredient',
-                        'The ' . ($isPests ? 'Pest' : 'Disease') . ' Finder: from what you see on your crop to the ' . $words['noun'] . ' behind it',
-                        $guides->count() ? $guides->count() . ' longer guides on ' . $words['nouns'] . ' and their control' : null,
-                    ])),
                 ])
             </div>
             @endif
@@ -269,7 +262,8 @@
     let group = '', all = false;
     const norm = (s) => s.toLowerCase().replace(/[^a-z0-9ñ ]+/g, ' ').replace(/\s+/g, ' ').trim();
     const rise = (c, i) => { c.classList.remove('is-in'); c.style.animationDelay = Math.min(i, 12) * 25 + 'ms'; void c.offsetWidth; c.classList.add('is-in'); };
-    const apply = () => {
+    let booted = false;
+    const paint = () => {
         const words = norm(q.value).split(' ').filter(Boolean);
         const capped = !gated && !all && !group && !words.length && cards.length > cap();
         let shown = 0;
@@ -291,6 +285,8 @@
         if (elsewhere) elseB.textContent = 'See the ' + elsewhere + ' found in all crops';
         window.aneeHubGate?.(grid);
     };
+    // After the first paint every change moves the cards (partials/hub-gate).
+    const apply = () => (booted && window.aneeFlip ? window.aneeFlip(grid, paint) : paint());
     const elseP = empty.querySelector('.wk-else'), elseB = document.getElementById('wkElse');
     elseB.addEventListener('click', () => setGroup(''));
     more?.addEventListener('click', () => {
@@ -309,6 +305,7 @@
     }));
     const want = new URLSearchParams(location.search).get('group');
     if (want && cats.querySelector('[data-group="' + CSS.escape(want) + '"]')) setGroup(want); else apply();
+    booted = true;
 })();
 </script>
 @endpush

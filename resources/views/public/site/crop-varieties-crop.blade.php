@@ -150,12 +150,6 @@
                 'here' => '/crop-varieties/' . $crop['slug'],
                 'title' => 'See all ' . $all->count() . ' ' . $lname . ' varieties, and the ones that fit your farm',
                 'lead' => 'Register for free to compare every variety side by side: its yield, its strengths and weaknesses, and how it will do on your farm, in your season and your soil.',
-                'behind' => array_values(array_filter([
-                    'All ' . $all->count() . ' varieties with their ' . $unit . ' to harvest, yield and where each grows best',
-                    'Strengths and weaknesses: what each one stands up to, and where it falls short',
-                    $sold && $registered ? 'Which are on the national registry (' . $registered . ') and which only carry their seller\'s word (' . $sold . ')' : null,
-                    'Which fit your farm: Anee compares them for your town, your season and your field',
-                ])),
             ] : null])
         </div>
     </section>

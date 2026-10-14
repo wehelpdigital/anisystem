@@ -13,9 +13,9 @@
     // A pest, a disease, a weed or a variety by its plain name; null on a
     // guide about many of them.
     $subject = $G::subject($page);
-    $more = count($behind) - 5;
-    $foot = ($more > 0 ? ($tl ? 'At ' . $more . ' pa' : 'And ' . $more . ' more ' . ($more === 1 ? 'section' : 'sections')) . ', ' : '')
-        . ($tl ? 'mga ' . $mins . ' minutong babasahin' : 'about ' . $mins . ' more minutes of reading');
+    $more = count($behind);
+    $foot = $tl ? $more . ' pang bahagi, mga ' . $mins . ' minutong babasahin'
+        : $more . ' more ' . ($more === 1 ? 'section' : 'sections') . ', about ' . $mins . ' more minutes of reading';
     $guide = 'Register for free to read the whole guide: ';
     [$title, $lead] = $tl ? ['Basahin ang buong gabay', null] : match ($page->section) {
         'crop-varieties', 'rice-varieties' => $subject
@@ -45,7 +45,6 @@
         'here' => '/' . $page->section . '/' . $page->slug,
         'title' => $title,
         'lead' => $lead,
-        'behind' => array_slice($behind, 0, 5),
         'foot' => $behind ? $foot : '',
     ])
 </div>
