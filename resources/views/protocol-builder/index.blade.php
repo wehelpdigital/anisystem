@@ -109,7 +109,7 @@
     <div class="wtp-quote" id="pbAbout">
         <button type="button" class="q-head" id="pbAboutHead" aria-expanded="true">
             <span class="q-ico">📋</span>
-            <span class="q-title">What the Protocol Builder is</span>
+            <span class="q-title">What the Protocol Builder is{{ \App\Support\Tagalog::flag('protocol-builder') }}</span>
             <span class="q-hint" id="pbAboutHint">Tap to read</span>
             <svg class="q-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
         </button>
@@ -124,7 +124,7 @@
     <button type="button" class="pb-new mb-3" id="pbNewBtn">New protocol</button>
     <button type="button" class="pb-port mb-4" id="pbPortOpen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4M12 12v6M9 15h6"/></svg>
-        Make a season from a protocol
+        <span>Make a season from a protocol{{ \App\Support\Tagalog::flag('make-season') }}</span>
     </button>
 
     <div class="pb-search hidden" id="pbSearchWrap">
@@ -153,7 +153,7 @@
 <div class="sheet hidden sheet-full" id="ppSheet" style="--sheet-width:34rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Make a season from protocols</h3>
+        <h3 class="sheet-title">Make a season from protocols{{ \App\Support\Tagalog::flag('make-season') }}</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
@@ -270,6 +270,15 @@
     const $id = (i) => document.getElementById(i);
     const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     const DAY_TYPES = @json($options['dayTypes']);
+    // Tagalog help flags: the key that explains each way of counting the days.
+    const DT_TL = { DAT: 'das-to-dat', DAS: 'das', DAP: 'dap', TREE: 'dos' };
+    // A row's count, flagged on the first row of each kind only (not on every row).
+    const dtWord = (dt, seen) => {
+        const w = esc((DAY_TYPES[dt] || {}).label || dt);
+        if (!seen || seen.has(dt) || !DT_TL[dt]) return w;
+        seen.add(dt);
+        return `<span data-tl="${DT_TL[dt]}">${w}</span>`;
+    };
     let ROWS = [];
     let MENU_ID = null;
 
@@ -293,22 +302,26 @@
         const cost = $id('pbAboutCost');
         if (o.aiLocked) { cost.innerHTML = "Writing protocols and making seasons from them is free. Anee's review comes with <b class=\"is-inline\">" + @json(\App\Support\Tier::planName(\App\Support\Tier::farmUnlocksAt('aiAnalyses'))) + "</b> and every plan above it."; return; }
         if (!o.canAnalyze) { cost.innerHTML = "Writing protocols and making seasons from them is free. Anee's review is not available right now."; return; }
-        cost.innerHTML = `Writing protocols and making seasons from them is free. A review by Anee costs <b class="is-inline">${o.quote} credits</b>. You have ${window.creditCoin(o.unlimited ? '∞' : Number(o.balance).toLocaleString())}. Nothing is charged until you ask for one.`;
+        cost.innerHTML = `Writing protocols and making seasons from them is free. A review by Anee costs <b class="is-inline" data-tl="credits">${o.quote} credits</b>. You have ${window.creditCoin(o.unlimited ? '∞' : Number(o.balance).toLocaleString())}. Nothing is charged until you ask for one.`;
     }
 
     function paint() {
         const q = ($id('pbSearch').value || '').trim().toLowerCase();
         const shown = ROWS.filter((r) => !q || (r.title + ' ' + (r.cropLabel || '') + ' ' + (r.variety || '') + ' ' + (r.tags || []).join(' ')).toLowerCase().includes(q));
+        // Tagalog flags once per kind of label, on the first row that shows it.
+        const seenDt = new Set();
+        let scoreTl = ' data-tl="anee-score"';
+        const firstScore = () => { const a = scoreTl; scoreTl = ''; return a; };
         $id('pbRows').innerHTML = shown.map((r) => `
             <div class="pb-row" data-id="${r.id}" role="button" tabindex="0">
                 <span class="pb-row-e">${esc(r.cropIcon || '🌱')}</span>
                 <span class="pb-row-t">
                     <b>${esc(r.title)}</b>
-                    <small>${esc(r.cropLabel || 'No crop yet')}${r.variety ? ' · ' + esc(r.variety) : ''} · ${esc((DAY_TYPES[r.dayType] || {}).label || r.dayType)} · ${r.count} ${r.count === 1 ? 'task' : 'tasks'}${r.notes ? ` · ${r.notes} ${r.notes === 1 ? 'note' : 'notes'}` : ''}</small>
+                    <small>${esc(r.cropLabel || 'No crop yet')}${r.variety ? ' · ' + esc(r.variety) : ''} · ${dtWord(r.dayType, seenDt)} · ${r.count} ${r.count === 1 ? 'task' : 'tasks'}${r.notes ? ` · ${r.notes} ${r.notes === 1 ? 'note' : 'notes'}` : ''}</small>
                     ${(r.versions || []).length > 1 ? `<small>🗂️ ${r.versions.length} versions · in use: ${esc(r.versionName || '')}</small>` : ''}
                     ${window.userTags ? window.userTags.chips(r.tags) : ''}
                     <span class="pb-row-tags">
-                        ${r.score !== null ? `<span class="pb-tag is-score">Anee: ${r.score}/100</span>` : ''}
+                        ${r.score !== null ? `<span class="pb-tag is-score"${firstScore()}>Anee: ${r.score}/100</span>` : ''}
                         ${r.ported ? `<span class="pb-tag is-ported">Season made ${esc(r.ported.at || '')}</span>` : ''}
                         <span class="pb-tag">Updated ${esc(r.updated || '')}</span>
                     </span>
@@ -455,11 +468,11 @@
                     ${p ? `<p class="pp-hint mt-1">${esc(p.cropLabel || 'No crop')} · ${esc((DAY_TYPES[p.dayType] || {}).label || p.dayType)} · ${ver ? ver.count : p.count} ${(ver ? ver.count : p.count) === 1 ? 'task' : 'tasks'}</p>` : ''}
                 </div>
                 ${p && versionsOf(p).length > 1 ? `<div>
-                    <span class="form-label">Version</span>
+                    <span class="form-label" data-tl="protocol-version">Version</span>
                     <button type="button" class="crop-tag" data-pp-ver><span class="crop-tag-e">🗂️</span><span class="crop-tag-t${ver ? '' : ' is-none'}">${ver ? esc(ver.name) : 'Choose a version'}</span><svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
                 </div>` : ''}
                 <div>
-                    <span class="form-label">${dat ? 'Sowing date (DAS 0)' : (p && p.dayType === 'DAP' ? 'Planting date (DAP 0)' : (tree ? 'Program start (DOS 0)' : 'Start date (day 0)'))}</span>
+                    <span class="form-label" data-tl="${dat ? 'das' : (p && p.dayType === 'DAP' ? 'dap' : (tree ? 'dos' : 'day-zero'))}">${dat ? 'Sowing date (DAS 0)' : (p && p.dayType === 'DAP' ? 'Planting date (DAP 0)' : (tree ? 'Program start (DOS 0)' : 'Start date (day 0)'))}</span>
                     ${DATE_TAG('ppStart_' + l.key, 'Pick the start date')}
                     ${tree ? '<p class="pp-hint mt-1">The day the tree program starts. All task days count from here.</p>' : ''}
                 </div>
@@ -475,7 +488,7 @@
                     <p class="pp-hint mt-1">Growth stages are based on the trees' age.</p>
                 </div>`) : ''}
                 ${dat ? `<div>
-                    <span class="form-label">Transplant date (DAT 0)</span>
+                    <span class="form-label" data-tl="dat">Transplant date (DAT 0)</span>
                     ${DATE_TAG('ppTrans_' + l.key, 'Pick the transplant date')}
                     <p class="pp-hint mt-1">Seedbed tasks count from sowing. Tasks after transplant count from this date.</p>
                 </div>` : ''}

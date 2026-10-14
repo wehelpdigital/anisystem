@@ -180,10 +180,11 @@
             $xrWords = array_values(array_unique(array_values($lotCounters ?? [])));
             $xrWord = count($xrWords) === 1 ? $xrWords[0] : (count($xrWords) ? 'Day' : ($schedule->dayType ?: 'DAS'));
             $xrWordSaid = $xrWord === 'AGE' ? 'Age' : $xrWord;
+            $xrWordTl = ['DAS' => 'das', 'DAT' => 'dat', 'DAP' => 'dap', 'DOS' => 'dos', 'AGE' => 'tree-age'][strtoupper((string) $xrWord)] ?? '';
         @endphp
         <div class="xr-range" id="xrRange" role="radiogroup" aria-label="Which part of the season">
             <button type="button" class="is-on" data-xr-range="season" aria-checked="true">🌱 Whole season</button>
-            <button type="button" data-xr-range="day" aria-checked="false">⏱️ <span data-xr-dayword>{{ $xrWordSaid }}</span> range</button>
+            <button type="button" data-xr-range="day" aria-checked="false" data-tl="{{ $xrWordTl }}">⏱️ <span data-xr-dayword>{{ $xrWordSaid }}</span> range</button>
             <button type="button" data-xr-range="date" aria-checked="false">📅 Date range</button>
         </div>
         <div class="xr-range-pane mt-2" id="xrRangeDay" hidden>
@@ -239,7 +240,7 @@
 
     <div id="xrContent" class="hidden">
         <div class="xr-hero">
-            <div class="xr-hero-label">Total spent</div>
+            <div class="xr-hero-label">Total spent{{ \App\Support\Tagalog::flag('money-out') }}</div>
             <div class="xr-hero-value" id="xrTotal">{{ \App\Support\Region::symbol() }}0</div>
             <div class="xr-hero-net" id="xrNet"></div>
             <div class="text-xs text-gray-500 mt-1" id="xrMeta"></div>
@@ -395,6 +396,8 @@ const __init = () => {
         purchase:  { label: 'Stock buys', e: '📦', color: '#7c3aed', hint: 'Stock bought or added in Inventory, not in an activity' },
         income:    { label: 'Income', e: '💰', color: '#a16207', hint: 'Income you logged by day' },
     };
+    // Tagalog help flags: the glossary key that explains each kind, worn by its tile.
+    const CAT_TL = { materials: 'cost-materials', labor: 'cost-labor', services: 'cost-services', expense: 'cost-extra', purchase: 'cost-stock', income: 'money-in' };
     const LOT_NAMES = @json($schedule->lots->pluck('lotName', 'id'));
     const SCHEDULE_TITLE = @json($schedule->title);
     const MAY_GEN = @json($xrMayGen);
@@ -414,6 +417,8 @@ const __init = () => {
     let STATUS = 'all';
     let RANGE = 'season';
     const DAY_TYPE = @json($schedule->dayType ?: 'DAS');
+    // Tagalog help flags: the glossary key for each way of counting the days.
+    const DAY_TL = { DAS: 'das', DAT: 'dat', DAP: 'dap', DOS: 'dos', AGE: 'tree-age' };
     /* The crop's own clock, as the chosen lots keep it: one word when they
        agree, "Day" when they do not (each lot still reads its own count),
        the season's word when the season has no lots. A tree keeps its age
@@ -429,6 +434,7 @@ const __init = () => {
     function sayDayWord() {
         const w = dayWord();
         document.querySelectorAll('[data-xr-dayword]').forEach((el) => { el.textContent = daySaid(w); });
+        document.querySelector('#xrRange [data-xr-range="day"]')?.setAttribute('data-tl', DAY_TL[String(w).toUpperCase()] || '');
         const unit = $id('xrDayUnit');
         if (unit) unit.textContent = w === 'AGE'
             ? 'Counted in months since the trees were planted.'
@@ -703,7 +709,7 @@ const __init = () => {
         $id('xrMeta').textContent = `${d.rowCount} ${d.rowCount === 1 ? 'entry' : 'entries'} · ${slice || 'the whole season'}`;
         $id('xrTiles').innerHTML = Object.entries(CATS)
             .filter(([k]) => k !== 'income' ? d.totals[k] > 0 : d.totals.income > 0)
-            .map(([k, c]) => `<div class="xr-tile"><div class="k"><i style="background:${c.color}"></i>${c.label}</div><div class="v">${fmtPeso(d.totals[k])}</div></div>`)
+            .map(([k, c]) => `<div class="xr-tile"><div class="k"><i style="background:${c.color}"></i><span data-tl="${CAT_TL[k] || ''}">${c.label}</span></div><div class="v">${fmtPeso(d.totals[k])}</div></div>`)
             .join('') || '<p class="text-xs text-gray-400">Nothing matched the filters.</p>';
 
         // Months

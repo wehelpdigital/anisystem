@@ -304,6 +304,16 @@
     const PLUS = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>';
     const isRice = (crop) => String(crop || '').startsWith('rice');
 
+    /* Tagalog help flags (data-tl, see partials/tagalog-flags): the technical
+       questions by key, and the technical answers by question.answer, with a
+       1 when the term sits in the answer's small line. */
+    const TLQ = { texture: 'soil-texture', organic: 'organic-matter', water: 'water-source', drainage: 'drainage', flooding: 'flood-prone',
+        salt: 'saline', acidity: 'acidic', lastLimed: 'lime', hardpan: 'hardpan' };
+    const TLO = { 'texture.sandy': ['sandy', 1], 'texture.loam': ['loam', 1], 'texture.clay': ['clay', 1], 'water.irrigation': ['irrigation'], 'water.rainfed': ['rainfed'],
+        'salt.sodic': ['sodic', 1], 'acidity.sulfate': ['acid-sulfate'], 'acidity.alkaline': ['alkaline'], 'stubble.ratoon': ['ratoon'], 'weeds.sedges': ['weed-sedge'] };
+    const tlAt = (key) => (key ? ' data-tl="' + esc(key) + '"' : '');
+    const tlFlag = (key) => (window.aneeTl ? window.aneeTl.flag(key) : '');
+
     /* ---- the bank, for a crop ---- */
     const qsFor = (crop, page) => Object.entries(Q).filter(([, q]) => q.page === page && !(crop && q.only === 'rice' && !isRice(crop)))
         .map(([k, q]) => [k, Object.assign({}, q, { o: Object.fromEntries(Object.entries(q.o || {}).filter(([, o]) => !(crop && o[2] === 'rice' && !isRice(crop)))) })]);
@@ -414,7 +424,7 @@
             const pills = Object.values(q.o).every((x) => !x[1] && String(x[0]).length <= 16);
             const on = (x) => (multi ? (v[k] || []).includes(x) : v[k] === x);
             return '<div class="fq-opts' + (pills ? ' is-pills' : '') + (multi ? ' is-multi' : '') + '" role="' + (multi ? 'group' : 'radiogroup') + '">'
-                + Object.entries(q.o).map(([x, lab]) => '<button type="button" class="fq-o' + (on(x) ? ' is-on' : '') + '" data-v="' + esc(x) + '" aria-pressed="' + on(x) + '"><span class="fq-m" aria-hidden="true"></span><span class="fq-ot"><b>' + esc(lab[0]) + '</b>' + (lab[1] ? '<small>' + esc(lab[1]) + '</small>' : '') + '</span></button>').join('') + '</div>';
+                + Object.entries(q.o).map(([x, lab]) => { const tl = TLO[k + '.' + x] || []; return '<button type="button" class="fq-o' + (on(x) ? ' is-on' : '') + '" data-v="' + esc(x) + '" aria-pressed="' + on(x) + '"><span class="fq-m" aria-hidden="true"></span><span class="fq-ot"><b' + (tl[1] ? '' : tlAt(tl[0])) + '>' + esc(lab[0]) + '</b>' + (lab[1] ? '<small' + (tl[1] ? tlAt(tl[0]) : '') + '>' + esc(lab[1]) + '</small>' : '') + '</span></button>'; }).join('') + '</div>';
         }
         function troubleHtml(v) {
             const picked = (v.outbreaks || []).filter((x) => x !== 'none');
@@ -430,12 +440,12 @@
         }
         function qHtml(k, q, v) {
             const done = k === 'outbreaks' ? (v.outbreaks || []).length > 0 : (q.multi ? (v[k] || []).length > 0 : v[k] !== undefined);
-            let h = '<section class="fq-q' + (done ? ' is-done' : '') + '" data-k="' + esc(k) + '"><h3><span>' + esc(q.q) + '</span><i class="fq-tick" aria-hidden="true">' + CHECK + '</i></h3>'
+            let h = '<section class="fq-q' + (done ? ' is-done' : '') + '" data-k="' + esc(k) + '"><h3><span' + tlAt(TLQ[k]) + '>' + esc(q.q) + '</span><i class="fq-tick" aria-hidden="true">' + CHECK + '</i></h3>'
                 + '<p class="fq-why">' + BULB + '<span>' + esc(q.why) + '</span></p>'
                 + (q.multi && k !== 'outbreaks' ? '<p class="fq-many">Pick all that fit</p>' : '');
             h += k === 'outbreaks' ? troubleHtml(v) : optHtml(k, q, v);
             if (q.ph) {
-                h += '<div class="fq-ph"><label>Known pH from a soil test <small>(optional)</small></label><div class="fq-phr">'
+                h += '<div class="fq-ph"><label>Known pH' + tlFlag('ph') + ' from a soil test <small>(optional)</small></label><div class="fq-phr">'
                     + '<label>From<input type="text" inputmode="decimal" maxlength="4" data-ph="phFrom" value="' + esc(v.phFrom ?? '') + '" aria-label="pH from"></label><span>to</span>'
                     + '<label>To<input type="text" inputmode="decimal" maxlength="4" data-ph="phTo" value="' + esc(v.phTo ?? '') + '" aria-label="pH to"></label></div><p class="fq-err" data-pherr hidden>A pH is a number from 3 to 10.</p></div>';
             }

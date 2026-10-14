@@ -57,6 +57,8 @@ final class FieldBook
             'facets' => $kinds->map(fn ($n, $k) => [$k, $k, self::KIND_ICONS[$k] ?? '🌱', $n])->values()->all(),
             'cropNames' => self::cropNames($facts['crops']),
             'products' => self::problemProducts($section, $entries),
+            // Systemic, translaminar or contact, per active ingredient (2026-10-15).
+            'mobility' => AiMobility::payload(),
         ];
     }
 
@@ -92,6 +94,7 @@ final class FieldBook
             'groups' => WeedControl::GROUPS,
             'cropNames' => self::cropNames($crops),
             'products' => self::weedProducts(array_keys($crops)),
+            'mobility' => AiMobility::payload(),
         ];
     }
 
@@ -266,7 +269,9 @@ final class FieldBook
         foreach (array_keys($used) as $k) {
             if (isset($all[$k])) {
                 $cards[$k] = ProductBook::card($all[$k]) + ['crops' => array_values(array_unique(array_map(
-                    fn ($c) => $names[$c][0] ?? ucfirst(str_replace('_', ' ', $c)), $all[$k]['crops'] ?? [])))];
+                    fn ($c) => $names[$c][0] ?? ucfirst(str_replace('_', ' ', $c)), $all[$k]['crops'] ?? []))),
+                    // How its active ingredients move in the plant: systemic, translaminar, contact.
+                    'mob' => AiMobility::ofList($all[$k]['ai'] ?? [])['c'] ?? []];
             }
         }
 

@@ -80,6 +80,8 @@
     'noun' => $w['noun'], 'nouns' => $w['nouns'], 'pests' => $book['isPests'],
     // Only the products this page can show (FieldBook::problemProducts).
     'products' => $book['products'],
+    // Systemic, translaminar or contact, per active ingredient (App\Support\AiMobility).
+    'mobility' => $book['mobility'] ?? null,
 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
 @push('scripts')
 <script>
@@ -97,15 +99,19 @@
     const KIND_ICON = Object.fromEntries(D.facets.map((f) => [f[0], f[2]]));
     const P = D.products || {};
     Object.assign(FH.prodCards, P.cards || {});
+    FH.setMobility(D.mobility);
     // The products sold here for one ingredient on one crop ("*": any crop), and those a label names for one entry.
     const prodsOf = (name, crop) => (((P.ip || {})[FH.norm(name)] || {})[crop || '*'] || []).map((k) => FH.prodCards[k]).filter(Boolean);
     const labelled = (slug, crop) => (((P.pp || {})[slug] || {})[crop || '*'] || []).map((k) => FH.prodCards[k]).filter(Boolean);
     const sold = (i, crop) => (i.ai || []).some(([n]) => prodsOf(n, crop).length);
 
-    // What to spray against one pest or disease, or why no spray helps.
-    const sprayOf = (i, crop) => (i.ai && i.ai.length) ? FH.ingList(i.ai.map(([n, g]) => FH.ing(n, g, '', prodsOf(n, crop)))) : '';
+    // What to spray against one pest or disease, or why no spray helps. Shown only opened (a card's
+    // fold, the catalogue entry), so each ingredient's note on how it moves comes under its chips.
+    const sprayOf = (i, crop) => (i.ai && i.ai.length) ? FH.ingList(i.ai.map(([n, g]) => FH.ing(n, g, '', prodsOf(n, crop))), { notes: true }) : '';
     const noSpray = (i) => i.no ? '<p class="fh-no">' + I.warn + '<span><b>Before you spray</b>' + esc(i.no) + '</span></p>' : '';
     const legend = D.pests ? 'The IRAC group tells how an insecticide kills.' : 'The FRAC group tells how a fungicide works.';
+    // The Tagalog help flag of a kind ("Water mold" is kind-water-mold).
+    const kindTl = (k) => 'kind-' + String(k || '').toLowerCase().trim().replace(/\s+/g, '-');
 
     /* ---- One entry, in the catalogue's second pane ------------------- */
     const labels = (keys, book) => keys.map((k) => book[k]).filter(Boolean);
@@ -117,7 +123,7 @@
         const spray = sprayOf(i, crop), named = labelled(i.k, crop);
         return '<article class="fhd" style="--g: ' + i.hue + '">' + FH.photo(i)
             + '<div class="fhd-body">'
-            + '<header class="fhd-head"><span class="fhd-pill">' + esc(KIND_ICON[i.kind] || '') + ' ' + esc(i.kind) + '</span><h2>' + esc(i.name) + '</h2>'
+            + '<header class="fhd-head"><span class="fhd-pill"' + FH.tlAttr(kindTl(i.kind)) + '>' + esc(KIND_ICON[i.kind] || '') + ' ' + esc(i.kind) + '</span><h2>' + esc(i.name) + '</h2>'
             + (i.sci ? '<p class="fhd-sci">' + esc(i.sci) + '</p>' : '')
             + (i.local ? '<p class="fhd-local"><b>Local names:</b> ' + esc(i.local) + '</p>' : '') + '</header>'
             + (i.hint ? FH.sec(I.eye, 'Signs to look for', '<p>' + esc(i.hint) + '</p>') : '')
@@ -125,9 +131,9 @@
             + (parts.length ? FH.sec(I.pin, D.pests ? 'Where the damage shows' : 'Where it shows', chips(parts)) : '')
             + FH.sec(I.sprout, (D.pests ? 'Crops it attacks' : 'Crops it infects') + ' (' + i.crops.length + ')', FH.cropChips(i.crops, D.cropNames, st.crop))
             + (spray ? FH.sec(I.drop, 'What to spray', spray + '<p class="fh-fine">' + legend + ' Switch to a different group next time, so the ' + D.noun + ' does not learn to survive it.</p>'
-                + (sold(i, crop) ? FH.rateLine(D.noun) : '') + FH.SHOP_NOTE) : '')
+                + (sold(i, crop) ? FH.rateLine(D.noun) : '') + FH.SHOP_NOTE, 'what-to-spray') : '')
             + (i.no ? '<section>' + noSpray(i) + '</section>' : '')
-            + (named.length ? FH.sec(I.bag, 'Products labelled for this' + (crop && D.cropNames[crop] ? ' on ' + D.cropNames[crop][0].toLowerCase() : ''), FH.prodStrip(named)
+            + (named.length ? FH.sec(I.bag, 'Products labelled for this' + (crop && D.cropNames[crop] ? ' on ' + D.cropNames[crop][0].toLowerCase() : ''), FH.prodStrip(named, { help: !spray })
                 + (spray ? '' : FH.rateLine(D.noun))) : '')
             + FH.sources(i.sources)
             + '</div></article>';
@@ -142,19 +148,20 @@
     /* ---- The finder's answer ----------------------------------------- */
     // Which cards are open, kept across a filter or a crop change. Folded by default (2026-10-15, the owner).
     const opened = new Set();
-    const row = (i) => {
+    // kindFlag: ' data-tl="kind-…"' on the first card of each kind in the answer, '' on the rest.
+    const row = (i, kindFlag) => {
         const loc = FH.localOf(i), open = opened.has(i.k), id = 'fhrc-' + String(i.k).replace(/[^a-z0-9_-]/gi, '');
         const nAi = (i.ai || []).length, nProd = (i.ai || []).reduce((n, [a]) => n + prodsOf(a, st.crop).length, 0);
         const sum = nAi ? '<i>' + nAi + ' to spray</i>' + (nProd ? '<i>' + nProd + ' product' + (nProd === 1 ? '' : 's') + '</i>' : '')
             : (i.no ? '<i class="is-warn">Read before you spray</i>' : '');
-        const body = nAi ? '<div class="fh-rc-spray"><span class="fh-spray-h">' + I.drop + 'What to spray</span>' + sprayOf(i, st.crop) + '</div>'
+        const body = nAi ? '<div class="fh-rc-spray"><span class="fh-spray-h" data-tl="what-to-spray">' + I.drop + 'What to spray</span>' + sprayOf(i, st.crop) + '</div>'
             : (i.no ? '<div class="fh-rc-spray">' + noSpray(i) + '</div>' : '');
         return '<article class="fh-rc' + (open ? ' is-open' : '') + '" style="--g: ' + i.hue + '" data-k="' + esc(i.k) + '">'
             + '<div class="fh-rc-top">'
             + (body ? '<button type="button" class="fh-rc-head" data-fold="' + esc(i.k) + '" aria-expanded="' + open + '" aria-controls="' + id + '">'
                 : '<button type="button" class="fh-rc-head" data-open="' + esc(i.k) + '">')
             + (i.thumb ? '<img src="' + esc(i.thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : '<span class="none">' + I.leaf + '</span>')
-            + '<span class="fh-rc-t"><b>' + esc(i.name) + '</b><small><em>' + esc(i.kind) + '</em>' + (loc ? '<span>' + esc(loc) + '</span>' : '') + '</small>'
+            + '<span class="fh-rc-t"><b>' + esc(i.name) + '</b><small><em' + (kindFlag || '') + '>' + esc(i.kind) + '</em>' + (loc ? '<span>' + esc(loc) + '</span>' : '') + '</small>'
             + (sum && body ? '<span class="fh-rc-sum">' + sum + '</span>' : '') + '</span></button>'
             + '<span class="fh-rc-acts">'
             + '<button type="button" class="fh-rc-btn fh-rc-info" data-open="' + esc(i.k) + '" aria-label="About ' + esc(i.name) + '" title="About ' + esc(i.name) + '">' + I.info + '</button>'
@@ -189,12 +196,14 @@
         });
         const hits = st.where ? forCrop.filter((i) => i.where.includes(st.where)) : forCrop;
         const head = st.where ? D.where[st.where] : 'Every ' + D.noun + ' we cover';
+        const kinds = new Set();
         const draw = () => {
+            kinds.clear();
             card.innerHTML = '<div class="wc-when"><span class="wc-timing">' + esc(D.crops[st.crop]) + '</span><b>' + esc(head) + '</b>'
                 + '<small>' + hits.length + ' ' + (hits.length === 1 ? D.noun : D.nouns) + (st.where ? '. Tap one for its photo and every detail.' : '. Pick what you see to narrow it down.') + '</small></div>'
                 + '<div class="wc-body">'
                 + (hits.length
-                    ? early + '<div class="fh-res">' + hits.map(row).join('') + '</div>'
+                    ? early + '<div class="fh-res">' + hits.map((i) => row(i, FH.tlAttr(kindTl(i.kind), kinds))).join('') + '</div>'
                         + '<div><p class="wc-legend">' + legend + ' Switch to a different group next time, so the ' + D.noun + ' does not learn to survive it.</p>'
                         + (hits.some((i) => sold(i, st.crop)) ? FH.rateLine(D.noun) : '')
                         + (hits.some((i) => i.ai && i.ai.length) ? FH.SHOP_NOTE : '') + '</div>'

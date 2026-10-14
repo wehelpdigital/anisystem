@@ -113,12 +113,12 @@
 
     <div id="prContent" class="hidden">
         <div class="pr-hero" id="prHero">
-            <div class="pr-hero-label">Net profit</div>
+            <div class="pr-hero-label">Net profit{{ \App\Support\Tagalog::flag('net-profit') }}</div>
             <div class="pr-hero-value" id="prProfit">{{ \App\Support\Region::symbol() }}0</div>
             <div class="pr-hero-sub" id="prVerdict"></div>
             <div class="pr-vs">
-                <div><div class="k">Money in</div><div class="v" id="prRevenue">{{ \App\Support\Region::symbol() }}0</div></div>
-                <div><div class="k">Money out</div><div class="v" id="prCost">{{ \App\Support\Region::symbol() }}0</div></div>
+                <div><div class="k">Money in{{ \App\Support\Tagalog::flag('money-in') }}</div><div class="v" id="prRevenue">{{ \App\Support\Region::symbol() }}0</div></div>
+                <div><div class="k">Money out{{ \App\Support\Tagalog::flag('money-out') }}</div><div class="v" id="prCost">{{ \App\Support\Region::symbol() }}0</div></div>
             </div>
         </div>
 
@@ -160,6 +160,8 @@ const __init = () => {
         ['expense', 'Extra expenses', '#b91c1c'],
         ['purchase', 'Stock buys', '#7c3aed'],
     ];
+    // Tagalog help flags: the glossary key that explains each kind of cost.
+    const CAT_TL = { materials: 'cost-materials', labor: 'cost-labor', services: 'cost-services', expense: 'cost-extra', purchase: 'cost-stock' };
     let DATA = null;
 
     async function load() {
@@ -204,12 +206,12 @@ const __init = () => {
         $id('prStack').innerHTML = CATS.filter(([k]) => d.costCats[k] > 0)
             .map(([k, , c]) => `<span style="background:${c};flex:${d.costCats[k]} ${d.costCats[k]} 0"></span>`).join('');
         $id('prAnatomy').innerHTML = CATS.filter(([k]) => d.costCats[k] > 0)
-            .map(([k, label, c]) => `<div class="pr-anat"><i style="background:${c}"></i>${label}
+            .map(([k, label, c]) => `<div class="pr-anat"><i style="background:${c}"></i><span data-tl="${CAT_TL[k] || ''}">${label}</span>
                 <span class="text-gray-400">· ${Math.round((d.costCats[k] / total) * 100)}%</span><b>${fmtPeso(d.costCats[k])}</b></div>`).join('');
 
         // Lots
         const maxAmt = Math.max(1, ...d.lots.map((l) => Math.max(l.revenue, l.cost)));
-        $id('prLots').innerHTML = d.lots.map((l) => {
+        $id('prLots').innerHTML = d.lots.map((l, i) => {
             const lup = l.profit >= 0;
             return `<div class="pr-lot">
                 <div class="pr-lot-top">
@@ -220,8 +222,8 @@ const __init = () => {
                     ${l.crop ? `<span class="badge badge-gray">${esc(l.crop)}</span>` : ''}
                     ${l.size ? `<span class="badge badge-gray">${esc(l.size)}</span>` : ''}
                     ${(l.yield || []).map((y) => `<span class="badge badge-green">🌾 ${esc(y)}</span>`).join('')}
-                    ${l.margin !== null ? `<span class="badge ${lup ? 'badge-green' : 'badge-red'}">${l.margin}% margin</span>` : ''}
-                    ${l.costPerUnit !== null ? `<span class="badge badge-yellow">${fmtPeso(l.costPerUnit)} / ${esc(l.unit || 'unit')}</span>` : ''}
+                    ${l.margin !== null ? `<span class="badge ${lup ? 'badge-green' : 'badge-red'}"${i === 0 ? ' data-tl="margin"' : ''}>${l.margin}% margin</span>` : ''}
+                    ${l.costPerUnit !== null ? `<span class="badge badge-yellow"${i === 0 ? ' data-tl="cost-per-unit"' : ''}>${fmtPeso(l.costPerUnit)} / ${esc(l.unit || 'unit')}</span>` : ''}
                 </div>
                 <div class="pr-lot-bars">
                     <div class="pr-lot-bar"><span>Earned</span><span class="bar" style="background:#f0b429;width:${Math.max(2, (l.revenue / maxAmt) * 100)}%"></span><b>${fmtPeso0(l.revenue)}</b></div>

@@ -438,6 +438,19 @@
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
     const still = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('sm-still');
 
+    /* ---- Tagalog help flags (2026-10-15): a key's flag, written straight
+       after a label's last word ('' off the Philippine face or for no key).
+       Only on the app's own labels, never inside Anee's words. ---- */
+    const tl = (k) => (k && window.aneeTl ? window.aneeTl.flag(k) : '');
+    const KIND_TL = { labor: 'labor-report', expenses: 'expenses-report', profit: 'profit-report', season: 'season-report', sofar: 'analyze-so-far', protocol: 'protocol-report' };
+    const METRIC_TL = { workdays: 'person-days', workerDays: 'person-days', crewDays: 'person-days', perDay: 'cost-per-worker-day',
+        income: 'money-in', revenue: 'money-in', spend: 'money-out', net: 'net-profit', profit: 'net-profit', margin: 'margin',
+        standing: 'season-standing', yield: 'yield', yieldValue: 'gross-income' };
+    // "cost" is the labor bill in a Labor report and the money out everywhere else.
+    const metricTl = (kind, key) => (key === 'cost' ? (kind === 'labor' ? 'labor-cost' : 'money-out') : (METRIC_TL[key] || ''));
+    const unitTl = (u) => ({ cavan: 'cavans', cavans: 'cavans', 't/ha': 't-ha' })[String(u || '').toLowerCase()] || '';
+    const FACT_TL = { dayType: 'day-count', daySystem: 'day-count', zeroDate: 'day-zero', variety: 'variety' };
+
     /* ---- icons: drawn, never emoji, so they sit true in their badges ---- */
     const P = {
         coins: '<circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/>',
@@ -600,7 +613,7 @@
             </div>` : '';
         return `<header class="cx-hero cx-rise" style="--i:0">
             <div class="cx-kick">
-                <span class="cx-chip">${icon ? `<img src="${esc(icon)}" alt="">` : ''}${esc(rep.kindLabel || 'Reports')} · compared</span>
+                <span class="cx-chip">${icon ? `<img src="${esc(icon)}" alt="">` : ''}<span>${esc(rep.kindLabel || 'Reports')}${tl(KIND_TL[rep.kind])} · compared</span></span>
                 ${rep.analysis ? `<span class="cx-chip is-anee"><img src="${esc(opts.face)}" alt="">${esc(opts.anee || 'Anee')} read it</span>` : ''}
             </div>
             <h2 class="cx-title">${esc(data.title || 'Comparison')}</h2>
@@ -614,7 +627,7 @@
         return `<div class="cx-h"><span class="cx-h-ico">${I(icon)}</span><div><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</div></div>`;
     }
 
-    function metrics(list, i) {
+    function metrics(list, i, kind) {
         if (!list || !list.length) return '';
         const cards = list.map((m) => {
             const j = judge(m);
@@ -637,7 +650,7 @@
             const s = sayDiff(m, j);
             const hint = m.hint || (m.better === 'lower' ? 'lower is better' : (m.better === 'higher' ? 'higher is better' : ''));
             return `<div class="cx-m">
-                <div class="cx-m-h"><span class="cx-m-ico">${I(m.icon)}</span><div><b>${esc(m.label)}${m.qtyUnit ? ' (' + esc(m.qtyUnit) + ')' : ''}</b>${hint ? `<small>${esc(hint)}</small>` : ''}</div></div>
+                <div class="cx-m-h"><span class="cx-m-ico">${I(m.icon)}</span><div><b>${esc(m.label)}${tl(metricTl(kind, m.key))}${m.qtyUnit ? ' (' + esc(m.qtyUnit) + tl(unitTl(m.qtyUnit)) + ')' : ''}</b>${hint ? `<small>${esc(hint)}</small>` : ''}</div></div>
                 <div class="cx-m-cols">${col('a')}${col('b')}</div>
                 <p class="cx-m-d ${s.cls}">${I(s.icon)}<span>${esc(s.text)}</span>${s.pct ? `<span class="cx-pct">${esc(s.pct)}</span>` : ''}</p>
             </div>`;
@@ -679,12 +692,12 @@
         const diff = list.filter((f) => !f.same);
         const same = list.filter((f) => f.same);
         const rows = diff.map((f) => `<div class="cx-f-row">
-                <div class="cx-f-l">${esc(f.label)} <span class="cx-diff">Differs</span></div>
+                <div class="cx-f-l"><span>${esc(f.label)}${tl(FACT_TL[f.key])}</span> <span class="cx-diff">Differs</span></div>
                 <div class="cx-f-cols">${cell(f, 'a')}${cell(f, 'b')}</div>
             </div>`).join('');
         const chips = same.length ? `<div class="cx-f-row cx-f-same">
                 <div class="cx-f-l">Same in both <span class="cx-same">${same.length}</span></div>
-                <div class="cx-chips">${same.map((f) => `<span class="cx-chip-f"><b>${esc(f.label)}</b>${esc(f.a ?? f.b ?? '')}</span>`).join('')}</div>
+                <div class="cx-chips">${same.map((f) => `<span class="cx-chip-f"><b>${esc(f.label)}${tl(FACT_TL[f.key])}</b>${esc(f.a ?? f.b ?? '')}</span>`).join('')}</div>
             </div>` : '';
         return `<section class="cx-rise" style="--i:${i}">${head('words', 'In words', diff.length ? 'Where they differ, and what they share' : 'What the two share')}<div class="cx-card">${rows}${chips}</div></section>`;
     }
@@ -702,7 +715,7 @@
                     <h3 class="cx-anee-hl">Want ${name} to read these two?</h3>
                     <p>She reads both, side by side, and tells you what changed, the strengths of each, and what to carry into the next season.</p></div>
                 </div>
-                <button type="button" class="cx-anee-go" data-cx-add-anee><img src="${esc(opts.face)}" alt="">Add ${name}’s read ${opts.price ? coin(String(opts.price)) : ''}</button>
+                <button type="button" class="cx-anee-go" data-cx-add-anee><img src="${esc(opts.face)}" alt="">Add ${name}’s read ${opts.price ? coin(String(opts.price)) + tl('credits') : ''}</button>
                 <span class="cx-anee-note">It is saved as a new comparison with her read${data.mine ? ' and replaces this one' : ''}.</span>
             </section>`;
         }
@@ -739,12 +752,19 @@
             const mats = (s.materials || []).length ? `<small>${(s.materials || []).map(esc).join(', ')}</small>` : '';
             return `<p>${esc(s.title)}${meta ? `<small>${esc(meta)}</small>` : ''}${mats}</p>`;
         };
+        // The first chip of each day count (DAT 21, DAS 14...) carries its Tagalog flag, not every day.
+        const tlSeen = new Set();
+        const dayHtml = (label) => esc(label).replace(/\b(DAT|DAS|DAP|DOS) (-?\d+)/g, (m, c) => {
+            if (tlSeen.has(c)) return m;
+            tlSeen.add(c);
+            return m + tl(c.toLowerCase());
+        });
         const row = (r) => {
             const la = (r.labels || {}).a;
             const lb = (r.labels || {}).b;
             const label = r.day === null ? 'No day count' : ((la && lb && la !== lb) ? `${la} · ${lb}` : (la || lb || ('Day ' + r.day)));
             const cell = (k) => (r[k] || []).length ? `<div class="is-${k}">${r[k].map(item).join('')}</div>` : `<div class="is-${k}"><p class="none">Nothing</p></div>`;
-            return `<div class="cx-tl-row"><span class="cx-tl-day">${esc(label)}</span><div class="cx-tl-cols">${cell('a')}${cell('b')}</div></div>`;
+            return `<div class="cx-tl-row"><span class="cx-tl-day">${dayHtml(label)}</span><div class="cx-tl-cols">${cell('a')}${cell('b')}</div></div>`;
         };
         const FIRST = 8;
         const first = rows.slice(0, FIRST).map(row).join('');
@@ -917,7 +937,7 @@
         if (gone) {
             parts.push(`<div class="cx-note cx-rise" style="--i:${i++}">${I('info')}<span>One of the two reports has since been deleted. What it said is kept below, as it was when compared.</span></div>`);
         }
-        parts.push(metrics(rep.metrics, i++));
+        parts.push(metrics(rep.metrics, i++, rep.kind));
         parts.push(anee(rep, data, opts, i++));
         parts.push(groups(rep.groups, i++));
         parts.push(facts(rep.facts, i++));

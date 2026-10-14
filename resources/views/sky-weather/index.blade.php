@@ -317,13 +317,14 @@
                 <h2>Satellite Weather</h2>
                 <p>The sky over your farm, the way the weather watchers see it: live satellite clouds, rain radar, every typhoon's track and cone, and the next five days played on the map with the paths the rain clouds and storms are expected to take.</p>
                 <ul>
-                    <li><span>☁️</span>Himawari clouds and rain radar, played back</li>
-                    <li><span>🌀</span>Typhoon tracks with the time at every forecast point</li>
-                    <li><span>🧭</span>Where the rain clusters are headed, hour by hour</li>
-                    <li><span>📍</span>The distance from every storm to your farm</li>
+                    {{-- The words sit in a span of their own: the li is a flex row, and a flag loose in it would be an item of its own. --}}
+                    <li><span>☁️</span><span>Himawari clouds{{ \App\Support\Tagalog::flag('himawari') }} and rain radar{{ \App\Support\Tagalog::flag('rain-radar') }}, played back</span></li>
+                    <li><span>🌀</span><span>Typhoon tracks{{ \App\Support\Tagalog::flag('typhoon-track') }} with the time at every forecast point</span></li>
+                    <li><span>🧭</span><span>Where the rain clusters are headed, hour by hour</span></li>
+                    <li><span>📍</span><span>The distance from every storm to your farm</span></li>
                 </ul>
-                <div class="sk-wall-price"><span id="skWallPrice">30</span> credits<small id="skWallFor">for 7 days</small></div>
-                <label class="sk-wall-renew"><input type="checkbox" id="skWallRenew" checked><span>Renew every week from my credits. Cancel any time under Subscription.</span></label>
+                <div class="sk-wall-price"><span id="skWallPrice">30</span> credits{{ \App\Support\Tagalog::flag('credits') }}<small id="skWallFor" data-tl="pass-openings">for 7 days</small></div>
+                <label class="sk-wall-renew"><input type="checkbox" id="skWallRenew" checked><span>Renew every week{{ \App\Support\Tagalog::flag('auto-renew') }} from my credits. Cancel any time under Subscription.</span></label>
                 <button type="button" class="sk-wall-go" id="skWallGo">Subscribe</button>
                 <p class="sk-wall-fine" id="skWallFine"></p>
             </div>
@@ -338,14 +339,14 @@
             <span class="sk-badge" id="skBadge" role="status"><i></i><span id="skBadgeText">Checking for storms…</span></span>
         </div>
         <div class="sk-chips" id="skLayers" role="toolbar" aria-label="Map layers">
-            <button type="button" class="sk-lay sk-glass is-on" data-anim="clouds" title="Satellite clouds, the last three hours"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 18a4 4 0 01-.6-8A6 6 0 0118 8.5 4.5 4.5 0 0117.5 18H7z"/></svg></b><span>Clouds</span></button>
-            <button type="button" class="sk-lay sk-glass" data-anim="radar" title="Rain radar, the last hours"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 12l6-6M4.9 19.1a10 10 0 010-14.2M19.1 4.9a10 10 0 010 14.2M8 16a5.6 5.6 0 010-8M16 8a5.6 5.6 0 010 8"/></svg></b><span>Rain radar</span></button>
+            <button type="button" class="sk-lay sk-glass is-on" data-anim="clouds" title="Satellite clouds, the last three hours"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 18a4 4 0 01-.6-8A6 6 0 0118 8.5 4.5 4.5 0 0117.5 18H7z"/></svg></b><span>Clouds{{ \App\Support\Tagalog::flag('himawari') }}</span></button>
+            <button type="button" class="sk-lay sk-glass" data-anim="radar" title="Rain radar, the last hours"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 12l6-6M4.9 19.1a10 10 0 010-14.2M19.1 4.9a10 10 0 010 14.2M8 16a5.6 5.6 0 010-8M16 8a5.6 5.6 0 010 8"/></svg></b><span>Rain radar{{ \App\Support\Tagalog::flag('rain-radar') }}</span></button>
             <i class="sk-sep" aria-hidden="true"></i>
-            <button type="button" class="sk-lay sk-glass is-on" data-storms title="Typhoon tracks and cones"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg></b><span>Typhoons</span></button>
-            <button type="button" class="sk-lay sk-glass is-on" data-tracks title="Where the rain clouds and storms are headed, with the time at each dot"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 18c3-1 4-5 7-6s5 1 9-4M16 8h4v4"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/><circle cx="11" cy="12" r="1.5" fill="currentColor"/></svg></b><span>Tracks</span></button>
-            <button type="button" class="sk-lay sk-glass" data-owm="precipitation_new" title="Rain falling now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M8 19l-1 2M12 19l-1 2M16 19l-1 2M7 15a4 4 0 01-.6-8A6 6 0 0118 5.5 4.5 4.5 0 0117.5 15H7z"/></svg></b><span>Rain now</span></button>
-            <button type="button" class="sk-lay sk-glass" data-owm="clouds_new" title="Cloud cover now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg></b><span>Cloud cover</span></button>
-            <button type="button" class="sk-lay sk-glass" data-owm="wind_new" title="Wind now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 8h11a3 3 0 10-3-3M3 12h16a3 3 0 11-3 3M3 16h8"/></svg></b><span>Wind</span></button>
+            <button type="button" class="sk-lay sk-glass is-on" data-storms title="Typhoon tracks and cones"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg></b><span>Typhoons{{ \App\Support\Tagalog::flag('typhoon-track') }}</span></button>
+            <button type="button" class="sk-lay sk-glass is-on" data-tracks title="Where the rain clouds and storms are headed, with the time at each dot"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 18c3-1 4-5 7-6s5 1 9-4M16 8h4v4"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/><circle cx="11" cy="12" r="1.5" fill="currentColor"/></svg></b><span>Tracks{{ \App\Support\Tagalog::flag('rain-tracks') }}</span></button>
+            <button type="button" class="sk-lay sk-glass" data-owm="precipitation_new" title="Rain falling now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M8 19l-1 2M12 19l-1 2M16 19l-1 2M7 15a4 4 0 01-.6-8A6 6 0 0118 5.5 4.5 4.5 0 0117.5 15H7z"/></svg></b><span>Rain now{{ \App\Support\Tagalog::flag('rain-now') }}</span></button>
+            <button type="button" class="sk-lay sk-glass" data-owm="clouds_new" title="Cloud cover now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg></b><span>Cloud cover{{ \App\Support\Tagalog::flag('cloud-cover') }}</span></button>
+            <button type="button" class="sk-lay sk-glass" data-owm="wind_new" title="Wind now"><b><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 8h11a3 3 0 10-3-3M3 12h16a3 3 0 11-3 3M3 16h8"/></svg></b><span>Wind{{ \App\Support\Tagalog::flag('wind-speed') }}</span></button>
         </div>
         <div class="sk-panel" id="skPanel">
             <h4>Where is your farm?</h4>
@@ -364,7 +365,7 @@
                 </button>
                 <div class="sk-time"><b id="skTimeLabel">Loading the sky…</b><input type="range" id="skSlider" min="0" max="17" value="17" aria-label="Move through time"></div>
                 <div class="sk-two">
-                    <div class="sk-modes" role="tablist" aria-label="Past or forecast"><button type="button" class="is-on" data-mode="past">Past 3 h</button><button type="button" data-mode="future">Forecast</button></div>
+                    <div class="sk-modes" role="tablist" aria-label="Past or forecast"><button type="button" class="is-on" data-mode="past">Past 3 h</button><button type="button" data-mode="future">Forecast{{ \App\Support\Tagalog::flag('forecast') }}</button></div>
                     <label class="sk-op" title="How strong the layer shows"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 010 16z" fill="currentColor"/></svg><input type="range" id="skOp" min="10" max="100" value="65" aria-label="Layer opacity"></label>
                 </div>
             </div>
@@ -374,7 +375,7 @@
 
     <section class="sk-tp" data-tp="storms" hidden>
             <div class="sk-card">
-                <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg>Typhoons near your farm</h3>
+                <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg><span>Typhoons near your farm{{ \App\Support\Tagalog::flag('storm-distance') }}</span></h3>
                 <p class="sk-sub">Distance from the eye to your farm, measured on the map. Inside 300 km is a direct threat.</p>
                 <div id="skStorms"></div>
             </div>
@@ -383,8 +384,8 @@
 
     <section class="sk-tp" data-tp="days" hidden>
             <div class="sk-card">
-                <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>The next 10 days at your farm</h3>
-                <p class="sk-sub">The sky, the high and the low, the rain expected and its chance.</p>
+                <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg><span>The next 10 days at your farm{{ \App\Support\Tagalog::flag('forecast') }}</span></h3>
+                <p class="sk-sub">The sky, the high and the low, the rain expected{{ \App\Support\Tagalog::flag('rain-mm') }} and its chance{{ \App\Support\Tagalog::flag('rain-chance') }}.</p>
                 <div class="sk-days" id="skDays"><p class="sk-sub">Choose your farm to see its forecast.</p></div>
             </div>
             <p class="sk-credit">Clouds: Himawari-9 infrared from NASA GIBS. Rain radar: RainViewer. Live layers: OpenWeatherMap. Forecast, and the forecast clouds and rain the map plays: the Open-Meteo model. Times are Philippine time.</p>
@@ -393,7 +394,7 @@
     <section class="sk-tp" data-tp="anee" hidden>
         <div class="sk-card sk-ask">
             <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Ask Anee what it means for your crop</h3>
-            <p class="sk-sub">Anee reads the storms, the forecast, ENSO and the past five years, then checks them against one of your lots: its crop, age and stage.</p>
+            <p class="sk-sub">Anee reads the storms, the forecast, ENSO{{ \App\Support\Tagalog::flag('enso') }} and the past five years, then checks them against one of your lots: its crop, age and stage.</p>
             <button type="button" class="crop-tag sk-lottag" id="skLotBtn">
                 <span class="crop-tag-e" id="skLotIcon">🗺️</span>
                 <span class="crop-tag-t" id="skLotNow">No lot, my farm in general</span>
@@ -439,6 +440,8 @@
     const $ = (id) => document.getElementById(id);
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('sm-still');
+    /* A Tagalog help flag for a key, written straight after a label's last word ('' off the Philippine face). */
+    const tl = (k) => (k && window.aneeTl ? window.aneeTl.flag(k) : '');
     const U = {
         options: @json(route('sky.options')), frames: @json(route('sky.frames')), storms: @json(route('sky.storms')), forecast: @json(route('sky.forecast')),
         tile: @json(url('/app/sky-weather/tile')), generate: @json(route('sky.generate')), job: (id) => @json(url('/app/sky-weather/job')) + '/' + id,
@@ -950,7 +953,7 @@
             const d = farm && s.eye ? km(farm, s.eye) : null;
             const close = farm ? (s.points || []).filter((p) => p.forecast).map((p) => ({ p, d: km(farm, p) })).sort((a, b) => a.d - b.d)[0] : null;
             return '<div class="sk-storm"><b>' + esc(s.name) + '</b>' + (d != null ? '<span class="sk-km' + (d <= 300 ? ' is-near' : '') + '">' + Math.round(d).toLocaleString() + ' km<small>from your farm</small></span>' : '<span></span>')
-                + '<p>' + (s.current ? 'Active now' : 'Ended') + (s.alert ? ' · ' + esc(s.alert) + ' alert' : '') + (s.maxWindKmh ? ' · up to ' + Math.round(s.maxWindKmh) + ' km/h' : '') + '</p>'
+                + '<p>' + (s.current ? 'Active now' : 'Ended') + (s.alert ? ' · ' + esc(s.alert) + ' alert' + tl('storm-alert') : '') + (s.maxWindKmh ? ' · up to ' + Math.round(s.maxWindKmh) + ' km/h' : '') + '</p>'
                 + (close && close.p.ph ? '<p>Closest forecast point: <b>' + Math.round(close.d) + ' km</b> on ' + esc(new Date(close.p.ph).toLocaleString('en-PH', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric' })) + '</p>' : '')
                 + '</div>';
         }).join('') : '<div class="sk-storm is-calm"><i><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></i><span><b>No typhoon near the Philippines</b><p>The track and cone of any storm that forms will show on the map, with its distance to your farm.</p></span></div>';
@@ -973,6 +976,7 @@
         if (!farm) return;
         try { const r = await window.api(U.forecast + '?lat=' + farm.lat + '&lng=' + farm.lng); FC = r.data || FC; } catch (_) {}
         const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Manila' });
+        let gustTl = false;     // the first gusty day carries the Tagalog flag, not every one
         $('skDays').innerHTML = FC.days.length ? FC.days.slice(0, 10).map((d, i) => {
             const day = new Date(d.date + 'T00:00:00');
             const rain = Number(d.rain) || 0;
@@ -983,7 +987,7 @@
                 + '<em>' + esc(key && window.wxName ? window.wxName(key) : wxWord(d.code, rain)) + '</em>'
                 + '<span class="t">' + esc(Math.round(d.tmax)) + '°' + (d.tmin != null ? ' <small>/ ' + esc(Math.round(d.tmin)) + '°</small>' : '') + '</span>'
                 + '<span class="r">' + esc(rain >= 10 ? Math.round(rain) : rain) + ' mm' + (d.pop != null ? ' · ' + esc(Math.round(d.pop)) + '%' : '') + '</span>'
-                + ((d.gust || 0) >= 50 ? '<span class="g">Gusts ' + Math.round(d.gust) + ' km/h</span>' : '') + '</div>';
+                + ((d.gust || 0) >= 50 ? '<span class="g"' + (gustTl ? '' : (gustTl = true, ' data-tl="wind-gusts"')) + '>Gusts ' + Math.round(d.gust) + ' km/h</span>' : '') + '</div>';
         }).join('') : '<p class="sk-sub">The forecast did not load. Try again in a moment.</p>';
         if (mode === 'future') future(Number($('skSlider').value));
     };
@@ -1000,8 +1004,12 @@
     };
     const paintLots = () => {
         const q = ($('skLotQ').value || '').trim().toLowerCase();
+        // Tagalog flags on the first stage chip and the first chip of each day count (DAT, DAS...), not on every row.
+        const tlSeen = new Set();
+        const tlOnce = (k) => { if (!k || tlSeen.has(k)) return ''; tlSeen.add(k); return ' data-tl="' + k + '"'; };
+        const dayKey = (l) => (/^(DAT|DAS|DAP|DOS)$/.test(String(l.counter || '')) ? String(l.counter).toLowerCase() : '');
         const row = (l) => '<button type="button" class="dt-row sk-lotrow' + (String(l.id) === lotId ? ' is-on' : '') + '" data-id="' + l.id + '"><span class="dt-row-e">' + esc(l.icon || '🌱') + '</span>'
-            + '<span class="dt-row-body"><b>' + esc(l.name) + '</b><span class="sk-lotchips"><em>' + esc(l.crop) + '</em>' + (l.stage ? '<em class="is-stage">' + esc(l.stage) + '</em>' : '') + (lotDay(l) ? '<em class="is-day">' + esc(lotDay(l)) + '</em>' : '') + '</span>'
+            + '<span class="dt-row-body"><b>' + esc(l.name) + '</b><span class="sk-lotchips"><em>' + esc(l.crop) + '</em>' + (l.stage ? '<em class="is-stage"' + tlOnce('growth-stage') + '>' + esc(l.stage) + '</em>' : '') + (lotDay(l) ? '<em class="is-day"' + tlOnce(dayKey(l)) + '>' + esc(lotDay(l)) + '</em>' : '') + '</span>'
             + (l.place ? '<i>' + esc(l.place) + '</i>' : (l.lat ? '<i>Pinned on its map</i>' : '')) + '</span>' + TICK + '</button>';
         const hit = (l) => !q || (l.name + ' ' + l.crop + ' ' + (l.season || '') + ' ' + (l.place || '')).toLowerCase().includes(q);
         const groups = {};
@@ -1029,6 +1037,8 @@
     const quote = () => {
         $('skRun').disabled = !OPT.canUse;
         $('skRunSays').textContent = OPT.canUse ? 'Ask Anee · ' + OPT.quote + ' credits' : 'Anee is not on your plan';
+        // The Tagalog flag explains "credits", so it rides only on the price.
+        if (OPT.canUse) $('skRunSays').setAttribute('data-tl', 'credits'); else $('skRunSays').removeAttribute('data-tl');
         $('skFine').innerHTML = OPT.canUse ? 'You have ' + (window.creditCoin ? window.creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()) : OPT.balance) + '. Charged only when the reading is ready.' : esc(OPT.whyNot || '');
     };
     $('skRun').addEventListener('click', async () => {
@@ -1048,14 +1058,14 @@
         const risk = String(a.risk || 'low').toLowerCase();
         const tabs = [['now', 'Overview'], ['storm', 'Storm'], ['days', 'Next days'], ['lot', 'Your lot'], ['do', 'What to do']];
         const panes = {
-            now: '<p>' + esc(a.riskWhy) + '</p><p><b>Next 72 hours:</b> ' + esc(a.next72h) + '</p><p><b>Keep watching:</b> ' + esc(a.watch) + '</p><p class="text-xs text-gray-400">Confidence: ' + esc(a.confidence) + '</p>',
-            storm: '<p><b>' + esc(st.status) + '</b></p><p>' + esc(st.reading) + '</p><p><b>Closest approach:</b> ' + esc(st.closestApproach) + '</p><p><b>Expect at the farm:</b> ' + esc(st.expect) + '</p>',
+            now: '<p>' + esc(a.riskWhy) + '</p><p><b>Next 72 hours:</b> ' + esc(a.next72h) + '</p><p><b>Keep watching:</b> ' + esc(a.watch) + '</p><p class="text-xs text-gray-400">Confidence' + tl('confidence') + ': ' + esc(a.confidence) + '</p>',
+            storm: '<p><b>' + esc(st.status) + '</b></p><p>' + esc(st.reading) + '</p><p><b>Closest approach' + tl('storm-distance') + ':</b> ' + esc(st.closestApproach) + '</p><p><b>Expect at the farm:</b> ' + esc(st.expect) + '</p>',
             days: '<p>' + esc(a.next10Days) + '</p><p>' + esc(a.climate) + '</p>',
             lot: '<p>' + esc(fl.reading) + '</p>' + ((fl.risks || []).length ? '<p><b>Risks</b></p><ul class="list-disc pl-5">' + fl.risks.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '') + ((fl.opportunities || []).length ? '<p class="mt-2"><b>Windows to use</b></p><ul class="list-disc pl-5">' + fl.opportunities.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' : ''),
             do: '<ul class="sk-acts">' + (a.actions || []).map((x) => '<li><em>' + esc(x.when) + '</em><span><b>' + esc(x.what) + '</b><br><span class="text-xs text-gray-500">' + esc(x.why) + '</span></span></li>').join('') + '</ul>',
         };
         $('skRep').hidden = false;
-        $('skRep').innerHTML = '<div class="sk-rhead r-' + esc(risk) + '"><small>Risk: ' + esc(risk) + ' · ' + esc((d.report || {}).at || '') + '</small><h3>' + esc(a.headline) + '</h3></div>'
+        $('skRep').innerHTML = '<div class="sk-rhead r-' + esc(risk) + '"><small>Risk' + tl('risk-level') + ': ' + esc(risk) + ' · ' + esc((d.report || {}).at || '') + '</small><h3>' + esc(a.headline) + '</h3></div>'
             + '<div class="sk-rtabs">' + tabs.map(([k, l], i) => '<button type="button" class="sk-rtab' + (i ? '' : ' is-on') + '" data-t="' + k + '">' + esc(l) + '</button>').join('') + '</div>'
             + tabs.map(([k], i) => '<div class="sk-card sk-pane' + (i ? '' : ' is-on') + '" data-p="' + k + '">' + panes[k] + '</div>').join('');
         $('skRep').scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'start' });
@@ -1111,16 +1121,17 @@
         const box = $('skSubCard');
         if (!box) return;
         if (P.unlimited) {
-            box.innerHTML = '<h3>Subscription</h3><div class="sk-sub-state"><i>♾️</i><span><b>Unlimited account</b><small>Satellite Weather is always open on this account. Nothing is charged.</small></span></div>';
+            box.innerHTML = '<h3><span data-tl="subscription">Subscription</span></h3><div class="sk-sub-state"><i>♾️</i><span><b>Unlimited account</b><small>Satellite Weather is always open on this account. Nothing is charged.</small></span></div>';
             return;
         }
         const renew = !!P.autoRenew;
-        box.innerHTML = '<h3>Subscription</h3><p class="sk-sub">Satellite Weather is ' + esc(P.price) + ' credits a week. With renewal on, a new week is taken from your credits half an hour before the old one ends, so the page never closes on you. Cancel any time: the week you paid for stays open to its end.</p>'
+        // The h3 is a flex row: the word and its Tagalog flag share a span, so the flag stays snug.
+        box.innerHTML = '<h3><span data-tl="subscription">Subscription</span></h3><p class="sk-sub">Satellite Weather is ' + esc(P.price) + ' credits a week. With renewal on, a new week is taken from your credits half an hour before the old one ends, so the page never closes on you. Cancel any time: the week you paid for stays open to its end.</p>'
             + '<div class="sk-sub-state' + (renew ? '' : ' is-off') + '"><i>' + (renew ? '🔄' : '⏳') + '</i><span><b>' + (renew ? 'Active, renews every week' : 'Active until ' + esc(P.endsAt)) + '</b><small>'
             + (renew ? 'Next renewal: ' + esc(P.endsAt) + ', ' + esc(P.price) + ' credits.' : 'Renewal is off: it closes on ' + esc(P.endsAt) + ' and nothing more is charged.') + '</small></span></div>'
             + '<div class="sk-sub-facts"><div><small>Price</small><b>' + esc(P.price) + ' credits / week</b></div><div><small>This week ends</small><b>' + esc(P.endsAt || '') + '</b></div>'
-            + '<div><small>Openings left</small><b>' + esc(P.opensLeft ?? '') + ' of ' + esc(P.fairOpens) + '</b></div><div><small>Your credits</small><b>' + Number(Math.floor(OPT.balance || 0)).toLocaleString() + '</b></div></div>'
-            + (P.canBuy ? '<div class="sk-sub-row"><span><b>Renew every week</b><br><span class="text-xs text-gray-500">From your credits. If they run short, it simply ends; nothing is charged.</span></span><button type="button" class="sk-switch" id="skRenew" role="switch" aria-checked="' + renew + '" aria-label="Renew every week"></button></div>' : '<p class="sk-sub mt-3">The farm owner manages the subscription.</p>')
+            + '<div><small data-tl="pass-openings">Openings left</small><b>' + esc(P.opensLeft ?? '') + ' of ' + esc(P.fairOpens) + '</b></div><div><small data-tl="credits">Your credits</small><b>' + Number(Math.floor(OPT.balance || 0)).toLocaleString() + '</b></div></div>'
+            + (P.canBuy ? '<div class="sk-sub-row"><span><b data-tl="auto-renew">Renew every week</b><br><span class="text-xs text-gray-500">From your credits. If they run short, it simply ends; nothing is charged.</span></span><button type="button" class="sk-switch" id="skRenew" role="switch" aria-checked="' + renew + '" aria-label="Renew every week"></button></div>' : '<p class="sk-sub mt-3">The farm owner manages the subscription.</p>')
             + '<p class="sk-sub mt-2"><a class="underline font-bold" href="' + U.buy + '">Buy credits</a> · A week covers up to ' + esc(P.fairOpens) + ' openings; when they run out, a renewing subscription starts its next week early.</p>';
         $('skRenew')?.addEventListener('click', async (e) => {
             const btn = e.currentTarget, on = btn.getAttribute('aria-checked') !== 'true';

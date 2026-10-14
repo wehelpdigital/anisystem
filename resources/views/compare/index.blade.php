@@ -237,7 +237,8 @@
             <span class="cmp-ink" aria-hidden="true"></span>
             <button type="button" role="tab" class="cmp-tab is-on" id="cmpTabGen" aria-selected="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
-                Compare
+                {{-- The About card above folds its title into a new line drawn from its text, so the tool's Tagalog flag rides here. --}}
+                <span>Compare{{ \App\Support\Tagalog::flag('compare-reports') }}</span>
             </button>
             <button type="button" role="tab" class="cmp-tab" id="cmpTabSaved" aria-selected="false">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
@@ -318,7 +319,7 @@
                         <input type="checkbox" class="cmp-switch-in" id="cmpWithAi">
                         <span class="cmp-switch" aria-hidden="true"></span>
                         <span class="cmp-ai-t">
-                            <b>Add {{ $aneeName }}'s read · <span id="cmpPrice">30</span> credits</b>
+                            <b>Add {{ $aneeName }}'s read · <span id="cmpPrice">30</span> credits{{ \App\Support\Tagalog::flag('credits') }}</b>
                             <i>She reads both and tells you what changed, what each did well and what to keep doing.</i>
                             <i class="cmp-bal" id="cmpBal"></i>
                         </span>
@@ -441,6 +442,8 @@ const __init = () => {
     const KINDS = @json($kinds);
     const KIND = Object.fromEntries(KINDS.map((k) => [k.key, k]));
     const ICONS = Object.fromEntries(KINDS.map((k) => [k.key, k.icon]));
+    /* Each kind of report and its Tagalog help flag (the glossary key). */
+    const KIND_TL = { labor: 'labor-report', expenses: 'expenses-report', profit: 'profit-report', season: 'season-report', sofar: 'analyze-so-far', protocol: 'protocol-report' };
     const OPEN_ID = @json($openId);
     const PREF_SEASON = @json($seasonId);
     const U = {
@@ -677,7 +680,7 @@ const __init = () => {
                 : `${t.n} saved in ${t.seasons} season${t.seasons === 1 ? '' : 's'}${t.n < 2 ? '. You need two to compare' : ''}`;
             return `<button type="button" class="dt-row${S.kind === k.key ? ' is-on' : ''}" data-kind="${esc(k.key)}" style="--i:${n}" ${off ? 'disabled' : ''}>
                 <span class="dt-row-e"><img src="${esc(k.icon)}" alt=""></span>
-                <span class="dt-row-body"><b>${esc(k.label)}</b><i>${esc(say)}</i></span>
+                <span class="dt-row-body"><b${KIND_TL[k.key] ? ` data-tl="${KIND_TL[k.key]}"` : ''}>${esc(k.label)}</b><i>${esc(say)}</i></span>
                 ${SVG.tick}
             </button>`;
         }).join('');

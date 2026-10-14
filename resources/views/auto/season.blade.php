@@ -199,7 +199,7 @@
 <div class="ac">
     <div class="ac-head">
         <div class="ac-head-row">
-            <div class="min-w-0"><h2 id="acTitle">{{ $schedule->title }}</h2><p id="acSay">Anee plans, you follow.</p></div>
+            <div class="min-w-0"><h2 id="acTitle">{{ $schedule->title }}</h2><p id="acSay" data-tl="anee-auto">Anee plans, you follow.</p></div>
             <div class="ac-acts">
                 <button type="button" class="ac-hbtn" id="acLogBtn">📖 Log</button>
                 <button type="button" class="ac-hbtn" id="acSafeBtn">🛡️ Safety</button>
@@ -250,26 +250,52 @@
     const SHOP_NOTE = 'These links only show who may be selling it. Anee does not recommend a shop or a brand: read the label and buy only FPA registered products.';
     let F = null, EV = [], open = new Set();
 
+    /* ---- Tagalog help flags (2026-10-15): written straight after a label's
+       last word, on the app's own labels only, never inside Anee's words. ---- */
+    const tl = (k) => (k && window.aneeTl ? window.aneeTl.flag(k) : '');
+    let tlSeen = new Set();     // one flag per term per drawing of today's plan
+    const tlOnce = (k) => { if (!k || tlSeen.has(k)) return ''; tlSeen.add(k); return tl(k); };
+    // "DAT 21", "12 days to DAT 0": the day count's flag right after its number.
+    const dayHtml = (s) => esc(s).replace(/\b(DAT|DAS|DAP|DOS) (-?\d+)/, (m, c) => m + tl(c.toLowerCase()));
+    // A stage's own entry where the glossary has one, the general one otherwise.
+    const STAGE_TL = [[/panicle init/, 'panicle-initiation'], [/active tiller/, 'active-tillering'], [/max(imum)? tiller/, 'max-tillering'], [/tiller/, 'tillering'],
+        [/booting/, 'booting'], [/heading/, 'heading'], [/flower|anthesis/, 'flowering'], [/grain fill/, 'grain-filling'], [/milk/, 'milking'], [/dough/, 'dough'],
+        [/ripen/, 'ripening-stage'], [/matur/, 'maturity'], [/seedling/, 'seedling-stage'], [/vegetative/, 'vegetative-stage'], [/reproductive/, 'reproductive-stage'], [/harvest/, 'harvest']];
+    const stageTl = (s) => {
+        const x = String(s || '').toLowerCase();
+        const hit = STAGE_TL.find(([re]) => re.test(x));
+        return tl(hit && window.aneeTl && window.aneeTl.has(hit[1]) ? hit[1] : 'growth-stage');
+    };
+    const groupTl = (g) => { const m = String(g || '').match(/\b(IRAC|FRAC|HRAC)\b/i); return m ? tl(m[1].toLowerCase()) : ''; };
+
     const chev = '<svg class="ac-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
     const taskCard = (t, i) => {
         const flags = (t.critical ? '<span class="ac-flag is-crit">Cannot wait</span>' : '') + (t.late ? '<span class="ac-flag is-late">Late</span>' : '')
             + (t.note && t.note.risk ? '<span class="ac-flag is-risk">' + ({ weather: 'Weather risk', workers: 'Short of hands', both: 'Weather and hands' })[t.note.risk] + '</span>' : '');
-        const meta = [t.lot, t.time ? (t.time === 'morning' ? 'Morning' : 'Afternoon') : null, t.workers && t.workers.length ? '👥 ' + t.workers.join(', ') : null, t.note && t.note.sky ? t.note.sky.emoji + ' ' + t.note.sky.pop + '%' : null].filter(Boolean);
+        const sky = t.note && t.note.sky ? t.note.sky.emoji + ' ' + t.note.sky.pop + '%' : null;
+        const meta = [t.lot, t.time ? (t.time === 'morning' ? 'Morning' : 'Afternoon') : null, t.workers && t.workers.length ? '👥 ' + t.workers.join(', ') : null, sky].filter(Boolean);
+        // The sky's rain chance is last when it is there; the first card of the plan carries its Tagalog flag.
+        const metaHtml = meta.map(esc);
+        if (sky) metaHtml[metaHtml.length - 1] += tlOnce('rain-chance');
         const d = t.detail || {};
+        let rateTl = tl('label-rate');      // on the first product's rate in this task only
         const prods = (d.products || []).map((p, k) => {
             const shop = (t.shop || [])[k];
-            return '<div class="ac-prod"><b>' + esc(p.name) + '</b>' + (p.group ? '<em>' + esc(p.group) + '</em>' : '') + (p.rate ? '<div class="text-xs mt-1">Rate: ' + esc(p.rate) + '</div>' : '') + (p.amount ? '<div class="text-xs">For this lot: ' + esc(p.amount) + '</div>' : '')
+            const rateFlag = p.rate ? rateTl : '';
+            if (p.rate) rateTl = '';
+            return '<div class="ac-prod"><b>' + esc(p.name) + '</b>' + (p.group ? '<em>' + esc(p.group) + groupTl(p.group) + '</em>' : '') + (p.rate ? '<div class="text-xs mt-1">Rate' + rateFlag + ': ' + esc(p.rate) + '</div>' : '') + (p.amount ? '<div class="text-xs">For this lot: ' + esc(p.amount) + '</div>' : '')
                 + (shop ? '<div class="ac-shop">'
                     + '<a class="shop-logo is-sp" href="' + esc(shop.shopee) + '" target="_blank" rel="noopener nofollow" title="Search Shopee for ' + esc(p.name) + '" aria-label="Search Shopee for ' + esc(p.name) + '"><img src="' + SHOP_LOGO.sp + '" alt="" width="48" height="48"></a>'
                     + '<a class="shop-logo is-lz" href="' + esc(shop.lazada) + '" target="_blank" rel="noopener nofollow" title="Search Lazada for ' + esc(p.name) + '" aria-label="Search Lazada for ' + esc(p.name) + '"><img src="' + SHOP_LOGO.lz + '" alt="" width="48" height="48"></a></div>' : '') + '</div>';
         }).join('');
         return '<div class="ac-task' + (t.critical ? ' is-critical' : '') + (t.late ? ' is-late' : '') + (open.has(t.id) ? ' is-open' : '') + '" data-task="' + t.id + '" data-tone="' + esc(t.tone) + '" style="--i:' + i + '">'
-            + '<button type="button" class="ac-tt" data-toggle><span class="ac-te">' + t.emoji + '</span><span class="ac-tm"><b>' + esc(t.title) + '</b><small>' + meta.map(esc).join(' · ') + flags + '</small></span>' + chev + '</button>'
+            // The words in a span of their own: the small is a flex row, and a loose flag would stand apart as an item.
+            + '<button type="button" class="ac-tt" data-toggle><span class="ac-te">' + t.emoji + '</span><span class="ac-tm"><b>' + esc(t.title) + '</b><small>' + (metaHtml.length ? '<span>' + metaHtml.join(' · ') + '</span>' : '') + flags + '</small></span>' + chev + '</button>'
             + '<div class="ac-fold"><div><div class="ac-fin">'
             + (t.summary ? '<p>' + esc(t.summary) + '</p>' : '')
             + (t.why ? '<h5>Why</h5><div class="ac-why">' + esc(t.why) + '</div>' : '')
             + ((d.steps || []).length ? '<h5>How</h5><ol>' + d.steps.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ol>' : '')
-            + (prods ? '<h5>What to use</h5>' + prods + ((t.shop || []).length ? '<p class="text-xs text-gray-400 mt-1">' + esc(SHOP_NOTE) + '</p>' : '') : '')
+            + (prods ? '<h5>What to use</h5>' + prods + ((t.shop || []).length ? '<p class="text-xs text-gray-400 mt-1">' + esc(SHOP_NOTE).replace('FPA registered', 'FPA registered' + tl('fpa-registration')) + '</p>' : '') : '')
             + ((d.safety || []).length ? '<h5>Safety</h5><div class="ac-safe"><ul>' + d.safety.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ul></div>' : '')
             + ((d.bring || []).length ? '<h5>Have ready</h5><ul>' + d.bring.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ul>' : '')
             + (t.moved ? '<p class="text-xs text-gray-400 mt-2">Moved ' + t.moved + ' time' + (t.moved > 1 ? 's' : '') + ' so far.</p>' : '')
@@ -278,6 +304,7 @@
     };
     const todayBlock = () => {
         if (!F) return '';
+        tlSeen = new Set();
         if (F.status !== 'active') return '<div class="ac-msg ac-today"><span class="ac-av"><img src="' + FACE + '" alt=""></span><div class="ac-bub"><div class="ac-h">🎉 This season is finished</div><p class="ac-none">The log keeps every task, observation and change for the post harvest report.</p></div></div>';
         const soon = F.soon.map((t) => '<button type="button" class="ac-srow" data-peek="' + t.id + '"><i>' + esc(t.when) + '</i><span>' + t.emoji + '</span><b>' + esc(t.title) + '</b><em>' + esc(t.lot || '') + '</em></button>').join('');
         return '<div class="ac-msg ac-today" id="acToday"><span class="ac-av"><img src="' + FACE + '" alt=""></span><div class="ac-bub">'
@@ -306,7 +333,14 @@
     };
     const paintHead = () => {
         $('acTitle').textContent = F.title;
-        $('acLots').innerHTML = F.lots.map((l, i) => '<div class="ac-lot" style="--i:' + i + '"><span>' + l.icon + '</span><div><b>' + esc(l.name) + '</b><small>' + esc([l.say, l.stage].filter(Boolean).join(' · ') || l.crop || '') + (l.harvest ? ' · 🧺 ' + esc(l.harvest) : '') + '</small></div></div>').join('');
+        // Each lot's day count and stage carry their Tagalog flags: the lots are read one by one.
+        const lotLine = (l) => {
+            const bits = [];
+            if (l.say) bits.push(dayHtml(l.say));
+            if (l.stage) bits.push(esc(l.stage) + stageTl(l.stage));
+            return bits.length ? bits.join(' · ') : esc(l.crop || '');
+        };
+        $('acLots').innerHTML = F.lots.map((l, i) => '<div class="ac-lot" style="--i:' + i + '"><span>' + l.icon + '</span><div><b>' + esc(l.name) + '</b><small>' + lotLine(l) + (l.harvest ? ' · 🧺 ' + esc(l.harvest) : '') + '</small></div></div>').join('');
         $('acWeek').innerHTML = F.week.map((d, i) => '<div class="' + (i === 0 ? 'is-today' : '') + '">' + esc(d.dow) + '<i>' + d.emoji + '</i><em>' + d.pop + '%</em></div>').join('');
         $('acStats').innerHTML = '<span>✅ ' + F.doneCount + ' done</span><span>📌 ' + F.left + ' to go</span>';
         $('acSay').textContent = F.today.length ? F.today.length + ' task' + (F.today.length > 1 ? 's' : '') + ' today' : 'Nothing due today';
@@ -340,7 +374,10 @@
     const modal = (html, mount) => { const m = $('acModal'); $('acModalBox').innerHTML = html; m.hidden = false; void m.offsetWidth; m.classList.add('is-on'); $('acModalBox').querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeModal)); mount && mount($('acModalBox')); };
     const closeModal = () => { const m = $('acModal'); m.classList.remove('is-on'); setTimeout(() => { m.hidden = true; }, 300); };
     $('acModal').addEventListener('click', (e) => { if (e.target === $('acModal')) closeModal(); });
-    const peekTask = (t) => modal('<div class="ac-task is-open" data-tone="' + esc(t.tone) + '" style="border:0">' + taskCard(t, 0).replace(/^<div[^>]*>/, '').replace(/<div class="ac-tbtns">[\s\S]*?<\/div>/, '') + '<p class="text-xs text-gray-500 mt-2 px-1">Planned for ' + esc(t.when) + '. Anee moves it if the weather or the workers change.</p><div class="ac-macts"><button type="button" class="btn btn-white" data-close>Close</button></div>');
+    const peekTask = (t) => {
+        tlSeen = new Set();     // the peek is a block of its own: its Tagalog flags show again
+        modal('<div class="ac-task is-open" data-tone="' + esc(t.tone) + '" style="border:0">' + taskCard(t, 0).replace(/^<div[^>]*>/, '').replace(/<div class="ac-tbtns">[\s\S]*?<\/div>/, '') + '<p class="text-xs text-gray-500 mt-2 px-1">Planned for ' + esc(t.when) + '. Anee moves it if the weather or the workers change.</p><div class="ac-macts"><button type="button" class="btn btn-white" data-close>Close</button></div>');
+    };
     const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
     const doneModal = (t, card) => modal('<h3>✅ ' + esc(t.title) + '</h3><p class="ac-msub">Anee keeps it in the season log. If it went in on another day, say which: the days after it count from there.</p>'
         + '<label class="ac-lab" for="acDDate">Done on</label><input type="date" id="acDDate" class="form-input" max="' + today() + '" value="' + today() + '">'

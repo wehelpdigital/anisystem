@@ -21,6 +21,7 @@
         $reports = [
             [
                 'label' => 'Labor Report',
+                'tl' => 'labor-report',
                 'desc' => 'Worker days and labor cost for the season.',
                 'url' => route('sm.labor.report', ['id' => $schedule->id]),
                 'img' => asset('images/icons/tea.png'),
@@ -29,6 +30,7 @@
             ],
             [
                 'label' => 'Expenses Report',
+                'tl' => 'expenses-report',
                 'desc' => 'Every ' . (\App\Support\Region::ph() ? 'peso' : 'dollar') . ' spent this season.',
                 'url' => route('sm.expenses.report', ['id' => $schedule->id]),
                 'img' => asset('images/icons/money-bag.png'),
@@ -36,6 +38,7 @@
             ],
             [
                 'label' => 'Profit Report',
+                'tl' => 'profit-report',
                 'desc' => 'What your harvest earned against all you spent.',
                 'url' => route('sm.profit.report', ['id' => $schedule->id]),
                 'img' => asset('images/icons/profit.png'),
@@ -43,6 +46,7 @@
             ],
             [
                 'label' => 'Anee Season Report',
+                'tl' => 'season-report',
                 'desc' => 'Anee reads your finished season and shows what went well, what went wrong and what to improve.',
                 'url' => route('sm.anee.season', ['id' => $schedule->id]),
                 'img' => asset('images/anee/emoji/thinking.png'),
@@ -50,6 +54,7 @@
             ],
             [
                 'label' => 'Analyze So Far',
+                'tl' => 'analyze-so-far',
                 'desc' => 'Where your crop stands now, the risks ahead and what to do next.',
                 'url' => route('sm.anee.sofar', ['id' => $schedule->id]),
                 'img' => asset('images/icons/calendar.png'),
@@ -57,6 +62,7 @@
             ],
             [
                 'label' => 'View as Protocol',
+                'tl' => 'protocol-report',
                 'desc' => 'One lot\'s finished work as a step by step recipe.',
                 'url' => route('sm.protocol.report', ['id' => $schedule->id]),
                 'img' => asset('images/icons/checklist.png'),
@@ -80,7 +86,7 @@
                 </div>
                 <div class="min-w-0 grow {{ $rLocked ? 'tl-dim' : '' }}">
                     <div class="flex items-center gap-2">
-                        <span class="font-bold text-gray-900">{{ $r['label'] }}</span>
+                        <span class="font-bold text-gray-900">{{ $r['label'] }}{{ \App\Support\Tagalog::flag($r['tl'] ?? '') }}</span>
                         @if ($r['badge'] !== null && $r['badge'] > 0)<span class="badge badge-green">{{ $r['badge'] }}</span>@endif
                     </div>
                     <p class="text-sm text-gray-500 mt-0.5">{{ $r['desc'] }}</p>

@@ -617,7 +617,7 @@
         <img src="{{ asset('images/icons/leaf-color.svg') }}" alt="">
         <div>
             <span class="lc-only"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 21V9M12 9c-2.5-1-4-3.5-4-6 2.5 1 4 3.5 4 6zM12 13c2.5-1 4-3.5 4-6-2.5 1-4 3.5-4 6zM12 17c-2.5-1-4-3.5-4-6 2.5 1 4 3.5 4 6z"/></svg>For rice only</span>
-            <h2>Leaf color, read for you</h2>
+            <h2>Leaf color, read for you{{ \App\Support\Tagalog::flag('lcc-checker') }}</h2>
             <p>The leaf color chart times nitrogen on rice. Read 10 rice leaves each week, from 14 days after transplanting or 21 after sowing, and the checker says if urea is due and how much for your field.</p>
             <button type="button" class="lc-howbtn" id="lcHowOpen"><i><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></i>How the leaf color chart works</button>
         </div>
@@ -642,8 +642,8 @@
                     <div>
                         <span class="lc-lab">How it was planted</span>
                         <div class="lc-seg" id="lcMethod" role="radiogroup" aria-label="How it was planted">
-                            <button type="button" data-v="tpr" class="is-on" role="radio" aria-checked="true">Transplanted</button>
-                            <button type="button" data-v="dsr" role="radio" aria-checked="false">Direct seeded</button>
+                            <button type="button" data-v="tpr" class="is-on" role="radio" aria-checked="true">Transplanted{{ \App\Support\Tagalog::flag('transplanting') }}</button>
+                            <button type="button" data-v="dsr" role="radio" aria-checked="false">Direct seeded{{ \App\Support\Tagalog::flag('direct-seeding') }}</button>
                         </div>
                     </div>
                     <div class="lc-f-area">
@@ -666,7 +666,7 @@
                             <span class="lc-chev">Pick<svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></span>
                         </button>
                         <div class="lc-age" id="lcAge" hidden aria-live="polite">
-                            <div class="lc-age-n" id="lcAgeBox"><b id="lcAgeN">0</b><span id="lcAgeW">DAT</span></div>
+                            <div class="lc-age-n" id="lcAgeBox"><b id="lcAgeN">0</b><span id="lcAgeW" data-tl="dat">DAT</span></div>
                             <div class="lc-age-t"><b id="lcAgeLine"></b><small id="lcAgeState"></small></div>
                         </div>
                         <div class="lc-season" id="lcSeason" hidden>
@@ -675,7 +675,7 @@
                         </div>
                     </div>
                     <div>
-                        <span class="lc-lab">Variety and maturity</span>
+                        <span class="lc-lab">Variety and maturity{{ \App\Support\Tagalog::flag('maturity-days') }}</span>
                         <button type="button" class="lc-tag is-empty" id="lcVarBtn" aria-haspopup="dialog">
                             <span class="lc-tag-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 21V9M12 9c-2.5-1-4-3.5-4-6 2.5 1 4 3.5 4 6zM12 13c2.5-1 4-3.5 4-6-2.5 1-4 3.5-4 6zM12 17c-2.5-1-4-3.5-4-6 2.5 1 4 3.5 4 6z"/></svg></span>
                             <span class="lc-tag-t"><b id="lcVarNow">Not sure</b><small id="lcVarSub">Pick your variety or how long it takes</small></span>
@@ -701,7 +701,7 @@
                 </button>
                 <button type="button" class="lc-way is-chart" id="lcWayChart">
                     <span class="lc-way-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-9 5-15 14-17-1 9-6 15-14 17zM5 19l7-8"/></svg></span>
-                    <span class="lc-way-t"><b>Use my leaf color chart</b><small>Hold your chart to each leaf and tap the panel it matches. The checker does the counting.</small><span class="lc-way-p is-free">Free</span></span>
+                    <span class="lc-way-t"><b>Use my leaf color chart{{ \App\Support\Tagalog::flag('leaf-color-chart') }}</b><small>Hold your chart to each leaf and tap the panel it matches. The checker does the counting.</small><span class="lc-way-p is-free">Free</span></span>
                     <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
             </div>
@@ -713,7 +713,7 @@
             <div class="lc-card">
                 <div class="lc-card-h"><h3>Photograph 10 leaves</h3><span class="lc-rice">Rice leaves</span></div>
                 <ol class="lc-tips">
-                    <li>Pick 10 hills spread across the field. On each, take the youngest leaf that is fully open.</li>
+                    <li>Pick 10 hills spread across the field. On each, take the youngest leaf that is fully open{{ \App\Support\Tagalog::flag('youngest-full-leaf') }}.</li>
                     <li>Lay the leaf flat on white paper and shade it with your body. Morning, about 8 to 10 am, is best.</li>
                     <li>Skip leaves with insect bites or spots. Anee still tells you what she sees.</li>
                 </ol>
@@ -729,7 +729,7 @@
         {{-- 3b. The farmer's own chart --}}
         <section class="lc-step" data-step="3b" aria-label="Your leaf color chart">
             <div class="lc-card">
-                <div class="lc-card-h"><h3>Tap the panel each leaf matches</h3><span class="lc-rice is-free">Free</span></div>
+                <div class="lc-card-h"><h3>Tap the panel each leaf matches{{ \App\Support\Tagalog::flag('lcc-panel') }}</h3><span class="lc-rice is-free">Free</span></div>
                 <p class="lc-sub">Hold the chart against the middle of the leaf, in your shade. Between two panels? Tap the half.</p>
                 <div class="lc-strip" id="lcStrip" role="group" aria-label="Your 10 leaves"></div>
                 <div class="lc-now"><b id="lcLeafOf">Leaf 1</b><span id="lcLeafHint">Tap its panel below</span></div>
@@ -801,9 +801,9 @@
             <div id="lcMatGroup">
                 <b class="lc-sgh" id="lcMatHead">Not sure of the variety? Pick how long it takes</b>
                 <div class="lc-mats">
-                    <button type="button" class="lc-mat" data-mat="early" style="--w:52%"><b>Early</b><span>100 to 110 days</span><i></i></button>
-                    <button type="button" class="lc-mat" data-mat="medium" style="--w:72%"><b>Medium</b><span>111 to 120 days</span><i></i></button>
-                    <button type="button" class="lc-mat" data-mat="late" style="--w:92%"><b>Late</b><span>121 to 130 days</span><i></i></button>
+                    <button type="button" class="lc-mat" data-mat="early" style="--w:52%"><b>Early{{ \App\Support\Tagalog::flag('early-maturing') }}</b><span>100 to 110 days</span><i></i></button>
+                    <button type="button" class="lc-mat" data-mat="medium" style="--w:72%"><b>Medium{{ \App\Support\Tagalog::flag('medium-maturing') }}</b><span>111 to 120 days</span><i></i></button>
+                    <button type="button" class="lc-mat" data-mat="late" style="--w:92%"><b>Late{{ \App\Support\Tagalog::flag('late-maturing') }}</b><span>121 to 130 days</span><i></i></button>
                 </div>
                 <button type="button" class="lc-unsure" data-mat="">I am not sure of either</button>
             </div>
@@ -876,6 +876,8 @@
     const cap = (s) => String(s || '').charAt(0).toUpperCase() + String(s || '').slice(1);
     const trimDot = (s) => String(s || '').trim().replace(/[.\s]+$/, '');
     const bump = (el, cls) => { if (!el || reduce()) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
+    // A Tagalog help flag, written straight after a word ('' on the international face).
+    const tl = (k) => (window.aneeTl ? window.aneeTl.flag(k) : '');
 
     let BOOT = { today: new Date().toISOString().slice(0, 10), varieties: [] };
     try { BOOT = JSON.parse($('lcBoot').textContent) || BOOT; } catch (e) { /* the page still works without the catalogue */ }
@@ -967,6 +969,7 @@
             $('lcAgeN').textContent = days;
             if (was !== String(days)) bump($('lcAgeBox'), 'is-bump');
             $('lcAgeW').textContent = dayWord();
+            $('lcAgeW').setAttribute('data-tl', st.method === 'dsr' ? 'das' : 'dat');
             $('lcAgeLine').textContent = `${days} ${days === 1 ? 'day' : 'days'} after ${word()}`;
             const s = $('lcAgeState');
             s.className = 'is-' + stage;
@@ -1029,7 +1032,7 @@
     function paintUnitList() {
         const tick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
         $('lcUnitList').innerHTML = Object.entries(UNITS).map(([k, u]) => '<button type="button" class="lc-urow" role="radio" data-u="' + k + '" aria-checked="' + (k === st.unit) + '">'
-            + '<span class="u-ab">' + u[1] + '</span><span class="u-t"><b>' + u[0] + '</b><small>' + u[3] + '</small></span><span class="u-ck" aria-hidden="true">' + tick + '</span></button>').join('');
+            + '<span class="u-ab">' + u[1] + '</span><span class="u-t"><b' + (k === 'ha' ? ' data-tl="hectare"' : '') + '>' + u[0] + '</b><small>' + u[3] + '</small></span><span class="u-ck" aria-hidden="true">' + tick + '</span></button>').join('');
     }
     $('lcUnitBtn').addEventListener('click', () => { paintUnitList(); sheetOpen($('lcUnitSheet')); });
     $('lcUnitList').addEventListener('click', (e) => {
@@ -1081,7 +1084,7 @@
         const days = ageOf(st.date), stage = stageOf(days), v = varRow();
         const chips = [st.method === 'dsr' ? 'Direct seeded' : 'Transplanted', `${days} ${dayWord()}`, `${cap(season())} season`,
             v ? v.n : (st.variety || (st.maturity ? `${MAT[st.maturity][0]} maturity` : 'Variety not set')), areaWords(st.area, st.unit, areaHa())];
-        $('lcSum').innerHTML = chips.map((c) => `<span>${esc(c)}</span>`).join('');
+        $('lcSum').innerHTML = chips.map((c, i) => `<span${i === 1 ? ` data-tl="${st.method === 'dsr' ? 'das' : 'dat'}"` : ''}>${esc(c)}</span>`).join('');
         let warn = '';
         if (stage === 'early') warn = `Your rice is at day ${days} after ${word()}. Readings start on day ${startDay()}, ${fmt(ds(dn(st.date) + startDay()), { weekday: 'short', month: 'short', day: 'numeric' })}. Young leaves are pale anyway, so a check today will say wait.`;
         if (stage === 'late') warn = `Your rice is at day ${days}, past its first flowers (about day ${flowerDay()} for this maturity). Nitrogen now does not reach the grain, and a check will say so.`;
@@ -1185,7 +1188,7 @@
     function paintPalette() {
         const crit = st.method === 'dsr' ? 3 : 4;
         $('lcPal').querySelectorAll('.lc-sw').forEach((b) => b.classList.toggle('is-crit', Number(b.dataset.p) === crit));
-        $('lcCrit').innerHTML = `The <b>dashed line</b> is panel ${crit}, the line for ${st.method === 'dsr' ? 'direct seeded' : 'transplanted'} rice. Leaves left of it are pale.`;
+        $('lcCrit').innerHTML = `The <b>dashed line</b> is panel ${crit}${tl('critical-panel')}, the line for ${st.method === 'dsr' ? 'direct seeded' : 'transplanted'} rice. Leaves left of it are pale.`;
     }
     function paintChartState() {
         const crit = st.method === 'dsr' ? 3 : 4;
@@ -1261,22 +1264,23 @@
         out.push(`<div class="lv-saved lv-in" ${K()}>${I.check}${fresh ? 'Saved to Your checks' : esc(`Checked ${r.at || ''}`)}</div>`);
         const sorted = panels.slice().sort((x, y) => x - y);
         const meter = (v === 'due' || v === 'ok') && n ? `<div class="lv-meter"><div class="lv-bar">${sorted.map((x, i) => `<i class="${x < crit ? 'is-low' : ''}" style="--i:${i}"></i>`).join('')}<span class="lv-half"><em>half</em></span></div>
-            <div class="lv-meter-t"><span><b>${below} of ${n}</b> below panel ${crit}</span>${d.average != null ? `<span>Average panel ${d.average}</span>` : ''}</div></div>` : '';
-        const eyebrow = [String(r.at || '').replace(/,? \d{4}.*$/, ''), days != null ? `${days} ${dw}` : '', r.mode === 'anee' ? 'Read by Anee' : 'Your chart'].filter(Boolean).join(' · ');
-        out.push(`<section class="lv-hero is-${v} lv-in" ${K()}><div class="lv-top"><span class="lv-ico">${VICON[v]}</span><span class="lv-eyebrow">${esc(eyebrow)}</span></div><h2>${head[0]}</h2><p>${head[1]}</p>${meter}</section>`);
+            <div class="lv-meter-t"><span data-tl="critical-panel"><b>${below} of ${n}</b> below panel ${crit}</span>${d.average != null ? `<span>Average panel ${d.average}</span>` : ''}</div></div>` : '';
+        // The eyebrow's parts escaped one by one, so the day count can carry its flag.
+        const eyebrow = [esc(String(r.at || '').replace(/,? \d{4}.*$/, '')), days != null ? esc(`${days} ${dw}`) + tl(dsr ? 'das' : 'dat') : '', r.mode === 'anee' ? 'Read by Anee' : 'Your chart'].filter(Boolean).join(' · ');
+        out.push(`<section class="lv-hero is-${v} lv-in" ${K()}><div class="lv-top"><span class="lv-ico">${VICON[v]}</span><span class="lv-eyebrow">${eyebrow}</span></div><h2 data-tl="${v === 'due' || v === 'ok' ? 'nitrogen' : 'nitrogen-window'}">${head[0]}</h2><p>${head[1]}</p>${meter}</section>`);
         if (v === 'due') {
             const area = Number(d.areaHa) || 1;
-            out.push(`<section class="lv-card lv-in" ${K()}><h3>${I.sack}How much urea</h3>
-                <div class="lv-big"><b>${num(d.ureaForArea)} kg</b><span>of urea for your ${esc(areaWords(p.areaInput, p.areaUnit, area))}<em>about ${num(d.bagsForArea)} ${Number(d.bagsForArea) === 1 ? 'bag' : 'bags'} of 50 kg</em></span></div>
-                <div class="lv-grid3"><span><b>${num(d.kgN)} kg</b>nitrogen per ha</span><span><b>${num(d.ureaPerHa)} kg</b>urea per ha</span><span><b>${num(d.bagsPerHa)}</b>${Number(d.bagsPerHa) === 1 ? 'bag' : 'bags'} per ha</span></div>
+            out.push(`<section class="lv-card lv-in" ${K()}><h3>${I.sack}<span data-tl="urea">How much urea</span></h3>
+                <div class="lv-big"><b>${num(d.ureaForArea)} kg</b><span>of urea for your ${esc(areaWords(p.areaInput, p.areaUnit, area))}<em data-tl="fertilizer-bags">about ${num(d.bagsForArea)} ${Number(d.bagsForArea) === 1 ? 'bag' : 'bags'} of 50 kg</em></span></div>
+                <div class="lv-grid3"><span data-tl="nitrogen"><b>${num(d.kgN)} kg</b>nitrogen per ha</span><span data-tl="kg-per-hectare"><b>${num(d.ureaPerHa)} kg</b>urea per ha</span><span><b>${num(d.bagsPerHa)}</b>${Number(d.bagsPerHa) === 1 ? 'bag' : 'bags'} per ha</span></div>
                 <ul class="lv-how"><li>${I.check}<span>Spread it evenly on 2 to 3 cm of water, late in the afternoon.</span></li><li>${I.check}<span>That is the ${seasonName} season rate, ${num(d.kgN)} kg of nitrogen per hectare. Urea is 46 percent nitrogen.</span></li><li>${I.check}<span>Keep reading every week. The leaves should green up.</span></li></ul></section>`);
         }
         const tiles = a && (a.leaves || []).length ? a.leaves.map((l) => ({ n: l.n, p: l.panel })) : panels.map((x, i) => ({ n: i + 1, p: x }));
         if (tiles.length) {
-            out.push(`<section class="lv-card lv-in" ${K()}><h3>${I.leaf}Your ${tiles.length} leaves</h3><div class="lv-leaves">${tiles.map((t, i) => t.p == null
+            out.push(`<section class="lv-card lv-in" ${K()}><h3>${I.leaf}<span data-tl="lcc-panel">Your ${tiles.length} leaves</span></h3><div class="lv-leaves">${tiles.map((t, i) => t.p == null
                 ? `<span class="lv-leaf is-null" style="--i:${i}"><b>?</b><small>Leaf ${esc(t.n)}</small></span>`
                 : `<span class="lv-leaf${t.p < crit ? ' is-low' : ''}" style="--c:${panelBg(t.p)};--t:${panelFg(t.p)};--i:${i}"><b>${t.p}</b><small>Leaf ${esc(t.n)}</small></span>`).join('')}</div>
-                <p class="lv-legend"><i></i>Ringed leaves are below panel ${crit}, the line for ${dsr ? 'direct seeded' : 'transplanted'} rice.${tiles.some((t) => t.p == null) ? ' A question mark is a photo Anee could not read.' : ''}</p></section>`);
+                <p class="lv-legend"><i></i><span>Ringed leaves are below panel ${crit}${tl('critical-panel')}, the line for ${dsr ? 'direct seeded' : 'transplanted'} rice.${tiles.some((t) => t.p == null) ? ' A question mark is a photo Anee could not read.' : ''}</span></p></section>`);
         }
         if (v !== 'late' && (d.nextCheck || d.lastWeek)) {
             let small = 'Next check', big = d.nextCheck || '', line = `Then every 7 days until the first flowers${d.flowerDate ? `, around ${d.flowerDate}` : ''}.`;
@@ -1287,23 +1291,23 @@
         if (a) {
             const items = [];
             if (a.health) items.push(['What Anee sees', esc(a.health)]);
-            if ((a.otherCauses || []).length) items.push(['Not only nitrogen', `<ul>${a.otherCauses.map((c) => `<li><b>${esc(trimDot(c.cause))}</b>: ${esc(trimDot(c.sign))}. ${esc(c.action)}</li>`).join('')}</ul>`]);
+            if ((a.otherCauses || []).length) items.push(['Not only nitrogen', `<ul>${a.otherCauses.map((c) => `<li><b>${esc(trimDot(c.cause))}</b>: ${esc(trimDot(c.sign))}. ${esc(c.action)}</li>`).join('')}</ul>`, 'nutrient-deficiency']);
             const notes = (a.leaves || []).filter((l) => l.note);
             if (notes.length) items.push(['Leaf by leaf', `<ul>${notes.map((l) => `<li><b>Leaf ${esc(l.n)}</b>: ${esc(l.note)}</li>`).join('')}</ul>`]);
             if (a.tip) items.push(['This week', esc(a.tip)]);
             if (a.photoNote) items.push([`Your photos${a.photoQuality ? `, ${esc(a.photoQuality)}` : ''}`, esc(a.photoNote)]);
             const face = (OPT && OPT.aneeFace) || $('lcAneeFace').src;
-            out.push(`<section class="lv-card lv-anee lv-in" ${K()}><h3><img src="${esc(face)}" alt="">Anee's notes${a.confidence ? `<span class="lv-conf">${esc(a.confidence)} confidence</span>` : ''}</h3>${items.map(([h, b]) => `<div class="lv-note"><b>${h}</b><div>${b}</div></div>`).join('')}</section>`);
+            out.push(`<section class="lv-card lv-anee lv-in" ${K()}><h3><img src="${esc(face)}" alt="">Anee's notes${a.confidence ? `<span class="lv-conf" data-tl="confidence">${esc(a.confidence)} confidence</span>` : ''}</h3>${items.map(([h, b, k]) => `<div class="lv-note"><b${k ? ` data-tl="${k}"` : ''}>${h}</b><div>${b}</div></div>`).join('')}</section>`);
         }
         const varLine = p.variety ? esc(p.variety) + (p.maturityDays ? `, ${p.maturityDays} days` : (p.maturity ? `, ${(MAT[p.maturity] || [''])[0].toLowerCase()} maturity` : '')) : (p.maturity && MAT[p.maturity] ? `${MAT[p.maturity][0]} maturity` : 'Not given');
         const rows = [
-            [dsr ? 'Sown' : 'Transplanted', p.plantingDate ? `${fmt(p.plantingDate, { month: 'short', day: 'numeric', year: 'numeric' })}${days != null ? `, ${days} ${dw}` : ''}` : (days != null ? `${days} ${dw}` : 'Not given')],
+            [dsr ? 'Sown' : 'Transplanted', p.plantingDate ? `${fmt(p.plantingDate, { month: 'short', day: 'numeric', year: 'numeric' })}${days != null ? `, ${days} ${dw}` : ''}` : (days != null ? `${days} ${dw}` : 'Not given'), dsr ? 'direct-seeding' : 'transplanting'],
             ['Season', `${cap(seasonName)}${p.seasonInferred && p.seasonInferred !== p.season ? ', set by you' : ''}`],
             ['Variety', varLine],
             ['Area', areaWords(p.areaInput, p.areaUnit, p.areaHa || d.areaHa || 1)],
             ['Read', r.mode === 'anee' ? `By Anee from photos${item.charged ? `, ${num(item.charged)} credits` : ''}` : 'With your chart, free'],
         ];
-        out.push(`<section class="lv-card lv-in" ${K()}><h3>${I.field}Your field</h3><dl class="lv-dl">${rows.map(([t, x]) => `<div><dt>${t}</dt><dd>${x}</dd></div>`).join('')}</dl></section>`);
+        out.push(`<section class="lv-card lv-in" ${K()}><h3>${I.field}Your field</h3><dl class="lv-dl">${rows.map(([t, x, k]) => `<div><dt${k ? ` data-tl="${k}"` : ''}>${t}</dt><dd>${x}</dd></div>`).join('')}</dl></section>`);
         out.push(`<div class="lv-acts lv-in" ${K()}><button type="button" class="btn btn-primary" data-vact="new">${I.plus}New check</button><button type="button" class="btn btn-white" data-vact="ren">${I.pen}Rename</button><button type="button" class="btn btn-white lv-del" data-vact="del">${I.trash}Delete</button></div>`);
         return out.join('');
     }
@@ -1685,10 +1689,12 @@
                 <text class="lx-small" x="294" y="123" text-anchor="end">First flowers</text>`;
         }],
     ];
+    // The Tagalog flag each step's title carries, step by step.
+    const LX_TL = ['hill', 'lcc-panel', 'critical-panel', 'urea', ''];
     let LXI = 0;
     function lxBuild() {
         if ($('lxStage').children.length) return;
-        $('lxStage').innerHTML = LX.map(([t, s, art], i) => `<figure class="lx-step" data-x="${i}"><svg class="lx-svg" viewBox="0 0 320 160" role="img" aria-label="${esc(t)}">${art()}</svg><figcaption><b>${i + 1}. ${esc(t)}</b><span>${esc(s)}</span></figcaption></figure>`).join('');
+        $('lxStage').innerHTML = LX.map(([t, s, art], i) => `<figure class="lx-step" data-x="${i}"><svg class="lx-svg" viewBox="0 0 320 160" role="img" aria-label="${esc(t)}">${art()}</svg><figcaption><b${LX_TL[i] ? ` data-tl="${LX_TL[i]}"` : ''}>${i + 1}. ${esc(t)}</b><span>${esc(s)}</span></figcaption></figure>`).join('');
         $('lxDots').innerHTML = LX.map((_, i) => `<button type="button" data-x="${i}" aria-label="Step ${i + 1}"></button>`).join('');
     }
     function lxGo(i) {

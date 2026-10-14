@@ -1,0 +1,523 @@
+{
+ "v": 1,
+ "classes": {
+  "systemic": {
+   "en": "Systemic",
+   "say": "Taken in and carried through the plant, so it reaches parts the spray did not touch, and new growth."
+  },
+  "translaminar": {
+   "en": "Translaminar",
+   "say": "Soaks through the leaf from the sprayed side to the other side, but does not travel through the whole plant."
+  },
+  "contact": {
+   "en": "Contact",
+   "say": "Stays where it lands. It works only on what the spray touches, so cover the plant well."
+  }
+ },
+ "ai": {
+  "2,4-D": {
+   "c": "systemic"
+  },
+  "2,4-D amine": {
+   "c": "systemic"
+  },
+  "2,4-D IBE": {
+   "c": "systemic"
+  },
+  "Abamectin": {
+   "c": "translaminar"
+  },
+  "Acephate": {
+   "c": "systemic"
+  },
+  "Acetamiprid": {
+   "c": "systemic",
+   "n": "Also moves through the leaf"
+  },
+  "Ametryn": {
+   "c": "systemic",
+   "n": "Taken up by roots and leaves"
+  },
+  "Atrazine": {
+   "c": "systemic",
+   "n": "Taken up mostly by the roots"
+  },
+  "Azadirachtin": {
+   "c": "contact",
+   "n": "Some is taken up by the plant"
+  },
+  "Azoxystrobin": {
+   "c": "systemic",
+   "n": "Also moves through the leaf"
+  },
+  "Benomyl": {
+   "c": "systemic"
+  },
+  "Bensulfuron methyl": {
+   "c": "systemic"
+  },
+  "Bentazone": {
+   "c": "contact"
+  },
+  "Beta cyfluthrin": {
+   "c": "contact"
+  },
+  "Beta cypermethrin": {
+   "c": "contact"
+  },
+  "Bifenthrin": {
+   "c": "contact"
+  },
+  "Bispyribac sodium": {
+   "c": "systemic"
+  },
+  "Bordeaux mixture": {
+   "c": "contact"
+  },
+  "Boscalid": {
+   "c": "systemic"
+  },
+  "Bromacil": {
+   "c": "systemic",
+   "n": "Taken up by the roots"
+  },
+  "Buprofezin": {
+   "c": "contact"
+  },
+  "Butachlor": {
+   "c": "systemic",
+   "n": "Taken up by sprouting weeds from the soil"
+  },
+  "Butachlor with safener": {
+   "c": "systemic",
+   "n": "Taken up by sprouting weeds from the soil"
+  },
+  "Cadusafos": {
+   "c": "contact",
+   "n": "Works in the soil"
+  },
+  "Captan": {
+   "c": "contact"
+  },
+  "Carbaryl": {
+   "c": "contact"
+  },
+  "Carbendazim": {
+   "c": "systemic"
+  },
+  "Carbosulfan": {
+   "c": "systemic"
+  },
+  "Carboxin": {
+   "c": "systemic"
+  },
+  "Cartap": {
+   "c": "systemic"
+  },
+  "Cartap hydrochloride": {
+   "c": "systemic"
+  },
+  "Chlorantraniliprole": {
+   "c": "systemic",
+   "n": "Also moves through the leaf"
+  },
+  "Chlorimuron ethyl": {
+   "c": "systemic"
+  },
+  "Chlorothalonil": {
+   "c": "contact"
+  },
+  "Chlorpyrifos": {
+   "c": "contact"
+  },
+  "Clomazone": {
+   "c": "systemic",
+   "n": "Taken up by roots and young shoots"
+  },
+  "Copper": {
+   "c": "contact"
+  },
+  "Copper compounds": {
+   "c": "contact"
+  },
+  "Copper fungicide paste": {
+   "c": "contact"
+  },
+  "Copper fungicides": {
+   "c": "contact"
+  },
+  "Copper hydroxide": {
+   "c": "contact"
+  },
+  "Copper oxychloride": {
+   "c": "contact"
+  },
+  "Copper sulfate": {
+   "c": "contact"
+  },
+  "Cyantraniliprole": {
+   "c": "systemic"
+  },
+  "Cyazofamid": {
+   "c": "contact"
+  },
+  "Cyfluthrin": {
+   "c": "contact"
+  },
+  "Cyhalofop butyl": {
+   "c": "systemic"
+  },
+  "Cymoxanil": {
+   "c": "translaminar",
+   "n": "Moves a little into the leaf"
+  },
+  "Cypermethrin": {
+   "c": "contact"
+  },
+  "Cyprodinil": {
+   "c": "systemic"
+  },
+  "Cyromazine": {
+   "c": "translaminar"
+  },
+  "Deltamethrin": {
+   "c": "contact"
+  },
+  "Diazinon": {
+   "c": "contact"
+  },
+  "Difenoconazole": {
+   "c": "systemic"
+  },
+  "Dimethoate": {
+   "c": "systemic"
+  },
+  "Dimethomorph": {
+   "c": "translaminar"
+  },
+  "Dinotefuran": {
+   "c": "systemic"
+  },
+  "Disodium octaborate tetrahydrate": {
+   "c": "contact"
+  },
+  "Diuron": {
+   "c": "systemic",
+   "n": "Taken up mostly by the roots"
+  },
+  "Emamectin benzoate": {
+   "c": "translaminar"
+  },
+  "Ethoxysulfuron": {
+   "c": "systemic"
+  },
+  "Etofenprox": {
+   "c": "contact"
+  },
+  "Fenhexamid": {
+   "c": "contact"
+  },
+  "Fenoxaprop P ethyl": {
+   "c": "systemic"
+  },
+  "Fipronil": {
+   "c": "systemic"
+  },
+  "Florpyrauxifen benzyl": {
+   "c": "systemic"
+  },
+  "Fluazifop P butyl": {
+   "c": "systemic"
+  },
+  "Fluazinam": {
+   "c": "contact"
+  },
+  "Flucetosulfuron": {
+   "c": "systemic"
+  },
+  "Fludioxonil": {
+   "c": "contact"
+  },
+  "Fluensulfone": {
+   "c": "contact",
+   "n": "Works in the soil"
+  },
+  "Fluopyram": {
+   "c": "systemic"
+  },
+  "Formetanate": {
+   "c": "contact"
+  },
+  "Fosetyl aluminium": {
+   "c": "systemic",
+   "n": "Moves up and down the plant"
+  },
+  "Glufosinate ammonium": {
+   "c": "contact",
+   "n": "Moves only a little in the plant"
+  },
+  "Glyphosate": {
+   "c": "systemic"
+  },
+  "Halosulfuron methyl": {
+   "c": "systemic"
+  },
+  "Hexaconazole": {
+   "c": "systemic"
+  },
+  "Horticultural oil or insecticidal soap": {
+   "c": "contact"
+  },
+  "Horticultural or white oil": {
+   "c": "contact"
+  },
+  "Imazethapyr": {
+   "c": "systemic"
+  },
+  "Imidacloprid": {
+   "c": "systemic"
+  },
+  "Indoxacarb": {
+   "c": "contact",
+   "n": "Works when the pest eats or touches it"
+  },
+  "Insecticidal soap": {
+   "c": "contact"
+  },
+  "Iprodione": {
+   "c": "contact"
+  },
+  "Lambda cyhalothrin": {
+   "c": "contact"
+  },
+  "Linuron": {
+   "c": "systemic",
+   "n": "Taken up by roots and leaves"
+  },
+  "Lufenuron": {
+   "c": "contact",
+   "n": "Works when the pest eats it"
+  },
+  "Malathion": {
+   "c": "contact"
+  },
+  "Mancozeb": {
+   "c": "contact"
+  },
+  "Mandipropamid": {
+   "c": "translaminar"
+  },
+  "Maneb": {
+   "c": "contact"
+  },
+  "MCPA": {
+   "c": "systemic"
+  },
+  "Mesotrione": {
+   "c": "systemic"
+  },
+  "Metalaxyl": {
+   "c": "systemic"
+  },
+  "Metalaxyl M": {
+   "c": "systemic"
+  },
+  "Metaldehyde": {
+   "c": "contact",
+   "n": "A bait the snail eats"
+  },
+  "Metamifop": {
+   "c": "systemic"
+  },
+  "Methomyl": {
+   "c": "systemic",
+   "n": "Moves a little in the plant"
+  },
+  "Metribuzin": {
+   "c": "systemic"
+  },
+  "Metsulfuron methyl": {
+   "c": "systemic"
+  },
+  "Mineral oil": {
+   "c": "contact"
+  },
+  "Myclobutanil": {
+   "c": "systemic"
+  },
+  "Neem": {
+   "c": "contact",
+   "n": "Some is taken up by the plant"
+  },
+  "Niclosamide": {
+   "c": "contact"
+  },
+  "Nicosulfuron": {
+   "c": "systemic"
+  },
+  "Oxadiazon": {
+   "c": "contact",
+   "n": "Forms a layer on the soil that kills shoots as they come up"
+  },
+  "Oxamyl": {
+   "c": "systemic"
+  },
+  "Oxycarboxin": {
+   "c": "systemic"
+  },
+  "Oxyfluorfen": {
+   "c": "contact"
+  },
+  "Paraquat": {
+   "c": "contact"
+  },
+  "Pendimethalin": {
+   "c": "systemic",
+   "n": "Works in the soil on sprouting weeds"
+  },
+  "Penoxsulam": {
+   "c": "systemic"
+  },
+  "Permethrin": {
+   "c": "contact"
+  },
+  "Phenthoate": {
+   "c": "contact"
+  },
+  "Phosphorous acid": {
+   "c": "systemic",
+   "n": "Moves up and down the plant"
+  },
+  "Pirimiphos methyl": {
+   "c": "contact"
+  },
+  "Potassium bicarbonate": {
+   "c": "contact"
+  },
+  "Pretilachlor": {
+   "c": "systemic",
+   "n": "Taken up by sprouting weeds from the soil"
+  },
+  "Pretilachlor with safener": {
+   "c": "systemic",
+   "n": "Taken up by sprouting weeds from the soil"
+  },
+  "Prochloraz": {
+   "c": "translaminar"
+  },
+  "Profenofos": {
+   "c": "translaminar"
+  },
+  "Profoxydim": {
+   "c": "systemic"
+  },
+  "Propanil": {
+   "c": "contact"
+  },
+  "Propiconazole": {
+   "c": "systemic"
+  },
+  "Propineb": {
+   "c": "contact"
+  },
+  "Prothioconazole": {
+   "c": "systemic"
+  },
+  "Pymetrozine": {
+   "c": "systemic"
+  },
+  "Pyraclostrobin": {
+   "c": "translaminar"
+  },
+  "Pyrazosulfuron ethyl": {
+   "c": "systemic"
+  },
+  "Pyrethroids": {
+   "c": "contact"
+  },
+  "Pyrethrum": {
+   "c": "contact"
+  },
+  "Pyribenzoxim": {
+   "c": "systemic"
+  },
+  "Quinalphos": {
+   "c": "contact"
+  },
+  "Quizalofop P ethyl": {
+   "c": "systemic"
+  },
+  "Rotenone": {
+   "c": "contact"
+  },
+  "S metolachlor": {
+   "c": "systemic",
+   "n": "Taken up by sprouting weeds from the soil"
+  },
+  "Spinetoram": {
+   "c": "translaminar"
+  },
+  "Spinosad": {
+   "c": "translaminar"
+  },
+  "Spiromesifen": {
+   "c": "contact"
+  },
+  "Spirotetramat": {
+   "c": "systemic",
+   "n": "Moves up and down the plant"
+  },
+  "Sulfur": {
+   "c": "contact"
+  },
+  "Synthetic pyrethroids": {
+   "c": "contact"
+  },
+  "Tebuconazole": {
+   "c": "systemic"
+  },
+  "Tebufenozide": {
+   "c": "contact",
+   "n": "Works when the caterpillar eats it"
+  },
+  "Tefuryltrione": {
+   "c": "systemic"
+  },
+  "Thiamethoxam": {
+   "c": "systemic"
+  },
+  "Thiophanate methyl": {
+   "c": "systemic"
+  },
+  "Thiram": {
+   "c": "contact"
+  },
+  "Topramezone": {
+   "c": "systemic"
+  },
+  "Triadimefon": {
+   "c": "systemic"
+  },
+  "Triafamone": {
+   "c": "systemic"
+  },
+  "Triazole fungicides": {
+   "c": "systemic"
+  },
+  "Tricyclazole": {
+   "c": "systemic"
+  },
+  "Tridemorph": {
+   "c": "systemic"
+  },
+  "Trifloxystrobin": {
+   "c": "translaminar"
+  },
+  "Validamycin": {
+   "c": "contact"
+  },
+  "Validamycin A": {
+   "c": "contact"
+  }
+ }
+}

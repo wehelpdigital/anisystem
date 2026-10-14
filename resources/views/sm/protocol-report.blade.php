@@ -162,6 +162,9 @@ const __init = () => {
     };
     let LOT_ID = 0;
     let LAST = null;
+    // Tagalog help flags: the glossary key for each way of counting the days.
+    const tlFlag = (k) => (k && window.aneeTl ? window.aneeTl.flag(k) : '');
+    const dayTl = (w) => ({ DAS: 'das', DAT: 'dat', DAP: 'dap', DOS: 'dos', AGE: 'tree-age' })[String(w || '').toUpperCase()] || '';
 
     const showTab = (gen) => {
         $id('ptTabGen').classList.toggle('is-on', gen);
@@ -209,7 +212,7 @@ const __init = () => {
         if (r.crop) chips.push(esc(r.crop));
         if (r.variety) chips.push(esc(r.variety));
         if (r.size) chips.push(esc(r.size));
-        if (r.daySystem) chips.push('counts in ' + esc(r.daySystem));
+        if (r.daySystem) chips.push('counts in ' + esc(r.daySystem) + tlFlag(dayTl(r.daySystem)));
         if (r.span) chips.push(esc(r.span));
         const steps = (r.steps || []).map((s2) => {
             const cls = s2.day === 0 ? ' is-zero' : (s2.day !== null && s2.day < 0 ? ' is-pre' : '');
@@ -229,11 +232,11 @@ const __init = () => {
         host.innerHTML = `
             <div class="pt-hero">
                 <h2>${r.lot ? 'Protocol for ' + esc(r.lot) : 'The protocol'}</h2>
-                <p class="sub">${esc(r.schedule || '')}${r.zeroDate ? ' · day zero ' + esc(r.zeroDate) : ''}</p>
+                <p class="sub">${esc(r.schedule || '')}${r.zeroDate ? ' · day zero' + tlFlag('day-zero') + ' ' + esc(r.zeroDate) : ''}</p>
                 <div class="pt-chips">${chips.map((c) => `<span class="pt-chip">${c}</span>`).join('')}</div>
             </div>
             <div class="pt-steps">${steps || '<p class="text-sm text-gray-400 py-6 text-center">No work on this lot is marked done yet.</p>'}</div>
-            ${(r.yields || []).length ? `<div class="pt-yield"><b>🌾 What this protocol produced</b>${r.yields.map(esc).join(' · ')}</div>` : ''}
+            ${(r.yields || []).length ? `<div class="pt-yield"><b data-tl="yield">🌾 What this protocol produced</b>${r.yields.map(esc).join(' · ')}</div>` : ''}
             ${r.skippedPlanned ? `<p class="pt-note">${r.skippedPlanned} planned ${r.skippedPlanned === 1 ? 'activity' : 'activities'} not marked done ${r.skippedPlanned === 1 ? 'is' : 'are'} left out.</p>` : ''}
 `;
         host.querySelector('[data-pt-again]')?.addEventListener('click', () => {

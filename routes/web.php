@@ -35,6 +35,13 @@ Route::get('/storage/{path}', App\Http\Controllers\StorageFallbackController::cl
     ])
     ->name('storage.fallback');
 
+// The Tagalog help flags' glossary (App\Support\Tagalog): the same words for
+// everyone, fetched once on the first tap and cached for a year under its
+// version. Outside the web group, so no session, cookie or query rides along.
+Route::get('/tl/glossary.json', [App\Http\Controllers\TagalogController::class, 'glossary'])
+    ->withoutMiddleware('web')
+    ->name('tl.glossary');
+
 /**
  * Which build is actually serving? "The fix is pushed" and "the fix is live"
  * are different claims, and without this the difference is guesswork: it

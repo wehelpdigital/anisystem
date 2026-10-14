@@ -118,6 +118,8 @@
             root.classList.toggle('sm-contrast', get('sm-a11y-contrast') === '1');
             root.classList.toggle('sm-still', get('sm-a11y-motion') === '1');
             root.classList.toggle('sm-underline', get('sm-a11y-underline') === '1');
+            // Tagalog help flags: on unless switched off (partials.tagalog-flags).
+            root.classList.toggle('tlx-off', get('sm-tl-flags') === '0');
         })();
     </script>
     {{-- WHO IS STANDING HERE, FOR THE TIER WALL TO ADDRESS.
@@ -134,6 +136,9 @@
             window.AU_FARM_NAME = @json($__auGrant ? (optional($__auGrant->boss)->full_name ?: 'This farm') : '');
         </script>
     @endauth
+    {{-- Tagalog help flags: the little Philippine flag that explains a
+         technical word. Before app.js, so its click listener is first. --}}
+    @include('partials.tagalog-flags')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- Google AdSense, only where the free plan carries ads and only for the
          person who sees them (App\Support\Ads): a paid account never loads it. --}}

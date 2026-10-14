@@ -221,10 +221,15 @@
 </div>
 <div class="fhv-count" aria-live="polite"><span data-fhv-count></span><button type="button" class="fhc-clear" data-fhv-clear hidden>Clear the filters</button></div>
 <div class="fhv-wrap" data-fhv-wrap>
+    {{-- Where the yield figures come from (partials.yield-note, shared). --}}
+    @includeIf('partials.yield-note')
     <div class="fhv-grid" data-fhv-grid></div>
     <p class="fhc-none" data-fhv-none hidden>No variety matches all of these. Clear a filter or two.</p>
     <button type="button" class="fhv-more" data-fhv-more hidden>Show more varieties</button>
 </div>
+
+{{-- The same note, compact, for the variety sheet's Yield section (copied in by the script). --}}
+<template id="fhvYieldNote">@includeIf('partials.yield-note', ['compact' => true])</template>
 
 {{-- One variety, full screen. --}}
 <dialog class="fhm fhv-dlg" id="fhvDetail" aria-label="Variety">
@@ -367,14 +372,20 @@
         }).map((x) => x[0]);
     };
     const RES_SHORT = { 'Blast': 'Blast', 'Bacterial leaf blight': 'BLB', 'Tungro': 'Tungro', 'Brown planthopper': 'BPH', 'Green leafhopper': 'GLH', 'Stem borer': 'SB', 'Sheath blight': 'ShB' };
-    const card = (v) => {
+    // Tagalog help flags: a rating code's key, and the filters whose sheet title carries one.
+    const RES_TL = { HR: 'res-hr', R: 'res-r', MR: 'res-mr', HT: 'res-ht', T: 'res-t', MT: 'res-mt', I: 'res-i', MS: 'res-ms', S: 'res-s', HS: 'res-hs' };
+    const FILTER_TL = { days: 'maturity-days', res: 'resistance-rating' };
+    const kindTl = (k) => (/hybrid/i.test(k || '') ? 'hybrid' : (/^inbred$/i.test(String(k || '').trim()) ? 'inbred' : ''));
+    // `lead`: the first card of the list, the one whose labels and rating chips carry the flags (once each).
+    const card = (v, lead) => {
         const s = statsOf(book), rice = book.crop.key === 'rice';
+        const flag = (k, seen) => (lead ? FH.tlAttr(k, seen) : ''), rated = new Set();
         const alias = (v.al || []).slice(0, 2).join(', ');
         const unit = (v.du || s.unit) === 'months' ? 'months' : 'days';
         const nums = (v.d || v.ya !== undefined)
-            ? '<span class="fhv-nums"><span><b>' + (v.d || 'n/a') + '</b><small>' + unit + '</small></span>'
-                + '<span><b>' + (v.ya !== undefined ? fmt(v.ya, v.yu === 't/ha' ? 1 : 0) : 'n/a') + '</b><small>' + esc(rice ? 't/ha avg' : (v.yu || 'yield')) + '</small></span>'
-                + (rice ? '<span><b>' + (v.ym !== undefined ? fmt(v.ym) : 'n/a') + '</b><small>t/ha top</small></span>'
+            ? '<span class="fhv-nums"><span><b>' + (v.d || 'n/a') + '</b><small' + flag('maturity-days') + '>' + unit + '</small></span>'
+                + '<span><b>' + (v.ya !== undefined ? fmt(v.ya, v.yu === 't/ha' ? 1 : 0) : 'n/a') + '</b><small' + flag(rice ? 't-ha-average' : (v.yu === 't/ha' ? 't-ha' : (v.yu ? '' : 'yield'))) + '>' + esc(rice ? 't/ha avg' : (v.yu || 'yield')) + '</small></span>'
+                + (rice ? '<span><b>' + (v.ym !== undefined ? fmt(v.ym) : 'n/a') + '</b><small' + flag('t-ha-top') + '>t/ha top</small></span>'
                     : '<span><b>' + (v.h ? fmt(v.h, 0) : 'n/a') + '</b><small>' + (v.hu === 'm' ? 'm tall' : 'cm tall') + '</small></span>') + '</span>'
                 + (v.ya !== undefined && s.yBest && v.yu === s.yu ? '<span class="fhv-meter" aria-hidden="true"><i style="width: ' + Math.min(100, Math.round(v.ya / s.yBest * 100)) + '%"></i></span>' : '')
             : '<span class="fhv-nodata">' + esc(v.yt ? 'Yield: ' + v.yt : (rice ? 'Days to harvest and yield not listed by PhilRice yet' : 'Traits and ratings inside')) + '</span>';
@@ -386,7 +397,7 @@
             + ((v.envL || []).length ? '<span class="fhv-tag">' + esc(v.envL.join(', ')) + '</span>' : ((v.where || []).length ? '<span class="fhv-tag">' + esc(v.where.join(', ')) + '</span>' : ''))
             + (!rice && !v.reg ? '<span class="fhv-tag is-g">Not on the registry</span>' : '') + '</span>'
             + nums
-            + (res.length ? '<span class="fhv-cres">' + res.map((r) => '<i class="' + r[3] + '" title="' + esc(r[0] + ': ' + r[2]) + '">' + esc(RES_SHORT[r[0]] || r[0].slice(0, 16)) + ' ' + esc(r[1]) + '</i>').join('') + '</span>' : '')
+            + (res.length ? '<span class="fhv-cres">' + res.map((r) => '<i class="' + r[3] + '" title="' + esc(r[0] + ': ' + r[2]) + '"' + flag(RES_TL[r[1]], rated) + '>' + esc(RES_SHORT[r[0]] || r[0].slice(0, 16)) + ' ' + esc(r[1]) + '</i>').join('') + '</span>' : '')
             + '</button>';
     };
     let ok = [], booted = false;
@@ -394,7 +405,7 @@
         const t = st.q.toLowerCase().replace(/\s+/g, ' ').trim(), tc = t.replace(/[\s-]/g, '');
         ok = order(book.items.filter((v) => matches(v, t, tc)));
         const view = ok.slice(from, st.shown);
-        const html = view.map(card).join('');
+        const html = view.map((v, n) => card(v, !from && !n)).join('');
         if (from) grid.insertAdjacentHTML('beforeend', html); else grid.innerHTML = html;
         if (animate && !FH.reduce()) [...grid.children].slice(from).forEach((c, i) => { c.style.animationDelay = Math.min(i, 12) * 28 + 'ms'; c.classList.add('is-in'); });
         const total = book.items.length, noun = book.crop.name.toLowerCase();
@@ -417,7 +428,7 @@
         const f = book.filters.find((x) => x.key === b.dataset.f);
         if (!f) return;
         const v = await FH.pick({ title: f.label, note: f.note, multi: !!f.multi, value: filterVal(f), all: f.key === 'sort' ? null : f.all, counts: f.key !== 'sort',
-            opts: f.opts.map((o) => ({ k: o.k, l: o.l, n: o.n })) });
+            opts: f.opts.map((o) => ({ k: o.k, l: o.l, n: o.n })), tl: FILTER_TL[f.key] });
         if (v === null) return;
         if (f.key === 'sort') st.sort = v || 'year'; else st.f[f.key] = v;
         st.shown = STEP;
@@ -445,7 +456,8 @@
 
     /* ---- One variety, full screen -------------------------------------- */
     const dlg = document.getElementById('fhvDetail'), body = $('[data-fhv-body]', dlg), pane = $('[data-fhv-pane]', dlg);
-    const sec = (h, inner, wide) => '<section class="fhd-sec' + (wide ? ' is-wide' : '') + '"><h3>' + esc(h) + '</h3>' + inner + '</section>';
+    // tl: a Tagalog help flag's key for the heading (optional).
+    const sec = (h, inner, wide, tl) => '<section class="fhd-sec' + (wide ? ' is-wide' : '') + '"><h3' + FH.tlAttr(tl) + '>' + esc(h) + '</h3>' + inner + '</section>';
     const chipsOf = (list, on) => '<ul class="fhd-chips">' + list.map((x) => '<li' + (on ? ' class="is-on"' : '') + '>' + esc(x) + '</li>').join('') + '</ul>';
     const detail = (b, v) => {
         const s = statsOf(b), c = b.crop, rice = c.key === 'rice';
@@ -464,13 +476,15 @@
                     + '<div class="fhv-range-l"><span><b>' + s.dMin + '</b>Soonest</span><span><b>' + Math.round(s.dAvg) + '</b>Average</span><span><b>' + s.dMax + '</b>Latest</span></div>';
             }
             out.push(sec(unit === 'months' ? 'Months to harvest' : 'Days to harvest', '<div class="fhv-big"><b data-count="' + v.d + '">' + v.d + '</b><span>' + unit + ' ' + esc(c.harvest.replace(/^(days|months|years)\s+/, '')) + '</span></div>'
-                + line + (v.dt ? '<p class="fh-fine" style="margin-top:.5rem">In the trials: ' + esc(v.dt) + '</p>' : '')));
+                + line + (v.dt ? '<p class="fh-fine" style="margin-top:.5rem">In the trials: ' + esc(v.dt) + '</p>' : ''), false, 'maturity-days'));
         }
         // Yield against the crop's average, as bars.
         if (v.ya !== undefined || v.yt || (v.yx || []).length) {
             const rows = [];
             const max = Math.max(v.ya || 0, v.ym || 0, s.yAvg || 0, ...(v.yx || []).map((x) => x[1])) || 1;
-            const bar = (label, val, cls) => '<div class="fhv-brow ' + (cls || '') + '"><span>' + esc(label) + '</span><b>' + fmt(val, val >= 100 ? 0 : 2) + ' ' + esc(v.yu || s.yu) + '</b><i><u style="--w: ' + Math.max(3, val / max * 100).toFixed(1) + '%"></u></i></div>';
+            // The first bar's figure carries the t/ha flag.
+            const unitTl = new Set((v.yu || s.yu) === 't/ha' ? [] : ['t-ha']);
+            const bar = (label, val, cls) => '<div class="fhv-brow ' + (cls || '') + '"><span>' + esc(label) + '</span><b' + FH.tlAttr('t-ha', unitTl) + '>' + fmt(val, val >= 100 ? 0 : 2) + ' ' + esc(v.yu || s.yu) + '</b><i><u style="--w: ' + Math.max(3, val / max * 100).toFixed(1) + '%"></u></i></div>';
             if (v.ya !== undefined) rows.push(bar(rice ? 'This variety, average' : 'This variety', v.ya));
             if (v.ym !== undefined) rows.push(bar('This variety, at its best', v.ym, 'is-top'));
             (v.yx || []).forEach(([l, val]) => rows.push(bar(l, val, 'is-top')));
@@ -480,12 +494,15 @@
                 const pct = Math.round((v.ya / s.yAvg - 1) * 100);
                 say = '<p class="fhv-say">' + (Math.abs(pct) < 2 ? 'About the average yield of its crop.' : '<b>' + Math.abs(pct) + ' percent ' + (pct > 0 ? 'more' : 'less') + '</b> than the average ' + c.name.toLowerCase() + ' variety in the trials.') + '</p>';
             }
-            out.push(sec('Yield', (rows.length ? '<div class="fhv-bars">' + rows.join('') + '</div>' : '') + say + (v.yt ? '<p class="fhv-say">' + esc(v.yt) + '</p>' : '')));
+            const note = document.getElementById('fhvYieldNote');
+            out.push(sec('Yield', (rows.length ? '<div class="fhv-bars">' + rows.join('') + '</div>' : '') + say + (v.yt ? '<p class="fhv-say">' + esc(v.yt) + '</p>' : '')
+                + (note ? note.innerHTML.trim() : ''), false, 'yield'));
         }
         // Pests and diseases, as coloured chips.
         if ((v.res || []).length) {
-            out.push(sec('Pests and diseases', '<ul class="fhv-res">' + v.res.map((r, i) => '<li class="' + r[3] + '" style="--i: ' + i + '"><b>' + esc(r[1]) + '</b><span>' + esc(r[0]) + '<small>' + esc(r[2]) + '</small></span></li>').join('') + '</ul>'
-                + '<p class="fh-fine" style="margin-top:.6rem">Green held up in the tests, yellow took a middling share of damage, red took clear damage. A rating can break down when a new strain comes, so keep scouting.</p>'));
+            const rated = new Set();
+            out.push(sec('Pests and diseases', '<ul class="fhv-res">' + v.res.map((r, i) => '<li class="' + r[3] + '" style="--i: ' + i + '"><b' + FH.tlAttr(RES_TL[r[1]], rated) + '>' + esc(r[1]) + '</b><span>' + esc(r[0]) + '<small>' + esc(r[2]) + '</small></span></li>').join('') + '</ul>'
+                + '<p class="fh-fine" style="margin-top:.6rem">Green held up in the tests, yellow took a middling share of damage, red took clear damage. A rating can break down when a new strain comes, so keep scouting.</p>', false, 'resistance-rating'));
         }
         // Grain (rice) and the registry's traits (every other crop).
         if ((v.grain || []).length) {
@@ -518,7 +535,7 @@
         }
         const who = [v.o ? (rice ? 'Bred by ' : 'From ') + v.o : '', v.reg ? 'Registered as ' + v.reg : (rice ? '' : 'Not on the NSIC registry'), v.y ? 'Released ' + v.y : ''].filter(Boolean).join('. ');
         const from = rice ? c.source : (v.reg ? 'the NSIC registry of the Bureau of Plant Industry' + (n && n.claims ? ', and its seller' : '') : 'its seller');
-        const chips = [v.k ? '<span class="' + (v.hy ? 'is-h' : '') + '">' + esc(v.k) + '</span>' : '', v.gl ? '<span class="is-g">Glutinous</span>' : '', v.nw ? '<span class="is-n">New</span>' : '',
+        const chips = [v.k ? '<span class="' + (v.hy ? 'is-h' : '') + '"' + FH.tlAttr(kindTl(v.k)) + '>' + esc(v.k) + '</span>' : '', v.gl ? '<span class="is-g">Glutinous</span>' : '', v.nw ? '<span class="is-n">New</span>' : '',
             v.y ? '<span>' + esc(v.y) + '</span>' : '', v.reg ? '<span>' + esc(v.reg) + '</span>' : ''].join('');
         return '<header class="fhv-hero"><span class="fhv-ic" aria-hidden="true">' + esc(c.icon) + '</span><div><small>' + esc(c.name) + ' variety</small><h2>' + esc(v.n) + '</h2>'
             + ((v.ln || (v.al || []).length) ? '<p>' + esc([v.ln, (v.al || []).length ? (v.ln ? 'Sold as ' : 'Also called ') + v.al.slice(0, 3).join(', ') : ''].filter(Boolean).join('. ')) + '</p>' : '') + '</div>'

@@ -187,7 +187,7 @@
                 return `
                 <button type="button" class="dt-row${k === state.dayType ? ' is-on' : ''}${off ? ' is-off' : ''}" data-day-type="${esc(k)}"${off ? ' aria-disabled="true"' : ''}>
                     <span class="dt-row-e">${esc(d.icon)}</span>
-                    <span class="dt-row-body"><b>${esc(d.label)}</b><i>${esc(d.sub)}</i><i class="dt-row-why">${esc(whyNot(k, state.crop))}</i></span>
+                    <span class="dt-row-body"><b${({ DAT: ' data-tl="das-to-dat"', DAS: ' data-tl="das"', DAP: ' data-tl="dap"', TREE: ' data-tl="dos"' })[k] || ''}>${esc(d.label)}</b><i>${esc(d.sub)}</i><i class="dt-row-why">${esc(whyNot(k, state.crop))}</i></span>
                     <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                 </button>`;
             }).join('');

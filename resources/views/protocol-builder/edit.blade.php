@@ -576,7 +576,7 @@
         </div>
         <div class="pb-head-ver">
             <button type="button" class="pb-ver" id="pbVerBtn" title="Versions of this protocol" aria-label="Versions of this protocol">
-                <span class="pb-ver-e">🗂️</span><span>Version</span><b id="pbVerName">{{ $protocol['versionName'] }}</b><small id="pbVerCount"></small>
+                <span class="pb-ver-e">🗂️</span><span>Version{{ \App\Support\Tagalog::flag('protocol-version') }}</span><b id="pbVerName">{{ $protocol['versionName'] }}</b><small id="pbVerCount"></small>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>
         </div>
@@ -643,7 +643,7 @@
         <div class="pbm-list" id="pbMatList"></div>
         <div class="rx-empty hidden" id="pbMatEmpty">
             <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span>
-            <p class="rx-empty-t">No materials yet</p>
+            <p class="rx-empty-t">No materials{{ \App\Support\Tagalog::flag('protocol-materials') }} yet</p>
             <p class="rx-empty-p">List what you will use, like seed, fertilizer and sprays, and how much you have. Tasks can take from this list, so you see what is left.</p>
         </div>
         <button type="button" class="pb-add-bottom" id="pbAddMatBottom">
@@ -657,7 +657,7 @@
     <div class="pb-panel" id="pbPanelAn" data-panel="analyses" role="tabpanel" hidden>
         <div class="card pba-card" id="pbAnCard">
             <div class="pba-h">
-                <div class="pba-h-t"><b>Saved analyses</b><small id="pbAnSay"></small></div>
+                <div class="pba-h-t"><b>Saved analyses{{ \App\Support\Tagalog::flag('anee-review') }}</b><small id="pbAnSay"></small></div>
             </div>
             <div class="pba-list" id="pbAnList"></div>
             <div class="rx-empty hidden" id="pbAnEmpty">
@@ -672,7 +672,7 @@
     {{-- Rules & notes: a document of the protocol's standing rules, and files beside it. --}}
     <div class="pb-panel" id="pbPanelRules" data-panel="rules" role="tabpanel" hidden>
         <div class="card pbr-card">
-            <div class="pbr-h"><b>Rules &amp; notes</b><span class="pb-save" id="pbRulesState" aria-live="polite"></span></div>
+            <div class="pbr-h"><b>Rules &amp; notes{{ \App\Support\Tagalog::flag('protocol-rules') }}</b><span class="pb-save" id="pbRulesState" aria-live="polite"></span></div>
             <p class="pbh-hint">Your rules for this protocol: when not to spray, how to mix, what to watch for, who to call. It saves as you type.</p>
             <div class="pbr-ed" id="pbRulesEd"></div>
         </div>
@@ -944,7 +944,7 @@
 <div class="sheet hidden" id="pbAskSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Analyze by Anee</h3>
+        <h3 class="sheet-title">Analyze by Anee{{ \App\Support\Tagalog::flag('anee-review') }}</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-4">
@@ -1034,7 +1034,7 @@
 <div class="sheet hidden" id="pbVerSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Versions</h3>
+        <h3 class="sheet-title">Versions{{ \App\Support\Tagalog::flag('protocol-version') }}</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
@@ -1084,6 +1084,14 @@
     const uid = (p) => p + Math.random().toString(36).slice(2, 9);
     const PHASE = { DAS: 0, DAP: 0, DOS: 0, DAT: 1 };
     const TYPE_ICON = { equipment_prep: '🛠️', land_prep: '🚜', seed_treatment: '🧪', planting: '🌱', irrigation: '💧', service: '🧾', fertilizer: '🧂', foliar_spray: '🌫️', herbicide: '🌿', pesticide: '🐛', copper_fungicide: '🟠', fungicide: '🍄', microbial: '🦠', harvest: '🌾', monitoring: '🔍', worker_payroll: '👷', reminder_checklist: '✅', other: '📌' };
+    /* Tagalog help flags (data-tl): which glossary key explains a count, a
+       way of counting, an activity type or a kind of item. A label with no
+       key here simply carries no flag. */
+    const COUNTER_TL = { DAS: 'das', DAT: 'dat', DAP: 'dap', DOS: 'dos' };
+    const DT_TL = { DAT: 'das-to-dat', DAS: 'das', DAP: 'dap', TREE: 'dos' };
+    const TYPE_TL = { seed_treatment: 'seed-treatment', irrigation: 'irrigation', fertilizer: 'granular-fertilizer', foliar_spray: 'foliar-fertilizer', herbicide: 'herbicide', pesticide: 'insecticide', copper_fungicide: 'copper-fungicide', fungicide: 'fungicide', microbial: 'microbial' };
+    const KIND_TL = { herbicide: 'herbicide', insecticide: 'insecticide', fungicide: 'fungicide', molluscicide: 'molluscicide', rodenticide: 'rodenticide', fertilizer: 'granular-fertilizer', foliar: 'foliar-fertilizer', growth: 'growth-regulator', adjuvant: 'adjuvant', bio: 'bio-organic', seed: 'planting-material' };
+    const tlAttr = (key) => key ? ` data-tl="${key}"` : '';
     const GRIP = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>';
     const DOTS = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>';
     const X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
@@ -1285,7 +1293,10 @@
         const dt = OPT.dayTypes[P.dayType] || {};
         $id('pbHeadIcon').textContent = P.cropIcon || '🌱';
         $id('pbHeadTitle').textContent = P.title;
-        $id('pbHeadSub').textContent = `${P.cropLabel || 'No crop yet'}${P.variety ? ' · ' + P.variety : ''} · ${dt.label || P.dayType}`;
+        // The line ends with the way the days are counted; its flag follows it.
+        const headSub = $id('pbHeadSub');
+        if (DT_TL[P.dayType]) headSub.setAttribute('data-tl', DT_TL[P.dayType]); else headSub.removeAttribute('data-tl');
+        headSub.textContent = `${P.cropLabel || 'No crop yet'}${P.variety ? ' · ' + P.variety : ''} · ${dt.label || P.dayType}`;
         const d = $id('pbHeadDesc');
         d.textContent = P.description || '';
         d.classList.toggle('hidden', !P.description);
@@ -1300,7 +1311,7 @@
         if (f && f.day < 0) tags.push(`<span class="pb-tag">Starts <b>${esc(sayWhen(f.counter, f.day))}</b></span>`);
         const n = onlyTasks.length ? onlyTasks[onlyTasks.length - 1] : null;
         if (n) tags.push(`<span class="pb-tag">Runs to <b>${esc(sayWhen(n.counter, n.day))}</b></span>`);
-        if (REVIEW) tags.push(`<button type="button" class="pb-tag is-score" data-go-analyses title="Open the Analyses tab">Anee: <b>${REVIEW.score}/100</b></button>`);
+        if (REVIEW) tags.push(`<button type="button" class="pb-tag is-score" data-go-analyses data-tl="anee-score" title="Open the Analyses tab">Anee: <b>${REVIEW.score}/100</b></button>`);
         if (P.ported) tags.push(`<a class="pb-tag is-ported" href="${esc(P.ported.url)}">Season made ${esc(P.ported.at || '')} → <b>${esc(P.ported.title || 'the season')}</b></a>`);
         $id('pbHeadTags').innerHTML = tags.join('');
         $id('pbVerName').textContent = VER.name || 'Version 1';
@@ -1379,7 +1390,7 @@
         uniq(WARN[t.id] || []).forEach((w) => more.push(`<div class="pb-warnnote">⚠️ ${esc(w)}</div>`));
         return `
             <div class="pb-card" data-id="${esc(t.id)}" data-prio="${esc(t.priority)}">
-                <div class="pb-day${t.day < 0 ? ' is-before' : ''}">${t.day < 0 ? `<b>BEFORE ${esc(t.counter)}</b><span>${-t.day}</span><i title="${esc(stage)}">${-t.day === 1 ? 'day' : 'days'} before</i>` : `<b>${esc(t.counter)}</b><span>${t.day}</span>${stage ? `<i title="${esc(stage)}">${esc(stage)}</i>` : ''}`}</div>
+                <div class="pb-day${t.day < 0 ? ' is-before' : ''}">${t.day < 0 ? `<b${railTl(t.counter)}>BEFORE ${esc(t.counter)}</b><span>${-t.day}</span><i title="${esc(stage)}">${-t.day === 1 ? 'day' : 'days'} before</i>` : `<b${railTl(t.counter)}>${esc(t.counter)}</b><span>${t.day}</span>${stage ? `<i title="${esc(stage)}">${esc(stage)}</i>` : ''}`}</div>
                 <div class="pb-body">
                     <div class="pb-body-t"><span><b>${esc(t.title)}</b>${t.subtitle ? `<i>${esc(t.subtitle)}</i>` : ''}</span><button type="button" class="pb-chev" aria-label="Show more" title="Show more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></div>
                     <div class="pb-chips">${chips.join('')}</div>
@@ -1390,6 +1401,14 @@
                     <button type="button" class="pb-menu" aria-label="More options" title="More options">${DOTS}</button>
                 </div>
             </div>`;
+    }
+    /* The count on a card's rail (DAS, DAT…) carries its Tagalog flag on the
+       first card of each count only, not on every card. */
+    let RAIL_SEEN = null;
+    function railTl(c) {
+        if (!RAIL_SEEN || RAIL_SEEN.has(c) || !COUNTER_TL[c]) return '';
+        RAIL_SEEN.add(c);
+        return tlAttr(COUNTER_TL[c]);
     }
     let OPEN = new Set();
     let WARN = {};
@@ -1411,7 +1430,9 @@
         WARN = warningsFor(TASKS);
         renderWarnings();
         const list = $id('pbList');
+        RAIL_SEEN = new Set();
         list.innerHTML = TASKS.map(cardHtml).join('');
+        RAIL_SEEN = null;
         OPEN.forEach((id) => { const c = list.querySelector(`.pb-card[data-id="${CSS.escape(id)}"]`); if (c) c.classList.add('is-open'); });
         $id('pbEmpty').classList.toggle('hidden', TASKS.length > 0);
         $id('pbUndo').disabled = !HIST.undo.length;
@@ -1628,13 +1649,13 @@
         // planting. Land preparation for a transplanted field is seedbed-time
         // work, so it goes on the DAS count.
         const tree = first === 'DOS';
-        rows.push({ when: 'before', c: first, e: '⏮️', b: `Before ${first} 0`, i: tree ? 'Days before DOS 0, the day the tree program starts. For buying inputs and readying tools.' : `Days before ${first} 0, the ${first === 'DAP' ? 'planting' : 'sowing'} day. For land preparation, seedbed work and buying inputs.` });
+        rows.push({ when: 'before', c: first, e: '⏮️', b: `Before ${first} 0`, tl: 'day-zero', i: tree ? 'Days before DOS 0, the day the tree program starts. For buying inputs and readying tools.' : `Days before ${first} 0, the ${first === 'DAP' ? 'planting' : 'sowing'} day. For land preparation, seedbed work and buying inputs.` });
         counters().forEach((c) => {
-            rows.push({ when: 'on', c, e: '🗓️', b: whenWord('on', c), i: tree ? 'Days counted from the day the tree program starts. The board uses this count for orchards.' : (two ? (c === 'DAS' ? 'Days after sowing, up to transplant. Main field preparation goes here too.' : 'Days after transplant.') : `A day of the ${c} count.`) });
+            rows.push({ when: 'on', c, e: '🗓️', b: whenWord('on', c), tl: COUNTER_TL[c], i: tree ? 'Days counted from the day the tree program starts. The board uses this count for orchards.' : (two ? (c === 'DAS' ? 'Days after sowing, up to transplant. Main field preparation goes here too.' : 'Days after transplant.') : `A day of the ${c} count.`) });
         });
         $id('pbWhenList').innerHTML = rows.map((r) => `
             <button type="button" class="dt-row${r.when === st.when && r.c === st.counter ? ' is-on' : ''}" data-when="${r.when}" data-c="${r.c}">
-                <span class="dt-row-e">${r.e}</span><span class="dt-row-body"><b>${esc(r.b)}</b><i>${esc(r.i)}</i></span>
+                <span class="dt-row-e">${r.e}</span><span class="dt-row-body"><b${tlAttr(r.tl)}>${esc(r.b)}</b><i>${esc(r.i)}</i></span>
                 <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>`).join('');
     }
@@ -1953,7 +1974,7 @@
     $id('pbGroupCustomGo').addEventListener('click', () => { const v = $id('pbGroupCustom').value.trim(); if (!v) { $id('pbGroupCustom').focus(); return; } setGroupName(v); });
     $id('pbGroupCustom').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $id('pbGroupCustomGo').click(); } });
     $id('pbKindList').innerHTML = Object.entries(OPT.kinds).map(([k, v]) => `
-        <button type="button" class="dt-row" data-kind="${k}"><span class="dt-row-e">${esc(v.icon)}</span><span class="dt-row-body"><b>${esc(v.label)}</b></span>
+        <button type="button" class="dt-row" data-kind="${k}"><span class="dt-row-e">${esc(v.icon)}</span><span class="dt-row-body"><b${tlAttr(KIND_TL[k])}>${esc(v.label)}</b></span>
         <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('');
     $id('pbKindList').addEventListener('click', (e) => {
         const r = e.target.closest('[data-kind]'); if (!r || !KIND_FOR) return;
@@ -1965,7 +1986,7 @@
     $id('pbTypeList').innerHTML = `<button type="button" class="dt-row" data-type=""><span class="dt-row-e">📌</span><span class="dt-row-body"><b>No type</b></span>
         <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`
         + Object.entries(OPT.types).map(([k, v]) => `
-        <button type="button" class="dt-row" data-type="${k}"><span class="dt-row-e">${TYPE_ICON[k] || '📌'}</span><span class="dt-row-body"><b>${esc(v)}</b></span>
+        <button type="button" class="dt-row" data-type="${k}"><span class="dt-row-e">${TYPE_ICON[k] || '📌'}</span><span class="dt-row-body"><b${tlAttr(TYPE_TL[k])}>${esc(v)}</b></span>
         <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('');
     $id('pbtTypeBtn').addEventListener('click', () => {
         $id('pbTypeList').querySelectorAll('[data-type]').forEach((r) => r.classList.toggle('is-on', (r.getAttribute('data-type') || '') === (W.type || '')));
@@ -2078,6 +2099,8 @@
             offX = e.clientX - r.left; offY = e.clientY - r.top;
             ghost = el.cloneNode(true); ghost.classList.add('pb-ghost'); ghost.classList.remove('dragging', 'is-open');
             ghost.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+            // The copy keeps the flag it was cloned with; a data-tl left on it would earn a second one.
+            ghost.querySelectorAll('[data-tl]').forEach((n) => n.removeAttribute('data-tl'));
             ghost.style.width = r.width + 'px'; ghost.style.transform = `translate(${r.left}px, ${r.top}px) scale(1.02)`;
             document.body.appendChild(ghost);
             el.classList.add('dragging');
@@ -2243,8 +2266,11 @@
     /* ------------------------------------------------------------ the materials tab */
     const UNIT_WORDS = { kg: 'Kilogram (kg)', g: 'Gram (g)', L: 'Litre (L)', mL: 'Millilitre (mL)', bag: 'Bag', sack: 'Sack', bottle: 'Bottle', pack: 'Pack', sachet: 'Sachet', can: 'Can', piece: 'Piece', roll: 'Roll' };
     let FLASH_MAT = null;
-    function matCardHtml(m) {
+    function matCardHtml(m, seenKinds) {
         const k = OPT.kinds[m.kind] || OPT.kinds.other;
+        // The kind's Tagalog flag rides on the first card of each kind only.
+        let kindWord = esc(k.label);
+        if (seenKinds && KIND_TL[m.kind] && !seenKinds.has(m.kind)) { seenKinds.add(m.kind); kindWord = `<span${tlAttr(KIND_TL[m.kind])}>${kindWord}</span>`; }
         const used = USE.u[m.id] || 0;
         const has = hasQty(m.qty);
         const left = has ? Number(m.qty) - used : null;
@@ -2258,7 +2284,7 @@
             <div class="pbm-card${short ? ' is-short' : ''}" data-mid="${esc(m.id)}">
                 <div class="pbm-e">${esc(k.icon)}</div>
                 <div class="pbm-body">
-                    <div class="pbm-t"><b>${esc(m.name)}</b><i>${esc(k.label)}${m.note ? ' · ' + esc(m.note) : ''}</i></div>
+                    <div class="pbm-t"><b>${esc(m.name)}</b><i>${kindWord}${m.note ? ' · ' + esc(m.note) : ''}</i></div>
                     <div class="pbm-nums">
                         <span>On hand <b>${has ? fmt(m.qty) + esc(unit) : 'not set'}</b></span>
                         <span>Planned <b>${fmt(used)}${esc(unit)}</b></span>
@@ -2279,7 +2305,8 @@
         // The bars grow from where they were, not from nothing.
         const was = {};
         list.querySelectorAll('.pbm-card').forEach((c) => { const s = c.querySelector('.pbm-bar span'); if (s) was[c.getAttribute('data-mid')] = s.style.width; });
-        list.innerHTML = MATS.map(matCardHtml).join('');
+        const seenKinds = new Set();
+        list.innerHTML = MATS.map((m) => matCardHtml(m, seenKinds)).join('');
         $id('pbMatEmpty').classList.toggle('hidden', MATS.length > 0);
         const bars = [...list.querySelectorAll('.pbm-card')].map((c) => ({ s: c.querySelector('.pbm-bar span'), from: was[c.getAttribute('data-mid')] })).filter((x) => x.s);
         bars.forEach(({ s, from }) => { s.style.width = from || '0%'; });
@@ -2288,7 +2315,7 @@
         const drawnBy = new Set();
         TASKS.filter(isTask).forEach((t) => (t.groups || []).forEach((g) => (g.items || []).forEach((it) => { if (it.materialId && matOf(it.materialId)) drawnBy.add(t.id); })));
         $id('pbMatSum').innerHTML = MATS.length ? `
-            <div><b>${MATS.length}</b><span>${MATS.length === 1 ? 'material' : 'materials'}</span></div>
+            <div><b>${MATS.length}</b><span data-tl="protocol-materials">${MATS.length === 1 ? 'material' : 'materials'}</span></div>
             <div><b>${drawnBy.size}</b><span>${drawnBy.size === 1 ? 'task uses' : 'tasks use'} them</span></div>
             <div class="${short.length ? 'is-short' : ''}"><b>${short.length || '✓'}</b><span>${short.length ? 'running short' : 'all covered'}</span></div>` : '';
         if (FLASH_MAT) {
@@ -2836,12 +2863,12 @@
                     <img class="pb-rv-face" src="${esc(OPT.aneeFace)}" alt="">
                 </div>
                 <div class="pb-rv-body">
-                    ${(r.strengths || []).length ? `<p class="pb-rv-h">What is good</p><div class="pb-rv-list">${r.strengths.map((s) => row('is-good', s.point, [s.why])).join('')}</div>` : ''}
-                    ${(r.gaps || []).length ? `<p class="pb-rv-h">What is missing or weak</p><div class="pb-rv-list">${r.gaps.map((g) => row('is-gap', g.what, [g.why, g.fix ? 'Fix: ' + g.fix : ''])).join('')}</div>` : ''}
-                    ${(r.risks || []).length ? `<p class="pb-rv-h">What could go wrong</p><div class="pb-rv-list">${r.risks.map((k) => row('is-risk', k.risk + (k.when ? ' · ' + k.when : ''), [k.action])).join('')}</div>` : ''}
-                    ${(r.additions || []).length ? `<p class="pb-rv-h">Anee would add</p><div class="pb-rv-list">${additions}</div>` : ''}
-                    ${r.sequence ? `<p class="pb-rv-h">Order and spacing</p><p class="pb-rv-p">${esc(r.sequence)}</p>` : ''}
-                    ${r.summary ? `<p class="pb-rv-h">In short</p><p class="pb-rv-p">${esc(r.summary)}</p>` : ''}
+                    ${(r.strengths || []).length ? `<p class="pb-rv-h" data-tl="review-good">What is good</p><div class="pb-rv-list">${r.strengths.map((s) => row('is-good', s.point, [s.why])).join('')}</div>` : ''}
+                    ${(r.gaps || []).length ? `<p class="pb-rv-h" data-tl="review-gaps">What is missing or weak</p><div class="pb-rv-list">${r.gaps.map((g) => row('is-gap', g.what, [g.why, g.fix ? 'Fix: ' + g.fix : ''])).join('')}</div>` : ''}
+                    ${(r.risks || []).length ? `<p class="pb-rv-h" data-tl="review-risks">What could go wrong</p><div class="pb-rv-list">${r.risks.map((k) => row('is-risk', k.risk + (k.when ? ' · ' + k.when : ''), [k.action])).join('')}</div>` : ''}
+                    ${(r.additions || []).length ? `<p class="pb-rv-h" data-tl="review-additions">Anee would add</p><div class="pb-rv-list">${additions}</div>` : ''}
+                    ${r.sequence ? `<p class="pb-rv-h" data-tl="review-order">Order and spacing</p><p class="pb-rv-p">${esc(r.sequence)}</p>` : ''}
+                    ${r.summary ? `<p class="pb-rv-h" data-tl="review-in-short">In short</p><p class="pb-rv-p">${esc(r.summary)}</p>` : ''}
                 </div>
                 ${ANALYSES[0] && VIEW_ID !== ANALYSES[0].id ? '<div class="pb-rv-foot"><span class="pb-rv-fold">An older analysis. The latest is at the top of the list.</span></div>' : ''}
             </div>`;
@@ -2873,8 +2900,8 @@
         const short = !OPT.unlimited && have < price;
         const coin = window.creditCoin(OPT.unlimited ? '∞' : have.toLocaleString());
         $id('pbAskQuote').innerHTML = short
-            ? `This review costs <b>${price} credits</b>. You have ${coin}, so you are <b>${(price - have).toLocaleString()} short</b>. Top up to run it.`
-            : `This review costs <b>${price} credits</b>. You have ${coin}. Nothing is charged until you press <b>Analyze it</b>.`;
+            ? `This review costs <b data-tl="credits">${price} credits</b>. You have ${coin}, so you are <b>${(price - have).toLocaleString()} short</b>. Top up to run it.`
+            : `This review costs <b data-tl="credits">${price} credits</b>. You have ${coin}. Nothing is charged until you press <b>Analyze it</b>.`;
         const go = $id('pbAskGo');
         go.textContent = short ? 'Top up credits' : 'Analyze it';
         go.dataset.short = short ? '1' : '';

@@ -33,6 +33,8 @@
         'broadleaves' => 'M5 19C5 10 10 5 19 5c0 9-5 14-14 14zM5 19L15 9M9.5 14.5h4M12 12V8.5',
     ];
     $groupHue = ['grasses' => 98, 'sedges' => 168, 'broadleaves' => 38];
+    // Each weed group's Tagalog help flag.
+    $groupTl = ['grasses' => 'weed-grass', 'sedges' => 'weed-sedge', 'broadleaves' => 'weed-broadleaf'];
     $faces = collect(array_keys($W::GROUPS))->map(fn ($g) => collect($book['entries'])->first(fn ($e) => $e['kind'] === $g && $e['thumb']))->filter();
 @endphp
 @include('field-helpers.partials.kit')
@@ -95,7 +97,7 @@
                 @foreach ($W::GROUPS as $g => $info)
                     <button type="button" aria-pressed="{{ $loop->first ? 'true' : 'false' }}" data-g="{{ $g }}" style="--g: {{ $groupHue[$g] }}">
                         <span class="ico"><svg fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $groupIcons[$g] }}"/></svg></span>
-                        <span>{{ $info['label'] }}<small>{{ $info['hint'] }}</small></span>
+                        <span>{{ $info['label'] }}{{ \App\Support\Tagalog::flag($groupTl[$g] ?? '') }}<small>{{ $info['hint'] }}</small></span>
                         <span class="tick"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
                     </button>
                 @endforeach
@@ -138,6 +140,8 @@
     'cropNames' => $book['cropNames'],
     // Only the products this page can show (FieldBook::weedProducts).
     'products' => $book['products'],
+    // Systemic, translaminar or contact, per active ingredient (App\Support\AiMobility).
+    'mobility' => $book['mobility'] ?? null,
 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
 @push('scripts')
 <script>
@@ -159,11 +163,18 @@
     const ORDER = ['grasses', 'sedges', 'broadleaves'];
     const HUE = { grasses: 98, sedges: 168, broadleaves: 38 };
     const TIMING = { prep: 'Land preparation', pre: 'Pre emergence', early: 'Early post emergence', post: 'Post emergence', rescue: 'Rescue only', young: 'Young crop', established: 'Established crop' };
+    // Tagalog help flags: the timings, the weed groups, how it was planted and what the days count from.
+    const TIMING_TL = { pre: 'pre-emergence', early: 'early-post', post: 'post-emergence' };
+    const GROUP_TL = { grasses: 'weed-grass', sedges: 'weed-sedge', broadleaves: 'weed-broadleaf' };
+    const planTl = (k) => (/transplant/.test(k) ? 'transplanting' : (/direct/.test(k) ? 'direct-seeding' : ''));
+    const afterTl = (a) => (/transplant/.test(a) ? 'dat' : (/sow|seed/.test(a) ? 'das' : 'dap'));
+    const tl = (k) => (k && window.aneeTl ? window.aneeTl.flag(k) : '');
     const join = (a) => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
     const gIcon = (g) => '<svg fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="' + esc(D.groupIcons[g] || '') + '"/></svg>';
 
     const P = D.products || {};
     Object.assign(FH.prodCards, P.cards || {});
+    FH.setMobility(D.mobility);
     // The products sold here for one ingredient on this crop that name every weed group seen (four at most).
     const prodsOf = (name, groups) => {
         const m = ((P.ip || {})[FH.norm(name)] || {})[st.crop] || {};
@@ -190,7 +201,7 @@
         fold.classList.toggle('is-shut', !many);
         fold.setAttribute('aria-hidden', String(!many));
         methodBox.innerHTML = many ? plans.map((k) => '<button type="button" role="radio" aria-checked="' + (k === st.plan) + '" data-plan="' + esc(k) + '">'
-            + esc(D.plans[k].label) + (D.plans[k].local ? '<small>' + esc(D.plans[k].local) + '</small>' : '') + '</button>').join('') : '';
+            + esc(D.plans[k].label) + tl(planTl(k)) + (D.plans[k].local ? '<small>' + esc(D.plans[k].local) + '</small>' : '') + '</button>').join('') : '';
         const p = D.plans[st.plan];
         const keys = Object.keys(p.windows);
         if (!keys.includes(st.days)) st.days = keys[0];
@@ -199,6 +210,7 @@
         daysBox.innerHTML = keys.map((k) => '<button type="button" role="radio" aria-checked="' + (k === st.days) + '" data-days="' + esc(k) + '">' + dayChip(p.windows[k].short) + '</button>').join('');
         ageAsk.textContent = 'How old is your ' + (D.cropWord[st.crop] || 'crop') + '?';
         hint.textContent = words ? 'Pick where your field is now' : 'Days ' + p.after;
+        if (words) hint.removeAttribute('data-tl'); else hint.setAttribute('data-tl', afterTl(p.after));
         document.querySelectorAll('.wc-ask .wc-q > b > i[data-n]').forEach((i) => { i.textContent = String((i.dataset.n === 'age' ? 2 : 3) + (many ? 1 : 0)); });
     };
 
@@ -212,17 +224,17 @@
         let ings = '';
         anySold = false;
         if (!gs.length) {
-            ings = '<div><h3>Active ingredients</h3><p class="wc-note ok">Pick the weeds you see and the active ingredients for them show here.</p></div>';
+            ings = '<div><h3>Active ingredients' + tl('active-ingredient') + '</h3><p class="wc-note ok">Pick the weeds you see and the active ingredients for them show here.</p></div>';
         } else {
             const lists = gs.map((g) => w[g] || []);
             const common = lists.reduce((a, l) => a.filter((x) => l.includes(x)));
             if (common.length) {
-                ings = '<div><h3>Active ingredients that work on ' + esc(join(names)) + '</h3>' + list(common, gs) + '</div>';
+                ings = '<div><h3>Active ingredients' + tl('active-ingredient') + ' that work on ' + esc(join(names)) + '</h3>' + list(common, gs) + '</div>';
             } else if (gs.length === 1) {
-                ings = '<div><h3>Active ingredients for ' + esc(names[0]) + '</h3><p class="wc-note">No herbicide is listed for ' + esc(names[0]) + ' at this age. Weed by hand or with a hoe, and keep them from seeding.</p></div>';
+                ings = '<div><h3>Active ingredients' + tl('active-ingredient') + ' for ' + esc(names[0]) + '</h3><p class="wc-note">No herbicide is listed for ' + esc(names[0]) + ' at this age. Weed by hand or with a hoe, and keep them from seeding.</p></div>';
             } else {
-                ings = '<div><h3>Active ingredients by group</h3><p class="wc-note">No single active ingredient covers ' + esc(join(names)) + ' at this age. Treat each group with its own, and space the sprays as the labels say.</p></div>'
-                    + '<div class="wc-split fhw-split">' + gs.map((g) => '<div style="--g: ' + HUE[g] + '"><b>' + gIcon(g) + esc(D.groups[g]) + '</b>'
+                ings = '<div><h3>Active ingredients' + tl('active-ingredient') + ' by group</h3><p class="wc-note">No single active ingredient covers ' + esc(join(names)) + ' at this age. Treat each group with its own, and space the sprays as the labels say.</p></div>'
+                    + '<div class="wc-split fhw-split">' + gs.map((g) => '<div style="--g: ' + HUE[g] + '"><b' + FH.tlAttr(GROUP_TL[g]) + '>' + gIcon(g) + esc(D.groups[g]) + '</b>'
                         + (w[g] && w[g].length ? list(w[g], [g]) : '<p class="wc-legend" style="margin-top:.4rem">None listed at this age. Weed by hand.</p>') + '</div>').join('') + '</div>';
             }
             if (ings.includes('fh-ings')) ings += '<div><p class="wc-legend">The group number tells how a herbicide kills. Use a different group next season so the weeds do not learn to survive it.</p>' + (anySold ? FH.rateLine('weeds') : '') + FH.SHOP_NOTE + '</div>';
@@ -231,7 +243,7 @@
         const based = src.length ? '<p class="wc-src">Based on ' + join(src.map((s) => s.url ? '<a href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow">' + esc(s.label) + '</a>' : esc(s.label))) + '.</p>' : '';
         const cw = D.cropWord[st.crop] || '';
         const draw = () => {
-            card.innerHTML = '<div class="wc-when"><span class="wc-timing">' + esc(TIMING[w.timing] || '') + '</span><b>' + esc(w.title) + '</b>'
+            card.innerHTML = '<div class="wc-when"><span class="wc-timing"' + FH.tlAttr(TIMING_TL[w.timing]) + '>' + esc(TIMING[w.timing] || '') + '</span><b>' + esc(w.title) + '</b>'
                 + '<small>' + esc((cw ? cw.charAt(0).toUpperCase() + cw.slice(1) + '. ' : '') + w.stage) + '</small></div>'
                 + '<div class="wc-body"><div><h3>Do this first</h3><ol class="wc-steps">' + w.steps.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ol></div>' + ings + based + '</div>';
         };
@@ -273,14 +285,14 @@
         const named = ((((P.wp || {})[i.kind] || {})[crop || '*']) || []).map((k) => FH.prodCards[k]).filter(Boolean);
         return '<article class="fhd" style="--g: ' + i.hue + '">' + FH.photo(i)
             + '<div class="fhd-body">'
-            + '<header class="fhd-head"><span class="fhd-pill">' + gIcon(i.kind) + esc(gl) + '</span><h2>' + esc(i.name) + '</h2>'
+            + '<header class="fhd-head"><span class="fhd-pill"' + FH.tlAttr(GROUP_TL[i.kind]) + '>' + gIcon(i.kind) + esc(gl) + '</span><h2>' + esc(i.name) + '</h2>'
             + (i.sci ? '<p class="fhd-sci">' + esc(i.sci) + '</p>' : '')
             + (i.local ? '<p class="fhd-local"><b>Local names:</b> ' + esc(i.local) + '</p>' : '') + '</header>'
             + '<div class="fhd-facts"><div><small>Group</small><b>' + esc(gl) + '</b></div>' + (i.life ? '<div><small>Life</small><b>' + esc(i.life) + '</b></div>' : '') + '</div>'
             + (i.hint ? FH.sec(I.eye, 'How to spot it', '<p>' + esc(i.hint) + '</p>') : '')
             + FH.sec(I.eye, 'How to tell ' + gl.toLowerCase(), '<p>' + esc(D.groupHints[i.kind] || '') + '</p>')
             + FH.sec(I.sprout, 'Crops it troubles (' + i.crops.length + ')', FH.cropChips(i.crops, D.cropNames, st.crop))
-            + (named.length ? FH.sec(I.bag, 'Herbicides labelled for ' + gl.toLowerCase() + (crop && D.cropNames[crop] ? ' on ' + D.cropNames[crop][0].toLowerCase() : ''), FH.prodStrip(named) + FH.rateLine('weeds')) : '')
+            + (named.length ? FH.sec(I.bag, 'Herbicides labelled for ' + gl.toLowerCase() + (crop && D.cropNames[crop] ? ' on ' + D.cropNames[crop][0].toLowerCase() : ''), FH.prodStrip(named, { help: true }) + FH.rateLine('weeds')) : '')
             + '<button type="button" class="fhd-cta" data-weed-go="' + esc(i.kind) + '">' + I.drop + 'What to spray on ' + esc(gl.toLowerCase()) + ' at your crop\'s age</button>'
             + FH.sources(i.sources)
             + '</div></article>';

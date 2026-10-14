@@ -18,6 +18,13 @@
        FH.catalogue({...})        a whole catalogue in a full screen sheet:
                                   search, crop and kind tags, cards, details
        FH.swap(el, fn)            redraw el with its height easing
+       FH.setMobility(book)       the page's AiMobility book (FieldBook's
+                                  `mobility`); then FH.mob(name) gives an
+                                  ingredient's {c: classes, n: note} and
+                                  FH.mobChips(classes) its systemic,
+                                  translaminar, contact chips
+       FH.mobHelp()               the explainer of the three (any
+                                  [data-mob-help] opens it)
 
      The option sheet wears the crop tag's looks (public.site.partials.
      crop-pick, which every helper page includes) under its own class, so
@@ -115,6 +122,118 @@
     .fh-no b { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #8a5a00; }
     .fh-no svg { flex: none; width: 1.05rem; height: 1.05rem; margin-top: .12rem; color: #c79e00; }
     .fh-fine { font-size: .76rem; line-height: 1.5; color: #6b7280; }
+
+    /* ---- How it moves in the plant (2026-10-15, the owner) --------------
+       Systemic, translaminar or contact: a chip per class, the same on every
+       ingredient row, product and sheet, in the book's order. Selectors are
+       two classes deep so the cards' own "span" and "i" rules leave them be. */
+    .fh-mob { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .25rem; min-width: 0; vertical-align: middle; }
+    .fh-mob .fh-mc { display: inline-flex; align-items: center; gap: .22rem; margin: 0; padding: .1rem .45rem .1rem .32rem; border-radius: 999px; border: 1px solid transparent;
+        font-style: normal; font-size: .64rem; font-weight: 800; line-height: 1.25; letter-spacing: .02em; text-transform: none; white-space: nowrap; }
+    .fh-mob .fh-mc svg { flex: none; width: .74rem; height: .74rem; }
+    .fh-mob .fh-mc.is-systemic { color: #0b5e48; background: #ddf4ea; border-color: #b4e3cf; }
+    .fh-mob .fh-mc.is-translaminar { color: #1e46a3; background: #e4ecff; border-color: #c3d4fb; }
+    .fh-mob .fh-mc.is-contact { color: #874f00; background: #fdf0d3; border-color: #f4d79a; }
+    .fh-ing-mob { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .3rem; }
+    .fh-ing-note { margin-top: .3rem; font-size: .72rem; line-height: 1.45; color: #5b6650; }
+    .fh-pcard .fh-mob { margin-top: .2rem; }
+    .fh-psheet-mob { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin-top: .7rem; }
+    .fh-psheet-mob .fh-mc { font-size: .72rem; }
+    .fh-psheet .fh-ing-note { font-size: .8rem; }
+    /* The way into the explainer: a round "?" after a list's first chips, or a worded pill. */
+    .fh-mob-q { position: relative; flex: none; width: 1.3rem; height: 1.3rem; padding: 0; border-radius: 999px; display: inline-grid; place-items: center;
+        font-size: .72rem; font-weight: 900; line-height: 1; color: #2d5016; background: #fff; border: 1.5px solid #a8cc7e; cursor: pointer;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    button.fh-mob-q::after { content: ''; position: absolute; inset: -.4rem -.5rem; }
+    button.fh-mob-q:hover { background: #eef6e4; border-color: #6b9f3d; transform: scale(1.08); }
+    .fh-mob-q:focus-visible, .fh-mob-ask:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    .fh-mob-foot { margin-top: .55rem; }
+    .fh-mob-ask { display: inline-flex; align-items: center; gap: .45rem; padding: .3rem .7rem .3rem .3rem; border-radius: 999px; font-size: .76rem; font-weight: 800; color: #2d5016;
+        background: #f1f6ea; border: 1px solid #dfe8d4; cursor: pointer; transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .fh-mob-ask:hover { background: #e7f0dc; border-color: #a8cc7e; }
+
+    /* The explainer: the option sheet's looks, English and Tagalog tabs. */
+    .fh-mobx-tabs { position: relative; flex: none; display: grid; grid-template-columns: 1fr 1fr; margin: .1rem 1rem .7rem; padding: .25rem; border-radius: 999px; background: #f1f5ec; border: 1px solid #e3ead9; }
+    .fh-mobx-tabs::before { content: ''; position: absolute; top: .25rem; bottom: .25rem; left: .25rem; width: calc(50% - .25rem); border-radius: 999px; background: #2d5016;
+        box-shadow: 0 6px 14px -8px rgb(45 80 22 / .8); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .fh-mobx-tabs[data-on="tl"]::before { transform: translateX(100%); }
+    .fh-mobx-tabs button { position: relative; z-index: 1; min-height: 2.4rem; border: 0; border-radius: 999px; background: none; font-size: .88rem; font-weight: 800; color: #3d4b33; cursor: pointer;
+        transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .fh-mobx-tabs button[aria-selected="true"] { color: #fff; }
+    .fh-mobx-tabs button:focus-visible { outline: 3px solid #f5c518; outline-offset: 1px; }
+    .fh-mobx-body { flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; padding: 0 1rem 1rem; }
+    .fh-mobx-panes { display: grid; }
+    .fh-mobx-pane { grid-area: 1 / 1; min-width: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), visibility 0s linear 0s; }
+    .fh-mobx-pane[aria-hidden="true"] { opacity: 0; visibility: hidden; pointer-events: none;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), visibility 0s linear .28s; }
+    .fh-mobx-pane.is-en[aria-hidden="true"] { transform: translateX(-18px); }
+    .fh-mobx-pane.is-tl[aria-hidden="true"] { transform: translateX(18px); }
+    .fh-mobx-lead { font-size: .9rem; line-height: 1.55; color: #374151; }
+    .fh-mobx-c { --mx: #10906e; display: grid; grid-template-columns: 5.4rem minmax(0, 1fr); gap: .8rem; align-items: start; margin-top: .75rem; padding: .75rem; border-radius: 1.1rem;
+        background: #f2faf6; border: 1px solid #cdeee0; }
+    .fh-mobx-c.is-translaminar { --mx: #2f6fe0; background: #f3f6ff; border-color: #d3e0fc; }
+    .fh-mobx-c.is-contact { --mx: #d08300; background: #fff9ec; border-color: #f6e2b4; }
+    .fh-mobx-art { margin: 0; aspect-ratio: 4 / 3; border-radius: .8rem; overflow: hidden; background: #fff; box-shadow: inset 0 0 0 1px rgb(20 33 12 / .06); }
+    .fh-mobx-art svg { display: block; width: 100%; height: 100%; }
+    .fh-mobx-t { min-width: 0; }
+    .fh-mobx-t .fh-mc { font-size: .74rem; }
+    .fh-mobx-t p { margin-top: .35rem; font-size: .86rem; line-height: 1.5; color: #1f2937; }
+    .fh-mobx-best { display: block; margin-top: .55rem; font-size: .64rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #6b7f5a; }
+    .fh-mobx-t ul { display: grid; gap: .25rem; margin-top: .25rem; }
+    .fh-mobx-t li { position: relative; padding-left: .85rem; font-size: .82rem; line-height: 1.45; color: #374151; }
+    .fh-mobx-t li::before { content: ''; position: absolute; left: .1rem; top: .55rem; width: .32rem; height: .32rem; border-radius: 999px; background: var(--mx); }
+    .fh-mobx-more { margin-top: .75rem; padding: .75rem .85rem; border-radius: 1.1rem; background: #fff; border: 1px solid #e5ebdf; }
+    .fh-mobx-more h3 { font-size: .92rem; font-weight: 800; color: #14210c; }
+    .fh-mobx-more p { margin-top: .25rem; font-size: .84rem; line-height: 1.5; color: #374151; }
+    @media (max-width: 359.98px) { .fh-mobx-c { grid-template-columns: minmax(0, 1fr); } .fh-mobx-art { max-width: 8rem; } }
+    /* The pictures: a sprayed leaf, the spray in its class's colour. */
+    .fh-mobx-art .mx-soil, .fh-mobx-art .mx-root { fill: none; stroke: #b08b5a; stroke-width: 2.2; stroke-linecap: round; }
+    .fh-mobx-art .mx-root { stroke-width: 1.6; }
+    .fh-mobx-art .mx-stem { fill: none; stroke: #4d8a2a; stroke-width: 3.4; stroke-linecap: round; }
+    .fh-mobx-art .mx-leaf { fill: #86b556; }
+    .fh-mobx-art .mx-leaf.is-new { fill: #b9dc8c; }
+    .fh-mobx-art .mx-vein { fill: none; stroke: rgb(255 255 255 / .55); stroke-width: 1.4; stroke-linecap: round; }
+    .fh-mobx-art .mx-drops circle { fill: var(--mx); transform-box: fill-box; transform-origin: center; }
+    .fh-mobx-art .mx-shine circle { fill: #fff; opacity: .8; }
+    .fh-mobx-art .mx-rings circle { fill: none; stroke: var(--mx); stroke-width: 1.2; stroke-dasharray: 2 2.4; opacity: .7; }
+    .fh-mobx-art .mx-flow { fill: none; stroke: var(--mx); stroke-width: 1.9; stroke-linecap: round; stroke-dasharray: 3 3.6; }
+    .fh-mobx-art .mx-head { fill: none; stroke: var(--mx); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+    .fh-mobx-art .mx-bug { fill: #7a4a1d; stroke: #7a4a1d; stroke-width: 1.2; stroke-linecap: round; }
+    .fh-mobx[open] .mx-flow { animation: mxFlow 1.2s linear infinite; }
+    .fh-mobx[open] .mx-drops circle { animation: mxLand .6s cubic-bezier(.22,1,.36,1) both; animation-delay: .15s; }
+    .fh-mobx[open] .mx-drops circle:nth-child(2) { animation-delay: .25s; }
+    .fh-mobx[open] .mx-drops circle:nth-child(3) { animation-delay: .35s; }
+    .fh-mobx[open] .mx-drops circle:nth-child(n+4) { animation-delay: .45s; }
+    @keyframes mxFlow { to { stroke-dashoffset: -13.2; } }
+    @keyframes mxLand { from { opacity: 0; transform: translateY(-8px); } }
+    @media (prefers-reduced-motion: reduce) {
+        .fh-mob-q, .fh-mob-ask, .fh-mobx-tabs::before, .fh-mobx-tabs button, .fh-mobx-pane, .fh-mobx-pane[aria-hidden="true"] { transition: none; }
+        .fh-mobx .mx-flow, .fh-mobx .mx-drops circle { animation: none !important; }
+    }
+    html.sm-still .fh-mobx .mx-flow, html.sm-still .fh-mobx .mx-drops circle { animation: none !important; }
+    html.dark .fh-mob .fh-mc.is-systemic { color: #8fe3c4; background: rgb(16 150 110 / .18); border-color: rgb(16 150 110 / .4); }
+    html.dark .fh-mob .fh-mc.is-translaminar { color: #b3cbff; background: rgb(59 120 240 / .2); border-color: rgb(59 120 240 / .42); }
+    html.dark .fh-mob .fh-mc.is-contact { color: #f7cd7c; background: rgb(240 160 20 / .16); border-color: rgb(240 160 20 / .38); }
+    html.dark .fh-ing-note { color: #b9caa8; }
+    html.dark .fh-mob-q { background: #151b12; border-color: #4a7c2a; color: #cfe3b8; }
+    html.dark button.fh-mob-q:hover { background: #22301a; border-color: #6b9f3d; }
+    html.dark .fh-mob-ask { background: #1c2616; border-color: #2b3a1c; color: #d5e3c5; }
+    html.dark .fh-mob-ask:hover { background: #22301a; border-color: #4a7c2a; }
+    html.dark .fh-mobx-tabs { background: #1c2616; border-color: #2b3a1c; }
+    html.dark .fh-mobx-tabs::before { background: #4a7c2a; box-shadow: none; }
+    html.dark .fh-mobx-tabs button { color: #c9d8b8; }
+    html.dark .fh-mobx-tabs button[aria-selected="true"] { color: #fff; }
+    html.dark .fh-mobx-lead, html.dark .fh-mobx-t p, html.dark .fh-mobx-t li, html.dark .fh-mobx-more p { color: #d5e3c5; }
+    html.dark .fh-mobx-c { --mx: #3fd0a2; background: rgb(16 150 110 / .08); border-color: rgb(16 150 110 / .26); }
+    html.dark .fh-mobx-c.is-translaminar { --mx: #7aa6ff; background: rgb(59 120 240 / .09); border-color: rgb(59 120 240 / .28); }
+    html.dark .fh-mobx-c.is-contact { --mx: #f2b443; background: rgb(240 160 20 / .08); border-color: rgb(240 160 20 / .26); }
+    html.dark .fh-mobx-art { background: #0f150c; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .06); }
+    html.dark .fh-mobx-art .mx-leaf { fill: #6b9f3d; }
+    html.dark .fh-mobx-art .mx-leaf.is-new { fill: #9cc46a; }
+    html.dark .fh-mobx-art .mx-bug { fill: #d7a46a; stroke: #d7a46a; }
+    html.dark .fh-mobx-best { color: #9fb58a; }
+    html.dark .fh-mobx-more { background: #1a2414; border-color: #2b3a1c; }
+    html.dark .fh-mobx-more h3 { color: #e8efe1; }
 
     /* ---- A finder's answer: one card per pest or disease ----------------- */
     .fh-res { display: grid; gap: .75rem; }
@@ -434,13 +553,72 @@
         return { q, shopee: 'https://shopee.ph/search?keyword=' + encodeURIComponent(q.toLowerCase()), lazada: 'https://www.lazada.com.ph/tag/' + slug + '/' };
     };
     // One active ingredient: everything a spray list row shows. Add a field here and draw it in ingRow.
-    FH.ing = (name, group, mode, products) => ({ name: String(name), group: group || '', mode: mode || '', shop: FH.shop(name), products: (products || []).filter(Boolean) });
+    FH.ing = (name, group, mode, products) => ({ name: String(name), group: group || '', mode: mode || '', shop: FH.shop(name), products: (products || []).filter(Boolean), mob: FH.mob(name) });
     // ProductBook::norm: the key a product list is filed under.
     FH.norm = (s) => String(s).toLowerCase().replace(/-/g, ' ').replace(/,/g, '').replace(/\s+/g, ' ').trim();
     FH.prodCards = FH.prodCards || {};
     const TIMING = { pre: ['Pre', 'Pre emergence, before the weeds come up'], early_post: ['Early post', 'Early post emergence, on young weeds'],
         post: ['Post', 'Post emergence, on weeds already up'], burndown: ['Burndown', 'Burndown, to clear the field before planting'] };
     const KIND = { herbicide: 'Herbicide', insecticide: 'Insecticide', fungicide: 'Fungicide', molluscicide: 'Molluscicide', nematicide: 'Nematicide', rodenticide: 'Rodenticide' };
+    /* Tagalog help flags (2026-10-15): the glossary key of a group chip, a
+       formulation code and a herbicide's timing. A bare "Group 4" is only
+       ever a herbicide's (the weed helper's), so it is HRAC. */
+    FH.tlGroup = (g) => { const s = String(g || '').trim(); return /^IRAC\b/i.test(s) ? 'irac' : (/^FRAC\b/i.test(s) ? 'frac' : (/^(HRAC\b|Groups?\s+\d)/i.test(s) ? 'hrac' : '')); };
+    const FORM_TL = { EC: 'form-ec', SC: 'form-sc', WG: 'form-wg', WDG: 'form-wg', WP: 'form-wp', GR: 'form-gr', G: 'form-gr', SL: 'form-sl', SE: 'form-se', ME: 'form-me',
+        EW: 'form-ew', CS: 'form-cs', OD: 'form-od', SP: 'form-sp', SG: 'form-sg', FS: 'form-fs', RB: 'form-rb' };
+    FH.tlForm = (f) => FORM_TL[String(f || '').trim().toUpperCase()] || '';
+    const TIMING_TL = { pre: 'pre-emergence', early_post: 'early-post', post: 'post-emergence', burndown: 'burndown' };
+    // ' data-tl="key"' for markup ('' with no key). Given a Set, a term flags only its first chip in that list.
+    const tlAttr = (FH.tlAttr = (k, seen) => {
+        const s = seen && typeof seen.has === 'function' ? seen : null;
+        if (!k || (s && s.has(k))) return '';
+        if (s) s.add(k);
+        return ' data-tl="' + esc(k) + '"';
+    });
+
+    /* ---- How it moves in the plant: systemic, translaminar, contact ------
+       (2026-10-15, the owner.) App\Support\AiMobility's twin: the same name
+       cleaning and the same split of a mix, read from the book a page hands
+       FH.setMobility (FieldBook's `mobility`). A product card brings its own
+       classes (mob). Nothing is shown for a name the book does not know. */
+    const MOB_ORDER = ['systemic', 'translaminar', 'contact'];
+    const MOB_WORD = { systemic: 'Systemic', translaminar: 'Translaminar', contact: 'Contact' };
+    const MOB_ICON = { systemic: svg('<path d="M12 21V4M6.5 9.5L12 4l5.5 5.5M8 21h8"/>', 2.6), translaminar: svg('<path d="M3 9h18M12 3v17M7.5 15.5L12 20l4.5-4.5"/>', 2.6),
+        contact: svg('<path d="M12 3.5s6 6.4 6 10.6a6 6 0 01-12 0c0-4.2 6-10.6 6-10.6z"/>', 2.6) };
+    FH.mobBook = FH.mobBook || null;
+    FH.setMobility = (m) => { if (m && m.ai) FH.mobBook = m; };
+    // AiMobility::norm: no "(...)", no commas, runs of spaces and dashes as one space.
+    FH.mobNorm = (s) => String(s ?? '').replace(/\(.*?\)/g, '').toLowerCase().replace(/,/g, '').replace(/[\s-]+/g, ' ').trim();
+    // AiMobility::of: { c: the classes in order, n: the notes or null }, or null when nothing is known.
+    FH.mob = (name) => {
+        const book = FH.mobBook && FH.mobBook.ai;
+        if (!book) return null;
+        const clean = String(name ?? '').replace(/\(.*?\)/g, '').trim();
+        // A mix is split on "plus" or "+" (and "with", but not "with safener"); "2,4-D" keeps its comma.
+        const parts = clean.split(/\s+plus\s+|\s*\+\s*|\s+with\s+(?!safener)/i);
+        const cls = new Set(), notes = [];
+        parts.forEach((p) => {
+            const k = FH.mobNorm(p), row = Object.prototype.hasOwnProperty.call(book, k) ? book[k] : null;
+            if (!row) return;
+            cls.add(row.c);
+            if (row.n) { const t = p.trim(); notes.push((parts.length > 1 ? t.charAt(0).toUpperCase() + t.slice(1) + ': ' : '') + row.n); }
+        });
+        return cls.size ? { c: MOB_ORDER.filter((c) => cls.has(c)), n: notes.length ? notes.join('. ') + '.' : null } : null;
+    };
+    // A record's classes: what FH.ing found, or read now.
+    const mobOf = (i) => (i && i.mob !== undefined ? i.mob : FH.mob(i && i.name));
+    // The chips, one per class, always in the book's order ('' for none).
+    FH.mobChips = (classes) => {
+        const list = MOB_ORDER.filter((k) => (classes || []).includes(k));
+        if (!list.length) return '';
+        const cl = (FH.mobBook && FH.mobBook.classes) || {};
+        return '<span class="fh-mob">' + list.map((k) => '<span class="fh-mc is-' + k + '"' + (cl[k] && cl[k].say ? ' title="' + esc(cl[k].say) + '"' : '') + '>'
+            + MOB_ICON[k] + esc((cl[k] && cl[k].en) || MOB_WORD[k]) + '</span>').join('') + '</span>';
+    };
+    // The way into the explainer (FH.mobHelp): a round "?", or a worded pill.
+    const MOB_ASK = 'What systemic, translaminar and contact mean';
+    FH.mobHelpBtn = () => '<button type="button" class="fh-mob-q" data-mob-help aria-haspopup="dialog" aria-label="' + MOB_ASK + '" title="' + MOB_ASK + '">?</button>';
+    FH.mobAskBtn = () => '<button type="button" class="fh-mob-ask" data-mob-help aria-haspopup="dialog"><span class="fh-mob-q" aria-hidden="true">?</span>Systemic, translaminar or contact?</button>';
     // The plain line wherever products show: the label decides the rate.
     FH.rateLine = (noun) => '<p class="fh-fine fh-rate">Use the rate on the product label. Rotate groups so ' + (noun === 'weeds' ? 'the weeds do' : 'the ' + esc(noun || 'pest') + ' does') + ' not build resistance.</p>';
     // A product's own search on each shop (2026-10-15, the owner): the brand as it is sold.
@@ -454,22 +632,39 @@
         + '<a class="shop-logo is-sp" href="' + esc(shopee) + '" target="_blank" rel="noopener nofollow" title="Search Shopee for ' + esc(what) + '" aria-label="Search Shopee for ' + esc(what) + '"><img src="' + LOGO.sp + '" alt="" width="48" height="48">' + (words ? '<span>Search Shopee</span>' : '') + '</a>'
         + '<a class="shop-logo is-lz" href="' + esc(lazada) + '" target="_blank" rel="noopener nofollow" title="Search Lazada for ' + esc(what) + '" aria-label="Search Lazada for ' + esc(what) + '"><img src="' + LOGO.lz + '" alt="" width="48" height="48">' + (words ? '<span>Search Lazada</span>' : '') + '</a></span>';
     FH.prodShop = (p, words) => { const u = FH.shopOf(p.brand); return FH.shopLinks(u.shopee, u.lazada, p.brand, 'fh-pshop', words); };
-    FH.prodChip = (p) => '<div class="fh-prod"><button type="button" class="fh-prod-n" data-prod="' + esc(p.key) + '">'
-        + '<b><span>' + esc(p.brand) + '</span></b>'
-        + (p.timing && TIMING[p.timing] || p.company || p.form ? '<small>' + (p.timing && TIMING[p.timing] ? '<em>' + TIMING[p.timing][0] + '</em>' : '')
-            + '<span>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</span></small>' : '') + '</button>'
+    // `seen` (a Set, optional): the list's flags so far, so a form code or a timing flags its first chip only.
+    FH.prodChip = (p, seen) => '<div class="fh-prod"><button type="button" class="fh-prod-n" data-prod="' + esc(p.key) + '">'
+        + '<b><span>' + esc(p.brand) + '</span>' + FH.mobChips(p.mob) + '</b>'
+        + (p.timing && TIMING[p.timing] || p.company || p.form ? '<small>' + (p.timing && TIMING[p.timing] ? '<em' + tlAttr(TIMING_TL[p.timing], seen) + '>' + TIMING[p.timing][0] + '</em>' : '')
+            + '<span' + (p.form ? tlAttr(FH.tlForm(p.form), seen) : '') + '>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</span></small>' : '') + '</button>'
         + FH.prodShop(p) + '</div>';
-    FH.prodStrip = (cards) => (cards && cards.length) ? '<div class="fh-pcards">' + cards.map((p) => '<div class="fh-pcard"><button type="button" class="fh-pcard-n" data-prod="' + esc(p.key) + '">'
-        + '<b>' + esc(p.brand) + '</b><small>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</small>'
-        + ((p.ai || []).length ? '<span>' + esc(p.ai.join(' plus ')) + '</span>' : '') + (p.group ? '<i>' + esc(p.group) + '</i>' : '')
-        + (p.timing && TIMING[p.timing] ? '<em>' + TIMING[p.timing][0] + '</em>' : '') + '</button>' + FH.prodShop(p) + '</div>').join('') + '</div>' : '';
-    FH.ingRow = (i) => '<li class="fh-ing">'
-        + '<div class="fh-ing-top"><b>' + esc(i.name) + '</b>' + (i.group ? '<i class="fh-grp"' + (i.mode ? ' title="' + esc(i.mode) + '"' : '') + '>' + esc(i.group) + '</i>' : '') + '</div>'
+    // The group chip flags on every card (each is read on its own); a form code and a timing on their first card.
+    // opts.help: the worded way into the explainer under the cards (when no spray list above has its "?").
+    FH.prodStrip = (cards, opts) => { const seen = new Set(), o = opts || {}; return (cards && cards.length) ? '<div class="fh-pcards">' + cards.map((p) => '<div class="fh-pcard"><button type="button" class="fh-pcard-n" data-prod="' + esc(p.key) + '">'
+        + '<b>' + esc(p.brand) + '</b><small' + (p.form ? tlAttr(FH.tlForm(p.form), seen) : '') + '>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</small>'
+        + ((p.ai || []).length ? '<span>' + esc(p.ai.join(' plus ')) + '</span>' : '') + (p.group ? '<i' + tlAttr(FH.tlGroup(p.group)) + '>' + esc(p.group) + '</i>' : '')
+        + FH.mobChips(p.mob)
+        + (p.timing && TIMING[p.timing] ? '<em' + tlAttr(TIMING_TL[p.timing], seen) + '>' + TIMING[p.timing][0] + '</em>' : '') + '</button>' + FH.prodShop(p) + '</div>').join('') + '</div>'
+        + (o.help && cards.some((p) => (p.mob || []).length) ? '<div class="fh-mob-foot">' + FH.mobAskBtn() + '</div>' : '') : ''; };
+    // The group chip flags on every row; "Sold as", a form code and a timing on their first row of the list.
+    // o.help: the "?" after this row's class chips; o.notes: the ingredient's note under them (a detail, an opened card).
+    FH.ingRow = (i, seen, o) => { const s = seen && typeof seen.has === 'function' ? seen : new Set(), m = mobOf(i), mc = m ? FH.mobChips(m.c) : ''; return '<li class="fh-ing">'
+        + '<div class="fh-ing-top"><b>' + esc(i.name) + '</b>' + (i.group ? '<i class="fh-grp"' + (i.mode ? ' title="' + esc(i.mode) + '"' : '') + tlAttr(FH.tlGroup(i.group)) + '>' + esc(i.group) + '</i>' : '') + '</div>'
+        + (mc ? '<div class="fh-ing-mob">' + mc + (o && o.help ? FH.mobHelpBtn() : '') + '</div>' + (o && o.notes && m.n ? '<p class="fh-ing-note">' + esc(m.n) + '</p>' : '') : '')
         + '<div class="fh-ing-foot">' + (i.mode ? '<small>' + esc(i.mode) + '</small>' : '')
         + FH.shopLinks(i.shop.shopee, i.shop.lazada, i.shop.q || i.name, 'fh-shop') + '</div>'
-        + (i.products && i.products.length ? '<div class="fh-prods"><span class="fh-prods-l">Sold as</span>' + i.products.map(FH.prodChip).join('') + '</div>' : '')
-        + '</li>';
-    FH.ingList = (list) => '<ul class="fh-ings">' + list.map(FH.ingRow).join('') + '</ul>';
+        + (i.products && i.products.length ? '<div class="fh-prods"><span class="fh-prods-l"' + tlAttr('sold-as', s) + '>Sold as</span>' + i.products.map((p) => FH.prodChip(p, s)).join('') + '</div>' : '')
+        + '</li>'; };
+    // One "?" a list, after the first row that has class chips. opts.notes: each ingredient's note under its chips.
+    FH.ingList = (list, opts) => {
+        const seen = new Set(), notes = !!(opts && opts.notes);
+        let asked = false;
+        return '<ul class="fh-ings">' + list.map((i) => {
+            const m = mobOf(i), help = !asked && !!(m && FH.mobChips(m.c));
+            if (help) asked = true;
+            return FH.ingRow(i, seen, { help, notes });
+        }).join('') + '</ul>';
+    };
     FH.SHOP_NOTE = '<p class="fh-fine">The Shopee and Lazada links only search those shops for the active ingredient or the product. They are not a recommendation of any seller. Check the label, your crop and the FPA registration before you buy.</p>';
 
     // The local names a farmer would say, when they are names and not a sentence about names.
@@ -557,7 +752,8 @@
         sheet.querySelectorAll('.cp-row').forEach((r) => { const on = !q || r.dataset.q.includes(q); r.hidden = !on; any = any || on; });
         sheet.querySelector('.cp-none')?.classList.toggle('is-on', !any);
     };
-    // FH.pick({ title, note, opts: [{k, l, sub, n, icon}], value, multi, all, search, counts }) resolves the choice, or null.
+    // FH.pick({ title, note, opts: [{k, l, sub, n, icon}], value, multi, all, search, counts, tl }) resolves the choice, or null.
+    // tl: a Tagalog help flag's key for the title.
     // The one sheet, made the first time it is wanted.
     const ensureSheet = () => {
         if (!sheet) {
@@ -591,7 +787,7 @@
         sheet._multi = multi;
         sheet.setAttribute('aria-label', cfg.title || 'Pick');
         sheet.innerHTML = '<div class="cp-box" tabindex="-1"><div class="cp-grip" aria-hidden="true"></div>'
-            + '<div class="cp-head"><h2>' + esc(cfg.title) + '</h2><button type="button" class="cp-x" aria-label="Close">' + FH.icon.x + '</button></div>'
+            + '<div class="cp-head"><h2' + tlAttr(cfg.tl) + '>' + esc(cfg.title) + '</h2><button type="button" class="cp-x" aria-label="Close">' + FH.icon.x + '</button></div>'
             + (cfg.note ? '<p class="fh-sheet-note">' + esc(cfg.note) + '</p>' : '')
             + (cfg.search ? '<label class="cp-find">' + FH.icon.search + '<span class="sr-only">Search</span><input type="search" placeholder="' + esc(cfg.search) + '" autocomplete="off"></label>' : '')
             + '<div class="cp-list" role="listbox" aria-label="' + esc(cfg.title) + '"' + (multi ? ' aria-multiselectable="true"' : '') + '>'
@@ -622,12 +818,17 @@
         sheetKind = 'info';
         sheet._multi = false;
         sheet.setAttribute('aria-label', p.brand);
-        const facts = [['Active ingredients', (p.ai || []).join(', ')], ['Group', p.group], ['Form', p.form], ['When', p.timing && TIMING[p.timing] ? TIMING[p.timing][1] : ''],
-            ['Labelled for', (p.crops || []).join(', ')]].filter((x) => x[1]);
+        // Each fact: its label, its value, and the Tagalog flag its label carries.
+        const facts = [['Active ingredients', (p.ai || []).join(', '), 'active-ingredient'], ['Group', p.group, FH.tlGroup(p.group)], ['Form', p.form, FH.tlForm(p.form) || 'formulation'],
+            ['When', p.timing && TIMING[p.timing] ? TIMING[p.timing][1] : '', TIMING_TL[p.timing]], ['Labelled for', (p.crops || []).join(', ')]].filter((x) => x[1]);
+        // How its active ingredients move (the card's classes), each one's note from the book, and the way into the explainer.
+        const pm = FH.mobChips(Array.isArray(p.mob) ? p.mob : [].concat(...(p.ai || []).map((a) => (FH.mob(a) || {}).c || [])));
+        const pn = (p.ai || []).map((a) => { const m = FH.mob(a); return m && m.n ? ((p.ai.length > 1 && m.n.indexOf(':') < 0) ? a + ': ' : '') + m.n : ''; }).filter(Boolean).join(' ');
         sheet.innerHTML = '<div class="cp-box" tabindex="-1"><div class="cp-grip" aria-hidden="true"></div>'
             + '<div class="cp-head"><h2>' + esc(p.brand) + '</h2><button type="button" class="cp-x" aria-label="Close">' + FH.icon.x + '</button></div>'
-            + '<div class="fh-psheet"><p class="fh-pkind"><span>' + esc(KIND[p.kind] || p.kind || 'Product') + '</span>' + (p.company ? 'by ' + esc(p.company) : '') + '</p>'
-            + '<div class="fhd-facts">' + facts.map(([l, v]) => '<div><small>' + esc(l) + '</small><b style="font-size:.88rem">' + esc(v) + '</b></div>').join('') + '</div>'
+            + '<div class="fh-psheet"><p class="fh-pkind"><span' + tlAttr(KIND[p.kind] ? p.kind : '') + '>' + esc(KIND[p.kind] || p.kind || 'Product') + '</span>' + (p.company ? 'by ' + esc(p.company) : '') + '</p>'
+            + (pm ? '<div class="fh-psheet-mob">' + pm + FH.mobHelpBtn() + '</div>' + (pn ? '<p class="fh-ing-note">' + esc(pn) + '</p>' : '') : '')
+            + '<div class="fhd-facts">' + facts.map(([l, v, k]) => '<div><small' + tlAttr(k) + '>' + esc(l) + '</small><b style="font-size:.88rem">' + esc(v) + '</b></div>').join('') + '</div>'
             + (p.note ? '<p class="fh-pnote">' + esc(p.note) + '</p>' : '')
             + '<div class="fh-psheet-shop"><b>Find it in a shop</b>' + FH.prodShop(p, true) + '</div>'
             + FH.rateLine(p.kind === 'herbicide' ? 'weeds' : (p.kind === 'fungicide' ? 'disease' : 'pest'))
@@ -640,6 +841,147 @@
         sheet.querySelector('.cp-box').focus({ preventScroll: true });
     };
     document.addEventListener('click', (e) => { const b = e.target.closest('[data-prod]'); if (b && FH.prodCards[b.dataset.prod]) FH.productSheet(FH.prodCards[b.dataset.prod]); });
+
+    /* ---- The explainer: systemic, translaminar, contact ------------------
+       A sheet of its own (dialog#fhMobHelp, the option sheet's looks), so it
+       can open over a product's sheet and leave it there. English and Tagalog
+       tabs (the choice kept on this phone), a drawn leaf for each class, when
+       each is the better choice, why to rotate, and why a contact spray needs
+       full cover. Built on its first opening. */
+    const MOBX = {
+        en: { tab: 'English', close: 'Close', best: 'Best when',
+            lead: 'Every active ingredient works in one of three ways once it is on the plant. The chip beside it in the list tells you which.',
+            c: {
+                systemic: ['Taken in and carried through the plant, so it reaches parts the spray did not touch, and new growth.', [
+                    'Pests hide inside stems, fruits or rolled leaves, or under the leaves',
+                    'Sucking insects like planthoppers, aphids and whiteflies',
+                    'The crop is growing fast and new leaves keep coming',
+                    'On weeds it can move down to the roots, so weeds that grow back from their roots die too']],
+                translaminar: ['Soaks through the leaf from the sprayed side to the other side, but does not travel through the whole plant.', [
+                    'Mites, leafminers and thrips feed under the leaf',
+                    'Rain may come soon. Once it has soaked in, rain does not wash it off',
+                    'New leaves that come out after the spray are not covered, so keep watching them']],
+                contact: ['Stays where it lands. It works only on what the spray touches, so cover the plant well.', [
+                    'You need a quick knockdown of pests you can see',
+                    'You want to slow resistance. Many contact fungicides hit a disease in many ways at once, so it rarely learns to survive them',
+                    'On weeds it burns only the green parts it hits. Weeds with deep roots may grow back']],
+            },
+            more: [['Why switch groups and classes', 'A pest, disease or weed that meets the same group again and again learns to survive it. Use a different group number the next time you spray. A product that joins a systemic and a contact attacks in two ways at once, which also slows resistance.'],
+                ['Contact sprays need full cover', 'Spray until both sides of the leaves are wet, inside the canopy too. A spot the spray missed is not protected. Heavy rain soon after spraying washes a contact spray off, so you may need to spray again. Follow the label.']] },
+        tl: { tab: 'Tagalog', close: 'Isara', best: 'Mas bagay kapag',
+            lead: 'May tatlong paraan ng pagkilos ang aktibong sangkap kapag nasa halaman na. Ang maliit na tatak sa tabi nito sa listahan ang nagsasabi kung alin.',
+            c: {
+                systemic: ['Sinisipsip ito ng halaman at dinadala sa loob, pati sa bahaging hindi natamaan ng spray at sa mga bagong dahon.', [
+                    'Nagtatago ang peste sa loob ng puno, bunga o nakarolyong dahon, o sa ilalim ng dahon',
+                    'May insektong sumisipsip ng katas, gaya ng planthopper, aphid at whitefly',
+                    'Mabilis lumaki ang tanim at laging may bagong dahon',
+                    'Sa damo, puwede itong bumaba hanggang ugat, kaya namamatay pati ang damong tumutubo ulit mula sa ugat']],
+                translaminar: ['Tumatagos ito sa dahon, mula sa ibabaw na natamaan ng spray hanggang sa ilalim. Pero hindi ito kumakalat sa buong halaman.', [
+                    'Nasa ilalim ng dahon ang peste, gaya ng hama (mite), leafminer at thrips',
+                    'Baka umulan agad. Kapag nasipsip na ng dahon, hindi na ito naaanod ng ulan',
+                    'Hindi naaabot ang mga bagong dahon na lalabas pagkatapos ng spray, kaya bantayan ang mga ito']],
+                contact: ['Nananatili ito kung saan tumama. Ang peste, sakit o bahagi lang ng halaman na nabasa ng spray ang tinatablan.', [
+                    'Kailangan mong mapatay agad ang pesteng nakikita mo',
+                    'Gusto mong mapabagal ang resistance. Maraming contact na fungicide ang tumatama sa sakit sa maraming paraan nang sabay, kaya bihira itong masanay',
+                    'Sa damo, ang berdeng bahagi lang na natamaan ang nasusunog. Puwedeng tumubo ulit ang damong malalim ang ugat']],
+            },
+            more: [['Bakit nagpapalit ng grupo at uri', 'Kapag paulit-ulit ang parehong grupo, natututo ang peste, sakit o damo na mabuhay dito. Ibang numero ng grupo naman sa susunod na spray. Ang produktong may halong systemic at contact ay tumatama sa dalawang paraan nang sabay, kaya mas mabagal ding magka-resistance.'],
+                ['Sa contact, basain ang lahat', 'Mag-spray hanggang basa ang ibabaw at ilalim ng dahon, pati sa loob ng tanim. Hindi protektado ang bahaging hindi natamaan. Kapag malakas ang ulan pagkatapos mag-spray, naaanod ang contact, kaya baka kailangang mag-spray ulit. Sundin ang label.']] },
+    };
+    // The pictures: a sprayed plant (systemic), a leaf cut across (translaminar), a leaf from above (contact).
+    const MOB_ART = {
+        systemic: '<svg viewBox="0 0 96 72" aria-hidden="true"><path class="mx-soil" d="M8 62h80"/><path class="mx-root" d="M48 62v7M48 65l-5 4M48 65l5 4"/>'
+            + '<path class="mx-stem" d="M48 62V15"/><path class="mx-leaf" d="M48 50C40 43 29 43 20 49C29 56 40 56 48 50Z"/><path class="mx-leaf" d="M48 35C56 28 67 28 76 34C67 41 56 41 48 35Z"/>'
+            + '<path class="mx-leaf is-new" d="M48 17C44 11 45 6 49 2C53 6 53 12 48 17Z"/>'
+            + '<g class="mx-drops"><circle cx="26" cy="44" r="2.2"/><circle cx="33" cy="42.4" r="2.2"/><circle cx="40" cy="43.6" r="2.2"/></g>'
+            + '<path class="mx-flow" d="M28 49.5H48V20"/><path class="mx-flow" d="M48 35H71"/><path class="mx-flow" d="M48 50V66"/>'
+            + '<path class="mx-head" d="M44.5 23.5L48 19l3.5 4.5M67.5 31.5L72 35l-4.5 3.5"/></svg>',
+        translaminar: '<svg viewBox="0 0 96 72" aria-hidden="true"><path class="mx-leaf" d="M6 31C30 23 66 23 90 31V43C66 35 30 35 6 43Z"/><path class="mx-vein" d="M8 37C30 29.5 66 29.5 88 37"/>'
+            + '<g class="mx-drops"><circle cx="24" cy="23" r="2.6"/><circle cx="48" cy="20.6" r="2.6"/><circle cx="72" cy="23" r="2.6"/></g>'
+            + '<path class="mx-flow" d="M24 27V51M48 25V49M72 27V51"/><path class="mx-head" d="M20.5 48L24 52.5l3.5-4.5M44.5 46L48 50.5l3.5-4.5M68.5 48L72 52.5l3.5-4.5"/>'
+            + '<g class="mx-bug"><ellipse cx="48" cy="61" rx="5.5" ry="3.6"/><path d="M43 58.5l-3.5-2.5M43 63.5l-3.5 2.5M53 58.5l3.5-2.5M53 63.5l3.5 2.5"/></g></svg>',
+        contact: '<svg viewBox="0 0 96 72" aria-hidden="true"><path class="mx-leaf" d="M8 58C18 24 62 10 90 13C84 46 46 68 8 58Z"/><path class="mx-vein" d="M13 55C36 42 62 28 85 16"/>'
+            + '<g class="mx-rings"><circle cx="30" cy="44" r="6"/><circle cx="50" cy="30" r="6.6"/><circle cx="66" cy="38" r="5.4"/></g>'
+            + '<g class="mx-drops"><circle cx="30" cy="44" r="3.2"/><circle cx="50" cy="30" r="3.6"/><circle cx="66" cy="38" r="2.8"/><circle cx="72" cy="22" r="2.2"/><circle cx="40" cy="52" r="2.2"/></g>'
+            + '<g class="mx-shine"><circle cx="29" cy="42.8" r=".9"/><circle cx="48.8" cy="28.6" r="1"/><circle cx="65.2" cy="37" r=".8"/></g></svg>',
+    };
+    const MOB_LANGS = ['en', 'tl'];
+    let mobDlg = null, mobLang = 'en', mobTok = 0, mobFrom = null;
+    try { if (localStorage.getItem('fh-mobx-lang') === 'tl') mobLang = 'tl'; } catch (_) { /* private mode: English */ }
+    const mobPane = (l) => {
+        const t = MOBX[l], cl = (FH.mobBook && FH.mobBook.classes) || {};
+        return '<p class="fh-mobx-lead">' + esc(t.lead) + '</p>'
+            + MOB_ORDER.map((k) => '<article class="fh-mobx-c is-' + k + '"><figure class="fh-mobx-art">' + MOB_ART[k] + '</figure><div class="fh-mobx-t">' + FH.mobChips([k])
+                // English says what the book says (one source); Tagalog is the explainer's own.
+                + '<p>' + esc(l === 'en' && cl[k] && cl[k].say ? cl[k].say : t.c[k][0]) + '</p>'
+                + '<b class="fh-mobx-best">' + esc(t.best) + '</b><ul>' + t.c[k][1].map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul></div></article>').join('')
+            + t.more.map(([h, x]) => '<section class="fh-mobx-more"><h3>' + esc(h) + '</h3><p>' + esc(x) + '</p></section>').join('');
+    };
+    const setMobLang = (l, keep) => {
+        mobLang = l === 'tl' ? 'tl' : 'en';
+        const d = mobDlg;
+        d.querySelector('.fh-mobx-tabs').dataset.on = mobLang;
+        d.querySelectorAll('.fh-mobx-tabs [role="tab"]').forEach((b) => { const on = b.dataset.lang === mobLang; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+        d.querySelectorAll('.fh-mobx-pane').forEach((p) => { const on = p.classList.contains('is-' + mobLang); p.setAttribute('aria-hidden', String(!on)); p.toggleAttribute('inert', !on); });
+        d.querySelector('[data-mob-close]').textContent = MOBX[mobLang].close;
+        if (keep) { try { localStorage.setItem('fh-mobx-lang', mobLang); } catch (_) { /* not kept */ } }
+    };
+    const closeMob = () => {
+        const d = mobDlg;
+        if (!d || !d.open || d.classList.contains('is-closing')) return;
+        window.unregisterOverlay?.('fh-mobx');
+        const tok = ++mobTok;
+        const done = () => {
+            if (tok !== mobTok) return;
+            d.classList.remove('is-closing'); d.close(); FH.lock(false);
+            if (mobFrom && mobFrom.isConnected) { try { mobFrom.focus({ preventScroll: true }); } catch (_) { /* gone */ } }
+            mobFrom = null;
+        };
+        if (reduce()) done(); else { d.classList.add('is-closing'); setTimeout(done, 230); }
+    };
+    const buildMob = () => {
+        if (mobDlg) return mobDlg;
+        const d = (mobDlg = document.createElement('dialog'));
+        d.className = 'fh-sheet fh-mobx';
+        d.id = 'fhMobHelp';
+        d.setAttribute('aria-labelledby', 'fhMobTitle');
+        d.innerHTML = '<div class="cp-box" tabindex="-1"><div class="cp-grip" aria-hidden="true"></div>'
+            + '<div class="cp-head"><h2 id="fhMobTitle" data-tl="mob-classes">How a spray moves in the plant</h2><button type="button" class="cp-x" aria-label="Close">' + FH.icon.x + '</button></div>'
+            + '<div class="fh-mobx-tabs" role="tablist" aria-label="Language">' + MOB_LANGS.map((l) => '<button type="button" role="tab" id="fhMobTab-' + l + '" aria-controls="fhMob-' + l + '" data-lang="' + l + '">' + MOBX[l].tab + '</button>').join('') + '</div>'
+            + '<div class="fh-mobx-body"><div class="fh-mobx-panes">' + MOB_LANGS.map((l) => '<section class="fh-mobx-pane is-' + l + '" id="fhMob-' + l + '" role="tabpanel" aria-labelledby="fhMobTab-' + l + '" lang="' + l + '">' + mobPane(l) + '</section>').join('') + '</div></div>'
+            + '<div class="fh-sheet-foot"><button type="button" class="fh-sheet-done" data-mob-close>Close</button></div></div>';
+        document.body.appendChild(d);
+        d.addEventListener('click', (e) => {
+            if (e.target === d || e.target.closest('.cp-x') || e.target.closest('[data-mob-close]')) { closeMob(); return; }
+            const t = e.target.closest('.fh-mobx-tabs [role="tab"]');
+            if (t && t.dataset.lang !== mobLang) setMobLang(t.dataset.lang, true);
+        });
+        // Arrow keys move between the tabs, as tabs should.
+        d.querySelector('.fh-mobx-tabs').addEventListener('keydown', (e) => {
+            if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+            e.preventDefault();
+            const l = e.key === 'Home' ? 'en' : (e.key === 'End' ? 'tl' : (mobLang === 'en' ? 'tl' : 'en'));
+            setMobLang(l, true);
+            d.querySelector('#fhMobTab-' + l).focus();
+        });
+        d.addEventListener('cancel', (e) => { e.preventDefault(); closeMob(); });
+        setMobLang(mobLang, false);
+        return d;
+    };
+    // Open the explainer (any [data-mob-help] does it).
+    FH.mobHelp = () => {
+        const d = buildMob();
+        mobTok++;                                          // a close still on its way is called off
+        d.classList.remove('is-closing');
+        if (!d.open) {
+            mobFrom = document.activeElement;
+            d.showModal(); FH.lock(true);
+            d.querySelector('.fh-mobx-body').scrollTop = 0;
+        }
+        window.registerOverlay?.('fh-mobx', closeMob);
+        d.querySelector('.cp-box').focus({ preventScroll: true });
+    };
+    document.addEventListener('click', (e) => { const b = e.target.closest('[data-mob-help]'); if (!b) return; e.preventDefault(); FH.mobHelp(); });
 
     /* ---- A whole catalogue in a full screen sheet -------------------------
        cfg: { dlg (the dialog.fhm a field-helpers.partials.catalogue drew),
@@ -771,7 +1113,8 @@
         return '<figure class="fhd-ph">' + (first ? '<img src="' + esc(first) + '" data-big="' + esc(i.photo || '') + '" alt="' + esc(i.alt || i.name) + '" referrerpolicy="no-referrer">' : '<span class="none">' + FH.icon.leaf + '</span>')
             + (i.credit ? '<figcaption>Photo: ' + esc(i.credit) + '</figcaption>' : '') + '</figure>';
     };
-    FH.sec = (icon, h, body) => '<section class="fhd-sec"><h3>' + icon + esc(h) + '</h3>' + body + '</section>';
+    // tl: a Tagalog help flag's key for the heading (optional).
+    FH.sec = (icon, h, body, tl) => '<section class="fhd-sec"><h3' + tlAttr(tl) + '>' + icon + esc(h) + '</h3>' + body + '</section>';
     FH.sources = (list) => (list && list.length) ? '<p class="fhd-src">Based on ' + list.slice(0, 4).map((s) => s.url ? '<a href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow">' + esc(s.label) + '</a>' : esc(s.label)).join(', ') + '.</p>' : '';
 })();
 </script>

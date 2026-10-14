@@ -325,7 +325,7 @@
              (DAT, DAS or DAP as the chosen lots count it), or two dates. --}}
         <div class="lr-range" id="lrRange" role="radiogroup" aria-label="Which part of the season">
             <button type="button" class="is-on" data-lr-range="season" aria-checked="true">🌱 Whole season</button>
-            <button type="button" data-lr-range="day" aria-checked="false">⏱️ <span data-lr-dayword>{{ $schedule->dayType }}</span> range</button>
+            <button type="button" data-lr-range="day" aria-checked="false" data-tl="{{ ['DAS' => 'das', 'DAT' => 'dat', 'DAP' => 'dap', 'DOS' => 'dos', 'AGE' => 'tree-age'][strtoupper((string) $schedule->dayType)] ?? '' }}">⏱️ <span data-lr-dayword>{{ $schedule->dayType }}</span> range</button>
             <button type="button" data-lr-range="date" aria-checked="false">📅 Date range</button>
         </div>
         <div class="grid grid-cols-2 gap-2 mt-2" id="lrRangeDay" hidden>
@@ -390,7 +390,7 @@
 
             {{-- Hero: the total, then the figures as tags. --}}
             <div class="lr-hero mb-4">
-                <div class="lr-hero-label">Total labor expense</div>
+                <div class="lr-hero-label">Total labor expense{{ \App\Support\Tagalog::flag('labor-cost') }}</div>
                 <div class="lr-hero-value" id="lrTotal">{{ \App\Support\Region::symbol() }}0</div>
                 <div class="rx-stats" id="lrMeta"></div>
                 <div class="lr-tiles" id="lrTiles"></div>
@@ -573,6 +573,8 @@ const __init = () => {
     const esc = window.escapeHtml || ((s) => String(s));
     const LABOR_URL = @json(route('sm.activities.labor') . '?scheduleId=' . $schedule->id);
     const DAY_TYPE = @json($schedule->dayType);
+    // Tagalog help flags: the glossary key for each way of counting the days.
+    const dayTl = (w) => ({ DAS: 'das', DAT: 'dat', DAP: 'dap', DOS: 'dos', AGE: 'tree-age' })[String(w || '').toUpperCase()] || '';
     const SCHEDULE_TITLE = @json($schedule->title);
     const MAY_GEN = @json($lrMayGen);
     const U = {
@@ -657,7 +659,10 @@ const __init = () => {
         if (!words.length) return DAY_TYPE || 'Day';
         return words.length === 1 ? words[0] : 'Day';
     }
-    function sayDayWord() { document.querySelectorAll('[data-lr-dayword]').forEach((el) => { el.textContent = dayWord(); }); }
+    function sayDayWord() {
+        document.querySelectorAll('[data-lr-dayword]').forEach((el) => { el.textContent = dayWord(); });
+        document.querySelector('#lrRange [data-lr-range="day"]')?.setAttribute('data-tl', dayTl(dayWord()));
+    }
     $id('lrLotsBtn')?.addEventListener('click', () => openSheet('lrLotsSheet'));
     $id('lrLotsList')?.addEventListener('click', (e) => {
         const row = e.target.closest('[data-lr-lot]');
@@ -850,15 +855,15 @@ const __init = () => {
         ].join('');
         const ph = d.phases || {};
         const tiles = [
-            ['Land Preparation', `${DAY_TYPE} < 0`, ph.preDayZero, PHASE.pre],
-            ['Main Cropping', `${DAY_TYPE} 0 onwards`, ph.cropping, PHASE.crop],
+            ['Land Preparation', `${DAY_TYPE} < 0`, ph.preDayZero, PHASE.pre, 'land-prep-phase'],
+            ['Main Cropping', `${DAY_TYPE} 0 onwards`, ph.cropping, PHASE.crop, 'main-cropping-phase'],
         ];
-        if ((ph.unanchored || {}).count > 0) tiles.push(['No start day', `no ${DAY_TYPE} 0`, ph.unanchored, PHASE.una]);
-        $id('lrTiles').innerHTML = tiles.map(([label, sub, p, color]) => {
+        if ((ph.unanchored || {}).count > 0) tiles.push(['No start day', `no ${DAY_TYPE} 0`, ph.unanchored, PHASE.una, 'no-start-day']);
+        $id('lrTiles').innerHTML = tiles.map(([label, sub, p, color, tl]) => {
             p = p || { count: 0, cost: 0 };
             const pct = d.grandTotal > 0 ? Math.round((p.cost / d.grandTotal) * 100) : 0;
             return `<div class="lr-tile">
-                <div class="k"><i style="background:${color}"></i>${esc(label)} <span class="font-normal">· ${esc(sub)}</span></div>
+                <div class="k" data-tl="${tl}"><i style="background:${color}"></i>${esc(label)} <span class="font-normal">· ${esc(sub)}</span></div>
                 <div class="v">${esc(fmtPeso(p.cost))}</div>
                 <div class="m">${p.count} ${p.count === 1 ? 'activity' : 'activities'} · ${pct}% of total</div>
             </div>`;
@@ -1118,7 +1123,7 @@ const __init = () => {
             return `<div class="lr-day lr-dc-${i % 8}${folded ? ' is-folded' : ''}" data-lr-day="${esc(k)}">
                 <button type="button" class="lr-day-h" aria-expanded="${folded ? 'false' : 'true'}">
                     ${dt ? `<span class="lr-day-dow">${DOW[dt.getDay()]}</span><span class="lr-day-date">${MONTH_SHORT[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}</span>` : '<span class="lr-day-date">No date</span>'}
-                    ${das ? `<span class="lr-day-das">${esc(das)}</span>` : ''}
+                    ${das ? `<span class="lr-day-das"${i === 0 ? ` data-tl="${dayTl(DAY_TYPE)}"` : ''}>${esc(das)}</span>` : ''}
                     <span class="lr-day-count">${items.length}<span class="lr-w"> ${items.length === 1 ? 'activity' : 'activities'}</span></span>
                     <span class="lr-day-cost">${fmtPeso(cost)}</span>
                     <svg class="lr-day-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>

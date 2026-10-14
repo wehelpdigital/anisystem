@@ -112,6 +112,16 @@
         ['Chat Anee', 'ai', null,
             'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5'],
     ];
+    // Tagalog help flags (2026-10-15): the glossary key that explains each
+    // tile's module, said after its name. An unknown key draws nothing.
+    $tileTl = [
+        'settings' => 'mod-settings', 'lots' => 'mod-lots', 'workers' => 'workers',
+        'inventory' => 'mod-inventory', 'documentation' => 'mod-documentation',
+        'post-harvest' => 'mod-observations', 'tags' => 'tags', 'notes' => 'mod-notes',
+        'weather' => 'mod-weather', 'growth' => 'mod-growth', 'gallery' => 'gallery',
+        'ai' => 'mod-chat-anee',
+    ];
+    $dayTl = ['DAS' => 'das', 'DAT' => 'dat', 'DAP' => 'dap', 'DOS' => 'dos', 'AGE' => 'tree-age'];
 @endphp
 
 @section('content')
@@ -158,7 +168,7 @@
             @endforeach
             <span class="sched-fact"><span class="sf-emoji">📐</span>{{ $schedule->lots_count }} {{ \Illuminate\Support\Str::plural('lot', $schedule->lots_count) }}</span>
             <span class="sched-fact"><span class="sf-emoji">👷</span>{{ $schedule->workers_count }} {{ \Illuminate\Support\Str::plural('worker', $schedule->workers_count) }}</span>
-            <span class="sched-fact"><span class="sf-emoji">🗓️</span>{{ $schedule->dayType ?: 'DAS' }} counting</span>
+            <span class="sched-fact"><span class="sf-emoji">🗓️</span><span>{{ $schedule->dayType ?: 'DAS' }} counting{{ \App\Support\Tagalog::flag($dayTl[strtoupper($schedule->dayType ?: 'DAS')] ?? '') }}</span></span>
             {{-- When the crop's clock starts: the earliest lot's day zero
                  (a ported season is made days before its lots begin), and
                  only when no lot has one, the day the season was made. --}}
@@ -391,6 +401,14 @@
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             }
             .hub-grid .badge { order: 2; margin-left: auto; flex-shrink: 0; }
+            /* A Tagalog help flag rides after the name: the name alone takes
+               the ellipsis, so the flag is never the part that gets cut. */
+            .hub-grid .hub-name { display: flex; align-items: center; overflow: visible; }
+            .hub-grid .hub-name-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            /* On a phone the row has no room for both: the flag moves to the
+               tile's top corner, so "Documentation" keeps every letter. */
+            .hub-grid > * > div { position: relative; }
+            .hub-grid .hub-name > .tlx { position: absolute !important; top: .5rem; right: .55rem; margin: 0 !important; padding-left: 14px !important; line-height: 10px !important; min-height: 0; }
             /* A grey badge is a zero — it says nothing the tile does not, and
                on a phone it was costing the name its last 30px: "Documentation"
                came out clipped mid-word. Counts that exist still show. */
@@ -436,7 +454,7 @@
             </span>
             <span class="min-w-0 grow">
                 <span class="flex items-center gap-2 flex-wrap">
-                    <span class="cta-title text-lg font-bold leading-tight">Activities</span>
+                    <span class="cta-title text-lg font-bold leading-tight">Activities{{ \App\Support\Tagalog::flag('mod-activities') }}</span>
                     <span class="badge badge-yellow">{{ $schedule->activities_count }}</span>
                 </span>
                 <span class="cta-sub block text-sm leading-snug mt-0.5">Your day by day plan, goals and milestones.</span>
@@ -453,7 +471,7 @@
                 <img src="{{ asset('images/camera.png') }}" alt="" style="width:1.75rem;height:1.75rem;object-fit:contain">
             </span>
             <span class="min-w-0 grow">
-                <span class="cta-title block text-lg font-bold leading-tight">Quick Capture</span>
+                <span class="cta-title block text-lg font-bold leading-tight">Quick Capture{{ \App\Support\Tagalog::flag('quick-capture') }}</span>
                 <span class="cta-sub block text-sm leading-snug mt-0.5">Take a photo and save it fast.</span>
             </span>
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -478,7 +496,7 @@
                 <img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.75rem;height:1.75rem;object-fit:contain">
             </span>
             <span class="min-w-0 grow {{ $hubVidLocked ? 'tl-dim' : '' }}">
-                <span class="cta-title block text-lg font-bold leading-tight">Quick Record</span>
+                <span class="cta-title block text-lg font-bold leading-tight">Quick Record{{ \App\Support\Tagalog::flag('quick-record') }}</span>
                 <span class="cta-sub block text-sm leading-snug mt-0.5">Record a short video.</span>
             </span>
             @if ($hubVidLocked)
@@ -502,7 +520,7 @@
                 <img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1.75rem;height:1.75rem;object-fit:contain">
             </span>
             <span class="min-w-0 grow">
-                <span class="cta-title block text-lg font-bold leading-tight">Quick Voice</span>
+                <span class="cta-title block text-lg font-bold leading-tight">Quick Voice{{ \App\Support\Tagalog::flag('quick-voice') }}</span>
                 <span class="cta-sub block text-sm leading-snug mt-0.5">Speak and it saves as a note.</span>
             </span>
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -544,7 +562,7 @@
                             <span class="badge {{ $count > 0 ? 'badge-green' : 'badge-gray' }}">{{ $count }}</span>
                         @endif
                     </div>
-                    <span class="font-bold text-gray-900 text-sm {{ $tileLocked ? 'tl-dim' : '' }}">{{ $label }}</span>
+                    <span class="font-bold text-gray-900 text-sm hub-name {{ $tileLocked ? 'tl-dim' : '' }}"><span class="hub-name-t">{{ $label }}</span>{{ \App\Support\Tagalog::flag($tileTl[$moduleKey] ?? '') }}</span>
                 </div>
             </a>
         @endforeach
@@ -566,7 +584,7 @@
                         </div>
                         <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
                     </div>
-                    <span class="font-bold text-gray-900 text-sm tl-dim">Collab Room</span>
+                    <span class="font-bold text-gray-900 text-sm hub-name tl-dim"><span class="hub-name-t">Collab Room</span>{{ \App\Support\Tagalog::flag('mod-collab-room') }}</span>
                 </div>
             </a>
         @elseif (\App\Support\ScheduleTeam::hasTeam($schedule))
@@ -577,7 +595,7 @@
                     <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
                         <img src="{{ asset('images/united.png') }}" alt="" class="w-6 h-6 object-contain">
                     </div>
-                    <span class="font-bold text-gray-900 text-sm">Collab Room</span>
+                    <span class="font-bold text-gray-900 text-sm hub-name"><span class="hub-name-t">Collab Room</span>{{ \App\Support\Tagalog::flag('mod-collab-room') }}</span>
                 </div>
             </a>
         @endif
@@ -589,7 +607,7 @@
                 <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
                     <img src="{{ asset('images/pie-chart.png') }}" alt="" class="w-6 h-6 object-contain">
                 </div>
-                <span class="font-bold text-gray-900 text-sm">Reports</span>
+                <span class="font-bold text-gray-900 text-sm hub-name"><span class="hub-name-t">Reports</span>{{ \App\Support\Tagalog::flag('mod-reports') }}</span>
             </div>
         </a>
         @endif

@@ -150,6 +150,22 @@
             </button>
         </div>
 
+        @if (\App\Support\Tagalog::on())
+        {{-- Tagalog help flags (partials.tagalog-flags): on unless switched off. --}}
+        <div class="st-group">
+            <h3>Help in Tagalog</h3>
+            <p class="st-why">For the hard words in the tools and in Anee's results.</p>
+
+            <button type="button" class="st-switch" id="stTagalog" role="switch" aria-checked="true">
+                <span class="st-switch-txt">
+                    <b>Tagalog help flags{{ \App\Support\Tagalog::flag('tagalog-flags') }}</b>
+                    <span>A small flag after a technical word, like DAT{{ \App\Support\Tagalog::flag('dat') }} or urea{{ \App\Support\Tagalog::flag('urea') }}. Tap the flag to read what it means in Tagalog.</span>
+                </span>
+                <span class="st-knob" aria-hidden="true"></span>
+            </button>
+        </div>
+        @endif
+
         <div class="st-preview">
             <h4>The season is looking good</h4>
             <p>This is how normal text will look, like a note about a lot or a weather warning.</p>
@@ -206,6 +222,25 @@
     wire('stContrast', 'sm-contrast', 'sm-a11y-contrast');
     wire('stUnderline', 'sm-underline', 'sm-a11y-underline');
     wire('stMotion', 'sm-still', 'sm-a11y-motion');
+
+    /* ---- Tagalog help flags: on by default, so the class marks them off ---- */
+    (() => {
+        const btn = document.getElementById('stTagalog');
+        if (!btn) return;
+        const paint = () => {
+            const on = !root.classList.contains('tlx-off');
+            btn.classList.toggle('is-on', on);
+            btn.setAttribute('aria-checked', on ? 'true' : 'false');
+        };
+        btn.addEventListener('click', () => {
+            const on = root.classList.contains('tlx-off');
+            root.classList.toggle('tlx-off', !on);
+            put('sm-tl-flags', on ? '1' : '0');
+            window.aneeTl?.close();
+            paint();
+        });
+        paint();
+    })();
 
     /* ---- the tabs ---- */
     document.querySelectorAll('[data-st-tab]').forEach((t) => t.addEventListener('click', () => {

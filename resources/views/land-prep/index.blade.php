@@ -840,14 +840,14 @@
 
             {{-- How it goes in --}}
             <section class="lp-step" data-screen="method">
-                <p class="lp-q" id="lpMethodQ">How will you plant it?</p>
+                <p class="lp-q" id="lpMethodQ" data-tl="planting-method">How will you plant it?</p>
                 <p class="lp-sub" id="lpMethodSub">Each way has its own schedule.</p>
                 <div class="lp-choices" id="lpMethods"></div>
             </section>
 
             {{-- The variety, and how its seed is prepared --}}
             <section class="lp-step" data-screen="variety">
-                <p class="lp-q">Which variety?</p>
+                <p class="lp-q">Which variety?{{ \App\Support\Tagalog::flag('variety') }}</p>
                 <p class="lp-sub">Its seed preparation depends on it. Not on our list? Add it, and Anee looks it up.</p>
                 <button type="button" class="lp-tag is-none" id="lpVarTag" aria-haspopup="dialog">
                     <span class="ti" aria-hidden="true">🌾</span>
@@ -857,8 +857,8 @@
                 <div id="lpSeedType" hidden>
                     <span class="lp-label">Is the seed inbred or hybrid?</span>
                     <div class="lp-chips" id="lpSeedTypes">
-                        <button type="button" class="lp-chipb" data-type="inbred">Inbred</button>
-                        <button type="button" class="lp-chipb" data-type="hybrid">Hybrid</button>
+                        <button type="button" class="lp-chipb" data-type="inbred">Inbred{{ \App\Support\Tagalog::flag('inbred') }}</button>
+                        <button type="button" class="lp-chipb" data-type="hybrid">Hybrid{{ \App\Support\Tagalog::flag('hybrid') }}</button>
                         <button type="button" class="lp-chipb" data-type="">Not sure</button>
                     </div>
                 </div>
@@ -868,13 +868,13 @@
             {{-- Where the seed is from (rice) --}}
             <section class="lp-step" data-screen="seed">
                 <p class="lp-q" id="lpSeedQ">Where is your seed from?</p>
-                <p class="lp-sub" id="lpSeedWhy"></p>
+                <p class="lp-sub" id="lpSeedWhy" data-tl="germination-test"></p>
                 <div class="lp-choices" id="lpSeedSrc"></div>
             </section>
 
             {{-- The planting day --}}
             <section class="lp-step" data-screen="date">
-                <p class="lp-q" id="lpDateQ">When will you plant?</p>
+                <p class="lp-q" id="lpDateQ" data-tl="planting-day">When will you plant?</p>
                 <p class="lp-sub">Everything is dated back from this day. Lots can have their own day on the next screen.</p>
                 <button type="button" class="lp-tag is-big is-none" id="lpDateTag" aria-haspopup="dialog">
                     <span class="ti" aria-hidden="true"><i id="lpDateMon">Day</i><em id="lpDateDay">?</em></span>
@@ -887,7 +887,7 @@
 
             {{-- The lots --}}
             <section class="lp-step" data-screen="lots">
-                <p class="lp-q">Which lots are you preparing?</p>
+                <p class="lp-q">Which lots are you preparing?{{ \App\Support\Tagalog::flag('lot') }}</p>
                 <p class="lp-sub">One card a lot. Anee plans every lot and shares the crew between them.</p>
                 <div class="lp-lots" id="lpLots"></div>
                 <div class="lp-lot-acts">
@@ -899,14 +899,14 @@
 
             {{-- The machines --}}
             <section class="lp-step" data-screen="equip">
-                <p class="lp-q">What will plow and harrow?</p>
+                <p class="lp-q">What will plow and harrow?{{ \App\Support\Tagalog::flag('harrowing') }}</p>
                 <p class="lp-sub">Pick every machine or animal you will use, and say how many you own and how many you hire.</p>
                 <div id="lpEquipBox"></div>
             </section>
 
             {{-- The workers --}}
             <section class="lp-step" data-screen="workers">
-                <p class="lp-q">Who will do the work?</p>
+                <p class="lp-q">Who will do the work?{{ \App\Support\Tagalog::flag('crew') }}</p>
                 <p class="lp-sub">Each worker keeps their own days. Anee gives each day only the hands that work it.</p>
                 <div id="lpRec"></div>
                 <div class="lp-stepper">
@@ -921,7 +921,7 @@
                 <span class="lp-label">If the crew cannot finish a lot in time</span>
                 <div class="lp-choices" id="lpStagger">
                     <button type="button" class="lp-choice is-on" data-stagger="0"><span class="ce">📅</span><span class="ct"><b>Keep my planting days</b><small>Anee shows what runs late and how to fix it</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
-                    <button type="button" class="lp-choice" data-stagger="1"><span class="ce">🔀</span><span class="ct"><b>Let Anee stagger the lots</b><small>She moves a planting day later only as much as the crew needs</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
+                    <button type="button" class="lp-choice" data-stagger="1"><span class="ce">🔀</span><span class="ct"><b>Let Anee stagger the lots{{ \App\Support\Tagalog::flag('stagger') }}</b><small>She moves a planting day later only as much as the crew needs</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
                 </div>
             </section>
 
@@ -933,7 +933,7 @@
             {{-- The place --}}
             <section class="lp-step" data-screen="place">
                 <p class="lp-q">Where are the lots?</p>
-                <p class="lp-sub">Anee reads the forecast, the ENSO outlook and ten years of the area's weather there.</p>
+                <p class="lp-sub">Anee reads the forecast, the ENSO outlook{{ \App\Support\Tagalog::flag('enso-outlook') }} and ten years of the area's weather there.</p>
                 <div id="lpPlacePh">
                     <span class="lp-label">Province</span>
                     <button type="button" class="lp-tag is-none" id="lpProv" aria-haspopup="dialog"><span class="ti" aria-hidden="true">🗺️</span><span class="tt"><b>Choose the province</b></span><span class="tc">Pick{!! $chev !!}</span></button>
@@ -1011,8 +1011,8 @@
             <div id="lpVarNewType">
                 <span class="lp-label">Is it hybrid or inbred?</span>
                 <div class="lp-chips" id="lpVarNewTypes">
-                    <button type="button" class="lp-chipb" data-ntype="hybrid">Hybrid</button>
-                    <button type="button" class="lp-chipb" data-ntype="inbred">Inbred</button>
+                    <button type="button" class="lp-chipb" data-ntype="hybrid">Hybrid{{ \App\Support\Tagalog::flag('hybrid') }}</button>
+                    <button type="button" class="lp-chipb" data-ntype="inbred">Inbred{{ \App\Support\Tagalog::flag('inbred') }}</button>
                     <button type="button" class="lp-chipb is-on" data-ntype="">Not sure</button>
                 </div>
             </div>
@@ -1051,7 +1051,7 @@
 <dialog class="lp-sheet is-small" id="lpTimeSheet" aria-labelledby="lpTimeTitle">
     <div class="lp-sbox" tabindex="-1">
         <div class="lp-grip" aria-hidden="true"></div>
-        <div class="lp-shead"><h2 id="lpTimeTitle">Little time for the full preparation<small>Anee squeezes the plan to fit the days left</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
+        <div class="lp-shead"><h2 id="lpTimeTitle">Little time for the full preparation<small>Anee squeezes the plan to fit the days left{{ \App\Support\Tagalog::flag('short-on-time') }}</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
         <div class="lp-sbody" id="lpTimeBody"></div>
         <div class="lp-sfoot"><button type="button" class="btn btn-primary lp-wide" id="lpTimeGo">Continue, I understand</button></div>
     </div>
@@ -1074,7 +1074,7 @@
         <div class="lp-shead"><h2 id="lpEqTitle">Machines and animals<small>Tick each one, then set how many you own and hire</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
         <div class="lp-slist" id="lpEqList"></div>
         <div class="lp-credit"><button type="button" id="lpCredOpen">Photo credits</button></div>
-        <div class="lp-sfoot"><span class="lp-pickline"><b id="lpEqCount">None picked</b><span>A hired one comes with its driver</span></span><button type="button" class="btn btn-primary" data-close>Done</button></div>
+        <div class="lp-sfoot"><span class="lp-pickline"><b id="lpEqCount">None picked</b><span>A hired{{ \App\Support\Tagalog::flag('hired') }} one comes with its driver</span></span><button type="button" class="btn btn-primary" data-close>Done</button></div>
     </div>
 </dialog>
 
@@ -1216,6 +1216,14 @@
     const CHEV = '<svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>';
     const XSM = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>';
     const PLUS = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>';
+    /* Tagalog help flags (partials/tagalog-flags): tlf is a flag for a spot inside a line,
+       tlAt the data-tl attribute for a whole label. Methods and machines by key. */
+    const tlf = (key) => (key && window.aneeTl ? window.aneeTl.flag(key) : '');
+    const tlAt = (key) => (key ? ' data-tl="' + esc(key) + '"' : '');
+    const METH_TL = { tpr_manual: 'transplanting', transplant: 'transplanting', tpr_mechanical: 'mechanical-transplanting', dsr_wet_broadcast: 'wet-seeding', dsr_wet_drum: 'drum-seeder',
+        dsr_dry: 'dry-seeding', direct: 'direct-seeding', setts: 'cane-setts', suckers: 'suckers', tissue: 'tissue-culture', grafted: 'grafted-seedlings' };
+    const EQ_TL = { hand_tractor: 'hand-tractor', tractor_rotavator: 'rotavating', tractor_disc: 'disc-plow', carabao_plow: 'plowing', carabao_harrow: 'harrowing',
+        pagulong: 'puddling', leveling_board: 'leveling', drum_seeder: 'drum-seeder', transplanter: 'mechanical-transplanting' };
 
     /* ---- dates, as Y-m-d strings and whole days ---- */
     const dn = (s) => { const [y, m, d] = String(s).split('-').map(Number); return Date.UTC(y, m - 1, d) / 864e5; };
@@ -1369,7 +1377,7 @@
         } else {
             q.className = 'lp-quote';
             q.innerHTML = (OPT.aneeFace ? '<img src="' + esc(OPT.aneeFace) + '" alt="">' : '')
-                + '<span>Anee plans every step of your land preparation, lot by lot, from PhilRice and extension practice, your soil, the weather and your crew. One plan costs <b>' + OPT.quote + ' credits</b>. You have '
+                + '<span>Anee plans every step of your land preparation, lot by lot, from PhilRice and extension practice, your soil, the weather and your crew. One plan costs <b>' + OPT.quote + ' credits' + tlf('credits') + '</b>. You have '
                 + (window.creditCoin ? window.creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()) : '<b>' + esc(OPT.balance) + '</b>') + '. Nothing is charged until the plan is ready.</span>';
         }
         q.hidden = false;
@@ -1391,10 +1399,10 @@
         if (!S.method || !ms[S.method]) S.method = keys.length === 1 ? keys[0] : null;
         $('lpMethodQ').textContent = keys.length === 1 ? 'How it goes in' : 'How will you plant it?';
         $('lpMethodSub').textContent = keys.length === 1 ? (CROPS[S.crop] ? CROPS[S.crop].en : 'This crop') + ' goes in one way. The plan follows it.' : 'Each way has its own schedule.';
-        $('lpMethods').innerHTML = keys.map((k) => {
+        $('lpMethods').innerHTML = keys.map((k, i) => {
             const m = ms[k], f = rice() ? (OPT.riceFacts[k] || {}) : {};
-            return '<button type="button" class="lp-choice' + (S.method === k ? ' is-on' : '') + '" data-method="' + esc(k) + '"><span class="ce">' + esc(m[2]) + '</span><span class="ct"><b>' + esc(m[0]) + '</b><small>' + esc(m[1]) + '</small>'
-                + (f.rate ? '<em>' + esc(f.rate.split('.')[0]) + '</em>' : '') + '</span><span class="ck">' + CHECK + '</span></button>';
+            return '<button type="button" class="lp-choice' + (S.method === k ? ' is-on' : '') + '" data-method="' + esc(k) + '"><span class="ce">' + esc(m[2]) + '</span><span class="ct"><b' + tlAt(METH_TL[k]) + '>' + esc(m[0]) + '</b><small>' + esc(m[1]) + '</small>'
+                + (f.rate ? '<em' + (i === 0 ? tlAt('seeding-rate') : '') + '>' + esc(f.rate.split('.')[0]) + '</em>' : '') + '</span><span class="ck">' + CHECK + '</span></button>';
         }).join('');
     }
     $('lpMethods').addEventListener('click', (e) => {
@@ -1438,11 +1446,11 @@
         } catch (_) { /* the card waits */ }
     }
     function hoursHtml(p) {
-        const card = (ico, val, label, line) => '<div class="lp-hour"><span>' + ico + '</span><div><b>' + esc(val) + '</b><em>' + esc(label) + '</em><small>' + esc(line) + '</small></div></div>';
+        const card = (ico, val, label, line, tl) => '<div class="lp-hour"><span>' + ico + '</span><div><b>' + esc(val) + '</b><em' + tlAt(tl) + '>' + esc(label) + '</em><small>' + esc(line) + '</small></div></div>';
         return '<div class="lp-hours">'
-            + card('💧', p.soakHours + ' hours', 'Soak', p.soakRange[0] !== p.soakRange[1] ? p.soakRange[0] + ' to ' + p.soakRange[1] + ' hours is fine' : 'In clean water')
+            + card('💧', p.soakHours + ' hours', 'Soak', p.soakRange[0] !== p.soakRange[1] ? p.soakRange[0] + ' to ' + p.soakRange[1] + ' hours is fine' : 'In clean water', 'seed-soaking')
             + card('🔁', 'Every ' + (p.refreshEveryHours || 6) + ' h', 'Change the water', p.refreshEveryHours ? 'While it soaks in still water' : 'PhilRice advice, none given')
-            + card('🧺', p.incubateRange[0] + ' to ' + p.incubateRange[1] + ' h', 'Incubate', 'Until a small white root shows')
+            + card('🧺', p.incubateRange[0] + ' to ' + p.incubateRange[1] + ' h', 'Incubate', 'Until a small white root shows', 'seed-incubation')
             + '</div>';
     }
     window.lpHoursHtml = hoursHtml;
@@ -1452,13 +1460,13 @@
         const research = S.custom && S.variety
             ? '<div class="lp-research"><span>🔎</span><span><b>Anee looks up ' + esc(S.variety) + '.</b> When you make the plan she searches the web for its days to harvest, its type and the seed company\'s own soaking and sprouting hours. ' + (p.found && p.applies && p.soakHours ? 'Until then, these are the general hours for ' + esc(p.type || 'this') + ' seed.' : 'Until then, follow the seed bag.') + '</span></div>' : '';
         if (!p.found || !p.applies || !p.soakHours) {
-            box.innerHTML = '<div class="lp-seed-h"><b>Seed preparation</b><span class="lp-badge ' + (S.custom ? 'is-anee' : 'is-none') + '">' + (S.custom ? 'Anee looks it up' : (p.applies === false && p.found ? 'Not needed' : 'Not researched')) + '</span></div>'
+            box.innerHTML = '<div class="lp-seed-h"><b data-tl="seed-prep">Seed preparation</b><span class="lp-badge ' + (S.custom ? 'is-anee' : 'is-none') + '">' + (S.custom ? 'Anee looks it up' : (p.applies === false && p.found ? 'Not needed' : 'Not researched')) + '</span></div>'
                 + research + (S.custom ? '' : '<p>' + esc(p.say) + '</p>');
             box.hidden = false;
             return;
         }
         const co = p.confidence === 'company';
-        box.innerHTML = '<div class="lp-seed-h"><b>' + (p.brand && !S.custom ? esc(p.brand) : (p.type === 'inbred' ? 'Inbred seed' : 'Hybrid seed')) + '</b><span class="lp-badge ' + (S.custom ? 'is-anee' : (co ? 'is-co' : 'is-gen')) + '">' + (S.custom ? 'Anee looks it up' : (co ? (p.source === 'brand' ? 'Seed company' : 'PhilRice') : 'General practice')) + '</span></div>'
+        box.innerHTML = '<div class="lp-seed-h"><b' + (p.brand && !S.custom ? '' : tlAt(p.type === 'inbred' ? 'inbred' : 'hybrid')) + '>' + (p.brand && !S.custom ? esc(p.brand) : (p.type === 'inbred' ? 'Inbred seed' : 'Hybrid seed')) + '</b><span class="lp-badge ' + (S.custom ? 'is-anee' : (co ? 'is-co' : 'is-gen')) + '">' + (S.custom ? 'Anee looks it up' : (co ? (p.source === 'brand' ? 'Seed company' : 'PhilRice') : 'General practice')) + '</span></div>'
             + hoursHtml(p) + research
             + (S.custom ? '' : '<p>' + esc(p.say) + (p.refreshNote ? ' ' + esc(p.refreshNote) : '') + (p.floatRule ? ' ' + esc(p.floatRule) : '') + ' The plan dates every soak, water change and sowing for each lot.</p>');
         box.hidden = false;
@@ -1545,7 +1553,7 @@
         $('lpSeedQ').textContent = q.q;
         $('lpSeedWhy').textContent = q.why;
         const ico = { certified: '🏷️', own: '🌾', old: '📦' };
-        $('lpSeedSrc').innerHTML = Object.entries(q.o).map(([k, o]) => '<button type="button" class="lp-choice' + (S.seedSource === k ? ' is-on' : '') + '" data-src="' + esc(k) + '"><span class="ce">' + (ico[k] || '🌱') + '</span><span class="ct"><b>' + esc(o[0]) + '</b><small>' + esc(o[1]) + '</small></span><span class="ck">' + CHECK + '</span></button>').join('');
+        $('lpSeedSrc').innerHTML = Object.entries(q.o).map(([k, o]) => '<button type="button" class="lp-choice' + (S.seedSource === k ? ' is-on' : '') + '" data-src="' + esc(k) + '"><span class="ce">' + (ico[k] || '🌱') + '</span><span class="ct"><b' + tlAt({ certified: 'certified-seed', own: 'farmer-saved-seed' }[k]) + '>' + esc(o[0]) + '</b><small>' + esc(o[1]) + '</small></span><span class="ck">' + CHECK + '</span></button>').join('');
     }
     $('lpSeedSrc').addEventListener('click', (e) => {
         const b = e.target.closest('[data-src]');
@@ -1665,14 +1673,17 @@
         const short = t.filter((x) => x.short);
         const many = S.lots.length > 1;
         const word = dayWordOf() + 'ing';
+        let tlSq = false, tlRest = false;    // one flag a term in the sheet
         return short.map((x) => {
             const pct = Math.max(4, Math.min(100, Math.round((x.need - Math.max(0, x.left)) / Math.max(1, x.need) * 100)));
+            const sqAt = x.steps.length && !tlSq ? (tlSq = true, tlAt('squeezed-steps')) : '';
+            const restFlag = x.rest && !tlRest ? (tlRest = true, tlf('fallow')) : '';
             return '<div class="lp-tw">' + (many ? '<b class="lp-tw-lot" style="--lc:' + lc(x.lot) + '"><i></i>' + esc(x.name) + '</b>' : '')
                 + '<div class="lp-tw-stats"><div><b>' + x.need + '</b><small>days the full preparation needs</small></div><div class="is-left"><b>' + Math.max(0, x.left) + '</b><small>days left to ' + esc(day(x.planting)) + '</small></div></div>'
                 + '<div class="lp-tw-bar" aria-hidden="true"><i style="width:' + pct + '%"></i></div><div class="lp-tw-cap"><span>Today</span><span>' + (x.need - Math.max(0, x.left)) + ' days short</span></div>'
-                + (x.steps.length ? '<p class="lp-tw-h">Squeezed to fit</p><ul class="lp-tw-list">' + x.steps.slice(0, 8).map((s) => '<li><span class="' + (s.state === 'missed' ? 'is-moved' : 'is-short') + '">' + (s.state === 'missed' ? 'Moved up' : 'Shortened') + '</span><em>' + esc(s.what) + '</em></li>').join('')
+                + (x.steps.length ? '<p class="lp-tw-h"' + sqAt + '>Squeezed to fit</p><ul class="lp-tw-list">' + x.steps.slice(0, 8).map((s) => '<li><span class="' + (s.state === 'missed' ? 'is-moved' : 'is-short') + '">' + (s.state === 'missed' ? 'Moved up' : 'Shortened') + '</span><em>' + esc(s.what) + '</em></li>').join('')
                     + (x.steps.length > 8 ? '<li><em>and ' + (x.steps.length - 8) + ' more</em></li>' : '') + '</ul>' : '')
-                + (x.rest ? '<p class="lp-tw-h" style="text-transform:none;letter-spacing:0;font-weight:700">The field also needs ' + x.rest + ' days of rest without rice before sowing, as PhilRice advises.</p>' : '')
+                + (x.rest ? '<p class="lp-tw-h" style="text-transform:none;letter-spacing:0;font-weight:700">The field also needs ' + x.rest + ' days of rest' + restFlag + ' without rice before sowing, as PhilRice advises.</p>' : '')
                 + (x.restNotYet ? '<p class="lp-tw-h" style="text-transform:none;letter-spacing:0;font-weight:700">The last crop is not harvested yet: count 30 days without rice from the harvest.</p>' : '')
                 + '</div>';
         }).join('') + '<div class="lp-tw-note"><span>🔎</span><span>Anee keeps the plowing, every harrowing and the leveling in order and shortens the waiting between them. Before you go on, walk the field and check it carefully: the dikes, the water and how hard the soil is. For every step at its own pace, ' + esc(dayWordOf()) + ' on or after ' + esc(day(short.map((x) => x.earliest).sort().pop() || TODAY)) + '.</span></div>';
@@ -1693,12 +1704,13 @@
 
     /* ---------------- lots: one card each ---------------- */
     function paintLots() {
+        const haAt = S.lots.findIndex((x) => x.unit === 'ha');     // the hectare flag, on the first lot in hectares
         $('lpLots').innerHTML = S.lots.map((l, i) => '<div class="lp-lot" data-uid="' + l.uid + '" style="--lc:' + lc(i) + ';animation-delay:' + (i * 40) + 'ms">'
             + '<div class="lp-lot-top"><i></i><b>Lot ' + (i + 1) + '</b>' + (l.from ? '<em>from ' + esc(l.from) + '</em>' : '') + '</div>'
             + (S.lots.length > 1 ? '<button type="button" class="lp-lot-x" data-lot-x="' + l.uid + '" aria-label="Remove lot ' + (i + 1) + '">' + XSM + '</button>' : '')
             + '<div class="lp-field" data-f="name"><label for="lpLn' + l.uid + '">Name of the lot <small>(optional)</small></label><input type="text" id="lpLn' + l.uid + '" class="form-input" data-in="name" maxlength="60" value="' + esc(l.name) + '" autocomplete="off"></div>'
             + '<div class="lp-field" data-f="area"><label for="lpLa' + l.uid + '">Size</label><div class="lp-size"><input type="text" id="lpLa' + l.uid + '" class="form-input" data-in="area" inputmode="decimal" maxlength="10" value="' + esc(l.area) + '" autocomplete="off">'
-            + '<button type="button" class="lp-unit" data-unit="' + l.uid + '" aria-haspopup="dialog" aria-label="Unit: ' + esc(UNITS[l.unit][0]) + '">' + esc(UNITS[l.unit][1]) + CHEV + '</button></div>'
+            + '<button type="button" class="lp-unit" data-unit="' + l.uid + '" aria-haspopup="dialog" aria-label="Unit: ' + esc(UNITS[l.unit][0]) + '">' + esc(UNITS[l.unit][1]) + (i === haAt ? tlf('hectare') : '') + CHEV + '</button></div>'
             + '<p class="lp-size-eq" data-eq>' + eqWords(l) + '</p><p class="lp-ferr" data-err hidden></p></div>'
             + '<div class="lp-field"><span class="lp-fl">' + esc(dayWordOf().replace(/^\w/, (c) => c.toUpperCase())) + 'ing day</span><div class="lp-own">' + (l.planting
                 ? '<button type="button" data-lot-date="' + l.uid + '">📅 ' + esc(day(l.planting)) + '</button><button type="button" class="is-x" data-lot-same="' + l.uid + '">Same day as the others</button>'
@@ -1843,7 +1855,7 @@
         const keys = Object.keys(fleet);
         let h = '';
         if (keys.length) {
-            h += '<div class="lp-eqs">' + keys.map((k, i) => '<div class="lp-eq" style="animation-delay:' + (i * 40) + 'ms">' + photo(items[k], items[k].name) + '<span class="et"><b>' + esc(items[k].name) + (items[k].local ? '<span class="lp-loc">' + esc(items[k].local) + '</span>' : '') + '</b><small>' + esc(items[k].line) + '</small></span>'
+            h += '<div class="lp-eqs">' + keys.map((k, i) => '<div class="lp-eq" style="animation-delay:' + (i * 40) + 'ms">' + photo(items[k], items[k].name) + '<span class="et"><b>' + esc(items[k].name) + tlf(EQ_TL[k]) + (items[k].local ? '<span class="lp-loc">' + esc(items[k].local) + '</span>' : '') + '</b><small>' + esc(items[k].line) + '</small></span>'
                 + '<div class="lp-cts">' + counters(k, fleet[k]) + '</div></div>').join('') + '</div>';
             h += '<button type="button" class="lp-tag lp-eqadd" id="lpEqOpen"><span class="ti">➕</span><span class="tt"><b>Change the machines</b><small>' + keys.length + ' picked</small></span><span class="tc">Open' + CHEV + '</span></button>';
         } else {
@@ -1857,7 +1869,7 @@
         const items = eqFor();
         $('lpEqList').innerHTML = Object.entries(items).map(([k, e]) => {
             const f = S.fleet[k] && (S.fleet[k].own + S.fleet[k].hired) > 0 ? S.fleet[k] : null;
-            return '<div class="lp-eqrow' + (f ? ' is-on' : '') + '" data-eqk="' + k + '"><button type="button" role="checkbox" aria-checked="' + !!f + '" data-eqt="' + k + '">' + photo(e, e.name) + '<span class="et"><b>' + esc(e.name) + (e.local ? '<span class="lp-loc">' + esc(e.local) + '</span>' : '') + '</b><small>' + esc(e.line) + (e.plants ? '. For the planting day' : '') + '</small></span><span class="lp-check">' + CHECK + '</span></button>'
+            return '<div class="lp-eqrow' + (f ? ' is-on' : '') + '" data-eqk="' + k + '"><button type="button" role="checkbox" aria-checked="' + !!f + '" data-eqt="' + k + '">' + photo(e, e.name) + '<span class="et"><b>' + esc(e.name) + tlf(EQ_TL[k]) + (e.local ? '<span class="lp-loc">' + esc(e.local) + '</span>' : '') + '</b><small>' + esc(e.line) + (e.plants ? '. For the planting day' : '') + '</small></span><span class="lp-check">' + CHECK + '</span></button>'
                 + '<div class="lp-cts"><div>' + counters(k, f || { own: 0, hired: 0 }) + '</div></div></div>';
         }).join('');
         const n = Object.keys(fleetNow()).length;
@@ -2038,7 +2050,7 @@
         if (screenOf(FLOW[pos]) !== 'review' || !t) return;
         const sh = t.filter((x) => x.short);
         if (sh.length) {
-            $('lpTimeCard').innerHTML = '<div class="lp-twarn"><span>⏳</span><span><b>Little time for the full preparation.</b> ' + sh.map((x) => (S.lots.length > 1 ? esc(x.name) + ': ' : '') + Math.max(0, x.left) + ' days left, ' + x.need + ' needed').join('. ') + '. Anee squeezes the plan to fit.<br><button type="button" id="lpTimeMore">See what gets squeezed</button></span></div>';
+            $('lpTimeCard').innerHTML = '<div class="lp-twarn"><span>⏳</span><span><b data-tl="short-on-time">Little time for the full preparation.</b> ' + sh.map((x) => (S.lots.length > 1 ? esc(x.name) + ': ' : '') + Math.max(0, x.left) + ' days left, ' + x.need + ' needed').join('. ') + '. Anee squeezes the plan to fit.<br><button type="button" id="lpTimeMore">See what gets squeezed</button></span></div>';
             $('lpTimeMore').onclick = () => { ACK.review = null; timeWarn(t, 'review'); };
             timeWarn(t, 'review');
         }
@@ -2104,13 +2116,13 @@
     });
     window.lpSheet = { open: sheetOpen, close: sheetClose, lock: sheetLock };
     window.lpBoot = boot;
-    window.lpUtil = { $, esc, reduce, dn, ds, fmt, day, time, inDays, ha, lc, CHECK, CHEV, sizeWords, UNITS, TODAY, CROPS, opt: () => OPT };
+    window.lpUtil = { $, esc, reduce, dn, ds, fmt, day, time, inDays, ha, lc, CHECK, CHEV, sizeWords, UNITS, TODAY, CROPS, tlf, tlAt, EQ_TL, opt: () => OPT };
 })();
 </script>
 
 <script>
 (() => {
-    const { $, esc, reduce, dn, ds, fmt, day, time, ha, lc, CHEV, UNITS, TODAY } = window.lpUtil;
+    const { $, esc, reduce, dn, ds, fmt, day, time, ha, lc, CHEV, UNITS, TODAY, tlf, tlAt, EQ_TL } = window.lpUtil;
     const OPT = () => window.lpUtil.opt() || {};
     const U = {
         list: @json(route('landprep.list')), meta: @json(route('landprep.meta')), port: @json(route('landprep.port')), protocols: @json(route('landprep.protocols')),
@@ -2129,6 +2141,17 @@
         seed_soak: 'Soak', seed_incubate: 'Sprout', sprout_check: 'Check sprouts' };
     const SEEDKEYS = ['seedbed_site', 'seedbed_beds', 'sow_seedbed', 'nursery_fill', 'sow_nursery', 'backup_seedbed', 'nursery', 'nursery_site'];
     const SOAKKEYS = ['seed_soak', 'seed_incubate', 'sprout_check'];
+    /* Tagalog help flags: a step's term by its key, a lot answer's by its short name. A list
+       flags a term once (tlOnce keeps a Set of the terms already flagged in that list). */
+    const STEP_TL = { plow: 'plowing', first_plow: 'plowing', crack_plow: 'plowing', harrow1: 'harrowing', harrow2: 'harrowing', harrow: 'harrowing', harrow_level: 'harrowing',
+        level: 'leveling', extra_level: 'leveling', rough_level: 'leveling', dikes: 'dike', straw: 'straw-incorporation', stale_wet: 'stale-seedbed', stale_kill: 'stale-seedbed',
+        stale_round: 'stale-seedbed', settle: 'puddling', lime: 'lime', gypsum: 'gypsum', manure: 'organic-fertilizer', seed_soak: 'seed-soaking', seed_incubate: 'seed-incubation',
+        seed_test: 'germination-test', soil_test: 'soil-test', seedbed_site: 'seedbed', seedbed_beds: 'seedbed', sow_seedbed: 'seedbed', backup_seedbed: 'backup-seedbed',
+        nursery_fill: 'dapog', sow_nursery: 'seedling-tray', rest: 'fallow', transplant: 'transplanting', drum_setup: 'drum-seeder', weeds_pre: 'pre-emergence', weeds_post: 'early-post',
+        flush_salt: 'saline', deep_till: 'hardpan', subsoil: 'hardpan', replant: 'replanting', water_replant: 'replanting', seedbed_zinc: 'zinc-sulfate', nursery_zinc: 'zinc-sulfate', book_service: 'hired' };
+    const ANS_TL = { Soil: 'soil-texture', 'Organic matter': 'organic-matter', Water: 'water-source', Drainage: 'drainage', Floods: 'flood-prone', Salt: 'saline', Acidity: 'acidic',
+        'Known pH': 'ph', 'Hard layer': 'hardpan', 'Last limed': 'lime', Idle: 'fallow', 'Field level': 'leveling' };
+    const tlOnce = (seen, key) => (key && !seen.has(key) ? (seen.add(key), tlAt(key)) : '');
     /* Tips for the step sheet, in a farmer's words. */
     const TIPS = {
         plow: ['Plow when the soil is moist, not soaking wet and not bone dry.', 'Overlap each pass a little so no strip is left unturned.', 'Go a little deeper where the last crop left tough roots.'],
@@ -2199,13 +2222,13 @@
         const crew = r.crew || {};
         const nMach = (crew.fleet || []).reduce((s, f) => s + (f.own || 0) + (f.hired || 0), 0);
         $('lpViewBody').innerHTML = ''
-            + '<div class="lp-hero"><div class="lp-hero-top"><span class="lp-hero-ico">' + esc((r.crop || {}).icon || '🌱') + '</span><div style="min-width:0"><small>Land preparation plan</small><h2>' + esc((r.crop || {}).label || '') + ', ' + esc(((r.method || {}).label || '').toLowerCase()) + '</h2></div></div>'
+            + '<div class="lp-hero"><div class="lp-hero-top"><span class="lp-hero-ico">' + esc((r.crop || {}).icon || '🌱') + '</span><div style="min-width:0"><small data-tl="land-prep-planner">Land preparation plan</small><h2>' + esc((r.crop || {}).label || '') + ', ' + esc(((r.method || {}).label || '').toLowerCase()) + '</h2></div></div>'
             + '<div class="lp-hero-chips"><span>📅 ' + esc(dates[0] ? day(dates[0]) : '') + (dates.length > 1 && dates[dates.length - 1] !== dates[0] ? ' to ' + esc(day(dates[dates.length - 1])) : '') + '</span>'
             + '<span>🟩 ' + lots.length + (lots.length === 1 ? ' lot' : ' lots') + ', ' + ha(area) + '</span>'
             + '<span>👷 ' + esc((crew.workers || '') + ((crew.workers === 1) ? ' worker' : ' workers')) + (crew.fleet ? (nMach ? ', ' + nMach + (nMach === 1 ? ' machine' : ' machines') : ', by hand') : (crew.equipmentLabel ? ', ' + esc(String(crew.equipmentLabel).toLowerCase()) : '')) + '</span>'
             + (major.length ? '<span class="is-warn">⚠ ' + major.length + (major.length === 1 ? ' step runs late' : ' steps run late') + '</span>' : '<span class="is-ok">✓ Every lot ready on time</span>')
-            + (squeezed.length ? '<span class="is-warn">⏳ Squeezed to fit the time</span>' : '')
-            + (moved.length ? '<span>🔀 ' + moved.length + (moved.length === 1 ? ' lot staggered' : ' lots staggered') + '</span>' : '')
+            + (squeezed.length ? '<span class="is-warn" data-tl="squeezed-steps">⏳ Squeezed to fit the time</span>' : '')
+            + (moved.length ? '<span data-tl="stagger">🔀 ' + moved.length + (moved.length === 1 ? ' lot staggered' : ' lots staggered') + '</span>' : '')
             + (r.variety ? '<span>🏷️ ' + esc(r.variety) + '</span>' : '') + (it.credits ? '<span>' + esc(it.credits) + ' credits</span>' : '') + '</div></div>'
             + '<div class="lp-seg" id="lpSeg"><i></i><button type="button" class="' + (VIEW.tab === 'farm' ? 'is-on' : '') + '" data-tab="farm">Whole farm</button><button type="button" class="' + (VIEW.tab === 'lot' ? 'is-on' : '') + '" data-tab="lot">Per lot</button></div>'
             + '<div class="lp-pane" id="lpFarm"' + (VIEW.tab === 'farm' ? '' : ' hidden') + '>' + farmHtml(r, r.anee || {}) + '</div>'
@@ -2222,12 +2245,12 @@
     function farmHtml(r, a) {
         const lots = r.lots || [];
         const face = OPT().aneeFace ? '<img src="' + esc(OPT().aneeFace) + '" alt="">' : '🤖';
-        let h = '<div class="lp-c"><h3>' + face + "Anee's reading" + (a.confidence ? '<em>Confidence: ' + esc(a.confidence) + '</em>' : '') + '</h3><p class="lp-p">' + esc(a.summary || '') + '</p>'
+        let h = '<div class="lp-c"><h3>' + face + "<span>Anee's reading" + tlf('anee-reading') + '</span>' + (a.confidence ? '<em>Confidence: ' + esc(a.confidence) + tlf('confidence') + '</em>' : '') + '</h3><p class="lp-p">' + esc(a.summary || '') + '</p>'
             + ((a.analysis || []).length ? '<div class="lp-an">' + a.analysis.map((x) => '<div><span>' + (TOPIC[x.topic] || '•') + '</span><span><b>' + esc(x.title) + '</b><p>' + esc(x.text) + '</p></span></div>').join('') + '</div>' : '') + '</div>';
         // Short on time: what Anee squeezed, and what she says comes first.
         const sq = lots.map((l, i) => [l, i]).filter(([l]) => l.squeeze);
         if (sq.length) {
-            h += '<div class="lp-c lp-short"><h3>⏳ Short on time</h3><div class="lp-short-lots">' + sq.map(([l, i]) => '<div class="lp-short-lot" style="--lc:' + lc(i) + '"><i></i><span><b>' + esc(l.name) + ':</b> ' + l.squeeze.left + ' days left, the full preparation needs ' + l.squeeze.needed + '. ' + l.squeeze.count + ' steps squeezed to fit'
+            h += '<div class="lp-c lp-short"><h3><span>⏳ Short on time' + tlf('short-on-time') + '</span></h3><div class="lp-short-lots">' + sq.map(([l, i]) => '<div class="lp-short-lot" style="--lc:' + lc(i) + '"><i></i><span><b>' + esc(l.name) + ':</b> ' + l.squeeze.left + ' days left, the full preparation needs ' + l.squeeze.needed + '. ' + l.squeeze.count + ' steps squeezed to fit'
                 + (l.squeeze.age && l.squeeze.ageWas && l.squeeze.age < l.squeeze.ageWas ? ', the seedlings ' + l.squeeze.age + ' days old instead of ' + l.squeeze.ageWas : '') + '.</span></div>').join('') + '</div>'
                 + (a.shortTime ? '<p class="lp-p">' + esc(a.shortTime) + '</p>' : '<p class="lp-p">The plowing comes first, every harrowing and the leveling stay, and the waiting between them is shorter. Walk the field and check it carefully before you start.</p>') + '</div>';
         }
@@ -2241,11 +2264,11 @@
                 + '</ul></div>';
         }
         h += crewHtml(r, a);
-        h += '<div class="lp-c"><h3>📊 Across your lots</h3>' + timelineHtml(r) + '</div>';
+        h += '<div class="lp-c"><h3><span>📊 Across your lots' + tlf('lots-timeline') + '</span></h3>' + timelineHtml(r) + '</div>';
         h += seedHtml(r);
         h += weatherHtml(r, a);
         if ((a.risks || []).length) {
-            h += '<div class="lp-c"><h3>👀 What to watch</h3>' + a.risks.map((x) => '<div class="lp-risk"><span class="is-' + esc(x.level) + '">' + esc(x.level) + '</span><div><b>' + esc(x.title) + '</b><p>' + esc(x.text) + '</p>' + (x.when ? '<small>' + esc(x.when) + '</small>' : '') + '</div></div>').join('') + '</div>';
+            h += '<div class="lp-c"><h3>👀 What to watch</h3>' + a.risks.map((x, k) => '<div class="lp-risk"><span class="is-' + esc(x.level) + '"' + (k === 0 ? tlAt('risk-level') : '') + '>' + esc(x.level) + '</span><div><b>' + esc(x.title) + '</b><p>' + esc(x.text) + '</p>' + (x.when ? '<small>' + esc(x.when) + '</small>' : '') + '</div></div>').join('') + '</div>';
         }
         if ((r.rules || []).length) {
             h += '<div class="lp-c"><h3>📋 Good to know for this field</h3><ul class="lp-rules">' + r.rules.map((n) => '<li><span>' + (n.level === 'warn' ? '⚠️' : '💡') + '</span><div>' + esc(n.text)
@@ -2284,7 +2307,7 @@
     function crewHtml(r, a) {
         const crew = r.crew || {}, lots = r.lots || [];
         const jobs = jobsOf(r);
-        let h = '<div class="lp-c"><h3>👷 Your crew<em>' + esc(crew.workers || 0) + (crew.workers === 1 ? ' worker' : ' workers') + '</em></h3>';
+        let h = '<div class="lp-c"><h3><span>👷 Your crew' + tlf('crew') + '</span><em>' + esc(crew.workers || 0) + (crew.workers === 1 ? ' worker' : ' workers') + '</em></h3>';
         // Who: the workers by their days, the machines with their photos.
         const chips = [];
         if (crew.workerList) {
@@ -2303,16 +2326,17 @@
             chips.push('<span class="lp-crew-chip"><span class="lp-ph">👷</span><em>' + esc(crew.workers || '') + ' workers, ' + esc(crew.daysPerWeek || 6) + ' days a week</em></span>', '<span class="lp-crew-chip"><span class="lp-ph">🚜</span><em>' + esc(crew.equipmentLabel || '') + '</em></span>');
         }
         h += '<div class="lp-crew-top">' + chips.join('') + '</div>';
-        (r.bookings || []).forEach((b) => {
-            h += '<div class="lp-book"><span>📞</span><span><b>Book the hired ' + esc(String(b.name).toLowerCase()) + ' by ' + esc(day(b.by)) + '.</b> It is first needed on ' + esc(day(b.use)) + (b.for ? ' for ' + esc(b.for) : '') + (lots.length > 1 ? ' on ' + esc(lotName(r, b.lot)) : '') + '.</span></div>';
+        (r.bookings || []).forEach((b, bi) => {
+            h += '<div class="lp-book"><span>📞</span><span><b>Book the hired' + (bi === 0 ? tlf('hired') : '') + ' ' + esc(String(b.name).toLowerCase()) + ' by ' + esc(day(b.by)) + '.</b> It is first needed on ' + esc(day(b.use)) + (b.for ? ' for ' + esc(b.for) : '') + (lots.length > 1 ? ' on ' + esc(lotName(r, b.lot)) : '') + '.</span></div>';
         });
         if (a.crew) h += '<p class="lp-p" style="margin:.2rem 0 .6rem">' + esc(a.crew) + '</p>';
         if (jobs.length) {
+            const seen = new Set();
             h += '<p class="lp-sk" style="margin-top:.6rem">The jobs, tap one for what to do</p><div class="lp-jobs">' + jobs.map((j, k) => {
                 const s = stepOf(r, j.key, j.lots[0]);
                 const icon = SEEDKEYS.includes(j.key) ? '🌱' : (j.crew === 'machine' ? '🚜' : '🧑‍🌾');
                 const who = j.crew === 'machine' ? (j.machines.length ? j.machines.map(eqName).join(', ').toLowerCase() : 'machine') : (j.byHand ? 'by hand, no machine for it' : (j.people ? 'up to ' + j.people + (j.people === 1 ? ' person' : ' people') + ' a day' : 'hand work'));
-                return '<button type="button" class="lp-job' + (j.late ? ' is-late' : '') + '" data-job="' + esc(j.key) + '" style="animation-delay:' + Math.min(k, 10) * 30 + 'ms"><span>' + icon + '</span><span class="jt"><b>' + esc(s.what) + '</b><small>'
+                return '<button type="button" class="lp-job' + (j.late ? ' is-late' : '') + '" data-job="' + esc(j.key) + '" style="animation-delay:' + Math.min(k, 10) * 30 + 'ms"><span>' + icon + '</span><span class="jt"><b' + tlOnce(seen, STEP_TL[j.key]) + '>' + esc(s.what) + '</b><small>'
                     + (lots.length > 1 ? '<span class="jd">' + j.lots.map((i) => '<i style="--lc:' + lc(i) + '"></i>').join('') + '</span>' : '')
                     + esc((j.start ? day(j.start) + (j.end && j.end !== j.start ? ' to ' + day(j.end) : '') : 'Not fitted in') + ' · ' + who) + '</small></span>' + '<svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>';
             }).join('') + '</div>';
@@ -2393,7 +2417,7 @@
                 + '</div>';
         }).join('');
         return '<div class="lp-tl2"><div class="lp-tax">' + ticks + '</div>' + blocks + '</div>'
-            + '<div class="lp-glegend"><span><i style="background:#4a7c2a"></i>Machine work</span><span><i style="background:#d97706"></i>Hand work</span><span><i style="background:#0284c7"></i>Seedbed and seed</span><span><i style="background:repeating-linear-gradient(135deg,#bae6fd 0 4px,#e0f2fe 4px 8px)"></i>Seedlings grow</span><span><i style="background:#7c3aed;width:.6rem;height:.6rem;border-radius:.15rem;transform:rotate(45deg)"></i>Planting day</span><span><i style="background:#ef4444;width:2px;height:.85rem"></i>Today</span></div>'
+            + '<div class="lp-glegend"><span><i style="background:#4a7c2a"></i>Machine work</span><span><i style="background:#d97706"></i>Hand work</span><span><i style="background:#0284c7"></i>Seedbed and seed' + tlf('seedbed') + '</span><span><i style="background:repeating-linear-gradient(135deg,#bae6fd 0 4px,#e0f2fe 4px 8px)"></i>Seedlings grow</span><span><i style="background:#7c3aed;width:.6rem;height:.6rem;border-radius:.15rem;transform:rotate(45deg)"></i>Planting day</span><span><i style="background:#ef4444;width:2px;height:.85rem"></i>Today</span></div>'
             + '<p class="lp-tl-tip">Tap a bar to see the step.</p>';
     }
     function fitTimeline() {
@@ -2414,14 +2438,14 @@
             ? '<div class="lp-research"><span>🔎</span><span><b>Anee\'s research on ' + esc(r.variety) + ':</b> ' + esc(facts ? facts.replace(/^\w/, (c) => c.toUpperCase()) + '.' : 'Found on the web.') + (p.researchSay ? ' ' + esc(p.researchSay) : '') + '</span></div>'
             : '<div class="lp-research is-miss"><span>🔎</span><span>' + esc(p.researchSay || 'Anee could not find this variety on the web just now. Follow the instructions on the seed bag.') + '</span></div>') : '';
         if (!p.found || !p.applies || !p.soakHours) {
-            return '<div class="lp-c"><h3>🌾 Seed preparation</h3>' + (p.say ? '<p class="lp-p">' + esc(p.say) + '</p>' : '') + researchBox + '</div>';
+            return '<div class="lp-c"><h3><span>🌾 Seed preparation' + tlf('seed-prep') + '</span></h3>' + (p.say ? '<p class="lp-p">' + esc(p.say) + '</p>' : '') + researchBox + '</div>';
         }
         const lots = r.lots || [];
         const co = p.confidence === 'company', rs = p.confidence === 'research';
-        let h = '<div class="lp-c"><h3>🌾 Seed preparation<em>' + (rs ? "Anee's research" : (co ? (p.source === 'brand' ? 'Seed company' : 'PhilRice') : 'General practice')) + '</em></h3>'
+        let h = '<div class="lp-c"><h3><span>🌾 Seed preparation' + tlf('seed-prep') + '</span><em>' + (rs ? "Anee's research" : (co ? (p.source === 'brand' ? 'Seed company' : 'PhilRice') : 'General practice')) + '</em></h3>'
             + '<div class="lp-seed" style="margin-top:0;border:0;padding:0;animation:none">' + window.lpHoursHtml(p) + '</div>' + researchBox
             + '<p class="lp-p" style="font-size:.84rem;margin-top:.7rem">' + esc(p.say) + (p.refreshNote ? ' ' + esc(p.refreshNote) : '') + (p.floatRule ? ' ' + esc(p.floatRule) : '') + '</p>';
-        if ((p.amounts || []).length) h += '<p class="lp-p" style="font-size:.84rem;margin-top:.4rem"><b>Seed to buy:</b> ' + p.amounts.map((x) => esc(lotName(r, x.lot)) + ' ' + (x.lo === x.hi ? x.lo : x.lo + ' to ' + x.hi) + ' kg').join(', ') + '.</p>';
+        if ((p.amounts || []).length) h += '<p class="lp-p" style="font-size:.84rem;margin-top:.4rem"><b>Seed to buy:' + tlf('seeding-rate') + '</b> ' + p.amounts.map((x) => esc(lotName(r, x.lot)) + ' ' + (x.lo === x.hi ? x.lo : x.lo + ' to ' + x.hi) + ' kg').join(', ') + '.</p>';
         else if (p.rateNote) h += '<p class="lp-p" style="font-size:.84rem;margin-top:.4rem">' + esc(p.rateNote) + '</p>';
         h += (p.timeline || []).map((t) => '<p class="lp-tlh2" style="--lc:' + lc(t.lot) + '"><i></i>' + esc(lotName(r, t.lot)) + ', sowing ' + esc(day(t.sow)) + '</p><div class="lp-tl">' + eventsHtml(t.events) + '</div>').join('');
         if ((p.steps || []).length) h += '<details class="lp-more-d"><summary>How to do it, step by step</summary><ol class="lp-steps-ol">' + p.steps.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ol></details>';
@@ -2438,13 +2462,13 @@
         const w = r.weather || {};
         const fc = w.forecast || [];
         if (!w.place && !w.enso && !a.weather) return '';
-        let h = '<div class="lp-c"><h3>🌦️ Weather and water' + (w.enso ? '<em>' + esc(w.enso) + '</em>' : '') + '</h3>';
+        let h = '<div class="lp-c"><h3>🌦️ Weather and water' + (w.enso ? '<em>' + esc(w.enso) + tlf('enso') + '</em>' : '') + '</h3>';
         if (a.weather) h += '<p class="lp-p" style="margin-bottom:.7rem">' + esc(a.weather) + '</p>';
         if (fc.length) h += '<div class="lp-scrollx"><div class="lp-fc" tabindex="0" aria-label="The forecast, day by day. It slides sideways.">' + fc.map((d) => '<div class="lp-fd"><small>' + esc(fmt(d.date, { weekday: 'short' })) + ' ' + esc(fmt(d.date, { day: 'numeric' })) + '</small><span>' + esc(d.emoji || '') + '</span><b>' + (d.max != null ? d.max + '°' : '') + '</b><i>' + (d.pop != null ? d.pop + '%' : '') + '</i></div>').join('') + '</div>'
             + '<button type="button" class="lp-nudge" data-nudge aria-label="Slide to see more days">Slide<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button></div>';
         if (w.history || w.plowRain != null) {
-            h += '<div class="lp-wx">' + (w.history ? '<div><b>' + w.history.rain + ' mm</b><small>rain over the prep, a ' + w.history.years + ' year average</small></div><div><b>' + w.history.dry + ' to ' + w.history.wet + '</b><small>mm, driest to wettest year</small></div>' : '')
-                + (w.plowRain != null ? '<div><b>' + w.plowRain + ' mm</b><small>in the 3 plowing weeks</small></div>' : '') + '</div>';
+            h += '<div class="lp-wx">' + (w.history ? '<div><b>' + w.history.rain + ' mm' + tlf('rain-mm') + '</b><small>rain over the prep, a ' + w.history.years + ' year average</small></div><div><b>' + w.history.dry + ' to ' + w.history.wet + '</b><small>mm, driest to wettest year</small></div>' : '')
+                + (w.plowRain != null ? '<div><b>' + w.plowRain + ' mm' + (w.history ? '' : tlf('rain-mm')) + '</b><small>in the 3 plowing weeks</small></div>' : '') + '</div>';
         }
         if (w.place) h += '<p class="lp-fineprint" style="margin-top:.6rem">At ' + esc(w.place.label) + '. Forecast and history from Open-Meteo, ENSO from NOAA.</p>';
         return h + '</div>';
@@ -2481,7 +2505,7 @@
             + (lot.copiedFrom != null && lots[lot.copiedFrom] ? '<span class="lp-copytag">⧉ ' + (lot.edited ? 'Started from the answers of ' : 'Same answers as ') + esc(lots[lot.copiedFrom].name) + '</span>' : '')
             + (lot.shift ? '<p class="lp-moved">Anee moved this lot ' + lot.shift + (lot.shift === 1 ? ' day' : ' days') + ' later than the ' + esc(day(lot.asked)) + ' you asked, so the crew can finish it in time.</p>' : '')
             + (lot.squeeze ? '<p class="lp-moved">⏳ ' + lot.squeeze.left + ' days left, the full preparation needs ' + lot.squeeze.needed + '. ' + lot.squeeze.count + ' steps were squeezed to fit, each marked below.</p>' : '')
-            + ((lot.answers || []).length ? '<div class="lp-ans">' + lot.answers.map((x) => '<span><b>' + esc(x[0]) + '</b>' + esc(x[1]) + '</span>').join('') + '</div>' : '')
+            + ((lot.answers || []).length ? '<div class="lp-ans">' + lot.answers.map((x) => '<span><b' + tlAt(ANS_TL[x[0]]) + '>' + esc(x[0]) + '</b>' + esc(x[1]) + '</span>').join('') + '</div>' : '')
             + (own.length ? '<ul class="lp-rules" style="margin-top:.6rem">' + own.map((n) => '<li><span>' + (n.level === 'warn' ? '⚠️' : '💡') + '</span><div>' + esc(n.text) + '</div></li>').join('') + '</ul>' : '')
             + '</div>';
         // The steps and the seed reminders, in date order.
@@ -2491,12 +2515,13 @@
         ((tl && tl.events) || []).forEach((e) => { const last = evs[evs.length - 1]; if (e.kind === 'water' && last && last.e.kind === 'water') { last.times.push(e.at); return; } evs.push({ e, times: [e.at] }); });
         evs.forEach((x) => items.push({ at: x.e.at.slice(0, 10), ev: x }));
         items.sort((x, y) => (x.at < y.at ? -1 : (x.at > y.at ? 1 : (x.ev ? -1 : 1))));
-        h += '<div class="lp-list">' + items.map((x, k) => (x.ev ? evHtml(x.ev) : stepHtml(r, x.s, people[x.s.key], plant, word, i, k))).join('') + '</div>';
+        const seen = new Set();     // the terms already flagged in this lot's list
+        h += '<div class="lp-list">' + items.map((x, k) => (x.ev ? evHtml(x.ev, seen) : stepHtml(r, x.s, people[x.s.key], plant, word, i, k, seen))).join('') + '</div>';
         return h;
     }
-    function evHtml(x) {
+    function evHtml(x, seen) {
         const ico = { soak: '💧', water: '🔁', incubate: '🧺', sow: '🌱' };
-        return '<div class="lp-ts"><span>' + (ico[x.e.kind] || '⏰') + '</span><div><b>' + esc(x.e.what) + '</b><small>' + esc(x.times.map((t, i) => (i === 0 || t.slice(0, 10) !== x.times[i - 1].slice(0, 10) ? day(t) + ', ' : '') + time(t)).join(', ')) + '</small></div></div>';
+        return '<div class="lp-ts"><span>' + (ico[x.e.kind] || '⏰') + '</span><div><b' + (seen ? tlOnce(seen, { soak: 'seed-soaking', incubate: 'seed-incubation' }[x.e.kind]) : '') + '>' + esc(x.e.what) + '</b><small>' + esc(x.times.map((t, i) => (i === 0 || t.slice(0, 10) !== x.times[i - 1].slice(0, 10) ? day(t) + ', ' : '') + time(t)).join(', ')) + '</small></div></div>';
     }
     function whenOf(r, row, ppl, plant, lot) {
         if (row.start) {
@@ -2507,7 +2532,7 @@
         if (row.planting) { const pd = plant.find((p) => p.key === row.key); return (row.winFrom === row.winTo ? day(row.winFrom) : day(row.winFrom) + ' or ' + day(row.winTo)) + (pd ? ', about ' + pd.people + ' ' + pd.words : ''); }
         return row.winFrom === row.winTo ? 'On ' + day(row.winFrom) : 'Any day from ' + day(row.winFrom) + ' to ' + day(row.winTo);
     }
-    function stepHtml(r, row, ppl, plant, word, lot, k) {
+    function stepHtml(r, row, ppl, plant, word, lot, k, seen) {
         const s = stepOf(r, row.key, lot);
         const anee = s.tag === 'anee';
         const at = row.start || row.winFrom;
@@ -2516,9 +2541,9 @@
             + (s.squeezed ? '<span class="lp-tg is-squeezed">⏳ ' + (s.squeezed.state === 'shortened' ? 'Shortened' : 'Moved up') + '</span>' : '')
             + (row.late ? '<span class="lp-tg is-late">' + row.late + (row.late === 1 ? ' day late' : ' days late') + '</span>' : '');
         return '<button type="button" class="lp-s' + (anee ? ' is-anee' : '') + (s.squeezed ? ' is-squeezed' : '') + '" data-step="' + lot + '|' + esc(row.key) + '" style="animation-delay:' + Math.min(k, 12) * 25 + 'ms"><span class="lp-cal1"><i>' + esc(fmt(at, { month: 'short' })) + '</i><b>' + esc(fmt(at, { day: 'numeric' })) + '</b><small>' + esc(fmt(at, { weekday: 'short' })) + '</small></span>'
-            + '<span class="lp-sb"><b>' + esc(s.what) + '</b><span class="lp-tags">' + tags + '</span><span class="lp-when" style="display:block">' + esc(whenOf(r, row, ppl, plant, lot)) + '</span>'
+            + '<span class="lp-sb"><b' + (seen ? tlOnce(seen, STEP_TL[row.key]) : '') + '>' + esc(s.what) + '</b><span class="lp-tags">' + tags + '</span><span class="lp-when" style="display:block">' + esc(whenOf(r, row, ppl, plant, lot)) + '</span>'
             + (s.how ? '<span class="lp-how" style="display:block">' + esc(s.how) + (s.rule ? ' ' + esc(s.rule) : '') + '</span>' : '')
-            + (s.squeezed ? '<span class="lp-sq" style="display:block"><b>Squeezed:</b> ' + esc(s.squeezed.why) + '</span>' : '')
+            + (s.squeezed ? '<span class="lp-sq" style="display:block"><b' + (seen ? tlOnce(seen, 'squeezed-steps') : '') + '>Squeezed:</b> ' + esc(s.squeezed.why) + '</span>' : '')
             + (s.why ? '<span class="lp-why" style="display:block"><b>Why:</b> ' + esc(s.why) + '</span>' : '')
             + (s.note ? '<span class="lp-note">' + (OPT().aneeFace ? '<img src="' + esc(OPT().aneeFace) + '" alt="">' : '') + '<span>' + esc(s.note) + '</span></span>' : '') + '</span></button>';
     }
@@ -2539,7 +2564,7 @@
         const used = []; allRows.forEach(([, row]) => (row.machines || []).forEach((m) => { if (!used.includes(m)) used.push(m); }));
         const fleet = (r.crew || {}).fleet || [];
         let h = '';
-        if (s.squeezed) h += '<div class="lp-sq"><b>Squeezed to fit the time.</b> ' + esc(s.squeezed.why) + '</div>';
+        if (s.squeezed) h += '<div class="lp-sq"><b>Squeezed to fit the time.' + tlf('squeezed-steps') + '</b> ' + esc(s.squeezed.why) + '</div>';
         h += '<div><p class="lp-sk">When' + (allRows.length > 1 ? ', lot by lot' : '') + '</p><div class="lp-swhen">' + allRows.map(([i, row]) => '<div style="--lc:' + lc(i) + '">' + (lots.length > 1 ? '<i></i>' : '') + '<span>' + (lots.length > 1 ? '<b>' + esc(lotName(r, i)) + ':</b> ' : '') + esc(whenOf(r, row, null, plant.filter((p) => p.lot === i), i)) + (row.workDays ? ', ' + row.workDays + (row.workDays === 1 ? ' work day' : ' work days') : '') + (row.late ? ', ' + row.late + ' days late' : '') + '</span></div>').join('') + '</div></div>';
         const anyCrew = allRows.some(([, row]) => row.crew);
         if (anyCrew) {
@@ -2547,11 +2572,11 @@
             used.forEach((m) => {
                 const f = fleet.find((x) => x.type === m) || {};
                 const ph = f.photo || eqPhoto(m);
-                stats.push('<div><span class="lp-ph">' + (ph ? '<img src="' + esc(ph) + '" alt="">' : '🚜') + '</span><span><b>' + esc(eqName(m)) + '</b><small>' + (f.hired && !f.own ? 'Hired, comes with its driver' : (f.hired ? 'Yours, or the hired one' : 'Yours, one worker drives it')) + '</small></span></div>');
+                stats.push('<div><span class="lp-ph">' + (ph ? '<img src="' + esc(ph) + '" alt="">' : '🚜') + '</span><span><b>' + esc(eqName(m)) + tlf(EQ_TL[m]) + '</b><small>' + (f.hired && !f.own ? 'Hired' + tlf('hired') + ', comes with its driver' : (f.hired ? 'Yours, or the hired one' : 'Yours, one worker drives it')) + '</small></span></div>');
             });
             if (allRows.some(([, row]) => row.byHand)) stats.push('<div><span class="lp-ph">🧑‍🌾</span><span><b>By hand</b><small>None of your machines can do it</small></span></div>');
-            if (people) stats.push('<div><span class="lp-ph">👷</span><span><b>Up to ' + people + (people === 1 ? ' person' : ' people') + ' a day</b><small>About ' + pdays + (pdays === 1 ? ' person day' : ' person days') + ' in all</small></span></div>');
-            if (mach) stats.push('<div><span class="lp-ph">🚜</span><span><b>' + mach + (mach === 1 ? ' machine day' : ' machine days') + '</b><small>Across ' + (allRows.length === 1 ? 'the lot' : allRows.length + ' lots') + '</small></span></div>');
+            if (people) stats.push('<div><span class="lp-ph">👷</span><span><b>Up to ' + people + (people === 1 ? ' person' : ' people') + ' a day</b><small>About ' + pdays + (pdays === 1 ? ' person day' : ' person days') + tlf('person-days') + ' in all</small></span></div>');
+            if (mach) stats.push('<div><span class="lp-ph">🚜</span><span><b>' + mach + (mach === 1 ? ' machine day' : ' machine days') + tlf('machine-days') + '</b><small>Across ' + (allRows.length === 1 ? 'the lot' : allRows.length + ' lots') + '</small></span></div>');
             if (stats.length) h += '<div><p class="lp-sk">Who and with what</p><div class="lp-sstats">' + stats.join('') + '</div></div>';
         }
         if (s.how) h += '<div><p class="lp-sk">How to do it</p><p class="lp-p">' + esc(s.how) + (s.rule ? ' ' + esc(s.rule) : '') + '</p></div>';

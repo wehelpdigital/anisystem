@@ -335,7 +335,7 @@
             </button>
             <div class="arq-body" id="arQuoteBody">
                 <div class="arq-card">
-                    One report costs <b>{{ $price }} credits</b>. You have @if (\App\Support\WorkerContext::inWorkerContext())<span class="credit-coin">@else<a class="credit-coin" href="{{ route('ai.credits') }}" title="My Credits: your log and credits to buy">@endif<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg><b id="arBalance">…</b>@if (\App\Support\WorkerContext::inWorkerContext())</span>@else</a>@endif. Nothing is charged until you press Run.
+                    One report costs <b>{{ $price }} credits{{ \App\Support\Tagalog::flag('credits') }}</b>. You have @if (\App\Support\WorkerContext::inWorkerContext())<span class="credit-coin">@else<a class="credit-coin" href="{{ route('ai.credits') }}" title="My Credits: your log and credits to buy">@endif<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg><b id="arBalance">…</b>@if (\App\Support\WorkerContext::inWorkerContext())</span>@else</a>@endif. Nothing is charged until you press Run.
                 </div>
                 <div class="arq-card">
                     {{ $isSofar
@@ -542,9 +542,15 @@ const __init = () => {
     const nf = (n, d = 1) => Number(n || 0).toLocaleString(REG.locale || 'en-PH', { maximumFractionDigits: d });
     const pct = (v, max) => (max > 0 ? Math.max(0, Math.min(100, Number(v || 0) / max * 100)) : 0);
     const CATS = [['materials', 'Materials'], ['labor', 'Labor'], ['services', 'Services'], ['expense', 'Extra expenses'], ['purchase', 'Stock buys']];
+    /* Tagalog help flags (2026-10-15): glossary keys for the app's own
+       labels around Anee's words, never inside them. data-tl draws the
+       flag; an unknown key draws nothing. */
+    const CAT_TL = { materials: 'cost-materials', labor: 'cost-labor', services: 'cost-services', expense: 'cost-extra', purchase: 'cost-stock' };
+    const dayTl = (w) => ({ DAS: 'das', DAT: 'dat', DAP: 'dap', DOS: 'dos', AGE: 'tree-age' })[String(w || '').toUpperCase()] || '';
+    const tlAttr = (k) => (k ? ` data-tl="${k}"` : '');
     const monthName = (ym) => { const d = new Date(String(ym) + '-01T00:00:00'); return isNaN(d) ? String(ym) : d.toLocaleString('en', { month: 'short' }); };
     const one = (unit) => { const u = String(unit || ''); return /^(kg|kgs|g|t|mt)$/i.test(u) ? u : u.replace(/s$/i, ''); };
-    const cardOf = (title, body) => `<div class="ar-card"><h3>${title}</h3>${body}</div>`;
+    const cardOf = (title, body, tl = '') => `<div class="ar-card"><h3${tlAttr(tl)}>${title}</h3>${body}</div>`;
     const capOf = (t) => (t ? `<p class="ar-cap">${esc(t)}</p>` : '');
     const proseOf = (t, top = true) => (t ? `<p class="ar-prose${top ? ' mt-3' : ''}">${esc(t)}</p>` : '');
     const barRow = (label, sub, right, w, cls, extra = '') => `<div class="ar-prog-row"><div class="ar-prog-h"><span><b>${esc(label)}</b>${sub ? ' · ' + esc(sub) : ''}</span><small>${esc(right)}</small></div><span class="track"><span class="fill ${cls}" data-w="${Number(w).toFixed(1)}"></span>${extra}</span></div>`;
@@ -595,17 +601,17 @@ const __init = () => {
             const perHa = lots.filter((l) => l.perHa !== null && l.perHa !== undefined);
             const tiles = [
                 [loss ? 'is-bad' : 'is-good', loss ? 'Loss' : 'Net profit', peso(Math.abs(Number(M.profit))),
-                    M.margin !== null && M.margin !== undefined ? (loss ? 'more went out than came in' : `${nf(M.margin)}% of the money in was kept`) : ''],
-                ['', 'Money in', peso(M.revenue), Number(M.dayIncome) > 0 ? 'the harvest and other income' : 'from the harvest'],
-                ['', 'Money out', peso(M.cost), 'everything the season spent'],
+                    M.margin !== null && M.margin !== undefined ? (loss ? 'more went out than came in' : `${nf(M.margin)}% of the money in was kept`) : '', loss ? 'loss' : 'net-profit'],
+                ['', 'Money in', peso(M.revenue), Number(M.dayIncome) > 0 ? 'the harvest and other income' : 'from the harvest', 'money-in'],
+                ['', 'Money out', peso(M.cost), 'everything the season spent', 'money-out'],
             ];
             const oneUnit = perHa.length && perHa.every((l) => l.unit === perHa[0].unit);
             const lo = oneUnit ? Math.min(...perHa.map((l) => Number(l.perHa))) : 0;
             const hi = oneUnit ? Math.max(...perHa.map((l) => Number(l.perHa))) : 0;
-            if ((F.harvest || []).length) tiles.push(['', 'Harvest', F.harvest.join(' + '), oneUnit ? `${lo === hi ? nf(lo) : nf(lo) + ' to ' + nf(hi)} ${perHa[0].unit} per hectare` : (perHa.length ? 'per hectare, lot by lot below' : '')]);
-            if (ran.length) tiles.push(['', 'Days to harvest', Math.min(...ran) === Math.max(...ran) ? `${ran[0]} days` : `${Math.min(...ran)} to ${Math.max(...ran)} days`, 'from day zero to harvest']);
-            if (F.work) tiles.push(['', 'Work done', `${F.work.done} ${Number(F.work.done) === 1 ? 'job' : 'jobs'}`, `${nf(F.work.workerDays)} worker days`]);
-            parts.push(cardOf('✨ At a glance', `<div class="ar-figs">${tiles.map(([cls, k, v, sub]) => `<div class="ar-fig ${cls}"><small>${esc(k)}</small><b>${esc(v)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`).join('')}</div>`));
+            if ((F.harvest || []).length) tiles.push(['', 'Harvest', F.harvest.join(' + '), oneUnit ? `${lo === hi ? nf(lo) : nf(lo) + ' to ' + nf(hi)} ${perHa[0].unit} per hectare` : (perHa.length ? 'per hectare, lot by lot below' : ''), 'yield']);
+            if (ran.length) tiles.push(['', 'Days to harvest', Math.min(...ran) === Math.max(...ran) ? `${ran[0]} days` : `${Math.min(...ran)} to ${Math.max(...ran)} days`, 'from day zero to harvest', 'days-to-harvest']);
+            if (F.work) tiles.push(['', 'Work done', `${F.work.done} ${Number(F.work.done) === 1 ? 'job' : 'jobs'}`, `${nf(F.work.workerDays)} worker days`, '', 'person-days']);
+            parts.push(cardOf('✨ At a glance', `<div class="ar-figs">${tiles.map(([cls, k, v, sub, tk, sk]) => `<div class="ar-fig ${cls}"><small${tlAttr(tk)}>${esc(k)}</small><b>${esc(v)}</b>${sub ? `<span${tlAttr(sk)}>${esc(sub)}</span>` : ''}</div>`).join('')}</div>`));
         }
 
         // The scores, each with the reason for it.
@@ -617,7 +623,7 @@ const __init = () => {
             const v = (k) => Math.max(0, Math.min(100, Number(S[k]) || 0));
             if (rows.length) parts.push(cardOf('📈 The season, scored', rows.map(([k, label]) => `
                 <div class="ar-score"><span>${label}</span><span class="track"><span class="fill" data-w="${v(k)}"></span></span><b>${v(k)}</b>${W[k] ? `<p class="ar-score-why">${esc(W[k])}</p>` : ''}</div>`).join('')
-                + capOf('Each score is out of 100. Higher is better.')));
+                + capOf('Each score is out of 100. Higher is better.'), 'report-score'));
         }
 
         // The money: in against out, then where it went.
@@ -631,10 +637,10 @@ const __init = () => {
                     ${barRow('Money in', '', peso(M.revenue), pct(M.revenue, max), 'k-in')}
                     ${barRow('Money out', '', peso(M.cost), pct(M.cost, max), 'k-out')}
                 </div>
-                <div class="ar-kv"><span class="${loss ? 'is-bad' : ''}">${loss ? 'Loss' : 'Kept'} <b>${peso(Math.abs(Number(M.profit)))}</b></span>${M.margin !== null && M.margin !== undefined ? `<span>Margin <b>${nf(M.margin)}%</b></span>` : ''}</div>
+                <div class="ar-kv"><span class="${loss ? 'is-bad' : ''}">${loss ? 'Loss' : 'Kept'} <b>${peso(Math.abs(Number(M.profit)))}</b></span>${M.margin !== null && M.margin !== undefined ? `<span data-tl="margin">Margin <b>${nf(M.margin)}%</b></span>` : ''}</div>
                 ${cats.length ? `<p class="ar-sub">Where the money went</p>
                     <div class="ar-stack">${cats.map(([k, label]) => `<i class="k-${k}" style="width:${(Number(C[k]) / total * 100).toFixed(1)}%" title="${esc(label)}: ${esc(peso(C[k]))}"></i>`).join('')}</div>
-                    <div class="ar-legend">${cats.map(([k, label]) => `<span><i class="k-${k}"></i>${label} <b>${peso(C[k])}</b> <em>${Math.round(Number(C[k]) / total * 100)}%</em></span>`).join('')}</div>` : ''}
+                    <div class="ar-legend">${cats.map(([k, label]) => `<span><i class="k-${k}"></i><span${tlAttr(CAT_TL[k])}>${label}</span> <b>${peso(C[k])}</b> <em>${Math.round(Number(C[k]) / total * 100)}%</em></span>`).join('')}</div>` : ''}
                 ${proseOf(r.moneyStory)}`));
         }
 
@@ -656,13 +662,13 @@ const __init = () => {
         const shown = lots.filter((l) => Number(l.revenue) > 0 || Number(l.cost) > 0 || (l.yield || []).length);
         if (shown.length) {
             const max = Math.max(0, ...shown.flatMap((l) => [Number(l.revenue) || 0, Number(l.cost) || 0])) || 1;
-            parts.push(cardOf('🌾 Lot by lot', shown.map((l) => `<div class="ar-lot">
+            parts.push(cardOf('🌾 Lot by lot', shown.map((l, i) => `<div class="ar-lot">
                 <div class="ar-lot-h"><b>${esc(l.name)}</b><span>${esc(l.icon || '')} ${esc(l.crop || '')}${l.variety ? ' · ' + esc(l.variety) : ''}${l.size ? ' · ' + esc(l.size) : ''}</span></div>
                 <div class="ar-prog">${barRow('Money in', '', peso(l.revenue), pct(l.revenue, max), 'k-in')}${barRow('Money out', '', peso(l.cost), pct(l.cost, max), 'k-out')}</div>
                 <div class="ar-kv">
                     ${(l.yield || []).length ? `<span>Harvest <b>${esc(l.yield.join(' + '))}</b></span>` : ''}
-                    ${l.perHa !== null && l.perHa !== undefined ? `<span><b>${nf(l.perHa)}</b> ${esc(l.unit)} per hectare</span>` : ''}
-                    ${l.costPerUnit !== null && l.costPerUnit !== undefined ? `<span><b>${peso(l.costPerUnit)}</b> cost per ${esc(one(l.unit))}</span>` : ''}
+                    ${l.perHa !== null && l.perHa !== undefined ? `<span${tlAttr(i === 0 ? 'per-hectare' : '')}><b>${nf(l.perHa)}</b> ${esc(l.unit)} per hectare</span>` : ''}
+                    ${l.costPerUnit !== null && l.costPerUnit !== undefined ? `<span${tlAttr(i === 0 ? 'cost-per-unit' : '')}><b>${peso(l.costPerUnit)}</b> cost per ${esc(one(l.unit))}</span>` : ''}
                     <span class="${Number(l.profit) < 0 ? 'is-bad' : ''}">${Number(l.profit) < 0 ? 'Loss' : 'Kept'} <b>${peso(Math.abs(Number(l.profit)))}</b></span>
                 </div>
             </div>`).join('')
@@ -721,7 +727,7 @@ const __init = () => {
                     l.maturity ? `<span class="mark" style="left:${pct(l.maturity, maxD).toFixed(1)}%" title="A typical crop: ${esc(l.maturity)} days"></span>` : '')).join('')}</div>`
                     + capOf('Each bar runs from day zero to harvest. The dark line marks where a typical crop is ready. Orange means it ran well past it.');
             }
-            parts.push(cardOf('⏱️ How long the crop took', body + proseOf(r.delays, !!body)));
+            parts.push(cardOf('⏱️ How long the crop took', body + proseOf(r.delays, !!body), 'maturity-days'));
         }
 
         // The weather, month by month.
@@ -738,7 +744,7 @@ const __init = () => {
                 }));
                 const sum = (k) => WX.months.reduce((n, m) => n + Number(m[k] || 0), 0);
                 body = colChart(cols, (v) => nf(v, 0) + ' mm', 'Tap a month to see its rain, heat and wind.')
-                    + `<div class="ar-kv"><span><b>${nf(sum('rain'), 0)} mm</b> of rain in all</span><span><b>${sum('wet')}</b> wet days</span><span><b>${sum('dry')}</b> dry days</span>`
+                    + `<div class="ar-kv"><span data-tl="rain-mm"><b>${nf(sum('rain'), 0)} mm</b> of rain in all</span><span><b>${sum('wet')}</b> wet days</span><span><b>${sum('dry')}</b> dry days</span>`
                     + (sum('hot') ? `<span class="is-bad"><b>${sum('hot')}</b> days at 35°C or hotter</span>` : '')
                     + (sum('windy') ? `<span class="is-bad"><b>${sum('windy')}</b> windy days</span>` : '') + `</div>`
                     + capOf('Taller bars mean more rain that month. From the weather archive for your field.');
@@ -765,7 +771,7 @@ const __init = () => {
         }
 
         if ((r.protocolChanges || []).length) {
-            parts.push(`<div class="ar-card"><h3>🔁 Protocol changes</h3>${r.protocolChanges.map((p) => `
+            parts.push(`<div class="ar-card"><h3 data-tl="protocol">🔁 Protocol changes</h3>${r.protocolChanges.map((p) => `
                 <div class="ar-proto"><b>${esc(p.change || '')}</b>
                     <div class="swap"><s>${esc(p.current || '')}</s><br><em>${esc(p.suggested || '')}</em>
                     ${p.timing ? ` <span class="badge badge-gray">${esc(p.timing)}</span>` : ''}</div>
@@ -809,13 +815,13 @@ const __init = () => {
             const due = lots.filter((l) => l.daysLeft !== null && l.daysLeft !== undefined).sort((a, b) => a.daysLeft - b.daysLeft);
             const soon = due.find((l) => l.daysLeft >= 0) || due[due.length - 1] || null;
             const tiles = [];
-            if (M) tiles.push(['', 'Spent so far', peso(M.cost), Number(M.plan) > 0 ? `of about ${peso(M.plan)} for the whole plan` : 'work marked done and costs up to today']);
+            if (M) tiles.push(['', 'Spent so far', peso(M.cost), Number(M.plan) > 0 ? `of about ${peso(M.plan)} for the whole plan` : 'work marked done and costs up to today', 'spent-so-far']);
             if (P && P.planned) tiles.push([P.overdue ? 'is-bad' : 'is-good', 'Work due by today', `${P.done} of ${P.planned} done`, P.overdue ? `${P.overdue} overdue` : 'nothing overdue']);
             if (soon) tiles.push(['', 'Next harvest', soon.daysLeft > 0 ? `in ${soon.daysLeft} ${soon.daysLeft === 1 ? 'day' : 'days'}` : 'due now', `${soon.name} · about ${soon.harvestOn}`]);
             if (P) tiles.push(['', 'Coming up', `${P.coming} ${Number(P.coming) === 1 ? 'job' : 'jobs'}`, 'in the next 14 days']);
-            if (WX) tiles.push(['', 'Rain so far', `${nf(wxSum('rain'), 0)} mm`, `${wxSum('wet')} wet days, ${wxSum('dry')} dry`]);
-            if (F.work && Number(F.work.workerDays) > 0) tiles.push(['', 'Worker days', nf(F.work.workerDays), `by ${F.work.workerCount} ${Number(F.work.workerCount) === 1 ? 'worker' : 'workers'} so far`]);
-            if (tiles.length) parts.push(cardOf('✨ At a glance', `<div class="ar-figs">${tiles.map(([cls, k, v, sub]) => `<div class="ar-fig ${cls}"><small>${esc(k)}</small><b>${esc(v)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`).join('')}</div>`));
+            if (WX) tiles.push(['', 'Rain so far', `${nf(wxSum('rain'), 0)} mm`, `${wxSum('wet')} wet days, ${wxSum('dry')} dry`, 'rain-mm']);
+            if (F.work && Number(F.work.workerDays) > 0) tiles.push(['', 'Worker days', nf(F.work.workerDays), `by ${F.work.workerCount} ${Number(F.work.workerCount) === 1 ? 'worker' : 'workers'} so far`, 'person-days']);
+            if (tiles.length) parts.push(cardOf('✨ At a glance', `<div class="ar-figs">${tiles.map(([cls, k, v, sub, tk, sk]) => `<div class="ar-fig ${cls}"><small${tlAttr(tk)}>${esc(k)}</small><b>${esc(v)}</b>${sub ? `<span${tlAttr(sk)}>${esc(sub)}</span>` : ''}</div>`).join('')}</div>`));
         }
 
         // The scores, five ways, each with its reason.
@@ -826,7 +832,7 @@ const __init = () => {
             const rows = [['protocol', 'Protocol'], ['timing', 'Timing'], ['weather', 'Weather'], ['money', 'Money'], ['records', 'Records']].filter(([k]) => S[k] !== undefined && S[k] !== null);
             if (rows.length) parts.push(cardOf('📈 The season so far, scored', rows.map(([k, label]) => `
                 <div class="ar-score"><span>${label}</span><span class="track"><span class="fill" data-w="${v(k)}"></span></span><b>${v(k)}</b>${W[k] ? `<p class="ar-score-why">${esc(W[k])}</p>` : ''}</div>`).join('')
-                + capOf('Each score is out of 100. Higher is better.')));
+                + capOf('Each score is out of 100. Higher is better.'), 'report-score'));
         }
 
         // The good and the bad.
@@ -836,7 +842,11 @@ const __init = () => {
         // Where the crop stands, and what it needs now.
         const needs = (r.cropNow || []).filter((c) => c && (c.needs || c.watch));
         if (lots.length || needs.length) {
+            const counted = new Set();
             const bars = lots.length ? `<div class="ar-prog">${lots.map((l) => {
+                const ck = l.day !== null && l.day !== undefined ? dayTl(l.counter) : '';
+                const cFlag = !!ck && !counted.has(ck);
+                if (cFlag) counted.add(ck);
                 // v2 says the stage on its own line, with what comes next;
                 // the header keeps only the count, so a phone reads it clean.
                 const bits = [];
@@ -844,14 +854,14 @@ const __init = () => {
                 if (V2 && l.next) bits.push(`${l.next.label} in ${l.next.inDays} ${Number(l.next.inDays) === 1 ? 'day' : 'days'}`);
                 if (V2 && l.harvestOn) bits.push(l.daysLeft > 0 ? `harvest about ${l.harvestOn}` : `harvest due (${l.harvestOn})`);
                 return `<div class="ar-prog-row">
-                    <div class="ar-prog-h"><span><b>${esc(l.name)}</b> · ${esc(l.icon || '')} ${esc(l.crop || '')}</span><small>${l.day !== null && l.day !== undefined ? `${esc(l.counter)} ${l.day}` : 'no day zero'}${l.maturity ? ` of ~${l.maturity}` : ''}${!V2 && l.stage ? ` · ${esc(l.stage)}` : ''}</small></div>
+                    <div class="ar-prog-h"><span><b>${esc(l.name)}</b> · ${esc(l.icon || '')} ${esc(l.crop || '')}</span><small>${l.day !== null && l.day !== undefined ? (cFlag ? `<span data-tl="${ck}">${esc(l.counter)} ${l.day}</span>` : `${esc(l.counter)} ${l.day}`) : 'no day zero'}${l.maturity ? ` of ~${l.maturity}` : ''}${!V2 && l.stage ? ` · ${esc(l.stage)}` : ''}</small></div>
                     <span class="track"><span class="fill" data-w="${l.pct === null || l.pct === undefined ? 0 : l.pct}"></span></span>
                     ${bits.length ? `<p class="ar-lot-next">${esc(bits.join(' · '))}</p>` : ''}
                 </div>`;
             }).join('')}</div>` + capOf(`As of ${F.asOf || ''}. Each bar is the crop's calendar, from day zero to a typical harvest.`) : '';
             const now = needs.length ? `<p class="ar-sub">What the crop needs now</p><div class="ar-gb">${needs.map((c) => `
                 <div class="ar-gb-row"><b>${esc(c.lot || '')}</b>${esc(c.needs || '')}${c.watch ? `<em class="ar-watch">Watch for: ${esc(c.watch)}</em>` : ''}</div>`).join('')}</div>` : '';
-            parts.push(cardOf('🌱 Where the crop stands', bars + now));
+            parts.push(cardOf('🌱 Where the crop stands', bars + now, 'growth-stage'));
         }
 
         // What to do next: Anee's list, then the plan's own calendar.
@@ -886,7 +896,7 @@ const __init = () => {
             body += `<div class="ar-kv"><span>Spent <b>${peso(M.cost)}</b></span>${V2 ? `<span>Still to spend <b>${peso(M.planned)}</b></span>` : ''}<span>Earned <b>${peso(M.revenue)}</b></span>${r.money && r.money.verdict ? `<span>Spend is <b>${esc(r.money.verdict)}</b></span>` : ''}</div>`;
             if (cats.length) {
                 body += `<p class="ar-sub">Where it went</p><div class="ar-stack">${cats.map(([k, label]) => `<i class="k-${k}" style="width:${(Number(C[k]) / total * 100).toFixed(1)}%" title="${esc(label)}: ${esc(peso(C[k]))}"></i>`).join('')}</div>
-                    <div class="ar-legend">${cats.map(([k, label]) => `<span><i class="k-${k}"></i>${label} <b>${peso(C[k])}</b> <em>${Math.round(Number(C[k]) / total * 100)}%</em></span>`).join('')}</div>`;
+                    <div class="ar-legend">${cats.map(([k, label]) => `<span><i class="k-${k}"></i><span${tlAttr(CAT_TL[k])}>${label}</span> <b>${peso(C[k])}</b> <em>${Math.round(Number(C[k]) / total * 100)}%</em></span>`).join('')}</div>`;
             }
             if (V2 && (F.months || []).length) {
                 const cols = F.months.map((m) => ({
@@ -932,7 +942,7 @@ const __init = () => {
                         + (m.windy ? `, ${m.windy} windy ${Number(m.windy) === 1 ? 'day' : 'days'}` : '') + '.',
                 }));
                 body = colChart(cols, (v) => nf(v, 0) + ' mm', 'Tap a month to see its rain, heat and wind.')
-                    + `<div class="ar-kv"><span><b>${nf(wxSum('rain'), 0)} mm</b> of rain so far</span><span><b>${wxSum('wet')}</b> wet days</span><span><b>${wxSum('dry')}</b> dry days</span>`
+                    + `<div class="ar-kv"><span data-tl="rain-mm"><b>${nf(wxSum('rain'), 0)} mm</b> of rain so far</span><span><b>${wxSum('wet')}</b> wet days</span><span><b>${wxSum('dry')}</b> dry days</span>`
                     + (wxSum('hot') ? `<span class="is-bad"><b>${wxSum('hot')}</b> days at 35°C or hotter</span>` : '')
                     + (wxSum('windy') ? `<span class="is-bad"><b>${wxSum('windy')}</b> windy days</span>` : '') + '</div>'
                     + capOf('Taller bars mean more rain that month. From the weather archive for your field, up to a few days ago.');
@@ -968,7 +978,7 @@ const __init = () => {
         // The protocol so far, and the timing.
         if (r.protocol && typeof r.protocol === 'object') {
             const Pp = r.protocol;
-            parts.push(`<div class="ar-card"><h3>📋 The protocol so far</h3>
+            parts.push(`<div class="ar-card"><h3 data-tl="protocol">📋 The protocol so far</h3>
                 ${Pp.summary ? `<p class="ar-prose">${esc(Pp.summary)}</p>` : ''}
                 ${((Pp.followed || []).length || (Pp.missed || []).length) ? `<div class="ar-two">
                     ${(Pp.followed || []).length ? `<div class="is-ok"><b>Done as planned</b><ul>${Pp.followed.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
