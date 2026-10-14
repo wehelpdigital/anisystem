@@ -152,7 +152,7 @@
                 <h2>Weeds of Philippine Farms</h2>
                 <p>{{ $weeds->count() }} weeds of {{ count($wkCrops) }} Philippine crops, from the rice paddy to the corn field, the vegetable plot, the cane field and the orchard. Pick your crop, or search by any name you know, English, scientific or local, like bayakibok, gabi gabi or kogon.</p>
             </div>
-            <div class="wk-tools mt-7">
+            <div class="wk-tools has-crop mt-7">
                 <label class="wk-search">
                     <span class="sr-only">Search the weeds</span>
                     <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>
@@ -161,11 +161,14 @@
                 <div class="wk-crop" id="wkCrop">
                     @include('public.site.partials.crop-pick', ['id' => 'wkCropSheet', 'crops' => $wkCrops, 'current' => '', 'title' => 'Weeds of which crop?', 'noun' => 'weeds', 'all' => ['All crops', 'Every weed in the catalogue']])
                 </div>
-                <div class="sp-cats wk-cats" id="wkCats" role="group" aria-label="Weed group">
-                    <button type="button" class="is-on" data-group="">All <i>{{ $weeds->count() }}</i></button>
-                    @foreach ($W::GROUPS as $g => $info)
-                        <button type="button" data-group="{{ $g }}">{{ $info['label'] }} <i>{{ $count($g) }}</i></button>
-                    @endforeach
+                <div class="wk-row">
+                    <span class="wk-lab" aria-hidden="true">Weed group</span>
+                    <div class="sp-cats wk-cats" id="wkCats" role="group" aria-label="Weed group">
+                        <button type="button" class="is-on" data-group="">All <i>{{ $weeds->count() }}</i></button>
+                        @foreach ($W::GROUPS as $g => $info)
+                            <button type="button" data-group="{{ $g }}">{{ $info['label'] }} <i>{{ $count($g) }}</i></button>
+                        @endforeach
+                    </div>
                 </div>
                 <span class="wk-count" id="wkCount" aria-live="polite"></span>
             </div>

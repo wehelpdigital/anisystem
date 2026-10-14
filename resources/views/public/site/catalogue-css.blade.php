@@ -45,8 +45,18 @@
         .wk-group button svg { width: .9rem; height: .9rem; }
 
         /* The catalogue */
-        .wk-tools { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
-        .wk-search { position: relative; flex: 1 1 18rem; max-width: 26rem; }
+        /* The filters (2026-10-14): a panel like the variety finders', the
+           search on its own row (with the crop picker beside it on /weeds),
+           then the labelled chips with the count at their end. */
+        .wk-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "search search" "row count"; align-items: end; gap: .9rem 1.25rem;
+            padding: 1.1rem 1.2rem 1.15rem; border-radius: 1.4rem; background: #fff; border: 1px solid #e3ecd8; box-shadow: 0 18px 40px -34px rgb(20 33 12 / .55); }
+        .wk-tools.has-crop { grid-template-columns: minmax(0, 1fr) minmax(17rem, 21rem); grid-template-areas: "search crop" "row count"; align-items: center; }
+        .wk-tools > .wk-search { grid-area: search; }
+        .wk-tools > .wk-crop { grid-area: crop; }
+        .wk-tools > .wk-row { grid-area: row; min-width: 0; }
+        .wk-tools > .wk-count { grid-area: count; align-self: end; justify-self: end; padding-bottom: .35rem; white-space: nowrap; }
+        .wk-lab { display: block; margin-bottom: .45rem; font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #3d6823; }
+        .wk-search { position: relative; min-width: 0; }
         .wk-search svg { position: absolute; left: .85rem; top: 50%; translate: 0 -50%; width: 1.05rem; height: 1.05rem; color: #6b9f3d; pointer-events: none; }
         .wk-search input { width: 100%; padding: .7rem .9rem .7rem 2.5rem; border-radius: 999px; border: 1px solid #d7e8c2; background: #fff; font-size: .95rem; color: #14210c;
             transition: border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
@@ -55,10 +65,14 @@
         .wk-cats button i { font-style: normal; font-size: .72rem; font-weight: 800; opacity: .7; }
         .wk-count { font-size: .85rem; color: #6b7280; }
         /* The crop beside the search (the weeds catalogue, 2026-10-08): the same tag the helpers use. */
-        .wk-crop { flex: 0 1 17rem; min-width: 14rem; }
+        .wk-crop { min-width: 0; }
+        .wk-crop .cp-tag small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .wk-crop .cp-tag { margin-top: 0; padding-top: .35rem; padding-bottom: .35rem; border-radius: 999px; background: #fff; border-color: #d7e8c2; }
         .wk-crop .cp-ico { width: 2.1rem; height: 2.1rem; border-radius: 999px; font-size: 1.1rem; }
-        @media (max-width: 639.98px) { .wk-crop { flex-basis: 100%; } }
+        @media (max-width: 639.98px) {
+            .wk-tools, .wk-tools.has-crop { grid-template-columns: minmax(0, 1fr); grid-template-areas: "search" "crop" "row" "count"; padding: .95rem; }
+            .wk-tools > .wk-count { justify-self: start; padding-bottom: 0; }
+        }
         .wk-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 12.75rem), 1fr)); }
         .wk-card { --g: 98; display: flex; flex-direction: column; overflow: hidden; border-radius: 1.1rem; background: #fff; border: 1px solid #e5ebdf; text-decoration: none;
             transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }

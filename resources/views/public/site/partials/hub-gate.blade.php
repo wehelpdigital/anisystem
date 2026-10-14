@@ -67,9 +67,8 @@
     const lock = (grid) => {
         const wrap = grid && grid.closest('[data-hg]');
         if (!wrap) return;
-        const foot = wrap.querySelector('[data-gate-foot]');
         // An answer with nothing to hold back (no list at all): no gate.
-        if (!grid.hasAttribute('data-hg-grid')) { wrap.classList.remove('has-locked'); if (foot) foot.textContent = ''; return; }
+        if (!grid.hasAttribute('data-hg-grid')) { wrap.classList.remove('has-locked'); return; }
         const cards = cardsOf(grid);
         cards.forEach((c) => { c.classList.remove('hg-locked', 'hg-cut'); c.inert = false; });
         const on = cards.filter((c) => !c.hidden && !c.classList.contains('is-out') && shown(c));
@@ -106,14 +105,6 @@
             held += on.length - kept.length;
         }
         wrap.classList.toggle('has-locked', held > 0);
-        if (foot) {
-            const noun = held === 1 ? wrap.dataset.hgOne : wrap.dataset.hgMany;
-            // Every card is behind the blur now, so the count is all of them.
-            const more = held < on.length ? ' more ' : ' ';
-            foot.textContent = !held ? '' : wrap.dataset.hgFoot || (on.length < cards.length
-                ? held + more + noun + (held === 1 ? ' matches' : ' match') + ' what you picked'
-                : (held < on.length ? 'And ' + held + ' more ' : held + ' ') + noun + ' waiting for you');
-        }
     };
 
     /* An answer drawn again from scratch (the finders write their card

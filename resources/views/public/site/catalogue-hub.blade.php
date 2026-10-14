@@ -150,11 +150,14 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>
                     <input type="search" id="wkQ" placeholder="Search a name" autocomplete="off">
                 </label>
-                <div class="sp-cats wk-cats" id="wkCats" role="group" aria-label="Crop">
-                    <button type="button" class="is-on" data-group="">All <i>{{ $items->count() }}</i></button>
-                    @foreach ($F::SHELVES as $g => [$gLabel])
-                        @if ($count($g))<button type="button" data-group="{{ $g }}">{{ $shelfTag($g) }} <i>{{ $count($g) }}</i></button>@endif
-                    @endforeach
+                <div class="wk-row">
+                    <span class="wk-lab" aria-hidden="true">Crop</span>
+                    <div class="sp-cats wk-cats" id="wkCats" role="group" aria-label="Crop">
+                        <button type="button" class="is-on" data-group="">All <i>{{ $items->count() }}</i></button>
+                        @foreach ($F::SHELVES as $g => [$gLabel])
+                            @if ($count($g))<button type="button" data-group="{{ $g }}">{{ $shelfTag($g) }} <i>{{ $count($g) }}</i></button>@endif
+                        @endforeach
+                    </div>
                 </div>
                 <span class="wk-count" id="wkCount" aria-live="polite"></span>
             </div>
