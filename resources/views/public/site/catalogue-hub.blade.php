@@ -2,9 +2,9 @@
 
 {{-- /pests and /diseases (2026-10-07), built like /weeds: the crop shelves,
      the catalogue (one card per profile page, searched by any name and
-     filtered by shelf), the finder ("What is attacking my crop?": the crop,
-     then where the damage shows or what the farmer sees, and the matching
-     pages), the guides and Anee. The words around it come from
+     filtered by shelf), the guides and Anee. The finder ("What is attacking
+     my crop?") left the public site on 2026-10-14 (the owner): it lives in
+     anee.io's Field helpers. The words around it come from
      App\Support\ProblemCatalogue::HUB, the card facts from the field
      catalogue (App\Support\FieldCatalogue), every crop since 2026-10-08. --}}
 @include('public.partials.site-css')
@@ -78,7 +78,6 @@
                     <p class="sp-lead mt-4">{{ $meta['intro'] }}</p>
                     <div class="wk-jump mt-6">
                         <a href="#catalogue"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a {{ $words['noun'] }}</a>
-                        <a href="#finder"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 9a2.5 2.5 0 115 0c0 1.5-2.5 2-2.5 3.5m0 3h.01M12 21a9 9 0 110-18 9 9 0 010 18z"/></svg>{{ $words['finder'] }}</a>
                         @if ($hg)
                             <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Register for free to see them all</a>
                         @elseif ($member)
@@ -204,17 +203,6 @@
         </div>
     </section>
 
-    {{-- The finder --}}
-    <section class="wc-sec" id="finder">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-            <div class="wk-sec-h">
-                <span class="sp-chip">{{ $isPests ? 'Pest finder' : 'Disease finder' }}</span>
-                <h2 class="mt-3">{{ $words['finder'] }}</h2>
-                <p>{{ $words['finderLead'] }}</p>
-            </div>
-            @include('public.site.partials.problem-finder', $finder + ['gate' => 'signup'])
-        </div>
-    </section>
 
     @if ($guides->count())
         <section class="bg-white" id="guides" style="scroll-margin-top: 5rem">

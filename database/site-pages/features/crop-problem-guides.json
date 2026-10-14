@@ -16,7 +16,7 @@
     "common weeds in the philippines",
     "fertilizer and pesticide authority"
   ],
-  "excerpt": "The anee.io crop problem guides are free field guides to the crop problems Filipino farmers meet most: the pests, diseases and weeds of palay, mais, vegetables and fruit. Each guide shows how to spot the problem, why it comes and what to do about it, with the local names farmers use. You do not need an account to read them.",
+  "excerpt": "The anee.io crop problem guides are free field guides to the crop problems Filipino farmers meet most: the pests, diseases and weeds of palay, mais, vegetables and fruit. Each guide shows how to spot the problem, why it comes and what to do about it, with the local names farmers use. Anyone can read the start of each guide, and you can register for free to read them in full.",
   "heroImage": {
     "src": "/images/site/app/how/guides.webp",
     "alt": "The anee.io crop problems page on a phone, with filters for rice pests, corn pests, crop diseases and weeds above the rice bug guide",
@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "Every guide follows the same order, so you know where to look. It opens with a photo and what the problem is. Then come the signs in the field, why it builds up and how to manage it, with cultural control first and chemicals last. Each one ends with the questions farmers ask and the sources behind it, from PhilRice, IRRI, the DA and the product labels.\n\nThe guides sit behind three doors: [crop pests](/pests), [crop diseases](/diseases) and [weeds and grasses](/weeds). Each door covers every crop anee.io knows, from palay to durian. The weeds door holds a catalogue of the weeds of Philippine farms, each with its local names, and a weed control helper that shows what to do at every age of your crop."
+      "text": "Every guide follows the same order, so you know where to look. It opens with a photo and what the problem is. Then come the signs in the field, why it builds up and how to manage it, with cultural control first and chemicals last. Each one ends with the questions farmers ask and the sources behind it, from PhilRice, IRRI, the DA and the product labels.\n\nThe guides sit behind three doors: [crop pests](/pests), [crop diseases](/diseases) and [weeds and grasses](/weeds). Each door covers every crop anee.io knows, from palay to durian. The weeds door holds a catalogue of the weeds of Philippine farms, each with its local names and how to control it at every age of your crop."
     },
     {
       "type": "heading",
@@ -136,7 +136,7 @@
     {
       "type": "cta",
       "title": "Catch crop problems at the right stage",
-      "text": "Read the guides free, any time. Sign up free to see each lot's stage, what to watch for and a daily tip on your phone.",
+      "text": "Register for free to read every guide in full, and to see each lot's stage, what to watch for and a daily tip on your phone.",
       "label": "Start free",
       "url": "/signup"
     },
@@ -149,8 +149,8 @@
       "type": "faq",
       "items": [
         {
-          "q": "Are the guides free?",
-          "a": "Yes. Anyone can read them on the web, with or without an anee.io account."
+          "q": "Can I read the guides without an account?",
+          "a": "Anyone can read the start of every guide. Register for free to read them in full, with the finders and every tool on your phone."
         },
         {
           "q": "Which crops do the guides cover?",

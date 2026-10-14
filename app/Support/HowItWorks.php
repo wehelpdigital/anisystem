@@ -317,7 +317,7 @@ class HowItWorks
                     self::item('weedHelper', 'Weed Control Helper', "What to do about weeds at your crop's age", 'icons/weed.svg', false,
                         'Pick your crop, how old it is and the weeds you see. The helper tells you what works at that age: the active ingredients for those weeds, group by group, or weeding by hand when no herbicide fits. Free.',
                         ['By your crop and its age', 'Active ingredients by group, never brands', 'Hand weeding when no spray fits'],
-                        null, 'fh.page:weeds', $ph ? '/weeds' : null),
+                        'pest-and-disease-finders', 'fh.page:weeds'),
                     $ph ? self::item('guides', 'Crop problem guides', 'Pests, diseases and weeds, explained', 'icons/tool-box.png', false,
                         'Free guides to the pests, diseases and weeds of Philippine crops: how to spot them, why they come and what to do about them.',
                         ['Written for Philippine farms', 'What to look for, with pictures', 'What to do, step by step'],

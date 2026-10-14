@@ -129,8 +129,8 @@
                         </div>
                     @elseif ($prob)
                         <a href="{{ $S::url($page->section) }}?group={{ $prob['group'] }}#catalogue" class="sp-chip">{{ $page->category }}</a>
-                        {{-- Not sure this is the one? The finder, from the top (it also waits at the foot). --}}
-                        <a href="{{ $S::url($page->section) }}#finder" class="sp-finder-link">{{ $page->section === 'pests' ? 'Not sure it is this pest? Use the Pest Finder' : 'Not sure it is this disease? Use the Disease Finder' }} ›</a>
+                        {{-- Not sure this is the one? The finder in anee.io (SitePages::helperUrl). --}}
+                        <a href="{{ $S::helperUrl($page->section, $prob['crops'][0] ?? null) }}" class="sp-finder-link">{{ $page->section === 'pests' ? 'Not sure it is this pest? Use the Pest Finder in anee.io' : 'Not sure it is this disease? Use the Disease Finder in anee.io' }} ›</a>
                     @elseif ($weed)
                         {{-- A weed's group opens the catalogue on that group. --}}
                         <a href="{{ $S::url('weeds') }}?group={{ $weed['group'] }}#catalogue" class="sp-chip">{{ $page->category }}</a>
@@ -240,19 +240,19 @@
                         </div>
                     @endif
                     @if ($prob)
-                        {{-- The finder, opened on this one's first crop. --}}
+                        {{-- The finder in anee.io, opened on this one's first crop. --}}
                         <div class="sp-card sp-wcard">
                             <h2 class="sp-card-h">{{ $page->section === 'pests' ? 'What is attacking my crop?' : 'What is wrong with my crop?' }}</h2>
-                            <p>Not sure this is it? Pick your crop and what you see, and compare the {{ $page->section }} that match.</p>
-                            <a href="{{ $S::url($page->section) }}?crop={{ $prob['crops'][0] ?? 'rice' }}#finder" class="btn btn-outline btn-sm">Open the finder</a>
+                            <p>Not sure this is it? In anee.io, pick your crop and what you see, and compare the {{ $page->section }} that match.</p>
+                            <a href="{{ $S::helperUrl($page->section, $prob['crops'][0] ?? 'rice') }}" class="btn btn-outline btn-sm">{{ $page->section === 'pests' ? 'Open the Pest Finder' : 'Open the Disease Finder' }}</a>
                         </div>
                     @endif
                     @if ($weed)
-                        {{-- The helper, opened on this weed's first crop and its group. --}}
+                        {{-- The helper in anee.io, opened on this weed's first crop and its group. --}}
                         <div class="sp-card sp-wcard">
                             <h2 class="sp-card-h">Weed control by crop age</h2>
-                            <p>Pick your crop and how old it is, and see the active ingredients that work on {{ strtolower(\App\Support\WeedControl::GROUPS[$weed['group']]['label']) }} at that age.</p>
-                            <a href="{{ $S::url('weeds') }}?crop={{ $weed['crops'][0] ?? 'rice' }}&amp;group={{ $weed['group'] }}#control" class="btn btn-outline btn-sm">Open the helper</a>
+                            <p>In anee.io, pick your crop and how old it is, and see the active ingredients that work on {{ strtolower(\App\Support\WeedControl::GROUPS[$weed['group']]['label']) }} at that age.</p>
+                            <a href="{{ $S::helperUrl('weeds', $weed['crops'][0] ?? 'rice', $weed['group']) }}" class="btn btn-outline btn-sm">Open the weed control helper</a>
                         </div>
                     @endif
                     <div class="sp-promo">

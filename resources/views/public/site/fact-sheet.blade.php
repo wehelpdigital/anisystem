@@ -95,7 +95,7 @@
                         <a href="{{ $S::url('weeds') }}?group={{ $e['group'] }}#catalogue" class="sp-chip">{{ $W::GROUPS[$e['group']]['label'] ?? 'Weeds' }}</a>
                     @else
                         <a href="{{ $S::url($section) }}?group={{ $e['group'] }}#catalogue" class="sp-chip">{{ $shelf[0] ?? ucfirst($section) }}</a>
-                        <a href="{{ $S::url($section) }}?crop={{ $firstCrop }}#finder" class="sp-finder-link">{{ $isPest ? 'Not sure it is this pest? Use the Pest Finder' : 'Not sure it is this disease? Use the Disease Finder' }} ›</a>
+                        <a href="{{ $S::helperUrl($section, $firstCrop) }}" class="sp-finder-link">{{ $isPest ? 'Not sure it is this pest? Use the Pest Finder in anee.io' : 'Not sure it is this disease? Use the Disease Finder in anee.io' }} ›</a>
                     @endif
                     <h1 class="sp-h1 mt-3">{{ $e['name'] }}</h1>
                     @if (trim($e['hint']) !== '')<p class="sp-lead mt-4">{{ $e['hint'] }}</p>@endif
@@ -123,7 +123,7 @@
                         <div class="fs-chips">
                             @foreach ($crops as $c)
                                 @php([$cl, $ce, $ci] = $F::crops()[$c])
-                                <a href="{{ $isWeed ? $S::url('weeds') . '?crop=' . $c . '#control' : $S::url($section) . '?crop=' . $c . '#finder' }}"><i aria-hidden="true">{{ $ci }}</i>{{ $cl }}@if ($cl !== $ce) <small class="text-gray-500 font-semibold">{{ $ce }}</small>@endif</a>
+                                <a href="{{ $isWeed ? $S::helperUrl('weeds', $c) : $S::helperUrl($section, $c) }}"><i aria-hidden="true">{{ $ci }}</i>{{ $cl }}@if ($cl !== $ce) <small class="text-gray-500 font-semibold">{{ $ce }}</small>@endif</a>
                             @endforeach
                         </div>
                     </section>
@@ -142,8 +142,8 @@
                         </section>
                         <section class="fs-box">
                             <h2>How to control it</h2>
-                            <p>What to do and which active ingredients work depend on your crop and how old it is. The weed control helper gives both, for {{ $F::cropWord($firstCrop) }} and every other crop it grows in.</p>
-                            <p class="mt-3"><a href="{{ $S::url('weeds') }}?crop={{ $firstCrop }}&amp;group={{ $e['group'] }}#control" class="btn btn-outline btn-sm">Open the weed control helper</a></p>
+                            <p>What to do and which active ingredients work depend on your crop and how old it is. The weed control helper in anee.io gives both, for {{ $F::cropWord($firstCrop) }} and every other crop it grows in.</p>
+                            <p class="mt-3"><a href="{{ $S::helperUrl('weeds', $firstCrop, $e['group']) }}" class="btn btn-outline btn-sm">Open the weed control helper</a></p>
                         </section>
                     @elseif (count($e['ai']))
                         <section class="fs-box">
@@ -185,12 +185,12 @@
                     <div class="sp-card sp-wcard">
                         @if ($isWeed)
                             <h2 class="sp-card-h">Weed control by crop age</h2>
-                            <p>Pick your crop and how old it is, and see the active ingredients that work on {{ strtolower($W::GROUPS[$e['group']]['label'] ?? 'weeds') }} at that age.</p>
-                            <a href="{{ $S::url('weeds') }}?crop={{ $firstCrop }}&amp;group={{ $e['group'] }}#control" class="btn btn-outline btn-sm">Open the helper</a>
+                            <p>In anee.io, pick your crop and how old it is, and see the active ingredients that work on {{ strtolower($W::GROUPS[$e['group']]['label'] ?? 'weeds') }} at that age.</p>
+                            <a href="{{ $S::helperUrl('weeds', $firstCrop, $e['group']) }}" class="btn btn-outline btn-sm">Open the weed control helper</a>
                         @else
                             <h2 class="sp-card-h">{{ $isPest ? 'What is attacking my crop?' : 'What is wrong with my crop?' }}</h2>
-                            <p>Pick your crop and what you see, and compare the {{ $section }} that match.</p>
-                            <a href="{{ $S::url($section) }}?crop={{ $firstCrop }}#finder" class="btn btn-outline btn-sm">Open the finder</a>
+                            <p>In anee.io, pick your crop and what you see, and compare the {{ $section }} that match.</p>
+                            <a href="{{ $S::helperUrl($section, $firstCrop) }}" class="btn btn-outline btn-sm">{{ $isPest ? 'Open the Pest Finder' : 'Open the Disease Finder' }}</a>
                         @endif
                     </div>
                     @if ($more->count())

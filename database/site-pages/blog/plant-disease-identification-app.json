@@ -40,7 +40,7 @@
         "No app is right every time, and mild, early signs fool apps most.",
         "Send several photos. Six leaves per plant gave the Nuru app its best results.",
         "Pick an app that covers your crop, asks its age and place, and tells you how to confirm.",
-        "Free options: the anee.io [Disease Finder](/diseases#finder) and [Pest Finder](/pests#finder).",
+        "Free options: the [Disease Finder and Pest Finder](/features/pest-and-disease-finders) inside anee.io.",
         "Confirm with a field check, a technician or a lab before you spray."
       ]
     },
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "Yes, and a free plant disease app is a good first stop. The [Disease Finder](/diseases#finder) on anee.io asks your crop and what you see, from spots and wilting to rot and mottled leaves. Then it names the diseases that fit, what to do first and the active ingredients with their FRAC groups, or why no spray helps.\n\nThe [Pest Finder](/pests#finder) does the same for pests, and the [Weed Control Helper](/weeds#control) covers weeds. On the public pages, each asks for your name and email once. Inside the app they open straight away on every plan, Libre included, and [pricing](/pricing) shows what each plan adds."
+      "text": "Yes, and a free plant disease app is a good first stop. The [Disease Finder](/features/pest-and-disease-finders) inside anee.io asks your crop and what you see, from spots and wilting to rot and mottled leaves. Then it names the diseases that fit, what to do first and the active ingredients with their FRAC groups, or why no spray helps.\n\nThe Pest Finder does the same for pests, and the Weed Control Helper covers weeds. You open them from the tools in anee.io once you register for free. Inside the app they open straight away on every plan, Libre included, and [pricing](/pricing) shows what each plan adds."
     },
     {
       "type": "table",

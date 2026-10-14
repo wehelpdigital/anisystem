@@ -3,8 +3,9 @@
 {{-- /weeds (2026-10-06): the weeds of Philippine farms, rice first and
      every other crop since 2026-10-08. The three groups, the catalogue (one
      card per weed, its profile page or its fact sheet, filtered by group and
-     crop and searched by any of its names), the weed control helper by crop
-     age, and the long guides. The card facts and the helper's plans come
+     crop and searched by any of its names) and the long guides. The weed
+     control helper left the public site on 2026-10-14 (the owner): it lives
+     in anee.io's Field helpers. The card facts and the helper's plans come
      from App\Support\FieldCatalogue. --}}
 @include('public.partials.site-css')
 @include('public.site.css')
@@ -79,7 +80,6 @@
                     <p class="sp-lead mt-4">{{ $meta['intro'] }}</p>
                     <div class="wk-jump mt-6">
                         <a href="#catalogue"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a weed</a>
-                        <a href="#control"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Control by crop age</a>
                         @if ($hg)
                             <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Register for free to see them all</a>
                         @elseif ($member)
@@ -209,20 +209,6 @@
         </div>
     </section>
 
-    {{-- The weed control helper --}}
-    <section class="wc-sec" id="control">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-            <div class="wk-sec-h">
-                <span class="sp-chip">Weed control helper</span>
-                <h2 class="mt-3">Weed Control by Crop Age</h2>
-                <p>
-                    Tell us your crop, how old it is and which weeds you see. You get what to do first and the active ingredients that work at that age,
-                    from PhilRice for palay and from the DA, the sugar and coconut agencies and university guides for every other crop. Active ingredients only, never brands.
-                </p>
-            </div>
-            @include('public.site.partials.weed-helper', ['gate' => 'signup'])
-        </div>
-    </section>
 
     {{-- The long guides --}}
     @if ($guides->count())

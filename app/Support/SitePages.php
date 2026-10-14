@@ -210,6 +210,22 @@ class SitePages
         return ['name' => $name, 'icon' => $icon, 'blurb' => $blurb, 'hue' => $hue];
     }
 
+    /**
+     * Where a public page sends a reader for the Pest Finder, the Disease
+     * Finder or the weed control helper (2026-10-14, the owner: they live
+     * inside anee.io only). A member goes straight to the tool, opened on
+     * the crop (and weed group); a guest to the page that shows what the
+     * tools do and asks them to register.
+     */
+    public static function helperUrl(string $tool, ?string $crop = null, ?string $group = null): string
+    {
+        if (! auth()->check()) {
+            return self::url('features', 'pest-and-disease-finders');
+        }
+
+        return route('fh.page', array_filter(['tool' => $tool, 'crop' => $crop, 'group' => $group]));
+    }
+
     /** Where a page lives. */
     public static function url(string $section, ?string $slug = null): string
     {
