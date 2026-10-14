@@ -113,6 +113,21 @@ final class FieldCatalogue
         return [$local !== '' ? $local : $en, $en];
     }
 
+    /**
+     * The photo of an entry that has no profile page of its own (2026-10-14):
+     * {src, thumb, alt, credit, page} from database/field-catalogue/photos.json,
+     * freely licensed only (CC0, public domain, CC BY, CC BY SA), each with
+     * its author and licence. Null when there is none yet.
+     */
+    public static function photo(string $section, string $slug): ?array
+    {
+        static $all = null;
+        $all ??= json_decode((string) @file_get_contents(database_path('field-catalogue/photos.json')), true) ?: [];
+        $p = $all[$section][$slug] ?? null;
+
+        return $p && ! empty($p['src']) ? $p : null;
+    }
+
     /** One section's pests or diseases, in the hub's order: slug => facts. */
     public static function problems(string $section): array
     {

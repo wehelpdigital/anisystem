@@ -1,0 +1,1728 @@
+{
+ "diseases": {
+  "southern-corn-leaf-blight": {
+   "src": "/images/site/diseases/southern-corn-leaf-blight.webp",
+   "thumb": "/images/site/diseases/southern-corn-leaf-blight-480.webp",
+   "alt": "Southern corn leaf blight (Bipolaris maydis): long tan lesions across a corn leaf",
+   "credit": "Eric McKenzie, CC BY 3.0 au, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Bipolaris_maydis_leave_(2).jpg",
+   "license": "CC BY 3.0 au",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/9/97/Bipolaris_maydis_leave_%282%29.jpg",
+   "focus": 0.5
+  },
+  "sorghum-grain-mold": {
+   "src": "/images/site/diseases/sorghum-grain-mold.webp",
+   "thumb": "/images/site/diseases/sorghum-grain-mold-480.webp",
+   "alt": "Ripe sorghum heads in a field, the grain that molds when rain comes at harvest",
+   "credit": "USDAgov, Public domain, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Agriculture_Research_Service_(ARS)_(8411801273).jpg",
+   "license": "Public domain",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/Agriculture_Research_Service_%28ARS%29_%288411801273%29.jpg/1280px-Agriculture_Research_Service_%28ARS%29_%288411801273%29.jpg",
+   "focus": 0.5
+  },
+  "southern-blight": {
+   "src": "/images/site/diseases/southern-blight.webp",
+   "thumb": "/images/site/diseases/southern-blight-480.webp",
+   "alt": "Southern blight (Athelia rolfsii): white fungal threads around the base of a stem",
+   "credit": "余世文, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/244856757",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/436840537/large.jpeg",
+   "focus": 0.5
+  },
+  "charcoal-stem-rot": {
+   "src": "/images/site/diseases/charcoal-stem-rot.webp",
+   "thumb": "/images/site/diseases/charcoal-stem-rot-480.webp",
+   "alt": "Stem rot and charcoal rot (Macrophomina phaseolina): a dried, shredded stem",
+   "credit": "Photchana Trakunsukharati, Department of Agriculture, Thailand, CC BY 3.0 au, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Host_symptom_of_Macrophomina_phaseolina_on_Mungbean.jpg",
+   "license": "CC BY 3.0 au",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Host_symptom_of_Macrophomina_phaseolina_on_Mungbean.jpg",
+   "focus": 0.5
+  },
+  "bean-rust": {
+   "src": "/images/site/diseases/bean-rust.webp",
+   "thumb": "/images/site/diseases/bean-rust-480.webp",
+   "alt": "Bean rust (Uromyces): rust colored pustules spread over a bean leaf",
+   "credit": "Jan Sheppard, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/181404426",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/316107933/large.jpg",
+   "focus": 0.5
+  },
+  "bean-mosaic": {
+   "src": "/images/site/diseases/bean-mosaic.webp",
+   "thumb": "/images/site/diseases/bean-mosaic-480.webp",
+   "alt": "Cowpea aphids on bean pods, the insects that spread bean and cowpea mosaic",
+   "credit": "Jesse Rorabaugh, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/2709184",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/3052504/large.JPG",
+   "focus": 0.5
+  },
+  "peanut-leaf-spot": {
+   "src": "/images/site/diseases/peanut-leaf-spot.webp",
+   "thumb": "/images/site/diseases/peanut-leaf-spot-480.webp",
+   "alt": "Leaf spot on a peanut plant: dark round spots on the leaflets",
+   "credit": "Swarochi Tathagath, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/61480527",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/98388065/large.jpeg",
+   "focus": 0.4
+  },
+  "soybean-rust": {
+   "src": "/images/site/diseases/soybean-rust.webp",
+   "thumb": "/images/site/diseases/soybean-rust-480.webp",
+   "alt": "Soybean rust (Phakopsora pachyrhizi): yellowing soybean leaves speckled with rust",
+   "credit": "Unknown author, Public domain, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Soybean_rust.jpg",
+   "license": "Public domain",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Soybean_rust.jpg",
+   "focus": 0.5
+  },
+  "winged-bean-false-rust": {
+   "src": "/images/site/diseases/winged-bean-false-rust.webp",
+   "thumb": "/images/site/diseases/winged-bean-false-rust-480.webp",
+   "alt": "False rust of winged bean (Synchytrium psophocarpi): orange galls along a stem",
+   "credit": "Jie Hao Ou, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/105293439",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/176635830/large.jpeg",
+   "focus": 0.5
+  },
+  "sweet-potato-little-leaf": {
+   "src": "/images/site/diseases/sweet-potato-little-leaf.webp",
+   "thumb": "/images/site/diseases/sweet-potato-little-leaf-480.webp",
+   "alt": "A sweet potato plant with little leaf: small, pale, crowded leaves",
+   "credit": "Million Moments, CC BY 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Sweetpotatoelittleleaf.JPG",
+   "license": "CC BY 3.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/Sweetpotatoelittleleaf.JPG/1280px-Sweetpotatoelittleleaf.JPG",
+   "focus": 0.5
+  },
+  "cassava-witches-broom": {
+   "src": "/images/site/diseases/cassava-witches-broom.webp",
+   "thumb": "/images/site/diseases/cassava-witches-broom-480.webp",
+   "alt": "Cassava witches broom: plants with bunches of thin shoots and small leaves",
+   "credit": "J. M. Pardo, A. Gil Ordóñez, A. M. Leiva, L. Enjelvin, A. Chourrot, S., CC BY 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Symptoms_of_cassava_witches%E2%80%99_broom_disease_(French_Guiana).jpg",
+   "license": "CC BY 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Symptoms_of_cassava_witches%E2%80%99_broom_disease_%28French_Guiana%29.jpg",
+   "focus": 0.5
+  },
+  "taro-leaf-blight": {
+   "src": "/images/site/diseases/taro-leaf-blight.webp",
+   "thumb": "/images/site/diseases/taro-leaf-blight-480.webp",
+   "alt": "Taro leaf blight (Phytophthora colocasiae): brown, spreading lesions on taro leaves",
+   "credit": "Scot Nelson from Honolulu, Hawaii, USA, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Phytophthora_leaf_blight_of_taro_(Colocasia_esculenta)_(14833259593).jpg",
+   "license": "CC0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Phytophthora_leaf_blight_of_taro_%28Colocasia_esculenta%29_%2814833259593%29.jpg/1280px-Phytophthora_leaf_blight_of_taro_%28Colocasia_esculenta%29_%2814833259593%29.jpg",
+   "focus": 0.5
+  },
+  "potato-cyst-nematode": {
+   "src": "/images/site/diseases/potato-cyst-nematode.webp",
+   "thumb": "/images/site/diseases/potato-cyst-nematode-480.webp",
+   "alt": "Potato cyst nematodes: tiny round yellow cysts on potato roots",
+   "credit": "Xiaohong Wang, Public domain, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:PotatoNematodeCysts.jpg",
+   "license": "Public domain",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/7/7d/PotatoNematodeCysts.jpg",
+   "focus": 0.5
+  },
+  "carrot-leaf-blight": {
+   "src": "/images/site/diseases/carrot-leaf-blight.webp",
+   "thumb": "/images/site/diseases/carrot-leaf-blight-480.webp",
+   "alt": "Carrot leaf blight (Alternaria dauci): a dark lesion on a carrot leaf stalk",
+   "credit": "ApplemanCooperKutzke, CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Alternaria_dauci_on_a_carrot_stem.png",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Alternaria_dauci_on_a_carrot_stem.png",
+   "focus": 0.4
+  },
+  "cucurbit-mosaic": {
+   "src": "/images/site/diseases/cucurbit-mosaic.webp",
+   "thumb": "/images/site/diseases/cucurbit-mosaic-480.webp",
+   "alt": "Zucchini yellow mosaic on squash: mottled, misshapen fruit and leaves",
+   "credit": "Downtowngal, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Zucchini_yellow_mosaic_virus_fruits_and_leaves.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Zucchini_yellow_mosaic_virus_fruits_and_leaves.jpg/1280px-Zucchini_yellow_mosaic_virus_fruits_and_leaves.jpg",
+   "focus": 0.5
+  },
+  "alternaria-leaf-spot": {
+   "src": "/images/site/diseases/alternaria-leaf-spot.webp",
+   "thumb": "/images/site/diseases/alternaria-leaf-spot-480.webp",
+   "alt": "Alternaria leaf spot on a cabbage family leaf: round brown spots, some fallen out into holes",
+   "credit": "Seemadua, S. Department of Agriculture, Thailand, CC BY 3.0 au, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Alternaria_brassicicola_host_symptoms.jpg",
+   "license": "CC BY 3.0 au",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/8/89/Alternaria_brassicicola_host_symptoms.jpg",
+   "focus": 0.5
+  },
+  "white-rust": {
+   "src": "/images/site/diseases/white-rust.webp",
+   "thumb": "/images/site/diseases/white-rust-480.webp",
+   "alt": "White rust (Albugo candida): white, blister like pustules on a leaf",
+   "credit": "Lena Struwe, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/115661457",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/195207705/large.jpg",
+   "focus": 0.5
+  },
+  "phytophthora-blight": {
+   "src": "/images/site/diseases/phytophthora-blight.webp",
+   "thumb": "/images/site/diseases/phytophthora-blight-480.webp",
+   "alt": "Phytophthora blight (Phytophthora capsici): pepper plants wilted and collapsed in the row",
+   "credit": "Don Ferrin, Louisiana State University Agricultural Center, Bugwood.or, CC BY 3.0 us, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:P._capsici_blight_on_sweet_pepper.jpg",
+   "license": "CC BY 3.0 us",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/P._capsici_blight_on_sweet_pepper.jpg/1280px-P._capsici_blight_on_sweet_pepper.jpg",
+   "focus": 0.5
+  },
+  "choanephora-wet-rot": {
+   "src": "/images/site/diseases/choanephora-wet-rot.webp",
+   "thumb": "/images/site/diseases/choanephora-wet-rot-480.webp",
+   "alt": "Choanephora wet rot: a squash rotting under dark, whisker like mold",
+   "credit": "David B. Langston, University of Georgia, CC BY 3.0 us, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Choanephora_cucurbitarum.jpg",
+   "license": "CC BY 3.0 us",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/6/60/Choanephora_cucurbitarum.jpg",
+   "focus": 0.5
+  },
+  "gummy-stem-blight": {
+   "src": "/images/site/diseases/gummy-stem-blight.webp",
+   "thumb": "/images/site/diseases/gummy-stem-blight-480.webp",
+   "alt": "Gummy stem blight (Didymella bryoniae): a vine stem cracked and dying at its base",
+   "credit": "David B. Langston, CC BY 3.0 us, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Didymella_bryoniae.jpg",
+   "license": "CC BY 3.0 us",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Didymella_bryoniae.jpg",
+   "focus": 0.5
+  },
+  "tomato-mosaic": {
+   "src": "/images/site/diseases/tomato-mosaic.webp",
+   "thumb": "/images/site/diseases/tomato-mosaic-480.webp",
+   "alt": "Tobacco mosaic virus on a leaf: patches of light and dark green mottling",
+   "credit": "R.J. Reynolds Tobacco Company Slide Set, CC BY 3.0 us, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Tobacco_mosaic_virus_symptoms_tobacco.jpg",
+   "license": "CC BY 3.0 us",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Tobacco_mosaic_virus_symptoms_tobacco.jpg/1280px-Tobacco_mosaic_virus_symptoms_tobacco.jpg",
+   "focus": 0.5
+  },
+  "gray-mold": {
+   "src": "/images/site/diseases/gray-mold.webp",
+   "thumb": "/images/site/diseases/gray-mold-480.webp",
+   "alt": "Gray mold (Botrytis cinerea): gray, fuzzy mold on ripening berries",
+   "credit": "Liam Steele, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/238128988",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/423899832/large.jpeg",
+   "focus": 0.5
+  },
+  "tobacco-mosaic": {
+   "src": "/images/site/diseases/tobacco-mosaic.webp",
+   "thumb": "/images/site/diseases/tobacco-mosaic-480.webp",
+   "alt": "A tobacco plant with mosaic: mottled, puckered leaves",
+   "credit": "Tashkoskip, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%BE%D0%B7%D0%B0%D0%B8%D0%BA_%D0%B8_%D0%BD%D0%B5%D0%BA%D1%80%D0%BE%D0%B7%D0%B8_%D0%BD%D0%B0_%D1%82%D1%83%D1%82%D1%83%D0%BD_(Tobacco_mosaic_virus).jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/%D0%9C%D0%BE%D0%B7%D0%B0%D0%B8%D0%BA_%D0%B8_%D0%BD%D0%B5%D0%BA%D1%80%D0%BE%D0%B7%D0%B8_%D0%BD%D0%B0_%D1%82%D1%83%D1%82%D1%83%D0%BD_%28Tobacco_mosaic_virus%29.jpg/1280px-%D0%9C%D0%BE%D0%B7%D0%B0%D0%B8%D0%BA_%D0%B8_%D0%BD%D0%B5%D0%BA%D1%80%D0%BE%D0%B7%D0%B8_%D0%BD%D0%B0_%D1%82%D1%83%D1%82%D1%83%D0%BD_%28Tobacco_mosaic_virus%29.jpg",
+   "focus": 0.5
+  },
+  "celery-late-blight": {
+   "src": "/images/site/diseases/celery-late-blight.webp",
+   "thumb": "/images/site/diseases/celery-late-blight-480.webp",
+   "alt": "Septoria late blight of celery: yellowing leaflets covered with small brown spots",
+   "credit": "Peter de Lange, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/331020449",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/600401524/large.jpg",
+   "focus": 0.5
+  },
+  "strawberry-leaf-spot": {
+   "src": "/images/site/diseases/strawberry-leaf-spot.webp",
+   "thumb": "/images/site/diseases/strawberry-leaf-spot-480.webp",
+   "alt": "Strawberry leaf spot: round spots with purple borders on a strawberry leaf",
+   "credit": "Matt Schultz, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/367853352",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/671809462/large.jpg",
+   "focus": 0.5
+  },
+  "verticillium-wilt": {
+   "src": "/images/site/diseases/verticillium-wilt.webp",
+   "thumb": "/images/site/diseases/verticillium-wilt-480.webp",
+   "alt": "Verticillium wilt (Verticillium dahliae): a leaf yellowing and browning between its veins",
+   "credit": "Stephen James McWilliam, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/57969425",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/92506989/large.jpeg",
+   "focus": 0.5
+  },
+  "ganoderma-basal-stem-rot": {
+   "src": "/images/site/diseases/ganoderma-basal-stem-rot.webp",
+   "thumb": "/images/site/diseases/ganoderma-basal-stem-rot-480.webp",
+   "alt": "Ganoderma basal stem rot: the fungus's bracket growing from the base of a palm",
+   "credit": "Sue Carnahan, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/149555313",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/257725565/large.jpeg",
+   "focus": 0.5
+  },
+  "sugarcane-smut": {
+   "src": "/images/site/diseases/sugarcane-smut.webp",
+   "thumb": "/images/site/diseases/sugarcane-smut-480.webp",
+   "alt": "Sugarcane smut: the black, whip like shoot that grows from an infected cane",
+   "credit": "William M. Brown Jr., Bugwood, CC BY 3.0 us, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Sugar_cane_smut.jpg",
+   "license": "CC BY 3.0 us",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Sugar_cane_smut.jpg/1280px-Sugar_cane_smut.jpg",
+   "focus": 0.5
+  },
+  "sugarcane-leaf-scald": {
+   "src": "/images/site/diseases/sugarcane-leaf-scald.webp",
+   "thumb": "/images/site/diseases/sugarcane-leaf-scald-480.webp",
+   "alt": "Leaf scald of sugarcane: white, pencil line streaks down the leaves",
+   "credit": "Scot Nelson, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Sugarcane_Leaf_scald_(Pathogen_Xanthomomas_albilineans,_a_bacterium)_(12209805035).jpg",
+   "license": "CC0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Sugarcane_Leaf_scald_%28Pathogen_Xanthomomas_albilineans%2C_a_bacterium%29_%2812209805035%29.jpg",
+   "focus": 0.5
+  },
+  "pineapple-heart-rot": {
+   "src": "/images/site/diseases/pineapple-heart-rot.webp",
+   "thumb": "/images/site/diseases/pineapple-heart-rot-480.webp",
+   "alt": "Heart rot of pineapple: the center of the plant rotting and its leaves pulling free",
+   "credit": "Scot Nelson from Honolulu, Hawaii, USA, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Pineapple_Phytophthora_heart_rot2_(5829871682).jpg",
+   "license": "CC0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Pineapple_Phytophthora_heart_rot2_%285829871682%29.jpg",
+   "focus": 0.5
+  },
+  "black-shank": {
+   "src": "/images/site/diseases/black-shank.webp",
+   "thumb": "/images/site/diseases/black-shank-480.webp",
+   "alt": "Black shank of tobacco: wilted, dying plants in a tobacco field",
+   "credit": "Kelly Ivors, Cal Poly, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Black_Shank_on_Tobacco_at_H._Davis_farm.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/9/96/Black_Shank_on_Tobacco_at_H._Davis_farm.jpg",
+   "focus": 0.5
+  },
+  "abaca-mosaic": {
+   "src": "/images/site/diseases/abaca-mosaic.webp",
+   "thumb": "/images/site/diseases/abaca-mosaic-480.webp",
+   "alt": "Sugarcane mosaic virus on a leaf: the pale, streaked mottling it also brings to abaca",
+   "credit": "Jeffrey W. Lotz, Florida Department of Agriculture and Consumer Servic, CC BY 3.0 us, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Sugarcane_mosaic_virus.jpg",
+   "license": "CC BY 3.0 us",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Sugarcane_mosaic_virus.jpg/1280px-Sugarcane_mosaic_virus.jpg",
+   "focus": 0.5
+  },
+  "corynespora-leaf-fall": {
+   "src": "/images/site/diseases/corynespora-leaf-fall.webp",
+   "thumb": "/images/site/diseases/corynespora-leaf-fall-480.webp",
+   "alt": "Corynespora cassiicola leaf spots: the fungus that makes rubber trees drop their leaves",
+   "credit": "Jerzy Opioła, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Corynespora_cassiicola_(5).jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Corynespora_cassiicola_%285%29.jpg/1280px-Corynespora_cassiicola_%285%29.jpg",
+   "focus": 0.5
+  },
+  "bamboo-witches-broom": {
+   "src": "/images/site/diseases/bamboo-witches-broom.webp",
+   "thumb": "/images/site/diseases/bamboo-witches-broom-480.webp",
+   "alt": "Bamboo witches broom: a cluster of thin, crowded shoots on a bamboo",
+   "credit": "Amityadav8, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Bamboo_Phytoplasma.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/Bamboo_Phytoplasma.jpg/1280px-Bamboo_Phytoplasma.jpg",
+   "focus": 0.5
+  },
+  "curvularia-leaf-spot": {
+   "src": "/images/site/diseases/curvularia-leaf-spot.webp",
+   "thumb": "/images/site/diseases/curvularia-leaf-spot-480.webp",
+   "alt": "Curvularia leaf spot on oil palm leaves",
+   "credit": "Srisurang Likhitekaraj, Department of Agriculture, Thailand, CC BY 3.0 au, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Leaf_spot_on_oil_palm_from_which_Curvularia_oryzae_was_isolated.jpg",
+   "license": "CC BY 3.0 au",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/0/04/Leaf_spot_on_oil_palm_from_which_Curvularia_oryzae_was_isolated.jpg",
+   "focus": 0.5
+  },
+  "sooty-mold": {
+   "src": "/images/site/diseases/sooty-mold.webp",
+   "thumb": "/images/site/diseases/sooty-mold-480.webp",
+   "alt": "Sooty mold: a black, soot like coating over the leaves",
+   "credit": "Amnon Shavit, CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Sooty_mold_Schefflera_2.JPG",
+   "license": "CC BY SA 3.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Sooty_mold_Schefflera_2.JPG/1280px-Sooty_mold_Schefflera_2.JPG",
+   "focus": 0.5
+  },
+  "phytophthora-canker-and-fruit-rot": {
+   "src": "/images/site/diseases/phytophthora-canker-and-fruit-rot.webp",
+   "thumb": "/images/site/diseases/phytophthora-canker-and-fruit-rot-480.webp",
+   "alt": "Phytophthora fruit rot on papaya: fruit rotting on the tree",
+   "credit": "Scot Nelson from Honolulu, Hawaii, USA, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Phytophthora_blight_of_papaya_(5794539135).jpg",
+   "license": "CC0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Phytophthora_blight_of_papaya_%285794539135%29.jpg/1280px-Phytophthora_blight_of_papaya_%285794539135%29.jpg",
+   "focus": 0.5
+  },
+  "algal-leaf-spot": {
+   "src": "/images/site/diseases/algal-leaf-spot.webp",
+   "thumb": "/images/site/diseases/algal-leaf-spot-480.webp",
+   "alt": "Algal leaf spot (Cephaleuros virescens): an orange, velvety spot on a leaf",
+   "credit": "余世文, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/45132396",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/71555214/large.jpg",
+   "focus": 0.5
+  },
+  "white-root-rot": {
+   "src": "/images/site/diseases/white-root-rot.webp",
+   "thumb": "/images/site/diseases/white-root-rot-480.webp",
+   "alt": "White root rot (Rigidoporus microporus): the fungus's orange brackets at the base of a tree",
+   "credit": "Tara Severns, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/179476069",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/312470469/large.jpg",
+   "focus": 0.5
+  },
+  "citrus-gummosis": {
+   "src": "/images/site/diseases/citrus-gummosis.webp",
+   "thumb": "/images/site/diseases/citrus-gummosis-480.webp",
+   "alt": "Foot rot and gummosis at the base of a lemon tree trunk",
+   "credit": "Eiku, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Lemon_tree_with_phytophtora_02_-_foot_rot_gummosis.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Lemon_tree_with_phytophtora_02_-_foot_rot_gummosis.jpg/1280px-Lemon_tree_with_phytophtora_02_-_foot_rot_gummosis.jpg",
+   "focus": 0.5
+  },
+  "citrus-scab": {
+   "src": "/images/site/diseases/citrus-scab.webp",
+   "thumb": "/images/site/diseases/citrus-scab-480.webp",
+   "alt": "Citrus scab (Elsinoe fawcettii): raised, corky scabs on young fruit",
+   "credit": "Scot Nelson from USA, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Fungal_scab_of_rough_lemon_(9504944200).jpg",
+   "license": "CC0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Fungal_scab_of_rough_lemon_%289504944200%29.jpg/1280px-Fungal_scab_of_rough_lemon_%289504944200%29.jpg",
+   "focus": 0.5
+  },
+  "citrus-canker": {
+   "src": "/images/site/diseases/citrus-canker.webp",
+   "thumb": "/images/site/diseases/citrus-canker-480.webp",
+   "alt": "Citrus canker: raised brown lesions on the leaves and fruit",
+   "credit": "Scot Nelson, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Xanthomonas_axonopodis_canker_1_(8233192838).jpg",
+   "license": "CC0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Xanthomonas_axonopodis_canker_1_%288233192838%29.jpg",
+   "focus": 0.5
+  },
+  "diplodia-fruit-rot": {
+   "src": "/images/site/diseases/diplodia-fruit-rot.webp",
+   "thumb": "/images/site/diseases/diplodia-fruit-rot-480.webp",
+   "alt": "Diplodia fruit rot on papaya: a dark, spreading rot on fruit still on the tree",
+   "credit": "Scot Nelson from USA, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Papaya_(Carica_papaya)_Lasiodiplodia_fruit_rot_(39219698451).jpg",
+   "license": "CC0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Papaya_%28Carica_papaya%29_Lasiodiplodia_fruit_rot_%2839219698451%29.jpg/1280px-Papaya_%28Carica_papaya%29_Lasiodiplodia_fruit_rot_%2839219698451%29.jpg",
+   "focus": 0.5
+  },
+  "burrowing-nematode": {
+   "src": "/images/site/diseases/burrowing-nematode.webp",
+   "thumb": "/images/site/diseases/burrowing-nematode-480.webp",
+   "alt": "Banana plants toppled by burrowing nematodes, which rot the roots that hold them up",
+   "credit": "Plant pests and diseases, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Toppling_of_banana.jpg",
+   "license": "CC0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Toppling_of_banana.jpg/1280px-Toppling_of_banana.jpg",
+   "focus": 0.5
+  },
+  "banana-freckle": {
+   "src": "/images/site/diseases/banana-freckle.webp",
+   "thumb": "/images/site/diseases/banana-freckle-480.webp",
+   "alt": "Banana freckle: small dark specks over a bunch of green bananas",
+   "credit": "Scot Nelson from Honolulu, Hawaii, USA, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Banana_freckle_Pohnpei_(5680832547).jpg",
+   "license": "CC0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Banana_freckle_Pohnpei_%285680832547%29.jpg/1280px-Banana_freckle_Pohnpei_%285680832547%29.jpg",
+   "focus": 0.5
+  },
+  "rhizopus-fruit-rot": {
+   "src": "/images/site/diseases/rhizopus-fruit-rot.webp",
+   "thumb": "/images/site/diseases/rhizopus-fruit-rot-480.webp",
+   "alt": "Rhizopus mold (Rhizopus stolonifer), the fuzzy gray mold that also rots jackfruit, on a ripe fruit",
+   "credit": "S.R, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/333716306",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/605867790/large.jpg",
+   "focus": 0.5
+  },
+  "avocado-root-rot": {
+   "src": "/images/site/diseases/avocado-root-rot.webp",
+   "thumb": "/images/site/diseases/avocado-root-rot-480.webp",
+   "alt": "Trees killed by Phytophthora cinnamomi, the root rot that also kills avocado",
+   "credit": "porkytama, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/195837229",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/344632024/large.jpg",
+   "focus": 0.5
+  },
+  "avocado-scab": {
+   "src": "/images/site/diseases/avocado-scab.webp",
+   "thumb": "/images/site/diseases/avocado-scab-480.webp",
+   "alt": "Avocado scab: rough, corky patches on the fruit skin",
+   "credit": "Fructibus, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Avocado_scab_2016_A1.jpg",
+   "license": "CC0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Avocado_scab_2016_A1.jpg/1280px-Avocado_scab_2016_A1.jpg",
+   "focus": 0.5
+  },
+  "root-crop-storage-rot": {
+   "src": "/images/site/diseases/root-crop-storage-rot.webp",
+   "thumb": "/images/site/diseases/root-crop-storage-rot-480.webp",
+   "alt": "Java black rot (Lasiodiplodia theobromae), one of the storage rots, on purple sweet potatoes",
+   "credit": "Scot Nelson, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Java_black_rot_of_Okinawan_purple_sweetpotato.jpg",
+   "license": "CC0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Java_black_rot_of_Okinawan_purple_sweetpotato.jpg/1280px-Java_black_rot_of_Okinawan_purple_sweetpotato.jpg",
+   "focus": 0.5
+  },
+  "tospovirus": {
+   "src": "/images/site/diseases/tospovirus.webp",
+   "thumb": "/images/site/diseases/tospovirus-480.webp",
+   "alt": "Tomato spotted wilt, a tospovirus, on tomato fruit: yellow rings and blotches",
+   "credit": "William M. Brown Jr., Bugwood.org, CC BY 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Tomato_spotted_wilt_virus_5356805-PPT.png",
+   "license": "CC BY 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Tomato_spotted_wilt_virus_5356805-PPT.png",
+   "focus": 0.5
+  },
+  "onion-twister": {
+   "src": "/images/site/diseases/onion-twister.webp",
+   "thumb": "/images/site/diseases/onion-twister-480.webp",
+   "alt": "Onion smudge, a Colletotrichum disease related to the anthracnose twister, on onion bulbs",
+   "credit": "Gerhard Bedlan, Univ.Doz. Dr.phil., Institut für Pflanzenschutz,3430 T, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Zwiebel_Schmutzfleckenkrankheit_(Colletotrichum_dematium_f._sp._circinans)_-_G-Bedlan,_Wien.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Zwiebel_Schmutzfleckenkrankheit_%28Colletotrichum_dematium_f._sp._circinans%29_-_G-Bedlan%2C_Wien.jpg",
+   "focus": 0.5
+  },
+  "allium-virus-complex": {
+   "src": "/images/site/diseases/allium-virus-complex.webp",
+   "thumb": "/images/site/diseases/allium-virus-complex-480.webp",
+   "alt": "Onion yellow dwarf: onion leaves striped yellow, flattened and bent",
+   "credit": "Jochen Kreiselmaier, Pflanzenschutzberater beim Dienstleistungszentrum, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Zwiebel_Gelbstreifigkeit-3-LYSV-DLR-NW-jk.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Zwiebel_Gelbstreifigkeit-3-LYSV-DLR-NW-jk.jpg/1280px-Zwiebel_Gelbstreifigkeit-3-LYSV-DLR-NW-jk.jpg",
+   "focus": 0.5
+  },
+  "cotton-bacterial-blight": {
+   "src": "/images/site/diseases/cotton-bacterial-blight.webp",
+   "thumb": "/images/site/diseases/cotton-bacterial-blight-480.webp",
+   "alt": "Angular leaf spots from Xanthomonas bacteria on a leaf",
+   "credit": "Ninjatacoshell, CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Xanthomonas_leaf_spot.png",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Xanthomonas_leaf_spot.png",
+   "focus": 0.5
+  },
+  "peanut-rust": {
+   "src": "/images/site/diseases/peanut-rust.webp",
+   "thumb": "/images/site/diseases/peanut-rust-480.webp",
+   "alt": "A peanut plant. Peanut rust shows as small orange brown pustules under leaves like these",
+   "credit": "Agnes, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/141737366",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/242884730/large.jpg",
+   "focus": 0.5
+  },
+  "pigeonpea-wilt": {
+   "src": "/images/site/diseases/pigeonpea-wilt.webp",
+   "thumb": "/images/site/diseases/pigeonpea-wilt-480.webp",
+   "alt": "Pigeon pea in flower, the crop that Fusarium wilt dries out plant by plant",
+   "credit": "Josiah Londerée, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/258005759",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/462833644/large.jpeg",
+   "focus": 0.5
+  },
+  "rhizome-rot": {
+   "src": "/images/site/diseases/rhizome-rot.webp",
+   "thumb": "/images/site/diseases/rhizome-rot-480.webp",
+   "alt": "Ginger rhizomes, the part that rhizome rot turns soft and watery",
+   "credit": "Diogo Luiz, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/331475509",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/601335438/large.jpg",
+   "focus": 0.5
+  },
+  "sweet-potato-scab": {
+   "src": "/images/site/diseases/sweet-potato-scab.webp",
+   "thumb": "/images/site/diseases/sweet-potato-scab-480.webp",
+   "alt": "Sweet potato leaves, where scab leaves corky, curled spots along the veins",
+   "credit": "Daniel Mesa, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/146861226",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/252592175/large.jpeg",
+   "focus": 0.5
+  },
+  "sweet-potato-virus-disease": {
+   "src": "/images/site/diseases/sweet-potato-virus-disease.webp",
+   "thumb": "/images/site/diseases/sweet-potato-virus-disease-480.webp",
+   "alt": "A sweet potato vine in flower. Virus disease stunts plants like this and mottles their leaves",
+   "credit": "Ricard Busquets Reverte, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/145864347",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/250641245/large.jpeg",
+   "focus": 0.5
+  },
+  "ginger-leaf-spot": {
+   "src": "/images/site/diseases/ginger-leaf-spot.webp",
+   "thumb": "/images/site/diseases/ginger-leaf-spot-480.webp",
+   "alt": "Ginger plants, whose leaves leaf spot marks with pale, dark edged spots",
+   "credit": "ritirene, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/135404908",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/230935597/large.jpeg",
+   "focus": 0.5
+  },
+  "bacterial-spot": {
+   "src": "/images/site/diseases/bacterial-spot.webp",
+   "thumb": "/images/site/diseases/bacterial-spot-480.webp",
+   "alt": "A chili plant. Bacterial spot leaves small dark spots on leaves and fruit like these",
+   "credit": "Daniel Mesa, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/317635484",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/573984429/large.jpg",
+   "focus": 0.5
+  },
+  "lettuce-bacterial-leaf-spot": {
+   "src": "/images/site/diseases/lettuce-bacterial-leaf-spot.webp",
+   "thumb": "/images/site/diseases/lettuce-bacterial-leaf-spot-480.webp",
+   "alt": "Lettuce leaves, where bacterial leaf spot starts as small, water soaked spots",
+   "credit": "kiwialli, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/321325166",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/581102897/large.jpg",
+   "focus": 0.5
+  },
+  "stemphylium-leaf-blight": {
+   "src": "/images/site/diseases/stemphylium-leaf-blight.webp",
+   "thumb": "/images/site/diseases/stemphylium-leaf-blight-480.webp",
+   "alt": "Green onions. Stemphylium leaf blight turns onion leaves yellow, then brown from the tips",
+   "credit": "Cole Carrabba, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/201600577",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/355900406/large.jpg",
+   "focus": 0.5
+  },
+  "thielaviopsis-rot": {
+   "src": "/images/site/diseases/thielaviopsis-rot.webp",
+   "thumb": "/images/site/diseases/thielaviopsis-rot-480.webp",
+   "alt": "A ripening pineapple, one of the crops Thielaviopsis rot attacks",
+   "credit": "Júlio Castellain, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/335414495",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/609321312/large.jpg",
+   "focus": 0.5
+  },
+  "abaca-bract-mosaic": {
+   "src": "/images/site/diseases/abaca-bract-mosaic.webp",
+   "thumb": "/images/site/diseases/abaca-bract-mosaic-480.webp",
+   "alt": "Abaca plants. Bract mosaic streaks their bracts and leaf sheaths",
+   "credit": "Forest Botial Jarvis, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/104253762",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/174666233/large.jpg",
+   "focus": 0.5
+  },
+  "pestalotiopsis-leaf-fall": {
+   "src": "/images/site/diseases/pestalotiopsis-leaf-fall.webp",
+   "thumb": "/images/site/diseases/pestalotiopsis-leaf-fall-480.webp",
+   "alt": "Rubber tree leaves, which Pestalotiopsis leaf fall spots and strips",
+   "credit": "Ashwin A, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/281066236",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/504862381/large.jpg",
+   "focus": 0.5
+  },
+  "pink-disease": {
+   "src": "/images/site/diseases/pink-disease.webp",
+   "thumb": "/images/site/diseases/pink-disease-480.webp",
+   "alt": "A cacao trunk with a pod. Pink disease coats branches like these in a pink crust",
+   "credit": "Jared Shorma, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/150198183",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/258941220/large.jpg",
+   "focus": 0.5
+  },
+  "citrus-tristeza": {
+   "src": "/images/site/diseases/citrus-tristeza.webp",
+   "thumb": "/images/site/diseases/citrus-tristeza-480.webp",
+   "alt": "A pomelo tree in fruit. Tristeza slowly weakens citrus trees like this one",
+   "credit": "scaup, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/259343578",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/465521199/large.jpeg",
+   "focus": 0.5
+  },
+  "banana-bract-mosaic": {
+   "src": "/images/site/diseases/banana-bract-mosaic.webp",
+   "thumb": "/images/site/diseases/banana-bract-mosaic-480.webp",
+   "alt": "A banana flower and its bracts, where bract mosaic shows its dark streaks",
+   "credit": "Ong Jyh Seng, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/60785365",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/97218303/large.jpeg",
+   "focus": 0.5
+  },
+  "papaya-bacterial-crown-rot": {
+   "src": "/images/site/diseases/papaya-bacterial-crown-rot.webp",
+   "thumb": "/images/site/diseases/papaya-bacterial-crown-rot-480.webp",
+   "alt": "Papaya trees. Bacterial crown rot rots the crown at the top of the trunk",
+   "credit": "Jay Brasher, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/299610339",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/539763920/large.jpg",
+   "focus": 0.5
+  },
+  "mango-scab": {
+   "src": "/images/site/diseases/mango-scab.webp",
+   "thumb": "/images/site/diseases/mango-scab-480.webp",
+   "alt": "Young mangoes on the tree, the fruit that mango scab marks with gray, corky spots",
+   "credit": "Diogo Luiz, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/60789215",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/97215998/large.jpeg",
+   "focus": 0.5
+  },
+  "rambutan-powdery-mildew": {
+   "src": "/images/site/diseases/rambutan-powdery-mildew.webp",
+   "thumb": "/images/site/diseases/rambutan-powdery-mildew-480.webp",
+   "alt": "Young rambutan fruit, which powdery mildew coats in white and makes drop",
+   "credit": "Min Khant Naing, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/142875483",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/245019134/large.jpeg",
+   "focus": 0.5
+  },
+  "vascular-streak-dieback": {
+   "src": "/images/site/diseases/vascular-streak-dieback.webp",
+   "thumb": "/images/site/diseases/vascular-streak-dieback-480.webp",
+   "alt": "A young cacao tree. Vascular streak dieback yellows the leaves and kills the branches",
+   "credit": "Gabriel Cardoso Fialho, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/359517818",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/655953913/large.jpg",
+   "focus": 0.5
+  },
+  "dragon-fruit-stem-canker": {
+   "src": "/images/site/diseases/dragon-fruit-stem-canker.webp",
+   "thumb": "/images/site/diseases/dragon-fruit-stem-canker-480.webp",
+   "alt": "Dragon fruit stems, where stem canker leaves orange spots that turn into holes",
+   "credit": "Ben Machado, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/139160866",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/237966470/large.jpeg",
+   "focus": 0.5
+  },
+  "chico-leaf-spot": {
+   "src": "/images/site/diseases/chico-leaf-spot.webp",
+   "thumb": "/images/site/diseases/chico-leaf-spot-480.webp",
+   "alt": "Chico fruit and leaves. Leaf spot marks the leaves with small round spots",
+   "credit": "Ong Jyh Seng, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/16515945",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/24860297/large.jpeg",
+   "focus": 0.5
+  }
+ },
+ "pests": {
+  "corn-aphid": {
+   "src": "/images/site/pests/corn-aphid.webp",
+   "thumb": "/images/site/pests/corn-aphid-480.webp",
+   "alt": "A colony of corn leaf aphids (Rhopalosiphum maidis) on a corn leaf",
+   "credit": "Juan Cruzado Cortés, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/1890037",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/2304866/large.JPG",
+   "focus": 0.5
+  },
+  "sugarcane-aphid": {
+   "src": "/images/site/pests/sugarcane-aphid.webp",
+   "thumb": "/images/site/pests/sugarcane-aphid-480.webp",
+   "alt": "Sugarcane aphids (Melanaphis sacchari), a crowd of pale yellow aphids on a leaf",
+   "credit": "Sam Kieschnick, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/17196439",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/26065319/large.jpeg",
+   "focus": 0.5
+  },
+  "sorghum-shoot-fly": {
+   "src": "/images/site/pests/sorghum-shoot-fly.webp",
+   "thumb": "/images/site/pests/sorghum-shoot-fly-480.webp",
+   "alt": "A preserved sorghum shoot fly (Atherigona soccata), photographed under magnification",
+   "credit": "Khan, Kakar and Kamran (2024), CC BY 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Atherigona_soccata_(10.3897-BDJ.12.e114414)_Figure_3.jpg",
+   "license": "CC BY 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/9/91/Atherigona_soccata_%2810.3897-BDJ.12.e114414%29_Figure_3.jpg",
+   "focus": 0.5
+  },
+  "cowpea-aphid": {
+   "src": "/images/site/pests/cowpea-aphid.webp",
+   "thumb": "/images/site/pests/cowpea-aphid-480.webp",
+   "alt": "Cowpea aphids (Aphis craccivora), black aphids crowding a stem",
+   "credit": "Вячеслав Юсупов, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/27708265",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/43139519/large.jpg",
+   "focus": 0.5
+  },
+  "pod-sucking-bugs": {
+   "src": "/images/site/pests/pod-sucking-bugs.webp",
+   "thumb": "/images/site/pests/pod-sucking-bugs-480.webp",
+   "alt": "A southern green stink bug (Nezara viridula), one of the pod sucking bugs, on a leaf",
+   "credit": "Hayath Mohammed, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/62315914",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/99827077/large.jpeg",
+   "focus": 0.5
+  },
+  "bruchids": {
+   "src": "/images/site/pests/bruchids.webp",
+   "thumb": "/images/site/pests/bruchids-480.webp",
+   "alt": "A bean weevil (Callosobruchus), the small beetle that bores into stored beans",
+   "credit": "Sabarni Sarker, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/143330529",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/245796685/large.jpeg",
+   "focus": 0.5
+  },
+  "bean-leaf-roller": {
+   "src": "/images/site/pests/bean-leaf-roller.webp",
+   "thumb": "/images/site/pests/bean-leaf-roller-480.webp",
+   "alt": "The bean leaf roller moth (Omiodes indicata), with its golden brown wings",
+   "credit": "Kahio Tiberio Mazon, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/14184620",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/21033071/large.jpeg",
+   "focus": 0.5
+  },
+  "green-stink-bug": {
+   "src": "/images/site/pests/green-stink-bug.webp",
+   "thumb": "/images/site/pests/green-stink-bug-480.webp",
+   "alt": "A southern green stink bug (Nezara viridula) on a stem",
+   "credit": "ivan_humljani, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/22155754",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/34300597/large.jpg",
+   "focus": 0.5
+  },
+  "hornworms": {
+   "src": "/images/site/pests/hornworms.webp",
+   "thumb": "/images/site/pests/hornworms-480.webp",
+   "alt": "The sweet potato hornworm moth (Agrius convolvuli), the adult of the hornworm caterpillar",
+   "credit": "SteveM4560, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/186656156",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/326246639/large.jpg",
+   "focus": 0.5
+  },
+  "sweet-potato-leaf-folder": {
+   "src": "/images/site/pests/sweet-potato-leaf-folder.webp",
+   "thumb": "/images/site/pests/sweet-potato-leaf-folder-480.webp",
+   "alt": "The sweet potato leaf folder moth (Herpetogramma hipponalis), with its orange brown wings",
+   "credit": "Kai Squires, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/287170302",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/516328127/large.jpg",
+   "focus": 0.5
+  },
+  "shoot-borer": {
+   "src": "/images/site/pests/shoot-borer.webp",
+   "thumb": "/images/site/pests/shoot-borer-480.webp",
+   "alt": "The ginger and turmeric shoot borer moth (Conogethes punctiferalis), yellow with dark spots",
+   "credit": "Gabriel, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/380272296",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/695692711/large.jpg",
+   "focus": 0.5
+  },
+  "ginger-leaf-roller": {
+   "src": "/images/site/pests/ginger-leaf-roller.webp",
+   "thumb": "/images/site/pests/ginger-leaf-roller-480.webp",
+   "alt": "The ginger leaf roller (Udaspes folus), a skipper butterfly whose caterpillars roll ginger leaves",
+   "credit": "Rajeesh, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/174816257",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/303748292/large.jpeg",
+   "focus": 0.5
+  },
+  "sweet-potato-weevil": {
+   "src": "/images/site/pests/sweet-potato-weevil.webp",
+   "thumb": "/images/site/pests/sweet-potato-weevil-480.webp",
+   "alt": "A sweet potato weevil (Cylas formicarius), with its dark blue head and orange red middle",
+   "credit": "Emanuele Santarelli, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/315093788",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/569178344/large.jpg",
+   "focus": 0.5
+  },
+  "potato-tuber-moth": {
+   "src": "/images/site/pests/potato-tuber-moth.webp",
+   "thumb": "/images/site/pests/potato-tuber-moth-480.webp",
+   "alt": "A potato tuber moth (Phthorimaea operculella) resting on a leaf",
+   "credit": "ingridaltmann, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/162877249",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/281661264/large.jpg",
+   "focus": 0.5
+  },
+  "spider-mites": {
+   "src": "/images/site/pests/spider-mites.webp",
+   "thumb": "/images/site/pests/spider-mites-480.webp",
+   "alt": "A red spider mite (Tetranychus) and its eggs on a leaf, seen up close",
+   "credit": "Wynand Uys, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/320606408",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/579693641/large.jpg",
+   "focus": 0.5
+  },
+  "cabbage-moth": {
+   "src": "/images/site/pests/cabbage-moth.webp",
+   "thumb": "/images/site/pests/cabbage-moth-480.webp",
+   "alt": "The cabbage moth (Crocidolomia pavonana), whose caterpillars feed in clusters on cabbage",
+   "credit": "Kai Squires, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/338994263",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/616572866/large.jpg",
+   "focus": 0.5
+  },
+  "flea-beetle": {
+   "src": "/images/site/pests/flea-beetle.webp",
+   "thumb": "/images/site/pests/flea-beetle-480.webp",
+   "alt": "A striped flea beetle (Phyllotreta striolata), black with two yellow stripes",
+   "credit": "Ruebezahl, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/253755048",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/454422272/large.jpeg",
+   "focus": 0.5
+  },
+  "broad-mite": {
+   "src": "/images/site/pests/broad-mite.webp",
+   "thumb": "/images/site/pests/broad-mite-480.webp",
+   "alt": "Broad mites (Polyphagotarsonemus latus), tiny pale mites on a leaf seen under magnification",
+   "credit": "余世文, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/194318267",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/341539235/large.jpg",
+   "focus": 0.5
+  },
+  "epilachna-beetle": {
+   "src": "/images/site/pests/epilachna-beetle.webp",
+   "thumb": "/images/site/pests/epilachna-beetle-480.webp",
+   "alt": "A twenty eight spotted lady beetle (Henosepilachna vigintioctopunctata) on a leaf",
+   "credit": "Helio Lourencini, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/93306657",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/154627567/large.jpeg",
+   "focus": 0.5
+  },
+  "cabbage-looper": {
+   "src": "/images/site/pests/cabbage-looper.webp",
+   "thumb": "/images/site/pests/cabbage-looper-480.webp",
+   "alt": "A cabbage looper moth (Trichoplusia ni) resting on a leaf",
+   "credit": "SteveM4560, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/297290286",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/535392868/large.jpg",
+   "focus": 0.5
+  },
+  "aphids": {
+   "src": "/images/site/pests/aphids.webp",
+   "thumb": "/images/site/pests/aphids-480.webp",
+   "alt": "A green peach aphid (Myzus persicae) feeding on a reddish plant stem",
+   "credit": "Jesse Rorabaugh, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/22924820",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/35534929/large.jpg",
+   "focus": 0.5
+  },
+  "green-peach-aphid": {
+   "src": "/images/site/pests/green-peach-aphid.webp",
+   "thumb": "/images/site/pests/green-peach-aphid-480.webp",
+   "alt": "A green peach aphid (Myzus persicae) on a leaf",
+   "credit": "Jesse Rorabaugh, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/38478019",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/61157923/large.jpg",
+   "focus": 0.5
+  },
+  "cotton-aphid": {
+   "src": "/images/site/pests/cotton-aphid.webp",
+   "thumb": "/images/site/pests/cotton-aphid-480.webp",
+   "alt": "Cotton aphids (Aphis gossypii), yellow green aphids crowding the underside of a leaf",
+   "credit": "Jesse Rorabaugh, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/55997238",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/89202276/large.jpg",
+   "focus": 0.5
+  },
+  "leaf-footed-plant-bug": {
+   "src": "/images/site/pests/leaf-footed-plant-bug.webp",
+   "thumb": "/images/site/pests/leaf-footed-plant-bug-480.webp",
+   "alt": "A leaf footed plant bug (Leptoglossus) on a leaf, with the flattened hind legs that name it",
+   "credit": "Kozue Kawakami, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/66090234",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/106467357/large.jpeg",
+   "focus": 0.5
+  },
+  "jute-semilooper": {
+   "src": "/images/site/pests/jute-semilooper.webp",
+   "thumb": "/images/site/pests/jute-semilooper-480.webp",
+   "alt": "The jute semilooper moth (Anomis sabulifera) resting on a leaf",
+   "credit": "Sunčana Bradley, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/195059118",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/343054654/large.jpg",
+   "focus": 0.5
+  },
+  "leatherleaf-slugs": {
+   "src": "/images/site/pests/leatherleaf-slugs.webp",
+   "thumb": "/images/site/pests/leatherleaf-slugs-480.webp",
+   "alt": "A leatherleaf slug (Veronicellidae), the flat, leathery slug of farms and gardens",
+   "credit": "Harendra Srivastava, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Leatherleaf_Slug.jpg",
+   "license": "CC0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Leatherleaf_Slug.jpg/1280px-Leatherleaf_Slug.jpg",
+   "focus": 0.5
+  },
+  "termites": {
+   "src": "/images/site/pests/termites.webp",
+   "thumb": "/images/site/pests/termites-480.webp",
+   "alt": "Termite workers and soldiers crowding an opened part of their nest",
+   "credit": "U.S. Department of Agriculture (taken by Scott Bauer), CC BY 2.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Termites_rush_to_damaged_portion_of_mound.jpg",
+   "license": "CC BY 2.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/Termites_rush_to_damaged_portion_of_mound.jpg/1280px-Termites_rush_to_damaged_portion_of_mound.jpg",
+   "focus": 0.5
+  },
+  "slug-caterpillars": {
+   "src": "/images/site/pests/slug-caterpillars.webp",
+   "thumb": "/images/site/pests/slug-caterpillars-480.webp",
+   "alt": "A nettle caterpillar (Setothosea asigna), the stinging slug caterpillar of oil palm and coconut",
+   "credit": "Andreas Manz, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/16959636",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/25636517/large.jpg",
+   "focus": 0.5
+  },
+  "pink-bollworm": {
+   "src": "/images/site/pests/pink-bollworm.webp",
+   "thumb": "/images/site/pests/pink-bollworm-480.webp",
+   "alt": "Pink bollworm (Pectinophora gossypiella) caterpillars inside an opened cotton boll",
+   "credit": "Peggy Greb USDA, ARS, Public domain, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Pinkbollworm.jpg",
+   "license": "Public domain",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/3/35/Pinkbollworm.jpg",
+   "focus": 0.5
+  },
+  "cotton-stainer": {
+   "src": "/images/site/pests/cotton-stainer.webp",
+   "thumb": "/images/site/pests/cotton-stainer-480.webp",
+   "alt": "A cotton stainer (Dysdercus cingulatus), red with black and white markings, on a leaf",
+   "credit": "athiwu, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/296733092",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/534336609/large.jpg",
+   "focus": 0.5
+  },
+  "bagworms": {
+   "src": "/images/site/pests/bagworms.webp",
+   "thumb": "/images/site/pests/bagworms-480.webp",
+   "alt": "A bagworm (Psychidae) in its case of stem bits, hanging from a twig",
+   "credit": "Nativeplants garden, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Psychidae_3.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Psychidae_3.jpg/1280px-Psychidae_3.jpg",
+   "focus": 0.5
+  },
+  "red-striped-soft-scale": {
+   "src": "/images/site/pests/red-striped-soft-scale.webp",
+   "thumb": "/images/site/pests/red-striped-soft-scale-480.webp",
+   "alt": "Red striped soft scales (Pulvinaria tenuivalvata) on a sugarcane leaf",
+   "credit": "Department of Agriculture Northern Mindanao: Regional Crop Protection , Public domain, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Pulvinaria_tenuivalvata_on_sugarcane.png",
+   "license": "Public domain",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/48/Pulvinaria_tenuivalvata_on_sugarcane.png/1280px-Pulvinaria_tenuivalvata_on_sugarcane.png",
+   "focus": 0.5
+  },
+  "sugarcane-woolly-aphid": {
+   "src": "/images/site/pests/sugarcane-woolly-aphid.webp",
+   "thumb": "/images/site/pests/sugarcane-woolly-aphid-480.webp",
+   "alt": "Sugarcane woolly aphids (Ceratovacuna lanigera), white woolly colonies on a sugarcane leaf",
+   "credit": "王沐, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/390995561",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/716386505/large.jpg",
+   "focus": 0.5
+  },
+  "bamboo-powderpost-beetle": {
+   "src": "/images/site/pests/bamboo-powderpost-beetle.webp",
+   "thumb": "/images/site/pests/bamboo-powderpost-beetle-480.webp",
+   "alt": "A bamboo powderpost beetle (Dinoderus minutus), photographed up close",
+   "credit": "Wisut Sittichaya, Roger A. Beaver, Lan Yu Liu, Aran Ngampongsai, CC BY 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Dinoderus_minutus_(dorsal_view).jpg",
+   "license": "CC BY 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Dinoderus_minutus_%28dorsal_view%29.jpg",
+   "focus": 0.5
+  },
+  "scale-insects": {
+   "src": "/images/site/pests/scale-insects.webp",
+   "thumb": "/images/site/pests/scale-insects-480.webp",
+   "alt": "Coconut scale insects (Aspidiotus destructor) crowding the underside of a leaf",
+   "credit": "Mike Bowie, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/182088480",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/317415455/large.jpg",
+   "focus": 0.5
+  },
+  "spiraling-whitefly": {
+   "src": "/images/site/pests/spiraling-whitefly.webp",
+   "thumb": "/images/site/pests/spiraling-whitefly-480.webp",
+   "alt": "Spiraling whitefly (Aleurodicus dispersus) colonies with their white waxy threads on a leaf",
+   "credit": "Benjamin Burgunder, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/334300394",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/607057058/large.jpg",
+   "focus": 0.5
+  },
+  "asian-citrus-psyllid": {
+   "src": "/images/site/pests/asian-citrus-psyllid.webp",
+   "thumb": "/images/site/pests/asian-citrus-psyllid-480.webp",
+   "alt": "An Asian citrus psyllid (Diaphorina citri), the insect that spreads citrus greening",
+   "credit": "Sinaloa Silvestre, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/198188120",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/349254680/large.jpeg",
+   "focus": 0.5
+  },
+  "citrus-bark-borer": {
+   "src": "/images/site/pests/citrus-bark-borer.webp",
+   "thumb": "/images/site/pests/citrus-bark-borer-480.webp",
+   "alt": "A citrus bark borer beetle (Agrilus occipitalis) on a leaf",
+   "credit": "Auradyme, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/251427414",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/449874699/large.jpeg",
+   "focus": 0.5
+  },
+  "buff-coconut-mealybug": {
+   "src": "/images/site/pests/buff-coconut-mealybug.webp",
+   "thumb": "/images/site/pests/buff-coconut-mealybug-480.webp",
+   "alt": "Buff coconut mealybugs (Nipaecoccus nipae), waxy white clusters on a leaf",
+   "credit": "Cricket Raspet, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/270964951",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/487362847/large.jpeg",
+   "focus": 0.5
+  },
+  "red-branch-borer": {
+   "src": "/images/site/pests/red-branch-borer.webp",
+   "thumb": "/images/site/pests/red-branch-borer-480.webp",
+   "alt": "The red branch borer moth (Zeuzera coffeae), the carpenter moth whose caterpillars bore into branches",
+   "credit": "Marco Chan, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/276522693",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/496574269/large.jpg",
+   "focus": 0.5
+  },
+  "helopeltis-bug": {
+   "src": "/images/site/pests/helopeltis-bug.webp",
+   "thumb": "/images/site/pests/helopeltis-bug-480.webp",
+   "alt": "A mosquito bug (Helopeltis), the thin, long legged plant bug of cacao and cashew",
+   "credit": "AnnLazaro, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/10389379",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/14421822/large.jpg",
+   "focus": 0.5
+  },
+  "banana-skipper": {
+   "src": "/images/site/pests/banana-skipper.webp",
+   "thumb": "/images/site/pests/banana-skipper-480.webp",
+   "alt": "The banana skipper (Erionota thrax), the butterfly whose caterpillars roll banana leaves",
+   "credit": "Gerard Chartier, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/197224343",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/347310794/large.jpg",
+   "focus": 0.5
+  },
+  "mango-seed-borer": {
+   "src": "/images/site/pests/mango-seed-borer.webp",
+   "thumb": "/images/site/pests/mango-seed-borer-480.webp",
+   "alt": "The red banded mango caterpillar moth (Deanolis sublimbalis)",
+   "credit": "dhfischer, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/202248678",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/357164701/large.jpg",
+   "focus": 0.5
+  },
+  "jackfruit-fruit-borer": {
+   "src": "/images/site/pests/jackfruit-fruit-borer.webp",
+   "thumb": "/images/site/pests/jackfruit-fruit-borer-480.webp",
+   "alt": "The jackfruit shoot and fruit borer moth (Glyphodes caesalis)",
+   "credit": "Kai Squires, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/234862383",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/417595381/large.jpeg",
+   "focus": 0.5
+  },
+  "jackfruit-fruit-fly": {
+   "src": "/images/site/pests/jackfruit-fruit-fly.webp",
+   "thumb": "/images/site/pests/jackfruit-fruit-fly-480.webp",
+   "alt": "A jackfruit fruit fly (Bactrocera umbrosa) on a leaf",
+   "credit": "Dominik Maximilián Ramík, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/251321874",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/449661804/large.jpeg",
+   "focus": 0.5
+  },
+  "durian-fruit-borer": {
+   "src": "/images/site/pests/durian-fruit-borer.webp",
+   "thumb": "/images/site/pests/durian-fruit-borer-480.webp",
+   "alt": "The yellow peach moth (Conogethes punctiferalis), one of the durian fruit borers",
+   "credit": "Adithyan A Saj, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/302017886",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/544274968/large.jpg",
+   "focus": 0.5
+  },
+  "shot-hole-borer": {
+   "src": "/images/site/pests/shot-hole-borer.webp",
+   "thumb": "/images/site/pests/shot-hole-borer-480.webp",
+   "alt": "A shot hole borer (Euwallacea fornicatus), one of the tiny ambrosia beetles that bore into trees",
+   "credit": "Ken Walker (Available online: PaDIL http://www.padil.gov.a), CC BY 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Euwallacea_fornicatus_8239-large.jpg",
+   "license": "CC BY 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Euwallacea_fornicatus_8239-large.jpg",
+   "focus": 0.5
+  },
+  "tussock-caterpillar": {
+   "src": "/images/site/pests/tussock-caterpillar.webp",
+   "thumb": "/images/site/pests/tussock-caterpillar-480.webp",
+   "alt": "A tussock caterpillar (Orgyia), with its tufts of hair",
+   "credit": "MPPeterBro, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Orgyia_leucostigma_Pupae_stage_-_4.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Orgyia_leucostigma_Pupae_stage_-_4.jpg/1280px-Orgyia_leucostigma_Pupae_stage_-_4.jpg",
+   "focus": 0.5
+  },
+  "moringa-leaf-caterpillar": {
+   "src": "/images/site/pests/moringa-leaf-caterpillar.webp",
+   "thumb": "/images/site/pests/moringa-leaf-caterpillar-480.webp",
+   "alt": "The moringa moth (Noorda blitealis), whose caterpillars eat moringa leaves",
+   "credit": "Cheryl Stinchcomb, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/356098606",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/649382257/large.jpg",
+   "focus": 0.5
+  },
+  "tamarind-seed-beetle": {
+   "src": "/images/site/pests/tamarind-seed-beetle.webp",
+   "thumb": "/images/site/pests/tamarind-seed-beetle-480.webp",
+   "alt": "A tamarind seed beetle (Caryedon serratus), photographed up close",
+   "credit": "division, CSIRO, CC BY 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:CSIRO_ScienceImage_10826_Caryedon_serratus_Groundnut_bruchid_hind_leg_detail_showing_enlarged_femur_and_row_of_small_spines_on_lower_edge.jpg",
+   "license": "CC BY 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/b/b1/CSIRO_ScienceImage_10826_Caryedon_serratus_Groundnut_bruchid_hind_leg_detail_showing_enlarged_femur_and_row_of_small_spines_on_lower_edge.jpg",
+   "focus": 0.5
+  },
+  "corn-seedling-maggot": {
+   "src": "/images/site/pests/corn-seedling-maggot.webp",
+   "thumb": "/images/site/pests/corn-seedling-maggot-480.webp",
+   "alt": "A shoot fly (Atherigona), the genus of the corn seedling maggot",
+   "credit": "Katja Schulz, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/107924838",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/181609417/large.jpg",
+   "focus": 0.5
+  },
+  "groundnut-leafminer": {
+   "src": "/images/site/pests/groundnut-leafminer.webp",
+   "thumb": "/images/site/pests/groundnut-leafminer-480.webp",
+   "alt": "A groundnut leafminer moth (Aproaerema), the tiny moth whose caterpillars mine peanut and soybean leaves",
+   "credit": "Jean Paul Boerekamps, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/308982642",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/557512992/large.jpg",
+   "focus": 0.5
+  },
+  "cassava-scale": {
+   "src": "/images/site/pests/cassava-scale.webp",
+   "thumb": "/images/site/pests/cassava-scale-480.webp",
+   "alt": "A young cassava field, the crop whose stems the cassava white scale crusts over",
+   "credit": "Yangi Elizabeth, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Cassava_growing_in_kajo-keji.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/5/56/Cassava_growing_in_kajo-keji.jpg",
+   "focus": 0.5
+  },
+  "yam-leaf-beetle": {
+   "src": "/images/site/pests/yam-leaf-beetle.webp",
+   "thumb": "/images/site/pests/yam-leaf-beetle-480.webp",
+   "alt": "A Lilioceris leaf beetle, the red beetle that strips yam leaves",
+   "credit": "katunchik, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/22528201",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/34902754/large.jpg",
+   "focus": 0.5
+  },
+  "sugarcane-stem-borers": {
+   "src": "/images/site/pests/sugarcane-stem-borers.webp",
+   "thumb": "/images/site/pests/sugarcane-stem-borers-480.webp",
+   "alt": "The sugarcane internode borer moth (Chilo sacchariphagus)",
+   "credit": "Hopeland, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/142137782",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/243640116/large.jpeg",
+   "focus": 0.5
+  },
+  "pineapple-mealybug-wilt": {
+   "src": "/images/site/pests/pineapple-mealybug-wilt.webp",
+   "thumb": "/images/site/pests/pineapple-mealybug-wilt-480.webp",
+   "alt": "A pineapple mealybug (Dysmicoccus brevipes), stained and mounted on a slide for study",
+   "credit": "Chamaiporn Department of Agriculture, Thailand, CC BY 3.0 au, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Dysmicoccus_brevipes_dorsal.jpg",
+   "license": "CC BY 3.0 au",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Dysmicoccus_brevipes_dorsal.jpg",
+   "focus": 0.5
+  },
+  "pineapple-scale": {
+   "src": "/images/site/pests/pineapple-scale.webp",
+   "thumb": "/images/site/pests/pineapple-scale-480.webp",
+   "alt": "Boisduval scale (Diaspis boisduvalii), a close relative of the pineapple scale, on a leaf",
+   "credit": "Rosie Steinberg Depicted place: Redfern NSW 2016, Australia (33°53′25″, CC BY 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Diaspis_boisduvalii_-_inat_257805833.jpg",
+   "license": "CC BY 4.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Diaspis_boisduvalii_-_inat_257805833.jpg/1280px-Diaspis_boisduvalii_-_inat_257805833.jpg",
+   "focus": 0.5
+  },
+  "citrus-rind-borer": {
+   "src": "/images/site/pests/citrus-rind-borer.webp",
+   "thumb": "/images/site/pests/citrus-rind-borer-480.webp",
+   "alt": "The citrus flower moth (Prays citri), a close relative of the citrus rind borer",
+   "credit": "Ben Jobson, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/378813065",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/692857254/large.jpg",
+   "focus": 0.5
+  },
+  "avocado-twig-borer": {
+   "src": "/images/site/pests/avocado-twig-borer.webp",
+   "thumb": "/images/site/pests/avocado-twig-borer-480.webp",
+   "alt": "Niphonoclea longhorn beetles, relatives of the avocado twig borers, as museum specimens",
+   "credit": "Ben Sale from UK, CC BY 2.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Niphonoclea_ornata_(15515155422).jpg",
+   "license": "CC BY 2.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/54/Niphonoclea_ornata_%2815515155422%29.jpg/1280px-Niphonoclea_ornata_%2815515155422%29.jpg",
+   "focus": 0.5
+  },
+  "lanzones-scale": {
+   "src": "/images/site/pests/lanzones-scale.webp",
+   "thumb": "/images/site/pests/lanzones-scale-480.webp",
+   "alt": "Unaspis scale insects, the genus of the lanzones scale, crowding a leaf",
+   "credit": "Jon Mortin, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/346439044",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/631505244/large.jpg",
+   "focus": 0.5
+  },
+  "lanzones-bark-borer": {
+   "src": "/images/site/pests/lanzones-bark-borer.webp",
+   "thumb": "/images/site/pests/lanzones-bark-borer-480.webp",
+   "alt": "A lanzones tree, whose trunk and branches the bark borer tunnels",
+   "credit": "Obsidian Soul, CC0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Lansium_domesticum.jpg",
+   "license": "CC0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/0/08/Lansium_domesticum.jpg",
+   "focus": 0.5
+  },
+  "rhizome-scale": {
+   "src": "/images/site/pests/rhizome-scale.webp",
+   "thumb": "/images/site/pests/rhizome-scale-480.webp",
+   "alt": "Ubi (purple yam) vines. The yam and rhizome scale crusts their tubers and ginger rhizomes in storage",
+   "credit": "Joseph Hubbard, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/87015748",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/143447769/large.jpg",
+   "focus": 0.5
+  },
+  "annona-fruit-borer": {
+   "src": "/images/site/pests/annona-fruit-borer.webp",
+   "thumb": "/images/site/pests/annona-fruit-borer-480.webp",
+   "alt": "An atis fruit on the tree, the fruit the atis and guyabano fruit borer tunnels into",
+   "credit": "Vinay K L, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/60405094",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/96588239/large.jpeg",
+   "focus": 0.5
+  },
+  "durian-psyllid": {
+   "src": "/images/site/pests/durian-psyllid.webp",
+   "thumb": "/images/site/pests/durian-psyllid-480.webp",
+   "alt": "Durian branches. Psyllids feed on the young leaves and flushes of trees like this",
+   "credit": "Samuel Lee, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/70998556",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/115520164/large.jpeg",
+   "focus": 0.5
+  },
+  "pineapple-red-mite": {
+   "src": "/images/site/pests/pineapple-red-mite.webp",
+   "thumb": "/images/site/pests/pineapple-red-mite-480.webp",
+   "alt": "A pineapple plant. The pineapple red mite feeds at the base of its leaves",
+   "credit": "Daniel Dias, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/157277265",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/271955302/large.jpeg",
+   "focus": 0.5
+  },
+  "banana-thrips": {
+   "src": "/images/site/pests/banana-thrips.webp",
+   "thumb": "/images/site/pests/banana-thrips-480.webp",
+   "alt": "A young banana bunch, the fruit that flower thrips and red rust thrips scar",
+   "credit": "Lucas Christofides, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/230906643",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/410027513/large.jpeg",
+   "focus": 0.5
+  }
+ },
+ "weeds": {
+  "itchgrass": {
+   "src": "/images/site/weeds/itchgrass.webp",
+   "thumb": "/images/site/weeds/itchgrass-480.webp",
+   "alt": "Itchgrass (Rottboellia cochinchinensis) growing thick along the edge of a wet field",
+   "credit": "Roland Muench, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/202217595",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/357100064/large.jpeg",
+   "focus": 0.5
+  },
+  "cogon": {
+   "src": "/images/site/weeds/cogon.webp",
+   "thumb": "/images/site/weeds/cogon-480.webp",
+   "alt": "Cogon grass (Imperata cylindrica) in flower, its white silky plumes covering a field",
+   "credit": "i_c_riddell, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/33878770",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/53258599/large.jpg",
+   "focus": 0.5
+  },
+  "talahib": {
+   "src": "/images/site/weeds/talahib.webp",
+   "thumb": "/images/site/weeds/talahib-480.webp",
+   "alt": "Wild sugarcane or talahib (Saccharum spontaneum) in full white bloom below a hill",
+   "credit": "Damien Wallace, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/255052353",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/456987419/large.jpeg",
+   "focus": 0.5
+  },
+  "johnson-grass": {
+   "src": "/images/site/weeds/johnson-grass.webp",
+   "thumb": "/images/site/weeds/johnson-grass-480.webp",
+   "alt": "Johnson grass (Sorghum halepense) with its reddish flower head above the leaves",
+   "credit": "zebedeugalinha, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/306316326",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/552388407/large.jpg",
+   "focus": 0.4
+  },
+  "para-grass": {
+   "src": "/images/site/weeds/para-grass.webp",
+   "thumb": "/images/site/weeds/para-grass-480.webp",
+   "alt": "A dense stand of para grass (Urochloa mutica)",
+   "credit": "Kevin Faccenda, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/190287243",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/333536490/large.jpeg",
+   "focus": 0.5
+  },
+  "swollen-fingergrass": {
+   "src": "/images/site/weeds/swollen-fingergrass.webp",
+   "thumb": "/images/site/weeds/swollen-fingergrass-480.webp",
+   "alt": "A tuft of swollen fingergrass (Chloris barbata) with its purple, finger like seed heads",
+   "credit": "Kevin Faccenda, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/169329896",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/293557334/large.jpg",
+   "focus": 0.5
+  },
+  "whitehead-spikesedge": {
+   "src": "/images/site/weeds/whitehead-spikesedge.webp",
+   "thumb": "/images/site/weeds/whitehead-spikesedge-480.webp",
+   "alt": "Whitehead spikesedge (Kyllinga nemoralis) with its round white flower heads among grassy leaves",
+   "credit": "Andre Hosper, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/15613632",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/23338885/large.jpeg",
+   "focus": 0.5
+  },
+  "siam-weed": {
+   "src": "/images/site/weeds/siam-weed.webp",
+   "thumb": "/images/site/weeds/siam-weed-480.webp",
+   "alt": "Siam weed (Chromolaena odorata) in flower, with clusters of pale flower heads",
+   "credit": "Francisco Farriols Sarabia, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/102623312",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/171589837/large.jpeg",
+   "focus": 0.5
+  },
+  "mile-a-minute": {
+   "src": "/images/site/weeds/mile-a-minute.webp",
+   "thumb": "/images/site/weeds/mile-a-minute-480.webp",
+   "alt": "Mile a minute vine (Mikania cordata) climbing over shrubs, covered in small white flowers",
+   "credit": "Yercaud elango, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Mikania_cordata-1-hawaghar_junction-port_blair-andaman-India.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Mikania_cordata-1-hawaghar_junction-port_blair-andaman-India.jpg/1280px-Mikania_cordata-1-hawaghar_junction-port_blair-andaman-India.jpg",
+   "focus": 0.5
+  },
+  "billygoat-weed": {
+   "src": "/images/site/weeds/billygoat-weed.webp",
+   "thumb": "/images/site/weeds/billygoat-weed-480.webp",
+   "alt": "Billygoat weed (Ageratum conyzoides) with its soft lilac flower heads",
+   "credit": "Wynand Uys, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/10870081",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/15258131/large.jpg",
+   "focus": 0.5
+  },
+  "spanish-needle": {
+   "src": "/images/site/weeds/spanish-needle.webp",
+   "thumb": "/images/site/weeds/spanish-needle-480.webp",
+   "alt": "Spanish needle (Bidens pilosa) with a white and yellow flower among its leaves",
+   "credit": "Lucas Christofides, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/279380576",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/501680644/large.jpeg",
+   "focus": 0.5
+  },
+  "gallant-soldier": {
+   "src": "/images/site/weeds/gallant-soldier.webp",
+   "thumb": "/images/site/weeds/gallant-soldier-480.webp",
+   "alt": "Gallant soldier (Galinsoga parviflora) with its small white and yellow flowers",
+   "credit": "Dinesh Valke, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/144473867",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/247968316/large.jpg",
+   "focus": 0.5
+  },
+  "tropical-chickweed": {
+   "src": "/images/site/weeds/tropical-chickweed.webp",
+   "thumb": "/images/site/weeds/tropical-chickweed-480.webp",
+   "alt": "Tropical chickweed (Drymaria cordata) with its round leaves and tiny white flowers",
+   "credit": "黃美滿, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/253601386",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/454120212/large.jpeg",
+   "focus": 0.5
+  },
+  "nodeweed": {
+   "src": "/images/site/weeds/nodeweed.webp",
+   "thumb": "/images/site/weeds/nodeweed-480.webp",
+   "alt": "Nodeweed (Synedrella nodiflora) with a small yellow flower where the leaves meet the stem",
+   "credit": "James K. Douch, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/170257446",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/295274646/large.jpg",
+   "focus": 0.5
+  },
+  "asthma-weed": {
+   "src": "/images/site/weeds/asthma-weed.webp",
+   "thumb": "/images/site/weeds/asthma-weed-480.webp",
+   "alt": "Asthma weed (Euphorbia hirta) with its clusters of tiny flowers along the stems",
+   "credit": "Andre Hosper, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/7390133",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/9592919/large.jpg",
+   "focus": 0.5
+  },
+  "coat-buttons": {
+   "src": "/images/site/weeds/coat-buttons.webp",
+   "thumb": "/images/site/weeds/coat-buttons-480.webp",
+   "alt": "Coat buttons (Tridax procumbens) with a white and yellow flower on a long stalk",
+   "credit": "Whaldener Endo, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/125174512",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/212253242/large.jpg",
+   "focus": 0.5
+  },
+  "common-wireweed": {
+   "src": "/images/site/weeds/common-wireweed.webp",
+   "thumb": "/images/site/weeds/common-wireweed-480.webp",
+   "alt": "Common wireweed (Sida acuta) with a yellow flower among its narrow toothed leaves",
+   "credit": "Alexis López Hernández, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/177310518",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/308369620/large.jpeg",
+   "focus": 0.5
+  },
+  "caesar-weed": {
+   "src": "/images/site/weeds/caesar-weed.webp",
+   "thumb": "/images/site/weeds/caesar-weed-480.webp",
+   "alt": "Caesar weed (Urena lobata) with a pink flower among its broad leaves",
+   "credit": "fagushayata, CC BY SA, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/18977236",
+   "license": "CC BY SA",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/29095460/large.jpeg",
+   "focus": 0.5
+  },
+  "lantana": {
+   "src": "/images/site/weeds/lantana.webp",
+   "thumb": "/images/site/weeds/lantana-480.webp",
+   "alt": "Lantana (Lantana camara) with its red, orange and yellow flower clusters",
+   "credit": "Carlos Otávio Gussoni, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/108197835",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/182123176/large.jpeg",
+   "focus": 0.5
+  },
+  "bush-mint": {
+   "src": "/images/site/weeds/bush-mint.webp",
+   "thumb": "/images/site/weeds/bush-mint-480.webp",
+   "alt": "Bush mint (Hyptis suaveolens) with small lilac flowers along its stem",
+   "credit": "Haneesh K M, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/96892162",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/161033330/large.jpg",
+   "focus": 0.5
+  },
+  "creeping-woodsorrel": {
+   "src": "/images/site/weeds/creeping-woodsorrel.webp",
+   "thumb": "/images/site/weeds/creeping-woodsorrel-480.webp",
+   "alt": "Creeping woodsorrel (Oxalis corniculata) with its yellow flowers and clover like leaves",
+   "credit": "W. Terry Hunefeld, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/5304591",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/6567381/large.jpg",
+   "focus": 0.5
+  },
+  "little-ironweed": {
+   "src": "/images/site/weeds/little-ironweed.webp",
+   "thumb": "/images/site/weeds/little-ironweed-480.webp",
+   "alt": "Little ironweed (Cyanthillium cinereum) with its small purple flower heads on thin stalks",
+   "credit": "Daniel Cahen, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/38236085",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/60739747/large.jpeg",
+   "focus": 0.5
+  },
+  "lilac-tasselflower": {
+   "src": "/images/site/weeds/lilac-tasselflower.webp",
+   "thumb": "/images/site/weeds/lilac-tasselflower-480.webp",
+   "alt": "Lilac tasselflower (Emilia sonchifolia) with its lilac, tassel like flower head",
+   "credit": "Attila Oláh, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/139130003",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/237907865/large.jpeg",
+   "focus": 0.5
+  },
+  "blue-snakeweed": {
+   "src": "/images/site/weeds/blue-snakeweed.webp",
+   "thumb": "/images/site/weeds/blue-snakeweed-480.webp",
+   "alt": "Blue snakeweed (Stachytarpheta jamaicensis) with small blue flowers on its long spikes",
+   "credit": "Dayron Breto, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/140683444",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/240836590/large.jpeg",
+   "focus": 0.5
+  },
+  "elephant-foot": {
+   "src": "/images/site/weeds/elephant-foot.webp",
+   "thumb": "/images/site/weeds/elephant-foot-480.webp",
+   "alt": "Elephant foot (Elephantopus scaber) with its pale purple flower heads above the leaves",
+   "credit": "Toby Y, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/140479889",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/240476779/large.jpg",
+   "focus": 0.5
+  },
+  "stinking-passion-flower": {
+   "src": "/images/site/weeds/stinking-passion-flower.webp",
+   "thumb": "/images/site/weeds/stinking-passion-flower-480.webp",
+   "alt": "Stinking passion flower (Passiflora foetida) with its white flower and a fruit in a feathery husk",
+   "credit": "葉子, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/40689238",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/64502090/large.jpeg",
+   "focus": 0.5
+  },
+  "black-nightshade": {
+   "src": "/images/site/weeds/black-nightshade.webp",
+   "thumb": "/images/site/weeds/black-nightshade-480.webp",
+   "alt": "Black nightshade (Solanum americanum) with clusters of small green berries among its leaves",
+   "credit": "Carl Ramirez, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/324411719",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/587164612/large.jpg",
+   "focus": 0.5
+  },
+  "spreading-hogweed": {
+   "src": "/images/site/weeds/spreading-hogweed.webp",
+   "thumb": "/images/site/weeds/spreading-hogweed-480.webp",
+   "alt": "Spreading hogweed (Boerhavia diffusa) with its small pink flowers",
+   "credit": "葉子, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/35640190",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/56219988/large.jpeg",
+   "focus": 0.5
+  },
+  "sickle-senna": {
+   "src": "/images/site/weeds/sickle-senna.webp",
+   "thumb": "/images/site/weeds/sickle-senna-480.webp",
+   "alt": "Sickle senna (Senna tora) with its rounded leaflets and a yellow flower",
+   "credit": "Agnes Trekker, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/99868651",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/166578919/large.jpeg",
+   "focus": 0.5
+  },
+  "cockscomb": {
+   "src": "/images/site/weeds/cockscomb.webp",
+   "thumb": "/images/site/weeds/cockscomb-480.webp",
+   "alt": "Silver cockscomb (Celosia argentea) growing as a weed in a field, with its pink and silver flower spikes",
+   "credit": "chiuluan, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/310447053",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/560302504/large.jpg",
+   "focus": 0.5
+  },
+  "kilob-fern": {
+   "src": "/images/site/weeds/kilob-fern.webp",
+   "thumb": "/images/site/weeds/kilob-fern-480.webp",
+   "alt": "Forked fern or kilob (Dicranopteris linearis) covering the ground in a thick stand",
+   "credit": "Peter de Lange, CC0, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/253120725",
+   "license": "CC0",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/453169135/large.jpg",
+   "focus": 0.5
+  },
+  "chinese-violet": {
+   "src": "/images/site/weeds/chinese-violet.webp",
+   "thumb": "/images/site/weeds/chinese-violet-480.webp",
+   "alt": "Chinese violet (Asystasia gangetica) with its pale lilac flowers",
+   "credit": "santhoshk, CC BY, via iNaturalist",
+   "page": "https://www.inaturalist.org/observations/35668863",
+   "license": "CC BY",
+   "big": "https://inaturalist-open-data.s3.amazonaws.com/photos/56270176/large.jpeg",
+   "focus": 0.5
+  }
+ }
+}

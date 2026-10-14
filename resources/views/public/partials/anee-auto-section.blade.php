@@ -15,8 +15,10 @@
     $aaE = fn (string $n) => \App\Support\AneeEmoji::url($n);
     $aaSite = ($aaLook ?? 'home') === 'site';
     $aaSay = fn (string $k, string $own) => trim((string) (($aaText ?? [])[$k] ?? '')) !== '' ? trim((string) $aaText[$k]) : $own;
-    // What she reads, the network's inputs: left side, then right side.
-    $aaInputs = [['Forecast', 'El Niño', 'Your soil', 'Variety'], ['Crop stage', 'Fertilizer', 'Workers', 'Typhoons']];
+    // The network's named inputs (Forecast, El Niño, Your soil...) are off
+    // (2026-10-14, the owner: no small labels in the background); the web
+    // and its pulses stay. Put [[left...], [right...]] back to name them.
+    $aaInputs = [[], []];
 @endphp
 <section class="{{ $aaSite ? 'hp-auto is-site' : 'hp-sec hp-auto' }}" id="anee-auto" aria-labelledby="hpAutoH">
     {{-- Her thinking, across the whole section (2026-10-13, the owner: "extend

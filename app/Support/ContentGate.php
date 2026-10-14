@@ -22,7 +22,8 @@ use Illuminate\Support\Facades\Session;
  */
 class ContentGate
 {
-    public const SECTIONS = ['crops', 'crop-varieties', 'rice-varieties', 'land-preparation', 'pests', 'diseases', 'weeds'];
+    // Crop guides (/crops) stay open to everyone (the owner, 2026-10-14).
+    public const SECTIONS = ['crop-varieties', 'rice-varieties', 'land-preparation', 'pests', 'diseases', 'weeds'];
 
     /**
      * The section front pages that are gated too (2026-10-14, the owner):

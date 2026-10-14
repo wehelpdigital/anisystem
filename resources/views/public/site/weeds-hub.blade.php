@@ -19,7 +19,8 @@
     // written, its fact sheet when not.
     $weeds = collect($F::weeds())->map(function ($w, $slug) use ($live, $S) {
         $page = $live->get($slug);
-        $h = $page && is_array($page->heroImage) ? $page->heroImage : [];
+        // No page yet: the fact sheet's own photo, when it has one.
+        $h = $page && is_array($page->heroImage) ? $page->heroImage : (\App\Support\FieldCatalogue::photo('weeds', $slug) ?? []);
         return $w + ['slug' => $slug, 'url' => $S::url('weeds', $slug), 'hasPage' => (bool) $page,
             'thumb' => $S::img($h['thumb'] ?? ($h['src'] ?? null)), 'alt' => $h['alt'] ?? $w['name']];
     });

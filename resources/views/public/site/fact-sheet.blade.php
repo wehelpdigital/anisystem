@@ -28,6 +28,8 @@
     $title = $e['name'] . ($isWeed ? ': How to Tell It and Control It' : ': Signs and What to Spray');
     $desc = \Illuminate\Support\Str::limit(trim($e['hint'] . ' ' . ($isWeed ? 'A weed of ' : 'Found on ') . $crops->take(4)->map(fn ($c) => $F::cropWord($c))->join(', ', ' and ') . ' in the Philippines.'), 155);
     $canonical = $S::url($section, $slug);
+    // Its photo (freely licensed, credited), when one has been found.
+    $photo = $F::photo($section, $slug);
 @endphp
 
 @section('title_full', $title . ' | anee.io')
@@ -39,6 +41,7 @@
     <meta property="og:title" content="{{ $title }}">
     <meta property="og:description" content="{{ $desc }}">
     <meta property="og:url" content="{{ $canonical }}">
+    @if ($photo)<meta property="og:image" content="{{ $S::img($photo['src']) }}">@endif
     <style>
         .fs-kind { display: inline-flex; align-items: center; gap: .35rem; padding: .2rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; letter-spacing: .05em;
             text-transform: uppercase; color: hsl(var(--g) 55% 22%); background: hsl(var(--g) 55% 91%); }
@@ -105,6 +108,12 @@
                         <span class="fs-sheet"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.6a1 1 0 01.7.3l5.4 5.4a1 1 0 01.3.7V19a2 2 0 01-2 2z"/></svg>Fact sheet</span>
                     </div>
                 </div>
+                @if ($photo)
+                    <figure class="sp-figure mt-7">
+                        <img src="{{ $S::img($photo['src']) }}" @if (! empty($photo['thumb'])) srcset="{{ $S::img($photo['thumb']) }} 480w, {{ $S::img($photo['src']) }} 1200w" sizes="(min-width: 1152px) 1088px, calc(100vw - 2rem)" @endif alt="{{ $photo['alt'] ?? $e['name'] }}" fetchpriority="high" referrerpolicy="no-referrer">
+                        @if (trim((string) ($photo['credit'] ?? '')) !== '')<figcaption>Photo: {{ $photo['credit'] }}</figcaption>@endif
+                    </figure>
+                @endif
             </div>
         </header>
 

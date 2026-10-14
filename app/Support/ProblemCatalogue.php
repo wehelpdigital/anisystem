@@ -104,9 +104,12 @@ final class ProblemCatalogue
         return collect(self::entries($section))->map(function ($e, $slug) use ($section, $live, $thumbOf, $S) {
             $page = $live->get($slug);
             $hero = $page && is_array($page->heroImage) ? $page->heroImage : [];
+            // No page yet: the fact sheet's own photo, when it has one.
+            $photo = $page ? null : FieldCatalogue::photo($section, $slug);
 
             return $e + ['slug' => $slug, 'url' => $S::url($section, $slug), 'hasPage' => (bool) $page,
-                'thumb' => $page ? $thumbOf($page) : null, 'alt' => ($hero['alt'] ?? null) ?: $e['name'],
+                'thumb' => $page ? $thumbOf($page) : ($photo ? $S::img($photo['thumb'] ?? $photo['src']) : null),
+                'alt' => ($hero['alt'] ?? null) ?: ($photo['alt'] ?? null) ?: $e['name'],
                 'shelves' => array_values(array_unique(array_merge([$e['group']], array_map([FieldCatalogue::class, 'shelfOf'], $e['crops'])))),
             ];
         });
