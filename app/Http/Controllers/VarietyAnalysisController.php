@@ -93,7 +93,7 @@ class VarietyAnalysisController extends Controller
     private function guardTier(): void
     {
         if (! \App\Support\Tier::farmCan('aiAnalyses')) {
-            \App\Support\Tier::farmDenyFor('aiAnalyses', 'Variety research comes with {plan}, and with every plan above it.');
+            \App\Support\Tier::farmDenyFor('aiAnalyses', 'Variety Ranking comes with {plan}, and with every plan above it.');
         }
     }
 
@@ -282,7 +282,7 @@ class VarietyAnalysisController extends Controller
             $crop = CropCatalog::CROPS[$p['crop']] ?? ['label' => 'Crop'];
             $note = AiUsage::record('variety', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
-                mb_substr('Variety research: ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
+                mb_substr('Variety Ranking: ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),
@@ -578,7 +578,7 @@ class VarietyAnalysisController extends Controller
         $params = json_decode($r->params, true) ?: [];
         $order = collect($params['priorities'] ?? [])->map(fn ($k) => self::PRIORITIES[$k]['label'] ?? $k)->implode(' > ');
         $top = $report['topPick'] ?? [];
-        $text = "\n\n--- ATTACHED: Variety research (the farmer generated this earlier; treat it as shared context) ---\n"
+        $text = "\n\n--- ATTACHED: Variety Ranking (the farmer generated this earlier; treat it as shared context) ---\n"
             . 'Case: ' . $r->title . "\n"
             . 'Ground: soil ' . (self::SOILS[$params['soil'] ?? ''] ?? '')
             . (! empty($params['elevation']) ? '; the land ' . (self::ELEVATIONS[$params['elevation']] ?? $params['elevation']) : '')

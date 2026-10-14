@@ -272,7 +272,7 @@
                 <div class="au-tools">
                     <a href="{{ route('whatp.page') }}" target="_blank" rel="noopener"><b>🌱 What to Plant</b>The crops your ground and season favour</a>
                     <a href="{{ route('wtp.page') }}" target="_blank" rel="noopener"><b>📅 When to Plant</b>The best weeks for your crop and place</a>
-                    <a href="{{ route('vary.page') }}" target="_blank" rel="noopener"><b>🔬 Variety Research</b>Varieties compared for your farm</a>
+                    <a href="{{ route('vary.page') }}" target="_blank" rel="noopener"><b>🔬 Variety Ranking</b>Varieties compared for your farm</a>
                 </div>
             </div></div>
         </div>

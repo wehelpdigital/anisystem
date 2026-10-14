@@ -49,7 +49,7 @@ final class AiPrices
     public const NAMES = [
         'wtp' => 'When to Plant analysis',
         'what' => 'What to Plant analysis',
-        'variety' => 'Variety research & comparison (searches the web)',
+        'variety' => 'Variety Ranking (searches the web)',
         'protocol' => 'Crop Protocol Analysis (season plan by growth stage, searches the web)',
         'season' => 'Anee Season Report',
         'sofar' => 'Analyze So Far report',

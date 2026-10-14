@@ -1,8 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Variety Research')
+@section('title', 'Variety Ranking')
 {{-- A tool page: no bottom tab bar on a phone and no footer (2026-10-15, the owner). --}}
 @section('body-class', 'hide-tabbar no-footer')
-@section('page-title', 'Variety Research')
+@section('page-title', 'Variety Ranking')
 @section('page-subtitle', 'Find the best variety for your field')
 
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))
@@ -584,9 +584,9 @@
     </div>
 
     {{-- The report, full screen, when one lands or a saved one is opened. --}}
-    <div class="va-view" id="vaView" hidden role="dialog" aria-modal="true" aria-label="Variety research">
+    <div class="va-view" id="vaView" hidden role="dialog" aria-modal="true" aria-label="Variety Ranking">
         <div class="va-view-bar">
-            <b id="vaViewTitle">Variety research</b>
+            <b id="vaViewTitle">Variety Ranking</b>
             <button type="button" class="va-view-x" id="vaViewX" aria-label="Close">✕</button>
         </div>
         <div class="va-view-body"><div class="wtp-report" id="vaViewReport"></div></div>
@@ -1161,7 +1161,7 @@
         VIEW_MODE = mode || null;
         const view = $id('vaView');
         const crop = (OPT ? OPT.crops.find((c) => c.key === (item.params || {}).crop) : null) || {};
-        $id('vaViewTitle').textContent = crop.label ? crop.label + ' variety research' : 'Variety research';
+        $id('vaViewTitle').textContent = crop.label ? crop.label + ' variety ranking' : 'Variety Ranking';
         const host = $id('vaViewReport');
         host.classList.remove('is-drawn');
         drawReport(host, item, mode, true);

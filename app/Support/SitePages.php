@@ -165,7 +165,7 @@ class SitePages
         'farmer-community' => ['Farmer Community', 'M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2v-1m8-10H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l4-4h4a2 2 0 002-2V6a2 2 0 00-2-2z', 'Share wins and warnings with farmers across the Philippines, and climb a ladder of 100 levels.', 350],
         // Every How It Works tool has its own page (2026-10-05).
         'what-to-plant-analysis' => ['What to Plant', 'M12 3c4 4 6 7 6 10a6 6 0 01-12 0c0-3 2-6 6-10zm0 8v7', 'Anee weighs your climate, soil and water and ranks the crops that should do best this season.', 110],
-        'variety-research' => ['Variety Research', 'M9 5h11M9 12h11M9 19h11M4.5 5h.01M4.5 12h.01M4.5 19h.01', 'Compare seed varieties for your area on yield, maturity and resistance before you buy.', 70],
+        'variety-research' => ['Variety Ranking', 'M9 5h11M9 12h11M9 19h11M4.5 5h.01M4.5 12h.01M4.5 19h.01', 'Compare seed varieties for your area on yield, maturity and resistance before you buy.', 70],
         'crop-protocol-analysis' => ['Crop Protocol Analysis', 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4', 'Anee writes the season for your crop and variety, stage by stage, checked against your field.', 140],
         'farm-drawing' => ['Farm Drawing', 'M15.2 5.2l3.6 3.6M4 20l1-4.6L16.4 4a1.5 1.5 0 012.1 0l1.5 1.5a1.5 1.5 0 010 2.1L8.6 19 4 20z', 'Sketch the seedbed, the water and who works which lot, and keep one plan for the team.', 30],
         'protocol-review-by-anee' => ['Protocol Review by Anee', 'M8 10h8M8 14h5m8-2a8 8 0 01-11.6 7.1L4 20l1-4.2A8 8 0 1121 12z', 'Before you commit, Anee reads your protocol and points out the problems and weak spots.', 160],

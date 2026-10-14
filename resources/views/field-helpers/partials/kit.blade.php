@@ -315,7 +315,9 @@
     .fh-sheet-done:hover { background: #3d6823; }
 
     /* ---- A taglike filter button: the label, what is picked, a chevron -- */
-    .fh-ftags { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+    /* One filter a row on a phone (2026-10-15, the owner): two side by side cut the choices short. */
+    .fh-ftags { display: grid; grid-template-columns: minmax(0, 1fr); gap: .45rem; }
+    @media (min-width: 560px) { .fh-ftags { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; } }
     @media (min-width: 768px) { .fh-ftags { grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); } }
     .fh-ftag { display: flex; align-items: center; gap: .45rem; width: 100%; min-width: 0; min-height: 3.1rem; padding: .45rem .5rem .45rem .75rem; border-radius: .95rem; text-align: left;
         color: #14210c; background: #f6f8f3; border: 1px solid #dfe8d4; cursor: pointer;

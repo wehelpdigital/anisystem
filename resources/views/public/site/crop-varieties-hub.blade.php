@@ -172,7 +172,7 @@
             <div class="rv-links">
                 @foreach ([
                     ['/rice-varieties', 'Every rice variety, side by side'],
-                    ['/features/variety-research', 'Variety Research: Anee compares varieties for your town'],
+                    ['/features/variety-research', 'Variety Ranking: Anee compares varieties for your town'],
                     ['/crops/pagtatanim-ng-mais', 'Pagtatanim ng mais, step by step'],
                     ['/crops/vegetables-philippines', 'Vegetables in the Philippines'],
                     ['/land-preparation', 'Land preparation for every crop'],

@@ -45,7 +45,7 @@ class GlobalTagController extends Controller
     private const ANALYSES = [
         'when' => ['label' => 'When to Plant', 'route' => 'wtp.page', 'icon' => '📅'],
         'what' => ['label' => 'What to Plant', 'route' => 'whatp.page', 'icon' => '🌱'],
-        'variety' => ['label' => 'Variety Research', 'route' => 'vary.page', 'icon' => '🔬'],
+        'variety' => ['label' => 'Variety Ranking', 'route' => 'vary.page', 'icon' => '🔬'],
         'protocol' => ['label' => 'Crop Protocol Analysis', 'route' => 'proto.page', 'icon' => '📘'],
     ];
 

@@ -34,7 +34,7 @@ class AneeMemory
 
     private const ANALYSIS_KINDS = [
         'when' => 'When to Plant analysis',
-        'variety' => 'Variety research',
+        'variety' => 'Variety Ranking',
         'protocol' => 'Crop Protocol analysis',
     ];
 

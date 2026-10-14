@@ -217,7 +217,7 @@ return [
         ],
 
         'analysis.variety' => [
-            'title' => 'Variety Research',
+            'title' => 'Variety Ranking',
             'blurb' => 'Anee looks up the varieties of your crop, compares them, and tells you which one fits your farm best.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],

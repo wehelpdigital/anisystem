@@ -639,7 +639,12 @@
     .dba-bar { display: flex; align-items: center; gap: .5rem; padding: .5rem .55rem .5rem .5rem; border-radius: 1.2rem; color: #f6f1e4;
         background: linear-gradient(110deg, #26301a 0%, #1d2412 60%, #141a0c 100%); box-shadow: 0 18px 40px -30px rgb(20 26 10 / .9), inset 0 0 0 1px rgb(255 255 255 / .07);
         transition: border-radius .35s cubic-bezier(.22,1,.36,1); }
-    .dba.is-open .dba-bar { border-radius: 1.2rem 1.2rem .5rem .5rem; }
+    /* Open, the bar and the album are one card (2026-10-15, the owner): square
+       where they meet, one outline, no seam, and the bar's dark carried down
+       into the top of the album so it reads as the same piece. */
+    .dba { border-radius: 1.2rem; transition: box-shadow .35s cubic-bezier(.22,1,.36,1); }
+    .dba.is-open { box-shadow: 0 30px 60px -40px rgb(20 26 10 / .9); }
+    .dba.is-open .dba-bar { border-radius: 1.2rem 1.2rem 0 0; box-shadow: inset 1px 1px 0 rgb(255 255 255 / .07), inset -1px 0 0 rgb(255 255 255 / .07); }
     .dba-open { display: flex; align-items: center; gap: .7rem; flex: 1; min-width: 0; text-align: left; }
     .dba-cover { position: relative; flex: none; width: 3.1rem; height: 3.1rem; }
     .dba-cover img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; border-radius: .55rem; box-shadow: 0 6px 16px -8px rgb(0 0 0 / .7); }
@@ -664,7 +669,10 @@
     .dba-fold { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.22,1,.36,1); }
     .dba.is-open .dba-fold { grid-template-rows: 1fr; }
     .dba-fold > div { min-height: 0; overflow: hidden; }
-    .dba-fold .ba { border-radius: .5rem .5rem 1.5rem 1.5rem; }
+    .dba-fold .ba { border-radius: 0 0 1.2rem 1.2rem; box-shadow: inset 1px -1px 0 rgb(255 255 255 / .07), inset -1px 0 0 rgb(255 255 255 / .07); }
+    .dba-fold .ba::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3.5rem; z-index: -1; pointer-events: none;
+        background: linear-gradient(110deg, #26301a 0%, #1d2412 60%, #141a0c 100%);
+        -webkit-mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / .55) 40%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / .55) 40%, transparent 100%); }
     /* Open, the card's own head repeats the bar: on a phone it goes. */
     @media (max-width: 639.98px) {
         .dba-fold .ba .ba-sleeve, .dba-fold .ba .ba-head { display: none; }

@@ -124,7 +124,7 @@ class HowItWorks
                         'Not sure what to grow? Anee weighs your climate, the forecast, your soil and your water, and ranks the crops that should do best on your land this season.',
                         ['Crops ranked for your place and season', 'Why each one fits, or does not', 'What each one will need from you'],
                         null, 'whatp.page'),
-                    self::item('variety', 'Variety Research', 'Compare varieties before you buy seed', 'icons/biotechnology.png', true,
+                    self::item('variety', 'Variety Ranking', 'Compare varieties before you buy seed', 'icons/biotechnology.png', true,
                         'Anee looks up the varieties of your crop and compares them for your area: yield, maturity, resistance and how they did in weather like yours.',
                         ['Varieties side by side', 'Strong and weak points for your area', 'The sources she used, to check yourself'],
                         null, 'vary.page'),

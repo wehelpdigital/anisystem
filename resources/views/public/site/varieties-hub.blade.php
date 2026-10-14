@@ -214,7 +214,7 @@
                 @foreach ([
                     ['/crops/rice-varieties-philippines', 'Rice varieties in the Philippines: inbred, hybrid, special'],
                     ['/blog/best-rice-variety-for-my-area', 'How to choose the best rice variety for your area'],
-                    ['/features/variety-research', 'Variety Research: Anee compares varieties for your town'],
+                    ['/features/variety-research', 'Variety Ranking: Anee compares varieties for your town'],
                     ['/blog/palaycheck-key-checks', 'The PalayCheck key checks, from seed to harvest'],
                     ['/land-preparation/rice-land-preparation', 'Land preparation for rice'],
                     ['/blog/best-time-to-plant-rice-philippines', 'The best time to plant rice in your province'],

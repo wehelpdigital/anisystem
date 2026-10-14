@@ -185,7 +185,7 @@
             <div class="mt-12 wk-sec-h"><h2>Grow Your {{ $name }} Season with anee.io</h2>
                 <p>Once you pick a variety, anee.io dates every task from each lot's own planting day, from land preparation to harvest, and Anee, your smart farm technician, answers your questions about it.</p></div>
             <div class="rv-links">
-                @foreach (array_merge($guides, [['/crop-varieties', 'Every crop, every variety'], ['/features/variety-research', 'Variety Research: Anee compares varieties for your town'], ['/features/growth-stages-and-weather', 'Growth stages and weather for each lot']]) as [$href, $label])
+                @foreach (array_merge($guides, [['/crop-varieties', 'Every crop, every variety'], ['/features/variety-research', 'Variety Ranking: Anee compares varieties for your town'], ['/features/growth-stages-and-weather', 'Growth stages and weather for each lot']]) as [$href, $label])
                     <a href="{{ url($href) }}">{{ $label }}<svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>
                 @endforeach
             </div>

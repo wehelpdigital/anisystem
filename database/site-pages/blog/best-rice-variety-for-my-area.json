@@ -14,7 +14,7 @@
     "certified seed",
     "Binhing Palay"
   ],
-  "excerpt": "If you are asking \"what is the best rice variety for my area\", look for one that suits your field, season, pests and buyers. PhilRice's PalayCheck adds one more test: it should have done well in at least two seasons of local trials. Start with the varieties your DA regional office recommends, look them up in PhilRice's Binhing Palay app, and buy certified seed. Variety Research in anee.io, a farm app built for Filipino farmers, compares varieties for your own town and lists its sources.",
+  "excerpt": "If you are asking \"what is the best rice variety for my area\", look for one that suits your field, season, pests and buyers. PhilRice's PalayCheck adds one more test: it should have done well in at least two seasons of local trials. Start with the varieties your DA regional office recommends, look them up in PhilRice's Binhing Palay app, and buy certified seed. Variety Ranking in anee.io, a farm app built for Filipino farmers, compares varieties for your own town and lists its sources.",
   "heroImage": {
     "src": "/images/site/guides/blog-best-rice-variety-for-my-area.webp",
     "alt": "Grains of many rice varieties side by side from the IRRI collection, each suited to different fields and seasons",
@@ -158,7 +158,7 @@
       "type": "cta",
       "title": "Compare varieties for your own town",
       "text": "Anee looks up the varieties of your crop and compares yield, maturity and resistance for your area, with every source she read.",
-      "label": "See Variety Research",
+      "label": "See Variety Ranking",
       "url": "/features/variety-research"
     },
     {
@@ -168,7 +168,7 @@
     },
     {
       "type": "text",
-      "text": "Variety Research is run by Anee, the smart farm technician inside anee.io. You type your town, season, field type and the troubles you have seen, like drought or floods. She then compares up to eight varieties, or picks the top released ones herself, and lists every source so you can check them. It runs on credits and comes with Libre plus Anee from PHP 70 a month, Solo Farmer and Farm Owner.\n\nOnce you plant, type the variety into each [lot](/features/farm-lots), so the yield in your harvest records stays tied to it. After two seasons, Compare Reports puts the two side by side, and Anee explains what changed, which uses credits."
+      "text": "Variety Ranking is run by Anee, the smart farm technician inside anee.io. You type your town, season, field type and the troubles you have seen, like drought or floods. She then compares up to eight varieties, or picks the top released ones herself, and lists every source so you can check them. It runs on credits and comes with Libre plus Anee from PHP 70 a month, Solo Farmer and Farm Owner.\n\nOnce you plant, type the variety into each [lot](/features/farm-lots), so the yield in your harvest records stays tied to it. After two seasons, Compare Reports puts the two side by side, and Anee explains what changed, which uses credits."
     },
     {
       "type": "heading",

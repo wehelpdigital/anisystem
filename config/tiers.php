@@ -123,7 +123,7 @@ return [
         'features' => [
             'Everything in Libre',
             'Anee AI chat: ask anything, show a photo',
-            'All AI analyses: What to Plant, When to Plant, Variety Research, Crop Protocol',
+            'All AI analyses: What to Plant, When to Plant, Variety Ranking, Crop Protocol',
             'Realign by Anee on your growth stages',
             'Maps: draw and measure up to 3 fields',
             'Buy AI credit packs whenever you need more',

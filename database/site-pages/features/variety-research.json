@@ -4,29 +4,29 @@
   "sortOrder": 210,
   "lang": "en",
   "category": "Agronomy",
-  "title": "Variety Research: Compare Seed Varieties Before You Buy",
-  "metaTitle": "Variety Research: Compare Rice, Corn and Vegetable Seed",
-  "metaDescription": "Variety research by Anee: she searches the newest Philippine varieties and hybrids, compares yield, maturity and resistance, and ranks them for your field.",
-  "focusKeyword": "variety research",
+  "title": "Variety Ranking: Compare Seed Varieties Before You Buy",
+  "metaTitle": "Variety Ranking: Compare Rice, Corn and Vegetable Seed",
+  "metaDescription": "Variety Ranking by Anee: she searches the newest Philippine varieties and hybrids, compares yield, maturity and resistance, and ranks them for your field.",
+  "focusKeyword": "variety ranking",
   "keywords": [
-    "variety research",
+    "variety ranking", "variety research",
     "rice variety",
     "rice hybrid",
     "rice seeds",
     "variety of corn",
     "corn seeds"
   ],
-  "excerpt": "Seed is one of the first costs of the season, and the wrong variety can cost you the harvest. Variety Research in anee.io has Anee search the newest Philippine varieties of your crop, compare them for your field and season, and rank them by what matters most to you.",
+  "excerpt": "Seed is one of the first costs of the season, and the wrong variety can cost you the harvest. Variety Ranking in anee.io has Anee search the newest Philippine varieties of your crop, compare them for your field and season, and rank them by what matters most to you.",
   "heroImage": {
     "src": "/images/site/app/how/variety.webp",
-    "alt": "The Variety Research screen in anee.io on a phone, showing the price in credits and asking where the field is",
+    "alt": "The Variety Ranking screen in anee.io on a phone, showing the price in credits and asking where the field is",
     "credit": ""
   },
   "blocks": [
     {
       "type": "heading",
       "level": 2,
-      "text": "How variety research works in anee.io"
+      "text": "How Variety Ranking works in anee.io"
     },
     {
       "type": "steps",
@@ -103,26 +103,26 @@
     },
     {
       "type": "text",
-      "text": "Each research you run stays on the Saved tab, where you can rename it, describe it, tag it and search it. Tap Attach to Anee to ask her more, for example how the top pick handles a late typhoon. That chat works like any talk with [Anee, the AI agricultural technician](/features/ai-agricultural-technician).\n\nNot sure of the crop yet? Start with the [What to Plant Analysis](/features/what-to-plant-analysis). Once you have the variety, the [Crop Protocol Analysis](/features/crop-protocol-analysis) writes a season plan for it. Then, when you plant, set it as the variety of your [lot](/features/farm-lots).\n\nVariety Research runs on credits and comes with Libre plus Anee, Solo Farmer and Farm Owner. The price shows before you press Run, and a failed run costs nothing."
+      "text": "Each research you run stays on the Saved tab, where you can rename it, describe it, tag it and search it. Tap Attach to Anee to ask her more, for example how the top pick handles a late typhoon. That chat works like any talk with [Anee, the AI agricultural technician](/features/ai-agricultural-technician).\n\nNot sure of the crop yet? Start with the [What to Plant Analysis](/features/what-to-plant-analysis). Once you have the variety, the [Crop Protocol Analysis](/features/crop-protocol-analysis) writes a season plan for it. Then, when you plant, set it as the variety of your [lot](/features/farm-lots).\n\nVariety Ranking runs on credits and comes with Libre plus Anee, Solo Farmer and Farm Owner. The price shows before you press Run, and a failed run costs nothing."
     },
     {
       "type": "cta",
       "title": "Compare varieties before you buy seed",
-      "text": "Sign up free, add Anee, and run your first Variety Research for your own field.",
+      "text": "Sign up free, add Anee, and run your first Variety Ranking for your own field.",
       "label": "Create a free account",
       "url": "/signup"
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Questions about variety research"
+      "text": "Questions about Variety Ranking"
     },
     {
       "type": "faq",
       "items": [
         {
           "q": "Which is the best rice variety for my farm?",
-          "a": "There is no single best one. It depends on your season, soil, water and the pests in your area, so Variety Research ranks them for your own field and priorities."
+          "a": "There is no single best one. It depends on your season, soil, water and the pests in your area, so Variety Ranking ranks them for your own field and priorities."
         },
         {
           "q": "Does Anee compare hybrids and inbreds?",

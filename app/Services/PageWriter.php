@@ -290,7 +290,7 @@ class PageWriter
 
     public static function honestRules(): string
     {
-        return "\n--- anee.io, honestly ---\nOnly claim what anee.io really does: a cropping calendar that dates every task from each lot's own day zero (DAS, DAT or DAP), Anee the smart farm technician who answers in Tagalog or English and can look at a photo of a pest or a sick plant, growth stages for 85 Philippine crops with the weather forecast per lot, When to Plant and What to Plant analyses, Variety Research, Crop Protocol Analysis, the Protocol Builder, workers and payroll, inventory that tracks fertilizer and chemicals, labor, expenses and profit reports, notes with photos and voice, farm maps, a farmer community. Free to start (Libre), paid plans for more.\n";
+        return "\n--- anee.io, honestly ---\nOnly claim what anee.io really does: a cropping calendar that dates every task from each lot's own day zero (DAS, DAT or DAP), Anee the smart farm technician who answers in Tagalog or English and can look at a photo of a pest or a sick plant, growth stages for 85 Philippine crops with the weather forecast per lot, When to Plant and What to Plant analyses, Variety Ranking, Crop Protocol Analysis, the Protocol Builder, workers and payroll, inventory that tracks fertilizer and chemicals, labor, expenses and profit reports, notes with photos and voice, farm maps, a farmer community. Free to start (Libre), paid plans for more.\n";
     }
 
     private function parse(string $text): ?array
