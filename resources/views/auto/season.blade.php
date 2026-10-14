@@ -95,9 +95,19 @@
     .ac-why { padding: .55rem .7rem; border-radius: .8rem; background: #f3f8ec; border: 1px solid #d6e6c2; color: #2d4a17; }
     .ac-prod { padding: .5rem .65rem; border-radius: .8rem; border: 1px solid var(--color-gray-200); margin-top: .35rem; }
     .ac-prod b { color: var(--color-gray-900); } .ac-prod em { font-style: normal; font-size: .7rem; font-weight: 800; color: #6b4e00; background: #fdf3d3; padding: .05rem .4rem; border-radius: 999px; margin-left: .3rem; }
-    .ac-shop { display: flex; gap: .35rem; margin-top: .35rem; }
-    .ac-shop a { font-size: .7rem; font-weight: 800; padding: .2rem .55rem; border-radius: 999px; border: 1px solid var(--color-gray-200); color: var(--color-gray-600); }
-    .ac-shop a:hover { border-color: #f0a46b; color: #b45309; }
+    /* The shops by their own logos (2026-10-15, the owner): a white tile, the
+       logo centred, the shop named for screen readers and on hover. */
+    .shop-logo { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 2.25rem; height: 2.25rem; border-radius: .7rem;
+        background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 4px 10px -8px rgb(17 24 39 / .45); text-decoration: none;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .shop-logo img { width: 1.35rem; height: 1.35rem; object-fit: contain; display: block; }
+    .shop-logo:hover { transform: translateY(-1px); box-shadow: 0 8px 16px -10px rgb(17 24 39 / .5); }
+    .shop-logo.is-sp:hover { border-color: #f6a58d; }
+    .shop-logo.is-lz:hover { border-color: #f59ac8; }
+    .shop-logo:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { .shop-logo { transition: none; } }
+    .ac-shop { display: flex; gap: .35rem; margin-top: .45rem; }
+    html.dark .shop-logo { border-color: transparent; box-shadow: 0 0 0 1px rgb(255 255 255 / .08); }
     .ac-safe { padding: .55rem .7rem; border-radius: .8rem; background: #fff6dd; border: 1px solid #f3d98f; color: #6b4a00; }
     .ac-tbtns { display: flex; gap: .45rem; margin-top: .8rem; }
     .ac-tbtns .btn { flex: 1; }
@@ -230,6 +240,7 @@
 (() => {
     const $ = (id) => document.getElementById(id);
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const SHOP_LOGO = { sp: @json(asset('images/shops/shopee.webp')), lz: @json(asset('images/shops/lazada.webp')) };
     const still = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
     const U = {
         feed: @json(route('auto.feed', $auto->id)), log: @json(route('auto.log', $auto->id)), observe: @json(route('auto.observe', $auto->id)), ask: @json(route('auto.ask', $auto->id)),
@@ -248,7 +259,9 @@
         const prods = (d.products || []).map((p, k) => {
             const shop = (t.shop || [])[k];
             return '<div class="ac-prod"><b>' + esc(p.name) + '</b>' + (p.group ? '<em>' + esc(p.group) + '</em>' : '') + (p.rate ? '<div class="text-xs mt-1">Rate: ' + esc(p.rate) + '</div>' : '') + (p.amount ? '<div class="text-xs">For this lot: ' + esc(p.amount) + '</div>' : '')
-                + (shop ? '<div class="ac-shop"><a href="' + esc(shop.shopee) + '" target="_blank" rel="noopener nofollow">Shopee</a><a href="' + esc(shop.lazada) + '" target="_blank" rel="noopener nofollow">Lazada</a></div>' : '') + '</div>';
+                + (shop ? '<div class="ac-shop">'
+                    + '<a class="shop-logo is-sp" href="' + esc(shop.shopee) + '" target="_blank" rel="noopener nofollow" title="Search Shopee for ' + esc(p.name) + '" aria-label="Search Shopee for ' + esc(p.name) + '"><img src="' + SHOP_LOGO.sp + '" alt="" width="48" height="48"></a>'
+                    + '<a class="shop-logo is-lz" href="' + esc(shop.lazada) + '" target="_blank" rel="noopener nofollow" title="Search Lazada for ' + esc(p.name) + '" aria-label="Search Lazada for ' + esc(p.name) + '"><img src="' + SHOP_LOGO.lz + '" alt="" width="48" height="48"></a></div>' : '') + '</div>';
         }).join('');
         return '<div class="ac-task' + (t.critical ? ' is-critical' : '') + (t.late ? ' is-late' : '') + (open.has(t.id) ? ' is-open' : '') + '" data-task="' + t.id + '" data-tone="' + esc(t.tone) + '" style="--i:' + i + '">'
             + '<button type="button" class="ac-tt" data-toggle><span class="ac-te">' + t.emoji + '</span><span class="ac-tm"><b>' + esc(t.title) + '</b><small>' + meta.map(esc).join(' · ') + flags + '</small></span>' + chev + '</button>'

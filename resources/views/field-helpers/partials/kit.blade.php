@@ -55,14 +55,19 @@
     .fh-grp { flex: none; margin-top: .05rem; padding: .14rem .5rem; border-radius: 999px; font-style: normal; font-size: .68rem; font-weight: 800; white-space: nowrap; color: #2d5016; background: #e4efd4; }
     .fh-ing-foot { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; margin-top: .35rem; }
     .fh-ing-foot small { flex: 1 1 8rem; min-width: 0; font-size: .74rem; line-height: 1.4; color: #6b7280; }
-    .fh-shop { display: inline-flex; gap: .3rem; }
+    /* The shops by their own logos (2026-10-15, the owner): a white tile, the
+       logo centred, the shop named for screen readers and on hover. */
+    .shop-logo { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 2.25rem; height: 2.25rem; border-radius: .7rem;
+        background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 4px 10px -8px rgb(17 24 39 / .45); text-decoration: none;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .shop-logo img { width: 1.35rem; height: 1.35rem; object-fit: contain; display: block; }
+    .shop-logo:hover { transform: translateY(-1px); box-shadow: 0 8px 16px -10px rgb(17 24 39 / .5); }
+    .shop-logo.is-sp:hover { border-color: #f6a58d; }
+    .shop-logo.is-lz:hover { border-color: #f59ac8; }
+    .shop-logo:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { .shop-logo { transition: none; } }
+    .fh-shop { display: inline-flex; gap: .35rem; }
     .fh-ing-foot small + .fh-shop { margin-left: auto; }
-    .fh-shop a { display: inline-flex; align-items: center; gap: .25rem; min-height: 1.7rem; padding: .12rem .55rem; border-radius: 999px; font-size: .68rem; font-weight: 800; color: #fff; text-decoration: none;
-        transition: transform .28s cubic-bezier(.22,1,.36,1), filter .28s cubic-bezier(.22,1,.36,1); }
-    .fh-shop a:hover { transform: translateY(-1px); filter: brightness(1.08); }
-    .fh-shop a svg { width: .78rem; height: .78rem; }
-    .fh-shop a.is-sp { background: #ee4d2d; }
-    .fh-shop a.is-lz { background: #1a1aa6; }
     .fh-prods { display: grid; gap: .35rem; margin-top: .55rem; padding-top: .55rem; border-top: 1px dashed #e1e9d7; }
     .fh-prods-l { font-size: .62rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #6b7f5a; }
     /* One product a row (2026-10-15, the owner): its name opens what it is,
@@ -78,15 +83,7 @@
     .fh-prod-n small { display: flex; align-items: center; flex-wrap: wrap; gap: .1rem .35rem; min-width: 0; font-size: .68rem; line-height: 1.3; color: #6b7280; }
     .fh-prod-n small span { min-width: 0; overflow-wrap: anywhere; }
     .fh-prod em, .fh-pcard em { flex: none; font-style: normal; font-size: .58rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; padding: .08rem .38rem; border-radius: 999px; color: #6b4e00; background: #fdeeb2; }
-    .fh-pshop { flex: none; display: inline-flex; gap: .25rem; }
-    .fh-pshop a { display: inline-flex; align-items: center; justify-content: center; gap: .2rem; min-height: 2rem; padding: .15rem .5rem; border-radius: 999px; font-size: .66rem; font-weight: 800; color: #fff; text-decoration: none;
-        transition: transform .28s cubic-bezier(.22,1,.36,1), filter .28s cubic-bezier(.22,1,.36,1); }
-    .fh-pshop a:hover { transform: translateY(-1px); filter: brightness(1.08); }
-    .fh-pshop a svg { width: .74rem; height: .74rem; }
-    .fh-pshop a.is-sp { background: #ee4d2d; }
-    .fh-pshop a.is-lz { background: #1a1aa6; }
-    /* Narrow phones: the pills keep their word, the name keeps its room. */
-    @media (max-width: 380px) { .fh-pshop a { padding: .15rem .42rem; } .fh-pshop a svg { display: none; } }
+    .fh-pshop { flex: none; display: inline-flex; gap: .35rem; }
     .fh-rate { margin-top: .45rem; }
     .fh-pcards { display: grid; gap: .5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     @media (min-width: 640px) { .fh-pcards { grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); } }
@@ -94,8 +91,7 @@
         background: #f7faf3; border: 1px solid #e3ecd8; transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .fh-pcard:hover { border-color: #a8cc7e; transform: translateY(-2px); }
     .fh-pcard-n { flex: 1 1 auto; display: flex; flex-direction: column; align-items: flex-start; gap: .15rem; min-width: 0; padding: .6rem .7rem .55rem; text-align: left; color: inherit; cursor: pointer; }
-    .fh-pcard .fh-pshop { display: grid; grid-template-columns: 1fr 1fr; gap: .3rem; padding: 0 .55rem .55rem; }
-    .fh-pcard .fh-pshop a { min-height: 1.95rem; }
+    .fh-pcard .fh-pshop { padding: 0 .7rem .65rem; }
     .fh-pcard b { font-size: .9rem; font-weight: 800; line-height: 1.25; overflow-wrap: anywhere; }
     .fh-pcard small { font-size: .72rem; color: #6b7280; }
     .fh-pcard span { font-size: .74rem; line-height: 1.35; color: #374151; }
@@ -109,9 +105,10 @@
     .fh-psheet .fh-fine { margin-top: .7rem; }
     .fh-psheet-shop { margin-top: .9rem; }
     .fh-psheet-shop > b { display: block; margin-bottom: .4rem; font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
+    /* In the sheet there is room for the words beside the logo. */
     .fh-psheet-shop .fh-pshop { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
-    .fh-psheet-shop .fh-pshop a { min-height: 2.75rem; padding: .4rem .7rem; border-radius: .9rem; font-size: .84rem; gap: .4rem; }
-    .fh-psheet-shop .fh-pshop a svg { display: inline; width: 1rem; height: 1rem; }
+    .fh-psheet-shop .shop-logo { width: auto; height: 2.85rem; gap: .5rem; padding: 0 .8rem; border-radius: .9rem; font-size: .86rem; font-weight: 800; color: #1f2937; }
+    .fh-psheet-shop .shop-logo img { width: 1.5rem; height: 1.5rem; }
     .fh-spray-h { display: inline-flex; align-items: center; gap: .35rem; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
     .fh-spray-h svg { width: .95rem; height: .95rem; }
     .fh-no { display: flex; gap: .5rem; align-items: flex-start; padding: .65rem .75rem; border-radius: .85rem; font-size: .88rem; line-height: 1.5; color: #6b4a00; background: #fff8e6; border: 1px solid #f5d98a; }
@@ -356,6 +353,7 @@
     html.dark .fh-prod-n { color: #e8efe1; }
     html.dark .fh-prod-n small { color: #b9caa8; }
     html.dark .fh-psheet-shop > b { color: #a5c97e; }
+    html.dark .shop-logo { border-color: transparent; box-shadow: 0 0 0 1px rgb(255 255 255 / .08); }
     html.dark .fh-rc .fh-prod { background: #22301a; }
     html.dark .fh-prod small, html.dark .fh-pcard small { color: #b9caa8; }
     html.dark .fh-pcard span { color: #d5e3c5; }
@@ -416,12 +414,12 @@
         const q = String(name || '').toLowerCase().replace(/\s+/g, ' ').trim();
         return { shopee: 'https://shopee.ph/search?keyword=' + encodeURIComponent(q), lazada: 'https://www.lazada.com.ph/catalog/?q=' + encodeURIComponent(q) };
     };
-    FH.prodShop = (p, words) => {
-        const u = FH.shopOf(p.brand);
-        return '<span class="fh-pshop">'
-            + '<a class="is-sp" href="' + esc(u.shopee) + '" target="_blank" rel="noopener nofollow" aria-label="Search Shopee for ' + esc(p.brand) + '">' + FH.icon.bag + (words ? 'Search Shopee' : 'Shopee') + '</a>'
-            + '<a class="is-lz" href="' + esc(u.lazada) + '" target="_blank" rel="noopener nofollow" aria-label="Search Lazada for ' + esc(p.brand) + '">' + FH.icon.bag + (words ? 'Search Lazada' : 'Lazada') + '</a></span>';
-    };
+    // The two shops by their logos; `words` adds "Search Shopee" beside the logo (the product sheet).
+    const LOGO = { sp: @json(asset('images/shops/shopee.webp')), lz: @json(asset('images/shops/lazada.webp')) };
+    FH.shopLinks = (shopee, lazada, what, cls, words) => '<span class="' + cls + '">'
+        + '<a class="shop-logo is-sp" href="' + esc(shopee) + '" target="_blank" rel="noopener nofollow" title="Search Shopee for ' + esc(what) + '" aria-label="Search Shopee for ' + esc(what) + '"><img src="' + LOGO.sp + '" alt="" width="48" height="48">' + (words ? '<span>Search Shopee</span>' : '') + '</a>'
+        + '<a class="shop-logo is-lz" href="' + esc(lazada) + '" target="_blank" rel="noopener nofollow" title="Search Lazada for ' + esc(what) + '" aria-label="Search Lazada for ' + esc(what) + '"><img src="' + LOGO.lz + '" alt="" width="48" height="48">' + (words ? '<span>Search Lazada</span>' : '') + '</a></span>';
+    FH.prodShop = (p, words) => { const u = FH.shopOf(p.brand); return FH.shopLinks(u.shopee, u.lazada, p.brand, 'fh-pshop', words); };
     FH.prodChip = (p) => '<div class="fh-prod"><button type="button" class="fh-prod-n" data-prod="' + esc(p.key) + '">'
         + '<b><span>' + esc(p.brand) + '</span></b>'
         + (p.timing && TIMING[p.timing] || p.company || p.form ? '<small>' + (p.timing && TIMING[p.timing] ? '<em>' + TIMING[p.timing][0] + '</em>' : '')
@@ -434,8 +432,7 @@
     FH.ingRow = (i) => '<li class="fh-ing">'
         + '<div class="fh-ing-top"><b>' + esc(i.name) + '</b>' + (i.group ? '<i class="fh-grp"' + (i.mode ? ' title="' + esc(i.mode) + '"' : '') + '>' + esc(i.group) + '</i>' : '') + '</div>'
         + '<div class="fh-ing-foot">' + (i.mode ? '<small>' + esc(i.mode) + '</small>' : '')
-        + '<span class="fh-shop"><a class="is-sp" href="' + esc(i.shop.shopee) + '" target="_blank" rel="noopener nofollow" aria-label="' + esc(i.shop.q) + ' on Shopee">' + FH.icon.bag + 'Shopee</a>'
-        + '<a class="is-lz" href="' + esc(i.shop.lazada) + '" target="_blank" rel="noopener nofollow" aria-label="' + esc(i.shop.q) + ' on Lazada">' + FH.icon.bag + 'Lazada</a></span></div>'
+        + FH.shopLinks(i.shop.shopee, i.shop.lazada, i.shop.q || i.name, 'fh-shop') + '</div>'
         + (i.products && i.products.length ? '<div class="fh-prods"><span class="fh-prods-l">Sold as</span>' + i.products.map(FH.prodChip).join('') + '</div>' : '')
         + '</li>';
     FH.ingList = (list) => '<ul class="fh-ings">' + list.map(FH.ingRow).join('') + '</ul>';
