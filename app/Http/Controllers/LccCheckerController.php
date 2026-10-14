@@ -114,6 +114,8 @@ class LccCheckerController extends Controller
             'balance' => round((float) $credits->balance($payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'canUse' => Tier::farmCan('aiAnalyses') && $payer->canUseAi() && $settings->isUsable(),
+            // The plan, not the credits, is what stands in the way: the Anee card opens the upgrade sheet.
+            'tierLocked' => ! Tier::farmCan('aiAnalyses'),
             'whyNot' => ! Tier::farmCan('aiAnalyses') ? 'Anee reading the photos comes with Libre + Anee and every plan above it. Reading your own chart stays free.'
                 : (! $payer->canUseAi() ? Tier::aneeNeeds($payer, 'The photo reading') : (! $settings->isUsable() ? 'Anee is not switched on yet. Please check back soon.' : null)),
             'aneeFace' => $settings->faceUrl(),

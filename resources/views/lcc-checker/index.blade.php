@@ -1016,7 +1016,11 @@
         p.className = 'lc-way-p' + (OPT.canUse ? '' : ' is-lock');
         if (OPT.aneeFace) $('lcAneeFace').src = OPT.aneeFace;
     }
-    $('lcWayAnee').addEventListener('click', () => go('3a'));
+    // On a plan without Anee the card offers the upgrade instead of a photo step that cannot read.
+    $('lcWayAnee').addEventListener('click', () => {
+        if (OPT && OPT.tierLocked && window.aneeUpgrade) { window.aneeUpgrade(OPT.whyNot, 'libreAnee'); return; }
+        go('3a');
+    });
     $('lcWayChart').addEventListener('click', () => go('3b'));
 
     /* ---------------- 3a. photos: each one squared, measured (DGCI of its green pixels) and kept small ---------------- */
