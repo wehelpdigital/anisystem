@@ -16,7 +16,7 @@
     "crop problems",
     "plant disease symptoms"
   ],
-  "excerpt": "To tell a pest or disease apart, look for the culprit first. Chewed or cut tissue, holes, droppings, eggs and the insects themselves point to a pest, while spots with borders, ooze, mold, rot or mottled leaves with no insect in sight point to a disease. Yellowing with no spots can also come from the soil or the water. With anee.io, a farm app built for Filipino farmers, the free Pest Finder and Disease Finder sort the signs, and Anee, its smart farm technician, can read a photo when you are still unsure.",
+  "excerpt": "To tell a pest or disease apart, look for the culprit first. Chewed or cut tissue, holes, droppings, eggs and the insects themselves point to a pest, while spots with borders, ooze, mold, rot or mottled leaves with no insect in sight point to a disease. Yellowing with no spots can also come from the soil or the water. With anee.io, a farm app built for Filipino farmers, the Pest Finder and Disease Finder sort the signs, and Anee, its smart farm technician, can read a photo when you are still unsure.",
   "heroImage": {
     "src": "/images/site/guides/blog-pest-or-disease-how-to-tell.webp",
     "alt": "A rice field with pale, dried patches among green plants. From the bund it is hard to say pest or disease, and here it is bacterial leaf blight",
@@ -159,12 +159,12 @@
     },
     {
       "type": "text",
-      "text": "anee.io has two helpers for this exact question, on every plan. The [Pest Finder](/features/pest-and-disease-finders) asks where you see the damage. The Disease Finder asks what you see: spots or streaks, wilting, yellowing, stunted plants, rotting, powdery or fuzzy growth, or curled and mottled leaves. If you cannot tell, try both, or compare the signs in our [crop pests](/pests) and [crop diseases](/diseases) catalogues.\n\nOn a plan with Anee, send a photo to Anee, the smart farm technician inside anee.io. She reads it with your lot, its stage, the weather and what you already applied. Halfway through the season, Analyze So Far reads your season and lists the risks ahead. Both use credits and need internet, while the finders and your photo notes also work on the free Libre plan."
+      "text": "anee.io has two helpers for this exact question. The [Pest Finder](/features/pest-and-disease-finders) asks where you see the damage. The Disease Finder asks what you see: spots or streaks, wilting, yellowing, stunted plants, rotting, powdery or fuzzy growth, or curled and mottled leaves. If you cannot tell, try both, or compare the signs in our [crop pests](/pests) and [crop diseases](/diseases) catalogues.\n\nOn a plan with Anee, send a photo to Anee, the smart farm technician inside anee.io. She reads it with your lot, its stage, the weather and what you already applied. Halfway through the season, Analyze So Far reads your season and lists the risks ahead. Both use credits and need internet, while your photo notes also work on the free Libre plan."
     },
     {
       "type": "cta",
       "title": "Not sure? Try both finders",
-      "text": "Pick your crop and the signs you see. The Pest Finder and Disease Finder name what fits, how to be sure and what to do first. Free on every plan.",
+      "text": "Pick your crop and the signs you see. The Pest Finder and Disease Finder name what fits, how to be sure and what to do first.",
       "label": "Open the finders",
       "url": "/features/pest-and-disease-finders"
     },

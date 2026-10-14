@@ -16,7 +16,7 @@
     "hopperburn",
     "rice bug"
   ],
-  "excerpt": "To identify rice pests from a photo, take two pictures: a close one of the insect and one of the damage it left, both sharp and in daylight. Then match the damage to the pest: deadhearts and whiteheads point to stem borers, yellow and dried patches with insects at the base point to planthoppers, and empty grains point to rice bugs. With anee.io, a farm app built for Filipino farmers, you can send the photo to Anee, its smart farm technician, or match the damage in the free Pest Finder.",
+  "excerpt": "To identify rice pests from a photo, take two pictures: a close one of the insect and one of the damage it left, both sharp and in daylight. Then match the damage to the pest: deadhearts and whiteheads point to stem borers, yellow and dried patches with insects at the base point to planthoppers, and empty grains point to rice bugs. With anee.io, a farm app built for Filipino farmers, you can send the photo to Anee, its smart farm technician, or match the damage in its Pest Finder.",
   "heroImage": {
     "src": "/images/site/guides/blog-identify-rice-pests-from-a-photo.webp",
     "alt": "Two rice bugs on a green rice leaf, a sharp close photo of the kind that helps identify rice pests",
@@ -35,7 +35,7 @@
         "Shoot in the early morning or late afternoon, the hours PalayCheck gives for monitoring insect pests.",
         "Match the damage, not just the bug, with the table below.",
         "Confirm with a field check, like pulling a tiller or tapping the base of the hill, before you spray.",
-        "In anee.io, send the photo to Anee or match the damage in the free Pest Finder."
+        "In anee.io, send the photo to Anee or match the damage in the Pest Finder."
       ]
     },
     {
@@ -158,12 +158,12 @@
     },
     {
       "type": "text",
-      "text": "Pick palay in the free [Pest Finder in anee.io](/features/pest-and-disease-finders), then where you see the damage: the leaves, the stems, the panicles or the roots. It names the pests that fit, how to be sure, and the active ingredients with their groups, never brands. On a plan with Anee, you can send the photo to Anee, the smart farm technician inside anee.io. She reads it with your lot, its day count, the weather and what you already applied. Then she tells you what it most likely is and what to check next.\n\nQuick Capture saves each photo as a note on the season, with tags such as Pest or Lot 2. Next season you can look back at when the pest came. Anee needs internet and uses credits, while the finder, notes and photos also work on the free Libre plan."
+      "text": "Pick palay in the [Pest Finder in anee.io](/features/pest-and-disease-finders), then where you see the damage: the leaves, the stems, the panicles or the roots. It names the pests that fit, how to be sure, and the active ingredients with their groups, never brands. On a plan with Anee, you can send the photo to Anee, the smart farm technician inside anee.io. She reads it with your lot, its day count, the weather and what you already applied. Then she tells you what it most likely is and what to check next.\n\nQuick Capture saves each photo as a note on the season, with tags such as Pest or Lot 2. Next season you can look back at when the pest came. Anee needs internet and uses credits, while your notes and photos also work on the free Libre plan."
     },
     {
       "type": "cta",
       "title": "Match the damage in the Pest Finder",
-      "text": "Pick your crop and where you see the damage, and get the pests that fit, how to be sure and what controls them. Free on every plan.",
+      "text": "Pick your crop and where you see the damage, and get the pests that fit, how to be sure and what controls them.",
       "label": "Open the Pest Finder",
       "url": "/features/pest-and-disease-finders"
     },

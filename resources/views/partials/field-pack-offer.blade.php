@@ -37,7 +37,7 @@
     .fp-price span { font-size: .9rem; font-weight: 700; color: var(--color-gray-500); }
     .fp-day { margin-top: -.55rem; text-align: center; font-size: .78rem; font-weight: 700; color: #6b7f5a; }
     .fp-acts { display: grid; gap: .5rem; }
-    .fp-acts .btn { justify-content: center; width: 100%; }
+    .fp-acts .btn { justify-content: center; width: 100%; text-align: center; text-wrap: balance; line-height: 1.25; }
     .fp-or { text-align: center; font-size: .78rem; line-height: 1.5; color: var(--color-gray-500); }
     .fp-or a { font-weight: 800; color: var(--color-brand-700, #3d6823); text-decoration: underline; text-underline-offset: 3px; }
     html.dark .fp-card { background: #141a10; } html.dark .fp-tool { background: #1a2114; border-color: #2b3a1c; } html.dark .fp-tool b { color: #eef3e8; } html.dark .fp-tool img { background: #22301a; }
@@ -75,7 +75,7 @@
                 <div class="fp-price"><b><?= e($fpPrice) ?></b><span>for one year</span></div>
                 <p class="fp-day">That is <?= e(\App\Support\FieldPack::perDay()) ?>.</p>
                 <div class="fp-acts">
-                    <a href="<?= e(route('checkout', ['item' => 'addon:' . \App\Support\FieldPack::KEY])) ?>" class="btn btn-primary btn-lg">Open the field helpers for <?= e($fpPrice) ?></a>
+                    <a href="<?= e(route('checkout', ['item' => 'addon:' . \App\Support\FieldPack::KEY])) ?>" class="btn btn-primary btn-lg">Open them for <?= e($fpPrice) ?></a>
                 </div>
                 <p class="fp-or">Or <a href="<?= e(route('account.subscription')) ?>">upgrade to Libre + Anee</a>, which has the field helpers and Anee too.</p>
             <?php endif; ?>

@@ -173,7 +173,7 @@
         [
           "Help naming a problem",
           "A wrong guess buys the wrong spray",
-          "Free Pest Finder and Disease Finder, and Anee reads a photo (credits)"
+          "Pest Finder and Disease Finder, and Anee reads a photo (credits)"
         ],
         [
           "Costs and sales",
@@ -194,7 +194,7 @@
     },
     {
       "type": "text",
-      "text": "In anee.io, each bed or batch becomes a lot with its own crop, variety and day zero. The growth stages cover 85 Philippine crops, ampalaya, talong and pechay among them. So the board can show that Bed 2 is at flowering while Bed 4 is still vegetative.\n\nDuring a scouting round, [notes, photos and voice](/features/notes-photos-and-voice) keep what you see with the season. When you cannot name a pest, the free [pest and disease finders](/features/pest-and-disease-finders) work from the crop and the damage. They name the active ingredients and their groups, never brands. Anee, the smart farm technician inside anee.io, can also read a photo in Tagalog or English, and that uses credits."
+      "text": "In anee.io, each bed or batch becomes a lot with its own crop, variety and day zero. The growth stages cover 85 Philippine crops, ampalaya, talong and pechay among them. So the board can show that Bed 2 is at flowering while Bed 4 is still vegetative.\n\nDuring a scouting round, [notes, photos and voice](/features/notes-photos-and-voice) keep what you see with the season. When you cannot name a pest, the [pest and disease finders](/features/pest-and-disease-finders) work from the crop and the damage. They name the active ingredients and their groups, never brands. Anee, the smart farm technician inside anee.io, can also read a photo in Tagalog or English, and that uses credits."
     },
     {
       "type": "image",
@@ -236,7 +236,7 @@
         },
         {
           "q": "Can an app tell me what pest is on my pechay?",
-          "a": "It can narrow it down. The free Pest Finder in anee.io starts from your crop and where the damage is, and Anee can read a photo. Confirm the answer on the plants before you buy anything."
+          "a": "It can narrow it down. The Pest Finder in anee.io starts from your crop and where the damage is, and Anee can read a photo. Confirm the answer on the plants before you buy anything."
         },
         {
           "q": "Will a monitoring platform raise my yield?",

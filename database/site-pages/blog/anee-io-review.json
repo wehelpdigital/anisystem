@@ -37,7 +37,7 @@
       "ordered": false,
       "items": [
         "anee.io runs a cropping season from the first plan to the profit report: 50 tools in eight steps, on any phone.",
-        "Standouts: Anee, Anee Auto, a calendar that counts days, free finders, satellite and typhoon tools, money reports, offline mode.",
+        "Standouts: Anee, Anee Auto, a calendar that counts days, pest and disease finders, satellite and typhoon tools, money reports, offline mode.",
         "Libre is free. Libre plus Anee costs PHP 70 a month, Solo Farmer PHP 200 and Farm Owner PHP 600.",
         "It is built for crop farms in the Philippines. It is not for livestock, and it is not a marketplace."
       ]
@@ -95,11 +95,11 @@
     {
       "type": "heading",
       "level": 3,
-      "text": "Free finders and NPK Plus"
+      "text": "The finders and NPK Plus"
     },
     {
       "type": "text",
-      "text": "The Pest Finder, Disease Finder and Weed Control Helper are free. They name the likely problem and the active ingredients that control it, by group, never by brand. The free [NPK Plus calculator](/features/npk-plus-calculator) adds up the nutrients in your fertilizer plan. See the [pest and disease finders](/features/pest-and-disease-finders)."
+      "text": "The Pest Finder, Disease Finder and Weed Control Helper come with Libre plus Anee and the plans above it. They name the likely problem and the active ingredients that control it, by group, never by brand. The free [NPK Plus calculator](/features/npk-plus-calculator) adds up the nutrients in your fertilizer plan. See the [pest and disease finders](/features/pest-and-disease-finders)."
     },
     {
       "type": "heading",
@@ -157,7 +157,7 @@
           "Libre plus Anee",
           "PHP 70 a month or PHP 700 a year",
           "One lot with Anee beside you",
-          "Anee chat with photos, four analyses, Realign by Anee, credit packs, a few ads"
+          "Anee chat with photos, four analyses, Realign by Anee, the finders, credit packs, a few ads"
         ],
         [
           "Solo Farmer",

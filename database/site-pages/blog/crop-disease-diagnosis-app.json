@@ -16,7 +16,7 @@
     "Rice Doctor",
     "Disease Finder"
   ],
-  "excerpt": "The best crop disease diagnosis app for a Filipino rice or corn farmer reads your photo together with the crop's age, variety and weather. It tells you how to confirm the problem and names active ingredients, not brands. That is how anee.io, a farm app built for Filipino farmers, works: Anee, its smart farm technician, reads your photo with your season, and a free Pest Finder and Disease Finder match the signs. Still, confirm in the field before you spray.",
+  "excerpt": "The best crop disease diagnosis app for a Filipino rice or corn farmer reads your photo together with the crop's age, variety and weather. It tells you how to confirm the problem and names active ingredients, not brands. That is how anee.io, a farm app built for Filipino farmers, works: Anee, its smart farm technician, reads your photo with your season, and its Pest Finder and Disease Finder match the signs. Still, confirm in the field before you spray.",
   "heroImage": {
     "src": "/images/site/guides/blog-crop-disease-diagnosis-app.webp",
     "alt": "Corn leaves with the long tan lesions of northern corn leaf blight, the kind of problem a crop disease diagnosis app is asked to name",
@@ -34,7 +34,7 @@
         "Pick an app that reads the photo with your crop's age, variety, place and weather, not the photo alone.",
         "It should tell you how to confirm the problem before it tells you what to buy.",
         "It should name active ingredients, not brands, and say plainly when no spray helps, as with a virus.",
-        "In anee.io the finders are free on every plan, and Anee reads photos on plans with Anee, from PHP 70 a month."
+        "In anee.io, Anee reads photos on plans with Anee, from PHP 70 a month, and the finders come with those plans too."
       ]
     },
     {
@@ -122,7 +122,7 @@
         [
           "Match the signs yourself",
           "Disease Finder and Pest Finder: pick your crop and what you see, then get the likely problems, how to be sure, and the active ingredients with their groups, never brands",
-          "Free on every plan"
+          "Libre plus Anee, Solo Farmer or Farm Owner"
         ],
         [
           "Read before you spray",
@@ -146,7 +146,7 @@
       "ordered": false,
       "items": [
         "Anee needs internet and uses credits. The rest of the app keeps working offline and syncs later.",
-        "The free Libre plan has the finders and guides but not the Anee chat. It also shows a few ads and holds one active season.",
+        "The free Libre plan has the guides but not the Anee chat. It also shows a few ads and holds one active season.",
         "A photo reading is a first opinion. Anee cannot run a lab test for a virus or smell a rotting stem.",
         "For a spreading outbreak, call your municipal agriculturist."
       ]
@@ -171,7 +171,7 @@
     },
     {
       "type": "text",
-      "text": "The finders and guides cost nothing. Anee comes with the plans below, and you can buy credit packs when you run low. You pay by GCash or bank transfer, and the [pricing page](/pricing) shows the current details."
+      "text": "The guides cost nothing. Anee and the finders come with the plans below, and you can buy credit packs when you run low. You pay by GCash or bank transfer, and the [pricing page](/pricing) shows the current details."
     },
     {
       "type": "table",
@@ -185,12 +185,12 @@
         [
           "Libre",
           "Free",
-          "Disease Finder, Pest Finder, guides and photo notes, with a few ads"
+          "Guides and photo notes, with a few ads"
         ],
         [
           "Libre plus Anee",
           "PHP 70 a month or PHP 700 a year",
-          "Adds the Anee chat with photos and all her analyses, with a few ads"
+          "Adds the Anee chat with photos, all her analyses and the finders, with a few ads"
         ],
         [
           "Solo Farmer",
@@ -257,7 +257,7 @@
         },
         {
           "q": "Is there a free crop disease diagnosis app in the Philippines?",
-          "a": "Yes. The Disease Finder and Pest Finder of anee.io are free on every plan, and IRRI's Rice Doctor is free on the web. Photo reading by Anee needs a plan with Anee, from PHP 70 a month."
+          "a": "Yes. IRRI's Rice Doctor is free on the web and helps you identify problems in a rice crop. In anee.io, photo reading by Anee needs a plan with Anee, from PHP 70 a month, and those plans also open the Disease Finder and Pest Finder."
         },
         {
           "q": "What if the app and my technician disagree?",

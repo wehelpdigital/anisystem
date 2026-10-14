@@ -23,7 +23,7 @@
     "app to diagnose plants",
     "plant problem app free"
   ],
-  "excerpt": "Yes. An app to identify plant problems can name a likely cause from a photo or from the signs you pick. But one yellow leaf can come from a pest, a disease, hunger, water or weeds. So use the app inside a simple method: read the pattern, the whole plant, the timing and your records, then confirm. anee.io, a farm app built for Filipino farmers, has a free Pest Finder, Disease Finder and Weed Control Helper, and Anee, its smart farm technician, reads your photo with your season's records.",
+  "excerpt": "Yes. An app to identify plant problems can name a likely cause from a photo or from the signs you pick. But one yellow leaf can come from a pest, a disease, hunger, water or weeds. So use the app inside a simple method: read the pattern, the whole plant, the timing and your records, then confirm. anee.io, a farm app built for Filipino farmers, has a Pest Finder, Disease Finder and Weed Control Helper, and Anee, its smart farm technician, reads your photo with your season's records.",
   "heroImage": {
     "src": "/images/site/guides/blog-app-to-identify-plant-problems.webp",
     "alt": "A hand holds a citrus leaf with blotchy yellow patches, here from citrus greening, the kind of sign an app to identify plant problems is asked to explain",
@@ -42,7 +42,7 @@
         "Read the pattern first: spreading patches are usually alive, even damage usually is not.",
         "Check the whole plant, roots included, and your records.",
         "Confirm before you spend.",
-        "In anee.io, three free tools sort the signs, and Anee reads your photo."
+        "In anee.io, three field helpers sort the signs, and Anee reads your photo."
       ]
     },
     {
@@ -147,7 +147,7 @@
     },
     {
       "type": "text",
-      "text": "Pests leave chewed tissue, droppings and eggs. Diseases leave spots with borders, ooze, mold or rot. The free [Pest Finder in anee.io](/features/pest-and-disease-finders) and [Disease Finder in anee.io](/features/pest-and-disease-finders) sort these signs by crop. When you still cannot tell, read how to tell a [pest or disease](/blog/pest-or-disease-how-to-tell) apart."
+      "text": "Pests leave chewed tissue, droppings and eggs. Diseases leave spots with borders, ooze, mold or rot. The [Pest Finder in anee.io](/features/pest-and-disease-finders) and [Disease Finder in anee.io](/features/pest-and-disease-finders) sort these signs by crop. When you still cannot tell, read how to tell a [pest or disease](/blog/pest-or-disease-how-to-tell) apart."
     },
     {
       "type": "heading",
@@ -178,7 +178,7 @@
       "ordered": false,
       "items": [
         "Anee needs internet and uses credits, on Libre plus Anee (PHP 70 a month) and the paid plans.",
-        "The finders, the Weed Control Helper and NPK Plus are free.",
+        "NPK Plus is free. The finders and the Weed Control Helper come with Libre plus Anee and the paid plans.",
         "The free Libre plan shows a few ads and holds one active season."
       ]
     },
@@ -199,15 +199,15 @@
       "items": [
         {
           "q": "What is the best app to identify plant problems?",
-          "a": "The best one checks more than disease. It asks your crop, its age and what you see, then tells you how to confirm. In anee.io, the free finders do this for pests, diseases and weeds, and Anee reads your photo with your records."
+          "a": "The best one checks more than disease. It asks your crop, its age and what you see, then tells you how to confirm. In anee.io, the finders do this for pests, diseases and weeds, and Anee reads your photo with your records."
         },
         {
           "q": "Is there a free plant app for sick plants?",
-          "a": "Yes. The anee.io finders and Weed Control Helper come with every plan, Libre included, once you register for free. Inside the app they are free on every plan. Like any plant sickness app, free or paid, treat the answer as a first opinion."
+          "a": "Some photo apps say their diagnosis is free, and our guide to choosing a [plant disease identification app](/blog/plant-disease-identification-app) shows how to judge them. In anee.io, the finders and the Weed Control Helper sort the signs by crop, and Anee reads your photo with your records. Like any plant sickness app, free or paid, treat the answer as a first opinion."
         },
         {
           "q": "How can I diagnose plant problems for free?",
-          "a": "Follow the steps above with a free finder, then ask a person. The PhilRice Text Center answers rice questions by text at 0917 111 7423. For a lab test, the Visayas State University plant disease lab lists routine diagnosis for farmers at PHP 50 a sample."
+          "a": "Follow the steps above, then ask a person. The PhilRice Text Center answers rice questions by text at 0917 111 7423. For a lab test, the Visayas State University plant disease lab lists routine diagnosis for farmers at PHP 50 a sample."
         },
         {
           "q": "Can an app tell a nutrient deficiency from a disease?",

@@ -16,7 +16,7 @@
     "papaya ringspot",
     "fruit tree diseases Philippines"
   ],
-  "excerpt": "The most useful plant disease detection tool for a Filipino fruit grower is not the one with the smartest camera. It reads the leaf, fruit or trunk with your tree's stage and weather, and it tells you how to confirm. It also warns you when a sick plant must come out, because viruses such as bunchy top and papaya ringspot have no cure. That is what anee.io, a farm app built for Filipino farmers, offers: Anee, its smart farm technician, reads your photos, and a free Disease Finder covers fruit trees too.",
+  "excerpt": "The most useful plant disease detection tool for a Filipino fruit grower is not the one with the smartest camera. It reads the leaf, fruit or trunk with your tree's stage and weather, and it tells you how to confirm. It also warns you when a sick plant must come out, because viruses such as bunchy top and papaya ringspot have no cure. That is what anee.io, a farm app built for Filipino farmers, offers: Anee, its smart farm technician, reads your photos, and its Disease Finder covers fruit trees too.",
   "heroImage": {
     "src": "/images/site/guides/blog-plant-disease-detection-for-fruit-growers.webp",
     "alt": "Green papaya fruits with the pale ring spots of papaya ringspot virus, a disease that plant disease detection should catch early",
@@ -35,7 +35,7 @@
         "Bunchy top, papaya ringspot and Fusarium wilt have no cure. Early detection is about removing sick plants and protecting the rest.",
         "Some spots on mango are a pest, not a disease: kurikong, the cecid fly, leaves scab like spots on the fruit.",
         "A good tool asks your crop, its stage and the part of the plant, and tells you when it is a lab question.",
-        "In anee.io the Disease Finder and Pest Finder are free, and Anee reads photos on plans with Anee."
+        "In anee.io, the Disease Finder and Pest Finder sort the signs by crop, and Anee reads photos on plans with Anee."
       ]
     },
     {
@@ -128,7 +128,7 @@
     },
     {
       "type": "text",
-      "text": "anee.io knows 85 Philippine crops, fruit trees among them, and counts perennials by their own stages. Its free [Disease Finder in anee.io](/features/pest-and-disease-finders) asks for your crop and the signs you see: spots, wilting, yellowing, rot or mottled leaves. It then names the diseases that fit, what to do first and the active ingredients with their groups. For a virus, it says no spray cures it.\n\nThe Pest Finder works the same way for [kurikong](/pests/mango-cecid-fly) and fruit flies. On a plan with Anee, you can also send a photo of a leaf or fruit to Anee, the smart farm technician. She reads it with your crop, its stage and the weather. Every photo from Quick Capture stays with the season. You can compare the same tree month after month."
+      "text": "anee.io knows 85 Philippine crops, fruit trees among them, and counts perennials by their own stages. Its [Disease Finder in anee.io](/features/pest-and-disease-finders) asks for your crop and the signs you see: spots, wilting, yellowing, rot or mottled leaves. It then names the diseases that fit, what to do first and the active ingredients with their groups. For a virus, it says no spray cures it.\n\nThe Pest Finder works the same way for [kurikong](/pests/mango-cecid-fly) and fruit flies. On a plan with Anee, you can also send a photo of a leaf or fruit to Anee, the smart farm technician. She reads it with your crop, its stage and the weather. Every photo from Quick Capture stays with the season. You can compare the same tree month after month."
     },
     {
       "type": "heading",
@@ -139,7 +139,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "Anee needs internet and uses credits. The finders and your notes also work on the free Libre plan.",
+        "Anee needs internet and uses credits. Your notes and photos also work on the free Libre plan.",
         "No app, Anee included, can run the lab test that confirms a virus or Fusarium wilt.",
         "Libre shows a few ads and holds one active season. Solo Farmer removes the ads and adds full weather."
       ]
@@ -153,7 +153,7 @@
     {
       "type": "cta",
       "title": "Check your fruit trees in the Disease Finder",
-      "text": "Pick your crop and the signs you see, and get the diseases that fit, what to do first and the active ingredients. Free on every plan.",
+      "text": "Pick your crop and the signs you see, and get the diseases that fit, what to do first and the active ingredients.",
       "label": "Open the finders",
       "url": "/features/pest-and-disease-finders"
     },

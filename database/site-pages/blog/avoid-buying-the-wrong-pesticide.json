@@ -16,7 +16,7 @@
     "IRAC group",
     "pesticide resistance"
   ],
-  "excerpt": "You avoid the wrong pesticide by naming the problem before you shop. An insecticide does nothing for a fungus, no spray cures a virus, and some problems need no spray at all. Then check that the FPA has registered the product for your crop and pest, read the label, and rotate groups so the pest does not build resistance. With anee.io, a farm app built for Filipino farmers, the free Pest Finder and Disease Finder name active ingredients with their groups, never brands, and Anee, its smart farm technician, can read a photo first.",
+  "excerpt": "You avoid the wrong pesticide by naming the problem before you shop. An insecticide does nothing for a fungus, no spray cures a virus, and some problems need no spray at all. Then check that the FPA has registered the product for your crop and pest, read the label, and rotate groups so the pest does not build resistance. With anee.io, a farm app built for Filipino farmers, the Pest Finder and Disease Finder name active ingredients with their groups, never brands, and Anee, its smart farm technician, can read a photo first.",
   "heroImage": {
     "src": "/images/site/guides/blog-avoid-buying-the-wrong-pesticide.webp",
     "alt": "A farmer pours water into a knapsack sprayer to mix a farm chemical, the moment a wrong pesticide becomes a costly mistake",
@@ -155,12 +155,12 @@
     },
     {
       "type": "text",
-      "text": "The free [Pest Finder and Disease Finder](/features/pest-and-disease-finders) name the active ingredients for each problem with their IRAC or FRAC group, never brands and never a rate. Where no spray helps, they say so. On a plan with Anee, send a photo first. Anee, the smart farm technician inside anee.io, reads it with your lot, its stage and what you already applied.\n\nAfter you buy, the [farm inventory](/features/farm-inventory-and-expenses) keeps each product in its own unit, liters or kilos. When you tick a spray task done, the stock goes down and the cost goes into your expenses. You can also count the days between two sprays on the board, and let Anee review your protocol for a spray too close to harvest."
+      "text": "The [Pest Finder and Disease Finder](/features/pest-and-disease-finders) name the active ingredients for each problem with their IRAC or FRAC group, never brands and never a rate. Where no spray helps, they say so. On a plan with Anee, send a photo first. Anee, the smart farm technician inside anee.io, reads it with your lot, its stage and what you already applied.\n\nAfter you buy, the [farm inventory](/features/farm-inventory-and-expenses) keeps each product in its own unit, liters or kilos. When you tick a spray task done, the stock goes down and the cost goes into your expenses. You can also count the days between two sprays on the board, and let Anee review your protocol for a spray too close to harvest."
     },
     {
       "type": "cta",
       "title": "Name the problem before you shop",
-      "text": "Pick your crop and the signs you see, and take the active ingredients and their groups to the store. Free on every plan.",
+      "text": "Pick your crop and the signs you see, and take the active ingredients and their groups to the store.",
       "label": "Open the finders",
       "url": "/features/pest-and-disease-finders"
     },

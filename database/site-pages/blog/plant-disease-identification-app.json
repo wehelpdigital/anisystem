@@ -22,7 +22,7 @@
     "free tree disease identification app",
     "plant app diagnosis"
   ],
-  "excerpt": "The best plant disease identification app covers your crop, reads the photo with the crop's age and weather, and tells you how to confirm. No app is right every time. In a field test, PlantVillage Nuru named cassava disease symptoms correctly 65 percent of the time, and 74 to 88 percent when it read six leaves per plant. For a free start, anee.io, a farm app built for Filipino farmers, has a free Disease Finder and Pest Finder, and Anee, its smart farm technician, reads your photo with your season's records.",
+  "excerpt": "The best plant disease identification app covers your crop, reads the photo with the crop's age and weather, and tells you how to confirm. No app is right every time. In a field test, PlantVillage Nuru named cassava disease symptoms correctly 65 percent of the time, and 74 to 88 percent when it read six leaves per plant. For a free first guess, Plantix says its photo diagnosis is free. anee.io, a farm app built for Filipino farmers, has a Disease Finder and Pest Finder, and Anee, its smart farm technician, reads your photo with your season's records.",
   "heroImage": {
     "src": "/images/site/guides/blog-plant-disease-identification-app.webp",
     "alt": "An eggplant leaf covered in small pale spots of Cercospora leaf spot, the kind of photo a plant disease identification app is asked to name",
@@ -40,7 +40,7 @@
         "No app is right every time, and mild, early signs fool apps most.",
         "Send several photos. Six leaves per plant gave the Nuru app its best results.",
         "Pick an app that covers your crop, asks its age and place, and tells you how to confirm.",
-        "Free options: the [Disease Finder and Pest Finder](/features/pest-and-disease-finders) inside anee.io.",
+        "Free options: Plantix says its photo diagnosis is free, and a DA crop protection center in Caraga lists lab diagnosis as free. In anee.io, the [Disease Finder and Pest Finder](/features/pest-and-disease-finders) sort the signs by crop.",
         "Confirm with a field check, a technician or a lab before you spray."
       ]
     },
@@ -131,17 +131,16 @@
     },
     {
       "type": "text",
-      "text": "Yes, and a free plant disease app is a good first stop. The [Disease Finder](/features/pest-and-disease-finders) inside anee.io asks your crop and what you see, from spots and wilting to rot and mottled leaves. Then it names the diseases that fit, what to do first and the active ingredients with their FRAC groups, or why no spray helps.\n\nThe Pest Finder does the same for pests, and the Weed Control Helper covers weeds. You open them from the tools in anee.io once you register for free. Inside the app they open straight away on every plan, Libre included, and [pricing](/pricing) shows what each plan adds."
+      "text": "Yes, and a free plant disease app is a good first stop. Plantix says on its own site that its photo diagnosis is free. Use a free app for a fast first guess, then check it against a second source.\n\nFor that second look, the [Disease Finder](/features/pest-and-disease-finders) inside anee.io asks your crop and what you see, from spots and wilting to rot and mottled leaves. Then it names the diseases that fit, what to do first and the active ingredients with their FRAC groups, or why no spray helps. The Pest Finder does the same for pests, and the Weed Control Helper covers weeds. You open them from the tools in anee.io, and [pricing](/pricing) shows which plans include them."
     },
     {
       "type": "table",
       "caption": "What the anee.io tools for a sick plant cost",
       "rows": [
         ["Option", "Cost", "What you get"],
-        ["The finders and Weed Control Helper", "Free", "Causes that fit, first steps, active ingredients"],
         ["Libre plan", "Free, with a few ads", "One active season, notes, photos and growth stages"],
-        ["Libre plus Anee", "PHP 70 a month or PHP 700 a year", "Chat with Anee and show her a photo, using credits"],
-        ["Solo Farmer or Farm Owner", "PHP 200 or PHP 600 a month", "Anee with 30 or 100 credits each renewal, no ads"]
+        ["Libre plus Anee", "PHP 70 a month or PHP 700 a year", "Chat with Anee and show her a photo, using credits, plus the finders and Weed Control Helper"],
+        ["Solo Farmer or Farm Owner", "PHP 200 or PHP 600 a month", "Anee with 30 or 100 credits each renewal, the finders, no ads"]
       ]
     },
     {
@@ -164,12 +163,12 @@
       "items": [
         "Anee needs internet and uses credits, on Libre plus Anee and the paid plans.",
         "She cannot run a lab test, so for a suspected virus she tells you how to confirm it.",
-        "The free Libre plan has the finders but not the chat, shows a few ads and holds one active season."
+        "The free Libre plan has no chat, shows a few ads and holds one active season."
       ]
     },
     {
       "type": "cta",
-      "title": "Find the disease in a few taps, free",
+      "title": "Find the disease in a few taps",
       "text": "Pick your crop and what you see in the Disease Finder. When you need a second look, send Anee a photo.",
       "label": "Open the finders",
       "url": "/features/pest-and-disease-finders"
@@ -224,19 +223,19 @@
         },
         {
           "q": "What is the best free plant disease identification app?",
-          "a": "The best free one covers your crop and tells you how to confirm. The anee.io finders are free, and Plantix describes its photo diagnosis as free. Try two and compare."
+          "a": "The best free one covers your crop and tells you how to confirm. Plantix describes its photo diagnosis as free. Then compare its answer with a second source, such as the anee.io Disease Finder or your municipal agriculturist."
         },
         {
           "q": "Is there a free tree disease identification app?",
-          "a": "Yes, for farm trees. The anee.io Disease Finder covers mango, banana, coconut, cacao, coffee and durian. Our guide to [plant disease detection for fruit growers](/blog/plant-disease-detection-for-fruit-growers) covers more."
+          "a": "Check the crop list first, since a photo app names only what it learned. In anee.io, the Disease Finder covers farm trees such as mango, banana, coconut, cacao, coffee and durian. Our guide to [plant disease detection for fruit growers](/blog/plant-disease-detection-for-fruit-growers) covers more."
         },
         {
           "q": "Do plant disease apps work offline?",
           "a": "Some do, such as Nuru. In anee.io, Anee needs a signal, but your notes and photos keep working offline and sync later."
         },
         {
-          "q": "Which plant disease app is free and tells me what to spray?",
-          "a": "The anee.io finders are free and name active ingredients with their groups, never brands, or say when no spray helps. For the rate, follow the product label."
+          "q": "Which plant disease app tells me what to spray?",
+          "a": "The anee.io finders name active ingredients with their groups, never brands, or say when no spray helps. For the rate, follow the product label."
         }
       ]
     },

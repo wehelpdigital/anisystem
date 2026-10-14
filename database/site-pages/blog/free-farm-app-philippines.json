@@ -175,7 +175,7 @@
     },
     {
       "type": "text",
-      "text": "Some tools of anee.io are free on their own. The [NPK Plus calculator](/features/npk-plus-calculator) adds up the nutrients in the fertilizers you plan to use. Pest Finder, Disease Finder and Weed Control Helper name the likely problem and the active ingredients by group, never brands. Inside the app, The Stash lets you read every issue of the PhilRice Magazine for free."
+      "text": "Some tools of anee.io are free on their own. The [NPK Plus calculator](/features/npk-plus-calculator) adds up the nutrients in the fertilizers you plan to use. Inside the app, The Stash lets you read every issue of the PhilRice Magazine for free."
     },
     {
       "type": "heading",
@@ -194,7 +194,7 @@
         [
           "Libre + Anee",
           "PHP 70 a month or PHP 700 a year",
-          "Anee, the smart farm technician: chat, photos and all four analyses. Still with ads"
+          "Anee, the smart farm technician: chat, photos and all four analyses, plus the Pest Finder, Disease Finder and Weed Control Helper. Still with ads"
         ],
         [
           "Solo Farmer",
@@ -248,7 +248,7 @@
         },
         {
           "q": "Can I ask Anee questions on the free plan?",
-          "a": "Not on Libre. Anee comes with Libre + Anee for PHP 70 a month and with every paid plan, and her answers use credits. The pest and disease finders and the NPK Plus calculator are free."
+          "a": "Not on Libre. Anee comes with Libre + Anee for PHP 70 a month and with every paid plan, and her answers use credits. The NPK Plus calculator is free on every plan."
         },
         {
           "q": "Which free apps does PhilRice offer?",
