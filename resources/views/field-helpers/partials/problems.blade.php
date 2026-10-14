@@ -140,17 +140,40 @@
     document.querySelectorAll('[data-fh-cat]').forEach((b) => b.addEventListener('click', () => cat.open({ crop: '' })));
 
     /* ---- The finder's answer ----------------------------------------- */
+    // Which cards are open, kept across a filter or a crop change. Folded by default (2026-10-15, the owner).
+    const opened = new Set();
     const row = (i) => {
-        const loc = FH.localOf(i);
-        return '<article class="fh-rc" style="--g: ' + i.hue + '" data-k="' + esc(i.k) + '">'
-            + '<button type="button" class="fh-rc-head" data-open="' + esc(i.k) + '">'
+        const loc = FH.localOf(i), open = opened.has(i.k), id = 'fhrc-' + String(i.k).replace(/[^a-z0-9_-]/gi, '');
+        const nAi = (i.ai || []).length, nProd = (i.ai || []).reduce((n, [a]) => n + prodsOf(a, st.crop).length, 0);
+        const sum = nAi ? '<i>' + nAi + ' to spray</i>' + (nProd ? '<i>' + nProd + ' product' + (nProd === 1 ? '' : 's') + '</i>' : '')
+            : (i.no ? '<i class="is-warn">Read before you spray</i>' : '');
+        const body = nAi ? '<div class="fh-rc-spray"><span class="fh-spray-h">' + I.drop + 'What to spray</span>' + sprayOf(i, st.crop) + '</div>'
+            : (i.no ? '<div class="fh-rc-spray">' + noSpray(i) + '</div>' : '');
+        return '<article class="fh-rc' + (open ? ' is-open' : '') + '" style="--g: ' + i.hue + '" data-k="' + esc(i.k) + '">'
+            + '<div class="fh-rc-top">'
+            + (body ? '<button type="button" class="fh-rc-head" data-fold="' + esc(i.k) + '" aria-expanded="' + open + '" aria-controls="' + id + '">'
+                : '<button type="button" class="fh-rc-head" data-open="' + esc(i.k) + '">')
             + (i.thumb ? '<img src="' + esc(i.thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : '<span class="none">' + I.leaf + '</span>')
-            + '<span class="fh-rc-t"><b>' + esc(i.name) + '</b><small><em>' + esc(i.kind) + '</em>' + (loc ? '<span>' + esc(loc) + '</span>' : '') + '</small></span>'
-            + '<span class="fh-rc-go" aria-hidden="true">' + I.arrow + '</span><span class="sr-only">Open the details</span></button>'
+            + '<span class="fh-rc-t"><b>' + esc(i.name) + '</b><small><em>' + esc(i.kind) + '</em>' + (loc ? '<span>' + esc(loc) + '</span>' : '') + '</small>'
+            + (sum && body ? '<span class="fh-rc-sum">' + sum + '</span>' : '') + '</span></button>'
+            + '<span class="fh-rc-acts">'
+            + '<button type="button" class="fh-rc-btn fh-rc-info" data-open="' + esc(i.k) + '" aria-label="About ' + esc(i.name) + '" title="About ' + esc(i.name) + '">' + I.info + '</button>'
+            + (body ? '<button type="button" class="fh-rc-btn fh-rc-fold-btn" data-fold="' + esc(i.k) + '" aria-expanded="' + open + '" aria-controls="' + id + '" aria-label="' + (open ? 'Fold away' : 'Show') + ' what to do">' + I.chev + '</button>' : '')
+            + '</span></div>'
             + (i.hint ? '<p class="fh-rc-sign">' + I.eye + '<span>' + esc(i.hint) + '</span></p>' : '')
-            + (i.ai && i.ai.length ? '<div class="fh-rc-spray"><span class="fh-spray-h">' + I.drop + 'What to spray</span>' + sprayOf(i, st.crop) + '</div>'
-                : (i.no ? '<div class="fh-rc-spray">' + noSpray(i) + '</div>' : ''))
+            + (body ? '<div class="fh-rc-fold" id="' + id + '"><div>' + body + '</div></div>' : '')
             + '</article>';
+    };
+    const fold = (k) => {
+        const art = card.querySelector('.fh-rc[data-k="' + CSS.escape(k) + '"]');
+        if (!art || !art.querySelector('.fh-rc-fold')) return;
+        const open = !art.classList.contains('is-open');
+        if (open) opened.add(k); else opened.delete(k);
+        art.classList.toggle('is-open', open);
+        art.querySelectorAll('[data-fold]').forEach((b) => b.setAttribute('aria-expanded', String(open)));
+        art.querySelector('.fh-rc-fold-btn')?.setAttribute('aria-label', (open ? 'Fold away' : 'Show') + ' what to do');
+        // Opened low on a phone: bring the top of the card into view, gently.
+        if (open && !FH.reduce()) setTimeout(() => { const r = art.getBoundingClientRect(); if (r.top < 70) art.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
     };
     const render = (swap) => {
         const rank = (i) => (i.ranks && i.ranks[st.crop] !== undefined ? i.ranks[st.crop] : 99);
@@ -184,7 +207,12 @@
             if (swap) FH.bump(go);
         }
     };
-    card.addEventListener('click', (e) => { const b = e.target.closest('[data-open]'); if (b) cat.open({ k: b.dataset.open, crop: st.crop }); });
+    card.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-open]');
+        if (b) { cat.open({ k: b.dataset.open, crop: st.crop }); return; }
+        const f = e.target.closest('[data-fold]');
+        if (f) fold(f.dataset.fold);
+    });
     go?.addEventListener('click', () => card.closest('.wc-out').scrollIntoView({ behavior: FH.reduce() ? 'auto' : 'smooth', block: 'start' }));
     cropTag?.addEventListener('croppick', (e) => { st.crop = e.detail.crop; render(true); });
     whereBox.addEventListener('click', (e) => {

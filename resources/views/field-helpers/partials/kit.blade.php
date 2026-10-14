@@ -120,22 +120,49 @@
     .fh-res { display: grid; gap: .75rem; }
     .fh-rc { --g: 98; min-width: 0; border-radius: 1.1rem; background: #f6f8f3; border: 1px solid #e5ebdf; overflow: hidden; transition: border-color .28s cubic-bezier(.22,1,.36,1); }
     .fh-rc:hover { border-color: hsl(var(--g) 40% 72%); }
-    .fh-rc-head { width: 100%; display: grid; grid-template-columns: 4.4rem minmax(0, 1fr) auto; gap: .75rem; align-items: center; padding: .6rem .7rem .55rem .6rem;
+    /* One pest or disease (2026-10-15, the owner): the head folds the card
+       open and shut (folded by default, the chevron says which), and the
+       round "i" opens everything about it in the catalogue sheet. */
+    .fh-rc-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .35rem; padding-right: .55rem; }
+    .fh-rc-head { width: 100%; min-width: 0; display: grid; grid-template-columns: 3.7rem minmax(0, 1fr); gap: .7rem; align-items: center; padding: .6rem 0 .6rem .6rem;
         text-align: left; color: inherit; background: none; border: 0; cursor: pointer; }
-    .fh-rc-head:focus-visible { outline: 3px solid #f5c518; outline-offset: -3px; border-radius: 1.1rem; }
-    .fh-rc-head > img, .fh-rc-head > .none { width: 4.4rem; height: 4.4rem; border-radius: .85rem; object-fit: cover; background: hsl(var(--g) 35% 88%); }
+    @media (min-width: 640px) { .fh-rc-head { grid-template-columns: 4.4rem minmax(0, 1fr); } }
+    .fh-rc-head:focus-visible, .fh-rc-btn:focus-visible { outline: 3px solid #f5c518; outline-offset: -3px; border-radius: 1rem; }
+    .fh-rc-head > img, .fh-rc-head > .none { width: 100%; aspect-ratio: 1; border-radius: .85rem; object-fit: cover; background: hsl(var(--g) 35% 88%); }
     .fh-rc-head > .none { display: grid; place-items: center; color: hsl(var(--g) 40% 45%); }
     .fh-rc-head > .none svg { width: 1.6rem; height: 1.6rem; }
+    .fh-rc-acts { display: flex; align-items: center; gap: .3rem; }
+    /* A phone: the two buttons stack, so the name keeps the width, and the
+       local names keep to one line (all of them are in the "i" sheet). */
+    @media (max-width: 639.98px) {
+        .fh-rc-acts { flex-direction: column; gap: .4rem; }
+        .fh-rc-btn { width: 2.15rem; height: 2.15rem; }
+        .fh-rc .fh-rc-t small { display: flex; align-items: center; gap: .35rem; min-width: 0; }
+        .fh-rc .fh-rc-t small em { flex: none; margin-right: 0; }
+        .fh-rc .fh-rc-t small span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    }
+    .fh-rc-btn { width: 2.25rem; height: 2.25rem; flex: none; border-radius: 999px; display: grid; place-items: center; color: hsl(var(--g) 50% 26%); background: hsl(var(--g) 50% 90%);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .fh-rc-btn:hover { background: hsl(var(--g) 50% 84%); }
+    .fh-rc-btn svg { width: 1.05rem; height: 1.05rem; transition: transform .34s cubic-bezier(.22,1,.36,1); }
+    .fh-rc-info { color: #1d4ed8; background: #e0ecff; }
+    .fh-rc-info:hover { background: #cfe0ff; }
+    .fh-rc.is-open .fh-rc-fold-btn svg { transform: rotate(180deg); }
+    /* What is inside, said before it is opened. */
+    .fh-rc-sum { display: flex; flex-wrap: wrap; gap: .25rem; margin-top: .35rem; }
+    .fh-rc-sum i { display: inline-flex; align-items: center; gap: .2rem; padding: .08rem .45rem; border-radius: 999px; font-style: normal; font-size: .64rem; font-weight: 800; color: #3f4a37; background: #eaf0e3; }
+    .fh-rc-sum i.is-warn { color: #7a4b00; background: #fdf0c8; }
+    .fh-rc-fold { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.22,1,.36,1); }
+    .fh-rc.is-open .fh-rc-fold { grid-template-rows: 1fr; }
+    .fh-rc-fold > div { min-height: 0; overflow: hidden; }
+    .fh-rc-fold > div > * { opacity: 0; transform: translateY(-4px); transition: opacity .3s cubic-bezier(.22,1,.36,1), transform .3s cubic-bezier(.22,1,.36,1); }
+    .fh-rc.is-open .fh-rc-fold > div > * { opacity: 1; transform: none; transition-delay: .06s; }
     .fh-rc-t { min-width: 0; }
     .fh-rc-t b { display: block; font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; line-height: 1.25; color: #14210c; }
     .fh-rc-t small { display: block; margin-top: .25rem; font-size: .78rem; line-height: 1.45; color: #4b5563; }
     .fh-rc-t small span { font-style: italic; }
     .fh-rc-t em { display: inline-block; margin-right: .35rem; padding: .08rem .45rem; border-radius: 999px; font-style: normal; font-size: .62rem; font-weight: 800; letter-spacing: .05em;
         text-transform: uppercase; color: hsl(var(--g) 55% 22%); background: hsl(var(--g) 55% 91%); vertical-align: 1px; }
-    .fh-rc-go { width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; color: hsl(var(--g) 50% 26%); background: hsl(var(--g) 50% 90%);
-        transition: transform .28s cubic-bezier(.22,1,.36,1); }
-    .fh-rc-go svg { width: 1rem; height: 1rem; }
-    .fh-rc-head:hover .fh-rc-go { transform: translateX(3px); }
     .fh-rc-sign { display: flex; gap: .45rem; align-items: flex-start; padding: 0 .85rem .7rem; font-size: .86rem; line-height: 1.5; color: #374151; }
     .fh-rc-sign svg { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: #6b9f3d; }
     .fh-rc-spray { display: grid; padding: .65rem .7rem .75rem; border-top: 1px dashed #dfe8d4; }
@@ -146,8 +173,12 @@
     html.dark .fh-rc-t small { color: #b9caa8; }
     html.dark .fh-rc-sign { color: #d5e3c5; }
     html.dark .fh-rc-spray { border-color: #2b3a1c; }
-    html.dark .fh-rc-go { background: hsl(var(--g) 30% 22%); color: hsl(var(--g) 50% 80%); }
-    @media (prefers-reduced-motion: reduce) { .fh-rc, .fh-rc-go { transition: none; } }
+    html.dark .fh-rc-btn { background: hsl(var(--g) 30% 22%); color: hsl(var(--g) 50% 80%); }
+    html.dark .fh-rc-btn:hover { background: hsl(var(--g) 30% 27%); }
+    html.dark .fh-rc-info { background: #1e2a44; color: #9cc0ff; }
+    html.dark .fh-rc-sum i { background: #26331d; color: #cfe0bb; }
+    html.dark .fh-rc-sum i.is-warn { background: #3a2f12; color: #f5d98a; }
+    @media (prefers-reduced-motion: reduce) { .fh-rc, .fh-rc-btn, .fh-rc-btn svg, .fh-rc-fold, .fh-rc-fold > div > * { transition: none; } }
 
     /* ---- A full screen sheet: the catalogues and the variety details ---- */
     .fhm { padding: 0; border: 0; margin: 0; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; overflow: hidden; color: #14210c; background: #f4f6f1; }
@@ -379,6 +410,7 @@
     FH.icon = {
         arrow: svg('<path d="M9 5l7 7-7 7"/>', 2.6), back: svg('<path d="M15 19l-7-7 7-7"/>', 2.6), x: svg('<path d="M6 6l12 12M18 6L6 18"/>', 2.4),
         chev: svg('<path d="M19 9l-7 7-7-7"/>', 3), check: svg('<path d="M5 13l4 4L19 7"/>', 3.2),
+        info: svg('<circle cx="12" cy="12" r="9"/><path d="M12 11.2v5.3M12 7.6h.01"/>', 2.3),
         leaf: svg('<path d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/>', 1.8),
         drop: svg('<path d="M12 3.5s6 6.4 6 10.6a6 6 0 01-12 0c0-4.2 6-10.6 6-10.6z"/>', 2.2),
         warn: svg('<path d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/>'),
