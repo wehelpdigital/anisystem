@@ -351,6 +351,46 @@
     .lv-how { display: grid; gap: .4rem; margin-top: .85rem; }
     .lv-how li { display: flex; gap: .5rem; font-size: .84rem; line-height: 1.5; color: var(--color-gray-700); }
     .lv-how li svg { flex: none; width: 1rem; height: 1rem; margin-top: .2rem; color: #4a7c2a; }
+    /* The fertilizer on hand (2026-10-15, the owner): a tag on the answer that opens a sheet of bags. */
+    .lv-ftag { display: flex; align-items: center; gap: .65rem; width: 100%; margin-top: .75rem; padding: .5rem .55rem .5rem .5rem; border-radius: 1rem; text-align: left; background: #fffbeb; border: 1.5px solid #fde68a;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .lv-ftag:hover { border-color: #f5c518; background: #fff8db; }
+    .lv-ftag:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    .lv-ftag.is-bump { animation: lvFBump .42s cubic-bezier(.22,1,.36,1); }
+    @keyframes lvFBump { 40% { transform: scale(1.025); } }
+    .lv-ftag-g { flex: none; min-width: 4.4rem; padding: .5rem .45rem; border-radius: .75rem; text-align: center; font-family: var(--font-heading); font-size: .84rem; font-weight: 800; font-variant-numeric: tabular-nums; color: #fff; background: #92400e; }
+    .lv-ftag-t { flex: 1; min-width: 0; display: grid; line-height: 1.2; }
+    .lv-ftag-t small { font-size: .58rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #a16207; }
+    .lv-ftag-t b { font-size: 1rem; font-weight: 800; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lv-ftag-c { flex: none; display: inline-flex; align-items: center; gap: .25rem; padding: .4rem .65rem; border-radius: 999px; font-size: .76rem; font-weight: 800; color: #92400e; background: #fff; border: 1px solid #fde68a; }
+    .lv-ftag-c svg { width: .8rem; height: .8rem; }
+    .lv-big i, .lv-grid3 i { font-style: normal; font-variant-numeric: tabular-nums; }
+    .lv-fplus { display: flex; gap: .5rem; margin-top: .75rem; padding: .6rem .75rem; border-radius: .9rem; font-size: .84rem; line-height: 1.45; color: #1e3a10; background: #f1f8e9; }
+    .lv-fplus svg { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: #4a7c2a; }
+    .lc-fsub { padding: 0 1.15rem .75rem; font-size: .84rem; line-height: 1.45; color: var(--color-gray-600); }
+    .lc-fsub b { color: var(--color-gray-900); }
+    .lc-ferts { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+    .lc-frow .u-ab { width: 4rem; font-size: .74rem; font-variant-numeric: tabular-nums; color: #fff; background: #92400e; }
+    .lc-frow .u-ab.is-own { color: #6b7280; background: #f3f4f6; border: 1.5px dashed #d1d5db; }
+    .lc-frow .u-q { flex: none; display: grid; text-align: right; line-height: 1.15; }
+    .lc-frow .u-q b { font-family: var(--font-heading); font-size: .98rem; font-weight: 800; color: #92400e; white-space: nowrap; }
+    .lc-frow .u-q small { font-size: .7rem; color: var(--color-gray-500); white-space: nowrap; }
+    .lc-fown { display: grid; grid-template-rows: 0fr; opacity: 0; margin-top: -.45rem;
+        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), margin-top .28s cubic-bezier(.22,1,.36,1); }
+    .lc-fown.is-on { grid-template-rows: 1fr; opacity: 1; margin-top: 0; }
+    .lc-fown > div { min-height: 0; overflow: hidden; }
+    .lc-fown-box { display: grid; gap: .65rem; padding: .8rem; border-radius: 1rem; background: #fffbeb; border: 1.5px solid #fde68a; }
+    .lc-fown-in { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: .3rem; }
+    .lc-fown-in label { display: grid; gap: .25rem; min-width: 0; }
+    .lc-fown-in small { font-size: .6rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; text-align: center; color: #a16207; }
+    .lc-fown-in input { width: 100%; min-height: 3rem; border-radius: .8rem; border: 1.5px solid #e5e7eb; background: #fff; text-align: center; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #14210c; -moz-appearance: textfield; }
+    .lc-fown-in input::-webkit-outer-spin-button, .lc-fown-in input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .lc-fown-in input::placeholder { color: #d6d3d1; font-weight: 700; }
+    .lc-fown-in input:focus { border-color: #f5c518; outline: none; box-shadow: 0 0 0 3px rgb(245 197 24 / .25); }
+    .lc-fown-in > span { padding-bottom: .75rem; font-weight: 900; color: #a16207; }
+    .lc-fown-out { font-size: .84rem; line-height: 1.4; color: #78350f; }
+    .lc-fown-out.is-bad { color: #b91c1c; }
+    .lc-fown .btn { min-height: 2.85rem; }
     .lv-leaves { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .55rem .45rem; margin-top: .8rem; }
     @media (min-width: 560px) { .lv-leaves { grid-template-columns: repeat(10, minmax(0, 1fr)); } }
     .lv-leaf { text-align: center; animation: lcPopIn .34s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i) * .04s + .3s); }
@@ -598,12 +638,32 @@
     html.dark .lc-d:hover:not(:disabled):not(.is-sel), html.dark .lc-mon button:hover:not(:disabled) { background: #22301a; }
     html.dark .lv-grid3 span, html.dark .lv-note, html.dark .lc-ck-date, html.dark .lc-sum-chips span { background: #1c2616; border-color: #2b3a1c; }
     html.dark .lx-stage { --lx-bg: #1c2616; --lx-line: #34482a; --lx-ink: #e8efe1; --lx-mute: #a9bb98; }
+    html.dark .lv-ftag { background: rgb(202 138 4 / .1); border-color: rgb(202 138 4 / .35); }
+    html.dark .lv-ftag:hover { background: rgb(202 138 4 / .16); border-color: #ca8a04; }
+    html.dark .lv-ftag-g, html.dark .lc-frow .u-ab { background: #b45309; color: #fff; }
+    html.dark .lv-ftag-t small { color: #fbbf24; }
+    html.dark .lv-ftag-t b { color: #fef3c7; }
+    html.dark .lv-ftag-c { background: #1c2616; border-color: rgb(202 138 4 / .35); color: #fcd34d; }
+    html.dark .lv-fplus { background: #1c2616; color: #d5e3c5; }
+    html.dark .lv-fplus svg { color: #a5c97e; }
+    html.dark .lc-fsub { color: #b9caa8; }
+    html.dark .lc-fsub b { color: #e8efe1; }
+    html.dark .lc-frow .u-q b { color: #fcd34d; }
+    html.dark .lc-frow .u-q small { color: #9fb08f; }
+    html.dark .lc-frow .u-ab.is-own { background: #151b12; border-color: #3d5a28; color: #b9caa8; }
+    html.dark .lc-fown-box { background: rgb(202 138 4 / .08); border-color: rgb(202 138 4 / .3); }
+    html.dark .lc-fown-in input { background: #0d110a; border-color: #2b3a1c; color: #e8efe1; }
+    html.dark .lc-fown-in input::placeholder { color: #44523a; }
+    html.dark .lc-fown-in small, html.dark .lc-fown-in > span { color: #fbbf24; }
+    html.dark .lc-fown-out { color: #fde68a; }
+    html.dark .lc-fown-out.is-bad { color: #fca5a5; }
 
     @media (prefers-reduced-motion: reduce) {
         .lc-step.is-on, .lc-age, .lc-season, .lc-shot, .lc-ck.is-new, .lc-view.is-on .lv-in, .lv-bar i, .lv-leaf, .lc-days.is-slide-l, .lc-days.is-slide-r, .lc-d.is-sel,
         .lc-tag.is-bump .lc-tag-ico, .lc-tag.is-shake, .lc-age-n.is-bump, .lc-sl.is-bump svg, .lx-step.is-on,
-        .lc-sbox, .lc-sheet::backdrop, .lc-sheet.is-closing .lc-sbox, .lc-sheet.is-closing::backdrop { animation: none !important; }
+        .lc-sbox, .lc-sheet::backdrop, .lc-sheet.is-closing .lc-sbox, .lc-sheet.is-closing::backdrop, .lv-ftag.is-bump { animation: none !important; }
         .lx-step *, .lx-step.is-on * { animation: none !important; }
+        .lv-ftag, .lc-fown { transition: none; }
         .lc-view, .lc-seg button, .lc-tag, .lc-way, .lc-ck, .lc-sl, .lc-sw, .lc-d, .lc-on, .lc-steps > i::after, .lx-dots button { transition: none; }
     }
     html.sm-still .lc-step.is-on, html.sm-still .lc-view.is-on .lv-in, html.sm-still .lx-step *, html.sm-still .lv-bar i, html.sm-still .lv-leaf { animation: none !important; }
@@ -814,7 +874,7 @@
     </div>
 </dialog>
 
-{{-- Rename a saved check. --}}
+{{-- The area unit. --}}
 <dialog class="lc-sheet is-small" id="lcUnitSheet" aria-labelledby="lcUnitTitle">
     <div class="lc-sbox" tabindex="-1">
         <div class="lc-grip" aria-hidden="true"></div>
@@ -823,6 +883,17 @@
     </div>
 </dialog>
 
+{{-- The fertilizer on hand: the same nitrogen, worked out for each bag (2026-10-15, the owner). --}}
+<dialog class="lc-sheet" id="lcFertSheet" aria-labelledby="lcFertTitle">
+    <div class="lc-sbox" tabindex="-1">
+        <div class="lc-grip" aria-hidden="true"></div>
+        <div class="lc-shead"><h2 id="lcFertTitle">Which fertilizer do you have?</h2><button type="button" class="lc-x" aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <p class="lc-fsub" id="lcFertSub"></p>
+        <div class="lc-units lc-ferts" id="lcFertList" role="radiogroup" aria-labelledby="lcFertTitle"></div>
+    </div>
+</dialog>
+
+{{-- Rename a saved check. --}}
 <dialog class="lc-sheet is-small" id="lcRenSheet" aria-labelledby="lcRenTitle">
     <form class="lc-sbox" tabindex="-1" id="lcRenForm">
         <div class="lc-grip" aria-hidden="true"></div>
@@ -955,6 +1026,149 @@
         return num(n) + ' ' + name + (unit && unit !== 'ha' && ha ? ' (' + num(ha) + ' ha)' : '');
     }
 
+    /* ---------------- the fertilizer on hand (2026-10-15, the owner) ----------------
+       The reading sets the nitrogen and the bag sets the kilos. The first number on a
+       bag is its percent of nitrogen, so the kilos are the nitrogen over that percent. */
+    const FERTS = {
+        urea: { name: 'Urea', short: 'urea', cell: 'urea', g: [46, 0, 0], tl: 'urea', blurb: 'The most nitrogen in a bag',
+            line: 'Urea has the most nitrogen in a bag, so it takes the fewest bags to carry.' },
+        ammosul: { name: 'Ammosul', short: 'ammosul', cell: 'ammosul', g: [21, 0, 0], s: 24, tl: 'ammosul', blurb: 'Ammonium sulfate. Adds sulfur',
+            line: 'Ammosul also feeds sulfur. It suits alkaline or sulfur poor soil. It sours the soil a little, so skip it on very sour soil.' },
+        amcl: { name: 'Ammonium chloride', short: 'ammonium chloride', cell: '25-0-0', g: [25, 0, 0], tl: 'ammonium-chloride', blurb: 'Works well on flooded rice',
+            line: 'Ammonium chloride works well on flooded rice. Like ammosul, it sours the soil a little.' },
+        ammophos: { name: 'Ammophos', short: 'ammophos', cell: 'ammophos', g: [16, 20, 0], tl: 'ammophos', blurb: 'Ammonium phosphate. Adds phosphorus',
+            line: 'Ammophos also feeds phosphorus. It does the most good in the first weeks after planting, while the roots are young.' },
+        complete: { name: 'Complete', short: 'complete fertilizer', cell: '14-14-14', g: [14, 14, 14], tl: 'complete-fertilizer', blurb: 'Adds phosphorus and potassium',
+            line: 'Complete also feeds phosphorus and potassium. It does the most good early in the season. Later on, a straight nitrogen bag means fewer kilos.' },
+    };
+    const FKEY = 'lcc-fert-v1';
+    const TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+    const CHEV = '<svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>';
+    // A bag the farmer types: nitrogen 1 to 46 (urea is the richest granular bag), P and K up to 60.
+    function okGrade(g) { return Array.isArray(g) && g.length === 3 && g.every((x) => Number.isInteger(x)) && g[0] >= 1 && g[0] <= 46 && g[1] >= 0 && g[1] <= 60 && g[2] >= 0 && g[2] <= 60; }
+    let FERT = { k: 'urea' };
+    try { const s = JSON.parse(localStorage.getItem(FKEY) || 'null'); if (s && (FERTS[s.k] || (s.k === 'own' && okGrade(s.g)))) FERT = s.k === 'own' ? { k: 'own', g: s.g } : { k: s.k }; } catch (e) { /* urea it is */ }
+    const gradeOf = (g) => g.join('-');
+    function fert(f) {
+        f = f || FERT;
+        if (f.k !== 'own') return { k: f.k, ...FERTS[f.k] };
+        const gr = gradeOf(f.g);
+        return { k: 'own', name: 'Your ' + gr, short: gr, cell: gr, g: f.g, tl: 'fertilizer-grade', line: 'The first number on your bag is its nitrogen. The lower it is, the more kilos it takes.' };
+    }
+    // Rounded per hectare first, the way the server rounds urea, so a urea answer matches the saved check.
+    function fertQty(kgN, area, f) {
+        const ha = Math.round(kgN / (f.g[0] / 100));
+        return { ha, kg: Math.round(ha * area), bha: Math.round(ha / 50 * 10) / 10, bags: Math.round(ha * area / 50 * 10) / 10 };
+    }
+    const bagWord = (x) => (Number(x) === 1 ? 'bag' : 'bags');
+    function fertPlus(f, q) {
+        const bits = [];
+        if (f.g[1]) bits.push(`${num(Math.round(q.ha * f.g[1] / 100))} kg of phosphorus`);
+        if (f.g[2]) bits.push(`${num(Math.round(q.ha * f.g[2] / 100))} kg of potassium`);
+        if (f.s) bits.push(`${num(Math.round(q.ha * f.s / 100))} kg of sulfur`);
+        if (!bits.length) return '';
+        return `It also gives ${bits.length > 1 ? bits.slice(0, -1).join(', ') + ' and ' + bits[bits.length - 1] : bits[0]} per hectare.`;
+    }
+    // The answer card's inside: the tag, the kilos for the field, per hectare, and how.
+    function fertBody(d, p, area) {
+        const f = fert(), kgN = Number(d.kgN) || 23, q = fertQty(kgN, area, f), plus = fertPlus(f, q);
+        return `<button type="button" class="lv-ftag" data-vact="fert" aria-haspopup="dialog" aria-label="Change the fertilizer. Now ${esc(f.name)}, ${gradeOf(f.g)}"><span class="lv-ftag-g">${gradeOf(f.g)}</span><span class="lv-ftag-t"><small>Your fertilizer</small><b>${esc(f.name)}</b></span><span class="lv-ftag-c">Change${CHEV}</span></button>
+            <div class="lv-big"><b><i data-n="kg" data-v="${q.kg}">${num(q.kg)}</i> kg</b><span>of ${esc(f.short)} for your ${esc(areaWords(p.areaInput, p.areaUnit, area))}<em data-tl="fertilizer-bags">about <i data-n="bags" data-d="1" data-v="${q.bags}">${num(q.bags)}</i> ${bagWord(q.bags)} of 50 kg</em></span></div>
+            <div class="lv-grid3"><span data-tl="nitrogen"><b>${num(kgN)} kg</b>nitrogen per ha</span><span data-tl="kg-per-hectare"><b><i data-n="ha" data-v="${q.ha}">${num(q.ha)}</i> kg</b>${esc(f.cell)} per ha</span><span><b><i data-n="bha" data-d="1" data-v="${q.bha}">${num(q.bha)}</i></b>${bagWord(q.bha)} per ha</span></div>
+            ${plus ? `<p class="lv-fplus">${I.plus}<span>${esc(plus)}</span></p>` : ''}
+            <ul class="lv-how"><li>${I.check}<span>Spread it evenly on 2 to 3 cm of water, late in the afternoon.</span></li><li>${I.check}<span>That is the ${p.season === 'dry' ? 'dry' : 'wet'} season rate, ${num(kgN)} kg of nitrogen per hectare. ${esc(cap(f.short))} is ${f.g[0]} percent nitrogen, so it takes ${num(q.ha)} kg of it.</span></li><li>${I.check}<span>${esc(f.line)}</span></li><li>${I.check}<span>Keep reading every week. The leaves should green up.</span></li></ul>`;
+    }
+    // The saved checks list: each due check's kilos per hectare in the bag on hand.
+    function fertMeta(uha) {
+        const f = fert(), kgN = Math.round(Number(uha) * 0.46);
+        return `<b>${num(fertQty(kgN, 1, f).ha)} kg</b> ${esc(f.short)} per ha`;
+    }
+    const seasonWhy = () => { const f = fert(); return `Wet is June to November, dry is December to May. It sets the ${f.short}: ${num(fertQty(23, 1, f).ha)} kg per ha wet, ${num(fertQty(30, 1, f).ha)} kg dry.`; };
+    // Numbers count from the old bag's to the new one's, in the house easing.
+    function countIn(box, was) {
+        if (reduce()) return;
+        box.querySelectorAll('[data-n]').forEach((el) => {
+            const to = Number(el.dataset.v), from = was[el.dataset.n], dec = Number(el.dataset.d || 0);
+            if (from == null || from === to) return;
+            const t0 = performance.now(), dur = 560;
+            const step = (t) => {
+                const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+                el.textContent = num(Number((from + (to - from) * e).toFixed(dec)));
+                if (k < 1 && el.isConnected) requestAnimationFrame(step);
+            };
+            el.textContent = num(from);
+            requestAnimationFrame(step);
+        });
+    }
+    function paintFert() {
+        const box = $('lvFert');
+        if (box && VIEW) {
+            const was = {};
+            box.querySelectorAll('[data-n]').forEach((el) => { was[el.dataset.n] = Number(el.dataset.v); });
+            const d = (VIEW.item.report || {}).decision || {}, p = VIEW.item.params || {};
+            box.innerHTML = fertBody(d, p, Number(d.areaHa) || 1);
+            countIn(box, was);
+            bump(box.querySelector('.lv-ftag'), 'is-bump');
+        }
+        document.querySelectorAll('[data-uha]').forEach((el) => { el.innerHTML = fertMeta(el.dataset.uha); });
+        document.querySelectorAll('[data-nofert]').forEach((el) => { el.textContent = `No ${fert().short} this week`; });
+        if ($('lcSeasonWhy').textContent) $('lcSeasonWhy').textContent = seasonWhy();
+    }
+    function setFert(f) {
+        FERT = f;
+        try { localStorage.setItem(FKEY, JSON.stringify(f)); } catch (e) { /* private mode */ }
+        paintFert();
+    }
+    // The sheet: each bag with the kilos it takes for this field, and a row for any other bag.
+    let FS = { kgN: 23, area: 1 };
+    function fertRow(k, f, on) {
+        const q = fertQty(FS.kgN, FS.area, f);
+        return `<button type="button" class="lc-urow lc-frow" role="radio" data-f="${k}" aria-checked="${on}"><span class="u-ab">${gradeOf(f.g)}</span><span class="u-t"><b data-tl="${f.tl}">${esc(f.name)}</b><small>${esc(f.blurb)}</small></span><span class="u-q"><b>${num(q.kg)} kg</b><small>${num(q.bags)} ${bagWord(q.bags)}</small></span><span class="u-ck" aria-hidden="true">${TICK}</span></button>`;
+    }
+    function paintFertList() {
+        const own = FERT.k === 'own' ? FERT.g : null;
+        const ownQ = own ? fertQty(FS.kgN, FS.area, fert()) : null;
+        $('lcFertList').innerHTML = Object.entries(FERTS).map(([k, f]) => fertRow(k, f, FERT.k === k)).join('')
+            + `<button type="button" class="lc-urow lc-frow" role="radio" data-f="own" aria-checked="${!!own}" aria-expanded="${!!own}" aria-controls="lcFertOwn"><span class="u-ab is-own">${own ? gradeOf(own) : 'N-P-K'}</span><span class="u-t"><b data-tl="fertilizer-grade">Another bag</b><small>Type the three numbers on it</small></span><span class="u-q">${ownQ ? `<b>${num(ownQ.kg)} kg</b><small>${num(ownQ.bags)} ${bagWord(ownQ.bags)}</small>` : ''}</span><span class="u-ck" aria-hidden="true">${TICK}</span></button>
+            <div class="lc-fown${own ? ' is-on' : ''}" id="lcFertOwn"${own ? '' : ' inert'}><div><div class="lc-fown-box">
+                <div class="lc-fown-in">
+                    <label><small>Nitrogen</small><input type="number" inputmode="numeric" min="1" max="46" step="1" id="lcOwnN" value="${own ? own[0] : ''}" placeholder="21" aria-label="Nitrogen, the first number"></label><span aria-hidden="true">-</span>
+                    <label><small>Phosphorus</small><input type="number" inputmode="numeric" min="0" max="60" step="1" id="lcOwnP" value="${own ? own[1] : ''}" placeholder="0" aria-label="Phosphorus, the second number"></label><span aria-hidden="true">-</span>
+                    <label><small>Potassium</small><input type="number" inputmode="numeric" min="0" max="60" step="1" id="lcOwnK" value="${own ? own[2] : ''}" placeholder="0" aria-label="Potassium, the third number"></label>
+                </div>
+                <p class="lc-fown-out" id="lcOwnOut" aria-live="polite"></p>
+                <button type="button" class="btn btn-primary" id="lcOwnUse">Use this bag</button>
+            </div></div></div>`;
+        ownLine();
+    }
+    function ownGrade() {
+        const v = ['lcOwnN', 'lcOwnP', 'lcOwnK'].map((id) => $(id).value.trim());
+        return [v[0] === '' ? NaN : Number(v[0]), v[1] === '' ? 0 : Number(v[1]), v[2] === '' ? 0 : Number(v[2])];
+    }
+    function ownLine() {
+        const out = $('lcOwnOut');
+        if (!out) return false;
+        const g = ownGrade(), ok = okGrade(g);
+        out.classList.toggle('is-bad', !ok && $('lcOwnN').value.trim() !== '');
+        if (ok) {
+            const q = fertQty(FS.kgN, FS.area, { g });
+            out.textContent = `${gradeOf(g)} takes ${num(q.kg)} kg for your field, about ${num(q.bags)} ${bagWord(q.bags)} of 50 kg.`;
+        } else {
+            out.textContent = $('lcOwnN').value.trim() === '' ? 'The first number is the nitrogen. A bag that says 21-0-0 has 21 kg of nitrogen in every 100 kg.' : 'Use whole numbers. The first one goes from 1 to 46, the others from 0 to 60.';
+        }
+        return ok;
+    }
+    function openFert() {
+        if (!VIEW) return;
+        const d = (VIEW.item.report || {}).decision || {}, p = VIEW.item.params || {};
+        FS = { kgN: Number(d.kgN) || 23, area: Number(d.areaHa) || 1 };
+        $('lcFertSub').innerHTML = `Each one gives your ${esc(areaWords(p.areaInput, p.areaUnit, FS.area))} the same <b>${num(Math.round(FS.kgN * FS.area * 10) / 10)} kg of nitrogen</b>. A bag with less nitrogen takes more kilos.`;
+        paintFertList();
+        sheetOpen($('lcFertSheet'));
+        $('lcFertList').querySelector('[aria-checked="true"]')?.scrollIntoView({ block: 'nearest' });
+    }
+    function fertDone() { setTimeout(() => sheetClose($('lcFertSheet')), reduce() ? 0 : 180); }
+
     /* ---------------- 1. the field ---------------- */
     function paintField() {
         $('lcMethod').querySelectorAll('button').forEach((b) => { const on = b.dataset.v === st.method; b.classList.toggle('is-on', on); b.setAttribute('aria-checked', String(on)); });
@@ -983,7 +1197,7 @@
             $('lcSeasonIco').innerHTML = now === 'dry' ? I.sun : I.rain;
             $('lcSeasonLine').innerHTML = st.seasonSet ? `<b>${cap(now)} season</b>, as you set it.` : `<b>${cap(now)} season</b> crop, from the ${fmt(st.date, { month: 'long' })} planting.`;
             $('lcSeasonFlip').textContent = `Switch to ${other}`;
-            $('lcSeasonWhy').textContent = 'Wet is June to November, dry is December to May. It sets the urea: 50 kg per ha wet, 65 kg dry.';
+            $('lcSeasonWhy').textContent = seasonWhy();
         } else {
             $('lcDateNow').textContent = 'Pick the date';
             $('lcDateSub').textContent = st.method === 'dsr' ? 'The day the seeds were sown' : 'The day the seedlings went in';
@@ -1254,7 +1468,7 @@
         const seasonName = p.season === 'dry' ? 'dry' : 'wet';
         const head = {
             due: ['Time for nitrogen', `${below} of ${n} leaves read below panel ${crit}. That is more than half, so your rice wants nitrogen now.`],
-            ok: ['No nitrogen yet', `${below} of ${n} leaves read below panel ${crit}. That is not more than half, so hold the urea for now.`],
+            ok: ['No nitrogen yet', `${below} of ${n} leaves read below panel ${crit}. That is not more than half, so hold the ${fert().short} for now.`],
             early: ['Too early to read', `Young rice leaves are pale anyway. Readings start ${d.startDay || (dsr ? 21 : 14)} days after ${wd}${days != null ? `, and your rice is at day ${days}` : ''}.`],
             late: ['Past the nitrogen window', 'Your rice is at or past its first flowers. Nitrogen now feeds leaves, not grain, and invites pests and lodging. Keep the water steady instead.'],
         }[v];
@@ -1269,11 +1483,8 @@
         const eyebrow = [esc(String(r.at || '').replace(/,? \d{4}.*$/, '')), days != null ? esc(`${days} ${dw}`) + tl(dsr ? 'das' : 'dat') : '', r.mode === 'anee' ? 'Read by Anee' : 'Your chart'].filter(Boolean).join(' · ');
         out.push(`<section class="lv-hero is-${v} lv-in" ${K()}><div class="lv-top"><span class="lv-ico">${VICON[v]}</span><span class="lv-eyebrow">${eyebrow}</span></div><h2 data-tl="${v === 'due' || v === 'ok' ? 'nitrogen' : 'nitrogen-window'}">${head[0]}</h2><p>${head[1]}</p>${meter}</section>`);
         if (v === 'due') {
-            const area = Number(d.areaHa) || 1;
-            out.push(`<section class="lv-card lv-in" ${K()}><h3>${I.sack}<span data-tl="urea">How much urea</span></h3>
-                <div class="lv-big"><b>${num(d.ureaForArea)} kg</b><span>of urea for your ${esc(areaWords(p.areaInput, p.areaUnit, area))}<em data-tl="fertilizer-bags">about ${num(d.bagsForArea)} ${Number(d.bagsForArea) === 1 ? 'bag' : 'bags'} of 50 kg</em></span></div>
-                <div class="lv-grid3"><span data-tl="nitrogen"><b>${num(d.kgN)} kg</b>nitrogen per ha</span><span data-tl="kg-per-hectare"><b>${num(d.ureaPerHa)} kg</b>urea per ha</span><span><b>${num(d.bagsPerHa)}</b>${Number(d.bagsPerHa) === 1 ? 'bag' : 'bags'} per ha</span></div>
-                <ul class="lv-how"><li>${I.check}<span>Spread it evenly on 2 to 3 cm of water, late in the afternoon.</span></li><li>${I.check}<span>That is the ${seasonName} season rate, ${num(d.kgN)} kg of nitrogen per hectare. Urea is 46 percent nitrogen.</span></li><li>${I.check}<span>Keep reading every week. The leaves should green up.</span></li></ul></section>`);
+            // Not only urea (2026-10-15, the owner): the tag picks the bag on hand and the kilos follow it.
+            out.push(`<section class="lv-card lv-in" ${K()}><h3>${I.sack}<span data-tl="granular-fertilizer">How much fertilizer</span></h3><div id="lvFert">${fertBody(d, p, Number(d.areaHa) || 1)}</div></section>`);
         }
         const tiles = a && (a.leaves || []).length ? a.leaves.map((l) => ({ n: l.n, p: l.panel })) : panels.map((x, i) => ({ n: i + 1, p: x }));
         if (tiles.length) {
@@ -1346,7 +1557,34 @@
         if (b.dataset.vact === 'new') { closeView(); newCheck(); }
         if (b.dataset.vact === 'ren') openRename(VIEW.item.id);
         if (b.dataset.vact === 'del') delCheck(VIEW.item.id);
+        if (b.dataset.vact === 'fert') openFert();
     });
+    $('lcFertList').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-f]');
+        if (b && b.dataset.f !== 'own') {
+            $('lcFertList').querySelectorAll('[data-f]').forEach((x) => x.setAttribute('aria-checked', String(x === b)));
+            setFert({ k: b.dataset.f });
+            fertDone();
+            return;
+        }
+        if (b) {
+            // Another bag: open its three numbers. It counts once "Use this bag" is tapped.
+            const box = $('lcFertOwn'), on = !box.classList.contains('is-on');
+            box.classList.toggle('is-on', on);
+            box.inert = !on;
+            b.setAttribute('aria-expanded', String(on));
+            if (on && matchMedia('(pointer: fine)').matches) setTimeout(() => $('lcOwnN').focus({ preventScroll: true }), 60);
+            if (on) setTimeout(() => box.scrollIntoView({ block: 'nearest', behavior: reduce() ? 'auto' : 'smooth' }), reduce() ? 0 : 280);
+            return;
+        }
+        if (e.target.closest('#lcOwnUse')) {
+            if (!ownLine()) { bump($('lcOwnOut'), 'is-shake'); $('lcOwnN').focus(); return; }
+            setFert({ k: 'own', g: ownGrade() });
+            fertDone();
+        }
+    });
+    $('lcFertList').addEventListener('input', (e) => { if (e.target.closest('.lc-fown-in')) ownLine(); });
+    $('lcFertList').addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.closest('.lc-fown-in')) { e.preventDefault(); $('lcOwnUse').click(); } });
     function newCheck() {
         st.chart = Array(10).fill(null); st.cur = 0; st.shots = [];
         paintChartState(); paintShots();
@@ -1368,8 +1606,8 @@
         const v = VERD[r.verdict] || VERD.ok;
         const meta = [];
         if (r.days != null) meta.push(`<span><b>${r.days}</b> ${r.dayWord}</span>`);
-        if (r.verdict === 'due' && r.ureaPerHa) meta.push(`<span><b>${num(r.ureaPerHa)} kg</b> urea per ha</span>`);
-        else if (r.verdict === 'ok') meta.push('<span>No urea this week</span>');
+        if (r.verdict === 'due' && r.ureaPerHa) meta.push(`<span data-uha="${Number(r.ureaPerHa)}">${fertMeta(r.ureaPerHa)}</span>`);
+        else if (r.verdict === 'ok') meta.push(`<span data-nofert>No ${esc(fert().short)} this week</span>`);
         if (r.leaves) meta.push(`<span>${r.below} of ${r.leaves} pale</span>`);
         const dots = (r.panels || []).length ? `<div class="lc-ck-dots" aria-hidden="true">${r.panels.map((p) => `<i style="--c:${panelBg(p)}" class="${r.critical && p < r.critical ? 'is-low' : ''}"></i>`).join('')}</div>` : '';
         const isNew = !LIST.seen.has(r.id);
