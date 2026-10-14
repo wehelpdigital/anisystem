@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Session;
  * The members' gate on the field guides (2026-10-14, the owner's ask): the
  * crop guides, the crop and rice varieties, land preparation, pests, diseases
  * and weeds open in full to anyone signed in to anee.io. A guest reads the
- * opening of each page (enough to see what the page answers) and the rest is
- * blurred under an invitation to sign up free.
+ * first paragraph of each page and the rest is blurred under an invitation
+ * to register for free (split()).
  *
  * Search engines read the whole page: the full text is in the HTML for every
  * visitor (no cloaking), and the page's structured data says which part is
@@ -80,37 +80,45 @@ class ContentGate
     }
 
     /**
-     * Where a page's blocks are cut: the opening a guest reads is the
-     * blocks before the cut. The cut falls on a section heading, after at
-     * least about 110 words, and leaves at least two sections behind it.
-     * Returns null when the page is too short to gate.
+     * Where a page opens and where its gate starts (2026-10-14, the owner:
+     * "after the first paragraph"). A guest reads everything up to and
+     * including the first paragraph of the page's first text block (a
+     * heading before it stays with it); the rest, from that block's second
+     * paragraph on, is the gated part, still in the HTML for search engines.
+     * Keys are kept, so the headings' anchors match the contents; a split
+     * text block's remainder rides under its own key ("5:rest"). Null when
+     * there is no paragraph, or too little after it to gate.
+     *
+     * @return array{open: array, gated: array}|null
      */
-    public static function cut(array $blocks): ?int
+    public static function split(array $blocks): ?array
     {
-        $blocks = array_values($blocks);
-        $h2 = [];
-        $words = [];
-        $run = 0;
-        foreach ($blocks as $i => $b) {
-            $words[$i] = $run;
-            if (($b['type'] ?? '') === 'heading' && (int) ($b['level'] ?? 2) === 2) {
-                $h2[] = $i;
+        $open = [];
+        $gated = [];
+        $found = false;
+        foreach ($blocks as $k => $b) {
+            if ($found) {
+                $gated[$k] = $b;
+
+                continue;
             }
-            $run += self::words($b);
+            if (($b['type'] ?? '') === 'text' && trim((string) ($b['text'] ?? '')) !== '') {
+                $found = true;
+                $paras = preg_split('/\n\s*\n/', trim((string) $b['text']));
+                $open[$k] = ['text' => array_shift($paras)] + $b;
+                if ($paras) {
+                    $gated[$k . ':rest'] = ['text' => implode("\n\n", $paras)] + $b;
+                }
+
+                continue;
+            }
+            $open[$k] = $b;
         }
-        $total = max(1, $run);
-        if (count($h2) < 3) {
+        if (! $found || self::wordsFrom(array_values($gated), 0) < 40) {
             return null;
         }
-        foreach (array_slice($h2, 1) as $k => $i) {
-            $left = count($h2) - ($k + 1);
-            if ($words[$i] >= 110 && $left >= 2) {
-                return $i;
-            }
-        }
 
-        // Every section short: the cut after the second, if two are left.
-        return count($h2) >= 4 ? $h2[1] : null;
+        return ['open' => $open, 'gated' => $gated];
     }
 
     /**

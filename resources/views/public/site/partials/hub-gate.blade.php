@@ -1,9 +1,8 @@
 {{-- The members' gate on a finder or catalogue (2026-10-14, the owner):
      /pests, /diseases, /weeds, /rice-varieties and every crop's variety
-     finder. The search and the filters still work for a guest, but the
-     first row of what matches shows clear, a blur starts halfway down the
-     second row and covers the third, and the rest is held back under the
-     members' card. Every card stays in the HTML, so search engines read
+     finder. The search and the filters still work for a guest, but the blur
+     starts 30 percent down the first row of what matches and covers the
+     second, and the rest is held back under the members' card. Every card stays in the HTML, so search engines read
      every link.
 
      It also moves the cards (window.aneeFlip): a search or a filter slides
@@ -60,12 +59,11 @@
     // An element's top inside the wrapper, without the moves in flight.
     const topIn = (el, wrap) => { let y = 0; for (let n = el; n && n !== wrap; n = n.offsetParent) y += n.offsetTop; return y; };
 
-    /* The gate: the first row of what matches stays clear; the blur starts
-       halfway down the second row (halfway down the only row, when one row
-       is all there is) and covers the third; anything after the third row
-       waits behind the card. Rows are read from where the cards actually
-       sit, so a grid, a single column and a wrapping row of chips all
-       count alike (and a crop chip's CSS order is followed). */
+    /* The gate (2026-10-14, the owner): the blur starts 30 percent down the
+       first row of what matches and covers the second; anything after the
+       second row waits behind the card. Rows are read from where the cards
+       actually sit, so a grid, a single column and a wrapping row of chips
+       all count alike (and a crop chip's CSS order is followed). */
     const lock = (grid) => {
         const wrap = grid && grid.closest('[data-hg]');
         if (!wrap) return;
@@ -86,7 +84,7 @@
         };
         const rowOf = (c) => { const t = at.get(c); let r = 0; tops.forEach((x, i) => { if (t >= x - 4) r = i; }); return r; };
         measure(on);
-        on.forEach((c) => { if (rowOf(c) >= 3) c.classList.add('hg-cut'); });
+        on.forEach((c) => { if (rowOf(c) >= 2) c.classList.add('hg-cut'); });
         // Holding rows back can move what is left (an answer box that
         // centres its content), so the rows that stay are read again.
         const kept = on.filter((c) => !c.classList.contains('hg-cut'));
@@ -94,10 +92,9 @@
         let veil = wrap.querySelector(':scope > .hg-veil');
         if (!veil) { veil = document.createElement('div'); veil.className = 'hg-veil'; veil.setAttribute('aria-hidden', 'true'); wrap.appendChild(veil); }
         let held = 0;
-        if (on.length > 1) {
-            const r = tops.length > 1 ? 1 : 0;
-            const row = kept.filter((c) => rowOf(c) === r);
-            const from = Math.round(tops[r] + Math.max(...row.map((c) => c.offsetHeight)) / 2);
+        if (on.length) {
+            const row = kept.filter((c) => rowOf(c) === 0);
+            const from = Math.round(tops[0] + Math.max(...row.map((c) => c.offsetHeight)) * 0.3);
             const bottom = topIn(grid, wrap) + grid.offsetHeight;
             veil.style.top = from + 'px';
             veil.style.height = Math.max(0, bottom - from) + 'px';
@@ -111,7 +108,11 @@
         wrap.classList.toggle('has-locked', held > 0);
         if (foot) {
             const noun = held === 1 ? wrap.dataset.hgOne : wrap.dataset.hgMany;
-            foot.textContent = !held ? '' : wrap.dataset.hgFoot || (on.length < cards.length ? held + ' more ' + noun + ' match what you picked' : 'And ' + held + ' more ' + noun + ' waiting for you');
+            // Every card is behind the blur now, so the count is all of them.
+            const more = held < on.length ? ' more ' : ' ';
+            foot.textContent = !held ? '' : wrap.dataset.hgFoot || (on.length < cards.length
+                ? held + more + noun + (held === 1 ? ' matches' : ' match') + ' what you picked'
+                : (held < on.length ? 'And ' + held + ' more ' : held + ' ') + noun + ' waiting for you');
         }
     };
 

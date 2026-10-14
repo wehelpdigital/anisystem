@@ -40,7 +40,7 @@ class PageSchema
         $seoTitle = trim((string) ($page->metaTitle ?: $page->title));
         $description = (string) ($page->metaDescription ?: Str::limit(SitePages::plain($page->excerpt), 155));
         $sectionUrl = $isFeature ? route('features') : SitePages::url($page->section);
-        $gated = ContentGate::gatedSection($page->section) && ContentGate::cut($blocks) !== null;
+        $gated = ContentGate::gatedSection($page->section) && ContentGate::split($blocks) !== null;
 
         $graph = [[
             '@type' => 'Organization',
