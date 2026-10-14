@@ -158,12 +158,18 @@ class ContentGate
     /** The section headings behind the gate: what a guest is invited to. */
     public static function behind(array $blocks, int $cut): array
     {
+        // The sections a guest would see in the contents: the H2 headings.
+        // A questions block counts only when no heading of its own names it
+        // (it usually sits under "Questions farmers ask about ...", which
+        // made the card say one section more than the page has).
         $out = [];
+        $headed = false;
         foreach (array_slice($blocks, $cut, null, true) as $b) {
-            if (($b['type'] ?? '') === 'heading' && trim((string) ($b['text'] ?? '')) !== '' && (int) ($b['level'] ?? 2) === 2) {
+            $type = $b['type'] ?? '';
+            if ($type === 'heading' && trim((string) ($b['text'] ?? '')) !== '' && (int) ($b['level'] ?? 2) === 2) {
                 $out[] = (string) $b['text'];
-            }
-            if (($b['type'] ?? '') === 'faq') {
+                $headed = true;
+            } elseif ($type === 'faq' && ! $headed) {
                 $out[] = 'Questions farmers ask, answered';
             }
         }
