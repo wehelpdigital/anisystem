@@ -739,6 +739,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/lcc-checker/manual', [App\Http\Controllers\LccCheckerController::class, 'manual'])->name('lcc.manual');
     Route::post('/app/lcc-checker/generate', [App\Http\Controllers\LccCheckerController::class, 'generate'])->name('lcc.generate');
     Route::get('/app/lcc-checker/job/{id}', [App\Http\Controllers\LccCheckerController::class, 'job'])->whereNumber('id')->name('lcc.job');
+    Route::get('/app/lcc-checker/one/{id}', [App\Http\Controllers\LccCheckerController::class, 'one'])->whereNumber('id')->name('lcc.one');
+    Route::get('/app/lcc-checker/list', [App\Http\Controllers\LccCheckerController::class, 'list'])->name('lcc.list');
+    Route::post('/app/lcc-checker/rename', [App\Http\Controllers\LccCheckerController::class, 'rename'])->name('lcc.rename');
     Route::delete('/app/lcc-checker/{id}', [App\Http\Controllers\LccCheckerController::class, 'destroy'])->whereNumber('id')->name('lcc.delete');
     Route::get('/app/variety-research', [App\Http\Controllers\VarietyAnalysisController::class, 'page'])->name('vary.page');
     Route::get('/app/variety-research/options', [App\Http\Controllers\VarietyAnalysisController::class, 'options'])->name('vary.options');

@@ -8,6 +8,7 @@ use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Support\AiPrices;
 use App\Support\AiUsage;
+use App\Support\RiceVarieties;
 use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
@@ -20,13 +21,13 @@ use Illuminate\Support\Facades\Validator;
 /**
  * The LCC Checker (2026-10-14): the leaf color chart, read for the farmer.
  *
- * The leaf color chart is PhilRice and IRRI's way to time nitrogen on rice:
- * from 14 days after transplanting (21 after sowing for direct wet seeded
- * rice) and every week until the first flowers, read the youngest fully
- * opened leaf of 10 hills against the chart's green panels; when more than
- * half read below the critical panel (4 for transplanted rice, 3 for direct
- * wet seeded), top dress about 23 kg of nitrogen per hectare in the wet
- * season or 30 kg in the dry season.
+ * The leaf color chart is PhilRice and IRRI's way to time nitrogen on rice
+ * (rice only): from 14 days after transplanting (21 after sowing for direct
+ * wet seeded rice) and every week until the first flowers, read the youngest
+ * fully opened leaf of 10 hills against the chart's green panels; when more
+ * than half read below the critical panel (4 for transplanted rice, 3 for
+ * direct wet seeded), top dress about 23 kg of nitrogen per hectare in the
+ * wet season or 30 kg in the dry season.
  *
  * Two ways in. A farmer with a chart taps each leaf's panel: free, the rule
  * above does the rest. Without a chart, they photograph the leaves on white
@@ -37,8 +38,17 @@ use Illuminate\Support\Facades\Validator;
  * from her panels whether nitrogen is due and how much urea that is for
  * the farmer's area.
  *
+ * The field (2026-10-14, second pass): the farmer gives the planting date
+ * (transplanting, or sowing for direct seeded rice), and the crop's age in
+ * days (DAT or DAS) is counted here from it, Manila time. The season comes
+ * from the planting month (wet June to November, dry December to May) unless
+ * the farmer flipped it. The variety comes from the rice variety catalogue
+ * with its own days to maturity, or the farmer picks a maturity class; either
+ * way the days to maturity date the first flowers, which close the window.
+ *
  * Kept on the analyses shelf (as_plant_analyses, kind 'lcc'); the photos are
- * never stored, only what was read from them.
+ * never stored, only what was read from them. Rows written before the second
+ * pass carry `season` and `days` without a planting date and stay readable.
  */
 class LccCheckerController extends Controller
 {
@@ -51,9 +61,46 @@ class LccCheckerController extends Controller
 
     public const MATURITY = ['early' => 'Early, about 100 to 110 days', 'medium' => 'Medium, about 111 to 120 days', 'late' => 'Late, about 121 to 130 days'];
 
+    /** A maturity class's middle, in days from sowing, when no variety names its own. */
+    public const MATURITY_DAYS = ['early' => 105, 'medium' => 115, 'late' => 125];
+
+    /** The seedling's age at transplanting: the days from sowing a transplanted crop spent in the seedbed. */
+    public const SEEDLING_DAYS = 20;
+
+    /** The furthest back a planting date may be. */
+    public const MAX_DAYS = 200;
+
     public function page()
     {
-        return view('lcc-checker.index');
+        return view('lcc-checker.index', [
+            'varieties' => self::varieties(),
+            'today' => now('Asia/Manila')->toDateString(),
+        ]);
+    }
+
+    /**
+     * The rice variety catalogue, as small as the picker needs it: name,
+     * local name, trade names, days to maturity, hybrid or not, popular.
+     */
+    public static function varieties(): array
+    {
+        $rows = [];
+        foreach (RiceVarieties::all() as $v) {
+            $days = (int) round((float) ($v['maturity'] ?? 0));
+            if (empty($v['name']) || $days < 60 || $days > 200) {
+                continue;
+            }
+            $rows[] = [
+                'n' => (string) $v['name'],
+                'l' => (string) ($v['localName'] ?? ''),
+                't' => implode(', ', array_filter((array) ($v['tradeNames'] ?? []), 'is_string')),
+                'd' => $days,
+                'h' => ($v['type'] ?? '') === 'hybrid' ? 1 : 0,
+                'p' => ! empty($v['preferred']) ? 1 : 0,
+            ];
+        }
+
+        return $rows;
     }
 
     public function options()
@@ -61,7 +108,6 @@ class LccCheckerController extends Controller
         $payer = $this->payer();
         $credits = app(AiCreditService::class);
         $settings = AiSetting::current();
-        $month = (int) now('Asia/Manila')->format('n');
 
         return $this->json(true, 'ok', [
             'price' => AiPrices::of(self::KIND),
@@ -74,24 +120,40 @@ class LccCheckerController extends Controller
             'panels' => self::PANELS,
             'methods' => self::METHODS,
             'maturity' => self::MATURITY,
-            'season' => ($month >= 5 && $month <= 10) ? 'wet' : 'dry',
-            'history' => $this->history(),
-        ]);
+            'today' => now('Asia/Manila')->toDateString(),
+        ] + $this->shelf(1));
+    }
+
+    /** Wet for a crop planted June to November, dry for December to May. */
+    public static function seasonOf(int $month): string
+    {
+        return ($month >= 6 && $month <= 11) ? 'wet' : 'dry';
+    }
+
+    /** A maturity class from a variety's days to maturity. */
+    public static function classOf(int $days): string
+    {
+        return $days <= 110 ? 'early' : ($days <= 120 ? 'medium' : 'late');
     }
 
     /**
      * The rule, from panels: is nitrogen due, and how much. The decision is
      * this arithmetic, never the model's.
+     *
+     * The window closes at the first flowers, about 30 days before harvest:
+     * the days to maturity count from sowing, so a transplanted crop's
+     * flowering in days after transplanting also loses its time in the
+     * seedbed (SEEDLING_DAYS).
      */
-    public static function decide(array $panels, string $method, string $season, ?int $days, ?string $maturity, float $areaHa): array
+    public static function decide(array $panels, string $method, string $season, ?int $days, ?string $maturity, float $areaHa, ?int $maturityDays = null, ?string $plantingDate = null): array
     {
         $panels = array_values(array_filter(array_map('floatval', $panels), fn ($p) => $p >= 1 && $p <= 6));
         $critical = $method === 'dsr' ? 3.0 : 4.0;
         $n = count($panels);
         $below = count(array_filter($panels, fn ($p) => $p < $critical));
         $start = $method === 'dsr' ? 21 : 14;
-        // Flowering comes about 30 days before harvest; after it, no more nitrogen.
-        $flower = ['early' => 75, 'medium' => 85, 'late' => 95][$maturity ?? ''] ?? null;
+        $matDays = $maturityDays ?: (self::MATURITY_DAYS[$maturity ?? ''] ?? null);
+        $flower = $matDays ? max($start + 7, $matDays - 30 - ($method === 'dsr' ? 0 : self::SEEDLING_DAYS)) : null;
         $kgN = $season === 'dry' ? 30 : 23;
         $urea = (int) round($kgN / 0.46);
         $stage = 'on';
@@ -103,14 +165,33 @@ class LccCheckerController extends Controller
         $due = $stage === 'on' && $n > 0 && $below > $n / 2;
         $area = max(0.0001, $areaHa);
 
+        // The next reading: the window's first day while it is too early, a
+        // week on while it is open, none once the first flowers are near.
+        $today = now('Asia/Manila')->startOfDay();
+        $next = null;
+        $lastWeek = false;
+        if ($stage === 'early') {
+            $next = $today->copy()->addDays($start - (int) $days);
+        } elseif ($stage === 'on') {
+            if ($flower && $days !== null && $days + 7 >= $flower) {
+                $lastWeek = true;
+            } else {
+                $next = $today->copy()->addDays(7);
+            }
+        }
+        $planted = $plantingDate ? Carbon::createFromFormat('!Y-m-d', $plantingDate, 'Asia/Manila') : null;
+
         return [
             'critical' => $critical,
             'leaves' => $n,
             'below' => $below,
             'average' => $n ? round(array_sum($panels) / $n, 1) : null,
             'stage' => $stage,
+            'days' => $days,
+            'dayWord' => $method === 'dsr' ? 'DAS' : 'DAT',
             'startDay' => $start,
             'flowerDay' => $flower,
+            'flowerDate' => $planted && $flower ? $planted->copy()->addDays($flower)->format('M j') : null,
             'due' => $due,
             'kgN' => $kgN,
             'ureaPerHa' => $urea,
@@ -118,7 +199,9 @@ class LccCheckerController extends Controller
             'areaHa' => round($area, 4),
             'ureaForArea' => (int) round($urea * $area),
             'bagsForArea' => round($urea * $area / 50, 1),
-            'nextCheck' => now('Asia/Manila')->addDays(7)->format('D, M j'),
+            'nextCheck' => $next?->format('D, M j'),
+            'nextCheckIso' => $next?->toDateString(),
+            'lastWeek' => $lastWeek,
         ];
     }
 
@@ -130,16 +213,17 @@ class LccCheckerController extends Controller
             return $v;
         }
         $case = $this->case($request);
-        $decision = self::decide((array) $request->input('panels'), $case['method'], $case['season'], $case['days'], $case['maturity'], $case['areaHa']);
+        $decision = $this->decideFor((array) $request->input('panels'), $case);
         $report = ['mode' => 'chart', 'decision' => $decision, 'panels' => array_map('floatval', (array) $request->input('panels')),
             'at' => now('Asia/Manila')->format('M j, Y g:i A')];
+        $title = mb_substr($this->title($case), 0, 190);
         $id = DB::table('as_plant_analyses')->insertGetId([
-            'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($this->title($case, $decision), 0, 190),
+            'userId' => Auth::id(), 'kind' => self::KIND, 'title' => $title,
             'params' => json_encode($case), 'report' => json_encode($report), 'credits' => 0, 'status' => 'ready', 'deleteStatus' => 1,
             'created_at' => now(), 'updated_at' => now(),
         ]);
 
-        return $this->json(true, 'Saved.', ['status' => 'ready', 'id' => $id, 'report' => $report, 'params' => $case, 'history' => $this->history()]);
+        return $this->json(true, 'Saved.', ['status' => 'ready', 'id' => $id, 'title' => $title, 'report' => $report, 'params' => $case, 'charged' => 0] + $this->shelf(1));
     }
 
     /** Anee reads the leaf photos (one picture of up to 12 numbered tiles). */
@@ -213,18 +297,23 @@ class LccCheckerController extends Controller
             }
             $anee = $result['data'];
             $panels = array_values(array_filter(array_map(fn ($l) => $l['panel'] ?? null, $anee['leaves']), fn ($p) => $p !== null));
-            $decision = self::decide($panels, $case['method'], $case['season'], $case['days'], $case['maturity'], $case['areaHa']);
+            $decision = $this->decideFor($panels, $case);
             $price = (float) AiPrices::of(self::KIND);
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
             app(AiCreditService::class)->chargeAllowingNegative($payerId, $price, mb_substr('LCC Checker: ' . count($panels) . ' leaves' . $note, 0, 250));
             $report = ['mode' => 'anee', 'decision' => $decision, 'panels' => $panels, 'anee' => $anee, 'at' => now('Asia/Manila')->format('M j, Y g:i A')];
-            DB::table('as_plant_analyses')->where('id', $id)->update(['title' => mb_substr($this->title($case, $decision), 0, 190), 'report' => json_encode($report),
+            DB::table('as_plant_analyses')->where('id', $id)->update(['title' => mb_substr($this->title($case), 0, 190), 'report' => json_encode($report),
                 'credits' => round($price, 2), 'status' => 'ready', 'error' => null, 'updated_at' => now()]);
         } catch (\Throwable $e) {
             report($e);
             DB::table('as_plant_analyses')->where('id', $id)->update(['status' => 'failed', 'error' => mb_substr($e->getMessage(), 0, 500), 'updated_at' => now()]);
         }
+    }
+
+    private function decideFor(array $panels, array $case): array
+    {
+        return self::decide($panels, $case['method'], $case['season'], $case['days'], $case['maturity'], $case['areaHa'], $case['maturityDays'] ?? null, $case['plantingDate'] ?? null);
     }
 
     private function prompt(array $case): string
@@ -236,13 +325,15 @@ class LccCheckerController extends Controller
             }
         }
         $critical = $case['method'] === 'dsr' ? 3 : 4;
+        $maturity = ! empty($case['maturityDays']) ? ' (about ' . $case['maturityDays'] . ' days from sowing to harvest)'
+            : (! empty($case['maturity']) ? ' (' . strtolower(self::MATURITY[$case['maturity']] ?? '') . ' to harvest)' : '');
 
         return 'You are Anee, a smart farm technician for rice farmers in the Philippines, reading a farmer\'s rice leaves the way a leaf color chart (LCC) is read. '
             . 'The picture holds ' . $case['leaves'] . ' numbered tiles, one leaf each, photographed by the farmer (ideally on white paper, shaded). '
             . "The standard 4 panel LCC: panel 2 is a pale yellowish green, 3 a light green, 4 a medium green, 5 a deep dark green. A leaf between two panels reads as the half (for example 3.5).\n\n"
             . 'The case: ' . self::METHODS[$case['method']] . ' rice, ' . $case['season'] . ' season'
             . ($case['days'] !== null ? ', ' . $case['days'] . ' days after ' . ($case['method'] === 'dsr' ? 'sowing' : 'transplanting') : ', crop age not given')
-            . ($case['variety'] !== '' ? ', variety ' . $case['variety'] : '') . '. The critical panel for this crop is ' . $critical . ".\n"
+            . ($case['variety'] !== '' ? ', variety ' . $case['variety'] : '') . $maturity . '. The critical panel for this crop is ' . $critical . ".\n"
             . ($dg ? 'The app measured each photo\'s dark green color index (DGCI, 0 to 1, higher is darker green; it varies with light, so weigh it as relative): ' . implode('; ', $dg) . ".\n" : '')
             . ($case['notes'] !== '' ? 'The farmer adds: ' . $case['notes'] . "\n" : '')
             . "\nRULES: Give each tile the LCC panel its leaf matches (2, 2.5, 3, 3.5, 4, 4.5 or 5), reading the middle of the leaf blade, not the tip or the edge. "
@@ -307,64 +398,183 @@ class LccCheckerController extends Controller
             return $this->json(false, $r->error ?: 'The reading failed and nothing was charged. Please try again.', ['status' => 'failed'], 502);
         }
 
-        return $this->json(true, 'Ready.', ['status' => 'ready', 'id' => (int) $r->id, 'report' => json_decode((string) $r->report, true),
+        return $this->json(true, 'Ready.', ['status' => 'ready', 'id' => (int) $r->id, 'title' => $r->title, 'report' => json_decode((string) $r->report, true),
             'params' => json_decode((string) $r->params, true), 'charged' => (float) $r->credits,
-            'balance' => round((float) app(AiCreditService::class)->balance($this->payer()->id), 2), 'history' => $this->history()]);
+            'balance' => round((float) app(AiCreditService::class)->balance($this->payer()->id), 2)] + $this->shelf(1));
+    }
+
+    /** One saved check, to open again in the full screen view. */
+    public function one(int $id)
+    {
+        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)
+            ->where('status', 'ready')->where('deleteStatus', 1)->first();
+        if (! $r) {
+            return $this->json(false, 'That check is gone.', [], 404);
+        }
+
+        return $this->json(true, 'ok', ['id' => (int) $r->id, 'title' => $r->title, 'report' => json_decode((string) $r->report, true),
+            'params' => json_decode((string) $r->params, true), 'charged' => (float) $r->credits]);
+    }
+
+    /** More of the farmer's checks, a page at a time. */
+    public function list(Request $request)
+    {
+        return $this->json(true, 'ok', $this->shelf(max(1, (int) $request->query('page', 1))));
+    }
+
+    /** Give a saved check the farmer's own name. */
+    public function rename(Request $request)
+    {
+        $title = trim(preg_replace('/\s+/u', ' ', (string) $request->input('title')) ?? '');
+        if ($title === '' || mb_strlen($title) > 120) {
+            return $this->json(false, 'Give it a name of up to 120 letters.', [], 422);
+        }
+        $n = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', (int) $request->input('id'))
+            ->where('deleteStatus', 1)->update(['title' => $title, 'updated_at' => now()]);
+        if (! $n) {
+            return $this->json(false, 'That check is not in your list.', [], 404);
+        }
+
+        return $this->json(true, 'Renamed.', ['title' => $title] + $this->shelf(1));
     }
 
     public function destroy(int $id)
     {
         DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-        return $this->json(true, 'Deleted.', ['history' => $this->history()]);
+        return $this->json(true, 'Deleted.', $this->shelf(1));
     }
 
-    /** The farmer's last readings, newest first. */
-    private function history(): array
+    /**
+     * The farmer's checks, newest first, as cards: what the list shows
+     * without opening one (the verdict, the crop's age, the urea, the
+     * panels). Twelve to a page.
+     */
+    private function shelf(int $page): array
     {
-        return DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
-            ->orderByDesc('id')->limit(20)->get(['id', 'title', 'credits', 'created_at'])
-            ->map(fn ($r) => ['id' => (int) $r->id, 'title' => $r->title, 'credits' => (float) $r->credits,
-                'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A')])->values()->all();
+        $per = 12;
+        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
+            ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'title', 'credits', 'report', 'params', 'created_at']);
+
+        return [
+            'history' => $rows->take($per)->map(fn ($r) => self::card($r))->values()->all(),
+            'hasMore' => $rows->count() > $per,
+            'page' => $page,
+        ];
+    }
+
+    private static function card(object $r): array
+    {
+        $rep = json_decode((string) $r->report, true) ?: [];
+        $p = json_decode((string) $r->params, true) ?: [];
+        $d = (array) ($rep['decision'] ?? []);
+        $at = Carbon::parse($r->created_at)->timezone('Asia/Manila');
+
+        return [
+            'id' => (int) $r->id,
+            'title' => (string) $r->title,
+            'credits' => (float) $r->credits,
+            'mode' => ($rep['mode'] ?? 'chart') === 'anee' ? 'anee' : 'chart',
+            'verdict' => self::verdict($d),
+            'day' => $at->format('j'),
+            'month' => $at->format('M'),
+            'at' => $at->format('M j, Y g:i A'),
+            'days' => isset($p['days']) && is_numeric($p['days']) ? (int) $p['days'] : null,
+            'dayWord' => ($p['method'] ?? 'tpr') === 'dsr' ? 'DAS' : 'DAT',
+            'ureaPerHa' => $d['ureaPerHa'] ?? null,
+            'ureaForArea' => $d['ureaForArea'] ?? null,
+            'areaHa' => $d['areaHa'] ?? null,
+            'below' => $d['below'] ?? null,
+            'leaves' => $d['leaves'] ?? null,
+            'critical' => $d['critical'] ?? null,
+            'panels' => array_values(array_slice(array_map('floatval', (array) ($rep['panels'] ?? [])), 0, 12)),
+            'variety' => (string) ($p['variety'] ?? ''),
+        ];
+    }
+
+    /** The answer in one word: due, ok, early or late. */
+    public static function verdict(array $d): string
+    {
+        return match ($d['stage'] ?? 'on') {
+            'early' => 'early',
+            'late' => 'late',
+            default => ! empty($d['due']) ? 'due' : 'ok',
+        };
     }
 
     private function validateCase(Request $request, array $more)
     {
         $v = Validator::make($request->all(), [
             'method' => 'required|in:' . implode(',', array_keys(self::METHODS)),
-            'season' => 'required|in:wet,dry',
-            'days' => 'nullable|integer|min:0|max:200',
+            'plantingDate' => 'required|date_format:Y-m-d',
+            'season' => 'nullable|in:wet,dry',
             'maturity' => 'nullable|in:' . implode(',', array_keys(self::MATURITY)),
+            'maturityDays' => 'nullable|integer|min:60|max:200',
             'areaHa' => 'nullable|numeric|min:0.0001|max:10000',
             'variety' => 'nullable|string|max:60',
             'notes' => 'nullable|string|max:400',
-        ] + $more);
+        ] + $more, [
+            'plantingDate.required' => 'Pick the day the rice was ' . ($request->input('method') === 'dsr' ? 'sown.' : 'transplanted.'),
+            'plantingDate.date_format' => 'Pick the planting date again.',
+        ]);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        $days = self::daysSince((string) $request->input('plantingDate'));
+        if ($days === null || $days < 0) {
+            return $this->json(false, 'The planting date cannot be after today.', [], 422);
+        }
+        if ($days > self::MAX_DAYS) {
+            return $this->json(false, 'That planting date is more than ' . self::MAX_DAYS . ' days ago. Pick a date for the rice in the field now.', [], 422);
+        }
 
-        return $v->fails() ? $this->json(false, $v->errors()->first(), [], 422) : null;
+        return null;
+    }
+
+    /** Whole days from a planting date to today, Manila time. */
+    public static function daysSince(string $date): ?int
+    {
+        try {
+            $d = Carbon::createFromFormat('!Y-m-d', $date, 'Asia/Manila');
+        } catch (\Throwable) {
+            return null;
+        }
+        if (! $d || $d->format('Y-m-d') !== $date) {
+            return null;
+        }
+
+        return (int) round($d->diffInDays(now('Asia/Manila')->startOfDay(), false));
     }
 
     private function case(Request $request): array
     {
+        $method = (string) $request->input('method');
+        $date = (string) $request->input('plantingDate');
+        $inferred = self::seasonOf((int) substr($date, 5, 2));
+        $season = in_array($request->input('season'), ['wet', 'dry'], true) ? (string) $request->input('season') : $inferred;
+        $matDays = $request->filled('maturityDays') ? (int) $request->input('maturityDays') : null;
+        $maturity = $request->filled('maturity') ? (string) $request->input('maturity') : ($matDays ? self::classOf($matDays) : null);
+
         return [
-            'method' => (string) $request->input('method'),
-            'season' => (string) $request->input('season'),
-            'days' => $request->filled('days') ? (int) $request->input('days') : null,
-            'maturity' => $request->filled('maturity') ? (string) $request->input('maturity') : null,
+            'method' => $method,
+            'plantingDate' => $date,
+            'days' => self::daysSince($date),
+            'dayWord' => $method === 'dsr' ? 'DAS' : 'DAT',
+            'season' => $season,
+            'seasonInferred' => $inferred,
+            'maturity' => $maturity,
+            'maturityDays' => $matDays,
             'areaHa' => (float) ($request->input('areaHa') ?: 1),
             'variety' => trim((string) $request->input('variety', '')),
             'notes' => trim((string) $request->input('notes', '')),
         ];
     }
 
-    private function title(array $case, array $d): string
+    /** The name a check starts with: the variety (or the field) and its age; the list shows the day beside it. The farmer can rename it. */
+    private function title(array $case): string
     {
-        $what = match ($d['stage']) {
-            'early' => 'too early to read',
-            'late' => 'past flowering',
-            default => $d['due'] ? 'nitrogen due' : 'no nitrogen yet',
-        };
-
-        return 'Leaf color · ' . now('Asia/Manila')->format('M j') . ' · ' . $d['below'] . ' of ' . $d['leaves'] . ' below ' . $d['critical'] . ' · ' . $what;
+        return ($case['variety'] !== '' ? $case['variety'] : 'Rice field')
+            . ($case['days'] !== null ? ' · ' . $case['days'] . ' ' . $case['dayWord'] : ' · ' . now('Asia/Manila')->format('M j'));
     }
 
     private function payer(): User

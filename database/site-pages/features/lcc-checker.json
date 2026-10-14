@@ -14,7 +14,7 @@
   "blocks": [
     {"type": "heading", "level": 2, "text": "How the LCC checker works"},
     {"type": "steps", "items": [
-      {"title": "Tell it about the field", "text": "Pick how the rice was planted, transplanted or direct seeded, and the season. Add the days since transplanting or sowing, your area in hectares and, if you know it, how long your variety takes to mature."},
+      {"title": "Tell it about the field", "text": "Pick how the rice was planted and the day it went in. The checker counts the days after transplanting or sowing for you. Add your area and, if you know it, your variety."},
       {"title": "Read the leaves", "text": "Have a chart? Tap the panel each of ten leaves matches, free. No chart? Photograph ten leaves on white paper and Anee reads them for a few credits."},
       {"title": "Get the answer", "text": "The checker counts the leaves below the critical panel. When more than half fall below it, nitrogen is due, and it shows the urea per hectare, in bags, and for your own area."}
     ]},
@@ -32,7 +32,7 @@
       "Past flowering, it tells you to stop: nitrogen then feeds leaves, not grain."
     ]},
     {"type": "heading", "level": 2, "text": "Keep every check"},
-    {"type": "text", "text": "Every reading is saved with its date and its answer, so you can see the field get greener or paler week by week. Put the urea on your [cropping calendar](/features/cropping-calendar) as a task, and check the season's whole fertilizer plan with the free [NPK Plus calculator](/features/npk-plus-calculator). For the full schedule by target yield, read our [rice fertilizer schedule](/blog/rice-fertilizer-schedule)."},
+    {"type": "text", "text": "Every reading is saved with its date and its answer, so you can see the field get greener or paler week by week. Give a check its own name and open it again any time, with the date of the next one. Put the urea on your [cropping calendar](/features/cropping-calendar) as a task, and check the season's whole fertilizer plan with the free [NPK Plus calculator](/features/npk-plus-calculator). For the full schedule by target yield, read our [rice fertilizer schedule](/blog/rice-fertilizer-schedule)."},
     {"type": "cta", "title": "Check your rice leaves this week", "text": "Sign up free. Reading your own chart is free on every plan, and Anee's photo reading uses a few credits.", "label": "Start free", "url": "/signup"},
     {"type": "heading", "level": 2, "text": "Questions about the LCC checker"},
     {"type": "faq", "items": [
