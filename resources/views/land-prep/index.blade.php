@@ -170,6 +170,12 @@
     .lp-run img { width: 1.6rem; height: 1.6rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px rgb(255 255 255 / .6); }
     @keyframes lpTide { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
     .lp-fine { margin-top: .5rem; text-align: center; font-size: .74rem; color: var(--color-gray-400); }
+    /* A run that failed says why, and stays said (2026-10-15). */
+    .lp-err { margin: .2rem 0 .8rem; padding: .8rem .95rem; border-radius: 1rem; background: #fef2f2; border: 1px solid #fecaca; color: #7f1d1d; animation: lpIn .34s cubic-bezier(.22,1,.36,1) both; }
+    .lp-err b { display: block; font-size: .9rem; font-weight: 800; }
+    .lp-err p { margin-top: .2rem; font-size: .84rem; line-height: 1.45; }
+    html.dark .lp-err { background: #2a1414; border-color: #5b2121; color: #fecaca; }
+    @media (prefers-reduced-motion: reduce) { .lp-err { animation: none; } }
 
     /* Your plans. */
     .lp-find { display: flex; align-items: center; gap: .5rem; padding: 0 .8rem; margin-bottom: .8rem; border-radius: 1rem; background: var(--color-white); border: 1px solid var(--color-gray-200); }
@@ -696,6 +702,7 @@
                 <p class="lp-q">Ready for Anee</p>
                 <p class="lp-sub">Tap a row to change it.</p>
                 <div class="lp-rev" id="lpReview"></div>
+                <div class="lp-err" id="lpErr" role="alert" hidden><b>The plan did not finish</b><p id="lpErrText"></p></div>
                 <button type="button" class="lp-run" id="lpRun"><span id="lpRunFace"></span><span id="lpRunSays">Make my plan</span></button>
                 <p class="lp-fine" id="lpRunFine"></p>
             </section>
@@ -1377,7 +1384,7 @@
         const short = OPT.canUse && !OPT.unlimited && Number(OPT.balance) < Number(OPT.quote);
         $('lpRunFine').innerHTML = !OPT.canUse ? esc(OPT.whyNot || '')
             : (short ? 'You have ' + esc(Math.floor(Number(OPT.balance))) + ' credits and this plan needs ' + esc(OPT.quote) + '.' + (OPT.creditsUrl ? ' <a href="' + esc(OPT.creditsUrl) + '" style="font-weight:800;text-decoration:underline">Get credits</a>' : '')
-            : 'Usually one to two minutes. Stay on this page while Anee works.');
+            : 'Usually one to three minutes. Stay on this page while Anee works.');
     }
     $('lpReview').addEventListener('click', (e) => { const b = e.target.closest('[data-jump]'); if (b) show(Number(b.dataset.jump), true); });
 
@@ -1389,7 +1396,8 @@
             crew: S.crew, soil: Object.assign({}, S.soil, $('lpPh').value.trim() ? { ph: $('lpPh').value.trim() } : {}), history: S.history,
             location: { province: S.loc.province, town: townName(S.loc.town), place: S.loc.place, lat: S.loc.lat, lng: S.loc.lng }, notes: S.notes,
         };
-        window.aneeWait.show({ title: 'Anee is planning your land preparation…', lines: ['Laying out the PhilRice steps for ' + (CROPS[S.crop] ? CROPS[S.crop].en.toLowerCase() : 'your crop') + '…', 'Sharing the crew between your lots…', 'Reading the forecast and ten years of weather…', 'Checking the ENSO outlook for water…', 'Timing the seed soak to the hour…'], sub: 'Usually one to two minutes.' });
+        window.aneeWait.show({ title: 'Anee is planning your land preparation…', lines: ['Laying out the PhilRice steps for ' + (CROPS[S.crop] ? CROPS[S.crop].en.toLowerCase() : 'your crop') + '…', 'Sharing the crew between your lots…', 'Reading the forecast and ten years of weather…', 'Checking the ENSO outlook for water…', 'Timing the seed soak to the hour…'], sub: 'Usually one to three minutes. Stay on this page while Anee works.' });
+        $('lpErr').hidden = true;
         let landed = false;
         try {
             const res = await window.api(U.generate, { method: 'POST', body });
@@ -1402,9 +1410,13 @@
             paintQuote();
             LIST.stale = true;
         } catch (err) {
-            window.toast?.(err.message, 'error');
+            // Said on the page, not in a toast that is gone before it is read.
+            $('lpErrText').textContent = (err && err.message) || 'Something went wrong. Nothing was charged. Please try again.';
+            $('lpErr').hidden = false;
+            $('lpRunSays').textContent = OPT && OPT.canUse ? 'Try again · ' + OPT.quote + ' credits' : 'Try again';
         } finally {
             if (!landed) window.aneeWait.fail();
+            if (!landed) requestAnimationFrame(() => $('lpErr').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' }));
         }
     });
 

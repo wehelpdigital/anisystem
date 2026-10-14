@@ -111,6 +111,10 @@ class AiClient
      * because the house pays for all of them. `$parse` turns the text into
      * the array wanted, or null when it cannot.
      *
+     * `$opts['retryAfterTimeout'] = false` keeps the transport retry for a
+     * quick failure only: a try that used up most of its clock is not asked
+     * again (a job with a long clock would otherwise sit through two).
+     *
      * `$opts['onPhase']` is called before each call the model is made --
      * ('document'), ('document', 2) for the transport retry, ('document-json')
      * for the shape retry -- so a job can beat its heart in the database
@@ -125,7 +129,8 @@ class AiClient
         $onPhase = is_callable($opts['onPhase'] ?? null) ? $opts['onPhase'] : null;
         // A picture to read with the document (2026-10-14: the LCC Checker's leaves).
         $image = $opts['image'] ?? null;
-        unset($opts['onPhase'], $opts['image']);
+        $retryAfterTimeout = (bool) ($opts['retryAfterTimeout'] ?? true);
+        unset($opts['onPhase'], $opts['image'], $opts['retryAfterTimeout']);
         $sum = ['tokensIn' => 0, 'tokensOut' => 0, 'searched' => false, 'sources' => []];
         $fold = function (array $r) use (&$sum): void {
             $sum['tokensIn'] += (int) ($r['tokensIn'] ?? 0);
@@ -143,9 +148,11 @@ class AiClient
         if ($onPhase) {
             $onPhase('document', 1);
         }
+        $began = microtime(true);
         $result = $this->ask($settings, [], $prompt, $image, $maxOut, $opts);
         $fold($result);
-        if (! ($result['ok'] ?? false)) {
+        $timedOut = (microtime(true) - $began) > 0.8 * (int) $opts['timeout'];
+        if (! ($result['ok'] ?? false) && ($retryAfterTimeout || ! $timedOut)) {
             // A transport blip (the provider timing out once) gets a second try.
             sleep(3);
             if ($onPhase) {
@@ -155,7 +162,7 @@ class AiClient
             $fold($result);
         }
         if (! ($result['ok'] ?? false)) {
-            return $sum + ['ok' => false, 'data' => null, 'text' => '',
+            return $sum + ['ok' => false, 'data' => null, 'text' => '', 'timedOut' => $timedOut,
                 'error' => $result['error'] ?? 'The AI could not be reached. Nothing was charged.'];
         }
 

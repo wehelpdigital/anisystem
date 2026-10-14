@@ -131,6 +131,15 @@ class LandPrepController extends Controller
         ], null],
     ];
 
+    /**
+     * How long Anee may take over one plan (2026-10-15). Measured on the
+     * live model: the same plan answered in 55 s one day and needed 211 s
+     * the next, so the document clock (180 s) cut it off twice and the
+     * farmer waited six minutes for "could not be reached". The job runs
+     * after the response is sent, so it can afford one long try.
+     */
+    private const AI_TIMEOUT = 330;
+
     public function __construct(private AiCreditService $credits, private AiClient $ai)
     {
     }
@@ -323,7 +332,7 @@ class LandPrepController extends Controller
             $this->runJob($id, (int) $payer->id, $settings, $case);
             exit;
         }
-        @set_time_limit(300);
+        @set_time_limit(self::AI_TIMEOUT + 120);
         $this->runJob($id, (int) $payer->id, $settings, $case);
 
         return $this->jobState($id);
@@ -440,7 +449,11 @@ class LandPrepController extends Controller
             $beat('start');
             $plan = $this->plan($case);
             $weather = $this->weather($case, $plan);
-            $result = $this->ai->askForJson($settings->forField('PH'), $this->prompt($case, $plan, $weather), 9000, fn (string $t) => $this->parse($t, $plan), ['onPhase' => $beat]);
+            $result = $this->ai->askForJson($settings->forField('PH'), $this->prompt($case, $plan, $weather), 6000, fn (string $t) => $this->parse($t, $plan),
+                ['onPhase' => $beat, 'timeout' => self::AI_TIMEOUT, 'retryAfterTimeout' => false]);
+            if (! empty($result['timedOut'])) {
+                throw new \RuntimeException('Anee is slow to answer right now and the plan did not finish. Nothing was charged. Please try again in a few minutes.');
+            }
             if ($result['data'] === null) {
                 Log::warning('landprep: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
                 throw new \RuntimeException($result['error'] ?? 'Anee\'s plan could not be read. Nothing was charged. Please try again.');
@@ -606,7 +619,7 @@ WEATHER
 - ENSO: {$enso}
 
 RULES FOR YOUR ANSWER
-- Add only steps that this farm needs because of something above (soil, history, weather, ENSO, crew, seed or water). At most 6. Each must say why in one sentence that names the fact. Never repeat a step that is already in the plan (keys: {$keys}).
+- Add only steps that this farm needs because of something above (soil, history, weather, ENSO, crew, seed or water). At most 5. Each must say why in one sentence that names the fact. Never repeat a step that is already in the plan (keys: {$keys}).
 - Offsets are days relative to the {$word} day (negative before it), from -120 to 30. Keep them realistic around the plan above.
 - crew: "machine" or "manual" when the crew must do it (give effort as machine days or person days per hectare), else "none".
 - lots: [] for every lot, or the names of the lots it applies to ({$lotNames}).
@@ -617,7 +630,8 @@ RULES FOR YOUR ANSWER
 
 Return ONLY one JSON object, no fences:
 {"summary":"3 to 4 sentences","analysis":[{"topic":"weather|enso|soil|history|crew|seed|water","title":"short","text":"2 to 3 sentences"}],"additions":[{"key":"short_snake_case","from":-20,"to":-18,"what":"short title","how":"what to do, 1 to 3 sentences","why":"one sentence naming the fact","reason":"weather|enso|soil|history|crew|seed|water","crew":"none|manual|machine","effort":0,"lots":[]}],"stepNotes":[{"key":"an existing key","note":"one sentence"}],"risks":[{"title":"short","level":"low|medium|high","text":"one or two sentences","when":"when to watch"}],"weather":"2 sentences on the weather for this preparation","crew":"1 to 2 sentences on the crew","confidence":"low|moderate|high","dataGaps":["what would sharpen this plan"]}
-analysis: 3 to 6 items. stepNotes: at most 8. risks: at most 5. dataGaps: at most 3.
+analysis: 3 to 4 items. stepNotes: at most 5. risks: at most 3. dataGaps: at most 3.
+Keep it short: no greeting, every text one or two plain sentences, the whole answer under about 700 words.
 PROMPT;
     }
 
@@ -788,7 +802,7 @@ PROMPT;
     {
         $beatAt = Carbon::parse($r->updated_at ?: $r->created_at);
 
-        return $beatAt->lt(now()->subSeconds(AiClient::TIMEOUT_DOCUMENT + 60)) || Carbon::parse($r->created_at)->lt(now()->subMinutes(20));
+        return $beatAt->lt(now()->subSeconds(self::AI_TIMEOUT + 90)) || Carbon::parse($r->created_at)->lt(now()->subMinutes(20));
     }
 
     public function jobState(int $id)
