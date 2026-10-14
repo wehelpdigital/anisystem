@@ -33,6 +33,9 @@
         ['Are hybrid rice varieties better than inbreds?', 'In PhilRice\'s table the irrigated hybrids average ' . $irrHybrid . ' tonnes per hectare, against ' . $irrInbred . ' for the irrigated inbreds. But you must buy new hybrid seed every season, and hybrids need good water and fertilizer to give that much. Inbreds cost less, and their seed grows true. Compare both kinds above with the Type filter.'],
         ['Which rice varieties are for saline or flood prone fields?', 'Use the Kind of farm filter. Saline prone varieties are bred to stand salt in the soil, and flood prone ones to survive a spell under water. They yield less than irrigated varieties on good land: the saline prone ones in PhilRice\'s table average ' . $saline . ' tonnes per hectare, because they are bred to survive where others fail.'],
     ];
+    // The members' gate (2026-10-14): a guest sees the finder's first rows.
+    $hg = \App\Support\ContentGate::hubApplies($section);
+    $member = auth()->check() && ! $hg;
     if ($brands->count()) {
         array_splice($faq, 4, 0, [['Why does my seed bag show a brand name and not an NSIC number?', 'Seed companies sell their varieties under their own brand names, while PhilRice and the National Seed Industry Council list them by their NSIC number. They are the same seed. Type the brand name into the search box above, and the card shows the NSIC number with the PhilRice numbers for it.']]);
     }
@@ -55,7 +58,9 @@
                 'name' => $meta['hubTitle'],
                 'description' => $meta['metaDescription'],
                 'url' => $S::url($section),
-                'hasPart' => $all->map(fn ($v) => ['@type' => 'WebPage', 'name' => $v['name'], 'url' => $S::url($section, $v['slug'])])->values()->all(),
+                'isAccessibleForFree' => false,
+                'hasPart' => $all->map(fn ($v) => ['@type' => 'WebPage', 'name' => $v['name'], 'url' => $S::url($section, $v['slug'])])->values()
+                    ->push(['@type' => 'WebPageElement', 'isAccessibleForFree' => false, 'cssSelector' => '.hg-grid'])->all(),
             ],
             [
                 '@type' => 'FAQPage',
@@ -96,11 +101,15 @@
         .rv-links svg { flex: none; width: 1rem; height: 1rem; color: #4a7c2a; }
         .rv-src { margin-top: 1rem; font-size: .82rem; line-height: 1.6; color: #6b7280; }
         .rv-src a { color: #3d6823; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+        /* Behind the members' gate the brand list is a blurred taste. */
+        .rv-brands.hg-soft { max-height: 8.5rem; overflow: hidden; filter: blur(4px); opacity: .7; user-select: none;
+            -webkit-mask-image: linear-gradient(#000 30%, transparent); mask-image: linear-gradient(#000 30%, transparent); }
         @media (prefers-reduced-motion: reduce) { .rv-card, .rv-chip, .rv-pop a, .rv-links a, .rv-more { transition: none; } }
     </style>
 @endpush
 
 @section('content')
+    @if ($hg || $member)@include('public.site.partials.hub-gate')@endif
     <section class="sp-hero">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-10 sm:pt-14">
             <nav class="sp-crumbs" aria-label="Breadcrumb">
@@ -118,6 +127,11 @@
                     <div class="wk-jump mt-6">
                         <a href="#finder"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a variety</a>
                         <a href="#read"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2m0-13c1.5-1.5 4-2 8-2v13c-4 0-6.5.5-8 2m0-13v13"/></svg>How to read the numbers</a>
+                        @if ($hg)
+                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Members' finder, free to join</a>
+                        @elseif ($member)
+                            <a href="?guest=1#spGateCard" class="hg-chip is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>Open for you · <u>See it as a guest</u></a>
+                        @endif
                     </div>
                 </div>
                 <div class="rv-stats" aria-label="The list in numbers">
@@ -148,7 +162,17 @@
                 <h2>Find the Right Rice Variety for Your Farm</h2>
                 <p>Pick your kind of farm first, then how long you can wait for harvest and the pests and diseases you fear most. Each card shows the days to harvest, the average yield and the best trial yield, in tonnes per hectare, and opens the variety's full page.</p>
             </div>
-            @include('public.site.partials.variety-finder', ['varieties' => $varieties])
+            @include('public.site.partials.variety-finder', ['varieties' => $varieties, 'hubGate' => $hg ? [
+                'here' => '/' . $section,
+                'title' => 'See all ' . $all->count() . ' rice varieties',
+                'lead' => "Sign up free to anee.io and the whole finder opens, with every variety's page and every guide on crops, varieties, land preparation, pests, diseases and weeds.",
+                'behind' => array_values(array_filter([
+                    $all->count() . ' rice varieties, each with its days to harvest, yields and pest and disease ratings',
+                    'Every match for your filters, not just the first few',
+                    $brands->count() ? 'The NSIC variety behind ' . $brands->count() . ' seed bag brand names' : null,
+                    'Variety Research in the app: Anee compares the varieties that fit your town',
+                ])),
+            ] : null])
 
             @if ($popular->count())
                 <div class="mt-12">
@@ -166,11 +190,12 @@
                 <div class="mt-12" id="brands" style="scroll-margin-top: 5rem">
                     <div class="wk-sec-h"><h2>Rice Varieties by Brand Name</h2>
                         <p>Seed bags often carry the company's brand name, not the NSIC number. Here is the NSIC variety behind each name, so you can read PhilRice's numbers for the seed you were offered.</p></div>
-                    <div class="rv-pop rv-brands">
+                    <div class="rv-pop rv-brands {{ $hg ? 'hg-soft' : '' }}" @if ($hg) inert @endif>
                         @foreach ($brands as $v)
                             <a href="{{ $S::url('rice-varieties', $v['slug']) }}">{{ $tradeName($v['tradeNames'][0]) }} <small>{{ $v['name'] }}</small></a>
                         @endforeach
                     </div>
+                    @if ($hg)<p class="mt-3"><a href="#spGateCard" class="hg-chip">Sign up free to see the variety behind every brand ›</a></p>@endif
                 </div>
             @endif
         </div>

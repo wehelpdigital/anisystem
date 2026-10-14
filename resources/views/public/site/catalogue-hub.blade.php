@@ -26,6 +26,9 @@
     $words = $finder['words'];
     $kindHue = $P::KINDS;
     $shelfTag = fn ($g) => ['Fruits and Plantation Crops' => 'Fruits', 'Sugarcane and Industrial Crops' => 'Industrial', 'Corn and Sorghum' => 'Corn'][$F::SHELVES[$g][0]] ?? $F::SHELVES[$g][0];
+    // The members' gate (2026-10-14): a guest sees the catalogue's first rows.
+    $hg = \App\Support\ContentGate::hubApplies($section);
+    $member = auth()->check() && ! $hg;
 @endphp
 
 @section('title_full', $meta['metaTitle'] . ' | anee.io')
@@ -44,7 +47,9 @@
         'name' => $meta['hubTitle'],
         'description' => $meta['metaDescription'],
         'url' => $S::url($section),
-        'hasPart' => $pages->map(fn ($p) => ['@type' => 'Article', 'headline' => $p->title, 'url' => $S::pageUrl($p)])->values()->all(),
+        'isAccessibleForFree' => false,
+        'hasPart' => $pages->map(fn ($p) => ['@type' => 'Article', 'headline' => $p->title, 'url' => $S::pageUrl($p)])->values()
+            ->push(['@type' => 'WebPageElement', 'isAccessibleForFree' => false, 'cssSelector' => '.hg-grid'])->all(),
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
     @include('public.site.catalogue-css')
     <style>
@@ -58,6 +63,7 @@
 @endpush
 
 @section('content')
+    @if ($hg || $member)@include('public.site.partials.hub-gate')@endif
     <section class="sp-hero">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-10 sm:pt-14">
             <nav class="sp-crumbs" aria-label="Breadcrumb">
@@ -73,6 +79,11 @@
                     <div class="wk-jump mt-6">
                         <a href="#catalogue"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a {{ $words['noun'] }}</a>
                         <a href="#finder"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 9a2.5 2.5 0 115 0c0 1.5-2.5 2-2.5 3.5m0 3h.01M12 21a9 9 0 110-18 9 9 0 010 18z"/></svg>{{ $words['finder'] }}</a>
+                        @if ($hg)
+                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Members' catalogue, free to join</a>
+                        @elseif ($member)
+                            <a href="?guest=1#spGateCard" class="hg-chip is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>Open for you · <u>See it as a guest</u></a>
+                        @endif
                         @if ($guides->count())<a href="#guides"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2m0-13c1.5-1.5 4-2 8-2v13c-4 0-6.5.5-8 2m0-13v13"/></svg>Read the guides</a>@endif
                     </div>
                 </div>
@@ -148,7 +159,8 @@
                 </div>
                 <span class="wk-count" id="wkCount" aria-live="polite"></span>
             </div>
-            <div class="wk-grid mt-6" id="wkGrid">
+            @if ($hg)<div class="hg" data-hg data-hg-one="{{ $words['noun'] }}" data-hg-many="{{ $words['nouns'] }}">@endif
+            <div class="wk-grid hg-grid mt-6" id="wkGrid" data-hg-grid data-hg-card=".wk-card">
                 @foreach ($items as $w)
                     @php($gh = $F::SHELVES[$w['group']][2])
                     <a href="{{ $w['url'] }}" class="wk-card" style="--g: {{ $gh }}" data-group="{{ $w['group'] }}" data-shelves="{{ implode(' ', $w['shelves']) }}"
@@ -179,6 +191,20 @@
                 <p class="wk-none">Nothing by that name in the catalogue yet. Try its scientific name, or take a photo and
                 <a href="{{ url('/features/ai-agricultural-technician') }}">ask Anee, the smart farm technician</a>.</p>
             </div>
+            @if ($hg)
+                @include('public.site.partials.content-gate-card', [
+                    'here' => '/' . $section,
+                    'title' => 'See all ' . $items->count() . ' crop ' . $words['nouns'],
+                    'lead' => 'Sign up free to anee.io and the whole catalogue opens, with the ' . ($isPests ? 'Pest' : 'Disease') . ' Finder and every guide on crops, varieties, land preparation, pests, diseases and weeds.',
+                    'behind' => array_values(array_filter([
+                        $items->count() . ' ' . $words['nouns'] . ' of ' . count($finder['crops']) . ' Philippine crops, with photos and local names',
+                        'Every ' . $words['noun'] . "'s page: the signs, the damage and what to spray",
+                        'The ' . ($isPests ? 'Pest' : 'Disease') . ' Finder: from what you see on the crop to the ' . $words['nouns'] . ' that fit',
+                        $guides->count() ? $guides->count() . ' guides on ' . $words['nouns'] . ' and their control' : null,
+                    ])),
+                ])
+            </div>
+            @endif
         </div>
     </section>
 
@@ -190,7 +216,7 @@
                 <h2 class="mt-3">{{ $words['finder'] }}</h2>
                 <p>{{ $words['finderLead'] }}</p>
             </div>
-            @include('public.site.partials.problem-finder', $finder + ['gate' => true])
+            @include('public.site.partials.problem-finder', $finder + ['gate' => 'signup'])
         </div>
     </section>
 
@@ -235,12 +261,14 @@
     if (!grid || !cats || !q) return;
     const cards = [...grid.querySelectorAll('.wk-card')];
     const phone = matchMedia('(max-width: 639.98px)'), cap = () => (phone.matches ? 8 : 24);
+    // Behind the members' gate, the gate decides what shows (partials/hub-gate).
+    const gated = !!grid.closest('[data-hg]');
     let group = '', all = false;
     const norm = (s) => s.toLowerCase().replace(/[^a-z0-9ñ ]+/g, ' ').replace(/\s+/g, ' ').trim();
     const rise = (c, i) => { c.classList.remove('is-in'); c.style.animationDelay = Math.min(i, 12) * 25 + 'ms'; void c.offsetWidth; c.classList.add('is-in'); };
     const apply = () => {
         const words = norm(q.value).split(' ').filter(Boolean);
-        const capped = !all && !group && !words.length && cards.length > cap();
+        const capped = !gated && !all && !group && !words.length && cards.length > cap();
         let shown = 0;
         cards.forEach((c) => {
             const on = (!group || (c.dataset.shelves || c.dataset.group).split(' ').includes(group)) && words.every((w) => norm(c.dataset.q).includes(w));
@@ -258,6 +286,7 @@
         const elsewhere = shown === 0 && group && words.length ? cards.filter((c) => words.every((w) => norm(c.dataset.q).includes(w))).length : 0;
         elseP.hidden = !elsewhere;
         if (elsewhere) elseB.textContent = 'See the ' + elsewhere + ' found in all crops';
+        window.aneeHubGate?.(grid);
     };
     const elseP = empty.querySelector('.wk-else'), elseB = document.getElementById('wkElse');
     elseB.addEventListener('click', () => setGroup(''));

@@ -96,7 +96,7 @@
                             <noscript><div class="wc-body"><p>Turn on JavaScript to use the finder, or browse the <a href="#catalogue">catalogue</a>.</p></div></noscript>
                         </div>
                         @if ($gate ?? true)
-                            @include('public.site.tool-gate', ['tool' => $section])
+                            @include('public.site.tool-gate', ['tool' => $section, 'signup' => ($gate ?? true) === 'signup'])
                         @endif
                     </div>
                     <p class="wc-fine">

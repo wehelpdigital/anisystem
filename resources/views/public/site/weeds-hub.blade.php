@@ -35,6 +35,9 @@
         'broadleaves' => 'M5 19C5 10 10 5 19 5c0 9-5 14-14 14zM5 19L15 9M9.5 14.5h4M12 12V8.5',
     ];
     $groupHue = ['grasses' => 98, 'sedges' => 168, 'broadleaves' => 38];
+    // The members' gate (2026-10-14): a guest sees the catalogue's first rows.
+    $hg = \App\Support\ContentGate::hubApplies($section);
+    $member = auth()->check() && ! $hg;
 @endphp
 
 @section('title_full', $meta['metaTitle'] . ' | anee.io')
@@ -53,12 +56,15 @@
         'name' => $meta['hubTitle'],
         'description' => $meta['metaDescription'],
         'url' => $S::url($section),
-        'hasPart' => $pages->map(fn ($p) => ['@type' => 'Article', 'headline' => $p->title, 'url' => $S::pageUrl($p)])->values()->all(),
+        'isAccessibleForFree' => false,
+        'hasPart' => $pages->map(fn ($p) => ['@type' => 'Article', 'headline' => $p->title, 'url' => $S::pageUrl($p)])->values()
+            ->push(['@type' => 'WebPageElement', 'isAccessibleForFree' => false, 'cssSelector' => '.hg-grid'])->all(),
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
     @include('public.site.catalogue-css')
 @endpush
 
 @section('content')
+    @if ($hg || $member)@include('public.site.partials.hub-gate')@endif
     <section class="sp-hero">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-10 sm:pt-14">
             <nav class="sp-crumbs" aria-label="Breadcrumb">
@@ -74,6 +80,11 @@
                     <div class="wk-jump mt-6">
                         <a href="#catalogue"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a weed</a>
                         <a href="#control"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Control by crop age</a>
+                        @if ($hg)
+                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Members' catalogue, free to join</a>
+                        @elseif ($member)
+                            <a href="?guest=1#spGateCard" class="hg-chip is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>Open for you · <u>See it as a guest</u></a>
+                        @endif
                         <a href="#guides"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2m0-13c1.5-1.5 4-2 8-2v13c-4 0-6.5.5-8 2m0-13v13"/></svg>Read the guides</a>
                     </div>
                 </div>
@@ -158,7 +169,8 @@
                 </div>
                 <span class="wk-count" id="wkCount" aria-live="polite"></span>
             </div>
-            <div class="wk-grid mt-6" id="wkGrid">
+            @if ($hg)<div class="hg" data-hg data-hg-one="weed" data-hg-many="weeds">@endif
+            <div class="wk-grid hg-grid mt-6" id="wkGrid" data-hg-grid data-hg-card=".wk-card">
                 @foreach ($weeds as $w)
                     <a href="{{ $w['url'] }}" class="wk-card" style="--g: {{ $groupHue[$w['group']] }}" data-group="{{ $w['group'] }}" data-crops="{{ implode(' ', $w['crops']) }}"
                        data-q="{{ \Illuminate\Support\Str::lower($w['name'] . ' ' . $w['sci'] . ' ' . $w['local']) }}">
@@ -186,6 +198,20 @@
                 <p class="wk-none">No weed by that name in the catalogue yet. Try its scientific name, or take a photo and
                 <a href="{{ url('/features/ai-agricultural-technician') }}">ask Anee, the smart farm technician</a>.</p>
             </div>
+            @if ($hg)
+                @include('public.site.partials.content-gate-card', [
+                    'here' => '/' . $section,
+                    'title' => 'See all ' . $weeds->count() . ' weeds and grasses',
+                    'lead' => 'Sign up free to anee.io and the whole catalogue opens, with the weed control helper and every guide on crops, varieties, land preparation, pests, diseases and weeds.',
+                    'behind' => array_values(array_filter([
+                        $weeds->count() . ' weeds of ' . count($wkCrops) . ' Philippine crops, with photos and local names',
+                        "Every weed's page: how to tell it apart and how to control it",
+                        "The weed control helper: what to do first and what to spray at your crop's age",
+                        $guides->count() ? $guides->count() . ' guides on weeds and herbicides' : null,
+                    ])),
+                ])
+            </div>
+            @endif
         </div>
     </section>
 
@@ -200,7 +226,7 @@
                     from PhilRice for palay and from the DA, the sugar and coconut agencies and university guides for every other crop. Active ingredients only, never brands.
                 </p>
             </div>
-            @include('public.site.partials.weed-helper', ['gate' => true])
+            @include('public.site.partials.weed-helper', ['gate' => 'signup'])
         </div>
     </section>
 
@@ -252,6 +278,8 @@
     const more = document.getElementById('wkMore');
     if (!grid || !cats || !q) return;
     const cards = [...grid.querySelectorAll('.wk-card')];
+    // Behind the members' gate, the gate decides what shows (partials/hub-gate).
+    const gated = !!grid.closest('[data-hg]');
     // A phone shows the first eight until the reader searches, picks a
     // group or asks for all, so the helper is not 40 rows further down.
     const phone = matchMedia('(max-width: 639.98px)'), cap = () => (phone.matches ? 8 : 24);
@@ -261,7 +289,7 @@
     const rise = (c, i) => { c.classList.remove('is-in'); c.style.animationDelay = Math.min(i, 12) * 25 + 'ms'; void c.offsetWidth; c.classList.add('is-in'); };
     const apply = () => {
         const words = norm(q.value).split(' ').filter(Boolean);
-        const capped = !all && !group && !crop && !words.length && cards.length > cap();
+        const capped = !gated && !all && !group && !crop && !words.length && cards.length > cap();
         // The group chips count the weeds of the chosen crop.
         const ofCrop = crop ? cards.filter((c) => c.dataset.crops.split(' ').includes(crop)) : cards;
         cats.querySelectorAll('button').forEach((b) => { const i = b.querySelector('i'); if (i) i.textContent = b.dataset.group ? ofCrop.filter((c) => c.dataset.group === b.dataset.group).length : ofCrop.length; });
@@ -282,6 +310,7 @@
         const elsewhere = shown === 0 && (group || crop) && words.length ? cards.filter((c) => words.every((w) => norm(c.dataset.q).includes(w))).length : 0;
         elseP.hidden = !elsewhere;
         if (elsewhere) elseB.textContent = 'See the ' + elsewhere + ' found in all crops and groups';
+        window.aneeHubGate?.(grid);
     };
     const elseP = empty.querySelector('.wk-else'), elseB = document.getElementById('wkElse');
     elseB.addEventListener('click', () => { if (crop) { crop = ''; window.cropPickSet?.(cropTag, ''); } setGroup(''); });

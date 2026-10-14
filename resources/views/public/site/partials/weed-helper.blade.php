@@ -97,7 +97,7 @@
                             <noscript><div class="wc-body"><p>Turn on JavaScript to use the helper, or read the <a href="{{ $S::url('weeds', 'herbicides-for-rice-weeds') }}">tables in our herbicide guide</a>.</p></div></noscript>
                         </div>
                         @if ($gate ?? true)
-                            @include('public.site.tool-gate', ['tool' => 'weeds'])
+                            @include('public.site.tool-gate', ['tool' => 'weeds', 'signup' => ($gate ?? true) === 'signup'])
                         @endif
                     </div>
                     <p class="wc-fine">

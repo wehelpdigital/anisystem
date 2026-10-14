@@ -13,6 +13,10 @@
     already open); the browser keeps the name and email, so the next tool
     is one tap. A signed in member never sees the gate. Without JavaScript
     nothing is hidden.
+
+    With 'signup' => true (the gated section fronts since 2026-10-14, see
+    App\Support\ContentGate::HUBS) the panel asks for a free anee.io sign up
+    instead of a name and an email, and a kept email does not open it.
 --}}
 @php
     $gateWords = [
@@ -21,7 +25,27 @@
         'diseases' => ['See What to Spray', 'It is free. Type your name and email once to see the diseases that fit what you see and the active ingredients to spray against each one.'],
     ][$tool];
     $gateId = 'tg' . ucfirst($tool);
+    $signup = $signup ?? false;
+    $signupWords = [
+        'weeds' => 'Sign up free to anee.io to see what to do first and the active ingredients to spray at this age of your crop, with every weed guide.',
+        'pests' => 'Sign up free to anee.io to see the pests that fit what you see and the active ingredients to spray against each one, with every pest guide.',
+        'diseases' => 'Sign up free to anee.io to see the diseases that fit what you see and the active ingredients to spray against each one, with every disease guide.',
+    ][$tool];
 @endphp
+@if ($signup)
+<div class="tg-gate" id="{{ $gateId }}" data-signup hidden>
+    <div class="tg-panel" role="group" aria-labelledby="{{ $gateId }}H">
+        <div class="tg-head">
+            <span class="tg-lock" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2"/><path stroke-linecap="round" d="M8 10.5V7.8a4 4 0 018 0v2.7"/></svg></span>
+            <h3 id="{{ $gateId }}H">{{ $gateWords[0] }}</h3>
+        </div>
+        <p class="tg-lead">{{ $signupWords }}</p>
+        <a href="{{ route('signup') }}?read={{ urlencode('/' . $tool) }}" class="btn btn-accent tg-go">Sign up free</a>
+        <a href="{{ route('login') }}?read={{ urlencode('/' . $tool) }}" class="btn btn-outline tg-go" style="margin-top: 0">I have an account</a>
+        <p class="tg-fine">Free for good on the Libre plan. No credit card.</p>
+    </div>
+</div>
+@else
 <div class="tg-gate" id="{{ $gateId }}" hidden>
     <form class="tg-panel" novalidate data-tool="{{ $tool }}" aria-labelledby="{{ $gateId }}H">
         <div class="tg-head">
@@ -56,6 +80,7 @@
         <b></b>
     </div>
 </div>
+@endif
 
 @once
 @push('head')
@@ -123,7 +148,7 @@
        one is a single tap. A storage that throws (a private window) just
        means the form shows again next visit. */
     const KEY = 'anee.toolGate';
-    const member = @json(auth()->check());
+    const member = @json(auth()->check() && ! \App\Support\ContentGate::previewing());
     const read = () => { try { return JSON.parse(localStorage.getItem(KEY) || 'null') || {}; } catch (_) { return {}; } };
     const save = (tool, name, email) => {
         try { const d = read(); d.name = name; d.email = email; d.tools = Object.assign({}, d.tools, { [tool]: Date.now() }); localStorage.setItem(KEY, JSON.stringify(d)); } catch (_) {}
@@ -138,7 +163,9 @@
         const card = wrap.querySelector('.wc-card');
         const out = wrap.closest('[aria-live]');
         const tool = wrap.dataset.toolGate;
-        if (!gate || !card || isOpen(tool)) return;
+        // A sign up gate opens only for a member, never for a kept email.
+        const signup = !!gate && gate.hasAttribute('data-signup');
+        if (!gate || !card || (signup ? member : isOpen(tool))) return;
 
         // The header (the age, the crop, the count) stays readable: the gate
         // starts where the card's body does, after every redraw.
@@ -151,6 +178,7 @@
         if (out) out.setAttribute('aria-live', 'off');
         gate.hidden = false;
         place();
+        if (signup) return;
 
         const form = gate.querySelector('form');
         const btn = form.querySelector('.tg-go');

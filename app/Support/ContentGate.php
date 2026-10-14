@@ -24,6 +24,15 @@ class ContentGate
 {
     public const SECTIONS = ['crops', 'crop-varieties', 'rice-varieties', 'land-preparation', 'pests', 'diseases', 'weeds'];
 
+    /**
+     * The section front pages that are gated too (2026-10-14, the owner):
+     * their catalogue or finder shows a guest its first rows, the next rows
+     * blurred and the rest held back, under the same invitation, and the
+     * finder's answer asks for a free sign up. Every card is still in the
+     * HTML. See partials/hub-gate.
+     */
+    public const HUBS = ['pests', 'diseases', 'weeds', 'rice-varieties'];
+
     /** The class the gated part wears; the structured data names it. */
     public const SELECTOR = '.sp-gated';
 
@@ -40,6 +49,12 @@ class ContentGate
     public static function applies(?string $section): bool
     {
         return self::gatedSection($section) && (! Auth::check() || self::previewing());
+    }
+
+    /** Whether this visitor meets the gate on a section's front page. */
+    public static function hubApplies(?string $section): bool
+    {
+        return in_array((string) $section, self::HUBS, true) && (! Auth::check() || self::previewing());
     }
 
     /** A signed in member looking at the page as a guest would. */
@@ -116,7 +131,9 @@ class ContentGate
         $path = '/' . ltrim((string) parse_url((string) $path, PHP_URL_PATH), '/');
         $sections = implode('|', array_map(fn ($s) => preg_quote($s, '#'), self::SECTIONS));
 
-        return preg_match('#^/(' . $sections . ')/[a-z0-9\-]+$#', $path) ? $path : null;
+        $hubs = implode('|', array_map(fn ($s) => preg_quote($s, '#'), self::HUBS));
+
+        return preg_match('#^/(' . $sections . ')/[a-z0-9\-]+$#', $path) || preg_match('#^/(' . $hubs . ')$#', $path) ? $path : null;
     }
 
     /** Keeps the page a guest left for the sign up or log in form. */
@@ -134,7 +151,13 @@ class ContentGate
         if (! $p) {
             return null;
         }
-        [, $section, $slug] = explode('/', $p);
+        $parts = explode('/', $p);
+        if (count($parts) === 2) {
+            $title = SitePages::SECTIONS[$parts[1]]['hubTitle'] ?? null;
+
+            return $title ? ['url' => url($p), 'title' => (string) $title] : null;
+        }
+        [, $section, $slug] = $parts;
         $page = SitePages::find($section, $slug);
 
         return $page ? ['url' => url($p), 'title' => (string) $page->title] : null;

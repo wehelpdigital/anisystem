@@ -11,6 +11,9 @@
     $envCount = fn ($k) => $all->filter(fn ($v) => in_array($k, $v['environments'], true))->count();
     $fmt = fn ($x) => rtrim(rtrim(number_format((float) $x, 1, '.', ''), '0'), '.');
     $cardTarget = $cardTarget ?? null;
+    // The members' gate on /rice-varieties (2026-10-14): the card's words
+    // when a guest is looking, else null (partials/hub-gate).
+    $hubGate = $hubGate ?? null;
     // A company's seed brand finds its varieties too: "arize" finds every Bayer hybrid.
     $brandWords = fn ($breeder) => collect(['bayer' => 'arize', 'syngenta' => 'nk', 'long ping' => 'longping lp', 'longping' => 'longping lp', 'sl agritech' => 'sl',
         'leads' => 'jackpot leads', 'bioseed' => 'biorice', 'seedworks' => 'us th', 'pioneer' => 'phb', 'advanta' => 'pac'])
@@ -55,7 +58,8 @@
             </div>
             <div class="rv-count" aria-live="polite"><span><b data-rv-n>{{ $all->count() }}</b> of {{ $all->count() }} varieties</span><button type="button" class="rv-reset" data-rv-reset hidden>Clear the filters</button></div>
 
-            <div class="rv-grid" data-rv-grid>
+            @if ($hubGate)<div class="hg" data-hg data-hg-one="variety" data-hg-many="varieties">@endif
+            <div class="rv-grid hg-grid" data-rv-grid data-hg-grid data-hg-card=".rv-card">
                 @foreach ($all as $i => $v)
                     @php
                         $res = collect($v['reactions'])->map(fn ($r) => $RV::code($r))->filter()->all();
@@ -98,6 +102,10 @@
             </div>
             <p class="rv-none" data-rv-none hidden>No variety in PhilRice's list matches all of these. Clear a filter or two.</p>
             <button type="button" class="rv-more" data-rv-more>Show more varieties</button>
+            @if ($hubGate)
+                @include('public.site.partials.content-gate-card', $hubGate)
+            </div>
+            @endif
 
 @once
 @push('scripts')
@@ -113,7 +121,10 @@
     const envs = [...document.querySelectorAll('[data-rv-env]')], ress = [...document.querySelectorAll('[data-rv-res]')];
     // Twelve at a time on a phone (a card is a quarter of its screen), 24 on a desk.
     const STEP = window.matchMedia('(max-width: 639.98px)').matches ? 12 : 24;
-    let env = '', want = new Set(), shown = STEP;
+    // Behind the members' gate every match is in order and the gate decides
+    // what shows (partials/hub-gate).
+    const gated = !!grid.closest('[data-hg]'), FIRST = gated ? 1e9 : STEP;
+    let env = '', want = new Set(), shown = FIRST;
     const norm = (s) => s.toLowerCase().replace(/\s+/g, ' ').trim();
     const apply = () => {
         const t = norm(q.value), tc = t.replace(/\s/g, ''), ty = type.value, d = Number(days.value || 0);
@@ -137,24 +148,25 @@
         ok.forEach((c, i) => { grid.appendChild(c); c.hidden = i >= shown; });
         nOut.textContent = ok.length;
         none.hidden = ok.length > 0;
-        more.hidden = ok.length <= shown;
+        more.hidden = gated || ok.length <= shown;
         reset.hidden = !(t || env || ty || d || want.size || by !== 'year');
+        window.aneeHubGate?.(grid);
     };
-    envs.forEach((b) => b.addEventListener('click', () => { env = b.dataset.rvEnv; envs.forEach((x) => x.classList.toggle('is-on', x === b)); shown = STEP; apply(); }));
+    envs.forEach((b) => b.addEventListener('click', () => { env = b.dataset.rvEnv; envs.forEach((x) => x.classList.toggle('is-on', x === b)); shown = FIRST; apply(); }));
     ress.forEach((b) => b.addEventListener('click', () => {
         const k = b.dataset.rvRes;
         if (want.has(k)) want.delete(k); else want.add(k);
         b.classList.toggle('is-on', want.has(k)); b.setAttribute('aria-pressed', want.has(k) ? 'true' : 'false');
-        shown = STEP; apply();
+        shown = FIRST; apply();
     }));
-    [type, days, sort].forEach((s) => s.addEventListener('change', () => { shown = STEP; apply(); }));
+    [type, days, sort].forEach((s) => s.addEventListener('change', () => { shown = FIRST; apply(); }));
     let qt = 0;
-    q.addEventListener('input', () => { clearTimeout(qt); qt = setTimeout(() => { shown = STEP; apply(); }, 120); });
+    q.addEventListener('input', () => { clearTimeout(qt); qt = setTimeout(() => { shown = FIRST; apply(); }, 120); });
     more.addEventListener('click', () => { shown += STEP * 2; apply(); });
     reset.addEventListener('click', () => {
         q.value = ''; type.value = ''; days.value = ''; sort.value = 'year'; env = ''; want.clear();
         envs.forEach((x) => x.classList.toggle('is-on', x.dataset.rvEnv === '')); ress.forEach((x) => { x.classList.remove('is-on'); x.setAttribute('aria-pressed', 'false'); });
-        shown = STEP; apply();
+        shown = FIRST; apply();
     });
     apply();
 })();
