@@ -113,6 +113,40 @@ class ContentGate
         return count($h2) >= 4 ? $h2[1] : null;
     }
 
+    /**
+     * What the gate's card calls the page's subject: a variety by the name on
+     * its seed bag and its registry number, a pest, disease or weed by its
+     * plain name ("Kangkong Weed in Rice Fields" is Kangkong). Null for a
+     * guide that is about many things (Rice Diseases in the Philippines).
+     */
+    public static function subject(object $page): ?string
+    {
+        $section = (string) $page->section;
+        $slug = (string) $page->slug;
+        if ($section === 'rice-varieties' || $section === 'crop-varieties') {
+            $all = $section === 'rice-varieties' ? RiceVarieties::all() : CropVarieties::all();
+            $v = collect($all)->firstWhere('slug', $slug);
+            if (! $v) {
+                return null;
+            }
+            $trade = $v['tradeNames'][0] ?? null;
+
+            return $trade && stripos((string) $v['name'], (string) $trade) === false ? $trade . ' (' . $v['name'] . ')' : (string) $v['name'];
+        }
+        $known = match ($section) {
+            'pests', 'diseases' => (bool) ProblemCatalogue::get($section, $slug),
+            'weeds' => (bool) WeedCatalogue::get($slug),
+            default => false,
+        };
+        if (! $known) {
+            return null;
+        }
+        $name = SitePages::shortTitle($page);
+        $name = preg_replace('/\s+(in|of)\s+(Rice Fields|Rice|Your Palay|Palay|Corn|Vegetables|the Philippines)$/i', '', $name);
+
+        return trim((string) preg_replace('/\s+Weed$/', '', (string) $name));
+    }
+
     /** The section headings behind the gate: what a guest is invited to. */
     public static function behind(array $blocks, int $cut): array
     {

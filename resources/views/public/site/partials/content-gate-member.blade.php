@@ -18,6 +18,6 @@
 <div class="sp-member" role="note">
     <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>
     <span><b>{{ $tl ? 'Para sa mga miyembro ang kasunod.' : 'The members\' part starts here.' }}</b>
-        {{ $tl ? 'Bukas ito sa iyo dahil naka-sign in ka. Malabo ito sa mga bisita, sa ilalim ng libreng sign up.' : 'It is open for you because you are signed in. Guests see it blurred behind a free sign up.' }}</span>
+        {{ $tl ? 'Bukas ito sa iyo dahil naka-sign in ka. Malabo ito sa mga bisita hanggang mag-register sila.' : 'It is open for you because you are signed in. Guests see it blurred until they register.' }}</span>
     <a href="?guest=1#spGateCard">{{ $tl ? 'Tingnan bilang bisita ›' : 'See it as a guest ›' }}</a>
 </div>

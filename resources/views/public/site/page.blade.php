@@ -159,7 +159,7 @@
                             ? ($tl ? 'Sinagot ni Anee, ang smart farm technician ng anee.io' : 'Answered by Anee, the anee.io smart farm technician')
                             : ($tl ? 'Mula sa agriculture team ng anee.io' : 'By the anee.io agriculture team') }}</span>
                         @if ($gateCut !== null)
-                            <a href="#spGateCard" class="sp-meta-gate"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>{{ $tl ? 'Gabay ng miyembro, libre ang pagsali' : 'Members\' guide, free to join' }}</a>
+                            <a href="#spGateCard" class="sp-meta-gate"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>{{ $tl ? 'Mag-register nang libre para mabasa lahat' : 'Register for free to read it all' }}</a>
                         @elseif ($memberCut !== null)
                             <span class="sp-meta-gate is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>{{ $tl ? 'Gabay ng miyembro, bukas sa iyo' : 'Members\' guide, open for you' }}</span>
                         @endif

@@ -27,9 +27,9 @@
     $gateId = 'tg' . ucfirst($tool);
     $signup = $signup ?? false;
     $signupWords = [
-        'weeds' => 'Sign up free to anee.io to see what to do first and the active ingredients to spray at this age of your crop, with every weed guide.',
-        'pests' => 'Sign up free to anee.io to see the pests that fit what you see and the active ingredients to spray against each one, with every pest guide.',
-        'diseases' => 'Sign up free to anee.io to see the diseases that fit what you see and the active ingredients to spray against each one, with every disease guide.',
+        'weeds' => 'Register for free to see what to do first at this age of your crop, and the active ingredients that work against the weeds you see.',
+        'pests' => 'Register for free to see the pests that fit what you see, and the active ingredients that work against each one.',
+        'diseases' => 'Register for free to see the diseases that fit what you see, and the active ingredients that work against each one.',
     ][$tool];
 @endphp
 @if ($signup)
@@ -40,9 +40,9 @@
             <h3 id="{{ $gateId }}H">{{ $gateWords[0] }}</h3>
         </div>
         <p class="tg-lead">{{ $signupWords }}</p>
-        <a href="{{ route('signup') }}?read={{ urlencode('/' . $tool) }}" class="btn btn-accent tg-go">Sign up free</a>
+        <a href="{{ route('signup') }}?read={{ urlencode('/' . $tool) }}" class="btn btn-accent tg-go">Register for free</a>
         <a href="{{ route('login') }}?read={{ urlencode('/' . $tool) }}" class="btn btn-outline tg-go" style="margin-top: 0">I have an account</a>
-        <p class="tg-fine">Free for good on the Libre plan. No credit card.</p>
+        <p class="tg-fine">Free to register. No credit card.</p>
     </div>
 </div>
 @else

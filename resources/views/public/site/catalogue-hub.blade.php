@@ -80,7 +80,7 @@
                         <a href="#catalogue"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a {{ $words['noun'] }}</a>
                         <a href="#finder"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 9a2.5 2.5 0 115 0c0 1.5-2.5 2-2.5 3.5m0 3h.01M12 21a9 9 0 110-18 9 9 0 010 18z"/></svg>{{ $words['finder'] }}</a>
                         @if ($hg)
-                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Members' catalogue, free to join</a>
+                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Register for free to see them all</a>
                         @elseif ($member)
                             <a href="?guest=1#spGateCard" class="hg-chip is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>Open for you · <u>See it as a guest</u></a>
                         @endif
@@ -194,13 +194,16 @@
             @if ($hg)
                 @include('public.site.partials.content-gate-card', [
                     'here' => '/' . $section,
-                    'title' => 'See all ' . $items->count() . ' crop ' . $words['nouns'],
-                    'lead' => 'Sign up free to anee.io and the whole catalogue opens, with the ' . ($isPests ? 'Pest' : 'Disease') . ' Finder and every guide on crops, varieties, land preparation, pests, diseases and weeds.',
+                    'title' => 'See all ' . $items->count() . ' crop ' . $words['nouns'] . ($isPests ? ' and how to stop each one' : ' and how to manage each one'),
+                    'lead' => $isPests
+                        ? 'Register for free to open every pest: how to be sure which one you have, the damage it does, when it pays to act and what to spray.'
+                        : 'Register for free to open every disease: how to tell it from look alikes, what makes it spread, and what to spray and when.',
                     'behind' => array_values(array_filter([
-                        $items->count() . ' ' . $words['nouns'] . ' of ' . count($finder['crops']) . ' Philippine crops, with photos and local names',
-                        'Every ' . $words['noun'] . "'s page: the signs, the damage and what to spray",
-                        'The ' . ($isPests ? 'Pest' : 'Disease') . ' Finder: from what you see on the crop to the ' . $words['nouns'] . ' that fit',
-                        $guides->count() ? $guides->count() . ' guides on ' . $words['nouns'] . ' and their control' : null,
+                        $items->count() . ' ' . $words['nouns'] . ' of ' . count($finder['crops']) . ' Philippine crops, with photos and their local names',
+                        $isPests ? 'The signs, the damage and when it pays to spray' : 'The signs, the look alikes and the weather that spreads it',
+                        'What to spray against each one, by active ingredient',
+                        'The ' . ($isPests ? 'Pest' : 'Disease') . ' Finder: from what you see on your crop to the ' . $words['noun'] . ' behind it',
+                        $guides->count() ? $guides->count() . ' longer guides on ' . $words['nouns'] . ' and their control' : null,
                     ])),
                 ])
             </div>

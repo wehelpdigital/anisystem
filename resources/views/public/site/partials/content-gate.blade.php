@@ -1,7 +1,8 @@
 {{-- The members' gate (2026-10-14): the rest of a field guide, in the page
-     for search engines and blurred for a guest, under an invitation to join
-     anee.io free. Needs $page and $gated (the blocks behind the gate, keys
-     kept so their heading anchors match the contents). See
+     for search engines and blurred for a guest, under an invitation to
+     register for free. Needs $page and $gated (the blocks behind the gate,
+     keys kept so their heading anchors match the contents). The words say
+     what registering opens, never that a tool is free. See
      App\Support\ContentGate. --}}
 @php
     $G = \App\Support\ContentGate::class;
@@ -9,9 +10,30 @@
     $behind = $G::behind(array_values($gated), 0);
     $mins = max(1, (int) round($G::wordsFrom(array_values($gated), 0) / 200));
     $name = \App\Support\SitePages::shortTitle($page);
+    // A pest, a disease, a weed or a variety by its plain name; null on a
+    // guide about many of them.
+    $subject = $G::subject($page);
     $more = count($behind) - 5;
     $foot = ($more > 0 ? ($tl ? 'At ' . $more . ' pa' : 'And ' . $more . ' more ' . ($more === 1 ? 'section' : 'sections')) . ', ' : '')
         . ($tl ? 'mga ' . $mins . ' minutong babasahin' : 'about ' . $mins . ' more minutes of reading');
+    $guide = 'Register for free to read the whole guide: ';
+    [$title, $lead] = $tl ? ['Basahin ang buong gabay', null] : match ($page->section) {
+        'crop-varieties', 'rice-varieties' => $subject
+            ? ['See how ' . $subject . ' will do on your farm', 'Register for free to see its full record: how it yields, its strengths and weaknesses against pests, diseases and the weather, and whether it fits your farm, your season and your soil.']
+            : ['See the varieties that fit your farm', 'Register for free to compare every variety, its strengths and weaknesses, and how it will do on your farm, in your season and your soil.'],
+        'pests' => $subject
+            ? ['Stop ' . $subject . ' from costing you the harvest', $guide . 'how to be sure it is this pest, when it pays to act, and what to spray, by active ingredient.']
+            : ['Read the whole guide and protect your harvest', $guide . 'how to tell the pests apart, when it pays to act, and what to spray, by active ingredient.'],
+        'diseases' => $subject
+            ? ['Stop the spread of ' . $subject, $guide . 'how to tell it from look alikes, what makes it spread, and what to spray and when.']
+            : ['Read the whole guide and keep your crop healthy', $guide . 'how to tell the diseases apart, what makes them spread, and what to spray and when.'],
+        'weeds' => $subject
+            ? ['Get ' . $subject . ' out of your field', $guide . 'how to tell it from your crop, and what to do and spray at every age of your crop.']
+            : ['Read the whole guide and keep your field clean', $guide . 'how to tell the weeds apart, and what to do and spray at every age of your crop.'],
+        'land-preparation' => ['Get every step of ' . \Illuminate\Support\Str::lower($name) . ' right', 'Register for free to read every step, then date each one on your own calendar with the Land Prep Planner, counted back from your planting day.'],
+        'crops' => ['Read the whole guide to ' . $name, 'Register for free to read the whole guide, then plan your season in anee.io with every task dated from your own planting day.'],
+        default => ['Read the whole guide', null],
+    };
 @endphp
 @include('public.site.partials.content-gate-assets')
 <div class="sp-gate">
@@ -21,14 +43,8 @@
     @include('public.site.partials.content-gate-card', [
         'tl' => $tl,
         'here' => '/' . $page->section . '/' . $page->slug,
-        'title' => $tl ? 'Basahin ang buong gabay, libre' : match ($page->section) {
-            'crop-varieties', 'rice-varieties' => 'See the full record of ' . $name,
-            'pests' => 'Read how to stop ' . $name,
-            'diseases' => 'Read how to manage ' . $name,
-            'weeds' => 'Read how to control ' . $name,
-            'land-preparation' => 'Read every step of ' . \Illuminate\Support\Str::lower($name),
-            default => 'Read the full guide, free',
-        },
+        'title' => $title,
+        'lead' => $lead,
         'behind' => array_slice($behind, 0, 5),
         'foot' => $behind ? $foot : '',
     ])

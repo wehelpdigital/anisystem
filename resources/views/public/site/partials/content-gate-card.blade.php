@@ -8,8 +8,8 @@
     $behind = $behind ?? [];
     $foot = $foot ?? '';
     $lead = $lead ?? ($tl
-        ? 'Mag-sign up nang libre sa anee.io at bubukas ang buong pahina, pati ang lahat ng gabay sa pananim, binhi, paghahanda ng lupa, peste, sakit at damo.'
-        : 'Sign up free to anee.io and the whole page opens, with every guide on crops, varieties, land preparation, pests, diseases and weeds.');
+        ? 'Mag-register nang libre sa anee.io para mabasa ang buong pahina, pati ang bawat gabay sa pananim, binhi, paghahanda ng lupa, peste, sakit at damo.'
+        : 'Register for free on anee.io to read the whole page, and every guide on crops, varieties, land preparation, pests, diseases and weeds.');
 @endphp
 <div class="sp-gate-card" id="spGateCard" data-gate-card>
     @if (\App\Support\ContentGate::previewing())
@@ -26,15 +26,15 @@
         </div>
     @endif
     <div class="sp-gate-perks">
-        <span>✓ {{ $tl ? 'Libre habambuhay sa Libre plan' : 'Free for good on the Libre plan' }}</span>
+        <span>✓ {{ $tl ? 'Libre ang pag-register' : 'Free to register' }}</span>
         <span>✓ {{ $tl ? 'Walang credit card' : 'No credit card' }}</span>
         <span>✓ {{ $tl ? 'Gumagana sa kahit anong phone' : 'Works on any phone' }}</span>
     </div>
     <div class="sp-gate-acts">
-        <a href="{{ route('signup') }}?read={{ urlencode($here) }}" class="btn btn-accent">{{ $tl ? 'Mag-sign up nang libre' : 'Sign up free' }}</a>
+        <a href="{{ route('signup') }}?read={{ urlencode($here) }}" class="btn btn-accent">{{ $tl ? 'Mag-register nang libre' : 'Register for free' }}</a>
         <a href="{{ route('login') }}?read={{ urlencode($here) }}" class="btn btn-outline">{{ $tl ? 'May account na ako' : 'I have an account' }}</a>
     </div>
     <p class="sp-gate-tools">{{ $tl
-        ? 'Kasama rin ang mga tool: ang kalendaryo ng bawat gawain, ang pest at disease finder, ang variety finder, at si Anee, ang smart farm technician na sumasagot sa Tagalog.'
-        : 'The tools come with it: a cropping calendar that dates every task, the pest, disease and variety finders, and Anee, the smart farm technician who answers in Tagalog or English.' }}</p>
+        ? 'Nasa anee.io din ang kalendaryo na nagtatakda ng bawat gawain, ang pest, disease at variety finder, at si Anee, ang smart farm technician na sumasagot sa Tagalog.'
+        : 'Inside anee.io you also find a cropping calendar that dates every task, the pest, disease and variety finders, and Anee, the smart farm technician who answers in Tagalog or English.' }}</p>
 </div>

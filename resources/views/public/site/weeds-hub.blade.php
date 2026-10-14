@@ -81,7 +81,7 @@
                         <a href="#catalogue"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a weed</a>
                         <a href="#control"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Control by crop age</a>
                         @if ($hg)
-                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Members' catalogue, free to join</a>
+                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Register for free to see them all</a>
                         @elseif ($member)
                             <a href="?guest=1#spGateCard" class="hg-chip is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>Open for you · <u>See it as a guest</u></a>
                         @endif
@@ -201,13 +201,13 @@
             @if ($hg)
                 @include('public.site.partials.content-gate-card', [
                     'here' => '/' . $section,
-                    'title' => 'See all ' . $weeds->count() . ' weeds and grasses',
-                    'lead' => 'Sign up free to anee.io and the whole catalogue opens, with the weed control helper and every guide on crops, varieties, land preparation, pests, diseases and weeds.',
+                    'title' => 'See all ' . $weeds->count() . ' weeds and how to control each one',
+                    'lead' => 'Register for free to open every weed: how to tell it from your crop, and what to do and spray at every age of your crop.',
                     'behind' => array_values(array_filter([
-                        $weeds->count() . ' weeds of ' . count($wkCrops) . ' Philippine crops, with photos and local names',
-                        "Every weed's page: how to tell it apart and how to control it",
+                        $weeds->count() . ' weeds of ' . count($wkCrops) . ' Philippine crops, with photos and their local names',
+                        'How to tell each one apart, even as a seedling',
                         "The weed control helper: what to do first and what to spray at your crop's age",
-                        $guides->count() ? $guides->count() . ' guides on weeds and herbicides' : null,
+                        $guides->count() ? $guides->count() . ' longer guides on weeds and herbicides' : null,
                     ])),
                 ])
             </div>
