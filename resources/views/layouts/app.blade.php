@@ -231,13 +231,11 @@
                     <nav class="hidden lg:flex items-center gap-1 text-sm font-semibold">
                         <a href="{{ route('app.dashboard') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('app.dashboard') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Dashboard</a>
                         <a href="{{ route('sm.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('sm.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Schedules</a>
-                        {{-- Only where the farm's owner has left it open: a
-                             worker whose grant says no community is refused at
-                             the door, and a link that only refuses is worse
-                             than no link. --}}
-                        @if (\App\Support\WorkerContext::canUseCommunity())
+                        {{-- Shown inside somebody's farm too (2026-10-15, the
+                             owner): there a tap opens the notice that the
+                             Community lives in the worker's own account, with
+                             the switch (partials.worker-community-switch). --}}
                         <a href="{{ route('community.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('community.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Community</a>
-                        @endif
                         {{-- Tutorials left this row: the How-to-use module is
                              that door now, and two ways in read as two
                              different things. The page itself still answers
@@ -771,12 +769,11 @@
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 8h2m4 0h2m-8 4h2m4 0h2"/></svg>
             <span>Schedules</span>
         </a>
-        @if (\App\Support\WorkerContext::canUseCommunity())
+        {{-- In a farm, the switch notice answers this tap (see the nav above). --}}
         <a href="{{ route('community.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('community.*') ? 'is-active' : '' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
             <span>Community</span>
         </a>
-        @endif
         {{-- Account lives behind the profile photo already; this seat goes
              to the Shop, where the season's needs will be bought. --}}
         <a href="{{ route('shop.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('shop.*') ? 'is-active' : '' }}">
@@ -967,7 +964,7 @@
          card there opens a chat window inside it. --}}
     @auth
         @php $msgrHome = request()->is('app') || request()->routeIs('app.dashboard'); @endphp
-        @if ($msgrHome || request()->is('app/community') || request()->is('app/community/*'))
+        @if (\App\Support\WorkerContext::canUseCommunity() && ($msgrHome || request()->is('app/community') || request()->is('app/community/*')))
             @include('community.partials.messenger', ['launcher' => ! $msgrHome])
             {{-- Emoji picker + photo lightbox for the dock (guarded singletons —
                  safe even when the page already includes them). --}}
@@ -977,6 +974,12 @@
     @endauth
 
     @stack('sheets')
+    {{-- Inside somebody's farm, a way into the Community asks to switch to the worker's own account first. --}}
+    @auth
+        @if (\App\Support\WorkerContext::inWorkerContext())
+            @include('partials.worker-community-switch')
+        @endif
+    @endauth
     <script>
         /* The question mark knows which guide it wants and how wide the screen
            holding it is — the server cannot measure either. It also blinks

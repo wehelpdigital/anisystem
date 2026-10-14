@@ -96,6 +96,13 @@ class AccountController extends Controller
             }
         }
 
+        // Where the switch was for (2026-10-15: the Community notice sends the
+        // page the worker was opening). Only a path inside the app.
+        $next = (string) $request->input('next', '');
+        if ($next !== '' && preg_match('~^/app(/|$)~', $next) && ! str_contains($next, '\\') && ! str_starts_with($next, '//') && mb_strlen($next) <= 500) {
+            return redirect()->to($next);
+        }
+
         return redirect()->route('sm.index');
     }
 

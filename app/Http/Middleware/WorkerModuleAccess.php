@@ -273,6 +273,12 @@ class WorkerModuleAccess
             }
 
             if ($module === 'community') {
+                // A page asks to switch to the worker's own account and go
+                // on to it (2026-10-15); calls behind a page still get JSON.
+                if (! $request->expectsJson() && $request->isMethodSafe()) {
+                    return response()->view('sm.community-switch', ['next' => $request->getRequestUri()], 403);
+                }
+
                 return $this->refuse($request, 'community');
             }
 
