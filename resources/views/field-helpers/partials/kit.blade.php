@@ -63,22 +63,39 @@
     .fh-shop a svg { width: .78rem; height: .78rem; }
     .fh-shop a.is-sp { background: #ee4d2d; }
     .fh-shop a.is-lz { background: #1a1aa6; }
-    .fh-prods { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .5rem; padding-top: .5rem; border-top: 1px dashed #e1e9d7; }
-    .fh-prods-l { margin-right: .1rem; font-size: .62rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #6b7f5a; }
-    .fh-prod { display: inline-flex; align-items: center; gap: .3rem; max-width: 100%; min-height: 1.85rem; padding: .2rem .55rem; border-radius: 999px; font-size: .76rem; line-height: 1.2;
-        color: #14210c; background: #f3f7ee; border: 1px solid #dfe8d4; cursor: pointer;
-        transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
-    .fh-prod:hover { border-color: #a8cc7e; background: #fff; transform: translateY(-1px); }
-    .fh-prod:focus-visible, .fh-pcard:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
-    .fh-prod b { flex: none; max-width: 100%; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .fh-prod small { min-width: 0; font-size: .68rem; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .fh-prods { display: grid; gap: .35rem; margin-top: .55rem; padding-top: .55rem; border-top: 1px dashed #e1e9d7; }
+    .fh-prods-l { font-size: .62rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #6b7f5a; }
+    /* One product a row (2026-10-15, the owner): its name opens what it is,
+       and each product has its own Shopee and Lazada search beside it. */
+    .fh-prod { display: flex; align-items: center; gap: .45rem; min-width: 0; padding: .3rem .35rem .3rem .3rem; border-radius: .85rem; background: #f3f7ee; border: 1px solid #dfe8d4;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .fh-prod:hover { border-color: #a8cc7e; background: #fff; }
+    .fh-prod-n { flex: 1 1 auto; min-width: 0; display: grid; gap: .05rem; padding: .2rem .35rem; border-radius: .6rem; text-align: left; color: #14210c; cursor: pointer; }
+    .fh-prod-n:focus-visible, .fh-pcard-n:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    .fh-prod-n b { display: flex; align-items: center; flex-wrap: wrap; gap: .1rem .35rem; min-width: 0; font-size: .82rem; font-weight: 800; line-height: 1.25; }
+    /* The whole name shows, on two lines if it must: a cut brand cannot be searched for in a shop. */
+    .fh-prod-n b span { min-width: 0; overflow-wrap: anywhere; }
+    .fh-prod-n small { display: flex; align-items: center; flex-wrap: wrap; gap: .1rem .35rem; min-width: 0; font-size: .68rem; line-height: 1.3; color: #6b7280; }
+    .fh-prod-n small span { min-width: 0; overflow-wrap: anywhere; }
     .fh-prod em, .fh-pcard em { flex: none; font-style: normal; font-size: .58rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; padding: .08rem .38rem; border-radius: 999px; color: #6b4e00; background: #fdeeb2; }
+    .fh-pshop { flex: none; display: inline-flex; gap: .25rem; }
+    .fh-pshop a { display: inline-flex; align-items: center; justify-content: center; gap: .2rem; min-height: 2rem; padding: .15rem .5rem; border-radius: 999px; font-size: .66rem; font-weight: 800; color: #fff; text-decoration: none;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), filter .28s cubic-bezier(.22,1,.36,1); }
+    .fh-pshop a:hover { transform: translateY(-1px); filter: brightness(1.08); }
+    .fh-pshop a svg { width: .74rem; height: .74rem; }
+    .fh-pshop a.is-sp { background: #ee4d2d; }
+    .fh-pshop a.is-lz { background: #1a1aa6; }
+    /* Narrow phones: the pills keep their word, the name keeps its room. */
+    @media (max-width: 380px) { .fh-pshop a { padding: .15rem .42rem; } .fh-pshop a svg { display: none; } }
     .fh-rate { margin-top: .45rem; }
     .fh-pcards { display: grid; gap: .5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     @media (min-width: 640px) { .fh-pcards { grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); } }
-    .fh-pcard { display: flex; flex-direction: column; align-items: flex-start; gap: .15rem; min-width: 0; padding: .6rem .7rem .65rem; border-radius: .95rem; text-align: left; color: #14210c;
-        background: #f7faf3; border: 1px solid #e3ecd8; cursor: pointer; transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .fh-pcard { display: flex; flex-direction: column; min-width: 0; border-radius: .95rem; overflow: hidden; color: #14210c;
+        background: #f7faf3; border: 1px solid #e3ecd8; transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .fh-pcard:hover { border-color: #a8cc7e; transform: translateY(-2px); }
+    .fh-pcard-n { flex: 1 1 auto; display: flex; flex-direction: column; align-items: flex-start; gap: .15rem; min-width: 0; padding: .6rem .7rem .55rem; text-align: left; color: inherit; cursor: pointer; }
+    .fh-pcard .fh-pshop { display: grid; grid-template-columns: 1fr 1fr; gap: .3rem; padding: 0 .55rem .55rem; }
+    .fh-pcard .fh-pshop a { min-height: 1.95rem; }
     .fh-pcard b { font-size: .9rem; font-weight: 800; line-height: 1.25; overflow-wrap: anywhere; }
     .fh-pcard small { font-size: .72rem; color: #6b7280; }
     .fh-pcard span { font-size: .74rem; line-height: 1.35; color: #374151; }
@@ -90,6 +107,11 @@
     .fh-psheet .fhd-facts > div { background: #f7faf3; }
     .fh-psheet .fh-pnote { margin-top: .8rem; padding: .7rem .8rem; border-radius: .9rem; font-size: .92rem; line-height: 1.55; color: #24400f; background: #f3f8ec; border: 1px solid #d7e8c2; }
     .fh-psheet .fh-fine { margin-top: .7rem; }
+    .fh-psheet-shop { margin-top: .9rem; }
+    .fh-psheet-shop > b { display: block; margin-bottom: .4rem; font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
+    .fh-psheet-shop .fh-pshop { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
+    .fh-psheet-shop .fh-pshop a { min-height: 2.75rem; padding: .4rem .7rem; border-radius: .9rem; font-size: .84rem; gap: .4rem; }
+    .fh-psheet-shop .fh-pshop a svg { display: inline; width: 1rem; height: 1rem; }
     .fh-spray-h { display: inline-flex; align-items: center; gap: .35rem; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
     .fh-spray-h svg { width: .95rem; height: .95rem; }
     .fh-no { display: flex; gap: .5rem; align-items: flex-start; padding: .65rem .75rem; border-radius: .85rem; font-size: .88rem; line-height: 1.5; color: #6b4a00; background: #fff8e6; border: 1px solid #f5d98a; }
@@ -330,6 +352,10 @@
     html.dark .fh-prods { border-color: #2b3a1c; }
     html.dark .fh-prods-l { color: #9fb58a; }
     html.dark .fh-prod, html.dark .fh-pcard { background: #1c2616; border-color: #2b3a1c; color: #e8efe1; }
+    html.dark .fh-prod:hover { background: #222e1b; }
+    html.dark .fh-prod-n { color: #e8efe1; }
+    html.dark .fh-prod-n small { color: #b9caa8; }
+    html.dark .fh-psheet-shop > b { color: #a5c97e; }
     html.dark .fh-rc .fh-prod { background: #22301a; }
     html.dark .fh-prod small, html.dark .fh-pcard small { color: #b9caa8; }
     html.dark .fh-pcard span { color: #d5e3c5; }
@@ -385,12 +411,26 @@
     const KIND = { herbicide: 'Herbicide', insecticide: 'Insecticide', fungicide: 'Fungicide', molluscicide: 'Molluscicide', nematicide: 'Nematicide', rodenticide: 'Rodenticide' };
     // The plain line wherever products show: the label decides the rate.
     FH.rateLine = (noun) => '<p class="fh-fine fh-rate">Use the rate on the product label. Rotate groups so ' + (noun === 'weeds' ? 'the weeds do' : 'the ' + esc(noun || 'pest') + ' does') + ' not build resistance.</p>';
-    FH.prodChip = (p) => '<button type="button" class="fh-prod" data-prod="' + esc(p.key) + '"><b>' + esc(p.brand) + '</b>' + (p.company ? '<small>' + esc(p.company) + '</small>' : '')
-        + (p.timing && TIMING[p.timing] ? '<em>' + TIMING[p.timing][0] + '</em>' : '') + '</button>';
-    FH.prodStrip = (cards) => (cards && cards.length) ? '<div class="fh-pcards">' + cards.map((p) => '<button type="button" class="fh-pcard" data-prod="' + esc(p.key) + '">'
+    // A product's own search on each shop (2026-10-15, the owner): the brand as it is sold.
+    FH.shopOf = (name) => {
+        const q = String(name || '').toLowerCase().replace(/\s+/g, ' ').trim();
+        return { shopee: 'https://shopee.ph/search?keyword=' + encodeURIComponent(q), lazada: 'https://www.lazada.com.ph/catalog/?q=' + encodeURIComponent(q) };
+    };
+    FH.prodShop = (p, words) => {
+        const u = FH.shopOf(p.brand);
+        return '<span class="fh-pshop">'
+            + '<a class="is-sp" href="' + esc(u.shopee) + '" target="_blank" rel="noopener nofollow" aria-label="Search Shopee for ' + esc(p.brand) + '">' + FH.icon.bag + (words ? 'Search Shopee' : 'Shopee') + '</a>'
+            + '<a class="is-lz" href="' + esc(u.lazada) + '" target="_blank" rel="noopener nofollow" aria-label="Search Lazada for ' + esc(p.brand) + '">' + FH.icon.bag + (words ? 'Search Lazada' : 'Lazada') + '</a></span>';
+    };
+    FH.prodChip = (p) => '<div class="fh-prod"><button type="button" class="fh-prod-n" data-prod="' + esc(p.key) + '">'
+        + '<b><span>' + esc(p.brand) + '</span></b>'
+        + (p.timing && TIMING[p.timing] || p.company || p.form ? '<small>' + (p.timing && TIMING[p.timing] ? '<em>' + TIMING[p.timing][0] + '</em>' : '')
+            + '<span>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</span></small>' : '') + '</button>'
+        + FH.prodShop(p) + '</div>';
+    FH.prodStrip = (cards) => (cards && cards.length) ? '<div class="fh-pcards">' + cards.map((p) => '<div class="fh-pcard"><button type="button" class="fh-pcard-n" data-prod="' + esc(p.key) + '">'
         + '<b>' + esc(p.brand) + '</b><small>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</small>'
         + ((p.ai || []).length ? '<span>' + esc(p.ai.join(' plus ')) + '</span>' : '') + (p.group ? '<i>' + esc(p.group) + '</i>' : '')
-        + (p.timing && TIMING[p.timing] ? '<em>' + TIMING[p.timing][0] + '</em>' : '') + '</button>').join('') + '</div>' : '';
+        + (p.timing && TIMING[p.timing] ? '<em>' + TIMING[p.timing][0] + '</em>' : '') + '</button>' + FH.prodShop(p) + '</div>').join('') + '</div>' : '';
     FH.ingRow = (i) => '<li class="fh-ing">'
         + '<div class="fh-ing-top"><b>' + esc(i.name) + '</b>' + (i.group ? '<i class="fh-grp"' + (i.mode ? ' title="' + esc(i.mode) + '"' : '') + '>' + esc(i.group) + '</i>' : '') + '</div>'
         + '<div class="fh-ing-foot">' + (i.mode ? '<small>' + esc(i.mode) + '</small>' : '')
@@ -399,7 +439,7 @@
         + (i.products && i.products.length ? '<div class="fh-prods"><span class="fh-prods-l">Sold as</span>' + i.products.map(FH.prodChip).join('') + '</div>' : '')
         + '</li>';
     FH.ingList = (list) => '<ul class="fh-ings">' + list.map(FH.ingRow).join('') + '</ul>';
-    FH.SHOP_NOTE = '<p class="fh-fine">The Shopee and Lazada links only show who sells something with that active ingredient. They are not a recommendation of any seller or product. Check the label, your crop and the FPA registration before you buy.</p>';
+    FH.SHOP_NOTE = '<p class="fh-fine">The Shopee and Lazada links only search those shops for the active ingredient or the product. They are not a recommendation of any seller. Check the label, your crop and the FPA registration before you buy.</p>';
 
     // The local names a farmer would say, when they are names and not a sentence about names.
     FH.localOf = (i) => {
@@ -558,7 +598,9 @@
             + '<div class="fh-psheet"><p class="fh-pkind"><span>' + esc(KIND[p.kind] || p.kind || 'Product') + '</span>' + (p.company ? 'by ' + esc(p.company) : '') + '</p>'
             + '<div class="fhd-facts">' + facts.map(([l, v]) => '<div><small>' + esc(l) + '</small><b style="font-size:.88rem">' + esc(v) + '</b></div>').join('') + '</div>'
             + (p.note ? '<p class="fh-pnote">' + esc(p.note) + '</p>' : '')
-            + FH.rateLine(p.kind === 'herbicide' ? 'weeds' : (p.kind === 'fungicide' ? 'disease' : 'pest')) + '</div>'
+            + '<div class="fh-psheet-shop"><b>Find it in a shop</b>' + FH.prodShop(p, true) + '</div>'
+            + FH.rateLine(p.kind === 'herbicide' ? 'weeds' : (p.kind === 'fungicide' ? 'disease' : 'pest'))
+            + '<p class="fh-fine">The links only search Shopee and Lazada for this name. They are not a recommendation of any seller. Check the label and the FPA registration before you buy.</p></div>'
             + '<div class="fh-sheet-foot"><button type="button" class="fh-sheet-done">Close</button></div></div>';
         sheetTok++;
         sheet.classList.remove('is-closing');

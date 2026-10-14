@@ -1406,7 +1406,8 @@
                              style="width:auto;height:1.15em;flex:none">
                         News Feed
                     </h2>
-                    <a href="{{ route('community.index') }}" class="text-sm font-bold text-brand-700 hover:underline shrink-0">See more</a>
+                    {{-- The same small link as the Technician's Blog's "See all" (2026-10-15, the owner). --}}
+                    <a href="{{ route('community.index') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">See more →</a>
                 </div>
 
                 {{-- One button, not a box you scroll past.
