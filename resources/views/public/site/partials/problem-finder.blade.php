@@ -12,6 +12,8 @@
     // The crop asked for (?crop=), else the one the page brings (the app: the newest season's).
     $fdCrop = $F::cropKey(request('crop') ?: ($defaultCrop ?? null));
     $fdCrop = isset($crops[$fdCrop]) ? $fdCrop : array_key_first($crops);
+    // A guest on the public page meets the gate (tool-gate, signup).
+    $fdGate = ($gate ?? true) === 'signup' && \App\Support\ContentGate::guestView();
 @endphp
 @once
 @push('head')
@@ -91,7 +93,7 @@
                         <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
                 </div>
                 <div class="wc-out" aria-live="polite">
-                    <div class="tg" data-tool-gate="{{ $section }}">
+                    <div class="tg {{ $fdGate ? 'hg' : '' }}" data-tool-gate="{{ $section }}" @if ($fdGate) data-hg data-hg-one="{{ $words['noun'] }}" data-hg-many="{{ $words['nouns'] }}" @endif>
                         <div class="wc-card" id="fdCard">
                             <noscript><div class="wc-body"><p>Turn on JavaScript to use the finder, or browse the <a href="#catalogue">catalogue</a>.</p></div></noscript>
                         </div>
@@ -162,7 +164,7 @@
     };
     const row = (i) => {
         const loc = localOf(i);
-        return '<div class="fd-card" style="--g: ' + i.hue + '"><a class="fd-item" href="' + esc(i.url) + '">'
+        return '<div class="fd-card" data-k="' + esc(i.url) + '" style="--g: ' + i.hue + '"><a class="fd-item" href="' + esc(i.url) + '">'
             + (i.thumb ? '<img src="' + esc(i.thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : '<span class="none">' + leaf + '</span>')
             + '<span class="fd-t"><b>' + esc(i.name) + '</b><small class="fd-meta"><em>' + esc(i.kind) + '</em>' + (loc ? '<span class="fd-loc">' + esc(loc) + '</span>' : '') + '</small></span>'
             + arrow
@@ -189,25 +191,29 @@
             + '<small>' + hits.length + ' ' + (hits.length === 1 ? D.noun : D.nouns) + (st.where ? '' : '. Pick what you see to narrow it down.') + '</small></div>'
             + '<div class="wc-body">'
             + (hits.length
-                ? early + '<div class="fd-res' + (early ? ' fd-wait' : '') + '">' + hits.map(row).join('') + '</div>'
+                ? early + '<div class="fd-res' + (early ? ' fd-wait' : '') + '" data-hg-grid data-hg-card=".fd-card">' + hits.map(row).join('') + '</div>'
                     + '<p class="wc-legend">' + (D.pests ? 'The IRAC group tells how an insecticide kills.' : 'The FRAC group tells how a fungicide works.')
                     + ' Switch to a different group next time, so the ' + D.noun + ' does not learn to survive it. Open a ' + D.noun + ' for when to spray and the steps to take first.</p>'
                     + (hits.some((i) => i.ai && i.ai.length) ? SHOP_NOTE : '')
                 : '<p class="wc-note ok">Nothing in our catalogue for ' + esc(D.crops[st.crop].toLowerCase()) + ' matches that yet. Send a photo to Anee, the smart farm technician, and she will tell you what it most likely is.</p>')
             + '</div>';
-        if (swap) { card.classList.remove('is-swap'); void card.offsetWidth; card.classList.add('is-swap'); }
+        if (swap && !window.aneeSwap) { card.classList.remove('is-swap'); void card.offsetWidth; card.classList.add('is-swap'); }
+        // The gate, on the public page: the first row clear (partials/hub-gate).
+        window.aneeHubGate?.(card.querySelector('[data-hg-grid]') || card);
         if (goText) {
             goText.textContent = hits.length ? 'See the ' + hits.length + ' ' + (hits.length === 1 ? D.noun : D.nouns) : 'See the answer';
             if (swap) { go.classList.remove('is-bump'); void go.offsetWidth; go.classList.add('is-bump'); }
         }
     };
     go?.addEventListener('click', () => card.closest('.wc-out').scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'start' }));
-    cropTag?.addEventListener('croppick', (e) => { st.crop = e.detail.crop; render(true); });
+    // On the public page the answer moves: rows that stay slide, new ones fade up.
+    const redo = () => (window.aneeSwap ? window.aneeSwap(card, () => render(true), { key: '.fd-card[data-k]', fade: '.wc-when, .wc-body > :not(.fd-res)' }) : render(true));
+    cropTag?.addEventListener('croppick', (e) => { st.crop = e.detail.crop; redo(); });
     whereBox.addEventListener('click', (e) => {
         const b = e.target.closest('button[data-where]');
         if (!b || b.disabled) return;
         st.where = st.where === b.dataset.where ? '' : b.dataset.where;
-        render(true);
+        redo();
     });
     render(false);
 })();

@@ -15,8 +15,10 @@
     nothing is hidden.
 
     With 'signup' => true (the gated section fronts since 2026-10-14, see
-    App\Support\ContentGate::HUBS) the panel asks for a free anee.io sign up
-    instead of a name and an email, and a kept email does not open it.
+    App\Support\ContentGate::HUBS) a guest gets the catalogues' gate instead
+    of the email form: the answer's first row clear, the blur from halfway
+    down the second, and the shared card (partials/hub-gate). The wrapper
+    carries data-hg for a guest; see partials/problem-finder and weed-helper.
 --}}
 @php
     $gateWords = [
@@ -26,25 +28,20 @@
     ][$tool];
     $gateId = 'tg' . ucfirst($tool);
     $signup = $signup ?? false;
-    $signupWords = [
-        'weeds' => 'Register for free to see what to do first at this age of your crop, and the active ingredients that work against the weeds you see.',
-        'pests' => 'Register for free to see the pests that fit what you see, and the active ingredients that work against each one.',
-        'diseases' => 'Register for free to see the diseases that fit what you see, and the active ingredients that work against each one.',
+    $signupCard = [
+        'weeds' => ['title' => 'See what to spray at this age', 'lead' => 'Register for free to see the active ingredients that work against the weeds you see at this age of your crop, and what to do first.'],
+        'pests' => ['title' => 'See every pest that fits, and what to spray', 'lead' => 'Register for free to see all the pests that match what you see on your crop, and the active ingredients that work against each one.'],
+        'diseases' => ['title' => 'See every disease that fits, and what to spray', 'lead' => 'Register for free to see all the diseases that match what you see on your crop, and the active ingredients that work against each one.'],
     ][$tool];
 @endphp
 @if ($signup)
-<div class="tg-gate" id="{{ $gateId }}" data-signup hidden>
-    <div class="tg-panel" role="group" aria-labelledby="{{ $gateId }}H">
-        <div class="tg-head">
-            <span class="tg-lock" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2"/><path stroke-linecap="round" d="M8 10.5V7.8a4 4 0 018 0v2.7"/></svg></span>
-            <h3 id="{{ $gateId }}H">{{ $gateWords[0] }}</h3>
-        </div>
-        <p class="tg-lead">{{ $signupWords }}</p>
-        <a href="{{ route('signup') }}?read={{ urlencode('/' . $tool) }}" class="btn btn-accent tg-go">Register for free</a>
-        <a href="{{ route('login') }}?read={{ urlencode('/' . $tool) }}" class="btn btn-outline tg-go" style="margin-top: 0">I have an account</a>
-        <p class="tg-fine">Free to register. No credit card.</p>
-    </div>
-</div>
+    {{-- A guest only (the wrapper says so with data-hg): the answer shows its
+         first row, the blur starts halfway down the second, and the shared
+         members' card asks for a free registration (partials/hub-gate). --}}
+    @if (\App\Support\ContentGate::guestView())
+        @include('public.site.partials.hub-gate')
+        @include('public.site.partials.content-gate-card', $signupCard + ['here' => '/' . $tool, 'cardId' => null])
+    @endif
 @else
 <div class="tg-gate" id="{{ $gateId }}" hidden>
     <form class="tg-panel" novalidate data-tool="{{ $tool }}" aria-labelledby="{{ $gateId }}H">

@@ -26,7 +26,8 @@
     .hg-cut { display: none !important; }
     .hg .wk-more, .hg [data-rv-more] { display: none !important; }
     .hg .sp-gate-card { margin-top: 1.6rem; }
-    /* The blur: a veil over the grid from halfway down its second row. It
+    /* The blur: a veil over the grid from halfway down its second row (a
+       finder's answer: its second result, or its second block). It
        blurs what is under it, so a row can be half clear and half not. */
     .hg-veil { position: absolute; left: -.5rem; right: -.5rem; z-index: 1; top: 0; height: 0; pointer-events: none; opacity: 0;
         -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); background: rgb(251 252 249 / .25);
@@ -36,6 +37,8 @@
     /* The blurred rows fade out under the card that sits over their end. */
     .hg.has-locked [data-hg-grid] { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 12rem), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 12rem), transparent); }
     .hg.has-locked .sp-gate-card { margin-top: -7rem; }
+    .hg.has-locked [data-hg-grid] ~ :not(.hg-veil) { display: none; }
+    .hg.has-locked :has(> [data-hg-grid]) ~ :not(.hg-veil) { display: none; }
     .hg-chip, .wk-jump .hg-chip { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .9rem; border-radius: 999px; font-size: .88rem; font-weight: 800; text-decoration: none;
         color: #2d5016; background: #eef6e4; border: 1px solid #d3e6bd; transition: background-color .28s cubic-bezier(.22,1,.36,1); }
     a.hg-chip:hover, .wk-jump a.hg-chip:hover { background: #e2f0d2; }
@@ -58,40 +61,98 @@
     /* The gate: the first row of what matches stays clear; the blur starts
        halfway down the second row (halfway down the only row, when one row
        is all there is) and covers the third; anything after the third row
-       waits behind the card. A crop chip puts other shelves' cards after the
-       shelf's own (CSS order), so the rows follow that order. */
+       waits behind the card. Rows are read from where the cards actually
+       sit, so a grid, a single column and a wrapping row of chips all
+       count alike (and a crop chip's CSS order is followed). */
     const lock = (grid) => {
         const wrap = grid && grid.closest('[data-hg]');
         if (!wrap) return;
+        const foot = wrap.querySelector('[data-gate-foot]');
+        // An answer with nothing to hold back (no list at all): no gate.
+        if (!grid.hasAttribute('data-hg-grid')) { wrap.classList.remove('has-locked'); if (foot) foot.textContent = ''; return; }
         const cards = cardsOf(grid);
-        const on = cards.filter((c) => !c.hidden && !c.classList.contains('is-out'))
-            .sort((a, b) => (a.classList.contains('is-also') ? 1 : 0) - (b.classList.contains('is-also') ? 1 : 0));
-        const cols = Math.max(1, getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length);
         cards.forEach((c) => { c.classList.remove('hg-locked', 'hg-cut'); c.inert = false; });
-        on.forEach((c, i) => { if (i >= cols * 3) c.classList.add('hg-cut'); });
+        const on = cards.filter((c) => !c.hidden && !c.classList.contains('is-out') && shown(c));
+        // Locked or not changes what shows after the list, so measure as it will be.
+        wrap.classList.toggle('has-locked', on.length > 1);
+        // The rows: the cards grouped by their top, a few pixels either way.
+        let at, tops;
+        const measure = (list) => {
+            at = new Map(list.map((c) => [c, topIn(c, wrap)]));
+            tops = [];
+            [...at.values()].sort((a, b) => a - b).forEach((t) => { if (!tops.length || t - tops[tops.length - 1] > 4) tops.push(t); });
+        };
+        const rowOf = (c) => { const t = at.get(c); let r = 0; tops.forEach((x, i) => { if (t >= x - 4) r = i; }); return r; };
+        measure(on);
+        on.forEach((c) => { if (rowOf(c) >= 3) c.classList.add('hg-cut'); });
+        // Holding rows back can move what is left (an answer box that
+        // centres its content), so the rows that stay are read again.
+        const kept = on.filter((c) => !c.classList.contains('hg-cut'));
+        measure(kept);
         let veil = wrap.querySelector(':scope > .hg-veil');
-        if (!veil) { veil = document.createElement('div'); veil.className = 'hg-veil'; veil.setAttribute('aria-hidden', 'true'); grid.after(veil); }
+        if (!veil) { veil = document.createElement('div'); veil.className = 'hg-veil'; veil.setAttribute('aria-hidden', 'true'); wrap.appendChild(veil); }
         let held = 0;
         if (on.length > 1) {
-            const row = on.length > cols ? on.slice(cols, cols * 2) : on.slice(0, cols);
-            const rowTop = Math.min(...row.map((c) => topIn(c, wrap)));
-            const rowH = Math.max(...row.map((c) => c.offsetHeight));
-            const from = Math.round(rowTop + rowH / 2);
+            const r = tops.length > 1 ? 1 : 0;
+            const row = kept.filter((c) => rowOf(c) === r);
+            const from = Math.round(tops[r] + Math.max(...row.map((c) => c.offsetHeight)) / 2);
             const bottom = topIn(grid, wrap) + grid.offsetHeight;
             veil.style.top = from + 'px';
             veil.style.height = Math.max(0, bottom - from) + 'px';
-            on.slice(0, cols * 3).forEach((c) => {
-                const t = topIn(c, wrap);
+            kept.forEach((c) => {
+                const t = at.get(c);
                 if (t + c.offsetHeight > from) held++;
                 if (t >= from) { c.classList.add('hg-locked'); c.inert = true; }
             });
-            held += Math.max(0, on.length - cols * 3);
+            held += on.length - kept.length;
         }
         wrap.classList.toggle('has-locked', held > 0);
-        const foot = wrap.querySelector('[data-gate-foot]');
         if (foot) {
             const noun = held === 1 ? wrap.dataset.hgOne : wrap.dataset.hgMany;
-            foot.textContent = !held ? '' : on.length < cards.length ? held + ' more ' + noun + ' match what you picked' : 'And ' + held + ' more ' + noun + ' waiting for you';
+            foot.textContent = !held ? '' : wrap.dataset.hgFoot || (on.length < cards.length ? held + ' more ' + noun + ' match what you picked' : 'And ' + held + ' more ' + noun + ' waiting for you');
+        }
+    };
+
+    /* An answer drawn again from scratch (the finders write their card
+       anew): the rows with the same key slide from where they were, new
+       ones and the unkeyed parts fade up, rows that left fade where they
+       stood, and the box's height eases. */
+    const swap = (box, paint, o = {}) => {
+        if (still() || !box) { paint(); return; }
+        const pick = (sel) => (sel ? [...box.querySelectorAll(sel)].filter(shown) : []);
+        const was = new Map(), leave = [];
+        pick(o.key).forEach((el) => { const r = el.getBoundingClientRect(); was.set(el.dataset.k, r); leave.push([el.dataset.k, el.cloneNode(true), r]); });
+        const h0 = box.getBoundingClientRect().height;
+        box.getAnimations({ subtree: true }).forEach((a) => { if (a.id === 'flip') a.cancel(); });
+        document.querySelectorAll('.hg-ghost').forEach((g) => g.remove());
+        paint();
+        const h1 = box.getBoundingClientRect().height;
+        const vh = innerHeight, stay = new Set();
+        let n = 0;
+        const fadeUp = (el) => { const a = el.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 300, delay: Math.min(n++, 8) * 35, easing: EASE, fill: 'backwards' }); a.id = 'flip'; };
+        pick(o.key).forEach((el) => {
+            const now = el.getBoundingClientRect(), before = was.get(el.dataset.k);
+            stay.add(el.dataset.k);
+            if (now.bottom < -200 || now.top > vh + 200) return;
+            if (!before) { fadeUp(el); return; }
+            const dx = before.left - now.left, dy = before.top - now.top;
+            if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+            const a = el.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], { duration: 320, easing: EASE });
+            a.id = 'flip';
+        });
+        pick(o.fade).forEach(fadeUp);
+        let gone = 0;
+        leave.forEach(([k, g, r]) => {
+            if (stay.has(k) || r.bottom < 0 || r.top > vh || gone++ > 12) return;
+            g.classList.add('hg-ghost');
+            g.inert = true;
+            Object.assign(g.style, { position: 'fixed', left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', margin: '0', zIndex: '3', pointerEvents: 'none' });
+            document.body.appendChild(g);
+            g.animate([{ opacity: 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(.97)' }], { duration: 200, easing: EASE }).onfinish = () => g.remove();
+        });
+        if (Math.abs(h1 - h0) > 1) {
+            const a = box.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 320, easing: EASE });
+            a.id = 'flip';
         }
     };
 
@@ -154,6 +215,7 @@
 
     window.aneeHubGate = lock;
     window.aneeFlip = flip;
+    window.aneeSwap = swap;
     const all = () => document.querySelectorAll('[data-hg] [data-hg-grid]').forEach(lock);
     all();
     document.addEventListener('DOMContentLoaded', all);

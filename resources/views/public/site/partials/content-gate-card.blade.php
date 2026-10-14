@@ -6,11 +6,13 @@
 @php
     $tl = $tl ?? false;
     $foot = $foot ?? '';
+    // The page's main gate answers to #spGateCard; a finder's own gate has none.
+    $cardId = $cardId ?? 'spGateCard';
     $lead = $lead ?? ($tl
         ? 'Mag-register nang libre sa anee.io para mabasa ang buong pahina, pati ang bawat gabay sa pananim, binhi, paghahanda ng lupa, peste, sakit at damo.'
         : 'Register for free on anee.io to read the whole page, and every guide on crops, varieties, land preparation, pests, diseases and weeds.');
 @endphp
-<div class="sp-gate-card" id="spGateCard" data-gate-card>
+<div class="sp-gate-card" @if ($cardId) id="{{ $cardId }}" @endif data-gate-card>
     @if (\App\Support\ContentGate::previewing())
         <div class="sp-gate-as">{{ $tl ? 'Ganito ito nakikita ng bisita. Naka-sign in ka, kaya bukas sa iyo ang buong pahina.' : 'This is what a guest sees. You are signed in, so the whole page is open for you.' }}
             <a href="{{ url($here) }}">{{ $tl ? 'Bumalik sa buong pahina ›' : 'Back to the full page ›' }}</a></div>

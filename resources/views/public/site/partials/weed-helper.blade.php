@@ -10,6 +10,8 @@
     $W = \App\Support\WeedControl::class;
     $F = \App\Support\FieldCatalogue::class;
     $plans = $F::weedPlans();
+    // A guest on the public page meets the gate (tool-gate, signup).
+    $wcGate = ($gate ?? true) === 'signup' && \App\Support\ContentGate::guestView();
     // Each crop's plans: rice has two (how it was planted), every other crop one.
     $cropPlans = [];
     foreach ($plans as $pk => $p) {
@@ -92,7 +94,7 @@
                         <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
                 </div>
                 <div class="wc-out" aria-live="polite">
-                    <div class="tg" data-tool-gate="weeds">
+                    <div class="tg {{ $wcGate ? 'hg' : '' }}" data-tool-gate="weeds" @if ($wcGate) data-hg data-hg-one="active ingredient" data-hg-many="active ingredients" @endif>
                         <div class="wc-card" id="wcCard">
                             <noscript><div class="wc-body"><p>Turn on JavaScript to use the helper, or read the <a href="{{ $S::url('weeds', 'herbicides-for-rice-weeds') }}">tables in our herbicide guide</a>.</p></div></noscript>
                         </div>
@@ -212,6 +214,13 @@
             }
             if (ings.includes('wc-ings')) ings += '<p class="wc-legend">The group number tells how a herbicide kills. Use a different group next season so the weeds do not learn to survive it.</p>' + SHOP_NOTE;
         }
+        // The gate, on the public page, holds back the active ingredients:
+        // the list (or the groups side by side) is what it counts in rows.
+        const split = ings.includes('wc-split');
+        ings = split ? ings.replace('<div class="wc-split">', '<div class="wc-split" data-hg-grid data-hg-card="div">')
+            : ings.replace('<ul class="wc-ings">', '<ul class="wc-ings" data-hg-grid data-hg-card="li">');
+        const gateWrap = card.closest('[data-hg]');
+        if (gateWrap) gateWrap.dataset.hgFoot = split ? 'What to spray for each group is waiting for you' : '';
         const src = (p.sources || []).filter((s) => s && s.label).slice(0, 3);
         const based = src.length ? '<p class="wc-src">Based on ' + join(src.map((s) => s.url ? '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label) + '</a>' : esc(s.label))) + '.</p>' : '';
         const title = w.title;
@@ -219,7 +228,9 @@
             '<div class="wc-when"><span class="wc-timing">' + esc(TIMING[w.timing] || '') + '</span><b>' + esc(title) + '</b>'
             + '<small>' + esc((D.cropWord[st.crop] ? D.cropWord[st.crop].charAt(0).toUpperCase() + D.cropWord[st.crop].slice(1) + '. ' : '') + w.stage) + '</small></div>'
             + '<div class="wc-body"><div><h3>Do this first</h3><ol class="wc-steps">' + w.steps.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ol></div>' + ings + based + '</div>';
-        if (swap) { card.classList.remove('is-swap'); void card.offsetWidth; card.classList.add('is-swap'); }
+        if (swap && !window.aneeSwap) { card.classList.remove('is-swap'); void card.offsetWidth; card.classList.add('is-swap'); }
+        // The gate, on the public page: the first block clear (partials/hub-gate).
+        window.aneeHubGate?.(card.querySelector('[data-hg-grid]') || card);
         if (goText) {
             goText.textContent = counted(w.short) ? 'See what to do at ' + w.short.toLowerCase() : 'See what to do: ' + w.short.toLowerCase();
             if (swap) { go.classList.remove('is-bump'); void go.offsetWidth; go.classList.add('is-bump'); }
@@ -228,15 +239,17 @@
     const go = document.getElementById('wcGo');
     const goText = go?.querySelector('span');
     go?.addEventListener('click', () => card.closest('.wc-out').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
-    cropTag?.addEventListener('croppick', (e) => { st.crop = e.detail.crop; st.days = ''; drawControls(); render(true); });
-    methodBox.addEventListener('click', (e) => { const b = e.target.closest('button[data-plan]'); if (b && b.dataset.plan !== st.plan) { st.plan = b.dataset.plan; st.days = ''; drawControls(); render(true); } });
-    daysBox.addEventListener('click', (e) => { const b = e.target.closest('button[data-days]'); if (b && b.dataset.days !== st.days) { st.days = b.dataset.days; render(true); } });
+    // On the public page the answer moves: its parts fade up, its height eases.
+    const redo = () => (window.aneeSwap ? window.aneeSwap(card, () => render(true), { fade: '.wc-when, .wc-body > *' }) : render(true));
+    cropTag?.addEventListener('croppick', (e) => { st.crop = e.detail.crop; st.days = ''; drawControls(); redo(); });
+    methodBox.addEventListener('click', (e) => { const b = e.target.closest('button[data-plan]'); if (b && b.dataset.plan !== st.plan) { st.plan = b.dataset.plan; st.days = ''; drawControls(); redo(); } });
+    daysBox.addEventListener('click', (e) => { const b = e.target.closest('button[data-days]'); if (b && b.dataset.days !== st.days) { st.days = b.dataset.days; redo(); } });
     groupBox.addEventListener('click', (e) => {
         const b = e.target.closest('button[data-g]');
         if (!b) return;
         const g = b.dataset.g;
         st.groups = st.groups.includes(g) ? st.groups.filter((x) => x !== g) : st.groups.concat(g);
-        render(true);
+        redo();
     });
     // Arrow keys move within a radio group, as a radio group should.
     [methodBox, daysBox].forEach((box) => box.addEventListener('keydown', (e) => {

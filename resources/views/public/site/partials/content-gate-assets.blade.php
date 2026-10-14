@@ -34,16 +34,18 @@
 (() => {
     /* The gate's card comes up as it scrolls in, and a link into the gated
        part (or to the card) brings the reader to the card instead. */
-    const card = document.querySelector('[data-gate-card]');
+    const cards = [...document.querySelectorAll('[data-gate-card]')];
+    const card = document.getElementById('spGateCard') || cards[0];
     if (!card) return;
     const show = () => card.classList.add('is-in');
     /* Arrived on the card itself (the "See it as a guest" link, or the
        chip at the top): show it at once, without waiting to scroll in. */
     if (location.hash === '#spGateCard') show();
+    // Every card on the page (a finder has its own) comes up as it scrolls in.
     if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { show(); io.disconnect(); } }, { rootMargin: '0px 0px -10% 0px' });
-        io.observe(card);
-    } else { show(); }
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px' });
+        cards.forEach((c) => io.observe(c));
+    } else { cards.forEach((c) => c.classList.add('is-in')); }
     const gated = document.querySelector('.sp-gated');
     const toCard = () => {
         show();
