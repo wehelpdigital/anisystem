@@ -26,6 +26,8 @@
     // The members' gate (2026-10-14): a guest reads the opening of a field
     // guide; the rest is in the page for search engines, blurred for them.
     $gateCut = (! ($preview ?? false) && \App\Support\ContentGate::applies($page->section)) ? \App\Support\ContentGate::cut($blocks) : null;
+    // A member reads it all; a thin marker shows where a guest would stop.
+    $memberCut = ($gateCut === null && ! ($preview ?? false) && \App\Support\ContentGate::opensFor($page->section)) ? \App\Support\ContentGate::cut($blocks) : null;
     $isFeature = $page->section === 'features';
     $isQuestion = $page->section === 'questions';
     $feat = $isFeature ? $S::feature($page) : null;
@@ -156,6 +158,11 @@
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $isQuestion
                             ? ($tl ? 'Sinagot ni Anee, ang smart farm technician ng anee.io' : 'Answered by Anee, the anee.io smart farm technician')
                             : ($tl ? 'Mula sa agriculture team ng anee.io' : 'By the anee.io agriculture team') }}</span>
+                        @if ($gateCut !== null)
+                            <a href="#spGateCard" class="sp-meta-gate"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>{{ $tl ? 'Gabay ng miyembro, libre ang pagsali' : 'Members\' guide, free to join' }}</a>
+                        @elseif ($memberCut !== null)
+                            <span class="sp-meta-gate is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>{{ $tl ? 'Gabay ng miyembro, bukas sa iyo' : 'Members\' guide, open for you' }}</span>
+                        @endif
                     </div>
                     @endif
                 </div>
@@ -206,6 +213,10 @@
                     @if ($gateCut !== null)
                         @include('public.site.blocks', ['blocks' => array_slice($blocks, 0, $gateCut, true)])
                         @include('public.site.partials.content-gate', ['gated' => array_slice($blocks, $gateCut, null, true)])
+                    @elseif ($memberCut !== null)
+                        @include('public.site.blocks', ['blocks' => array_slice($blocks, 0, $memberCut, true)])
+                        @include('public.site.partials.content-gate-member')
+                        @include('public.site.blocks', ['blocks' => array_slice($blocks, $memberCut, null, true)])
                     @else
                         @include('public.site.blocks', ['blocks' => $blocks])
                     @endif

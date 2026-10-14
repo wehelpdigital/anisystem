@@ -32,10 +32,26 @@ class ContentGate
         return in_array((string) $section, self::SECTIONS, true);
     }
 
-    /** Whether this visitor meets the gate on a page of this section. */
+    /**
+     * Whether this visitor meets the gate on a page of this section: every
+     * guest, and a member who asked to see the page as a guest (?guest=1,
+     * the link on the members' marker), so the owner can check it signed in.
+     */
     public static function applies(?string $section): bool
     {
-        return self::gatedSection($section) && ! Auth::check();
+        return self::gatedSection($section) && (! Auth::check() || self::previewing());
+    }
+
+    /** A signed in member looking at the page as a guest would. */
+    public static function previewing(): bool
+    {
+        return Auth::check() && request()->query('guest') === '1';
+    }
+
+    /** A signed in member reading a gated page in full: the marker shows where guests stop. */
+    public static function opensFor(?string $section): bool
+    {
+        return self::gatedSection($section) && Auth::check() && ! self::previewing();
     }
 
     /**

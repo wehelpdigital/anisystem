@@ -28,6 +28,9 @@
     .sp-meta { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .8rem; color: #6b7280; }
     .sp-meta span { display: inline-flex; align-items: center; gap: .3rem; }
     .sp-meta svg { width: .95rem; height: .95rem; color: #86b556; }
+    .sp-meta .sp-meta-gate { display: inline-flex; align-items: center; gap: .3rem; padding: .15rem .6rem; border-radius: 999px; background: #eef6e4; border: 1px solid #d3e6bd; margin-bottom: .45rem; font-weight: 800; color: #2d5016; text-decoration: none; transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .sp-meta a.sp-meta-gate:hover { background: #e2f0d2; }
+    .sp-meta .sp-meta-gate svg { color: #4d7f2a; }
     .sp-figure { margin: 0; }
     /* "On this page" on a phone: under the title, folded. The side column's
        copy is the desktop's. */

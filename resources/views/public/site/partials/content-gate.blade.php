@@ -44,6 +44,8 @@
     .sp-gate-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-top: 1.1rem; }
     .sp-gate-acts .btn { min-width: 11rem; }
     .sp-gate-tools { margin-top: .9rem; font-size: .8rem; line-height: 1.55; color: #6b7280; }
+    .sp-gate-as { margin: -.3rem 0 1rem; padding: .55rem .8rem; border-radius: .8rem; background: #fff7e0; border: 1px solid #f3dc9b; font-size: .82rem; line-height: 1.45; color: #6b4e00; }
+    .sp-gate-as a { font-weight: 800; color: #6b4e00; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
     @media (max-width: 639.98px) { .sp-gate-card { margin-top: -14rem; padding: 1.25rem 1rem 1.1rem; } .sp-gate-acts .btn { width: 100%; } }
     @media (prefers-reduced-motion: reduce) { .sp-gate-card { transition: none; opacity: 1; transform: none; } }
 </style>
@@ -56,6 +58,9 @@
     const card = document.querySelector('[data-gate-card]');
     if (!card) return;
     const show = () => card.classList.add('is-in');
+    /* Arrived on the card itself (the "See it as a guest" link, or the
+       chip at the top): show it at once, without waiting to scroll in. */
+    if (location.hash === '#spGateCard') show();
     if ('IntersectionObserver' in window) {
         const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { show(); io.disconnect(); } }, { rootMargin: '0px 0px -10% 0px' });
         io.observe(card);
@@ -65,7 +70,7 @@
         const a = e.target.closest('a[href^="#"]');
         if (!a || !gated) return;
         const t = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
-        if (!t || !gated.contains(t)) return;
+        if (!t || (t !== card && !gated.contains(t))) return;
         e.preventDefault();
         show();
         card.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
@@ -80,7 +85,11 @@
     <div class="sp-gated" id="spGated">
         @include('public.site.blocks', ['blocks' => $gated])
     </div>
-    <div class="sp-gate-card" data-gate-card>
+    <div class="sp-gate-card" id="spGateCard" data-gate-card>
+        @if (\App\Support\ContentGate::previewing())
+            <div class="sp-gate-as">{{ $tl ? 'Ganito ito nakikita ng bisita. Naka-sign in ka, kaya bukas sa iyo ang buong pahina.' : 'This is what a guest sees. You are signed in, so the whole page is open for you.' }}
+                <a href="{{ url($here) }}">{{ $tl ? 'Bumalik sa buong pahina ›' : 'Back to the full page ›' }}</a></div>
+        @endif
         <div class="sp-gate-lock" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg></div>
         <h2>{{ $title }}</h2>
         <p>{{ $tl
