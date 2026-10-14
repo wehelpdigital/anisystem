@@ -16,6 +16,9 @@ final class AiMobility
 {
     public const ORDER = ['systemic', 'translaminar', 'contact'];
 
+    /** A herbicide's timings, in the order a season meets them. */
+    public const WHEN = ['burndown', 'pre', 'early_post', 'post'];
+
     private static ?array $book = null;
 
     public static function book(): array
@@ -26,7 +29,7 @@ final class AiMobility
             foreach ((array) ($raw['ai'] ?? []) as $name => $row) {
                 $ai[self::norm($name)] = $row;
             }
-            self::$book = ['classes' => (array) ($raw['classes'] ?? []), 'ai' => $ai];
+            self::$book = ['classes' => (array) ($raw['classes'] ?? []), 'herb' => (array) ($raw['herb'] ?? []), 'ai' => $ai];
         }
 
         return self::$book;
@@ -59,12 +62,21 @@ final class AiMobility
         $parts = preg_split('/\s+plus\s+|\s*\+\s*|\s+with\s+(?!safener)/i', $clean) ?: [$clean];
         $cls = [];
         $notes = [];
+        $sel = null;
+        $when = [];
         foreach ($parts as $p) {
             $row = $book[self::norm($p)] ?? null;
             if (! $row) {
                 continue;
             }
             $cls[$row['c']] = true;
+            // A herbicide: selective unless any part kills every green plant; its timings joined.
+            if (isset($row['s'])) {
+                $sel = ($sel === 'non_selective' || $row['s'] === 'non_selective') ? 'non_selective' : 'selective';
+                foreach ((array) ($row['w'] ?? []) as $w) {
+                    $when[$w] = true;
+                }
+            }
             if (! empty($row['n'])) {
                 $notes[] = (count($parts) > 1 ? ucfirst(trim($p)) . ': ' : '') . $row['n'];
             }
@@ -73,7 +85,13 @@ final class AiMobility
             return null;
         }
 
-        return ['c' => array_values(array_filter(self::ORDER, fn ($k) => isset($cls[$k]))), 'n' => $notes ? implode('. ', $notes) . '.' : null];
+        $out = ['c' => array_values(array_filter(self::ORDER, fn ($k) => isset($cls[$k]))), 'n' => $notes ? implode('. ', $notes) . '.' : null];
+        if ($sel) {
+            $out['s'] = $sel;
+            $out['w'] = array_values(array_filter(self::WHEN, fn ($k) => isset($when[$k])));
+        }
+
+        return $out;
     }
 
     /** What a page carries to read names itself: the class words, and every base ingredient (normalised) => [class, note]. */
@@ -81,7 +99,7 @@ final class AiMobility
     {
         $b = self::book();
 
-        return ['classes' => $b['classes'], 'ai' => (object) $b['ai']];
+        return ['classes' => $b['classes'], 'herb' => $b['herb'], 'ai' => (object) $b['ai']];
     }
 
     /** A product: the classes of all its active ingredients together. */

@@ -152,7 +152,9 @@
     const row = (i, kindFlag) => {
         const loc = FH.localOf(i), open = opened.has(i.k), id = 'fhrc-' + String(i.k).replace(/[^a-z0-9_-]/gi, '');
         const nAi = (i.ai || []).length, nProd = (i.ai || []).reduce((n, [a]) => n + prodsOf(a, st.crop).length, 0);
-        const sum = nAi ? '<i>' + nAi + ' to spray</i>' + (nProd ? '<i>' + nProd + ' product' + (nProd === 1 ? '' : 's') + '</i>' : '')
+        // How its sprays move, seen before the card is opened (2026-10-15, the owner).
+        const cls = [...new Set((i.ai || []).flatMap(([a]) => (FH.mob(a) || {}).c || []))];
+        const sum = nAi ? '<i>' + nAi + ' to spray</i>' + (nProd ? '<i>' + nProd + ' product' + (nProd === 1 ? '' : 's') + '</i>' : '') + FH.mobChips(cls)
             : (i.no ? '<i class="is-warn">Read before you spray</i>' : '');
         const body = nAi ? '<div class="fh-rc-spray"><span class="fh-spray-h" data-tl="what-to-spray">' + I.drop + 'What to spray</span>' + sprayOf(i, st.crop) + '</div>'
             : (i.no ? '<div class="fh-rc-spray">' + noSpray(i) + '</div>' : '');

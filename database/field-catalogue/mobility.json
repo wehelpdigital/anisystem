@@ -14,15 +14,53 @@
    "say": "Stays where it lands. It works only on what the spray touches, so cover the plant well."
   }
  },
+ "herb": {
+  "selective": {
+   "en": "Selective",
+   "say": "Kills certain weeds and spares the crop it is labelled for."
+  },
+  "non_selective": {
+   "en": "Non selective",
+   "say": "Kills any green plant it touches, the crop too. Keep it off the crop."
+  },
+  "pre": {
+   "en": "Pre",
+   "say": "Pre emergence: goes on before the weeds come up, on moist soil."
+  },
+  "early_post": {
+   "en": "Early post",
+   "say": "Early post emergence: on young weeds with a few leaves."
+  },
+  "post": {
+   "en": "Post",
+   "say": "Post emergence: on weeds already up and growing."
+  },
+  "burndown": {
+   "en": "Burndown",
+   "say": "Clears every weed before planting."
+  }
+ },
  "ai": {
   "2,4-D": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "2,4-D amine": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "2,4-D IBE": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Abamectin": {
    "c": "translaminar"
@@ -36,11 +74,21 @@
   },
   "Ametryn": {
    "c": "systemic",
-   "n": "Taken up by roots and leaves"
+   "n": "Taken up by roots and leaves",
+   "s": "selective",
+   "w": [
+    "pre",
+    "post"
+   ]
   },
   "Atrazine": {
    "c": "systemic",
-   "n": "Taken up mostly by the roots"
+   "n": "Taken up mostly by the roots",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
   },
   "Azadirachtin": {
    "c": "contact",
@@ -54,10 +102,19 @@
    "c": "systemic"
   },
   "Bensulfuron methyl": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
   },
   "Bentazone": {
-   "c": "contact"
+   "c": "contact",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Beta cyfluthrin": {
    "c": "contact"
@@ -69,7 +126,12 @@
    "c": "contact"
   },
   "Bispyribac sodium": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "early_post",
+    "post"
+   ]
   },
   "Bordeaux mixture": {
    "c": "contact"
@@ -79,18 +141,33 @@
   },
   "Bromacil": {
    "c": "systemic",
-   "n": "Taken up by the roots"
+   "n": "Taken up by the roots",
+   "s": "selective",
+   "w": [
+    "pre",
+    "post"
+   ]
   },
   "Buprofezin": {
    "c": "contact"
   },
   "Butachlor": {
    "c": "systemic",
-   "n": "Taken up by sprouting weeds from the soil"
+   "n": "Taken up by sprouting weeds from the soil",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
   },
   "Butachlor with safener": {
    "c": "systemic",
-   "n": "Taken up by sprouting weeds from the soil"
+   "n": "Taken up by sprouting weeds from the soil",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
   },
   "Cadusafos": {
    "c": "contact",
@@ -122,7 +199,12 @@
    "n": "Also moves through the leaf"
   },
   "Chlorimuron ethyl": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "post"
+   ]
   },
   "Chlorothalonil": {
    "c": "contact"
@@ -132,7 +214,11 @@
   },
   "Clomazone": {
    "c": "systemic",
-   "n": "Taken up by roots and young shoots"
+   "n": "Taken up by roots and young shoots",
+   "s": "selective",
+   "w": [
+    "pre"
+   ]
   },
   "Copper": {
    "c": "contact"
@@ -165,7 +251,11 @@
    "c": "contact"
   },
   "Cyhalofop butyl": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Cymoxanil": {
    "c": "translaminar",
@@ -203,13 +293,22 @@
   },
   "Diuron": {
    "c": "systemic",
-   "n": "Taken up mostly by the roots"
+   "n": "Taken up mostly by the roots",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
   },
   "Emamectin benzoate": {
    "c": "translaminar"
   },
   "Ethoxysulfuron": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "early_post"
+   ]
   },
   "Etofenprox": {
    "c": "contact"
@@ -218,22 +317,38 @@
    "c": "contact"
   },
   "Fenoxaprop P ethyl": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Fipronil": {
    "c": "systemic"
   },
   "Florpyrauxifen benzyl": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Fluazifop P butyl": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Fluazinam": {
    "c": "contact"
   },
   "Flucetosulfuron": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "early_post"
+   ]
   },
   "Fludioxonil": {
    "c": "contact"
@@ -254,13 +369,27 @@
   },
   "Glufosinate ammonium": {
    "c": "contact",
-   "n": "Moves only a little in the plant"
+   "n": "Moves only a little in the plant",
+   "s": "non_selective",
+   "w": [
+    "post",
+    "burndown"
+   ]
   },
   "Glyphosate": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "non_selective",
+   "w": [
+    "post",
+    "burndown"
+   ]
   },
   "Halosulfuron methyl": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Hexaconazole": {
    "c": "systemic"
@@ -272,7 +401,12 @@
    "c": "contact"
   },
   "Imazethapyr": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "post"
+   ]
   },
   "Imidacloprid": {
    "c": "systemic"
@@ -292,7 +426,12 @@
   },
   "Linuron": {
    "c": "systemic",
-   "n": "Taken up by roots and leaves"
+   "n": "Taken up by roots and leaves",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
   },
   "Lufenuron": {
    "c": "contact",
@@ -311,10 +450,19 @@
    "c": "contact"
   },
   "MCPA": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Mesotrione": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "post"
+   ]
   },
   "Metalaxyl": {
    "c": "systemic"
@@ -327,17 +475,31 @@
    "n": "A bait the snail eats"
   },
   "Metamifop": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Methomyl": {
    "c": "systemic",
    "n": "Moves a little in the plant"
   },
   "Metribuzin": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "post"
+   ]
   },
   "Metsulfuron methyl": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "post"
+   ]
   },
   "Mineral oil": {
    "c": "contact"
@@ -353,11 +515,19 @@
    "c": "contact"
   },
   "Nicosulfuron": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Oxadiazon": {
    "c": "contact",
-   "n": "Forms a layer on the soil that kills shoots as they come up"
+   "n": "Forms a layer on the soil that kills shoots as they come up",
+   "s": "selective",
+   "w": [
+    "pre"
+   ]
   },
   "Oxamyl": {
    "c": "systemic"
@@ -366,17 +536,36 @@
    "c": "systemic"
   },
   "Oxyfluorfen": {
-   "c": "contact"
+   "c": "contact",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
   },
   "Paraquat": {
-   "c": "contact"
+   "c": "contact",
+   "s": "non_selective",
+   "w": [
+    "post",
+    "burndown"
+   ]
   },
   "Pendimethalin": {
    "c": "systemic",
-   "n": "Works in the soil on sprouting weeds"
+   "n": "Works in the soil on sprouting weeds",
+   "s": "selective",
+   "w": [
+    "pre"
+   ]
   },
   "Penoxsulam": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
   },
   "Permethrin": {
    "c": "contact"
@@ -396,11 +585,19 @@
   },
   "Pretilachlor": {
    "c": "systemic",
-   "n": "Taken up by sprouting weeds from the soil"
+   "n": "Taken up by sprouting weeds from the soil",
+   "s": "selective",
+   "w": [
+    "pre"
+   ]
   },
   "Pretilachlor with safener": {
    "c": "systemic",
-   "n": "Taken up by sprouting weeds from the soil"
+   "n": "Taken up by sprouting weeds from the soil",
+   "s": "selective",
+   "w": [
+    "pre"
+   ]
   },
   "Prochloraz": {
    "c": "translaminar"
@@ -409,10 +606,18 @@
    "c": "translaminar"
   },
   "Profoxydim": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Propanil": {
-   "c": "contact"
+   "c": "contact",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Propiconazole": {
    "c": "systemic"
@@ -430,7 +635,12 @@
    "c": "translaminar"
   },
   "Pyrazosulfuron ethyl": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
   },
   "Pyrethroids": {
    "c": "contact"
@@ -439,20 +649,32 @@
    "c": "contact"
   },
   "Pyribenzoxim": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Quinalphos": {
    "c": "contact"
   },
   "Quizalofop P ethyl": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Rotenone": {
    "c": "contact"
   },
   "S metolachlor": {
    "c": "systemic",
-   "n": "Taken up by sprouting weeds from the soil"
+   "n": "Taken up by sprouting weeds from the soil",
+   "s": "selective",
+   "w": [
+    "pre"
+   ]
   },
   "Spinetoram": {
    "c": "translaminar"
@@ -481,7 +703,12 @@
    "n": "Works when the caterpillar eats it"
   },
   "Tefuryltrione": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
   },
   "Thiamethoxam": {
    "c": "systemic"
@@ -493,13 +720,21 @@
    "c": "contact"
   },
   "Topramezone": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   },
   "Triadimefon": {
    "c": "systemic"
   },
   "Triafamone": {
-   "c": "systemic"
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "early_post"
+   ]
   },
   "Triazole fungicides": {
    "c": "systemic"

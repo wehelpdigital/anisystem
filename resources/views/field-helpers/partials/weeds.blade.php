@@ -175,6 +175,8 @@
     const P = D.products || {};
     Object.assign(FH.prodCards, P.cards || {});
     FH.setMobility(D.mobility);
+    // Weed killers: the explainer adds selective or not, and pre, early post, post and burndown.
+    FH.mobHerb = true;
     // The products sold here for one ingredient on this crop that name every weed group seen (four at most).
     const prodsOf = (name, groups) => {
         const m = ((P.ip || {})[FH.norm(name)] || {})[st.crop] || {};

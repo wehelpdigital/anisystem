@@ -134,6 +134,19 @@
     .fh-mob .fh-mc.is-systemic { color: #0b5e48; background: #ddf4ea; border-color: #b4e3cf; }
     .fh-mob .fh-mc.is-translaminar { color: #1e46a3; background: #e4ecff; border-color: #c3d4fb; }
     .fh-mob .fh-mc.is-contact { color: #874f00; background: #fdf0d3; border-color: #f4d79a; }
+    /* A herbicide's own words (2026-10-15, the owner): selective or not, and when it goes on. */
+    .fh-mob .fh-mc.is-sel { color: #3f3a8f; background: #eceafd; border-color: #d3cff8; }
+    .fh-mob .fh-mc.is-nonsel { color: #9b1c1c; background: #fde8e8; border-color: #f8c9c9; }
+    .fh-mob .fh-mc.is-when { color: #374151; background: #f1f3ef; border-color: #dfe3da; }
+    html.dark .fh-mob .fh-mc.is-sel { color: #c8c3ff; background: #26244a; border-color: #3b3870; }
+    html.dark .fh-mob .fh-mc.is-nonsel { color: #ffc9c9; background: #3a1b1b; border-color: #5c2a2a; }
+    html.dark .fh-mob .fh-mc.is-when { color: #d5e3c5; background: #1f2a17; border-color: #2f3d22; }
+    .fh-mobx-h { margin: 1.1rem 0 .1rem; font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #6b7f5a; }
+    .fh-mobx-herb { display: grid; gap: .45rem; margin-top: .5rem; }
+    .fh-mobx-herb > div { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .6rem; align-items: start; padding: .6rem .7rem; border-radius: .9rem; background: #fff; border: 1px solid #e5ebdf; }
+    .fh-mobx-herb p { font-size: .84rem; line-height: 1.5; color: #374151; }
+    html.dark .fh-mobx-herb > div { background: #151b12; border-color: #2b3a1c; }
+    html.dark .fh-mobx-herb p { color: #d5e3c5; }
     .fh-ing-mob { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .3rem; }
     .fh-ing-note { margin-top: .3rem; font-size: .72rem; line-height: 1.45; color: #5b6650; }
     .fh-pcard .fh-mob { margin-top: .2rem; }
@@ -271,6 +284,7 @@
     .fh-rc-sum { display: flex; flex-wrap: wrap; gap: .25rem; margin-top: .35rem; }
     .fh-rc-sum i { display: inline-flex; align-items: center; gap: .2rem; padding: .08rem .45rem; border-radius: 999px; font-style: normal; font-size: .64rem; font-weight: 800; color: #3f4a37; background: #eaf0e3; }
     .fh-rc-sum i.is-warn { color: #7a4b00; background: #fdf0c8; }
+    .fh-rc-sum .fh-mob .fh-mc { font-size: .62rem; padding: .06rem .4rem .06rem .3rem; }
     .fh-rc-fold { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.22,1,.36,1); }
     .fh-rc.is-open .fh-rc-fold { grid-template-rows: 1fr; }
     .fh-rc-fold > div { min-height: 0; overflow: hidden; }
@@ -596,14 +610,33 @@
         const clean = String(name ?? '').replace(/\(.*?\)/g, '').trim();
         // A mix is split on "plus" or "+" (and "with", but not "with safener"); "2,4-D" keeps its comma.
         const parts = clean.split(/\s+plus\s+|\s*\+\s*|\s+with\s+(?!safener)/i);
-        const cls = new Set(), notes = [];
+        const cls = new Set(), notes = [], when = new Set();
+        let sel = null;
         parts.forEach((p) => {
             const k = FH.mobNorm(p), row = Object.prototype.hasOwnProperty.call(book, k) ? book[k] : null;
             if (!row) return;
             cls.add(row.c);
+            // A herbicide (AiMobility::of): selective unless any part kills every green plant; timings joined.
+            if (row.s) { sel = (sel === 'non_selective' || row.s === 'non_selective') ? 'non_selective' : 'selective'; (row.w || []).forEach((w) => when.add(w)); }
             if (row.n) { const t = p.trim(); notes.push((parts.length > 1 ? t.charAt(0).toUpperCase() + t.slice(1) + ': ' : '') + row.n); }
         });
-        return cls.size ? { c: MOB_ORDER.filter((c) => cls.has(c)), n: notes.length ? notes.join('. ') + '.' : null } : null;
+        if (!cls.size) return null;
+        const out = { c: MOB_ORDER.filter((c) => cls.has(c)), n: notes.length ? notes.join('. ') + '.' : null };
+        if (sel) { out.s = sel; out.w = HERB_WHEN.filter((w) => when.has(w)); }
+        return out;
+    };
+    // A herbicide's chips: selective or not, then each timing ('' for anything else).
+    const HERB_WHEN = ['burndown', 'pre', 'early_post', 'post'];
+    const HERB_WORD = { selective: 'Selective', non_selective: 'Non selective', pre: 'Pre', early_post: 'Early post', post: 'Post', burndown: 'Burndown' };
+    // One herbicide word as a chip (the explainer's rows).
+    FH.herbChip = (k) => '<span class="fh-mob"><span class="fh-mc ' + (k === 'non_selective' ? 'is-nonsel' : (k === 'selective' ? 'is-sel' : 'is-when')) + '">' + esc(HERB_WORD[k] || k) + '</span></span>';
+    // A herbicide product: selective or not, from its active ingredients (its own label timing shows already).
+    FH.selChip = (p) => { if (!p || p.kind !== 'herbicide') return ''; const m = FH.mob((p.ai || []).join(' plus ')); return m && m.s ? FH.herbChip(m.s) : ''; };
+    FH.herbChips = (m) => {
+        if (!m || !m.s) return '';
+        const hb = (FH.mobBook && FH.mobBook.herb) || {}, say = (k) => (hb[k] && hb[k].say ? ' title="' + esc(hb[k].say) + '"' : '');
+        return '<span class="fh-mob">' + '<span class="fh-mc ' + (m.s === 'non_selective' ? 'is-nonsel' : 'is-sel') + '"' + say(m.s) + ' data-tl="' + (m.s === 'non_selective' ? 'non-selective' : 'selective') + '">' + esc(HERB_WORD[m.s]) + '</span>'
+            + (m.w || []).map((w) => '<span class="fh-mc is-when"' + say(w) + '>' + esc(HERB_WORD[w]) + '</span>').join('') + '</span>';
     };
     // A record's classes: what FH.ing found, or read now.
     const mobOf = (i) => (i && i.mob !== undefined ? i.mob : FH.mob(i && i.name));
@@ -634,7 +667,7 @@
     FH.prodShop = (p, words) => { const u = FH.shopOf(p.brand); return FH.shopLinks(u.shopee, u.lazada, p.brand, 'fh-pshop', words); };
     // `seen` (a Set, optional): the list's flags so far, so a form code or a timing flags its first chip only.
     FH.prodChip = (p, seen) => '<div class="fh-prod"><button type="button" class="fh-prod-n" data-prod="' + esc(p.key) + '">'
-        + '<b><span>' + esc(p.brand) + '</span>' + FH.mobChips(p.mob) + '</b>'
+        + '<b><span>' + esc(p.brand) + '</span>' + FH.mobChips(p.mob) + FH.selChip(p) + '</b>'
         + (p.timing && TIMING[p.timing] || p.company || p.form ? '<small>' + (p.timing && TIMING[p.timing] ? '<em' + tlAttr(TIMING_TL[p.timing], seen) + '>' + TIMING[p.timing][0] + '</em>' : '')
             + '<span' + (p.form ? tlAttr(FH.tlForm(p.form), seen) : '') + '>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</span></small>' : '') + '</button>'
         + FH.prodShop(p) + '</div>';
@@ -643,14 +676,14 @@
     FH.prodStrip = (cards, opts) => { const seen = new Set(), o = opts || {}; return (cards && cards.length) ? '<div class="fh-pcards">' + cards.map((p) => '<div class="fh-pcard"><button type="button" class="fh-pcard-n" data-prod="' + esc(p.key) + '">'
         + '<b>' + esc(p.brand) + '</b><small' + (p.form ? tlAttr(FH.tlForm(p.form), seen) : '') + '>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</small>'
         + ((p.ai || []).length ? '<span>' + esc(p.ai.join(' plus ')) + '</span>' : '') + (p.group ? '<i' + tlAttr(FH.tlGroup(p.group)) + '>' + esc(p.group) + '</i>' : '')
-        + FH.mobChips(p.mob)
+        + FH.mobChips(p.mob) + FH.selChip(p)
         + (p.timing && TIMING[p.timing] ? '<em' + tlAttr(TIMING_TL[p.timing], seen) + '>' + TIMING[p.timing][0] + '</em>' : '') + '</button>' + FH.prodShop(p) + '</div>').join('') + '</div>'
         + (o.help && cards.some((p) => (p.mob || []).length) ? '<div class="fh-mob-foot">' + FH.mobAskBtn() + '</div>' : '') : ''; };
     // The group chip flags on every row; "Sold as", a form code and a timing on their first row of the list.
     // o.help: the "?" after this row's class chips; o.notes: the ingredient's note under them (a detail, an opened card).
     FH.ingRow = (i, seen, o) => { const s = seen && typeof seen.has === 'function' ? seen : new Set(), m = mobOf(i), mc = m ? FH.mobChips(m.c) : ''; return '<li class="fh-ing">'
         + '<div class="fh-ing-top"><b>' + esc(i.name) + '</b>' + (i.group ? '<i class="fh-grp"' + (i.mode ? ' title="' + esc(i.mode) + '"' : '') + tlAttr(FH.tlGroup(i.group)) + '>' + esc(i.group) + '</i>' : '') + '</div>'
-        + (mc ? '<div class="fh-ing-mob">' + mc + (o && o.help ? FH.mobHelpBtn() : '') + '</div>' + (o && o.notes && m.n ? '<p class="fh-ing-note">' + esc(m.n) + '</p>' : '') : '')
+        + (mc ? '<div class="fh-ing-mob">' + mc + FH.herbChips(m) + (o && o.help ? FH.mobHelpBtn() : '') + '</div>' + (o && o.notes && m.n ? '<p class="fh-ing-note">' + esc(m.n) + '</p>' : '') : '')
         + '<div class="fh-ing-foot">' + (i.mode ? '<small>' + esc(i.mode) + '</small>' : '')
         + FH.shopLinks(i.shop.shopee, i.shop.lazada, i.shop.q || i.name, 'fh-shop') + '</div>'
         + (i.products && i.products.length ? '<div class="fh-prods"><span class="fh-prods-l"' + tlAttr('sold-as', s) + '>Sold as</span>' + i.products.map((p) => FH.prodChip(p, s)).join('') + '</div>' : '')
@@ -849,7 +882,13 @@
        each is the better choice, why to rotate, and why a contact spray needs
        full cover. Built on its first opening. */
     const MOBX = {
-        en: { tab: 'English', close: 'Close', best: 'Best when',
+        en: { tab: 'English', close: 'Close', best: 'Best when', herbHead: 'For weed killers',
+            herb: [['selective', 'Kills certain weeds and spares the crop it is labelled for. Check that your crop is on the label.'],
+                ['non_selective', 'Kills any green plant it touches, the crop too. Use it before planting, or shield the crop.'],
+                ['burndown', 'Clears every weed in the field before planting or before the crop comes up.'],
+                ['pre', 'Goes on before the weeds come up, on moist soil. It stops the seeds as they sprout.'],
+                ['early_post', 'Goes on young weeds with two to four leaves, when they die most easily.'],
+                ['post', 'Goes on weeds already up and growing. Spray the leaves, not the soil.']],
             lead: 'Every active ingredient works in one of three ways once it is on the plant. The chip beside it in the list tells you which.',
             c: {
                 systemic: ['Taken in and carried through the plant, so it reaches parts the spray did not touch, and new growth.', [
@@ -868,7 +907,13 @@
             },
             more: [['Why switch groups and classes', 'A pest, disease or weed that meets the same group again and again learns to survive it. Use a different group number the next time you spray. A product that joins a systemic and a contact attacks in two ways at once, which also slows resistance.'],
                 ['Contact sprays need full cover', 'Spray until both sides of the leaves are wet, inside the canopy too. A spot the spray missed is not protected. Heavy rain soon after spraying washes a contact spray off, so you may need to spray again. Follow the label.']] },
-        tl: { tab: 'Tagalog', close: 'Isara', best: 'Mas bagay kapag',
+        tl: { tab: 'Tagalog', close: 'Isara', best: 'Mas bagay kapag', herbHead: 'Para sa pamatay damo',
+            herb: [['selective', 'Pinapatay nito ang ilang damo pero ligtas ang tanim na nakasulat sa label. Tingnan muna kung nasa label ang tanim mo.'],
+                ['non_selective', 'Pinapatay nito ang lahat ng berdeng halamang tatamaan, pati ang tanim. Gamitin bago magtanim, o takpan ang tanim.'],
+                ['burndown', 'Nililinis nito ang lahat ng damo sa bukid bago magtanim o bago tumubo ang tanim.'],
+                ['pre', 'Inilalagay bago tumubo ang damo, sa basang lupa. Pinipigilan nito ang buto ng damo na sumibol.'],
+                ['early_post', 'Inilalagay sa batang damo na may dalawa hanggang apat na dahon, kung kailan pinakamadali silang mamatay.'],
+                ['post', 'Inilalagay sa damong tumubo na at lumalaki. I-spray sa dahon, hindi sa lupa.']],
             lead: 'May tatlong paraan ng pagkilos ang aktibong sangkap kapag nasa halaman na. Ang maliit na tatak sa tabi nito sa listahan ang nagsasabi kung alin.',
             c: {
                 systemic: ['Sinisipsip ito ng halaman at dinadala sa loob, pati sa bahaging hindi natamaan ng spray at sa mga bagong dahon.', [
@@ -915,6 +960,8 @@
                 // English says what the book says (one source); Tagalog is the explainer's own.
                 + '<p>' + esc(l === 'en' && cl[k] && cl[k].say ? cl[k].say : t.c[k][0]) + '</p>'
                 + '<b class="fh-mobx-best">' + esc(t.best) + '</b><ul>' + t.c[k][1].map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul></div></article>').join('')
+            + (FH.mobHerb ? '<h3 class="fh-mobx-h">' + esc(t.herbHead) + '</h3><div class="fh-mobx-herb">'
+                + t.herb.map(([k, x]) => '<div>' + FH.herbChip(k) + '<p>' + esc(x) + '</p></div>').join('') + '</div>' : '')
             + t.more.map(([h, x]) => '<section class="fh-mobx-more"><h3>' + esc(h) + '</h3><p>' + esc(x) + '</p></section>').join('');
     };
     const setMobLang = (l, keep) => {
