@@ -418,6 +418,20 @@
     .lp-done .ok svg { width: 1.6rem; height: 1.6rem; }
     html.lp-lock { overflow: hidden; }
 
+    /* The season sheet's summary (2026-10-15). */
+    .lp-ssum { display: grid; gap: .45rem; margin-top: .9rem; }
+    .lp-ssum > div { display: flex; align-items: flex-start; gap: .65rem; padding: .6rem .7rem; border-radius: .9rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .lp-ssum > div > span { flex: none; width: 2rem; height: 2rem; border-radius: .7rem; display: grid; place-items: center; font-size: 1.05rem; background: #fff; border: 1px solid #e5ebdf; }
+    .lp-ssum p { min-width: 0; display: grid; gap: .05rem; }
+    .lp-ssum b { font-size: .88rem; font-weight: 800; color: var(--color-gray-900); }
+    .lp-ssum small { font-size: .74rem; line-height: 1.4; color: var(--color-gray-500); overflow-wrap: anywhere; }
+    .lp-sprev { margin-top: .7rem; padding: .6rem .75rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5; color: #6b4a00; background: #fff8e6; border: 1px solid #f5d98a; }
+    .lp-sprev a { font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+    html.dark .lp-ssum > div { background: #151b12; border-color: #2b3a1c; }
+    html.dark .lp-ssum > div > span { background: #1c2616; border-color: #2b3a1c; }
+    html.dark .lp-ssum b { color: #e8efe1; }
+    html.dark .lp-sprev { background: #2a2413; border-color: #4a3d16; color: #e0c26a; }
+
     /* ---- the plan, full screen ---- */
     .lp-view { position: fixed; inset: 0; z-index: 90; background: var(--color-gray-50); overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; opacity: 0; transform: translateY(14px);
         transition: opacity .3s cubic-bezier(.22,1,.36,1), transform .3s cubic-bezier(.22,1,.36,1); }
@@ -971,6 +985,7 @@
     <div class="lp-vbar">
         <button type="button" class="lp-x" id="lpViewX" aria-label="Close">{!! $xIcon !!}</button>
         <button type="button" class="lp-vname" id="lpViewName" aria-label="Rename this plan"><b id="lpViewTitle">Land prep plan</b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4"/></svg></button>
+        <button type="button" class="btn btn-white lp-vsend" id="lpViewSeason"><svg fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24" style="width:1rem;height:1rem" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3.5 10h17"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 13v5M9.5 15.5h5"/></svg>Make a cropping schedule</button>
         <button type="button" class="btn btn-primary lp-vsend" id="lpViewSend"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="width:1rem;height:1rem" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>Send to Protocol Builder</button>
     </div>
     <div class="lp-vbody" id="lpViewBody"></div>
@@ -1146,6 +1161,37 @@
             <button type="button" class="btn btn-white" data-close id="lpPortClose">Cancel</button>
             <button type="button" class="btn btn-primary" id="lpPortGo">Send</button>
             <a class="btn btn-primary" id="lpPortOpen" href="#" hidden>Open it</a>
+        </div>
+    </div>
+</dialog>
+
+{{-- Make a cropping schedule from the plan (2026-10-15, the owner). The
+     only way in is a new season made out of it. --}}
+<dialog class="lp-sheet" id="lpMakeSheet" aria-labelledby="lpMakeTitle">
+    <div class="lp-sbox" tabindex="-1">
+        <div class="lp-grip" aria-hidden="true"></div>
+        <div class="lp-shead"><h2 id="lpMakeTitle">Make a cropping schedule<small>The plan's lots, dates and steps on a season's board</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
+        <div id="lpMakeForm" class="lp-slist" style="padding:0 0 1rem">
+            <div class="lp-pmode">
+                <p class="lp-label" style="margin:.1rem 0 0">Which cropping schedule?</p>
+                <button type="button" class="lp-choice is-on" aria-pressed="true"><span class="ce">✨</span><span class="ct"><b>A new cropping schedule</b><small>Made out of this plan</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
+                <div>
+                    <label class="lp-label" for="lpMakeName">Its name</label>
+                    <input type="text" id="lpMakeName" class="form-input" maxlength="255">
+                </div>
+            </div>
+            <div class="lp-pmode"><div class="lp-ssum" id="lpMakeSum"></div>
+            <p class="lp-sprev" id="lpMakePrev" hidden></p></div>
+        </div>
+        <div class="lp-done" id="lpMakeDone" hidden>
+            <div class="ok"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+            <b>The season is made</b><p id="lpMakeDoneP"></p>
+        </div>
+        <div class="lp-sfoot">
+            <span class="lp-pickline"></span>
+            <button type="button" class="btn btn-white" data-close id="lpMakeClose">Cancel</button>
+            <button type="button" class="btn btn-primary" id="lpMakeGo">Make the season</button>
+            <a class="btn btn-primary" id="lpMakeOpen" href="#" hidden>Open the season</a>
         </div>
     </div>
 </dialog>
@@ -2068,6 +2114,7 @@
     const OPT = () => window.lpUtil.opt() || {};
     const U = {
         list: @json(route('landprep.list')), meta: @json(route('landprep.meta')), port: @json(route('landprep.port')), protocols: @json(route('landprep.protocols')),
+        season: @json(route('landprep.season')), hub: @json(route('sm.hub', ['id' => '__ID__'])),
         one: (id) => @json(url('/app/land-prep/one')) + '/' + id, del: (id) => @json(url('/app/land-prep')) + '/' + id,
     };
     const { open: sheetOpen, close: sheetClose, lock: sheetLock } = window.lpSheet;
@@ -2163,7 +2210,8 @@
             + '<div class="lp-seg" id="lpSeg"><i></i><button type="button" class="' + (VIEW.tab === 'farm' ? 'is-on' : '') + '" data-tab="farm">Whole farm</button><button type="button" class="' + (VIEW.tab === 'lot' ? 'is-on' : '') + '" data-tab="lot">Per lot</button></div>'
             + '<div class="lp-pane" id="lpFarm"' + (VIEW.tab === 'farm' ? '' : ' hidden') + '>' + farmHtml(r, r.anee || {}) + '</div>'
             + '<div class="lp-pane" id="lpLot"' + (VIEW.tab === 'lot' ? '' : ' hidden') + '>' + lotHtml(r, VIEW.lot) + '</div>'
-            + '<div class="lp-acts"><button type="button" class="btn btn-primary" data-act="send"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>Send to Protocol Builder</button>'
+            + '<div class="lp-acts"><button type="button" class="btn btn-primary" data-act="season"><svg fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3.5 10h17"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 13v5M9.5 15.5h5"/></svg>Make a cropping schedule</button>'
+            + '<button type="button" class="btn btn-white" data-act="send"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>Send to Protocol Builder</button>'
             + '<button type="button" class="btn btn-white" data-act="rename">Rename</button><button type="button" class="btn btn-white lp-del" data-act="delete">Delete</button></div>'
             + (VIEW.mode === 'fresh' ? '<button type="button" class="btn btn-white" data-act="again">Plan another field</button>' : '');
         $('lpSeg').classList.toggle('is-lot', VIEW.tab === 'lot');
@@ -2550,6 +2598,7 @@
         const act = a.dataset.act;
         if (act === 'crewdays') { const box = $('lpCrewDays'), open = !box.classList.contains('is-open'); box.classList.toggle('is-open', open); a.setAttribute('aria-expanded', String(open)); a.firstChild.textContent = open ? 'Hide the days' : 'Day by day'; return; }
         if (act === 'send') { openPort(); return; }
+        if (act === 'season') { openSeason(); return; }
         if (act === 'rename') { openRename(VIEW.item); return; }
         if (act === 'again') { closeView(); setTimeout(() => { tab('plan'); window.lpWizardAgain(); }, 320); return; }
         if (act === 'delete') {
@@ -2567,6 +2616,7 @@
     });
     $('lpViewBody').addEventListener('keydown', (e) => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.lp-bar2[data-step]')) { e.preventDefault(); e.target.click(); } });
     $('lpViewSend').addEventListener('click', () => openPort());
+    $('lpViewSeason').addEventListener('click', () => openSeason());
     $('lpViewName').addEventListener('click', () => VIEW && openRename(VIEW.item));
 
     /* ---------------- rename ---------------- */
@@ -2634,6 +2684,44 @@
             $('lpPortClose').textContent = 'Close';
         } catch (err) { window.toast?.(err.message, 'error'); }
         finally { $('lpPortGo').disabled = false; }
+    });
+
+    /* ---------------- make a cropping schedule from the plan ---------------- */
+    function openSeason() {
+        if (!VIEW) return;
+        const r = VIEW.item.report || {};
+        const lots = r.lots || [], per = r.perLot || [];
+        $('lpMakeForm').hidden = false; $('lpMakeDone').hidden = true; $('lpMakeGo').hidden = false; $('lpMakeOpen').hidden = true; $('lpMakeClose').textContent = 'Cancel';
+        $('lpMakeName').value = VIEW.item.title || '';
+        const steps = per.reduce((n, l) => n + ((l.steps || []).length), 0);
+        const starts = per.flatMap((l) => (l.steps || []).map((s) => s.start || s.winFrom)).filter(Boolean).sort();
+        const plantings = per.map((l) => l.planting).filter(Boolean).sort();
+        const day = (d) => { try { return new Date(d + 'T00:00:00').toLocaleDateString('en-PH', { month: 'short', day: 'numeric' }); } catch (_) { return d; } };
+        $('lpMakeSum').innerHTML = [
+            ['🌾', lots.length + (lots.length === 1 ? ' lot' : ' lots'), lots.map((l) => l.name).join(', ')],
+            ['📋', 'About ' + steps + ' activities', 'Each on the day the crew starts it, with the seed soak and the machine bookings'],
+            ['📅', starts.length ? day(starts[0]) + ' to ' + day(plantings[plantings.length - 1] || starts[starts.length - 1]) : 'Your dates', (r.dayWord ? 'Counted to the ' + r.dayWord + ' day of each lot' : '')],
+        ].map(([i, b, s]) => '<div><span>' + i + '</span><p><b>' + esc(b) + '</b>' + (s ? '<small>' + esc(s) + '</small>' : '') + '</p></div>').join('');
+        const prev = r.season;
+        $('lpMakePrev').hidden = !prev;
+        if (prev) $('lpMakePrev').innerHTML = 'You made <a href="' + esc(U.hub.replace('__ID__', prev.id)) + '">' + esc(prev.title) + '</a> from this plan on ' + esc(prev.at) + '. Making it again adds another season.';
+        sheetOpen($('lpMakeSheet'));
+    }
+    $('lpMakeGo').addEventListener('click', async () => {
+        if (!VIEW) return;
+        const name = $('lpMakeName').value.trim();
+        if (!name) { window.toast?.('Give the season a name.', 'error'); $('lpMakeName').focus(); return; }
+        $('lpMakeGo').disabled = true; $('lpMakeGo').textContent = 'Making it…';
+        try {
+            const res = await window.api(U.season, { method: 'POST', body: { id: VIEW.item.id, title: name } });
+            $('lpMakeForm').hidden = true; $('lpMakeDone').hidden = false;
+            $('lpMakeDoneP').textContent = res.message;
+            $('lpMakeGo').hidden = true;
+            $('lpMakeOpen').href = res.data.url; $('lpMakeOpen').hidden = false;
+            $('lpMakeClose').textContent = 'Close';
+            if (VIEW.item.report) VIEW.item.report.season = res.data.season;
+        } catch (err) { if (!err || !err.tierLock) window.toast?.(err.message, 'error'); }
+        finally { $('lpMakeGo').disabled = false; $('lpMakeGo').textContent = 'Make the season'; }
     });
 
     /* ---------------- your plans ---------------- */

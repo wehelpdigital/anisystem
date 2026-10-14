@@ -191,6 +191,14 @@ final class LandPrepPlanner
     /** Steps that are the planting itself, by method family. */
     private const PLANT_KEYS = ['transplant', 'sow', 'plant'];
 
+    /** A step's activity type on a season's board (2026-10-15: plans made into seasons). */
+    public static function typeOf(string $key, ?string $fallback = null): string
+    {
+        $t = self::TYPES[$key] ?? ($fallback ?: 'land_prep');
+
+        return isset(\App\Models\AsScheduleActivity::ACTIVITY_TYPES[$t]) ? $t : 'land_prep';
+    }
+
     /* ================================================================ books */
 
     /** database/land-prep/rice-methods.json: the five rice methods, the questions and their effects. */

@@ -786,6 +786,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/land-prep/seed', [App\Http\Controllers\LandPrepController::class, 'seed'])->middleware('throttle:240,1')->name('landprep.seed');
     Route::get('/app/land-prep/seasons', [App\Http\Controllers\LandPrepController::class, 'seasons'])->name('landprep.seasons');
     Route::post('/app/land-prep/check', [App\Http\Controllers\LandPrepController::class, 'check'])->middleware('throttle:120,1')->name('landprep.check');
+    // A plan made into a new cropping schedule (2026-10-15).
+    Route::post('/app/land-prep/season', [App\Http\Controllers\LandPrepController::class, 'season'])->middleware('throttle:20,1')->name('landprep.season');
     Route::get('/app/land-prep/protocols', [App\Http\Controllers\LandPrepController::class, 'protocols'])->name('landprep.protocols');
     Route::post('/app/land-prep/generate', [App\Http\Controllers\LandPrepController::class, 'generate'])->name('landprep.generate');
     Route::get('/app/land-prep/job/{id}', [App\Http\Controllers\LandPrepController::class, 'jobState'])->whereNumber('id')->name('landprep.job');

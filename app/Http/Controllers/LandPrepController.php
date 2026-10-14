@@ -1116,6 +1116,194 @@ PROMPT;
         return $this->json(true, $added . ' steps were added to ' . $p->title . '.', ['protocolId' => (int) $p->id, 'url' => route('pb.open', ['id' => $p->id]), 'added' => $added, 'title' => $p->title]);
     }
 
+    /* ======================================================= into a season */
+
+    /**
+     * MAKE A CROPPING SCHEDULE FROM THE PLAN (2026-10-15, the owner). One new
+     * season: a lot per plan lot (its name, size as typed, crop, variety and
+     * place), each counted from its own day (the seedbed sowing for a
+     * transplanted crop, with the planting as its transplant day; the
+     * planting otherwise), and every step an activity on the day the crew
+     * starts it, with the seed soak and incubation and the bookings of hired
+     * machines as their own. Anee's reading lands in the day book. The plan
+     * remembers the season it made.
+     */
+    public function season(Request $request)
+    {
+        $v = Validator::make($request->all(), ['id' => 'required|integer', 'title' => 'nullable|string|max:255']);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        $user = $request->user();
+        if (WorkerContext::inWorkerContext()) {
+            return $this->json(false, 'Switch to your own farm to make a season from this plan.', [], 403);
+        }
+        if (! $user->canCreateSchedule()) {
+            $limit = $user->scheduleLimit();
+            Tier::denyFor('schedulesActive', 'Your plan allows ' . ($limit === 0 ? 'no' : 'up to ' . $limit) . ' active ' . ($limit === 1 ? 'season' : 'seasons') . '. Finish or archive one, or move up to {plan} for more.');
+        }
+        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', (int) $request->input('id'))->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')->first();
+        if (! $r) {
+            return $this->json(false, 'That plan is gone.', [], 404);
+        }
+        $report = json_decode((string) $r->report, true) ?: [];
+        $params = json_decode((string) $r->params, true) ?: [];
+        $lots = array_values((array) ($report['lots'] ?? []));
+        if (! $lots || empty($report['perLot'])) {
+            return $this->json(false, 'This plan is from before seasons could be made from it. Make the plan again, then make the season.', [], 422);
+        }
+        $cap = Tier::limit('lotsPerSchedule');
+        if ($cap !== null && count($lots) > (int) $cap) {
+            Tier::denyFor('lotsPerSchedule', 'Your plan allows ' . (int) $cap . ' ' . ((int) $cap === 1 ? 'lot' : 'lots') . ' in a season, and this plan has ' . count($lots) . '. Move up to {plan} for more room.');
+        }
+
+        $crop = (string) ($params['crop'] ?? ($report['crop']['key'] ?? ''));
+        $method = (string) ($params['method'] ?? ($report['method']['key'] ?? ''));
+        $nursery = LP::hasNursery($crop, $method);
+        $dayType = $nursery ? 'DAT' : (in_array($method, ['dsr_wet_broadcast', 'dsr_wet_drum', 'dsr_dry', 'direct'], true) ? 'DAS' : 'DAP');
+        $cropKey = \App\Support\CropStages::normalize($crop) ?? \App\Support\CropStages::normalize(\App\Support\CropCatalog::label($crop)) ?? $crop;
+        $variety = trim((string) ($params['variety'] ?? ($report['variety'] ?? '')));
+        $loc = (array) ($params['location'] ?? []);
+        $units = ['ha' => 'hectare', 'sqm' => 'sqm', 'acre' => 'acre'];
+        $tagWord = LP::TAGS;
+        $title = trim((string) $request->input('title')) ?: mb_substr((string) $r->title, 0, 255);
+        $made = ['activities' => 0, 'lots' => 0];
+
+        $schedule = DB::transaction(function () use ($report, $lots, $params, $crop, $cropKey, $variety, $loc, $units, $tagWord, $title, $dayType, $nursery, $r, &$made) {
+            $schedule = \App\Models\AsCroppingSchedule::create([
+                'anisystemUserId' => (int) Auth::id(),
+                'usersId' => (int) config('anisystem.order_users_id', 1),
+                'title' => mb_substr($title, 0, 255),
+                'description' => mb_substr('Made from the Land Prep Planner plan "' . $r->title . '". Every land preparation step is on the board on the day your crew starts it.', 0, 5000),
+                'cropType' => (string) ($report['crop']['label'] ?? ($params['cropLabel'] ?? $crop)),
+                'cropVariety' => $variety !== '' ? mb_substr($variety, 0, 255) : null,
+                'dayType' => $dayType,
+                'status' => 'setup',
+                'isActive' => 1,
+                'deleteStatus' => 1,
+            ]);
+            $version = \App\Models\AsScheduleActivityVersion::create([
+                'croppingScheduleId' => $schedule->id, 'versionName' => 'Original', 'isOriginal' => 1, 'isActive' => 1, 'versionOrder' => 0, 'deleteStatus' => 1,
+            ]);
+            $perDate = [];
+            $first = null;
+            foreach ($lots as $i => $l) {
+                $pl = (array) ($report['perLot'][$i] ?? []);
+                $planting = (string) ($pl['planting'] ?? ($l['planting'] ?? ''));
+                if ($planting === '') {
+                    continue;
+                }
+                $defs = [];
+                foreach ((array) ($report['lotSteps'][$i] ?? $report['steps'] ?? []) as $s) {
+                    $defs[$s['key']] = $s;
+                }
+                $dates = [];
+                foreach ((array) ($pl['steps'] ?? []) as $ps) {
+                    $dates[$ps['key']] = $ps;
+                }
+                $at = function (string $key) use ($dates, $defs, $planting): ?string {
+                    $d = $dates[$key] ?? null;
+                    if ($d) {
+                        return (string) ($d['start'] ?? $d['winFrom'] ?? '') ?: null;
+                    }
+
+                    return isset($defs[$key]) ? Carbon::parse($planting)->addDays((int) $defs[$key]['from'])->toDateString() : null;
+                };
+                $sowAt = $nursery ? ($at('sow_seedbed') ?? $at('sow_nursery') ?? $at('nursery')) : null;
+                $dayZero = $nursery ? ($sowAt ?? Carbon::parse($planting)->subDays(21)->toDateString()) : $planting;
+                $lot = \App\Models\AsScheduleLot::create(array_filter([
+                    'croppingScheduleId' => $schedule->id,
+                    'lotName' => mb_substr((string) ($l['name'] ?? ('Lot ' . ($i + 1))), 0, 255),
+                    'lotSize' => (float) (($l['input'] ?? null) ?: ($l['area'] ?? 1)),
+                    'lotSizeUnit' => $units[$l['unit'] ?? 'ha'] ?? 'hectare',
+                    'variety' => $variety !== '' ? mb_substr($variety, 0, 255) : null,
+                    'crop' => $cropKey ?: null,
+                    'locTown' => ! empty($loc['town']) ? mb_substr((string) $loc['town'], 0, 120) : null,
+                    'locProvince' => ! empty($loc['province']) ? mb_substr((string) $loc['province'], 0, 120) : null,
+                    'dayType' => $dayType,
+                    'dayZeroDate' => $dayZero,
+                    'transplantDate' => $nursery ? $planting : null,
+                    'deleteStatus' => 1,
+                ], fn ($v) => $v !== null));
+                $made['lots']++;
+                $add = function (string $date, string $title, string $html, string $type, string $priority, bool $zero = false, bool $transplant = false) use ($schedule, $version, $lot, &$perDate, &$made, &$first) {
+                    $perDate[$date] = ($perDate[$date] ?? 0) + 1;
+                    $a = \App\Models\AsScheduleActivity::create([
+                        'croppingScheduleId' => $schedule->id, 'versionId' => $version->id,
+                        'activityTitle' => mb_substr($title, 0, 255), 'targetDate' => $date, 'priority' => $priority, 'activityType' => $type,
+                        'description' => \App\Support\HtmlSanitizer::rich($html), 'timeRequired' => 'n/a',
+                        'isDayZero' => $zero, 'isTransplant' => $transplant, 'isDraft' => false, 'isHidden' => false, 'isDone' => false,
+                        'workerChecklist' => false, 'workerSelfCheck' => false, 'sequenceOrder' => ($perDate[$date] - 1) * 10, 'deleteStatus' => 1,
+                    ]);
+                    $a->lots()->attach($lot->id);
+                    $made['activities']++;
+                    $first = $first === null || $date < $first ? $date : $first;
+                };
+                $e = fn ($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
+                foreach ($defs as $key => $s) {
+                    $date = $at($key);
+                    if (! $date) {
+                        continue;
+                    }
+                    $d = $dates[$key] ?? [];
+                    $win = ! empty($d['winFrom']) && ! empty($d['winTo']) && $d['winFrom'] !== $d['winTo']
+                        ? 'Any day from ' . Carbon::parse($d['winFrom'])->format('D, M j') . ' to ' . Carbon::parse($d['winTo'])->format('D, M j') . '.' : '';
+                    $crew = ! empty($d['workDays']) ? ($d['workDays'] . ' work ' . ((int) $d['workDays'] === 1 ? 'day' : 'days') . (($d['crew'] ?? '') === 'machine' ? ' with the machine' : (($d['crew'] ?? '') === 'manual' ? ' by hand' : '')) . (! empty($d['end']) && $d['end'] !== ($d['start'] ?? null) ? ', until ' . Carbon::parse($d['end'])->format('D, M j') : '') . '.') : '';
+                    $why = trim(($s['why'] ?? '') . ' ' . ($s['note'] ?? '') . ' ' . ($s['rule'] ?? ''));
+                    $html = '<p>' . nl2br($e($s['how'] ?? '')) . '</p>'
+                        . ($win !== '' ? '<p><strong>When:</strong> ' . $e($win) . '</p>' : '')
+                        . ($crew !== '' ? '<p><strong>Crew:</strong> ' . $e($crew) . '</p>' : '')
+                        . ($why !== '' ? '<p><strong>Why:</strong> ' . $e($why) . '</p>' : '')
+                        . '<p><em>' . $e($tagWord[$s['tag'] ?? 'extension'] ?? 'Extension practice') . ', from the Land Prep Planner.</em></p>';
+                    $isZero = $nursery ? in_array($key, ['sow_seedbed', 'sow_nursery', 'nursery'], true) && $date === $dayZero : in_array($key, ['sow', 'plant'], true);
+                    $isTp = $nursery && $key === 'transplant';
+                    $add($date, (string) ($s['what'] ?? $key), $html, LP::typeOf((string) $key, $s['type'] ?? null),
+                        in_array($key, ['plow', 'level', 'transplant', 'sow', 'sow_seedbed', 'sow_nursery', 'plant', 'seed_soak'], true) ? 'high' : 'medium', $isZero, $isTp);
+                }
+                // The seed soak and incubation, to the hour.
+                foreach ((array) ($report['seed']['timeline'] ?? []) as $tl) {
+                    if ((int) ($tl['lot'] ?? -1) !== $i) {
+                        continue;
+                    }
+                    foreach ((array) ($tl['events'] ?? []) as $ev) {
+                        if (! in_array($ev['kind'] ?? '', ['soak', 'incubate'], true) || empty($ev['at'])) {
+                            continue;
+                        }
+                        $t = Carbon::parse($ev['at']);
+                        $add($t->toDateString(), $ev['what'] . ' at ' . $t->format('g:i A'), '<p>' . $e($ev['how'] ?? '') . '</p>', 'seed_treatment', 'high');
+                    }
+                }
+                // The hired machines, booked ahead.
+                foreach ((array) ($report['bookings'] ?? []) as $b) {
+                    if ((int) ($b['lot'] ?? -1) !== $i || empty($b['by'])) {
+                        continue;
+                    }
+                    $add((string) $b['by'], 'Book the hired ' . mb_strtolower((string) $b['name']), '<p>It is first needed on ' . $e(Carbon::parse($b['use'])->format('D, M j')) . ($b['for'] ?? '' ? ' for ' . $e($b['for']) : '') . '. Book it now so it comes on time.</p>', 'reminder_checklist', 'high');
+                }
+            }
+            // Anee's reading of the plan, in the day book on the first day.
+            $an = (array) ($report['anee'] ?? []);
+            if ($first && ! empty($an['summary'])) {
+                $risks = array_map(fn ($x) => '<li><strong>' . htmlspecialchars((string) ($x['title'] ?? ''), ENT_QUOTES, 'UTF-8') . ':</strong> ' . htmlspecialchars((string) ($x['text'] ?? ''), ENT_QUOTES, 'UTF-8') . '</li>', array_slice((array) ($an['risks'] ?? []), 0, 5));
+                \App\Models\AsScheduleDateNote::create([
+                    'croppingScheduleId' => $schedule->id, 'versionId' => $version->id, 'noteDate' => $first,
+                    'noteContent' => \App\Support\HtmlSanitizer::rich('<p><strong>Anee\'s reading of the land preparation</strong></p><p>' . htmlspecialchars((string) $an['summary'], ENT_QUOTES, 'UTF-8') . '</p>' . ($risks ? '<ul>' . implode('', $risks) . '</ul>' : '')),
+                    'deleteStatus' => 1,
+                ]);
+            }
+
+            return $schedule;
+        });
+
+        // The plan remembers the season it made.
+        $report['season'] = ['id' => (int) $schedule->id, 'title' => $schedule->title, 'at' => now('Asia/Manila')->format('M j, Y')];
+        DB::table('as_plant_analyses')->where('id', $r->id)->update(['report' => json_encode($report), 'updated_at' => now()]);
+
+        return $this->json(true, 'The season is made: ' . $made['lots'] . ' ' . ($made['lots'] === 1 ? 'lot' : 'lots') . ' and ' . $made['activities'] . ' activities on the board, each on the day your crew starts it.', [
+            'scheduleId' => (int) $schedule->id, 'title' => $schedule->title, 'url' => route('sm.hub', ['id' => $schedule->id]), 'made' => $made, 'season' => $report['season'],
+        ]);
+    }
+
     /* ============================================================ helpers */
 
     private function payer(): User
