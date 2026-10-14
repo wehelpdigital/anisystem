@@ -116,6 +116,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), "@section('body-class', 'hide-tabbar')"),
             'sitePages' => class_exists(\App\Support\SitePages::class) && Illuminate\Support\Facades\Route::has('site.crops.show')
                 && Illuminate\Support\Facades\Route::has('site.preview.post') && is_file(resource_path('views/public/site/page.blade.php')),
+            // 2026-10-15: the Land Prep Planner's own clock and the error that stays on the page.
+            'lpClock' => str_contains((string) @file_get_contents(app_path('Http/Controllers/LandPrepController.php')), 'private const AI_TIMEOUT = 330;')
+                && str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpErr"'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.
