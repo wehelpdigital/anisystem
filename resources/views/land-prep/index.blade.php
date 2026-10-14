@@ -1369,6 +1369,17 @@
     const fqLots = () => S.lots.map((l, i) => ({ name: l.name.trim() || ('Lot ' + (i + 1)), value: l.profile, copiedFrom: l.copiedFrom, edited: l.edited, from: l.savedFrom }));
     const syncFq = () => { if (FQ) { FQ.setCrop(S.crop); FQ.setLots(fqLots()); } };
 
+    /* This plan's price by its size (App\Support\AiPricing, 2026-10-15): the lots, and the
+       variety lookup when the variety is not on our list. Sent back on the run as `quote`, so
+       the price on the button is the price charged; a 409 hands back a newer one. */
+    const QUOTE_NOW = {};
+    const quoteKey = () => Math.min(12, Math.max(1, (S.lots || []).length)) + ':' + (S.custom ? 1 : 0);
+    function planQuote() {
+        const n = Math.min(12, Math.max(1, (S.lots || []).length)), k = quoteKey();
+        if (QUOTE_NOW[k]) return QUOTE_NOW[k];
+        const row = OPT.quoteFor && OPT.quoteFor[n];
+        return row ? Number(row[S.custom ? 1 : 0]) : Number(OPT.quote);
+    }
     function paintQuote() {
         const q = $('lpQuote');
         if (!OPT.canUse) {
@@ -1377,7 +1388,7 @@
         } else {
             q.className = 'lp-quote';
             q.innerHTML = (OPT.aneeFace ? '<img src="' + esc(OPT.aneeFace) + '" alt="">' : '')
-                + '<span>Anee plans every step of your land preparation, lot by lot, from PhilRice and extension practice, your soil, the weather and your crew. One plan costs <b>' + OPT.quote + ' credits' + tlf('credits') + '</b>. You have '
+                + '<span>Anee plans every step of your land preparation, lot by lot, from PhilRice and extension practice, your soil, the weather and your crew. One plan costs <b>' + OPT.quote + ' credits' + tlf('credits') + '</b>, more when Anee has to look up your variety. You have '
                 + (window.creditCoin ? window.creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()) : '<b>' + esc(OPT.balance) + '</b>') + '. Nothing is charged until the plan is ready.</span>';
         }
         q.hidden = false;
@@ -1665,8 +1676,12 @@
         };
     }
     async function timeCheck(withAnswers) {
-        try { return (await window.api(U.check, { method: 'POST', body: checkBody(withAnswers) })).data.time || []; }
-        catch (_) { return null; }
+        try {
+            const d = (await window.api(U.check, { method: 'POST', body: checkBody(withAnswers) })).data;
+            // The server's price for this very plan (it knows which varieties need a lookup).
+            if (withAnswers && Number(d.quote) > 0) QUOTE_NOW[quoteKey()] = Number(d.quote);
+            return d.time || [];
+        } catch (_) { return null; }
     }
     const ACK = { date: null, review: null };
     function timeHtml(t) {
@@ -2038,15 +2053,11 @@
         rows.push(['place', '📍', 'Place', OPT.ph ? (S.loc.town ? townName(S.loc.town) + ', ' + S.loc.province : 'Not chosen') : (S.loc.place || 'Not given')]);
         $('lpReview').innerHTML = rows.map(([id, e, k, v]) => '<button type="button" data-jump="' + esc(id) + '"><span class="re">' + (String(e).startsWith('<i') ? e : esc(e)) + '</span><span class="rt"><small>' + esc(k) + '</small><b>' + esc(v) + '</b></span><span class="rc">Change</span></button>').join('');
         $('lpRunFace').innerHTML = OPT.aneeFace ? '<img src="' + esc(OPT.aneeFace) + '" alt="">' : '';
-        $('lpRunSays').textContent = OPT.canUse ? 'Make my plan · ' + OPT.quote + ' credits' : 'Make my plan';
-        $('lpRun').disabled = !OPT.canUse;
-        const short = OPT.canUse && !OPT.unlimited && Number(OPT.balance) < Number(OPT.quote);
-        $('lpRunFine').innerHTML = !OPT.canUse ? esc(OPT.whyNot || '')
-            : (short ? 'You have ' + esc(Math.floor(Number(OPT.balance))) + ' credits and this plan needs ' + esc(OPT.quote) + '.' + (OPT.creditsUrl ? ' <a href="' + esc(OPT.creditsUrl) + '" style="font-weight:800;text-decoration:underline">Get credits</a>' : '')
-                : 'Usually one to three minutes' + (S.custom ? ', a little longer while Anee looks up the variety' : '') + '. Stay on this page while Anee works.');
+        paintRun();
         // The time, again, with every lot's answers (lime, a salt flush or a rest can add weeks).
         $('lpTimeCard').innerHTML = '';
         const t = await timeCheck(true);
+        if (screenOf(FLOW[pos]) === 'review') paintRun();
         if (screenOf(FLOW[pos]) !== 'review' || !t) return;
         const sh = t.filter((x) => x.short);
         if (sh.length) {
@@ -2054,6 +2065,16 @@
             $('lpTimeMore').onclick = () => { ACK.review = null; timeWarn(t, 'review'); };
             timeWarn(t, 'review');
         }
+    }
+    // The run button and its fine print, at this plan's price.
+    function paintRun() {
+        const price = planQuote();
+        $('lpRunSays').textContent = OPT.canUse ? 'Make my plan · ' + price + ' credits' : 'Make my plan';
+        $('lpRun').disabled = !OPT.canUse;
+        const short = OPT.canUse && !OPT.unlimited && Number(OPT.balance) < price;
+        $('lpRunFine').innerHTML = !OPT.canUse ? esc(OPT.whyNot || '')
+            : (short ? 'You have ' + esc(Math.floor(Number(OPT.balance))) + ' credits and this plan needs ' + esc(price) + '.' + (OPT.creditsUrl ? ' <a href="' + esc(OPT.creditsUrl) + '" style="font-weight:800;text-decoration:underline">Get credits</a>' : '')
+                : 'Usually one to three minutes' + (S.custom ? ', a little longer while Anee looks up the variety. Looking it up on the web is why this plan costs more' : '') + '. Stay on this page while Anee works.');
     }
     $('lpReview').addEventListener('click', (e) => { const b = e.target.closest('[data-jump]'); if (b) goTo(b.dataset.jump, true); });
 
@@ -2063,6 +2084,7 @@
             lots: S.lots.map((l) => ({ name: l.name.trim(), area: num(l.area), unit: l.unit, planting: l.planting, sourceLotId: l.sourceLotId, copiedFrom: l.copiedFrom, edited: !!l.edited, profile: l.profile })),
             crew: { workers: S.workers.map((w) => ({ name: w.name.trim(), days: w.days })), fleet: fleetList(), stagger: S.stagger },
             location: { province: S.loc.province, town: townName(S.loc.town), place: S.loc.place, lat: S.loc.lat, lng: S.loc.lng }, notes: S.notes,
+            quote: planQuote(),
         };
         const phases = S.custom
             ? { start: { label: 'Getting started', lo: 2, hi: 6, tau: 10 }, research: { label: 'Looking up ' + S.variety, lo: 6, hi: 34, tau: 70 }, document: { label: 'Writing your plan', lo: 34, hi: 93, tau: 80 }, 'document-json': { label: 'Tidying the plan', lo: 93, hi: 97, tau: 25 } }
@@ -2083,9 +2105,11 @@
             paintQuote();
             window.lpListStale();
         } catch (err) {
+            // The price moved since the page loaded: keep the new one, so the next try carries it.
+            if (err && err.status === 409 && err.data && Number(err.data.quote) > 0) QUOTE_NOW[quoteKey()] = Number(err.data.quote);
             $('lpErrText').textContent = (err && err.message) || 'Something went wrong. Nothing was charged. Please try again.';
             $('lpErr').hidden = false;
-            $('lpRunSays').textContent = OPT && OPT.canUse ? 'Try again · ' + OPT.quote + ' credits' : 'Try again';
+            $('lpRunSays').textContent = OPT && OPT.canUse ? 'Try again · ' + planQuote() + ' credits' : 'Try again';
         } finally {
             if (!landed) window.aneeWait.fail();
             if (!landed) requestAnimationFrame(() => $('lpErr').scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'center' }));
