@@ -640,7 +640,7 @@
             </a>
             {{-- Anee Auto (2026-10-12): a season Anee plans and keeps planning. --}}
             <button type="button" class="sch-auto-cta md:hidden" data-auto-start>
-                <span aria-hidden="true">🤖</span> Anee Auto <small>Anee plans the whole season</small>
+                <span class="sch-auto-face" aria-hidden="true"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""></span> Anee Auto <small>Anee plans the whole season</small>
             </button>
         @endif
 
@@ -664,7 +664,7 @@
         <div class="hidden md:flex md:justify-end md:items-center gap-2">
             @if (! $isWorkerHere)
             <a href="{{ route('auto.index') }}" class="btn btn-white">Anee Auto seasons</a>
-            <button type="button" class="sch-auto-cta is-desk" data-auto-start><span aria-hidden="true">🤖</span> Anee Auto</button>
+            <button type="button" class="sch-auto-cta is-desk" data-auto-start><span class="sch-auto-face" aria-hidden="true"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""></span> Anee Auto</button>
             <a href="{{ route('sm.create') }}" class="btn btn-primary">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                 New Cropping Schedule
@@ -699,7 +699,15 @@
         @keyframes schAutoShine { 55%, 100% { transform: translateX(100%); } }
         .sch-auto-cta.is-desk { width: auto; padding: .6rem 1rem; border-radius: .8rem; font-size: .9rem; }
         @media (prefers-reduced-motion: reduce) { .sch-auto-cta::after { animation: none; } }
-        .se-auto-badge { display: inline-flex; align-items: center; gap: .25rem; padding: .12rem .5rem; border-radius: 999px; font-size: .66rem; font-weight: 800; color: #2b3a1c; background: #f5c518; }
+        .se-auto-badge { display: inline-flex; align-items: center; gap: .3rem; padding: .1rem .5rem .1rem .12rem; border-radius: 999px; font-size: .66rem; font-weight: 800; color: #2b3a1c; background: #f5c518; }
+        .se-auto-badge img { width: 1.05rem; height: 1.05rem; border-radius: 999px; object-fit: cover; background: #fff; box-shadow: 0 0 0 1px rgb(43 58 28 / .25); }
+        /* Anee's own face on her doors (2026-10-15, the owner), in a gold ring that breathes. */
+        .sch-auto-face { position: relative; z-index: 1; flex: none; display: inline-grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 999px; padding: 2px;
+            background: linear-gradient(140deg, #fde68a, #f5c518 55%, #c99a06); box-shadow: 0 0 0 0 rgb(245 197 24 / .55); animation: schAutoRing 2.8s ease-in-out infinite; }
+        .sch-auto-face img { width: 100%; height: 100%; border-radius: 999px; object-fit: cover; background: #fff; }
+        .sch-auto-cta.is-desk .sch-auto-face { width: 1.55rem; height: 1.55rem; }
+        @keyframes schAutoRing { 0%, 100% { box-shadow: 0 0 0 0 rgb(245 197 24 / .5); } 50% { box-shadow: 0 0 0 5px rgb(245 197 24 / 0); } }
+        @media (prefers-reduced-motion: reduce) { .sch-auto-face { animation: none; } }
     </style>
 
     {{-- Two controls for the whole shelf. The orders live behind Filter
@@ -961,7 +969,7 @@
                             @php $seAuto = (int) ($s->aneeAuto ?? 0) === 1 ? \App\Models\AsAutoSeason::where('croppingScheduleId', $s->id)->where('deleteStatus', 1)->value('id') : null; @endphp
                             @if ($seAuto)
                                 <a href="{{ route('auto.show', $seAuto) }}" class="btn btn-primary w-full sweep-fill sweep-green"
-                                   style="--sw-t:{{ 9 + ($s->id % 7) }}s;--sw-d:-{{ $s->id % 11 }}s"><span class="se-auto-badge">🤖 Anee Auto</span> Open</a>
+                                   style="--sw-t:{{ 9 + ($s->id % 7) }}s;--sw-d:-{{ $s->id % 11 }}s"><span class="se-auto-badge"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="">Anee Auto</span> Open</a>
                             @else
                             <a href="{{ route('sm.hub', ['id' => $s->id]) }}" class="btn btn-primary w-full sweep-fill sweep-green"
                                style="--sw-t:{{ 9 + ($s->id % 7) }}s;--sw-d:-{{ $s->id % 11 }}s">Open</a>

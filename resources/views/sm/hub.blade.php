@@ -122,7 +122,7 @@
     @php $hubAuto = (int) ($schedule->aneeAuto ?? 0) === 1 && ! \App\Support\WorkerContext::inWorkerContext() ? \App\Models\AsAutoSeason::where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->first(['id', 'status']) : null; @endphp
     @if ($hubAuto)
         <a href="{{ route('auto.show', $hubAuto->id) }}" class="flex items-center gap-3 mb-4 p-3 rounded-2xl text-white" style="background:linear-gradient(115deg,#24410f,#10200a)">
-            <span class="text-2xl" aria-hidden="true">🤖</span>
+            <span class="flex-none rounded-full" aria-hidden="true" style="width:2.6rem;height:2.6rem;padding:2px;background:linear-gradient(140deg,#fde68a,#f5c518 55%,#c99a06);box-shadow:0 6px 16px -8px rgb(245 197 24 / .7)"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" style="width:100%;height:100%;border-radius:999px;object-fit:cover;background:#fff"></span>
             <span class="min-w-0 flex-1"><b class="block text-sm" style="color:#f5d34a">This is an Anee Auto season</b><span class="block text-xs" style="color:#cfe3b9">{{ $hubAuto->status === 'setting_up' ? 'Finish setting it up' : "Today's work, the plan and the chat with Anee" }}</span></span>
             <span class="text-xs font-extrabold px-3 py-1 rounded-full" style="background:#f5c518;color:#1d330d">Open</span>
         </a>
