@@ -1,0 +1,1240 @@
+{
+ "generated": "2026-10-14",
+ "fields": {
+  "soakHours": "Hours to plan the soak for. soakRange holds the low and high ends the source allows.",
+  "refreshEveryHours": "Change still water this often. null means the source gives no schedule.",
+  "incubateHours": "Hours after draining to start checking for sprouts. incubateRange holds the earliest and latest the source allows, sowWhen says what ready looks like.",
+  "seedKgPerHa": "Seed in kg per hectare as a low and high pair, by planting method.",
+  "transplantAgeDays": "Seedling age at transplanting in days as a low and high pair.",
+  "confidence": "company means the seed company or breeder said it. general means no brand instruction was found and the PhilRice hybrid steps stand in."
+ },
+ "howToMatch": "Compare whole names, ignoring case, spaces and dashes, never a substring (Mestiso 1 must not match Mestiso 117). Walk brands in order and take the first whose match list holds the record name, its NSIC number or a trade name. Fall back to brandWords, then breeders, then general.hybrid or general.inbred by the record type. The US 88 entry sits before the wider SeedWorks entry on purpose.",
+ "general": {
+  "inbred": {
+   "label": "Inbred certified seed (PhilRice PalayCheck and Pinoy Rice Knowledge Bank)",
+   "soakHours": 24,
+   "soakRange": [
+    12,
+    24
+   ],
+   "refreshEveryHours": 6,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When the white root tip shows like a small dot on most seeds.",
+   "seedKgPerHa": {
+    "transplanted": [
+     20,
+     40
+    ],
+    "directSeededRow": [
+     40,
+     60
+    ],
+    "directSeededBroadcast": [
+     60,
+     80
+    ]
+   },
+   "seedbed": "About 400 square meters of raised seedbed per hectare, 1 meter wide and 4 to 5 cm high. Sow about 100 grams per square meter for certified seed.",
+   "transplantAgeDays": [
+    18,
+    21
+   ],
+   "steps": [
+    "Put the seed in a clean, strong sack or net bag filled only halfway so it has room to swell.",
+    "Soak it for 24 hours in flowing water, or in a drum of clean water.",
+    "If the seed sits in a drum, change the water every 6 hours so it does not sour.",
+    "Lift the sack out and let it drain on a raised pallet in the shade.",
+    "Incubate for 24 to 36 hours under a cover, until the white root tip shows.",
+    "Do not stack the sacks. Heat builds up and can kill the sprouting seed.",
+    "Keep the seed damp and let air reach it until it is sown.",
+    "Sow the sprouted seed right away so the roots do not tangle."
+   ],
+   "directSeeded": "Soak 24 hours and incubate 24 to 36 hours, then let the seed air dry a little so it spreads evenly. Use 40 to 60 kg per hectare with a drum seeder and 60 to 80 kg when broadcasting by hand.",
+   "notes": "In the cool dry season incubation can take up to 48 hours. Some PhilRice guides give 12 to 24 hours of soaking for inbred seed.",
+   "confidence": "company"
+  },
+  "hybrid": {
+   "label": "Hybrid seed with no brand instruction (PhilRice hybrid guidance)",
+   "soakHours": 24,
+   "soakRange": [
+    12,
+    24
+   ],
+   "refreshEveryHours": 6,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When white roots show on most seeds.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     18
+    ]
+   },
+   "seedbed": "About 400 square meters of seedbed per hectare. Sow about 50 grams, one handful, per square meter.",
+   "transplantAgeDays": [
+    18,
+    25
+   ],
+   "steps": [
+    "Wash the seed in a pail of clean water.",
+    "Put it in a sack or net bag that lets water through.",
+    "Soak it 12 to 24 hours in flowing water or in a drum of clean water.",
+    "Do not throw away seeds that float. Hybrid seed is often lighter, darker and slightly open, and these seeds still grow.",
+    "If the water is not flowing, change it every 6 hours so the seed does not ferment.",
+    "Wash the seed well after soaking and set the sack on a pallet or wooden platform.",
+    "Incubate 24 to 36 hours until white roots show.",
+    "Keep the seed damp while it incubates. Rinse it and turn the sacks every 4 to 6 hours so it does not overheat."
+   ],
+   "directSeeded": "No PhilRice hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
+   "notes": "Older PhilRice guides give a shorter soak for hybrids: 10 to 12 hours in flowing water, or 12 hours with the water changed every 3 hours. Start checking for swollen seed at 12 hours.",
+   "confidence": "general"
+  },
+  "irri": {
+   "label": "IRRI Rice Knowledge Bank pregermination",
+   "soakHours": 24,
+   "soakRange": [
+    12,
+    24
+   ],
+   "refreshEveryHours": null,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    24
+   ],
+   "sowWhen": "Root about 2 to 3 mm long. Sow before roots pass 5 mm.",
+   "steps": [
+    "Soak the seed 12 to 24 hours, or until small shoots appear at the tip.",
+    "In cold weather the soak may need 36 to 48 hours.",
+    "Drain and keep the seed in its bag for about 24 hours in a shady place where air moves around the bags.",
+    "Do not let the bags get hotter than about 42 degrees Celsius or some seed will be damaged.",
+    "Broadcast or drum seed before the roots pass 5 mm. Longer roots tangle and break at sowing.",
+    "Weigh the seed dry. Soaking adds 10 to 30 percent to its weight."
+   ],
+   "directSeeded": "Wet direct seeding needs about 80 kg per hectare of an inbred suited to direct seeding. Pregerminated seed cannot go through a drill seeder.",
+   "confidence": "company"
+  },
+  "rules": [
+   {
+    "rule": "Hybrid seed needs far less seed than inbred: about 15 to 18 kg per hectare transplanted, against 20 to 40 kg of certified inbred seed."
+   },
+   {
+    "rule": "Never discard floating or half filled hybrid seed. Bayer, Longping and the Pioneer guide all say these seeds still grow, so a salt or float test is for inbred seed only."
+   },
+   {
+    "rule": "Soak in a loose sack or net bag. Flowing water is best. In still water change it on a schedule, every 6 hours for most brands, every 4 to 6 for Longping, every 3 for SL Agritech, so the seed does not sour."
+   },
+   {
+    "rule": "Incubate on a raised pallet in the shade, never on the floor and never with sacks stacked. Keep the seed damp and aired, and mix or turn it every 3 to 6 hours. Overheating sours and kills sprouting seed."
+   },
+   {
+    "rule": "Sow when about 85 percent of the seed shows a white root. For direct seeding, sow before roots pass 5 mm."
+   },
+   {
+    "rule": "Cool weather slows everything. IRRI allows 36 to 48 hours of soaking in cold weather and PhilRice up to 48 hours of incubation in the dry season."
+   },
+   {
+    "rule": "A whole preparation takes about two to three days from first soak to sowing. Plan the seedbed or field to be ready on the day the seed is."
+   }
+  ]
+ },
+ "brands": [
+  {
+   "brand": "SL Agritech",
+   "match": [
+    "NSIC Rc 774H",
+    "Rc 774H",
+    "Mestiso 152",
+    "Mestizo 152",
+    "SL-27H",
+    "NSIC Rc 776H",
+    "Rc 776H",
+    "Mestiso 153",
+    "Mestizo 153",
+    "SL-771H",
+    "NSIC Rc 756H",
+    "Rc 756H",
+    "Mestiso 147",
+    "Mestizo 147",
+    "SL-203H",
+    "NSIC Rc 758H",
+    "Rc 758H",
+    "Mestiso 148",
+    "Mestizo 148",
+    "SL-22H",
+    "NSIC Rc 718H",
+    "Rc 718H",
+    "Mestiso 134",
+    "Mestizo 134",
+    "SL-39H",
+    "NSIC Rc 720H",
+    "Rc 720H",
+    "Mestiso 135",
+    "Mestizo 135",
+    "SL-43H",
+    "NSIC Rc 722H",
+    "Rc 722H",
+    "Mestiso 136",
+    "Mestizo 136",
+    "SL-201H",
+    "NSIC Rc 724H",
+    "Rc 724H",
+    "Mestiso 137",
+    "Mestizo 137",
+    "SL-422H",
+    "NSIC Rc 726H",
+    "Rc 726H",
+    "Mestiso 138",
+    "Mestizo 138",
+    "SL-606H",
+    "NSIC Rc 728H",
+    "Rc 728H",
+    "Mestiso 139",
+    "Mestizo 139",
+    "SL-631H",
+    "NSIC Rc 540H",
+    "Rc 540H",
+    "Mestiso 97",
+    "Mestizo 97",
+    "SL-20H",
+    "NSIC Rc 488H",
+    "Rc 488H",
+    "Mestiso 81",
+    "Mestizo 81",
+    "SL-19H",
+    "SL19",
+    "NSIC Rc 132H",
+    "Rc 132H",
+    "Mestiso 6",
+    "Mestizo 6",
+    "SL-8H",
+    "SL 8H",
+    "SL8H",
+    "SL-12H",
+    "SL 12H",
+    "SL12H",
+    "SL-18H",
+    "SL 18H",
+    "SL18H",
+    "SL19H",
+    "SL20H",
+    "SL-9H",
+    "SL-68H"
+   ],
+   "brandWords": [
+    "SL Agritech",
+    "SLAC",
+    "SL Super Hybrid"
+   ],
+   "breeders": [
+    "SL Agritech"
+   ],
+   "soakHours": 12,
+   "soakRange": [
+    12,
+    12
+   ],
+   "refreshEveryHours": 3,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When about 85 percent of the seed has opened and shows a white root.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     18
+    ],
+    "directSeeded": [
+     30,
+     36
+    ]
+   },
+   "seedbed": "400 square meters of seedbed 4 to 5 cm high. Sow one handful per square meter.",
+   "steps": [
+    "Put the seed in a sack that water passes through easily.",
+    "Wash the seed, then soak it for 12 hours.",
+    "Change to clean water every 3 hours. Seed left in old water sours and sprouts poorly.",
+    "Lift the sack and incubate for 24 to 36 hours, one to one and a half days, in a shaded place.",
+    "Keep the sack closed. Dip it in water for about 5 seconds every 3 to 5 hours so the seed stays damp and cool.",
+    "Do not let the seed overheat while it incubates. Too much heat sours and darkens the seed and can kill it.",
+    "Sow on the seedbed once about 85 percent of the seed has cracked open with a white root."
+   ],
+   "directSeeded": "Use 30 to 36 kg per hectare when broadcasting, against 15 to 18 kg when transplanting.",
+   "notes": "From the SL Agritech planting guide animation (five steps for sprouting SL hybrid seed), shown re uploaded with credit to SL Agritech. SL says every pack carries the same printed guide. It matches the owner note of about 12 hours.",
+   "confidence": "company"
+  },
+  {
+   "brand": "Longping Tropical Rice Development (LP hybrids)",
+   "match": [
+    "NSIC Rc 802H",
+    "Rc 802H",
+    "Mestiso 165",
+    "Mestizo 165",
+    "LP 756",
+    "NSIC Rc 804H",
+    "Rc 804H",
+    "Mestiso 166",
+    "Mestizo 166",
+    "LP 757",
+    "NSIC Rc 806H",
+    "Rc 806H",
+    "Mestiso 167",
+    "Mestizo 167",
+    "LP 794",
+    "NSIC Rc 770H",
+    "Rc 770H",
+    "Mestiso 150",
+    "Mestizo 150",
+    "LP 894H",
+    "NSIC Rc 772H",
+    "Rc 772H",
+    "Mestiso 151",
+    "Mestizo 151",
+    "LP 994H",
+    "NSIC Rc 750H",
+    "Rc 750H",
+    "Mestiso 144",
+    "Mestizo 144",
+    "LP 777",
+    "NSIC Rc 752H",
+    "Rc 752H",
+    "Mestiso 145",
+    "Mestizo 145",
+    "LP 924",
+    "NSIC Rc 696H",
+    "Rc 696H",
+    "Mestiso 123",
+    "Mestizo 123",
+    "LP 908",
+    "Longping 908",
+    "NSIC Rc 698H",
+    "Rc 698H",
+    "Mestiso 124",
+    "Mestizo 124",
+    "LP 996",
+    "NSIC Rc 652H",
+    "Rc 652H",
+    "Mestiso 110",
+    "Mestizo 110",
+    "LP 624",
+    "NSIC Rc 654H",
+    "Rc 654H",
+    "Mestiso 111",
+    "Mestizo 111",
+    "LP 862",
+    "NSIC Rc 656H",
+    "Rc 656H",
+    "Mestiso 112",
+    "Mestizo 112",
+    "LP 524",
+    "NSIC Rc 658H",
+    "Rc 658H",
+    "Mestiso 113",
+    "Mestizo 113",
+    "LP 616",
+    "NSIC Rc 660H",
+    "Rc 660H",
+    "Mestiso 114",
+    "Mestizo 114",
+    "LP 763",
+    "NSIC Rc 662H",
+    "Rc 662H",
+    "Mestiso 115",
+    "Mestizo 115",
+    "LP 869",
+    "NSIC Rc 614H",
+    "Rc 614H",
+    "Mestiso 106",
+    "Mestizo 106",
+    "LP 488",
+    "NSIC Rc 616H",
+    "Rc 616H",
+    "Mestiso 107",
+    "Mestizo 107",
+    "LP 702",
+    "NSIC Rc 618H",
+    "Rc 618H",
+    "Mestiso 108",
+    "Mestizo 108",
+    "LP 727",
+    "NSIC Rc 550H",
+    "Rc 550H",
+    "Mestiso 102",
+    "Mestizo 102",
+    "LP 412",
+    "NSIC Rc 516H",
+    "Rc 516H",
+    "Mestiso 90",
+    "Mestizo 90",
+    "LP 402",
+    "NSIC Rc 486H",
+    "Rc 486H",
+    "Mestiso 80",
+    "Mestizo 80",
+    "LP 534",
+    "Longping 534",
+    "NSIC Rc 456H",
+    "Rc 456H",
+    "Mestiso 78",
+    "Mestizo 78",
+    "LP 937",
+    "Long Ping 937",
+    "NSIC Rc 458H",
+    "Rc 458H",
+    "Mestiso 79",
+    "Mestizo 79",
+    "LP 357",
+    "NSIC Rc 404H",
+    "Rc 404H",
+    "Mestiso 66",
+    "Mestizo 66",
+    "LP 2096",
+    "Longping 2096",
+    "NSIC Rc 412H",
+    "Rc 412H",
+    "Mestiso 70",
+    "Mestizo 70",
+    "LP 205",
+    "NSIC Rc 384H",
+    "Rc 384H",
+    "Mestiso 63",
+    "Mestizo 63",
+    "LP 106",
+    "LP 296",
+    "LP296",
+    "LP205",
+    "LP937",
+    "LP534",
+    "LP2096",
+    "LP908",
+    "Longping 937",
+    "Longping 205"
+   ],
+   "brandWords": [
+    "Longping",
+    "Long Ping",
+    "LongPing",
+    "LPHT"
+   ],
+   "breeders": [
+    "Long Ping",
+    "Longping High Tech"
+   ],
+   "soakHours": 24,
+   "soakRange": [
+    18,
+    24
+   ],
+   "refreshEveryHours": 6,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When more than 85 percent of the seed has sprouted.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     18
+    ]
+   },
+   "seedbed": "One 3 kg pack covers 1,800 to 2,000 square meters of field. Keep the seedbed wet for 5 to 7 days after sowing, then hold 1 to 2 cm of water.",
+   "transplantAgeDays": [
+    18,
+    20
+   ],
+   "steps": [
+    "Plan 15 to 18 kg per hectare, which is 5 to 6 packs of 3 kg.",
+    "Put each 3 kg of seed in its own net bag or sack.",
+    "Soak each bag in a drum or pail of clean water for 18 to 24 hours.",
+    "Do not throw away seeds that float. They also sprout.",
+    "Change the water every 4 to 6 hours, and wash the seed at each change so it does not sour or rot.",
+    "After 18 to 24 hours lift the bags onto a pallet or rack so the water drains. Never set them on the bare floor.",
+    "Incubate for 24 to 36 hours or a little longer, covered with a tarp.",
+    "Mix the seed every 5 to 6 hours, and sprinkle or pour clean water on it so it does not overheat or sour.",
+    "Sow on the seedbed once more than 85 percent of the seed has sprouted."
+   ],
+   "directSeeded": "No Longping direct seeding rate was found.",
+   "notes": "Owner note says about 24 hours with the water drained and renewed every 6 hours, which fits the official video. The 2021 Longping technical training deck gives the same steps and adds transplanting at 18 to 20 days, 1 to 2 seedlings a hill at 20 by 20 cm.",
+   "confidence": "company"
+  },
+  {
+   "brand": "Bayer Arize",
+   "match": [
+    "NSIC Rc 794H",
+    "Rc 794H",
+    "Mestiso 161",
+    "Mestizo 161",
+    "AZ8445DT",
+    "NSIC Rc 796H",
+    "Rc 796H",
+    "Mestiso 162",
+    "Mestizo 162",
+    "AZ2241ST",
+    "NSIC Rc 798H",
+    "Rc 798H",
+    "Mestiso 163",
+    "Mestizo 163",
+    "AZ5532ST",
+    "NSIC Rc 748H",
+    "Rc 748H",
+    "Mestiso 143",
+    "Mestizo 143",
+    "Arize 6585",
+    "AZ 6585",
+    "NSIC Rc 688H",
+    "Rc 688H",
+    "Mestiso 119",
+    "Mestizo 119",
+    "Arize AZ 8433 DT",
+    "AZ 8433 DT",
+    "NSIC Rc 708H",
+    "Rc 708H",
+    "Mestiso 129",
+    "Mestizo 129",
+    "NSIC Rc 520H",
+    "Rc 520H",
+    "Mestiso 92",
+    "Mestizo 92",
+    "NSIC Rc 524H",
+    "Rc 524H",
+    "Mestiso 94",
+    "Mestizo 94",
+    "Arize Habilis Plus",
+    "Habilis Plus",
+    "NSIC Rc 546H",
+    "Rc 546H",
+    "Mestiso 100",
+    "Mestizo 100",
+    "NSIC Rc 548H",
+    "Rc 548H",
+    "Mestiso 101",
+    "Mestizo 101",
+    "NSIC Rc 494H",
+    "Rc 494H",
+    "Mestiso 84",
+    "Mestizo 84",
+    "Arize AZ 7888",
+    "AZ 7888",
+    "NSIC Rc 502H",
+    "Rc 502H",
+    "Mestiso 88",
+    "Mestizo 88",
+    "NSIC Rc 406H",
+    "Rc 406H",
+    "Mestiso 67",
+    "Mestizo 67",
+    "NSIC Rc 410H",
+    "Rc 410H",
+    "Mestiso 69",
+    "Mestizo 69",
+    "NSIC Rc 310",
+    "Rc 310",
+    "Mestiso 44",
+    "Mestizo 44",
+    "NSIC Rc 310H",
+    "Rc 310H",
+    "NSIC Rc 312H",
+    "Rc 312H",
+    "Mestiso 45",
+    "Mestizo 45",
+    "NSIC Rc 314H",
+    "Rc 314H",
+    "Mestiso 46",
+    "Mestizo 46",
+    "Arize Bigante Plus",
+    "Bigante Plus",
+    "NSIC Rc 200H",
+    "Rc 200H",
+    "Mestiso 18",
+    "Mestizo 18",
+    "Arize Tej",
+    "NSIC Rc 168H",
+    "Rc 168H",
+    "Mestiso 11",
+    "Mestizo 11",
+    "Arize H64",
+    "NSIC Rc 124H",
+    "Rc 124H",
+    "Mestiso 4",
+    "Mestizo 4",
+    "Arize Bigante",
+    "Bigante",
+    "Arize",
+    "Arize Tej Gold",
+    "Tej Gold",
+    "AZ7888",
+    "AZ8433DT",
+    "AZ 8433",
+    "Habilis"
+   ],
+   "brandWords": [
+    "Arize",
+    "Bayer"
+   ],
+   "breeders": [
+    "Bayer",
+    "Bayer Crop Science"
+   ],
+   "soakHours": 24,
+   "soakRange": [
+    18,
+    24
+   ],
+   "refreshEveryHours": 6,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    48
+   ],
+   "sowWhen": "When the root emerges, seen as white dots or a swollen embryo.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     15
+    ]
+   },
+   "seedbed": "300 to 400 square meters of wet bed for 15 kg, raised 5 to 10 cm and about 1 meter wide with 40 cm drains. Sow 3 kg on 60 to 80 square meters.",
+   "transplantAgeDays": [
+    21,
+    23
+   ],
+   "steps": [
+    "Plan 15 kg per hectare, which is 5 packs of 3 kg.",
+    "Soak the seed 18 to 24 hours in clean water.",
+    "If the water is not flowing, change it every 6 hours.",
+    "Do not discard floating or half filled seeds.",
+    "Make sure the seed has taken up enough water, then drain it.",
+    "Incubate 24 to 48 hours until the root emerges. Keep the seed moist and aired and cover it.",
+    "Do not pile the sacks on each other, and turn the seed over gradually so heat does not build up.",
+    "Sow when white dots or a swollen embryo show."
+   ],
+   "directSeeded": "Bayer says Arize can be transplanted or direct seeded, but gives no direct seeding rate on its Philippine pages.",
+   "notes": "Transplant at the 3 to 5 leaf stage, which is 21 to 23 days after sowing for AZ 8433 DT, 1 to 2 seedlings a hill at 20 by 20 cm. Keep the seedbed saturated 5 to 7 days after sowing, then raise water to 1 to 2 cm. Bigante and Bigante Plus are Bayer Arize hybrids, not Bioseed.",
+   "confidence": "company"
+  },
+  {
+   "brand": "Pioneer (Corteva) PHB hybrids",
+   "match": [
+    "NSIC Rc 754H",
+    "Rc 754H",
+    "Mestiso 146",
+    "Mestizo 146",
+    "PHB 91",
+    "NSIC Rc 710H",
+    "Rc 710H",
+    "Mestiso 130",
+    "Mestizo 130",
+    "PHB 87",
+    "NSIC Rc 712H",
+    "Rc 712H",
+    "Mestiso 131",
+    "Mestizo 131",
+    "PHB 89",
+    "NSIC Rc 664H",
+    "Rc 664H",
+    "Mestiso 116",
+    "Mestizo 116",
+    "PHB 85",
+    "NSIC Rc 588H",
+    "Rc 588H",
+    "Mestiso 105",
+    "Mestizo 105",
+    "NSIC Rc 492H",
+    "Rc 492H",
+    "Mestiso 83",
+    "Mestizo 83",
+    "PHB 77",
+    "NSIC Rc 322H",
+    "Rc 322H",
+    "Mestiso 50",
+    "Mestizo 50",
+    "PHB 79",
+    "NSIC Rc 210",
+    "Rc 210",
+    "Mestiso 23",
+    "Mestizo 23",
+    "NSIC Rc 210H",
+    "Rc 210H",
+    "PHB 71",
+    "PHB71",
+    "PHB 73",
+    "PHB73",
+    "PHB77",
+    "PHB79",
+    "PHB 81",
+    "PHB81",
+    "PHB85",
+    "PHB87",
+    "PHB89",
+    "PHB91"
+   ],
+   "brandWords": [
+    "Pioneer",
+    "Corteva",
+    "PHB"
+   ],
+   "breeders": [
+    "Pioneer",
+    "Pioneer Hi bred",
+    "Corteva"
+   ],
+   "soakHours": 24,
+   "soakRange": [
+    12,
+    24
+   ],
+   "refreshEveryHours": 6,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When white roots show.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     20
+    ],
+    "directSeeded": [
+     15,
+     20
+    ]
+   },
+   "seedbed": "300 to 400 square meters of seedbed. Sow 50 grams per square meter and keep 2 to 3 cm of water once seedlings stand.",
+   "transplantAgeDays": [
+    21,
+    25
+   ],
+   "steps": [
+    "Put the seed in a sack.",
+    "Wash it and soak it in water for 12 to 24 hours, or until the seed has swelled.",
+    "Do not throw away seeds that float.",
+    "Change the water every 6 hours unless it is flowing.",
+    "Lift the seed out of the water and wash it.",
+    "Incubate 24 to 36 hours. Turn the sack over again and again while it incubates.",
+    "Keep the seed warm but not hot.",
+    "Sow when white roots show."
+   ],
+   "directSeeded": "For drum seeding Pioneer used 15 to 20 kg of PHB71 per hectare, soaked 12 to 24 hours and incubated 12 to 36 hours.",
+   "notes": "The older Pioneer planting guide reprinted by ATI gives incubation of 12 to 36 hours. The newer Corteva film gives 24 to 36.",
+   "confidence": "company"
+  },
+  {
+   "brand": "SeedWorks US Agriseeds: US 88",
+   "match": [
+    "US 88",
+    "US88",
+    "US-88",
+    "NSIC Rc 236H",
+    "Rc 236H",
+    "Mestiso 28",
+    "Mestizo 28"
+   ],
+   "brandWords": [],
+   "breeders": [
+    "Seedworks"
+   ],
+   "soakHours": 48,
+   "soakRange": [
+    36,
+    48
+   ],
+   "refreshEveryHours": null,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When the seed has sprouted.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     15
+    ],
+    "directSeeded": [
+     25,
+     30
+    ]
+   },
+   "seedbed": "Sow about 50 grams, one handful, per square meter.",
+   "steps": [
+    "Plan 15 kg per hectare for transplanting and split it into three clean sacks of 5 kg.",
+    "Soak US 88 longer than other hybrids, 36 to 48 hours.",
+    "Incubate 24 to 36 hours under a cover.",
+    "Keep the seed damp and never let it dry out.",
+    "Sow the sprouted seed on the seedbed at one handful per square meter."
+   ],
+   "directSeeded": "For broadcasting use 25 to 30 kg per hectare, split into 3 portions of 8 to 10 kg so the field is covered evenly.",
+   "notes": "SeedWorks shows no water change schedule. Changing the water every 6 hours, as PhilRice advises for still water, is a safe addition over a soak this long.",
+   "confidence": "company"
+  },
+  {
+   "brand": "SeedWorks US Agriseeds (TH 82, Quadro Alas and other lines)",
+   "match": [
+    "NSIC Rc 350H",
+    "Rc 350H",
+    "Mestiso 51",
+    "Mestizo 51",
+    "TH 82",
+    "Tatag Hybrid",
+    "NSIC Rc 260H",
+    "Rc 260H",
+    "Mestiso 37",
+    "Mestizo 37",
+    "Quadro Alas",
+    "TH-82",
+    "TH82",
+    "Cuadro Alas"
+   ],
+   "brandWords": [
+    "SeedWorks",
+    "US Agriseeds"
+   ],
+   "breeders": [
+    "Seedworks"
+   ],
+   "soakHours": 24,
+   "soakRange": [
+    12,
+    24
+   ],
+   "refreshEveryHours": null,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When the seed has sprouted.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     15
+    ],
+    "directSeeded": [
+     25,
+     30
+    ]
+   },
+   "seedbed": "Sow about 50 grams, one handful, per square meter.",
+   "steps": [
+    "Plan 15 kg per hectare for transplanting and split it into three clean sacks of 5 kg.",
+    "Soak the seed 12 to 24 hours.",
+    "Incubate 24 to 36 hours under a cover.",
+    "Keep the seed damp and never let it dry out.",
+    "Sow the sprouted seed on the seedbed at one handful per square meter."
+   ],
+   "directSeeded": "For broadcasting use 25 to 30 kg per hectare, split into 3 portions of 8 to 10 kg.",
+   "notes": "SeedWorks shows no water change schedule. Change still water every 6 hours as PhilRice advises.",
+   "confidence": "company"
+  },
+  {
+   "brand": "Leads Agri (Jackpot, LAV)",
+   "match": [
+    "NSIC Rc 692H",
+    "Rc 692H",
+    "Mestiso 121",
+    "Mestizo 121",
+    "NSIC Rc 694H",
+    "Rc 694H",
+    "Mestiso 122",
+    "Mestizo 122",
+    "Leads 143",
+    "LAV 107",
+    "NSIC Rc 666H",
+    "Rc 666H",
+    "Mestiso 117",
+    "Mestizo 117",
+    "Jackpot 102",
+    "Jackpot102",
+    "LAV 777",
+    "LAV777"
+   ],
+   "brandWords": [
+    "Jackpot",
+    "Leads Agri",
+    "LAV"
+   ],
+   "breeders": [
+    "Leads Agriventures"
+   ],
+   "soakHours": 24,
+   "soakRange": [
+    12,
+    24
+   ],
+   "refreshEveryHours": 6,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When white roots show on most seeds.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     18
+    ]
+   },
+   "seedbed": "About 400 square meters of seedbed per hectare. Sow about 50 grams, one handful, per square meter.",
+   "transplantAgeDays": [
+    18,
+    25
+   ],
+   "steps": [
+    "Wash the seed in a pail of clean water.",
+    "Put it in a sack or net bag that lets water through.",
+    "Soak it 12 to 24 hours in flowing water or in a drum of clean water.",
+    "Do not throw away seeds that float. Hybrid seed is often lighter, darker and slightly open, and these seeds still grow.",
+    "If the water is not flowing, change it every 6 hours so the seed does not ferment.",
+    "Wash the seed well after soaking and set the sack on a pallet or wooden platform.",
+    "Incubate 24 to 36 hours until white roots show.",
+    "Keep the seed damp while it incubates. Rinse it and turn the sacks every 4 to 6 hours so it does not overheat."
+   ],
+   "directSeeded": "No PhilRice hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
+   "notes": "No seed preparation instruction from Leads Agri was found online. These are the PhilRice hybrid steps. Jackpot 102 is NSIC Rc 666H.",
+   "confidence": "general"
+  },
+  {
+   "brand": "Syngenta (NK and Frontline hybrids)",
+   "match": [
+    "NSIC Rc 586H",
+    "Rc 586H",
+    "Mestiso 104",
+    "Mestizo 104",
+    "NSIC Rc 518H",
+    "Rc 518H",
+    "Mestiso 91",
+    "Mestizo 91",
+    "NSIC Rc 496H",
+    "Rc 496H",
+    "Mestiso 85",
+    "Mestizo 85",
+    "NSIC Rc 498H",
+    "Rc 498H",
+    "Mestiso 86",
+    "Mestizo 86",
+    "NSIC Rc 500H",
+    "Rc 500H",
+    "Mestiso 87",
+    "Mestizo 87",
+    "NSIC Rc 444H",
+    "Rc 444H",
+    "Mestiso 72",
+    "Mestizo 72",
+    "NSIC Rc 448H",
+    "Rc 448H",
+    "Mestiso 74",
+    "Mestizo 74",
+    "NSIC Rc 450H",
+    "Rc 450H",
+    "Mestiso 75",
+    "Mestizo 75",
+    "NSIC Rc 452H",
+    "Rc 452H",
+    "Mestiso 76",
+    "Mestizo 76",
+    "NSIC Rc 362H",
+    "Rc 362H",
+    "Mestiso 52",
+    "Mestizo 52",
+    "RH 9000",
+    "Frontline RH 9000",
+    "NSIC Rc 364H",
+    "Rc 364H",
+    "Mestiso 53",
+    "Mestizo 53",
+    "NSIC Rc 366H",
+    "Rc 366H",
+    "Mestiso 54",
+    "Mestizo 54",
+    "NSIC Rc 374H",
+    "Rc 374H",
+    "Mestiso 58",
+    "Mestizo 58",
+    "NSIC Rc 376H",
+    "Rc 376H",
+    "Mestiso 59",
+    "Mestizo 59",
+    "S6003",
+    "Frontline S6003",
+    "NSIC Rc 382H",
+    "Rc 382H",
+    "Mestiso 62",
+    "Mestizo 62",
+    "NSIC Rc 386H",
+    "Rc 386H",
+    "Mestiso 64",
+    "Mestizo 64",
+    "NSIC Rc 388H",
+    "Rc 388H",
+    "Mestiso 65",
+    "Mestizo 65",
+    "NSIC Rc 234H",
+    "Rc 234H",
+    "Mestiso 27",
+    "Mestizo 27",
+    "NK 5017",
+    "Frontline NK5017",
+    "NSIC Rc 208H",
+    "Rc 208H",
+    "Mestiso 22",
+    "Mestizo 22",
+    "NK 6401",
+    "NK6401",
+    "NSIC Rc 166H",
+    "Rc 166H",
+    "Mestiso 10",
+    "Mestizo 10",
+    "NK5017",
+    "S 6003",
+    "RH9000"
+   ],
+   "brandWords": [
+    "Syngenta",
+    "Frontline"
+   ],
+   "breeders": [
+    "Syngenta"
+   ],
+   "soakHours": 24,
+   "soakRange": [
+    12,
+    24
+   ],
+   "refreshEveryHours": 6,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When white roots show on most seeds.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     18
+    ]
+   },
+   "seedbed": "About 400 square meters of seedbed per hectare. Sow about 50 grams, one handful, per square meter.",
+   "transplantAgeDays": [
+    18,
+    25
+   ],
+   "steps": [
+    "Wash the seed in a pail of clean water.",
+    "Put it in a sack or net bag that lets water through.",
+    "Soak it 12 to 24 hours in flowing water or in a drum of clean water.",
+    "Do not throw away seeds that float. Hybrid seed is often lighter, darker and slightly open, and these seeds still grow.",
+    "If the water is not flowing, change it every 6 hours so the seed does not ferment.",
+    "Wash the seed well after soaking and set the sack on a pallet or wooden platform.",
+    "Incubate 24 to 36 hours until white roots show.",
+    "Keep the seed damp while it incubates. Rinse it and turn the sacks every 4 to 6 hours so it does not overheat."
+   ],
+   "directSeeded": "No PhilRice hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
+   "notes": "No seed preparation instruction from Syngenta Philippines was found. Its NK5017 page lists traits only. These are the PhilRice hybrid steps.",
+   "confidence": "general"
+  },
+  {
+   "brand": "Bioseed (BioRice hybrids)",
+   "match": [
+    "NSIC Rc 742H",
+    "Rc 742H",
+    "Mestiso 140",
+    "Mestizo 140",
+    "BioRice Bonus",
+    "NSIC Rc 744H",
+    "Rc 744H",
+    "Mestiso 141",
+    "Mestizo 141",
+    "BioRice Bounty",
+    "NSIC Rc 522H",
+    "Rc 522H",
+    "Mestiso 93",
+    "Mestizo 93",
+    "BioRice 453",
+    "Bio 453",
+    "NSIC Rc 372H",
+    "Rc 372H",
+    "Mestiso 57",
+    "Mestizo 57",
+    "NSIC Rc 180H",
+    "Rc 180H",
+    "Mestiso 15",
+    "Mestizo 15",
+    "BioRice 650",
+    "Bioseed Rice 650",
+    "BR 650",
+    "Bio 650",
+    "NSIC Rc 162H",
+    "Rc 162H",
+    "Mestiso 8",
+    "Mestizo 8",
+    "BioRice Zarap",
+    "BioZarap"
+   ],
+   "brandWords": [
+    "Bioseed",
+    "BioRice",
+    "Bio Rice"
+   ],
+   "breeders": [
+    "Bioseed"
+   ],
+   "soakHours": 24,
+   "soakRange": [
+    12,
+    24
+   ],
+   "refreshEveryHours": 6,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When white roots show on most seeds.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     18
+    ]
+   },
+   "seedbed": "About 400 square meters of seedbed per hectare. Sow about 50 grams, one handful, per square meter.",
+   "transplantAgeDays": [
+    18,
+    25
+   ],
+   "steps": [
+    "Wash the seed in a pail of clean water.",
+    "Put it in a sack or net bag that lets water through.",
+    "Soak it 12 to 24 hours in flowing water or in a drum of clean water.",
+    "Do not throw away seeds that float. Hybrid seed is often lighter, darker and slightly open, and these seeds still grow.",
+    "If the water is not flowing, change it every 6 hours so the seed does not ferment.",
+    "Wash the seed well after soaking and set the sack on a pallet or wooden platform.",
+    "Incubate 24 to 36 hours until white roots show.",
+    "Keep the seed damp while it incubates. Rinse it and turn the sacks every 4 to 6 hours so it does not overheat."
+   ],
+   "directSeeded": "No PhilRice hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
+   "notes": "No seed preparation instruction from Bioseed Research Philippines was found. These are the PhilRice hybrid steps. Bigante is a Bayer Arize hybrid, see that entry.",
+   "confidence": "general"
+  },
+  {
+   "brand": "PhilRice public hybrids (Mestiso)",
+   "match": [
+    "NSIC Rc 820H",
+    "Rc 820H",
+    "Mestiso 174",
+    "Mestizo 174",
+    "PRUP 15",
+    "NSIC Rc 714H",
+    "Rc 714H",
+    "Mestiso 132",
+    "Mestizo 132",
+    "NSIC Rc 552H",
+    "Rc 552H",
+    "Mestiso 103",
+    "Mestizo 103",
+    "NSIC Rc 544H",
+    "Rc 544H",
+    "Mestiso 99",
+    "Mestizo 99",
+    "NSIC Rc 446H",
+    "Rc 446H",
+    "Mestiso 73",
+    "Mestizo 73",
+    "NSIC Rc 368H",
+    "Rc 368H",
+    "Mestiso 55",
+    "Mestizo 55",
+    "NSIC Rc 316H",
+    "Rc 316H",
+    "Mestiso 47",
+    "Mestizo 47",
+    "NSIC Rc 318H",
+    "Rc 318H",
+    "Mestiso 48",
+    "Mestizo 48",
+    "NSIC Rc 320H",
+    "Rc 320H",
+    "Mestiso 49",
+    "Mestizo 49",
+    "NSIC Rc 244H",
+    "Rc 244H",
+    "Mestiso 29",
+    "Mestizo 29",
+    "NSIC Rc 262H",
+    "Rc 262H",
+    "Mestiso 38",
+    "Mestizo 38",
+    "NSIC Rc 196H",
+    "Rc 196H",
+    "Mestiso 16",
+    "Mestizo 16",
+    "NSIC Rc 198H",
+    "Rc 198H",
+    "Mestiso 17",
+    "Mestizo 17",
+    "NSIC Rc 202H",
+    "Rc 202H",
+    "Mestiso 19",
+    "Mestizo 19",
+    "NSIC Rc 204H",
+    "Rc 204H",
+    "Mestiso 20",
+    "Mestizo 20",
+    "PSB Rc 72H",
+    "Rc 72H",
+    "Mestiso 1",
+    "Mestizo 1"
+   ],
+   "brandWords": [],
+   "breeders": [
+    "PhilRice",
+    "PhilRice and UPLB",
+    "UPLB and PhilRice"
+   ],
+   "soakHours": 24,
+   "soakRange": [
+    12,
+    24
+   ],
+   "refreshEveryHours": 6,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When roots have sprouted.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     18
+    ]
+   },
+   "seedbed": "400 square meters of seedbed 1 meter wide with 10 to 15 bags of organic matter worked in. Sow 50 grams, about one handful, per square meter. Keep 1 to 2 cm of water once seedlings grow.",
+   "transplantAgeDays": [
+    18,
+    21
+   ],
+   "steps": [
+    "Use new seed, 15 to 18 kg per hectare.",
+    "Soak 12 to 24 hours in flowing clean water.",
+    "If the water is not flowing, change it every 6 hours.",
+    "Wash the seed well after soaking and set it on wood or a pallet.",
+    "Incubate 24 to 36 hours until roots sprout.",
+    "Do not worry if the seed looks darker, lighter, thinner or slightly open. That is normal for hybrid seed."
+   ],
+   "directSeeded": "No PhilRice direct seeding rate for its hybrids was found.",
+   "notes": "Transplant 18 to 21 day seedlings, 1 to 2 per hill, only 2 to 3 cm deep. The word Mestiso alone is the NSIC local name of every registered hybrid, so match on the full name with its number, never the bare word.",
+   "confidence": "company"
+  }
+ ]
+}

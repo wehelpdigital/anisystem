@@ -774,6 +774,22 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/stash/file/{id}', [App\Http\Controllers\StashController::class, 'file'])->whereNumber('id')->middleware('throttle:600,1')->name('stash.file');
     Route::get('/app/stash/{partner}/{type}', [App\Http\Controllers\StashController::class, 'shelf'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.shelf');
     Route::get('/app/stash/{partner}/{type}/items', [App\Http\Controllers\StashController::class, 'items'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.items');
+    // Land Prep Planner by Anee (2026-10-14): a dated land preparation plan for every lot, around the crew and the weather.
+    Route::get('/app/land-prep', [App\Http\Controllers\LandPrepController::class, 'page'])->name('landprep.page');
+    Route::get('/app/land-prep/options', [App\Http\Controllers\LandPrepController::class, 'options'])->name('landprep.options');
+    Route::get('/app/land-prep/varieties', [App\Http\Controllers\LandPrepController::class, 'varieties'])->middleware('throttle:120,1')->name('landprep.varieties');
+    Route::get('/app/land-prep/seed', [App\Http\Controllers\LandPrepController::class, 'seed'])->middleware('throttle:240,1')->name('landprep.seed');
+    Route::get('/app/land-prep/seasons', [App\Http\Controllers\LandPrepController::class, 'seasons'])->name('landprep.seasons');
+    Route::get('/app/land-prep/protocols', [App\Http\Controllers\LandPrepController::class, 'protocols'])->name('landprep.protocols');
+    Route::post('/app/land-prep/generate', [App\Http\Controllers\LandPrepController::class, 'generate'])->name('landprep.generate');
+    Route::get('/app/land-prep/job/{id}', [App\Http\Controllers\LandPrepController::class, 'jobState'])->whereNumber('id')->name('landprep.job');
+    Route::get('/app/land-prep/list', [App\Http\Controllers\LandPrepController::class, 'list'])->name('landprep.list');
+    Route::get('/app/land-prep/one/{id}', [App\Http\Controllers\LandPrepController::class, 'one'])->whereNumber('id')->name('landprep.one');
+    Route::post('/app/land-prep/meta', [App\Http\Controllers\LandPrepController::class, 'meta'])->name('landprep.meta');
+    Route::post('/app/land-prep/port', [App\Http\Controllers\LandPrepController::class, 'port'])->middleware('throttle:20,1')->name('landprep.port');
+    Route::delete('/app/land-prep/{id}', [App\Http\Controllers\LandPrepController::class, 'destroy'])->whereNumber('id')->name('landprep.delete');
+    // The old free field helper now opens the planner (defined before fh.page so it wins).
+    Route::get('/app/field-helpers/landprep', fn () => redirect()->route('landprep.page'))->name('landprep.legacy');
     // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.
     Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases|varieties|landprep')->name('fh.page');
     // The Variety Finder's data (2026-10-14): one crop's varieties, or every variety's names (?index=1).

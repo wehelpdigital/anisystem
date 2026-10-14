@@ -42,6 +42,8 @@ final class AiPrices
         'skypass' => 30,
         // 2026-10-14: the LCC Checker, Anee reading leaf photos against the leaf color chart.
         'lcc' => 30,
+        // 2026-10-14: the Land Prep Planner, Anee planning every lot's land preparation.
+        'landprep' => 60,
     ];
 
     public const NAMES = [
@@ -62,6 +64,7 @@ final class AiPrices
         'auto' => 'Anee Auto, per lot (a whole season planned and kept on track by Anee)',
         'skypass' => 'Satellite Weather, a week pass (never sold below what a week costs the house)',
         'lcc' => 'LCC Checker (Anee reads rice leaf photos against the leaf color chart)',
+        'landprep' => 'Land Prep Planner (every lot\'s land preparation, around the crew and the weather)',
     ];
 
     /** @var array<string, int>|null */
