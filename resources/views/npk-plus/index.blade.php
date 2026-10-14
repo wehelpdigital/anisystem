@@ -4,7 +4,7 @@
 @section('page-subtitle', 'Every nutrient in your fertilizer plan')
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))
 {{-- No phone tab bar here (the owner's call): the calculator has the whole screen. --}}
-@section('body-class', 'hide-tabbar')
+@section('body-class', 'hide-tabbar no-footer')
 
 @section('content')
 @include('partials.tag-sheet-css')

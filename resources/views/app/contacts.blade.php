@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Contact List')
+{{-- A tool page: no bottom tab bar on a phone and no footer (2026-10-15, the owner). --}}
+@section('body-class', 'hide-tabbar no-footer')
 @section('page-title', 'Contact List')
 @section('page-subtitle', 'Your farm\'s phonebook')
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))

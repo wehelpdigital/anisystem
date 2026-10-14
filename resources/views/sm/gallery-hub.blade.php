@@ -12,6 +12,8 @@
 @extends('layouts.app')
 
 @section('title', 'Global Gallery')
+{{-- A tool page: no bottom tab bar on a phone and no footer (2026-10-15, the owner). --}}
+@section('body-class', 'hide-tabbar no-footer')
 @section('page-title', 'Global Gallery')
 @section('page-subtitle', 'Every season, one shelf')
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))

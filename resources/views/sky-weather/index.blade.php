@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Satellite Weather')
 {{-- No bottom bar on a phone: the page is the whole screen (2026-10-12). --}}
-@section('body-class', 'hide-tabbar')
+@section('body-class', 'hide-tabbar no-footer')
 @section('page-title', 'Satellite Weather')
 @section('page-subtitle', 'Clouds, rain and typhoons over your farm')
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))

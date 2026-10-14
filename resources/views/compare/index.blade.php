@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Compare Reports')
+{{-- A tool page: no bottom tab bar on a phone and no footer (2026-10-15, the owner). --}}
+@section('body-class', 'hide-tabbar no-footer')
 @section('page-title', 'Compare Reports')
 @section('page-subtitle', 'Two saved reports, side by side')
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))

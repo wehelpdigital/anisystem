@@ -5,6 +5,8 @@
 @extends('layouts.app')
 
 @section('title', 'Maps')
+{{-- A tool page: no bottom tab bar on a phone and no footer (2026-10-15, the owner). --}}
+@section('body-class', 'hide-tabbar no-footer')
 @section('page-title', 'Maps')
 @section('page-subtitle', 'Your farm maps, for every season')
 @section('help-key', 'maps')

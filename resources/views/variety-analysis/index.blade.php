@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Variety Research')
+{{-- A tool page: no bottom tab bar on a phone and no footer (2026-10-15, the owner). --}}
+@section('body-class', 'hide-tabbar no-footer')
 @section('page-title', 'Variety Research')
 @section('page-subtitle', 'Find the best variety for your field')
 
