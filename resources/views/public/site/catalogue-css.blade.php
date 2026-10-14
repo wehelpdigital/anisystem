@@ -191,6 +191,10 @@
         .wc-steps li { position: relative; padding-left: 2.1rem; font-size: .95rem; line-height: 1.6; color: #374151; counter-increment: wc; }
         .wc-steps li::before { content: counter(wc); position: absolute; left: 0; top: .1rem; width: 1.45rem; height: 1.45rem; border-radius: 999px; display: grid; place-items: center;
             font-size: .75rem; font-weight: 800; color: #2d5016; background: #e4efd4; }
+        /* A thin line between the steps (2026-10-15, the owner). */
+        .wc-steps li + li { padding-top: .5rem; border-top: 1px solid #e5ebdf; }
+        .wc-steps li + li::before { top: .6rem; }
+        html.dark .wc-steps li + li { border-top-color: #2b3a1c; }
         .wc-ings { margin-top: .6rem; display: flex; flex-wrap: wrap; gap: .45rem; }
         .wc-ings li { display: inline-flex; align-items: center; gap: .45rem; padding: .42rem .45rem .42rem .75rem; border-radius: .8rem; background: #f6f8f3; border: 1px solid #e5ebdf;
             font-size: .88rem; font-weight: 700; color: #1f2937; }

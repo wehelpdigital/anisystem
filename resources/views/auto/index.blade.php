@@ -32,6 +32,9 @@
             @endforeach
         </div>
     @endif
+
+    {{-- Why it is worth its price (2026-10-15, the owner). --}}
+    <div class="mt-6 ac-c">@include('auto.partials.worth', ['tone' => 'light'])</div>
 </div>
 @include('auto.partials.start')
 @endsection

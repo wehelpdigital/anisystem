@@ -167,6 +167,12 @@
            height's 9%, the letters line up with the menu, the pill and the
            buttons (measured, 2026-10-01). */
         .pub-logo { display: block; flex: none; width: 200px; max-width: none; height: auto; aspect-ratio: 1041 / 160; object-fit: contain; transform: translateY(-9%); }
+        .pub-logo-night { display: none; }
+        html.dark .pub-logo-night { display: block; }
+        html.dark .pub-logo-day:has(+ .pub-logo-night) { display: none; }
+        /* The header goes dark with the page it sits on (only the login screens ever turn dark). */
+        html.dark .pm-host { background-color: rgb(17 22 14 / .92) !important; border-color: #222b1a !important; }
+        html.dark .pm-host button, html.dark .pm-host #pubNav a { color: #e8efe1; }
         @keyframes pmRow { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         @media (prefers-reduced-motion: reduce) {
             .pm-burger span, .pm-in, .pm-out { transition: none; }
@@ -248,7 +254,11 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <a href="{{ route('home') }}" class="flex items-center shrink-0">
-                    <img src="{{ asset('images/logo.png') }}?v=anee2" alt="anee.io" class="pub-logo" width="1041" height="160">
+                    <img src="{{ asset('images/logo.png') }}?v=anee2" alt="anee.io" title="anee.io" class="pub-logo pub-logo-day" width="1041" height="160">
+                    {{-- Night (the login page honours the app's theme cookie, 2026-10-15): the white logo. --}}
+                    @hasSection('honours-theme-cookie')
+                        <img src="{{ asset('images/site/logo-white-520.webp') }}?v=anee2" alt="anee.io" title="anee.io" class="pub-logo pub-logo-night" width="520" height="80" decoding="async">
+                    @endif
                 </a>
 
                 <nav id="pubNav" class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
@@ -467,7 +477,7 @@
             <div class="max-w-xl">
                 {{-- Its own shape at any width: a squeezed column used to
                      stretch the wordmark sideways. --}}
-                <img src="{{ asset('images/site/logo-white-520.webp') }}?v=anee" alt="anee.io" width="520" height="80" loading="lazy" decoding="async" class="block h-8 w-auto max-w-full object-contain object-left mb-4">
+                <img src="{{ asset('images/site/logo-white-520.webp') }}?v=anee2" alt="anee.io" title="anee.io" width="520" height="80" loading="lazy" decoding="async" class="block h-8 w-auto max-w-full object-contain object-left mb-4">
                 <p class="text-sm leading-relaxed text-gray-400">
                     anee.io is the smart farm app for {{ \App\Support\Region::t('farmersOf') }}: the cropping calendar,
                     every {{ \App\Support\Region::ph() ? 'peso' : 'dollar' }}, the workers, the field seen from space and Anee, your smart farm technician,

@@ -53,6 +53,7 @@
     .ac-step::before { counter-increment: ac; content: counter(ac); flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; display: grid; place-items: center;
         font-size: .72rem; font-weight: 900; color: #1d330d; background: #f5c518; }
     .ac-price { font-size: .78rem; color: #cfe3b9; } .ac-price b { color: #fff; }
+    .ac-worth { grid-column: 1 / -1; padding-top: .9rem; border-top: 1px solid rgb(255 255 255 / .12); }
     /* Her morning, in a phone */
     .ac-phone { margin: 0 auto; width: min(100%, 16rem); padding: .55rem; border-radius: 1.7rem; background: #0b1406; border: 1px solid rgb(255 255 255 / .12); box-shadow: 0 24px 50px -28px rgb(0 0 0 / .8); }
     .ac-screen { border-radius: 1.25rem; padding: .6rem .5rem; background: #f6f9f1; display: grid; gap: .4rem; min-height: 15.5rem; align-content: start; }
@@ -107,6 +108,8 @@
                     <div class="ac-b" style="--d:3"><img src="{{ $acFace }}" alt=""><div>Moved to Thursday, the next dry morning. 👍</div></div>
                 </div>
             </div>
+            {{-- Why the price is worth it (2026-10-15, the owner), the whole width under the steps and the phone. --}}
+            <div class="ac-worth">@include('auto.partials.worth')</div>
         </div>
     </div></div>
 </section>
