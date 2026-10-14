@@ -513,6 +513,9 @@ class LccCheckerController extends Controller
             'maturity' => 'nullable|in:' . implode(',', array_keys(self::MATURITY)),
             'maturityDays' => 'nullable|integer|min:60|max:200',
             'areaHa' => 'nullable|numeric|min:0.0001|max:10000',
+            // The area as the farmer typed it, and its unit (2026-10-15): hectares are still the number the rule reads.
+            'areaInput' => 'nullable|numeric|min:0|max:100000000',
+            'areaUnit' => 'nullable|in:ha,sqm,acre',
             'variety' => 'nullable|string|max:60',
             'notes' => 'nullable|string|max:400',
         ] + $more, [
@@ -567,6 +570,8 @@ class LccCheckerController extends Controller
             'maturity' => $maturity,
             'maturityDays' => $matDays,
             'areaHa' => (float) ($request->input('areaHa') ?: 1),
+            'areaInput' => $request->filled('areaInput') ? (float) $request->input('areaInput') : null,
+            'areaUnit' => (string) ($request->input('areaUnit') ?: 'ha'),
             'variety' => trim((string) $request->input('variety', '')),
             'notes' => trim((string) $request->input('notes', '')),
         ];

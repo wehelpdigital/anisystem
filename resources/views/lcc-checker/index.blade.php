@@ -123,10 +123,39 @@
     .lc-season small { display: block; font-size: .74rem; color: var(--color-gray-500); }
     .lc-season button { font-weight: 800; color: #3d6823; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
 
-    .lc-area { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
-    .lc-area-in { display: flex; align-items: center; flex: 0 1 9rem; border-radius: .9rem; border: 1px solid var(--color-gray-200); background: var(--color-white); overflow: hidden; }
+    .lc-area { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: .5rem; align-items: stretch; }
+    .lc-area-in { display: flex; align-items: center; min-width: 0; border-radius: .9rem; border: 1px solid var(--color-gray-200); background: var(--color-white); overflow: hidden; }
+    .lc-area-in.is-bad { border-color: #ef4444; box-shadow: 0 0 0 3px rgb(239 68 68 / .15); animation: lcShake .42s cubic-bezier(.22,1,.36,1); }
+    /* The unit, a tag that opens its sheet. */
+    .lc-unit { display: flex; align-items: center; gap: .4rem; min-width: 0; min-height: 3rem; padding: .35rem .7rem .35rem .8rem; border-radius: .9rem; text-align: left;
+        background: #f6faf1; border: 1.5px solid #cfe5b8; transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .lc-unit:hover { border-color: #86b556; background: #fff; }
+    .lc-unit:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    .lc-unit-t { flex: 1; min-width: 0; display: grid; line-height: 1.15; }
+    .lc-unit-t small { font-size: .58rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #4a7c2a; }
+    .lc-unit-t b { font-size: .92rem; font-weight: 800; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lc-unit > svg { flex: none; width: .95rem; height: .95rem; color: #4a7c2a; }
+    .lc-units { display: grid; gap: .45rem; padding: .2rem 1rem calc(1.1rem + env(safe-area-inset-bottom)); }
+    .lc-urow { display: flex; align-items: center; gap: .75rem; width: 100%; padding: .7rem .8rem; border-radius: 1rem; text-align: left; background: var(--color-gray-50); border: 1.5px solid var(--color-gray-200);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .lc-urow:hover { border-color: #a8cc7e; }
+    .lc-urow[aria-checked="true"] { border-color: #4a7c2a; background: #f1f8e9; }
+    .lc-urow .u-ab { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .8rem; display: grid; place-items: center; font-size: .8rem; font-weight: 900; color: #2d5016; background: #e4efd4; }
+    .lc-urow .u-t { flex: 1; min-width: 0; display: grid; gap: .05rem; }
+    .lc-urow .u-t b { font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+    .lc-urow .u-t small { font-size: .74rem; color: var(--color-gray-500); }
+    .lc-urow .u-ck { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; display: grid; place-items: center; color: #fff; background: var(--color-gray-200); transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .lc-urow .u-ck svg { width: .8rem; height: .8rem; opacity: 0; transition: opacity .2s ease; }
+    .lc-urow[aria-checked="true"] .u-ck { background: #4a7c2a; }
+    .lc-urow[aria-checked="true"] .u-ck svg { opacity: 1; }
+    html.dark .lc-unit { background: #1a2414; border-color: #2f4220; }
+    html.dark .lc-unit-t b, html.dark .lc-urow .u-t b { color: #e8efe1; }
+    html.dark .lc-urow { background: #151b12; border-color: #2b3a1c; }
+    html.dark .lc-urow[aria-checked="true"] { background: #1f2b15; border-color: #6b9f3d; }
+    html.dark .lc-urow .u-ab { background: #26331d; color: #cfe0bb; }
+    @media (prefers-reduced-motion: reduce) { .lc-unit, .lc-urow, .lc-urow .u-ck { transition: none; } .lc-area-in.is-bad { animation: none; } }
     .lc-area-in:focus-within { border-color: #86b556; box-shadow: 0 0 0 3px rgb(134 181 86 / .2); }
-    .lc-area-in input { flex: 1; min-width: 0; width: 4rem; min-height: 2.75rem; padding: 0 .7rem; border: 0; background: transparent; font-size: 1rem; font-weight: 800; color: var(--color-gray-900); outline: none; box-shadow: none; }
+    .lc-area-in input { flex: 1; min-width: 0; width: 4rem; min-height: 3rem; padding: 0 .8rem; border: 0; background: transparent; font-size: 1rem; font-weight: 800; color: var(--color-gray-900); outline: none; box-shadow: none; }
     .lc-area-in span { padding: 0 .7rem; font-size: .8rem; font-weight: 800; color: var(--color-gray-500); }
     .lc-chips { display: flex; gap: .3rem; flex-wrap: wrap; }
     .lc-chip { min-height: 2.3rem; padding: .3rem .7rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--color-gray-700); background: var(--color-gray-50); border: 1px solid var(--color-gray-200);
@@ -619,13 +648,15 @@
                     </div>
                     <div class="lc-f-area">
                         <span class="lc-lab" id="lcAreaLab">Area</span>
+                        {{-- The size, and its unit as a tag that opens a sheet (2026-10-15, the owner). --}}
                         <div class="lc-area">
-                            <label class="lc-area-in"><input type="number" inputmode="decimal" min="0.01" max="10000" step="0.01" id="lcArea" value="1" aria-labelledby="lcAreaLab"><span>ha</span></label>
-                            <div class="lc-chips" id="lcAreaChips">
-                                <button type="button" class="lc-chip" data-a="0.25">¼</button><button type="button" class="lc-chip" data-a="0.5">½</button><button type="button" class="lc-chip" data-a="1">1</button><button type="button" class="lc-chip" data-a="2">2</button>
-                            </div>
+                            <label class="lc-area-in"><span class="sr-only">How big</span><input type="number" inputmode="decimal" min="0.0001" step="any" id="lcArea" value="1" aria-labelledby="lcAreaLab" placeholder="0"></label>
+                            <button type="button" class="lc-unit" id="lcUnitBtn" aria-haspopup="dialog" aria-label="Area unit">
+                                <span class="lc-unit-t"><small>Unit</small><b id="lcUnitNow">Hectares</b></span>
+                                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
                         </div>
-                        <p class="lc-hint">1 hectare is 10,000 square meters.</p>
+                        <p class="lc-hint" id="lcAreaHint">1 hectare is 10,000 square meters.</p>
                     </div>
                     <div>
                         <span class="lc-lab" id="lcDateLab">Transplanted on</span>
@@ -784,6 +815,14 @@
 </dialog>
 
 {{-- Rename a saved check. --}}
+<dialog class="lc-sheet is-small" id="lcUnitSheet" aria-labelledby="lcUnitTitle">
+    <div class="lc-sbox" tabindex="-1">
+        <div class="lc-grip" aria-hidden="true"></div>
+        <div class="lc-shead"><h2 id="lcUnitTitle">Area unit</h2><button type="button" class="lc-x" aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="lc-units" id="lcUnitList" role="radiogroup" aria-labelledby="lcUnitTitle"></div>
+    </div>
+</dialog>
+
 <dialog class="lc-sheet is-small" id="lcRenSheet" aria-labelledby="lcRenTitle">
     <form class="lc-sbox" tabindex="-1" id="lcRenForm">
         <div class="lc-grip" aria-hidden="true"></div>
@@ -874,11 +913,13 @@
 
     /* ---------------- the state, remembered on this phone ---------------- */
     let OPT = null;
-    const st = { step: '1', method: 'tpr', date: null, seasonSet: null, variety: '', varSrc: null, maturity: null, maturityDays: null, area: 1,
+    // Area units (the Land Prep Planner's): the farmer's number and unit, hectares worked out.
+    const UNITS = { ha: ['Hectares', 'ha', 1, '10,000 square meters'], sqm: ['Square meters', 'm²', 0.0001, 'Like 2,500 for a quarter hectare'], acre: ['Acres', 'ac', 0.40468564, 'About 4,047 square meters'] };
+    const st = { step: '1', method: 'tpr', date: null, seasonSet: null, variety: '', varSrc: null, maturity: null, maturityDays: null, area: 1, unit: 'ha',
         shots: [], chart: Array(10).fill(null), cur: 0 };
     const KEY = 'lcc-field-v2';
     function remember() {
-        try { localStorage.setItem(KEY, JSON.stringify({ method: st.method, date: st.date, seasonSet: st.seasonSet, variety: st.variety, varSrc: st.varSrc, maturity: st.maturity, maturityDays: st.maturityDays, area: st.area })); } catch (e) { /* private mode */ }
+        try { localStorage.setItem(KEY, JSON.stringify({ method: st.method, date: st.date, seasonSet: st.seasonSet, variety: st.variety, varSrc: st.varSrc, maturity: st.maturity, maturityDays: st.maturityDays, area: st.area, unit: st.unit })); } catch (e) { /* private mode */ }
     }
     function recall() {
         try {
@@ -891,6 +932,7 @@
             if (MAT[s.maturity]) st.maturity = s.maturity;
             if (Number(s.maturityDays) >= 60 && Number(s.maturityDays) <= 200) st.maturityDays = Number(s.maturityDays);
             if (Number(s.area) > 0) st.area = Number(s.area);
+            if (UNITS[s.unit]) st.unit = s.unit;
         } catch (e) { /* nothing kept */ }
     }
 
@@ -902,7 +944,14 @@
     const word = () => (st.method === 'dsr' ? 'sowing' : 'transplanting');
     const dayWord = () => (st.method === 'dsr' ? 'DAS' : 'DAT');
     const caseBody = () => ({ method: st.method, plantingDate: st.date, season: season(), maturity: st.maturity, maturityDays: st.maturityDays,
-        areaHa: Number(st.area) || 1, variety: st.variety, notes: '' });
+        areaHa: areaHa() || 1, areaInput: Number(st.area) || 1, areaUnit: st.unit, variety: st.variety, notes: '' });
+    function areaHa() { return Math.round((Number(st.area) || 0) * UNITS[st.unit][2] * 10000) / 10000; }
+    // "0.5 hectares", "5,000 square meters (0.5 ha)": the area as the farmer gave it.
+    function areaWords(input, unit, ha) {
+        const u = UNITS[unit] || UNITS.ha, n = Number(input) || Number(ha) || 1;
+        const name = unit === 'sqm' ? 'square meters' : (unit === 'acre' ? (n === 1 ? 'acre' : 'acres') : (n <= 1 ? 'hectare' : 'hectares'));
+        return num(n) + ' ' + name + (unit && unit !== 'ha' && ha ? ' (' + num(ha) + ' ha)' : '');
+    }
 
     /* ---------------- 1. the field ---------------- */
     function paintField() {
@@ -940,7 +989,7 @@
         }
         paintVarTag();
         $('lcArea').value = st.area;
-        $('lcAreaChips').querySelectorAll('.lc-chip').forEach((c) => c.classList.toggle('is-on', Number(c.dataset.a) === Number(st.area)));
+        paintUnit();
     }
     function varRow() { return st.varSrc === 'list' ? VARS.find((v) => v.n === st.variety) : null; }
     function paintVarTag() {
@@ -965,13 +1014,44 @@
         st.seasonSet = st.date && other === seasonOf(st.date) ? null : other;
         paintField(); remember();
     });
-    $('lcArea').addEventListener('input', () => { const a = Number($('lcArea').value); if (a > 0) { st.area = a; $('lcAreaChips').querySelectorAll('.lc-chip').forEach((c) => c.classList.toggle('is-on', Number(c.dataset.a) === a)); remember(); } });
-    $('lcAreaChips').addEventListener('click', (e) => { const c = e.target.closest('[data-a]'); if (!c) return; st.area = Number(c.dataset.a); paintField(); remember(); });
+    function paintUnit() {
+        const u = UNITS[st.unit];
+        $('lcUnitNow').textContent = u[0];
+        const ha = areaHa();
+        $('lcAreaHint').textContent = st.unit === 'ha' ? '1 hectare is 10,000 square meters.'
+            : (Number(st.area) > 0 ? 'That is ' + num(ha) + ' ' + (ha === 1 ? 'hectare' : 'hectares') + '.' : u[3] + '.');
+    }
+    $('lcArea').addEventListener('input', () => {
+        $('lcArea').closest('.lc-area-in').classList.remove('is-bad');
+        const a = Number($('lcArea').value);
+        if (a > 0) { st.area = a; paintUnit(); remember(); }
+    });
+    function paintUnitList() {
+        const tick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+        $('lcUnitList').innerHTML = Object.entries(UNITS).map(([k, u]) => '<button type="button" class="lc-urow" role="radio" data-u="' + k + '" aria-checked="' + (k === st.unit) + '">'
+            + '<span class="u-ab">' + u[1] + '</span><span class="u-t"><b>' + u[0] + '</b><small>' + u[3] + '</small></span><span class="u-ck" aria-hidden="true">' + tick + '</span></button>').join('');
+    }
+    $('lcUnitBtn').addEventListener('click', () => { paintUnitList(); sheetOpen($('lcUnitSheet')); });
+    $('lcUnitList').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-u]');
+        if (!b) return;
+        st.unit = b.dataset.u;
+        $('lcUnitList').querySelectorAll('[data-u]').forEach((x) => x.setAttribute('aria-checked', String(x === b)));
+        paintUnit(); remember();
+        setTimeout(() => { sheetClose($('lcUnitSheet')); $('lcArea').focus({ preventScroll: true }); }, reduce() ? 0 : 180);
+    });
     $('lcNext').addEventListener('click', () => {
         if (!st.date) { bump($('lcDateBtn'), 'is-shake'); openDate(); return; }
         const a = Number($('lcArea').value);
-        if (!(a > 0) || a > 10000) { toast('Put the area in hectares, like 1 or 0.5.', 'error'); $('lcArea').focus(); return; }
-        st.area = a; remember();
+        st.area = a;
+        const ha = areaHa();
+        if (!(a > 0) || !(ha > 0) || ha > 10000) {
+            const box = $('lcArea').closest('.lc-area-in');
+            box.classList.remove('is-bad'); void box.offsetWidth; box.classList.add('is-bad');
+            toast('Put the size of your field, like ' + (st.unit === 'sqm' ? '5000' : '1') + ' ' + UNITS[st.unit][0].toLowerCase() + '.', 'error');
+            $('lcArea').focus(); return;
+        }
+        remember();
         go('2');
     });
 
@@ -1000,7 +1080,7 @@
     function paintChoice() {
         const days = ageOf(st.date), stage = stageOf(days), v = varRow();
         const chips = [st.method === 'dsr' ? 'Direct seeded' : 'Transplanted', `${days} ${dayWord()}`, `${cap(season())} season`,
-            v ? v.n : (st.variety || (st.maturity ? `${MAT[st.maturity][0]} maturity` : 'Variety not set')), `${num(st.area)} ha`];
+            v ? v.n : (st.variety || (st.maturity ? `${MAT[st.maturity][0]} maturity` : 'Variety not set')), areaWords(st.area, st.unit, areaHa())];
         $('lcSum').innerHTML = chips.map((c) => `<span>${esc(c)}</span>`).join('');
         let warn = '';
         if (stage === 'early') warn = `Your rice is at day ${days} after ${word()}. Readings start on day ${startDay()}, ${fmt(ds(dn(st.date) + startDay()), { weekday: 'short', month: 'short', day: 'numeric' })}. Young leaves are pale anyway, so a check today will say wait.`;
@@ -1187,7 +1267,7 @@
         if (v === 'due') {
             const area = Number(d.areaHa) || 1;
             out.push(`<section class="lv-card lv-in" ${K()}><h3>${I.sack}How much urea</h3>
-                <div class="lv-big"><b>${num(d.ureaForArea)} kg</b><span>of urea for your ${num(area)} ${area <= 1 ? 'hectare' : 'hectares'}<em>about ${num(d.bagsForArea)} ${Number(d.bagsForArea) === 1 ? 'bag' : 'bags'} of 50 kg</em></span></div>
+                <div class="lv-big"><b>${num(d.ureaForArea)} kg</b><span>of urea for your ${esc(areaWords(p.areaInput, p.areaUnit, area))}<em>about ${num(d.bagsForArea)} ${Number(d.bagsForArea) === 1 ? 'bag' : 'bags'} of 50 kg</em></span></div>
                 <div class="lv-grid3"><span><b>${num(d.kgN)} kg</b>nitrogen per ha</span><span><b>${num(d.ureaPerHa)} kg</b>urea per ha</span><span><b>${num(d.bagsPerHa)}</b>${Number(d.bagsPerHa) === 1 ? 'bag' : 'bags'} per ha</span></div>
                 <ul class="lv-how"><li>${I.check}<span>Spread it evenly on 2 to 3 cm of water, late in the afternoon.</span></li><li>${I.check}<span>That is the ${seasonName} season rate, ${num(d.kgN)} kg of nitrogen per hectare. Urea is 46 percent nitrogen.</span></li><li>${I.check}<span>Keep reading every week. The leaves should green up.</span></li></ul></section>`);
         }
@@ -1220,7 +1300,7 @@
             [dsr ? 'Sown' : 'Transplanted', p.plantingDate ? `${fmt(p.plantingDate, { month: 'short', day: 'numeric', year: 'numeric' })}${days != null ? `, ${days} ${dw}` : ''}` : (days != null ? `${days} ${dw}` : 'Not given')],
             ['Season', `${cap(seasonName)}${p.seasonInferred && p.seasonInferred !== p.season ? ', set by you' : ''}`],
             ['Variety', varLine],
-            ['Area', `${num(p.areaHa || d.areaHa || 1)} ha`],
+            ['Area', areaWords(p.areaInput, p.areaUnit, p.areaHa || d.areaHa || 1)],
             ['Read', r.mode === 'anee' ? `By Anee from photos${item.charged ? `, ${num(item.charged)} credits` : ''}` : 'With your chart, free'],
         ];
         out.push(`<section class="lv-card lv-in" ${K()}><h3>${I.field}Your field</h3><dl class="lv-dl">${rows.map(([t, x]) => `<div><dt>${t}</dt><dd>${x}</dd></div>`).join('')}</dl></section>`);
