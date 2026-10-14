@@ -11,6 +11,9 @@
     $all = collect($varieties);
     $fmt = fn ($x, $d = 1) => $d > 0 ? rtrim(rtrim(number_format((float) $x, $d, '.', ''), '0'), '.') : number_format((float) $x, 0, '.', '');
     $cardTarget = $cardTarget ?? null;
+    // The members' gate on /crop-varieties/{crop} (2026-10-14): the card's
+    // words when a guest is looking, else null (partials/hub-gate).
+    $hubGate = $hubGate ?? null;
     // The type chips: corn by its kinds, every other crop by the kinds it has.
     $chipNames = ['hybrid' => 'Yellow hybrid', 'gm' => 'GM hybrid', 'white-hybrid' => 'White hybrid', 'opv' => 'Open pollinated', 'glutinous' => 'Glutinous', 'sweet' => 'Sweet corn'];
     if ($crop['key'] === 'corn') {
@@ -81,7 +84,8 @@
             </div>
             <div class="rv-count" aria-live="polite"><span><b data-cv-n>{{ $all->count() }}</b> of {{ $all->count() }} {{ $cropName }} varieties</span><button type="button" class="rv-reset" data-cv-reset hidden>Clear the filters</button></div>
 
-            <div class="rv-grid" data-cv-grid>
+            @if ($hubGate)<div class="hg" data-hg data-hg-one="variety" data-hg-many="varieties">@endif
+            <div class="rv-grid hg-grid" data-cv-grid data-hg-grid data-hg-card=".rv-card">
                 @foreach ($all as $i => $v)
                     @php
                         $kind = $CV::kind($v);
@@ -129,6 +133,10 @@
             </div>
             <p class="rv-none" data-cv-none hidden>No {{ $cropName }} variety matches all of these. Clear a filter or two.</p>
             <button type="button" class="rv-more" data-cv-more>Show more varieties</button>
+            @if ($hubGate)
+                @include('public.site.partials.content-gate-card', $hubGate)
+            </div>
+            @endif
 
 @once
 @push('scripts')
@@ -144,10 +152,13 @@
     const more = $('[data-cv-more]'), none = $('[data-cv-none]'), nOut = $('[data-cv-n]'), reset = $('[data-cv-reset]');
     const chips = [...document.querySelectorAll('[data-cv-chip]')];
     const STEP = window.matchMedia('(max-width: 639.98px)').matches ? 12 : 24;
+    // Behind the members' gate every match is in order and the gate decides
+    // what shows (partials/hub-gate).
+    const gated = !!grid.closest('[data-hg]'), FIRST = gated ? 1e9 : STEP;
     // The thirds of the day counts, for the short, middle and long choices.
     const ds = cards.map((c) => Number(c.dataset.days || 0)).filter(Boolean).sort((a, b) => a - b);
     const t1 = ds[Math.floor(ds.length / 3)] || 0, t2 = ds[Math.floor(ds.length * 2 / 3)] || 0;
-    let chip = '', shown = STEP;
+    let chip = '', shown = FIRST;
     const norm = (s) => s.toLowerCase().replace(/\s+/g, ' ').trim();
     const apply = () => {
         const t = norm(q.value), tc = t.replace(/[\s-]/g, ''), d = days ? days.value : '', a = dom ? dom.value : '';
@@ -170,20 +181,21 @@
         ok.forEach((c, i) => { grid.appendChild(c); c.hidden = i >= shown; });
         nOut.textContent = ok.length;
         none.hidden = ok.length > 0;
-        more.hidden = ok.length <= shown;
+        more.hidden = gated || ok.length <= shown;
         reset.hidden = !(t || chip || d || a || by !== 'year');
+        window.aneeHubGate?.(grid);
     };
-    chips.forEach((b) => b.addEventListener('click', () => { chip = b.dataset.cvChip; chips.forEach((x) => x.classList.toggle('is-on', x === b)); shown = STEP; apply(); }));
-    [dom, days, sort].filter(Boolean).forEach((s) => s.addEventListener('change', () => { shown = STEP; apply(); }));
+    chips.forEach((b) => b.addEventListener('click', () => { chip = b.dataset.cvChip; chips.forEach((x) => x.classList.toggle('is-on', x === b)); shown = FIRST; apply(); }));
+    [dom, days, sort].filter(Boolean).forEach((s) => s.addEventListener('change', () => { shown = FIRST; apply(); }));
     let qt = 0;
-    q.addEventListener('input', () => { clearTimeout(qt); qt = setTimeout(() => { shown = STEP; apply(); }, 120); });
+    q.addEventListener('input', () => { clearTimeout(qt); qt = setTimeout(() => { shown = FIRST; apply(); }, 120); });
     more.addEventListener('click', () => { shown += STEP * 2; apply(); });
     reset.addEventListener('click', () => {
         q.value = ''; chip = ''; sort.value = 'year';
         if (dom) dom.value = '';
         if (days) days.value = '';
         chips.forEach((x) => x.classList.toggle('is-on', x.dataset.cvChip === ''));
-        shown = STEP; apply();
+        shown = FIRST; apply();
     });
     // A search carried in the address (?q=), from the crop list's search box.
     const pre = new URLSearchParams(location.search).get('q');

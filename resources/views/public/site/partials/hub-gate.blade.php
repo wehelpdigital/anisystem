@@ -34,7 +34,8 @@
 @push('scripts')
 <script>
 (() => {
-    /* Whole rows: at least two, and at least four cards, show clear; the
+    /* Whole rows: at least two, and at least four cards, show clear (half,
+       when fewer match); the
        next two rows blur; the rest wait behind the card. A crop chip puts
        other shelves' cards after the shelf's own (CSS order), so the count
        follows that order, not the page's. */
@@ -46,7 +47,8 @@
         const on = cards.filter((c) => !c.hidden && !c.classList.contains('is-out'))
             .sort((a, b) => (a.classList.contains('is-also') ? 1 : 0) - (b.classList.contains('is-also') ? 1 : 0));
         const cols = Math.max(1, getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length);
-        const open = cols * Math.max(2, Math.ceil(4 / cols)), blur = cols * 2;
+        // A short list still keeps half of it behind the gate.
+        const open = Math.min(cols * Math.max(2, Math.ceil(4 / cols)), Math.max(1, Math.ceil(on.length / 2))), blur = cols * 2;
         cards.forEach((c) => { c.classList.remove('hg-locked', 'hg-cut'); c.inert = false; });
         on.forEach((c, i) => {
             if (i >= open + blur) c.classList.add('hg-cut');

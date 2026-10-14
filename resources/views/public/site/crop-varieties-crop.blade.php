@@ -27,6 +27,9 @@
     $ys = $all->filter(fn ($v) => isset($v['yield']['value']) && ($v['yield']['unit'] ?? '') === 't/ha')->pluck('yield.value');
     $hybrids = $all->filter(fn ($v) => str_contains(strtolower((string) ($v['kind'] ?? '')), 'hybrid'))->count();
     $title = $name . ' Varieties in the Philippines';
+    // The members' gate (2026-10-14): a guest sees the finder's first rows.
+    $hg = \App\Support\ContentGate::guestView();
+    $member = auth()->check() && ! $hg;
     $metaTitle = collect([$title . ': Every Registered Variety', $title . ': Yield and Maturity', $title])->first(fn ($t) => mb_strlen($t) <= 60);
     $desc = collect([
         'Every ' . $lname . ' variety on the NSIC registry' . ($sold ? ', plus the seed farmers buy most' : '') . ($local ? ' (' . $local . ')' : '') . ': days to harvest, yield, ratings and where each grows best.',
@@ -67,7 +70,9 @@
                 'name' => $title,
                 'description' => $desc,
                 'url' => $url,
-                'hasPart' => $all->map(fn ($v) => ['@type' => 'WebPage', 'name' => $v['name'], 'url' => $S::url('crop-varieties', $v['slug'])])->values()->all(),
+                'isAccessibleForFree' => false,
+                'hasPart' => $all->map(fn ($v) => ['@type' => 'WebPage', 'name' => $v['name'], 'url' => $S::url('crop-varieties', $v['slug'])])->values()
+                    ->push(['@type' => 'WebPageElement', 'isAccessibleForFree' => false, 'cssSelector' => '.hg-grid'])->all(),
             ],
             [
                 '@type' => 'FAQPage',
@@ -88,6 +93,7 @@
 @endpush
 
 @section('content')
+    @if ($hg || $member)@include('public.site.partials.hub-gate')@endif
     <section class="sp-hero">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-10 sm:pt-14">
             <nav class="sp-crumbs" aria-label="Breadcrumb">
@@ -105,6 +111,11 @@
                     <div class="wk-jump mt-6">
                         <a href="#finder"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a variety</a>
                         <a href="#choose"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2m0-13c1.5-1.5 4-2 8-2v13c-4 0-6.5.5-8 2m0-13v13"/></svg>How to choose</a>
+                        @if ($hg)
+                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Members' finder, free to join</a>
+                        @elseif ($member)
+                            <a href="?guest=1#spGateCard" class="hg-chip is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>Open for you · <u>See it as a guest</u></a>
+                        @endif
                     </div>
                 </div>
                 <figure class="cv-hero">
@@ -135,7 +146,17 @@
                 <h2>Find the Right {{ $name }} Variety for Your Farm</h2>
                 <p>Search a name or a brand, pick a type, then sort by yield or by {{ $unit }} to harvest. Tap a card for the full record.</p>
             </div>
-            @include('public.site.partials.crop-variety-finder', ['varieties' => $varieties, 'crop' => $crop])
+            @include('public.site.partials.crop-variety-finder', ['varieties' => $varieties, 'crop' => $crop, 'hubGate' => $hg ? [
+                'here' => '/crop-varieties/' . $crop['slug'],
+                'title' => 'See all ' . $all->count() . ' ' . $lname . ' varieties',
+                'lead' => "Sign up free to anee.io and the whole finder opens, with every variety's record and every guide on crops, varieties, land preparation, pests, diseases and weeds.",
+                'behind' => array_values(array_filter([
+                    $all->count() . ' ' . $lname . ' varieties, each with its ' . $unit . ' to harvest, yield, ratings and where it grows best',
+                    'Every match for your filters, not just the first few',
+                    $sold && $registered ? $registered . ' on the national registry and ' . $sold . ' sold by seed companies, each marked' : null,
+                    'Variety Research in the app: Anee compares the varieties that fit your town',
+                ])),
+            ] : null])
         </div>
     </section>
 

@@ -54,7 +54,17 @@ class ContentGate
     /** Whether this visitor meets the gate on a section's front page. */
     public static function hubApplies(?string $section): bool
     {
-        return in_array((string) $section, self::HUBS, true) && (! Auth::check() || self::previewing());
+        return in_array((string) $section, self::HUBS, true) && self::guestView();
+    }
+
+    /**
+     * Whether this visitor sees the gated view of a finder that is not a
+     * section front: every crop's own variety finder, /crop-varieties/corn
+     * (2026-10-14, the owner: "all varieties should be gated").
+     */
+    public static function guestView(): bool
+    {
+        return ! Auth::check() || self::previewing();
     }
 
     /** A signed in member looking at the page as a guest would. */
@@ -158,6 +168,10 @@ class ContentGate
             return $title ? ['url' => url($p), 'title' => (string) $title] : null;
         }
         [, $section, $slug] = $parts;
+        // A crop's variety finder (/crop-varieties/corn) is not a page of its own.
+        if ($section === 'crop-varieties' && ($crop = CropVarieties::cropBySlug($slug))) {
+            return ['url' => url($p), 'title' => $crop['name'] . ' varieties'];
+        }
         $page = SitePages::find($section, $slug);
 
         return $page ? ['url' => url($p), 'title' => (string) $page->title] : null;
