@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\AsCroppingSchedule;
 use App\Models\AsScheduleLot;
-use App\Support\ProblemCatalogue;
+use App\Support\FieldBook;
+use App\Support\VarietyFinder;
 use App\Support\WorkerContext;
 
 /**
  * Field helpers in the app (2026-10-07): the weed control helper and the
  * pest and disease finders from the public site, as small modules of their
- * own under Global and Quick Tools. The same partials the public hubs use,
- * without the email gate: a member is already in. Every crop of the catalog
- * since 2026-10-08, opened on the crop of the farmer's newest season.
+ * own under Global and Quick Tools. Every crop of the catalog since
+ * 2026-10-08, opened on the crop of the farmer's newest season. Since
+ * 2026-10-14 they have partials of their own (field-helpers/partials), made
+ * for a phone first, with the whole catalogue in a full screen sheet; the
+ * public hubs' partials are no longer used here, and nothing in the app
+ * links out to the public catalogue.
  */
 class FieldHelperController extends Controller
 {
@@ -31,31 +35,47 @@ class FieldHelperController extends Controller
     {
         abort_unless(isset(self::TOOLS[$tool]), 404);
         $defaultCrop = $this->newestCrop();
-        // The variety finder's crop: the one asked for, else the newest season's.
-        $vCrop = null;
+        // The in-app helpers (2026-10-14): their own partials (field-helpers/partials),
+        // fed by App\Support\FieldBook and VarietyFinder from the same files and rows
+        // the public catalogues read, and never a link out to them.
+        $book = null;
+        $vBook = null;
         $vCrops = [];
-        if ($tool === 'varieties') {
-            $vCrops = collect(\App\Support\CropVarieties::crops())->filter(fn ($c) => $c['hasHub'])->sortByDesc('count')->all();
+        if (in_array($tool, ['pests', 'diseases'], true)) {
+            $book = FieldBook::problems($tool);
+        } elseif ($tool === 'weeds') {
+            $book = FieldBook::weeds();
+        } elseif ($tool === 'varieties') {
+            // The crop asked for (?crop=), else the newest season's, else rice.
+            $vCrops = VarietyFinder::crops();
             $want = (string) request()->query('crop', '');
-            $fromSeason = $defaultCrop ? (str_starts_with($defaultCrop, 'corn') ? 'corn' : $defaultCrop) : null;
-            foreach ([$want, $fromSeason] as $k) {
-                if ($k && isset($vCrops[$k])) {
-                    $vCrop = $k;
-                    break;
-                }
-            }
+            $vBook = VarietyFinder::book($want !== '' ? $want : (string) $defaultCrop);
         }
 
         return view('field-helpers.index', [
             'tool' => $tool,
             'tools' => self::TOOLS,
-            'facts' => in_array($tool, ['weeds', 'varieties', 'landprep'], true) ? [] : ProblemCatalogue::finderFacts($tool),
+            'book' => $book,
             'landBook' => $tool === 'landprep' ? \App\Support\LandPrep::book() : null,
-            'varieties' => $tool === 'varieties' ? ($vCrop ? \App\Support\CropVarieties::forCrop($vCrop) : \App\Support\RiceVarieties::all()) : [],
-            'vCrop' => $vCrop,
+            'vBook' => $vBook,
             'vCrops' => $vCrops,
             'defaultCrop' => $defaultCrop,
         ]);
+    }
+
+    /**
+     * The Variety Finder's data (2026-10-14), as JSON: one crop's varieties,
+     * filters and words (?crop=), or every variety's names for the variety
+     * catalogue's search (?index=1).
+     */
+    public function data(string $tool)
+    {
+        abort_unless($tool === 'varieties', 404);
+        $payload = request()->boolean('index')
+            ? ['success' => true, 'items' => VarietyFinder::index()]
+            : ['success' => true] + VarietyFinder::book((string) request()->query('crop', 'rice'));
+
+        return response()->json($payload, 200, ['Cache-Control' => 'private, max-age=600'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /** The crop of the farmer's newest season (a lot's own crop first), or null. */

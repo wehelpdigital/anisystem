@@ -776,6 +776,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/stash/{partner}/{type}/items', [App\Http\Controllers\StashController::class, 'items'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.items');
     // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.
     Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases|varieties|landprep')->name('fh.page');
+    // The Variety Finder's data (2026-10-14): one crop's varieties, or every variety's names (?index=1).
+    Route::get('/app/field-helpers/{tool}/data', [App\Http\Controllers\FieldHelperController::class, 'data'])->where('tool', 'varieties')->middleware('throttle:120,1')->name('fh.data');
     // NPK Plus (2026-10-07): the free fertilizer calculator, and Anee's reading of a plan.
     Route::get('/app/npk-plus', [App\Http\Controllers\NpkPlusController::class, 'page'])->name('npk.page');
     Route::get('/app/npk-plus/options', [App\Http\Controllers\NpkPlusController::class, 'options'])->name('npk.options');

@@ -1,0 +1,8147 @@
+{
+ "products": [
+  {
+   "key": "accept-410-se",
+   "brand": "Accept 410 SE",
+   "company": "Corteva",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor",
+    "Penoxsulam"
+   ],
+   "group": "HRAC 2 plus 15",
+   "formulation": "SE",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Goes on early in transplanted rice and stops grasses, sedges and broadleaves as they sprout.",
+   "app_ai": [
+    "Butachlor",
+    "Penoxsulam",
+    "Penoxsulam plus butachlor"
+   ]
+  },
+  {
+   "key": "advance-ec",
+   "brand": "Advance EC",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor",
+    "Propanil"
+   ],
+   "group": "HRAC 5 plus 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills young weeds already up in rice and keeps new ones from sprouting. Spray while weeds are small.",
+   "app_ai": [
+    "Butachlor plus propanil"
+   ]
+  },
+  {
+   "key": "advice-70-ec",
+   "brand": "Advice 70 EC",
+   "company": "Leads Agri",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor",
+    "Propanil"
+   ],
+   "group": "HRAC 5 plus 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills young weeds already up in rice and keeps new ones from sprouting. Spray while weeds are small.",
+   "app_ai": [
+    "Butachlor plus propanil"
+   ]
+  },
+  {
+   "key": "agrotech-pyrifop-8-5-ec",
+   "brand": "Agrotech Pyrifop 8.5 EC",
+   "company": "Agro Technoproducts",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl",
+    "Pyribenzoxim"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A post emergence mix for rice. Spray while grasses and broadleaves are young.",
+   "app_ai": [
+    "Pyribenzoxim plus cyhalofop butyl"
+   ]
+  },
+  {
+   "key": "agroxone-s",
+   "brand": "Agroxone S",
+   "company": "Jardine Distribution",
+   "kind": "herbicide",
+   "ai": [
+    "MCPA"
+   ],
+   "group": "HRAC 4",
+   "formulation": "",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Takes out broadleaves and sedges in rice. Keep the spray from drifting onto vegetables.",
+   "app_ai": [
+    "MCPA"
+   ]
+  },
+  {
+   "key": "almix-20-wp",
+   "brand": "Almix 20 WP",
+   "company": "Corteva",
+   "kind": "herbicide",
+   "ai": [
+    "Chlorimuron ethyl",
+    "Metsulfuron methyl"
+   ],
+   "group": "HRAC 2",
+   "formulation": "WP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "A wettable powder for sedges and broadleaves in rice. Spray when those weeds are young.",
+   "app_ai": [
+    "Metsulfuron methyl plus chlorimuron ethyl"
+   ]
+  },
+  {
+   "key": "anchor-supra-8-5-ec",
+   "brand": "Anchor Supra 8.5 EC",
+   "company": "Radisson Agrochemical",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl",
+    "Pyribenzoxim"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A post emergence mix for rice. Spray while grasses and broadleaves are young.",
+   "app_ai": [
+    "Pyribenzoxim plus cyhalofop butyl"
+   ]
+  },
+  {
+   "key": "aspire-10-sc",
+   "brand": "Aspire 10 SC",
+   "company": "Texicon Agri Ventures",
+   "kind": "herbicide",
+   "ai": [
+    "Bispyribac sodium"
+   ],
+   "group": "HRAC 2",
+   "formulation": "SC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A post emergence spray for direct seeded rice. Spray young weeds on a drained field, then bring the water back.",
+   "app_ai": [
+    "Bispyribac sodium"
+   ]
+  },
+  {
+   "key": "awardee-200-od",
+   "brand": "Awardee 200 OD",
+   "company": "International Veterinary & Agrochemical (IVA)",
+   "kind": "herbicide",
+   "ai": [
+    "Bispyribac sodium",
+    "Cyhalofop butyl"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "OD",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Two actives in one bottle for direct seeded rice. It handles grasses, sedges and broadleaves while they are young.",
+   "app_ai": [
+    "Cyhalofop butyl plus bispyribac sodium"
+   ]
+  },
+  {
+   "key": "basagran-48-sl",
+   "brand": "Basagran 48 SL",
+   "company": "BASF",
+   "kind": "herbicide",
+   "ai": [
+    "Bentazone"
+   ],
+   "group": "HRAC 6",
+   "formulation": "SL",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Takes out sedges and broadleaves in rice without hurting the rice. It does not kill grasses.",
+   "app_ai": [
+    "Bentazone"
+   ]
+  },
+  {
+   "key": "bentex-480-sl",
+   "brand": "Bentex 480 SL",
+   "company": "Indofil",
+   "kind": "herbicide",
+   "ai": [
+    "Bentazone"
+   ],
+   "group": "HRAC 6",
+   "formulation": "SL",
+   "crops": [
+    "rice",
+    "soybean"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Takes out sedges and broadleaves in rice without hurting the rice. It does not kill grasses.",
+   "app_ai": [
+    "Bentazone"
+   ]
+  },
+  {
+   "key": "bisig-100-sc",
+   "brand": "Bisig 100 SC",
+   "company": "Sinochem",
+   "kind": "herbicide",
+   "ai": [
+    "Bispyribac sodium"
+   ],
+   "group": "HRAC 2",
+   "formulation": "SC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A post emergence spray for direct seeded rice. Spray young weeds on a drained field, then bring the water back.",
+   "app_ai": [
+    "Bispyribac sodium"
+   ]
+  },
+  {
+   "key": "bispyn-400-sc",
+   "brand": "Bispyn 400 SC",
+   "company": "UPL",
+   "kind": "herbicide",
+   "ai": [
+    "Bispyribac sodium"
+   ],
+   "group": "HRAC 2",
+   "formulation": "SC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A post emergence spray for direct seeded rice. Spray young weeds on a drained field, then bring the water back.",
+   "app_ai": [
+    "Bispyribac sodium"
+   ]
+  },
+  {
+   "key": "blade-60-ec",
+   "brand": "Blade 60 EC",
+   "company": "Leads Agri",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor"
+   ],
+   "group": "HRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A pre emergence spray for rice. Apply on moist soil a few days after transplanting or seeding, before weeds sprout.",
+   "app_ai": [
+    "Butachlor"
+   ]
+  },
+  {
+   "key": "bootmidy-600-ec",
+   "brand": "Bootmidy 600 EC",
+   "company": "Rainbow Agrosciences",
+   "kind": "herbicide",
+   "ai": [
+    "Clomazone",
+    "Propanil"
+   ],
+   "group": "HRAC 5 plus 13",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "For young grasses and other weeds in rice. Spray early, while weeds have two to three leaves.",
+   "app_ai": [
+    "Clomazone plus propanil"
+   ]
+  },
+  {
+   "key": "butakill-600-ec",
+   "brand": "Butakill 600 EC",
+   "company": "Zagro",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor"
+   ],
+   "group": "HRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A pre emergence spray for rice. Apply on moist soil a few days after transplanting or seeding, before weeds sprout.",
+   "app_ai": [
+    "Butachlor"
+   ]
+  },
+  {
+   "key": "chief-330-od",
+   "brand": "Chief 330 OD",
+   "company": "Syngenta",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl",
+    "Ethoxysulfuron"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "OD",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Takes out grasses, sedges and broadleaves in rice after they come up. Best on young weeds.",
+   "app_ai": [
+    "Cyhalofop butyl plus ethoxysulfuron"
+   ]
+  },
+  {
+   "key": "clincher-100-ec",
+   "brand": "Clincher 100 EC",
+   "company": "Corteva",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl"
+   ],
+   "group": "HRAC 1",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A grass killer for rice. It takes out barnyard grass and sprangletop and leaves the rice alone.",
+   "app_ai": [
+    "Cyhalofop butyl"
+   ]
+  },
+  {
+   "key": "combonex-200-od",
+   "brand": "Combonex 200 OD",
+   "company": "Nexchem",
+   "kind": "herbicide",
+   "ai": [
+    "Bispyribac sodium",
+    "Cyhalofop butyl"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "OD",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Two actives in one bottle for direct seeded rice. It handles grasses, sedges and broadleaves while they are young.",
+   "app_ai": [
+    "Cyhalofop butyl plus bispyribac sodium"
+   ]
+  },
+  {
+   "key": "command-3-me",
+   "brand": "Command 3 ME",
+   "company": "FMC",
+   "kind": "herbicide",
+   "ai": [
+    "Clomazone"
+   ],
+   "group": "HRAC 13",
+   "formulation": "ME",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A pre emergence herbicide for rice that mainly stops grasses. Apply on wet soil before weeds come up.",
+   "app_ai": [
+    "Clomazone"
+   ]
+  },
+  {
+   "key": "command-plus-600-ec",
+   "brand": "Command Plus 600 EC",
+   "company": "FMC",
+   "kind": "herbicide",
+   "ai": [
+    "Clomazone",
+    "Propanil"
+   ],
+   "group": "HRAC 5 plus 13",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "For young grasses and other weeds in rice. Spray early, while weeds have two to three leaves.",
+   "app_ai": [
+    "Clomazone plus propanil"
+   ]
+  },
+  {
+   "key": "council-complete-sc-300",
+   "brand": "Council Complete SC 300",
+   "company": "Bayer",
+   "kind": "herbicide",
+   "ai": [
+    "Tefuryltrione",
+    "Triafamone"
+   ],
+   "group": "HRAC 2 plus 27",
+   "formulation": "SC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Applied early in rice to stop grasses, sedges and broadleaves before they take hold.",
+   "app_ai": [
+    "Tefuryltrione plus triafamone"
+   ]
+  },
+  {
+   "key": "couron-20-wp",
+   "brand": "Couron 20 WP",
+   "company": "Rainbow Agrosciences",
+   "kind": "herbicide",
+   "ai": [
+    "Chlorimuron ethyl",
+    "Metsulfuron methyl"
+   ],
+   "group": "HRAC 2",
+   "formulation": "WP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "A wettable powder for sedges and broadleaves in rice. Spray when those weeds are young.",
+   "app_ai": [
+    "Metsulfuron methyl plus chlorimuron ethyl"
+   ]
+  },
+  {
+   "key": "cropstar-25-ec",
+   "brand": "Cropstar 25 EC",
+   "company": "Zagro",
+   "kind": "herbicide",
+   "ai": [
+    "Oxadiazon"
+   ],
+   "group": "HRAC 14",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Apply soon after planting so weeds do not come up. Leave the treated soil undisturbed afterward.",
+   "app_ai": [
+    "Oxadiazon"
+   ]
+  },
+  {
+   "key": "crossfire-plus-55-ec",
+   "brand": "Crossfire Plus 55 EC",
+   "company": "Jynnsons",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor",
+    "Pretilachlor"
+   ],
+   "group": "HRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Two soil acting herbicides for rice. Apply soon after planting, before weeds come up.",
+   "app_ai": [
+    "Pretilachlor plus butachlor"
+   ]
+  },
+  {
+   "key": "duaklor-55-ec",
+   "brand": "Duaklor 55 EC",
+   "company": "Agchem Manufacturing",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor",
+    "Pretilachlor"
+   ],
+   "group": "HRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Two soil acting herbicides for rice. Apply soon after planting, before weeds come up.",
+   "app_ai": [
+    "Pretilachlor plus butachlor"
+   ]
+  },
+  {
+   "key": "eon-2-4-d-ester",
+   "brand": "Eon 2,4 D Ester",
+   "company": "Shellhomes Chemicals",
+   "kind": "herbicide",
+   "ai": [
+    "2,4 D IBE"
+   ],
+   "group": "HRAC 4",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "An ester form of 2,4 D for broadleaves and sedges in transplanted rice. Spray on a calm day so it does not drift.",
+   "app_ai": [
+    "2,4 D IBE"
+   ]
+  },
+  {
+   "key": "eros-gold-30-75-wg",
+   "brand": "Eros Gold 30.75 WG",
+   "company": "Jardine Distribution",
+   "kind": "herbicide",
+   "ai": [
+    "Pretilachlor",
+    "Pyrazosulfuron ethyl"
+   ],
+   "group": "HRAC 2 plus 15",
+   "formulation": "WG",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Applied early in rice to stop grasses, sedges and broadleaves as they sprout.",
+   "app_ai": [
+    "Pyrazosulfuron ethyl plus pretilachlor"
+   ]
+  },
+  {
+   "key": "flexo-10-wg",
+   "brand": "Flexo 10 WG",
+   "company": "Biostadt",
+   "kind": "herbicide",
+   "ai": [
+    "Flucetosulfuron"
+   ],
+   "group": "HRAC 2",
+   "formulation": "WG",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Works on grasses, sedges and broadleaves in rice, early after they come up.",
+   "app_ai": [
+    "Flucetosulfuron"
+   ]
+  },
+  {
+   "key": "halorice-50-ec",
+   "brand": "Halorice 50 EC",
+   "company": "Rainbow Agrosciences",
+   "kind": "herbicide",
+   "ai": [
+    "Pyribenzoxim"
+   ],
+   "group": "HRAC 2",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A post emergence herbicide for rice, mainly for barnyard grass and broadleaves.",
+   "app_ai": [
+    "Pyribenzoxim"
+   ]
+  },
+  {
+   "key": "hedonal-sl-400-sl",
+   "brand": "Hedonal SL 400 SL",
+   "company": "Bayer",
+   "kind": "herbicide",
+   "ai": [
+    "2,4 D amine"
+   ],
+   "group": "HRAC 4",
+   "formulation": "SL",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_glutinous",
+    "sugarcane"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills broadleaf weeds and sedges in growing rice, corn and cane. Keep the spray from drifting onto vegetables or fruit trees.",
+   "app_ai": [
+    "2,4 D amine"
+   ]
+  },
+  {
+   "key": "herbadox-330-ec",
+   "brand": "Herbadox 330 EC",
+   "company": "BASF",
+   "kind": "herbicide",
+   "ai": [
+    "Pendimethalin"
+   ],
+   "group": "HRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_glutinous",
+    "sugarcane",
+    "cotton",
+    "onion",
+    "tobacco"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Stops weed seeds from sprouting. Spray on moist soil right after planting, before weeds come up.",
+   "app_ai": [
+    "Pendimethalin"
+   ]
+  },
+  {
+   "key": "husay-100-ec",
+   "brand": "Husay 100 EC",
+   "company": "Kemistar",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl"
+   ],
+   "group": "HRAC 1",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A grass killer for rice. It takes out barnyard grass and sprangletop and leaves the rice alone.",
+   "app_ai": [
+    "Cyhalofop butyl"
+   ]
+  },
+  {
+   "key": "karet-40-sl",
+   "brand": "Karet 40 SL",
+   "company": "Agchem Manufacturing",
+   "kind": "herbicide",
+   "ai": [
+    "MCPA"
+   ],
+   "group": "HRAC 4",
+   "formulation": "SL",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Takes out broadleaves and sedges in rice. Keep the spray from drifting onto vegetables.",
+   "app_ai": [
+    "MCPA"
+   ]
+  },
+  {
+   "key": "lazerock-40-sl",
+   "brand": "Lazerock 40 SL",
+   "company": "Green Action Brigade",
+   "kind": "herbicide",
+   "ai": [
+    "MCPA"
+   ],
+   "group": "HRAC 4",
+   "formulation": "SL",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Takes out broadleaves and sedges in rice. Keep the spray from drifting onto vegetables.",
+   "app_ai": [
+    "MCPA"
+   ]
+  },
+  {
+   "key": "leblecorp-2-4-d-amine-40-sc",
+   "brand": "Leblecorp 2,4 D Amine 40 SC",
+   "company": "LEB Legacy Agri",
+   "kind": "herbicide",
+   "ai": [
+    "2,4 D amine"
+   ],
+   "group": "HRAC 4",
+   "formulation": "SC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_glutinous",
+    "sugarcane"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills broadleaf weeds and sedges in growing rice, corn and cane. Keep the spray from drifting onto vegetables or fruit trees.",
+   "app_ai": [
+    "2,4 D amine"
+   ]
+  },
+  {
+   "key": "lexor-ultra-8-5-ec",
+   "brand": "Lexor Ultra 8.5 EC",
+   "company": "Agway Chemicals",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl",
+    "Pyribenzoxim"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A post emergence mix for rice. Spray while grasses and broadleaves are young.",
+   "app_ai": [
+    "Cyhalofop butyl",
+    "Pyribenzoxim",
+    "Pyribenzoxim plus cyhalofop butyl"
+   ]
+  },
+  {
+   "key": "linchor-5-ec",
+   "brand": "Linchor 5 EC",
+   "company": "Lichemphil International",
+   "kind": "herbicide",
+   "ai": [
+    "Pyribenzoxim"
+   ],
+   "group": "HRAC 2",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A post emergence herbicide for rice, mainly for barnyard grass and broadleaves.",
+   "app_ai": [
+    "Pyribenzoxim"
+   ]
+  },
+  {
+   "key": "machete-60-ec",
+   "brand": "Machete 60 EC",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor"
+   ],
+   "group": "HRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A pre emergence spray for rice. Apply on moist soil a few days after transplanting or seeding, before weeds sprout.",
+   "app_ai": [
+    "Butachlor"
+   ]
+  },
+  {
+   "key": "machete-plus",
+   "brand": "Machete Plus",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor"
+   ],
+   "group": "HRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Butachlor with a safener that shields the rice. Made for wet direct seeded fields, applied soon after sowing.",
+   "app_ai": [
+    "Butachlor with safener"
+   ]
+  },
+  {
+   "key": "metafop-100-ec",
+   "brand": "Metafop 100 EC",
+   "company": "Leads Agri",
+   "kind": "herbicide",
+   "ai": [
+    "Metamifop"
+   ],
+   "group": "HRAC 1",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A grass killer for rice, strong on barnyard grass and sprangletop. Spray while the grasses are young.",
+   "app_ai": [
+    "Metamifop"
+   ]
+  },
+  {
+   "key": "nexstar-25-ec",
+   "brand": "Nexstar 25 EC",
+   "company": "Nexchem",
+   "kind": "herbicide",
+   "ai": [
+    "Oxadiazon"
+   ],
+   "group": "HRAC 14",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Apply soon after planting so weeds do not come up. Leave the treated soil undisturbed afterward.",
+   "app_ai": [
+    "Oxadiazon"
+   ]
+  },
+  {
+   "key": "nominee-100-sc",
+   "brand": "Nominee 100 SC",
+   "company": "Bayer",
+   "kind": "herbicide",
+   "ai": [
+    "Bispyribac sodium"
+   ],
+   "group": "HRAC 2",
+   "formulation": "SC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A post emergence spray for direct seeded rice. Spray young weeds on a drained field, then bring the water back.",
+   "app_ai": [
+    "Bispyribac sodium"
+   ]
+  },
+  {
+   "key": "novlect-120-neo-ec",
+   "brand": "Novlect 120 Neo EC",
+   "company": "Corteva",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl",
+    "Florpyrauxifen benzyl"
+   ],
+   "group": "HRAC 1 plus 4",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A newer mix for rice that handles grasses, sedges and broadleaves after they come up, including hard ones.",
+   "app_ai": [
+    "Cyhalofop butyl plus florpyrauxifen benzyl"
+   ]
+  },
+  {
+   "key": "pendistop-330-ec",
+   "brand": "Pendistop 330 EC",
+   "company": "Metroagri Trading and General Merchandise",
+   "kind": "herbicide",
+   "ai": [
+    "Pendimethalin"
+   ],
+   "group": "HRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_glutinous",
+    "sugarcane",
+    "cotton",
+    "onion",
+    "tobacco"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Stops weed seeds from sprouting. Spray on moist soil right after planting, before weeds come up.",
+   "app_ai": [
+    "Pendimethalin"
+   ]
+  },
+  {
+   "key": "powerburn-140-od",
+   "brand": "Powerburn 140 OD",
+   "company": "Agsmart",
+   "kind": "herbicide",
+   "ai": [
+    "Bispyribac sodium",
+    "Metamifop"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "OD",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "For direct seeded rice. Spray when grasses and broadleaves are still small.",
+   "app_ai": [
+    "Bispyribac sodium",
+    "Metamifop"
+   ]
+  },
+  {
+   "key": "precept-300-ec",
+   "brand": "Precept 300 EC",
+   "company": "Primestocks Chemical",
+   "kind": "herbicide",
+   "ai": [
+    "Pretilachlor"
+   ],
+   "group": "HRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A pre emergence herbicide for rice. Apply on moist or wet soil soon after transplanting or seeding.",
+   "app_ai": [
+    "Pretilachlor"
+   ]
+  },
+  {
+   "key": "pretilanex-30-ec",
+   "brand": "Pretilanex 30 EC",
+   "company": "Nexchem",
+   "kind": "herbicide",
+   "ai": [
+    "Pretilachlor"
+   ],
+   "group": "HRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A pre emergence herbicide for rice. Apply on moist or wet soil soon after transplanting or seeding.",
+   "app_ai": [
+    "Pretilachlor"
+   ]
+  },
+  {
+   "key": "pyronex-100-ec",
+   "brand": "Pyronex 100 EC",
+   "company": "Nexchem",
+   "kind": "herbicide",
+   "ai": [
+    "Metamifop"
+   ],
+   "group": "HRAC 1",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A grass killer for rice, strong on barnyard grass and sprangletop. Spray while the grasses are young.",
+   "app_ai": [
+    "Metamifop"
+   ]
+  },
+  {
+   "key": "pyzero-10-ec",
+   "brand": "Pyzero 10 EC",
+   "company": "FMC",
+   "kind": "herbicide",
+   "ai": [
+    "Metamifop"
+   ],
+   "group": "HRAC 1",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A grass killer for rice, strong on barnyard grass and sprangletop. Spray while the grasses are young.",
+   "app_ai": [
+    "Metamifop"
+   ]
+  },
+  {
+   "key": "rainbow-25-of",
+   "brand": "Rainbow 25 OF",
+   "company": "Corteva",
+   "kind": "herbicide",
+   "ai": [
+    "Penoxsulam"
+   ],
+   "group": "HRAC 2",
+   "formulation": "OF",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "For rice weeds after they come up, including barnyard grass, sedges and broadleaves. Spray while they are young.",
+   "app_ai": [
+    "Penoxsulam"
+   ]
+  },
+  {
+   "key": "ransack-60-ec",
+   "brand": "Ransack 60 EC",
+   "company": "Jynnsons",
+   "kind": "herbicide",
+   "ai": [
+    "2,4 D IBE",
+    "Butachlor"
+   ],
+   "group": "HRAC 4 plus 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Goes on soon after planting rice and stops grasses, sedges and broadleaves before they come up.",
+   "app_ai": [
+    "Butachlor plus 2,4 D IBE"
+   ]
+  },
+  {
+   "key": "resumide-48-sl",
+   "brand": "Resumide 48 SL",
+   "company": "FMC",
+   "kind": "herbicide",
+   "ai": [
+    "Bentazone"
+   ],
+   "group": "HRAC 6",
+   "formulation": "SL",
+   "crops": [
+    "rice",
+    "soybean"
+   ],
+   "weeds": [
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Takes out sedges and broadleaves in rice without hurting the rice. It does not kill grasses.",
+   "app_ai": [
+    "Bentazone"
+   ]
+  },
+  {
+   "key": "rice-buddy-60-od",
+   "brand": "Rice Buddy 60 OD",
+   "company": "Zhengbang Crop Protection (Philippine)",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl",
+    "Penoxsulam"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "OD",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "An oil based mix for rice that takes out grasses, sedges and broadleaves once they are up.",
+   "app_ai": [
+    "Penoxsulam plus cyhalofop butyl"
+   ]
+  },
+  {
+   "key": "ricestar-xtra",
+   "brand": "Ricestar Xtra",
+   "company": "Bayer",
+   "kind": "herbicide",
+   "ai": [
+    "Ethoxysulfuron",
+    "Fenoxaprop P ethyl"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "SC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Handles grasses, sedges and broadleaves in rice after they come up. Works best on young weeds.",
+   "app_ai": [
+    "Fenoxaprop P ethyl plus ethoxysulfuron"
+   ]
+  },
+  {
+   "key": "risun-90-sc",
+   "brand": "Risun 90 SC",
+   "company": "Rainbow Agrosciences",
+   "kind": "herbicide",
+   "ai": [
+    "Ethoxysulfuron",
+    "Fenoxaprop P ethyl"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "SC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Handles grasses, sedges and broadleaves in rice after they come up. Works best on young weeds.",
+   "app_ai": [
+    "Fenoxaprop P ethyl plus ethoxysulfuron"
+   ]
+  },
+  {
+   "key": "roadrunner-200-od",
+   "brand": "Roadrunner 200 OD",
+   "company": "Planters Products",
+   "kind": "herbicide",
+   "ai": [
+    "Bispyribac sodium",
+    "Cyhalofop butyl"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "OD",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Two actives in one bottle for direct seeded rice. It handles grasses, sedges and broadleaves while they are young.",
+   "app_ai": [
+    "Cyhalofop butyl plus bispyribac sodium"
+   ]
+  },
+  {
+   "key": "rogue-ec",
+   "brand": "Rogue EC",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "herbicide",
+   "ai": [
+    "2,4 D IBE",
+    "Butachlor"
+   ],
+   "group": "HRAC 4 plus 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Goes on soon after planting rice and stops grasses, sedges and broadleaves before they come up.",
+   "app_ai": [
+    "Butachlor plus 2,4 D IBE"
+   ]
+  },
+  {
+   "key": "ronstar-ec-25",
+   "brand": "Ronstar EC 25",
+   "company": "Bayer",
+   "kind": "herbicide",
+   "ai": [
+    "Oxadiazon"
+   ],
+   "group": "HRAC 14",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Apply soon after planting so weeds do not come up. Leave the treated soil undisturbed afterward.",
+   "app_ai": [
+    "Oxadiazon"
+   ]
+  },
+  {
+   "key": "saathi-gold-30-75-wg",
+   "brand": "Saathi Gold 30.75 WG",
+   "company": "UPL",
+   "kind": "herbicide",
+   "ai": [
+    "Pretilachlor",
+    "Pyrazosulfuron ethyl"
+   ],
+   "group": "HRAC 2 plus 15",
+   "formulation": "WG",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Applied early in rice to stop grasses, sedges and broadleaves as they sprout.",
+   "app_ai": [
+    "Pyrazosulfuron ethyl plus pretilachlor"
+   ]
+  },
+  {
+   "key": "salvador-200-od",
+   "brand": "Salvador 200 OD",
+   "company": "Jardine Distribution",
+   "kind": "herbicide",
+   "ai": [
+    "Bispyribac sodium",
+    "Cyhalofop butyl"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "OD",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Two actives in one bottle for direct seeded rice. It handles grasses, sedges and broadleaves while they are young.",
+   "app_ai": [
+    "Cyhalofop butyl plus bispyribac sodium"
+   ]
+  },
+  {
+   "key": "satura-20-wp",
+   "brand": "Satura 20 WP",
+   "company": "Vast Agro Solutions",
+   "kind": "herbicide",
+   "ai": [
+    "Chlorimuron ethyl",
+    "Metsulfuron methyl"
+   ],
+   "group": "HRAC 2",
+   "formulation": "WP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "A wettable powder for sedges and broadleaves in rice. Spray when those weeds are young.",
+   "app_ai": [
+    "Metsulfuron methyl plus chlorimuron ethyl"
+   ]
+  },
+  {
+   "key": "shot-plus-250-ec",
+   "brand": "Shot Plus 250 EC",
+   "company": "Lichemphil International",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl",
+    "Pyribenzoxim"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A post emergence mix for rice. Spray while grasses and broadleaves are young.",
+   "app_ai": [
+    "Cyhalofop butyl",
+    "Pyribenzoxim",
+    "Pyribenzoxim plus cyhalofop butyl"
+   ]
+  },
+  {
+   "key": "sinochem-2-4-d-amine",
+   "brand": "Sinochem 2,4 D Amine",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "herbicide",
+   "ai": [
+    "2,4 D amine"
+   ],
+   "group": "HRAC 4",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_glutinous",
+    "sugarcane"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills broadleaf weeds and sedges in growing rice, corn and cane. Keep the spray from drifting onto vegetables or fruit trees.",
+   "app_ai": [
+    "2,4 D amine"
+   ]
+  },
+  {
+   "key": "sinochem-2-4-d-ester",
+   "brand": "Sinochem 2,4 D Ester",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "herbicide",
+   "ai": [
+    "2,4 D IBE"
+   ],
+   "group": "HRAC 4",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "An ester form of 2,4 D for broadleaves and sedges in transplanted rice. Spray on a calm day so it does not drift.",
+   "app_ai": [
+    "2,4 D IBE"
+   ]
+  },
+  {
+   "key": "sofit-300-ec",
+   "brand": "Sofit 300 EC",
+   "company": "Syngenta",
+   "kind": "herbicide",
+   "ai": [
+    "Pretilachlor"
+   ],
+   "group": "HRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A pre emergence herbicide for rice. Apply on moist or wet soil soon after transplanting or seeding.",
+   "app_ai": [
+    "Pretilachlor"
+   ]
+  },
+  {
+   "key": "suave-60-od",
+   "brand": "Suave 60 OD",
+   "company": "Sinochem",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl",
+    "Penoxsulam"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "OD",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "An oil based mix for rice that takes out grasses, sedges and broadleaves once they are up.",
+   "app_ai": [
+    "Cyhalofop butyl",
+    "Penoxsulam",
+    "Penoxsulam plus cyhalofop butyl"
+   ]
+  },
+  {
+   "key": "taniamine-40-sl",
+   "brand": "Taniamine 40 SL",
+   "company": "Zagro",
+   "kind": "herbicide",
+   "ai": [
+    "2,4 D amine"
+   ],
+   "group": "HRAC 4",
+   "formulation": "SL",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_glutinous",
+    "sugarcane"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills broadleaf weeds and sedges in growing rice, corn and cane. Keep the spray from drifting onto vegetables or fruit trees.",
+   "app_ai": [
+    "2,4 D amine"
+   ]
+  },
+  {
+   "key": "topshot-60-od",
+   "brand": "Topshot 60 OD",
+   "company": "Corteva",
+   "kind": "herbicide",
+   "ai": [
+    "Cyhalofop butyl",
+    "Penoxsulam"
+   ],
+   "group": "HRAC 1 plus 2",
+   "formulation": "OD",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "An oil based mix for rice that takes out grasses, sedges and broadleaves once they are up.",
+   "app_ai": [
+    "Cyhalofop butyl",
+    "Penoxsulam",
+    "Penoxsulam plus cyhalofop butyl"
+   ]
+  },
+  {
+   "key": "tornado-70-ec",
+   "brand": "Tornado 70 EC",
+   "company": "Jardine Distribution",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor",
+    "Propanil"
+   ],
+   "group": "HRAC 5 plus 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills young weeds already up in rice and keeps new ones from sprouting. Spray while weeds are small.",
+   "app_ai": [
+    "Butachlor plus propanil"
+   ]
+  },
+  {
+   "key": "triplex-75-ec",
+   "brand": "Triplex 75 EC",
+   "company": "BASF",
+   "kind": "herbicide",
+   "ai": [
+    "Profoxydim"
+   ],
+   "group": "HRAC 1",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "A grass killer for rice that takes out barnyard grass and other grassy weeds after they come up.",
+   "app_ai": [
+    "Profoxydim"
+   ]
+  },
+  {
+   "key": "twinklor-55-ec",
+   "brand": "Twinklor 55 EC",
+   "company": "Onegrain Marketing",
+   "kind": "herbicide",
+   "ai": [
+    "Butachlor",
+    "Pretilachlor"
+   ],
+   "group": "HRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Two soil acting herbicides for rice. Apply soon after planting, before weeds come up.",
+   "app_ai": [
+    "Pretilachlor plus butachlor"
+   ]
+  },
+  {
+   "key": "weedguard-plus-60-ec",
+   "brand": "Weedguard Plus 60 EC",
+   "company": "Leads Agri",
+   "kind": "herbicide",
+   "ai": [
+    "2,4 D IBE",
+    "Butachlor"
+   ],
+   "group": "HRAC 4 plus 15",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Goes on soon after planting rice and stops grasses, sedges and broadleaves before they come up.",
+   "app_ai": [
+    "Butachlor plus 2,4 D IBE"
+   ]
+  },
+  {
+   "key": "zagro-2-4-d-ester",
+   "brand": "Zagro 2,4 D Ester",
+   "company": "Zagro",
+   "kind": "herbicide",
+   "ai": [
+    "2,4 D IBE"
+   ],
+   "group": "HRAC 4",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "An ester form of 2,4 D for broadleaves and sedges in transplanted rice. Spray on a calm day so it does not drift.",
+   "app_ai": [
+    "2,4 D IBE"
+   ]
+  },
+  {
+   "key": "agway-atrazine-80-wp",
+   "brand": "Agway Atrazine 80 WP",
+   "company": "Agway Chemicals",
+   "kind": "herbicide",
+   "ai": [
+    "Atrazine"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "corn_yellow",
+    "corn_glutinous",
+    "sorghum",
+    "sugarcane"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Spray on moist soil after planting corn or cane, before weeds come up or while they are still tiny.",
+   "app_ai": [
+    "Atrazine"
+   ]
+  },
+  {
+   "key": "atrakorn-80-wp",
+   "brand": "Atrakorn 80 WP",
+   "company": "Leads Agri",
+   "kind": "herbicide",
+   "ai": [
+    "Atrazine"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "corn_yellow",
+    "corn_glutinous",
+    "sorghum",
+    "sugarcane"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Spray on moist soil after planting corn or cane, before weeds come up or while they are still tiny.",
+   "app_ai": [
+    "Atrazine"
+   ]
+  },
+  {
+   "key": "convey-complete-310-sc",
+   "brand": "Convey Complete 310 SC",
+   "company": "BASF",
+   "kind": "herbicide",
+   "ai": [
+    "Atrazine",
+    "Topramezone"
+   ],
+   "group": "HRAC 5 plus 27",
+   "formulation": "SC",
+   "crops": [
+    "corn_yellow",
+    "corn_glutinous"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "A corn herbicide for grasses, sedges and broadleaves. Spray while the corn and the weeds are still young.",
+   "app_ai": [
+    "Atrazine",
+    "Topramezone"
+   ]
+  },
+  {
+   "key": "fascinate-150-sl",
+   "brand": "Fascinate 150 SL",
+   "company": "UPL",
+   "kind": "herbicide",
+   "ai": [
+    "Glufosinate ammonium"
+   ],
+   "group": "HRAC 10",
+   "formulation": "SL",
+   "crops": [
+    "corn_yellow",
+    "corn_glutinous",
+    "banana",
+    "cacao",
+    "calamansi",
+    "citrus",
+    "coffee",
+    "oilpalm",
+    "pomelo",
+    "rubber"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "burndown",
+   "pests": [],
+   "diseases": [],
+   "note": "Burns down the green weeds it touches. Spray the weeds only and keep it off crop leaves and green stems.",
+   "app_ai": [
+    "Glufosinate ammonium"
+   ]
+  },
+  {
+   "key": "halex-gt-525-zc",
+   "brand": "Halex GT 525 ZC",
+   "company": "Syngenta",
+   "kind": "herbicide",
+   "ai": [
+    "Glyphosate",
+    "Mesotrione",
+    "S metolachlor"
+   ],
+   "group": "HRAC 9 plus 15 plus 27",
+   "formulation": "ZC",
+   "crops": [
+    "corn_yellow"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Only for glyphosate tolerant corn. It kills weeds that are up and keeps new ones from sprouting.",
+   "app_ai": [
+    "Glyphosate",
+    "Mesotrione",
+    "S metolachlor"
+   ]
+  },
+  {
+   "key": "roundup-480-sl",
+   "brand": "Roundup 480 SL",
+   "company": "Bayer",
+   "kind": "herbicide",
+   "ai": [
+    "Glyphosate"
+   ],
+   "group": "HRAC 9",
+   "formulation": "SL",
+   "crops": [
+    "corn_yellow",
+    "sugarcane",
+    "alugbati",
+    "ampalaya",
+    "banana",
+    "bellpepper",
+    "broccoli",
+    "cabbage",
+    "cacao",
+    "calamansi",
+    "carrot",
+    "cauliflower",
+    "celery",
+    "chili",
+    "citrus",
+    "coconut",
+    "coffee",
+    "cucumber",
+    "eggplant",
+    "garlic",
+    "kangkong",
+    "lettuce",
+    "mango",
+    "melon",
+    "mustard",
+    "oilpalm",
+    "okra",
+    "onion",
+    "onion_spring",
+    "patola",
+    "pechay",
+    "pomelo",
+    "radish",
+    "rubber",
+    "saluyot",
+    "sayote",
+    "shallot",
+    "squash",
+    "tomato",
+    "upo",
+    "watermelon"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "burndown",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills any green plant it wets, roots and all. Clear weeds before planting or spray only the weeds. Over corn, only glyphosate tolerant varieties.",
+   "app_ai": [
+    "Glyphosate"
+   ]
+  },
+  {
+   "key": "square-off-480-sl",
+   "brand": "Square Off 480 SL",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "herbicide",
+   "ai": [
+    "Glyphosate"
+   ],
+   "group": "HRAC 9",
+   "formulation": "SL",
+   "crops": [
+    "corn_yellow",
+    "sugarcane",
+    "alugbati",
+    "ampalaya",
+    "banana",
+    "bellpepper",
+    "broccoli",
+    "cabbage",
+    "cacao",
+    "calamansi",
+    "carrot",
+    "cauliflower",
+    "celery",
+    "chili",
+    "citrus",
+    "coconut",
+    "coffee",
+    "cucumber",
+    "eggplant",
+    "garlic",
+    "kangkong",
+    "lettuce",
+    "mango",
+    "melon",
+    "mustard",
+    "oilpalm",
+    "okra",
+    "onion",
+    "onion_spring",
+    "patola",
+    "pechay",
+    "pomelo",
+    "radish",
+    "rubber",
+    "saluyot",
+    "sayote",
+    "shallot",
+    "squash",
+    "tomato",
+    "upo",
+    "watermelon"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "burndown",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills any green plant it wets, roots and all. Clear weeds before planting or spray only the weeds. Over corn, only glyphosate tolerant varieties.",
+   "app_ai": [
+    "Glyphosate"
+   ]
+  },
+  {
+   "key": "sweep-480-sl",
+   "brand": "Sweep 480 SL",
+   "company": "UPL",
+   "kind": "herbicide",
+   "ai": [
+    "Glyphosate"
+   ],
+   "group": "HRAC 9",
+   "formulation": "SL",
+   "crops": [
+    "corn_yellow",
+    "sugarcane",
+    "alugbati",
+    "ampalaya",
+    "banana",
+    "bellpepper",
+    "broccoli",
+    "cabbage",
+    "cacao",
+    "calamansi",
+    "carrot",
+    "cauliflower",
+    "celery",
+    "chili",
+    "citrus",
+    "coconut",
+    "coffee",
+    "cucumber",
+    "eggplant",
+    "garlic",
+    "kangkong",
+    "lettuce",
+    "mango",
+    "melon",
+    "mustard",
+    "oilpalm",
+    "okra",
+    "onion",
+    "onion_spring",
+    "patola",
+    "pechay",
+    "pomelo",
+    "radish",
+    "rubber",
+    "saluyot",
+    "sayote",
+    "shallot",
+    "squash",
+    "tomato",
+    "upo",
+    "watermelon"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "burndown",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills any green plant it wets, roots and all. Clear weeds before planting or spray only the weeds. Over corn, only glyphosate tolerant varieties.",
+   "app_ai": [
+    "Glyphosate"
+   ]
+  },
+  {
+   "key": "weedrun-747-sg",
+   "brand": "Weedrun 747 SG",
+   "company": "Byter",
+   "kind": "herbicide",
+   "ai": [
+    "Glyphosate"
+   ],
+   "group": "HRAC 9",
+   "formulation": "SG",
+   "crops": [
+    "corn_yellow",
+    "corn_glutinous"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "burndown",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills any green plant it wets, roots and all. Clear weeds before planting or spray only the weeds. Over corn, only glyphosate tolerant varieties.",
+   "app_ai": [
+    "Glyphosate"
+   ]
+  },
+  {
+   "key": "zagro-atrazine-80-wp",
+   "brand": "Zagro Atrazine 80 WP",
+   "company": "Zagro",
+   "kind": "herbicide",
+   "ai": [
+    "Atrazine"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "corn_yellow",
+    "corn_glutinous",
+    "sorghum",
+    "sugarcane"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Spray on moist soil after planting corn or cane, before weeds come up or while they are still tiny.",
+   "app_ai": [
+    "Atrazine"
+   ]
+  },
+  {
+   "key": "agway-ametryn-80-wp",
+   "brand": "Agway Ametryn 80 WP",
+   "company": "Agway Chemicals",
+   "kind": "herbicide",
+   "ai": [
+    "Ametryn"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "sugarcane",
+    "pineapple"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Used in cane and pineapple on bare soil after planting or on small weeds between the rows.",
+   "app_ai": [
+    "Ametryn"
+   ]
+  },
+  {
+   "key": "amatex-80-wp",
+   "brand": "Amatex 80 WP",
+   "company": "Texicon Agri Ventures",
+   "kind": "herbicide",
+   "ai": [
+    "Ametryn"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "sugarcane",
+    "pineapple"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Used in cane and pineapple on bare soil after planting or on small weeds between the rows.",
+   "app_ai": [
+    "Ametryn"
+   ]
+  },
+  {
+   "key": "fezpax-80-wp",
+   "brand": "Fezpax 80 WP",
+   "company": "Zagro",
+   "kind": "herbicide",
+   "ai": [
+    "Ametryn"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "sugarcane",
+    "pineapple"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "early_post",
+   "pests": [],
+   "diseases": [],
+   "note": "Used in cane and pineapple on bare soil after planting or on small weeds between the rows.",
+   "app_ai": [
+    "Ametryn"
+   ]
+  },
+  {
+   "key": "mastra-diuron-80-wp",
+   "brand": "Mastra Diuron 80 WP",
+   "company": "Sumitomo Chemical",
+   "kind": "herbicide",
+   "ai": [
+    "Diuron"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "sugarcane",
+    "oilpalm",
+    "pineapple"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A soil acting herbicide for cane, pineapple and the weeded ring around plantation trees. Keep it off crop leaves.",
+   "app_ai": [
+    "Diuron"
+   ]
+  },
+  {
+   "key": "outweeder-80-wp",
+   "brand": "Outweeder 80 WP",
+   "company": "Jardine Distribution",
+   "kind": "herbicide",
+   "ai": [
+    "Diuron"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "sugarcane",
+    "pineapple"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A soil acting herbicide for cane, pineapple and the weeded ring around plantation trees. Keep it off crop leaves.",
+   "app_ai": [
+    "Diuron"
+   ]
+  },
+  {
+   "key": "prestige-80-sc",
+   "brand": "Prestige 80 SC",
+   "company": "Kemistar",
+   "kind": "herbicide",
+   "ai": [
+    "Diuron"
+   ],
+   "group": "HRAC 5",
+   "formulation": "SC",
+   "crops": [
+    "sugarcane",
+    "pineapple"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A soil acting herbicide for cane, pineapple and the weeded ring around plantation trees. Keep it off crop leaves.",
+   "app_ai": [
+    "Diuron"
+   ]
+  },
+  {
+   "key": "afalon-50-wp",
+   "brand": "Afalon 50 WP",
+   "company": "Magan Agro Phils. Enterprise",
+   "kind": "herbicide",
+   "ai": [
+    "Linuron"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "carrot",
+    "potato"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Used in carrot and potato fields on fresh beds, before weeds come up or while they are very small.",
+   "app_ai": [
+    "Linuron"
+   ]
+  },
+  {
+   "key": "agrocide-15-ec",
+   "brand": "Agrocide 15 EC",
+   "company": "United Agro Trade",
+   "kind": "herbicide",
+   "ai": [
+    "Fluazifop P butyl"
+   ],
+   "group": "HRAC 1",
+   "formulation": "EC",
+   "crops": [
+    "banana",
+    "cacao",
+    "calamansi",
+    "citrus",
+    "coffee",
+    "cotton",
+    "oilpalm",
+    "onion",
+    "pomelo",
+    "rubber",
+    "soybean",
+    "tomato"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills grasses only. Broadleaf crops, trees and broadleaf weeds are left alone.",
+   "app_ai": [
+    "Fluazifop P butyl"
+   ]
+  },
+  {
+   "key": "basta-15-sl",
+   "brand": "Basta 15 SL",
+   "company": "BASF",
+   "kind": "herbicide",
+   "ai": [
+    "Glufosinate ammonium"
+   ],
+   "group": "HRAC 10",
+   "formulation": "SL",
+   "crops": [
+    "banana",
+    "oilpalm",
+    "rubber"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "burndown",
+   "pests": [],
+   "diseases": [],
+   "note": "Burns down the green weeds it touches. Spray the weeds only and keep it off crop leaves and green stems.",
+   "app_ai": [
+    "Glufosinate ammonium"
+   ]
+  },
+  {
+   "key": "bromaclear-80-wp",
+   "brand": "Bromaclear 80 WP",
+   "company": "C.B. Andrew Asia",
+   "kind": "herbicide",
+   "ai": [
+    "Bromacil"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A soil acting weed killer for pineapple fields. Keep it away from other crops and fruit trees.",
+   "app_ai": [
+    "Bromacil"
+   ]
+  },
+  {
+   "key": "bromirage-80-wp",
+   "brand": "Bromirage 80 WP",
+   "company": "Philippine Farmfix Solutions",
+   "kind": "herbicide",
+   "ai": [
+    "Bromacil"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A soil acting weed killer for pineapple fields. Keep it away from other crops and fruit trees.",
+   "app_ai": [
+    "Bromacil"
+   ]
+  },
+  {
+   "key": "calibre-70-wg",
+   "brand": "Calibre 70 WG",
+   "company": "Gamechanger Agriculture",
+   "kind": "herbicide",
+   "ai": [
+    "Metribuzin"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WG",
+   "crops": [
+    "potato",
+    "tomato"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "For potato and tomato fields. Apply on moist soil before weeds come up, or on very small weeds.",
+   "app_ai": [
+    "Metribuzin"
+   ]
+  },
+  {
+   "key": "clavengo-200-sl",
+   "brand": "Clavengo 200 SL",
+   "company": "Syngenta",
+   "kind": "herbicide",
+   "ai": [
+    "Glufosinate ammonium"
+   ],
+   "group": "HRAC 10",
+   "formulation": "SL",
+   "crops": [
+    "banana",
+    "cacao",
+    "calamansi",
+    "citrus",
+    "coffee",
+    "oilpalm",
+    "pomelo",
+    "rubber"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "burndown",
+   "pests": [],
+   "diseases": [],
+   "note": "Burns down the green weeds it touches. Spray the weeds only and keep it off crop leaves and green stems.",
+   "app_ai": [
+    "Glufosinate ammonium"
+   ]
+  },
+  {
+   "key": "farmfix-hera-50-wp",
+   "brand": "Farmfix Hera 50 WP",
+   "company": "Philippine Farmfix Solutions",
+   "kind": "herbicide",
+   "ai": [
+    "Linuron"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "carrot",
+    "potato"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Used in carrot and potato fields on fresh beds, before weeds come up or while they are very small.",
+   "app_ai": [
+    "Linuron"
+   ]
+  },
+  {
+   "key": "fenfen-240-ec",
+   "brand": "Fenfen 240 EC",
+   "company": "Rainbow Agrosciences",
+   "kind": "herbicide",
+   "ai": [
+    "Oxyfluorfen"
+   ],
+   "group": "HRAC 14",
+   "formulation": "EC",
+   "crops": [
+    "onion"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "For onion fields. Apply on the soil early so weeds do not come up between the rows.",
+   "app_ai": [
+    "Oxyfluorfen"
+   ]
+  },
+  {
+   "key": "flory-240-ec",
+   "brand": "Flory 240 EC",
+   "company": "Zeal Ecological Nature (Zencor)",
+   "kind": "herbicide",
+   "ai": [
+    "Oxyfluorfen"
+   ],
+   "group": "HRAC 14",
+   "formulation": "EC",
+   "crops": [
+    "onion"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "For onion fields. Apply on the soil early so weeds do not come up between the rows.",
+   "app_ai": [
+    "Oxyfluorfen"
+   ]
+  },
+  {
+   "key": "hyvar-x-80",
+   "brand": "Hyvar X 80",
+   "company": "Agway Chemicals",
+   "kind": "herbicide",
+   "ai": [
+    "Bromacil"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "A soil acting weed killer for pineapple fields. Keep it away from other crops and fruit trees.",
+   "app_ai": [
+    "Bromacil"
+   ]
+  },
+  {
+   "key": "linux-one-50wp",
+   "brand": "Linux One 50WP",
+   "company": "Allied Botanical",
+   "kind": "herbicide",
+   "ai": [
+    "Linuron"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "carrot",
+    "potato"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "Used in carrot and potato fields on fresh beds, before weeds come up or while they are very small.",
+   "app_ai": [
+    "Linuron"
+   ]
+  },
+  {
+   "key": "metril-700-wp",
+   "brand": "Metril 700 WP",
+   "company": "Biostadt",
+   "kind": "herbicide",
+   "ai": [
+    "Metribuzin"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WP",
+   "crops": [
+    "potato",
+    "tomato"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "For potato and tomato fields. Apply on moist soil before weeds come up, or on very small weeds.",
+   "app_ai": [
+    "Metribuzin"
+   ]
+  },
+  {
+   "key": "nexchem-oxynex-24-ec",
+   "brand": "Nexchem Oxynex 24 EC",
+   "company": "Nexchem",
+   "kind": "herbicide",
+   "ai": [
+    "Oxyfluorfen"
+   ],
+   "group": "HRAC 14",
+   "formulation": "EC",
+   "crops": [
+    "onion"
+   ],
+   "weeds": [
+    "grasses",
+    "sedges",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "For onion fields. Apply on the soil early so weeds do not come up between the rows.",
+   "app_ai": [
+    "Oxyfluorfen"
+   ]
+  },
+  {
+   "key": "nexcide-15-ec",
+   "brand": "Nexcide 15 EC",
+   "company": "Nexchem",
+   "kind": "herbicide",
+   "ai": [
+    "Fluazifop P butyl"
+   ],
+   "group": "HRAC 1",
+   "formulation": "EC",
+   "crops": [
+    "banana",
+    "cacao",
+    "calamansi",
+    "cassava",
+    "citrus",
+    "coffee",
+    "cotton",
+    "oilpalm",
+    "onion",
+    "pomelo",
+    "rubber",
+    "soybean",
+    "tomato"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills grasses only. Broadleaf crops, trees and broadleaf weeds are left alone.",
+   "app_ai": [
+    "Fluazifop P butyl"
+   ]
+  },
+  {
+   "key": "unimark-70-wg",
+   "brand": "Unimark 70 WG",
+   "company": "UPL",
+   "kind": "herbicide",
+   "ai": [
+    "Metribuzin"
+   ],
+   "group": "HRAC 5",
+   "formulation": "WG",
+   "crops": [
+    "potato",
+    "tomato"
+   ],
+   "weeds": [
+    "grasses",
+    "broadleaves"
+   ],
+   "timing": "pre",
+   "pests": [],
+   "diseases": [],
+   "note": "For potato and tomato fields. Apply on moist soil before weeds come up, or on very small weeds.",
+   "app_ai": [
+    "Metribuzin"
+   ]
+  },
+  {
+   "key": "upcide-15-ec",
+   "brand": "Upcide 15 EC",
+   "company": "Kemistar",
+   "kind": "herbicide",
+   "ai": [
+    "Fluazifop P butyl"
+   ],
+   "group": "HRAC 1",
+   "formulation": "EC",
+   "crops": [
+    "banana",
+    "cacao",
+    "calamansi",
+    "citrus",
+    "coffee",
+    "cotton",
+    "onion",
+    "pomelo",
+    "soybean",
+    "tomato"
+   ],
+   "weeds": [
+    "grasses"
+   ],
+   "timing": "post",
+   "pests": [],
+   "diseases": [],
+   "note": "Kills grasses only. Broadleaf crops, trees and broadleaf weeds are left alone.",
+   "app_ai": [
+    "Fluazifop P butyl"
+   ]
+  },
+  {
+   "key": "aliah-247-zc",
+   "brand": "Aliah 247 ZC",
+   "company": "Agway Chemicals",
+   "kind": "insecticide",
+   "ai": [
+    "Lambda cyhalothrin",
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 3A plus 4A",
+   "formulation": "ZC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-bug"
+   ],
+   "diseases": [],
+   "note": "Handles rice bugs, hoppers and other pests in one spray.",
+   "app_ai": [
+    "Lambda cyhalothrin plus thiamethoxam"
+   ]
+  },
+  {
+   "key": "alika-247-zc",
+   "brand": "Alika 247 ZC",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Lambda cyhalothrin",
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 3A plus 4A",
+   "formulation": "ZC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-bug"
+   ],
+   "diseases": [],
+   "note": "Handles rice bugs, hoppers and other pests in one spray.",
+   "app_ai": [
+    "Lambda cyhalothrin plus thiamethoxam"
+   ]
+  },
+  {
+   "key": "applaud-10-wp",
+   "brand": "Applaud 10 WP",
+   "company": "Jardine Distribution",
+   "kind": "insecticide",
+   "ai": [
+    "Buprofezin"
+   ],
+   "group": "IRAC 16",
+   "formulation": "WP",
+   "crops": [
+    "rice",
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "pineapple-mealybug-wilt"
+   ],
+   "diseases": [
+    "rice-tungro"
+   ],
+   "note": "Stops young hoppers and mealybugs from growing into adults. Gentle on spiders and other helpers.",
+   "app_ai": [
+    "Buprofezin"
+   ]
+  },
+  {
+   "key": "avanza-40-wg",
+   "brand": "Avanza 40 WG",
+   "company": "Lichemphil International",
+   "kind": "insecticide",
+   "ai": [
+    "Chlorantraniliprole",
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 28 plus 4A",
+   "formulation": "WG",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-black-bug"
+   ],
+   "diseases": [],
+   "note": "Covers stem borers, leaffolders, hoppers and black bugs in rice with one spray.",
+   "app_ai": [
+    "Chlorantraniliprole plus thiamethoxam"
+   ]
+  },
+  {
+   "key": "blizzard-50-sp",
+   "brand": "Blizzard 50 SP",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "insecticide",
+   "ai": [
+    "Cartap"
+   ],
+   "group": "IRAC 14",
+   "formulation": "SP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-stem-borer"
+   ],
+   "diseases": [],
+   "note": "Controls rice stem borers. Apply when you see dead hearts or many moths in the field.",
+   "app_ai": [
+    "Cartap hydrochloride"
+   ]
+  },
+  {
+   "key": "bolezin-50-wg",
+   "brand": "Bolezin 50 WG",
+   "company": "Agro Iris",
+   "kind": "insecticide",
+   "ai": [
+    "Pymetrozine"
+   ],
+   "group": "IRAC 9B",
+   "formulation": "WG",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "brown-planthopper",
+    "corn-aphid"
+   ],
+   "diseases": [
+    "rice-tungro"
+   ],
+   "note": "Stops hoppers and aphids from feeding. Gentle on spiders and other helpful insects.",
+   "app_ai": [
+    "Pymetrozine"
+   ]
+  },
+  {
+   "key": "chess-50-wg",
+   "brand": "Chess 50 WG",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Pymetrozine"
+   ],
+   "group": "IRAC 9B",
+   "formulation": "WG",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "brown-planthopper",
+    "corn-aphid"
+   ],
+   "diseases": [
+    "rice-tungro"
+   ],
+   "note": "Stops hoppers and aphids from feeding. Gentle on spiders and other helpful insects.",
+   "app_ai": [
+    "Pymetrozine"
+   ]
+  },
+  {
+   "key": "chloranex-5-sc",
+   "brand": "Chloranex 5 SC",
+   "company": "Nexchem",
+   "kind": "insecticide",
+   "ai": [
+    "Chlorantraniliprole"
+   ],
+   "group": "IRAC 28",
+   "formulation": "SC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "sugarcane",
+    "cabbage",
+    "eggplant",
+    "stringbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "diamondback-moth",
+    "eggplant-fruit-and-shoot-borer",
+    "fall-armyworm",
+    "legume-pod-borer",
+    "rice-leaffolder",
+    "rice-stem-borer",
+    "sugarcane-stem-borers"
+   ],
+   "diseases": [],
+   "note": "Stops caterpillars such as stem borers, leaffolders and fall armyworm, and spares most helpful insects.",
+   "app_ai": [
+    "Chlorantraniliprole"
+   ]
+  },
+  {
+   "key": "descarte-2-5-ec",
+   "brand": "Descarte 2.5 EC",
+   "company": "Planters Products",
+   "kind": "insecticide",
+   "ai": [
+    "Lambda cyhalothrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cotton",
+    "mango",
+    "onion",
+    "tobacco",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "asian-corn-borer",
+    "corn-earworm",
+    "cutworm",
+    "fall-armyworm",
+    "mango-leafhopper",
+    "rice-black-bug",
+    "rice-bug",
+    "rice-leaffolder"
+   ],
+   "diseases": [],
+   "note": "A pyrethroid for rice bugs, corn borers and other chewing pests. Keep it away from fish and bees.",
+   "app_ai": [
+    "Lambda cyhalothrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "fullstop-247-zc",
+   "brand": "Fullstop 247 ZC",
+   "company": "Sinochem",
+   "kind": "insecticide",
+   "ai": [
+    "Lambda cyhalothrin",
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 3A plus 4A",
+   "formulation": "ZC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-bug"
+   ],
+   "diseases": [],
+   "note": "Handles rice bugs, hoppers and other pests in one spray.",
+   "app_ai": [
+    "Lambda cyhalothrin plus thiamethoxam"
+   ]
+  },
+  {
+   "key": "hoppex",
+   "brand": "Hoppex",
+   "company": "Taipan Brand Farm",
+   "kind": "insecticide",
+   "ai": [
+    "Buprofezin"
+   ],
+   "group": "IRAC 16",
+   "formulation": "WP",
+   "crops": [
+    "rice",
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "pineapple-mealybug-wilt"
+   ],
+   "diseases": [
+    "rice-tungro"
+   ],
+   "note": "Stops young hoppers and mealybugs from growing into adults. Gentle on spiders and other helpers.",
+   "app_ai": [
+    "Buprofezin"
+   ]
+  },
+  {
+   "key": "karate-2-5-ec",
+   "brand": "Karate 2.5 EC",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Lambda cyhalothrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cotton",
+    "mango",
+    "onion",
+    "tobacco",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "asian-corn-borer",
+    "corn-earworm",
+    "cutworm",
+    "mango-leafhopper",
+    "rice-black-bug",
+    "rice-bug",
+    "rice-leaffolder"
+   ],
+   "diseases": [],
+   "note": "A pyrethroid for rice bugs, corn borers and other chewing pests. Keep it away from fish and bees.",
+   "app_ai": [
+    "Lambda cyhalothrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "lumivia-625-fs",
+   "brand": "Lumivia 625 FS",
+   "company": "Corteva",
+   "kind": "insecticide",
+   "ai": [
+    "Chlorantraniliprole"
+   ],
+   "group": "IRAC 28",
+   "formulation": "FS",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "fall-armyworm",
+    "rice-stem-borer"
+   ],
+   "diseases": [],
+   "note": "Coated on the seed before planting to protect the young crop from early pests.",
+   "app_ai": [
+    "Chlorantraniliprole"
+   ]
+  },
+  {
+   "key": "ovation-10-wp",
+   "brand": "Ovation 10 WP",
+   "company": "Berris Agricultural Company",
+   "kind": "insecticide",
+   "ai": [
+    "Buprofezin"
+   ],
+   "group": "IRAC 16",
+   "formulation": "WP",
+   "crops": [
+    "rice",
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "pineapple-mealybug-wilt"
+   ],
+   "diseases": [
+    "rice-tungro"
+   ],
+   "note": "Stops young hoppers and mealybugs from growing into adults. Gentle on spiders and other helpers.",
+   "app_ai": [
+    "Buprofezin"
+   ]
+  },
+  {
+   "key": "padan-4g",
+   "brand": "Padan 4G",
+   "company": "Sumitomo Chemical",
+   "kind": "insecticide",
+   "ai": [
+    "Cartap"
+   ],
+   "group": "IRAC 14",
+   "formulation": "G",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-stem-borer"
+   ],
+   "diseases": [],
+   "note": "Granules for rice stem borers, spread into the paddy water.",
+   "app_ai": [
+    "Cartap hydrochloride"
+   ]
+  },
+  {
+   "key": "prevathon-sc",
+   "brand": "Prevathon SC",
+   "company": "FMC",
+   "kind": "insecticide",
+   "ai": [
+    "Chlorantraniliprole"
+   ],
+   "group": "IRAC 28",
+   "formulation": "SC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "sugarcane",
+    "cabbage",
+    "eggplant",
+    "stringbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "diamondback-moth",
+    "eggplant-fruit-and-shoot-borer",
+    "fall-armyworm",
+    "legume-pod-borer",
+    "rice-leaffolder",
+    "rice-stem-borer",
+    "sugarcane-stem-borers"
+   ],
+   "diseases": [],
+   "note": "Stops caterpillars such as stem borers, leaffolders and fall armyworm, and spares most helpful insects.",
+   "app_ai": [
+    "Chlorantraniliprole"
+   ]
+  },
+  {
+   "key": "pulsar-2-5-ec",
+   "brand": "Pulsar 2.5 EC",
+   "company": "UPL",
+   "kind": "insecticide",
+   "ai": [
+    "Lambda cyhalothrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cotton",
+    "mango",
+    "onion",
+    "tobacco",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "asian-corn-borer",
+    "corn-earworm",
+    "cutworm",
+    "mango-leafhopper",
+    "rice-black-bug",
+    "rice-bug",
+    "rice-leaffolder"
+   ],
+   "diseases": [],
+   "note": "A pyrethroid for rice bugs, corn borers and other chewing pests. Keep it away from fish and bees.",
+   "app_ai": [
+    "Lambda cyhalothrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "pylon-50-wg",
+   "brand": "Pylon 50 WG",
+   "company": "UPL",
+   "kind": "insecticide",
+   "ai": [
+    "Pymetrozine"
+   ],
+   "group": "IRAC 9B",
+   "formulation": "WG",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "brown-planthopper",
+    "corn-aphid"
+   ],
+   "diseases": [
+    "rice-tungro"
+   ],
+   "note": "Stops hoppers and aphids from feeding. Gentle on spiders and other helpful insects.",
+   "app_ai": [
+    "Pymetrozine"
+   ]
+  },
+  {
+   "key": "rampage-50-sp",
+   "brand": "Rampage 50 SP",
+   "company": "Bayer",
+   "kind": "insecticide",
+   "ai": [
+    "Cartap"
+   ],
+   "group": "IRAC 14",
+   "formulation": "SP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-stem-borer"
+   ],
+   "diseases": [],
+   "note": "Controls rice stem borers. Apply when you see dead hearts or many moths in the field.",
+   "app_ai": [
+    "Cartap hydrochloride"
+   ]
+  },
+  {
+   "key": "virtako-40-wg",
+   "brand": "Virtako 40 WG",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Chlorantraniliprole",
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 28 plus 4A",
+   "formulation": "WG",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-black-bug"
+   ],
+   "diseases": [],
+   "note": "Covers stem borers, leaffolders, hoppers and black bugs in rice with one spray.",
+   "app_ai": [
+    "Chlorantraniliprole plus thiamethoxam"
+   ]
+  },
+  {
+   "key": "virtuoso-40-wg",
+   "brand": "Virtuoso 40 WG",
+   "company": "Agway Chemicals",
+   "kind": "insecticide",
+   "ai": [
+    "Chlorantraniliprole",
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 28 plus 4A",
+   "formulation": "WG",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-black-bug"
+   ],
+   "diseases": [],
+   "note": "Covers stem borers, leaffolders, hoppers and black bugs in rice with one spray.",
+   "app_ai": [
+    "Chlorantraniliprole plus thiamethoxam"
+   ]
+  },
+  {
+   "key": "ader-5-ec",
+   "brand": "Ader 5 EC",
+   "company": "Agway Chemicals",
+   "kind": "insecticide",
+   "ai": [
+    "Cypermethrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cotton",
+    "limabean",
+    "mango",
+    "onion",
+    "stringbean",
+    "tobacco",
+    "tomato",
+    "wingedbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "asian-corn-borer",
+    "corn-earworm",
+    "cowpea-aphid",
+    "cutworm",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A fast acting pyrethroid for caterpillars and bugs. Avoid spraying open flowers where bees feed.",
+   "app_ai": [
+    "Cypermethrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "agwatan-50ec",
+   "brand": "Agwatan 50EC",
+   "company": "Agway Chemicals",
+   "kind": "insecticide",
+   "ai": [
+    "Lufenuron"
+   ],
+   "group": "IRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "fall-armyworm"
+   ],
+   "diseases": [],
+   "note": "Stops young caterpillars from molting. Best against fall armyworm when larvae are small.",
+   "app_ai": [
+    "Lufenuron"
+   ]
+  },
+  {
+   "key": "byter-xunkedi-50-ec",
+   "brand": "Byter Xunkedi 50 EC",
+   "company": "Byter",
+   "kind": "insecticide",
+   "ai": [
+    "Lufenuron"
+   ],
+   "group": "IRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "fall-armyworm"
+   ],
+   "diseases": [],
+   "note": "Stops young caterpillars from molting. Best against fall armyworm when larvae are small.",
+   "app_ai": [
+    "Lufenuron"
+   ]
+  },
+  {
+   "key": "cruiser-350-fs",
+   "brand": "Cruiser 350 FS",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "FS",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "corn-seedling-maggot"
+   ],
+   "diseases": [],
+   "note": "Coated on the seed before planting to protect the young crop from early pests.",
+   "app_ai": [
+    "Thiamethoxam (seed treatment)"
+   ]
+  },
+  {
+   "key": "cymbush-5-ec",
+   "brand": "Cymbush 5 EC",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Cypermethrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cotton",
+    "limabean",
+    "mango",
+    "onion",
+    "stringbean",
+    "tobacco",
+    "tomato",
+    "wingedbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "asian-corn-borer",
+    "corn-earworm",
+    "cowpea-aphid",
+    "cutworm",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A fast acting pyrethroid for caterpillars and bugs. Avoid spraying open flowers where bees feed.",
+   "app_ai": [
+    "Cypermethrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "cypersun-5-ec",
+   "brand": "Cypersun 5 EC",
+   "company": "Sankhem",
+   "kind": "insecticide",
+   "ai": [
+    "Cypermethrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cotton",
+    "limabean",
+    "mango",
+    "onion",
+    "stringbean",
+    "tobacco",
+    "tomato",
+    "wingedbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "asian-corn-borer",
+    "corn-earworm",
+    "cowpea-aphid",
+    "cutworm",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A fast acting pyrethroid for caterpillars and bugs. Avoid spraying open flowers where bees feed.",
+   "app_ai": [
+    "Cypermethrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "cyrux-5-ec",
+   "brand": "Cyrux 5 EC",
+   "company": "UPL",
+   "kind": "insecticide",
+   "ai": [
+    "Cypermethrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cotton",
+    "limabean",
+    "mango",
+    "onion",
+    "stringbean",
+    "tobacco",
+    "tomato",
+    "wingedbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "asian-corn-borer",
+    "corn-earworm",
+    "cowpea-aphid",
+    "cutworm",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A fast acting pyrethroid for caterpillars and bugs. Avoid spraying open flowers where bees feed.",
+   "app_ai": [
+    "Cypermethrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "decis-2-5-ec",
+   "brand": "Decis 2.5 EC",
+   "company": "Bayer",
+   "kind": "insecticide",
+   "ai": [
+    "Deltamethrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cotton",
+    "mango",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "corn-earworm",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A pyrethroid for caterpillars and bugs. Spray late in the afternoon and keep it out of water.",
+   "app_ai": [
+    "Deltamethrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "deltamax-2-5-ec",
+   "brand": "Deltamax 2.5 EC",
+   "company": "Leads Agri",
+   "kind": "insecticide",
+   "ai": [
+    "Deltamethrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cotton",
+    "mango",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "corn-earworm",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A pyrethroid for caterpillars and bugs. Spray late in the afternoon and keep it out of water.",
+   "app_ai": [
+    "Deltamethrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "deltup-2-5-ec",
+   "brand": "Deltup 2.5 EC",
+   "company": "UPL",
+   "kind": "insecticide",
+   "ai": [
+    "Deltamethrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cotton",
+    "mango",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "corn-earworm",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A pyrethroid for caterpillars and bugs. Spray late in the afternoon and keep it out of water.",
+   "app_ai": [
+    "Deltamethrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "exalt-60-sc",
+   "brand": "Exalt 60 SC",
+   "company": "Corteva",
+   "kind": "insecticide",
+   "ai": [
+    "Spinetoram"
+   ],
+   "group": "IRAC 5",
+   "formulation": "SC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "fall-armyworm"
+   ],
+   "diseases": [],
+   "note": "Controls fall armyworm in corn. Aim the spray into the whorl while larvae are young.",
+   "app_ai": [
+    "Spinetoram"
+   ]
+  },
+  {
+   "key": "fiprol-0-3-gr",
+   "brand": "Fiprol 0.3 GR",
+   "company": "Biostadt",
+   "kind": "insecticide",
+   "ai": [
+    "Fipronil"
+   ],
+   "group": "IRAC 2B",
+   "formulation": "GR",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "corn-earworm"
+   ],
+   "diseases": [],
+   "note": "Granules for soil and stem pests. Keep it away from fish ponds and bees.",
+   "app_ai": [
+    "Fipronil"
+   ]
+  },
+  {
+   "key": "gaucho-350-fs",
+   "brand": "Gaucho 350 FS",
+   "company": "Bayer",
+   "kind": "insecticide",
+   "ai": [
+    "Imidacloprid"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "FS",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "corn-seedling-maggot"
+   ],
+   "diseases": [],
+   "note": "Coated on the seed before planting to protect the young crop from early pests.",
+   "app_ai": [
+    "Imidacloprid (seed treatment)"
+   ]
+  },
+  {
+   "key": "impride-350-fs",
+   "brand": "Impride 350 FS",
+   "company": "Rainbow Agrosciences",
+   "kind": "insecticide",
+   "ai": [
+    "Imidacloprid"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "FS",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "corn-seedling-maggot"
+   ],
+   "diseases": [],
+   "note": "Coated on the seed before planting to protect the young crop from early pests.",
+   "app_ai": [
+    "Imidacloprid (seed treatment)"
+   ]
+  },
+  {
+   "key": "kamao-6-ec",
+   "brand": "Kamao 6 EC",
+   "company": "Envireau Pacific",
+   "kind": "insecticide",
+   "ai": [
+    "Emamectin benzoate"
+   ],
+   "group": "IRAC 6",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "fall-armyworm"
+   ],
+   "diseases": [],
+   "note": "Stops caterpillars such as fall armyworm and diamondback moth. Spray while the larvae are young.",
+   "app_ai": [
+    "Emamectin benzoate"
+   ]
+  },
+  {
+   "key": "match-050-ec",
+   "brand": "Match 050 EC",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Lufenuron"
+   ],
+   "group": "IRAC 15",
+   "formulation": "EC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "fall-armyworm"
+   ],
+   "diseases": [],
+   "note": "Stops young caterpillars from molting. Best against fall armyworm when larvae are small.",
+   "app_ai": [
+    "Lufenuron"
+   ]
+  },
+  {
+   "key": "proclaim-opti-5-wg",
+   "brand": "Proclaim Opti 5 WG",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Emamectin benzoate"
+   ],
+   "group": "IRAC 6",
+   "formulation": "WG",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cabbage",
+    "eggplant",
+    "onion",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "asian-corn-borer",
+    "cutworm",
+    "diamondback-moth",
+    "eggplant-fruit-and-shoot-borer",
+    "fall-armyworm"
+   ],
+   "diseases": [],
+   "note": "Stops caterpillars such as fall armyworm and diamondback moth. Spray while the larvae are young.",
+   "app_ai": [
+    "Emamectin benzoate"
+   ]
+  },
+  {
+   "key": "progent-0-3-gr",
+   "brand": "Progent 0.3 GR",
+   "company": "Lichemphil International",
+   "kind": "insecticide",
+   "ai": [
+    "Fipronil"
+   ],
+   "group": "IRAC 2B",
+   "formulation": "GR",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "banana-weevil",
+    "corn-earworm"
+   ],
+   "diseases": [],
+   "note": "Granules for soil and stem pests. Keep it away from fish ponds and bees.",
+   "app_ai": [
+    "Fipronil"
+   ]
+  },
+  {
+   "key": "qiluram-60-sc",
+   "brand": "Qiluram 60 SC",
+   "company": "Green Action Brigade",
+   "kind": "insecticide",
+   "ai": [
+    "Spinetoram"
+   ],
+   "group": "IRAC 5",
+   "formulation": "SC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "fall-armyworm"
+   ],
+   "diseases": [],
+   "note": "Controls fall armyworm in corn. Aim the spray into the whorl while larvae are young.",
+   "app_ai": [
+    "Spinetoram"
+   ]
+  },
+  {
+   "key": "regent-0-3-gr",
+   "brand": "Regent 0.3 GR",
+   "company": "BASF",
+   "kind": "insecticide",
+   "ai": [
+    "Fipronil"
+   ],
+   "group": "IRAC 2B",
+   "formulation": "GR",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "banana-weevil",
+    "corn-earworm"
+   ],
+   "diseases": [],
+   "note": "Granules for soil and stem pests. Keep it away from fish ponds and bees.",
+   "app_ai": [
+    "Fipronil"
+   ]
+  },
+  {
+   "key": "reno-350-fs",
+   "brand": "Reno 350 FS",
+   "company": "UPL",
+   "kind": "insecticide",
+   "ai": [
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "FS",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "corn-seedling-maggot"
+   ],
+   "diseases": [],
+   "note": "Coated on the seed before planting to protect the young crop from early pests.",
+   "app_ai": [
+    "Thiamethoxam (seed treatment)"
+   ]
+  },
+  {
+   "key": "rockot-xtra-350-fs",
+   "brand": "Rockot Xtra 350 FS",
+   "company": "Rainbow Agrosciences",
+   "kind": "insecticide",
+   "ai": [
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "FS",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "corn-seedling-maggot"
+   ],
+   "diseases": [],
+   "note": "Coated on the seed before planting to protect the young crop from early pests.",
+   "app_ai": [
+    "Thiamethoxam (seed treatment)"
+   ]
+  },
+  {
+   "key": "confidor-sl-200",
+   "brand": "Confidor SL 200",
+   "company": "Bayer",
+   "kind": "insecticide",
+   "ai": [
+    "Imidacloprid"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "SL",
+   "crops": [
+    "sugarcane",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "aphids",
+    "termites"
+   ],
+   "diseases": [],
+   "note": "A systemic insecticide for sucking pests like aphids. Do not spray open flowers where bees feed.",
+   "app_ai": [
+    "Imidacloprid"
+   ]
+  },
+  {
+   "key": "imalir-200-sl",
+   "brand": "Imalir 200 SL",
+   "company": "Hailir Philippines Agroservice",
+   "kind": "insecticide",
+   "ai": [
+    "Imidacloprid"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "SL",
+   "crops": [
+    "sugarcane",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "aphids",
+    "termites"
+   ],
+   "diseases": [],
+   "note": "A systemic insecticide for sucking pests like aphids. Do not spray open flowers where bees feed.",
+   "app_ai": [
+    "Imidacloprid"
+   ]
+  },
+  {
+   "key": "imaron-20-sl",
+   "brand": "Imaron 20 SL",
+   "company": "Texicon Agri Ventures",
+   "kind": "insecticide",
+   "ai": [
+    "Imidacloprid"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "SL",
+   "crops": [
+    "sugarcane",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "aphids",
+    "termites"
+   ],
+   "diseases": [],
+   "note": "A systemic insecticide for sucking pests like aphids. Do not spray open flowers where bees feed.",
+   "app_ai": [
+    "Imidacloprid"
+   ]
+  },
+  {
+   "key": "911-85-wp",
+   "brand": "911 85 WP",
+   "company": "Everland Agri",
+   "kind": "insecticide",
+   "ai": [
+    "Carbaryl"
+   ],
+   "group": "IRAC 1A",
+   "formulation": "WP",
+   "crops": [
+    "ampalaya",
+    "cucumber",
+    "melon",
+    "patola",
+    "squash",
+    "tomato",
+    "upo",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "epilachna-beetle",
+    "squash-beetle"
+   ],
+   "diseases": [],
+   "note": "Kills leaf beetles on vegetables. Do not spray while bees are working the flowers.",
+   "app_ai": [
+    "Carbaryl"
+   ]
+  },
+  {
+   "key": "abacuz-1-8-ec",
+   "brand": "Abacuz 1.8 EC",
+   "company": "Tradeton",
+   "kind": "insecticide",
+   "ai": [
+    "Abamectin"
+   ],
+   "group": "IRAC 6",
+   "formulation": "EC",
+   "crops": [
+    "onion",
+    "papaya",
+    "potato",
+    "strawberry",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "leafminer",
+    "spider-mites"
+   ],
+   "diseases": [],
+   "note": "Works on leafminers and mites. Spray so it reaches the undersides of the leaves.",
+   "app_ai": [
+    "Abamectin"
+   ]
+  },
+  {
+   "key": "actara-25-wg",
+   "brand": "Actara 25 WG",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "WG",
+   "crops": [
+    "eggplant"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "aphids"
+   ],
+   "diseases": [],
+   "note": "A systemic insecticide for aphids and other sucking pests.",
+   "app_ai": [
+    "Thiamethoxam"
+   ]
+  },
+  {
+   "key": "agnewtek-dinofuran-20-sg",
+   "brand": "Agnewtek Dinofuran 20 SG",
+   "company": "Agnewtek",
+   "kind": "insecticide",
+   "ai": [
+    "Dinotefuran"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "SG",
+   "crops": [
+    "coconut"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "cocolisap"
+   ],
+   "diseases": [],
+   "note": "Used against cocolisap on coconut. Follow the PCA advice on how it is applied.",
+   "app_ai": [
+    "Dinotefuran"
+   ]
+  },
+  {
+   "key": "agriguard-1-8-ec",
+   "brand": "Agriguard 1.8 EC",
+   "company": "Agway Chemicals",
+   "kind": "insecticide",
+   "ai": [
+    "Abamectin"
+   ],
+   "group": "IRAC 6",
+   "formulation": "EC",
+   "crops": [
+    "onion",
+    "papaya",
+    "potato",
+    "strawberry",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "leafminer",
+    "spider-mites"
+   ],
+   "diseases": [],
+   "note": "Works on leafminers and mites. Spray so it reaches the undersides of the leaves.",
+   "app_ai": [
+    "Abamectin"
+   ]
+  },
+  {
+   "key": "agrimek-1-8-ec",
+   "brand": "Agrimek 1.8 EC",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Abamectin"
+   ],
+   "group": "IRAC 6",
+   "formulation": "EC",
+   "crops": [
+    "onion",
+    "papaya",
+    "potato",
+    "strawberry",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "leafminer",
+    "spider-mites"
+   ],
+   "diseases": [],
+   "note": "Works on leafminers and mites. Spray so it reaches the undersides of the leaves.",
+   "app_ai": [
+    "Abamectin"
+   ]
+  },
+  {
+   "key": "agrithion-40-ec",
+   "brand": "Agrithion 40 EC",
+   "company": "Agway Chemicals",
+   "kind": "insecticide",
+   "ai": [
+    "Dimethoate"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "limabean",
+    "mango",
+    "stringbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "bean-fly",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A systemic spray that moves inside the plant. Used on bean fly and mango leafhoppers.",
+   "app_ai": [
+    "Dimethoate"
+   ]
+  },
+  {
+   "key": "agsmart-gimbal-85-wp",
+   "brand": "Agsmart Gimbal 85 WP",
+   "company": "Agsmart",
+   "kind": "insecticide",
+   "ai": [
+    "Carbaryl"
+   ],
+   "group": "IRAC 1A",
+   "formulation": "WP",
+   "crops": [
+    "ampalaya",
+    "cucumber",
+    "melon",
+    "patola",
+    "squash",
+    "tomato",
+    "upo",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "epilachna-beetle",
+    "squash-beetle"
+   ],
+   "diseases": [],
+   "note": "Kills leaf beetles on vegetables. Do not spray while bees are working the flowers.",
+   "app_ai": [
+    "Carbaryl"
+   ]
+  },
+  {
+   "key": "agway-malathion-57-ec",
+   "brand": "Agway Malathion 57 EC",
+   "company": "Agway Chemicals",
+   "kind": "insecticide",
+   "ai": [
+    "Malathion"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "atis",
+    "avocado",
+    "calamansi",
+    "cashew",
+    "chico",
+    "citrus",
+    "durian",
+    "guava",
+    "guyabano",
+    "jackfruit",
+    "lanzones",
+    "mango",
+    "mangosteen",
+    "pomelo",
+    "rambutan",
+    "santol",
+    "starapple",
+    "tamarind"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "mealybug",
+    "scale-insects"
+   ],
+   "diseases": [],
+   "note": "An older contact spray for mealybugs and scale insects on fruit trees.",
+   "app_ai": [
+    "Malathion"
+   ]
+  },
+  {
+   "key": "akasa-25-sc",
+   "brand": "Akasa 25 SC",
+   "company": "Lichemphil International",
+   "kind": "insecticide",
+   "ai": [
+    "Spinosad"
+   ],
+   "group": "IRAC 5",
+   "formulation": "SC",
+   "crops": [
+    "cabbage",
+    "eggplant",
+    "limabean",
+    "onion",
+    "stringbean",
+    "wingedbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "diamondback-moth",
+    "eggplant-fruit-and-shoot-borer",
+    "legume-pod-borer",
+    "onion-armyworm",
+    "thrips"
+   ],
+   "diseases": [],
+   "note": "Made from a soil microbe. Controls caterpillars and thrips with little harm to most helpful insects.",
+   "app_ai": [
+    "Spinosad"
+   ]
+  },
+  {
+   "key": "ammate-15-ec",
+   "brand": "Ammate 15 EC",
+   "company": "FMC",
+   "kind": "insecticide",
+   "ai": [
+    "Indoxacarb"
+   ],
+   "group": "IRAC 22A",
+   "formulation": "EC",
+   "crops": [
+    "cabbage"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "diamondback-moth"
+   ],
+   "diseases": [],
+   "note": "Stops diamondback moth and other caterpillars on cabbage family crops.",
+   "app_ai": [
+    "Indoxacarb"
+   ]
+  },
+  {
+   "key": "approve-25-sc",
+   "brand": "Approve 25 SC",
+   "company": "S&P Enterprises",
+   "kind": "insecticide",
+   "ai": [
+    "Spinosad"
+   ],
+   "group": "IRAC 5",
+   "formulation": "SC",
+   "crops": [
+    "cabbage",
+    "eggplant",
+    "limabean",
+    "onion",
+    "stringbean",
+    "wingedbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "diamondback-moth",
+    "eggplant-fruit-and-shoot-borer",
+    "legume-pod-borer",
+    "onion-armyworm",
+    "thrips"
+   ],
+   "diseases": [],
+   "note": "Made from a soil microbe. Controls caterpillars and thrips with little harm to most helpful insects.",
+   "app_ai": [
+    "Spinosad"
+   ]
+  },
+  {
+   "key": "aztron-wdg",
+   "brand": "Aztron WDG",
+   "company": "Leads Agri",
+   "kind": "insecticide",
+   "ai": [
+    "Bacillus thuringiensis var aizawai"
+   ],
+   "group": "IRAC 11A",
+   "formulation": "WDG",
+   "crops": [
+    "banana",
+    "broccoli",
+    "cabbage",
+    "cauliflower",
+    "mustard",
+    "pechay"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "diamondback-moth",
+    "slug-caterpillars"
+   ],
+   "diseases": [],
+   "note": "A biological spray that only harms caterpillars. Spray when the worms are still small.",
+   "app_ai": [
+    "Bacillus thuringiensis"
+   ]
+  },
+  {
+   "key": "bulldock-025-ec",
+   "brand": "Bulldock 025 EC",
+   "company": "Bayer",
+   "kind": "insecticide",
+   "ai": [
+    "Beta cyfluthrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "mango"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A pyrethroid used on mango leafhoppers. Spray when hoppers show up on the flower clusters.",
+   "app_ai": [
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "calfos-500-ec",
+   "brand": "Calfos 500 EC",
+   "company": "UPL",
+   "kind": "insecticide",
+   "ai": [
+    "Profenofos"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "eggplant",
+    "mango",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "thrips"
+   ],
+   "diseases": [],
+   "note": "Used on thrips and caterpillars in vegetables and mango. Wear full protection when spraying.",
+   "app_ai": [
+    "Profenofos"
+   ]
+  },
+  {
+   "key": "camada-200-sc",
+   "brand": "Camada 200 SC",
+   "company": "Agsmart",
+   "kind": "insecticide",
+   "ai": [
+    "Carbosulfan"
+   ],
+   "group": "IRAC 1A",
+   "formulation": "SC",
+   "crops": [
+    "mango"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "mango-cecid-fly"
+   ],
+   "diseases": [],
+   "note": "A carbamate used on mango for cecid flies. Spray when the first damage shows on young leaves or flowers.",
+   "app_ai": [
+    "Carbamates"
+   ]
+  },
+  {
+   "key": "carbanex-85-wp",
+   "brand": "Carbanex 85 WP",
+   "company": "Nexchem",
+   "kind": "insecticide",
+   "ai": [
+    "Carbaryl"
+   ],
+   "group": "IRAC 1A",
+   "formulation": "WP",
+   "crops": [
+    "ampalaya",
+    "cucumber",
+    "melon",
+    "patola",
+    "squash",
+    "tomato",
+    "upo",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "epilachna-beetle",
+    "squash-beetle"
+   ],
+   "diseases": [],
+   "note": "Kills leaf beetles on vegetables. Do not spray while bees are working the flowers.",
+   "app_ai": [
+    "Carbaryl"
+   ]
+  },
+  {
+   "key": "chix-2-5-ec",
+   "brand": "Chix 2.5 EC",
+   "company": "UPL",
+   "kind": "insecticide",
+   "ai": [
+    "Beta cypermethrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "EC",
+   "crops": [
+    "mango"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A pyrethroid used on mango leafhoppers. Spray when hoppers show up on the flower clusters.",
+   "app_ai": [
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "chlorfos-400-ec",
+   "brand": "Chlorfos 400 EC",
+   "company": "Kemistar",
+   "kind": "insecticide",
+   "ai": [
+    "Chlorpyrifos"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "banana-thrips"
+   ],
+   "diseases": [],
+   "note": "Used in banana against thrips on the young bunch. Keep it away from fish ponds and canals.",
+   "app_ai": [
+    "Chlorpyrifos (treated bunch bags or bud injection)"
+   ]
+  },
+  {
+   "key": "clever-15-ec",
+   "brand": "Clever 15 EC",
+   "company": "Lichemphil International",
+   "kind": "insecticide",
+   "ai": [
+    "Indoxacarb"
+   ],
+   "group": "IRAC 22A",
+   "formulation": "EC",
+   "crops": [
+    "cabbage"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "diamondback-moth"
+   ],
+   "diseases": [],
+   "note": "Stops diamondback moth and other caterpillars on cabbage family crops.",
+   "app_ai": [
+    "Indoxacarb"
+   ]
+  },
+  {
+   "key": "cyrokill-75-wp",
+   "brand": "Cyrokill 75 WP",
+   "company": "S&P Enterprises",
+   "kind": "insecticide",
+   "ai": [
+    "Cyromazine"
+   ],
+   "group": "IRAC 17",
+   "formulation": "WP",
+   "crops": [
+    "onion",
+    "potato",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "leafminer"
+   ],
+   "diseases": [],
+   "note": "Stops leafminer larvae from growing. Spray when the first trails show on the leaves.",
+   "app_ai": [
+    "Cyromazine"
+   ]
+  },
+  {
+   "key": "detonate-40-sp",
+   "brand": "Detonate 40 SP",
+   "company": "Zagro",
+   "kind": "insecticide",
+   "ai": [
+    "Methomyl"
+   ],
+   "group": "IRAC 1A",
+   "formulation": "SP",
+   "crops": [
+    "limabean",
+    "mungbean",
+    "soybean",
+    "stringbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "bean-fly"
+   ],
+   "diseases": [],
+   "note": "A strong contact spray for bean fly and caterpillars. Wear full protection when mixing.",
+   "app_ai": [
+    "Methomyl"
+   ]
+  },
+  {
+   "key": "diagran-5g",
+   "brand": "Diagran 5G",
+   "company": "Old Town Agricultural Kinds",
+   "kind": "insecticide",
+   "ai": [
+    "Diazinon"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "G",
+   "crops": [
+    "cowpea",
+    "limabean",
+    "mungbean",
+    "soybean",
+    "stringbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "bean-fly"
+   ],
+   "diseases": [],
+   "note": "Granules used against bean fly on young beans and other legumes.",
+   "app_ai": [
+    "Diazinon"
+   ]
+  },
+  {
+   "key": "dicarzol-20-sp",
+   "brand": "Dicarzol 20 SP",
+   "company": "Agspec",
+   "kind": "insecticide",
+   "ai": [
+    "Formetanate"
+   ],
+   "group": "IRAC 1A",
+   "formulation": "SP",
+   "crops": [
+    "cucumber",
+    "melon",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "spider-mites"
+   ],
+   "diseases": [],
+   "note": "Controls mites and thrips on watermelon and other melons.",
+   "app_ai": [
+    "Formetanate"
+   ]
+  },
+  {
+   "key": "dipel-wp",
+   "brand": "Dipel WP",
+   "company": "Sumitomo Chemical",
+   "kind": "insecticide",
+   "ai": [
+    "Bacillus thuringiensis var kurstaki"
+   ],
+   "group": "IRAC 11A",
+   "formulation": "WP",
+   "crops": [
+    "cabbage",
+    "cauliflower",
+    "mustard",
+    "pechay"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "cabbage-moth",
+    "diamondback-moth"
+   ],
+   "diseases": [],
+   "note": "A biological spray that only harms caterpillars. Spray when the worms are still small.",
+   "app_ai": [
+    "Bacillus thuringiensis",
+    "Bacillus thuringiensis var kurstaki"
+   ]
+  },
+  {
+   "key": "dymeto-40-ec",
+   "brand": "Dymeto 40 EC",
+   "company": "Ezertech",
+   "kind": "insecticide",
+   "ai": [
+    "Dimethoate"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "limabean",
+    "mango",
+    "stringbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "bean-fly",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A systemic spray that moves inside the plant. Used on bean fly and mango leafhoppers.",
+   "app_ai": [
+    "Dimethoate"
+   ]
+  },
+  {
+   "key": "enspray-n",
+   "brand": "Enspray N",
+   "company": "Leads Agri",
+   "kind": "insecticide",
+   "ai": [
+    "Mineral oil"
+   ],
+   "group": "IRAC UN",
+   "formulation": "",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "mealybug"
+   ],
+   "diseases": [],
+   "note": "A spray oil that coats and smothers mealybugs and scales. Do not spray in the midday heat.",
+   "app_ai": [
+    "Mineral oil"
+   ]
+  },
+  {
+   "key": "exelon-25-wg",
+   "brand": "Exelon 25 WG",
+   "company": "Indofil",
+   "kind": "insecticide",
+   "ai": [
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "WG",
+   "crops": [
+    "eggplant"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "aphids"
+   ],
+   "diseases": [],
+   "note": "A systemic insecticide for aphids and other sucking pests.",
+   "app_ai": [
+    "Thiamethoxam"
+   ]
+  },
+  {
+   "key": "fast-beat-300-wg",
+   "brand": "Fast Beat 300 WG",
+   "company": "NAC United Crop Solutions",
+   "kind": "insecticide",
+   "ai": [
+    "Indoxacarb"
+   ],
+   "group": "IRAC 22A",
+   "formulation": "WG",
+   "crops": [
+    "cabbage"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "diamondback-moth"
+   ],
+   "diseases": [],
+   "note": "Stops diamondback moth and other caterpillars on cabbage family crops.",
+   "app_ai": [
+    "Indoxacarb"
+   ]
+  },
+  {
+   "key": "marshal-200-sc",
+   "brand": "Marshal 200 SC",
+   "company": "FMC",
+   "kind": "insecticide",
+   "ai": [
+    "Carbosulfan"
+   ],
+   "group": "IRAC 1A",
+   "formulation": "SC",
+   "crops": [
+    "mango"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "mango-cecid-fly"
+   ],
+   "diseases": [],
+   "note": "A carbamate used on mango for cecid flies. Spray when the first damage shows on young leaves or flowers.",
+   "app_ai": [
+    "Carbamates"
+   ]
+  },
+  {
+   "key": "masta-40-sp",
+   "brand": "Masta 40 SP",
+   "company": "UPL",
+   "kind": "insecticide",
+   "ai": [
+    "Methomyl"
+   ],
+   "group": "IRAC 1A",
+   "formulation": "SP",
+   "crops": [
+    "limabean",
+    "mungbean",
+    "soybean",
+    "stringbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "bean-fly"
+   ],
+   "diseases": [],
+   "note": "A strong contact spray for bean fly and caterpillars. Wear full protection when mixing.",
+   "app_ai": [
+    "Methomyl"
+   ]
+  },
+  {
+   "key": "methonex-40-sp",
+   "brand": "Methonex 40 SP",
+   "company": "Nexchem",
+   "kind": "insecticide",
+   "ai": [
+    "Methomyl"
+   ],
+   "group": "IRAC 1A",
+   "formulation": "SP",
+   "crops": [
+    "limabean",
+    "mungbean",
+    "soybean",
+    "stringbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "bean-fly"
+   ],
+   "diseases": [],
+   "note": "A strong contact spray for bean fly and caterpillars. Wear full protection when mixing.",
+   "app_ai": [
+    "Methomyl"
+   ]
+  },
+  {
+   "key": "nimbicidine-0-03-ec",
+   "brand": "Nimbicidine 0.03 EC",
+   "company": "Berris Agricultural Company",
+   "kind": "insecticide",
+   "ai": [
+    "Azadirachtin"
+   ],
+   "group": "IRAC UN",
+   "formulation": "EC",
+   "crops": [
+    "cabbage",
+    "eggplant"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "aphids",
+    "cabbage-moth"
+   ],
+   "diseases": [],
+   "note": "A neem based spray for soft bodied pests and young caterpillars. Works best when pests are first seen.",
+   "app_ai": [
+    "Azadirachtin (neem)",
+    "Neem (azadirachtin)"
+   ]
+  },
+  {
+   "key": "nomoult-75-wp",
+   "brand": "Nomoult 75 WP",
+   "company": "Aries RNE Chemical",
+   "kind": "insecticide",
+   "ai": [
+    "Cyromazine"
+   ],
+   "group": "IRAC 17",
+   "formulation": "WP",
+   "crops": [
+    "onion",
+    "potato",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "leafminer"
+   ],
+   "diseases": [],
+   "note": "Stops leafminer larvae from growing. Spray when the first trails show on the leaves.",
+   "app_ai": [
+    "Cyromazine"
+   ]
+  },
+  {
+   "key": "oshin-20-sg",
+   "brand": "Oshin 20 SG",
+   "company": "Biostadt",
+   "kind": "insecticide",
+   "ai": [
+    "Dinotefuran"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "SG",
+   "crops": [
+    "coconut"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "cocolisap"
+   ],
+   "diseases": [],
+   "note": "Used against cocolisap on coconut. Follow the PCA advice on how it is applied.",
+   "app_ai": [
+    "Dinotefuran"
+   ]
+  },
+  {
+   "key": "perfekthion-40-ec",
+   "brand": "Perfekthion 40 EC",
+   "company": "BASF",
+   "kind": "insecticide",
+   "ai": [
+    "Dimethoate"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "limabean",
+    "mango",
+    "stringbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "bean-fly",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A systemic spray that moves inside the plant. Used on bean fly and mango leafhoppers.",
+   "app_ai": [
+    "Dimethoate"
+   ]
+  },
+  {
+   "key": "profen-50-ec",
+   "brand": "Profen 50 EC",
+   "company": "Kemistar",
+   "kind": "insecticide",
+   "ai": [
+    "Profenofos"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "eggplant",
+    "mango",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "thrips"
+   ],
+   "diseases": [],
+   "note": "Used on thrips and caterpillars in vegetables and mango. Wear full protection when spraying.",
+   "app_ai": [
+    "Profenofos"
+   ]
+  },
+  {
+   "key": "purespray-green",
+   "brand": "Purespray Green",
+   "company": "Envireau Pacific",
+   "kind": "insecticide",
+   "ai": [
+    "Mineral oil"
+   ],
+   "group": "IRAC UN",
+   "formulation": "",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "mealybug"
+   ],
+   "diseases": [],
+   "note": "A spray oil that coats and smothers mealybugs and scales. Do not spray in the midday heat.",
+   "app_ai": [
+    "Mineral oil"
+   ]
+  },
+  {
+   "key": "renova-25-wg",
+   "brand": "Renova 25 WG",
+   "company": "UPL",
+   "kind": "insecticide",
+   "ai": [
+    "Thiamethoxam"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "WG",
+   "crops": [
+    "eggplant"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "aphids"
+   ],
+   "diseases": [],
+   "note": "A systemic insecticide for aphids and other sucking pests.",
+   "app_ai": [
+    "Thiamethoxam"
+   ]
+  },
+  {
+   "key": "sk-enspray-99",
+   "brand": "SK Enspray 99",
+   "company": "Galchem Enterprise",
+   "kind": "insecticide",
+   "ai": [
+    "Mineral oil"
+   ],
+   "group": "IRAC UN",
+   "formulation": "EC",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "mealybug"
+   ],
+   "diseases": [],
+   "note": "A spray oil that coats and smothers mealybugs and scales. Do not spray in the midday heat.",
+   "app_ai": [
+    "Mineral oil"
+   ]
+  },
+  {
+   "key": "selecron-500-ec",
+   "brand": "Selecron 500 EC",
+   "company": "Syngenta",
+   "kind": "insecticide",
+   "ai": [
+    "Profenofos"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "eggplant",
+    "mango",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "thrips"
+   ],
+   "diseases": [],
+   "note": "Used on thrips and caterpillars in vegetables and mango. Wear full protection when spraying.",
+   "app_ai": [
+    "Profenofos"
+   ]
+  },
+  {
+   "key": "sinochem-malathion-57-ec",
+   "brand": "Sinochem Malathion 57 EC",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "insecticide",
+   "ai": [
+    "Malathion"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "atis",
+    "avocado",
+    "calamansi",
+    "cashew",
+    "chico",
+    "citrus",
+    "durian",
+    "guava",
+    "guyabano",
+    "jackfruit",
+    "lanzones",
+    "mango",
+    "mangosteen",
+    "pomelo",
+    "rambutan",
+    "santol",
+    "starapple",
+    "tamarind"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "mealybug",
+    "scale-insects"
+   ],
+   "diseases": [],
+   "note": "An older contact spray for mealybugs and scale insects on fruit trees.",
+   "app_ai": [
+    "Malathion"
+   ]
+  },
+  {
+   "key": "starkle-20-sg",
+   "brand": "Starkle 20 SG",
+   "company": "Leads Agri",
+   "kind": "insecticide",
+   "ai": [
+    "Dinotefuran"
+   ],
+   "group": "IRAC 4A",
+   "formulation": "SG",
+   "crops": [
+    "coconut"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "cocolisap"
+   ],
+   "diseases": [],
+   "note": "Used against cocolisap on coconut. Follow the PCA advice on how it is applied.",
+   "app_ai": [
+    "Dinotefuran"
+   ]
+  },
+  {
+   "key": "success-naturalyte",
+   "brand": "Success Naturalyte",
+   "company": "Corteva",
+   "kind": "insecticide",
+   "ai": [
+    "Spinosad"
+   ],
+   "group": "IRAC 5",
+   "formulation": "SC",
+   "crops": [
+    "cabbage",
+    "eggplant",
+    "limabean",
+    "onion",
+    "stringbean",
+    "wingedbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "diamondback-moth",
+    "eggplant-fruit-and-shoot-borer",
+    "legume-pod-borer",
+    "onion-armyworm",
+    "thrips"
+   ],
+   "diseases": [],
+   "note": "Made from a soil microbe. Controls caterpillars and thrips with little harm to most helpful insects.",
+   "app_ai": [
+    "Spinosad"
+   ]
+  },
+  {
+   "key": "talstar-8-sc",
+   "brand": "Talstar 8 SC",
+   "company": "FMC",
+   "kind": "insecticide",
+   "ai": [
+    "Bifenthrin"
+   ],
+   "group": "IRAC 3A",
+   "formulation": "SC",
+   "crops": [
+    "banana",
+    "mango"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "banana-weevil",
+    "mango-leafhopper"
+   ],
+   "diseases": [],
+   "note": "A pyrethroid used against banana weevils and mango hoppers. Keep it out of ponds and canals.",
+   "app_ai": [
+    "Bifenthrin",
+    "Synthetic pyrethroids"
+   ]
+  },
+  {
+   "key": "termex-40-ec",
+   "brand": "Termex 40 EC",
+   "company": "Planters Products",
+   "kind": "insecticide",
+   "ai": [
+    "Chlorpyrifos"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "banana-thrips"
+   ],
+   "diseases": [],
+   "note": "Used in banana against thrips on the young bunch. Keep it away from fish ponds and canals.",
+   "app_ai": [
+    "Chlorpyrifos (treated bunch bags or bud injection)"
+   ]
+  },
+  {
+   "key": "thripshield-20-sp",
+   "brand": "Thripshield 20 SP",
+   "company": "Agway Chemicals",
+   "kind": "insecticide",
+   "ai": [
+    "Formetanate"
+   ],
+   "group": "IRAC 1A",
+   "formulation": "SP",
+   "crops": [
+    "cucumber",
+    "melon",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "spider-mites"
+   ],
+   "diseases": [],
+   "note": "Controls mites and thrips on watermelon and other melons.",
+   "app_ai": [
+    "Formetanate"
+   ]
+  },
+  {
+   "key": "trigard-75-wp",
+   "brand": "Trigard 75 WP",
+   "company": "Agway Chemicals",
+   "kind": "insecticide",
+   "ai": [
+    "Cyromazine"
+   ],
+   "group": "IRAC 17",
+   "formulation": "WP",
+   "crops": [
+    "onion",
+    "potato",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "leafminer"
+   ],
+   "diseases": [],
+   "note": "Stops leafminer larvae from growing. Spray when the first trails show on the leaves.",
+   "app_ai": [
+    "Cyromazine"
+   ]
+  },
+  {
+   "key": "uthion-57-ec",
+   "brand": "Uthion 57 EC",
+   "company": "UPL",
+   "kind": "insecticide",
+   "ai": [
+    "Malathion"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "atis",
+    "avocado",
+    "calamansi",
+    "cashew",
+    "chico",
+    "citrus",
+    "durian",
+    "guava",
+    "guyabano",
+    "jackfruit",
+    "lanzones",
+    "mango",
+    "mangosteen",
+    "pomelo",
+    "rambutan",
+    "santol",
+    "starapple",
+    "tamarind"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "mealybug",
+    "scale-insects"
+   ],
+   "diseases": [],
+   "note": "An older contact spray for mealybugs and scale insects on fruit trees.",
+   "app_ai": [
+    "Malathion"
+   ]
+  },
+  {
+   "key": "vessel-400-ec",
+   "brand": "Vessel 400 EC",
+   "company": "Agway Chemicals",
+   "kind": "insecticide",
+   "ai": [
+    "Chlorpyrifos"
+   ],
+   "group": "IRAC 1B",
+   "formulation": "EC",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "banana-thrips"
+   ],
+   "diseases": [],
+   "note": "Used in banana against thrips on the young bunch. Keep it away from fish ponds and canals.",
+   "app_ai": [
+    "Chlorpyrifos (treated bunch bags or bud injection)"
+   ]
+  },
+  {
+   "key": "xentari-wdg",
+   "brand": "Xentari WDG",
+   "company": "Sumitomo Chemical",
+   "kind": "insecticide",
+   "ai": [
+    "Bacillus thuringiensis var aizawai"
+   ],
+   "group": "IRAC 11A",
+   "formulation": "WDG",
+   "crops": [
+    "banana",
+    "broccoli",
+    "cabbage",
+    "cauliflower",
+    "mustard",
+    "pechay"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "diamondback-moth",
+    "slug-caterpillars"
+   ],
+   "diseases": [],
+   "note": "A biological spray that only harms caterpillars. Spray when the worms are still small.",
+   "app_ai": [
+    "Bacillus thuringiensis"
+   ]
+  },
+  {
+   "key": "battalion-70-wp",
+   "brand": "Battalion 70 WP",
+   "company": "FMC",
+   "kind": "molluscicide",
+   "ai": [
+    "Niclosamide"
+   ],
+   "group": "Molluscicide",
+   "formulation": "WP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "golden-apple-snail"
+   ],
+   "diseases": [],
+   "note": "Kills golden apple snails in the paddy water. Keep the treated water out of canals and fish ponds.",
+   "app_ai": [
+    "Niclosamide"
+   ]
+  },
+  {
+   "key": "bayluscide-250-ec",
+   "brand": "Bayluscide 250 EC",
+   "company": "Bayer",
+   "kind": "molluscicide",
+   "ai": [
+    "Niclosamide"
+   ],
+   "group": "Molluscicide",
+   "formulation": "EC",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "golden-apple-snail"
+   ],
+   "diseases": [],
+   "note": "Kills golden apple snails in the paddy water. Keep the treated water out of canals and fish ponds.",
+   "app_ai": [
+    "Niclosamide"
+   ]
+  },
+  {
+   "key": "bayonet-6-pellets",
+   "brand": "Bayonet 6% Pellets",
+   "company": "Jardine Distribution",
+   "kind": "molluscicide",
+   "ai": [
+    "Metaldehyde"
+   ],
+   "group": "Molluscicide",
+   "formulation": "P",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "golden-apple-snail"
+   ],
+   "diseases": [],
+   "note": "Pellets that kill golden apple snails. Scatter them where snails gather in the field.",
+   "app_ai": [
+    "Metaldehyde"
+   ]
+  },
+  {
+   "key": "deadline-6-pellet",
+   "brand": "Deadline 6% Pellet",
+   "company": "Agway Chemicals",
+   "kind": "molluscicide",
+   "ai": [
+    "Metaldehyde"
+   ],
+   "group": "Molluscicide",
+   "formulation": "P",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "golden-apple-snail"
+   ],
+   "diseases": [],
+   "note": "Pellets that kill golden apple snails. Scatter them where snails gather in the field.",
+   "app_ai": [
+    "Metaldehyde"
+   ]
+  },
+  {
+   "key": "galleon-70-wp",
+   "brand": "Galleon 70 WP",
+   "company": "UPL",
+   "kind": "molluscicide",
+   "ai": [
+    "Niclosamide"
+   ],
+   "group": "Molluscicide",
+   "formulation": "WP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "golden-apple-snail"
+   ],
+   "diseases": [],
+   "note": "Kills golden apple snails in the paddy water. Keep the treated water out of canals and fish ponds.",
+   "app_ai": [
+    "Niclosamide"
+   ]
+  },
+  {
+   "key": "thump-6-gr",
+   "brand": "Thump 6 GR",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "molluscicide",
+   "ai": [
+    "Metaldehyde"
+   ],
+   "group": "Molluscicide",
+   "formulation": "GR",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "golden-apple-snail"
+   ],
+   "diseases": [],
+   "note": "Pellets that kill golden apple snails. Scatter them where snails gather in the field.",
+   "app_ai": [
+    "Metaldehyde"
+   ]
+  },
+  {
+   "key": "ratkil",
+   "brand": "Ratkil",
+   "company": "Biostadt",
+   "kind": "rodenticide",
+   "ai": [
+    "Zinc phosphide"
+   ],
+   "group": "",
+   "formulation": "B",
+   "crops": [
+    "sugarcane"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-field-rats"
+   ],
+   "diseases": [],
+   "note": "A rat bait for cane fields. Use covered bait stations away from children, pets and farm animals.",
+   "app_ai": []
+  },
+  {
+   "key": "storm-wax-block-bait",
+   "brand": "Storm Wax Block Bait",
+   "company": "BASF",
+   "kind": "rodenticide",
+   "ai": [
+    "Flocoumafen"
+   ],
+   "group": "",
+   "formulation": "BB",
+   "crops": [
+    "sugarcane",
+    "oilpalm"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-field-rats"
+   ],
+   "diseases": [],
+   "note": "A wax block rat bait for cane fields and plantations. Use covered bait stations away from children, pets and farm animals.",
+   "app_ai": []
+  },
+  {
+   "key": "trapp",
+   "brand": "Trapp",
+   "company": "Indofil",
+   "kind": "rodenticide",
+   "ai": [
+    "Zinc phosphide"
+   ],
+   "group": "",
+   "formulation": "B",
+   "crops": [
+    "sugarcane"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "rice-field-rats"
+   ],
+   "diseases": [],
+   "note": "A rat bait for cane fields. Use covered bait stations away from children, pets and farm animals.",
+   "app_ai": []
+  },
+  {
+   "key": "apache-10-g",
+   "brand": "Apache 10 G",
+   "company": "FMC",
+   "kind": "nematicide",
+   "ai": [
+    "Cadusafos"
+   ],
+   "group": "IRAC N1B",
+   "formulation": "G",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "burrowing-nematode"
+   ],
+   "note": "Granules for nematodes and soil pests in banana, worked into the soil around the plant.",
+   "app_ai": [
+    "Cadusafos"
+   ]
+  },
+  {
+   "key": "aurola-500-sc",
+   "brand": "Aurola 500 SC",
+   "company": "Green Action Brigade",
+   "kind": "nematicide",
+   "ai": [
+    "Fluopyram"
+   ],
+   "group": "IRAC N3",
+   "formulation": "SC",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "burrowing-nematode",
+    "root-knot-nematode"
+   ],
+   "note": "Protects roots from nematodes. Applied to the soil around the roots.",
+   "app_ai": [
+    "Fluopyram"
+   ]
+  },
+  {
+   "key": "haipyram-400-sc",
+   "brand": "Haipyram 400 SC",
+   "company": "Hailir Philippines Agroservice",
+   "kind": "nematicide",
+   "ai": [
+    "Fluopyram"
+   ],
+   "group": "IRAC N3",
+   "formulation": "SC",
+   "crops": [
+    "ampalaya",
+    "banana",
+    "eggplant",
+    "potato",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "burrowing-nematode",
+    "root-knot-nematode"
+   ],
+   "note": "Protects roots from nematodes. Applied to the soil around the roots.",
+   "app_ai": [
+    "Fluopyram"
+   ]
+  },
+  {
+   "key": "verango-prime-sc-400",
+   "brand": "Verango Prime SC 400",
+   "company": "Bayer",
+   "kind": "nematicide",
+   "ai": [
+    "Fluopyram"
+   ],
+   "group": "IRAC N3",
+   "formulation": "SC",
+   "crops": [
+    "ampalaya",
+    "banana",
+    "eggplant",
+    "pineapple",
+    "potato",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "burrowing-nematode",
+    "root-knot-nematode"
+   ],
+   "note": "Protects roots from nematodes. Applied to the soil around the roots.",
+   "app_ai": [
+    "Fluopyram"
+   ]
+  },
+  {
+   "key": "abunda-300-ec",
+   "brand": "Abunda 300 EC",
+   "company": "Gold Gen Marketing Trading",
+   "kind": "fungicide",
+   "ai": [
+    "Difenoconazole",
+    "Propiconazole"
+   ],
+   "group": "FRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "sheath-blight"
+   ],
+   "note": "Two systemic fungicides for sheath blight in rice and corn.",
+   "app_ai": [
+    "Difenoconazole",
+    "Propiconazole"
+   ]
+  },
+  {
+   "key": "agromyl-50-wp",
+   "brand": "Agromyl 50 WP",
+   "company": "United Agro Trade",
+   "kind": "fungicide",
+   "ai": [
+    "Benomyl"
+   ],
+   "group": "FRAC 1",
+   "formulation": "WP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "rice-blast"
+   ],
+   "note": "A systemic fungicide used against rice blast. Spray when the first spots show on the leaves.",
+   "app_ai": [
+    "Benomyl"
+   ]
+  },
+  {
+   "key": "albaguard-50-wp",
+   "brand": "Albaguard 50 WP",
+   "company": "Altacrop Protection",
+   "kind": "fungicide",
+   "ai": [
+    "Benomyl"
+   ],
+   "group": "FRAC 1",
+   "formulation": "WP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "rice-blast"
+   ],
+   "note": "A systemic fungicide used against rice blast. Spray when the first spots show on the leaves.",
+   "app_ai": [
+    "Benomyl"
+   ]
+  },
+  {
+   "key": "alicee-70-wg",
+   "brand": "Alicee 70 WG",
+   "company": "Aktiv Multi Trading",
+   "kind": "fungicide",
+   "ai": [
+    "Propineb"
+   ],
+   "group": "FRAC M3",
+   "formulation": "WG",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "rice-brown-spot"
+   ],
+   "note": "A protective fungicide with zinc, used against brown spot in rice.",
+   "app_ai": [
+    "Propineb"
+   ]
+  },
+  {
+   "key": "amoree-300-ec",
+   "brand": "Amoree 300 EC",
+   "company": "Kemistar",
+   "kind": "fungicide",
+   "ai": [
+    "Difenoconazole",
+    "Propiconazole"
+   ],
+   "group": "FRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "sheath-blight"
+   ],
+   "note": "Two systemic fungicides for sheath blight in rice and corn.",
+   "app_ai": [
+    "Difenoconazole",
+    "Propiconazole"
+   ]
+  },
+  {
+   "key": "antracol-70-wp",
+   "brand": "Antracol 70 WP",
+   "company": "Bayer",
+   "kind": "fungicide",
+   "ai": [
+    "Propineb"
+   ],
+   "group": "FRAC M3",
+   "formulation": "WP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "rice-brown-spot"
+   ],
+   "note": "A protective fungicide with zinc, used against brown spot in rice.",
+   "app_ai": [
+    "Propineb"
+   ]
+  },
+  {
+   "key": "armure-300-ec",
+   "brand": "Armure 300 EC",
+   "company": "Syngenta",
+   "kind": "fungicide",
+   "ai": [
+    "Difenoconazole",
+    "Propiconazole"
+   ],
+   "group": "FRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "sheath-blight"
+   ],
+   "note": "Two systemic fungicides for sheath blight in rice and corn.",
+   "app_ai": [
+    "Difenoconazole",
+    "Propiconazole"
+   ]
+  },
+  {
+   "key": "bash-250-ec",
+   "brand": "Bash 250 EC",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "fungicide",
+   "ai": [
+    "Difenoconazole"
+   ],
+   "group": "FRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "mango",
+    "onion",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "early-blight",
+    "purple-blotch",
+    "sheath-blight"
+   ],
+   "note": "A systemic fungicide for leaf spots, blights and anthracnose.",
+   "app_ai": [
+    "Difenoconazole",
+    "Triazole fungicides"
+   ]
+  },
+  {
+   "key": "benomex-50-wp",
+   "brand": "Benomex 50 WP",
+   "company": "Nexchem",
+   "kind": "fungicide",
+   "ai": [
+    "Benomyl"
+   ],
+   "group": "FRAC 1",
+   "formulation": "WP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "rice-blast"
+   ],
+   "note": "A systemic fungicide used against rice blast. Spray when the first spots show on the leaves.",
+   "app_ai": [
+    "Benomyl"
+   ]
+  },
+  {
+   "key": "byter-top-750-wg",
+   "brand": "Byter Top 750 WG",
+   "company": "Byter",
+   "kind": "fungicide",
+   "ai": [
+    "Tebuconazole",
+    "Trifloxystrobin"
+   ],
+   "group": "FRAC 3 plus FRAC 11",
+   "formulation": "WG",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "rice-brown-spot"
+   ],
+   "note": "Two fungicides in one, used against brown spot and other rice diseases.",
+   "app_ai": [
+    "Tebuconazole plus trifloxystrobin"
+   ]
+  },
+  {
+   "key": "curegold-750-wg",
+   "brand": "Curegold 750 WG",
+   "company": "NAC United Crop Solutions",
+   "kind": "fungicide",
+   "ai": [
+    "Tebuconazole",
+    "Trifloxystrobin"
+   ],
+   "group": "FRAC 3 plus FRAC 11",
+   "formulation": "WG",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "rice-brown-spot"
+   ],
+   "note": "Two fungicides in one, used against brown spot and other rice diseases.",
+   "app_ai": [
+    "Tebuconazole plus trifloxystrobin"
+   ]
+  },
+  {
+   "key": "dianex-325-sc",
+   "brand": "Dianex 325 SC",
+   "company": "Nexchem",
+   "kind": "fungicide",
+   "ai": [
+    "Azoxystrobin",
+    "Difenoconazole"
+   ],
+   "group": "FRAC 11 plus FRAC 3",
+   "formulation": "SC",
+   "crops": [
+    "rice",
+    "mango"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "rice-blast",
+    "sheath-blight"
+   ],
+   "note": "Two fungicides in one, for blast, sheath blight and leaf spots. Spray at the first signs.",
+   "app_ai": [
+    "Azoxystrobin",
+    "Azoxystrobin plus difenoconazole",
+    "Difenoconazole"
+   ]
+  },
+  {
+   "key": "difenex-250-ec",
+   "brand": "Difenex 250 EC",
+   "company": "Nexchem",
+   "kind": "fungicide",
+   "ai": [
+    "Difenoconazole"
+   ],
+   "group": "FRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "mango",
+    "onion",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "early-blight",
+    "purple-blotch",
+    "sheath-blight"
+   ],
+   "note": "A systemic fungicide for leaf spots, blights and anthracnose.",
+   "app_ai": [
+    "Difenoconazole",
+    "Triazole fungicides"
+   ]
+  },
+  {
+   "key": "elbow-250-ec",
+   "brand": "Elbow 250 EC",
+   "company": "Kemistar",
+   "kind": "fungicide",
+   "ai": [
+    "Difenoconazole"
+   ],
+   "group": "FRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "rice",
+    "mango",
+    "onion",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "early-blight",
+    "purple-blotch",
+    "sheath-blight"
+   ],
+   "note": "A systemic fungicide for leaf spots, blights and anthracnose.",
+   "app_ai": [
+    "Difenoconazole",
+    "Triazole fungicides"
+   ]
+  },
+  {
+   "key": "elite-proper-70-wp",
+   "brand": "Elite Proper 70 WP",
+   "company": "Elite Agrochemicals",
+   "kind": "fungicide",
+   "ai": [
+    "Propineb"
+   ],
+   "group": "FRAC M3",
+   "formulation": "WP",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "rice-brown-spot"
+   ],
+   "note": "A protective fungicide with zinc, used against brown spot in rice.",
+   "app_ai": [
+    "Propineb"
+   ]
+  },
+  {
+   "key": "nativo-wg-75",
+   "brand": "Nativo WG 75",
+   "company": "Bayer",
+   "kind": "fungicide",
+   "ai": [
+    "Tebuconazole",
+    "Trifloxystrobin"
+   ],
+   "group": "FRAC 3 plus FRAC 11",
+   "formulation": "WG",
+   "crops": [
+    "rice"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "rice-brown-spot"
+   ],
+   "note": "Two fungicides in one, used against brown spot and other rice diseases.",
+   "app_ai": [
+    "Tebuconazole plus trifloxystrobin"
+   ]
+  },
+  {
+   "key": "ortiva-top-325-sc",
+   "brand": "Ortiva Top 325 SC",
+   "company": "Syngenta",
+   "kind": "fungicide",
+   "ai": [
+    "Azoxystrobin",
+    "Difenoconazole"
+   ],
+   "group": "FRAC 11 plus FRAC 3",
+   "formulation": "SC",
+   "crops": [
+    "rice",
+    "mango",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "early-blight",
+    "rice-blast",
+    "sheath-blight"
+   ],
+   "note": "Two fungicides in one, for blast, sheath blight and leaf spots. Spray at the first signs.",
+   "app_ai": [
+    "Azoxystrobin",
+    "Azoxystrobin plus difenoconazole",
+    "Difenoconazole"
+   ]
+  },
+  {
+   "key": "resist-325-sc",
+   "brand": "Resist 325 SC",
+   "company": "Agway Chemicals",
+   "kind": "fungicide",
+   "ai": [
+    "Azoxystrobin",
+    "Difenoconazole"
+   ],
+   "group": "FRAC 11 plus FRAC 3",
+   "formulation": "SC",
+   "crops": [
+    "rice",
+    "mango"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "rice-blast",
+    "sheath-blight"
+   ],
+   "note": "Two fungicides in one, for blast, sheath blight and leaf spots. Spray at the first signs.",
+   "app_ai": [
+    "Azoxystrobin",
+    "Azoxystrobin plus difenoconazole",
+    "Difenoconazole"
+   ]
+  },
+  {
+   "key": "affix-25-sc",
+   "brand": "Affix 25 SC",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Azoxystrobin"
+   ],
+   "group": "FRAC 11",
+   "formulation": "SC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "mango",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "early-blight",
+    "sheath-blight"
+   ],
+   "note": "A systemic fungicide that guards new growth. Spray before the disease spreads.",
+   "app_ai": [
+    "Azoxystrobin"
+   ]
+  },
+  {
+   "key": "agricote-75-wg",
+   "brand": "Agricote 75 WG",
+   "company": "Agway Chemicals",
+   "kind": "fungicide",
+   "ai": [
+    "Mancozeb"
+   ],
+   "group": "FRAC M3",
+   "formulation": "WG",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "cabbage",
+    "cauliflower",
+    "cucumber",
+    "garlic",
+    "limabean",
+    "mango",
+    "melon",
+    "onion",
+    "peanut",
+    "potato",
+    "stringbean",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "alternaria-leaf-spot",
+    "anthracnose",
+    "cercospora-leaf-spot",
+    "downy-mildew",
+    "late-blight",
+    "mango-scab",
+    "peanut-leaf-spot",
+    "purple-blotch",
+    "southern-corn-leaf-blight"
+   ],
+   "note": "A protective fungicide for many leaf diseases. Spray before the disease spreads and after heavy rain.",
+   "app_ai": [
+    "Mancozeb"
+   ]
+  },
+  {
+   "key": "amistar-25-sc",
+   "brand": "Amistar 25 SC",
+   "company": "Syngenta",
+   "kind": "fungicide",
+   "ai": [
+    "Azoxystrobin"
+   ],
+   "group": "FRAC 11",
+   "formulation": "SC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "mango",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "early-blight",
+    "sheath-blight"
+   ],
+   "note": "A systemic fungicide that guards new growth. Spray before the disease spreads.",
+   "app_ai": [
+    "Azoxystrobin"
+   ]
+  },
+  {
+   "key": "hailistar-250-sc",
+   "brand": "Hailistar 250 SC",
+   "company": "Hailir Philippines Agroservice",
+   "kind": "fungicide",
+   "ai": [
+    "Azoxystrobin"
+   ],
+   "group": "FRAC 11",
+   "formulation": "SC",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "mango",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "early-blight",
+    "sheath-blight",
+    "southern-corn-leaf-blight"
+   ],
+   "note": "A systemic fungicide that guards new growth. Spray before the disease spreads.",
+   "app_ai": [
+    "Azoxystrobin"
+   ]
+  },
+  {
+   "key": "dithane-m-45-neotec",
+   "brand": "Dithane M 45 Neotec",
+   "company": "Arysta LifeScience",
+   "kind": "fungicide",
+   "ai": [
+    "Mancozeb"
+   ],
+   "group": "FRAC M3",
+   "formulation": "WP",
+   "crops": [
+    "corn_sweet",
+    "banana",
+    "bellpepper",
+    "broccoli",
+    "cabbage",
+    "cauliflower",
+    "celery",
+    "chili",
+    "cotton",
+    "cucumber",
+    "garlic",
+    "limabean",
+    "mango",
+    "melon",
+    "mungbean",
+    "onion",
+    "peanut",
+    "potato",
+    "soybean",
+    "squash",
+    "stringbean",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "alternaria-leaf-spot",
+    "anthracnose",
+    "bean-rust",
+    "black-sigatoka",
+    "celery-late-blight",
+    "cercospora-leaf-spot",
+    "damping-off",
+    "downy-mildew",
+    "late-blight",
+    "mango-scab",
+    "peanut-leaf-spot",
+    "purple-blotch",
+    "southern-corn-leaf-blight",
+    "soybean-rust"
+   ],
+   "note": "A protective fungicide for many leaf diseases. Spray before the disease spreads and after heavy rain.",
+   "app_ai": [
+    "Mancozeb"
+   ]
+  },
+  {
+   "key": "wallop-75-wdg",
+   "brand": "Wallop 75 WDG",
+   "company": "Sinochem (Syngenta Group)",
+   "kind": "fungicide",
+   "ai": [
+    "Mancozeb"
+   ],
+   "group": "FRAC M3",
+   "formulation": "WDG",
+   "crops": [
+    "corn_sweet",
+    "banana",
+    "bellpepper",
+    "broccoli",
+    "cabbage",
+    "cauliflower",
+    "celery",
+    "chili",
+    "cotton",
+    "cucumber",
+    "garlic",
+    "limabean",
+    "mango",
+    "melon",
+    "mungbean",
+    "onion",
+    "peanut",
+    "potato",
+    "soybean",
+    "squash",
+    "stringbean",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "alternaria-leaf-spot",
+    "anthracnose",
+    "bean-rust",
+    "black-sigatoka",
+    "celery-late-blight",
+    "cercospora-leaf-spot",
+    "damping-off",
+    "downy-mildew",
+    "late-blight",
+    "mango-scab",
+    "peanut-leaf-spot",
+    "purple-blotch",
+    "southern-corn-leaf-blight",
+    "soybean-rust"
+   ],
+   "note": "A protective fungicide for many leaf diseases. Spray before the disease spreads and after heavy rain.",
+   "app_ai": [
+    "Mancozeb"
+   ]
+  },
+  {
+   "key": "apogee-500-sc",
+   "brand": "Apogee 500 SC",
+   "company": "Agfrontier",
+   "kind": "fungicide",
+   "ai": [
+    "Carbendazim"
+   ],
+   "group": "FRAC 1",
+   "formulation": "SC",
+   "crops": [
+    "sugarcane",
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "thielaviopsis-rot"
+   ],
+   "note": "A systemic fungicide, used as a dip for cane setts and pineapple crowns and on rubber leaves.",
+   "app_ai": [
+    "Carbendazim (sett dip)"
+   ]
+  },
+  {
+   "key": "bendazid-500-sc",
+   "brand": "Bendazid 500 SC",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Carbendazim"
+   ],
+   "group": "FRAC 1",
+   "formulation": "SC",
+   "crops": [
+    "sugarcane"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "thielaviopsis-rot"
+   ],
+   "note": "A systemic fungicide, used as a dip for cane setts and pineapple crowns and on rubber leaves.",
+   "app_ai": [
+    "Carbendazim (sett dip)"
+   ]
+  },
+  {
+   "key": "biostin-500-sc",
+   "brand": "Biostin 500 SC",
+   "company": "Biostadt",
+   "kind": "fungicide",
+   "ai": [
+    "Carbendazim"
+   ],
+   "group": "FRAC 1",
+   "formulation": "SC",
+   "crops": [
+    "sugarcane"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "thielaviopsis-rot"
+   ],
+   "note": "A systemic fungicide, used as a dip for cane setts and pineapple crowns and on rubber leaves.",
+   "app_ai": [
+    "Carbendazim (sett dip)"
+   ]
+  },
+  {
+   "key": "systema-50-sc",
+   "brand": "Systema 50 SC",
+   "company": "Philippine Farmfix Solutions",
+   "kind": "fungicide",
+   "ai": [
+    "Carbendazim"
+   ],
+   "group": "FRAC 1",
+   "formulation": "SC",
+   "crops": [
+    "sugarcane",
+    "rubber"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "pestalotiopsis-leaf-fall",
+    "thielaviopsis-rot"
+   ],
+   "note": "A systemic fungicide, used as a dip for cane setts and pineapple crowns and on rubber leaves.",
+   "app_ai": [
+    "Carbendazim",
+    "Carbendazim (sett dip)"
+   ]
+  },
+  {
+   "key": "zimcote-500-sc",
+   "brand": "Zimcote 500 SC",
+   "company": "Agway Chemicals",
+   "kind": "fungicide",
+   "ai": [
+    "Carbendazim"
+   ],
+   "group": "FRAC 1",
+   "formulation": "SC",
+   "crops": [
+    "sugarcane"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "thielaviopsis-rot"
+   ],
+   "note": "A systemic fungicide, used as a dip for cane setts and pineapple crowns and on rubber leaves.",
+   "app_ai": [
+    "Carbendazim (sett dip)"
+   ]
+  },
+  {
+   "key": "ace-hydra-77-wp",
+   "brand": "Ace Hydra 77 WP",
+   "company": "ACE Crop Solutions",
+   "kind": "fungicide",
+   "ai": [
+    "Copper hydroxide"
+   ],
+   "group": "FRAC M1",
+   "formulation": "WP",
+   "crops": [
+    "bellpepper",
+    "cabbage",
+    "cacao",
+    "calamansi",
+    "celery",
+    "chili",
+    "citrus",
+    "coffee",
+    "cucumber",
+    "mango",
+    "onion",
+    "pomelo",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "bacterial-spot",
+    "black-rot",
+    "cacao-black-pod",
+    "celery-late-blight",
+    "citrus-canker",
+    "citrus-scab",
+    "coffee-leaf-rust",
+    "purple-blotch"
+   ],
+   "note": "A copper fungicide for bacterial and fungal spots. Spray before long rains.",
+   "app_ai": [
+    "Copper",
+    "Copper compounds",
+    "Copper fungicides",
+    "Copper hydroxide"
+   ]
+  },
+  {
+   "key": "acojin-80-wp",
+   "brand": "Acojin 80 WP",
+   "company": "Philippine Farmfix Solutions",
+   "kind": "fungicide",
+   "ai": [
+    "Fosetyl aluminium"
+   ],
+   "group": "FRAC P07",
+   "formulation": "WP",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "pineapple-heart-rot"
+   ],
+   "note": "Moves down to the roots and guards against heart rot and root rot.",
+   "app_ai": [
+    "Fosetyl aluminium"
+   ]
+  },
+  {
+   "key": "acrobat-50-wp",
+   "brand": "Acrobat 50 WP",
+   "company": "BASF",
+   "kind": "fungicide",
+   "ai": [
+    "Dimethomorph"
+   ],
+   "group": "FRAC 40",
+   "formulation": "WP",
+   "crops": [
+    "potato",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "late-blight"
+   ],
+   "note": "Used against late blight on potato and tomato. Take turns with fungicides from other groups.",
+   "app_ai": [
+    "Dimethomorph"
+   ]
+  },
+  {
+   "key": "agricote-pro-505-wp",
+   "brand": "Agricote Pro 505 WP",
+   "company": "Agway Chemicals",
+   "kind": "fungicide",
+   "ai": [
+    "Cymoxanil",
+    "Mancozeb"
+   ],
+   "group": "FRAC 27 plus FRAC M3",
+   "formulation": "WP",
+   "crops": [
+    "potato",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "late-blight"
+   ],
+   "note": "Stops late blight early. Spray when the weather turns cool and wet.",
+   "app_ai": [
+    "Cymoxanil",
+    "Mancozeb"
+   ]
+  },
+  {
+   "key": "alouette-80-wp",
+   "brand": "Alouette 80 WP",
+   "company": "Ramgo International",
+   "kind": "fungicide",
+   "ai": [
+    "Fosetyl aluminium"
+   ],
+   "group": "FRAC P07",
+   "formulation": "WP",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "pineapple-heart-rot"
+   ],
+   "note": "Moves down to the roots and guards against heart rot and root rot.",
+   "app_ai": [
+    "Fosetyl aluminium"
+   ]
+  },
+  {
+   "key": "alternil-720-sc",
+   "brand": "Alternil 720 SC",
+   "company": "Arysta LifeScience",
+   "kind": "fungicide",
+   "ai": [
+    "Chlorothalonil"
+   ],
+   "group": "FRAC M5",
+   "formulation": "SC",
+   "crops": [
+    "banana",
+    "bellpepper",
+    "carrot",
+    "celery",
+    "chili",
+    "cucumber",
+    "limabean",
+    "mango",
+    "melon",
+    "onion",
+    "pechay",
+    "potato",
+    "squash",
+    "stringbean",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "bean-rust",
+    "black-sigatoka",
+    "carrot-leaf-blight",
+    "celery-late-blight",
+    "cercospora-leaf-spot",
+    "early-blight",
+    "late-blight",
+    "powdery-mildew",
+    "purple-blotch"
+   ],
+   "note": "A protective fungicide for many leaf spots and blights. Spray before the disease spreads and again after rain.",
+   "app_ai": [
+    "Chlorothalonil"
+   ]
+  },
+  {
+   "key": "bm-20-wg",
+   "brand": "BM 20 WG",
+   "company": "Leads Agri",
+   "kind": "fungicide",
+   "ai": [
+    "Bordeaux mixture"
+   ],
+   "group": "FRAC M1",
+   "formulation": "WG",
+   "crops": [
+    "cabbage",
+    "cacao",
+    "coffee",
+    "garlic",
+    "mango",
+    "onion"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "black-rot",
+    "cacao-black-pod",
+    "coffee-leaf-rust",
+    "purple-blotch"
+   ],
+   "note": "A copper fungicide that coats leaves and pods. Spray before long rains.",
+   "app_ai": [
+    "Copper",
+    "Copper compounds",
+    "Copper fungicides"
+   ]
+  },
+  {
+   "key": "basic-25-ec",
+   "brand": "Basic 25 EC",
+   "company": "Berris Agricultural Company",
+   "kind": "fungicide",
+   "ai": [
+    "Propiconazole"
+   ],
+   "group": "FRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "thielaviopsis-rot"
+   ],
+   "note": "A systemic fungicide, used as a dip for pineapple crowns against base rot.",
+   "app_ai": [
+    "Propiconazole (sett dip)"
+   ]
+  },
+  {
+   "key": "captan-50-wp",
+   "brand": "Captan 50 WP",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Captan"
+   ],
+   "group": "FRAC M4",
+   "formulation": "WP",
+   "crops": [
+    "strawberry"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "gray-mold"
+   ],
+   "note": "A protective fungicide for gray mold on strawberry. Spray before long wet spells.",
+   "app_ai": [
+    "Captan"
+   ]
+  },
+  {
+   "key": "ceadew-100-sc",
+   "brand": "Ceadew 100 SC",
+   "company": "Rainbow Agrosciences",
+   "kind": "fungicide",
+   "ai": [
+    "Cyazofamid"
+   ],
+   "group": "FRAC 21",
+   "formulation": "SC",
+   "crops": [
+    "cabbage"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "clubroot"
+   ],
+   "note": "Used against downy mildew and clubroot. For clubroot it goes on the soil at planting.",
+   "app_ai": [
+    "Cyazofamid"
+   ]
+  },
+  {
+   "key": "checkpoint-720-sc",
+   "brand": "Checkpoint 720 SC",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Chlorothalonil"
+   ],
+   "group": "FRAC M5",
+   "formulation": "SC",
+   "crops": [
+    "ampalaya",
+    "banana",
+    "carrot",
+    "celery",
+    "cucumber",
+    "limabean",
+    "mango",
+    "melon",
+    "onion",
+    "patola",
+    "pechay",
+    "potato",
+    "sayote",
+    "squash",
+    "stringbean",
+    "tomato",
+    "upo",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "bean-rust",
+    "black-sigatoka",
+    "carrot-leaf-blight",
+    "celery-late-blight",
+    "cercospora-leaf-spot",
+    "downy-mildew",
+    "early-blight",
+    "late-blight",
+    "powdery-mildew",
+    "purple-blotch"
+   ],
+   "note": "A protective fungicide for many leaf spots and blights. Spray before the disease spreads and again after rain.",
+   "app_ai": [
+    "Chlorothalonil"
+   ]
+  },
+  {
+   "key": "chlorotek-50-sc",
+   "brand": "Chlorotek 50 SC",
+   "company": "Biostadt",
+   "kind": "fungicide",
+   "ai": [
+    "Chlorothalonil"
+   ],
+   "group": "FRAC M5",
+   "formulation": "SC",
+   "crops": [
+    "banana",
+    "bellpepper",
+    "carrot",
+    "celery",
+    "chili",
+    "cucumber",
+    "garlic",
+    "limabean",
+    "mango",
+    "melon",
+    "onion",
+    "peanut",
+    "pechay",
+    "potato",
+    "squash",
+    "stringbean",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "bean-rust",
+    "black-sigatoka",
+    "carrot-leaf-blight",
+    "celery-late-blight",
+    "cercospora-leaf-spot",
+    "late-blight",
+    "peanut-leaf-spot",
+    "peanut-rust",
+    "powdery-mildew",
+    "purple-blotch"
+   ],
+   "note": "A protective fungicide for many leaf spots and blights. Spray before the disease spreads and again after rain.",
+   "app_ai": [
+    "Chlorothalonil"
+   ]
+  },
+  {
+   "key": "cosavet-df",
+   "brand": "Cosavet DF",
+   "company": "Zagro",
+   "kind": "fungicide",
+   "ai": [
+    "Sulfur"
+   ],
+   "group": "FRAC M2",
+   "formulation": "DF",
+   "crops": [
+    "bellpepper",
+    "chili",
+    "limabean",
+    "papaya",
+    "wingedbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "powdery-mildew"
+   ],
+   "note": "Controls powdery mildew and some mites. Do not spray in the midday heat.",
+   "app_ai": [
+    "Sulfur"
+   ]
+  },
+  {
+   "key": "cuprofix-wg",
+   "brand": "Cuprofix WG",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Bordeaux mixture"
+   ],
+   "group": "FRAC M1",
+   "formulation": "WG",
+   "crops": [
+    "cabbage",
+    "cacao",
+    "coffee",
+    "garlic",
+    "mango",
+    "onion"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "black-rot",
+    "cacao-black-pod",
+    "coffee-leaf-rust",
+    "purple-blotch"
+   ],
+   "note": "A copper fungicide that coats leaves and pods. Spray before long rains.",
+   "app_ai": [
+    "Copper",
+    "Copper compounds",
+    "Copper fungicides"
+   ]
+  },
+  {
+   "key": "curzate-m",
+   "brand": "Curzate M",
+   "company": "Corteva",
+   "kind": "fungicide",
+   "ai": [
+    "Cymoxanil",
+    "Mancozeb"
+   ],
+   "group": "FRAC 27 plus FRAC M3",
+   "formulation": "WP",
+   "crops": [
+    "potato",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "late-blight"
+   ],
+   "note": "Stops late blight early. Spray when the weather turns cool and wet.",
+   "app_ai": [
+    "Cymoxanil",
+    "Mancozeb"
+   ]
+  },
+  {
+   "key": "dimorph-50-wp",
+   "brand": "Dimorph 50 WP",
+   "company": "Zagro",
+   "kind": "fungicide",
+   "ai": [
+    "Dimethomorph"
+   ],
+   "group": "FRAC 40",
+   "formulation": "WP",
+   "crops": [
+    "potato",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "late-blight"
+   ],
+   "note": "Used against late blight on potato and tomato. Take turns with fungicides from other groups.",
+   "app_ai": [
+    "Dimethomorph"
+   ]
+  },
+  {
+   "key": "filder-50-wp",
+   "brand": "Filder 50 WP",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Dimethomorph"
+   ],
+   "group": "FRAC 40",
+   "formulation": "WP",
+   "crops": [
+    "potato",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "late-blight"
+   ],
+   "note": "Used against late blight on potato and tomato. Take turns with fungicides from other groups.",
+   "app_ai": [
+    "Dimethomorph"
+   ]
+  },
+  {
+   "key": "forsee-800-wp",
+   "brand": "Forsee 800 WP",
+   "company": "Indofil",
+   "kind": "fungicide",
+   "ai": [
+    "Fosetyl aluminium"
+   ],
+   "group": "FRAC P07",
+   "formulation": "WP",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "pineapple-heart-rot"
+   ],
+   "note": "Moves down to the roots and guards against heart rot and root rot.",
+   "app_ai": [
+    "Fosetyl aluminium"
+   ]
+  },
+  {
+   "key": "fungitox-70-wp",
+   "brand": "Fungitox 70 WP",
+   "company": "Planters Products",
+   "kind": "fungicide",
+   "ai": [
+    "Thiophanate methyl"
+   ],
+   "group": "FRAC 1",
+   "formulation": "WP",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "black-sigatoka"
+   ],
+   "note": "A systemic fungicide used against sigatoka leaf spot in banana.",
+   "app_ai": [
+    "Thiophanate methyl"
+   ]
+  },
+  {
+   "key": "funguran-oh",
+   "brand": "Funguran OH",
+   "company": "Aldiz",
+   "kind": "fungicide",
+   "ai": [
+    "Copper hydroxide"
+   ],
+   "group": "FRAC M1",
+   "formulation": "WP",
+   "crops": [
+    "bellpepper",
+    "cabbage",
+    "cacao",
+    "calamansi",
+    "celery",
+    "chili",
+    "citrus",
+    "coffee",
+    "cucumber",
+    "mango",
+    "onion",
+    "pomelo",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "bacterial-spot",
+    "black-rot",
+    "cacao-black-pod",
+    "celery-late-blight",
+    "citrus-canker",
+    "citrus-scab",
+    "coffee-leaf-rust",
+    "purple-blotch"
+   ],
+   "note": "A copper fungicide for bacterial and fungal spots. Spray before long rains.",
+   "app_ai": [
+    "Copper",
+    "Copper compounds",
+    "Copper fungicides",
+    "Copper hydroxide"
+   ]
+  },
+  {
+   "key": "granada-70-wp",
+   "brand": "Granada 70 WP",
+   "company": "Kemistar",
+   "kind": "fungicide",
+   "ai": [
+    "Thiophanate methyl"
+   ],
+   "group": "FRAC 1",
+   "formulation": "WP",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "black-sigatoka"
+   ],
+   "note": "A systemic fungicide used against sigatoka leaf spot in banana.",
+   "app_ai": [
+    "Thiophanate methyl"
+   ]
+  },
+  {
+   "key": "hidrocob-77-wp",
+   "brand": "Hidrocob 77 WP",
+   "company": "Zagro",
+   "kind": "fungicide",
+   "ai": [
+    "Copper hydroxide"
+   ],
+   "group": "FRAC M1",
+   "formulation": "WP",
+   "crops": [
+    "bellpepper",
+    "cabbage",
+    "cacao",
+    "calamansi",
+    "celery",
+    "chili",
+    "citrus",
+    "coffee",
+    "cucumber",
+    "garlic",
+    "mango",
+    "onion",
+    "pomelo",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "bacterial-spot",
+    "black-rot",
+    "cacao-black-pod",
+    "celery-late-blight",
+    "citrus-canker",
+    "citrus-scab",
+    "coffee-leaf-rust",
+    "purple-blotch"
+   ],
+   "note": "A copper fungicide for bacterial and fungal spots. Spray before long rains.",
+   "app_ai": [
+    "Copper",
+    "Copper compounds",
+    "Copper fungicides",
+    "Copper hydroxide"
+   ]
+  },
+  {
+   "key": "ionic-copper-concentrate",
+   "brand": "Ionic Copper Concentrate",
+   "company": "Envireau Pacific",
+   "kind": "fungicide",
+   "ai": [
+    "Copper sulfate"
+   ],
+   "group": "FRAC M1",
+   "formulation": "",
+   "crops": [
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "bacterial-spot"
+   ],
+   "note": "A copper spray used against bacterial spot on tomato.",
+   "app_ai": [
+    "Copper fungicides"
+   ]
+  },
+  {
+   "key": "kocide-200-df",
+   "brand": "Kocide 200 DF",
+   "company": "Corteva",
+   "kind": "fungicide",
+   "ai": [
+    "Copper hydroxide"
+   ],
+   "group": "FRAC M1",
+   "formulation": "DF",
+   "crops": [
+    "bellpepper",
+    "cabbage",
+    "cacao",
+    "calamansi",
+    "celery",
+    "chili",
+    "citrus",
+    "coffee",
+    "cucumber",
+    "mango",
+    "onion",
+    "pomelo",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "bacterial-spot",
+    "black-rot",
+    "cacao-black-pod",
+    "celery-late-blight",
+    "citrus-canker",
+    "citrus-scab",
+    "coffee-leaf-rust",
+    "purple-blotch"
+   ],
+   "note": "A copper fungicide for bacterial and fungal spots. Spray before long rains.",
+   "app_ai": [
+    "Copper",
+    "Copper compounds",
+    "Copper fungicides",
+    "Copper hydroxide"
+   ]
+  },
+  {
+   "key": "kumulus-80-df",
+   "brand": "Kumulus 80 DF",
+   "company": "BASF",
+   "kind": "fungicide",
+   "ai": [
+    "Sulfur"
+   ],
+   "group": "FRAC M2",
+   "formulation": "DF",
+   "crops": [
+    "bellpepper",
+    "chili",
+    "limabean",
+    "papaya",
+    "wingedbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [
+    "spider-mites"
+   ],
+   "diseases": [
+    "powdery-mildew"
+   ],
+   "note": "Controls powdery mildew and some mites. Do not spray in the midday heat.",
+   "app_ai": [
+    "Sulfur"
+   ]
+  },
+  {
+   "key": "leads-armor-70-wp",
+   "brand": "Leads Armor 70 WP",
+   "company": "Leads Agri",
+   "kind": "fungicide",
+   "ai": [
+    "Thiophanate methyl"
+   ],
+   "group": "FRAC 1",
+   "formulation": "WP",
+   "crops": [
+    "banana"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "black-sigatoka"
+   ],
+   "note": "A systemic fungicide used against sigatoka leaf spot in banana.",
+   "app_ai": [
+    "Thiophanate methyl"
+   ]
+  },
+  {
+   "key": "lichem-captan-50-wp",
+   "brand": "Lichem Captan 50 WP",
+   "company": "Lichemphil International",
+   "kind": "fungicide",
+   "ai": [
+    "Captan"
+   ],
+   "group": "FRAC M4",
+   "formulation": "WP",
+   "crops": [
+    "strawberry"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "gray-mold"
+   ],
+   "note": "A protective fungicide for gray mold on strawberry. Spray before long wet spells.",
+   "app_ai": [
+    "Captan"
+   ]
+  },
+  {
+   "key": "metalyx-480-sl",
+   "brand": "Metalyx 480 SL",
+   "company": "Indofil",
+   "kind": "fungicide",
+   "ai": [
+    "Metalaxyl M"
+   ],
+   "group": "FRAC 4",
+   "formulation": "SL",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "pineapple-heart-rot"
+   ],
+   "note": "A systemic fungicide for water mold diseases like heart rot.",
+   "app_ai": [
+    "Metalaxyl"
+   ]
+  },
+  {
+   "key": "microthiol-df",
+   "brand": "Microthiol DF",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Sulfur"
+   ],
+   "group": "FRAC M2",
+   "formulation": "DF",
+   "crops": [
+    "bellpepper",
+    "chili",
+    "limabean",
+    "papaya",
+    "wingedbean"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "powdery-mildew"
+   ],
+   "note": "Controls powdery mildew and some mites. Do not spray in the midday heat.",
+   "app_ai": [
+    "Sulfur"
+   ]
+  },
+  {
+   "key": "nautile-73-wg",
+   "brand": "Nautile 73 WG",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Cymoxanil",
+    "Mancozeb"
+   ],
+   "group": "FRAC 27 plus FRAC M3",
+   "formulation": "WG",
+   "crops": [
+    "potato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "late-blight"
+   ],
+   "note": "Stops late blight early. Spray when the weather turns cool and wet.",
+   "app_ai": [
+    "Cymoxanil",
+    "Mancozeb"
+   ]
+  },
+  {
+   "key": "proviso-250-ec",
+   "brand": "Proviso 250 EC",
+   "company": "Indofil",
+   "kind": "fungicide",
+   "ai": [
+    "Propiconazole"
+   ],
+   "group": "FRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "thielaviopsis-rot"
+   ],
+   "note": "A systemic fungicide, used as a dip for pineapple crowns against base rot.",
+   "app_ai": [
+    "Propiconazole (sett dip)"
+   ]
+  },
+  {
+   "key": "ranman-10-sc",
+   "brand": "Ranman 10 SC",
+   "company": "AVC Chemical",
+   "kind": "fungicide",
+   "ai": [
+    "Cyazofamid"
+   ],
+   "group": "FRAC 21",
+   "formulation": "SC",
+   "crops": [
+    "cabbage",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "clubroot",
+    "downy-mildew"
+   ],
+   "note": "Used against downy mildew and clubroot. For clubroot it goes on the soil at planting.",
+   "app_ai": [
+    "Cyazofamid"
+   ]
+  },
+  {
+   "key": "ridomil-gold-480-sl",
+   "brand": "Ridomil Gold 480 SL",
+   "company": "Syngenta",
+   "kind": "fungicide",
+   "ai": [
+    "Metalaxyl M"
+   ],
+   "group": "FRAC 4",
+   "formulation": "SL",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "pineapple-heart-rot"
+   ],
+   "note": "A systemic fungicide for water mold diseases like heart rot.",
+   "app_ai": [
+    "Metalaxyl"
+   ]
+  },
+  {
+   "key": "saaf-75-wp",
+   "brand": "Saaf 75 WP",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Carbendazim",
+    "Mancozeb"
+   ],
+   "group": "FRAC 1 plus FRAC M3",
+   "formulation": "WP",
+   "crops": [
+    "rubber"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "pestalotiopsis-leaf-fall"
+   ],
+   "note": "Two fungicides in one for leaf fall disease in rubber.",
+   "app_ai": [
+    "Carbendazim",
+    "Mancozeb"
+   ]
+  },
+  {
+   "key": "tancap-50-wp",
+   "brand": "Tancap 50 WP",
+   "company": "Rainbow Agrosciences",
+   "kind": "fungicide",
+   "ai": [
+    "Captan"
+   ],
+   "group": "FRAC M4",
+   "formulation": "WP",
+   "crops": [
+    "strawberry"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "gray-mold"
+   ],
+   "note": "A protective fungicide for gray mold on strawberry. Spray before long wet spells.",
+   "app_ai": [
+    "Captan"
+   ]
+  },
+  {
+   "key": "tilt-250-ec",
+   "brand": "Tilt 250 EC",
+   "company": "Syngenta",
+   "kind": "fungicide",
+   "ai": [
+    "Propiconazole"
+   ],
+   "group": "FRAC 3",
+   "formulation": "EC",
+   "crops": [
+    "pineapple"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "thielaviopsis-rot"
+   ],
+   "note": "A systemic fungicide, used as a dip for pineapple crowns against base rot.",
+   "app_ai": [
+    "Propiconazole (sett dip)"
+   ]
+  },
+  {
+   "key": "unilax-72-wp",
+   "brand": "Unilax 72 WP",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Mancozeb",
+    "Metalaxyl"
+   ],
+   "group": "FRAC M3 plus FRAC 4",
+   "formulation": "WP",
+   "crops": [
+    "potato",
+    "tomato"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "late-blight"
+   ],
+   "note": "Fights late blight from inside and outside the leaf.",
+   "app_ai": [
+    "Mancozeb",
+    "Metalaxyl"
+   ]
+  },
+  {
+   "key": "vondozeb-75-wg",
+   "brand": "Vondozeb 75 WG",
+   "company": "UPL",
+   "kind": "fungicide",
+   "ai": [
+    "Mancozeb"
+   ],
+   "group": "FRAC M3",
+   "formulation": "WG",
+   "crops": [
+    "banana",
+    "cabbage",
+    "cauliflower",
+    "cucumber",
+    "garlic",
+    "limabean",
+    "mango",
+    "melon",
+    "onion",
+    "peanut",
+    "potato",
+    "stringbean",
+    "tomato",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "alternaria-leaf-spot",
+    "anthracnose",
+    "bean-rust",
+    "black-sigatoka",
+    "cercospora-leaf-spot",
+    "downy-mildew",
+    "late-blight",
+    "mango-scab",
+    "peanut-leaf-spot",
+    "purple-blotch"
+   ],
+   "note": "A protective fungicide for many leaf diseases. Spray before the disease spreads and after heavy rain.",
+   "app_ai": [
+    "Mancozeb"
+   ]
+  },
+  {
+   "key": "weather-stik-720-sc",
+   "brand": "Weather Stik 720 SC",
+   "company": "Syngenta",
+   "kind": "fungicide",
+   "ai": [
+    "Chlorothalonil"
+   ],
+   "group": "FRAC M5",
+   "formulation": "SC",
+   "crops": [
+    "ampalaya",
+    "banana",
+    "carrot",
+    "celery",
+    "cucumber",
+    "limabean",
+    "mango",
+    "melon",
+    "onion",
+    "patola",
+    "pechay",
+    "potato",
+    "sayote",
+    "squash",
+    "stringbean",
+    "tomato",
+    "upo",
+    "watermelon"
+   ],
+   "weeds": [],
+   "timing": null,
+   "pests": [],
+   "diseases": [
+    "anthracnose",
+    "bean-rust",
+    "black-sigatoka",
+    "carrot-leaf-blight",
+    "celery-late-blight",
+    "cercospora-leaf-spot",
+    "downy-mildew",
+    "late-blight",
+    "powdery-mildew",
+    "purple-blotch"
+   ],
+   "note": "A protective fungicide for many leaf spots and blights. Spray before the disease spreads and again after rain.",
+   "app_ai": [
+    "Chlorothalonil"
+   ]
+  }
+ ]
+}
