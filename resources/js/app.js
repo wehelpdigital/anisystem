@@ -250,6 +250,14 @@ window.api = async function api(url, { method = 'GET', body = null, headers = {}
         err.tierLock = true;
         throw err;
     }
+    // The field helpers pack on the free plan (2026-10-14): its offer, or its page.
+    if (res.status === 403 && json?.packLock) {
+        if (window.aneeFieldPack) window.aneeFieldPack();
+        else window.aneeUpgrade?.(json.message, 'libreAnee');
+        const err = new Error(json.message || 'The field helpers are an add-on on the free plan.');
+        err.tierLock = true;
+        throw err;
+    }
     if (res.status === 403 && json?.locked) {
         window.location.href = '/account/subscription';
         throw new Error(json.message || 'This needs a paid plan.');

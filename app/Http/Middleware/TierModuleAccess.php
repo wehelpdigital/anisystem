@@ -44,6 +44,11 @@ class TierModuleAccess
         ['sm.map', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
         ['sm.map.*', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
         ['sm.maps', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
+        // And every map door inside a season (2026-10-14, the owner): a lot's own
+        // map, attaching a saved map to a lot, and pinning where a lot is.
+        ['sm.lots.map', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
+        ['sm.lots.map.*', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
+        ['sm.lots.pin', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
     ];
 
     public function handle(Request $request, Closure $next): Response

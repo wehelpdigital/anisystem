@@ -3,7 +3,7 @@
 @section('title', 'Checkout')
 @section('page-title', 'Checkout')
 @section('page-subtitle', $order ? 'Order ' . $order->orderNumber : ($item['name'] ?? ''))
-@section('back', ($item['kind'] ?? $order?->kind) === 'credits' ? route('ai.credits', ['tab' => 'buy']) : route('account.subscription'))
+@section('back', ($item['kind'] ?? $order?->kind) === 'credits' ? route('ai.credits', ['tab' => 'buy']) : (($item['kind'] ?? $order?->kind) === 'addon' ? route('app.dashboard') : route('account.subscription')))
 
 @php
     /* Orders paid by hand (2026-09-30): one page, four steps -- how to pay,
@@ -12,6 +12,8 @@
        stands. Every write is CheckoutController's; see OrderService. */
     $money = fn ($v) => \App\Support\Region::money((float) $v);
     $isPlan = ($item['kind'] ?? $order?->kind) === 'plan';
+    // The field helpers pack (2026-10-14), an add-on bought apart from a plan.
+    $isAddon = ($item['kind'] ?? $order?->kind) === 'addon';
     $gcashFee = (float) $pay['gcashFee'];
     $aiPlan = $isPlan && $pay['aiAutoApprove'];
     $tierCfg = $isPlan && $item ? (array) config('tiers.' . $item['tier']) : [];
@@ -148,7 +150,7 @@
         $showPrice = $order ? (float) $order->price : (float) $item['price'];
     @endphp
     <div class="card co-sum" id="coSum">
-        <span class="ic" aria-hidden="true">{{ $isPlan ? '🌾' : '🪙' }}</span>
+        <span class="ic" aria-hidden="true">{{ $isPlan ? '🌾' : ($isAddon ? '🔓' : '🪙') }}</span>
         <div class="min-w-0">
             <b>{{ $showName }}</b>
             <small>
@@ -163,6 +165,8 @@
                         Starts once approved.
                     @endif
                     @if (($item['credits'] ?? 0) > 0) Comes with {{ number_format($item['credits']) }} AI credits. @endif
+                @elseif ($isAddon)
+                    The Weed Control Helper, Pest Finder, Disease Finder and Variety Finder for one year. That is {{ \App\Support\FieldPack::perDay() }}.
                 @elseif ($item)
                     AI credits never expire.
                 @endif
@@ -198,7 +202,7 @@
                 @endforeach
             </div>
             <div class="co-lines">
-                <div><span>{{ $isPlan ? 'Plan' : 'Credits' }}</span><span>{{ $money($showPrice) }}</span></div>
+                <div><span>{{ $isPlan ? 'Plan' : ($isAddon ? 'Field helpers, 1 year' : 'Credits') }}</span><span>{{ $money($showPrice) }}</span></div>
                 <div id="coFeeLine" hidden><span>GCash processing fee</span><span>{{ $money($gcashFee) }}</span></div>
                 <div class="tot"><span>You pay</span><span id="coTotal">{{ $money($showPrice) }}</span></div>
             </div>
@@ -339,6 +343,7 @@
 (() => {
     const ITEM = @json($item['key'] ?? null);
     const IS_PLAN = @json($isPlan);
+    const IS_ADDON = @json($isAddon);
     const AI_PLAN = @json($aiPlan);
     const PRICE = {{ $showPrice }};
     const FEE = { gcash: {{ $gcashFee }} };
@@ -347,6 +352,7 @@
         farm: @json(route('app.dashboard')),
         plans: @json(route('account.subscription')),
         credits: @json(route('ai.credits')),
+        helpers: @json(route('fh.page', 'pests')),
         again: @json($item ? route('checkout', ['item' => $item['key']]) : route('account.subscription')),
     };
     const money = (n) => new Intl.NumberFormat('en-PH', { style: 'currency', currency: @json($order->currency ?? ($item['currency'] ?? 'PHP')), minimumFractionDigits: 2 }).format(n);
@@ -543,8 +549,13 @@
         const base = [['Order', o.number], ['For', o.itemName], ['Paid', o.totalText + ' by ' + o.methodLabel]];
         let html;
         if (o.status === 'approved') {
-            const plan = o.kind === 'plan';
-            html = `<div class="co-badge ok">${ICON.ok}</div>
+            const plan = o.kind === 'plan', addon = o.kind === 'addon';
+            html = addon ? `<div class="co-badge ok">${ICON.ok}</div>
+                <h2>Your field helpers are open</h2>
+                <p>The Weed Control Helper, Pest Finder, Disease Finder and Variety Finder are yours until ${esc(o.expiresAt || '')}.${o.decidedByAi ? ' Anee checked your receipt.' : ''}</p>
+                ${facts(base.concat([['Open until', o.expiresAt]]))}
+                <div class="co-actions"><a class="btn btn-primary btn-lg" href="${LINKS.helpers}">Open the Pest Finder</a><a class="btn btn-white btn-lg" href="${LINKS.farm}">Back to my farm</a></div>`
+                : `<div class="co-badge ok">${ICON.ok}</div>
                 <h2>${plan ? (o.queued ? 'Approved. Your plan is next in line' : esc(o.itemName) + ' is active') : esc(o.credits.toLocaleString()) + ' credits added'}</h2>
                 <p>${plan ? (o.queued ? 'It starts ' + esc(o.startsAt) + ', right after your current plan ends.' : 'Your plan is open now until ' + esc(o.expiresAt) + '.') : 'They are in your account now and never expire.'}
                 ${o.decidedByAi ? ' Anee checked your receipt.' : ''}</p>
@@ -555,7 +566,7 @@
                 <h2>We are checking your payment</h2>
                 <p>A person checks it, usually within {{ $pay['reviewHours'] }} hours. We will email and notify you once it is approved. It turns on by itself.</p>
                 ${facts(base.concat([['Sent', o.submittedAt]]))}
-                <div class="co-actions"><a class="btn btn-white btn-lg" href="${o.kind === 'plan' ? LINKS.plans : LINKS.credits}">Done</a></div>`;
+                <div class="co-actions"><a class="btn btn-white btn-lg" href="${o.kind === 'plan' ? LINKS.plans : (o.kind === 'addon' ? LINKS.farm : LINKS.credits)}">Done</a></div>`;
             startPoll();
         } else if (o.status === 'rejected' || o.status === 'revoked') {
             html = `<div class="co-badge no">${ICON.no}</div>

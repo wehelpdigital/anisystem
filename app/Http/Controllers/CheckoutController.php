@@ -37,6 +37,10 @@ class CheckoutController extends Controller
         if (! $order && $item['kind'] === 'credits' && ! $user->canUseAi()) {
             return redirect()->route('ai.credits', ['tab' => 'buy']);
         }
+        // The field helpers come with every plan above Libre: nothing to buy.
+        if (! $order && $item['kind'] === 'addon' && \App\Support\FieldPack::inPlan($user)) {
+            return redirect()->route('app.dashboard')->with('success', 'Your plan already has the field helpers.');
+        }
         // A plan page for a plan already waiting for a decision shows that
         // order. Credits do not wait: a new pack can be bought meanwhile.
         if (! $order && $item && $item['kind'] === 'plan' && ($waiting = $this->orders->inReview($user, 'plan'))) {

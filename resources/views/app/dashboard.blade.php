@@ -635,6 +635,42 @@
     @media (max-width: 599px) { .wb-hint { display: none; } }
 
     .dash-album { margin-top: .9rem; }
+    /* The album, folded to a slim bar (2026-10-14). */
+    .dba-bar { display: flex; align-items: center; gap: .5rem; padding: .5rem .55rem .5rem .5rem; border-radius: 1.2rem; color: #f6f1e4;
+        background: linear-gradient(110deg, #26301a 0%, #1d2412 60%, #141a0c 100%); box-shadow: 0 18px 40px -30px rgb(20 26 10 / .9), inset 0 0 0 1px rgb(255 255 255 / .07);
+        transition: border-radius .35s cubic-bezier(.22,1,.36,1); }
+    .dba.is-open .dba-bar { border-radius: 1.2rem 1.2rem .5rem .5rem; }
+    .dba-open { display: flex; align-items: center; gap: .7rem; flex: 1; min-width: 0; text-align: left; }
+    .dba-cover { position: relative; flex: none; width: 3.1rem; height: 3.1rem; }
+    .dba-cover img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; border-radius: .55rem; box-shadow: 0 6px 16px -8px rgb(0 0 0 / .7); }
+    .dba-disc { position: absolute; z-index: 0; top: .2rem; left: .55rem; width: 2.7rem; height: 2.7rem; border-radius: 999px;
+        background: radial-gradient(circle, #f5c518 0 14%, #111 15% 22%, #222 23% 100%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); transition: transform .5s cubic-bezier(.22,1,.36,1); }
+    .dba.is-playing .dba-disc { transform: translateX(1.1rem); animation: dbaSpin 3s linear infinite; }
+    @keyframes dbaSpin { to { rotate: 360deg; } }
+    .dba-t { min-width: 0; display: grid; line-height: 1.2; padding-left: .2rem; }
+    .dba.is-playing .dba-t { padding-left: 1.2rem; transition: padding .5s cubic-bezier(.22,1,.36,1); }
+    .dba-t small { font-size: .6rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: #c9b98a; }
+    .dba-t b { font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #fff; }
+    .dba-t em { font-style: normal; font-size: .72rem; color: #cfc4a4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .dba-play { flex: none; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 999px; color: #1d2412; background: #f5c518;
+        box-shadow: 0 10px 22px -12px rgb(245 197 24 / .8); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .dba-play:hover { transform: scale(1.06); }
+    .dba-play svg { width: 1.05rem; height: 1.05rem; }
+    .dba-play .i-pause, .dba.is-playing .dba-play .i-play { display: none; }
+    .dba.is-playing .dba-play .i-pause { display: block; }
+    .dba-chev { flex: none; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 999px; color: #f6f1e4; background: rgb(255 255 255 / .08); }
+    .dba-chev svg { width: 1rem; height: 1rem; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+    .dba.is-open .dba-chev svg { transform: rotate(180deg); }
+    .dba-fold { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.22,1,.36,1); }
+    .dba.is-open .dba-fold { grid-template-rows: 1fr; }
+    .dba-fold > div { min-height: 0; overflow: hidden; }
+    .dba-fold .ba { border-radius: .5rem .5rem 1.5rem 1.5rem; }
+    /* Open, the card's own head repeats the bar: on a phone it goes. */
+    @media (max-width: 639.98px) {
+        .dba-fold .ba .ba-sleeve, .dba-fold .ba .ba-head { display: none; }
+        .dba-fold .ba.is-compact .ba-in { grid-template-columns: minmax(0, 1fr); grid-template-areas: "player" "songs"; }
+    }
+    @media (prefers-reduced-motion: reduce) { .dba-fold, .dba-chev svg, .dba-disc, .dba-bar { transition: none; } .dba.is-playing .dba-disc { animation: none; } }
 
     /* THE INVITATION THAT STANDS IN FOR AN EMPTY LIST.
        A card headed "Latest Discussions" with "join a group" as its only row
@@ -917,10 +953,10 @@
     {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
     @include('partials.ad-slot', ['placement' => 'dashboard'])
 
-    {{-- Anee Auto (2026-10-12), shown off to the farm owner: Anee plans the season. --}}
+    {{-- Anee Auto (2026-10-12), shown off to the farm owner: Anee plans the
+         season. A simple card that opens (2026-10-14, the owner). --}}
     @unless (\App\Support\WorkerContext::inWorkerContext())
-        @include('auto.partials.hero-css')
-        @include('auto.partials.hero', ['cta' => true])
+        @include('auto.partials.card')
         @include('auto.partials.start')
     @endunless
 
@@ -1248,7 +1284,25 @@
             {{-- Bayani ng Lupa (2026-10-12): the anee.io album in place of the
                  one song (a Taglish album: sung for the home market). --}}
             @if (\App\Support\Region::ph())
-                <div class="dash-album">@include('partials.bayani-album', ['id' => 'dashAlbum', 'h' => 'h2'])</div>
+                {{-- Folded to one slim bar by default (2026-10-14, the owner: too big on a
+                     phone); the bar's own play button plays the album without opening it. --}}
+                @php $dbaCover = asset(\App\Support\BayaniAlbum::COVER); $dbaTracks = \App\Support\BayaniAlbum::tracks(); @endphp
+                <div class="dash-album dba" id="dashAlbumWrap">
+                    <div class="dba-bar">
+                        <button type="button" class="dba-open" data-dba-toggle aria-expanded="false" aria-controls="dashAlbumFold">
+                            <span class="dba-cover"><img src="{{ $dbaCover }}-480.webp" alt="" width="96" height="96" loading="lazy"><i class="dba-disc" aria-hidden="true"></i></span>
+                            <span class="dba-t"><small>The anee.io album</small><b>Bayani ng Lupa</b><em data-dba-now>{{ count($dbaTracks) }} songs · Free to play</em></span>
+                        </button>
+                        <button type="button" class="dba-play" data-dba-play aria-label="Play the album">
+                            <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                            <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
+                        </button>
+                        <button type="button" class="dba-chev" data-dba-toggle aria-label="Show the album" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                    </div>
+                    <div class="dba-fold" id="dashAlbumFold"><div>
+                        @include('partials.bayani-album', ['id' => 'dashAlbum', 'h' => 'h2', 'compact' => true])
+                    </div></div>
+                </div>
             @endif
 
             {{-- What's New in Agriculture (the owner, 2026-10-07): the newest
@@ -2213,6 +2267,34 @@
         vid.play?.().catch(showDot);
     });
 
+    // The album bar (2026-10-14): folded by default, remembered; its play
+    // button presses the album's own, and it shows what is playing.
+    (() => {
+        const wrap = document.getElementById('dashAlbumWrap');
+        const album = document.getElementById('dashAlbum');
+        if (!wrap || !album) return;
+        const KEY = 'dbaOpen';
+        const toggles = [...wrap.querySelectorAll('[data-dba-toggle]')];
+        const set = (open) => { wrap.classList.toggle('is-open', open); toggles.forEach((t) => t.setAttribute('aria-expanded', open ? 'true' : 'false')); };
+        try { set(localStorage.getItem(KEY) === '1'); } catch (_) { set(false); }
+        toggles.forEach((t) => t.addEventListener('click', () => {
+            const open = !wrap.classList.contains('is-open');
+            set(open);
+            try { localStorage.setItem(KEY, open ? '1' : '0'); } catch (_) {}
+        }));
+        const play = wrap.querySelector('[data-dba-play]'), now = wrap.querySelector('[data-dba-now]'), first = now.textContent;
+        play.addEventListener('click', () => album.querySelector('[data-ba-play]')?.click());
+        const paint = () => {
+            const on = album.classList.contains('is-playing');
+            wrap.classList.toggle('is-playing', on);
+            play.setAttribute('aria-label', on ? 'Pause the album' : 'Play the album');
+            const t = album.querySelector('[data-ba-now]')?.textContent;
+            now.textContent = on && t ? 'Now playing: ' + t : first;
+        };
+        new MutationObserver(paint).observe(album, { attributes: true, attributeFilter: ['class'] });
+        const nowEl = album.querySelector('[data-ba-now]');
+        if (nowEl) new MutationObserver(paint).observe(nowEl, { childList: true, characterData: true, subtree: true });
+    })();
     // The album stops when Anee speaks (and stops her when it plays).
     vid.addEventListener('play', () => { hideDot(); document.querySelectorAll('[data-album] audio').forEach((a) => a.pause()); });
     vid.addEventListener('pause', showDot);

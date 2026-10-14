@@ -38,6 +38,7 @@ return [
         'maps'              => false,   // the Maps module: Libre + Anee and up (2026-10-12)
         'workersPerSchedule' => 0,      // the Workers module is the Solo Farmer plan's (2026-09-19)
         'workers'           => false,
+        'fieldHelpers'      => false,   // Weed, Pest, Disease and Variety Finders; Libre buys them as a yearly add-on (2026-10-14, App\Support\FieldPack)
         'inventory'         => false,   // and so is the shed
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -96,6 +97,7 @@ return [
         'maps'              => true,
         'workersPerSchedule' => 0,
         'workers'           => false,
+        'fieldHelpers'      => true,
         'inventory'         => false,
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -149,6 +151,7 @@ return [
         'maps'              => true,
         'workersPerSchedule' => null,
         'workers'           => true,
+        'fieldHelpers'      => true,
         'inventory'         => true,
         'workerLogins'      => false,   // logins are the Owner tier's story
         'videoRecording'    => true,
@@ -204,6 +207,7 @@ return [
         'maps'              => true,
         'workersPerSchedule' => null,
         'workers'           => true,
+        'fieldHelpers'      => true,
         'inventory'         => true,
         'workerLogins'      => true,
         'videoRecording'    => true,
@@ -254,6 +258,7 @@ return [
         'maps'              => true,
         'workersPerSchedule' => null,
         'workers'           => true,
+        'fieldHelpers'      => true,
         'inventory'         => true,
         'workerLogins'      => true,
         'videoRecording'    => true,

@@ -2514,8 +2514,9 @@ class ActivityController extends BaseScheduleController
             }
         }
 
-        // Maps the season uses, and your own (Global and Quick Tools).
-        $maps = \App\Support\MapAccess::choices($schedule->id)
+        // Maps the season uses, and your own (Global and Quick Tools). None on
+        // a plan without Maps (2026-10-14): Maps is an Anee plan tool.
+        $maps = ! \App\Support\Tier::farmCan('maps') ? collect() : \App\Support\MapAccess::choices($schedule->id)
             ->orderByDesc('id')->limit(100)->get()
             ->map(function ($m) use ($when) {
                 $n = count(json_decode((string) $m->objects, true) ?: []);

@@ -63,6 +63,9 @@ return Application::configure(basePath: dirname(__DIR__))
             // And whether the farm's PLAN has the module at all: Workers and
             // the Inventory are the Solo Farmer plan's. Same shape, same reason.
             \App\Http\Middleware\TierModuleAccess::class,
+            // And the field helpers pack on the free plan (2026-10-14): by path,
+            // so a catalogue route added later is covered too.
+            \App\Http\Middleware\FieldPackGate::class,
             // Watches the /app/community hallway for suspended members. By
             // path, not per-route: a door added next month is still covered.
             \App\Http\Middleware\CommunityOpen::class,

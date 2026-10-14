@@ -208,7 +208,9 @@ class OrderService
             if (! $user) {
                 throw new RuntimeException('The buyer of this order no longer exists.');
             }
-            $effect = $o->isPlan() ? $this->applyPlan($o, $user) : $this->applyCredits($o, $user);
+            $effect = $o->isPlan() ? $this->applyPlan($o, $user)
+                : ($o->kind === 'addon' ? \App\Support\FieldPack::grant((int) $user->id, (string) $o->orderNumber, (float) $o->total, (string) ($o->currency ?: 'PHP'))
+                : $this->applyCredits($o, $user));
             $o->update(['status' => AsOrder::APPROVED, 'approvedAt' => now(), 'decidedBy' => $by, 'effect' => $effect]);
 
             return $o->fresh();
@@ -260,6 +262,9 @@ class OrderService
             }
             if (! empty($effect['credits'])) {
                 $this->credits->takeBack((int) $o->userId, (float) $effect['credits'], $why);
+            }
+            if (! empty($effect['addonId'])) {
+                \App\Support\FieldPack::revoke((int) $effect['addonId'], $why . ($reason ? ': ' . $reason : ''));
             }
             if (! empty($effect['creditPurchaseId'])) {
                 AiCreditPurchase::whereKey($effect['creditPurchaseId'])->update(['status' => 'revoked']);

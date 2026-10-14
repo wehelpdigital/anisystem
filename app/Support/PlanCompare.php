@@ -37,6 +37,8 @@ class PlanCompare
                 ['Growth stages', 'Where every lot stands on any date', $all()],
                 ['Farm maps', 'Draw, measure and pin your fields', fn (array $t) => empty($t['maps']) ? false : ($t['mapsTotal'] === null ? 'Unlimited' : (string) $t['mapsTotal'])],
                 ['Drawings and photo capture', null, $all()],
+                // The field helpers (2026-10-14): a yearly add-on on Libre, in every plan above it.
+                ['Field helpers', 'Weed Control Helper, Pest Finder, Disease Finder, Variety Finder', fn (array $t) => ! empty($t['fieldHelpers']) ? true : 'Add-on'],
             ]],
             ['Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', [
                 ['Forecast', null, fn (array $t) => $t['weatherDays'] === null ? 'Full forecast' : 'Today and tomorrow'],

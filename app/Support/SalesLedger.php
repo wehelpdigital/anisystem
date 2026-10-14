@@ -59,7 +59,18 @@ class SalesLedger
             ->tap(fn ($q) => $window($q, 'created_at'))
             ->get(['userId', 'packName', 'credits', 'price', 'ecomOrderId', 'orderNumber', 'created_at']);
 
-        $numbers = $plans->pluck('orderNumber')->merge($packs->pluck('orderNumber'))->filter()->unique()->values()->all();
+        // Add-ons (2026-10-14): the field helpers pack, bought on its own.
+        $addons = \Illuminate\Support\Facades\Schema::hasTable('as_user_addons')
+            ? DB::table('as_user_addons')->where('status', 'active')->where('price', '>', 0)
+                ->tap(fn ($q) => $window($q, 'created_at'))
+                ->get(['userId', 'name', 'price', 'orderNumber', 'created_at'])->map(function ($r) {
+                    $r->ecomOrderId = null;
+
+                    return $r;
+                })
+            : collect();
+
+        $numbers = $plans->pluck('orderNumber')->merge($packs->pluck('orderNumber'))->merge($addons->pluck('orderNumber'))->filter()->unique()->values()->all();
         $orders = $numbers ? DB::table('as_orders')->whereIn('orderNumber', $numbers)->get(['orderNumber', 'method', 'currency'])->keyBy('orderNumber') : collect();
 
         $how = function ($row) use ($orders) {
@@ -83,6 +94,13 @@ class SalesLedger
             'userId' => (int) $r->userId,
             'item' => (trim((string) $r->packName) ?: 'Credit pack') . ' · ' . number_format((int) $r->credits) . ' credits',
             'kind' => 'credits',
+            'amount' => round((float) $r->price, 2),
+            'orderNumber' => $r->orderNumber,
+        ] + $how($r)))->concat($addons->map(fn ($r) => [
+            'at' => Carbon::parse($r->created_at),
+            'userId' => (int) $r->userId,
+            'item' => trim((string) $r->name) ?: 'Add-on',
+            'kind' => 'addon',
             'amount' => round((float) $r->price, 2),
             'orderNumber' => $r->orderNumber,
         ] + $how($r)))->sortByDesc(fn ($s) => $s['at']->timestamp)->values();

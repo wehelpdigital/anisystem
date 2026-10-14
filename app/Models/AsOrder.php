@@ -56,6 +56,12 @@ class AsOrder extends Model
         return $this->kind === 'plan';
     }
 
+    /** An add-on bought apart from a plan (the field helpers pack). */
+    public function isAddon(): bool
+    {
+        return $this->kind === 'addon';
+    }
+
     /** How the buyer's own screens name the state. */
     public function statusLabel(): string
     {
