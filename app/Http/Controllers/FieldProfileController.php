@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Support\FieldProfile;
+use App\Support\WorkerContext;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+/**
+ * Saved field profiles (2026-10-15): a lot's soil, water and history,
+ * answered once (App\Support\FieldProfile) and offered again by every
+ * analysis through the shared partial partials/field-profile. The farm
+ * owner's (WorkerContext::effectiveOwnerId), so a worker sees the farm's.
+ */
+class FieldProfileController extends Controller
+{
+    /** The pests, diseases and other troubles a crop's last season may have had, with photos where we have them. */
+    public function troubles(Request $request)
+    {
+        $crop = (string) $request->query('crop', 'rice');
+
+        return $this->json(true, 'ok', ['crop' => $crop, 'rows' => FieldProfile::troubles($crop, true)]);
+    }
+
+    /** The farm's saved profiles, the newest first. */
+    public function list()
+    {
+        return $this->json(true, 'ok', ['rows' => FieldProfile::saved(WorkerContext::effectiveOwnerId()), 'ready' => FieldProfile::storeReady()]);
+    }
+
+    /** Save a profile: a new one, or the one already kept for the same season lot or name. */
+    public function save(Request $request)
+    {
+        return $this->keep($request, null);
+    }
+
+    /** Update one saved profile. */
+    public function update(Request $request, int $id)
+    {
+        return $this->keep($request, $id);
+    }
+
+    private function keep(Request $request, ?int $id)
+    {
+        $v = Validator::make($request->all(), [
+            'name' => 'required|string|max:120', 'crop' => 'nullable|string|max:40', 'answers' => 'required|array',
+            'lotId' => 'nullable|integer', 'scheduleId' => 'nullable|integer',
+        ]);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        if (! FieldProfile::storeReady()) {
+            return $this->json(false, 'Saved answers are not ready yet. Please try again later.', [], 503);
+        }
+        $row = FieldProfile::store(WorkerContext::effectiveOwnerId(), $request->only(['name', 'crop', 'answers', 'lotId', 'scheduleId']), $id);
+        if (! $row) {
+            return $this->json(false, $id ? 'That saved field is not yours.' : 'There is nothing to save yet.', [], $id ? 404 : 422);
+        }
+
+        return $this->json(true, 'Saved.', ['row' => $row]);
+    }
+
+    private function json(bool $ok, string $message, array $data = [], int $status = 200)
+    {
+        return response()->json(['success' => $ok, 'message' => $message, 'data' => $data], $status);
+    }
+}

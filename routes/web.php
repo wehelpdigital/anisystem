@@ -783,6 +783,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/land-prep/varieties', [App\Http\Controllers\LandPrepController::class, 'varieties'])->middleware('throttle:120,1')->name('landprep.varieties');
     Route::get('/app/land-prep/seed', [App\Http\Controllers\LandPrepController::class, 'seed'])->middleware('throttle:240,1')->name('landprep.seed');
     Route::get('/app/land-prep/seasons', [App\Http\Controllers\LandPrepController::class, 'seasons'])->name('landprep.seasons');
+    Route::post('/app/land-prep/check', [App\Http\Controllers\LandPrepController::class, 'check'])->middleware('throttle:120,1')->name('landprep.check');
     Route::get('/app/land-prep/protocols', [App\Http\Controllers\LandPrepController::class, 'protocols'])->name('landprep.protocols');
     Route::post('/app/land-prep/generate', [App\Http\Controllers\LandPrepController::class, 'generate'])->name('landprep.generate');
     Route::get('/app/land-prep/job/{id}', [App\Http\Controllers\LandPrepController::class, 'jobState'])->whereNumber('id')->name('landprep.job');
@@ -791,6 +792,11 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/land-prep/meta', [App\Http\Controllers\LandPrepController::class, 'meta'])->name('landprep.meta');
     Route::post('/app/land-prep/port', [App\Http\Controllers\LandPrepController::class, 'port'])->middleware('throttle:20,1')->name('landprep.port');
     Route::delete('/app/land-prep/{id}', [App\Http\Controllers\LandPrepController::class, 'destroy'])->whereNumber('id')->name('landprep.delete');
+    // Field profiles (2026-10-15): a lot's soil, water and history answered once and reused by every analysis (App\Support\FieldProfile).
+    Route::get('/app/field-profiles', [App\Http\Controllers\FieldProfileController::class, 'list'])->name('fieldprofile.list');
+    Route::get('/app/field-profiles/troubles', [App\Http\Controllers\FieldProfileController::class, 'troubles'])->middleware('throttle:120,1')->name('fieldprofile.troubles');
+    Route::post('/app/field-profiles', [App\Http\Controllers\FieldProfileController::class, 'save'])->middleware('throttle:60,1')->name('fieldprofile.save');
+    Route::post('/app/field-profiles/{id}', [App\Http\Controllers\FieldProfileController::class, 'update'])->whereNumber('id')->middleware('throttle:60,1')->name('fieldprofile.update');
     // The old free field helper now opens the planner (defined before fh.page so it wins).
     Route::get('/app/field-helpers/landprep', fn () => redirect()->route('landprep.page'))->name('landprep.legacy');
     // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.

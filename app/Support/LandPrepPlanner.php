@@ -6,7 +6,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * THE LAND PREP PLANNER'S ARITHMETIC (2026-10-14).
+ * THE LAND PREP PLANNER'S ARITHMETIC (2026-10-14, round two 2026-10-15).
  *
  * Everything Anee should not be trusted to count is counted here, in PHP:
  *
@@ -14,18 +14,28 @@ use Illuminate\Support\Facades\Cache;
  *    System of PhilRice (database/land-prep/rice-methods.json, written in our
  *    own words), the other crops from App\Support\LandPrep::PLANS, each a
  *    window of days before (negative) or after the planting day;
- *  - the rules the farmer's answers trigger (a soil test and lime for strongly
- *    acid soil, a salt flush, a stale seedbed for weedy rice, a backup
- *    seedbed for flood prone fields), each tagged with its source;
+ *  - the rules the farmer's answers trigger, LOT BY LOT since round two
+ *    (lots differ: one is clay and floods, the next is sandy and dry): a
+ *    soil test and lime for strongly acid soil, a salt flush, a stale
+ *    seedbed for weedy rice, a rat campaign, a break for a virus, and so on,
+ *    each tagged with its source;
  *  - the seed preparation of the chosen variety: the brand's own soak,
  *    water change and incubation hours (database/land-prep/seedprep.json),
- *    the PhilRice general practice when no brand instruction exists, and
- *    a plain "follow the seed bag" when nothing was researched;
+ *    Anee's own research for a variety not on our list, the PhilRice
+ *    general practice when no brand instruction exists, and a plain
+ *    "follow the seed bag" when nothing was found;
  *  - the crew: every lot's plowing, harrowing, leveling and hand work laid
- *    on the calendar day by day, so no worker and no machine is in two
- *    places at once and each lot is ready on its planting day. Where the
- *    crew cannot keep up, the late steps are named, or (when the farmer
- *    allows it) the planting days are staggered until they can.
+ *    on the calendar day by day. Each worker has their own work days, so a
+ *    day's hands are the workers who work that weekday. Machines are by type
+ *    and count (database/land-prep/equipment.json): a step that needs a plow
+ *    or a harrow takes any machine able to do it, the fastest first, and an
+ *    owned machine needs one of the workers to drive it while a hired one
+ *    comes with its driver and gets a "book it" reminder a week ahead.
+ *    Where the crew cannot keep up, the late steps are named, or (when the
+ *    farmer allows it) the planting days are staggered until they can;
+ *  - the time check: how many days the recommended preparation needs before
+ *    the planting day, against the days that are left, and the steps a short
+ *    run squeezes or misses; and the crew a plan of this size needs.
  *
  * Anee adds her judgement on top (LandPrepController): her own steps,
  * notes and an analysis of why, which run through the same scheduler.
@@ -82,10 +92,20 @@ final class LandPrepPlanner
         'crew' => 'your crew', 'seed' => 'your seed', 'water' => 'your water', 'method' => 'how you plant',
     ];
 
+    /** A lot's size as the farmer typed it: unit => [word, hectares per unit]. Only units that convert exactly. */
+    public const UNITS = [
+        'ha' => ['hectares', 1.0],
+        'sqm' => ['square meters', 0.0001],
+        'acre' => ['acres', 0.40468564],
+    ];
+
+    /** The other troubles of a last season (rats, flood damage, a zinc shortage): see FieldProfile::OTHER. */
+    public const OTHER_PROBLEMS = FieldProfile::OTHER;
+
     /**
      * Who does a step and how much of it there is: [kind, measure]. A
-     * machine step counts machine days per hectare by the equipment
-     * (MACHINE_RATES), a manual one person days per hectare.
+     * machine step names the kind of work (a machine's rate for it is in
+     * equipment.json), a manual one person days per hectare.
      */
     private const WORK = [
         'dikes' => ['manual', 5], 'straw' => ['manual', 2], 'clean_field' => ['manual', 3], 'drain_canal' => ['manual', 2],
@@ -99,19 +119,19 @@ final class LandPrepPlanner
         'clear' => ['manual', 10], 'clear_land' => ['manual', 20], 'stones' => ['manual', 5], 'contour' => ['manual', 3],
         'beds' => ['manual', 25], 'mulch' => ['manual', 10], 'drainage' => ['manual', 6], 'holes' => ['manual', 15], 'fill' => ['manual', 10],
         'windbreak' => ['manual', 4], 'material' => ['manual', 2], 'snail_screens' => ['manual', 0.5], 'trellis' => ['manual', 15],
-        'sucker_prep' => ['manual', 1], 'harden' => ['manual', 0.5],
+        'sucker_prep' => ['manual', 1], 'harden' => ['manual', 0.5], 'rat_campaign' => ['manual', 1], 'host_clear' => ['manual', 1.5],
     ];
 
-    /** Machine days per hectare by what pulls the plow; "hand" is person days. */
-    private const MACHINE_RATES = [
-        'hand_tractor' => ['plow' => 2, 'harrow' => 1, 'harrowlevel' => 2, 'level' => 1, 'roughlevel' => 2, 'light' => 0.5, 'furrow' => 1],
-        'tractor' => ['plow' => 0.35, 'harrow' => 0.25, 'harrowlevel' => 0.6, 'level' => 0.4, 'roughlevel' => 0.8, 'light' => 0.2, 'furrow' => 0.3],
-        'carabao' => ['plow' => 5, 'harrow' => 2.5, 'harrowlevel' => 4.5, 'level' => 2, 'roughlevel' => 4, 'light' => 1.5, 'furrow' => 2],
-        'hired' => ['plow' => 1, 'harrow' => 0.5, 'harrowlevel' => 1, 'level' => 0.5, 'roughlevel' => 1, 'light' => 0.3, 'furrow' => 0.5],
-        'hand' => ['plow' => 30, 'harrow' => 15, 'harrowlevel' => 22, 'level' => 8, 'roughlevel' => 16, 'light' => 6, 'furrow' => 10],
+    /** Person days per hectare for machine work done by hand, when no machine on the list can do it. */
+    private const HAND_RATES = ['plow' => 30, 'harrow' => 15, 'harrowlevel' => 22, 'level' => 8, 'roughlevel' => 16, 'light' => 6, 'furrow' => 10];
+
+    /** The old one-machine crew (before round two), as the machines it meant. */
+    private const LEGACY_FLEET = [
+        'hand_tractor' => ['hand_tractor'], 'tractor' => ['tractor_rotavator'], 'carabao' => ['carabao_plow', 'carabao_harrow'],
+        'hired' => ['hand_tractor'], 'hand' => [],
     ];
 
-    /** What pulls the plow, as the farmer picks it. */
+    /** The old one-machine choices, for plans saved before round two. */
     public const EQUIPMENT = [
         'hand_tractor' => ['Hand tractor', 'Kuliglig or power tiller', '🚜'],
         'tractor' => ['Four wheel tractor', 'Or a rotavator', '🚛'],
@@ -138,8 +158,11 @@ final class LandPrepPlanner
     /** Work that may start this many days before its window when the crew needs the room (a dike can be fixed early). */
     private const EARLY = [
         'dikes' => 14, 'straw' => 5, 'clear' => 14, 'clear_land' => 14, 'clean_field' => 14, 'drain_canal' => 14, 'windbreak' => 30,
-        'holes' => 14, 'contour' => 7, 'snail_screens' => 4, 'drainage' => 14, 'nursery_fill' => 2, 'seedbed_site' => 3,
+        'holes' => 14, 'contour' => 7, 'snail_screens' => 4, 'drainage' => 14, 'nursery_fill' => 2, 'seedbed_site' => 3, 'rat_campaign' => 7, 'host_clear' => 7,
     ];
+
+    /** Steps that are no field work, so they do not count toward the days a preparation needs. */
+    private const NOT_WORK = ['rest', 'calendar', 'soil_test', 'salt_variety', 'seed_test', 'book_service'];
 
     /** People a planting day takes, per hectare, and the words for it. */
     private const PLANTING = [
@@ -161,7 +184,7 @@ final class LandPrepPlanner
         'transplant' => 'planting', 'sow' => 'planting', 'plant' => 'planting', 'drum_setup' => 'planting', 'replant' => 'planting', 'water_replant' => 'planting',
         'seedbed_water' => 'irrigation', 'keep_wet' => 'irrigation', 'first_water' => 'irrigation', 'no_flood' => 'irrigation', 'soak_field' => 'irrigation',
         'weeds' => 'herbicide', 'weeds_pre' => 'herbicide', 'weeds_post' => 'herbicide', 'weeds_snails' => 'herbicide',
-        'guard' => 'monitoring', 'rest' => 'monitoring', 'snail_screens' => 'monitoring',
+        'guard' => 'monitoring', 'rest' => 'monitoring', 'snail_screens' => 'monitoring', 'rat_campaign' => 'monitoring',
         'calendar' => 'other', 'book_service' => 'other', 'soil_test' => 'service', 'trellis' => 'other',
     ];
 
@@ -180,6 +203,12 @@ final class LandPrepPlanner
     public static function seedBook(): array
     {
         return self::read('seedprep.json');
+    }
+
+    /** database/land-prep/equipment.json: the machines and animals, their work rates and photo credits. */
+    public static function equipmentBook(): array
+    {
+        return self::read('equipment.json');
     }
 
     private static function read(string $file): array
@@ -237,6 +266,156 @@ final class LandPrepPlanner
             in_array($method, ['dsr_wet_broadcast', 'dsr_wet_drum', 'dsr_dry', 'direct'], true) => 'sowing',
             default => 'planting',
         };
+    }
+
+    /** Whether a crop counts as a grain for the "grain" troubles (lodging, zinc). */
+    private static function isGrain(string $crop): bool
+    {
+        return str_starts_with($crop, 'rice') || str_starts_with($crop, 'corn') || in_array($crop, ['sorghum', 'sugarcane'], true);
+    }
+
+    /* ========================================================== the machines */
+
+    /** The machines and animals a crop and method can use: key => item (name, local, line, rates, plants, photo). */
+    public static function equipmentFor(string $crop, string $method): array
+    {
+        $rice = str_starts_with($crop, 'rice');
+        $out = [];
+        foreach ((array) (self::equipmentBook()['items'] ?? []) as $k => $e) {
+            $for = $e['for'] ?? 'all';
+            $ok = match (true) {
+                is_array($for) => in_array($method, $for, true),
+                $for === 'rice_wet' => $rice && $method !== 'dsr_dry',
+                default => true,
+            };
+            if ($ok) {
+                $out[$k] = $e;
+            }
+        }
+
+        return $out;
+    }
+
+    /** A machine's name for a sentence: "hand tractor", "four wheel tractor with a rotavator". */
+    public static function machineWord(string $type): string
+    {
+        $name = (string) (self::equipmentBook()['items'][$type]['name'] ?? $type);
+
+        return $type === 'pagulong' ? $name : lcfirst($name);
+    }
+
+    /**
+     * The crew in its round two shape, from either shape: workers as
+     * [{name, days: [0..6, Sunday 0]}], the fleet as [{type, own, hired}],
+     * and whether planting days may be staggered. A plan saved before round
+     * two (workers as a number, one machine, days a week) reads the same.
+     */
+    public static function crew(array $c): array
+    {
+        $workers = [];
+        if (is_array($c['workers'] ?? null)) {
+            foreach (array_slice(array_values($c['workers']), 0, 100) as $i => $w) {
+                $days = array_values(array_unique(array_filter(array_map('intval', (array) ($w['days'] ?? [])), fn ($d) => $d >= 0 && $d <= 6)));
+                sort($days);
+                if (! $days) {
+                    continue;
+                }
+                $workers[] = ['name' => mb_substr(trim((string) ($w['name'] ?? '')), 0, 40) ?: 'Worker ' . ($i + 1), 'days' => $days];
+            }
+        } else {
+            $n = max(1, min(200, (int) ($c['workers'] ?? 2)));
+            $dpw = (int) ($c['daysPerWeek'] ?? 6);
+            $days = $dpw >= 7 ? [0, 1, 2, 3, 4, 5, 6] : ($dpw <= 5 ? [1, 2, 3, 4, 5] : [1, 2, 3, 4, 5, 6]);
+            for ($i = 0; $i < $n; $i++) {
+                $workers[] = ['name' => 'Worker ' . ($i + 1), 'days' => $days];
+            }
+        }
+        if (! $workers) {
+            $workers[] = ['name' => 'Worker 1', 'days' => [1, 2, 3, 4, 5, 6]];
+        }
+        $items = (array) (self::equipmentBook()['items'] ?? []);
+        $fleet = [];
+        if (is_array($c['fleet'] ?? null)) {
+            foreach ($c['fleet'] as $f) {
+                $t = (string) ($f['type'] ?? '');
+                $own = max(0, min(20, (int) ($f['own'] ?? 0)));
+                $hired = max(0, min(20, (int) ($f['hired'] ?? 0)));
+                if (isset($items[$t]) && $own + $hired > 0 && ! isset($fleet[$t])) {
+                    $fleet[$t] = ['type' => $t, 'own' => $own, 'hired' => $hired];
+                }
+            }
+        } elseif (isset($c['equipment'])) {
+            $m = max(1, (int) ($c['machines'] ?? 1));
+            $hired = $c['equipment'] === 'hired';
+            foreach (self::LEGACY_FLEET[$c['equipment']] ?? [] as $t) {
+                $fleet[$t] = ['type' => $t, 'own' => $hired ? 0 : $m, 'hired' => $hired ? $m : 0];
+            }
+        }
+
+        return ['workers' => $workers, 'fleet' => array_values($fleet), 'stagger' => filter_var($c['stagger'] ?? false, FILTER_VALIDATE_BOOLEAN)];
+    }
+
+    /** The crew in words: "4 workers, 1 hand tractor and 1 hired four wheel tractor with a rotavator". */
+    public static function crewWords(array $crew): array
+    {
+        $parts = [];
+        foreach ($crew['fleet'] as $f) {
+            $w = self::machineWord($f['type']);
+            if ($f['own'] > 0) {
+                $parts[] = $f['own'] . ' ' . $w;
+            }
+            if ($f['hired'] > 0) {
+                $parts[] = $f['hired'] . ' hired ' . $w;
+            }
+        }
+        $machines = $parts ? (count($parts) > 1 ? implode(', ', array_slice($parts, 0, -1)) . ' and ' . end($parts) : $parts[0]) : 'no machine, all by hand';
+        $n = count($crew['workers']);
+        $byDays = [];
+        foreach ($crew['workers'] as $w) {
+            $byDays[self::daysLabel($w['days'])][] = 1;
+        }
+        $days = count($byDays) === 1 ? array_key_first($byDays) : implode(', ', array_map(fn ($k, $v) => count($v) . ' ' . $k, array_keys($byDays), $byDays));
+
+        return ['workers' => $n . ' ' . ($n === 1 ? 'worker' : 'workers'), 'machines' => $machines, 'days' => $days];
+    }
+
+    /** "Mon to Sat", "every day", "Mon, Wed, Fri". */
+    public static function daysLabel(array $days): string
+    {
+        $names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        sort($days);
+        if (count($days) === 7) {
+            return 'every day';
+        }
+        if ($days === [1, 2, 3, 4, 5, 6]) {
+            return 'Mon to Sat';
+        }
+        if ($days === [1, 2, 3, 4, 5]) {
+            return 'Mon to Fri';
+        }
+
+        return implode(', ', array_map(fn ($d) => $names[$d], $days));
+    }
+
+    /** The machine units of a fleet that do land preparation, one per machine: [{type, hired, rates}]. */
+    private static function units(array $fleet): array
+    {
+        $items = (array) (self::equipmentBook()['items'] ?? []);
+        $out = [];
+        foreach ($fleet as $f) {
+            $rates = array_filter((array) ($items[$f['type']]['rates'] ?? []), fn ($r) => is_numeric($r) && $r > 0);
+            if (! $rates) {
+                continue;   // a planting machine does no land preparation
+            }
+            for ($i = 0; $i < (int) $f['own']; $i++) {
+                $out[] = ['type' => $f['type'], 'hired' => false, 'rates' => $rates];
+            }
+            for ($i = 0; $i < (int) $f['hired']; $i++) {
+                $out[] = ['type' => $f['type'], 'hired' => true, 'rates' => $rates];
+            }
+        }
+
+        return $out;
     }
 
     /* ======================================================== the base plan */
@@ -356,10 +535,196 @@ final class LandPrepPlanner
         return trim(preg_replace('/[^a-z0-9]+/', '_', strtolower($s)), '_') ?: 'step';
     }
 
-    /* ================================================== the farmer's answers */
+    /* ==================================================== the whole plan */
 
     /**
-     * The plan bent by the farmer's answers: steps added, dropped or noted,
+     * A case in round two's shape from either shape: the crew normalised,
+     * and every lot carrying its own soil and history (a plan saved before
+     * round two had one set for the whole farm, so every lot shares it).
+     */
+    public static function normalize(array $case): array
+    {
+        $case['crew'] = self::crew((array) ($case['crew'] ?? []));
+        $soil = (array) ($case['soil'] ?? []);
+        $hist = (array) ($case['history'] ?? []);
+        $case['lots'] = array_values((array) ($case['lots'] ?? []));
+        foreach ($case['lots'] as $i => $l) {
+            $case['lots'][$i]['soil'] = isset($l['soil']) && is_array($l['soil']) ? $l['soil'] : $soil;
+            $case['lots'][$i]['history'] = isset($l['history']) && is_array($l['history']) ? $l['history'] : $hist;
+            $case['lots'][$i]['name'] = (string) ($l['name'] ?? 'Lot ' . ($i + 1));
+        }
+        $case['seedSource'] = (string) ($case['seedSource'] ?? ($hist['seedSource'] ?? ''));
+        $case['variety'] = (string) ($case['variety'] ?? '');
+        $case['seedType'] = (string) ($case['seedType'] ?? '');
+
+        return $case;
+    }
+
+    /** One lot's own steps and notes: the base plan bent by that lot's answers. */
+    public static function lotSteps(array $case, int $i): array
+    {
+        $lot = $case['lots'][$i];
+        $sub = $case;
+        $sub['soil'] = (array) ($lot['soil'] ?? []);
+        $sub['history'] = (array) ($lot['history'] ?? []);
+        $sub['lots'] = [$lot];
+
+        return self::applyAnswers(self::baseSteps($case['crop'], $case['method']), $sub);
+    }
+
+    /**
+     * Everything the arithmetic says about a case: each lot's steps, the
+     * steps of the whole farm (each marked with the lots it belongs to when
+     * not all), the notes (each with its lots), the seed preparation, the
+     * crew calendar and the bookings of hired machines. `$extra` are Anee's
+     * steps, each for every lot or the lots it names.
+     */
+    public static function build(array $case, array $extra = []): array
+    {
+        $case = self::normalize($case);
+        $lotSteps = [];
+        $notes = [];
+        foreach ($case['lots'] as $i => $lot) {
+            [$steps, $lotNotes] = self::lotSteps($case, $i);
+            foreach ($extra as $s) {
+                if (! empty($s['lots']) && ! in_array($i, $s['lots'], true)) {
+                    continue;
+                }
+                $steps = array_values(array_filter($steps, fn ($x) => $x['key'] !== $s['key']));
+                $steps[] = $s;
+            }
+            usort($steps, fn ($a, $b) => [$a['from'], $a['to']] <=> [$b['from'], $b['to']]);
+            $lotSteps[$i] = $steps;
+            foreach ($lotNotes as $n) {
+                $k = $n['level'] . '|' . $n['text'];
+                $notes[$k] ??= $n + ['lots' => []];
+                $notes[$k]['lots'][] = $i;
+            }
+        }
+        $count = count($case['lots']);
+        foreach ($notes as $k => $n) {
+            $notes[$k]['lots'] = count(array_unique($n['lots'])) >= $count ? [] : array_values(array_unique($n['lots']));
+        }
+        $prep = self::seedPrep($case['crop'], $case['method'], $case['variety'], $case['seedType'], $case['research'] ?? null);
+        // Too little time is never refused (2026-10-15, the owner): the early steps are squeezed into the days left.
+        $squeeze = [];
+        $prepDays = ! empty($prep['found']) && ! empty($prep['applies']) && isset($prep['soakHours']) ? (int) ceil(((int) $prep['soakHours'] + (int) $prep['incubateHours']) / 24) : 2;
+        foreach ($case['lots'] as $i => $lot) {
+            [$lotSteps[$i], $sq] = self::squeeze($lotSteps[$i], $case, $lot, $prepDays);
+            if ($sq) {
+                $squeeze[$i] = $sq;
+                $case['lots'][$i]['gapScale'] = $sq['ratio'];
+                foreach ($sq['notes'] as $n) {
+                    $k = $n['level'] . '|' . $n['text'];
+                    $notes[$k] ??= $n + ['lots' => []];
+                    $notes[$k]['lots'][] = $i;
+                }
+            }
+        }
+        $sched = self::schedule($lotSteps, $case['lots'], $case['crew'], $case);
+        [$lotSteps, $sched, $bookings] = self::bookings($lotSteps, $sched, $case);
+        foreach ($notes as $k => $n) {
+            $ls = array_values(array_unique($n['lots']));
+            $notes[$k]['lots'] = count($ls) >= $count ? [] : $ls;
+        }
+
+        return [
+            'case' => $case,
+            'steps' => self::union($lotSteps, $case['lots']),
+            'lotSteps' => $lotSteps,
+            'squeeze' => $squeeze,
+            'notes' => array_values($notes),
+            'prep' => $prep,
+            'sched' => $sched,
+            'bookings' => $bookings,
+            'dayWord' => self::dayWord($case['crop'], $case['method']),
+        ];
+    }
+
+    /**
+     * The steps of the whole farm: each key once, from the first lot that has
+     * it, marked with its lots when not every lot has it, and a lot's own
+     * rule added where it differs.
+     */
+    public static function union(array $lotSteps, array $lots): array
+    {
+        $n = count($lots);
+        $defs = [];
+        $have = [];
+        foreach ($lotSteps as $i => $steps) {
+            foreach ($steps as $s) {
+                $k = $s['key'];
+                if (! isset($defs[$k])) {
+                    $defs[$k] = $s;
+                    unset($defs[$k]['lots'], $defs[$k]['lotsWords']);
+                    $have[$k] = [$i];
+                    continue;
+                }
+                $have[$k][] = $i;
+                $r = trim((string) ($s['rule'] ?? ''));
+                if ($r !== '' && ! str_contains((string) ($defs[$k]['rule'] ?? ''), $r)) {
+                    $defs[$k]['rule'] = trim(($defs[$k]['rule'] ?? '') . ' For ' . ($lots[$i]['name'] ?? 'Lot ' . ($i + 1)) . ': ' . $r);
+                }
+            }
+        }
+        foreach ($defs as $k => $s) {
+            $ls = array_values(array_unique($have[$k]));
+            if ($n > 1 && count($ls) < $n) {
+                $defs[$k]['lots'] = $ls;
+                $defs[$k]['lotsWords'] = 'For ' . implode(', ', array_map(fn ($i) => $lots[$i]['name'] ?? 'Lot ' . ($i + 1), $ls));
+            }
+        }
+        $out = array_values($defs);
+        usort($out, fn ($a, $b) => [$a['from'], $a['to']] <=> [$b['from'], $b['to']]);
+
+        return $out;
+    }
+
+    /* ================================================== the farmer's answers */
+
+    /** A lot's answer as a list, whether it was saved as one value or several. */
+    private static function many(array $from, string $key): array
+    {
+        $v = $from[$key] ?? [];
+
+        return array_values(array_filter(is_array($v) ? $v : [$v], fn ($x) => is_string($x) && $x !== ''));
+    }
+
+    /**
+     * The last season's troubles of a lot as {key, kind, slug, name}: the
+     * catalogue's pests and diseases, the other troubles, and the answers of
+     * a plan saved before round two (snails, rats and birds, one outbreak).
+     */
+    public static function troubles(array $h, string $crop): array
+    {
+        $keys = self::many($h, 'outbreaks');
+        if (($h['snails'] ?? '') === 'many') {
+            $keys[] = 'other:snails';
+        }
+        $rb = (string) ($h['ratsBirds'] ?? '');
+        if (in_array($rb, ['rats', 'both'], true)) {
+            $keys[] = 'other:rats';
+        }
+        if (in_array($rb, ['birds', 'both'], true)) {
+            $keys[] = 'other:birds';
+        }
+        $old = ['tungro' => 'disease:rice-tungro', 'bph' => 'pest:brown-planthopper', 'blast' => 'disease:rice-blast'][$h['pests'] ?? ''] ?? null;
+        if ($old) {
+            $keys[] = $old;
+        }
+        $out = [];
+        foreach (array_unique($keys) as $k) {
+            $t = FieldProfile::trouble((string) $k);
+            if ($t) {
+                $out[] = $t;
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * The plan bent by one lot's answers: steps added, dropped or noted,
      * and the notes that go with them. Returns [steps, notes] where each
      * note is {level: info|warn, text, reason}.
      */
@@ -373,9 +738,14 @@ final class LandPrepPlanner
         $dry = $method === 'dsr_dry';
         $s = (array) ($case['soil'] ?? []);
         $h = (array) ($case['history'] ?? []);
-        $crew = (array) ($case['crew'] ?? []);
+        $crew = self::crew((array) ($case['crew'] ?? []));
         $notes = [];
         $note = function (string $level, string $text, string $reason) use (&$notes): void {
+            foreach ($notes as $n) {
+                if ($n['text'] === $text) {
+                    return;
+                }
+            }
             $notes[] = ['level' => $level, 'text' => $text, 'reason' => $reason];
         };
         $has = fn (string $k) => (bool) array_filter($steps, fn ($x) => $x['key'] === $k);
@@ -384,7 +754,7 @@ final class LandPrepPlanner
         };
         $addNote = function (string $k, string $text) use (&$steps): void {
             foreach ($steps as &$x) {
-                if ($x['key'] === $k) {
+                if ($x['key'] === $k && ! str_contains((string) ($x['rule'] ?? ''), $text)) {
                     $x['rule'] = trim(($x['rule'] ?? '') . ' ' . $text);
                 }
             }
@@ -396,6 +766,19 @@ final class LandPrepPlanner
             }
         };
         $adds = self::riceAdds();
+        $troubles = self::troubles($h, $crop);
+        $kinds = array_column($troubles, 'kind');
+        $slugs = array_column($troubles, 'slug');
+        $hadKind = fn (string $k) => in_array($k, $kinds, true);
+        $had = fn (string ...$ss) => (bool) array_intersect($ss, $slugs);
+
+        // Other troubles that stand for an answer the farmer left blank.
+        if ($had('flood') && empty($h['flooding'])) {
+            $h['flooding'] = 'sometimes';
+        }
+        if ($had('salt') && empty($s['salt'])) {
+            $s['salt'] = 'tips';
+        }
 
         // The soil's hardness: soften it before the plow only where it is hard.
         $hard = in_array($s['texture'] ?? '', ['clay', 'heavy_clay'], true) || ($s['hardpan'] ?? '') === 'yes'
@@ -408,7 +791,7 @@ final class LandPrepPlanner
         $tex = $s['texture'] ?? '';
         if (in_array($tex, ['clay', 'heavy_clay'], true)) {
             if ($rice && $tpr) {
-                $addNote($tpr && $method === 'tpr_manual' ? 'seedbed_site' : 'nursery_site', 'Your soil is clay, so work in the organic fertilizer or carbonized rice hull here.');
+                $addNote($method === 'tpr_manual' ? 'seedbed_site' : 'nursery_site', 'Your soil is clay, so work in the organic fertilizer or carbonized rice hull here.');
             }
             $addNote('soak_field', 'Clay holds its clods: give it a day or two more of soaking.');
             if ($tex === 'heavy_clay') {
@@ -426,15 +809,18 @@ final class LandPrepPlanner
             }
         }
 
-        /* ---- water ---- */
-        $water = $s['water'] ?? '';
-        if ($water === 'rainfed') {
+        /* ---- water: one source or several ---- */
+        $water = self::many($s, 'water');
+        if ($water === ['rainfed']) {
             $note('info', 'A rainfed field can only be plowed once the rains soften the soil. If the rains come late, every date moves with them, so watch the first heavy rains.', 'water');
             if ($rice && ! $dry) {
                 $addNote('dikes', 'Fix the dikes before the rains so the first water stays in the field.');
             }
-        } elseif ($water === 'pump' && $rice) {
+        } elseif (in_array('pump', $water, true) && $rice) {
             $note('info', 'On a pump, alternate wetting and drying later in the season saves fuel and water without losing yield.', 'water');
+        }
+        if (in_array('river', $water, true) || in_array('reservoir', $water, true)) {
+            $addNote('dikes', 'Clean the small canal from the river or the farm pond too, so the water reaches the field when you need it.');
         }
 
         /* ---- drainage ---- */
@@ -476,11 +862,12 @@ final class LandPrepPlanner
             $note('info', 'Red or yellow soil is often acidic and low in phosphorus. A soil test tells you what it needs.', 'soil');
         }
 
-        /* ---- acidity ---- */
+        /* ---- acidity, with a known pH range ---- */
         $acid = $s['acidity'] ?? '';
-        $ph = isset($s['ph']) && is_numeric($s['ph']) ? (float) $s['ph'] : null;
-        if ($ph !== null) {
-            $acid = $ph < 5 ? 'strong' : ($ph <= 5.5 ? 'mild' : ($ph > 7.5 ? 'alkaline' : ($acid === 'untested' ? 'none' : $acid)));
+        $lo = isset($s['phFrom']) && is_numeric($s['phFrom']) ? (float) $s['phFrom'] : (isset($s['ph']) && is_numeric($s['ph']) ? (float) $s['ph'] : null);
+        $hi = isset($s['phTo']) && is_numeric($s['phTo']) ? (float) $s['phTo'] : $lo;
+        if ($lo !== null && $acid !== 'sulfate') {
+            $acid = $lo < 5 ? 'strong' : ($lo <= 5.5 ? 'mild' : ($hi !== null && $hi > 7.5 ? 'alkaline' : (in_array($acid, ['untested', ''], true) ? 'none' : $acid)));
         }
         $limedRecently = ($h['lastLimed'] ?? '') === 'under_year';
         if ($acid === 'untested') {
@@ -530,14 +917,14 @@ final class LandPrepPlanner
                 $rest = $ago === null ? null : $ago + $daysToSow;
                 if ($ago === null) {
                     $note('warn', 'The last crop is not harvested yet. PhilRice asks for at least 30 days with no rice on the field before sowing: count from the harvest and move the planting day later if it falls short.', 'history');
-                } elseif (($h['prevCrop'] ?? '') !== 'no_rice' && str_starts_with((string) ($h['prevCrop'] ?? 'rice'), 'rice') && $rest < 30) {
+                } elseif (str_starts_with((string) ($h['prevCrop'] ?? 'rice'), 'rice') && $rest < 30) {
                     $note('warn', 'Your field gets only about ' . max(0, $rest) . ' days without rice before sowing. PhilRice asks for at least 30: plow the stubble and any ratoon under right away, or plant ' . (30 - max(0, $rest)) . ' days later.', 'history');
                     $addNote('rest', 'Short rest here: plow under the stubble and ratoon at once.');
                 }
             }
         }
         $prev = $h['prevCrop'] ?? '';
-        if ($prev === 'rice_no_straw' || $prev === 'corn' || $prev === 'legume' || $prev === 'vegetable' || $prev === 'fallow' || $prev === 'new_land') {
+        if (in_array($prev, ['rice_no_straw', 'corn', 'legume', 'vegetable', 'fallow', 'new_land'], true)) {
             $drop('straw');
         }
         if ($prev === 'corn') {
@@ -580,53 +967,90 @@ final class LandPrepPlanner
             }
         }
 
-        /* ---- weeds ---- */
-        $weeds = $h['weeds'] ?? '';
-        if ($weeds === 'many' && $rice && ! $dry) {
+        /* ---- weeds: one kind or several ---- */
+        $weeds = self::many($h, 'weeds');
+        $weedy = fn (string $k) => in_array($k, $weeds, true);
+        if ($weedy('many') && $rice && ! $dry) {
             $addNote('soak_field', 'Many weeds last season: give the field the full 7 days or more with water in between each pass.');
         }
-        if ($weeds === 'weedy_rice' && $rice) {
+        if ($weedy('weedy_rice') && $rice) {
             $x = $adds['weed_history']['stale_round'] ?? null;
             if ($x && ! $dry) {
-                $add(self::step('stale_round', -8, -4, $x['what'], $x['how'], 'anee', $x['follows'] ?? null, 'history', 'Weedy rice or heavy sedges last season.'));
+                $add(self::step('stale_round', -8, -4, $x['what'], $x['how'], 'anee', $x['follows'] ?? null, 'history', 'Weedy rice last season.'));
             }
             $note('warn', 'Weedy rice: ' . ($dry ? 'do not dry seed this field.' : ($wet ? 'transplant instead of direct seeding.' : 'transplanting is the right choice.')) . ' Use clean certified seed and clean the tractor, tools, canals and dikes so no weed seed rides in.', 'history');
         }
-        if ($weeds === 'tough' && ! $rice) {
+        if ($weedy('sedges')) {
+            $note('info', $rice ? 'Many sedges: level the field well and keep 3 to 5 cm of water after planting. Sedges take over the high spots that dry out.' : 'Many sedges: harrow twice a week apart before planting so the new flush is killed, and keep the rows weeded early.', 'history');
+        }
+        if ($weedy('tough')) {
             $note('info', 'Tough weeds like cogon or nutsedge regrow from their roots: plow, let them sprout, and plow or harrow again before planting.', 'history');
         }
 
-        /* ---- snails, rats, birds, pests ---- */
-        if ($rice && ($h['snails'] ?? '') === 'many') {
+        /* ---- the last season's pests, diseases and other troubles ---- */
+        if ($hadKind('Snail') && $rice) {
             $x = $adds['snail_history']['snail_screens'] ?? null;
             if ($x) {
-                $add(self::step('snail_screens', -3, -1, $x['what'], $x['how'], 'philrice', null, 'history', 'Many golden apple snails.'));
+                $add(self::step('snail_screens', -3, -1, $x['what'], $x['how'], 'philrice', null, 'history', 'Golden apple snails last season.'));
             }
             if ($tpr && ! $has('canals')) {
-                $add(self::step('canals', -1, 0, 'Cut the small canals', 'Right after leveling, cut small canals about 25 cm wide and 5 cm deep along the dikes and through the middle. Snails gather there and are easy to pick.', 'philrice', null, 'history', 'Many golden apple snails.'));
+                $add(self::step('canals', -1, 0, 'Cut the small canals', 'Right after leveling, cut small canals about 25 cm wide and 5 cm deep along the dikes and through the middle. Snails gather there and are easy to pick.', 'philrice', null, 'history', 'Golden apple snails last season.'));
             }
-            $note('info', 'Many snails: keep the soil just saturated, not flooded, up to about 15 days after transplanting or 20 to 25 days after sowing' . ($tpr ? ', and transplant at the older end of the seedling age.' : '.'), 'history');
+            $note('info', 'Snails: keep the soil just saturated, not flooded, up to about 15 days after transplanting or 20 to 25 days after sowing' . ($tpr ? ', and transplant at the older end of the seedling age.' : '.'), 'history');
         }
-        $rb = $h['ratsBirds'] ?? '';
-        if (in_array($rb, ['rats', 'both'], true)) {
-            $note('info', 'Rats: keep the dikes clean and no bigger than 15 by 20 cm, flood or dig out the burrows, and plant together with your neighbors. Join community baiting with sealed bait packs only.', 'history');
+        if ($hadKind('Rodent')) {
+            $add(self::step('rat_campaign', -21, -10, 'Plan a rat campaign with your neighbors', 'Before planting, dig out or flood the burrows on the dikes and canals, trim the dikes to no more than 15 by 20 cm, and agree with your neighbors to work and plant together so the rats have no single field to feed on. Use sealed bait stations only, as your agriculture office advises.', 'anee', null, 'history', 'Rats damaged the last crop.'));
         }
-        if (in_array($rb, ['birds', 'both'], true)) {
+        if ($hadKind('Bird')) {
             $note('info', 'Birds: plan someone to chase them in the first week after sowing, and do not sow far ahead of or behind your neighbors.', 'history');
         }
-        $pest = $h['pests'] ?? '';
-        if ($rice && in_array($pest, ['tungro', 'bph', 'blast'], true)) {
-            $note('warn', 'After ' . ['tungro' => 'tungro', 'bph' => 'brown planthopper', 'blast' => 'blast'][$pest] . ' the 30 day rest and planting together with your area are firm rules, and a resistant variety pays.'
-                . ($pest === 'bph' ? ' Do not broadcast seed, transplant instead.' : '') . ($pest === 'blast' ? ' Plow the infected stubble under right after harvest.' : ''), 'history');
+        $virus = $hadKind('Virus') || $hadKind('Viroid');
+        if ($virus) {
+            $add($rice
+                ? self::step('host_clear', -40, -25, 'Break the virus cycle', 'Plow under the stubble, ratoon and stray rice right away and keep the field free of rice through the rest. Raise the seedbed away from fields that were sick, and plant together with your neighbors so the insects that carry the virus find no young rice.', 'anee', null, 'history', 'A virus disease hit the last crop.')
+                : self::step('host_clear', -30, -20, 'Clear the old crop and the weeds around it', 'Pull out the old plants and the weeds on the borders that keep the virus and the insects that carry it, and bury or burn them away from the field. Use clean seedlings or planting material.', 'anee', null, 'history', 'A virus disease hit the last crop.'));
+        }
+        if ($rice && ($virus || $had('brown-planthopper', 'whitebacked-planthopper', 'rice-blast'))) {
+            $note('warn', 'After ' . implode(' and ', array_map(fn ($t) => mb_strtolower($t['name']), array_filter($troubles, fn ($t) => in_array($t['kind'], ['Virus', 'Viroid'], true) || in_array($t['slug'], ['brown-planthopper', 'whitebacked-planthopper', 'rice-blast'], true))))
+                . ' the 30 day rest and planting together with your area are firm rules, and a resistant variety pays.'
+                . ($had('brown-planthopper', 'whitebacked-planthopper') && $wet ? ' Do not broadcast seed, transplant instead.' : '')
+                . ($had('rice-blast') ? ' Plow the infected stubble under right after harvest.' : ''), 'history');
+        }
+        if ($had('rice-stem-borer')) {
+            $addNote('plow', 'Stem borers last season: plow the stubble under early, the larvae live in it.');
+        }
+        if ($had('bakanae', 'bacterial-leaf-blight', 'bacterial-leaf-streak')) {
+            $note('info', 'This disease rides on the seed and the water: use clean certified seed, do not overfeed nitrogen, and keep water from a sick field out of yours.', 'history');
+        }
+        if (! $rice && ($hadKind('Bacterium') || $hadKind('Water mold'))) {
+            $note('info', 'A soil disease hit the last crop: plant on raised beds that drain well, and rotate to a crop of another family.', 'history');
+        }
+        if ($hadKind('Nematode')) {
+            $note('info', 'Root knot nematodes stay in the soil: flood the field for a few weeks or plow it and leave it to the sun, and rotate with a crop they do not feed on.', 'history');
+        }
+        if ($had('white-grub', 'mole-cricket')) {
+            $addNote('plow', 'White grubs or mole crickets last season: plow early and twice so the birds and the sun get them.');
+        }
+        if ($had('drought')) {
+            $note('info', 'Drought last season: fix the canal and the water source before plowing' . ($rice ? ', choose a shorter variety, and keep alternate wetting and drying in mind.' : ', choose a shorter variety, and mulch to keep the soil moist.'), 'water');
+        }
+        if ($had('lodging')) {
+            $note('info', 'The crop lodged last season: go easy on nitrogen, keep the right spacing, and choose a sturdier variety.', 'history');
+        }
+        if ($had('nutrient')) {
+            $add(self::step('soil_test', -60, -45, 'Test the soil', 'Take a soil sample to the regional soils laboratory or check it with a soil test kit, so this season\'s fertilizer fits what the soil lacks.', 'anee', null, 'soil', 'The last crop was pale or yellow.'));
         }
 
-        /* ---- seed source, field level, zinc ---- */
-        if ($rice && in_array($h['seedSource'] ?? '', ['own', 'old'], true) && ! $dry) {
+        /* ---- seed source (asked once for the whole farm) ---- */
+        $seedSource = (string) ($case['seedSource'] ?? ($h['seedSource'] ?? ''));
+        if ($rice && in_array($seedSource, ['own', 'old'], true) && ! $dry) {
             $x = $adds['seed_source']['seed_test'] ?? null;
             if ($x) {
                 $add(self::step('seed_test', -37, -27, $x['what'], $x['how'], 'philrice', $x['follows'] ?? null, 'seed', 'The seed is home kept.'));
             }
         }
+
+        /* ---- field level, zinc ---- */
         if ($rice && in_array($h['level'] ?? '', ['some', 'uneven'], true) && ! $dry) {
             $x = $adds['field_level']['extra_level'] ?? null;
             if ($x) {
@@ -636,23 +1060,37 @@ final class LandPrepPlanner
                 $note('warn', 'A very uneven field drowns sown seed in its low spots. Level it well, or think of laser leveling, before direct seeding.', 'history');
             }
         }
-        $zinc = $h['zinc'] ?? '';
-        if ($rice && in_array($zinc, ['mild', 'severe'], true)) {
-            $txt = $zinc === 'severe' ? 'Zinc shortage was bad here: use 2 kg of zinc sulfate on the seedbed, or dip the seedling roots in a 2 percent zinc oxide mix before transplanting.' : 'A mild zinc shortage: 0.5 kg of zinc sulfate on the seedbed is enough.';
+        $zinc = (string) ($h['zinc'] ?? ($had('zinc') ? 'zinc' : ''));
+        if ($rice && in_array($zinc, ['mild', 'severe', 'zinc'], true)) {
+            $txt = match ($zinc) {
+                'severe' => 'Zinc shortage was bad here: use 2 kg of zinc sulfate on the seedbed, or dip the seedling roots in a 2 percent zinc oxide mix before transplanting.',
+                'mild' => 'A mild zinc shortage: 0.5 kg of zinc sulfate on the seedbed is enough.',
+                default => 'Zinc was short here: use 0.5 to 2 kg of zinc sulfate on the seedbed, the more the worse it was, or dip the seedling roots in a 2 percent zinc oxide mix before transplanting.',
+            };
             $addNote($method === 'tpr_mechanical' ? 'nursery_zinc' : 'seedbed_zinc', $txt);
             if ($wet) {
                 $addNote('seed_soak', 'Zinc was short here: add 1 kg of zinc sulfate for every 40 kg of seed to the last soaking water.');
             }
+        } elseif (! $rice && $had('zinc')) {
+            $note('info', 'Zinc was short here: a soil test tells how much zinc sulfate to work in before planting.', 'soil');
         }
 
-        /* ---- the crew's machine ---- */
-        $eq = $crew['equipment'] ?? '';
-        if ($eq === 'hired') {
-            $x = $adds['power']['book_service'] ?? null;
-            $add(self::step('book_service', -37, -37, $x['what'] ?? 'Book the tractor', $x['how'] ?? 'Call the operator and fix your plowing and harrowing days.', 'anee', $x['follows'] ?? ['step' => 'plow', 'from' => -7, 'to' => -7], 'crew', 'Operators are busiest when the whole area plants together.'));
-        }
-        if ($eq === 'carabao') {
+        /* ---- the machines ---- */
+        $types = array_column($crew['fleet'], 'type');
+        $able = fn (string $cap) => (bool) array_filter(self::units($crew['fleet']), fn ($u) => isset($u['rates'][$cap]));
+        if (! $types) {
+            $note('info', 'With no machine on your list, the plowing and harrowing are by hand. That takes far longer, so the crew needs more days or more hands.', 'crew');
+        } elseif (in_array('carabao_plow', $types, true) && ! array_intersect($types, ['hand_tractor', 'tractor_rotavator', 'tractor_disc'])) {
             $note('info', 'With a carabao each pass takes longer, so the plowing starts at the early end of its window.', 'crew');
+        }
+        if ($types && ! $able('plow') && $has('plow')) {
+            $note('warn', 'None of your machines can plow, so the plan has the plowing done by hand. Hiring a plow for those days saves weeks of work.', 'crew');
+        }
+        if ($method === 'dsr_wet_drum' && ! in_array('drum_seeder', $types, true)) {
+            $note('warn', 'You sow with a drum seeder but have none on your list. Borrow one from your agriculture office or hire one, and book it a week ahead.', 'crew');
+        }
+        if ($method === 'tpr_mechanical' && ! in_array('transplanter', $types, true)) {
+            $note('warn', 'You plant by machine but have no transplanter on your list. Book the transplanter service a week ahead, together with the trays.', 'crew');
         }
 
         usort($steps, fn ($a, $b) => [$a['from'], $a['to']] <=> [$b['from'], $b['to']]);
@@ -691,6 +1129,298 @@ final class LandPrepPlanner
         sort($dates);
 
         return $dates[0] ?? null;
+    }
+
+    /* ============================================================ the time */
+
+    /**
+     * Is there time? For each lot: the days the recommended preparation needs
+     * before its planting day (its earliest field work, after that lot's
+     * answers, so lime, a salt flush or a newly opened field count), the
+     * days a rice field still needs to rest without rice, the days that are
+     * left, and the steps a short run squeezes (its window already open) or
+     * misses (its window already closed).
+     */
+    public static function timeCheck(array $case, ?string $today = null): array
+    {
+        $case = self::normalize($case);
+        $T = Carbon::parse($today ?: now('Asia/Manila')->toDateString(), 'UTC')->startOfDay();
+        $rice = str_starts_with((string) $case['crop'], 'rice');
+        $out = [];
+        foreach ($case['lots'] as $i => $lot) {
+            [$steps] = self::lotSteps($case, $i);
+            $work = array_values(array_filter($steps, fn ($s) => ! in_array($s['key'], self::NOT_WORK, true) && ! in_array($s['key'], self::PLANT_KEYS, true) && $s['key'] !== 'pull' && (int) $s['from'] < 0));
+            usort($work, fn ($a, $b) => [$a['from'], $a['to']] <=> [$b['from'], $b['to']]);
+            $needed = $work ? -(int) $work[0]['from'] : 0;
+            $P = Carbon::parse((string) $lot['planting'], 'UTC')->startOfDay();
+            $left = (int) $T->diffInDays($P, false);
+            // The rest a rice field needs with no rice on it before sowing.
+            $h = (array) $lot['history'];
+            $rest = null;
+            $restNotYet = false;
+            $ago = ['under2w' => 7, '2to4w' => 21, '1to3m' => 60, 'over3m' => 120, 'not_yet' => null][$h['harvested'] ?? ''] ?? false;
+            if ($rice && $ago !== false && str_starts_with((string) ($h['prevCrop'] ?? 'rice'), 'rice')) {
+                if ($ago === null) {
+                    $restNotYet = true;
+                } else {
+                    $rest = max(0, 30 - $ago - self::sowOffset($steps, (string) $case['method']));
+                }
+            }
+            $need = max($needed, (int) $rest);
+            $hit = [];
+            foreach ($work as $s) {
+                $a = $left + (int) $s['from'];
+                $b = $left + (int) $s['to'];
+                if ($b < 0) {
+                    $hit[] = ['key' => $s['key'], 'what' => $s['what'], 'state' => 'missed'];
+                } elseif ($a < 0) {
+                    $hit[] = ['key' => $s['key'], 'what' => $s['what'], 'state' => 'squeezed'];
+                }
+            }
+            $out[] = [
+                'lot' => $i, 'name' => $lot['name'], 'planting' => $P->toDateString(), 'left' => $left,
+                'needed' => $needed, 'rest' => $rest, 'restNotYet' => $restNotYet, 'need' => $need,
+                'short' => $left < $need, 'earliest' => $T->copy()->addDays($need)->toDateString(),
+                'first' => $work ? ['what' => $work[0]['what'], 'from' => (int) $work[0]['from']] : null,
+                'steps' => $hit,
+            ];
+        }
+
+        return $out;
+    }
+
+    /** The seedbed and nursery steps: they move as one block with the sowing, so the seedlings keep their age. */
+    private const SEEDBED = ['seed_test', 'seedbed_site', 'seedbed_beds', 'seed_soak', 'seed_incubate', 'sow_seedbed', 'seedbed_water', 'seedbed_zinc', 'seedbed_feed', 'backup_seedbed',
+        'nursery_site', 'nursery_fill', 'sow_nursery', 'nursery_care', 'nursery_zinc', 'nursery_feed', 'nursery'];
+
+    /** Waiting periods: the first to give way when time is short. */
+    private const WAITS = ['rest', 'soak_field', 'stale_round', 'stale_wet', 'settle', 'soften'];
+
+    /** The youngest seedlings worth transplanting, by method, in days. */
+    private const MIN_AGE = ['tpr_manual' => 18, 'tpr_mechanical' => 14];
+
+    /**
+     * A lot's plan squeezed into the days it has left (2026-10-15, the owner:
+     * too little time is a warning, never a refusal). Nothing is dated before
+     * today. The seedbed moves as one block, as late as the days allow, so
+     * the seedlings keep as much of their age as they can. Everything else
+     * before the planting day keeps its order: the last stretch before
+     * planting (the final harrowing and the leveling) stays as it is, and
+     * the early part (the rest, the plowing and the waiting between passes)
+     * is pressed into what is left, so the waiting gives way first. Every
+     * step that moved says so, and why.
+     *
+     * Returns [steps, null] when there is time, else [steps, {left, needed,
+     * ratio (how much the early gaps shrink, for the scheduler), age, ageWas,
+     * count, notes}].
+     */
+    public static function squeeze(array $steps, array $case, array $lot, int $prepDays = 2, ?string $today = null): array
+    {
+        $T = Carbon::parse($today ?: now('Asia/Manila')->toDateString(), 'UTC')->startOfDay();
+        $L = max(0, (int) $T->diffInDays(Carbon::parse((string) $lot['planting'], 'UTC')->startOfDay(), false));
+        if (! array_filter($steps, fn ($s) => (int) $s['from'] < -$L)) {
+            return [$steps, null];
+        }
+        $work = array_filter($steps, fn ($s) => ! in_array($s['key'], self::NOT_WORK, true) && ! in_array($s['key'], self::PLANT_KEYS, true) && $s['key'] !== 'pull' && (int) $s['from'] < 0);
+        $needed = $work ? -(int) min(array_column($work, 'from')) : 0;
+        if ($needed <= $L) {
+            // The field work fits: only the waiting and the checks that should have begun already start today.
+            foreach ($steps as $k => $s) {
+                if ((int) $s['from'] < -$L) {
+                    $was = [(int) $s['from'], (int) $s['to']];
+                    $steps[$k]['from'] = -$L;
+                    $steps[$k]['to'] = max(-$L, (int) $s['to']);
+                    $steps[$k]['squeezed'] = ['was' => $was, 'state' => 'moved', 'why' => match ($s['key']) {
+                        'rest' => 'The rest without rice is shorter than PhilRice advises. Plow the stubble and any ratoon under at once.',
+                        'soil_test' => 'Test now, with a soil test kit if you can. A laboratory result may come after plowing.',
+                        default => 'Its usual time has passed, so do it as soon as you can.',
+                    }];
+                }
+            }
+            usort($steps, fn ($a, $b) => [$a['from'], $a['to']] <=> [$b['from'], $b['to']]);
+
+            return [$steps, null];
+        }
+        $N = max($needed, $L + 1);
+        $K = (int) floor($L / 2);
+        $ratio = ($L - $K) / max(1, $N - $K);
+        // The early part [-N, -K] is pressed into [-L, -K]; the last K days stay.
+        $f = function (int $o) use ($L, $N, $K, $ratio): int {
+            if ($o >= -$K) {
+                return $o;
+            }
+            if ($o <= -$N) {
+                return -$L;
+            }
+
+            return (int) round(-$K + ($o + $K) * $ratio);
+        };
+        $word = self::dayWord((string) $case['crop'], (string) $case['method']);
+        $method = (string) $case['method'];
+        // The seedbed: sown as late as the soaking and sprouting allow from today, never later than it was.
+        $sowKey = null;
+        foreach ($steps as $s) {
+            if (in_array($s['key'], ['sow_seedbed', 'sow_nursery', 'nursery'], true)) {
+                $sowKey = $s['key'];
+                break;
+            }
+        }
+        $oldSow = null;
+        $delta = 0;
+        if ($sowKey) {
+            foreach ($steps as $s) {
+                if ($s['key'] === $sowKey) {
+                    $oldSow = (int) $s['from'];
+                }
+            }
+            $minSow = -$L + ($sowKey === 'nursery' ? 0 : max(1, $prepDays));
+            $newSow = min(-1, max($oldSow, $minSow));
+            $delta = max(0, $newSow - $oldSow);
+        }
+        $count = 0;
+        foreach ($steps as $k => $s) {
+            $from = (int) $s['from'];
+            $to = (int) $s['to'];
+            if ($from >= 0) {
+                continue;
+            }
+            if ($sowKey && in_array($s['key'], self::SEEDBED, true)) {
+                $nf = max(-$L, $from + $delta);
+                $nt = min(max($nf, $to + $delta), max($nf, -1));
+            } else {
+                $nf = max(-$L, $f($from));
+                $nt = $to >= 0 ? $to : max($nf, $f($to));
+            }
+            if ($nf === $from && $nt === $to) {
+                continue;
+            }
+            $count++;
+            $why = match (true) {
+                $s['key'] === 'rest' => 'The rest without rice is shorter than PhilRice advises. Plow the stubble and any ratoon under at once.',
+                $s['key'] === 'calendar' => 'The planting day is near, so check the area\'s schedule today.',
+                $s['key'] === 'soil_test' => 'Test now, with a soil test kit if you can. A laboratory result may come after plowing.',
+                $s['key'] === 'seed_test' => 'Little time to test the seed: sprout a small handful first and check that most come up, or use certified seed.',
+                in_array($s['key'], self::SEEDBED, true) => 'Sown later than usual so it fits the days left. The seedlings will be younger at ' . $word . '.',
+                in_array($s['key'], self::WAITS, true) => 'Shortened: less waiting for the clods to soften and the weeds to sprout.',
+                default => 'Moved closer to the ' . $word . ' day: only ' . $L . ' ' . ($L === 1 ? 'day is' : 'days are') . ' left and the full preparation takes ' . $needed . '.',
+            };
+            $steps[$k]['from'] = $nf;
+            $steps[$k]['to'] = $nt;
+            $steps[$k]['squeezed'] = ['was' => [$from, $to], 'state' => ($nt - $nf) < ($to - $from) ? 'shortened' : 'moved', 'why' => $why];
+        }
+        usort($steps, fn ($a, $b) => [$a['from'], $a['to']] <=> [$b['from'], $b['to']]);
+        $notes = [['level' => 'warn', 'reason' => 'crew', 'text' => 'Only ' . $L . ' ' . ($L === 1 ? 'day is' : 'days are') . ' left before ' . $word . ', and the full preparation needs ' . $needed
+            . '. The plan presses the early steps together: plow first, keep every harrowing and the leveling, and shorten the waiting between them. Walk the field and check it carefully before you start.']];
+        $age = null;
+        if ($sowKey && $delta > 0) {
+            $age = -($oldSow + $delta);
+            $min = self::MIN_AGE[$method] ?? (int) ceil(-$oldSow * 0.75);
+            if ($age < $min) {
+                $notes[] = ['level' => 'warn', 'reason' => 'seed', 'text' => $age < 7
+                    ? 'There is no time to raise seedlings before this day. Buy or borrow healthy seedlings, or ' . ($word === 'transplanting' ? 'transplant' : 'plant') . ' later.'
+                    : 'The seedlings will be only ' . $age . ' days old at ' . $word . ', and ' . ($method === 'tpr_manual' ? 'PhilRice advises 18 to 21 days' : ($method === 'tpr_mechanical' ? 'PhilRice advises 14 to 18 days' : 'the usual age is ' . (-$oldSow) . ' days'))
+                        . '. Move the day a little later if you can, or get older seedlings from a neighbor\'s seedbed.'];
+            }
+        }
+
+        return [$steps, ['left' => $L, 'needed' => $needed, 'ratio' => round(max(0.1, min(1, $ratio)), 3), 'age' => $age, 'ageWas' => $oldSow !== null ? -$oldSow : null, 'count' => $count, 'notes' => $notes]];
+    }
+
+    /**
+     * The crew a case needs: the fewest workers (working Monday to Saturday,
+     * with the machines chosen) who get every lot ready on time with the
+     * whole window still ahead, and the reason in plain words.
+     */
+    public static function recommendCrew(array $case): array
+    {
+        $case = self::normalize($case);
+        $lots = $case['lots'];
+        if (! $lots) {
+            return ['workers' => null, 'reason' => ''];
+        }
+        $lotSteps = [];
+        foreach ($lots as $i => $l) {
+            [$lotSteps[$i]] = self::lotSteps($case, $i);
+            $lots[$i]['idx'] = $i;
+        }
+        $plantings = array_map(fn ($l) => (string) $l['planting'], $lots);
+        // The whole window ahead: today is the day before the earliest step of any lot.
+        $first = null;
+        foreach ($lots as $i => $l) {
+            $from = $lotSteps[$i] ? min(array_column($lotSteps[$i], 'from')) : -30;
+            $d = Carbon::parse($l['planting'], 'UTC')->addDays((int) $from - 1)->toDateString();
+            $first = $first === null || $d < $first ? $d : $first;
+        }
+        $units = self::units($case['crew']['fleet']);
+        $owned = count(array_filter($units, fn ($u) => ! $u['hired']));
+        $best = null;
+        foreach ([1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20, 25, 30, 40, 50, 60, 80, 100] as $n) {
+            if ($n < min(2, $owned)) {
+                continue;
+            }
+            $crew = $case['crew'];
+            $crew['workers'] = array_fill(0, $n, ['name' => 'Worker', 'days' => [1, 2, 3, 4, 5, 6]]);
+            $r = self::simulate($lotSteps, $lots, $plantings, $crew, $case, $first);
+            if (array_sum($r['late']) === 0) {
+                $best = $n;
+                break;
+            }
+        }
+        // The hand work, in person days, and the weeks it spreads over.
+        $hand = 0.0;
+        $byHand = [];
+        $span = 0;
+        foreach ($lots as $i => $l) {
+            $area = max(0.001, (float) $l['area']);
+            $from = 0;
+            foreach ($lotSteps[$i] as $s) {
+                [$kind, $u, $cap, $fallback] = self::workFor($s['key'], $area, $units, (array) $l['soil']);
+                if ($kind === 'manual' && ! in_array($s['key'], self::PLANT_KEYS, true)) {
+                    $hand += $u;
+                    $from = min($from, (int) $s['from']);
+                    if ($fallback) {
+                        $byHand[$cap] = true;
+                    }
+                }
+            }
+            $span = max($span, -$from);
+        }
+        $area = array_sum(array_map(fn ($l) => (float) $l['area'], $lots));
+        $weeks = max(1, (int) round($span / 7));
+        $word = self::dayWord($case['crop'], $case['method']);
+        $plantPeople = 0;
+        $plantWords = '';
+        foreach ($lots as $i => $l) {
+            foreach ($lotSteps[$i] as $s) {
+                $rate = self::PLANTING[$s['key'] . ':' . $case['method']] ?? self::PLANTING[$s['key'] . ':' . self::groupFor($case['crop'])] ?? null;
+                if ($rate && in_array($s['key'], self::PLANT_KEYS, true)) {
+                    $plantPeople = max($plantPeople, (int) ceil($rate[0] * (float) $l['area']));
+                    $plantWords = $rate[1];
+                }
+            }
+        }
+        $ha = rtrim(rtrim(number_format($area, 2), '0'), '.');
+        // The biggest hand jobs, by name.
+        $jobWords = ['dikes' => 'the dikes', 'clear_land' => 'opening the new land', 'clear' => 'clearing the field', 'beds' => 'the beds', 'holes' => 'the planting holes', 'fill' => 'filling the holes',
+            'seedbed_site' => 'the seedbed', 'seedbed_beds' => 'the seedbed', 'nursery_fill' => 'the nursery trays', 'mulch' => 'the mulch', 'straw' => 'the straw', 'drainage' => 'the drains'];
+        $named = [];
+        foreach ($lots as $i => $l) {
+            foreach ($lotSteps[$i] as $s) {
+                if (isset($jobWords[$s['key']]) && ! in_array($jobWords[$s['key']], $named, true)) {
+                    $named[] = $jobWords[$s['key']];
+                }
+            }
+        }
+        $named = array_slice($named, 0, 2);
+        $jobs = $named ? implode(', ', $named) . ' and the other hand work' : 'the hand work';
+        $reason = $best === null
+            ? 'Even 100 workers cannot finish ' . $ha . ' ha in time with these machines. Add a machine, hire a service, or let Anee stagger the lots.'
+            : 'About ' . $best . ' ' . ($best === 1 ? 'worker' : 'workers') . ' for ' . $ha . ' ha: ' . $jobs . ' come to about ' . (int) round($hand) . ' person days in the ' . $weeks . ' ' . ($weeks === 1 ? 'week' : 'weeks') . ' before ' . $word
+                . ($owned ? ', and each of your own machines needs a driver' : '')
+                . ($byHand ? ', and with no machine for some of the field work it is done by hand' : '') . '.'
+                . ($plantPeople > 1 ? ' The ' . $word . ' day itself takes about ' . $plantPeople . ' ' . $plantWords . ' on top.' : '');
+
+        return ['workers' => $best, 'reason' => $reason, 'handDays' => (int) round($hand), 'weeks' => $weeks, 'area' => round($area, 3), 'planting' => $plantPeople];
     }
 
     /* =================================================== seed preparation */
@@ -772,21 +1502,105 @@ final class LandPrepPlanner
         return null;
     }
 
+    /** Whether a variety name is on our list for this crop (rice or the crop variety book). */
+    public static function knownVariety(string $crop, string $name): bool
+    {
+        $name = trim($name);
+        if ($name === '') {
+            return true;
+        }
+        if (str_starts_with($crop, 'rice')) {
+            return self::riceRecord($name) !== null;
+        }
+        $k = self::norm($name);
+        foreach ((array) (CropVarieties::book()['crops'] ?? []) as $ck => $c) {
+            if ($ck !== $crop && ! in_array($crop, (array) ($c['catalogue'] ?? []), true)) {
+                continue;
+            }
+            foreach (CropVarieties::forCrop($ck) as $v) {
+                foreach (array_merge([$v['name'] ?? '', $v['localName'] ?? ''], (array) ($v['aliases'] ?? [])) as $n) {
+                    if (is_string($n) && $n !== '' && self::norm($n) === $k) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     /**
      * How to prepare the seed for this crop, method and variety, with the
      * hours, and how sure the source is. `applies` false when nothing is
      * soaked (dry seeding, cuttings, suckers); `found` false when nobody
      * researched it, and then `say` tells the farmer to follow the seed bag.
+     *
+     * `$research` is Anee's web research on a variety not on our list (see
+     * LandPrepController::research): its type, days and the company's own
+     * soaking, water change and incubation hours win over the general
+     * practice, and a failed research is said plainly.
      */
-    public static function seedPrep(string $crop, string $method, string $variety, string $seedType): array
+    public static function seedPrep(string $crop, string $method, string $variety, string $seedType, ?array $research = null): array
     {
-        $label = CropCatalog::label($crop);
+        $asked = $research && ! empty($research['asked']);
+        if (! $asked) {
+            return self::seedPrepBase($crop, $method, $variety, $seedType);
+        }
+        $rice = str_starts_with($crop, 'rice');
+        $found = ! empty($research['ok']) && ! empty($research['found']);
+        $facts = array_filter([
+            'days' => $research['days'] ?? null, 'type' => $research['type'] ?? null, 'company' => $research['company'] ?? null,
+            'searched' => (bool) ($research['searched'] ?? false),
+        ], fn ($v) => $v !== null && $v !== '');
+        if (! $found) {
+            $base = self::seedPrepBase($crop, $method, $variety, $seedType);
+            $miss = 'Anee could not find this variety on the web just now, so follow the instructions on the seed bag.';
+
+            return $base + ['research' => ['status' => 'failed'] + $facts, 'researchSay' => $miss];
+        }
+        $type = in_array($seedType, ['hybrid', 'inbred'], true) ? $seedType : (in_array($research['type'] ?? '', ['hybrid', 'inbred'], true) ? $research['type'] : '');
+        $base = self::seedPrepBase($crop, $method, $variety, $type);
+        $notes = trim((string) ($research['seedNotes'] ?? ''));
+        if (! $rice || empty($base['applies'])) {
+            return $base + ['research' => ['status' => 'found'] + $facts, 'researchSay' => $notes !== '' ? $notes : 'Anee found the variety but no seed instructions of its own. Follow the seed bag.'];
+        }
+        $soak = $research['soak'] ?? null;
+        $inc = $research['incubate'] ?? null;
+        if (! $soak && ! $inc) {
+            $say = ($base['confidence'] ?? '') === 'company' && ! empty($base['brand'])
+                ? 'Anee found this variety. Its soaking hours here are the seed company\'s own instructions (' . $base['brand'] . '). The seed bag comes first.'
+                : 'Anee found this variety but not its own soaking hours, so these are the general hours for ' . ($type ?: 'rice') . ' seed. The seed bag comes first.';
+
+            return $base + ['research' => ['status' => 'found'] + $facts, 'researchSay' => $say];
+        }
+        $general = $type === 'hybrid' ? (self::seedBook()['general']['hybrid'] ?? []) : (self::seedBook()['general']['inbred'] ?? []);
+        $soak = $soak ?: [(int) ($general['soakHours'] ?? 24), (int) ($general['soakHours'] ?? 24)];
+        $inc = $inc ?: array_map('intval', (array) ($general['incubateRange'] ?? [24, 36]));
+        $refresh = $research['refresh'] ?? null;
+        $out = array_merge($base ?: [], [
+            'applies' => true, 'found' => true, 'source' => 'research', 'type' => $type, 'confidence' => 'research',
+            'brand' => ! empty($research['company']) ? (string) $research['company'] : ($base['brand'] ?? null),
+            'soakHours' => (int) $soak[0], 'soakRange' => [(int) $soak[0], (int) $soak[1]],
+            'refreshEveryHours' => $refresh ? (int) $refresh : null, 'refreshPlanHours' => $refresh ? (int) $refresh : 6,
+            'refreshNote' => $refresh ? null : 'No water change schedule was found for this variety. In still water, PhilRice advises changing it every 6 hours.',
+            'incubateHours' => (int) $inc[0], 'incubateRange' => [(int) $inc[0], (int) $inc[1]],
+            'say' => 'From Anee\'s research on this variety.' . ($notes !== '' ? ' ' . $notes : '') . ' The seed bag comes first if it says otherwise.',
+            'research' => ['status' => 'found'] + $facts,
+        ]);
+        $out['floatRule'] = $type === 'hybrid' ? 'Never throw away hybrid seeds that float. They are lighter but they still grow.' : null;
+
+        return $out;
+    }
+
+    /** The seed preparation from our own books, before any research. */
+    private static function seedPrepBase(string $crop, string $method, string $variety, string $seedType): array
+    {
         if (! str_starts_with($crop, 'rice')) {
             $material = in_array($method, ['cuttings', 'cloves', 'setts', 'suckers', 'tissue', 'grafted'], true);
 
             return ['applies' => ! $material, 'found' => false, 'source' => 'none',
                 'say' => $material ? 'No seed to prepare: the planting material steps are in the plan.'
-                    : 'There is no researched seed preparation for ' . ($variety !== '' ? $variety : strtolower($label)) . '. Follow the instructions on the seed bag or from the seller.'];
+                    : 'There is no researched seed preparation for ' . ($variety !== '' ? $variety : FieldCatalogue::cropWord($crop)) . '. Follow the instructions on the seed bag or from the seller.'];
         }
         if ($method === 'dsr_dry') {
             return ['applies' => false, 'found' => true, 'source' => 'method', 'say' => 'Dry seeded rice is sown dry. Do not soak it.'];
@@ -880,55 +1694,60 @@ final class LandPrepPlanner
             }
         }
         $ev[] = ['at' => $incStart->format('Y-m-d H:i'), 'kind' => 'incubate', 'what' => 'Drain and start incubating', 'how' => 'Lift the bags onto a raised pallet in the shade, never the bare floor, cover them and keep them damp and aired. Do not stack the bags.'];
-        $ev[] = ['at' => $sow->format('Y-m-d H:i'), 'kind' => 'sow', 'what' => 'Check the sprouts and sow', 'how' => ($prep['sowWhen'] ?: 'Sow when most seeds show a small white root.') . ' If they are not ready, wait: up to ' . $prep['incubateRange'][1] . ' hours of incubation is normal, longer in cool weather.'];
+        $ev[] = ['at' => $sow->format('Y-m-d H:i'), 'kind' => 'sow', 'what' => 'Check the sprouts and sow', 'how' => (($prep['sowWhen'] ?? '') ?: 'Sow when most seeds show a small white root.') . ' If they are not ready, wait: up to ' . $prep['incubateRange'][1] . ' hours of incubation is normal, longer in cool weather.'];
 
         return $ev;
     }
 
     /* ============================================================ the crew */
 
-    /** Work for one step on one lot: [kind machine|manual|null, units]. */
-    private static function workFor(string $key, float $area, array $crew, array $case, ?array $own = null): array
+    /**
+     * Work for one step on one lot: [kind machine|manual|null, units, the
+     * kind of machine work, done by hand for want of a machine]. A machine
+     * step's units are hectares (slowed by heavy or stony soil), a manual
+     * one's person days.
+     */
+    private static function workFor(string $key, float $area, array $units, array $soil, ?array $own = null): array
     {
         $w = $own ?? (self::WORK[$key] ?? null);
         if (! $w) {
-            return [null, 0];
+            return [null, 0, null, false];
         }
-        $eq = $crew['equipment'] ?? 'hand_tractor';
-        $slow = 1.0;
-        $tex = $case['soil']['texture'] ?? '';
-        $slow *= ['clay' => 1.15, 'heavy_clay' => 1.35, 'sandy' => 0.85][$tex] ?? 1.0;
-        if (($case['soil']['rocks'] ?? '') === 'many') {
+        $slow = ['clay' => 1.15, 'heavy_clay' => 1.35, 'sandy' => 0.85][$soil['texture'] ?? ''] ?? 1.0;
+        if (($soil['rocks'] ?? '') === 'many') {
             $slow *= 1.25;
         }
         if ($w[0] === 'machine') {
-            $rates = self::MACHINE_RATES[$eq] ?? self::MACHINE_RATES['hand_tractor'];
-            $units = (float) ($rates[$w[1]] ?? 1) * $area * $slow;
-            if ($key === 'first_plow') {
-                $units *= 1.5;
+            $cap = (string) $w[1];
+            $eff = $area * $slow * ($key === 'first_plow' ? 1.5 : 1.0);
+            if (! array_filter($units, fn ($u) => isset($u['rates'][$cap]))) {
+                return ['manual', round(max(0.5, (self::HAND_RATES[$cap] ?? 10) * $eff), 2), $cap, true];
             }
 
-            return [$eq === 'hand' ? 'manual' : 'machine', round(max($eq === 'hand' ? 0.5 : 0.25, $units), 2)];
+            return ['machine', round(max(0.001, $eff), 4), $cap, false];
         }
 
-        return ['manual', round(max(0.25, (float) $w[1] * $area * ($w[1] >= 5 ? $slow : 1)), 2)];
+        return ['manual', round(max(0.25, (float) $w[1] * $area * ($w[1] >= 5 ? $slow : 1)), 2), null, false];
     }
 
     /**
      * Lay every lot's crew work on the calendar.
      *
-     * $lots: [{name, area (ha), planting (Y-m-d)}]; $crew: {workers,
-     * equipment, machines, daysPerWeek, stagger}. Returns per lot each step's
-     * dates, the crew calendar day by day, the conflicts, the planting days
-     * and any planting day moved.
+     * $stepsByLot: each lot's own steps, by lot index; $lots: [{name, area
+     * (ha), planting (Y-m-d), soil}]; $crew: {workers [{name, days}], fleet
+     * [{type, own, hired}], stagger}. Returns per lot each step's dates, the
+     * crew calendar day by day, the conflicts, the planting days, any
+     * planting day moved, and the first day each hired machine is needed.
      */
-    public static function schedule(array $steps, array $lots, array $crew, array $case, ?string $today = null): array
+    public static function schedule(array $stepsByLot, array $lots, array $crew, array $case, ?string $today = null): array
     {
         $today = $today ?: now('Asia/Manila')->toDateString();
+        $crew = self::crew($crew);
+        $lots = array_values($lots);
         $plantings = array_map(fn ($l) => (string) $l['planting'], $lots);
         $asked = $plantings;
         $shift = array_fill(0, count($lots), 0);
-        $run = function (array $plantings, ?array $only = null) use ($steps, $lots, $crew, $case, $today): array {
+        $run = function (array $plantings, ?array $only = null) use ($stepsByLot, $lots, $crew, $case, $today): array {
             $ls = [];
             $ps = [];
             foreach ($lots as $i => $l) {
@@ -937,10 +1756,10 @@ final class LandPrepPlanner
                     $ps[] = $plantings[$i];
                 }
             }
-            $r = self::simulate($steps, $ls, $ps, $crew, $case, $today);
+            $r = self::simulate($stepsByLot, $ls, $ps, $crew, $case, $today);
             if ($r['conflicts']) {
                 // A tight crew may start the work that waits for nobody (dikes, clearing) a little early.
-                $early = self::simulate($steps, $ls, $ps, $crew, $case, $today, true);
+                $early = self::simulate($stepsByLot, $ls, $ps, $crew, $case, $today, true);
                 if (array_sum($early['late']) < array_sum($r['late'])) {
                     $r = $early;
                 }
@@ -985,38 +1804,56 @@ final class LandPrepPlanner
         return $result;
     }
 
-    private static function simulate(array $steps, array $lots, array $plantings, array $crew, array $case, string $today, bool $early = false): array
+    private static function simulate(array $stepsByLot, array $lots, array $plantings, array $crew, array $case, string $today, bool $early = false): array
     {
         $d0 = fn (string $iso) => (int) floor(Carbon::parse($iso, 'UTC')->timestamp / 86400);
         $iso = fn (int $n) => gmdate('Y-m-d', $n * 86400);
+        $wd = fn (int $n) => (int) gmdate('w', $n * 86400);
         $T = $d0($today);
-        $W = max(1, (int) ($crew['workers'] ?? 2));
-        $eq = (string) ($crew['equipment'] ?? 'hand_tractor');
-        $M = $eq === 'hand' ? 0 : max(1, (int) ($crew['machines'] ?? 1));
-        $hired = $eq === 'hired';
-        $dpw = (int) ($crew['daysPerWeek'] ?? 6);
-        $offDay = fn (int $n) => ($dpw <= 5 && in_array((int) gmdate('w', $n * 86400), [0, 6], true)) || ($dpw === 6 && (int) gmdate('w', $n * 86400) === 0);
-        $keys = array_column($steps, 'key');
+        // A day's hands are the workers who work that weekday.
+        $cap = array_fill(0, 7, 0);
+        foreach ($crew['workers'] as $w) {
+            foreach ($w['days'] as $d) {
+                $cap[(int) $d]++;
+            }
+        }
+        $most = max(1, max($cap));
+        $workDays = count(array_filter($cap));
+        $units = self::units($crew['fleet']);
 
         // The jobs: one per crew step per lot.
         $jobs = [];
+        $lotKeys = [];
         foreach ($lots as $i => $lot) {
+            $idx = $lot['idx'] ?? $i;
+            $steps = $stepsByLot[$idx] ?? [];
+            $lotKeys[$i] = array_column($steps, 'key');
             $P = $d0($plantings[$i]);
-            $area = max(0.01, (float) $lot['area']);
+            $area = max(0.001, (float) $lot['area']);
             foreach ($steps as $s) {
-                if (isset($s['lots']) && is_array($s['lots']) && $s['lots'] && ! in_array($lot['idx'] ?? $i, $s['lots'], true)) {
+                if (isset($s['lots']) && is_array($s['lots']) && $s['lots'] && ! in_array($idx, $s['lots'], true)) {
                     continue;
                 }
-                [$kind, $units] = self::workFor($s['key'], $area, $crew, $case, isset($s['work']) && is_array($s['work']) ? $s['work'] : null);
+                [$kind, $amount, $capKey, $byHand] = self::workFor($s['key'], $area, $units, (array) ($lot['soil'] ?? []), isset($s['work']) && is_array($s['work']) ? $s['work'] : null);
                 if (! $kind || in_array($s['key'], self::PLANT_KEYS, true) || $s['key'] === 'pull') {
                     continue;
                 }
                 // Work longer than its window starts early enough to end on time.
-                $base = $kind === 'machine' ? $units : $units / $W;
-                $span = (int) ceil($base) + (($dpw < 7 && $base > 1) ? 1 : 0);
+                if ($kind === 'machine') {
+                    $perDay = 0.0;
+                    foreach ($units as $u) {
+                        if (isset($u['rates'][$capKey])) {
+                            $perDay += 1 / $u['rates'][$capKey];
+                        }
+                    }
+                    $base = $amount / max(0.001, $perDay);
+                } else {
+                    $base = $amount / $most;
+                }
+                $span = (int) ceil($base) + (($workDays < 7 && $base > 1) ? 1 : 0);
                 $es = min($P + (int) $s['from'], $P + (int) $s['to'] - $span + 1);
-                $jobs[] = ['lot' => $i, 'key' => $s['key'], 'kind' => $kind, 'units' => $units, 'left' => $units,
-                    'es' => $es - ($early ? (self::EARLY[$s['key']] ?? 0) : 0), 'le' => $P + (int) $s['to'], 'start' => null, 'end' => null, 'days' => []];
+                $jobs[] = ['lot' => $i, 'key' => $s['key'], 'kind' => $kind, 'cap' => $capKey, 'byHand' => $byHand, 'units' => $amount, 'left' => $amount,
+                    'es' => $es - ($early ? (self::EARLY[$s['key']] ?? 0) : 0), 'le' => $P + (int) $s['to'], 'start' => null, 'end' => null, 'days' => [], 'used' => []];
             }
         }
         $byKey = [];
@@ -1024,17 +1861,18 @@ final class LandPrepPlanner
             $byKey[$job['lot']][$job['key']] = $j;
         }
         $calendar = [];
-        if ($jobs) {
-            $from = min(array_column($jobs, 'es'));
-            $from = max($from, $T);
+        $firstHired = [];
+        if ($jobs && array_sum($cap) > 0) {
+            $from = max(min(array_column($jobs, 'es')), $T);
             $until = max(array_column($jobs, 'le')) + 120;
             for ($d = $from; $d <= $until; $d++) {
-                $open = array_filter(array_keys($jobs), fn ($j) => $jobs[$j]['left'] > 0.001);
+                $open = array_filter(array_keys($jobs), fn ($j) => $jobs[$j]['left'] > 0.0005);
                 if (! $open) {
                     break;
                 }
-                if ($offDay($d)) {
-                    continue;
+                $people = $cap[$wd($d)];
+                if ($people < 1) {
+                    continue;   // nobody works this weekday
                 }
                 // Ready: its window has opened (never before today) and what comes before it is done, with its gap.
                 $ready = [];
@@ -1044,53 +1882,81 @@ final class LandPrepPlanner
                         continue;
                     }
                     $after = self::AFTER[$job['key']] ?? null;
-                    if ($after && in_array($after[0], $keys, true) && isset($byKey[$job['lot']][$after[0]])) {
+                    if ($after && in_array($after[0], $lotKeys[$job['lot']], true) && isset($byKey[$job['lot']][$after[0]])) {
                         $pre = $jobs[$byKey[$job['lot']][$after[0]]];
-                        if ($pre['left'] > 0.001 || $pre['end'] === null || $pre['end'] + $after[1] > $d) {
+                        // A squeezed lot waits less between passes.
+                        $gs = (float) ($lots[$job['lot']]['gapScale'] ?? 1);
+                        $gap = $gs < 1 ? min($after[1], max(1, (int) floor($after[1] * $gs))) : $after[1];
+                        if ($pre['left'] > 0.0005 || $pre['end'] === null || $pre['end'] + $gap > $d) {
                             continue;
                         }
                     }
                     $ready[] = $j;
                 }
-                // Most urgent first, machine and hand work alike; hand work
-                // leaves one person for the machine while a machine job waits.
+                // Most urgent first, machine and hand work alike.
                 usort($ready, fn ($a, $b) => [$jobs[$a]['le'], $jobs[$a]['lot'], $jobs[$a]['es']] <=> [$jobs[$b]['le'], $jobs[$b]['lot'], $jobs[$b]['es']]);
-                $people = $W;
-                $machines = $M;
-                $today_items = [];
-                $machineWaiting = function () use (&$ready, &$jobs, &$machines, &$taken): bool {
-                    if ($machines < 1) {
-                        return false;
-                    }
-                    foreach ($ready as $j) {
-                        if ($jobs[$j]['kind'] === 'machine' && empty($taken[$j])) {
-                            return true;
-                        }
-                    }
-
-                    return false;
-                };
-                $taken = [];
+                $free = array_keys($units);
+                $served = [];
+                $items = [];
                 foreach ($ready as $j) {
                     if ($jobs[$j]['kind'] === 'machine') {
-                        if ($machines < 1 || (! $hired && $people < 1)) {
-                            continue;
+                        // Every free machine able to do it, the fastest first; an owned one needs a driver.
+                        $c = $jobs[$j]['cap'];
+                        $used = [];
+                        $drivers = 0;
+                        while ($jobs[$j]['left'] > 0.0005) {
+                            $best = null;
+                            foreach ($free as $fi => $u) {
+                                if (! isset($units[$u]['rates'][$c]) || (! $units[$u]['hired'] && $people < 1)) {
+                                    continue;
+                                }
+                                if ($best === null || $units[$u]['rates'][$c] < $units[$free[$best]]['rates'][$c]) {
+                                    $best = $fi;
+                                }
+                            }
+                            if ($best === null) {
+                                break;
+                            }
+                            $u = $free[$best];
+                            unset($free[$best]);
+                            if (! $units[$u]['hired']) {
+                                $people--;
+                                $drivers++;
+                            } else {
+                                $firstHired[$units[$u]['type']] ??= ['day' => $d, 'lot' => $jobs[$j]['lot'], 'key' => $jobs[$j]['key']];
+                            }
+                            $jobs[$j]['left'] = round(max(0, $jobs[$j]['left'] - 1 / $units[$u]['rates'][$c]), 4);
+                            $used[] = $units[$u]['type'];
                         }
-                        $machines--;
-                        if (! $hired) {
-                            $people--;
+                        if ($used) {
+                            $served[$j] = true;
+                            $jobs[$j]['start'] ??= $d;
+                            $jobs[$j]['end'] = $d;
+                            $jobs[$j]['days'][] = $d;
+                            $jobs[$j]['used'] = array_values(array_unique(array_merge($jobs[$j]['used'], $used)));
+                            $items[] = ['lot' => $jobs[$j]['lot'], 'key' => $jobs[$j]['key'], 'people' => $drivers, 'machine' => true, 'units' => array_values(array_unique($used)), 'n' => count($used)];
                         }
-                        $taken[$j] = true;
-                        $use = min(1.0, $jobs[$j]['left']);
-                        $jobs[$j]['left'] = round($jobs[$j]['left'] - $use, 3);
-                        $jobs[$j]['start'] ??= $d;
-                        $jobs[$j]['end'] = $d;
-                        $jobs[$j]['days'][] = $d;
-                        $today_items[] = ['lot' => $jobs[$j]['lot'], 'key' => $jobs[$j]['key'], 'people' => $hired ? 0 : 1, 'machine' => true];
                         continue;
                     }
-                    $taken[$j] = true;
-                    $spare = $people - ((! $hired && $machineWaiting()) ? 1 : 0);
+                    // Hand work leaves a driver for a machine job still waiting for an owned machine.
+                    $reserve = 0;
+                    foreach ($ready as $j2) {
+                        if ($jobs[$j2]['kind'] !== 'machine' || isset($served[$j2]) || $jobs[$j2]['left'] <= 0.0005) {
+                            continue;
+                        }
+                        $ownFree = false;
+                        $hireFree = false;
+                        foreach ($free as $u) {
+                            if (isset($units[$u]['rates'][$jobs[$j2]['cap']])) {
+                                $units[$u]['hired'] ? $hireFree = true : $ownFree = true;
+                            }
+                        }
+                        if ($ownFree && ! $hireFree) {
+                            $reserve = 1;
+                            break;
+                        }
+                    }
+                    $spare = $people - $reserve;
                     if ($spare < 1) {
                         continue;
                     }
@@ -1101,10 +1967,10 @@ final class LandPrepPlanner
                     $jobs[$j]['start'] ??= $d;
                     $jobs[$j]['end'] = $d;
                     $jobs[$j]['days'][] = $d;
-                    $today_items[] = ['lot' => $jobs[$j]['lot'], 'key' => $jobs[$j]['key'], 'people' => $give, 'machine' => false];
+                    $items[] = ['lot' => $jobs[$j]['lot'], 'key' => $jobs[$j]['key'], 'people' => $give, 'machine' => false];
                 }
-                if ($today_items) {
-                    $calendar[$iso($d)] = $today_items;
+                if ($items) {
+                    $calendar[$iso($d)] = $items;
                 }
             }
         }
@@ -1114,12 +1980,14 @@ final class LandPrepPlanner
         $late = [];
         $conflicts = [];
         foreach ($lots as $i => $lot) {
+            $idx = $lot['idx'] ?? $i;
+            $steps = $stepsByLot[$idx] ?? [];
             $P = $d0($plantings[$i]);
-            $area = max(0.01, (float) $lot['area']);
+            $area = max(0.001, (float) $lot['area']);
             $rows = [];
             $actual = [];
             foreach ($steps as $s) {
-                if (isset($s['lots']) && is_array($s['lots']) && $s['lots'] && ! in_array($lot['idx'] ?? $i, $s['lots'], true)) {
+                if (isset($s['lots']) && is_array($s['lots']) && $s['lots'] && ! in_array($idx, $s['lots'], true)) {
                     continue;
                 }
                 $row = ['key' => $s['key']];
@@ -1127,12 +1995,18 @@ final class LandPrepPlanner
                     $job = $jobs[$byKey[$i][$s['key']]];
                     $row['crew'] = $job['kind'];
                     $row['units'] = $job['units'];
+                    if ($job['used']) {
+                        $row['machines'] = $job['used'];
+                    }
+                    if ($job['byHand']) {
+                        $row['byHand'] = true;
+                    }
                     if ($job['start'] !== null) {
                         $row['start'] = $iso($job['start']);
                         $row['end'] = $iso($job['end']);
                         $row['workDays'] = count($job['days']);
                         $actual[$s['key']] = [$job['start'], $job['end']];
-                        $lateBy = $job['left'] > 0.001 ? 999 : max(0, $job['end'] - $job['le']);
+                        $lateBy = $job['left'] > 0.0005 ? 999 : max(0, $job['end'] - $job['le']);
                         if ($lateBy > 0) {
                             $row['late'] = $lateBy >= 999 ? null : $lateBy;
                             $row['lateWhy'] = $job['le'] < $T ? 'past' : 'crew';
@@ -1171,10 +2045,17 @@ final class LandPrepPlanner
                     $actual[$s['key']] = [min($a, $b), max($a, $b)];
                 }
             }
+            // Nothing is dated before today (an anchor near today can pull a step behind it).
+            foreach ($rows as $k => $r) {
+                if (! isset($r['crew']) && $r['from'] < $T && $r['to'] >= $T - 400) {
+                    $rows[$k]['from'] = $T;
+                    $rows[$k]['to'] = max($r['to'], $T);
+                }
+            }
             $out = [];
             foreach ($rows as $k => $r) {
                 $o = ['key' => $k, 'winFrom' => $iso($r['from']), 'winTo' => $iso($r['to'])];
-                foreach (['crew', 'units', 'start', 'end', 'workDays', 'late', 'lateWhy', 'planting'] as $f) {
+                foreach (['crew', 'units', 'machines', 'byHand', 'start', 'end', 'workDays', 'late', 'lateWhy', 'planting'] as $f) {
                     if (array_key_exists($f, $r)) {
                         $o[$f] = $r[$f];
                     }
@@ -1195,8 +2076,8 @@ final class LandPrepPlanner
         $group = self::groupFor((string) ($case['crop'] ?? ''));
         $plantDays = [];
         foreach ($lots as $i => $lot) {
-            $area = max(0.01, (float) $lot['area']);
-            foreach ($steps as $s) {
+            $area = max(0.001, (float) $lot['area']);
+            foreach ($stepsByLot[$lot['idx'] ?? $i] ?? [] as $s) {
                 if (! in_array($s['key'], array_merge(self::PLANT_KEYS, ['pull']), true)) {
                     continue;
                 }
@@ -1210,7 +2091,84 @@ final class LandPrepPlanner
         }
         ksort($calendar);
 
-        return ['perLot' => $perLot, 'calendar' => $calendar, 'conflicts' => $conflicts, 'plantDays' => $plantDays, 'late' => $late + array_fill(0, count($lots), 0)];
+        return ['perLot' => $perLot, 'calendar' => $calendar, 'conflicts' => $conflicts, 'plantDays' => $plantDays,
+            'hiredFirst' => array_map(fn ($x) => ['day' => $iso($x['day']), 'lot' => $x['lot'], 'key' => $x['key']], $firstHired),
+            'late' => $late + array_fill(0, count($lots), 0)];
+    }
+
+    /**
+     * A "book it" reminder for every hired machine, a week before the day
+     * the calendar first needs it (never before today), on the lot that
+     * needs it first: a step in that lot's plan and a dated row, and the
+     * list of bookings for the whole farm.
+     */
+    private static function bookings(array $lotSteps, array $sched, array $case): array
+    {
+        $items = (array) (self::equipmentBook()['items'] ?? []);
+        $today = now('Asia/Manila')->toDateString();
+        $lots = $case['lots'];
+        $need = [];
+        foreach ($sched['hiredFirst'] ?? [] as $type => $f) {
+            $need[$type] = $f;
+        }
+        // Planting machines are needed on the first planting day.
+        foreach ($case['crew']['fleet'] as $f) {
+            if (! empty($items[$f['type']]['plants']) && $f['hired'] > 0 && $lots) {
+                $first = 0;
+                foreach ($sched['plantings'] as $i => $p) {
+                    if ($p < $sched['plantings'][$first]) {
+                        $first = $i;
+                    }
+                }
+                $need[$f['type']] = ['day' => $sched['plantings'][$first], 'lot' => $first, 'key' => null];
+            }
+        }
+        $bookings = [];
+        foreach ($need as $type => $f) {
+            $i = (int) $f['lot'];
+            if (! isset($lots[$i])) {
+                continue;
+            }
+            $use = Carbon::parse($f['day'], 'UTC');
+            $by = $use->copy()->subDays(7);
+            if ($by->toDateString() < $today) {
+                $by = Carbon::parse($today, 'UTC');
+            }
+            $P = Carbon::parse($sched['plantings'][$i], 'UTC');
+            $off = (int) $P->diffInDays($by, false);
+            $word = self::machineWord($type);
+            $count = 0;
+            foreach ($case['crew']['fleet'] as $x) {
+                if ($x['type'] === $type) {
+                    $count = (int) $x['hired'];
+                }
+            }
+            $forWhat = '';
+            if ($f['key']) {
+                foreach ($lotSteps[$i] as $s) {
+                    if ($s['key'] === $f['key']) {
+                        $forWhat = mb_strtolower((string) $s['what']);
+                    }
+                }
+            }
+            $how = 'Call the operator now and fix the days. It is first needed on ' . $use->format('D M j') . ($forWhat !== '' ? ' (' . $forWhat . ', ' . $lots[$i]['name'] . ')' : ', the ' . self::dayWord($case['crop'], $case['method']) . ' day')
+                . '. Operators are busiest when the whole area plants together, so book early.';
+            $step = self::step('book_' . $type, $off, $off, 'Book the hired ' . $word, $how, 'anee', null, 'crew');
+            $step['type'] = 'other';
+            $lotSteps[$i] = array_values(array_filter($lotSteps[$i], fn ($x) => $x['key'] !== $step['key']));
+            $lotSteps[$i][] = $step;
+            usort($lotSteps[$i], fn ($a, $b) => [$a['from'], $a['to']] <=> [$b['from'], $b['to']]);
+            foreach ($sched['perLot'] as $k => $pl) {
+                if ($pl['lot'] === $i) {
+                    $sched['perLot'][$k]['steps'][] = ['key' => $step['key'], 'winFrom' => $by->toDateString(), 'winTo' => $by->toDateString(), 'booking' => true];
+                    usort($sched['perLot'][$k]['steps'], fn ($a, $b) => [($a['start'] ?? $a['winFrom']), $a['winTo']] <=> [($b['start'] ?? $b['winFrom']), $b['winTo']]);
+                }
+            }
+            $bookings[] = ['type' => $type, 'name' => (string) ($items[$type]['name'] ?? $type), 'count' => $count, 'use' => $use->toDateString(), 'by' => $by->toDateString(), 'lot' => $i, 'for' => $forWhat];
+        }
+        usort($bookings, fn ($a, $b) => $a['by'] <=> $b['by']);
+
+        return [$lotSteps, $sched, $bookings];
     }
 
     /* ======================================== into the Protocol Builder */

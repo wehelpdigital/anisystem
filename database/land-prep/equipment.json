@@ -1,0 +1,193 @@
+{
+    "about": "The machines and animals of a Philippine land preparation (2026-10-15), as the Land Prep Planner offers them. rates: machine days per hectare for each kind of work (plow, harrow, harrowlevel, level, roughlevel, light, furrow), typical field rates, a guide only. for: all, rice_wet (rice except dry seeding), or a list of planting methods. plants: a planting machine, booked for the planting day. photo: a freely licensed photo with its author, licence and file page.",
+    "items": {
+        "hand_tractor": {
+            "name": "Hand tractor",
+            "local": "Kuliglig",
+            "line": "Pulls a plow, a harrow or a leveling board",
+            "rates": {
+                "plow": 2,
+                "harrow": 1,
+                "harrowlevel": 2,
+                "level": 1,
+                "roughlevel": 2,
+                "light": 0.5,
+                "furrow": 1
+            },
+            "for": "all",
+            "photo": {
+                "file": "/images/land-prep/equipment/hand_tractor.webp",
+                "title": "File:Plowing with tractors in the Philippines 14.jpg",
+                "author": "SwarmCheng",
+                "license": "CC BY-SA 4.0",
+                "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+                "page": "https://commons.wikimedia.org/wiki/File:Plowing_with_tractors_in_the_Philippines_14.jpg",
+                "what": "A farmer rides behind a hand tractor (kuliglig) with a cage wheel, working a flooded rice paddy in the Philippines while egrets feed behind it."
+            }
+        },
+        "tractor_rotavator": {
+            "name": "Four wheel tractor with a rotavator",
+            "local": "",
+            "line": "Tills and puddles the soil in one pass",
+            "rates": {
+                "plow": 0.4,
+                "harrow": 0.3,
+                "harrowlevel": 0.6,
+                "level": 0.5,
+                "roughlevel": 0.8,
+                "light": 0.2
+            },
+            "for": "all",
+            "photo": {
+                "file": "/images/land-prep/equipment/tractor_rotavator.webp",
+                "title": "File:0487Plaridel during enhanced community quarantine in the Philippines 44.jpg",
+                "author": "JFVelasquez Floro",
+                "license": "CC0",
+                "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+                "page": "https://commons.wikimedia.org/wiki/File:0487Plaridel_during_enhanced_community_quarantine_in_the_Philippines_44.jpg",
+                "what": "A four wheel tractor pulling a rear mounted rotavator through a harvested rice field in Plaridel, Bulacan, Philippines."
+            }
+        },
+        "tractor_disc": {
+            "name": "Four wheel tractor with a disc plow",
+            "local": "",
+            "line": "Turns heavy or dry ground, then a disc harrow",
+            "rates": {
+                "plow": 0.35,
+                "harrow": 0.3,
+                "roughlevel": 0.8,
+                "light": 0.25,
+                "furrow": 0.3
+            },
+            "for": "all",
+            "photo": {
+                "file": "/images/land-prep/equipment/tractor_disc.webp",
+                "title": "File:11.06.17 Disc Harrow.JPG",
+                "author": "Easy n",
+                "license": "Public domain",
+                "licenseUrl": "",
+                "page": "https://commons.wikimedia.org/wiki/File:11.06.17_Disc_Harrow.JPG",
+                "what": "A four wheel tractor towing a wide disc harrow across a dry, freshly worked field."
+            }
+        },
+        "carabao_plow": {
+            "name": "Carabao with a plow",
+            "local": "Araro",
+            "line": "One carabao and a plow",
+            "rates": {
+                "plow": 5,
+                "furrow": 2
+            },
+            "for": "all",
+            "photo": {
+                "file": "/images/land-prep/equipment/carabao_plow.webp",
+                "title": "File:0256jfLandscapes Maronquillo Plowing Vegetables Fields San Rafael Bulacanfvf 24.JPG",
+                "author": "Judgefloro",
+                "license": "Public domain",
+                "licenseUrl": "",
+                "page": "https://commons.wikimedia.org/wiki/File:0256jfLandscapes_Maronquillo_Plowing_Vegetables_Fields_San_Rafael_Bulacanfvf_24.JPG",
+                "what": "A carabao pulling a traditional wooden plow (araro) guided by a farmer in San Rafael, Bulacan, Philippines."
+            }
+        },
+        "carabao_harrow": {
+            "name": "Carabao with a harrow",
+            "local": "Suyod",
+            "line": "Breaks the clods and buries the weeds",
+            "rates": {
+                "harrow": 2.5,
+                "harrowlevel": 4.5,
+                "level": 2.5,
+                "roughlevel": 4,
+                "light": 1.5
+            },
+            "for": "all",
+            "photo": {
+                "file": "/images/land-prep/equipment/carabao_harrow.webp",
+                "title": "File:Lao farmer plowing with buffalo.JPG",
+                "author": "BigBrotherMouse",
+                "license": "CC BY-SA 4.0",
+                "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+                "page": "https://commons.wikimedia.org/wiki/File:Lao_farmer_plowing_with_buffalo.JPG",
+                "what": "A water buffalo pulling a wooden comb tooth harrow through a muddy, flooded rice paddy in Laos while the farmer holds the handle."
+            }
+        },
+        "pagulong": {
+            "name": "Pagulong",
+            "local": "Roller puddler",
+            "line": "A bladed roller that puddles the wet paddy",
+            "rates": {
+                "harrow": 2,
+                "harrowlevel": 3.5,
+                "level": 2.5,
+                "light": 1.2
+            },
+            "for": "rice_wet",
+            "photo": {
+                "file": "/images/land-prep/equipment/pagulong.webp",
+                "title": "File:Tractor en el Delta del Ebro.jpg",
+                "author": "Vanbasten 23",
+                "license": "CC BY-SA 4.0",
+                "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+                "page": "https://commons.wikimedia.org/wiki/File:Tractor_en_el_Delta_del_Ebro.jpg",
+                "what": "A tractor on steel cage wheels puddling a flooded rice field in the Ebro Delta, Spain. It stands in for the pagulong, which does the same puddling, since no free photo of one was found."
+            }
+        },
+        "leveling_board": {
+            "name": "Leveling board",
+            "local": "",
+            "line": "A wide plank dragged over the puddled field",
+            "rates": {
+                "level": 1.5,
+                "roughlevel": 3
+            },
+            "for": "rice_wet",
+            "photo": {
+                "file": "/images/land-prep/equipment/leveling_board.webp",
+                "title": "File:Man leveling field using traditional tool during paddy plantation.jpg",
+                "author": "Mithunkunwar9",
+                "license": "CC BY-SA 4.0",
+                "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+                "page": "https://commons.wikimedia.org/wiki/File:Man_leveling_field_using_traditional_tool_during_paddy_plantation.jpg",
+                "what": "A farmer drags a wooden leveling board on a long handle across a puddled rice field in Nepal to smooth the mud before transplanting."
+            }
+        },
+        "drum_seeder": {
+            "name": "Drum seeder",
+            "local": "",
+            "line": "Sows sprouted seed in straight rows",
+            "rates": {},
+            "for": [
+                "dsr_wet_drum"
+            ],
+            "plants": true,
+            "photo": {
+                "file": "/images/land-prep/equipment/drum_seeder.webp",
+                "title": "File:Shykh Seraj works with a drum-seeder in Natore's Kholabaria (5263000834).jpg",
+                "author": "Hridoye Mati O Manush Channel i from Bangladesh, Bangladesh",
+                "license": "CC BY 2.0",
+                "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+                "page": "https://commons.wikimedia.org/wiki/File:Shykh_Seraj_works_with_a_drum-seeder_in_Natore%27s_Kholabaria_(5263000834).jpg",
+                "what": "A man pulls a plastic drum seeder across a puddled rice field in Natore, Bangladesh, sowing sprouted seed in rows."
+            }
+        },
+        "transplanter": {
+            "name": "Rice transplanter",
+            "local": "",
+            "line": "Plants the tray seedlings by machine",
+            "rates": {},
+            "for": [
+                "tpr_mechanical"
+            ],
+            "plants": true,
+            "photo": {
+                "file": "/images/land-prep/equipment/transplanter.webp",
+                "title": "File:Rice-planting-machine,katori-city,japan.JPG",
+                "author": "katorisi",
+                "license": "CC BY 2.5",
+                "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+                "page": "https://commons.wikimedia.org/wiki/File:Rice-planting-machine,katori-city,japan.JPG",
+                "what": "A riding rice transplanter loaded with seedling mats planting a flooded paddy in Katori, Japan."
+            }
+        }
+    }
+}
