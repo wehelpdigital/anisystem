@@ -215,6 +215,8 @@
                     . ($soft ? 'You can ask Anee inside this tool' : 'Anee, the smart farm technician, does this for you') . '"><img src="' . e($qAneeFace) . '" alt="">' . ($soft ? '+ Anee' : 'Anee') . '</span>';
                 // The small tag on a tool that has Anee inside.
                 $qPlus = '<span class="qa-anee is-soft is-mini" title="You can ask Anee inside this tool"><img src="' . e($qAneeFace) . '" alt="">+ Anee</span>';
+                // The gold Anee tag after each tool she runs herself (2026-10-15, the owner), its shine taking turns down the list.
+                $qMine = fn (int $i) => '<span class="qa-anee is-mini" style="--qa-d:' . ($i * 0.45) . 's" title="Anee, the smart farm technician, does this for you"><img src="' . e($qAneeFace) . '" alt="">Anee</span>';
             @endphp
             @php $qWtpLocked = ! \App\Support\Tier::farmCan('aiAnalyses'); $qWtpRung = \App\Support\Tier::farmUnlocksAt('aiAnalyses'); $qWtpWith = \App\Support\Tier::withPlan($qWtpRung); @endphp
             {{-- Grouped by Anee (2026-10-12): what she does for you, what has her inside, and the rest. --}}
@@ -230,7 +232,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The When to Plant analysis comes with {{ $qWtpWith }}. Anee reads your town's climate and the El Niño or La Niña outlook to find your safest time to plant." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>When to Plant Analysis</b>
+                    <b>When to Plant Analysis{!! $qMine(0) !!}</b>
                     <i>Find the best time to plant your crop, based on your location, past weather, climate and the forecast.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -243,7 +245,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The What to Plant analysis comes with {{ $qWtpWith }}. Anee looks at your location, the season's forecast and your soil to suggest the best crop." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>What to Plant Analysis</b>
+                    <b>What to Plant Analysis{!! $qMine(1) !!}</b>
                     <i>Find the best crop to plant in your area, based on climate, the forecast, past weather, season, soil and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -258,7 +260,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Variety research comes with {{ $qWtpWith }}. Anee studies the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids and ranks them for your soil, weather and priorities." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/biotechnology.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Variety Research & Comparison</b>
+                    <b>Variety Comparison{!! $qMine(2) !!}</b>
                     <i>Not sure which variety to plant? Anee finds and ranks the best varieties for your location, weather, climate, season, soil and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -273,7 +275,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The Crop Protocol Analysis comes with {{ $qWtpWith }}. Anee writes your season stage by stage: which fertilizer and when, the sprays to have ready, the water, and the pests and weeds to watch." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/checklist.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Crop Protocol Analysis</b>
+                    <b>Crop Protocol Analysis{!! $qMine(3) !!}</b>
                     <i>Get a recommended protocol for your crop variety, stage by stage, based on your location, weather, soil, climate and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -289,7 +291,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Satellite Analysis comes with {{ $qWtpWith }}. Draw your field and Anee reads the newest satellite pictures and radar for crop health, weak spots and threats." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/satellite.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Satellite Analysis</b>
+                    <b>Satellite Analysis{!! $qMine(4) !!}</b>
                     <i>Draw your field and see its health from space: greenness, weak spots, radar through clouds, threats and soil.</i>
                 </span>
                 @if ($qWtpLocked)
@@ -307,7 +309,7 @@
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The Land Prep Planner comes with {{ $qWtpWith }}. Anee plans every step of getting your lots ready, dated back from planting, around the weather and your crew." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/land-prep.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Land Prep Planner</b>
+                    <b>Land Prep Planner{!! $qMine(5) !!}</b>
                     <i>Every step of getting your lots ready, dated back from planting day, fitted to your soil, the weather and your workers.</i>
                 </span>
                 @if ($qWtpLocked)

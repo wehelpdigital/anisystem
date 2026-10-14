@@ -477,6 +477,18 @@ class VarietyAnalysisController extends Controller
             'season' => (string) $request->query('season', ''),
             'problems' => array_values(array_filter((array) $request->query('problems', []), 'is_string')),
         ]);
+        // The search sheet (2026-10-15, the owner): every record of the crop, compact, to search and pick from.
+        if ($request->boolean('all')) {
+            $all = array_map(function ($r) {
+                $b = \App\Support\VarietyBook::brief($r);
+
+                return [$b['name'], $b['alias'], $b['type'], $b['days'], $b['daysUnit'], $b['yield'], $b['yieldUnit'] ?? null, $b['where'] ?? null, $b['year'],
+                    implode(' ', array_slice($r['aliases'], 0, 4))];
+            }, $rows);
+            usort($all, fn ($a, $b) => ($b[8] ?? 0) <=> ($a[8] ?? 0) ?: strnatcasecmp($a[0], $b[0]));
+
+            return $this->json(true, 'ok', ['count' => count($rows), 'all' => $all]);
+        }
         $names = [];
         foreach ($rows as $r) {
             $names[] = $r['name'];

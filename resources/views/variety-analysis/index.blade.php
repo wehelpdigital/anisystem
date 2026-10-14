@@ -294,6 +294,51 @@
     .va-file-row small { font-size: .7rem; color: var(--color-gray-500); }
     .va-file-row .f-in { align-self: flex-start; font-size: .6rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .1rem .45rem; border-radius: 999px; color: #2d5016; background: #e4f1d6; }
     .va-file-all { display: inline-block; margin-top: .7rem; font-size: .78rem; font-weight: 800; color: var(--color-brand-700); text-decoration: underline; text-underline-offset: 3px; }
+    /* The two ways to add a variety (2026-10-15). */
+    .va-ways { display: grid; gap: .7rem; margin-top: .9rem; }
+    .va-way { display: flex; align-items: center; gap: .75rem; width: 100%; padding: .75rem .85rem; border-radius: 1rem; text-align: left;
+        background: linear-gradient(135deg, #f3f9ec, #fff); border: 1.5px solid #cfe5b8; cursor: pointer;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .va-way:hover { border-color: #86b556; transform: translateY(-1px); box-shadow: 0 10px 22px -16px rgb(45 80 22 / .5); }
+    .va-way-i { flex: none; width: 2.5rem; height: 2.5rem; border-radius: .8rem; display: grid; place-items: center; color: #fff; background: #4a7c2a; }
+    .va-way-i svg { width: 1.2rem; height: 1.2rem; }
+    .va-way-t { min-width: 0; display: grid; gap: .1rem; }
+    .va-way-t b { font-size: .92rem; font-weight: 800; color: var(--color-gray-900); }
+    .va-way-t small { font-size: .74rem; color: var(--color-gray-500); }
+    .va-own-l { display: block; margin-bottom: .35rem; font-size: .74rem; font-weight: 800; color: var(--color-gray-600); }
+    .va-find-filt { display: flex; gap: .35rem; margin-top: .6rem; }
+    .va-find-filt button { padding: .3rem .75rem; border-radius: 999px; font-size: .76rem; font-weight: 800; color: var(--color-gray-600); background: var(--color-gray-100);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .va-find-filt button[aria-pressed="true"] { color: #fff; background: #4a7c2a; }
+    .va-find-n { margin: .6rem 0 .3rem; font-size: .72rem; font-weight: 700; color: var(--color-gray-500); }
+    .va-find-list { display: grid; gap: .35rem; padding-bottom: .5rem; }
+    .va-find-r { display: flex; align-items: center; gap: .7rem; width: 100%; padding: .55rem .65rem; border-radius: .85rem; text-align: left;
+        background: #fff; border: 1px solid var(--color-gray-200); cursor: pointer; transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .va-find-r:hover { border-color: #a8cc7e; }
+    .va-find-r[aria-pressed="true"] { border-color: #4a7c2a; background: #f1f8e9; }
+    .va-find-r .t { flex: 1 1 auto; min-width: 0; display: grid; gap: .08rem; }
+    .va-find-r .t b { font-size: .86rem; font-weight: 800; color: var(--color-gray-900); overflow-wrap: anywhere; }
+    .va-find-r .t small { font-size: .7rem; color: #8a6a00; font-weight: 700; overflow-wrap: anywhere; }
+    .va-find-r .t span { font-size: .7rem; color: var(--color-gray-500); }
+    .va-find-r .ck { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 999px; display: grid; place-items: center; color: #fff; background: var(--color-gray-200);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .va-find-r .ck svg { width: .85rem; height: .85rem; opacity: 0; transition: opacity .2s ease; }
+    .va-find-r[aria-pressed="true"] .ck { background: #4a7c2a; transform: scale(1.05); }
+    .va-find-r[aria-pressed="true"] .ck svg { opacity: 1; }
+    .va-find-more { justify-self: center; margin-top: .3rem; padding: .45rem 1rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--color-brand-700); background: var(--color-brand-50); }
+    .va-find-foot { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
+        border-top: 1px solid var(--color-gray-100); background: var(--color-white); }
+    .va-find-foot span { font-size: .8rem; font-weight: 700; color: var(--color-gray-600); }
+    html.dark .va-way { background: linear-gradient(135deg, #1c2616, #151b12); border-color: #2f4220; }
+    html.dark .va-way-t b, html.dark .va-find-r .t b { color: #e8efe1; }
+    html.dark .va-find-r { background: #151b12; border-color: #2b3a1c; }
+    html.dark .va-find-r[aria-pressed="true"] { background: #1f2b15; border-color: #6b9f3d; }
+    html.dark .va-find-r .t small { color: #e0c26a; }
+    html.dark .va-find-filt button { background: #1f2a17; color: #b9caa8; }
+    html.dark .va-find-filt button[aria-pressed="true"] { background: #4a7c2a; color: #fff; }
+    html.dark .va-find-foot { background: #11160d; border-color: #222b1a; }
+    html.dark .va-own-l { color: #b9caa8; }
+    @media (prefers-reduced-motion: reduce) { .va-way, .va-find-r, .va-find-r .ck, .va-find-filt button { transition: none; } .va-way:hover { transform: none; } }
     .va-book-h { margin-top: .9rem; font-size: .78rem; font-weight: 800; color: var(--color-gray-700); }
     .va-book-h small { display: block; font-weight: 600; color: var(--color-gray-500); }
     .va-book { display: grid; gap: .4rem; margin-top: .5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
@@ -480,13 +525,23 @@
             {{-- Step 5: the varieties --}}
             <section class="wtp-step" data-step="4">
                 <p class="wtp-q">Which varieties are you comparing?</p>
-                <p class="wtp-sub">Type each name as sold and tap Add, up to eight. Leave it empty and Anee picks the top yielding ones.</p>
-                <div class="va-add">
-                    <input type="text" id="vaVarietyIn" class="form-input" maxlength="60" list="vaNames" placeholder="e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222, NK6414' : 'Pioneer P1197, DKC64-34' }}" autocomplete="off">
-                    <button type="button" class="btn btn-primary" id="vaVarietyAdd">Add</button>
-                </div>
-                <datalist id="vaNames"></datalist>
+                <p class="wtp-sub">Pick up to eight from our records, or type one that is not on record. Leave it empty and Anee picks the top yielding ones.</p>
                 <div class="va-chips" id="vaChips"></div>
+                {{-- Two ways to add (2026-10-15, the owner): search every variety on record, or type your own.
+                     The ones on record that suit the field follow, to add with a tap. --}}
+                <div class="va-ways">
+                    <button type="button" class="va-way" id="vaSearchBtn" hidden>
+                        <span class="va-way-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></span>
+                        <span class="va-way-t"><b>Search the records</b><small id="vaSearchSub">Every variety on record for this crop</small></span>
+                    </button>
+                    <div class="va-own">
+                        <label class="va-own-l" for="vaVarietyIn">Not on record? Type its name as sold</label>
+                        <div class="va-add">
+                            <input type="text" id="vaVarietyIn" class="form-input" maxlength="60" placeholder="e.g. {{ \App\Support\Region::ph() ? 'a new hybrid' : 'Pioneer P1197, DKC64-34' }}" autocomplete="off">
+                            <button type="button" class="btn btn-primary" id="vaVarietyAdd">Add</button>
+                        </div>
+                    </div>
+                </div>
                 <div id="vaBook" hidden></div>
                 <div class="va-anee" id="vaAneePicks"><span id="vaAneeFaceSlot">🤖</span><span>No varieties yet. <b>Anee will pick the top yielding released varieties</b> for your crop and field, and compare them.</span></div>
             </section>
@@ -552,6 +607,30 @@
 {{-- The crop sheet sits here, not on the 'sheets' stack: that stack prints
      after this script has run, and the script wires the sheet by id. --}}
 {{-- The crop catalogue, searchable — the same sheet the lot form and the sisters use. --}}
+{{-- Every variety on record for the crop, searched by name, local or trade name; tap to add or take away. --}}
+<div class="sheet hidden" id="vaFindSheet" style="--sheet-width:32rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="vaFindTitle">Varieties on record</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="crop-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="search" id="vaFindQ" class="form-input" autocomplete="off" placeholder="Search a name, like Rc 222 or Mestiso 20">
+        </div>
+        <div class="va-find-filt" id="vaFindFilt" role="group" aria-label="Kind">
+            <button type="button" data-ft="" aria-pressed="true">All</button>
+            <button type="button" data-ft="hybrid" aria-pressed="false">Hybrid</button>
+            <button type="button" data-ft="inbred" aria-pressed="false">Not hybrid</button>
+        </div>
+        <p class="va-find-n" id="vaFindN"></p>
+        <div class="va-find-list" id="vaFindList"></div>
+        <p class="crop-none hidden" id="vaFindNone">Nothing on record by that name. Close this and type it under "Not on record".</p>
+    </div>
+    <div class="va-find-foot"><span id="vaFindPicked">None picked yet</span><button type="button" class="btn btn-primary" data-sheet-close>Done</button></div>
+</div>
+
 <div class="sheet hidden" id="vaCropSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -850,7 +929,9 @@
     }
     const asAdded = (r) => r.alias && (r.name + ' (' + r.alias + ')').length <= 60 ? r.name + ' (' + r.alias + ')' : r.name;
     function paintBook() {
-        $id('vaNames').innerHTML = (BOOK.names || []).map((n) => `<option value="${esc(n)}"></option>`).join('');
+        // The search door shows when this crop has records (the Philippines' registry).
+        $id('vaSearchBtn').hidden = !BOOK.count;
+        $id('vaSearchSub').textContent = BOOK.count ? 'All ' + BOOK.count + ' on record for this crop, by name, local or trade name' : '';
         const have = state.varieties.map((v) => v.toLowerCase());
         const picks = (BOOK.picks || []).filter((r) => !have.some((v) => v.startsWith(r.name.toLowerCase()) || (r.alias && v.includes(r.alias.toLowerCase()))));
         const box = $id('vaBook');
@@ -891,6 +972,75 @@
         $id('vaCropSearch').value = '';
         cropSift();
         $id('vaCropSearch').focus();
+    });
+
+    /* ---- every variety on record, searched in a sheet (2026-10-15, the owner) ---- */
+    const FIND = { crop: '', rows: null, q: '', type: '', shown: 60 };
+    const norm = (s) => String(s || '').toLowerCase().replace(/[\s\-._]+/g, '');
+    const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+    const isPicked = (r) => state.varieties.some((v) => v.toLowerCase().startsWith(r[0].toLowerCase()));
+    async function openFind() {
+        openSheet('vaFindSheet');
+        const crop = state.crop;
+        $id('vaFindTitle').textContent = (((((OPT && OPT.crops) || []).find((x) => x.key === crop) || {}).label || 'Crop').split(' (')[0].split(' — ')[0]) + ' varieties on record';
+        if (FIND.crop !== crop || !FIND.rows) {
+            FIND.crop = crop; FIND.rows = null; FIND.shown = 60;
+            $id('vaFindList').innerHTML = '<p class="va-find-n">Loading the records…</p>';
+            try {
+                const q = new URLSearchParams({ crop, country: state.country || '', all: 1 });
+                const res = await api(U.book + '?' + q.toString(), { method: 'GET' });
+                if (FIND.crop !== crop) return;
+                FIND.rows = (res.data && res.data.all) || [];
+            } catch (err) {
+                FIND.rows = [];
+                $id('vaFindList').innerHTML = '<p class="va-find-n">The records could not be loaded. Close this and try again.</p>';
+                return;
+            }
+        }
+        paintFind();
+        if (matchMedia('(pointer: fine)').matches) $id('vaFindQ').focus();
+    }
+    function paintFind() {
+        if (!FIND.rows) return;
+        const q = norm(FIND.q);
+        const hits = FIND.rows.filter((r) => (!FIND.type || (FIND.type === 'hybrid' ? r[2] === 'hybrid' : r[2] !== 'hybrid'))
+            && (!q || norm(r[0] + ' ' + (r[1] || '') + ' ' + (r[9] || '')).includes(q)));
+        $id('vaFindN').textContent = hits.length + ' of ' + FIND.rows.length + (FIND.q ? ' match' : ' on record') + (hits.length > FIND.shown ? ', showing the first ' + FIND.shown : '');
+        $id('vaFindNone').classList.toggle('hidden', hits.length > 0);
+        $id('vaFindList').innerHTML = hits.slice(0, FIND.shown).map((r, i) => {
+            const facts = [r[2] === 'hybrid' ? 'Hybrid' : '', r[3] ? Math.round(r[3]) + ' ' + (r[4] || 'days') : '', r[5] ? fmtN(r[5]) + ' ' + (r[6] || 't/ha') : '', r[8] ? 'Released ' + r[8] : ''].filter(Boolean).join(' · ');
+            return '<button type="button" class="va-find-r" data-find="' + esc(r[0]) + '" data-alias="' + esc(r[1] || '') + '" aria-pressed="' + isPicked(r) + '">'
+                + '<span class="t"><b>' + esc(r[0]) + '</b>' + (r[1] ? '<small>' + esc(r[1]) + '</small>' : '') + (facts ? '<span>' + esc(facts) + '</span>' : '') + '</span>'
+                + '<span class="ck" aria-hidden="true">' + CHECK + '</span></button>';
+        }).join('') + (hits.length > FIND.shown ? '<button type="button" class="va-find-more" id="vaFindMore">Show ' + Math.min(60, hits.length - FIND.shown) + ' more</button>' : '');
+        paintPicked();
+    }
+    const paintPicked = () => { $id('vaFindPicked').textContent = state.varieties.length ? state.varieties.length + ' of 8 picked' : 'None picked yet'; };
+    $id('vaSearchBtn').addEventListener('click', openFind);
+    let findT = null;
+    $id('vaFindQ').addEventListener('input', (e) => { clearTimeout(findT); findT = setTimeout(() => { FIND.q = e.target.value.trim(); FIND.shown = 60; paintFind(); }, 120); });
+    $id('vaFindFilt').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-ft]');
+        if (!b) return;
+        FIND.type = b.dataset.ft; FIND.shown = 60;
+        $id('vaFindFilt').querySelectorAll('[data-ft]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        paintFind();
+    });
+    $id('vaFindList').addEventListener('click', (e) => {
+        if (e.target.closest('#vaFindMore')) { FIND.shown += 60; paintFind(); return; }
+        const b = e.target.closest('[data-find]');
+        if (!b) return;
+        const name = b.dataset.find, alias = b.dataset.alias;
+        const at = state.varieties.findIndex((v) => v.toLowerCase().startsWith(name.toLowerCase()));
+        if (at >= 0) {
+            state.varieties.splice(at, 1);
+        } else {
+            if (state.varieties.length >= 8) { toast('You can add up to eight.', 'error'); return; }
+            state.varieties.push(alias && (name + ' (' + alias + ')').length <= 60 ? name + ' (' + alias + ')' : name);
+        }
+        b.setAttribute('aria-pressed', String(at < 0));
+        paintChips();
+        paintPicked();
     });
 
     /* ---- the varieties: typed, added, worn as chips; empty means Anee picks ---- */
