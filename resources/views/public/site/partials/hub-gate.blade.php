@@ -30,15 +30,17 @@
        finder's answer: its second result, or its second block). It
        blurs what is under it, so a row can be half clear and half not. */
     .hg-veil { position: absolute; left: -.5rem; right: -.5rem; z-index: 1; top: 0; height: 0; pointer-events: none; opacity: 0;
-        -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); background: rgb(251 252 249 / .25);
+        -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px); background: rgb(251 252 249 / .4);
         -webkit-mask-image: linear-gradient(transparent, #000 2.75rem); mask-image: linear-gradient(transparent, #000 2.75rem);
         transition: top .3s cubic-bezier(.22,1,.36,1), height .3s cubic-bezier(.22,1,.36,1), opacity .3s cubic-bezier(.22,1,.36,1); }
     .hg.has-locked .hg-veil { opacity: 1; pointer-events: auto; }
     /* The blurred rows fade out under the card that sits over their end. */
     .hg.has-locked [data-hg-grid] { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 12rem), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 12rem), transparent); }
     .hg.has-locked .sp-gate-card { margin-top: -7rem; }
-    .hg.has-locked [data-hg-grid] ~ :not(.hg-veil) { display: none; }
-    .hg.has-locked :has(> [data-hg-grid]) ~ :not(.hg-veil) { display: none; }
+    /* Inside a finder's answer only, what follows a held list (its legend,
+       the shop note, the sources) waits too. Never the hub's own card, which
+       sits after the grid in the same wrapper. */
+    .hg.has-locked .wc-card [data-hg-grid] ~ *, .hg.has-locked .wc-card :has(> [data-hg-grid]) ~ * { display: none; }
     .hg-chip, .wk-jump .hg-chip { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .9rem; border-radius: 999px; font-size: .88rem; font-weight: 800; text-decoration: none;
         color: #2d5016; background: #eef6e4; border: 1px solid #d3e6bd; transition: background-color .28s cubic-bezier(.22,1,.36,1); }
     a.hg-chip:hover, .wk-jump a.hg-chip:hover { background: #e2f0d2; }
