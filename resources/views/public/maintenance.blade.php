@@ -61,7 +61,7 @@
     <main class="mt">
         <picture class="mt-logo">
             <source srcset="{{ asset('images/site/logo-white.png') }}?v=anee" media="(prefers-color-scheme: dark)">
-            <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io">
+            <img src="{{ asset('images/logo.png') }}?v=anee2" alt="anee.io">
         </picture>
         <div class="mt-card">
             <div class="mt-face"><img src="{{ asset('images/anee/emoji/calm.png') }}" alt=""></div>

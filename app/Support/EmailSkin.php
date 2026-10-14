@@ -53,7 +53,7 @@ class EmailSkin
     /** An absolute address for a file in public/, tagged so caches refresh. */
     public static function asset(string $path): string
     {
-        return self::ASSET_BASE . '/' . ltrim($path, '/') . '?v=anee';
+        return self::ASSET_BASE . '/' . ltrim($path, '/') . '?v=anee2';
     }
 
     /** One of Anee's faces (public/images/anee/emoji/{name}.png, 128px). */
@@ -165,7 +165,7 @@ img{-ms-interpolation-mode:bicubic;}
   <tr><td class="ae-head" bgcolor="#2B3A1C" style="background-color:#2B3A1C;background-image:linear-gradient(135deg,#1c2712 0%,#2B3A1C 48%,#44632a 100%);border-radius:18px 18px 0 0;padding:26px 32px 24px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
       <tr><td colspan="2" style="padding:0 0 18px;">
-        <a href="{$home}" style="text-decoration:none;"><img src="{$logo}" width="138" height="21" alt="anee.io" style="display:block;width:138px;height:21px;border:0;outline:none;color:#ffffff;font-family:{$font};font-size:18px;font-weight:800;"></a>
+        <a href="{$home}" style="text-decoration:none;"><img src="{$logo}" width="143" height="22" alt="anee.io" style="display:block;width:143px;height:22px;border:0;outline:none;color:#ffffff;font-family:{$font};font-size:18px;font-weight:800;"></a>
       </td></tr>
       <tr>
         <td valign="bottom">{$eyebrowHtml}{$titleHtml}</td>

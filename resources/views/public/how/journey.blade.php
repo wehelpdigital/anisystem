@@ -1035,7 +1035,7 @@
                 <div class="hw-scr"><div class="hwr">
                     {{-- Scene one: the login page. --}}
                     <div class="hw-scene s-login is-on">
-                        <div class="hwr-pub"><img src="{{ asset('images/logo.png') }}?v=anee" alt=""><span class="hwr-burger"><i></i><i></i><i></i></span></div>
+                        <div class="hwr-pub"><img src="{{ asset('images/logo.png') }}?v=anee2" alt=""><span class="hwr-burger"><i></i><i></i><i></i></span></div>
                         <div class="hwr-login">
                             <div class="hwr-h">Welcome back</div>
                             <p>Log in to manage your farm.</p>
@@ -1053,7 +1053,7 @@
                     {{-- Scene two: the dashboard. --}}
                     <div class="hw-scene s-dash">
                         <div class="hwr-top">
-                            <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="">
+                            <img src="{{ asset('images/logo-mark.png') }}?v=anee2" alt="">
                             <div><b>Dashboard</b><small>Your farm in one view</small></div>
                             <span class="r">
                                 <span class="hwr-help">?</span>
@@ -1122,7 +1122,7 @@
                     {{-- Scene three: Cropping Schedules, the season list. --}}
                     <div class="hw-scene s-list">
                         <div class="hwr-top">
-                            <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="">
+                            <img src="{{ asset('images/logo-mark.png') }}?v=anee2" alt="">
                             <div><b>Cropping Schedules</b><small>Plan and manage your seasons</small></div>
                             {!! $hwTopR !!}
                         </div>

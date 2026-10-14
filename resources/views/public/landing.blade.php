@@ -134,7 +134,7 @@
     .lp-hero::after { content: ''; position: absolute; inset: auto -10% -60px -10%; height: 120px; z-index: -1;
         background: #fff; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
     .lp-logo { display: inline-block; }
-    .lp-logo img { display: block; width: 200px; max-width: none; height: auto; aspect-ratio: 940 / 144; }
+    .lp-logo img { display: block; width: 200px; max-width: none; height: auto; aspect-ratio: 1041 / 160; object-fit: contain; }
     .lp-kicker { display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .85rem; border-radius: 999px;
         font-size: .78rem; font-weight: 800; color: #2d5016; background: #e4efd4; border: 1px solid #c9e0ad; }
     .lp-kicker i { width: .5rem; height: .5rem; border-radius: 999px; background: #6b9f3d; box-shadow: 0 0 0 4px rgb(107 159 61 / .2);
@@ -362,7 +362,7 @@
     <section class="lp-hero">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 sm:pt-8 sm:pb-24">
             {{-- The brand, and nothing to click away to. --}}
-            <span class="lp-logo"><img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" width="200" height="31"></span>
+            <span class="lp-logo"><img src="{{ asset('images/logo.png') }}?v=anee2" alt="anee.io" width="1041" height="160"></span>
             <div class="grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-12 items-center mt-8 sm:mt-10">
                 <div class="lp-copy animate-fade-up {{ ($lp['hero']['align'] ?? 'left') === 'right' ? 'is-right' : '' }}">
                     <span class="lp-kicker"><i aria-hidden="true"></i>{{ $lp['hero']['kicker'] }}</span>

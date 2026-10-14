@@ -239,7 +239,7 @@
                     <span class="hp-sum-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0h-5m5 0v5"/></svg></span>
                     <p class="hp-sum-k">The only way up is a <span class="hp-hl">higher yield.</span></p>
                     <p class="hp-sum-p">Yield more from the same hectare with precision farming: the right work, in the right amount, on the right day.</p>
-                    <span class="hp-sum-brand"><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">anee.io shows you how.</span>
+                    <span class="hp-sum-brand"><img src="{{ asset('images/logo-mark.png') }}?v=anee2" alt="" onerror="this.remove()">anee.io shows you how.</span>
                     <ul class="hp-sum-how">
                         <li>It dates every task from each lot's own planting day, so fertilizer and sprays go in on time.</li>
                         <li>Anee checks your crop, its growth stage and the weather before you spend.</li>
@@ -1675,7 +1675,7 @@
                 <div class="hp-vs-head" aria-hidden="true">
                     <span class="is-n">{{ $vsCount }} Things that Change</span>
                     <span class="is-old"><i class="hp-vs-key">{!! $vsX !!}</i>By Memory and Paper</span>
-                    <span class="is-new"><i class="hp-vs-key">{!! $tick !!}</i><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">With anee.io</span>
+                    <span class="is-new"><i class="hp-vs-key">{!! $tick !!}</i><img src="{{ asset('images/logo-mark.png') }}?v=anee2" alt="" onerror="this.remove()">With anee.io</span>
                 </div>
                 @foreach ($vsGroups as $gi => [$gt, $gico, $rows])
                     <div class="hp-vs-group reveal" id="vs-{{ $gi }}" data-vs-group>

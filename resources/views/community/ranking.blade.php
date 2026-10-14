@@ -229,7 +229,7 @@
                      the house itself signs your name. --}}
                 <div class="card rk-cert" data-animate-rows>
                     <div class="rk-cert-seal" aria-hidden="true">
-                        <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="">
+                        <img src="{{ asset('images/logo-mark.png') }}?v=anee2" alt="">
                     </div>
                     <div class="rk-cert-txt">
                         <i class="rk-cert-kicker">The Level 50 prize</i>

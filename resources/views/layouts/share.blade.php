@@ -42,7 +42,7 @@
     <header class="bg-white border-b border-gray-200">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
             <a href="{{ route('home') }}" class="shrink-0">
-                <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-8 w-auto">
+                <img src="{{ asset('images/logo.png') }}?v=anee2" alt="anee.io" class="h-8 w-auto shrink-0 object-contain" width="1041" height="160">
             </a>
             <a href="{{ route('signup') }}" class="btn btn-primary btn-sm">Plan your own season</a>
         </div>
