@@ -117,6 +117,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'sitePages' => class_exists(\App\Support\SitePages::class) && Illuminate\Support\Facades\Route::has('site.crops.show')
                 && Illuminate\Support\Facades\Route::has('site.preview.post') && is_file(resource_path('views/public/site/page.blade.php')),
             // 2026-10-15: the Land Prep Planner's own clock and the error that stays on the page.
+            // 2026-10-15: the Land Prep Planner's round 2 and the field profiles table.
+            'lpRound2' => Illuminate\Support\Facades\Route::has('landprep.check') && Illuminate\Support\Facades\Schema::hasTable('as_field_profiles'),
             'lpClock' => str_contains((string) @file_get_contents(app_path('Http/Controllers/LandPrepController.php')), 'private const AI_TIMEOUT = 330;')
                 && str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpErr"'),
         ],
