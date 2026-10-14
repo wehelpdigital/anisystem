@@ -35,7 +35,7 @@ GENERIC_TRADE = {'jackpot', 'hatao', 'mestizo', 'hyvar', 'frontline', 'kimbee', 
 # number for another variety.
 DOUBTFUL_TRADE = {('NSIC Rc 548H', 'arizebiganteplus'), ('NSIC Rc 548H', 'biganteplus'),
                   ('NSIC Rc 410H', 'arizehabilisplus'), ('NSIC Rc 410H', 'habilisplus'),
-                  ('NSIC Rc 176H', 'phb73'), ('NSIC Rc 656H', 'lav777'), ('NSIC Rc 406H', 'bataraindra01'),
+                  ('NSIC Rc 176H', 'phb73'), ('NSIC Rc 406H', 'bataraindra01'),
                   ('NSIC Rc 406H', 'batariindra01'), ('NSIC Rc 692H', 'pompyang2323'),
                   ('NSIC Rc 408H', 'sl68'), ('NSIC Rc 408H', 'sl68h')}
 
@@ -110,13 +110,35 @@ TRADE_FIX = {
     'NSIC Rc 696H': (['LP 908', 'Longping 908'], ['https://ilocos.da.gov.ph/?p=46408']),
     # Syngenta's NK line, sold under its registry name.
     'NSIC Rc 208H': (['NK 6401', 'NK6401'], [REGISTRY_URL]),
+    # The owner asked (2026-10-15). LAV 777 is Rc 656H: Leads Agriventures
+    # prints the number on the bag and its data sheet repeats the registry's
+    # trial figures for Rc 656H (112 cm, 20.1 amylose, 75 milling), and DA
+    # Ilocos lists 'NSIC Rc 656H (LAV 777)'. The registry names the line
+    # LP 524 and Long Ping as its breeder, so Leads sells a Long Ping hybrid.
+    'NSIC Rc 656H': (['LAV 777', 'LP 524'], ['https://www.leadsfarmex.com/downloads/lav-777.pdf', 'https://ilocos.da.gov.ph/?p=46408',
+                                             'https://www.leadsfarmex.com/products']),
+    # Nasiglat is Rc 750H (Mestiso 144, line LP 777): Pro Agri Seed, Long
+    # Ping's distributor, sells it under that number. Not LAV 777 (Rc 656H).
+    'NSIC Rc 750H': (['Nasiglat', 'LP 777', 'Longping Nasiglat'], ['https://proagriseed.com/voucher/', 'https://proagriseed.com/about-us-2/',
+                                                                 'https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf']),
 }
+
+
+# A tie between ratings (2026-10-15) is settled by this fixed order, MS and
+# MR by whichever is written first. Before, a tie fell to Python's string
+# hashing, so each rebuild could flip a rating; this order gives back the
+# book exactly as it was first built.
+TIE_ORDER = {'HS': 0, 'S': 1, 'MS': 2, 'MR': 2, 'I': 3, 'R': 4, 'HR': 5}
 
 
 def codes(v):
     """The rating a registry cell gives most often: 'PhilRice CES - I, Midsayap - I, UPLB - S' -> 'I'."""
     found = re.findall(r'\b(HR|MR|MS|HS|R|I|S)\b', v or '')
-    return max(set(found), key=found.count) if found else None
+    if not found:
+        return None
+    top = max(found.count(x) for x in found)
+    tied = [x for x in dict.fromkeys(found) if found.count(x) == top]
+    return min(tied, key=lambda x: (TIE_ORDER[x], tied.index(x)))
 
 
 def first_num(v):
@@ -411,7 +433,7 @@ def main():
             byname[name]['tradeSources'] = srcs
     print(filled, 'filled from the NSIC registry,', added, 'added from it')
     out.sort(key=lambda v: (-(v['year'] or 0), v['name']))
-    json.dump(out, open(os.path.join(HERE, 'varieties.json'), 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
+    json.dump(out, open(os.path.join(HERE, 'varieties.json'), 'w', encoding='utf-8', newline='\n'), indent=1, ensure_ascii=False)
     print(sum(1 for v in out if v.get('tradeNames')), 'with a trade name;', len(out), 'varieties;', sum(1 for v in out if v['maturity']), 'with trial results;', sum(1 for v in out if v['environments']),
           'with an environment;', sum(1 for v in out if v['localName']), 'with a local name;', sum(1 for v in out if v['sources']), 'with a public record')
 

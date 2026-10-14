@@ -57,6 +57,8 @@
                 </div>
             </div>
             <div class="rv-count" aria-live="polite"><span><b data-rv-n>{{ $all->count() }}</b> of {{ $all->count() }} varieties</span><button type="button" class="rv-reset" data-rv-reset hidden>Clear the filters</button></div>
+            {{-- Where the t/ha on the cards come from, and why a farm's harvest can differ (2026-10-15). --}}
+            @include('partials.yield-note')
 
             @if ($hubGate)<div class="hg" data-hg data-hg-one="variety" data-hg-many="varieties">@endif
             <div class="rv-grid hg-grid" data-rv-grid data-hg-grid data-hg-card=".rv-card">

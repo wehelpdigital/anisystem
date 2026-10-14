@@ -51601,6 +51601,48 @@
  },
  {
   "crop": "corn",
+  "name": "NK313 VIP",
+  "aliases": [
+   "NK313",
+   "NK 313"
+  ],
+  "reg": null,
+  "year": null,
+  "owner": "Syngenta (NK)",
+  "kind": "GM hybrid",
+  "color": null,
+  "localName": null,
+  "uses": null,
+  "maturity": null,
+  "yield": null,
+  "height": null,
+  "traits": [],
+  "reactions": [],
+  "domain": [],
+  "seasons": [],
+  "elevation": [],
+  "sources": [],
+  "research": {
+   "company": "Syngenta (NK)",
+   "kind": "GM hybrid",
+   "popular": "One of the NK VIP hybrids on Syngenta Philippines' corn list, sold under the slogan Protek TODO against fall armyworm and other corn caterpillars.",
+   "facts": {
+    "gm": "Syngenta's VIP trait: four Bt proteins built into the plant against fall armyworm, Asian corn borer, corn semilooper, common cutworm and corn earworm",
+    "traits": [
+     "yellow grain",
+     "in the NSIC national tests since 2024 and not yet on the registry"
+    ]
+   },
+   "sources": [
+    "https://www.syngenta.com.ph/nk313-vip",
+    "https://www.philstar.com/business/2025/11/09/2485758/syngenta-develops-breakthrough-corn-pest-solution",
+    "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx"
+   ]
+  },
+  "slug": "corn-nk313-vip"
+ },
+ {
+  "crop": "corn",
   "name": "Purple Gem F1",
   "aliases": [
    "Purple Gem",

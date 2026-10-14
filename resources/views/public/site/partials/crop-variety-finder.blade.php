@@ -83,6 +83,10 @@
                 </div>
             </div>
             <div class="rv-count" aria-live="polite"><span><b data-cv-n>{{ $all->count() }}</b> of {{ $all->count() }} {{ $cropName }} varieties</span><button type="button" class="rv-reset" data-cv-reset hidden>Clear the filters</button></div>
+            {{-- Where the yields on the cards come from, and why a farm's harvest can differ (2026-10-15). --}}
+            @if ($all->contains(fn ($v) => isset($v['yield']['value'])))
+                @include('partials.yield-note')
+            @endif
 
             @if ($hubGate)<div class="hg" data-hg data-hg-one="variety" data-hg-many="varieties">@endif
             <div class="rv-grid hg-grid" data-cv-grid data-hg-grid data-hg-card=".rv-card">

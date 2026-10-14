@@ -830,9 +830,23 @@ def main():
     st = stats_for(allv)
     focus_all(allv)
     os.makedirs(OUT, exist_ok=True)
+    # A page keeps the place it was first given (2026-10-15), so one new
+    # variety does not renumber every page after it. A new page shares the
+    # place of the page before it (the site sorts a tie by title).
+    placed = {}
+    for f in os.listdir(OUT):
+        if f.endswith('.json'):
+            try:
+                placed[f[:-5]] = json.load(open(os.path.join(OUT, f), encoding='utf-8'))['sortOrder']
+            except (ValueError, KeyError):
+                pass
     keep = set()
+    prev = None
     for v in allv:
         p = build(v, allv, st)
+        if placed:
+            p['sortOrder'] = placed.get(p['slug'], prev if prev is not None else p['sortOrder'])
+        prev = p['sortOrder']
         keep.add(p['slug'] + '.json')
         json.dump(p, open(os.path.join(OUT, p['slug'] + '.json'), 'w', encoding='utf-8', newline='\n'), indent=2, ensure_ascii=False)
     for f in os.listdir(OUT):

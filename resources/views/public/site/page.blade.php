@@ -70,6 +70,16 @@
     }
     // A news roundup is dated by when it went out, not when it was last touched.
     $isNews = ($page->kind ?? null) === 'roundup';
+    // A variety page that shows a yield carries the note on where its t/ha
+    // come from (partials/yield-note, 2026-10-15).
+    $yieldNote = false;
+    if ($page->section === 'rice-varieties') {
+        $yv = collect(\App\Support\RiceVarieties::all())->firstWhere('slug', $page->slug);
+        $yieldNote = $yv && (($yv['yieldAvg'] ?? null) !== null || ($yv['yieldMax'] ?? null) !== null);
+    } elseif ($page->section === 'crop-varieties') {
+        $yv = collect(\App\Support\CropVarieties::all())->firstWhere('slug', $page->slug);
+        $yieldNote = $yv && (isset($yv['yield']['value']) || ! empty($yv['research']['facts']['yield']));
+    }
 @endphp
 
 @section('title_full', $seoTitle . ' | anee.io')
@@ -210,6 +220,9 @@
             @endif
             <div class="sp-wrap">
                 <div class="sp-body" id="spBody">
+                    @if ($yieldNote)
+                        <div class="sp-yield-note">@include('partials.yield-note', ['compact' => true, 'flush' => true])</div>
+                    @endif
                     @if ($gateSplit !== null)
                         @include('public.site.blocks', ['blocks' => $gateSplit['open']])
                         @include('public.site.partials.content-gate', ['gated' => $gateSplit['gated']])
