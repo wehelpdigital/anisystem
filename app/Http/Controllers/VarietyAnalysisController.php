@@ -10,6 +10,7 @@ use App\Services\WeatherService;
 use App\Support\AiPrices;
 use App\Support\AiUsage;
 use App\Support\CropCatalog;
+use App\Support\FieldProfile;
 use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
@@ -172,6 +173,9 @@ class VarietyAnalysisController extends Controller
             'problems' => 'nullable|array',
             'problems.*' => 'string|in:' . implode(',', array_keys(self::PROBLEMS)),
             'notes' => 'nullable|string|max:400',
+            // The field in detail (App\Support\FieldProfile), optional.
+            'fieldProfile' => 'nullable|array',
+            'fieldProfileFrom' => 'nullable|integer',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
@@ -215,6 +219,8 @@ class VarietyAnalysisController extends Controller
         ]);
 
         $prompt = $this->prompt($p);
+        // The field in detail is kept for the next analysis, named after the place.
+        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
 
         /* Should PHP itself be cut off mid-run (a wall-clock limit, a fatal),
          * the row must not stay "pending" -- that blocks every next run for
@@ -583,6 +589,7 @@ class VarietyAnalysisController extends Controller
             . 'Ground: soil ' . (self::SOILS[$params['soil'] ?? ''] ?? '')
             . (! empty($params['elevation']) ? '; the land ' . (self::ELEVATIONS[$params['elevation']] ?? $params['elevation']) : '')
             . '; troubles: ' . (collect($params['problems'] ?? [])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none') . "\n"
+            . FieldProfile::promptLine((array) ($params['fieldProfile'] ?? []), $params['crop'] ?? null, '')
             . (! empty($params['season']) ? 'Planned for: ' . \App\Support\Region::seasonTitle($params['season'], (int) ($params['year'] ?? now('Asia/Manila')->year), $params['country'] ?? null) . "\n" : '')
             . 'Priorities, most important first: ' . $order . "\n"
             . 'Top pick: ' . ($top['variety'] ?? '') . ($top['by'] ?? null ? ' (' . $top['by'] . ')' : '') . ' — ' . ($top['why'] ?? '') . "\n"
@@ -659,7 +666,7 @@ class VarietyAnalysisController extends Controller
             'priorities' => array_values((array) $request->input('priorities')),
             'problems' => array_values((array) $request->input('problems', [])),
             'notes' => trim((string) $request->input('notes', '')),
-        ];
+        ] + FieldProfile::forParams(FieldProfile::fromInput($request->input('fieldProfile'), (string) $request->input('crop')), (string) $request->input('crop'));
     }
 
     /** The coming days at the field, read from the forecast, in a line or two. */
@@ -745,6 +752,8 @@ PROMPT;
         $soilKeys = array_map(fn ($k) => $k === 'salinity' ? 'saline' : $k, (array) $p['problems']);
         $soilGuide = \App\Support\SoilConditions::guidance(\App\Support\SoilConditions::normalize($soilKeys));
         $soilBlock = $soilGuide !== '' ? "- What the soil troubles mean for the choice (weigh each variety's published tolerance to them, and say so):\n" . $soilGuide . "\n" : '';
+        // The field in detail, when the farmer gave it: one compact line.
+        $soilBlock .= FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $p['crop']);
         $notes = $p['notes'] !== '' ? $p['notes'] : 'none';
         $order = [];
         foreach ($p['priorities'] as $i => $k) {

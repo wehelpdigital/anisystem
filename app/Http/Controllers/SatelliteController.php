@@ -12,6 +12,7 @@ use App\Support\AiUsage;
 use App\Support\CropCatalog;
 use App\Support\EnsoOutlook;
 use App\Support\FieldContext;
+use App\Support\FieldProfile;
 use App\Support\SoilConditions;
 use App\Support\Tier;
 use App\Support\WorkerContext;
@@ -162,6 +163,9 @@ class SatelliteController extends Controller
             'polygon.type' => 'required|in:Polygon',
             'polygon.coordinates' => 'required|array|min:1',
             'polygon.coordinates.0' => 'required|array|min:4|max:300',
+            // The field in detail (App\Support\FieldProfile), optional.
+            'fieldProfile' => 'nullable|array',
+            'fieldProfileFrom' => 'nullable|integer',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
@@ -201,7 +205,9 @@ class SatelliteController extends Controller
             'concerns' => array_values(array_intersect((array) $request->input('concerns', []), array_keys(self::CONCERNS))),
             'notes' => trim((string) $request->input('notes', '')),
             'polygon' => ['type' => 'Polygon', 'coordinates' => [$ring]],
-        ];
+        ] + FieldProfile::forParams(FieldProfile::fromInput($request->input('fieldProfile'), (string) $request->input('crop')), (string) $request->input('crop'));
+        // The field in detail is kept for the next analysis, named after the place.
+        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
         $title = str_replace(' — ', ', ', CropCatalog::label($p['crop'])) . ' · ' . $p['location'] . ' · ' . now('Asia/Manila')->format('M j, Y');
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($title, 0, 190),
@@ -508,8 +514,10 @@ class SatelliteController extends Controller
         $rep = json_decode((string) $r->report, true) ?: [];
         $a = $rep['anee'] ?? [];
         $s = $rep['satellite'] ?? [];
+        $par = json_decode((string) $r->params, true) ?: [];
         $text = "\n\n--- ATTACHED: Satellite analysis of a field (treat as shared context) ---\n"
             . 'Case: ' . $r->title . "\n"
+            . FieldProfile::promptLine((array) ($par['fieldProfile'] ?? []), $par['crop'] ?? null, '')
             . 'Health: ' . ($a['healthWord'] ?? '') . ' (' . ($a['healthScore'] ?? '') . '/100). ' . ($a['summary'] ?? '') . "\n"
             . 'NDVI mean ' . ($s['sentinel2']['ndvi']['mean'] ?? 'n/a') . ' on ' . ($s['sentinel2']['time']['ph'] ?? 'n/a')
             . '; radar VV ' . ($s['sentinel1']['vvDb'] ?? 'n/a') . ' dB, VH ' . ($s['sentinel1']['vhDb'] ?? 'n/a') . ' dB on ' . ($s['sentinel1']['time']['ph'] ?? 'n/a') . "\n"
@@ -575,6 +583,7 @@ class SatelliteController extends Controller
 
         return "You are Anee, a smart farm technician for Filipino farmers. Write a satellite field analysis as ONE JSON object, nothing else.\n\n"
             . "THE FIELD\n" . $this->facts($p)
+            . FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $p['crop'], '')
             . 'Elevation: ' . ($ctx['elevation'] ?? 'unknown') . " m\n\n"
             . "WHAT THE SATELLITES SAW (" . (($sat['source'] ?? '') === 'planetary' ? 'Copernicus Sentinel pictures through Microsoft Planetary Computer; Sentinel-1 is terrain corrected gamma nought' : 'Google Earth Engine') . "; times are Philippine time; NDVI from 10 m Sentinel-2 with clouds masked; radar in dB from Sentinel-1, VV and VH):\n"
             . json_encode($sat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n\n"

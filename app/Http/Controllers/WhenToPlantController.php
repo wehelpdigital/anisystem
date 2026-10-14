@@ -9,6 +9,7 @@ use App\Support\AiUsage;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Support\CropCatalog;
+use App\Support\FieldProfile;
 use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
@@ -166,6 +167,12 @@ class WhenToPlantController extends Controller
             'soilConditions' => 'nullable|array|max:7',
             'soilConditions.*' => 'string|in:' . implode(',', array_keys(\App\Support\SoilConditions::OPTIONS)),
             'phValue' => 'nullable|numeric|min:2|max:12',
+            // The field in detail (App\Support\FieldProfile), optional.
+            'fieldProfile' => 'nullable|array',
+            'fieldProfileFrom' => 'nullable|integer',
+            // A variety picked from the records (partials/variety-pick): matched again here.
+            'varietyRecord' => 'nullable|array',
+            'varietyRecord.name' => 'nullable|string|max:80',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
@@ -229,6 +236,8 @@ class WhenToPlantController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        // The field in detail is kept for the next analysis, named after the place.
+        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
 
         /* THE GATEWAY MUST NOT WAIT ON THE MODEL. A hosted proxy times a
          * long request out — a chat answer slips under its limit, this
@@ -477,6 +486,9 @@ class WhenToPlantController extends Controller
             . 'Case: ' . $r->title . "\n"
             . 'Field problems considered: ' . ($problems ?: 'none') . "\n"
             . (($params['soilConditions'] ?? []) || ($params['phValue'] ?? null) ? 'Soil condition: ' . \App\Support\SoilConditions::words(\App\Support\SoilConditions::normalize($params['soilConditions'] ?? []), \App\Support\SoilConditions::phValue($params['phValue'] ?? null)) . "\n" : '')
+            . FieldProfile::promptLine((array) ($params['fieldProfile'] ?? []), $params['crop'] ?? null, '')
+            . (! empty($params['varietyRecord']) ? 'Variety on record: ' . self::recordWords((array) $params['varietyRecord']) . "
+" : '')
             . 'Recommended window: ' . ($bw['label'] ?? '') . ' — ' . ($bw['why'] ?? '') . "\n"
             . (! empty($report['weekRanks']) ? 'Best planting weeks, ranked: ' . collect($report['weekRanks'])->map(fn ($w) => ($w['rank'] ?? '') . ') ' . ($w['label'] ?? '') . ' (score ' . ($w['score'] ?? '') . ') — ' . ($w['why'] ?? ''))->implode(' | ') . "\n" : '')
             . (! empty($report['typhoonOdds']['months']) ? 'Typhoon chance by month (share of years with a cyclone): ' . collect($report['typhoonOdds']['months'])->map(fn ($m) => date('M', mktime(0, 0, 0, (int) $m['month'], 1)) . ' ' . (int) $m['chance'] . '%')->implode(', ') . "\n" : '')
@@ -551,6 +563,41 @@ class WhenToPlantController extends Controller
         return $payerId === (int) Auth::id() ? Auth::user() : (User::find($payerId) ?? Auth::user());
     }
 
+    /**
+     * The record of a variety the farmer picked from the records (2026-10-15):
+     * matched again here (App\Support\VarietyBook), never taken from the page,
+     * so the facts Anee is given are the registry's. Null for a typed name,
+     * a field abroad, or a name the records do not hold.
+     */
+    public static function varietyRecord(string $crop, mixed $name, mixed $country = null): ?array
+    {
+        $name = trim((string) $name);
+        $fc = \App\Support\Region::valid($country) ?: \App\Support\Region::code();
+        if ($name === '' || $fc !== \App\Support\Region::HOME) {
+            return null;
+        }
+        $r = \App\Support\VarietyBook::match($crop, $name);
+        if (! $r) {
+            return null;
+        }
+
+        return array_filter([
+            'name' => $r['name'], 'alias' => $r['aliases'][0] ?? null, 'type' => $r['type'], 'days' => $r['days'], 'daysUnit' => $r['daysUnit'],
+            'where' => $r['where'] ?: null, 'yieldAvg' => $r['yield'], 'yieldTop' => $r['yieldTop'] ?? null, 'year' => $r['year'],
+            'source' => $r['registered'] ? 'NSIC registry and PhilRice seed data' : 'the variety records',
+        ], fn ($v) => $v !== null && $v !== '');
+    }
+
+    /** A variety record as one line of facts for a prompt. */
+    private static function recordWords(array $v): string
+    {
+        return $v['name'] . (! empty($v['alias']) ? ' (sold as ' . $v['alias'] . ')' : '')
+            . ': ' . ($v['type'] ?? '') . (! empty($v['days']) ? ', ' . (int) round($v['days']) . ' ' . ($v['daysUnit'] ?? 'days') . ' to harvest' : '')
+            . (! empty($v['where']) ? ', bred for ' . $v['where'] : '')
+            . (! empty($v['yieldAvg']) ? ', ' . $v['yieldAvg'] . ' t/ha average in the national trials' . (! empty($v['yieldTop']) ? ' and ' . $v['yieldTop'] . ' at best' : '') : '')
+            . (! empty($v['year']) ? ', released ' . $v['year'] : '') . ' (' . ($v['source'] ?? 'the variety records') . ')';
+    }
+
     private function params(Request $request): array
     {
         return [
@@ -563,12 +610,13 @@ class WhenToPlantController extends Controller
             'toYear' => (int) $request->input('toYear'),
             'crop' => $request->input('crop'),
             'variety' => trim((string) $request->input('variety', '')),
+            'varietyRecord' => self::varietyRecord((string) $request->input('crop'), $request->input('varietyRecord.name'), $request->input('country')),
             'location' => trim((string) $request->input('location')),
             'problems' => array_values((array) $request->input('problems', [])),
             'soilConditions' => \App\Support\SoilConditions::normalize($request->input('soilConditions', [])),
             'phValue' => \App\Support\SoilConditions::phValue($request->input('phValue')),
             'country' => \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code(),
-        ];
+        ] + FieldProfile::forParams(FieldProfile::fromInput($request->input('fieldProfile'), (string) $request->input('crop')), (string) $request->input('crop'));
     }
 
     /**
@@ -598,7 +646,10 @@ class WhenToPlantController extends Controller
         $registry = $fieldPH
             ? 'the NSIC / PhilRice / IRRI registration and seed catalogues, the seed company\'s own page, DA and university extension notes'
             : 'the breeder\'s or seed company\'s own page, the national variety registry, university extension notes';
-        $varietyAsk = $variety !== '' ? "\n0. THE VARIETY FIRST: \"{$variety}\" of {$cropLabel}. Search for its published characteristics: days to maturity (or harvest), yield potential, plant height and lodging, the season it is bred for (wet / dry, early / late), its tolerance to drought, flooding or submergence, heat, salinity and cold where they apply, its pest and disease resistance (for rice: blast, bacterial leaf blight, tungro, brown planthopper, stem borer; for other crops the ones that matter), and who released it and when. Prefer {$registry}. Give the figures with their source. If nothing reliable turns up, say plainly that the variety could not be found — never guess its traits.\n" : '';
+        $rec = (array) ($p['varietyRecord'] ?? []);
+        // A variety picked from the records: its facts are given, only what adds to them is searched (2026-10-15).
+        $varietyAsk = $rec ? "\n0. THE VARIETY IS ON RECORD: " . self::recordWords($rec) . ". Take these as known facts and do not search for them again. Search only for what adds to them for this place: regional trial results near the farmer, how it did in recent seasons, any warning about it.\n"
+            : ($variety !== '' ? "\n0. THE VARIETY FIRST: \"{$variety}\" of {$cropLabel}. Search for its published characteristics: days to maturity (or harvest), yield potential, plant height and lodging, the season it is bred for (wet / dry, early / late), its tolerance to drought, flooding or submergence, heat, salinity and cold where they apply, its pest and disease resistance (for rice: blast, bacterial leaf blight, tungro, brown planthopper, stem borer; for other crops the ones that matter), and who released it and when. Prefer {$registry}. Give the figures with their source. If nothing reliable turns up, say plainly that the variety could not be found — never guess its traits.\n" : '');
         $varietyHead = $variety !== '' ? ' and on the variety the farmer named' : '';
         // The typhoon chance chart is counted from this tally, not guessed.
         $cycloneAsk = $fieldPH
@@ -655,6 +706,8 @@ PROMPT;
         $soilBlock = $soilGuide !== ''
             ? "- What these soil conditions mean for timing (weigh them):\n" . $soilGuide . "\n"
             : '';
+        // The field in detail, when the farmer gave it: one compact line.
+        $soilBlock .= FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $p['crop']);
         $maturity = CropCatalog::maturity($p['crop']);
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
@@ -673,6 +726,11 @@ PROMPT;
         $climateRule = $fieldPH
             ? 'PAGASA climatological normals (wet/dry season timing for the region named), historical tropical-cyclone seasonality in the Philippines (including the Aug–Oct peak and regional differences)'
             : 'the climatological normals for the region named as published by ' . $met . ' (frost dates and the growing season where they apply, rainfall and temperature timing), the historical severe-weather seasonality of that region (storms, heat, drought, floods)';
+        // The variety: a record's facts as known (2026-10-15), else the research notes carry what is published.
+        $rec = (array) ($p['varietyRecord'] ?? []);
+        $varietyFact = $rec
+            ? '- Stated variety: "' . $p['variety'] . '", ON RECORD: ' . self::recordWords($rec) . '. These are known facts: time the crop by these days to harvest, and let its growing environment and tolerances move the windows, the month scores and the threats. The research notes may add regional trial results. In the variety field, found is true, maturityDays is these days and source names the record.'
+            : str_replace('{VARIETY}', (string) $p['variety'], '- Stated variety: "{VARIETY}" — the research notes at the end carry what the web says about it (maturity, season it is bred for, tolerance to drought / flood / heat / cold, pest and disease resistance, who released it). USE those published traits: time the crop by the variety\'s own days to maturity where the notes give one, and let its tolerances and weaknesses move the windows, the month scores and the threats (a submergence-tolerant variety fears the flood month less; an early-maturing one can dodge it). Where the notes say the variety could not be found, say variety-specific data is unavailable in dataGaps and reason from the crop\'s typical range. Never invent varietal traits, and never use a trait the notes do not carry.');
         $when = self::whenWords($p);
         $whenShort = self::whenTitle($p);
         $firstMonth = date('F', mktime(0, 0, 0, (int) $p['fromMonth'], 1)) . ' ' . (int) $p['fromYear'];
@@ -688,7 +746,7 @@ FACTS GIVEN
 - Planting months the farmer is considering: {$when}
 - Crop: {$cropLabel} — typical days to maturity: {$maturity}
 - Growth stages for calendar arithmetic: {$stages}
-- Stated variety: "{$p['variety']}" — the research notes at the end carry what the web says about it (maturity, season it is bred for, tolerance to drought / flood / heat / cold, pest and disease resistance, who released it). USE those published traits: time the crop by the variety's own days to maturity where the notes give one, and let its tolerances and weaknesses move the windows, the month scores and the threats (a submergence-tolerant variety fears the flood month less; an early-maturing one can dodge it). Where the notes say the variety could not be found, say variety-specific data is unavailable in dataGaps and reason from the crop's typical range. Never invent varietal traits, and never use a trait the notes do not carry.
+{$varietyFact}
 - Location as the farmer wrote it: {$p['location']}
 - Field problems the farmer reports: {$problems}
 - Soil condition as the farmer knows it: {$soil}

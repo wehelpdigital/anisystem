@@ -24,6 +24,7 @@ use App\Support\AutoBook;
 use App\Support\CropCatalog;
 use App\Support\CropStages;
 use App\Support\FieldCatalogue;
+use App\Support\FieldProfile;
 use App\Support\MediaStore;
 use App\Support\Tier;
 use App\Support\WorkerContext;
@@ -480,6 +481,15 @@ class AneeAutoController extends Controller
         if ($request->has('notes')) {
             $a['notes'] = mb_substr(trim((string) $request->input('notes')), 0, 2000) ?: null;
         }
+        // The field in detail (App\Support\FieldProfile, 2026-10-15): the farm's
+        // soil, water and last season, and the saved profile it started from.
+        if ($request->has('fieldProfile')) {
+            $fp = FieldProfile::fromInput($request->input('fieldProfile'));
+            $from = $request->input('fieldProfileFrom');
+            $a['fieldProfile'] = $fp ?: null;
+            $a['fieldProfileFrom'] = $fp && is_array($from) && is_numeric($from['id'] ?? null)
+                ? ['id' => (int) $from['id'], 'name' => mb_substr(trim((string) ($from['name'] ?? '')), 0, 120)] : null;
+        }
         $auto->update(['answers' => $a, 'step' => max((int) $auto->step, (int) $request->input('step', 0))]);
 
         return $this->json(true, 'Saved.', ['soilRead' => $a['soilRead'] ?? null]);
@@ -547,8 +557,31 @@ class AneeAutoController extends Controller
         if ((int) $auto->analysisRuns >= self::READINGS) {
             return $this->json(false, 'Anee has read this farm ' . self::READINGS . ' times already. Go on to the fertilizer.', [], 429);
         }
+        $this->keepFieldProfile($auto);
 
         return $this->runInBackground($auto, 'reading', fn () => $this->runReading($auto->fresh()));
+    }
+
+    /**
+     * The field in detail, kept for the next analysis when Anee first reads
+     * the farm: against the season's one lot, or named after the season when
+     * it has several (the answers are the farm's, not one lot's).
+     */
+    private function keepFieldProfile(AsAutoSeason $auto): void
+    {
+        $a = (array) $auto->answers;
+        if (empty($a['fieldProfile'])) {
+            return;
+        }
+        try {
+            $lots = AsScheduleLot::whereIn('id', AsAutoLot::where('autoId', $auto->id)->pluck('lotId'))->get(['id', 'lotName', 'crop']);
+            $one = $lots->count() === 1 ? $lots->first() : null;
+            $name = $one ? ($one->lotName ?: 'Lot 1') : (string) ($this->schedule($auto)->title ?: 'My field');
+            FieldProfile::keepFor((int) $this->payer()->id, (array) $a['fieldProfile'], $name, $lots->pluck('crop')->filter()->first(),
+                $a['fieldProfileFrom']['id'] ?? null, $one ? (int) $one->id : null, $one ? (int) $auto->croppingScheduleId : null);
+        } catch (\Throwable $e) {
+            report($e);
+        }
     }
 
     public function generate(int $id)

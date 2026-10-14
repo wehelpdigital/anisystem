@@ -551,16 +551,26 @@
                 <p class="wtp-sub">Put them in order. The first counts 40%, then 30%, 20% and 10%.</p>
                 <div class="va-rank" id="vaRank"></div>
             </section>
-            {{-- Step 7: the troubles --}}
+            {{-- Step 7: the field in detail (2026-10-15, the owner): the
+                 shared field questions (App\Support\FieldProfile), optional,
+                 asked once the crop is known. The answers fill the troubles
+                 step after it, and go to Anee whole. --}}
             <section class="wtp-step" data-step="6">
+                <p class="wtp-q">Your field in detail</p>
+                <p class="wtp-sub">Optional. The soil, the water and last season, one short page at a time. Your answers tick the troubles on the next step, and Anee weighs every one.</p>
+                <div id="vaFpc"></div>
+                @include('partials.field-profile-card')
+            </section>
+            {{-- Step 8: the troubles --}}
+            <section class="wtp-step" data-step="7">
                 <p class="wtp-q">What problems does this field have?</p>
                 <p class="wtp-sub">Tick what you have seen. Each one changes the scores.</p>
                 <div class="wtp-probs" id="vaProbs"></div>
                 <label class="form-label mt-4" for="vaNotes">Anything else? <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="vaNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. we transplant late, the buyer wants long grain"></textarea>
             </section>
-            {{-- Step 8: the decision --}}
-            <section class="wtp-step" data-step="7">
+            {{-- Step 9: the decision --}}
+            <section class="wtp-step" data-step="8">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="vaReview"></p>
                 <button type="button" class="wtp-run" id="vaRun">
@@ -678,7 +688,24 @@
         return crosses && y ? `${label} ${y} to ${y + 1}` : `${label} ${y || ''}`.trim();
     };
     let step = 0;
-    const STEPS = 8;
+    const STEPS = 9;
+    /* The field in detail (partials/field-profile-card): its answers tick the
+       troubles, unless the farmer has ticked them by hand. */
+    let FPC = null;
+    const TOUCH = { problems: false };
+    function applyProfile(answers, L) {
+        if (!OPT || TOUCH.problems) return '';
+        const want = [];
+        (L.problemsVariety || []).filter((k) => OPT.problems[k]).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
+        document.querySelectorAll('#vaProbs input').forEach((i) => { i.checked = want.includes(i.value); i.closest('.wtp-prob')?.classList.toggle('is-on', i.checked); });
+        state.problems = want;
+        window.aneeFieldCard.hint(document.querySelector('#vaWiz .wtp-step[data-step="7"]'), want.length > 0);
+        return want.length ? 'Filled in for you: ' + (want.length === 1 ? 'one trouble' : want.length + ' troubles') + ' on the next step. Change anything there.' : '';
+    }
+    function mountCard() {
+        if (FPC || !window.aneeFieldCard) return;
+        FPC = window.aneeFieldCard.mount($id('vaFpc'), { crop: () => state.crop || null, title: () => state.location || 'Your field', onChange: applyProfile });
+    }
 
     async function boot() {
         try {
@@ -688,6 +715,7 @@
             const pre = new URLSearchParams(location.search).get('crop');
             if (pre && (OPT.crops || []).some((c) => c.key === pre)) setCrop(pre);
         } catch (err) { toast(err.message, 'error'); }
+        if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
         // Painted: the price card and the wizard arrive together, once.
         const gen = $id('vaGen');
         if (gen && gen.classList.contains('an-wait')) {
@@ -805,7 +833,7 @@
             case 2: return !!state.soil || (toast('Pick the soil closest to yours.', 'error'), false);
             case 3: return !!state.crop || (toast('Choose a crop.', 'error'), false);
             case 4: addVariety(); return true;
-            case 6: state.problems = [...document.querySelectorAll('#vaProbs input:checked')].map((i) => i.value);
+            case 7: state.problems = [...document.querySelectorAll('#vaProbs input:checked')].map((i) => i.value);
                 state.notes = $id('vaNotes').value.trim(); return true;
             default: return true;
         }
@@ -818,7 +846,8 @@
             + ` · ${esc(seasonSaid(state.season, state.year))}`
             + `<br><span class="text-xs">${esc(String(OPT.soils[state.soil] || '').split(' — ')[0])}${state.elevation ? ' · ' + esc(String((OPT.elevations || {})[state.elevation] || state.elevation).split(' — ')[0]) : ''}`
             + ` · ${state.varieties.length ? esc(state.varieties.join(', ')) : 'Anee picks the varieties'}`
-            + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'} checked` : '') + '</span>'
+            + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'} checked` : '')
+            + (FPC && FPC.count() ? ` · your field in detail, ${FPC.count()} answer${FPC.count() === 1 ? '' : 's'}` : '') + '</span>'
             + `<br><span class="text-xs">${esc(order)}</span>`;
         $id('vaRunSays').textContent = OPT.canUse && OPT.quote ? `Run the research (${OPT.quote} credits)` : 'Run the research';
         $id('vaRunFine').textContent = OPT.canUse
@@ -877,6 +906,7 @@
        not both. Ticking one quietly unticks its opposite. */
     const PROB_FOES = { acidic: ['alkaline'], alkaline: ['acidic'], drought: ['floods'], floods: ['drought'] };
     $id('vaProbs').addEventListener('change', (e) => {
+        TOUCH.problems = true;
         const l = e.target.closest('.wtp-prob');
         if (l) l.classList.toggle('is-on', e.target.checked);
         if (!e.target.checked) return;
@@ -900,6 +930,7 @@
         const now = $id('vaCropNow');
         now.textContent = c.label || 'Choose the crop';
         now.classList.remove('is-none');
+        if (FPC) FPC.refresh();
         loadBook();
     }
     $id('vaCropSheet').addEventListener('click', (e) => {
@@ -1126,7 +1157,7 @@
                 location: state.location, country: state.country, year: state.year, season: state.season,
                 soil: state.soil, elevation: state.elevation, crop: state.crop,
                 varieties: state.varieties, priorities: state.priorities,
-                problems: state.problems, notes: state.notes,
+                problems: state.problems, notes: state.notes, ...(FPC ? FPC.payload() : {}),
             } });
             let data = res.data;
             if (data.pending) {
@@ -1329,6 +1360,12 @@
             <div class="wtp-card">
                 <h3>How to grow the top pick</h3>
                 <ul class="va-mgmt">${list(r.management).map((s) => `<li>${esc(sweep(s))}</li>`).join('')}</ul>
+            </div>` : ''}
+
+            ${(p.fieldProfileSaid || []).length && window.aneeFieldCard ? `
+            <div class="wtp-card">
+                <h3>🌾 Your field in detail</h3>
+                ${window.aneeFieldCard.said(p.fieldProfileSaid)}
             </div>` : ''}
 
             <div class="wtp-card">

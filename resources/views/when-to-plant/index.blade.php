@@ -446,6 +446,16 @@
     html.dark .va-view-bar { background: rgb(13 17 10 / .92); border-color: #2b3a1c; }
     html.dark .va-view-bar b { color: #e8efe1; }
     html.dark .va-view-x { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
+    /* The variety picked from the records: its facts, said under the tag. */
+    .wtp-varfacts { display: flex; align-items: flex-start; gap: .5rem; margin-top: .6rem; padding: .6rem .75rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5;
+        color: #24400f; background: #f3f8ec; border: 1px solid #d5e7c0; animation: wtpIn .3s cubic-bezier(.22,1,.36,1) both; }
+    .wtp-varfacts[hidden] { display: none; }
+    .wtp-varfacts svg { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: #4a7c2a; }
+    .wtp-varfacts.is-own { color: var(--color-gray-600); background: var(--color-gray-50); border-color: var(--color-gray-200); }
+    .wtp-varfacts.is-own svg { color: var(--color-gray-400); }
+    html.dark .wtp-varfacts { color: #cfe6b8; background: #17220f; border-color: #2b3a1c; }
+    html.dark .wtp-varfacts.is-own { color: #b9caa8; background: #121a0d; border-color: #2b3a1c; }
+    @media (prefers-reduced-motion: reduce) { .wtp-varfacts { animation: none; } }
     .wtp-loc-country { margin-bottom: .8rem; }
     .wtp-loc-country .form-label { margin-bottom: .3rem; }
 
@@ -551,11 +561,31 @@
             {{-- Step 5: the variety --}}
             <section class="wtp-step" data-step="3">
                 <p class="wtp-q">Which variety?</p>
-                <p class="wtp-sub">Type the name on the seed pack, like <span id="wtpVarEx">{{ \App\Support\Region::ph() ? 'NSIC Rc222' : 'Pioneer P1197' }}</span>. If there is no data on it, the report will say so.</p>
-                <input type="text" id="wtpVariety" class="form-input" maxlength="80" placeholder="Variety name (optional)">
+                {{-- Two ways (2026-10-15, the owner): picked from the variety records
+                     (its days to harvest and growing environment go to Anee as known
+                     facts), or typed as sold (Anee looks it up). The shared sheet
+                     partials/variety-pick. Optional. --}}
+                <p class="wtp-sub">Optional. Pick it from the records, like <span id="wtpVarEx">{{ \App\Support\Region::ph() ? 'NSIC Rc222' : 'Pioneer P1197' }}</span>, or type the name on the seed pack. If there is no data on it, the report will say so.</p>
+                <button type="button" class="crop-tag" id="wtpVarBtn">
+                    <span class="crop-tag-e" id="wtpVarIcon">🧬</span>
+                    <span class="crop-tag-t is-none" id="wtpVarNow">Pick from the records, or type your own</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <input type="hidden" id="wtpVariety" value="">
+                <div class="wtp-varfacts" id="wtpVarFacts" hidden></div>
+                @include('partials.variety-pick')
+            </section>
+            {{-- Step 5: the field in detail (2026-10-15, the owner): the
+                 shared field questions (App\Support\FieldProfile), optional.
+                 The answers fill the two steps after it and go to Anee whole. --}}
+            <section class="wtp-step" data-step="4">
+                <p class="wtp-q">Your field in detail</p>
+                <p class="wtp-sub">Optional. The soil, the water and last season, one short page at a time. Your answers fill in the next two steps, and Anee reads every one.</p>
+                <div id="wtpFpc"></div>
+                @include('partials.field-profile-card')
             </section>
             {{-- Step 6: the troubles --}}
-            <section class="wtp-step" data-step="4">
+            <section class="wtp-step" data-step="5">
                 <p class="wtp-q">What problems does this field have?</p>
                 <p class="wtp-sub">Tick what you have seen. Each one can change the best time.</p>
                 <div class="wtp-probs" id="wtpProbs"></div>
@@ -565,7 +595,7 @@
                  (a correction's lead time before planting, weather that makes
                  it worse at emergence). More than one can be true; the pH
                  words exclude one another. A tested pH is optional. --}}
-            <section class="wtp-step" data-step="5">
+            <section class="wtp-step" data-step="6">
                 <p class="wtp-q">What is the soil like?</p>
                 <p class="wtp-sub">Tick what you know. Skip it if the soil was never tested. You can tick more than one.</p>
                 <div class="wtp-probs" id="wtpSoil"></div>
@@ -574,8 +604,8 @@
                     <input type="number" id="wtpPh" class="form-input" inputmode="decimal" min="2" max="12" step="0.1" placeholder="Like 5.4">
                 </div>
             </section>
-            {{-- Step 8: the decision --}}
-            <section class="wtp-step" data-step="6">
+            {{-- Step 9: the decision --}}
+            <section class="wtp-step" data-step="7">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="wtpReview"></p>
                 <button type="button" class="wtp-run" id="wtpRun">
@@ -676,7 +706,7 @@
     let OPT = null;
     /* from / to: months as one number (year * 12 + month - 1), null until
        picked; the From and To tags each set their own end. */
-    const state = { from: null, to: null, crop: '', variety: '', location: '', problems: [], soil: [], ph: '', country: '' };
+    const state = { from: null, to: null, crop: '', variety: '', varRecord: null, location: '', problems: [], soil: [], ph: '', country: '' };
     const MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const ym = (n) => ({ year: Math.floor(n / 12), month: (n % 12) + 1 });
     const monthIdx = (year, month) => Number(year) * 12 + Number(month) - 1;
@@ -711,7 +741,45 @@
         return crosses && y ? `${label} ${y} to ${y + 1}` : `${label} ${y || ''}`.trim();
     };
     let step = 0;
-    const STEPS = 7;
+    const STEPS = 8;
+    /* The field in detail (partials/field-profile-card): its answers fill the
+       problems, the soil and the pH, unless the farmer has set them by hand. */
+    let FPC = null;
+    const TOUCH = { problems: false, soil: false, ph: false };
+    const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+    function applyProfile(answers, L) {
+        if (!OPT) return '';
+        const got = [];
+        const tick = (host, keys) => document.querySelectorAll('#' + host + ' input').forEach((i) => { i.checked = keys.includes(i.value); i.closest('.wtp-prob')?.classList.toggle('is-on', i.checked); });
+        if (!TOUCH.problems) {
+            const want = [];
+            // Rain only says more than a short water source, so it wins that pair.
+            const from = (L.problemsWhen || []).filter((k) => OPT.problems[k]);
+            from.filter((k) => !(k === 'water_source' && from.includes('rainfed'))).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
+            tick('wtpProbs', want);
+            state.problems = want;
+            if (want.length) got.push(want.length === 1 ? 'one field problem' : want.length + ' field problems');
+            window.aneeFieldCard.hint(document.querySelector('#wtpWiz .wtp-step[data-step="5"]'), want.length > 0);
+        }
+        let soilFilled = false;
+        if (!TOUCH.soil) {
+            const want = (L.soilConditions || []).filter((k) => k !== 'unsure' && (OPT.soilConditions || {})[k]);
+            tick('wtpSoil', want);
+            state.soil = want;
+            if (want.length) { got.push('the soil'); soilFilled = true; }
+        }
+        if (!TOUCH.ph) {
+            $id('wtpPh').value = L.phValue != null ? String(L.phValue) : '';
+            state.ph = $id('wtpPh').value;
+            if (L.phValue != null) { got.push('the pH'); soilFilled = true; }
+        }
+        if (!TOUCH.soil || !TOUCH.ph) window.aneeFieldCard.hint(document.querySelector('#wtpWiz .wtp-step[data-step="6"]'), soilFilled);
+        return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything on the next steps.' : '';
+    }
+    function mountCard() {
+        if (FPC || !window.aneeFieldCard) return;
+        FPC = window.aneeFieldCard.mount($id('wtpFpc'), { crop: () => state.crop || null, title: () => state.location || 'Your field', onChange: applyProfile });
+    }
     // A crop let go because the field's country changed: the step that asks
     // for it again says why.
     let cropDropped = false;
@@ -724,6 +792,7 @@
             OPT = res.data;
             paintOptions();
         } catch (err) { toast(err.message, 'error'); }
+        if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
         // Painted: the price card and the wizard arrive together, once.
         const gen = $id('wtpGen');
         if (gen && gen.classList.contains('an-wait')) {
@@ -914,9 +983,10 @@
                 if (state.to === null) state.to = state.from;
                 return true;
             case 2: return !!state.crop || (toast(cropDropped ? `The crop list is different for ${countryName(state.country)}. Pick the crop again.` : 'Pick the crop.', 'error'), false);
-            case 3: state.variety = $id('wtpVariety').value.trim(); return true;
-            case 4: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
-            case 5: {
+            case 3: return true;
+            case 4: return true;
+            case 5: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
+            case 6: {
                 state.soil = [...document.querySelectorAll('#wtpSoil input:checked')].map((i) => i.value);
                 const ph = $id('wtpPh').value.trim();
                 if (ph !== '' && (!(Number(ph) >= 2) || Number(ph) > 12)) { toast('pH must be a number from 2 to 12, like 5.4.', 'error'); return false; }
@@ -942,7 +1012,8 @@
             + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(whenSaid(rangeParams()))}`
             + ` · ${esc(state.location)}${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(nameOf(state.country)) : ''}`
             + (state.problems.length ? `<br><span class="text-xs">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '')
-            + ((state.soil.length || state.ph) ? `<br><span class="text-xs">Soil: ${esc([...state.soil.map((k) => ((OPT.soilConditions || {})[k] || k).split(' — ')[0]), state.ph ? 'pH ' + state.ph : ''].filter(Boolean).join(', '))}</span>` : '');
+            + ((state.soil.length || state.ph) ? `<br><span class="text-xs">Soil: ${esc([...state.soil.map((k) => ((OPT.soilConditions || {})[k] || k).split(' — ')[0]), state.ph ? 'pH ' + state.ph : ''].filter(Boolean).join(', '))}</span>` : '')
+            + (FPC && FPC.count() ? `<br><span class="text-xs">Your field in detail: ${FPC.count()} answer${FPC.count() === 1 ? '' : 's'}</span>` : '');
         $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wtpRunFine').textContent = OPT.canUse
             ? 'Paid from your AI credits. It shows in your credit log.'
@@ -969,6 +1040,8 @@
         $id('wtpLocation').placeholder = r.exampleLocation || '';
         const ex = $id('wtpVarEx');
         if (ex) ex.textContent = code === 'PH' ? 'NSIC Rc222' : 'Pioneer P1197';
+        // The variety records are the Philippines': a field abroad keeps the name, Anee looks it up.
+        if (state.varRecord && code !== 'PH') varSet(state.variety, null);
         // The crop book follows the field's country: a crop that is not in
         // the new one is let go.
         if (!OPT) return;
@@ -981,6 +1054,39 @@
             now.textContent = 'Choose the crop';
             now.classList.add('is-none');
         }
+    });
+    /* The variety, two ways (2026-10-15, the owner): the shared sheet
+       (partials/variety-pick). A record's days to harvest and growing
+       environment go to Anee as known facts; a typed name she looks up. */
+    const VAR_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+    function varSay() {
+        const now = $id('wtpVarNow'), rec = state.varRecord, box = $id('wtpVarFacts');
+        now.textContent = state.variety || 'Pick from the records, or type your own';
+        now.classList.toggle('is-none', !state.variety);
+        $id('wtpVarIcon').textContent = rec ? '📗' : '🧬';
+        $id('wtpVariety').value = state.variety;
+        if (!state.variety) { box.hidden = true; return; }
+        const VP = window.aneeVarietyPick;
+        box.classList.toggle('is-own', !rec);
+        box.innerHTML = VAR_ICON + '<span>' + (rec
+            ? '<b>On record.</b> ' + esc([VP ? VP.facts(rec) : '', rec.where ? 'bred for ' + rec.where : ''].filter(Boolean).join(' · ')) + '. Anee times the crop by these days and does not have to guess them.'
+            : 'Your own name, not on record. Anee looks it up, and the report says plainly if nothing is found.') + '</span>';
+        box.hidden = false;
+    }
+    function varSet(name, rec) {
+        state.variety = (name || '').trim();
+        state.varRecord = rec ? Object.assign({ crop: state.crop }, rec) : null;
+        varSay();
+    }
+    $id('wtpVarBtn').addEventListener('click', async () => {
+        if (!window.aneeVarietyPick) return;
+        const crop = (OPT && OPT.crops.find((c) => c.key === state.crop)) || {};
+        const m = state.from !== null ? ym(state.from).month : null;
+        const res = await window.aneeVarietyPick.open({ crop: state.crop, cropLabel: crop.label ? String(crop.label).split(' (')[0].split(' — ')[0] : '', country: state.country,
+            location: $id('wtpLocation').value.trim(), season: m ? (m >= 6 && m <= 10 ? 'wet' : 'dry') : '',
+            value: { name: state.variety, record: state.varRecord },
+            ownNote: 'Not on record, so Anee looks it up from what is published, and the report says plainly if nothing is found.' });
+        if (res) varSet(res.name, res.record);
     });
     $id('wtpCropBtn').addEventListener('click', () => {
         openSheet('wtpCropSheet');
@@ -998,6 +1104,9 @@
         now.textContent = c.label || 'Choose the crop';
         now.classList.remove('is-none');
         cropDropped = false;
+        // A variety from another crop's records does not belong to this one.
+        if (state.varRecord && state.varRecord.crop !== state.crop) varSet('', null);
+        if (FPC) FPC.refresh();
         closeSheet('wtpCropSheet');
         setTimeout(() => show(3), 220);
     });
@@ -1038,6 +1147,7 @@
         rainfed: ['water_source'],
     };
     $id('wtpProbs').addEventListener('change', (e) => {
+        TOUCH.problems = true;
         const l = e.target.closest('.wtp-prob');
         if (l) l.classList.toggle('is-on', e.target.checked);
         if (!e.target.checked) return;
@@ -1051,7 +1161,9 @@
     });
 
     const PH_WORDS = ['acidic', 'neutral', 'alkaline'];
+    $id('wtpPh').addEventListener('input', () => { TOUCH.ph = true; });
     $id('wtpSoil').addEventListener('change', (e) => {
+        TOUCH.soil = true;
         const l = e.target.closest('.wtp-prob');
         if (l) l.classList.toggle('is-on', e.target.checked);
         if (!e.target.checked || !PH_WORDS.includes(e.target.value)) return;
@@ -1074,7 +1186,8 @@
                 ...rangeParams(), crop: state.crop,
                 variety: state.variety, location: state.location, problems: state.problems,
                 soilConditions: state.soil, phValue: state.ph === '' ? null : Number(state.ph),
-                country: state.country,
+                country: state.country, ...(FPC ? FPC.payload() : {}),
+                varietyRecord: state.varRecord ? { name: state.varRecord.name, days: state.varRecord.days || null } : null,
             } });
             let data = res.data;
             /* The server answers at once and works after the reply; the page
@@ -1140,7 +1253,7 @@
         Object.assign(state, { from: null, to: null, crop: '', variety: '', location: '', problems: [], soil: [], ph: '' });
         cropDropped = false;
         $id('wtpLocation').value = '';
-        $id('wtpVariety').value = '';
+        varSet('', null);
         document.querySelectorAll('#wtpProbs input:checked, #wtpSoil input:checked').forEach((i) => { i.checked = false; i.closest('.wtp-prob')?.classList.remove('is-on'); });
         $id('wtpPh').value = '';
         $id('wtpCropIcon').textContent = '🌱';
@@ -1148,6 +1261,8 @@
         now.textContent = 'Choose the crop';
         now.classList.add('is-none');
         if ($id('wtpCropSearch')) { $id('wtpCropSearch').value = ''; cropSift(); }
+        Object.keys(TOUCH).forEach((k) => { TOUCH[k] = false; });
+        if (FPC) FPC.clear();
         paintRange();
         show(0);
     }
@@ -1286,6 +1401,7 @@
                 <div class="wtp-chips">
                     <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(nameOf(p.country)) : ''}</span>
                     ${p.variety ? `<span class="wtp-chip">🧬 ${esc(p.variety)}</span>` : ''}
+                    ${p.varietyRecord && p.varietyRecord.days ? `<span class="wtp-chip">📗 On record, ${esc(String(Math.round(p.varietyRecord.days)))} days</span>` : ''}
                     <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>
                     ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
                 </div>
@@ -1334,6 +1450,12 @@
                 </div>
                 <p class="wtp-plain mt-2">${esc(sweep(r.variety.traits))}</p>
                 ${r.variety.caution ? `<p class="wp-watch mt-1">⚠️ ${esc(sweep(r.variety.caution))}</p>` : ''}
+            </div>` : ''}
+
+            ${(p.fieldProfileSaid || []).length && window.aneeFieldCard ? `
+            <div class="wtp-card">
+                <h3>🌾 Your field in detail</h3>
+                ${window.aneeFieldCard.said(p.fieldProfileSaid)}
             </div>` : ''}
 
             <div class="wtp-card">

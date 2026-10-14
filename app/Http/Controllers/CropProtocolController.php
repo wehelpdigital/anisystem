@@ -10,6 +10,7 @@ use App\Services\WeatherService;
 use App\Support\AiPrices;
 use App\Support\AiUsage;
 use App\Support\CropCatalog;
+use App\Support\FieldProfile;
 use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
@@ -316,6 +317,9 @@ class CropProtocolController extends Controller
             'granulars' => 'nullable|array',
             'granulars.*' => 'string|max:24',
             'fertHistory' => 'nullable|string|max:200',
+            // The field in detail (App\Support\FieldProfile), optional.
+            'fieldProfile' => 'nullable|array',
+            'fieldProfileFrom' => 'nullable|integer',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
@@ -364,6 +368,8 @@ class CropProtocolController extends Controller
         ]);
 
         $prompt = $this->prompt($p);
+        // The field in detail is kept for the next analysis, named after the place.
+        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
 
         /* Should PHP itself be cut off mid-run, the row must not stay
          * "pending" -- that blocks every next run for ten minutes. */
@@ -848,6 +854,7 @@ class CropProtocolController extends Controller
                 . '; target ' . (($params['targetYield'] ?? null) ? $params['targetYield'] . ' ' . (self::yieldUnits()[$params['yieldUnit'] ?? ''] ?? '') : 'not set') . "\n"
                 . 'Headline: ' . ($report['headline'] ?? '') . "\n"
                 . 'Background — place: ' . ($bg['place'] ?? '') . ' Field: ' . ($bg['field'] ?? '') . "\n"
+                . FieldProfile::promptLine((array) ($params['fieldProfile'] ?? []), $params['crop'] ?? null, '')
                 . 'Weather ahead: ' . ($bg['weather']['outlook'] ?? '') . (! empty($bg['weather']['enso']) ? ' ENSO: ' . $bg['weather']['enso'] : '') . "\n"
                 . 'Variety: ' . ($v['name'] ?? '') . (! empty($v['by']) ? ' by ' . $v['by'] : '') . (! empty($v['maturityDays']) ? ', ' . $v['maturityDays'] . ' days' : '') . (! empty($v['yieldPotential']) ? ', ' . $v['yieldPotential'] : '') . ' — ' . ($v['traits'] ?? '') . "\n"
                 . 'Approach: ' . ($rec['intro'] ?? '') . "\n"
@@ -955,7 +962,7 @@ class CropProtocolController extends Controller
             'residue' => array_key_exists((string) $request->input('residue'), self::RESIDUES) ? (string) $request->input('residue') : 'unsure',
             'granulars' => WhatToPlantController::picks(self::GRANULARS, $request->input('granulars')),
             'fertHistory' => trim((string) preg_replace('/\s+/', ' ', (string) $request->input('fertHistory', ''))),
-        ];
+        ] + FieldProfile::forParams(FieldProfile::fromInput($request->input('fieldProfile'), (string) $request->input('crop')), (string) $request->input('crop'));
     }
 
     /** The coming days at the field, read from the forecast, in a line or two. */
@@ -1031,6 +1038,8 @@ class CropProtocolController extends Controller
             'notes' => $p['notes'] !== '' ? $p['notes'] : 'none',
             'counter' => $counter,
             'stageTable' => $stageTable,
+            // The field in detail, when the farmer gave it: one compact line (or nothing).
+            'fieldLine' => FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $p['crop']),
         ];
     }
 
@@ -1120,7 +1129,7 @@ FACTS GIVEN
 - What the field got last season, in the farmer's words: {$f['fertHistory']}
 - Granulars the farmer can buy locally: {$f['granulars']}
 - Field troubles the farmer reports: {$f['problems']}
-- The farmer's aim this season: {$f['priority']}
+{$f['fieldLine']}- The farmer's aim this season: {$f['priority']}
 - Target yield: {$f['target']}
 - The farmer's own notes: {$f['notes']}
 - Weather now: {$forecast}

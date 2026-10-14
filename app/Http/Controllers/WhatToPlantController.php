@@ -8,6 +8,7 @@ use App\Support\AiUsage;
 use App\Models\User;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
+use App\Support\FieldProfile;
 use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
@@ -292,6 +293,9 @@ class WhatToPlantController extends Controller
             // Families left out — never all of them.
             'exclude' => 'nullable|array',
             'exclude.*' => 'string|max:24',
+            // The field in detail (App\Support\FieldProfile), optional.
+            'fieldProfile' => 'nullable|array',
+            'fieldProfileFrom' => 'nullable|integer',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
@@ -337,6 +341,8 @@ class WhatToPlantController extends Controller
         ]);
 
         $prompt = $this->prompt($p);
+        // The field in detail is kept for the next analysis, named after the place.
+        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], null, $request->input('fieldProfileFrom'));
 
         if (function_exists('fastcgi_finish_request')) {
             ignore_user_abort(true);
@@ -592,6 +598,7 @@ class WhatToPlantController extends Controller
             . (($outlets = self::picks(self::MARKETS, $params['market'] ?? null)) ? '; sells to ' . collect($outlets)->map(fn ($k) => self::MARKETS[$k])->implode(', ') : '')
             . '; aim ' . (self::AIMS[$params['aim'] ?? ''] ?? '') . ($params['area'] ?? null ? '; area ' . $params['area'] : '') . "\n"
             . 'Troubles considered: ' . ($problems ?: 'none') . "\n"
+            . FieldProfile::promptLine((array) ($params['fieldProfile'] ?? []), null, '')
             . (! empty($params['priorities']) ? 'What matters to the farmer, most first: ' . collect(self::ordered($params['priorities']))->map(fn ($k) => explode(' — ', self::PRIORITIES[$k])[0])->implode(' > ') . "\n" : '')
             . (! empty($params['cropsAsked']) || ! empty($params['cropsOther']) ? 'Crops the farmer had in mind: ' . collect($params['cropsAsked'] ?? [])->map(fn ($k) => \App\Support\CropCatalog::label($k))->push($params['cropsOther'] ?? '')->filter()->implode('; ') . "\n" : '')
             . 'Top pick: ' . ($top['crop'] ?? '') . ' (' . ($top['category'] ?? '') . ') — ' . ($top['why'] ?? '') . "\n"
@@ -721,7 +728,7 @@ class WhatToPlantController extends Controller
             'labor' => array_key_exists((string) $request->input('labor'), self::LABORS) ? (string) $request->input('labor') : null,
             'budget' => array_key_exists((string) $request->input('budget'), self::BUDGETS) ? (string) $request->input('budget') : null,
             'market' => self::picks(self::MARKETS, $request->input('market')),
-        ];
+        ] + FieldProfile::forParams(FieldProfile::fromInput($request->input('fieldProfile'), null));
     }
 
     /** The question, spelled out so the answer is bounded and honest. */
@@ -754,6 +761,8 @@ class WhatToPlantController extends Controller
         $market = $saidMany(self::MARKETS, $p['market'] ?? null);
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
+        // The field in detail, when the farmer gave it: one compact line.
+        $fieldLine = FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []));
 
         // The FIELD's country, which may not be the farmer's: its name, its
         // weather authority, its crops; the language stays the farmer's.
@@ -847,7 +856,7 @@ FACTS GIVEN
 - Budget for inputs: {$budget}
 - Where the harvest would be sold (every outlet the farmer ticked): {$market}
 - Field troubles the farmer reports: {$problems}
-- The farmer's own notes: {$notes}
+{$fieldLine}- The farmer's own notes: {$notes}
 - Crops the farmer has in mind (each must be analysed and ranked, honestly): {$asked}
 - Crop families the farmer does NOT want at all: {$excludedLine}. Families still in play: {$familiesLeft}.
 - What matters most to the farmer, in their order, with the weight each carries in the score: {$prioLine}

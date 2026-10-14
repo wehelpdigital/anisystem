@@ -10,6 +10,7 @@ use App\Support\AiPrices;
 use App\Support\AiUsage;
 use App\Support\CropCatalog;
 use App\Support\EnsoOutlook;
+use App\Support\FieldProfile;
 use App\Support\NpkCrops;
 use App\Support\SoilConditions;
 use App\Support\Tier;
@@ -250,14 +251,26 @@ class NpkPlusController extends Controller
         $v = Validator::make($request->all(), [
             'id' => 'nullable|integer', 'title' => 'nullable|string|max:190', 'crop' => 'nullable|string|max:40', 'areaHa' => 'required|numeric|min:0.0001|max:100000',
             'targetYield' => 'nullable|numeric|min:0|max:1000', 'lines' => 'required|array|min:1|max:60', 'soil' => 'nullable|array', 'result' => 'nullable|array',
+            // The field in detail (App\Support\FieldProfile, 2026-10-15), optional.
+            'fieldProfile' => 'nullable|array', 'fieldProfileFrom' => 'nullable|integer',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), [], 422);
         }
         $crop = $request->input('crop');
         $title = trim((string) $request->input('title')) ?: (($crop ? str_replace(' — ', ', ', CropCatalog::label($crop)) : 'Fertilizer plan') . ' · ' . rtrim(rtrim(number_format((float) $request->input('areaHa'), 2), '0'), '.') . ' ha · ' . now('Asia/Manila')->format('M j, Y'));
+        // The field in detail rides in the calculation's setup, checked here, and is kept for the next analysis.
+        $result = (array) $request->input('result', []);
+        $fp = FieldProfile::fromInput($request->input('fieldProfile'), $crop ?: null);
+        $result['setup'] = array_merge((array) ($result['setup'] ?? []), FieldProfile::forParams($fp, $crop ?: null), ['fieldProfileFrom' => $fp ? $request->input('fieldProfileFrom') : null]);
+        // Inside Anee Auto the season keeps the profile itself (keepProfile false): no second copy here.
+        if ($fp && $request->boolean('keepProfile', true)) {
+            $set = (array) $result['setup'];
+            $place = trim(implode(', ', array_filter([preg_replace('/\s*\(Capital\)\s*$/i', '', (string) ($set['town'] ?? '')), (string) ($set['prov'] ?? '')])));
+            FieldProfile::keepFor(WorkerContext::effectiveOwnerId(), $fp, $place !== '' ? $place : 'My field', $crop ?: null, $request->input('fieldProfileFrom'));
+        }
         $row = ['title' => mb_substr($title, 0, 190), 'crop' => $crop, 'areaHa' => (float) $request->input('areaHa'), 'targetYield' => $request->input('targetYield'),
-            'lines' => json_encode($request->input('lines')), 'soil' => json_encode($request->input('soil')), 'result' => json_encode($request->input('result')), 'updated_at' => now()];
+            'lines' => json_encode($request->input('lines')), 'soil' => json_encode($request->input('soil')), 'result' => json_encode($result), 'updated_at' => now()];
         $id = (int) $request->input('id');
         if ($id && DB::table('as_npk_calcs')->where('id', $id)->where('userId', Auth::id())->where('deleteStatus', 1)->exists()) {
             DB::table('as_npk_calcs')->where('id', $id)->update($row);
@@ -319,6 +332,8 @@ class NpkPlusController extends Controller
             'soilConditions.*' => 'string|in:' . implode(',', array_keys(SoilConditions::OPTIONS)), 'phValue' => 'nullable|numeric|min:2|max:12',
             'water' => 'required|in:' . implode(',', array_keys(self::WATER)), 'plantingDate' => 'nullable|date', 'timing' => 'required|in:' . implode(',', array_keys(self::TIMING)),
             'variety' => 'nullable|string|max:80', 'notes' => 'nullable|string|max:800',
+            // The field in detail (App\Support\FieldProfile), optional.
+            'fieldProfile' => 'nullable|array', 'fieldProfileFrom' => 'nullable|integer',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), [], 422);
@@ -340,7 +355,9 @@ class NpkPlusController extends Controller
             'calcId' => (int) $calc->id, 'location' => trim((string) $request->input('location')), 'soilConditions' => SoilConditions::normalize($request->input('soilConditions', [])),
             'phValue' => SoilConditions::phValue($request->input('phValue')), 'water' => (string) $request->input('water'), 'plantingDate' => $request->input('plantingDate'),
             'timing' => (string) $request->input('timing'), 'variety' => trim((string) $request->input('variety', '')), 'notes' => trim((string) $request->input('notes', '')),
-        ];
+        ] + FieldProfile::forParams(FieldProfile::fromInput($request->input('fieldProfile'), $calc->crop ?: null), $calc->crop ?: null);
+        // The field in detail is kept for the next analysis, named after the place.
+        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $calc->crop ?: null, $request->input('fieldProfileFrom'));
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr('NPK Plus · ' . $calc->title, 0, 190), 'params' => json_encode($p),
             'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
@@ -411,6 +428,8 @@ class NpkPlusController extends Controller
 
         return 'Crop: ' . ($calc->crop ? CropCatalog::label($calc->crop) : 'not set') . '; area ' . (float) $calc->areaHa . ' ha'
             . (! empty($set['variety']) ? '; variety ' . mb_substr((string) $set['variety'], 0, 80) : '')
+            . (($set['varietyPick']['source'] ?? '') === 'record' ? ' (from the variety records' . (! empty($set['varietyPick']['potential']) ? ', ' . (float) $set['varietyPick']['potential'] . ' t/ha ' . (($set['varietyPick']['potentialIs'] ?? '') === 'top' ? 'highest' : 'average') . ' trial yield' : '') . (($set['varietyPick']['potentialFrom'] ?? '') === 'own' ? '; the farmer set the potential themselves' : '') . ')'
+                : (($set['varietyPick']['source'] ?? '') === 'custom' ? ' (typed by the farmer, not on record)' : ''))
             . (! empty($pot['value'])
                 ? '; potential yield of the variety ' . (float) $pot['value'] . ' ' . mb_substr((string) ($pot['unit'] ?? 't/ha'), 0, 30)
                     . (! empty($pot['tPerHa']) && ($pot['unit'] ?? '') !== 't/ha' ? ' (' . round((float) $pot['tPerHa'], 2) . ' t/ha)' : '')
@@ -425,6 +444,7 @@ class NpkPlusController extends Controller
             . ($soil ? 'Soil test: ' . json_encode($soil) . "\n" : 'No soil test given.' . "\n")
             . (! empty($set['texture']) && $set['texture'] !== 'unsure' ? 'Soil type: ' . $set['texture'] . "\n" : '')
             . (! empty($set['conditions']) ? 'Soil conditions the farmer picked: ' . implode(', ', array_map('strval', (array) $set['conditions'])) . "\n" : '')
+            . (! empty($set['fieldAdjust']) ? 'What the calculator counted for the field in detail: ' . mb_substr(implode(' ', array_map('strval', (array) $set['fieldAdjust'])), 0, 900) . "\n" : '')
             . (! empty($res['goal']) ? 'Yield goal the calculator counted for: ' . json_encode($res['goal']) . "\n" : '')
             . (! empty($res['needs']) ? 'The calculator\'s need model, kg per ha for that goal on this soil (the official guide rate sized to the goal and adjusted for the soil; plan is what the plan gives): ' . json_encode($res['needs']) . "\n" : '')
             . (! empty($res['micros']) ? 'The calculator\'s secondary, micro and beneficial element needs, kg of element per ha (level none, watch, likely, or test from a soil test): ' . json_encode($res['micros']) . "\n" : '')
@@ -452,6 +472,7 @@ class NpkPlusController extends Controller
             . 'Soil as the farmer knows it: ' . (SoilConditions::words($p['soilConditions'], $p['phValue']) ?: 'not stated') . "\n"
             . (SoilConditions::guidance($p['soilConditions']) ? SoilConditions::guidance($p['soilConditions']) . "\n" : '')
             . 'Water: ' . (self::WATER[$p['water']] ?? $p['water']) . "\n"
+            . FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $calc->crop ?: null, '')
             . 'Planting date: ' . ($p['plantingDate'] ?: 'not given') . '; how the farmer means to apply it: ' . (self::TIMING[$p['timing']] ?? $p['timing']) . "\n"
             . ($p['variety'] ? 'Variety: ' . $p['variety'] . "\n" : '') . ($p['notes'] ? 'Notes: ' . $p['notes'] . "\n" : '')
             . 'ENSO: ' . (EnsoOutlook::forPrompt() ?: 'not available') . "\n\n"

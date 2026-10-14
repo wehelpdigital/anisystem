@@ -643,4 +643,94 @@ final class FieldProfile
 
         return $ids;
     }
+
+    /* ======================================== in the other analyses (2026-10-15) */
+
+    /**
+     * The detailed answers an analysis was sent (its `fieldProfile` input),
+     * checked for the analysis's crop: [] when none came. Never in the way.
+     */
+    public static function fromInput(mixed $raw, ?string $crop = null): array
+    {
+        if (is_string($raw) && $raw !== '') {
+            $raw = json_decode($raw, true);
+        }
+        if (! is_array($raw) || ! $raw) {
+            return [];
+        }
+        try {
+            return self::normalize($raw, $crop !== '' ? $crop : null);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return [];
+        }
+    }
+
+    /** The answers as an analysis keeps them in its params: the profile and its words, or nothing. */
+    public static function forParams(array $answers, ?string $crop = null): array
+    {
+        return $answers ? ['fieldProfile' => $answers, 'fieldProfileSaid' => self::pairs($answers, $crop)] : ['fieldProfile' => null, 'fieldProfileSaid' => []];
+    }
+
+    /** The prompt's "Field in detail" line, or '' when no detail was given. Compact: one line of words(). */
+    public static function promptLine(array $answers, ?string $crop = null, string $lead = '- '): string
+    {
+        return $answers ? $lead . 'Field in detail (the farmer\'s own answers about this field, last season included): ' . self::words($answers, $crop) . "\n" : '';
+    }
+
+    /**
+     * Keep an analysis's detailed answers for the next one, best effort: back
+     * into the saved profile they came from when it is the farm's, is for the
+     * same crop (or none) and the answers changed; else as a profile named
+     * after the lot or the place. Returns the saved row's id, or null.
+     */
+    public static function keepFor(int $ownerId, array $answers, string $name, ?string $crop = null, mixed $fromId = null, ?int $lotId = null, ?int $scheduleId = null): ?int
+    {
+        if (! $answers || ! self::storeReady()) {
+            return null;
+        }
+        try {
+            $cropKey = $crop !== null && $crop !== '' ? FieldCatalogue::cropKey($crop) : null;
+            if (is_numeric($fromId) && (int) $fromId > 0) {
+                $had = DB::table('as_field_profiles')->where('id', (int) $fromId)->where('userId', $ownerId)->where('deleteStatus', 1)->first();
+                if ($had && ($had->crop === null || $cropKey === null || $had->crop === $cropKey)) {
+                    $old = self::normalize(json_decode((string) $had->answers, true) ?: [], $crop);
+                    if (self::sameAnswers($old, $answers)) {
+                        return (int) $had->id;
+                    }
+                    $row = self::store($ownerId, ['name' => (string) $had->name, 'crop' => $had->crop ?? $cropKey, 'answers' => $answers], (int) $had->id);
+
+                    return $row['id'] ?? null;
+                }
+            }
+            $row = self::store($ownerId, ['name' => $name, 'crop' => $cropKey, 'answers' => $answers, 'lotId' => $lotId, 'scheduleId' => $scheduleId]);
+
+            return $row['id'] ?? null;
+        } catch (\Throwable $e) {
+            report($e);
+
+            return null;
+        }
+    }
+
+    /** Two profiles alike, whatever the order of their lists. */
+    private static function sameAnswers(array $a, array $b): bool
+    {
+        $norm = function (array $x): array {
+            ksort($x);
+            foreach ($x as $k => $v) {
+                if (is_array($v)) {
+                    sort($v);
+                    $x[$k] = $v;
+                } elseif (is_float($v) || is_int($v)) {
+                    $x[$k] = (string) round((float) $v, 1);
+                }
+            }
+
+            return $x;
+        };
+
+        return $norm($a) === $norm($b);
+    }
 }

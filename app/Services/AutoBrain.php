@@ -13,6 +13,7 @@ use App\Support\CropStages;
 use App\Support\EnsoOutlook;
 use App\Support\FieldCatalogue;
 use App\Support\FieldContext;
+use App\Support\FieldProfile;
 use App\Support\SoilConditions;
 use Illuminate\Support\Carbon;
 
@@ -85,6 +86,8 @@ class AutoBrain
                 'readFromSigns' => ['texture' => $soil['texture'] ?? 'unsure', 'conditions' => $soil['conditions'] ?? [], 'ph' => $soil['ph'] ?? 'unsure'],
                 'guidance' => SoilConditions::guidance((array) ($soil['conditions'] ?? [])),
             ],
+            // The field in detail (App\Support\FieldProfile, 2026-10-15), when the farmer gave it.
+            'fieldInDetail' => ! empty($a['fieldProfile']) ? FieldProfile::words((array) $a['fieldProfile']) : null,
             'water' => AutoBook::WATER[$a['water'] ?? '']['0'] ?? 'not said',
             'waterNote' => $a['waterNote'] ?? null,
             'pastProblems' => array_values(array_filter(array_map(fn ($k) => AutoBook::PROBLEMS[$k][0] ?? null, (array) ($a['problems'] ?? [])))),
@@ -199,7 +202,7 @@ class AutoBrain
             . "THE LOT:\n" . json_encode($lot, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n"
             . "YOUR FIRST READING OF IT:\n" . json_encode($reading, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n"
             . "THE REST OF THE FARM (other lots share the same workers): " . json_encode($others, JSON_UNESCAPED_UNICODE) . "\n"
-            . 'SOIL: ' . json_encode($f['soil'], JSON_UNESCAPED_UNICODE) . "\nWATER: " . $f['water'] . ($f['waterNote'] ? ' (' . $f['waterNote'] . ')' : '') . "\nPAST PROBLEMS: " . json_encode(array_merge($f['pastProblems'], $f['pastPestsAndDiseases']), JSON_UNESCAPED_UNICODE)
+            . 'SOIL: ' . json_encode($f['soil'], JSON_UNESCAPED_UNICODE) . ($f['fieldInDetail'] ? "\nFIELD IN DETAIL (the farmer's own answers): " . $f['fieldInDetail'] : '') . "\nWATER: " . $f['water'] . ($f['waterNote'] ? ' (' . $f['waterNote'] . ')' : '') . "\nPAST PROBLEMS: " . json_encode(array_merge($f['pastProblems'], $f['pastPestsAndDiseases']), JSON_UNESCAPED_UNICODE)
             . "\nWORKERS: " . json_encode($f['workers'], JSON_UNESCAPED_UNICODE) . "\nENSO: " . $f['enso'] . "\n\n"
             . "GROWTH STAGES (day counts from the field day):\n" . json_encode($stages, JSON_UNESCAPED_UNICODE) . "\n\n"
             . "THE CROP BOOK:\n" . AutoBook::forPrompt($crop) . "\n\n"

@@ -58,6 +58,7 @@
     .np-sub { margin-top: .25rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-500); }
     .np-label { display: block; margin: .85rem 0 .35rem; font-size: .76rem; font-weight: 800; color: var(--color-gray-700); }
     .np-label span { color: var(--color-gray-400); font-weight: 600; }
+    .np-fpc-sub { margin: -.2rem 0 .6rem; }
     .np-hint { display: block; margin-top: .3rem; font-size: .72rem; line-height: 1.45; color: var(--color-gray-500); }
     .np-hint.is-warn { color: #b45309; font-weight: 700; }
     .np-row { display: flex; gap: .5rem; } .np-row > * { min-width: 0; }
@@ -461,6 +462,53 @@
         .np-hero-fold, .np-hero-chev, .np-soil, .np-nbar .have, .np-nbar .need, .np-pill, .np-otab-ind, .lb-st, .lb-water, .lb-pool, .lb-kbar span, .np-utag, .np-qty, .np-add, .np-wline span, .np-ws i, .lb-arrow .lb-ap, .lb-alab { transition: none; }
     }
     html.sm-still .lb-spill, html.sm-still .lb-top, html.sm-still .np-chem span, html.sm-still .lb-pool::before, html.sm-still .lb-pool::after { animation: none; }
+
+    /* The variety tag and its sheet (2026-10-15): the records, or a name typed as sold. */
+    .np-vtag span { font-weight: 800; }
+    .np-vtag.is-rec span::before { content: '✓ '; color: var(--color-brand-600, #4a7c2a); }
+    /* Where the potential came from: the record, or the farmer. */
+    .np-potfrom { display: flex; align-items: flex-start; gap: .45rem; margin-top: .4rem; padding: .5rem .6rem; border-radius: .75rem; font-size: .74rem; line-height: 1.45;
+        color: #24400f; background: #f3f8ec; border: 1px solid #d5e7c0; animation: npIn .3s var(--np-ease) both; }
+    .np-potfrom[hidden] { display: none; }
+    .np-potfrom svg { flex: none; width: .95rem; height: .95rem; margin-top: .1rem; color: #4a7c2a; }
+    .np-potfrom button { font-weight: 800; color: var(--color-brand-700); text-decoration: underline; text-underline-offset: 3px; }
+    .np-potfrom.is-own { color: #6b4a00; background: #fff8e1; border-color: #f5d77a; }
+    .np-potfrom.is-own svg { color: #b45309; }
+    /* The field in detail, in the soil step. */
+    .np-fpc { margin: .9rem 0 .2rem; padding-bottom: .4rem; border-bottom: 1px dashed var(--color-gray-200); }
+    .np-fpc-l { margin-top: 0; }
+    /* Your field, counted: every adjustment as a plain line with its reason. */
+    .np-field { margin-top: .9rem; padding: .8rem .85rem; border-radius: 1rem; background: linear-gradient(160deg, #fbfdf8, #f2f8ea); border: 1px solid #d5e7c0; animation: npIn .32s var(--np-ease) both; }
+    .np-field h4 { display: flex; align-items: center; gap: .45rem; font-family: var(--font-heading); font-weight: 800; font-size: .92rem; color: #1f3a10; }
+    .np-field h4 i { font-style: normal; }
+    .np-field > p { margin-top: .2rem; font-size: .74rem; color: var(--color-gray-500); }
+    .np-fl { display: grid; gap: .4rem; margin-top: .6rem; }
+    .np-fli { display: flex; align-items: flex-start; gap: .55rem; padding: .5rem .6rem; border-radius: .8rem; background: var(--color-white); border: 1px solid #e3ecd8; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700);
+        animation: npIn .3s var(--np-ease) both; animation-delay: calc(var(--k, 0) * 40ms); }
+    .np-fli > i { flex: none; width: 1.6rem; height: 1.6rem; border-radius: .55rem; display: grid; place-items: center; font-style: normal; font-size: .9rem; background: #f1f6ea; }
+    .np-fli > span { min-width: 0; flex: 1 1 auto; }
+    .np-fli b { color: var(--color-gray-900); }
+    .np-fli em { display: inline-block; margin-left: .2rem; padding: .05rem .45rem; border-radius: 999px; font-style: normal; font-size: .68rem; font-weight: 800; white-space: nowrap; color: #2d5016; background: #e4efd4; }
+    .np-fli em.is-up { color: #8a5a00; background: #fff1c2; }
+    .np-fli em.is-tip { color: #334155; background: #e2e8f0; }
+    .np-aneefield { margin: .8rem 0 0; padding: .55rem .7rem; border-radius: .8rem; font-size: .78rem; line-height: 1.5; color: #24400f; background: #f3f8ec; border: 1px solid #d5e7c0; }
+    .np-aneefield[hidden] { display: none; }
+    .np-free { display: flex; align-items: center; justify-content: center; gap: .4rem; margin-top: .6rem; font-size: .74rem; font-weight: 700; line-height: 1.4; text-align: center; color: var(--color-gray-500); }
+    .np-free svg { flex: none; width: .9rem; height: .9rem; color: var(--color-brand-600, #4a7c2a); }
+    html.dark .np-potfrom, html.dark .np-aneefield { color: #cfe6b8; background: #17220f; border-color: #2b3a1c; }
+    html.dark .np-potfrom.is-own { color: #f3dc9a; background: #2a2208; border-color: #5c4a10; }
+    html.dark .np-fpc { border-color: #2b3a1c; }
+    html.dark .np-field { background: linear-gradient(160deg, #151c11, #18220f); border-color: #2b3a1c; }
+    html.dark .np-field h4 { color: #e8efe1; }
+    html.dark .np-fli { background: #10150c; border-color: #2b3a1c; color: #c9d6bc; }
+    html.dark .np-fli b { color: #eef3e8; }
+    html.dark .np-fli > i { background: #1c2616; }
+    html.dark .np-fli em { color: #cfe6b8; background: #22301a; }
+    html.dark .np-fli em.is-up { color: #f3dc9a; background: #3a2e0c; }
+    html.dark .np-fli em.is-tip { color: #cbd5e1; background: #1e293b; }
+    @media (prefers-reduced-motion: reduce) {
+        .np-potfrom, .np-field, .np-fli { animation: none; }
+    }
 </style>
 
 @php $chev = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>'; @endphp
@@ -514,15 +562,21 @@
                         <section class="np-wstep" data-s="1" hidden>
                             <p class="np-wq">The variety and your yield goal</p>
                             <p class="np-sub">The bigger the harvest you aim for, the more the crop takes from the field.</p>
-                            <label class="np-label" for="npVariety">Variety <span>(optional)</span></label>
-                            <input type="text" id="npVariety" class="form-input w-full" maxlength="80" autocomplete="off" placeholder="{{ \App\Support\Region::ph() ? 'Like NSIC Rc222' : 'Like Pioneer P1197' }}">
+                            {{-- The variety, two ways (2026-10-15, the owner): picked from the
+                                 records (its trial yield fills the potential), or typed as sold. --}}
+                            <span class="np-label">Variety <span>(optional)</span></span>
+                            <button type="button" class="np-utag is-wide is-none np-vtag" id="npVarBtn"><span id="npVarSays">Pick from the records, or type your own</span>{!! $chev !!}</button>
+                            <input type="hidden" id="npVariety" value="">
+                            <span class="np-hint" id="npVarHint" hidden></span>
+                            @include('partials.variety-pick')
                             <div class="np-row" style="align-items:center;margin-top:.85rem"><span class="np-label" style="margin:0;flex:1 1 auto">Yields in</span>
                                 <button type="button" class="np-utag is-inline" id="npYUnit" aria-label="Yield unit"><span>t/ha</span>{!! $chev !!}</button></div>
                             <div class="np-two">
                                 <div>
                                     <label class="np-label" for="npPotential">Potential of the variety <span>(optional)</span></label>
                                     <input type="number" id="npPotential" class="form-input w-full" min="0" step="any" inputmode="decimal" placeholder="Like 8">
-                                    <span class="np-hint">On the seed bag or the variety's description.</span>
+                                    <span class="np-hint" id="npPotHint">On the seed bag or the variety's description.</span>
+                                    <div class="np-potfrom" id="npPotFrom" hidden></div>
                                 </div>
                                 <div>
                                     <label class="np-label" for="npTarget">Your yield goal <span>(optional)</span></label>
@@ -570,6 +624,17 @@
                         <section class="np-wstep" data-s="4" hidden>
                             <p class="np-wq">Your soil</p>
                             <p class="np-sub">It decides how much the soil gives on its own and how much of the fertilizer the crop can catch.</p>
+                            {{-- The field in detail (2026-10-15, the owner): the shared field
+                                 questions (App\Support\FieldProfile), optional. They fill the soil
+                                 and the water below and in step 4, and the calculator counts the
+                                 rest (the last crop, the organic matter, the drainage, salt, zinc)
+                                 as plain lines under the need. Anee reads them too. --}}
+                            <div class="np-fpc">
+                                <span class="np-label np-fpc-l">Your field in detail <span>(optional)</span></span>
+                                <p class="np-sub np-fpc-sub">The soil, the water and last season, one short page at a time. NPK Plus counts every answer, and shows how.</p>
+                                <div id="npFpc"></div>
+                                @include('partials.field-profile-card')
+                            </div>
                             <span class="np-label">Soil type</span>
                             <button type="button" class="np-utag is-wide is-none" id="npTexture"><span>Not sure</span>{!! $chev !!}</button>
                             <label class="np-label" for="npPh">Soil pH <span>(if you know it)</span></label>
@@ -645,8 +710,10 @@
                         <span>A guide, not a promise. The need and the yield still depend on the variety, and on your soil: how much of its own nutrients the crop can actually use. The weather and how and when the fertilizer goes on matter too. A soil test makes all of it surer.</span></div>
                     <div class="np-acts">
                         <button type="button" class="btn btn-white" id="npSave">Save this calculation</button>
-                        <button type="button" class="np-anee" id="npAnee"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="">Analyze further with Anee</button>
+                        <button type="button" class="np-anee" id="npAnee"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""><span id="npAneeSays">Analyze further with Anee</span></button>
                     </div>
+                    {{-- The owner's rule (2026-10-15): the calculator never uses credits; only Anee's reading does, when it is ready. --}}
+                    <p class="np-free" id="npFree"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>The calculator is free. Credits are used only when you ask Anee to look further.</span></p>
                 </div>
                 <div class="np-rep" id="npRep" hidden></div>
             </div>
@@ -665,7 +732,7 @@
         .np-frame-bar span { flex: 1; min-width: 0; font-size: .82rem; font-weight: 700; color: var(--color-gray-600); }
         .np-frame-bar .btn { flex: none; }
         html.dark .np-frame-bar { background: rgb(22 28 18 / .96); border-color: #2b3a1c; }
-        html.is-frame .np-hero, html.is-frame .np-tabs, html.is-frame #npSave, html.is-frame #npAnee { display: none !important; }
+        html.is-frame .np-hero, html.is-frame .np-tabs, html.is-frame #npSave, html.is-frame #npAnee, html.is-frame #npFree { display: none !important; }
     </style>
     @endif
 
@@ -850,6 +917,8 @@
         <p class="np-sub mt-0">Anee checks your plan against the place, your soil, the water, the season and ENSO, then says what to keep, cut, add or split, and when. Your soil from the wizard goes with it.</p>
         <label class="np-label" for="npLoc">Where is the field?</label>
         <input type="text" id="npLoc" class="form-input w-full" maxlength="160" placeholder="Town and province">
+        {{-- The field in detail lives in step 5 (the calculator counts it); it goes to Anee whole. --}}
+        <div class="np-aneefield" id="npAneeField" hidden></div>
         <span class="np-label">How will you apply it?</span>
         <div class="np-pills" id="npTiming"></div>
         <label class="np-label" for="npNotes">Anything else <span>(optional)</span></label>
@@ -908,7 +977,10 @@
 
     let OPT = null, M = null, calcId = null, RES = null;
     const st = { crop: null, cropPicked: false, lines: [], areaUnit: 'ha', yUnit: 't', seedUnit: 'kg', seedUnitSet: false, pMethod: 'olsen', kUnit: 'ppm', form: 'granular',
-        texture: 'unsure', conds: [], step: 0, prov: null, town: null, water: 'irrigated', season: null };
+        texture: 'unsure', conds: [], step: 0, prov: null, town: null, water: 'irrigated', season: null, varPick: null };
+    // The field in detail (partials/field-profile-card) and what the farmer set by hand (theirs wins over what it fills).
+    let FPC = null;
+    const TOUCH = {};
     const areaHa = () => st.areaUnit === 'sqm' ? num('npArea') / 10000 : num('npArea');
     const tagSay = (id, dict, k) => { $(id).querySelector('span').textContent = dict[k][1]; };
 
@@ -1033,6 +1105,8 @@
         if (st.step === 0) setTimeout(() => go(1), 380);
     });
     const setCrop = (k) => {
+        // A variety picked from another crop's records does not belong to this one.
+        if (st.varPick && st.varPick.source === 'record' && st.varPick.crop && st.varPick.crop !== k && typeof varSet === 'function') { st.crop = k; varSet(null, ''); }
         st.crop = k; st.cropPicked = true;
         const c = cropOf(k);
         $('npCropIcon').textContent = c ? c.icon : '🧮';
@@ -1099,21 +1173,89 @@
         } else if (P) { Y = 0.8 * P; why = '80% of the variety\'s potential, the most a well run field usually reaches'; }
         else if (ty) { Y = ty.hi; why = 'the Philippine average, since no goal or potential was given'; }
         const sd = seedCheck(c);
-        return { Y, Yeff: Y ? Y * sd.sf : null, why, warn, P, T, sd };
+        // Your field (NpkModel::FIELD caps): rain only, short water, salt or sodium hold the harvest
+        // below the goal, and the need with it. A goal the farmer typed stays theirs.
+        const cap = fieldCap(c), capped = !T && cap.k < 1;
+        return { Y, Yeff: Y ? Y * sd.sf * (capped ? cap.k : 1) : null, why, warn, P, T, sd, cap, capped };
     };
     const hints = () => {
         if (!M) return;
         const c = cropOf(st.crop), g = goalOf(c), unit = Y_U[st.yUnit][1], f = Y_U[st.yUnit][3];
         $('npGoal').innerHTML = !c ? 'Pick the crop first; the goal is sized to it.'
             : g.Y ? 'NPK Plus counts for <b>' + fmt(g.Y / f) + ' ' + esc(unit) + '</b>' + (st.yUnit !== 't' ? ' (' + fmt(g.Y) + ' t/ha)' : '') + ': ' + esc(g.why) + '.'
-                + (g.sd.sf < 1 ? ' Your stand is thin, so it counts for ' + fmt(g.Yeff / f) + ' ' + esc(unit) + '.' : '') + (g.warn ? '<br><span class="text-xs">' + esc(g.warn) + '</span>' : '')
+                + (g.sd.sf < 1 ? ' Your stand is thin, so it counts for ' + fmt(g.Yeff / f) + ' ' + esc(unit) + '.' : '')
+                + (g.capped ? ' Your field in detail holds it to <b>' + fmt(g.Yeff / f) + ' ' + esc(unit) + '</b> (' + esc(capWords(g.cap)) + ').' : '')
+                + (g.warn ? '<br><span class="text-xs">' + esc(g.warn) + '</span>' : '')
             : 'No yield numbers for this crop: give your goal, or the guide rate is used as it is.';
         const s = num('npSeed'), a = areaHa(), sd = c && M.seeding[c.key];
         $('npSeedHint').textContent = s && a ? 'For the whole area: ' + fmt(g.sd.raw * (st.seedUnit === 'g' ? 1000 : 1), g.sd.raw >= 100 ? 0 : 1) + ' ' + SEED_U[st.seedUnit][1] + ' per hectare. ' + g.sd.words
             : 'How much you plant on the whole area.' + (sd && sd.note ? ' ' + sd.note : '');
         $('npSeedHint').classList.toggle('is-warn', !!g.sd.warn);
     };
-    $('npYUnit').addEventListener('click', () => pick('Yields in', 'For the potential and your goal.', Y_U, st.yUnit, (k) => { st.yUnit = k; tagSay('npYUnit', Y_U, k); hints(); calc(); }));
+    $('npYUnit').addEventListener('click', () => pick('Yields in', 'For the potential and your goal.', Y_U, st.yUnit, (k) => { st.yUnit = k; tagSay('npYUnit', Y_U, k); potFill(false); potPaint(); hints(); calc(); }));
+
+    /* ---- the variety, two ways (2026-10-15, the owner) ----
+       Picked from the records (the shared sheet, partials/variety-pick,
+       a plain lookup): its trial yield fills the potential, which stays the
+       farmer's to change (a hybrid's own figure can differ from the trial's).
+       Or typed as sold, not on record. st.varPick keeps which. */
+    const OK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+    const recT = (p) => (p && p.source === 'record' ? (p.top || p.avg || null) : null);
+    const varPaintTag = () => {
+        const p = st.varPick, name = $('npVariety').value.trim();
+        $('npVarSays').textContent = name || 'Pick from the records, or type your own';
+        $('npVarBtn').classList.toggle('is-none', !name);
+        $('npVarBtn').classList.toggle('is-rec', !!(p && p.source === 'record'));
+        const h = $('npVarHint');
+        h.hidden = !name;
+        h.textContent = !name ? '' : (p && p.source === 'record'
+            ? 'On record: ' + [p.type === 'hybrid' ? 'hybrid' : 'not a hybrid', p.days ? Math.round(p.days) + ' days' : '', p.year ? 'released ' + p.year : ''].filter(Boolean).join(', ') + '.'
+            : 'Your own name, not on record.');
+    };
+    // The potential from the record, in the yield unit on screen: only while the farmer has not set their own.
+    const potFill = (force) => {
+        const t = recT(st.varPick);
+        if (!t || (TOUCH.potential && !force && num('npPotential'))) return;
+        $('npPotential').value = String(Math.round(t / Y_U[st.yUnit][3] * 100) / 100);
+        TOUCH.potential = false;
+    };
+    const potOwn = () => { const t = recT(st.varPick); return !!(t && TOUCH.potential && num('npPotential') && Math.abs(num('npPotential') * Y_U[st.yUnit][3] - t) > 0.05); };
+    const potPaint = () => {
+        const p = st.varPick, t = recT(p), box = $('npPotFrom');
+        $('npPotHint').hidden = !!t;
+        if (!t) { box.hidden = true; return; }
+        const rec = fmt(t / Y_U[st.yUnit][3], 2) + ' ' + Y_U[st.yUnit][1], word = p.top ? 'its best trial yield' : 'its average trial yield';
+        const own = potOwn();
+        box.classList.toggle('is-own', own);
+        box.innerHTML = OK_ICON + (own
+            ? '<span>Your own figure is used. The record says ' + esc(rec) + ', ' + word + '. <button type="button" data-pot-rec>Use the record\'s</button></span>'
+            : '<span>From the record: <b>' + esc(rec) + '</b>, ' + word + '. Change it if your seed bag or seller says otherwise.</span>');
+        box.hidden = false;
+    };
+    $('npPotential').addEventListener('input', () => { TOUCH.potential = true; potPaint(); });
+    $('npPotFrom').addEventListener('click', (e) => { if (e.target.closest('[data-pot-rec]')) { potFill(true); potPaint(); hints(); calc(); } });
+    const varSet = (pick, name) => {
+        const wasRec = recT(st.varPick) && !potOwn();
+        st.varPick = pick;
+        $('npVariety').value = name || '';
+        // A record's potential does not belong to another variety.
+        if (wasRec && !recT(pick)) { $('npPotential').value = ''; TOUCH.potential = false; }
+        if (recT(pick)) potFill(!num('npPotential'));
+        varPaintTag(); potPaint(); hints(); calc();
+    };
+    // The shared variety sheet (partials/variety-pick): the records, or a name typed as sold.
+    $('npVarBtn').addEventListener('click', async () => {
+        if (!ready() || !window.aneeVarietyPick) return;
+        const c = cropOf(st.crop), [town, prov] = placeWords();
+        const p = st.varPick;
+        const res = await window.aneeVarietyPick.open({ crop: st.crop || '', cropLabel: c ? cropShort(c) : '', location: [town, prov].filter(Boolean).join(', '),
+            water: st.water === 'rainfed' ? 'rainfed' : st.water === 'partial' ? 'limited' : '',
+            value: { name: $('npVariety').value.trim(), record: p && p.source === 'record' ? p : null },
+            ownNote: 'Not on record, so NPK Plus has no trial yield for it. Type its potential on this step if the seed bag or the seller gives one.' });
+        if (!res) return;
+        if (!res.name) { varSet(null, ''); return; }
+        varSet(res.record ? Object.assign({ source: 'record', crop: st.crop }, res.record) : { source: 'custom', name: res.name }, res.name);
+    });
     $('npSeedUnit').addEventListener('click', () => pick('What you plant', 'For the whole area.', SEED_U, st.seedUnit, (k) => { st.seedUnit = k; st.seedUnitSet = true; tagSay('npSeedUnit', SEED_U, k); hints(); calc(); }));
     $('npAreaUnit').addEventListener('click', () => pick('The area in', '', AREA_U, st.areaUnit, (k) => { st.areaUnit = k; tagSay('npAreaUnit', AREA_U, k); hints(); calc(); }));
     ['npArea', 'npPotential', 'npTarget', 'npSeed', 'npGerm', 'npVariety', 'npPh'].forEach((id) => $(id).addEventListener('input', () => { hints(); calc(); }));
@@ -1142,7 +1284,7 @@
         }, false, true);
     });
     const tagWide = (id, text, none) => { const b = $(id); if (!b) return; b.querySelector('span').textContent = text; b.classList.toggle('is-none', !!none); };
-    $('npWaterBtn').addEventListener('click', () => pick('Where the water comes from', '', WATER_U, st.water, (k) => { st.water = k; tagWide('npWaterBtn', WATER_U[k][0], false); calc(); }));
+    $('npWaterBtn').addEventListener('click', () => pick('Where the water comes from', '', WATER_U, st.water, (k) => { st.water = k; TOUCH.water = true; tagWide('npWaterBtn', WATER_U[k][0], false); calc(); }));
     ['npTownIn', 'npProvIn'].forEach((id) => $(id)?.addEventListener('input', () => seasonSoon(900)));
     $('npPlanted').addEventListener('change', () => seasonSoon());
     const placeWords = () => $('npTownIn') ? [$('npTownIn').value.trim(), $('npProvIn').value.trim()] : [townName(st.town), st.prov || ''];
@@ -1219,8 +1361,9 @@
         const t = $('npTexture'); t.querySelector('span').textContent = M.textures[st.texture][0]; t.classList.toggle('is-none', st.texture === 'unsure');
         const c = $('npConds'); c.querySelector('span').textContent = st.conds.length ? st.conds.map((k) => (M.conditions[k] || [k])[0]).join(', ') : 'None picked'; c.classList.toggle('is-none', !st.conds.length);
     };
-    $('npTexture').addEventListener('click', () => ready() && pick('Soil type', 'Rub a moist pinch between your fingers.', M.textures, st.texture, (k) => { st.texture = k; soilTag(); calc(); }));
-    $('npConds').addEventListener('click', () => ready() && pick('What else is true of your soil', 'Pick all that fit. Leave it empty if you are not sure.', M.conditions, st.conds, (sel) => { st.conds = sel; soilTag(); calc(); }, true));
+    $('npTexture').addEventListener('click', () => ready() && pick('Soil type', 'Rub a moist pinch between your fingers.', M.textures, st.texture, (k) => { st.texture = k; TOUCH.texture = true; soilTag(); calc(); }));
+    $('npConds').addEventListener('click', () => ready() && pick('What else is true of your soil', 'Pick all that fit. Leave it empty if you are not sure.', M.conditions, st.conds, (sel) => { st.conds = sel; TOUCH.conds = true; soilTag(); calc(); }, true));
+    $('npPh').addEventListener('input', () => { TOUCH.ph = true; });
     const SOIL = [['om', 'Organic matter %'], ['n', 'Total N %'], ['p', 'P ppm'], ['k', 'K'], ['zn', 'Zn ppm'], ['b', 'B ppm'], ['s', 'S ppm']];
     $('npSoilGrid').innerHTML = SOIL.map(([k, l]) => '<label>' + esc(l) + '<input type="number" class="form-input" step="any" min="0" inputmode="decimal" data-s="' + k + '"></label>').join('');
     $('npSoilOn').addEventListener('change', () => { $('npSoil').classList.toggle('is-on', $('npSoilOn').checked); calc(); });
@@ -1264,6 +1407,92 @@
         if (c && (c.key === 'rice' || c.key === 'rice_dsr_wet')) { f.add('flooded'); f.delete('waterlogged'); }
         return f;
     };
+
+    /* ---- your field, counted (2026-10-15, the owner) ----
+       The field in detail (step 5) as a layer on the model, never silent:
+       its texture, pH, salt and water answers fill the simple fields above
+       (so the soil factors count them), and what those cannot carry is
+       counted here with NpkModel::FIELD's numbers: the goal the water, salt
+       or sodium let the field carry (fieldCap, in goalOf), the nitrogen the
+       organic matter or slow drainage adds or saves, the credits of a legume
+       or of rice straw plowed back (fieldLayer, in needModel), a zinc shortage
+       last season (the Micros). fieldLines says every one of them in words.
+       Off, and the calculator is exactly as before, when no detail is given. */
+    const FIELD = () => (M && M.field) || {};
+    const fieldOn = () => !!(FPC && FPC.count());
+    const isRiceCrop = (c) => !!(c && String(c.key).startsWith('rice'));
+    const fieldCap = (c) => {
+        const out = { k: 1, why: [] };
+        if (!fieldOn() || !c) return out;
+        const F = FIELD(), caps = F.caps || {}, kind = isRiceCrop(c) ? 'rice' : 'other';
+        if (st.water === 'rainfed' && caps.rainfed) out.why.push(['rainfed', caps.rainfed[kind]]);
+        else if (st.water === 'partial' && caps.partial) out.why.push(['partial', caps.partial[kind]]);
+        if (st.conds.includes('saline') && caps.saline) out.why.push(['saline', caps.saline]);
+        if (st.conds.includes('sodic') && caps.sodic) out.why.push(['sodic', caps.sodic]);
+        out.k = Math.max(F.capFloor || 0.75, out.why.reduce((k, w) => k * w[1], 1));
+        return out;
+    };
+    const CAP_WORD = { rainfed: 'rain only', partial: 'water that runs short at times', saline: 'salt in the soil', sodic: 'sodium in the soil' };
+    const capWords = (cap) => list(cap.why.map((w) => CAP_WORD[w[0]] || w[0]));
+    const fieldLayer = (c, f) => {
+        const out = { on: fieldOn(), a: fieldOn() ? FPC.value() : {}, nMult: 1, credit: { N: 0, K2O: 0 }, zinc: false };
+        if (!out.on || !c) return out;
+        const F = FIELD(), a = out.a;
+        if (a.organic === 'high' && !f.has('low_om')) out.nMult *= F.omHighN || 0.9;
+        if (a.drainage === 'slow' && !f.has('flooded') && !f.has('waterlogged')) out.nMult *= F.slowN || 1.05;
+        if (a.prevCrop === 'legume' && !c.legume) out.credit.N = F.legumeN || 25;
+        if (a.prevCrop === 'rice_straw') out.credit.K2O = F.strawK || 25;
+        out.zinc = (a.outbreaks || []).includes('other:zinc');
+        return out;
+    };
+    // A factor's share, said plainly: "+15% N, +20% K₂O" (what needModel counted for it).
+    const pctSay = (k, f, only) => {
+        const a = M.adjust[k];
+        if (!a) return '';
+        return NPK.filter((n) => a[n] && (!only || only.includes(n)) && !(a.unless && a.unless[n] && f.has(a.unless[n])))
+            .map((n) => (a[n] > 1 ? '+' : '−') + Math.round(Math.abs(a[n] - 1) * 100) + '% ' + lab(n)).join(', ');
+    };
+    const fieldLines = (c, g, f, md, fl) => {
+        const L = [];
+        if (!fl.on || !c) return L;
+        const a = fl.a, F = FIELD(), ph = phVal(), phSay = ph != null ? ' (pH ' + fmt(ph) + ')' : '';
+        const add = (i, lead, text, e, cls) => L.push({ i, lead, text, e: e || '', c: cls || (String(e || '').startsWith('+') ? 'is-up' : '') });
+        const splits = (F.splits || {})[st.texture] || 2;
+        // Texture.
+        if (f.has('sandy')) add('🏖️', 'Sandy soil.', 'Nitrogen and potassium wash down, so more of each is counted. Split the nitrogen into ' + splits + ' doses or more, and the potassium into 2.', pctSay('sandy', f));
+        else if (f.has('clay')) add('🧱', a.texture === 'heavy_clay' ? 'Heavy clay that cracks.' : 'Clay soil.', 'It holds potassium and nitrogen well, so a little less potassium is counted. The nitrogen can go in fewer, larger doses than on sandy soil.', pctSay('clay', f));
+        // Acidity.
+        const acidK = f.has('strongAcid') ? 'strongAcid' : f.has('acid') ? 'acid' : null, alkK = f.has('strongAlk') ? 'strongAlk' : f.has('alkaline') ? 'alkaline' : null;
+        if (acidK) add('🍋', 'Acid soil' + phSay + '.', 'Phosphorus is locked up, so more of it is counted. Lime the field about a month before planting. A soil test says how much.', pctSay(acidK, f, ['P2O5']));
+        if (alkK) add('🧂', 'Alkaline soil' + phSay + '.', 'Phosphorus is less available, and zinc and iron may run short (the Micros tab counts them). For nitrogen, ammonium sulfate suits this soil better than urea.', pctSay(alkK, f));
+        if (f.has('acid_sulfate')) add('🟠', 'Acid sulfate soil.', 'Phosphorus is locked up and the soil sours when it dries. Keep it wet where you can, and lime it.', pctSay('acid_sulfate', f));
+        // Organic matter.
+        if (a.organic === 'high' && !f.has('low_om')) add('🌱', 'Rich in organic matter.', 'It gives some nitrogen of its own, so about ' + Math.round((1 - (F.omHighN || 0.9)) * 100) + '% less nitrogen is counted.', '−' + Math.round((1 - (F.omHighN || 0.9)) * 100) + '% N');
+        else if (f.has('low_om')) add('🍂', 'Little organic matter.', 'It gives less nitrogen of its own, so more is counted. Plowing the straw back in helps over the seasons.', pctSay('low_om', f));
+        // Last crop.
+        if (md.credit && md.credit.N) add('🫘', 'Mungbean, peanut or soybean before.', 'They leave nitrogen in the soil, so ' + fmt(md.credit.N, 0) + ' kg less nitrogen per hectare is counted.', '−' + fmt(md.credit.N, 0) + ' kg N');
+        else if (a.prevCrop === 'legume' && c.legume) add('🫘', 'A legume after a legume.', 'This crop makes its own nitrogen anyway, so no credit is taken. Rotating with a grain breaks the pests.', 'Tip', 'is-tip');
+        if (md.credit && md.credit.K2O) add('🌾', 'Rice straw left on the field.', 'Plowed in, it gives back potassium, so ' + fmt(md.credit.K2O, 0) + ' kg less K₂O per hectare is counted. Plow it in early so it rots before planting.', '−' + fmt(md.credit.K2O, 0) + ' kg K₂O');
+        else if (a.prevCrop === 'rice_no_straw') add('🔥', 'Straw burned or taken away.', 'No potassium comes back from it, so none is credited.', 'No credit', 'is-tip');
+        // Water.
+        const capOf = (k) => (g.cap && g.cap.why.find((w) => w[0] === k) || [])[1];
+        const goalSay = (k) => g.T ? 'Your own goal is kept, but the field may not carry it.' : 'NPK Plus counts for ' + Math.round(k * 100) + '% of the goal, which lowers the need.';
+        if (capOf('rainfed')) add('🌧️', 'Rain only.', 'The water, not the fertilizer, may set this harvest. ' + goalSay(capOf('rainfed')) + ' Split the nitrogen so a dry spell does not waste it.', g.T ? 'Tip' : 'Goal ' + Math.round(capOf('rainfed') * 100) + '%', g.T ? 'is-tip' : '');
+        else if (capOf('partial')) add('🚿', 'Water runs short at times.', 'A dry spell can hold the harvest back. ' + goalSay(capOf('partial')), g.T ? 'Tip' : 'Goal ' + Math.round(capOf('partial') * 100) + '%', g.T ? 'is-tip' : '');
+        if (f.has('flooded') && (a.drainage === 'stands' || a.drainage === 'slow')) add('💧', a.drainage === 'stands' ? 'Water stands for days.' : 'Slow to drain.', 'Put the nitrogen in small doses into shallow water, never onto a full flood, or much of it is lost.', 'Tip', 'is-tip');
+        else if (f.has('waterlogged')) add('💧', 'Water stands for days.', 'Wet soil loses nitrogen, so more is counted. Split it into more doses and drain before each one.', pctSay('waterlogged', f));
+        else if (a.drainage === 'slow' && !f.has('flooded')) add('💧', 'Slow to drain.', 'A little nitrogen is lost from wet soil, so about ' + Math.round(((F.slowN || 1.05) - 1) * 100) + '% more is counted. Split it into more doses.', '+' + Math.round(((F.slowN || 1.05) - 1) * 100) + '% N');
+        if (a.flooding === 'often') add('🌊', 'The field floods most wet seasons.', 'Hold back the last nitrogen dose until the water goes down, or it washes away.', 'Tip', 'is-tip');
+        // Salt and sodium.
+        const capChip = (k, pct) => [!g.T && capOf(k) ? 'Goal ' + Math.round(capOf(k) * 100) + '%' : '', pct].filter(Boolean).join(', ');
+        if (f.has('saline')) add('🧂', 'Salt in the soil.', (g.T ? 'Your own goal is kept, but salt may hold the harvest back.' : 'The harvest is held to about ' + Math.round((capOf('saline') || 1) * 100) + '% of the goal.') + ' Potassium helps the crop keep the salt out, so more is counted. Flush the field with good water before planting.', capChip('saline', pctSay('saline', f, ['K2O'])), 'is-up');
+        if (f.has('sodic')) add('🧱', 'Sodium in the soil.', (g.T ? 'Your own goal is kept, but sodium may hold the harvest back.' : 'The harvest is held to about ' + Math.round((capOf('sodic') || 1) * 100) + '% of the goal.') + ' Sodium crowds out potassium and sends nitrogen into the air, so more of both is counted. Spread gypsum before planting to push the sodium out. A soil test says how much.', capChip('sodic', pctSay('sodic', f)), 'is-up');
+        // Zinc.
+        if (fl.zinc) add('🟤', 'Zinc ran short last season.', 'Zinc is counted as likely short (the Micros tab). Add zinc sulfate (the monohydrate, about 33% zinc) at land preparation, or a zinc foliar early in the season.', 'Zinc', 'is-up');
+        return L;
+    };
+    const fieldBox = (L) => L.length ? '<div class="np-field"><h4><i aria-hidden="true">🌾</i>Your field, counted</h4><p>From your field in detail in step 5. Each line says what it changed and why.</p><div class="np-fl">'
+        + L.map((l, k) => '<div class="np-fli" style="--k:' + k + '"><i aria-hidden="true">' + l.i + '</i><span><b>' + esc(l.lead) + '</b> ' + esc(l.text) + (l.e ? ' <em class="' + esc(l.c) + '">' + esc(l.e) + '</em>' : '') + '</span></div>').join('') + '</div></div>' : '';
 
     /* ---- step 5: the fertilizers ---- */
     const grade = (p) => p.local && /^\d/.test(p.local) ? p.local : (p.pct.N || p.pct.P2O5 || p.pct.K2O ? [p.pct.N || 0, p.pct.P2O5 || 0, p.pct.K2O || 0].join('-') : '');
@@ -1502,8 +1731,8 @@
     });
 
     /* ---- the need model (App\Support\NpkModel says where each number comes from) ---- */
-    const needModel = (c, g, f, cls, perHa = {}, acidEq = 0) => {
-        const out = { need: {}, raw: {}, how: {}, share: {}, adj: {}, scale: {}, whys: [], Yg: null, micro: {}, base: null, acid: null };
+    const needModel = (c, g, f, cls, perHa = {}, acidEq = 0, fl = null) => {
+        const out = { need: {}, raw: {}, how: {}, share: {}, adj: {}, scale: {}, whys: [], Yg: null, micro: {}, base: null, acid: null, credit: {} };
         // The plan's own acidity (kg of lime per hectare): how far it goes toward its full effect.
         const alk = ['alkaline', 'strongAlk', 'calcareous', 'sodic'].some((k) => f.has(k)), sour = ['strongAcid', 'acid', 'acid_sulfate'].some((k) => f.has(k));
         const au = acidEq > 0 ? clamp(acidEq / (M.acidAt || 400), 0, 1) : 0;
@@ -1546,6 +1775,8 @@
             const a = M.adjust[b]; m[n] *= a[n]; sh[n] *= a.share[n];
             out.whys.push(a.why + ' in ' + NAMES[n].toLowerCase());
         });
+        // Your field: the nitrogen the organic matter or slow drainage adds or saves.
+        if (fl && fl.on) m.N *= fl.nMult;
         NPK.forEach((n) => { out.adj[n] = clamp(m[n], 0.5, 1.8); out.share[n] = clamp(sh[n], 0.3, 0.97); });
         out.base = base;
         if (!c) return out;
@@ -1569,6 +1800,13 @@
                 out.how[n] = c.removalOnly ? 'removal' : 'uptake';
             }
             if (v != null) { out.raw[n] = v; out.need[n] = v * out.adj[n]; }
+        });
+        // Your field: what the last crop left (a legume's nitrogen, rice straw's potassium), never more than part of the need.
+        if (fl && fl.on) ['N', 'K2O'].forEach((n) => {
+            const cr = fl.credit[n];
+            if (!cr || out.need[n] == null || out.how[n] === 'legume') return;
+            const cut = Math.min(cr, out.need[n] * ((M.field || {}).creditFloor ?? 0.5));
+            out.need[n] -= cut; out.credit[n] = cut;
         });
         // Lockouts the plan itself makes: too much phosphorus ties up zinc and
         // iron, too much potassium crowds out magnesium and calcium, lime ties
@@ -1600,6 +1838,8 @@
             }
             const L = M.levels;
             let level = score >= L.likely.at ? 'likely' : score >= L.watch.at ? 'watch' : 'none';
+            // Your field: a zinc shortage last season makes it likely this one too.
+            if (fl && fl.zinc && el === 'Zn' && level !== 'likely') { level = 'likely'; why.unshift('zinc ran short last season'); }
             if (e.beneficial && !sens) level = 'notneeded';
             if (cls[el] === 'low') { level = 'test'; why.unshift('your soil test reads low'); }
             else if (cls[el] === 'ok') level = 'testok';
@@ -1639,7 +1879,8 @@
         $('npN').textContent = fmt(perHa.N, 0); $('npP').textContent = fmt(perHa.P2O5, 0); $('npK').textContent = fmt(perHa.K2O, 0);
         const npk = fmt(perHa.N, 0) + '-' + fmt(perHa.P2O5, 0) + '-' + fmt(perHa.K2O, 0);
 
-        const c = cropOf(st.crop), g = goalOf(c), f = factors(c), cls = soilClass(soil()), md = needModel(c, g, f, cls, perHa, acidEq);
+        const c = cropOf(st.crop), g = goalOf(c), f = factors(c), cls = soilClass(soil()), fl = fieldLayer(c, f), md = needModel(c, g, f, cls, perHa, acidEq, fl);
+        const FL = fieldLines(c, g, f, md, fl);
         const yu = Y_U[st.yUnit], goalSaid = g.Yeff ? fmt(g.Yeff / yu[3]) + ' ' + yu[1] : '';
         $('npOutSub').textContent = (out.length ? 'For ' + fmt(area, 3) + ' ha' : 'Add a fertilizer to see the totals') + (c && goalSaid ? ', against the need for ' + goalSaid + ' of ' + cropShort(c).toLowerCase() : '') + '.' + (estimated ? ' Includes biofertilizer estimates.' : '');
 
@@ -1659,6 +1900,7 @@
             const R = c.recommendedPerHa || {};
             const guide = NPK.filter((n) => Array.isArray(R[n])).map((n) => lab(n) + ' ' + span(R[n][0], R[n][1]).replace('about ', ''));
             $('npNeed').innerHTML = '<h4 class="np-label">What ' + esc(cropShort(c).toLowerCase()) + ' needs from fertilizer' + (goalSaid ? ' for ' + esc(goalSaid) : '') + ' (the dark mark)</h4><div class="np-nrows">' + rows + '</div>'
+                + fieldBox(FL)
                 + (guide.length ? '<p class="np-fine mt-2">The official guide without a soil test: ' + esc(guide.join(', ')) + ' kg per ha. NPK Plus sizes it to your goal and your soil.</p>' : '')
                 + method(c, g, md);
         } else {
@@ -1685,12 +1927,15 @@
         const seedV = num('npSeed');
         RES = { perHa: Object.fromEntries(Object.entries(perHa).filter(([, v]) => v > 0).map(([k, v]) => [k, Math.round(v * 1000) / 1000])), total: Object.fromEntries(Object.entries(tot).filter(([, v]) => v > 0).map(([k, v]) => [k, Math.round(v * 1000) / 1000])),
             npkPerHa: npk, needs: states, micros: micro, reach, lines: out, areaHa: area, soilClass: cls,
-            goal: g.Y ? { tPerHa: Math.round(g.Y * 100) / 100, counted: Math.round(g.Yeff * 100) / 100, why: g.why } : null,
+            goal: g.Y ? { tPerHa: Math.round(g.Y * 100) / 100, counted: Math.round(g.Yeff * 100) / 100, why: g.why, fieldCap: g.capped ? Math.round(g.cap.k * 100) / 100 : null } : null,
             setup: { variety: $('npVariety').value.trim(), areaUnit: st.areaUnit, areaValue: num('npArea'), yUnit: st.yUnit,
                 potential: num('npPotential') ? { value: num('npPotential'), unit: yu[1], key: st.yUnit, tPerHa: Math.round(num('npPotential') * yu[3] * 100) / 100 } : null,
                 target: num('npTarget') ? { value: num('npTarget'), unit: yu[1], tPerHa: Math.round(num('npTarget') * yu[3] * 100) / 100 } : null,
                 seed: seedV ? { amount: seedV, unit: SEED_U[st.seedUnit][1], key: st.seedUnit, perHa: g.sd.raw ? Math.round(g.sd.raw * 10) / 10 : null, germination: g.sd.germ || null } : null,
-                texture: st.texture, conditions: st.conds.slice(), ph: phVal(), prov: st.prov, town: st.town, water: st.water, planted: $('npPlanted').value || null },
+                texture: st.texture, conditions: st.conds.slice(), ph: phVal(), prov: st.prov, town: st.town, water: st.water, planted: $('npPlanted').value || null,
+                // The variety's source (2026-10-15) and what the field in detail changed, in words.
+                varietyPick: st.varPick ? Object.assign({}, st.varPick, recT(st.varPick) ? { potential: recT(st.varPick), potentialIs: st.varPick.top ? 'top' : 'avg', potentialFrom: potOwn() ? 'own' : 'record' } : {}) : null,
+                fieldAdjust: FL.map((l) => l.lead + ' ' + l.text + (l.e ? ' [' + l.e + ']' : '')) },
             season: (() => { const SP = seasonPlanks(c, g); return SP ? { place: st.season.place, window: st.season.window, enso: SP.t.e ? SP.t.e.label : null, rainMm: Math.round(SP.rain), sunMJ: SP.rad, tmean: SP.tmean,
                 needMm: Math.round(SP.need), water: st.water, planks: { sun: Math.round(Math.min(1, SP.sun) * 100), water: Math.round(Math.min(1, SP.water) * 100), temp: Math.round(Math.min(1, SP.temp) * 100) },
                 potential: SP.pot ? { tPerHa: Math.round(SP.pot.t * 10) / 10, given: SP.pot.given } : null,
@@ -1702,7 +1947,9 @@
     // How the need was counted, in plain words.
     const method = (c, g, md) => {
         const li = [];
-        li.push('<b>Yield goal:</b> ' + (g.Y ? fmt(g.Y) + ' t/ha, ' + esc(g.why) + '.' : 'none, so the guide rate is used as it is.') + (g.sd.sf < 1 ? ' A thin stand brings it to ' + fmt(g.Yeff) + ' t/ha.' : ''));
+        li.push('<b>Yield goal:</b> ' + (g.Y ? fmt(g.Y) + ' t/ha, ' + esc(g.why) + '.' : 'none, so the guide rate is used as it is.') + (g.sd.sf < 1 ? ' A thin stand brings it to ' + fmt(g.Y * g.sd.sf) + ' t/ha.' : '')
+            + (g.capped ? ' Your field in detail (' + esc(capWords(g.cap)) + ') holds it to ' + fmt(g.Yeff) + ' t/ha.' : ''));
+        if (md.credit && (md.credit.N || md.credit.K2O)) li.push('<b>Credits from your field:</b> ' + [md.credit.N ? fmt(md.credit.N, 0) + ' kg N from the legume before' : '', md.credit.K2O ? fmt(md.credit.K2O, 0) + ' kg K₂O from the rice straw plowed back' : ''].filter(Boolean).join(', and ') + ', taken off the need above.');
         const Up = c.uptakePerTon || {};
         if (g.Yeff && NPK.some((n) => Up[n] > 0)) li.push('<b>What the crop takes up:</b> at ' + fmt(g.Yeff) + ' t/ha, about ' + NPK.filter((n) => Up[n] > 0).map((n) => fmt(Up[n] * g.Yeff, 0) + ' kg ' + lab(n)).join(', ') + (c.removalOnly ? ' leaves with the harvest.' : ' in all, from the soil and the fertilizer together.'));
         NPK.forEach((n) => {
@@ -1998,9 +2245,50 @@
     });
 
     /* ---- save, and Anee ---- */
+    /* The field in detail (partials/field-profile-card), in Anee's sheet: its
+       answers fill the soil type, the soil's other conditions, the pH and the
+       water the calculator still had as not sure (never one the farmer set),
+       so the plan and Anee's reading count the same field. */
+    const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+    function applyProfile(answers, L) {
+        if (!OPT || !M) return '';
+        const got = [];
+        let moved = false;
+        if (!TOUCH.texture) {
+            const t = ['sandy', 'loam', 'clay'].includes(L.soil) && M.textures[L.soil] ? L.soil : 'unsure';
+            if (t !== st.texture) { st.texture = t; moved = true; }
+            if (t !== 'unsure') got.push('the soil type');
+        }
+        if (!TOUCH.conds) {
+            const want = (L.soilConditions || []).filter((k) => M.conditions[k]);
+            if (answers.organic === 'low' && M.conditions.low_om) want.push('low_om');
+            if (answers.drainage === 'stands' && M.conditions.waterlogged) want.push('waterlogged');
+            if (want.join() !== st.conds.join()) { st.conds = want; moved = true; }
+            if (want.length) got.push('what else is true of the soil');
+        }
+        if (!TOUCH.ph) {
+            const v = L.phValue != null ? String(L.phValue) : '';
+            if (v !== $('npPh').value) { $('npPh').value = v; moved = true; }
+            if (v) got.push('the pH');
+        }
+        if (!TOUCH.water) {
+            const w = WATER_U[L.waterNpk] ? L.waterNpk : 'irrigated';
+            if (w !== st.water) { st.water = w; tagWide('npWaterBtn', WATER_U[w][0], false); moved = true; }
+            if (WATER_U[L.waterNpk]) got.push('the water');
+        }
+        // The layer reads the answers whatever moved: the goal, the need and its lines follow at once.
+        soilTag(); hints(); calc();
+        // The water lives in step 4: it says when the details filled it.
+        if (window.aneeFieldCard) window.aneeFieldCard.hint(document.querySelector('.np-wstep[data-s="3"]'), !TOUCH.water && !!WATER_U[L.waterNpk], '', $('npWaterBtn').previousElementSibling);
+        return got.length ? 'Filled in for you: ' + andList(got) + '. NPK Plus counts the rest under the need, line by line.' : (FPC && FPC.count() ? 'NPK Plus counts your answers under the need, line by line.' : '');
+    }
+    function mountCard() {
+        if (FPC || !window.aneeFieldCard || !$('npFpc')) return;
+        FPC = window.aneeFieldCard.mount($('npFpc'), { crop: () => st.crop || null, title: () => { const [tw, pv] = placeWords(); return [tw, pv].filter(Boolean).join(', ') || $('npLoc').value.trim() || 'Your field'; }, onChange: applyProfile });
+    }
     const save = async () => {
         if (!RES || !RES.lines.length) return null;
-        const r = await window.api(U.save, { method: 'POST', body: { id: calcId, crop: st.crop, areaHa: RES.areaHa || 0.0001, targetYield: RES.goal ? RES.goal.tPerHa : null, lines: RES.lines, soil: soil(), result: RES } });
+        const r = await window.api(U.save, { method: 'POST', body: { id: calcId, crop: st.crop, areaHa: RES.areaHa || 0.0001, targetYield: RES.goal ? RES.goal.tPerHa : null, lines: RES.lines, soil: soil(), result: RES, ...(FPC ? FPC.payload() : {}), keepProfile: !document.documentElement.classList.contains('is-frame') } });
         calcId = r.data.id;
         return r;
     };
@@ -2010,6 +2298,11 @@
         if (!$('npLoc').value.trim()) { const [tw, pv] = placeWords(); if (pv) $('npLoc').value = (tw ? tw + ', ' : '') + pv; }
         $('npRunSays').textContent = OPT.canUse ? 'Ask Anee · ' + OPT.quote + ' credits' : 'Anee is not on your plan';
         $('npRunFine').innerHTML = OPT.canUse ? 'You have ' + (window.creditCoin ? window.creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()) : OPT.balance) + '. Charged only when the reading is ready.' : esc(OPT.whyNot || '');
+        // The field in detail is answered in step 5; here it is said that it goes with the plan.
+        const n = FPC ? FPC.count() : 0, box = $('npAneeField');
+        box.hidden = false;
+        box.textContent = n ? 'Your field in detail goes with it: ' + n + (n === 1 ? ' answer' : ' answers') + ' from step 5, and what the calculator counted for them.'
+            : 'Tip: answer Your field in detail in step 5 first. The calculator counts it, and Anee reads it too.';
         window.openSheet('npAneeSheet');
     });
     const ans = { timing: 'split2' };
@@ -2028,16 +2321,17 @@
             window.closeSheet('npAneeSheet');
             window.aneeWait.show({ title: 'Anee is checking your plan…', sub: 'The soil, the season and the timing. About a minute.', lines: ['Weighing each nutrient against the need…', 'Reading the soils of your area…', 'Checking the rains around planting…', 'Deciding what to split and when…'] });
             const r = await window.api(U.analyze, { method: 'POST', body: { calcId, location: $('npLoc').value.trim(), soilConditions: st.conds.filter((k) => k in (OPT.soilConditions || {})), phValue: phVal(),
-                water: st.water, plantingDate: $('npPlanted').value || null, timing: ans.timing, variety: $('npVariety').value.trim(), notes: $('npNotes').value.trim() } });
+                water: st.water, plantingDate: $('npPlanted').value || null, timing: ans.timing, variety: $('npVariety').value.trim(), notes: $('npNotes').value.trim(), ...(FPC ? FPC.payload() : {}) } });
             const d = r.data && r.data.status === 'ready' ? r.data : await window.aneeWait.poll({ id: r.data.id, job: U.job });
             await window.aneeWait.done({ title: 'Your plan, read.', line: 'Here is what to keep and what to change.' });
             OPT.balance = d.balance;
-            showReport(d.report);
+            showReport(d.report, d.params);
         } catch (err) { window.aneeWait.fail(); window.toast?.(err.message || 'The reading did not finish. Nothing was charged.', 'error'); }
         finally { $('npRun').disabled = !OPT.canUse; }
     });
-    const showReport = (rep) => {
+    const showReport = (rep, params) => {
         const a = (rep || {}).anee || {};
+        const field = params && (params.fieldProfileSaid || []).length && window.aneeFieldCard ? '<div class="np-card"><h3>Your field in detail</h3>' + window.aneeFieldCard.said(params.fieldProfileSaid) + '</div>' : '';
         const v = String(a.verdict || '').toLowerCase().replace(/\s+/g, '-');
         const sec = (t, inner) => inner ? '<div class="np-card"><h3>' + esc(t) + '</h3><div class="np-rlist">' + inner + '</div></div>' : '';
         $('npRep').hidden = false;
@@ -2047,6 +2341,7 @@
             + sec('What to change', (a.changes || []).map((x) => '<div class="np-ritem"><b>' + esc(x.change) + '</b><br><span class="text-gray-500">' + esc(x.why) + '</span></div>').join(''))
             + sec('Your soil, the season and the yield', ['soil', 'weather', 'biofertilizers', 'yield'].filter((k) => a[k]).map((k) => '<div class="np-ritem">' + esc(a[k]) + '</div>').join(''))
             + sec('Be careful', (a.warnings || []).filter(Boolean).map((w) => '<div class="np-ritem">' + esc(w) + '</div>').join(''))
+            + field
             + '<p class="np-fine">Confidence: ' + esc(a.confidence || '') + '. A guide, not a promise: the weather, the variety and the soil still decide the harvest.</p>';
         $('npRep').scrollIntoView({ behavior: still() ? 'auto' : 'smooth', block: 'start' });
     };
@@ -2077,6 +2372,9 @@
             const set = (d.result || {}).setup || {};
             calcId = d.id || null;
             $('npVariety').value = set.variety || '';
+            // The variety's source: a record (its potential the record's, or the farmer's own), or a typed name.
+            st.varPick = set.varietyPick && set.varietyPick.name ? set.varietyPick : (set.variety ? { source: 'custom', name: set.variety } : null);
+            TOUCH.potential = !!(set.varietyPick && set.varietyPick.potentialFrom === 'own');
             st.areaUnit = set.areaUnit === 'sqm' ? 'sqm' : 'ha';
             $('npArea').value = set.areaValue || (st.areaUnit === 'sqm' ? d.areaHa * 10000 : d.areaHa);
             tagSay('npAreaUnit', AREA_U, st.areaUnit);
@@ -2107,7 +2405,12 @@
             soilTag();
             st.lines = (d.lines || []).filter((l) => OPT.products.some((p) => p.id === l.id)).map((l) => ({ id: l.id, amount: l.amount, unit: l.unit }));
             tab(false); lines(); setCrop(d.crop || null); go(5);
-            if (d.analysis) showReport(d.analysis.report); else $('npRep').hidden = true;
+            // A saved plan's answers are the farmer's: the field in detail fills none of them.
+            Object.assign(TOUCH, { water: true, texture: st.texture !== 'unsure', conds: st.conds.length > 0, ph: phVal() != null });
+            varPaintTag(); potPaint();
+            if (d.analysis) showReport(d.analysis.report, d.analysis.params); else $('npRep').hidden = true;
+            mountCard();
+            if (FPC) { const fp = set.fieldProfile || (d.analysis && d.analysis.params && d.analysis.params.fieldProfile); FPC.set(fp || {}, null); }
         }
     };
     $('npSavedMore').addEventListener('click', () => { savedPage++; loadSaved(true); });
@@ -2128,7 +2431,10 @@
             $('npCats').innerHTML = '<button type="button" class="np-cat is-on" data-c="all">All</button>' + Object.entries(OPT.categories).map(([k, v]) => '<button type="button" class="np-cat" data-c="' + esc(k) + '">' + esc(v) + '</button>').join('');
             paintPhCats();
             pills($('npTiming'), OPT.timing, 'timing');
+            // The optional extra step, said with its price: the calculator itself is free.
+            if (OPT.quote) $('npAneeSays').textContent = 'Analyze further with Anee · ' + OPT.quote + ' credits';
             soilTag(); lines(); hints(); calc();
+            if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
         } catch (err) { window.toast?.(err.message || 'Could not load the calculator.', 'error'); }
     };
     if (window.api) boot(); else window.addEventListener('load', boot, { once: true });
@@ -2152,6 +2458,8 @@
                         result: { setup: { variety: p.variety || '', areaUnit: p.areaUnit || 'ha', areaValue: p.areaValue || 1, yUnit: 't',
                             potential: p.potential ? { value: p.potential, key: 't' } : null, target: p.target ? { value: p.target } : null,
                             prov: p.prov || null, town: p.town || null, water: p.water || 'irrigated', planted: p.planted || '', texture: p.texture || 'unsure', conditions: p.conditions || [], ph: p.ph != null ? p.ph : null } } });
+                    // The season's field in detail (Anee Auto keeps one): the calculator counts it too.
+                    if (p.fieldProfile && FPC) FPC.set(p.fieldProfile, null);
                 }
                 $('npFrameSay').textContent = p.say || 'Add the fertilizers you plan to use on this lot.';
             } catch (err) { window.toast?.(err.message, 'error'); }

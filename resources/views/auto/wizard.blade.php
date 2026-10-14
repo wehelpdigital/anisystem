@@ -292,8 +292,18 @@
         </div>
     </section>
 
-    {{-- 3. The soil --}}
+    {{-- 3. The soil, opened by the field in detail (2026-10-15, the owner):
+         the shared field questions (App\Support\FieldProfile), optional. Its
+         answers tick the soil signs below, the water and the troubles, and
+         Anee plans with every one. A card on this step, not a step of its
+         own, so the seasons already in setup keep their saved place. --}}
     <section class="au-step" data-step="3">
+        <div class="au-card">
+            <h3 class="au-h">Your field in detail</h3>
+            <p class="au-sub">Optional. The soil, the water and last season, one short page at a time. Your answers tick the soil signs below, the water and the troubles, and Anee plans with every one.</p>
+            <div id="auFpc"></div>
+            @include('partials.field-profile-card')
+        </div>
         <div class="au-card">
             <h3 class="au-h">Your soil, as you see it</h3>
             <p class="au-sub">Tick everything that sounds like your field. From these Anee reads the soil type, the salt and the sodium, and which way the pH leans.</p>
@@ -482,7 +492,7 @@
     const paintStep = (n) => {
         if (n === 1) paintLots();
         if (n === 2) paintWorkers();
-        if (n === 3) paintSoil();
+        if (n === 3) { paintSoil(); mountCard(); if (FPC) FPC.refresh(); }
         if (n === 4) paintWater();
         if (n === 5) paintProblems();
         if (n === 6) paintReading();
@@ -750,6 +760,74 @@
     $('auCropProblems').addEventListener('click', (e) => { const b = e.target.closest('[data-cp]'); if (!b) return; const k = b.dataset.cp; S.answers.cropProblems = S.answers.cropProblems.includes(k) ? S.answers.cropProblems.filter((x) => x !== k) : [...S.answers.cropProblems, k]; b.setAttribute('aria-pressed', String(S.answers.cropProblems.includes(k))); later('problems', saveProblems, 400); });
     $('auNotes').addEventListener('input', () => { S.answers.notes = $('auNotes').value; later('problems', saveProblems, 900); });
 
+    /* ---- 3, first: the field in detail (partials/field-profile-card) ----
+       Its answers fill the soil signs, the pH, the water and the troubles
+       while they are empty, or still hold what the details filled; never
+       what the farmer picked. AUTO keeps what was filled this visit. */
+    let FPC = null;
+    const AUTO = {};
+    const sameList = (a, b) => JSON.stringify([...(a || [])].sort()) === JSON.stringify([...(b || [])].sort());
+    const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+    let CP_ROWS = null;
+    const cropProblemRows = () => CP_ROWS ??= window.api(U.problems).then((r) => (r.data && r.data.rows) || []).catch(() => { CP_ROWS = null; return []; });
+    async function applyProfile(answers, L, card) {
+        const pay = card.payload();
+        S.answers.fieldProfile = pay.fieldProfile;
+        S.answers.fieldProfileFrom = pay.fieldProfileFrom ? { id: pay.fieldProfileFrom, name: (card.from() || {}).name || '' } : null;
+        later('fieldProfile', () => put(U.answers, { fieldProfile: S.answers.fieldProfile, fieldProfileFrom: S.answers.fieldProfileFrom }), 300);
+        const got = [], lit = {};
+        const soil = S.answers.soil;
+        if (!soil.signs.length || sameList(soil.signs, AUTO.signs)) {
+            soil.signs = (L.soilSignsAuto || []).filter((k) => BOOK.signs[k]);
+            AUTO.signs = soil.signs.slice();
+            if (soil.signs.length) { got.push('the soil signs'); lit.soil = true; }
+        }
+        if ((soil.ph || 'unsure') === 'unsure' || soil.ph === AUTO.ph) {
+            soil.ph = BOOK.ph[L.phLevel] ? L.phLevel : 'unsure';
+            AUTO.ph = soil.ph;
+            if (soil.ph !== 'unsure') { got.push('the pH'); lit.soil = true; }
+        }
+        if (soil.tested == null || soil.tested === AUTO.tested) { soil.tested = L.phValue ?? null; AUTO.tested = soil.tested; }
+        paintSoil();
+        later('soil', saveSoil, 300);
+        if (!S.answers.water || S.answers.water === AUTO.water) {
+            const w = BOOK.water[L.waterAuto] ? L.waterAuto : null;
+            if (w || AUTO.water) { S.answers.water = w; AUTO.water = w; later('water', saveWater, 300); }
+            if (w) { got.push('the water'); lit.water = true; }
+        }
+        let probs = false;
+        if (!S.answers.problems.length || sameList(S.answers.problems, AUTO.problems)) {
+            S.answers.problems = (L.problemsAuto || []).filter((k) => BOOK.problems[k]);
+            AUTO.problems = S.answers.problems.slice();
+            probs = true;
+        }
+        if (!S.answers.cropProblems.length || sameList(S.answers.cropProblems, AUTO.cropProblems)) {
+            // The crops' own pests and diseases the farmer ticked in the details, where this step offers them.
+            const offered = new Set((await cropProblemRows()).map((r) => r.key));
+            S.answers.cropProblems = (answers.outbreaks || []).map((k) => k.replace(/^pest:/, 'pests:').replace(/^disease:/, 'diseases:')).filter((k) => offered.has(k));
+            AUTO.cropProblems = S.answers.cropProblems.slice();
+            probs = true;
+        }
+        if (probs) {
+            later('problems', saveProblems, 300);
+            const n = S.answers.problems.length + S.answers.cropProblems.length;
+            if (n) { got.push(n === 1 ? 'one trouble' : n + ' troubles'); lit.problems = true; }
+        }
+        window.aneeFieldCard.hint($('auSigns').closest('.au-card'), !!lit.soil);
+        window.aneeFieldCard.hint($('auWater').closest('.au-card'), !!lit.water);
+        window.aneeFieldCard.hint($('auProblems').closest('.au-card'), !!lit.problems);
+        return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything below and on the next steps.' : '';
+    }
+    function mountCard() {
+        if (FPC || !window.aneeFieldCard) return;
+        const from = S.answers.fieldProfileFrom && S.answers.fieldProfile ? { id: S.answers.fieldProfileFrom.id, name: S.answers.fieldProfileFrom.name || 'a saved field', answers: S.answers.fieldProfile, edited: false } : null;
+        FPC = window.aneeFieldCard.mount($('auFpc'), {
+            crop: () => ((S.lots || []).find((l) => l.crop) || {}).crop || null,
+            title: () => { const named = (S.lots || []).filter((l) => l.name); return named.length === 1 ? named[0].name : ($('auTitle').value.trim() || 'Your farm'); },
+            value: S.answers.fieldProfile || {}, from, onChange: applyProfile,
+        });
+    }
+
     /* ---- 6. Anee reads the farm ---- */
     const READS = [['🌾', 'Your varieties, looked up on the web: maturity, yield, weak points'], ['🌏', 'ENSO and the season ahead, with PAGASA\'s outlook'], ['🌦️', 'Sixteen days of weather at each lot'], ['🧪', 'Your soil from its signs and the soil model at the spot'], ['🐛', 'Your past troubles, to get ahead of them']];
     const paintReading = () => {
@@ -868,7 +946,9 @@
         const pre = { calcId: l.calcId || null, crop: l.crop, variety: l.variety || ((read.variety || {}).name || ''), areaValue: Number(l.size) || 1, areaUnit: l.unit === 'sqm' ? 'sqm' : 'ha',
             areaHa: l.unit === 'sqm' ? (Number(l.size) || 0) / 10000 : (Number(l.size) || 1), potential: (read.variety || {}).yieldPotentialTPerHa || null, target: (read.goal || {}).tPerHa || null,
             prov: l.province || null, town: l.town || null, water: (BOOK.water[S.answers.water] || [])[2] || 'irrigated', planted: l.fieldDate || '', texture: soilTex, conditions: conds,
-            ph: (S.answers.soil || {}).tested ?? null, say: 'Add the fertilizers you plan for ' + (l.name || 'this lot') + ', then Use this plan.' };
+            ph: (S.answers.soil || {}).tested ?? null, say: 'Add the fertilizers you plan for ' + (l.name || 'this lot') + ', then Use this plan.',
+            // The field in detail: NPK Plus counts it in the need too (2026-10-15).
+            fieldProfile: S.answers.fieldProfile || null };
         $('auFrameTitle').textContent = 'Fertilizer for ' + (l.name || 'the lot');
         const fr = $('auFrame'), ifr = $('auFrameIf');
         fr.hidden = false; void fr.offsetWidth; fr.classList.add('is-on');
@@ -913,7 +993,8 @@
             + ' · ' + (l.fert ? (l.imbalance ? 'fertilizer plan kept as is' : 'fertilizer planned') : '<span class="text-amber-700 font-bold">no fertilizer plan yet</span>') + '</span></div>').join('')
             + '<div><b>Workers</b><span>' + (S.crewList.length ? esc(S.crewList.map((w) => w.name).filter(Boolean).join(', ')) : 'The family') + '</span></div>'
             + '<div><b>Soil</b><span>' + esc([TEX[sr.texture] || 'not sure'].concat((sr.conditions || []).map((c) => COND[c] || c)).join(', ')) + '</span></div>'
-            + '<div><b>Water</b><span>' + esc((BOOK.water[S.answers.water] || ['not said'])[0]) + '</span></div>';
+            + '<div><b>Water</b><span>' + esc((BOOK.water[S.answers.water] || ['not said'])[0]) + '</span></div>'
+            + (S.answers.fieldProfile && window.aneeFieldProfile && window.aneeFieldProfile.count(S.answers.fieldProfile) ? '<div><b>Field in detail</b><span>' + window.aneeFieldProfile.count(S.answers.fieldProfile) + ' answers about the soil, the water and last season</span></div>' : '');
     };
     $('auGenerate').addEventListener('click', async () => {
         await flush();

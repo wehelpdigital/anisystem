@@ -343,6 +343,33 @@ final class NpkModel
         'la_nina' => ['rain' => [0.1, 0.2, 0.3, 0.3], 'sun' => [-0.02, -0.04, -0.05, -0.06], 'temp' => [-0.2, -0.3, -0.3, -0.3]],
     ];
 
+    /**
+     * Your field, counted (2026-10-15, the owner): what the detailed field
+     * answers (App\Support\FieldProfile) add to the need, on top of the soil
+     * factors above, each said to the farmer as a plain line. Conservative,
+     * from PhilRice, IRRI and DA practice:
+     *  - omHighN: soil rich in organic matter gives some nitrogen of its own;
+     *    slowN: slow drainage on an upland crop loses a little nitrogen;
+     *  - legumeN: kg N per ha a mungbean, peanut or soybean crop before leaves
+     *    (20 to 30 in the guides); strawK: kg K2O per ha rice straw left on
+     *    the field and plowed in gives back (20 to 30); never more than
+     *    creditFloor of the need is taken off;
+     *  - caps: the share of the goal the field can carry, for rain only or a
+     *    short water source (rice is grown for irrigation in the guides, so it
+     *    is held lower), for salt and for sodium; never below capFloor. A goal
+     *    the farmer typed is kept as theirs, and only warned about;
+     *  - splits: how many nitrogen doses suit each texture;
+     *  - acidPh and alkPh: the pH words the lines use (the factors keep their own).
+     */
+    public const FIELD = [
+        'omHighN' => 0.9, 'slowN' => 1.05,
+        'legumeN' => 25, 'strawK' => 25, 'creditFloor' => 0.5,
+        'caps' => ['rainfed' => ['rice' => 0.8, 'other' => 0.9], 'partial' => ['rice' => 0.9, 'other' => 0.95], 'saline' => 0.9, 'sodic' => 0.9],
+        'capFloor' => 0.75,
+        'splits' => ['sandy' => 3, 'loam' => 2, 'clay' => 2, 'unsure' => 2],
+        'acidPh' => 5.5, 'alkPh' => 7.5,
+    ];
+
     public static function forClient(): array
     {
         $conditions = [];
@@ -357,6 +384,7 @@ final class NpkModel
         return [
             'textures' => self::TEXTURES, 'conditions' => $conditions + self::MORE_CONDITIONS, 'soilShare' => self::SOIL_SHARE, 'soilShareCrop' => self::SOIL_SHARE_CROP, 'recovery' => self::RECOVERY,
             'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => self::SEEDING, 'elements' => self::ELEMENTS, 'levels' => self::MICRO_LEVELS, 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
+            'field' => self::FIELD,
         ];
     }
 }

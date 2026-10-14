@@ -711,8 +711,18 @@
                 </div>
                 <p class="form-hint">Anee checks if it is realistic for your variety, place and season.</p>
             </section>
-            {{-- 6: the field --}}
+            {{-- 6: the field in detail (2026-10-15, the owner): the shared
+                 field questions (App\Support\FieldProfile), optional. The
+                 answers fill the soil, water, troubles, soil condition and
+                 last crop steps after it, and go to Anee whole. --}}
             <section class="wtp-step" data-step="6">
+                <p class="wtp-q">Your field in detail</p>
+                <p class="wtp-sub">Optional. The soil, the water and last season, one short page at a time. Your answers fill in the next steps, and Anee builds the protocol on every one.</p>
+                <div id="cpFpc"></div>
+                @include('partials.field-profile-card')
+            </section>
+            {{-- 7: the field --}}
+            <section class="wtp-step" data-step="7">
                 <p class="wtp-q">How big is the field?</p>
                 <p class="wtp-sub">The bags and the shopping list are for the whole field.</p>
                 <div class="cp-area">
@@ -726,7 +736,7 @@
                 <div class="wtp-choices" id="cpWaters"></div>
             </section>
             {{-- 7: the troubles --}}
-            <section class="wtp-step" data-step="7">
+            <section class="wtp-step" data-step="8">
                 <p class="wtp-q">What problems does this field have?</p>
                 <p class="wtp-sub">Tick what you have seen. Each one changes the protocol.</p>
                 <div class="wtp-probs" id="cpProbs"></div>
@@ -734,7 +744,7 @@
                 <textarea id="cpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. tungro hit us last season, we have a pump but diesel is costly"></textarea>
             </section>
             {{-- 8: the ground, closer -- what decides WHICH granular and WHEN --}}
-            <section class="wtp-step" data-step="8">
+            <section class="wtp-step" data-step="9">
                 <p class="wtp-q">A closer look at the soil</p>
                 <p class="wtp-sub">Optional. Each answer changes which fertilizer to use and when. Skip what you do not know.</p>
                 <p class="wp-qh">Soil condition <small>pH, sodium or salt. You can pick more than one.</small></p>
@@ -745,7 +755,7 @@
                 <div class="wtp-choices is-four" id="cpTestK"></div>
             </section>
             {{-- 9: the history and what can be bought --}}
-            <section class="wtp-step" data-step="9">
+            <section class="wtp-step" data-step="10">
                 <p class="wtp-q">Last crop and what you can buy</p>
                 <p class="wtp-sub">Beans and peanuts leave nitrogen in the soil. Burned straw gives back potash, not nitrogen. The plan only uses fertilizer you can buy.</p>
                 <p class="wp-qh">Last crop</p>
@@ -758,7 +768,7 @@
                 <div class="wtp-choices is-pills" id="cpGranulars" role="group" aria-label="Fertilizer sold near you"></div>
             </section>
             {{-- 10: the decision --}}
-            <section class="wtp-step" data-step="10">
+            <section class="wtp-step" data-step="11">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="cpReview"></p>
                 <button type="button" class="wtp-run" id="cpRun">
@@ -818,8 +828,50 @@
     const state = { location: '', crop: '', variety: '', month: null, method: null, priority: null, targetYield: '', yieldUnit: '', area: '', soil: null, water: null, problems: [], notes: '',
         soilConditions: [], testP: 'unsure', testK: 'unsure', prevCrop: 'unsure', residue: 'unsure', fertHistory: '', granulars: [] };
     let step = 0;
-    const STEPS = 11;
+    const STEPS = 12;
     const phone = () => !window.matchMedia('(min-width: 640px)').matches;
+    /* The field in detail (partials/field-profile-card): its answers fill the
+       soil, the water, the troubles, the soil condition and the last crop,
+       each unless the farmer has set it by hand. */
+    let FPC = null;
+    const TOUCH = {};
+    const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+    // The last crop and what was left of it, from the detailed answer.
+    const PREV_OF = { rice_straw: ['rice', 'incorporated'], rice_no_straw: ['rice', null], corn: ['corn', null], legume: ['legume', null], vegetable: ['vegetables', null], fallow: ['fallow', null], new_land: ['fallow', null] };
+    function applyProfile(answers, L) {
+        if (!OPT) return '';
+        const got = [], lit = {};
+        const one = (key, hostId, attr, val, fallback, word, at) => {
+            if (TOUCH[key]) return;
+            state[key] = val || fallback;
+            document.querySelectorAll('#' + hostId + ' .wtp-choice').forEach((c) => c.classList.toggle('is-on', c.getAttribute('data-' + attr) === state[key]));
+            if (val) { got.push(word); lit[at] = true; }
+        };
+        one('soil', 'cpSoils', 'soil', L.soil && L.soil !== 'unsure' ? L.soil : null, null, 'the soil', 7);
+        one('water', 'cpWaters', 'water', L.water, null, 'the water', 7);
+        if (!TOUCH.problems) {
+            const want = [];
+            (L.problemsVariety || []).filter((k) => OPT.problems[k]).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
+            document.querySelectorAll('#cpProbs input').forEach((i) => { i.checked = want.includes(i.value); i.closest('.wtp-prob')?.classList.toggle('is-on', i.checked); });
+            state.problems = want;
+            if (want.length) { got.push(want.length === 1 ? 'one trouble' : want.length + ' troubles'); lit[8] = true; }
+        }
+        if (!TOUCH.soilConditions) {
+            state.soilConditions = (L.soilConditions || []).filter((k) => (OPT.soilConditions || {})[k]);
+            paintSoilConds();
+            if (state.soilConditions.length) { got.push('the soil condition'); lit[9] = true; }
+        }
+        const prev = PREV_OF[answers.prevCrop] || [null, null];
+        one('prevCrop', 'cpPrevCrops', 'prevcrop', prev[0], 'unsure', 'the last crop', 10);
+        one('residue', 'cpResidues', 'residue', prev[1], 'unsure', 'its leftovers', 10);
+        // The field step opens with the size, which the details do not say: its line goes under the soil question.
+        [7, 8, 9, 10].forEach((n) => window.aneeFieldCard.hint(document.querySelector('#cpWiz .wtp-step[data-step="' + n + '"]'), !!lit[n], '', n === 7 ? $id('cpSoils').previousElementSibling : null));
+        return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything on the next steps.' : '';
+    }
+    function mountCard() {
+        if (FPC || !window.aneeFieldCard) return;
+        FPC = window.aneeFieldCard.mount($id('cpFpc'), { crop: () => state.crop || null, title: () => state.location || 'Your field', onChange: applyProfile });
+    }
 
     async function boot() {
         try {
@@ -827,6 +879,7 @@
             OPT = res.data;
             paintOptions();
         } catch (err) { toast(err.message, 'error'); }
+        if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
         // Painted: the price card and the wizard arrive together, once.
         const gen = $id('cpGen');
         if (gen && gen.classList.contains('an-wait')) {
@@ -949,12 +1002,13 @@
             case 4: return !!state.method || (toast('Pick how you will plant.', 'error'), false);
             case 5: state.targetYield = $id('cpTarget').value.trim();
                 return !!state.priority || (toast('Pick your goal for this season.', 'error'), false);
-            case 6: state.area = $id('cpArea').value.trim();
+            case 6: return true;
+            case 7: state.area = $id('cpArea').value.trim();
                 if (!(Number(state.area) > 0)) { toast('Type the field size in hectares.', 'error'); if (!phone()) $id('cpArea').focus(); return false; }
                 if (!state.soil) { toast('Pick the soil closest to yours.', 'error'); return false; }
                 if (!state.water) { toast('Pick how the field gets water.', 'error'); return false; }
                 return true;
-            case 7: state.problems = [...document.querySelectorAll('#cpProbs input:checked')].map((i) => i.value);
+            case 8: state.problems = [...document.querySelectorAll('#cpProbs input:checked')].map((i) => i.value);
                 state.notes = $id('cpNotes').value.trim();
                 // A trouble ticked here answers the next step's soil
                 // condition while it is still "unsure" -- one tap fewer.
@@ -963,7 +1017,7 @@
                     if (said && (OPT.soilConditions || {})[said]) { state.soilConditions = [said, ...state.soilConditions]; paintSoilConds(); }
                 }
                 return true;
-            case 9: state.fertHistory = $id('cpFertHistory').value.trim(); return true;
+            case 10: state.fertHistory = $id('cpFertHistory').value.trim(); return true;
             default: return true;
         }
     }
@@ -976,6 +1030,7 @@
             + `<br><span class="text-xs">${esc(state.area)} ha · ${esc(split(OPT.soils[state.soil] || '')[0])} · ${esc(OPT.waters[state.water] || '')}${state.problems.length ? ' · ' + state.problems.length + ' problem' + (state.problems.length === 1 ? '' : 's') : ''}</span>`;
         const closer = ['testP', 'testK', 'prevCrop', 'residue'].filter((k) => state[k] && state[k] !== 'unsure').length + (state.soilConditions.length ? 1 : 0) + (state.fertHistory ? 1 : 0) + (state.granulars.length ? 1 : 0);
         if (closer) $id('cpReview').innerHTML += `<br><span class="text-xs">${state.soilConditions.length ? esc(state.soilConditions.map((k) => split((OPT.soilConditions || {})[k] || k)[0].toLowerCase()).join(', ')) + ' soil · ' : ''}${closer} extra answer${closer === 1 ? '' : 's'}${state.granulars.length ? ' · ' + state.granulars.length + ' fertilizer' + (state.granulars.length === 1 ? '' : 's') + ' you can buy' : ''}</span>`;
+        if (FPC && FPC.count()) $id('cpReview').innerHTML += `<br><span class="text-xs">Your field in detail: ${FPC.count()} answer${FPC.count() === 1 ? '' : 's'}</span>`;
         $id('cpRunSays').textContent = OPT.canUse && OPT.quote ? `Write the protocol (${OPT.quote} credits)` : 'Write the protocol';
         $id('cpRunFine').textContent = OPT.canUse
             ? 'This deep check takes a few minutes. It uses the same AI credits as your questions.'
@@ -988,6 +1043,7 @@
         $id(hostId).addEventListener('click', (e) => {
             const b = e.target.closest(`[data-${attr}]`);
             if (!b) return;
+            TOUCH[key] = true;
             state[key] = b.getAttribute(`data-${attr}`);
             document.querySelectorAll(`#${hostId} .wtp-choice`).forEach((c) => c.classList.toggle('is-on', c === b));
             if (next !== null) setTimeout(() => show(next), 180);
@@ -1012,6 +1068,7 @@
     $id('cpSoilConds').addEventListener('click', (e) => {
         const b = e.target.closest('[data-soilcond]');
         if (!b) return;
+        TOUCH.soilConditions = true;
         const k = b.getAttribute('data-soilcond');
         if (k === 'unsure') state.soilConditions = [];
         else if (state.soilConditions.includes(k)) state.soilConditions = state.soilConditions.filter((x) => x !== k);
@@ -1038,6 +1095,7 @@
     });
     const PROB_FOES = { acidic: ['alkaline'], alkaline: ['acidic'], drought: ['floods'], floods: ['drought'] };
     $id('cpProbs').addEventListener('change', (e) => {
+        TOUCH.problems = true;
         const l = e.target.closest('.wtp-prob');
         if (l) l.classList.toggle('is-on', e.target.checked);
         if (!e.target.checked) return;
@@ -1061,6 +1119,7 @@
         const now = $id('cpCropNow');
         now.textContent = c.label || 'Choose the crop';
         now.classList.remove('is-none');
+        if (FPC) FPC.refresh();
         closeSheet('cpCropSheet');
         setTimeout(() => show(2), 220);
     });
@@ -1093,7 +1152,7 @@
                 priority: state.priority, targetYield: state.targetYield || null, yieldUnit: state.yieldUnit, area: state.area,
                 soil: state.soil, water: state.water, problems: state.problems, notes: state.notes,
                 soilConditions: state.soilConditions, testP: state.testP, testK: state.testK, prevCrop: state.prevCrop, residue: state.residue,
-                fertHistory: state.fertHistory, granulars: state.granulars,
+                fertHistory: state.fertHistory, granulars: state.granulars, ...(FPC ? FPC.payload() : {}),
             } });
             let data = res.data;
             if (data.pending) {
@@ -1481,6 +1540,12 @@
                     ${rN ? `<div class="cp-yo-row"><small>Realistic</small><div class="tr"><span style="width:${Math.round((rN / yMax) * 100)}%"></span></div><b>${esc(yo.realistic || '')}</b></div>` : ''}
                 </div>
                 ${yo.note ? `<p class="cp-note">${esc(sweep(yo.note))}</p>` : ''}
+            </div>` : ''}
+
+            ${(p.fieldProfileSaid || []).length && window.aneeFieldCard ? `
+            <div class="wtp-card">
+                <h3>🌾 Your field in detail</h3>
+                ${window.aneeFieldCard.said(p.fieldProfileSaid)}
             </div>` : ''}
 
             <div class="wtp-card">

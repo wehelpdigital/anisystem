@@ -465,14 +465,24 @@
                 <p class="wtp-sub">The month you would prepare and plant. The list is built around it.</p>
                 <div class="wtp-choices is-two" id="wpMonths"></div>
             </section>
-            {{-- Step 3: the soil --}}
+            {{-- Step 3: the field in detail (2026-10-15, the owner): the
+                 shared field questions (App\Support\FieldProfile), optional.
+                 The answers fill the soil, water, land, farm and problem
+                 steps after it, and go to Anee whole. --}}
             <section class="wtp-step" data-step="2">
+                <p class="wtp-q">Your field in detail</p>
+                <p class="wtp-sub">Optional. The soil, the water and last season, one short page at a time. Your answers fill in the next steps, and Anee reads every one.</p>
+                <div id="wpFpc"></div>
+                @include('partials.field-profile-card')
+            </section>
+            {{-- Step 4: the soil --}}
+            <section class="wtp-step" data-step="3">
                 <p class="wtp-q">What is the soil like?</p>
                 <p class="wtp-sub">Go by feel. No test needed.</p>
                 <div class="wtp-choices" id="wpSoils"></div>
             </section>
             {{-- Step 4: the water --}}
-            <section class="wtp-step" data-step="3">
+            <section class="wtp-step" data-step="4">
                 <p class="wtp-q">What water does the field get?</p>
                 <p class="wtp-sub">Water matters most here.</p>
                 <div class="wtp-choices" id="wpWaters"></div>
@@ -480,7 +490,7 @@
             {{-- Step 5: more about the ground -- pH, how the water looks,
                  the lay of the land, elevation, sun. Every one optional and
                  answerable by eye; each one moves the ranking. --}}
-            <section class="wtp-step" data-step="4">
+            <section class="wtp-step" data-step="5">
                 <p class="wtp-q">More about the land</p>
                 <p class="wtp-sub">Answer what you know and skip the rest. Each answer makes the list better.</p>
                 <p class="wp-qh">Soil pH <small>from a test kit, or by the signs</small></p>
@@ -501,7 +511,7 @@
                 <div class="wtp-choices" id="wpSuns"></div>
             </section>
             {{-- Step 6: more about the farm -- history, hands, money, market. --}}
-            <section class="wtp-step" data-step="5">
+            <section class="wtp-step" data-step="6">
                 <p class="wtp-q">More about the farm</p>
                 <p class="wtp-sub">Also optional. Past crops and your means show what is realistic.</p>
                 <label class="form-label" for="wpPrevCrop">What grew there last? <span class="text-gray-400 font-normal">(optional)</span></label>
@@ -516,13 +526,13 @@
                 <div class="wtp-choices" id="wpMarkets"></div>
             </section>
             {{-- Step 7: the troubles --}}
-            <section class="wtp-step" data-step="6">
+            <section class="wtp-step" data-step="7">
                 <p class="wtp-q">What problems does the land have?</p>
                 <p class="wtp-sub">Tick what you have seen. Each one changes the list.</p>
                 <div class="wtp-probs" id="wpProbs"></div>
             </section>
             {{-- Step 8: the aim and the area --}}
-            <section class="wtp-step" data-step="7">
+            <section class="wtp-step" data-step="8">
                 <p class="wtp-q">What is the harvest for?</p>
                 <p class="wtp-sub">Crops to sell and crops for the family are not the same.</p>
                 <div class="wtp-choices" id="wpAims"></div>
@@ -532,19 +542,19 @@
                 <textarea id="wpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. thinking of ube, and my neighbor grows good onions"></textarea>
             </section>
             {{-- Step 9: what matters most -- a list the farmer reorders --}}
-            <section class="wtp-step" data-step="8">
+            <section class="wtp-step" data-step="9">
                 <p class="wtp-q">What matters most to you?</p>
                 <p class="wtp-sub">Put them in your order. The top one counts most.</p>
                 <div class="wp-prio" id="wpPrio"></div>
             </section>
             {{-- Step 10: families the farmer would rather not plant -- never all of them --}}
-            <section class="wtp-step" data-step="9">
+            <section class="wtp-step" data-step="10">
                 <p class="wtp-q">Anything you'd rather not plant?</p>
                 <p class="wtp-sub">Optional. Pick crop groups to skip. At least one must stay.</p>
                 <div class="wtp-choices" id="wpExcludes"></div>
             </section>
             {{-- Step 11: crops the farmer has in mind -- optional, each ranked honestly --}}
-            <section class="wtp-step" data-step="10">
+            <section class="wtp-step" data-step="11">
                 <p class="wtp-q">Any crops you have in mind?</p>
                 <p class="wtp-sub">Optional. Anee ranks each one with her own picks, even if it fits poorly.</p>
                 <button type="button" class="crop-tag" id="wpCropBtn">
@@ -557,7 +567,7 @@
                 <input type="text" id="wpCropsOther" class="form-input" maxlength="160" placeholder="e.g. ampalaya, ube (use commas)">
             </section>
             {{-- Step 12: the decision --}}
-            <section class="wtp-step" data-step="11">
+            <section class="wtp-step" data-step="12">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="wpReview"></p>
                 <button type="button" class="wtp-run" id="wpRun">
@@ -645,7 +655,65 @@
     const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
     const countryName = (code) => (code === 'PH' ? 'the Philippines' : (rulesFor(code).name || code || ''));
     let step = 0;
-    const STEPS = 12;
+    const STEPS = 13;
+    /* The field in detail (partials/field-profile-card): its answers fill the
+       soil, the water, the pH and salt, the slope, the last crop and the
+       problems, each unless the farmer has set it by hand. */
+    let FPC = null;
+    const TOUCH = {};
+    const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+    const stepEl = (n) => document.querySelector('#wpWiz .wtp-step[data-step="' + n + '"]');
+    const lightUp = (hostId, attr, val) => document.querySelectorAll('#' + hostId + ' .wtp-choice').forEach((c) => {
+        const k = c.getAttribute('data-' + attr);
+        c.classList.toggle('is-on', Array.isArray(val) ? (val.length ? val.includes(k) : k === 'unsure') : k === val);
+    });
+    let AUTO_PREV = '';
+    function applyProfile(answers, L) {
+        if (!OPT) return '';
+        const got = [], lit = {};
+        const one = (key, hostId, attr, val, word, at) => {
+            if (TOUCH[key]) return;
+            state[key] = val;
+            lightUp(hostId, attr, val);
+            const on = Array.isArray(val) ? val.length > 0 : (val !== null && val !== 'unsure');
+            if (on) { got.push(word); lit[at] = true; }
+        };
+        one('soil', 'wpSoils', 'soil', L.soil && L.soil !== 'unsure' ? L.soil : null, 'the soil', 3);
+        one('water', 'wpWaters', 'water', L.water || null, 'the water', 4);
+        one('ph', 'wpPhs', 'ph', L.phLevel || 'unsure', 'the pH', 5);
+        if (!TOUCH.phValue) {
+            const v = L.phLow != null ? (L.phHigh != null && L.phHigh !== L.phLow ? L.phLow + ' to ' + L.phHigh : String(L.phLow)) : '';
+            $id('wpPhValue').value = v;
+            state.phValue = v;
+            if (v) lit[5] = true;
+        }
+        $id('wpPhIn').hidden = state.ph === 'unsure';
+        one('soilExtra', 'wpSoilExtras', 'soilextra', (L.soilExtra || []).filter((k) => (OPT.soilExtras || {})[k]), 'salt or sodium', 5);
+        one('lay', 'wpLays', 'lay', L.lay || null, 'the slope', 5);
+        if (!TOUCH.prevCrop) {
+            const q = window.aneeFieldProfile && window.aneeFieldProfile.questions.prevCrop;
+            const said = answers.prevCrop && q && q.o[answers.prevCrop] ? q.o[answers.prevCrop][0] : '';
+            if (!$id('wpPrevCrop').value.trim() || $id('wpPrevCrop').value === AUTO_PREV) {
+                $id('wpPrevCrop').value = said;
+                state.prevCrop = said;
+                AUTO_PREV = said;
+                if (said) { got.push('the last crop'); lit[6] = true; }
+            }
+        }
+        if (!TOUCH.problems) {
+            const want = (L.problemsWhen || []).filter((k) => OPT.problems[k]);
+            if ((L.problemsVariety || []).includes('slope') && OPT.problems.slope) want.push('slope');
+            document.querySelectorAll('#wpProbs input').forEach((i) => { i.checked = want.includes(i.value); i.closest('.wtp-prob')?.classList.toggle('is-on', i.checked); });
+            state.problems = want;
+            if (want.length) { got.push(want.length === 1 ? 'one problem' : want.length + ' problems'); lit[7] = true; }
+        }
+        [3, 4, 5, 6, 7].forEach((n) => window.aneeFieldCard.hint(stepEl(n), !!lit[n]));
+        return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything on the next steps.' : '';
+    }
+    function mountCard() {
+        if (FPC || !window.aneeFieldCard) return;
+        FPC = window.aneeFieldCard.mount($id('wpFpc'), { crop: null, title: () => state.location || 'Your field', onChange: applyProfile });
+    }
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const PRIO_E = { profit: '💰', survival: '🛡️', ease: '🧰', speed: '⏱️', market: '🏪', food: '🍚' };
     // One word per fit, for the little bars under each ranked crop.
@@ -658,6 +726,7 @@
             OPT = res.data;
             paintOptions();
         } catch (err) { toast(err.message, 'error'); }
+        if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
         // Painted: the price card and the wizard arrive together, once.
         const gen = $id('wpGen');
         if (gen && gen.classList.contains('an-wait')) {
@@ -842,14 +911,15 @@
             case 0: state.location = $id('wpLocation').value.trim();
                 return !!state.location || (toast('Type where the field is.', 'error'), false);
             case 1: return !!state.startMonth || (toast('Pick the month you would start.', 'error'), false);
-            case 2: return !!state.soil || (toast('Pick the soil closest to yours.', 'error'), false);
-            case 3: return !!state.water || (toast('Pick the water the field gets.', 'error'), false);
-            case 4: state.phValue = $id('wpPhValue').value.trim(); return true;
-            case 5: state.prevCrop = $id('wpPrevCrop').value.trim(); state.grewWell = $id('wpGrewWell').value.trim(); return true;
-            case 6: state.problems = [...document.querySelectorAll('#wpProbs input:checked')].map((i) => i.value); return true;
-            case 7: state.area = $id('wpArea').value.trim(); state.notes = $id('wpNotes').value.trim();
+            case 2: return true;
+            case 3: return !!state.soil || (toast('Pick the soil closest to yours.', 'error'), false);
+            case 4: return !!state.water || (toast('Pick the water the field gets.', 'error'), false);
+            case 5: state.phValue = $id('wpPhValue').value.trim(); return true;
+            case 6: state.prevCrop = $id('wpPrevCrop').value.trim(); state.grewWell = $id('wpGrewWell').value.trim(); return true;
+            case 7: state.problems = [...document.querySelectorAll('#wpProbs input:checked')].map((i) => i.value); return true;
+            case 8: state.area = $id('wpArea').value.trim(); state.notes = $id('wpNotes').value.trim();
                 return !!state.aim || (toast('Pick what the harvest is for.', 'error'), false);
-            case 10: state.cropsOther = $id('wpCropsOther').value.trim(); return true;
+            case 11: state.cropsOther = $id('wpCropsOther').value.trim(); return true;
             default: return true;
         }
     }
@@ -862,7 +932,8 @@
             + (() => { const n = state.cropsAsked.length + (state.cropsOther ? state.cropsOther.split(',').filter((x) => x.trim()).length : 0); return n ? ` · ${n} crop${n === 1 ? '' : 's'} you picked` : ''; })()
             + (state.priorities.length ? ` · top priority: ${esc(shortOf((OPT.priorities || {})[state.priorities[0]] || state.priorities[0]).toLowerCase())}` : '')
             + (state.exclude.length ? ` · skipping ${esc(state.exclude.map((k) => shortOf((OPT.families || {})[k] || k).toLowerCase()).join(', '))}` : '')
-            + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.soilExtra.length ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra answer${n === 1 ? '' : 's'}` : ''; })() + '</span>';
+            + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.soilExtra.length ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra answer${n === 1 ? '' : 's'}` : ''; })()
+            + (FPC && FPC.count() ? ` · your field in detail, ${FPC.count()} answer${FPC.count() === 1 ? '' : 's'}` : '') + '</span>';
         $id('wpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wpRunFine').textContent = OPT.canUse
             ? 'Paid from your AI credits. It shows in your credit log.'
@@ -892,14 +963,15 @@
         $id(hostId).addEventListener('click', (e) => {
             const b = e.target.closest(`[data-${attr}]`);
             if (!b) return;
+            TOUCH[key] = true;
             state[key] = b.getAttribute(`data-${attr}`);
             document.querySelectorAll(`#${hostId} .wtp-choice`).forEach((c) => c.classList.toggle('is-on', c === b));
             if (next !== null) setTimeout(() => show(next), 180);
         });
     };
     pickWire('wpMonths', 'month', 'startMonth', 2);
-    pickWire('wpSoils', 'soil', 'soil', 3);
-    pickWire('wpWaters', 'water', 'water', 4);
+    pickWire('wpSoils', 'soil', 'soil', 4);
+    pickWire('wpWaters', 'water', 'water', 5);
     pickWire('wpAims', 'aim', 'aim', null);
     pickWire('wpPhs', 'ph', 'ph', null);
     // A pick-many group: answers toggle and gather in a list; "unsure" (where
@@ -909,6 +981,7 @@
             const b = e.target.closest(`[data-${attr}]`);
             if (!b) return;
             const k = b.getAttribute(`data-${attr}`);
+            TOUCH[key] = true;
             const list = Array.isArray(state[key]) ? state[key] : [];
             state[key] = k === 'unsure' ? [] : (list.includes(k) ? list.filter((x) => x !== k) : [...list, k]);
             document.querySelectorAll(`#${hostId} .wtp-choice`).forEach((c) => {
@@ -938,9 +1011,12 @@
     // A tested pH can be typed once the farmer says the soil is anything but "not sure".
     $id('wpPhs').addEventListener('click', () => { $id('wpPhIn').hidden = state.ph === 'unsure'; if (state.ph === 'unsure') $id('wpPhValue').value = ''; });
     $id('wpProbs').addEventListener('change', (e) => {
+        TOUCH.problems = true;
         const l = e.target.closest('.wtp-prob');
         if (l) l.classList.toggle('is-on', e.target.checked);
     });
+    $id('wpPhValue').addEventListener('input', () => { TOUCH.phValue = true; });
+    $id('wpPrevCrop').addEventListener('input', () => { TOUCH.prevCrop = true; });
 
     /* ---------------- the run ---------------- */
     $id('wpRun').addEventListener('click', async () => {
@@ -957,7 +1033,7 @@
                 problems: state.problems, country: state.country,
                 ph: state.ph, phValue: state.phValue || null, soilExtra: state.soilExtra, waterLook: state.waterLook, lay: state.lay, elevation: state.elevation, sun: state.sun,
                 prevCrop: state.prevCrop, grewWell: state.grewWell, labor: state.labor, budget: state.budget, market: state.market,
-                priorities: state.priorities, cropsAsked: state.cropsAsked, cropsOther: state.cropsOther, exclude: state.exclude,
+                priorities: state.priorities, cropsAsked: state.cropsAsked, cropsOther: state.cropsOther, exclude: state.exclude, ...(FPC ? FPC.payload() : {}),
             } });
             let data = res.data;
             if (data.pending) {
@@ -1176,6 +1252,12 @@
                 <h3>Better to avoid here</h3>
                 ${(r.avoid || []).map((a) => `
                     <div class="wtp-win-row is-no"><b>⛔ ${esc(a.crop || '')}:</b><span>${esc(a.why || '')}</span></div>`).join('')}
+            </div>` : ''}
+
+            ${(p.fieldProfileSaid || []).length && window.aneeFieldCard ? `
+            <div class="wtp-card">
+                <h3>🌾 Your field in detail</h3>
+                ${window.aneeFieldCard.said(p.fieldProfileSaid)}
             </div>` : ''}
 
             <div class="wtp-card">

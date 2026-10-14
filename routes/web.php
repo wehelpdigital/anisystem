@@ -821,6 +821,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/npk-plus/product', [App\Http\Controllers\NpkPlusController::class, 'storeProduct'])->middleware('throttle:30,1')->name('npk.product');
     Route::get('/app/npk-plus/ph', [App\Http\Controllers\NpkPlusController::class, 'phProducts'])->middleware('throttle:120,1')->name('npk.ph');
     Route::post('/app/npk-plus/ph/use', [App\Http\Controllers\NpkPlusController::class, 'phUse'])->middleware('throttle:60,1')->name('npk.ph.use');
+    // The shared variety sheet's records (partials/variety-pick, 2026-10-15): a lookup, no AI, no charge.
+    Route::get('/app/varieties/pick', [App\Http\Controllers\VarietyPickController::class, 'list'])->middleware('throttle:60,1')->name('varietypick.list');
     Route::delete('/app/npk-plus/product/{id}', [App\Http\Controllers\NpkPlusController::class, 'destroyProduct'])->whereNumber('id')->name('npk.product.delete');
     Route::post('/app/npk-plus/save', [App\Http\Controllers\NpkPlusController::class, 'save'])->middleware('throttle:60,1')->name('npk.save');
     Route::get('/app/npk-plus/list', [App\Http\Controllers\NpkPlusController::class, 'list'])->name('npk.list');

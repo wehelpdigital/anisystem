@@ -386,7 +386,7 @@
     <div id="satGen">
         <div class="sat-quote" id="satQuote" hidden></div>
         <div class="card p-5 sat-wiz" id="satWiz">
-            <div class="sat-stepno"><span id="satStepNo">Step 1 of 7</span><span id="satStepName">The place</span></div>
+            <div class="sat-stepno"><span id="satStepNo">Step 1 of 8</span><span id="satStepName">The place</span></div>
             <div class="sat-rail" id="satRail" aria-hidden="true"></div>
 
             {{-- Every choice is a tag that opens a sheet (the owner's rule for the
@@ -455,7 +455,17 @@
                 </div>
             </section>
 
+            {{-- The field in detail (2026-10-15, the owner): the shared field
+                 questions (App\Support\FieldProfile), optional. The answers
+                 fill the ground and water step after it, and go to Anee whole. --}}
             <section class="sat-step" data-step="3">
+                <h3>Your field in detail</h3>
+                <p class="sat-sub">Optional. The soil, the water and last season, one short page at a time. Your answers fill in the next step, and Anee reads the pictures with every one.</p>
+                <div id="satFpc"></div>
+                @include('partials.field-profile-card')
+            </section>
+
+            <section class="sat-step" data-step="4">
                 <h3>The ground and the water</h3>
                 <p class="sat-sub">Pick what you know. Leave the rest.</p>
                 <span class="sat-label">Water</span>
@@ -482,7 +492,7 @@
                 </div>
             </section>
 
-            <section class="sat-step" data-step="4">
+            <section class="sat-step" data-step="5">
                 <h3>Anything worrying you?</h3>
                 <p class="sat-sub">Anee looks hardest where you point. Pick any that fit.</p>
                 <span class="sat-label">What you have seen</span>
@@ -491,7 +501,7 @@
                 <textarea id="satNotes" class="form-textarea" rows="3" maxlength="800" placeholder="Like: the north end flooded last week"></textarea>
             </section>
 
-            <section class="sat-step" data-step="5">
+            <section class="sat-step" data-step="6">
                 <h3>Draw the field</h3>
                 <p class="sat-sub">Tap each corner of the field on the map, in order around it. Drag a corner to fix it.</p>
                 <div class="sat-draw">
@@ -506,7 +516,7 @@
                 <p class="sat-draw-hint">Three corners at least. Up to 2,000 hectares. The satellite pixel is 10 meters, so very small plots read less surely.</p>
             </section>
 
-            <section class="sat-step" data-step="6">
+            <section class="sat-step" data-step="7">
                 <h3>Ready to read the field</h3>
                 <div class="sat-review" id="satReview"></div>
                 <button type="button" class="sat-run" id="satRun">
@@ -577,7 +587,42 @@
     };
     let OPT = null;
     const st = { step: 0, place: null, crop: null, method: 'transplanted', water: 'irrigated', soil: [], concerns: [], ring: [], densityUnit: 'seeds_ha', prov: null, town: null };
-    const STEPS = 7;
+    const STEPS = 8;
+    /* The field in detail (partials/field-profile-card): its answers fill the
+       water, the soil and a tested pH range on the next step, each unless the
+       farmer has set it by hand. */
+    let FPC = null;
+    const TOUCH = {};
+    let phByProfile = false;
+    const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+    function applyProfile(answers, L) {
+        if (!OPT) return '';
+        const got = [];
+        if (!TOUCH.water) {
+            st.water = OPT.water[L.waterNpk] ? L.waterNpk : 'irrigated';
+            tagSay('satWaterBtn', words(OPT.water[st.water])[0]);
+            if (OPT.water[L.waterNpk]) got.push('the water');
+        }
+        if (!TOUCH.soil) {
+            st.soil = (L.soilConditions || []).filter((k) => k !== 'unsure' && (OPT.soilConditions || {})[k]);
+            soilSay();
+            if (st.soil.length) got.push('the soil');
+        }
+        if (!TOUCH.ph && (L.phLow != null || phByProfile)) {
+            const on = L.phLow != null;
+            $('satPhOn').checked = on;
+            $('satPhBox').hidden = !on;
+            if (on) { $('satPhLo').value = Math.max(PH_MIN, Math.min(PH_MAX, L.phLow)); $('satPhHi').value = Math.max(PH_MIN, Math.min(PH_MAX, L.phHigh ?? L.phLow)); got.push('the pH'); }
+            phByProfile = on;
+            phPaint('lo');
+        }
+        window.aneeFieldCard.hint(document.querySelector('#satWiz .sat-step[data-step="4"]'), got.length > 0);
+        return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything on the next step.' : '';
+    }
+    function mountCard() {
+        if (FPC || !window.aneeFieldCard) return;
+        FPC = window.aneeFieldCard.mount($('satFpc'), { crop: () => st.crop || null, title: () => (st.place && st.place.label) || 'Your field', onChange: applyProfile });
+    }
 
     /* Shops, stops and pins only clutter a field: the map keeps roads and places. */
     const QUIET = [{ featureType: 'poi', stylers: [{ visibility: 'off' }] }, { featureType: 'transit', stylers: [{ visibility: 'off' }] }];
@@ -608,9 +653,9 @@
         $('satBack').disabled = n === 0;
         $('satNext').hidden = n === STEPS - 1;
         $('satStepNo').textContent = 'Step ' + (n + 1) + ' of ' + STEPS;
-        $('satStepName').textContent = ['The place', 'The crop', 'Planting', 'Ground and water', 'Your worries', 'Draw the field', 'Review'][n] || '';
-        if (n === 5) initDraw();
-        if (n === 6) review();
+        $('satStepName').textContent = ['The place', 'The crop', 'Planting', 'Your field', 'Ground and water', 'Your worries', 'Draw the field', 'Review'][n] || '';
+        if (n === 6) initDraw();
+        if (n === 7) review();
         // A step starts at its title: on a phone the last one may have left the page scrolled down.
         const wiz = $('satWiz');
         if (booted && wiz.getBoundingClientRect().top < (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--app-head')) || 60)) {
@@ -671,6 +716,7 @@
     const cropName = (c) => String(c.label || '').replace(' — ', ', ');
     const setCrop = (k) => {
         st.crop = k;
+        if (FPC) FPC.refresh();
         const c = OPT.crops.find((x) => x.key === k);
         $('satCropIcon').textContent = c ? c.icon : '🌱';
         $('satCropNow').textContent = c ? cropName(c) : 'Choose the crop';
@@ -689,14 +735,14 @@
     const DENSITY = { seeds_ha: 'seeds per ha', plants_ha: 'plants per ha', kg_ha: 'kg seed per ha', hills_m2: 'hills per m²' };
     $('satMethodBtn').addEventListener('click', () => OPT && pick({ title: 'How it was planted', items: listOf(OPT.methods), cur: st.method, cb: (k) => { st.method = k; tagSay('satMethodBtn', words(OPT.methods[k])[0]); } }));
     $('satDensityUnitBtn').addEventListener('click', () => pick({ title: 'The rate is in', items: listOf(DENSITY), cur: st.densityUnit, cb: (k) => { st.densityUnit = k; tagSay('satDensityUnitBtn', DENSITY[k]); } }));
-    $('satWaterBtn').addEventListener('click', () => OPT && pick({ title: 'Where the water comes from', items: listOf(OPT.water), cur: st.water, cb: (k) => { st.water = k; tagSay('satWaterBtn', words(OPT.water[k])[0]); } }));
+    $('satWaterBtn').addEventListener('click', () => OPT && pick({ title: 'Where the water comes from', items: listOf(OPT.water), cur: st.water, cb: (k) => { st.water = k; TOUCH.water = true; tagSay('satWaterBtn', words(OPT.water[k])[0]); } }));
     const PH_WORDS = ['acidic', 'neutral', 'alkaline'];
     const soilSay = () => tagSay('satSoilBtn', st.soil.length ? st.soil.map((k) => words(OPT.soilConditions[k])[0]).join(', ') : 'Not sure', !st.soil.length);
     $('satSoilBtn').addEventListener('click', () => OPT && pick({ title: 'What is true of the soil', hint: 'Pick all that fit. Leave it empty if you are not sure.', multi: true, cur: st.soil,
         items: listOf(Object.fromEntries(Object.entries(OPT.soilConditions).filter(([k]) => k !== 'unsure'))),
         // The three pH words exclude one another; sodium, salt and acid sulfate ride with any.
         exclusive: (sel, k) => PH_WORDS.includes(k) ? sel.filter((x) => !PH_WORDS.includes(x)) : sel,
-        cb: (sel) => { st.soil = sel; soilSay(); } }));
+        cb: (sel) => { st.soil = sel; TOUCH.soil = true; soilSay(); } }));
     const concernsSay = () => tagSay('satConcernsBtn', st.concerns.length ? st.concerns.map((k) => words(OPT.concerns[k])[0]).join(', ') : 'Nothing picked', !st.concerns.length);
     $('satConcernsBtn').addEventListener('click', () => OPT && pick({ title: 'Anything worrying you?', hint: 'Pick any that fit.', multi: true, cur: st.concerns, items: listOf(OPT.concerns),
         exclusive: (sel, k) => k === 'none' ? [] : sel.filter((x) => x !== 'none'),
@@ -730,8 +776,8 @@
         if (from !== 'num') { $('satPhLoIn').value = fx(a); $('satPhHiIn').value = fx(b); }
         st.ph = $('satPhOn').checked ? { lo: Math.round(a * 10) / 10, hi: Math.round(b * 10) / 10 } : null;
     };
-    $('satPhLo').addEventListener('input', () => phPaint('lo'));
-    $('satPhHi').addEventListener('input', () => phPaint('hi'));
+    $('satPhLo').addEventListener('input', () => { TOUCH.ph = true; phPaint('lo'); });
+    $('satPhHi').addEventListener('input', () => { TOUCH.ph = true; phPaint('hi'); });
     const phTyped = () => {
         const a = Number($('satPhLoIn').value), b = Number($('satPhHiIn').value);
         let why = '';
@@ -743,8 +789,9 @@
         $('satPhLo').value = a; $('satPhHi').value = b;
         phPaint('num');
     };
-    $('satPhLoIn').addEventListener('input', phTyped);
-    $('satPhHiIn').addEventListener('input', phTyped);
+    $('satPhLoIn').addEventListener('input', () => { TOUCH.ph = true; phTyped(); });
+    $('satPhHiIn').addEventListener('input', () => { TOUCH.ph = true; phTyped(); });
+    $('satPhOn').addEventListener('change', () => { TOUCH.ph = true; });
     $('satPhOn').addEventListener('change', () => { $('satPhBox').hidden = !$('satPhOn').checked; $('satPhErr').hidden = true; phPaint('lo'); });
     phPaint('lo');
 
@@ -870,6 +917,7 @@
             ['Place', st.place ? st.place.label : ''], ['Crop', c ? c.icon + ' ' + cropName(c) + ($('satVariety').value.trim() ? ', ' + $('satVariety').value.trim() : '') : ''],
             ['Planted', ($('satPlanted').value || 'Not given') + ' · ' + words(label(OPT.methods, st.method))[0]],
             ['Water and soil', words(label(OPT.water, st.water))[0] + (st.soil.length ? ' · ' + st.soil.map((k) => words(OPT.soilConditions[k] || k)[0]).join(', ') : '') + (st.ph ? ' · pH ' + (st.ph.lo === st.ph.hi ? st.ph.lo : st.ph.lo + ' to ' + st.ph.hi) : '')],
+            ...(FPC && FPC.count() ? [['Field in detail', FPC.count() + (FPC.count() === 1 ? ' answer' : ' answers')]] : []),
             ['Field', ringArea().toLocaleString(undefined, { maximumFractionDigits: 2 }) + ' ha, ' + st.ring.length + ' corners'],
         ];
         $('satReview').innerHTML = rows.map(([k, v]) => '<div><b>' + esc(k) + '</b><span>' + esc(v) + '</span></div>').join('');
@@ -880,9 +928,9 @@
     const canNext = () => {
         if (st.step === 0 && !st.place) return st.town ? 'One moment, the town is still being found on the map.' : 'Pick the place first.';
         if (st.step === 1 && !st.crop) return 'Pick the crop.';
-        if (st.step === 3 && $('satPhOn').checked && !$('satPhErr').hidden) return $('satPhErr').textContent;
-        if (st.step === 5 && st.ring.length < 3) return 'Tap at least three corners of the field.';
-        if (st.step === 5 && ringArea() > 2000) return 'That is over 2,000 hectares. Draw one field at a time.';
+        if (st.step === 4 && $('satPhOn').checked && !$('satPhErr').hidden) return $('satPhErr').textContent;
+        if (st.step === 6 && st.ring.length < 3) return 'Tap at least three corners of the field.';
+        if (st.step === 6 && ringArea() > 2000) return 'That is over 2,000 hectares. Draw one field at a time.';
         return null;
     };
     $('satNext').addEventListener('click', () => { const why = canNext(); if (why) return window.toast?.(why, 'error'); show(st.step + 1); });
@@ -903,7 +951,7 @@
             location: st.place.label, crop: st.crop, variety: $('satVariety').value.trim(), plantedOn: $('satPlanted').value || null,
             method: st.method, density: $('satDensity').value ? Number($('satDensity').value) : null, densityUnit: st.densityUnit,
             water: st.water, soilConditions: st.soil, phValue: st.ph ? Math.round((st.ph.lo + st.ph.hi) / 2 * 10) / 10 : null, phLow: st.ph ? st.ph.lo : null, phHigh: st.ph ? st.ph.hi : null,
-            concerns: st.concerns, notes: $('satNotes').value.trim(), polygon: { type: 'Polygon', coordinates: [ring] },
+            concerns: st.concerns, notes: $('satNotes').value.trim(), polygon: { type: 'Polygon', coordinates: [ring] }, ...(FPC ? FPC.payload() : {}),
         };
         $('satRun').disabled = true;
         window.aneeWait.show({ title: 'Anee is reading your field…', sub: 'Satellite pictures, then the weather and the soil. About two minutes.',
@@ -1033,6 +1081,7 @@
                 }).join('') + '</div>' + p(W.outlook) + p(W.rain) + p(W.heat) + p(W.wind), ICON.cloud)
                 + card('ENSO and earlier years', p(CL.enso) + p(CL.history) + ((cx.climate || []).length ? '<table class="sat-table mt-2"><tr><th>Same weeks of</th><th>Rain</th><th>Days over 10 mm</th><th>Days 35°C+</th></tr>' + cx.climate.map((y) => '<tr><td>' + esc(String(y.from).slice(0, 4)) + '</td><td>' + esc(y.rain) + ' mm</td><td>' + esc(y.wetDays) + '</td><td>' + esc(y.hotDays) + '</td></tr>').join('') + '</table>' : ''), ICON.cloud),
             soil: card('The soil here', p(SO.reading) + p(SO.fit), ICON.soil)
+                + (((d.params || {}).fieldProfileSaid || []).length && window.aneeFieldCard ? card('Your field in detail', window.aneeFieldCard.said(d.params.fieldProfileSaid), ICON.soil) : '')
                 + ((SO.properties || []).length ? card('Soil numbers', '<table class="sat-table"><tr><th>What</th><th>Value</th><th>Meaning</th></tr>' + SO.properties.map((x) => '<tr><td>' + esc(x.name) + '</td><td>' + esc(x.value) + '</td><td>' + esc(x.meaning) + '</td></tr>').join('') + '</table><p class="sat-note mt-2">From the global soil map (ISRIC SoilGrids, 250 m), a modelled estimate. A soil test of your field is surer.</p>', ICON.soil) : '')
                 + ((SO.studies || []).length ? card('Studies of soils in your area', '<div class="sat-list">' + SO.studies.map((x) => '<div class="sat-item"><b>' + esc(x.title) + '</b><p>' + esc(x.finding) + '</p></div>').join('') + '</div>', ICON.soil) : ''),
             actions: card('What to do', '<ul class="sat-actions">' + (a.actions || []).map((x) => { const pr = String(x.priority || '').toLowerCase(); return '<li><em class="' + (pr === 'now' ? 'p-now' : pr.includes('month') ? 'p-month' : '') + '">' + esc(x.priority) + '</em><span><b>' + esc(x.what) + '</b><br><span class="sat-note">' + esc(x.why) + '</span></span></li>'; }).join('') + '</ul>', ICON.check)
@@ -1182,6 +1231,7 @@
             $('satPlanted').max = OPT.today;
             show(0);
             booted = true;
+            if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
             const open = new URLSearchParams(location.search).get('open');
             if (open) { const o = await window.api(U.one(open)); openReport(o.data); }
         } catch (err) { window.toast?.(err.message || 'Could not load the page.', 'error'); }
