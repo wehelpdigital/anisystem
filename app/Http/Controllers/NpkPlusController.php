@@ -6,7 +6,7 @@ use App\Models\AiSetting;
 use App\Models\User;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
-use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropCatalog;
 use App\Support\EnsoOutlook;
@@ -36,12 +36,15 @@ use Illuminate\Support\Str;
  * and sets it against what the crop takes up per ton of harvest (NpkCrops)
  * to say what yield it can feed, with the honest caveats.
  *
- * "Analyze further with Anee" (AiPrices 'npk') asks for the place, the soil,
+ * "Analyze further with Anee" (AiPricing 'npk') asks for the place, the soil,
  * the water and the timing, and Anee reads the plan against them.
  */
 class NpkPlusController extends Controller
 {
     public const KIND = 'npk';
+
+    /** The most fertilizer lines a calculation holds: the one price the page shows is the engine's quote at this size. */
+    private const PRICE_LINES = 60;
 
     public const NUTRIENTS = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si', 'Cl'];
 
@@ -87,7 +90,9 @@ class NpkPlusController extends Controller
             'model' => \App\Support\NpkModel::forClient(),
             'water' => self::WATER,
             'timing' => self::TIMING,
-            'quote' => AiPrices::of(self::KIND),
+            // Anee's reading only; the calculator is free. One price for any calculation
+            // (App\Support\AiPricing): the engine's quote at the most lines a calculation holds.
+            'quote' => AiPricing::credits(self::KIND, ['lines' => self::PRICE_LINES]),
             'balance' => round($this->credits->balance($payer->id), 2),
             'unlimited' => $this->credits->unlimited((int) $payer->id),
             'canUse' => $canUse,
@@ -342,7 +347,16 @@ class NpkPlusController extends Controller
         if (! $calc) {
             return $this->json(false, 'Save the calculation first.', [], 404);
         }
-        $price = (float) AiPrices::of(self::KIND);
+        /* The price the page showed is the price charged: one price for any
+           calculation. A page that sends the quote for this calculation's
+           own lines must match it. */
+        $lines = count((array) (json_decode((string) $calc->lines, true) ?: []));
+        $quote = AiPricing::quote(self::KIND, ['lines' => $lines]);
+        $agreed = AiPricing::agreed($request, $quote, AiPricing::credits(self::KIND, ['lines' => self::PRICE_LINES]));
+        if ($agreed === null) {
+            return $this->json(false, 'The reading now costs ' . $quote['credits'] . ' credits. Please run it again.', ['quote' => $quote['credits']], 409);
+        }
+        $price = (float) $agreed;
         if ($this->credits->balance($payer->id) < $price && ! $this->credits->unlimited($payer->id)) {
             return $this->json(false, 'You need ' . ceil($price) . ' credits for this reading and have ' . number_format((int) floor($this->credits->balance($payer->id))) . '.', ['outOfCredits' => true], 402);
         }
@@ -367,16 +381,16 @@ class NpkPlusController extends Controller
             @set_time_limit(0);
             response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $id]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $p, $calc);
+            $this->runJob($id, (int) $payer->id, $settings, $p, $calc, $price, $lines);
             exit;
         }
         @set_time_limit(600);
-        $this->runJob($id, (int) $payer->id, $settings, $p, $calc);
+        $this->runJob($id, (int) $payer->id, $settings, $p, $calc, $price, $lines);
 
         return $this->jobState($id);
     }
 
-    private function runJob(int $id, int $payerId, AiSetting $settings, array $p, object $calc): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, array $p, object $calc, float $price, int $lines): void
     {
         $beat = function (string $phase, int $try = 1) use ($id): void {
             DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update(['report' => json_encode(['phase' => $phase, 'try' => $try]), 'updated_at' => now()]);
@@ -390,10 +404,12 @@ class NpkPlusController extends Controller
                 throw new \RuntimeException($result['error'] ?? 'The reading could not be read. Nothing was charged. Please try again.');
             }
             $report = ['format' => 1, 'anee' => $anee, 'webSources' => (array) ($result['sources'] ?? []), 'at' => now('Asia/Manila')->format('M j, Y g:i A')];
-            $charged = (float) AiPrices::of(self::KIND);
+            // The price agreed when the run began.
+            $charged = $price;
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged, mb_substr('NPK Plus reading: ' . $calc->title . $note, 0, 250));
+            AiPricing::audit(self::KIND, $result, $charged, ['lines' => $lines], $settings);
             DB::table('as_plant_analyses')->where('id', $id)->update(['report' => json_encode($report), 'credits' => round($charged, 2), 'status' => 'ready', 'error' => null, 'updated_at' => now()]);
             DB::table('as_npk_calcs')->where('id', $calc->id)->update(['analysisId' => $id, 'updated_at' => now()]);
         } catch (\Throwable $e) {

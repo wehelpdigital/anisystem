@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AiSetting;
 use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Models\User;
 use App\Services\AiClient;
@@ -32,6 +33,9 @@ class WhatToPlantController extends Controller
 {
     /** The house's flat price for one analysis, in credits. */
     public const PRICE = AiPrices::DEFAULTS['what'];
+
+    /** The most crops one run can name (8 picks plus the farmer's own words): the one price the page shows is the engine's quote at this size. */
+    private const PRICE_CROPS = 16;
 
     public const SOILS = [
         'clay' => 'Heavy clay — sticky wet, cracks dry',
@@ -232,7 +236,8 @@ class WhatToPlantController extends Controller
             'problems' => self::PROBLEMS,
             'months' => $months,
             'country' => $farmerCountry,
-            'quote' => $canUse ? (float) AiPrices::of('what') : null,
+            // One price for any number of crops named (App\Support\AiPricing): the engine's quote at the most a run can name.
+            'quote' => $canUse ? (float) AiPricing::credits('what', ['crops' => self::PRICE_CROPS]) : null,
             'aneeFace' => $settings->faceUrl(),
             'balance' => round($this->credits->balance($payer->id), 2),
             'unlimited' => $this->credits->unlimited((int) $payer->id),
@@ -304,9 +309,19 @@ class WhatToPlantController extends Controller
             return $this->json(false, 'Keep at least one crop group. You left out all of them.', [], 422);
         }
 
+        /* The price the page showed is the price charged: one price for any
+           number of crops named. A page that sends the quote for its own
+           count (picks plus the farmer's own words) must match it. */
+        $named = count((array) $request->input('cropsAsked', []))
+            + count(array_filter(array_map('trim', explode(',', (string) $request->input('cropsOther', '')))));
+        $quote = AiPricing::quote('what', ['crops' => $named]);
+        $price = AiPricing::agreed($request, $quote, AiPricing::credits('what', ['crops' => self::PRICE_CROPS]));
+        if ($price === null) {
+            return $this->json(false, 'This analysis now costs ' . $quote['credits'] . ' credits. Please run it again.', ['quote' => $quote['credits']], 409);
+        }
         $balance = $this->credits->balance($payer->id);
-        if ($balance < AiPrices::of('what') && ! $this->credits->unlimited($payer->id)) {
-            return $this->json(false, 'You need ' . AiPrices::of('what') . ' credits for this analysis and have '
+        if ($balance < $price && ! $this->credits->unlimited($payer->id)) {
+            return $this->json(false, 'You need ' . $price . ' credits for this analysis and have '
                 . number_format((int) floor($balance)) . '.',
                 ['outOfCredits' => true], 402);
         }
@@ -351,18 +366,18 @@ class WhatToPlantController extends Controller
                 'pending' => true, 'id' => $id,
             ]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $prompt);
+            $this->runJob($id, (int) $payer->id, $settings, $prompt, $price, $named);
             exit;
         }
 
         @set_time_limit(300);
-        $this->runJob($id, (int) $payer->id, $settings, $prompt);
+        $this->runJob($id, (int) $payer->id, $settings, $prompt, $price, $named);
 
         return $this->jobState($id);
     }
 
     /** The model call and the charge, off the request's clock. */
-    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, int $price, int $named): void
     {
         /* The heartbeat: before every call to the model the row says which
          * phase it is in and touches updated_at, so the page can move its
@@ -385,12 +400,14 @@ class WhatToPlantController extends Controller
                 throw new \RuntimeException($result['error'] ?? 'The analysis could not be read. Nothing was charged. Please try again.');
             }
 
-            $charged = (float) AiPrices::of('what');
+            // The price agreed when the run began.
+            $charged = (float) $price;
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $p = json_decode((string) ($row->params ?? '[]'), true) ?: [];
             $note = AiUsage::record('what', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
                 mb_substr('What to Plant analysis: ' . ($p['location'] ?? '') . $note, 0, 250));
+            AiPricing::audit('what', $result, $charged, ['crops' => $named], $settings);
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),

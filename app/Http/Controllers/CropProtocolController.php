@@ -8,6 +8,7 @@ use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Services\WeatherService;
 use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropCatalog;
 use App\Support\FieldProfile;
@@ -267,7 +268,8 @@ class CropProtocolController extends Controller
             'prevCrops' => self::PREV_CROPS,
             'residues' => self::RESIDUES,
             'granulars' => self::GRANULARS,
-            'quote' => $canUse ? (float) AiPrices::of('protocol') : null,
+            // The engine's quote (App\Support\AiPricing): one size, today's flat price unless the cost says more.
+            'quote' => $canUse ? (float) AiPricing::credits('protocol') : null,
             'aneeFace' => $settings->faceUrl(),
             'balance' => round($this->credits->balance($payer->id), 2),
             'unlimited' => $this->credits->unlimited((int) $payer->id),
@@ -330,7 +332,12 @@ class CropProtocolController extends Controller
             return $this->json(false, 'That is not a way this crop is planted.', ['errors' => ['method' => ['Pick a method that suits the crop.']]], 422);
         }
 
-        $price = AiPrices::of('protocol');
+        // The price the page showed is the price charged (a page that sends `quote` must match it).
+        $quote = AiPricing::quote('protocol');
+        $price = AiPricing::agreed($request, $quote, $quote['credits']);
+        if ($price === null) {
+            return $this->json(false, 'This protocol now costs ' . $quote['credits'] . ' credits. Please run it again.', ['quote' => $quote['credits']], 409);
+        }
         $balance = $this->credits->balance($payer->id);
         if ($balance < $price && ! $this->credits->unlimited($payer->id)) {
             return $this->json(false, 'You need ' . $price . ' credits for this protocol and have '
@@ -392,18 +399,18 @@ class CropProtocolController extends Controller
                 'pending' => true, 'id' => $id,
             ]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $prompt, $p);
+            $this->runJob($id, (int) $payer->id, $settings, $prompt, $p, $price);
             exit;
         }
 
         @set_time_limit(900);
-        $this->runJob($id, (int) $payer->id, $settings, $prompt, $p);
+        $this->runJob($id, (int) $payer->id, $settings, $prompt, $p, $price);
 
         return $this->jobState($id);
     }
 
     /** The research, the document, and the charge, off the request's clock. */
-    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p, int $price): void
     {
         /* The heartbeat: before every call to the model the row says which
          * phase it is in and touches updated_at. No single call may run
@@ -430,12 +437,14 @@ class CropProtocolController extends Controller
             $report['webSources'] = $result['sources'];
             $report['searched'] = (bool) $result['searched'];
 
-            $charged = (float) AiPrices::of('protocol');
+            // The price agreed when the run began.
+            $charged = (float) $price;
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $crop = CropCatalog::CROPS[$p['crop']] ?? ['label' => 'Crop'];
             $note = AiUsage::record('protocol', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
                 mb_substr('Crop Protocol Analysis: ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
+            AiPricing::audit('protocol', $result, $charged, [], $settings);
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),

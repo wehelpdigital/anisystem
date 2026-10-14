@@ -30,6 +30,10 @@
     .wtp-quote { border-radius: .9rem; margin-bottom: 1rem; overflow: hidden;
         background: linear-gradient(115deg, #f3f8ec, #e4efd4); border: 1px solid #cfe3b8; }
     .wtp-quote b { color: #2d5016; }
+    /* A price that moved (a variety named or cleared) lifts once as it changes. */
+    .wtp-quote b.is-new { display: inline-block; animation: wtpPriceIn .28s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes wtpPriceIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .wtp-quote b.is-new { animation: none; } }
     .q-head { display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left;
         padding: .7rem .9rem; cursor: pointer; }
     .q-head .q-ico { font-size: 1.15rem; flex: none; }
@@ -934,6 +938,31 @@
     let quoteMin = false;
     try { quoteMin = localStorage.getItem(QUOTE_MIN_KEY) === '1'; } catch (_) { /* opens full */ }
 
+    /* The price that applies right now (App\Support\AiPricing): naming a
+       variety adds Anee's own research on it, so it has its own price. This
+       is the number shown, and the number sent back as `quote` on the run. */
+    const named = () => !!String(state.variety || '').trim();
+    const priceNow = () => {
+        const f = OPT && OPT.quoteFor;
+        if (!f) return OPT ? OPT.quote : null;
+        return named() ? f.variety : f.plain;
+    };
+    let saidPrice = null;
+    function sayPrice() {
+        if (!OPT || !OPT.canUse || !OPT.quote) return;
+        const price = priceNow();
+        const f = OPT.quoteFor || {};
+        // A price that moved (a variety named or cleared) is said with a small lift, not swapped in silently.
+        const lift = saidPrice !== null && saidPrice !== price ? ' class="is-new"' : '';
+        saidPrice = price;
+        const lead = named()
+            ? `With a variety named, one analysis costs <b${lift}>${price} credits</b>.`
+            : `One analysis costs <b${lift}>${price} credits</b>` + (f.variety && f.variety > price ? `, or ${f.variety} when you name a variety, since Anee reads up on it too.` : '.');
+        $id('wtpQuoteCost').innerHTML = `${lead} You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
+        // The folded card still says the one number that matters.
+        $id('wtpQuoteHint').textContent = `${price} credits`;
+    }
+
     function paintQuote() {
         const q = $id('wtpQuote');
         if (!OPT) return;
@@ -948,10 +977,8 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('wtpQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('wtpQuoteCost').innerHTML = `One analysis costs <b>${OPT.quote} credits</b>. You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
+        sayPrice();
         $id('wtpQuoteTreat').hidden = false;
-        // The folded card still says the one number that matters.
-        $id('wtpQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }
 
@@ -1014,7 +1041,7 @@
             + (state.problems.length ? `<br><span class="text-xs">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '')
             + ((state.soil.length || state.ph) ? `<br><span class="text-xs">Soil: ${esc([...state.soil.map((k) => ((OPT.soilConditions || {})[k] || k).split(' — ')[0]), state.ph ? 'pH ' + state.ph : ''].filter(Boolean).join(', '))}</span>` : '')
             + (FPC && FPC.count() ? `<br><span class="text-xs">Your field in detail: ${FPC.count()} answer${FPC.count() === 1 ? '' : 's'}</span>` : '');
-        $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
+        $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${priceNow()} credits)` : 'Run the analysis';
         $id('wtpRunFine').textContent = OPT.canUse
             ? 'Paid from your AI credits. It shows in your credit log.'
             : (OPT.whyNot || '');
@@ -1077,6 +1104,8 @@
         state.variety = (name || '').trim();
         state.varRecord = rec ? Object.assign({ crop: state.crop }, rec) : null;
         varSay();
+        // A named variety has its own price: the card above says it at once.
+        sayPrice();
     }
     $id('wtpVarBtn').addEventListener('click', async () => {
         if (!window.aneeVarietyPick) return;
@@ -1188,6 +1217,8 @@
                 soilConditions: state.soil, phValue: state.ph === '' ? null : Number(state.ph),
                 country: state.country, ...(FPC ? FPC.payload() : {}),
                 varietyRecord: state.varRecord ? { name: state.varRecord.name, days: state.varRecord.days || null } : null,
+                // The price this page showed: the server charges exactly it, or says the new one.
+                quote: priceNow(),
             } });
             let data = res.data;
             /* The server answers at once and works after the reply; the page
@@ -1208,6 +1239,13 @@
             toast(`Done. ${data.charged} credits used.`);
             loadSavedQuietly();
         } catch (err) {
+            // The price moved since the page loaded: the card says the new one, and the next press pays it.
+            if (err.status === 409 && err.data && Number(err.data.quote) > 0) {
+                const fresh = Number(err.data.quote);
+                if (OPT.quoteFor) OPT.quoteFor[named() ? 'variety' : 'plain'] = fresh;
+                if (!named()) OPT.quote = fresh;
+                sayPrice();
+            }
             toast(err.message, 'error');
         } finally {
             if (!landed) window.aneeWait.fail();

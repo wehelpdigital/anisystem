@@ -8,6 +8,7 @@ use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Services\WeatherService;
 use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropCatalog;
 use App\Support\FieldProfile;
@@ -49,6 +50,9 @@ class VarietyAnalysisController extends Controller
 {
     /** The house's flat price for one analysis, in credits. */
     public const PRICE = AiPrices::DEFAULTS['variety'];
+
+    /** The most varieties one run can name: the one price the page shows is the engine's quote at this size. */
+    private const PRICE_VARIETIES = 8;
 
     /** The four things a farmer weighs a variety by, in the order they are offered. */
     public const PRIORITIES = [
@@ -130,7 +134,8 @@ class VarietyAnalysisController extends Controller
             'problems' => self::PROBLEMS,
             'priorities' => self::PRIORITIES,
             'weights' => self::WEIGHTS,
-            'quote' => $canUse ? (float) AiPrices::of('variety') : null,
+            // One price for any number of varieties named (App\Support\AiPricing): the engine's quote at the most a run can name.
+            'quote' => $canUse ? (float) AiPricing::credits('variety', ['varieties' => self::PRICE_VARIETIES]) : null,
             'aneeFace' => $settings->faceUrl(),
             'balance' => round($this->credits->balance($payer->id), 2),
             'unlimited' => $this->credits->unlimited((int) $payer->id),
@@ -181,7 +186,15 @@ class VarietyAnalysisController extends Controller
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
         }
 
-        $price = AiPrices::of('variety');
+        /* The price the page showed is the price charged: one price for any
+           number of varieties. A page that sends the quote for its own count
+           must match it. */
+        $named = count((array) $request->input('varieties', []));
+        $quote = AiPricing::quote('variety', ['varieties' => $named]);
+        $price = AiPricing::agreed($request, $quote, AiPricing::credits('variety', ['varieties' => self::PRICE_VARIETIES]));
+        if ($price === null) {
+            return $this->json(false, 'This research now costs ' . $quote['credits'] . ' credits. Please run it again.', ['quote' => $quote['credits']], 409);
+        }
         $balance = $this->credits->balance($payer->id);
         if ($balance < $price && ! $this->credits->unlimited($payer->id)) {
             return $this->json(false, 'You need ' . $price . ' credits for this analysis and have '
@@ -244,19 +257,19 @@ class VarietyAnalysisController extends Controller
                 'pending' => true, 'id' => $id,
             ]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $prompt, $p);
+            $this->runJob($id, (int) $payer->id, $settings, $prompt, $p, $price);
             exit;
         }
 
         // Inline (no FPM): the research step alone may take a few minutes.
         @set_time_limit(900);
-        $this->runJob($id, (int) $payer->id, $settings, $prompt, $p);
+        $this->runJob($id, (int) $payer->id, $settings, $prompt, $p, $price);
 
         return $this->jobState($id);
     }
 
     /** The model call — with the web open — and the charge, off the request's clock. */
-    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p, int $price): void
     {
         /* The heartbeat: before every call to the model the row says which
          * phase it is in and touches updated_at, so the page can show a
@@ -283,12 +296,14 @@ class VarietyAnalysisController extends Controller
             $report['webSources'] = $result['sources'];
             $report['searched'] = (bool) $result['searched'];
 
-            $charged = (float) AiPrices::of('variety');
+            // The price agreed when the run began.
+            $charged = (float) $price;
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $crop = CropCatalog::CROPS[$p['crop']] ?? ['label' => 'Crop'];
             $note = AiUsage::record('variety', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
                 mb_substr('Variety Ranking: ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
+            AiPricing::audit('variety', $result, $charged, ['varieties' => count((array) ($p['varieties'] ?? []))], $settings);
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),

@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Services\FieldHealth;
-use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropCatalog;
 use App\Support\EnsoOutlook;
@@ -42,7 +42,7 @@ use Illuminate\Support\Facades\Validator;
  *      write the analysis: health, stand and spacing, disease risk, threats,
  *      soil, and what to do.
  *
- * Flat priced (AiPrices 'satellite'), charged only when the report lands.
+ * Priced by the engine (AiPricing 'satellite'), charged only when the report lands.
  * Rows live on the analyses shelf (as_plant_analyses, kind 'satellite').
  */
 class SatelliteController extends Controller
@@ -112,7 +112,8 @@ class SatelliteController extends Controller
             'water' => self::WATER,
             'methods' => self::METHODS,
             'soilConditions' => SoilConditions::OPTIONS,
-            'quote' => $canUse ? AiPrices::of(self::KIND) : null,
+            // The engine's quote (App\Support\AiPricing): one size, today's flat price unless the cost says more.
+            'quote' => $canUse ? AiPricing::credits(self::KIND) : null,
             'balance' => round($this->credits->balance($payer->id), 2),
             'unlimited' => $this->credits->unlimited((int) $payer->id),
             'canUse' => $canUse,
@@ -178,7 +179,13 @@ class SatelliteController extends Controller
             return $this->json(false, 'Draw the field with at least three corners inside the Philippines.', [], 422);
         }
 
-        $price = (float) AiPrices::of(self::KIND);
+        // The price the page showed is the price charged (a page that sends `quote` must match it).
+        $quote = AiPricing::quote(self::KIND);
+        $agreed = AiPricing::agreed($request, $quote, $quote['credits']);
+        if ($agreed === null) {
+            return $this->json(false, 'This analysis now costs ' . $quote['credits'] . ' credits. Please run it again.', ['quote' => $quote['credits']], 409);
+        }
+        $price = (float) $agreed;
         if ($this->credits->balance($payer->id) < $price && ! $this->credits->unlimited($payer->id)) {
             return $this->json(false, 'You need ' . ceil($price) . ' credits for this analysis and have '
                 . number_format((int) floor($this->credits->balance($payer->id))) . '.', ['outOfCredits' => true], 402);
@@ -220,11 +227,11 @@ class SatelliteController extends Controller
             @set_time_limit(0);
             response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $id]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $p);
+            $this->runJob($id, (int) $payer->id, $settings, $p, $price);
             exit;
         }
         @set_time_limit(900);
-        $this->runJob($id, (int) $payer->id, $settings, $p);
+        $this->runJob($id, (int) $payer->id, $settings, $p, $price);
 
         return $this->jobState($id);
     }
@@ -253,7 +260,7 @@ class SatelliteController extends Controller
         return count($out) >= 4 ? $out : null;
     }
 
-    private function runJob(int $id, int $payerId, AiSetting $settings, array $p): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, array $p, float $price): void
     {
         $beat = function (string $phase, int $try = 1) use ($id): void {
             DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')
@@ -302,10 +309,12 @@ class SatelliteController extends Controller
                 'searched' => (bool) ($result['searched'] ?? false),
             ];
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
-            $charged = (float) AiPrices::of(self::KIND);
+            // The price agreed when the run began.
+            $charged = $price;
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
                 mb_substr('Satellite Analysis: ' . CropCatalog::label($p['crop']) . ', ' . $p['location'] . $note, 0, 250));
+            AiPricing::audit(self::KIND, $result, $charged, [], $settings);
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report), 'credits' => round($charged, 2), 'status' => 'ready', 'error' => null, 'updated_at' => now(),
             ]);

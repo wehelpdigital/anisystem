@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AiSetting;
 use App\Models\User;
 use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
@@ -108,6 +109,10 @@ class WhenToPlantController extends Controller
             'monthsAhead' => self::MONTHS_AHEAD,
             'maxSpan' => self::MAX_SPAN,
             'quote' => $canUse ? $this->quote($settings) : null,
+            // The price by what is asked (App\Support\AiPricing): a named variety
+            // adds Anee's own research on it, so it has its own price. The page
+            // shows the one that applies and sends it back as `quote` on the run.
+            'quoteFor' => $canUse ? ['plain' => AiPricing::credits('wtp'), 'variety' => AiPricing::credits('wtp', ['variety' => true])] : null,
             'aneeFace' => $settings->faceUrl(),
             'balance' => round($this->credits->balance($payer->id), 2),
             // A super admin's wallet has no floor — the note says infinity
@@ -128,12 +133,13 @@ class WhenToPlantController extends Controller
 
     /**
      * The standing price, quoted before anything is spent — one number,
-     * shown up front, so the farmer decides with it in hand. Flat, not
-     * metered: the number said first is exactly the number charged.
+     * shown up front, so the farmer decides with it in hand. Not metered:
+     * the number said first is exactly the number charged. The engine's
+     * quote for a run with no variety named (App\Support\AiPricing).
      */
     private function quote(AiSetting $settings): float
     {
-        return (float) AiPrices::of('wtp');
+        return (float) AiPricing::credits('wtp');
     }
 
     /** Run the analysis. Nothing is saved unless the farmer asks to keep it. */
@@ -200,8 +206,14 @@ class WhenToPlantController extends Controller
 
         // The wall asks for the number the farmer was TOLD, not the smaller
         // chat-sized estimate — a quote passed and then doubled is a lie.
+        // A page that sends `quote` (the plain or the variety price it showed)
+        // must match it; an older page is charged the plain price it showed.
         $balance = $this->credits->balance($payer->id);
-        $estimate = $this->quote($settings);
+        $quote = AiPricing::quote('wtp', ['variety' => trim((string) $request->input('variety', '')) !== '']);
+        $estimate = AiPricing::agreed($request, $quote, (int) $this->quote($settings));
+        if ($estimate === null) {
+            return $this->json(false, 'This analysis now costs ' . $quote['credits'] . ' credits. Please run it again.', ['quote' => $quote['credits']], 409);
+        }
         if ($balance < $estimate && ! $this->credits->unlimited($payer->id)) {
             return $this->json(false, 'You need ' . ceil($estimate) . ' credits for this analysis and have '
                 . number_format((int) floor($balance)) . '.',
@@ -253,18 +265,18 @@ class WhenToPlantController extends Controller
                 'pending' => true, 'id' => $id,
             ]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $prompt, $p);
+            $this->runJob($id, (int) $payer->id, $settings, $prompt, $p, $estimate);
             exit;
         }
 
         @set_time_limit(600);
-        $this->runJob($id, (int) $payer->id, $settings, $prompt, $p);
+        $this->runJob($id, (int) $payer->id, $settings, $prompt, $p, $estimate);
 
         return $this->jobState($id);
     }
 
     /** The model call and the charge, off the request's clock. */
-    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p = []): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p, int $price): void
     {
         /* The heartbeat: before every call to the model the row says which
          * phase it is in and touches updated_at, so the page can move its
@@ -305,12 +317,14 @@ class WhenToPlantController extends Controller
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $p = json_decode((string) ($row->params ?? '[]'), true) ?: [];
             $crop = CropCatalog::CROPS[$p['crop'] ?? ''] ?? ['label' => 'Crop'];
-            // The flat price, exactly as quoted — never the meter's smaller
-            // figure, and never a surprise above the number the farmer read.
-            $charged = (float) AiPrices::of('wtp');
+            // The price agreed when the run began, exactly as quoted — never
+            // the meter's smaller figure, and never a surprise above the
+            // number the farmer read.
+            $charged = (float) $price;
             $note = AiUsage::record('wtp', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
                 mb_substr('When to Plant analysis: ' . $crop['label'] . ', ' . ($p['year'] ?? '') . $note, 0, 250));
+            AiPricing::audit('wtp', $result, $charged, ['variety' => trim((string) ($p['variety'] ?? '')) !== ''], $settings);
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),
