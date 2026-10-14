@@ -8,7 +8,7 @@ use App\Models\AsProtocolVersion;
 use App\Models\User;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
-use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropStages;
 use App\Support\EnsoOutlook;
@@ -52,8 +52,11 @@ class ProtocolNpkController extends Controller
         $payer = $this->payer();
         $credits = app(AiCreditService::class);
 
-        return $this->json(true, 'ok', self::plan($p, $area) + [
-            'price' => AiPrices::of(self::KIND),
+        $plan = self::plan($p, $area);
+
+        return $this->json(true, 'ok', $plan + [
+            // The engine's quote for this protocol's fertilizer tasks (App\Support\AiPricing); the flat price unless the cost says more.
+            'price' => AiPricing::credits(self::KIND, ['tasks' => count($plan['tasks'])]),
             'balance' => round((float) $credits->balance($payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'canUse' => Tier::farmCan('aiAnalyses') && $payer->canUseAi() && AiSetting::current()->isUsable(),
@@ -183,7 +186,13 @@ class ProtocolNpkController extends Controller
         if (! $plan['tasks']) {
             return $this->json(false, 'No fertilizer is in this protocol yet. Add the fertilizer to its tasks first.', [], 422);
         }
-        $price = (float) AiPrices::of(self::KIND);
+        // The price the sheet showed (the same protocol, the same tasks) is the price charged; a page that sends `quote` must match it.
+        $quote = AiPricing::quote(self::KIND, ['tasks' => count($plan['tasks'])]);
+        $agreed = AiPricing::agreed($request, $quote, $quote['credits']);
+        if ($agreed === null) {
+            return $this->json(false, 'This reading now costs ' . $quote['credits'] . ' credits. Please run it again.', ['quote' => $quote['credits']], 409);
+        }
+        $price = (float) $agreed;
         $credits = app(AiCreditService::class);
         if ($credits->balance($payer->id) < $price && ! $credits->unlimited((int) $payer->id)) {
             return $this->json(false, 'You need ' . ceil($price) . ' credits for this reading and have ' . number_format((int) floor($credits->balance($payer->id))) . '.', ['outOfCredits' => true], 402);
@@ -205,16 +214,16 @@ class ProtocolNpkController extends Controller
             @set_time_limit(0);
             response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $rid]])->send();
             fastcgi_finish_request();
-            $this->run($rid, (int) $payer->id, $settings, $plan, $ask);
+            $this->run($rid, (int) $payer->id, $settings, $plan, $ask, $price);
             exit;
         }
         @set_time_limit(400);
-        $this->run($rid, (int) $payer->id, $settings, $plan, $ask);
+        $this->run($rid, (int) $payer->id, $settings, $plan, $ask, $price);
 
         return $this->job($rid);
     }
 
-    private function run(int $id, int $payerId, AiSetting $settings, array $plan, array $ask): void
+    private function run(int $id, int $payerId, AiSetting $settings, array $plan, array $ask, float $price): void
     {
         $beat = function (string $phase, int $try = 1) use ($id): void {
             DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update(['report' => json_encode(['phase' => $phase, 'try' => $try]), 'updated_at' => now()]);
@@ -226,10 +235,11 @@ class ProtocolNpkController extends Controller
                 Log::warning('npkproto: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
                 throw new \RuntimeException($result['error'] ?? 'The reading could not be read. Nothing was charged. Please try again.');
             }
-            $price = (float) AiPrices::of(self::KIND);
+            // The price agreed when the run began.
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
             app(AiCreditService::class)->chargeAllowingNegative($payerId, $price, mb_substr('NPK Plus reading: ' . $plan['protocol']['title'] . $note, 0, 250));
+            AiPricing::audit(self::KIND, $result, $price, ['tasks' => count($plan['tasks'])], $settings);
             $report = ['format' => 1, 'anee' => $result['data'], 'plan' => $plan, 'at' => now('Asia/Manila')->format('M j, Y g:i A')];
             DB::table('as_plant_analyses')->where('id', $id)->update(['report' => json_encode($report), 'credits' => round($price, 2), 'status' => 'ready', 'error' => null, 'updated_at' => now()]);
         } catch (\Throwable $e) {

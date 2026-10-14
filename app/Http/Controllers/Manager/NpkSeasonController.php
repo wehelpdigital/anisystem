@@ -7,6 +7,7 @@ use App\Models\AsCroppingSchedule;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropStages;
 use App\Support\EnsoOutlook;
@@ -51,7 +52,8 @@ class NpkSeasonController extends BaseScheduleController
 
         return $this->jsonOk('ok', ['data' => [
             'lots' => self::season($schedule),
-            'price' => AiPrices::of(self::KIND),
+            // Per lot: the page shows price x the lots picked. AiPricing::linearPrice keeps every size at or above the engine's quote.
+            'price' => AiPricing::linearPrice(self::KIND),
             'balance' => round((float) $credits->balance($payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'locked' => ! Tier::scheduleCan($schedule, 'ai'),
@@ -194,7 +196,14 @@ class NpkSeasonController extends BaseScheduleController
         if (! collect($lots)->contains(fn ($l) => $l['lines'])) {
             return $this->jsonFail('No fertilizer is on these lots yet. Add the materials to the fertilizer tasks first.', 422);
         }
-        $price = (float) AiPrices::of(self::KIND) * count($lots);
+        // The price the page showed (per lot x lots) is the price charged; a page that sends `quote` must match it.
+        $perLot = AiPricing::linearPrice(self::KIND);
+        $quoted = $perLot * count($lots);
+        $agreed = AiPricing::agreed($request, ['credits' => $quoted], $quoted);
+        if ($agreed === null) {
+            return $this->jsonFail('This reading now costs ' . $perLot . ' credits per lot. Please run it again.', 409, ['quote' => $quoted, 'price' => $perLot]);
+        }
+        $price = (float) $agreed;
         if ($credits->balance($payer->id) < $price && ! $credits->unlimited((int) $payer->id)) {
             return $this->jsonFail('You need ' . ceil($price) . ' credits for ' . count($lots) . ' lot' . (count($lots) === 1 ? '' : 's') . ' and have '
                 . number_format((int) floor($credits->balance($payer->id))) . '.', 402, ['outOfCredits' => true]);
@@ -216,16 +225,16 @@ class NpkSeasonController extends BaseScheduleController
             @set_time_limit(0);
             response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $id]])->send();
             fastcgi_finish_request();
-            $this->run($id, (int) $payer->id, $settings, $schedule, $lots, $notes);
+            $this->run($id, (int) $payer->id, $settings, $schedule, $lots, $notes, $price);
             exit;
         }
         @set_time_limit(400);
-        $this->run($id, (int) $payer->id, $settings, $schedule, $lots, $notes);
+        $this->run($id, (int) $payer->id, $settings, $schedule, $lots, $notes, $price);
 
         return $this->job($id);
     }
 
-    private function run(int $id, int $payerId, AiSetting $settings, AsCroppingSchedule $schedule, array $lots, string $notes): void
+    private function run(int $id, int $payerId, AiSetting $settings, AsCroppingSchedule $schedule, array $lots, string $notes, float $price): void
     {
         $beat = function (string $phase, int $try = 1) use ($id): void {
             DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update(['report' => json_encode(['phase' => $phase, 'try' => $try]), 'updated_at' => now()]);
@@ -239,11 +248,12 @@ class NpkSeasonController extends BaseScheduleController
                 Log::warning('npkplan: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
                 throw new \RuntimeException($result['error'] ?? 'The reading could not be read. Nothing was charged. Please try again.');
             }
-            $price = (float) AiPrices::of(self::KIND) * count($lots);
+            // The price agreed when the run began.
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
             app(AiCreditService::class)->chargeAllowingNegative($payerId, $price,
                 mb_substr('NPK Plus reading: ' . $schedule->title . ' · ' . count($lots) . ' lot' . (count($lots) === 1 ? '' : 's') . $note, 0, 250));
+            AiPricing::audit(self::KIND, $result, $price, ['lots' => count($lots)], $settings);
             $report = ['format' => 1, 'anee' => $result['data'], 'lots' => array_map(fn ($l) => array_diff_key($l, array_flip(['lat', 'lng'])), $lots),
                 'at' => now('Asia/Manila')->format('M j, Y g:i A')];
             DB::table('as_plant_analyses')->where('id', $id)->update(['report' => json_encode($report), 'credits' => round($price, 2), 'status' => 'ready', 'error' => null, 'updated_at' => now()]);

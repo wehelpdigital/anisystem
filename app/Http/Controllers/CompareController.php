@@ -11,7 +11,7 @@ use App\Models\AsScheduleLot;
 use App\Models\User;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
-use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropStages;
 use App\Support\Region;
@@ -250,7 +250,8 @@ class CompareController extends BaseScheduleController
                 'since' => $s->created_at?->format('M Y'),
                 'counts' => (object) ($counts[(int) $s->id] ?? []),
             ])->values(),
-            'price' => AiPrices::of('compare'),
+            // The engine's quote (App\Support\AiPricing): today's flat price unless the cost says more.
+            'price' => AiPricing::credits('compare'),
             'balance' => round($credits->balance((int) $payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'canUseAi' => $payer->canUseAi() && AiSetting::current()->isUsable(),
@@ -354,7 +355,12 @@ class CompareController extends BaseScheduleController
         if (! $payer->canUseAi() || ! $settings->isUsable()) {
             return $this->jsonFail('Anee\'s read needs Anee on the farm\'s plan. You can still compare without her, for free.', 403);
         }
-        $price = AiPrices::of('compare');
+        // The price the summary showed is the price charged (a page that sends `quote` must match it).
+        $quote = AiPricing::quote('compare');
+        $price = AiPricing::agreed($request, $quote, $quote['credits']);
+        if ($price === null) {
+            return $this->jsonFail('Anee\'s read now costs ' . $quote['credits'] . ' credits. Please run it again.', 409, ['quote' => $quote['credits']]);
+        }
         $balance = $credits->balance((int) $payer->id);
         if ($balance < $price && ! $credits->unlimited((int) $payer->id)) {
             return $this->jsonFail('Anee\'s read costs ' . $price . ' credits and '
@@ -452,6 +458,7 @@ class CompareController extends BaseScheduleController
             $note = AiUsage::record('compare', (int) $row->userId, $payerId, $id, $settings, $result, $price);
             $credits->chargeAllowingNegative($payerId, (float) $price,
                 mb_substr('Comparison analysis: ' . mb_substr((string) $row->title, 0, 140) . $note, 0, 250));
+            AiPricing::audit('compare', $result, (float) $price, [], $settings);
 
             $rep = (array) $row->report;
             $rep['analysis'] = $analysis;

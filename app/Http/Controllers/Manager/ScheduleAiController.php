@@ -428,6 +428,8 @@ class ScheduleAiController extends BaseScheduleController
         ]);
         $a->setRelation('author', $owner);
         $newBalance = $this->credits->chargeAllowingNegative($ownerId, $charged, 'Team chat with Anee: ' . Str::limit($schedule->title, 50), $a->id);
+        // Metered per token: the guard logs an answer that came in under the margin floor (App\Support\AiPricing).
+        \App\Support\AiPricing::audit('chat', $result, (float) $charged, [], $settings);
 
         $aShaped = $this->shape($a, $askerId);
         $aShaped['balance'] = $newBalance;

@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\Schema;
  *
  * THE PRICE IS CHECKED, NOT ASSUMED. AiPrices 'skypass' is the owner's
  * price (30 by default, editable in the mother app). price() never sells
- * below floor(): what a pass used to its fair use limit costs the house,
- * at today's list prices, plus a margin, in credits at the cheapest a
- * credit is ever sold. Today that is about 27 credits, so 30 stands; if a
- * cost rises or the owner's price is set too low, the floor wins.
+ * below floor(). Since 2026-10-15 the floor is the pricing engine's quote
+ * (App\Support\AiPricing, kind 'skypass'): what a week costs the house at
+ * the openings a pass really sees (the 90th percentile of the passes that
+ * ended, the model's own number until ten have), at list prices, times the
+ * owner's margin (8x by default, never under 6x) over the cheapest a credit
+ * is sold. With the engine switched off it is the old floor: a pass used to
+ * its fair use limit, plus MARGIN.
  */
 final class SkyPass
 {
@@ -45,6 +48,9 @@ final class SkyPass
 
     public static function floor(): int
     {
+        if (AiPricing::settings()['on']) {
+            return AiPricing::credits('skypass');
+        }
         $cost = array_sum(self::COST_PER_OPEN) * self::FAIR_OPENS * self::MARGIN;
 
         return (int) ceil($cost / self::CREDIT_PESO_FLOOR);

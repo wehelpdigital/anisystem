@@ -9,6 +9,7 @@ use App\Models\AsInventoryMove;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\Tier;
 use Illuminate\Http\Request;
@@ -579,6 +580,12 @@ class FarmReportController extends BaseScheduleController
         return view('sm.anee-report', ['schedule' => $schedule, 'kind' => 'sofar']);
     }
 
+    /** The size the report is priced by: one lot when one is asked about, else every lot of the season. */
+    private function aneeLots(\App\Models\AsCroppingSchedule $schedule, int $lotId): int
+    {
+        return $lotId > 0 ? 1 : max(1, (int) $schedule->lots()->count());
+    }
+
     /** Readiness: what blocks a run, what only footnotes it, and the wallet. */
     public function aneeStatus(Request $request)
     {
@@ -597,7 +604,10 @@ class FarmReportController extends BaseScheduleController
 
         return $this->jsonOk('ok', ['data' => [
             'kind' => $kind,
-            'price' => AiPrices::of($kind === 'sofar' ? 'sofar' : 'season'),
+            // What the page shows and charges (sm/anee-report renders the flat price); `quote` is the
+            // engine's figure for this season's size (App\Support\AiPricing) for a page that sends it back.
+            'price' => AiPrices::of($kind),
+            'quote' => AiPricing::credits($kind, ['lots' => $this->aneeLots($schedule, (int) $request->query('lotId', 0))]),
             'balance' => round($credits->balance($payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'blockers' => $blockers,
@@ -662,7 +672,14 @@ class FarmReportController extends BaseScheduleController
             return $this->jsonFail('Not ready: ' . implode(' ', $blockers), 422);
         }
 
-        $price = AiPrices::of($kind === 'sofar' ? 'sofar' : 'season');
+        /* The price said before the run is the price charged. The report page
+           shows today's flat price (sm/anee-report); a page that sends the
+           engine's `quote` back is charged that, and a stale one is refused. */
+        $quote = AiPricing::quote($kind, ['lots' => $this->aneeLots($schedule, $lotId)]);
+        $price = AiPricing::agreed($request, $quote, AiPrices::of($kind));
+        if ($price === null) {
+            return $this->jsonFail('This report now costs ' . $quote['credits'] . ' credits. Please run it again.', 409, ['quote' => $quote['credits']]);
+        }
         $balance = $credits->balance($payer->id);
         if ($balance < $price && ! $credits->unlimited((int) $payer->id)) {
             return $this->jsonFail('You need ' . $price . ' credits for this report and have '
@@ -754,6 +771,7 @@ class FarmReportController extends BaseScheduleController
             $note = AiUsage::record($row->kind === 'sofar' ? 'sofar' : 'season', (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
             $credits->chargeAllowingNegative($payerId, (float) $price,
                 mb_substr(($row->kind === 'sofar' ? 'Analyze So Far report' : 'Anee Season Report') . ': ' . mb_substr((string) $row->title, 0, 120) . $note, 0, 250));
+            AiPricing::audit($row->kind === 'sofar' ? 'sofar' : 'season', $result, (float) $price, [], $settings);
 
             $row->update([
                 'report' => $report,

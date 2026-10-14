@@ -8,6 +8,7 @@ use App\Models\AsScheduleLot;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropStages;
 use App\Support\LotCalendar;
@@ -61,7 +62,10 @@ class GrowthRealignController extends BaseScheduleController
         $credits = app(AiCreditService::class);
 
         return $this->jsonOk('ok', ['data' => [
+            // What the sheet shows and charges (sm/partials/growth-realign renders the flat price);
+            // `quote` is the engine's figure (App\Support\AiPricing) for a sheet that sends it back.
             'price' => AiPrices::of('realign'),
+            'quote' => AiPricing::credits('realign'),
             'balance' => (float) $credits->balance($payer->id),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'locked' => ! Tier::scheduleCan($schedule, 'ai'),
@@ -94,9 +98,17 @@ class GrowthRealignController extends BaseScheduleController
         if (! $reading) {
             return $this->jsonFail($this->whyNot($lot) ?: 'This lot cannot be read yet.', 422);
         }
+        /* The price said before the run is the price charged: the sheet shows
+           today's flat price; a sheet that sends the engine's `quote` back is
+           charged that, and a stale one is refused. */
+        $quote = AiPricing::quote('realign');
+        $price = AiPricing::agreed($request, $quote, AiPrices::of('realign'));
+        if ($price === null) {
+            return $this->jsonFail('Realign by Anee now costs ' . $quote['credits'] . ' credits. Please run it again.', 409, ['quote' => $quote['credits']]);
+        }
         $balance = $credits->balance($payer->id);
-        if ($balance < AiPrices::of('realign') && ! $credits->unlimited((int) $payer->id)) {
-            return $this->jsonFail('You need ' . AiPrices::of('realign') . ' credits for this and have '
+        if ($balance < $price && ! $credits->unlimited((int) $payer->id)) {
+            return $this->jsonFail('You need ' . $price . ' credits for this and have '
                 . number_format((int) floor($balance)) . '.', 402, ['outOfCredits' => true]);
         }
 
@@ -126,12 +138,12 @@ class GrowthRealignController extends BaseScheduleController
             @set_time_limit(0);
             response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $row->id]])->send();
             fastcgi_finish_request();
-            $this->run($row->id, (int) $payer->id, $settings, $prompt, $reading);
+            $this->run($row->id, (int) $payer->id, $settings, $prompt, $reading, $price);
             exit;
         }
 
         @set_time_limit(300);
-        $this->run($row->id, (int) $payer->id, $settings, $prompt, $reading);
+        $this->run($row->id, (int) $payer->id, $settings, $prompt, $reading, $price);
 
         return $this->job($row->id);
     }
@@ -233,7 +245,7 @@ class GrowthRealignController extends BaseScheduleController
     /* ------------------------------------------------------------------ */
 
     /** The model call, the charge, and the answer written onto the lot. */
-    private function run(int $id, int $payerId, AiSetting $settings, string $prompt, array $reading): void
+    private function run(int $id, int $payerId, AiSetting $settings, string $prompt, array $reading, int $price): void
     {
         $ai = app(AiClient::class);
         $credits = app(AiCreditService::class);
@@ -249,10 +261,11 @@ class GrowthRealignController extends BaseScheduleController
             $lot = AsScheduleLot::findOrFail($row->lotId);
             $applied = $this->apply($lot, $reading, $found, $row);
 
-            $price = AiPrices::of('realign');
+            // The price agreed when the run began, not a number read again now.
             $note = AiUsage::record('realign', (int) $row->userId, $payerId, $id, $settings, $result, $price);
             $credits->chargeAllowingNegative($payerId, (float) $price,
                 mb_substr('Realign by Anee: ' . mb_substr((string) $lot->lotName, 0, 80) . ' · ' . $row->asOf?->format('M j, Y') . $note, 0, 250));
+            AiPricing::audit('realign', $result, (float) $price, [], $settings);
 
             $row->update(['result' => $applied, 'credits' => $price, 'status' => 'ready', 'error' => null]);
         } catch (\Throwable $e) {

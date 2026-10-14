@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Services\WeatherService;
-use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropCatalog;
 use App\Support\CropVarieties;
@@ -124,8 +124,12 @@ class LandPrepController extends Controller
             'reasons' => LP::REASONS,
             'today' => now('Asia/Manila')->toDateString(),
             'ph' => \App\Support\Region::ph(),
-            'quote' => $canUse ? AiPrices::of(self::KIND) : null,
-            'price' => AiPrices::of(self::KIND),
+            // What the page shows and charges today: the engine's quote for one lot (App\Support\AiPricing).
+            'quote' => $canUse ? AiPricing::credits(self::KIND, ['lots' => 1]) : null,
+            'price' => AiPricing::credits(self::KIND, ['lots' => 1]),
+            // The plan's price by its size, for a page that shows it and sends `quote` back on the run:
+            // quoteFor[lots] = [plain, with the variety lookup].
+            'quoteFor' => $this->quoteTable(),
             'balance' => round($this->credits->balance($payer->id), 2),
             'unlimited' => $this->credits->unlimited((int) $payer->id),
             'canUse' => $canUse,
@@ -245,7 +249,9 @@ class LandPrepController extends Controller
         if (is_string($case)) {
             return $this->json(false, $case, [], 422);
         }
-        $out = ['time' => LP::timeCheck($case), 'dayWord' => LP::dayWord($case['crop'], $case['method'])];
+        $out = ['time' => LP::timeCheck($case), 'dayWord' => LP::dayWord($case['crop'], $case['method']),
+            // This plan's price by its size (lots, and the variety lookup when the variety is not on our list).
+            'quote' => AiPricing::credits(self::KIND, ['lots' => max(1, count($case['lots'] ?? [])), 'research' => ! empty($case['varietyCustom'])])];
         if ($request->boolean('advise')) {
             $out['crew'] = LP::recommendCrew($case);
         }
@@ -267,7 +273,15 @@ class LandPrepController extends Controller
         if (is_string($case)) {
             return $this->json(false, $case, [], 422);
         }
-        $price = AiPrices::of(self::KIND);
+        /* The price said before the run is the price charged. The page shows
+           one price (the options quote, one lot) and is charged it; a page
+           that sends the quote for this plan's size (lots, variety lookup)
+           is charged that, and a stale one is refused. */
+        $quote = AiPricing::quote(self::KIND, ['lots' => count($case['lots']), 'research' => ! empty($case['varietyCustom'])]);
+        $price = AiPricing::agreed($request, $quote, AiPricing::credits(self::KIND, ['lots' => 1]));
+        if ($price === null) {
+            return $this->json(false, 'This plan now costs ' . $quote['credits'] . ' credits. Please make it again.', ['quote' => $quote['credits']], 409);
+        }
         if ($this->credits->balance($payer->id) < $price && ! $this->credits->unlimited($payer->id)) {
             return $this->json(false, 'You need ' . $price . ' credits for this plan and have ' . number_format((int) floor($this->credits->balance($payer->id))) . '.', ['outOfCredits' => true], 402);
         }
@@ -289,11 +303,11 @@ class LandPrepController extends Controller
             @set_time_limit(0);
             response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $id, 'research' => ! empty($case['varietyCustom'])]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $case);
+            $this->runJob($id, (int) $payer->id, $settings, $case, $price);
             exit;
         }
         @set_time_limit(self::AI_TIMEOUT + AiClient::TIMEOUT_SEARCHED * 2 + 120);
-        $this->runJob($id, (int) $payer->id, $settings, $case);
+        $this->runJob($id, (int) $payer->id, $settings, $case, $price);
 
         return $this->jobState($id);
     }
@@ -420,8 +434,19 @@ class LandPrepController extends Controller
         ];
     }
 
+    /** The plan's price for 1 to 12 lots, plain and with the variety lookup: [lots => [plain, research]]. */
+    private function quoteTable(): array
+    {
+        $out = [];
+        for ($n = 1; $n <= 12; $n++) {
+            $out[$n] = [AiPricing::credits(self::KIND, ['lots' => $n]), AiPricing::credits(self::KIND, ['lots' => $n, 'research' => true])];
+        }
+
+        return $out;
+    }
+
     /** The plan worked out, the variety looked up, Anee asked, the plan worked out again with her steps, the charge. */
-    private function runJob(int $id, int $payerId, AiSetting $settings, array $case): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, array $case, int $price): void
     {
         $beat = function (string $phase, int $try = 1) use ($id): void {
             DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update(['report' => json_encode(['phase' => $phase, 'try' => $try]), 'updated_at' => now()]);
@@ -452,10 +477,11 @@ class LandPrepController extends Controller
                 throw new \RuntimeException($result['error'] ?? 'Anee\'s plan could not be read. Nothing was charged. Please try again.');
             }
             $report = $this->compose($case, $plan, $weather, $result['data']);
-            $price = (float) AiPrices::of(self::KIND);
+            // The price agreed when the run began.
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
-            $this->credits->chargeAllowingNegative($payerId, $price, mb_substr('Land Prep Planner: ' . $case['cropLabel'] . ', ' . count($case['lots']) . ' ' . (count($case['lots']) === 1 ? 'lot' : 'lots') . $note, 0, 250));
+            $this->credits->chargeAllowingNegative($payerId, (float) $price, mb_substr('Land Prep Planner: ' . $case['cropLabel'] . ', ' . count($case['lots']) . ' ' . (count($case['lots']) === 1 ? 'lot' : 'lots') . $note, 0, 250));
+            AiPricing::audit(self::KIND, $result, (float) $price, ['lots' => count($case['lots']), 'research' => ! empty($case['varietyCustom'])], $settings);
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report), 'credits' => round($price, 2), 'status' => 'ready', 'error' => null, 'updated_at' => now(),
             ]);

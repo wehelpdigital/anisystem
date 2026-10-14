@@ -15,7 +15,7 @@ use App\Models\AsScheduleNote;
 use App\Models\User;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
-use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropStages;
 use App\Support\HtmlSanitizer;
@@ -122,7 +122,8 @@ class ProtocolBuilderController extends Controller
 
         return view('protocol-builder.edit', [
             'protocol' => $this->shape($p, true),
-            'options' => $this->options(),
+            // The review's price for THIS protocol (its tasks), shown on the page as OPT.quote.
+            'options' => $this->options($p),
             'stages' => $this->stagesFor($p->crop),
         ]);
     }
@@ -598,7 +599,12 @@ class ProtocolBuilderController extends Controller
         if (! count(array_filter($tasks, [self::class, 'isTask']))) {
             return $this->json(false, 'Add at least one task before asking Anee to read the protocol.', [], 422);
         }
-        $price = AiPrices::of('builder');
+        // The price the page showed (this protocol, these tasks) is the price charged; a page that sends `quote` must match it.
+        $quote = AiPricing::quote('builder', ['tasks' => count(array_filter($tasks, [self::class, 'isTask']))]);
+        $price = AiPricing::agreed(request(), $quote, $quote['credits']);
+        if ($price === null) {
+            return $this->json(false, 'The review now costs ' . $quote['credits'] . ' credits. Please run it again.', ['quote' => $quote['credits']], 409);
+        }
         $balance = $this->credits->balance($payer->id);
         if ($balance < $price && ! $this->credits->unlimited($payer->id)) {
             return $this->json(false, 'You need ' . $price . ' credits for this review and have ' . number_format((int) floor($balance)) . '.', ['outOfCredits' => true], 402);
@@ -630,16 +636,16 @@ class ProtocolBuilderController extends Controller
             @set_time_limit(0);
             response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $p->id]])->send();
             fastcgi_finish_request();
-            $this->runJob($p->id, (int) $payer->id, $settings, $prompt, (int) $ver->id, (string) $ver->name);
+            $this->runJob($p->id, (int) $payer->id, $settings, $prompt, (int) $ver->id, (string) $ver->name, (float) $price);
             exit;
         }
         @set_time_limit(900);
-        $this->runJob($p->id, (int) $payer->id, $settings, $prompt, (int) $ver->id, (string) $ver->name);
+        $this->runJob($p->id, (int) $payer->id, $settings, $prompt, (int) $ver->id, (string) $ver->name, (float) $price);
 
         return $this->job($p->id);
     }
 
-    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, ?int $versionId = null, ?string $versionName = null): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, ?int $versionId = null, ?string $versionName = null, ?float $price = null): void
     {
         $beat = function (string $phase, int $try = 1) use ($id): void {
             AsProtocol::where('id', $id)->where('analysisStatus', 'pending')->update([
@@ -655,9 +661,11 @@ class ProtocolBuilderController extends Controller
                 throw new \RuntimeException($result['error'] ?? 'The review could not be read. Nothing was charged. Please try again.');
             }
             $row = AsProtocol::find($id);
-            $charged = (float) AiPrices::of('builder');
+            // The price agreed when the run began.
+            $charged = $price ?? (float) AiPricing::credits('builder');
             $note = AiUsage::record('builder', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged, mb_substr('Protocol Builder review: ' . $row->title . $note, 0, 250));
+            AiPricing::audit('builder', $result, $charged, [], $settings);
             $row->forceFill([
                 'analysis' => $review,
                 'analysisStatus' => 'ready',
@@ -1520,8 +1528,17 @@ PROMPT;
         return $payerId === (int) Auth::id() ? Auth::user() : (User::find($payerId) ?? Auth::user());
     }
 
-    /** What the pages need to draw their pickers and price cards. */
-    private function options(): array
+    /** The size a review is priced by: the tasks of the version Anee reads. */
+    private function reviewTasks(AsProtocol $p): int
+    {
+        $ver = $this->current($p);
+        $materials = $this->cleanMaterials((array) ($ver->materials ?? []));
+
+        return count(array_filter($this->cleanTasks((array) ($ver->tasks ?? []), $p->dayType, $materials), [self::class, 'isTask']));
+    }
+
+    /** What the pages need to draw their pickers and price cards (with a protocol: its own review price). */
+    private function options(?AsProtocol $forProtocol = null): array
     {
         $payer = $this->payer();
         $settings = AiSetting::current();
@@ -1545,7 +1562,8 @@ PROMPT;
             'units' => self::UNITS,
             'canUpload' => self::canUpload(),
             'priorities' => self::PRIORITIES,
-            'quote' => (float) AiPrices::of('builder'),
+            // The engine's quote (App\Support\AiPricing): the flat price unless the protocol's size says more.
+            'quote' => (float) AiPricing::credits('builder', $forProtocol ? ['tasks' => $this->reviewTasks($forProtocol)] : []),
             'balance' => round($this->credits->balance($payer->id), 2),
             'unlimited' => $this->credits->unlimited((int) $payer->id),
             'canAnalyze' => $canAnalyze,

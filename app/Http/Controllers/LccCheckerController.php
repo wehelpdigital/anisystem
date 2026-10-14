@@ -6,7 +6,7 @@ use App\Models\AiSetting;
 use App\Models\User;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
-use App\Support\AiPrices;
+use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\RiceVarieties;
 use App\Support\Tier;
@@ -53,6 +53,9 @@ use Illuminate\Support\Facades\Validator;
 class LccCheckerController extends Controller
 {
     public const KIND = 'lcc';
+
+    /** The most leaves one reading takes: the one price the page shows is the engine's quote at this size. */
+    private const PRICE_LEAVES = 12;
 
     /** The chart's panels a reading may take, halves for a leaf between two. */
     public const PANELS = [2, 2.5, 3, 3.5, 4, 4.5, 5];
@@ -110,7 +113,8 @@ class LccCheckerController extends Controller
         $settings = AiSetting::current();
 
         return $this->json(true, 'ok', [
-            'price' => AiPrices::of(self::KIND),
+            // One price for any number of leaves (the page shows it before the photos are in): the engine's quote at the most leaves a reading takes.
+            'price' => AiPricing::credits(self::KIND, ['leaves' => self::PRICE_LEAVES]),
             'balance' => round((float) $credits->balance($payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'canUse' => Tier::farmCan('aiAnalyses') && $payer->canUseAi() && $settings->isUsable(),
@@ -251,7 +255,13 @@ class LccCheckerController extends Controller
         if (! preg_match('#^data:image/(jpeg|png|webp);base64,([A-Za-z0-9+/=]+)$#', (string) $request->input('image'), $m)) {
             return $this->json(false, 'The photos did not come through. Please add them again.', [], 422);
         }
-        $price = (float) AiPrices::of(self::KIND);
+        // The price the page showed is the price charged; a page that sends the quote for its own leaf count must match it.
+        $quote = AiPricing::quote(self::KIND, ['leaves' => (int) $request->input('leaves')]);
+        $agreed = AiPricing::agreed($request, $quote, AiPricing::credits(self::KIND, ['leaves' => self::PRICE_LEAVES]));
+        if ($agreed === null) {
+            return $this->json(false, 'The reading now costs ' . $quote['credits'] . ' credits. Please read it again.', ['quote' => $quote['credits']], 409);
+        }
+        $price = (float) $agreed;
         $credits = app(AiCreditService::class);
         if ($credits->balance($payer->id) < $price && ! $credits->unlimited((int) $payer->id)) {
             return $this->json(false, 'You need ' . ceil($price) . ' credits for this reading and have ' . number_format((int) floor($credits->balance($payer->id))) . '.', ['outOfCredits' => true], 402);
@@ -275,16 +285,16 @@ class LccCheckerController extends Controller
             @set_time_limit(0);
             response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $rid]])->send();
             fastcgi_finish_request();
-            $this->run($rid, (int) $payer->id, $settings, $case, $image);
+            $this->run($rid, (int) $payer->id, $settings, $case, $image, $price);
             exit;
         }
         @set_time_limit(300);
-        $this->run($rid, (int) $payer->id, $settings, $case, $image);
+        $this->run($rid, (int) $payer->id, $settings, $case, $image, $price);
 
         return $this->job($rid);
     }
 
-    private function run(int $id, int $payerId, AiSetting $settings, array $case, array $image): void
+    private function run(int $id, int $payerId, AiSetting $settings, array $case, array $image, float $price): void
     {
         $beat = function (string $phase, int $try = 1) use ($id): void {
             DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update(['report' => json_encode(['phase' => $phase, 'try' => $try]), 'updated_at' => now()]);
@@ -300,10 +310,11 @@ class LccCheckerController extends Controller
             $anee = $result['data'];
             $panels = array_values(array_filter(array_map(fn ($l) => $l['panel'] ?? null, $anee['leaves']), fn ($p) => $p !== null));
             $decision = $this->decideFor($panels, $case);
-            $price = (float) AiPrices::of(self::KIND);
+            // The price agreed when the run began.
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
             app(AiCreditService::class)->chargeAllowingNegative($payerId, $price, mb_substr('LCC Checker: ' . count($panels) . ' leaves' . $note, 0, 250));
+            AiPricing::audit(self::KIND, $result, $price, ['leaves' => (int) $case['leaves']], $settings);
             $report = ['mode' => 'anee', 'decision' => $decision, 'panels' => $panels, 'anee' => $anee, 'at' => now('Asia/Manila')->format('M j, Y g:i A')];
             DB::table('as_plant_analyses')->where('id', $id)->update(['title' => mb_substr($this->title($case), 0, 190), 'report' => json_encode($report),
                 'credits' => round($price, 2), 'status' => 'ready', 'error' => null, 'updated_at' => now()]);
