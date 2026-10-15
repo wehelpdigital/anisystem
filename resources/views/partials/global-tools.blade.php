@@ -195,7 +195,7 @@
             <button type="button" class="qa-panel-head" id="globalToolsHead" aria-expanded="true" aria-controls="globalToolsBody">
                 <span class="qa-panel-ico"><img src="{{ asset('images/icons/tool-box.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-panel-txt">
-                    <b>Global and Quick Tools{{ \App\Support\Tagalog::flag('global-quick-tools') }}</b>
+                    <b>Global and Quick Tools</b>
                     <i>Planting analyses, satellite, NPK Plus, notes, maps and more, in one place.</i>
                 </span>
                 <svg class="qa-panel-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
