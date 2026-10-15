@@ -711,7 +711,7 @@
         const pairs = window.aneeFieldCard && window.aneeFieldProfile ? window.aneeFieldCard.pairs(sub, {}) : [];
         // The other answers (the soil's feel, last season, the weeds) go to Anee whole.
         const more = window.aneeLots.answered(lot).filter((k) => !['water', 'acidity', 'phFrom', 'phTo', 'salt'].includes(k)).length;
-        box.innerHTML = '<p class="sat-lot-h"><b>From ' + esc(lot.name) + '</b><span>' + esc([lot.place, lot.areaHa ? window.aneeLots.fmtHa(lot.areaHa) : ''].filter(Boolean).join(' · ')) + '</span></p>'
+        box.innerHTML = '<p class="sat-lot-h"><b>From ' + esc(lot.name) + '</b><span>' + esc([lot.place, lot.areaHa ? window.aneeLots.fmtSize(lot) : ''].filter(Boolean).join(' · ')) + '</span></p>'
             + (pairs.length ? window.aneeFieldCard.said(pairs) : '')
             + '<p class="sat-lot-more">' + esc(!lot.count ? 'This lot has no field answers yet. Add them, and Anee reads the pictures with them.'
                 : (more ? (pairs.length ? 'And ' : '') + more + ' more answer' + (more === 1 ? '' : 's') + ' about its soil and last season. ' : '') + 'Anee reads the pictures with every one.') + '</p>'
@@ -727,7 +727,7 @@
     const paintLotSize = () => {
         const lot = LOT.lot, el = $('satLotSize');
         if (!el) return;
-        el.textContent = lot && lot.areaHa && window.aneeLots ? lot.name + ' is saved as ' + window.aneeLots.fmtHa(lot.areaHa) + '. The size Anee reads is the field you draw.' : '';
+        el.textContent = lot && lot.areaHa && window.aneeLots ? lot.name + ' is saved as ' + window.aneeLots.fmtSize(lot) + '. The size Anee reads is the field you draw.' : '';
         el.hidden = !el.textContent;
     };
 

@@ -29,6 +29,37 @@ final class FarmLots
     /** Six months: after this a lot's answers are to be checked again. */
     public const STALE_DAYS = 182;
 
+    /**
+     * The units a lot's size is given in: key => [name, short, hectares in
+     * one, the line under it]. The same three the season lots and the Land
+     * Prep Planner use. The size is kept in hectares, the unit beside it.
+     */
+    public const AREA_UNITS = [
+        'ha' => ['Hectares', 'ha', 1.0, '10,000 square meters each'],
+        'sqm' => ['Square meters', 'sq m', 0.0001, 'For a small plot or a garden'],
+        'acre' => ['Acres', 'acres', 0.40468564, 'About 4,047 square meters each'],
+    ];
+
+    /** Whether the size's unit column is in (a second, later migration). */
+    public static function unitReady(): bool
+    {
+        static $ready = null;
+        if ($ready === null) {
+            try {
+                $known = Cache::get('farm-lots:unit');
+                if ($known === null) {
+                    $known = FieldProfile::storeReady() && Schema::hasColumn('as_field_profiles', 'areaUnit') ? 1 : 0;
+                    Cache::put('farm-lots:unit', $known, $known ? 86400 : 60);
+                }
+                $ready = (int) $known === 1;
+            } catch (\Throwable) {
+                $ready = false;
+            }
+        }
+
+        return $ready;
+    }
+
     /** Whether the lot columns are in (the migration may not have run yet on this database). */
     public static function ready(): bool
     {
@@ -80,6 +111,7 @@ final class FarmLots
             'place' => self::place($brgy, $town, $prov),
             'where' => self::where($town, $prov),
             'areaHa' => isset($r->areaHa) && $r->areaHa !== null ? (float) $r->areaHa : null,
+            'areaUnit' => isset($r->areaUnit, self::AREA_UNITS[$r->areaUnit]) ? $r->areaUnit : 'ha',
             'updatedAt' => $at->toIso8601String(),
             'ageDays' => $age,
             'stale' => $age >= self::STALE_DAYS,
@@ -134,7 +166,10 @@ final class FarmLots
         }
         if (array_key_exists('areaHa', $data)) {
             $a = (float) ($data['areaHa'] ?? 0);
-            $row['areaHa'] = $a > 0 ? round(min($a, 100000), 4) : null;
+            $row['areaHa'] = $a > 0 ? round(min($a, 100000), 6) : null;
+        }
+        if (array_key_exists('areaUnit', $data) && self::unitReady()) {
+            $row['areaUnit'] = isset(self::AREA_UNITS[$data['areaUnit'] ?? '']) ? $data['areaUnit'] : 'ha';
         }
         foreach (['lotId', 'scheduleId'] as $k) {
             if (array_key_exists($k, $data)) {

@@ -128,6 +128,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'lpRound2' => Illuminate\Support\Facades\Route::has('landprep.check') && Illuminate\Support\Facades\Schema::hasTable('as_field_profiles'),
             // Global Lots (2026-10-16): the routes, and the lot columns the migration adds.
             'farmLots' => Illuminate\Support\Facades\Route::has('farmlots.index') && Illuminate\Support\Facades\Schema::hasColumn('as_field_profiles', 'barangay'),
+            'lotUnit' => Illuminate\Support\Facades\Schema::hasColumn('as_field_profiles', 'areaUnit'),
             'lpClock' => str_contains((string) @file_get_contents(app_path('Http/Controllers/LandPrepController.php')), 'private const AI_TIMEOUT = 330;')
                 && str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpErr"'),
         ],

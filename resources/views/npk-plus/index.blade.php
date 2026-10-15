@@ -2425,7 +2425,7 @@
         }
         if (H.area) {
             const a = Number(lot.areaHa);
-            st.areaUnit = a < 0.1 ? 'sqm' : 'ha';
+            st.areaUnit = lot.areaUnit === 'sqm' || a < 0.1 ? 'sqm' : 'ha';
             $('npArea').value = String(a < 0.1 ? Math.round(a * 10000) : Math.round(a * 10000) / 10000);
             tagSay('npAreaUnit', AREA_U, st.areaUnit);
         }

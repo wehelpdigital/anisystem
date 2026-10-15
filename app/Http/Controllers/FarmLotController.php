@@ -83,6 +83,7 @@ class FarmLotController extends Controller
             'town' => 'nullable|string|max:120',
             'barangay' => 'nullable|string|max:160',
             'areaHa' => 'nullable|numeric|min:0|max:100000',
+            'areaUnit' => 'nullable|in:' . implode(',', array_keys(FarmLots::AREA_UNITS)),
             'crop' => 'nullable|string|max:40',
             'answers' => 'nullable|array',
             'lotId' => 'nullable|integer',
@@ -97,7 +98,7 @@ class FarmLotController extends Controller
         if ($request->filled('crop') && ! isset(FieldCatalogue::crops()[FieldCatalogue::cropKey((string) $request->input('crop')) ?? ''])) {
             return $this->json(false, 'Pick a crop from the list.', [], 422);
         }
-        $keys = array_values(array_filter(['name', 'province', 'town', 'barangay', 'areaHa', 'crop', 'answers', 'lotId', 'scheduleId'], fn ($k) => $request->exists($k)));
+        $keys = array_values(array_filter(['name', 'province', 'town', 'barangay', 'areaHa', 'areaUnit', 'crop', 'answers', 'lotId', 'scheduleId'], fn ($k) => $request->exists($k)));
         $row = FarmLots::save(WorkerContext::effectiveOwnerId(), $request->only($keys), $id);
         if (! $row) {
             return $this->json(false, 'That lot is gone.', [], 404);

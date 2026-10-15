@@ -90,9 +90,11 @@
     .fl-tag .tc { flex: none; width: 1rem; height: 1rem; color: var(--color-gray-400); }
     .fl-tag.is-bump { animation: flBump .4s var(--fl-e); }
     @keyframes flBump { 40% { transform: scale(1.02); } }
-    .fl-area { position: relative; }
-    .fl-area .form-input { padding-right: 5.5rem; }
-    .fl-area span { position: absolute; right: .9rem; top: 50%; transform: translateY(-50%); font-size: .8rem; font-weight: 700; color: var(--color-gray-400); pointer-events: none; }
+    /* The size and its unit (2026-10-16, the owner): the unit is a tag that opens its list. */
+    .fl-size { display: flex; gap: .5rem; align-items: stretch; min-width: 0; }
+    .fl-size .form-input { flex: 1 1 auto; min-width: 0; }
+    .fl-size .fl-tag { flex: none; width: auto; min-width: 9.5rem; }
+    @media (max-width: 380px) { .fl-size .fl-tag { min-width: 8.2rem; } }
     .fl-q { padding: .8rem; border-radius: 1.1rem; background: linear-gradient(160deg, #fbfdf8, #f2f8ea); border: 1px solid #e0ebd3; }
     .fl-q-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; }
     @container (min-width: 32rem) { .fl-q-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
@@ -172,6 +174,7 @@
         'pages' => collect(\App\Support\FieldProfile::QUESTIONS)->map(fn ($q) => $q['page'])->all(),
         'groups' => collect(\App\Support\FieldProfile::GROUPS)->map(fn ($g) => $g[0])->all(),
         'icon' => asset('images/treasure-map.png'),
+        'units' => \App\Support\FarmLots::AREA_UNITS,
     ];
 @endphp
 <script>
@@ -191,6 +194,10 @@
     const PLUS = '<svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>';
     const CHEV = '<svg class="tc" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
     const fmtHa = (a) => { const v = Number(a); return v ? (v < 0.1 ? Math.round(v * 10000).toLocaleString() + ' sq m' : (Math.round(v * 100) / 100).toLocaleString() + ' ha') : ''; };
+    // A size in hectares, said in a unit (the one the lot was given in).
+    const UNITS = D.units;
+    const inUnit = (ha, u) => { const f = (UNITS[u] || UNITS.ha)[2]; const v = Number(ha) / f; return v >= 100 ? Math.round(v) : Math.round(v * 100) / 100; };
+    const fmtSize = (lot) => { const u = UNITS[lot && lot.areaUnit] ? lot.areaUnit : 'ha'; return lot && Number(lot.areaHa) > 0 ? (u === 'ha' ? fmtHa(lot.areaHa) : inUnit(lot.areaHa, u).toLocaleString() + ' ' + UNITS[u][1]) : ''; };
 
     /* ---- the farm's lots, once a page (fresh after a save) ---- */
     let ROWS = null, META = { ready: true, stale: 0 };
@@ -290,9 +297,11 @@
         bind(dlg);
         const st = {
             id: lot && lot.id ? lot.id : null, name: (lot && lot.name) || '', province: (lot && lot.province) || '', town: (lot && lot.town) || '',
-            barangay: (lot && lot.barangay) || '', areaHa: lot && lot.areaHa ? String(lot.areaHa) : '', crop: (lot && lot.crop) || o.crop || '',
+            barangay: (lot && lot.barangay) || '', crop: (lot && lot.crop) || o.crop || '',
+            areaUnit: lot && UNITS[lot.areaUnit] ? lot.areaUnit : 'ha', area: '',
             answers: clone(lot && lot.answers), stale: !!(lot && lot.stale), updated: (lot && lot.updated) || '',
         };
+        if (lot && Number(lot.areaHa) > 0) st.area = String(inUnit(lot.areaHa, st.areaUnit));
         // A crop the catalogue keys differently (corn is yellow corn, every rice is rice).
         if (st.crop && !CROPS[st.crop]) st.crop = String(st.crop).startsWith('rice') ? 'rice' : (st.crop === 'corn' ? 'corn_yellow' : '');
         editing = st;
@@ -332,7 +341,8 @@
         body.innerHTML = (st.stale ? '<div class="fl-warn">These answers were saved on ' + esc(st.updated) + ', over six months ago. Check each one and change what is different now, then save.</div>' : '')
             + '<div class="fl-f"><label class="fl-lab" for="flName">Name of the lot</label><input type="text" class="form-input" id="flName" maxlength="120" placeholder="Like North field, or the lot by the creek" value="' + esc(st.name) + '"></div>'
             + '<div class="fl-f"><span class="fl-lab">Where is it?</span><p class="fl-sub">The weather, the season and the advice follow the place.</p><div class="fl-tags is-3" id="flPlace"></div></div>'
-            + '<div class="fl-f"><label class="fl-lab" for="flArea">How big is it? <small>(optional)</small></label><div class="fl-area"><input type="number" class="form-input" id="flArea" min="0" step="any" inputmode="decimal" placeholder="e.g. 1.5" value="' + esc(st.areaHa) + '"><span>hectares</span></div></div>'
+            + '<div class="fl-f"><label class="fl-lab" for="flArea">How big is it? <small>(optional)</small></label><div class="fl-size"><input type="number" class="form-input" id="flArea" min="0" step="any" inputmode="decimal" placeholder="e.g. 1.5" value="' + esc(st.area) + '">'
+            + '<button type="button" class="fl-tag" id="flUnit" aria-haspopup="dialog"><span class="ti" aria-hidden="true">📐</span><span class="tt"><small>Unit</small><b>' + esc(UNITS[st.areaUnit][0]) + '</b></span>' + CHEV + '</button></div></div>'
             + '<div class="fl-f"><span class="fl-lab">What grows on it? <small>(optional)</small></span><p class="fl-sub">Its pests and diseases fill the troubles question.</p>'
             + '<button type="button" class="fl-tag is-none" id="flCrop" aria-haspopup="dialog"><span class="ti" aria-hidden="true">🌱</span><span class="tt"><small>Crop</small><b>Pick the crop (optional)</b></span>' + CHEV + '</button></div>'
             + '<div class="fl-f"><span class="fl-lab">Its soil, water and last season</span><div class="fl-q" id="flQ"></div></div>'
@@ -358,6 +368,10 @@
                     const r = await pickFrom({ title: 'Choose the barangay', sub: st.town + ', ' + st.province, items: list.map((n) => ({ v: n, l: n })), value: st.barangay,
                         find: 'Search a barangay', none: st.barangay ? 'No barangay' : null, empty: 'No barangay by that name.' });
                     if (r) { st.barangay = r.v || ''; paintPlace(); bump($('flBrgy')); }
+                } else if (t.id === 'flUnit') {
+                    const r = await pickFrom({ title: 'The size is in', sub: 'The number you typed stays: pick the unit it is in', value: st.areaUnit,
+                        items: Object.entries(UNITS).map(([k, u]) => ({ v: k, l: u[0], s: u[3], i: k === 'ha' ? '🌾' : k === 'sqm' ? '📏' : '🗺️' })) });
+                    if (r && r.v && UNITS[r.v]) { st.areaUnit = r.v; t.querySelector('b').textContent = UNITS[r.v][0]; bump(t); }
                 } else if (t.id === 'flCrop') {
                     const r = await pickFrom({ title: 'What grows on this lot?', sub: 'Its pests and diseases fill the troubles question', value: st.crop, find: 'Search a crop',
                         items: D.crops.map((c) => ({ v: c[0], l: c[1], s: c[3] !== c[1] ? c[3] : '', i: c[2] || '🌱', f: c[3] })), none: st.crop ? 'No crop' : null });
@@ -371,7 +385,7 @@
         };
         const read = () => {
             st.name = $('flName').value.trim();
-            st.areaHa = $('flArea').value.trim();
+            st.area = $('flArea').value.trim();
             if (!D.ph) { st.town = ($('flTownIn') || {}).value?.trim() || ''; st.province = ($('flProvIn') || {}).value?.trim() || ''; }
         };
         async function askQuestions() {
@@ -390,7 +404,7 @@
             const btn = $('flEditSave');
             btn.disabled = true;
             try {
-                const body = { name: st.name, province: st.province, town: st.town, barangay: st.barangay || null, areaHa: Number(st.areaHa) > 0 ? Number(st.areaHa) : null,
+                const body = { name: st.name, province: st.province, town: st.town, barangay: st.barangay || null, areaHa: Number(st.area) > 0 ? Number(st.area) * UNITS[st.areaUnit][2] : null, areaUnit: st.areaUnit,
                     crop: st.crop || null, answers: st.answers };
                 const r = await call(st.id ? D.urls.update + '/' + st.id : D.urls.save, { method: 'POST', body });
                 result = r.data.row;
@@ -418,7 +432,7 @@
     function card(lot, on, i) {
         const c = CROPS[lot.crop];
         const chips = [];
-        if (lot.areaHa) chips.push('<span class="fl-chip">' + esc(fmtHa(lot.areaHa)) + '</span>');
+        if (lot.areaHa) chips.push('<span class="fl-chip">' + esc(fmtSize(lot)) + '</span>');
         if (c) chips.push('<span class="fl-chip">' + esc((c[2] ? c[2] + ' ' : '') + c[1]) + '</span>');
         chips.push(lot.count ? '<span class="fl-chip">' + lot.count + ' answer' + (lot.count === 1 ? '' : 's') + '</span>' : '<span class="fl-chip is-none">No answers yet</span>');
         if (lot.stale) chips.push('<span class="fl-chip is-old" title="Saved on ' + esc(lot.updated) + '">' + CLOCK + 'Check it</span>');
@@ -490,7 +504,7 @@
         };
     }
 
-    window.aneeLots = { picker, edit, rows, answered, has, legacy, payload, confirm, card, meta: () => META, staleDays: D.staleDays, crops: CROPS, fmtHa };
+    window.aneeLots = { picker, edit, rows, answered, has, legacy, payload, confirm, card, meta: () => META, staleDays: D.staleDays, crops: CROPS, fmtHa, fmtSize, units: UNITS };
 })();
 </script>
 @endpush

@@ -1344,15 +1344,17 @@
         const f = all[0], key = (l) => (l.town + '|' + l.province).toLowerCase();
         return { province: f.province, town: f.town, where: f.where || f.town + ', ' + f.province, name: f.name, mixed: all.some((l) => key(l) !== key(f)) };
     }
-    const lotSize = (a) => { a = Number(a) || 0; return !a ? { area: '', unit: 'ha' } : (a < 0.1 ? { area: String(Math.round(a * 10000)), unit: 'sqm' } : { area: String(Math.round(a * 10000) / 10000), unit: 'ha' }); };
+    // A farm lot's size, in the unit the lot was given in (acres and square meters stay so).
+    const lotSize = (a, u) => { a = Number(a) || 0; return !a ? { area: '', unit: 'ha' } : (u === 'acre' ? { area: String(Math.round(a / 0.40468564 * 100) / 100), unit: 'acre' }
+        : (u === 'sqm' || a < 0.1) ? { area: String(Math.round(a * 10000)), unit: 'sqm' } : { area: String(Math.round(a * 10000) / 10000), unit: 'ha' }); };
     const farmBits = (r) => ({ farmLotId: r.id, lot: r, name: r.name || '', crop: r.crop || null, base: clone(r.answers), province: r.province || '', town: r.town || '', where: r.where || '',
         place: r.place || '', stale: !!r.stale, updated: r.updated || '' });
-    const fromFarm = (r) => newLot(Object.assign(farmBits(r), lotSize(r.areaHa), { areaFromLot: Number(r.areaHa) > 0, profile: clone(r.answers), savedFrom: r.count ? r.name : null }));
+    const fromFarm = (r) => newLot(Object.assign(farmBits(r), lotSize(r.areaHa, r.areaUnit), { areaFromLot: Number(r.areaHa) > 0, profile: clone(r.answers), savedFrom: r.count ? r.name : null }));
     // A lot saved or checked again. `keep`: the answers did not change there ("Still correct"), so this plan's own stay.
     function refreshFarm(l, r, keep) {
         Object.assign(l, farmBits(r), keep ? {} : { profile: clone(r.answers), savedFrom: r.count ? r.name : null, copiedFrom: null, edited: false });
         // The size follows the lot, unless one was typed here.
-        if (Number(r.areaHa) > 0 && (l.areaFromLot || !String(l.area).trim())) Object.assign(l, lotSize(r.areaHa), { areaFromLot: true });
+        if (Number(r.areaHa) > 0 && (l.areaFromLot || !String(l.area).trim())) Object.assign(l, lotSize(r.areaHa, r.areaUnit), { areaFromLot: true });
     }
     // The lot's sheet (partials/farm-lots). The answers given on this plan's pages ride along, so the lot keeps them too.
     async function editFarm(l) {
