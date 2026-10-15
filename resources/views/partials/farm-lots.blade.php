@@ -70,6 +70,78 @@
     .fl-old button:hover { background: #fef3c7; }
     .fl-old button.is-main:hover { background: #b45309; }
 
+    /* The picked lot's answers, as cards to slide through (2026-10-16, the owner). */
+    .fl-prev { display: grid; gap: .55rem; min-width: 0; margin: -.1rem 0 .15rem; padding: .7rem 0 .65rem; border-radius: 1.1rem;
+        background: linear-gradient(160deg, #fbfdf8, #f2f8ea); border: 1px solid #e0ebd3; overflow: hidden; animation: flPrevIn .38s var(--fl-e) both; }
+    .fl-prev.is-out { animation: flPrevOut .24s var(--fl-e) both; }
+    @keyframes flPrevIn { from { opacity: 0; transform: translateY(-6px); clip-path: inset(0 0 100% 0 round 1.1rem); } to { opacity: 1; transform: none; clip-path: inset(0 0 0 0 round 1.1rem); } }
+    @keyframes flPrevOut { to { opacity: 0; transform: translateY(-6px); } }
+    .fl-prev-h { display: flex; align-items: center; gap: .5rem; padding: 0 .85rem; min-width: 0; }
+    .fl-prev-h b { flex: 1; min-width: 0; font-size: .8rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; color: #3d6823; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .fl-prev-h button { flex: none; min-height: 2.2rem; padding: .25rem .8rem; border-radius: 999px; font-size: .76rem; font-weight: 800; color: #3d6823; background: #fff; border: 1.5px solid #cfe0bd;
+        transition: background-color .28s var(--fl-e), border-color .28s var(--fl-e); }
+    .fl-prev-h button:hover { background: #eef5e6; border-color: #86b556; }
+    .fl-prev-row { display: flex; gap: .6rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding: 0 .85rem; padding: .1rem .85rem .2rem;
+        scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .fl-prev-row::-webkit-scrollbar { display: none; }
+    .fl-prev-row:focus-visible { outline: 2px solid #86b556; outline-offset: -2px; border-radius: .9rem; }
+    .fl-pc { flex: 0 0 82%; max-width: 19rem; min-width: 0; scroll-snap-align: start; padding: .7rem .8rem .75rem; border-radius: 1rem; background: #fff; border: 1px solid #e3ecd9;
+        box-shadow: 0 8px 18px -16px rgb(20 33 12 / .5); }
+    @media (min-width: 640px) { .fl-pc { flex-basis: 15.5rem; } }
+    .fl-pc header { display: flex; align-items: center; gap: .45rem; margin-bottom: .45rem; }
+    .fl-pc header > span { flex: none; width: 1.9rem; height: 1.9rem; border-radius: .7rem; display: grid; place-items: center; font-size: 1rem; background: #f1f6ea; }
+    .fl-pc header b { flex: 1; min-width: 0; font-size: .86rem; font-weight: 800; color: #14210c; }
+    .fl-pc header small { flex: none; font-size: .66rem; font-weight: 800; color: #8a9480; }
+    .fl-pc dl { display: grid; gap: .3rem; margin: 0; }
+    .fl-pc dl > div { display: grid; grid-template-columns: minmax(0, 6.2rem) minmax(0, 1fr); gap: .5rem; font-size: .78rem; line-height: 1.4; }
+    .fl-pc dt { color: var(--color-gray-500); font-weight: 600; }
+    .fl-pc dd { margin: 0; color: #1f2a17; font-weight: 700; overflow-wrap: anywhere; }
+    .fl-pc .is-none { color: var(--color-gray-400); font-weight: 600; font-style: italic; }
+    .fl-pc .fl-pc-go { margin-top: .55rem; width: 100%; min-height: 2.4rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: #fff; background: #4a7c2a; transition: background-color .28s var(--fl-e); }
+    .fl-pc .fl-pc-go:hover { background: #3d6823; }
+    .fl-prev-f { display: flex; align-items: center; gap: .6rem; padding: 0 .85rem; min-width: 0; }
+    .fl-dots { display: flex; gap: .3rem; flex: none; }
+    .fl-dots i { width: .4rem; height: .4rem; border-radius: 999px; background: #cfdcc0; transition: width .28s var(--fl-e), background-color .28s var(--fl-e); }
+    .fl-dots i.is-on { width: 1.1rem; background: #4a7c2a; }
+    /* "Slide to see more": a finger that swipes, until the cards are slid once. */
+    .fl-hint { flex: 1; min-width: 0; display: inline-flex; align-items: center; justify-content: flex-end; gap: .45rem; font-size: .74rem; font-weight: 800; color: #5b6b4c;
+        transition: opacity .28s var(--fl-e), transform .28s var(--fl-e); }
+    .fl-hint.is-gone { opacity: 0; transform: translateX(6px); pointer-events: none; }
+    .fl-hint svg { flex: none; width: 3.25rem; height: 1.5rem; overflow: visible; }
+    .fl-hint .fl-f1 { fill: rgb(134 181 86 / .3); }
+    .fl-hint .fl-f2 { fill: #4a7c2a; stroke: #fff; stroke-width: 1.6; }
+    html.dark .fl-hint .fl-f1 { fill: rgb(143 194 94 / .28); }
+    html.dark .fl-hint .fl-f2 { fill: #8fc25e; stroke: #10150d; }
+    .fl-hint .fl-finger { animation: flSwipe 1.9s var(--fl-e) infinite; transform-origin: center; }
+    .fl-hint .fl-trail { animation: flTrail 1.9s var(--fl-e) infinite; }
+    @keyframes flSwipe { 0% { transform: translateX(14px); opacity: 0; } 12% { transform: translateX(14px); opacity: 1; } 62% { transform: translateX(-18px); opacity: 1; } 82%, 100% { transform: translateX(-18px); opacity: 0; } }
+    @keyframes flTrail { 0%, 12% { stroke-dashoffset: -36; opacity: 0; } 62% { stroke-dashoffset: 0; opacity: .7; } 82%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+    .fl-arrows { display: none; gap: .35rem; flex: none; }
+    @media (hover: hover) and (pointer: fine) {
+        .fl-arrows { display: inline-flex; }
+        .fl-hint .fl-touch { display: none; }
+    }
+    @media not all and (hover: hover) and (pointer: fine) { .fl-hint .fl-mouse { display: none; } }
+    .fl-arrows button { width: 2.1rem; height: 2.1rem; border-radius: 999px; display: grid; place-items: center; color: #3d6823; background: #fff; border: 1.5px solid #cfe0bd;
+        transition: background-color .28s var(--fl-e), opacity .28s var(--fl-e); }
+    .fl-arrows button:hover:not(:disabled) { background: #eef5e6; }
+    .fl-arrows button:disabled { opacity: .4; cursor: default; }
+    .fl-arrows svg { width: .9rem; height: .9rem; }
+    html.dark .fl-prev { background: #151b12; border-color: #2b3a1c; }
+    html.dark .fl-prev-h b { color: #a5c97e; }
+    html.dark .fl-prev-h button, html.dark .fl-arrows button { color: #a5c97e; background: #10150d; border-color: #3d5a26; }
+    html.dark .fl-pc { background: #10150d; border-color: #2b3a1c; }
+    html.dark .fl-pc header > span { background: #1c2616; }
+    html.dark .fl-pc header b, html.dark .fl-pc dd { color: #e8efe1; }
+    html.dark .fl-dots i { background: #3a4a2c; }
+    html.dark .fl-dots i.is-on { background: #8fc25e; }
+    html.dark .fl-hint { color: #b9caa8; }
+    @media (prefers-reduced-motion: reduce) {
+        .fl-prev, .fl-prev.is-out, .fl-hint .fl-finger, .fl-hint .fl-trail { animation: none !important; }
+        .fl-dots i, .fl-hint { transition: none; }
+    }
+    html.sm-still .fl-prev, html.sm-still .fl-hint .fl-finger, html.sm-still .fl-hint .fl-trail { animation: none !important; }
+
     /* The lot sheet. It wears the field questions' sheet (fq-sheet, fq-box). */
     .fl-f { margin-top: 1rem; }
     .fl-f:first-child { margin-top: .4rem; }
@@ -175,6 +247,9 @@
         'groups' => collect(\App\Support\FieldProfile::GROUPS)->map(fn ($g) => $g[0])->all(),
         'icon' => asset('images/treasure-map.png'),
         'units' => \App\Support\FarmLots::AREA_UNITS,
+        // The questions in words, for the picked lot's preview: key => [short name, page, option => label].
+        'qs' => collect(\App\Support\FieldProfile::QUESTIONS)->map(fn ($q) => [$q['short'], $q['page'], collect($q['o'])->map(fn ($o) => $o[0])->all()])->all(),
+        'others' => collect(\App\Support\FieldProfile::OTHER)->map(fn ($o) => $o[0])->all(),
     ];
 @endphp
 <script>
@@ -442,6 +517,79 @@
             + '<span class="fl-chips">' + chips.join('') + '</span></span><span class="fl-ck">' + CHECK + '</span></button>';
     }
 
+    /* ---- the picked lot's answers, as cards to slide through ---- */
+    const PREV_ICON = { lot: '🗺️', soil: '🟤', water: '💧', acid: '🧪', last: '🌾', weeds: '🌿', problems: '🐛' };
+    const PREV_NAME = { lot: 'The lot', soil: 'Soil', water: 'Water', acid: 'Acidity and the land', last: 'Last season', weeds: 'Weeds', problems: 'Troubles' };
+    const ARROW = (d) => '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' + (d < 0 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7') + '"/></svg>';
+    const troubleName = (k) => k.startsWith('other:') ? (D.others[k.slice(6)] || k.slice(6)) : k.replace(/^[a-z]+:/, '').replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
+    function prevCards(lot) {
+        const a = (lot && lot.answers) || {};
+        const c = CROPS[lot.crop];
+        const cards = [{ key: 'lot', rows: [['Place', lot.place || ''], ['Size', fmtSize(lot)], ['Crop', c ? c[1] : ''], ['Last checked', lot.updated + (lot.stale ? ', due for a check' : '')]] }];
+        Object.keys(D.groups).forEach((g) => {
+            const rows = [];
+            Object.entries(D.qs).forEach(([k, q]) => {
+                if (q[1] !== g) return;
+                const v = a[k];
+                if (v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length)) return;
+                const words = k === 'outbreaks' ? (v.includes('none') ? 'None' : [].concat(v).map(troubleName).join(', '))
+                    : [].concat(v).map((x) => (q[2] && q[2][x]) || x).join(', ');
+                rows.push([q[0], words]);
+            });
+            if (g === 'acid' && a.phFrom != null) rows.push(['pH', a.phTo != null && Number(a.phTo) !== Number(a.phFrom) ? a.phFrom + ' to ' + a.phTo : String(a.phFrom)]);
+            cards.push({ key: g, rows });
+        });
+        return cards;
+    }
+    function prevHtml(lot) {
+        const cards = prevCards(lot);
+        const n = cards.length;
+        const body = cards.map((cd, i) => '<article class="fl-pc" aria-label="' + esc(PREV_NAME[cd.key]) + '"><header><span aria-hidden="true">' + PREV_ICON[cd.key] + '</span><b>' + esc(PREV_NAME[cd.key]) + '</b><small>' + (i + 1) + ' of ' + n + '</small></header>'
+            + (cd.rows.some((r) => r[1]) ? '<dl>' + cd.rows.map((r) => '<div><dt>' + esc(r[0]) + '</dt><dd' + (r[1] ? '' : ' class="is-none"') + '>' + esc(r[1] || 'Not given') + '</dd></div>').join('') + '</dl>'
+                : '<p class="is-none" style="font-size:.8rem">Not answered yet.</p><button type="button" class="fl-pc-go" data-fl-edit>Answer it</button>')
+            + '</article>').join('');
+        return '<div class="fl-prev" data-fl-prev>'
+            + '<div class="fl-prev-h"><b>Its answers</b><button type="button" data-fl-edit>Edit the lot</button></div>'
+            + '<div class="fl-prev-row" tabindex="0" role="group" aria-label="' + esc(lot.name) + ': its answers, ' + n + ' cards">' + body + '</div>'
+            + '<div class="fl-prev-f"><span class="fl-dots" aria-hidden="true">' + cards.map((_, i) => '<i' + (i ? '' : ' class="is-on"') + '></i>').join('') + '</span>'
+            + '<span class="fl-hint" aria-hidden="true"><svg class="fl-touch" viewBox="0 0 52 24"><path class="fl-trail" d="M46 12H10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="36"/>'
+            + '<g class="fl-finger"><circle class="fl-f1" cx="30" cy="12" r="8.5"/><circle class="fl-f2" cx="30" cy="12" r="5"/></g></svg>'
+            + '<span class="fl-touch">Slide to see more</span><span class="fl-mouse">More with the arrows</span></span>'
+            + '<span class="fl-arrows"><button type="button" data-fl-go="-1" aria-label="Back one card" disabled>' + ARROW(-1) + '</button><button type="button" data-fl-go="1" aria-label="Next card">' + ARROW(1) + '</button></span></div>'
+            + '</div>';
+    }
+    // Wire one preview: the dots follow the slide, the hint leaves after the first one.
+    function wirePrev(box) {
+        const row = box.querySelector('.fl-prev-row');
+        const dots = [...box.querySelectorAll('.fl-dots i')];
+        const hint = box.querySelector('.fl-hint');
+        const [back, next] = box.querySelectorAll('[data-fl-go]');
+        const step = () => { const c = row.querySelector('.fl-pc'); return c ? c.getBoundingClientRect().width + 9.6 : row.clientWidth; };
+        let raf = 0, slid = false;
+        const sync = () => {
+            raf = 0;
+            const i = Math.max(0, Math.min(dots.length - 1, Math.round(row.scrollLeft / step())));
+            dots.forEach((d, k) => d.classList.toggle('is-on', k === i));
+            const end = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
+            if (back) back.disabled = row.scrollLeft < 4;
+            if (next) next.disabled = end;
+            if (row.scrollLeft > 8 && !slid) { slid = true; hint.classList.add('is-gone'); }
+        };
+        row.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(sync); }, { passive: true });
+        box.addEventListener('click', (e) => {
+            const b = e.target.closest('[data-fl-go]');
+            if (!b) return;
+            row.scrollBy({ left: Number(b.dataset.flGo) * step(), behavior: reduce() ? 'auto' : 'smooth' });
+        });
+        row.addEventListener('keydown', (e) => {
+            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            e.preventDefault();
+            row.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * step(), behavior: reduce() ? 'auto' : 'smooth' });
+        });
+        // Everything fits (a wide screen): nothing to slide, so no hint and no arrows.
+        requestAnimationFrame(() => { if (row.scrollWidth <= row.clientWidth + 4) { hint.classList.add('is-gone'); box.querySelector('.fl-arrows').style.display = 'none'; } sync(); });
+    }
+
     /* ---- the picker an analysis wears ---- */
     function picker(el, o) {
         o = o || {};
@@ -460,6 +608,25 @@
                 + '<div class="fl-old" data-fl-old hidden></div>'
                 + '<p class="fl-more"><span>Your lots are kept in Global Lots.</span><a href="' + esc(D.urls.page) + '" target="_blank" rel="noopener">Open Global Lots</a></p>';
             paintOld();
+            paintPrev(false);
+        }
+        // The picked lot's answers open right under its card.
+        function paintPrev(animate) {
+            const old = el.querySelector('[data-fl-prev]');
+            const card = st.lot ? el.querySelector('[data-fl-lot="' + st.lot.id + '"]') : null;
+            if (old && (!card || old.previousElementSibling !== card || animate)) {
+                if (animate && !reduce()) { old.classList.add('is-out'); old.removeAttribute('data-fl-prev'); setTimeout(() => old.remove(), 240); }
+                else old.remove();
+            } else if (old) {
+                return;
+            }
+            if (!card) return;
+            const tpl = document.createElement('div');
+            tpl.innerHTML = prevHtml(st.lot);
+            const box = tpl.firstChild;
+            if (!animate) box.style.animation = 'none';
+            card.after(box);
+            wirePrev(box);
         }
         function paintOld() {
             const box = el.querySelector('[data-fl-old]');
@@ -475,11 +642,13 @@
             st.lot = lot;
             el.querySelectorAll('.fl-card').forEach((c) => { const on = Number(c.getAttribute('data-fl-lot')) === st.id; c.classList.toggle('is-on', on); c.setAttribute('aria-checked', on ? 'true' : 'false'); });
             paintOld();
+            paintPrev(true);
             if (o.onPick) o.onPick(lot ? clone(lot) : null);
         }
         el.addEventListener('click', async (e) => {
             const add = e.target.closest('[data-fl-add]');
             if (add) { const row = await edit(null, { crop: crop() }); if (row) { st.id = row.id; await paint(true); pick(st.lot); } return; }
+            if (e.target.closest('[data-fl-edit]') && st.lot) { const row = await edit(st.lot, { crop: crop(), ask: false }); if (row) { await paint(true); pick(st.lot); } return; }
             if (e.target.closest('[data-fl-check]') && st.lot) { const row = await edit(st.lot, { crop: crop() }); if (row) { await paint(true); pick(st.lot); } return; }
             if (e.target.closest('[data-fl-fine]') && st.lot) { try { await confirm(st.lot); await paint(true); pick(st.lot); } catch (err) { window.toast?.(err.message, 'error'); } return; }
             const c = e.target.closest('[data-fl-lot]');
