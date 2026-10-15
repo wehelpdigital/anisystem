@@ -513,14 +513,19 @@
                 <p class="wtp-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</p>
                 <div id="vaLots"></div>
             </section>
-            {{-- Step 2: when it will be planted -- the month and its year
-                 (2026-10-16, the owner: more direct than a season). The
-                 season it falls in is worked out from it (seasonOf, and
-                 VarietyAnalysisController::seasonOfMonth on the server). --}}
+            {{-- Step 2: when it will be planted -- a month and its year, from a
+                 tag that opens the calendar (partials/month-pick; 2026-10-16,
+                 the owner). The season it falls in is worked out from it,
+                 unseen (seasonOf, VarietyAnalysisController::seasonOfMonth). --}}
             <section class="wtp-step" data-step="1">
                 <p class="wtp-q">When will you plant it?</p>
-                <p class="wtp-sub">The month you will sow or transplant. Anee checks the weather outlook for the months the crop stands in the field, and the season they fall in.</p>
-                <div class="wtp-choices is-two" id="vaMonths"></div>
+                <p class="wtp-sub">The month you will sow or transplant. Anee checks the weather outlook for the months the crop stands in the field.</p>
+                <button type="button" class="crop-tag" id="vaMonthBtn" aria-haspopup="dialog">
+                    <span class="crop-tag-e">🗓️</span>
+                    <span class="crop-tag-t is-none" id="vaMonthNow">Pick the month and year</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                @include('partials.month-pick')
             </section>
             {{-- Step 3: the soil. Skipped when the lot says how it feels.
                  Lowland, upland or highland is the lot's question now
@@ -718,7 +723,6 @@
         return out;
     };
     const monthLabel = (key) => ((OPT && OPT.months) || []).find((m) => m.key === key)?.label || key || '';
-    const seasonIcons = { dry: '☀️', wet: '🌧️', third: '🌗', spring: '🌱', summer: '☀️', autumn: '🍂', winter: '❄️' };
     let step = 0;
     const STEPS = 8;
     /* ---- the lot (2026-10-16, the owner): partials/farm-lots. Its answers
@@ -827,9 +831,6 @@
 
     function paintOptions() {
         state.country = state.country || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
-        // The months to plant in, each with the season it falls in where the field is.
-        $id('vaMonths').innerHTML = (OPT.months || []).map((m) => { const [k, y] = seasonOf(m.key); const lab = seasonSaid(k, y); return `
-            <button type="button" class="wtp-choice${state.month === m.key ? ' is-on' : ''}" data-month="${esc(m.key)}"><span class="c-e">${seasonIcons[k] || '🗓️'}</span><span>${esc(m.label)}${lab ? `<small>${esc(lab)}</small>` : ''}</span></button>`; }).join('');
         const soilIcons = { clay: '🧱', loam: '🟤', sandy: '🏖️', silty: '🌊', rocky: '⛰️', unsure: '🤷' };
         $id('vaSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => `
             <button type="button" class="wtp-choice" data-soil="${k}"><span class="c-e">${soilIcons[k] || '🟫'}</span><span>${esc(String(label).split(' — ')[0])}${String(label).includes(' — ') ? `<small>${esc(String(label).split(' — ').slice(1).join(' — '))}</small>` : ''}</span></button>`).join('');
@@ -918,7 +919,7 @@
     const shortLabel = (l) => String(l || '').split(/ \/ | \(| — /)[0];
     function review() {
         const crop = OPT.crops.find((c) => c.key === state.crop) || {};
-        const season = state.month ? monthLabel(state.month) + ', ' + seasonSaid(state.season, state.year).replace(/^./, (c) => c.toLowerCase()) : seasonSaid(state.season, state.year);
+        const season = state.month ? monthLabel(state.month) : seasonSaid(state.season, state.year);
         $id('vaReview').innerHTML = window.aneeReview.html({
             icon: crop.icon || '🌱', kicker: 'The varieties that fit', title: String(crop.label || '').replace(' — ', ', '),
             sub: season + (LOT.lot ? ' · ' + LOT.lot.name : ''),
@@ -943,12 +944,15 @@
 
     $id('vaNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
     $id('vaBack').addEventListener('click', () => show(step - 1, true));
-    $id('vaMonths').addEventListener('click', (e) => {
-        const b = e.target.closest('[data-month]');
-        if (!b) return;
-        state.month = b.getAttribute('data-month');
-        [state.season, state.year] = seasonOf(state.month);
-        document.querySelectorAll('#vaMonths .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
+    $id('vaMonthBtn').addEventListener('click', async () => {
+        if (!OPT || !window.aneeMonthPick) return;
+        const k = await window.aneeMonthPick.open({ months: OPT.months, value: state.month, title: 'Which month will you plant?' });
+        if (!k) return;
+        state.month = k;
+        [state.season, state.year] = seasonOf(k);
+        const t = $id('vaMonthNow');
+        t.textContent = monthLabel(k);
+        t.classList.remove('is-none');
         if (state.crop) loadBook();
     });
     $id('vaSoils').addEventListener('click', (e) => {

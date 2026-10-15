@@ -483,7 +483,12 @@
             <section class="wtp-step" data-step="1">
                 <p class="wtp-q">When do you plan to start?</p>
                 <p class="wtp-sub">The month you would prepare and plant. The list is built around it.</p>
-                <div class="wtp-choices is-two" id="wpMonths"></div>
+                <button type="button" class="crop-tag" id="wpMonthBtn" aria-haspopup="dialog">
+                    <span class="crop-tag-e">🗓️</span>
+                    <span class="crop-tag-t is-none" id="wpMonthNow">Pick the month and year</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                @include('partials.month-pick')
             </section>
             {{-- "Your field in detail" (2026-10-15) was a step here: the lot
                  carries those answers now (step 1). The steps below hide
@@ -901,8 +906,6 @@
 
     function paintOptions() {
         state.country = state.country || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
-        $id('wpMonths').innerHTML = OPT.months.map((m, i) => `
-            <button type="button" class="wtp-choice" data-month="${esc(m.key)}"><span class="c-e">🗓️</span><span>${esc(m.label)}${i === 0 ? '<small>This month</small>' : ''}</span></button>`).join('');
         const soilIcons = { clay: '🧱', loam: '🟤', sandy: '🏖️', silty: '🌊', rocky: '⛰️', unsure: '🤷' };
         $id('wpSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => { const [n, sub] = String(label).split(' — '); return `
             <button type="button" class="wtp-choice" data-soil="${k}"><span class="c-e">${soilIcons[k] || '🟫'}</span><span>${esc(n)}${sub ? `<small>${esc(sub)}</small>` : ''}</span></button>`; }).join('');
@@ -1160,7 +1163,16 @@
             document.querySelectorAll(`#${hostId} .wtp-choice`).forEach((c) => c.classList.toggle('is-on', c === b));
         });
     };
-    pickWire('wpMonths', 'month', 'startMonth');
+    // The month: a tag that opens the calendar (partials/month-pick, 2026-10-16, the owner).
+    $id('wpMonthBtn').addEventListener('click', async () => {
+        if (!OPT || !window.aneeMonthPick) return;
+        const k = await window.aneeMonthPick.open({ months: OPT.months, value: state.startMonth, title: 'Which month will you start?' });
+        if (!k) return;
+        state.startMonth = k;
+        const t = $id('wpMonthNow');
+        t.textContent = window.aneeMonthPick.label(k);
+        t.classList.remove('is-none');
+    });
     pickWire('wpSoils', 'soil', 'soil');
     pickWire('wpWaters', 'water', 'water');
     pickWire('wpAims', 'aim', 'aim');

@@ -551,12 +551,12 @@ class VarietyAnalysisController extends Controller
         return $c === \App\Support\Region::HOME;
     }
 
-    /** The next eighteen months, from this one: key Y-m, label "October 2026". */
+    /** The next twenty four months, from this one: key Y-m, label "October 2026". */
     public static function plantingMonths(): array
     {
         $out = [];
         $c = now('Asia/Manila')->startOfMonth();
-        for ($i = 0; $i < 18; $i++) {
+        for ($i = 0; $i < 24; $i++) {
             $out[] = ['key' => $c->format('Y-m'), 'label' => $c->format('F Y'), 'short' => $c->format('M Y')];
             $c = $c->addMonth();
         }

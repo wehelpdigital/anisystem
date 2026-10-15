@@ -762,8 +762,13 @@
             {{-- 3: when --}}
             <section class="wtp-step" data-step="3">
                 <p class="wtp-q">When will you plant?</p>
-                <p class="wtp-sub">The month sets the season and the weather your crop will face.</p>
-                <div class="wtp-choices is-two" id="cpMonths"></div>
+                <p class="wtp-sub">The month sets the weather your crop will face.</p>
+                <button type="button" class="crop-tag" id="cpMonthBtn" aria-haspopup="dialog">
+                    <span class="crop-tag-e">🗓️</span>
+                    <span class="crop-tag-t is-none" id="cpMonthNow">Pick the month and year</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                @include('partials.month-pick')
             </section>
             {{-- 4: the method --}}
             <section class="wtp-step" data-step="4">
@@ -1079,7 +1084,6 @@
                         <span class="crop-row-t"><b>${esc(c.label)}</b><small>${c.perennial ? 'Tree crop, counted by age' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small></span>
                     </button>`).join('')}
             </div>`).join('');
-        $id('cpMonths').innerHTML = OPT.months.map((m, i) => choice('month', m.key, '🗓️', m.label, i === 0 ? 'This month' : '')).join('');
         $id('cpPriorities').innerHTML = Object.entries(OPT.priorities).map(([k, p]) => choice('priority', k, p.icon, p.label, p.sub)).join('');
         const soilIcons = { clay: '🧱', loam: '🟤', sandy: '🏖️', silty: '🌊', rocky: '⛰️', unsure: '🤷' };
         $id('cpSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => { const [n, s] = split(label); return choice('soil', k, soilIcons[k] || '🟫', n, s); }).join('');
@@ -1271,7 +1275,16 @@
             document.querySelectorAll(`#${hostId} .wtp-choice`).forEach((c) => c.classList.toggle('is-on', c === b));
         });
     };
-    pickWire('cpMonths', 'month', 'month');
+    // The month: a tag that opens the calendar (partials/month-pick, 2026-10-16, the owner).
+    $id('cpMonthBtn').addEventListener('click', async () => {
+        if (!OPT || !window.aneeMonthPick) return;
+        const k = await window.aneeMonthPick.open({ months: OPT.months, value: state.month, title: 'Which month will you plant?' });
+        if (!k) return;
+        state.month = k;
+        const t = $id('cpMonthNow');
+        t.textContent = window.aneeMonthPick.label(k);
+        t.classList.remove('is-none');
+    });
     pickWire('cpMethods', 'method', 'method');
     pickWire('cpPriorities', 'priority', 'priority');
     pickWire('cpSoils', 'soil', 'soil');

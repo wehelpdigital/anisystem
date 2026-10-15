@@ -161,7 +161,7 @@
     .lp-own button { min-height: 2.5rem; padding: .3rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--lp-gd); background: #fff; border: 1px solid #d2e5bd; transition: background-color .28s var(--lp-e); }
     .lp-own button:hover { background: var(--lp-gl); }
     .lp-own button.is-x { color: var(--color-gray-500); border-color: var(--color-gray-200); }
-    .lp-lot-acts { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .8rem; }
+    .lp-lot-acts { display: grid; grid-template-columns: 1fr; gap: .5rem; margin-top: .8rem; }
     .lp-lot-acts .btn { min-height: 2.9rem; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; white-space: nowrap; font-size: .86rem; padding-left: .5rem; padding-right: .5rem; }
     .lp-lot-acts .btn svg { flex: none; width: 1.05rem; height: 1.05rem; }
     @media (max-width: 370px) { .lp-lot-acts { grid-template-columns: 1fr; } }
@@ -934,10 +934,10 @@
                 <p class="lp-sub">One card a lot. Anee plans every lot and shares the crew between them. Your lots bring their place, size and answers, so only what they lack is asked.</p>
                 <div class="lp-lots" id="lpLots"></div>
                 {{-- The farm's lots are the source (2026-10-16, the owner): pick them
-                     from Global Lots (partials/farm-lots), or the lots of a season. --}}
+                     from Global Lots (partials/farm-lots). "From your seasons" is gone
+                     (the owner, the same day): the lots live in Global Lots. --}}
                 <div class="lp-lot-acts">
                     <button type="button" class="btn btn-white" id="lpLotAdd"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>Add from your lots</button>
-                    <button type="button" class="btn btn-white" id="lpLotSeason"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10"/></svg>From your seasons</button>
                 </div>
                 <p class="lp-total" id="lpLotTotal"></p>
                 <div class="lp-hint" id="lpLotPlace" hidden></div>
@@ -1160,18 +1160,6 @@
     </div>
 </dialog>
 
-{{-- Lots from the farmer's seasons. --}}
-<dialog class="lp-sheet is-tall" id="lpSeasonSheet" aria-labelledby="lpSeasonTitle">
-    <div class="lp-sbox" tabindex="-1">
-        <div class="lp-grip" aria-hidden="true"></div>
-        <div class="lp-shead"><h2 id="lpSeasonTitle">Lots from your seasons<small>Tick the lots to prepare</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
-        <div class="lp-slist" id="lpSeasonList"></div>
-        <div class="lp-sfoot">
-            <div class="lp-pickline"><b id="lpSeasonCount">None ticked</b><span>Their names, sizes and places come along</span></div>
-            <button type="button" class="btn btn-primary" id="lpSeasonUse" disabled>Add them</button>
-        </div>
-    </div>
-</dialog>
 
 {{-- The farm's lots (Global Lots): tick the lots to prepare, or add a new one. --}}
 <dialog class="lp-sheet is-tall" id="lpFarmSheet" aria-labelledby="lpFarmTitle">
@@ -1895,7 +1883,7 @@
     }
     function checkLots() {
         if (!S.lots.length) {
-            window.toast?.('Add a lot first, from your lots or from your seasons.', 'error');
+            window.toast?.('Add a lot first, from your lots.', 'error');
             shake($('lpLotAdd').parentNode);
             return false;
         }
@@ -2063,42 +2051,6 @@
         paintLots(); syncFq();
         sheetClose($('lpFarmSheet'));
     });
-    let SEASONS = null;
-    const picked = new Set();
-    $('lpLotSeason').addEventListener('click', async () => {
-        picked.clear();
-        paintSeasonCount();
-        $('lpSeasonList').innerHTML = '<p class="lp-snone">Loading your seasons…</p>';
-        sheetOpen($('lpSeasonSheet'));
-        try { SEASONS = SEASONS || (await window.api(U.seasons)).data.seasons || []; }
-        catch (err) { $('lpSeasonList').innerHTML = '<p class="lp-snone">' + esc(err.message) + '</p>'; return; }
-        $('lpSeasonList').innerHTML = SEASONS.length ? SEASONS.map((s) => '<b class="lp-sgh">' + esc(s.title) + '</b>' + s.lots.map((l) => '<button type="button" class="lp-row" role="checkbox" aria-checked="false" data-slot="' + l.id + '">'
-            + '<span class="lp-check">' + CHECK + '</span><span class="rt"><b>' + esc(l.name) + '</b><small>' + esc([l.size, l.cropLabel, l.planting ? (l.planting >= TODAY ? 'plants ' : 'planted ') + day(l.planting) : '', l.town].filter(Boolean).join(' · ')) + '</small></span></button>').join('')).join('')
-            : '<p class="lp-snone">No lots in your seasons yet. Add them here by hand.</p>';
-    });
-    const paintSeasonCount = () => { $('lpSeasonCount').textContent = picked.size ? picked.size + (picked.size === 1 ? ' lot ticked' : ' lots ticked') : 'None ticked'; $('lpSeasonUse').disabled = !picked.size; };
-    $('lpSeasonList').addEventListener('click', (e) => {
-        const b = e.target.closest('[data-slot]');
-        if (!b) return;
-        const id = Number(b.dataset.slot);
-        if (picked.has(id)) picked.delete(id); else picked.add(id);
-        b.setAttribute('aria-checked', String(picked.has(id)));
-        paintSeasonCount();
-    });
-    $('lpSeasonUse').addEventListener('click', () => {
-        const all = (SEASONS || []).flatMap((s) => s.lots.map((l) => Object.assign({ season: s.title }, l)));
-        // A first lot still blank gives way to the season's.
-        if (S.lots.length === 1 && !String(S.lots[0].area).trim() && !S.lots[0].name.trim()) S.lots = [];
-        all.filter((l) => picked.has(l.id)).forEach((l) => {
-            if (S.lots.length >= 12 || S.lots.some((x) => x.sourceLotId === l.id)) return;
-            S.lots.push(newLot({ name: l.name, area: l.input ? String(l.input) : (l.ha > 0 ? String(l.ha) : ''), unit: l.unit || 'ha', planting: l.planting && l.planting >= TODAY ? l.planting : null, sourceLotId: l.id, from: l.season }));
-            if (!S.loc.province && l.province) { S.loc.province = l.province; S.loc.town = l.town || ''; }
-            if (S.loc.lat === null && l.lat !== null && l.lng !== null) { S.loc.lat = l.lat; S.loc.lng = l.lng; }
-        });
-        paintLots(); paintPlace(); syncFq();
-        sheetClose($('lpSeasonSheet'));
-    });
-
     /* ---------------- the machines ---------------- */
     const eqFor = () => Object.fromEntries(Object.entries(OPT.equipment).filter(([, e]) => e.for === 'all' || (e.for === 'rice_wet' && rice() && S.method !== 'dsr_dry') || (Array.isArray(e.for) && e.for.includes(S.method))));
     const fleetNow = () => { const ok = eqFor(); return Object.fromEntries(Object.entries(S.fleet).filter(([k, f]) => ok[k] && (f.own + f.hired) > 0)); };

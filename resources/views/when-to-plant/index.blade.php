@@ -569,6 +569,8 @@
                     </div>
                 </div>
                 <div class="wtp-msay is-empty" id="wtpMonthsSay" aria-live="polite"></div>
+                {{-- Each tag opens the shared calendar: a year and its twelve months (2026-10-16, the owner). --}}
+                @include('partials.month-pick')
             </section>
             {{-- Step 4: the crop. The lot form's tag-and-sheet, not a
                  dropdown: the tag wears the chosen crop's face, the sheet
@@ -672,19 +674,6 @@
             <button type="button" class="va-view-x" id="wtpViewX" aria-label="Close">✕</button>
         </div>
         <div class="va-view-body"><div class="wtp-report" id="wtpViewReport"></div></div>
-    </div>
-</div>
-
-{{-- One end of the planting months at a time: this month and the next 23. --}}
-<div class="sheet hidden" id="wtpMonthSheet" style="--sheet-width:28rem">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-        <h3 class="sheet-title" id="wtpMonthSheetTitle">From which month?</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
-    </div>
-    <div class="sheet-body">
-        <p class="form-hint mt-0 mb-3" id="wtpMonthSheetHint"></p>
-        <div class="wtp-mpick" id="wtpMonths"></div>
     </div>
 </div>
 
@@ -964,32 +953,10 @@
     const monthWords = (i) => MONTHS_LONG[ym(i).month - 1] + ' ' + ym(i).year;
     function paintMonths() {
         if (!OPT || !OPT.monthsFrom) return;
-        const first = FIRST();
-        const n = Number(OPT.monthsAhead) || 24;
-        const byYear = {};
-        for (let i = first; i < first + n; i++) (byYear[ym(i).year] = byYear[ym(i).year] || []).push(i);
-        $id('wtpMonths').innerHTML = Object.entries(byYear).map(([y, list]) => `
-            <div class="wtp-myear">
-                <p class="wtp-myear-h">${esc(y)}${Number(y) === OPT.monthsFrom.year ? ' · this year' : ''}</p>
-                <div class="wtp-mgrid">${list.map((i) => `<button type="button" class="wtp-mchip" data-m="${i}" aria-pressed="false" aria-label="${esc(monthWords(i))}">${MONTHS[ym(i).month - 1]}</button>`).join('')}</div>
-            </div>`).join('');
         paintRange();
     }
     function paintRange() {
         const { from, to } = state;
-        // In the To sheet a month before From, or more than a year past it,
-        // is not a choice.
-        const lo = M_END === 'to' && from !== null ? from : -Infinity;
-        const hi = M_END === 'to' && from !== null ? from + MAX_SPAN() - 1 : Infinity;
-        document.querySelectorAll('#wtpMonths .wtp-mchip').forEach((c) => {
-            const i = Number(c.getAttribute('data-m'));
-            const inside = from !== null && i >= from && i <= to;
-            const end = from !== null && (i === from || i === to);
-            c.classList.toggle('is-in', inside && !end);
-            c.classList.toggle('is-end', end);
-            c.disabled = i < lo || i > hi;
-            c.setAttribute('aria-pressed', inside ? 'true' : 'false');
-        });
         [['wtpFromNow', from], ['wtpToNow', to]].forEach(([id, v]) => {
             const t = $id(id);
             t.textContent = v === null ? 'Pick a month' : monthWords(v);
@@ -1009,22 +976,25 @@
             : `From <b>${MONTHS_LONG[a.month - 1]} ${a.year}</b> to <b>${MONTHS_LONG[b.month - 1]} ${b.year}</b> · ${n} months`;
         say.innerHTML = `<span>${words}</span><button type="button" data-m-clear>Clear</button>`;
     }
-    function openMonthSheet(end) {
-        if (!OPT) return;
+    // A month index as the calendar keys it ("2026-10"), and back.
+    const keyOf = (i) => ym(i).year + '-' + String(ym(i).month).padStart(2, '0');
+    const idxOf = (k) => { const [y, m] = String(k).split('-').map(Number); return monthIdx(y, m); };
+    /* One end of the range in the shared calendar (partials/month-pick): the
+       start from this month and the next ones on offer, the end from the
+       start up to the longest span. */
+    async function openMonthSheet(end) {
+        if (!OPT || !window.aneeMonthPick) return;
         // No start yet: the To tag asks for the start first.
         M_END = end === 'to' && state.from === null ? 'from' : end;
-        $id('wtpMonthSheetTitle').textContent = M_END === 'from' ? 'From which month?' : 'To which month?';
-        $id('wtpMonthSheetHint').textContent = M_END === 'from'
-            ? 'The first month you might plant.'
-            : `The last month you might plant. Up to ${MAX_SPAN()} months from ${monthWords(state.from)}.`;
-        paintRange();
-        openSheet('wtpMonthSheet');
-    }
-    document.querySelectorAll('[data-m-end]').forEach((b) => b.addEventListener('click', () => openMonthSheet(b.getAttribute('data-m-end'))));
-    $id('wtpMonths').addEventListener('click', (e) => {
-        const c = e.target.closest('[data-m]');
-        if (!c || c.disabled) return;
-        const i = Number(c.getAttribute('data-m'));
+        const first = FIRST(), last = first + (Number(OPT.monthsAhead) || 24) - 1;
+        const lo = M_END === 'to' ? state.from : first;
+        const hi = M_END === 'to' ? Math.min(last, state.from + MAX_SPAN() - 1) : last;
+        const keys = [];
+        for (let i = lo; i <= hi; i++) keys.push(keyOf(i));
+        const cur = M_END === 'from' ? state.from : state.to;
+        const k = await window.aneeMonthPick.open({ months: keys, value: cur !== null ? keyOf(cur) : null, title: M_END === 'from' ? 'From which month?' : 'To which month?' });
+        if (!k) return;
+        const i = idxOf(k);
         if (M_END === 'from') {
             state.from = i;
             // The end follows a start moved past it, or more than a year before it.
@@ -1033,8 +1003,8 @@
             state.to = i;
         }
         paintRange();
-        closeSheet('wtpMonthSheet');
-    });
+    }
+    document.querySelectorAll('[data-m-end]').forEach((b) => b.addEventListener('click', () => openMonthSheet(b.getAttribute('data-m-end'))));
     $id('wtpMonthsSay').addEventListener('click', (e) => {
         if (!e.target.closest('[data-m-clear]')) return;
         state.from = null; state.to = null;
