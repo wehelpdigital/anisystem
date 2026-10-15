@@ -166,6 +166,48 @@
     .lp-lot-acts .btn svg { flex: none; width: 1.05rem; height: 1.05rem; }
     @media (max-width: 370px) { .lp-lot-acts { grid-template-columns: 1fr; } }
     .lp-total { margin-top: .6rem; font-size: .8rem; font-weight: 700; color: var(--color-gray-500); text-align: right; }
+    #lpLotPlace[hidden] { display: none; }
+
+    /* A lot from the farm's lots (2026-10-16): its name, place and answers come with it. */
+    .lp-flot { display: flex; align-items: flex-start; gap: .65rem; min-width: 0; padding: .6rem .65rem; margin-bottom: .1rem; border-radius: .9rem; background: #fff; border: 1px solid #e3eadb; }
+    .lp-flot > span:first-child { flex: none; width: 2.4rem; height: 2.4rem; border-radius: .8rem; display: grid; place-items: center; font-size: 1.2rem; background: var(--lp-gx); border: 1px solid #e1edd3; }
+    .lp-flot > span:first-child img { width: 1.5rem; height: 1.5rem; object-fit: contain; }
+    .lp-flot > div { flex: 1; min-width: 0; }
+    .lp-flot b { display: block; font-size: .95rem; font-weight: 800; line-height: 1.3; color: var(--color-gray-900); overflow-wrap: anywhere; }
+    .lp-flot small { display: block; margin-top: .05rem; font-size: .76rem; line-height: 1.4; color: var(--color-gray-500); overflow-wrap: anywhere; }
+    .lp-flot small.is-none { color: #b45309; font-weight: 700; }
+    .lp-flchips { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .4rem; }
+    .lp-flchips span { padding: .12rem .5rem; border-radius: 999px; font-size: .7rem; font-weight: 800; line-height: 1.35; color: #3d5226; background: #eef5e6; }
+    .lp-flchips span.is-ask { color: #92400e; background: #fef3c7; }
+    .lp-flchips span.is-old { color: #92400e; background: #fef3c7; }
+    .lp-fledit { flex: none; align-self: center; min-height: 2.4rem; padding: .3rem .8rem; border-radius: 999px; font-size: .78rem; font-weight: 800; color: var(--lp-gd); background: var(--lp-gl); transition: background-color .28s var(--lp-e); }
+    .lp-fledit:hover { background: #d9e9c4; }
+    .lp-flold { display: grid; gap: .5rem; margin-top: .55rem; padding: .65rem .75rem; border-radius: .9rem; font-size: .8rem; line-height: 1.5; color: #78350f; background: #fffbeb; border: 1px solid #fde68a; animation: lpPop .3s var(--lp-e) both; }
+    .lp-flold > div { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .lp-flold button { min-height: 2.4rem; padding: .3rem .9rem; border-radius: 999px; font-size: .8rem; font-weight: 800; border: 1.5px solid #f59e0b; color: #92400e; background: #fff; transition: background-color .28s var(--lp-e); }
+    .lp-flold button.is-main { color: #fff; background: #d97706; border-color: #d97706; }
+    .lp-lotsnone { display: flex; align-items: center; gap: .75rem; padding: 1rem; border-radius: 1.1rem; background: var(--color-gray-50); border: 1px dashed var(--color-gray-300); animation: lpPop .3s var(--lp-e) both; }
+    .lp-lotsnone > span { flex: none; font-size: 1.6rem; }
+    .lp-lotsnone b { display: block; font-size: .92rem; font-weight: 800; color: var(--color-gray-900); }
+    .lp-lotsnone small { display: block; margin-top: .15rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-500); }
+    .lp-farmlist { display: grid; align-content: start; gap: .55rem; padding-top: .2rem; }
+    .lp-farmlist .fl-card[disabled] { cursor: default; opacity: .7; }
+    .lp-farmlist .fl-card[disabled]:hover { transform: none; box-shadow: none; }
+    .lp-farmlist .fl-chip.is-in { color: #fff; background: #4a7c2a; }
+    .lp-notes-rev { margin-top: .4rem; }
+    html.dark .lp-flot { background: #12170f; border-color: #2b3a1c; }
+    html.dark .lp-flot > span:first-child { background: #1c2616; border-color: #2b3a1c; }
+    html.dark .lp-flot b, html.dark .lp-lotsnone b { color: #e8efe1; }
+    html.dark .lp-flchips span { color: #cfe6b8; background: #22301a; }
+    html.dark .lp-flchips span.is-ask, html.dark .lp-flchips span.is-old { color: #fcd34d; background: #3a2a0c; }
+    html.dark .lp-fledit { background: #2b3a1c; color: #d5e3c5; }
+    html.dark .lp-flold { color: #fde68a; background: #2a2010; border-color: #5c4413; }
+    html.dark .lp-flold button { background: #1a1408; color: #fcd34d; }
+    html.dark .lp-lotsnone { background: #12170f; border-color: #2b3a1c; }
+    @media (prefers-reduced-motion: reduce) {
+        .lp-flold, .lp-lotsnone { animation: none !important; }
+        .lp-fledit, .lp-flold button { transition: none !important; }
+    }
 
     /* The machines: photo circles, owned and hired counters. */
     .lp-eqs { display: grid; gap: .6rem; }
@@ -817,6 +859,7 @@
     $chev = '<svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>';
 @endphp
 @include('partials.field-profile')
+@include('partials.farm-lots')
 
 <div class="lp" id="lpPage">
     <div class="lp-tabs" role="tablist">
@@ -888,13 +931,16 @@
             {{-- The lots --}}
             <section class="lp-step" data-screen="lots">
                 <p class="lp-q">Which lots are you preparing?{{ \App\Support\Tagalog::flag('lot') }}</p>
-                <p class="lp-sub">One card a lot. Anee plans every lot and shares the crew between them.</p>
+                <p class="lp-sub">One card a lot. Anee plans every lot and shares the crew between them. Your lots bring their place, size and answers, so only what they lack is asked.</p>
                 <div class="lp-lots" id="lpLots"></div>
+                {{-- The farm's lots are the source (2026-10-16, the owner): pick them
+                     from Global Lots (partials/farm-lots), or the lots of a season. --}}
                 <div class="lp-lot-acts">
-                    <button type="button" class="btn btn-white" id="lpLotAdd"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>Add a lot</button>
+                    <button type="button" class="btn btn-white" id="lpLotAdd"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>Add from your lots</button>
                     <button type="button" class="btn btn-white" id="lpLotSeason"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10"/></svg>From your seasons</button>
                 </div>
                 <p class="lp-total" id="lpLotTotal"></p>
+                <div class="lp-hint" id="lpLotPlace" hidden></div>
             </section>
 
             {{-- The machines --}}
@@ -945,8 +991,11 @@
                     <input type="text" id="lpPlaceText" class="form-input" maxlength="160">
                 </div>
                 <p class="lp-ferr" id="lpPlaceErr" hidden></p>
-                <label class="lp-label" for="lpNotes">Anything else Anee should know? <small>(optional)</small></label>
-                <textarea id="lpNotes" class="form-textarea" rows="2" maxlength="500"></textarea>
+                {{-- The notes live here, and move to the review when the lots' own place skips this screen. --}}
+                <div id="lpNotesHome"><div id="lpNotesBox">
+                    <label class="lp-label" for="lpNotes">Anything else Anee should know? <small>(optional)</small></label>
+                    <textarea id="lpNotes" class="form-textarea" rows="2" maxlength="500"></textarea>
+                </div></div>
             </section>
 
             {{-- Review and run --}}
@@ -954,6 +1003,7 @@
                 <p class="lp-q">Ready for Anee</p>
                 <p class="lp-sub">Tap a row to change it.</p>
                 <div class="lp-rev" id="lpReview"></div>
+                <div id="lpNotesSlot"></div>
                 <div id="lpTimeCard"></div>
                 <div class="lp-err" id="lpErr" role="alert" hidden><b>The plan did not finish</b><p id="lpErrText"></p></div>
                 <button type="button" class="lp-run" id="lpRun"><span id="lpRunFace"></span><span id="lpRunSays">Make my plan</span></button>
@@ -1123,6 +1173,19 @@
     </div>
 </dialog>
 
+{{-- The farm's lots (Global Lots): tick the lots to prepare, or add a new one. --}}
+<dialog class="lp-sheet is-tall" id="lpFarmSheet" aria-labelledby="lpFarmTitle">
+    <div class="lp-sbox" tabindex="-1">
+        <div class="lp-grip" aria-hidden="true"></div>
+        <div class="lp-shead"><h2 id="lpFarmTitle">Your lots<small>Tick the lots to prepare. Their place, size and answers come along.</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
+        <div class="lp-slist lp-farmlist" id="lpFarmList"></div>
+        <div class="lp-sfoot">
+            <div class="lp-pickline"><b id="lpFarmCount">None ticked</b><span>A lot already in the plan is ticked</span></div>
+            <button type="button" class="btn btn-primary" id="lpFarmUse" disabled>Add them</button>
+        </div>
+    </div>
+</dialog>
+
 {{-- Rename. --}}
 <dialog class="lp-sheet is-small" id="lpRenSheet" aria-labelledby="lpRenTitle">
     <form class="lp-sbox" tabindex="-1" id="lpRenForm">
@@ -1207,6 +1270,7 @@
         check: @json(route('landprep.check')), list: @json(route('landprep.list')), meta: @json(route('landprep.meta')), port: @json(route('landprep.port')),
         job: (id) => @json(url('/app/land-prep/job')) + '/' + id, one: (id) => @json(url('/app/land-prep/one')) + '/' + id, del: (id) => @json(url('/app/land-prep')) + '/' + id,
         ph: @json(asset('data/ph-locations.json')),
+        lots: @json(route('farmlots.index')), lotIcon: @json(asset('images/treasure-map.png')),
     };
     const TODAY = @json($today);
     const CROPS = @json($lpCropJs);
@@ -1249,10 +1313,57 @@
         lots: [], fleet: {}, handOnly: false, workers: [], stagger: false,
         loc: { province: '', town: '', place: '', lat: null, lng: null }, notes: '',
     };
-    const newLot = (o) => Object.assign({ uid: ++uid, name: '', area: '', unit: 'ha', planting: null, sourceLotId: null, from: null, profile: {}, copiedFrom: null, edited: false, savedFrom: null }, o || {});
+    /* A lot of the plan. One from the farm's lots (2026-10-16, the owner) keeps
+       farmLotId, its row (lot), its place, and `base`: its answers when it was
+       picked or last edited, which decide the pages still to ask. */
+    const newLot = (o) => Object.assign({ uid: ++uid, name: '', area: '', unit: 'ha', planting: null, sourceLotId: null, from: null, profile: {}, copiedFrom: null, edited: false, savedFrom: null,
+        farmLotId: null, lot: null, base: null, crop: null, province: '', town: '', where: '', place: '', stale: false, updated: '', areaFromLot: false }, o || {});
     const newWorker = (o) => Object.assign({ uid: ++uid, name: '', days: [1, 2, 3, 4, 5, 6] }, o || {});
-    S.lots.push(newLot());
+    const clone = (o) => JSON.parse(JSON.stringify(o || {}));
+    // The plan starts with no lot: they come from the farm's lots, or from a season.
     S.workers.push(newWorker(), newWorker());
+
+    /* ---- the farm's lots in the plan ---- */
+    const isRiceCrop = () => String(S.crop || '').startsWith('rice');
+    const answeredVal = (x) => x !== undefined && x !== null && x !== '' && !(Array.isArray(x) && !x.length);
+    // A page of the field questions the answers already cover (any of its questions for this crop).
+    const pageDone = (v, p) => {
+        const FP = window.aneeFieldProfile;
+        if (!FP || !v) return false;
+        return Object.entries(FP.questions).some(([k, q]) => q.page === p && !(q.only === 'rice' && !isRiceCrop()) && answeredVal(v[k])) || (p === 'acid' && v.phFrom != null);
+    };
+    // The pages a lot is asked: all of them, or for a farm lot only the ones it has not answered.
+    const askedPages = (l) => {
+        const pages = window.aneeFieldProfile ? window.aneeFieldProfile.pagesFor(S.crop) : [];
+        return l.farmLotId ? pages.filter((p) => !pageDone(l.base, p)) : pages;
+    };
+    // The place the plan reads the weather at, when the lots have one: the first farm lot with a place.
+    function lotPlace() {
+        const all = S.lots.filter((l) => l.farmLotId && l.town && l.province);
+        if (!all.length) return null;
+        const f = all[0], key = (l) => (l.town + '|' + l.province).toLowerCase();
+        return { province: f.province, town: f.town, where: f.where || f.town + ', ' + f.province, name: f.name, mixed: all.some((l) => key(l) !== key(f)) };
+    }
+    const lotSize = (a) => { a = Number(a) || 0; return !a ? { area: '', unit: 'ha' } : (a < 0.1 ? { area: String(Math.round(a * 10000)), unit: 'sqm' } : { area: String(Math.round(a * 10000) / 10000), unit: 'ha' }); };
+    const farmBits = (r) => ({ farmLotId: r.id, lot: r, name: r.name || '', crop: r.crop || null, base: clone(r.answers), province: r.province || '', town: r.town || '', where: r.where || '',
+        place: r.place || '', stale: !!r.stale, updated: r.updated || '' });
+    const fromFarm = (r) => newLot(Object.assign(farmBits(r), lotSize(r.areaHa), { areaFromLot: Number(r.areaHa) > 0, profile: clone(r.answers), savedFrom: r.count ? r.name : null }));
+    // A lot saved or checked again. `keep`: the answers did not change there ("Still correct"), so this plan's own stay.
+    function refreshFarm(l, r, keep) {
+        Object.assign(l, farmBits(r), keep ? {} : { profile: clone(r.answers), savedFrom: r.count ? r.name : null, copiedFrom: null, edited: false });
+        // The size follows the lot, unless one was typed here.
+        if (Number(r.areaHa) > 0 && (l.areaFromLot || !String(l.area).trim())) Object.assign(l, lotSize(r.areaHa), { areaFromLot: true });
+    }
+    // The lot's sheet (partials/farm-lots). The answers given on this plan's pages ride along, so the lot keeps them too.
+    async function editFarm(l) {
+        const L = window.aneeLots;
+        if (!L || !l || !l.farmLotId) return null;
+        const typed = numOk(l.area) && num(l.area) > 0 ? Math.round(toHa(l.area, l.unit) * 10000) / 10000 : null;
+        const row = await L.edit(Object.assign({}, l.lot || {}, { id: l.farmLotId, name: l.name, answers: clone(l.profile), areaHa: (l.lot && l.lot.areaHa) || typed }), { crop: S.crop });
+        if (!row) return null;
+        refreshFarm(l, row);
+        return row;
+    }
 
     /* ---------------- the walk: a flow of screens, the lot pages once for every lot ---------------- */
     let FLOW = ['crop'];
@@ -1262,9 +1373,11 @@
         const f = ['crop', 'method', 'variety'];
         if (rice() && S.method !== 'dsr_dry') f.push('seed');
         f.push('date', 'lots', 'equip', 'workers');
-        const pages = window.aneeFieldProfile ? window.aneeFieldProfile.pagesFor(S.crop) : [];
-        S.lots.forEach((l, i) => pages.forEach((p) => f.push('lot:' + i + ':' + p)));
-        f.push('place', 'review');
+        // A lot from the farm's lots is asked only the pages it has not answered yet.
+        S.lots.forEach((l, i) => askedPages(l).forEach((p) => f.push('lot:' + i + ':' + p)));
+        // The place is asked only when no lot of the farm's brings one.
+        if (!lotPlace()) f.push('place');
+        f.push('review');
         return f;
     }
     const NAMES = { crop: 'Crop', method: 'How it goes in', variety: 'Variety', seed: 'Seed', date: 'Planting day', lots: 'Lots', equip: 'Machines', workers: 'Workers', place: 'Place', review: 'Review' };
@@ -1276,6 +1389,9 @@
         pos = Math.max(0, Math.min(FLOW.length - 1, n));
         const id = FLOW[pos], sc = screenOf(id);
         const same = screenOf(was) === sc && sc === 'lotq';
+        // The notes ride on the place screen, or on the review when the lots' own place skips it.
+        const notesAt = sc === 'review' && !FLOW.includes('place') ? $('lpNotesSlot') : $('lpNotesHome');
+        if ($('lpNotesBox').parentNode !== notesAt) notesAt.appendChild($('lpNotesBox'));
         document.querySelectorAll('.lp-step').forEach((s) => {
             const on = s.dataset.screen === sc;
             s.classList.toggle('is-on', on);
@@ -1285,7 +1401,7 @@
         if (sc === 'lotq') {
             const [i, p] = lotPage(id);
             const l = S.lots[i] || {};
-            $('lpStepName').textContent = (S.lots.length > 1 ? 'Lot ' + (i + 1) + (l.name ? ', ' + l.name : '') : 'Your field') + ' · ' + window.aneeFieldProfile.groups[p][0];
+            $('lpStepName').textContent = (S.lots.length > 1 ? 'Lot ' + (i + 1) + (l.name ? ', ' + l.name : '') : (l.farmLotId && l.name ? l.name : 'Your field')) + ' · ' + window.aneeFieldProfile.groups[p][0];
             FQ.show(i, p, back);
         } else {
             $('lpStepName').textContent = NAMES[sc] || '';
@@ -1358,7 +1474,8 @@
         FQ = window.aneeFieldProfile.mount($('lpFq'), {
             crop: S.crop, lots: fqLots(), saved: true,
             onChange: (i, value, meta) => { const l = S.lots[i]; if (!l) return; l.profile = value; l.copiedFrom = meta.copiedFrom; l.edited = meta.edited; l.savedFrom = meta.from; },
-            onSkip: (i) => { const nx = S.lots[i + 1] ? 'lot:' + (i + 1) + ':' + window.aneeFieldProfile.pagesFor(S.crop)[0] : 'place'; goTo(nx); },
+            // Past this lot's pages: the next lot's first asked page, the place, or the review.
+            onSkip: (i) => { FLOW = flow(); const nx = FLOW.slice(pos + 1).find((id) => !String(id).startsWith('lot:' + i + ':')); if (nx) goTo(nx); },
         });
         $('lpPlacePh').hidden = !OPT.ph;
         $('lpPlaceAny').hidden = !!OPT.ph;
@@ -1718,12 +1835,41 @@
     }
 
     /* ---------------- lots: one card each ---------------- */
+    // A farm lot's head: its name, place and answers (they come with it), and its sheet one tap away.
+    function farmHead(l) {
+        const FP = window.aneeFieldProfile, n = FP ? FP.count(l.profile) : 0, ask = askedPages(l).length;
+        const C = window.aneeLots && window.aneeLots.crops ? window.aneeLots.crops[l.crop] : null;
+        return '<div class="lp-flot"><span aria-hidden="true">' + (C && C[2] ? esc(C[2]) : '<img src="' + esc(U.lotIcon) + '" alt="">') + '</span><div><b>' + esc(l.name) + '</b>'
+            + (l.place ? '<small>' + esc(l.place) + '</small>' : '<small class="is-none">No place yet</small>')
+            + '<span class="lp-flchips">' + (n ? '<span>' + n + (n === 1 ? ' answer' : ' answers') + '</span>' : '')
+            + (ask ? '<span class="is-ask">' + (n ? ask + (ask === 1 ? ' page' : ' pages') + ' of questions next' : 'Its questions come next') + '</span>' : '')
+            + (l.stale ? '<span class="is-old">Check it</span>' : '') + '</span></div>'
+            + '<button type="button" class="lp-fledit" data-lot-edit="' + l.uid + '" aria-label="Edit ' + esc(l.name) + '">Edit</button></div>'
+            + (l.stale ? '<div class="lp-flold"><span><b>' + esc(l.name) + '</b> was last checked on ' + esc(l.updated) + ', over six months ago. Are its answers still right?</span>'
+                + '<div><button type="button" class="is-main" data-lot-edit="' + l.uid + '">Check them</button><button type="button" data-lot-fine="' + l.uid + '">Still correct</button></div></div>' : '');
+    }
+    // Where the plan reads the weather, when the lots bring their place.
+    function paintLotPlace() {
+        const h = $('lpLotPlace'), lp = lotPlace();
+        if (!lp) { h.hidden = true; return; }
+        h.className = 'lp-hint' + (lp.mixed ? ' is-warn' : '');
+        h.innerHTML = lp.mixed
+            ? 'Your lots are in different towns. The plan reads the weather at the place of <b>' + esc(lp.name) + '</b>, the first one: ' + esc(lp.where) + '.'
+            : 'The place comes from your lots: <b>' + esc(lp.where) + '</b>. Anee reads the weather there.';
+        h.hidden = false;
+    }
     function paintLots() {
+        if (!S.lots.length) {
+            $('lpLots').innerHTML = '<div class="lp-lotsnone"><span aria-hidden="true">🗺️</span><div><b>No lots in this plan yet</b><small>Add them from your lots: each brings its place, size and answers. Or tick the lots of one of your seasons.</small></div></div>';
+            total(); paintLotPlace();
+            return;
+        }
         const haAt = S.lots.findIndex((x) => x.unit === 'ha');     // the hectare flag, on the first lot in hectares
         $('lpLots').innerHTML = S.lots.map((l, i) => '<div class="lp-lot" data-uid="' + l.uid + '" style="--lc:' + lc(i) + ';animation-delay:' + (i * 40) + 'ms">'
-            + '<div class="lp-lot-top"><i></i><b>Lot ' + (i + 1) + '</b>' + (l.from ? '<em>from ' + esc(l.from) + '</em>' : '') + '</div>'
-            + (S.lots.length > 1 ? '<button type="button" class="lp-lot-x" data-lot-x="' + l.uid + '" aria-label="Remove lot ' + (i + 1) + '">' + XSM + '</button>' : '')
-            + '<div class="lp-field" data-f="name"><label for="lpLn' + l.uid + '">Name of the lot <small>(optional)</small></label><input type="text" id="lpLn' + l.uid + '" class="form-input" data-in="name" maxlength="60" value="' + esc(l.name) + '" autocomplete="off"></div>'
+            + '<div class="lp-lot-top"><i></i><b>Lot ' + (i + 1) + '</b>' + (l.from ? '<em>from ' + esc(l.from) + '</em>' : (l.farmLotId ? '<em>from your lots</em>' : '')) + '</div>'
+            + '<button type="button" class="lp-lot-x" data-lot-x="' + l.uid + '" aria-label="Remove lot ' + (i + 1) + '">' + XSM + '</button>'
+            + (l.farmLotId ? farmHead(l)
+                : '<div class="lp-field" data-f="name"><label for="lpLn' + l.uid + '">Name of the lot <small>(optional)</small></label><input type="text" id="lpLn' + l.uid + '" class="form-input" data-in="name" maxlength="60" value="' + esc(l.name) + '" autocomplete="off"></div>')
             + '<div class="lp-field" data-f="area"><label for="lpLa' + l.uid + '">Size</label><div class="lp-size"><input type="text" id="lpLa' + l.uid + '" class="form-input" data-in="area" inputmode="decimal" maxlength="10" value="' + esc(l.area) + '" autocomplete="off">'
             + '<button type="button" class="lp-unit" data-unit="' + l.uid + '" aria-haspopup="dialog" aria-label="Unit: ' + esc(UNITS[l.unit][0]) + '">' + esc(UNITS[l.unit][1]) + (i === haAt ? tlf('hectare') : '') + CHEV + '</button></div>'
             + '<p class="lp-size-eq" data-eq>' + eqWords(l) + '</p><p class="lp-ferr" data-err hidden></p></div>'
@@ -1732,6 +1878,7 @@
                 : '<span class="lp-same-day">📅 ' + (S.planting ? esc(day(S.planting)) + ', same as the others' : 'Same as the others') + '</span><button type="button" data-lot-date="' + l.uid + '">Pick its own day</button>') + '</div></div>'
             + '</div>').join('');
         total();
+        paintLotPlace();
     }
     const eqWords = (l) => (l.unit !== 'ha' && num(l.area) > 0 && toHa(l.area, l.unit) >= 0.01 ? '= ' + ha(toHa(l.area, l.unit)) : '');
     function total() {
@@ -1747,6 +1894,11 @@
         e.hidden = !msg; e.textContent = msg || '';
     }
     function checkLots() {
+        if (!S.lots.length) {
+            window.toast?.('Add a lot first, from your lots or from your seasons.', 'error');
+            shake($('lpLotAdd').parentNode);
+            return false;
+        }
         let first = null;
         S.lots.forEach((l, i) => {
             let msg = '';
@@ -1769,6 +1921,7 @@
         if (!l) return;
         l[inp.dataset.in] = inp.value;
         if (inp.dataset.in === 'area') {
+            l.areaFromLot = false;
             if (card.querySelector('[data-f="area"]').classList.contains('is-bad') && numOk(l.area)) lotErr(l, '');
             card.querySelector('[data-eq]').textContent = eqWords(l);
         }
@@ -1776,7 +1929,23 @@
         syncFq();
     });
     let UNIT_FOR = null;
-    $('lpLots').addEventListener('click', (e) => {
+    $('lpLots').addEventListener('click', async (e) => {
+        // A farm lot: its sheet ("Edit", "Check them"), or "Still correct" (the six months start again).
+        const ed = e.target.closest('[data-lot-edit]');
+        if (ed) {
+            const l = S.lots.find((y) => String(y.uid) === ed.dataset.lotEdit);
+            if (l && await editFarm(l)) { paintLots(); syncFq(); }
+            return;
+        }
+        const fine = e.target.closest('[data-lot-fine]');
+        if (fine) {
+            const l = S.lots.find((y) => String(y.uid) === fine.dataset.lotFine);
+            if (!l || !window.aneeLots) return;
+            fine.disabled = true;
+            try { refreshFarm(l, await window.aneeLots.confirm(Object.assign({}, l.lot, { id: l.farmLotId })), true); paintLots(); }
+            catch (err) { fine.disabled = false; window.toast?.(err.message || 'That did not save. Please try again.', 'error'); }
+            return;
+        }
         const x = e.target.closest('[data-lot-x]');
         if (x) {
             const el = x.closest('.lp-lot');
@@ -1813,13 +1982,75 @@
         const card = $('lpLots').querySelector('.lp-lot[data-uid="' + UNIT_FOR + '"] .lp-unit');
         if (card) { card.classList.remove('is-bump'); bump(card); }
     });
-    $('lpLotAdd').addEventListener('click', () => {
+    /* "Add from your lots" (2026-10-16, the owner): the farm's lots, ticked one
+       or several (partials/farm-lots draws each card), or a new one made in the
+       lot sheet, which asks its place, size and questions once for every analysis. */
+    const FARM = { picked: new Set(), rows: [] };
+    const farmCount = () => {
+        const n = FARM.picked.size;
+        $('lpFarmCount').textContent = n ? n + (n === 1 ? ' lot ticked' : ' lots ticked') : 'None ticked';
+        $('lpFarmUse').disabled = !n;
+    };
+    async function paintFarm(fresh) {
+        const L = window.aneeLots;
+        FARM.rows = await L.rows(fresh);
+        const inPlan = new Set(S.lots.map((l) => l.farmLotId).filter(Boolean));
+        const card = (r, i) => {
+            // A tick list here (the kit draws a radio card); a lot already in the plan cannot be added twice.
+            let h = L.card(r, inPlan.has(r.id) || FARM.picked.has(r.id), i).replace('role="radio"', 'role="checkbox"');
+            if (inPlan.has(r.id)) h = h.replace('<button type="button" class="fl-card', '<button type="button" disabled class="fl-card').replace('<span class="fl-chips">', '<span class="fl-chips"><span class="fl-chip is-in">In the plan</span>');
+            return h;
+        };
+        $('lpFarmList').innerHTML = (FARM.rows.length ? FARM.rows.map(card).join('')
+            : '<div class="fl-empty">No lots yet. Add your first one: where it is, its size, and its soil and water. You answer it once, and every analysis reads it.</div>')
+            + '<button type="button" class="fl-add" data-farm-new>' + PLUS + (FARM.rows.length ? 'Add a new lot' : 'Add a lot') + '</button>'
+            + '<p class="fl-more"><span>Your lots are kept in Global Lots.</span><a href="' + esc(U.lots) + '" target="_blank" rel="noopener">Open Global Lots</a></p>';
+    }
+    $('lpLotAdd').addEventListener('click', async () => {
         if (S.lots.length >= 12) { window.toast?.('Up to 12 lots in one plan.', 'error'); return; }
-        S.lots.push(newLot({ unit: S.lots[S.lots.length - 1] ? S.lots[S.lots.length - 1].unit : 'ha' }));
+        if (!window.aneeLots) { window.toast?.('Your lots could not load. Please try again.', 'error'); return; }
+        FARM.picked.clear();
+        farmCount();
+        $('lpFarmList').innerHTML = '<p class="lp-snone">Loading your lots…</p>';
+        sheetOpen($('lpFarmSheet'));
+        try { await paintFarm(false); } catch (_) { $('lpFarmList').innerHTML = '<p class="lp-snone">Your lots could not load. Please try again.</p>'; }
+    });
+    $('lpFarmList').addEventListener('click', async (e) => {
+        const L = window.aneeLots;
+        if (!L) return;
+        if (e.target.closest('[data-farm-new]')) {
+            const row = await L.edit(null, { crop: S.crop });
+            if (row) { FARM.picked.add(row.id); await paintFarm(true); farmCount(); }
+            return;
+        }
+        const c = e.target.closest('[data-fl-lot]');
+        if (!c || c.disabled) return;
+        const id = Number(c.getAttribute('data-fl-lot'));
+        const r = FARM.rows.find((x) => x.id === id);
+        if (!r) return;
+        if (!r.where && !FARM.picked.has(id)) {
+            // A lot saved before the lots had a place: say where it is first.
+            const row = await L.edit(r, { crop: S.crop, reason: 'place', ask: false });
+            if (row) { FARM.picked.add(row.id); await paintFarm(true); farmCount(); }
+            return;
+        }
+        if (FARM.picked.has(id)) FARM.picked.delete(id); else FARM.picked.add(id);
+        const on = FARM.picked.has(id);
+        c.classList.toggle('is-on', on);
+        c.setAttribute('aria-checked', String(on));
+        farmCount();
+    });
+    $('lpFarmUse').addEventListener('click', () => {
+        let full = false;
+        // In the order they were ticked: the first one's place is the plan's.
+        [...FARM.picked].map((id) => FARM.rows.find((r) => r.id === id)).filter(Boolean).forEach((r) => {
+            if (S.lots.some((x) => x.farmLotId === r.id)) return;
+            if (S.lots.length >= 12) { full = true; return; }
+            S.lots.push(fromFarm(r));
+        });
+        if (full) window.toast?.('Up to 12 lots in one plan.', 'error');
         paintLots(); syncFq();
-        const last = $('lpLots').lastElementChild;
-        last?.querySelector('[data-in="name"]')?.focus({ preventScroll: true });
-        last?.scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'nearest' });
+        sheetClose($('lpFarmSheet'));
     });
     let SEASONS = null;
     const picked = new Set();
@@ -1853,7 +2084,6 @@
             if (!S.loc.province && l.province) { S.loc.province = l.province; S.loc.town = l.town || ''; }
             if (S.loc.lat === null && l.lat !== null && l.lng !== null) { S.loc.lat = l.lat; S.loc.lng = l.lng; }
         });
-        if (!S.lots.length) S.lots.push(newLot());
         paintLots(); paintPlace(); syncFq();
         sheetClose($('lpSeasonSheet'));
     });
@@ -2046,12 +2276,21 @@
             ['workers', '👷', 'Workers', S.workers.length + (S.workers.length === 1 ? ' worker' : ' workers') + (S.stagger ? ', staggering allowed' : '')]);
         S.lots.forEach((l, i) => {
             const n = window.aneeFieldProfile.count(l.profile);
+            // A farm lot says where its answers came from, and opens its own sheet.
+            if (l.farmLotId) {
+                const w = window.aneeFieldProfile.words(l.profile);
+                rows.push(['lotedit:' + l.uid, '<i style="--lc:' + lc(i) + '"></i>', S.lots.length > 1 ? 'Lot ' + (i + 1) + ', ' + l.name : l.name,
+                    'From ' + l.name + ': ' + (n ? (w.length > 120 ? w.slice(0, 118).replace(/\s+\S*$/, '') + '…' : w) : 'no answers yet'), 'Edit the lot']);
+                return;
+            }
             const src = l.copiedFrom !== null && S.lots[l.copiedFrom] ? 'same as Lot ' + (l.copiedFrom + 1) + (l.edited ? ', changed' : '') : (l.savedFrom ? 'from your saved ' + l.savedFrom : '');
             rows.push(['lot:' + i + ':' + pages[0], '<i style="--lc:' + lc(i) + '"></i>', S.lots.length > 1 ? 'Lot ' + (i + 1) + (l.name.trim() ? ', ' + l.name.trim() : '') : 'Your field',
                 'Soil and history: ' + (n ? n + (n === 1 ? ' answer' : ' answers') : 'skipped') + (src ? ', ' + src : '')]);
         });
-        rows.push(['place', '📍', 'Place', OPT.ph ? (S.loc.town ? townName(S.loc.town) + ', ' + S.loc.province : 'Not chosen') : (S.loc.place || 'Not given')]);
-        $('lpReview').innerHTML = rows.map(([id, e, k, v]) => '<button type="button" data-jump="' + esc(id) + '"><span class="re">' + (String(e).startsWith('<i') ? e : esc(e)) + '</span><span class="rt"><small>' + esc(k) + '</small><b>' + esc(v) + '</b></span><span class="rc">Change</span></button>').join('');
+        const lp = lotPlace();
+        rows.push(lp ? ['lots', '📍', 'Place', (OPT.ph ? townName(lp.town) + ', ' + lp.province : lp.where) + ', the place of ' + lp.name + (lp.mixed ? '. Your lots are in different towns, so the plan reads the weather there' : '')]
+            : ['place', '📍', 'Place', OPT.ph ? (S.loc.town ? townName(S.loc.town) + ', ' + S.loc.province : 'Not chosen') : (S.loc.place || 'Not given')]);
+        $('lpReview').innerHTML = rows.map(([id, e, k, v, c]) => '<button type="button" data-jump="' + esc(id) + '"><span class="re">' + (String(e).startsWith('<i') ? e : esc(e)) + '</span><span class="rt"><small>' + esc(k) + '</small><b>' + esc(v) + '</b></span><span class="rc">' + esc(c || 'Change') + '</span></button>').join('');
         $('lpRunFace').innerHTML = OPT.aneeFace ? '<img src="' + esc(OPT.aneeFace) + '" alt="">' : '';
         paintRun();
         // The time, again, with every lot's answers (lime, a salt flush or a rest can add weeks).
@@ -2076,14 +2315,30 @@
             : (short ? 'You have ' + esc(Math.floor(Number(OPT.balance))) + ' credits and this plan needs ' + esc(price) + '.' + (OPT.creditsUrl ? ' <a href="' + esc(OPT.creditsUrl) + '" style="font-weight:800;text-decoration:underline">Get credits</a>' : '')
                 : 'Usually one to three minutes' + (S.custom ? ', a little longer while Anee looks up the variety. Looking it up on the web is why this plan costs more' : '') + '. Stay on this page while Anee works.');
     }
-    $('lpReview').addEventListener('click', (e) => { const b = e.target.closest('[data-jump]'); if (b) goTo(b.dataset.jump, true); });
+    $('lpReview').addEventListener('click', async (e) => {
+        const b = e.target.closest('[data-jump]');
+        if (!b) return;
+        const id = b.dataset.jump;
+        if (id.startsWith('lotedit:')) {
+            // The lot's sheet; saved, the review is read again (its pages may no longer need asking).
+            const l = S.lots.find((x) => 'lotedit:' + x.uid === id);
+            if (l && await editFarm(l)) { syncFq(); goTo('review'); }
+            return;
+        }
+        goTo(id, true);
+    });
 
     $('lpRun').addEventListener('click', async () => {
+        // The notes may sit on this screen (the lots brought the place): read them now.
+        S.notes = $('lpNotes').value.trim();
+        const lp = lotPlace();
         const body = {
             crop: S.crop, method: S.method, variety: S.variety, seedType: S.seedType || null, seedSource: rice() ? (S.seedSource || null) : null, planting: S.planting,
-            lots: S.lots.map((l) => ({ name: l.name.trim(), area: num(l.area), unit: l.unit, planting: l.planting, sourceLotId: l.sourceLotId, copiedFrom: l.copiedFrom, edited: !!l.edited, profile: l.profile })),
+            lots: S.lots.map((l) => ({ name: l.name.trim(), area: num(l.area), unit: l.unit, planting: l.planting, sourceLotId: l.sourceLotId, farmLotId: l.farmLotId, copiedFrom: l.copiedFrom, edited: !!l.edited, profile: l.profile })),
             crew: { workers: S.workers.map((w) => ({ name: w.name.trim(), days: w.days })), fleet: fleetList(), stagger: S.stagger },
-            location: { province: S.loc.province, town: townName(S.loc.town), place: S.loc.place, lat: S.loc.lat, lng: S.loc.lng }, notes: S.notes,
+            // The first farm lot's place when the lots have one, else the place screen's.
+            location: lp ? { province: lp.province, town: townName(lp.town), place: '', lat: null, lng: null }
+                : { province: S.loc.province, town: townName(S.loc.town), place: S.loc.place, lat: S.loc.lat, lng: S.loc.lng }, notes: S.notes,
             quote: planQuote(),
         };
         const phases = S.custom

@@ -5800,6 +5800,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     $id('qalCrop')?.addEventListener('change', qalCropChanged);
 
+    /* The variety, from the records (partials/variety-pick, 2026-10-16): the
+       crop's varieties on record, searched, and the chosen name written into
+       the box. The box stays as it was, for a name typed as sold. */
+    $id('qalVarFind')?.addEventListener('click', async () => {
+        const box = $id('qalVariety');
+        if (!box || !window.aneeVarietyPick) return;
+        const sel = $id('qalCrop'), crop = (sel && sel.value) || '';
+        const label = crop && sel.selectedOptions[0] ? sel.selectedOptions[0].textContent.trim().replace(/^\S+\s+/, '').split(' (')[0].split(' — ')[0] : '';
+        const res = await window.aneeVarietyPick.open({ crop, cropLabel: label, value: null, ownNote: 'Not on record. The name is kept as you typed it.' });
+        if (!res || !res.name) return;
+        box.value = res.name;
+        box.classList.remove('qal-var-flash'); void box.offsetWidth; box.classList.add('qal-var-flash');
+    });
+
     /** The date a tree of that age would have been planted. */
     function qalPlantedFromAge() {
         const months = (parseInt($id('qalTreeYears')?.value, 10) || 0) * 12

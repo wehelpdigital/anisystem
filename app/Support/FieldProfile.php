@@ -697,6 +697,12 @@ final class FieldProfile
             $cropKey = $crop !== null && $crop !== '' ? FieldCatalogue::cropKey($crop) : null;
             if (is_numeric($fromId) && (int) $fromId > 0) {
                 $had = DB::table('as_field_profiles')->where('id', (int) $fromId)->where('userId', $ownerId)->where('deleteStatus', 1)->first();
+                // Since Global Lots (2026-10-16) the answers came from a farm lot: the lot
+                // is changed in its own sheet, never from an analysis (an update here would
+                // restart its six month check, and a crop of its own would make a second lot).
+                if ($had && FarmLots::ready()) {
+                    return (int) $had->id;
+                }
                 if ($had && ($had->crop === null || $cropKey === null || $had->crop === $cropKey)) {
                     $old = self::normalize(json_decode((string) $had->answers, true) ?: [], $crop);
                     if (self::sameAnswers($old, $answers)) {

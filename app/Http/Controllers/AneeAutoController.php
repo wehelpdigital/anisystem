@@ -490,6 +490,21 @@ class AneeAutoController extends Controller
             $a['fieldProfileFrom'] = $fp && is_array($from) && is_numeric($from['id'] ?? null)
                 ? ['id' => (int) $from['id'], 'name' => mb_substr(trim((string) ($from['name'] ?? '')), 0, 120)] : null;
         }
+        // Which of the farm's lots (Global Lots, App\Support\FarmLots) each lot
+        // of this season was filled from (2026-10-16): the wizard's link only,
+        // for this season's own lots.
+        if ($request->has('farmLots')) {
+            $mine = AsAutoLot::where('autoId', $auto->id)->pluck('lotId')->map(fn ($x) => (int) $x)->all();
+            $links = [];
+            foreach ((array) $request->input('farmLots', []) as $x) {
+                $lot = (int) (is_array($x) ? ($x['lotId'] ?? 0) : 0);
+                $farm = (int) (is_array($x) ? ($x['farmLotId'] ?? 0) : 0);
+                if ($farm > 0 && in_array($lot, $mine, true)) {
+                    $links[$lot] = ['lotId' => $lot, 'farmLotId' => $farm];
+                }
+            }
+            $a['farmLots'] = array_values($links);
+        }
         $auto->update(['answers' => $a, 'step' => max((int) $auto->step, (int) $request->input('step', 0))]);
 
         return $this->json(true, 'Saved.', ['soilRead' => $a['soilRead'] ?? null]);
@@ -571,6 +586,11 @@ class AneeAutoController extends Controller
     {
         $a = (array) $auto->answers;
         if (empty($a['fieldProfile'])) {
+            return;
+        }
+        // The answers are one of the farm's lots, picked as they are: nothing new to keep.
+        $from = (int) ($a['fieldProfileFrom']['id'] ?? 0);
+        if ($from && in_array($from, array_map(fn ($x) => (int) ($x['farmLotId'] ?? 0), (array) ($a['farmLots'] ?? [])), true)) {
             return;
         }
         try {

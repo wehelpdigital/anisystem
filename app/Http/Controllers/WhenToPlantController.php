@@ -176,6 +176,9 @@ class WhenToPlantController extends Controller
             // The field in detail (App\Support\FieldProfile), optional.
             'fieldProfile' => 'nullable|array',
             'fieldProfileFrom' => 'nullable|integer',
+            // The lot it is for (partials/farm-lots, 2026-10-16): named on the report.
+            'lotId' => 'nullable|integer',
+            'lotName' => 'nullable|string|max:120',
             // A variety picked from the records (partials/variety-pick): matched again here.
             'varietyRecord' => 'nullable|array',
             'varietyRecord.name' => 'nullable|string|max:80',
@@ -248,8 +251,12 @@ class WhenToPlantController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        // The field in detail is kept for the next analysis, named after the place.
-        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
+        // The field in detail is kept for the next analysis, named after the
+        // place. A lot already keeps its own answers: kept again under another
+        // crop it would come back as a second lot without a place.
+        if (empty($p['lotId'])) {
+            FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
+        }
 
         /* THE GATEWAY MUST NOT WAIT ON THE MODEL. A hosted proxy times a
          * long request out — a chat answer slips under its limit, this
@@ -626,6 +633,8 @@ class WhenToPlantController extends Controller
             'variety' => trim((string) $request->input('variety', '')),
             'varietyRecord' => self::varietyRecord((string) $request->input('crop'), $request->input('varietyRecord.name'), $request->input('country')),
             'location' => trim((string) $request->input('location')),
+            'lotId' => $request->filled('lotId') ? (int) $request->input('lotId') : null,
+            'lotName' => mb_substr(trim((string) $request->input('lotName', '')), 0, 120) ?: null,
             'problems' => array_values((array) $request->input('problems', [])),
             'soilConditions' => \App\Support\SoilConditions::normalize($request->input('soilConditions', [])),
             'phValue' => \App\Support\SoilConditions::phValue($request->input('phValue')),

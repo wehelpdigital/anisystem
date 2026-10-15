@@ -462,6 +462,22 @@
     @media (prefers-reduced-motion: reduce) { .wtp-varfacts { animation: none; } }
     .wtp-loc-country { margin-bottom: .8rem; }
     .wtp-loc-country .form-label { margin-bottom: .3rem; }
+    /* The lot (2026-10-16, the owner): what it answered is not asked again.
+       A [hidden] block loses to its own display rule without these. */
+    .wtp-loc-country[hidden], .wtp-lotq[hidden], .wtp-prob[hidden] { display: none; }
+    .wtp-lotnote { display: flex; align-items: flex-start; gap: .5rem; margin: 0 0 .8rem; padding: .55rem .75rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5;
+        color: #24400f; background: #f3f8ec; border: 1px solid #d5e7c0; animation: wtpLotIn .3s cubic-bezier(.22,1,.36,1) both; }
+    .wtp-lotnote[hidden] { display: none; }
+    .wtp-lotnote svg { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: #4a7c2a; }
+    @keyframes wtpLotIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .wtp-lotline { display: block; margin-top: .35rem; }
+    .wtp-lotline button { font-weight: 800; color: #3d6823; text-decoration: underline; text-underline-offset: 3px; }
+    /* A step the lot answered whole has no dot: it folds away. */
+    .wtp-dot.is-skip { width: 0; margin-left: -.35rem; opacity: 0; }
+    html.dark .wtp-lotnote { color: #cfe6b8; background: #17220f; border-color: #2b3a1c; }
+    html.dark .wtp-lotnote svg { color: #a5c97e; }
+    html.dark .wtp-lotline button { color: #a5c97e; }
+    @media (prefers-reduced-motion: reduce) { .wtp-lotnote { animation: none; } }
 
     /* A report that fits a hand: tighter hero, chart labels kept, the
        timeline's in-band words stand down and the legend speaks for them. */
@@ -507,19 +523,23 @@
         </div>
 
         <div class="card p-5 wtp-wiz" id="wtpWiz">
-            {{-- Step 1: the place, first, as What to Plant asks it. The
-                 field's country is the farmer's own (their account's) unless
-                 they say otherwise. It sets the address words, the example
-                 place, the crop book and whose climate record and agencies
-                 the analysis reads. --}}
+            {{-- Step 1: the lot (2026-10-16, the owner), picked from the
+                 farm's lots (partials/farm-lots) or added. Its town and
+                 province are where the climate is read, and its soil, water
+                 and last season are not asked again on the steps after it.
+                 The field's country is the farmer's own (their account's):
+                 the picker stays for a farm abroad and is out of sight for
+                 one at home. It sets the crop book and whose climate record
+                 and agencies the analysis reads. --}}
             <section class="wtp-step is-on" data-step="0">
-                <p class="wtp-q">Where is the field?</p>
-                <div class="wtp-loc-country">
+                <p class="wtp-q">Which lot is it for?{{ \App\Support\Tagalog::flag('lot') }}</p>
+                <p class="wtp-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</p>
+                <div class="wtp-loc-country" @if (\App\Support\Region::ph()) hidden @endif>
                     <label class="form-label">Country</label>
                     @include('partials.country-pick', ['id' => 'wtpCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
                 </div>
-                <p class="wtp-sub" id="wtpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough. Climate differs by region.</p>
-                <input type="text" id="wtpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
+                <div id="wtpLots"></div>
+                @include('partials.farm-lots')
             </section>
             {{-- Step 2: the MONTHS the farmer is weighing, not a named
                  season (the owner's call, 2026-09-28): the rains keep no
@@ -579,37 +599,37 @@
                 <div class="wtp-varfacts" id="wtpVarFacts" hidden></div>
                 @include('partials.variety-pick')
             </section>
-            {{-- Step 5: the field in detail (2026-10-15, the owner): the
-                 shared field questions (App\Support\FieldProfile), optional.
-                 The answers fill the two steps after it and go to Anee whole. --}}
-            <section class="wtp-step" data-step="4">
-                <p class="wtp-q">Your field in detail</p>
-                <p class="wtp-sub">Optional. The soil, the water and last season, one short page at a time. Your answers fill in the next two steps, and Anee reads every one.</p>
-                <div id="wtpFpc"></div>
-                @include('partials.field-profile-card')
-            </section>
-            {{-- Step 6: the troubles --}}
-            <section class="wtp-step" data-step="5">
+            {{-- "Your field in detail" (2026-10-15) was a step here: the lot
+                 carries those answers now (step 1). --}}
+            {{-- Step 5: the troubles. A row the lot already answered (the
+                 floods, the drainage, the soil, the water, the salt, last
+                 season's pests, the weeds) is hidden and keeps the lot's
+                 answer; a river, the wind and the shade are still asked. --}}
+            <section class="wtp-step" data-step="4" data-blocks-only>
                 <p class="wtp-q">What problems does this field have?</p>
                 <p class="wtp-sub">Tick what you have seen. Each one can change the best time.</p>
                 <div class="wtp-probs" id="wtpProbs"></div>
             </section>
-            {{-- Step 7: the soil's chemistry (the owner, 2026-09-29): acidic,
+            {{-- Step 6: the soil's chemistry (the owner, 2026-09-29): acidic,
                  alkaline, sodic, saline, acid sulfate. Each moves the window
                  (a correction's lead time before planting, weather that makes
                  it worse at emergence). More than one can be true; the pH
-                 words exclude one another. A tested pH is optional. --}}
-            <section class="wtp-step" data-step="6">
+                 words exclude one another. A tested pH is optional. The
+                 conditions are the lot's once it said its acidity (or a pH)
+                 and its salt, the pH once it gave a tested one. --}}
+            <section class="wtp-step" data-step="5" data-blocks-only>
                 <p class="wtp-q">What is the soil like?</p>
-                <p class="wtp-sub">Tick what you know. Skip it if the soil was never tested. You can tick more than one.</p>
-                <div class="wtp-probs" id="wtpSoil"></div>
-                <div class="wtp-ph">
+                <div class="wtp-lotq" data-lot="cond">
+                    <p class="wtp-sub">Tick what you know. Skip it if the soil was never tested. You can tick more than one.</p>
+                    <div class="wtp-probs" id="wtpSoil"></div>
+                </div>
+                <div class="wtp-ph wtp-lotq" data-lot="ph">
                     <label class="form-label" for="wtpPh">Tested pH <span class="wtp-opt">optional</span></label>
                     <input type="number" id="wtpPh" class="form-input" inputmode="decimal" min="2" max="12" step="0.1" placeholder="Like 5.4">
                 </div>
             </section>
-            {{-- Step 9: the decision --}}
-            <section class="wtp-step" data-step="7">
+            {{-- Step 7: the decision --}}
+            <section class="wtp-step" data-step="6">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="wtpReview"></p>
                 <button type="button" class="wtp-run" id="wtpRun">
@@ -710,7 +730,7 @@
     let OPT = null;
     /* from / to: months as one number (year * 12 + month - 1), null until
        picked; the From and To tags each set their own end. */
-    const state = { from: null, to: null, crop: '', variety: '', varRecord: null, location: '', problems: [], soil: [], ph: '', country: '' };
+    const state = { from: null, to: null, crop: '', variety: '', varRecord: null, location: '', problems: [], soil: [], ph: '', country: '', lot: null };
     const MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const ym = (n) => ({ year: Math.floor(n / 12), month: (n % 12) + 1 });
     const monthIdx = (year, month) => Number(year) * 12 + Number(month) - 1;
@@ -745,45 +765,165 @@
         return crosses && y ? `${label} ${y} to ${y + 1}` : `${label} ${y || ''}`.trim();
     };
     let step = 0;
-    const STEPS = 8;
-    /* The field in detail (partials/field-profile-card): its answers fill the
-       problems, the soil and the pH, unless the farmer has set them by hand. */
-    let FPC = null;
+    const STEPS = 7;
+    /* The lot's answers (partials/farm-lots, FieldProfile::legacy) fill the
+       problems, the soil and the pH, unless the farmer has set them by hand.
+       What the lot answered is hidden: those rows and blocks keep the lot's
+       answer whatever was ticked before. LIT: the steps where a question
+       still shown was filled in from the lot. */
     const TOUCH = { problems: false, soil: false, ph: false };
+    let LIT = {};
     const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
     function applyProfile(answers, L) {
         if (!OPT) return '';
         const got = [];
+        LIT = {};
         const tick = (host, keys) => document.querySelectorAll('#' + host + ' input').forEach((i) => { i.checked = keys.includes(i.value); i.closest('.wtp-prob')?.classList.toggle('is-on', i.checked); });
+        const want = [];
+        // Rain only says more than a short water source, so it wins that pair.
+        const from = (L.problemsWhen || []).filter((k) => OPT.problems[k]);
+        from.filter((k) => !(k === 'water_source' && from.includes('rainfed'))).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
         if (!TOUCH.problems) {
-            const want = [];
-            // Rain only says more than a short water source, so it wins that pair.
-            const from = (L.problemsWhen || []).filter((k) => OPT.problems[k]);
-            from.filter((k) => !(k === 'water_source' && from.includes('rainfed'))).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
             tick('wtpProbs', want);
             state.problems = want;
             if (want.length) got.push(want.length === 1 ? 'one field problem' : want.length + ' field problems');
-            window.aneeFieldCard.hint(document.querySelector('#wtpWiz .wtp-step[data-step="5"]'), want.length > 0);
+        } else {
+            // Ticked by hand: the farmer's own rows stay, the lot's hidden rows follow the lot.
+            document.querySelectorAll('#wtpProbs .wtp-prob').forEach((row) => {
+                if (!row.hidden) return;
+                const i = row.querySelector('input');
+                i.checked = want.includes(i.value);
+                row.classList.toggle('is-on', i.checked);
+            });
+            state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value);
         }
-        let soilFilled = false;
+        if (want.some((k) => !lotHas('prob:' + k))) LIT[4] = true;
         if (!TOUCH.soil) {
-            const want = (L.soilConditions || []).filter((k) => k !== 'unsure' && (OPT.soilConditions || {})[k]);
-            tick('wtpSoil', want);
-            state.soil = want;
-            if (want.length) { got.push('the soil'); soilFilled = true; }
+            const wantSoil = (L.soilConditions || []).filter((k) => k !== 'unsure' && (OPT.soilConditions || {})[k]);
+            tick('wtpSoil', wantSoil);
+            state.soil = wantSoil;
+            if (wantSoil.length) { got.push('the soil'); if (!lotHas('cond')) LIT[5] = true; }
         }
         if (!TOUCH.ph) {
             $id('wtpPh').value = L.phValue != null ? String(L.phValue) : '';
             state.ph = $id('wtpPh').value;
-            if (L.phValue != null) { got.push('the pH'); soilFilled = true; }
+            if (L.phValue != null) { got.push('the pH'); if (!lotHas('ph')) LIT[5] = true; }
         }
-        if (!TOUCH.soil || !TOUCH.ph) window.aneeFieldCard.hint(document.querySelector('#wtpWiz .wtp-step[data-step="6"]'), soilFilled);
-        return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything on the next steps.' : '';
+        return got.length ? 'Filled in for you: ' + andList(got) + '.' : '';
     }
-    function mountCard() {
-        if (FPC || !window.aneeFieldCard) return;
-        FPC = window.aneeFieldCard.mount($id('wtpFpc'), { crop: () => state.crop || null, title: () => state.location || 'Your field', onChange: applyProfile });
+
+    /* ---- the lot (partials/farm-lots, 2026-10-16, the owner) ----
+       Picked on the first step. Each block with data-lot is a question the
+       lot may already have answered: then it is hidden, and a step whose
+       every block is hidden (data-blocks-only) is skipped by Next and Back,
+       its dot folded away. The troubles list is asked row by row: a river,
+       the wind and the shade are not the lot's to say. */
+    let LOTS = null;
+    const LOT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+    const lotA = () => (state.lot && state.lot.answers) || {};
+    const lotHasKey = (k) => { const v = lotA()[k]; return v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && !v.length); };
+    // The lot's answers that settle each row of the troubles list.
+    const PROB_LOT = { floods: ['flooding'], drainage: ['drainage'], cracking: ['texture'], sandy: ['texture'], water_source: ['water'], rainfed: ['water'],
+        sea: ['salt'], pests: ['outbreaks'], weeds: ['weeds'] };
+    const LOT_WORD = { flooding: 'the floods', drainage: 'the drainage', texture: 'the soil', water: 'the water', salt: 'the salt', outbreaks: 'last season\'s troubles',
+        weeds: 'the weeds', cond: 'the soil condition', ph: 'the tested pH' };
+    function lotHas(k) {
+        if (!state.lot || !k || k === '-') return false;
+        // The pH words and the salt together; "never tested" does not say the pH.
+        if (k === 'cond') return ((lotHasKey('acidity') && lotA().acidity !== 'untested') || lotHasKey('phFrom')) && lotHasKey('salt');
+        if (k === 'ph') return lotHasKey('phFrom');
+        if (k.startsWith('prob:')) { const need = PROB_LOT[k.slice(5)]; return !!need && need.every(lotHasKey); }
+        return lotHasKey(k);
     }
+    const lotWordsOf = (k) => (k.startsWith('prob:') ? (PROB_LOT[k.slice(5)] || []) : [k]).map((x) => LOT_WORD[x]).filter(Boolean);
+    const stepEl = (n) => document.querySelector('#wtpWiz .wtp-step[data-step="' + n + '"]');
+    function skipped(n) {
+        const sec = stepEl(n);
+        if (!sec || !sec.hasAttribute('data-blocks-only')) return false;
+        const blocks = [...sec.querySelectorAll('[data-lot]')];
+        return blocks.length > 0 && blocks.every((b) => b.hidden);
+    }
+    function paintLot() {
+        document.querySelectorAll('#wtpWiz [data-lot]').forEach((b) => { b.hidden = lotHas(b.getAttribute('data-lot')); });
+        // Each step says what its lot answered for it, and what it filled in.
+        document.querySelectorAll('#wtpWiz .wtp-step').forEach((sec) => {
+            const n = Number(sec.getAttribute('data-step'));
+            const words = [...new Set([...sec.querySelectorAll('[data-lot]')].filter((b) => b.hidden).flatMap((b) => lotWordsOf(b.getAttribute('data-lot'))))];
+            const fill = !!LIT[n];
+            let note = sec.querySelector(':scope > .wtp-lotnote');
+            if (!state.lot || (!words.length && !fill) || skipped(n)) { if (note) note.hidden = true; return; }
+            if (!note) { note = document.createElement('p'); note.className = 'wtp-lotnote'; sec.querySelector(':scope > .wtp-q').after(note); }
+            const name = '<b>' + esc(state.lot.name) + '</b>';
+            note.innerHTML = LOT_ICON + '<span>' + (words.length
+                ? 'From ' + name + ': ' + esc(andList(words)) + '.' + (fill ? ' Some answers below are filled in from it too. Change any that is not right.' : '')
+                : 'Filled in from ' + name + '. Change anything that is not right.') + '</span>';
+            note.hidden = false;
+        });
+        document.querySelectorAll('#wtpDots .wtp-dot').forEach((d, i) => d.classList.toggle('is-skip', skipped(i)));
+    }
+    async function applyLot() {
+        const lot = state.lot;
+        paintLot();
+        if (!OPT) return;
+        // What the lot settles is the lot's: a hand set answer under a hidden block gives way.
+        if (lotHas('cond')) TOUCH.soil = false;
+        if (lotHas('ph')) TOUCH.ph = false;
+        let L = {};
+        if (lot) { try { L = await window.aneeLots.legacy(lot, state.crop || null); } catch (_) { L = {}; } }
+        if (state.lot !== lot) return;
+        applyProfile(lot ? lot.answers || {} : {}, L);
+        paintLot();
+    }
+    function pickLot(lot) {
+        const was = state.lot ? state.lot.id : null;
+        state.lot = lot || null;
+        state.location = lot ? (lot.where || lot.place || '') : '';
+        // Another lot is another field: what was set by hand for the last one gives way.
+        if (!lot || lot.id !== was) Object.keys(TOUCH).forEach((k) => { TOUCH[k] = false; });
+        return applyLot().then(() => { if (step === STEPS - 1 && state.lot) review(); });
+    }
+    function mountLots() {
+        if (LOTS || !window.aneeLots) return;
+        LOTS = window.aneeLots.picker($id('wtpLots'), { crop: () => state.crop || null, onPick: pickLot });
+    }
+    /* The lot's answers in a few plain words, for the review line. */
+    const SAY = { 'texture.sandy': 'gritty sandy soil', 'texture.loam': 'soft crumbly loam', 'texture.clay': 'sticky clay', 'texture.heavy_clay': 'heavy clay that cracks',
+        'water.irrigation': 'irrigation canal', 'water.pump': 'pump or well', 'water.river': 'river or spring water', 'water.reservoir': 'farm pond', 'water.rainfed': 'rain only',
+        'flooding.never': 'never floods', 'flooding.sometimes': 'floods sometimes', 'flooding.often': 'floods most wet seasons',
+        'drainage.fast': 'drains fast', 'drainage.day': 'drains within a day', 'drainage.slow': 'drains slowly', 'drainage.stands': 'water stands for days',
+        'salt.none': 'no salt', 'salt.crust': 'white salt crust', 'salt.sea': 'sea water at high tide', 'salt.tips': 'salt burned leaf tips', 'salt.sodic': 'sodic crust',
+        'acidity.untested': 'pH never tested', 'acidity.none': 'not acidic', 'acidity.mild': 'mildly acidic', 'acidity.strong': 'strongly acidic',
+        'acidity.sulfate': 'acid sulfate soil', 'acidity.alkaline': 'alkaline soil', 'weeds.few': 'few weeds' };
+    function lotSays(keys) {
+        const Q = (window.aneeFieldProfile && window.aneeFieldProfile.questions) || {};
+        const a = lotA(), out = [];
+        keys.forEach((k) => {
+            if (k === 'phFrom') {
+                if (lotHasKey('phFrom')) out.push('pH ' + (lotHasKey('phTo') && String(a.phTo) !== String(a.phFrom) ? a.phFrom + ' to ' + a.phTo : a.phFrom));
+                return;
+            }
+            if (!lotHasKey(k)) return;
+            if (k === 'outbreaks') {
+                const l = [].concat(a.outbreaks).filter((x) => x !== 'none');
+                out.push(l.length ? l.length + (l.length === 1 ? ' trouble' : ' troubles') + ' last season' : 'no troubles last season');
+                return;
+            }
+            const q = Q[k] || {};
+            out.push([].concat(a[k]).map((x) => SAY[k + '.' + x] || String(((q.o || {})[x] || [x])[0]).toLowerCase()).join(' and '));
+        });
+        return out;
+    }
+    function lotLine() {
+        const lot = state.lot;
+        if (!lot) return '';
+        const said = lotSays(['texture', 'water', 'flooding', 'drainage', 'salt', 'acidity', 'phFrom', 'weeds', 'outbreaks']);
+        return `<span class="wtp-lotline text-xs">${said.length ? 'From ' + esc(lot.name) + ': ' + esc(said.join(', ')) : esc(lot.name) + ' has no field answers yet'} · <button type="button" data-lot-edit>Edit the lot</button></span>`;
+    }
+    const lotPayload = () => {
+        if (!state.lot || !window.aneeLots) return {};
+        const P = window.aneeLots.payload(state.lot);
+        return { lotId: P.lotId || null, lotName: state.lot.name || null, fieldProfile: P.fieldProfile || null, fieldProfileFrom: P.fieldProfileFrom || null };
+    };
     // A crop let go because the field's country changed: the step that asks
     // for it again says why.
     let cropDropped = false;
@@ -796,7 +936,7 @@
             OPT = res.data;
             paintOptions();
         } catch (err) { toast(err.message, 'error'); }
-        if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
+        if (window.aneeLots) mountLots(); else document.addEventListener('DOMContentLoaded', mountLots, { once: true });
         // Painted: the price card and the wizard arrive together, once.
         const gen = $id('wtpGen');
         if (gen && gen.classList.contains('an-wait')) {
@@ -811,12 +951,15 @@
         state.country = state.country || ($id('wtpCountry') || {}).value || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
         paintMonths();
         paintCrops();
+        // Each row names the lot answer that settles it ("-": none can, it is always asked).
         $id('wtpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
-            <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
+            <label class="wtp-prob" data-prob="${k}" data-lot="${PROB_LOT[k] ? 'prob:' + k : '-'}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         // "Not sure" is the empty answer, so it is not a box to tick.
         $id('wtpSoil').innerHTML = Object.entries(OPT.soilConditions || {}).filter(([k]) => k !== 'unsure').map(([k, label]) => { const [n, sub] = String(label).split(' — '); return `
             <label class="wtp-prob" data-soil="${k}"><input type="checkbox" value="${k}"><span>${esc(n)}${sub ? `<small class="block text-xs text-gray-500">${esc(sub)}</small>` : ''}</span></label>`; }).join('');
         $id('wtpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
+        // A lot picked before the options came is filled in now.
+        applyLot();
 
         paintQuote();
     }
@@ -991,6 +1134,8 @@
     /* ---------------- the walk ---------------- */
     function show(n, backwards) {
         step = Math.max(0, Math.min(STEPS - 1, n));
+        // Over the steps the lot answered whole, the way the farmer is going.
+        while (step > 0 && step < STEPS - 1 && skipped(step)) step += backwards ? -1 : 1;
         document.querySelectorAll('.wtp-step').forEach((s) => {
             const on = Number(s.getAttribute('data-step')) === step;
             s.classList.toggle('is-on', on);
@@ -1004,16 +1149,14 @@
 
     function stepReady() {
         switch (step) {
-            case 0: state.location = $id('wtpLocation').value.trim();
-                return !!state.location || (toast('Type where the field is.', 'error'), false);
+            case 0: return (!!state.lot && !!state.location) || (toast('Pick the lot, or add one.', 'error'), false);
             case 1: if (state.from === null) { toast('Pick the months you might plant.', 'error'); return false; }
                 if (state.to === null) state.to = state.from;
                 return true;
             case 2: return !!state.crop || (toast(cropDropped ? `The crop list is different for ${countryName(state.country)}. Pick the crop again.` : 'Pick the crop.', 'error'), false);
             case 3: return true;
-            case 4: return true;
-            case 5: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
-            case 6: {
+            case 4: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
+            case 5: {
                 state.soil = [...document.querySelectorAll('#wtpSoil input:checked')].map((i) => i.value);
                 const ph = $id('wtpPh').value.trim();
                 if (ph !== '' && (!(Number(ph) >= 2) || Number(ph) > 12)) { toast('pH must be a number from 2 to 12, like 5.4.', 'error'); return false; }
@@ -1022,11 +1165,10 @@
             }
             default: {
                 // The run itself: every answer still stands for the field's country.
-                state.location = $id('wtpLocation').value.trim();
                 const gone = state.from !== null && OPT && state.from < FIRST();
-                const back = !state.location ? 0 : (state.from === null || gone) ? 1 : !state.crop ? 2 : -1;
+                const back = !state.lot || !state.location ? 0 : (state.from === null || gone) ? 1 : !state.crop ? 2 : -1;
                 if (back < 0) return true;
-                toast(['Type where the field is.', gone ? 'Those months have already started. Pick them again.' : 'Pick the months.', 'Pick the crop again.'][back], 'error');
+                toast(['Pick the lot, or add one.', gone ? 'Those months have already started. Pick them again.' : 'Pick the months.', 'Pick the crop again.'][back], 'error');
                 setTimeout(() => show(back, true), 250);
                 return false;
             }
@@ -1035,12 +1177,16 @@
 
     function review() {
         const crop = (OPT.crops.find((c) => c.key === state.crop) || {});
+        const lot = state.lot;
+        const size = lot && Number(lot.areaHa) > 0 && window.aneeLots ? window.aneeLots.fmtHa(lot.areaHa) : '';
         $id('wtpReview').innerHTML = `${esc(crop.icon || '')} <b>${esc(crop.label || '')}</b>`
             + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(whenSaid(rangeParams()))}`
-            + ` · ${esc(state.location)}${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(nameOf(state.country)) : ''}`
-            + (state.problems.length ? `<br><span class="text-xs">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '')
-            + ((state.soil.length || state.ph) ? `<br><span class="text-xs">Soil: ${esc([...state.soil.map((k) => ((OPT.soilConditions || {})[k] || k).split(' — ')[0]), state.ph ? 'pH ' + state.ph : ''].filter(Boolean).join(', '))}</span>` : '')
-            + (FPC && FPC.count() ? `<br><span class="text-xs">Your field in detail: ${FPC.count()} answer${FPC.count() === 1 ? '' : 's'}</span>` : '');
+            + `${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(nameOf(state.country)) : ''}`
+            // The lot by name, where it is and its size, then what it answered.
+            + (lot ? `<br>🗺️ <b>${esc(lot.name)}</b>, ${esc(lot.place || state.location)}${size ? ' · ' + esc(size) : ''}` : ` · ${esc(state.location)}`)
+            + lotLine()
+            + (state.problems.length ? `<span class="block text-xs mt-1">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '')
+            + ((state.soil.length || state.ph) ? `<span class="block text-xs">Soil: ${esc([...state.soil.map((k) => ((OPT.soilConditions || {})[k] || k).split(' — ')[0]), state.ph ? 'pH ' + state.ph : ''].filter(Boolean).join(', '))}</span>` : '');
         $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${priceNow()} credits)` : 'Run the analysis';
         $id('wtpRunFine').textContent = OPT.canUse
             ? 'Paid from your AI credits. It shows in your credit log.'
@@ -1056,15 +1202,17 @@
     };
     $id('wtpNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
     $id('wtpBack').addEventListener('click', () => show(step - 1, true));
+    // The review's "Edit the lot": its sheet, then the steps follow what changed.
+    $id('wtpReview').addEventListener('click', async (e) => {
+        if (!e.target.closest('[data-lot-edit]') || !state.lot || !window.aneeLots) return;
+        const row = await window.aneeLots.edit(state.lot, { crop: state.crop || null, ask: false });
+        if (row) pickLot(row);
+    });
     $id('wtpCountry')?.addEventListener('country:change', (e) => {
         const code = e.detail && e.detail.code;
         const r = e.detail && e.detail.rules;
         if (!code || !r) return;
         state.country = code;
-        const city = (r.address && r.address.city && r.address.city.label) || 'City';
-        const region = (r.address && r.address.region && r.address.region.label) || 'State / Region';
-        $id('wtpLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough. Climate differs by region.`;
-        $id('wtpLocation').placeholder = r.exampleLocation || '';
         const ex = $id('wtpVarEx');
         if (ex) ex.textContent = code === 'PH' ? 'NSIC Rc222' : 'Pioneer P1197';
         // The variety records are the Philippines': a field abroad keeps the name, Anee looks it up.
@@ -1112,7 +1260,7 @@
         const crop = (OPT && OPT.crops.find((c) => c.key === state.crop)) || {};
         const m = state.from !== null ? ym(state.from).month : null;
         const res = await window.aneeVarietyPick.open({ crop: state.crop, cropLabel: crop.label ? String(crop.label).split(' (')[0].split(' — ')[0] : '', country: state.country,
-            location: $id('wtpLocation').value.trim(), season: m ? (m >= 6 && m <= 10 ? 'wet' : 'dry') : '',
+            location: state.location, season: m ? (m >= 6 && m <= 10 ? 'wet' : 'dry') : '',
             value: { name: state.variety, record: state.varRecord },
             ownNote: 'Not on record, so Anee looks it up from what is published, and the report says plainly if nothing is found.' });
         if (res) varSet(res.name, res.record);
@@ -1135,7 +1283,8 @@
         cropDropped = false;
         // A variety from another crop's records does not belong to this one.
         if (state.varRecord && state.varRecord.crop !== state.crop) varSet('', null);
-        if (FPC) FPC.refresh();
+        // The lot's troubles are read for this crop (a pest of one is not of another).
+        applyLot();
         closeSheet('wtpCropSheet');
         setTimeout(() => show(3), 220);
     });
@@ -1215,7 +1364,7 @@
                 ...rangeParams(), crop: state.crop,
                 variety: state.variety, location: state.location, problems: state.problems,
                 soilConditions: state.soil, phValue: state.ph === '' ? null : Number(state.ph),
-                country: state.country, ...(FPC ? FPC.payload() : {}),
+                country: state.country, ...lotPayload(),
                 varietyRecord: state.varRecord ? { name: state.varRecord.name, days: state.varRecord.days || null } : null,
                 // The price this page showed: the server charges exactly it, or says the new one.
                 quote: priceNow(),
@@ -1284,13 +1433,15 @@
     $id('wtpViewX').addEventListener('click', closeView);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(); });
 
-    /* A finished run leaves a clean form: the place, the months, the crop,
+    /* A finished run leaves a clean form: the lot, the months, the crop,
        the variety and the field's troubles all cleared, back at the first
        step. The field's country stays -- a setting more than an answer. */
     function resetWizard() {
-        Object.assign(state, { from: null, to: null, crop: '', variety: '', location: '', problems: [], soil: [], ph: '' });
+        Object.assign(state, { from: null, to: null, crop: '', variety: '', location: '', problems: [], soil: [], ph: '', lot: null });
         cropDropped = false;
-        $id('wtpLocation').value = '';
+        if (LOTS) LOTS.set(null);
+        LIT = {};
+        paintLot();
         varSet('', null);
         document.querySelectorAll('#wtpProbs input:checked, #wtpSoil input:checked').forEach((i) => { i.checked = false; i.closest('.wtp-prob')?.classList.remove('is-on'); });
         $id('wtpPh').value = '';
@@ -1300,7 +1451,6 @@
         now.classList.add('is-none');
         if ($id('wtpCropSearch')) { $id('wtpCropSearch').value = ''; cropSift(); }
         Object.keys(TOUCH).forEach((k) => { TOUCH[k] = false; });
-        if (FPC) FPC.clear();
         paintRange();
         show(0);
     }
@@ -1437,7 +1587,7 @@
                 <p class="h-win">${esc(bw.label || (m1 + ' ' + (bw.fromDay || '') + (bw.fromYear ? ', ' + bw.fromYear : '') + ' to ' + m2 + ' ' + (bw.toDay || '') + (bw.toYear ? ', ' + bw.toYear : '')))}</p>
                 <p class="h-why">${esc(sweep(bw.why))}</p>
                 <div class="wtp-chips">
-                    <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(nameOf(p.country)) : ''}</span>
+                    <span class="wtp-chip">📍 ${p.lotName ? esc(p.lotName) + ' · ' : ''}${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(nameOf(p.country)) : ''}</span>
                     ${p.variety ? `<span class="wtp-chip">🧬 ${esc(p.variety)}</span>` : ''}
                     ${p.varietyRecord && p.varietyRecord.days ? `<span class="wtp-chip">📗 On record, ${esc(String(Math.round(p.varietyRecord.days)))} days</span>` : ''}
                     <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>
@@ -1492,7 +1642,7 @@
 
             ${(p.fieldProfileSaid || []).length && window.aneeFieldCard ? `
             <div class="wtp-card">
-                <h3>🌾 Your field in detail</h3>
+                <h3>🌾 ${p.lotName ? 'The lot: ' + esc(p.lotName) : 'Your field in detail'}</h3>
                 ${window.aneeFieldCard.said(p.fieldProfileSaid)}
             </div>` : ''}
 

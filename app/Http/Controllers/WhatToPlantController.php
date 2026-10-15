@@ -301,6 +301,9 @@ class WhatToPlantController extends Controller
             // The field in detail (App\Support\FieldProfile), optional.
             'fieldProfile' => 'nullable|array',
             'fieldProfileFrom' => 'nullable|integer',
+            // The lot it is for (partials/farm-lots, 2026-10-16).
+            'lotId' => 'nullable|integer',
+            'lotName' => 'nullable|string|max:120',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
@@ -356,8 +359,12 @@ class WhatToPlantController extends Controller
         ]);
 
         $prompt = $this->prompt($p);
-        // The field in detail is kept for the next analysis, named after the place.
-        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], null, $request->input('fieldProfileFrom'));
+        // The field in detail is kept for the next analysis, named after the
+        // place. A lot already keeps its own answers: saved again here, its
+        // six month check would start over without anyone checking it.
+        if (empty($p['lotId'])) {
+            FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], null, $request->input('fieldProfileFrom'));
+        }
 
         if (function_exists('fastcgi_finish_request')) {
             ignore_user_abort(true);
@@ -719,6 +726,9 @@ class WhatToPlantController extends Controller
 
         return [
             'location' => trim((string) $request->input('location')),
+            // The lot it is for (partials/farm-lots, 2026-10-16): named on the report.
+            'lotId' => $request->filled('lotId') ? (int) $request->input('lotId') : null,
+            'lotName' => mb_substr(trim((string) $request->input('lotName', '')), 0, 120) ?: null,
             'country' => $country,
             'cropsAsked' => self::picks($book, $request->input('cropsAsked')),
             'exclude' => self::picks(self::FAMILIES, $request->input('exclude')),

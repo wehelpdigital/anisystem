@@ -167,6 +167,9 @@ class SatelliteController extends Controller
             // The field in detail (App\Support\FieldProfile), optional.
             'fieldProfile' => 'nullable|array',
             'fieldProfileFrom' => 'nullable|integer',
+            // The lot it is for (Global Lots, App\Support\FarmLots): its name rides on the report.
+            'lotId' => 'nullable|integer',
+            'lotName' => 'nullable|string|max:120',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
@@ -212,10 +215,15 @@ class SatelliteController extends Controller
             'concerns' => array_values(array_intersect((array) $request->input('concerns', []), array_keys(self::CONCERNS))),
             'notes' => trim((string) $request->input('notes', '')),
             'polygon' => ['type' => 'Polygon', 'coordinates' => [$ring]],
+            'lotId' => (int) $request->input('lotId') ?: null,
+            'lotName' => mb_substr(trim((string) $request->input('lotName', '')), 0, 120) ?: null,
         ] + FieldProfile::forParams(FieldProfile::fromInput($request->input('fieldProfile'), (string) $request->input('crop')), (string) $request->input('crop'));
-        // The field in detail is kept for the next analysis, named after the place.
-        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
-        $title = str_replace(' — ', ', ', CropCatalog::label($p['crop'])) . ' · ' . $p['location'] . ' · ' . now('Asia/Manila')->format('M j, Y');
+        // The field in detail is kept for the next analysis, named after the place. A lot's
+        // answers are already kept, in the lot: saving them again would add a second lot.
+        if (! $p['lotId']) {
+            FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
+        }
+        $title = str_replace(' — ', ', ', CropCatalog::label($p['crop'])) . ' · ' . ($p['lotName'] ? $p['lotName'] . ', ' : '') . $p['location'] . ' · ' . now('Asia/Manila')->format('M j, Y');
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($title, 0, 190),
             'params' => json_encode($p), 'report' => json_encode(new \stdClass), 'credits' => 0,

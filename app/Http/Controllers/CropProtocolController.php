@@ -485,6 +485,8 @@ class CropProtocolController extends Controller
             // The field in detail (App\Support\FieldProfile), optional.
             'fieldProfile' => 'nullable|array',
             'fieldProfileFrom' => 'nullable|integer',
+            'lotId' => 'nullable|integer',
+            'lotName' => 'nullable|string|max:120',
         ] + self::NEED_RULES);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
@@ -525,7 +527,7 @@ class CropProtocolController extends Controller
         $p['npkNeed'] = self::needFor($p);
         $crop = CropCatalog::CROPS[$p['crop']];
         $when = \Illuminate\Support\Carbon::parse($p['month'] . '-01')->format('M Y');
-        $title = 'Protocol · ' . $crop['label'] . ($p['variety'] !== '' ? ' (' . $p['variety'] . ')' : '') . ' · ' . $when . ' · ' . $p['location'];
+        $title = 'Protocol · ' . $crop['label'] . ($p['variety'] !== '' ? ' (' . $p['variety'] . ')' : '') . ' · ' . $when . ' · ' . ($p['lotName'] !== '' ? $p['lotName'] . ', ' : '') . $p['location'];
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(),
             'kind' => 'protocol',
@@ -1163,6 +1165,9 @@ class CropProtocolController extends Controller
             'water' => (string) $request->input('water'),
             'problems' => array_values((array) $request->input('problems', [])),
             'notes' => trim((string) $request->input('notes', '')),
+            // The farm's lot it is for (Global Lots, 2026-10-16), when one was picked.
+            'lotId' => is_numeric($request->input('lotId')) ? (int) $request->input('lotId') : null,
+            'lotName' => mb_substr(trim((string) $request->input('lotName', '')), 0, 120),
             'soilConditions' => self::soilConditions($request->input('soilConditions', $request->input('soilCondition'))),
             'testP' => array_key_exists((string) $request->input('testP'), self::TEST_LEVELS) ? (string) $request->input('testP') : 'unsure',
             'testK' => array_key_exists((string) $request->input('testK'), self::TEST_LEVELS) ? (string) $request->input('testK') : 'unsure',

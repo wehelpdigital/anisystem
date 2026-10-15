@@ -258,6 +258,8 @@ class NpkPlusController extends Controller
             'targetYield' => 'nullable|numeric|min:0|max:1000', 'lines' => 'required|array|min:1|max:60', 'soil' => 'nullable|array', 'result' => 'nullable|array',
             // The field in detail (App\Support\FieldProfile, 2026-10-15), optional.
             'fieldProfile' => 'nullable|array', 'fieldProfileFrom' => 'nullable|integer',
+            // The farm's lot it is for (App\Support\FarmLots, 2026-10-16), optional.
+            'lotId' => 'nullable|integer',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), [], 422);
@@ -269,7 +271,8 @@ class NpkPlusController extends Controller
         $fp = FieldProfile::fromInput($request->input('fieldProfile'), $crop ?: null);
         $result['setup'] = array_merge((array) ($result['setup'] ?? []), FieldProfile::forParams($fp, $crop ?: null), ['fieldProfileFrom' => $fp ? $request->input('fieldProfileFrom') : null]);
         // Inside Anee Auto the season keeps the profile itself (keepProfile false): no second copy here.
-        if ($fp && $request->boolean('keepProfile', true)) {
+        // Nor for a farm lot: its answers are the lot's own, already kept in it.
+        if ($fp && $request->boolean('keepProfile', true) && ! $request->filled('lotId')) {
             $set = (array) $result['setup'];
             $place = trim(implode(', ', array_filter([preg_replace('/\s*\(Capital\)\s*$/i', '', (string) ($set['town'] ?? '')), (string) ($set['prov'] ?? '')])));
             FieldProfile::keepFor(WorkerContext::effectiveOwnerId(), $fp, $place !== '' ? $place : 'My field', $crop ?: null, $request->input('fieldProfileFrom'));
@@ -339,6 +342,8 @@ class NpkPlusController extends Controller
             'variety' => 'nullable|string|max:80', 'notes' => 'nullable|string|max:800',
             // The field in detail (App\Support\FieldProfile), optional.
             'fieldProfile' => 'nullable|array', 'fieldProfileFrom' => 'nullable|integer',
+            // The farm's lot it is for (App\Support\FarmLots, 2026-10-16), optional.
+            'lotId' => 'nullable|integer', 'lotName' => 'nullable|string|max:120',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), [], 422);
@@ -369,9 +374,12 @@ class NpkPlusController extends Controller
             'calcId' => (int) $calc->id, 'location' => trim((string) $request->input('location')), 'soilConditions' => SoilConditions::normalize($request->input('soilConditions', [])),
             'phValue' => SoilConditions::phValue($request->input('phValue')), 'water' => (string) $request->input('water'), 'plantingDate' => $request->input('plantingDate'),
             'timing' => (string) $request->input('timing'), 'variety' => trim((string) $request->input('variety', '')), 'notes' => trim((string) $request->input('notes', '')),
+            'lotId' => $request->filled('lotId') ? (int) $request->input('lotId') : null, 'lotName' => trim((string) $request->input('lotName', '')) ?: null,
         ] + FieldProfile::forParams(FieldProfile::fromInput($request->input('fieldProfile'), $calc->crop ?: null), $calc->crop ?: null);
-        // The field in detail is kept for the next analysis, named after the place.
-        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $calc->crop ?: null, $request->input('fieldProfileFrom'));
+        // The field in detail is kept for the next analysis, named after the place; a farm lot's answers are already its own.
+        if (! $p['lotId']) {
+            FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $calc->crop ?: null, $request->input('fieldProfileFrom'));
+        }
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr('NPK Plus · ' . $calc->title, 0, 190), 'params' => json_encode($p),
             'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),

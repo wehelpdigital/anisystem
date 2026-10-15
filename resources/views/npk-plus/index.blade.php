@@ -509,9 +509,38 @@
     @media (prefers-reduced-motion: reduce) {
         .np-potfrom, .np-field, .np-fli { animation: none; }
     }
+
+    /* The farm's lots (2026-10-16, the owner): the picker in step 3, and every
+       question the picked lot answered folds away (its words say where they came from). */
+    .np-wq2 { margin-top: 1.3rem; padding-top: 1rem; border-top: 1px dashed var(--color-gray-200); }
+    html.dark .np-wq2 { border-color: #2b3a1c; }
+    #npLots { margin-top: .2rem; }
+    .np-nolot { display: inline-flex; margin-top: .55rem; padding: .3rem 0; font-size: .78rem; font-weight: 800; text-align: left; color: var(--color-brand-700, #3d6823);
+        text-decoration: underline; text-underline-offset: 3px; animation: npIn .3s var(--np-ease) both; }
+    .np-nolot[hidden] { display: none; }
+    .np-lq { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .28s var(--np-ease), opacity .28s var(--np-ease); }
+    .np-lq > div { min-height: 0; min-width: 0; overflow: hidden; padding: 3px; margin: -3px; }
+    .np-lq.is-off { grid-template-rows: 0fr; opacity: 0; }
+    .np-lotsay { display: flex; align-items: flex-start; gap: .5rem; margin: .8rem 0 .1rem; padding: .6rem .7rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5;
+        color: #24400f; background: #f3f8ec; border: 1px solid #d5e7c0; animation: npIn .3s var(--np-ease) both; }
+    .np-lotsay[hidden] { display: none; }
+    .np-lotsay > i { flex: none; font-style: normal; font-size: 1rem; line-height: 1.3; }
+    .np-lotsay > span { min-width: 0; overflow-wrap: anywhere; }
+    .np-lotsay b { color: inherit; }
+    .np-lotsay button { font-weight: 800; color: var(--color-brand-700, #3d6823); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+    html.dark .np-lotsay { color: #cfe6b8; background: #17220f; border-color: #2b3a1c; }
+    html.dark .np-lotsay button, html.dark .np-nolot { color: #a5c97e; }
+    @media (prefers-reduced-motion: reduce) {
+        .np-lq { transition: none; }
+        .np-lotsay, .np-nolot { animation: none; }
+    }
 </style>
 
-@php $chev = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>'; @endphp
+@php
+    $chev = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
+    // Inside Anee Auto (?frame=auto) the season's lot is handed over by the frame: no lot picker there.
+    $npFrame = request()->query('frame') === 'auto';
+@endphp
 <div class="np-wrap">
     <section class="np-hero" id="npHero">
         <button type="button" class="np-hero-head" id="npHeroHead" aria-expanded="false" aria-controls="npHeroBody">
@@ -542,7 +571,7 @@
                         <span class="np-wline" aria-hidden="true"><span id="npWLine"></span></span>
                         <button type="button" class="np-ws is-on" data-s="0"><i>1</i><span>Crop</span></button>
                         <button type="button" class="np-ws" data-s="1"><i>2</i><span>Yield</span></button>
-                        <button type="button" class="np-ws" data-s="2"><i>3</i><span>Planting</span></button>
+                        <button type="button" class="np-ws" data-s="2"><i>3</i><span>{{ $npFrame ? 'Planting' : 'Lot' }}</span></button>
                         <button type="button" class="np-ws" data-s="3"><i>4</i><span>Season</span></button>
                         <button type="button" class="np-ws" data-s="4"><i>5</i><span>Soil</span></button>
                         <button type="button" class="np-ws" data-s="5"><i>6</i><span>Fertilizers</span></button>
@@ -587,8 +616,21 @@
                             <div class="np-goal" id="npGoal"></div>
                         </section>
                         <section class="np-wstep" data-s="2" hidden>
+                            @if ($npFrame)
                             <p class="np-wq">What you plant, and where</p>
                             <p class="np-sub">Too thin a stand cannot reach the goal; NPK Plus counts for what it can.</p>
+                            @else
+                            {{-- The farm's lots (2026-10-16, the owner): a lot brings its place,
+                                 size, soil and water (partials/farm-lots), so the steps after
+                                 do not ask them again. Optional here: the calculator is free
+                                 and works without one, exactly as before. --}}
+                            <p class="np-wq">Which lot is it for?{{ \App\Support\Tagalog::flag('lot') }}</p>
+                            <p class="np-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again. No lot? Go on, and the next steps ask them.</p>
+                            <div id="npLots"></div>
+                            <button type="button" class="np-nolot" id="npNoLot" hidden>Use no lot, and answer the steps by hand</button>
+                            <p class="np-wq np-wq2">What you plant</p>
+                            <p class="np-sub">Too thin a stand cannot reach the goal. NPK Plus counts for what it can.</p>
+                            @endif
                             <label class="np-label" for="npSeed">Seeds or planting material <span>(optional)</span></label>
                             <div class="np-row"><input type="number" id="npSeed" class="form-input flex-1" min="0" step="any" inputmode="decimal" placeholder="Like 40">
                                 <button type="button" class="np-utag is-inline" id="npSeedUnit" aria-label="What you plant"><span>kg</span>{!! $chev !!}</button></div>
@@ -597,13 +639,18 @@
                             <div class="np-row" style="align-items:center"><input type="number" id="npGerm" class="form-input flex-1" min="1" max="100" step="1" inputmode="numeric" placeholder="Like 85">
                                 <span class="np-hint" style="margin:0;flex:none;font-weight:800">%</span></div>
                             <span class="np-hint" id="npGermHint">Seed that does not sprout grows nothing: NPK Plus counts only the seed that will.</span>
-                            <label class="np-label" for="npArea">Area</label>
-                            <div class="np-row"><input type="number" id="npArea" class="form-input flex-1" min="0" step="any" value="1" inputmode="decimal">
-                                <button type="button" class="np-utag is-inline" id="npAreaUnit" aria-label="Area unit"><span>ha</span>{!! $chev !!}</button></div>
+                            <div class="np-lq" data-lq="area"><div>
+                                <label class="np-label" for="npArea">Area</label>
+                                <div class="np-row"><input type="number" id="npArea" class="form-input flex-1" min="0" step="any" value="1" inputmode="decimal">
+                                    <button type="button" class="np-utag is-inline" id="npAreaUnit" aria-label="Area unit"><span>ha</span>{!! $chev !!}</button></div>
+                            </div></div>
+                            <div class="np-lotsay" data-lotsay="area" hidden></div>
                         </section>
                         <section class="np-wstep" data-s="3" hidden>
-                            <p class="np-wq">Where, when and the water</p>
+                            <p class="np-wq" id="npSeasonQ">Where, when and the water</p>
                             <p class="np-sub">The sun, the rain and the heat of your season come from ten years of weather at your field, tilted by ENSO now.</p>
+                            <div class="np-lotsay" data-lotsay="season" hidden></div>
+                            <div class="np-lq" data-lq="place"><div>
                             @if (\App\Support\Region::ph())
                                 <span class="np-label">Province</span>
                                 <button type="button" class="np-utag is-wide is-none" id="npProvBtn"><span>Choose the province</span>{!! $chev !!}</button>
@@ -615,10 +662,13 @@
                                 <label class="np-label" for="npProvIn">State or province</label>
                                 <input type="text" id="npProvIn" class="form-input w-full" maxlength="120" placeholder="Like California">
                             @endif
+                            </div></div>
                             <span class="np-label">Planting date</span>
                             @include('partials.date-tag', ['id' => 'npPlanted', 'empty' => 'Pick the planting date', 'class' => 'np-date'])
-                            <span class="np-label">Water</span>
-                            <button type="button" class="np-utag is-wide" id="npWaterBtn"><span>Irrigated</span>{!! $chev !!}</button>
+                            <div class="np-lq" data-lq="water"><div>
+                                <span class="np-label">Water</span>
+                                <button type="button" class="np-utag is-wide" id="npWaterBtn"><span>Irrigated</span>{!! $chev !!}</button>
+                            </div></div>
                             <div class="np-season" id="npSeason">Pick the place and the planting date to read the season.</div>
                         </section>
                         <section class="np-wstep" data-s="4" hidden>
@@ -629,19 +679,30 @@
                                  and the water below and in step 4, and the calculator counts the
                                  rest (the last crop, the organic matter, the drainage, salt, zinc)
                                  as plain lines under the need. Anee reads them too. --}}
+                            <div class="np-lotsay" data-lotsay="soil" hidden></div>
+                            {{-- A lot's answers ARE the field in detail: with a lot picked the card
+                                 folds away and carries the lot's answers, so the need counts them the same. --}}
+                            <div class="np-lq" data-lq="fpc"><div>
                             <div class="np-fpc">
                                 <span class="np-label np-fpc-l">Your field in detail <span>(optional)</span></span>
                                 <p class="np-sub np-fpc-sub">The soil, the water and last season, one short page at a time. NPK Plus counts every answer, and shows how.</p>
                                 <div id="npFpc"></div>
                                 @include('partials.field-profile-card')
                             </div>
-                            <span class="np-label">Soil type</span>
-                            <button type="button" class="np-utag is-wide is-none" id="npTexture"><span>Not sure</span>{!! $chev !!}</button>
-                            <label class="np-label" for="npPh">Soil pH <span>(if you know it)</span></label>
-                            <input type="number" id="npPh" class="form-input w-full" min="2" max="12" step="0.1" inputmode="decimal" placeholder="Like 5.8">
-                            <span class="np-label">What else is true of it <span>(optional)</span></span>
-                            <button type="button" class="np-utag is-wide is-none" id="npConds"><span>None picked</span>{!! $chev !!}</button>
-                            <span class="np-hint">Acidic, alkaline, sodic, salty, acid sulfate, low in organic matter, peat or waterlogged.</span>
+                            </div></div>
+                            <div class="np-lq" data-lq="texture"><div>
+                                <span class="np-label">Soil type</span>
+                                <button type="button" class="np-utag is-wide is-none" id="npTexture"><span>Not sure</span>{!! $chev !!}</button>
+                            </div></div>
+                            <div class="np-lq" data-lq="ph"><div>
+                                <label class="np-label" for="npPh">Soil pH <span>(if you know it)</span></label>
+                                <input type="number" id="npPh" class="form-input w-full" min="2" max="12" step="0.1" inputmode="decimal" placeholder="Like 5.8">
+                            </div></div>
+                            <div class="np-lq" data-lq="conds"><div>
+                                <span class="np-label">What else is true of it <span>(optional)</span></span>
+                                <button type="button" class="np-utag is-wide is-none" id="npConds"><span>None picked</span>{!! $chev !!}</button>
+                                <span class="np-hint">Acidic, alkaline, sodic, salty, acid sulfate, low in organic matter, peat or waterlogged.</span>
+                            </div></div>
                             <div class="np-testbox">
                                 <label class="np-switch"><input type="checkbox" id="npSoilOn"> <span><b>I have a soil test</b><br><span class="text-xs text-gray-500 font-normal">It sharpens the need for nitrogen, phosphorus, potassium, sulfur, zinc and boron.</span></span></label>
                                 <div class="np-soil" id="npSoil"><div>
@@ -915,8 +976,11 @@
     </div>
     <div class="sheet-body">
         <p class="np-sub mt-0">Anee checks your plan against the place, your soil, the water, the season and ENSO, then says what to keep, cut, add or split, and when. Your soil from the wizard goes with it.</p>
-        <label class="np-label" for="npLoc">Where is the field?</label>
-        <input type="text" id="npLoc" class="form-input w-full" maxlength="160" placeholder="Town and province">
+        <div class="np-lq" data-lq="loc"><div>
+            <label class="np-label" for="npLoc">Where is the field?</label>
+            <input type="text" id="npLoc" class="form-input w-full" maxlength="160" placeholder="Town and province">
+        </div></div>
+        <div class="np-lotsay" data-lotsay="anee" hidden></div>
         {{-- The field in detail lives in step 5 (the calculator counts it); it goes to Anee whole. --}}
         <div class="np-aneefield" id="npAneeField" hidden></div>
         <span class="np-label">How will you apply it?</span>
@@ -928,6 +992,9 @@
     </div>
 </div>
 @include('sm.partials.anee-wait')
+@unless ($npFrame)
+    @include('partials.farm-lots')
+@endunless
 @endsection
 
 @push('scripts')
@@ -981,6 +1048,8 @@
     // The field in detail (partials/field-profile-card) and what the farmer set by hand (theirs wins over what it fills).
     let FPC = null;
     const TOUCH = {};
+    // The farm's lot this calculation is for (partials/farm-lots), and its picker: none inside Anee Auto.
+    let LOT = null, LOTP = null;
     const areaHa = () => st.areaUnit === 'sqm' ? num('npArea') / 10000 : num('npArea');
     const tagSay = (id, dict, k) => { $(id).querySelector('span').textContent = dict[k][1]; };
 
@@ -1184,7 +1253,7 @@
         $('npGoal').innerHTML = !c ? 'Pick the crop first; the goal is sized to it.'
             : g.Y ? 'NPK Plus counts for <b>' + fmt(g.Y / f) + ' ' + esc(unit) + '</b>' + (st.yUnit !== 't' ? ' (' + fmt(g.Y) + ' t/ha)' : '') + ': ' + esc(g.why) + '.'
                 + (g.sd.sf < 1 ? ' Your stand is thin, so it counts for ' + fmt(g.Yeff / f) + ' ' + esc(unit) + '.' : '')
-                + (g.capped ? ' Your field in detail holds it to <b>' + fmt(g.Yeff / f) + ' ' + esc(unit) + '</b> (' + esc(capWords(g.cap)) + ').' : '')
+                + (g.capped ? ' ' + esc(fieldWho()) + ' holds it to <b>' + fmt(g.Yeff / f) + ' ' + esc(unit) + '</b> (' + esc(capWords(g.cap)) + ').' : '')
                 + (g.warn ? '<br><span class="text-xs">' + esc(g.warn) + '</span>' : '')
             : 'No yield numbers for this crop: give your goal, or the guide rate is used as it is.';
         const s = num('npSeed'), a = areaHa(), sd = c && M.seeding[c.key];
@@ -1420,6 +1489,8 @@
        Off, and the calculator is exactly as before, when no detail is given. */
     const FIELD = () => (M && M.field) || {};
     const fieldOn = () => !!(FPC && FPC.count());
+    // Who gave the answers: the picked lot, or the field in detail of step 5.
+    const fieldWho = () => (LOT ? LOT.name : 'Your field in detail');
     const isRiceCrop = (c) => !!(c && String(c.key).startsWith('rice'));
     const fieldCap = (c) => {
         const out = { k: 1, why: [] };
@@ -1491,7 +1562,7 @@
         if (fl.zinc) add('🟤', 'Zinc ran short last season.', 'Zinc is counted as likely short (the Micros tab). Add zinc sulfate (the monohydrate, about 33% zinc) at land preparation, or a zinc foliar early in the season.', 'Zinc', 'is-up');
         return L;
     };
-    const fieldBox = (L) => L.length ? '<div class="np-field"><h4><i aria-hidden="true">🌾</i>Your field, counted</h4><p>From your field in detail in step 5. Each line says what it changed and why.</p><div class="np-fl">'
+    const fieldBox = (L) => L.length ? '<div class="np-field"><h4><i aria-hidden="true">🌾</i>Your field, counted</h4><p>' + (LOT ? 'From the answers of ' + esc(LOT.name) + '.' : 'From your field in detail in step 5.') + ' Each line says what it changed and why.</p><div class="np-fl">'
         + L.map((l, k) => '<div class="np-fli" style="--k:' + k + '"><i aria-hidden="true">' + l.i + '</i><span><b>' + esc(l.lead) + '</b> ' + esc(l.text) + (l.e ? ' <em class="' + esc(l.c) + '">' + esc(l.e) + '</em>' : '') + '</span></div>').join('') + '</div></div>' : '';
 
     /* ---- step 5: the fertilizers ---- */
@@ -1937,7 +2008,9 @@
                 texture: st.texture, conditions: st.conds.slice(), ph: phVal(), prov: st.prov, town: st.town, water: st.water, planted: $('npPlanted').value || null,
                 // The variety's source (2026-10-15) and what the field in detail changed, in words.
                 varietyPick: st.varPick ? Object.assign({}, st.varPick, recT(st.varPick) ? { potential: recT(st.varPick), potentialIs: st.varPick.top ? 'top' : 'avg', potentialFrom: potOwn() ? 'own' : 'record' } : {}) : null,
-                fieldAdjust: FL.map((l) => l.lead + ' ' + l.text + (l.e ? ' [' + l.e + ']' : '')) },
+                fieldAdjust: FL.map((l) => l.lead + ' ' + l.text + (l.e ? ' [' + l.e + ']' : '')),
+                // The farm's lot it was made for (2026-10-16): a saved calculation opens on it again.
+                lotId: LOT ? LOT.id : null, lotName: LOT ? LOT.name : null },
             season: (() => { const SP = seasonPlanks(c, g); return SP ? { place: st.season.place, window: st.season.window, enso: SP.t.e ? SP.t.e.label : null, rainMm: Math.round(SP.rain), sunMJ: SP.rad, tmean: SP.tmean,
                 needMm: Math.round(SP.need), water: st.water, planks: { sun: Math.round(Math.min(1, SP.sun) * 100), water: Math.round(Math.min(1, SP.water) * 100), temp: Math.round(Math.min(1, SP.temp) * 100) },
                 potential: SP.pot ? { tPerHa: Math.round(SP.pot.t * 10) / 10, given: SP.pot.given } : null,
@@ -1950,7 +2023,7 @@
     const method = (c, g, md) => {
         const li = [];
         li.push('<b>Yield goal:</b> ' + (g.Y ? fmt(g.Y) + ' t/ha, ' + esc(g.why) + '.' : 'none, so the guide rate is used as it is.') + (g.sd.sf < 1 ? ' A thin stand brings it to ' + fmt(g.Y * g.sd.sf) + ' t/ha.' : '')
-            + (g.capped ? ' Your field in detail (' + esc(capWords(g.cap)) + ') holds it to ' + fmt(g.Yeff) + ' t/ha.' : ''));
+            + (g.capped ? ' ' + esc(fieldWho()) + ' (' + esc(capWords(g.cap)) + ') holds it to ' + fmt(g.Yeff) + ' t/ha.' : ''));
         if (md.credit && (md.credit.N || md.credit.K2O)) li.push('<b>Credits from your field:</b> ' + [md.credit.N ? fmt(md.credit.N, 0) + ' kg N from the legume before' : '', md.credit.K2O ? fmt(md.credit.K2O, 0) + ' kg K₂O from the rice straw plowed back' : ''].filter(Boolean).join(', and ') + ', taken off the need above.');
         const Up = c.uptakePerTon || {};
         if (g.Yeff && NPK.some((n) => Up[n] > 0)) li.push('<b>What the crop takes up:</b> at ' + fmt(g.Yeff) + ' t/ha, about ' + NPK.filter((n) => Up[n] > 0).map((n) => fmt(Up[n] * g.Yeff, 0) + ' kg ' + lab(n)).join(', ') + (c.removalOnly ? ' leaves with the harvest.' : ' in all, from the soil and the fertilizer together.'));
@@ -2288,9 +2361,104 @@
         if (FPC || !window.aneeFieldCard || !$('npFpc')) return;
         FPC = window.aneeFieldCard.mount($('npFpc'), { crop: () => st.crop || null, title: () => { const [tw, pv] = placeWords(); return [tw, pv].filter(Boolean).join(', ') || $('npLoc').value.trim() || 'Your field'; }, onChange: applyProfile });
     }
+
+    /* ---- the farm's lot (2026-10-16, the owner) ----
+       Optional here (the calculator is free and works without one). A lot
+       picked fills the place, the area, the water and the soil from its
+       answers, and every question it answered folds away with a line that
+       says where it came from. Its answers ride in the field in detail card
+       (hidden), so the need counts them exactly as the card would. "Use no
+       lot" unfolds them again, filled. Never inside Anee Auto. */
+    const lotHas = (k) => !!(LOT && window.aneeLots && window.aneeLots.has(LOT, k));
+    const lotHides = () => ({
+        area: !!(LOT && Number(LOT.areaHa) > 0),
+        place: !!(LOT && LOT.province && LOT.town),
+        water: lotHas('water'),
+        fpc: !!LOT,
+        texture: lotHas('texture'),
+        ph: lotHas('phFrom'),
+        conds: (lotHas('acidity') || lotHas('phFrom')) && lotHas('salt'),
+        loc: !!(LOT && LOT.where),
+    });
+    const fold = (el, off) => {
+        if (el.classList.contains('is-off') === off) return;
+        el.classList.toggle('is-off', off);
+        if (off) el.setAttribute('inert', ''); else el.removeAttribute('inert');
+    };
+    const LOT_PIN = '<i aria-hidden="true">📍</i>';
+    const lotSay = (key, bits) => {
+        const el = document.querySelector('[data-lotsay="' + key + '"]');
+        if (!el) return;
+        if (!LOT || !bits.length) { el.hidden = true; return; }
+        el.innerHTML = LOT_PIN + '<span>From <b>' + esc(LOT.name) + '</b>: ' + esc(bits.join(' · ')) + '. <button type="button" data-lot-edit>Edit the lot</button></span>';
+        el.hidden = false;
+    };
+    const areaWords = () => fmt(num('npArea'), 4) + ' ' + AREA_U[st.areaUnit][1];
+    function paintLot() {
+        const H = lotHides();
+        document.querySelectorAll('[data-lq]').forEach((el) => fold(el, !!H[el.dataset.lq]));
+        if ($('npNoLot')) $('npNoLot').hidden = !LOT;
+        $('npSeasonQ').textContent = H.place && H.water ? 'When you plant' : (H.place ? 'When, and the water' : 'Where, when and the water');
+        if (!LOT) { ['area', 'season', 'soil', 'anee'].forEach((k) => lotSay(k, [])); return; }
+        const [tw, pv] = placeWords();
+        lotSay('area', H.area ? [areaWords()] : []);
+        lotSay('season', [H.place ? [tw, pv].filter(Boolean).join(', ') : '', H.water ? WATER_U[st.water][0] : ''].filter(Boolean));
+        const n = FPC ? FPC.count() : 0;
+        lotSay('soil', [H.texture && M ? M.textures[st.texture][0] : '', H.ph && phVal() != null ? 'pH ' + fmt(phVal()) : '',
+            H.conds ? (st.conds.length ? st.conds.map((k) => (M.conditions[k] || [k])[0]).join(', ') : 'nothing else of note') : '',
+            n ? n + (n === 1 ? ' answer' : ' answers') + ', counted under the need' : 'no answers yet'].filter(Boolean));
+        lotSay('anee', [LOT.place || LOT.where || '', n ? n + (n === 1 ? ' answer' : ' answers') + ' about its soil, water and last season' : ''].filter(Boolean));
+    }
+    async function applyLot(lot) {
+        if (!lot || !OPT || !M) return;
+        LOT = lot;
+        // What the lot answered wins over what was set by hand: those questions fold away.
+        const H = lotHides();
+        if (H.texture) TOUCH.texture = false;
+        if (H.water) TOUCH.water = false;
+        if (H.ph) TOUCH.ph = false;
+        if (H.conds) TOUCH.conds = false;
+        if (H.place) {
+            st.prov = lot.province; st.town = lot.town;
+            if ($('npProvBtn')) { tagWide('npProvBtn', st.prov, false); tagWide('npTownBtn', townName(st.town), false); $('npTownBtn').disabled = false; }
+            if ($('npTownIn')) { $('npTownIn').value = lot.town; $('npProvIn').value = lot.province; }
+        }
+        if (H.area) {
+            const a = Number(lot.areaHa);
+            st.areaUnit = a < 0.1 ? 'sqm' : 'ha';
+            $('npArea').value = String(a < 0.1 ? Math.round(a * 10000) : Math.round(a * 10000) / 10000);
+            tagSay('npAreaUnit', AREA_U, st.areaUnit);
+        }
+        if (H.loc) $('npLoc').value = lot.where;
+        mountCard();
+        // The lot's answers are the field in detail; applyProfile fills the simple questions from them.
+        if (FPC) await FPC.set(lot.answers || {}, { id: lot.id, name: lot.name, answers: JSON.parse(JSON.stringify(lot.answers || {})), edited: false });
+        if (LOT !== lot) return;
+        if (H.place) seasonSoon();
+        hints(); calc(); paintLot();
+    }
+    function clearLot() {
+        if (!LOT) return;
+        // The questions unfold, still filled from the lot: change what differs.
+        LOT = null;
+        if (LOTP) LOTP.set(null);
+        paintLot(); hints(); calc();
+    }
+    function mountLots() {
+        if (LOTP || !$('npLots') || !window.aneeLots) return;
+        LOTP = window.aneeLots.picker($('npLots'), { crop: () => st.crop || null, onPick: (lot) => { if (lot) applyLot(lot); else clearLot(); } });
+    }
+    $('npNoLot')?.addEventListener('click', clearLot);
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('[data-lot-edit]') || !LOT || !window.aneeLots) return;
+        // A save repaints the picker, and the picker hands the lot back (onPick): it is applied again.
+        window.aneeLots.edit(LOT, { crop: st.crop || null });
+    });
+
     const save = async () => {
         if (!RES || !RES.lines.length) return null;
-        const r = await window.api(U.save, { method: 'POST', body: { id: calcId, crop: st.crop, areaHa: RES.areaHa || 0.0001, targetYield: RES.goal ? RES.goal.tPerHa : null, lines: RES.lines, soil: soil(), result: RES, ...(FPC ? FPC.payload() : {}), keepProfile: !document.documentElement.classList.contains('is-frame') } });
+        // A lot's answers are already kept in the lot: no second copy of them (lotId).
+        const r = await window.api(U.save, { method: 'POST', body: { id: calcId, crop: st.crop, areaHa: RES.areaHa || 0.0001, targetYield: RES.goal ? RES.goal.tPerHa : null, lines: RES.lines, soil: soil(), result: RES, ...(FPC ? FPC.payload() : {}), lotId: LOT ? LOT.id : null, keepProfile: !document.documentElement.classList.contains('is-frame') && !LOT } });
         calcId = r.data.id;
         return r;
     };
@@ -2302,7 +2470,9 @@
         $('npRunFine').innerHTML = OPT.canUse ? 'You have ' + (window.creditCoin ? window.creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()) : OPT.balance) + '. Charged only when the reading is ready.' : esc(OPT.whyNot || '');
         // The field in detail is answered in step 5; here it is said that it goes with the plan.
         const n = FPC ? FPC.count() : 0, box = $('npAneeField');
-        box.hidden = false;
+        // With a lot, its line says the place and the answers that go with it.
+        if (LOT) { $('npLoc').value = LOT.where || $('npLoc').value; paintLot(); }
+        box.hidden = !!LOT;
         box.textContent = n ? 'Your field in detail goes with it: ' + n + (n === 1 ? ' answer' : ' answers') + ' from step 5, and what the calculator counted for them.'
             : 'Tip: answer Your field in detail in step 5 first. The calculator counts it, and Anee reads it too.';
         window.openSheet('npAneeSheet');
@@ -2323,7 +2493,8 @@
             window.closeSheet('npAneeSheet');
             window.aneeWait.show({ title: 'Anee is checking your plan…', sub: 'The soil, the season and the timing. About a minute.', lines: ['Weighing each nutrient against the need…', 'Reading the soils of your area…', 'Checking the rains around planting…', 'Deciding what to split and when…'] });
             const r = await window.api(U.analyze, { method: 'POST', body: { calcId, location: $('npLoc').value.trim(), soilConditions: st.conds.filter((k) => k in (OPT.soilConditions || {})), phValue: phVal(),
-                water: st.water, plantingDate: $('npPlanted').value || null, timing: ans.timing, variety: $('npVariety').value.trim(), notes: $('npNotes').value.trim(), ...(FPC ? FPC.payload() : {}) } });
+                water: st.water, plantingDate: $('npPlanted').value || null, timing: ans.timing, variety: $('npVariety').value.trim(), notes: $('npNotes').value.trim(), ...(FPC ? FPC.payload() : {}),
+                lotId: LOT ? LOT.id : null, lotName: LOT ? LOT.name : null } });
             const d = r.data && r.data.status === 'ready' ? r.data : await window.aneeWait.poll({ id: r.data.id, job: U.job });
             await window.aneeWait.done({ title: 'Your plan, read.', line: 'Here is what to keep and what to change.' });
             OPT.balance = d.balance;
@@ -2337,7 +2508,7 @@
         const v = String(a.verdict || '').toLowerCase().replace(/\s+/g, '-');
         const sec = (t, inner) => inner ? '<div class="np-card"><h3>' + esc(t) + '</h3><div class="np-rlist">' + inner + '</div></div>' : '';
         $('npRep').hidden = false;
-        $('npRep').innerHTML = '<div class="np-rhead v-' + esc(v) + '"><small>Anee\'s verdict: ' + esc(a.verdict) + ' · ' + esc(rep.at || '') + '</small><h3>' + esc(a.headline) + '</h3><p>' + esc(a.summary) + '</p></div>'
+        $('npRep').innerHTML = '<div class="np-rhead v-' + esc(v) + '"><small>Anee\'s verdict: ' + esc(a.verdict) + ' · ' + esc(rep.at || '') + (params && params.lotName ? ' · ' + esc(params.lotName) : '') + '</small><h3>' + esc(a.headline) + '</h3><p>' + esc(a.summary) + '</p></div>'
             + sec('Nutrient by nutrient', (a.nutrients || []).map((x) => '<div class="np-ritem"><span class="np-st s-' + esc(String(x.status || '').toLowerCase()) + '">' + esc(x.status) + '</span><b>' + esc(x.nutrient) + '</b> · ' + esc(x.comment) + '</div>').join(''))
             + sec('When to apply each one', (a.timing || []).map((x) => '<div class="np-ritem"><b>' + esc(x.product) + '</b> · ' + esc(x.when) + '<br>' + esc(x.how) + ' <span class="text-gray-500">' + esc(x.why) + '</span></div>').join(''))
             + sec('What to change', (a.changes || []).map((x) => '<div class="np-ritem"><b>' + esc(x.change) + '</b><br><span class="text-gray-500">' + esc(x.why) + '</span></div>').join(''))
@@ -2412,7 +2583,15 @@
             varPaintTag(); potPaint();
             if (d.analysis) showReport(d.analysis.report, d.analysis.params); else $('npRep').hidden = true;
             mountCard();
-            if (FPC) { const fp = set.fieldProfile || (d.analysis && d.analysis.params && d.analysis.params.fieldProfile); FPC.set(fp || {}, null); }
+            const fp = set.fieldProfile || (d.analysis && d.analysis.params && d.analysis.params.fieldProfile);
+            if (LOTP && set.lotId) {
+                // Made for a farm lot: it opens on that lot again, with its answers as they are now.
+                LOT = null;
+                LOTP.set(set.lotId).then(() => { if (!LOT) { if (FPC) FPC.set(fp || {}, null); paintLot(); } });
+            } else {
+                if (LOTP && LOT) { LOT = null; LOTP.set(null); paintLot(); }
+                if (FPC) FPC.set(fp || {}, null);
+            }
         }
     };
     $('npSavedMore').addEventListener('click', () => { savedPage++; loadSaved(true); });
@@ -2437,6 +2616,7 @@
             if (OPT.quote) $('npAneeSays').textContent = 'Analyze further with Anee · ' + OPT.quote + ' credits';
             soilTag(); lines(); hints(); calc();
             if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
+            if (window.aneeLots) mountLots(); else document.addEventListener('DOMContentLoaded', mountLots, { once: true });
         } catch (err) { window.toast?.(err.message || 'Could not load the calculator.', 'error'); }
     };
     if (window.api) boot(); else window.addEventListener('load', boot, { once: true });

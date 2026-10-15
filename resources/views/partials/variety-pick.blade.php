@@ -210,9 +210,12 @@
         });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    /* Bound once the sheet is in the page: at DOMContentLoaded, or at once for
+       a copy a page shell injects after load (the season Lots module, 2026-10-16). */
+    const bindSheet = () => {
         const sheet = $('vpSheet');
-        if (!sheet) return;
+        if (!sheet || sheet.dataset.vpBound) return;
+        sheet.dataset.vpBound = '1';
         sheet.addEventListener('sheet:close', () => {
             const r = S.resolve; S.resolve = null;
             if (r) r(S.answer === undefined ? null : S.answer);
@@ -246,7 +249,8 @@
         $('vpOwnOk').addEventListener('click', own);
         $('vpOwnIn').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); own(); } });
         $('vpClear').addEventListener('click', () => finish({ name: '', record: null }));
-    });
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindSheet, { once: true }); else bindSheet();
 
     window.aneeVarietyPick = { open, facts, yieldSay };
 })();

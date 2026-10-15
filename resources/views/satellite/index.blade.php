@@ -48,6 +48,40 @@
     .sat-rail i { flex: 1 1 0; height: .3rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; position: relative; }
     .sat-rail i::after { content: ''; position: absolute; inset: 0; background: var(--color-brand-600); transform: scaleX(0); transform-origin: left; transition: transform .36s var(--sat-ease); }
     .sat-rail i.is-done::after, .sat-rail i.is-on::after { transform: scaleX(1); }
+    /* A step the lot answered whole folds out of the rail. */
+    .sat-rail i { transition: flex-grow .28s var(--sat-ease), opacity .28s var(--sat-ease), margin .28s var(--sat-ease); }
+    .sat-rail i.is-skip { flex-grow: 0; opacity: 0; margin-left: -.3rem; }
+
+    /* The lot (2026-10-16): where the map opens, what it answered, and the variety tag. */
+    .sat-blk[hidden], .sat-onmap[hidden] { display: none; }
+    .sat-pop { animation: satPop .28s var(--sat-ease) both; }
+    @keyframes satPop { from { opacity: 0; transform: translateY(6px); } }
+    .sat-onmap { display: grid; justify-items: start; gap: .55rem; margin-top: .9rem; padding: .75rem .8rem; border-radius: 1rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .sat-onmap .sat-picked { margin-top: 0; }
+    .sat-onmap .sat-picked svg { flex: none; }
+    html.dark .sat-onmap { background: #121a0d; border-color: #2b3a1c; }
+    .sat-varfacts { display: flex; align-items: flex-start; gap: .5rem; margin-top: .6rem; padding: .6rem .75rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5;
+        color: #24400f; background: #f3f8ec; border: 1px solid #d5e7c0; }
+    .sat-varfacts[hidden] { display: none; }
+    .sat-varfacts svg { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: #4a7c2a; }
+    .sat-varfacts.is-own { color: var(--color-gray-600); background: var(--color-gray-50); border-color: var(--color-gray-200); }
+    .sat-varfacts.is-own svg { color: var(--color-gray-400); }
+    html.dark .sat-varfacts { color: #cfe6b8; background: #17220f; border-color: #2b3a1c; }
+    html.dark .sat-varfacts.is-own { color: #b9caa8; background: #121a0d; border-color: #2b3a1c; }
+    .sat-lot { margin-top: 1rem; padding: .8rem .85rem; border-radius: 1rem; background: linear-gradient(160deg, #fbfdf8, #f2f8ea); border: 1px solid #e0ebd3; }
+    .sat-lot[hidden] { display: none; }
+    .sat-lot-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .5rem; margin-bottom: .55rem; font-size: .86rem; line-height: 1.4; }
+    .sat-lot-h b { font-weight: 800; color: #2d5016; }
+    .sat-lot-h span { min-width: 0; font-size: .76rem; color: var(--color-gray-500); overflow-wrap: anywhere; }
+    .sat-lot-more { margin-top: .55rem; font-size: .78rem; line-height: 1.5; color: var(--color-gray-500); }
+    .sat-lot-edit { display: inline-flex; align-items: center; gap: .4rem; min-height: 2.5rem; margin-top: .6rem; padding: .4rem .95rem; border-radius: 999px; font-size: .82rem; font-weight: 800;
+        color: #3d6823; background: var(--color-white); border: 1.5px solid #b9d39c; cursor: pointer; transition: background-color .28s var(--sat-ease), border-color .28s var(--sat-ease); }
+    .sat-lot-edit:hover { background: #f3f8ec; border-color: #86b556; }
+    .sat-lot-edit svg { width: .95rem; height: .95rem; }
+    html.dark .sat-lot { background: #151b12; border-color: #2b3a1c; }
+    html.dark .sat-lot-h b { color: #a5c97e; }
+    html.dark .sat-lot-edit { background: #10150d; color: #a5c97e; border-color: #3d5a26; }
+    html.dark .sat-lot-edit:hover { background: #1c2914; }
     .sat-step { display: none; }
     .sat-step.is-on { display: block; animation: satIn .34s var(--sat-ease) both; }
     .sat-step.is-back { animation-name: satInBack; }
@@ -365,9 +399,10 @@
     @media (max-width: 379.98px) { .sat-legend i { width: 6.5rem; } .sat-opacity input { width: 4.2rem; } }
     @media (prefers-reduced-motion: reduce) {
         .sat-orbit i, .sat-step.is-on, .sat-pane.is-on, .sat-bar span i { animation: none; }
-        .sat-view, .sat-tab, .sat-pill, .sat-run, .sat-srow, .sat-rail i::after { transition: none; }
+        .sat-view, .sat-tab, .sat-pill, .sat-run, .sat-srow, .sat-rail i::after, .sat-rail i, .sat-lot-edit { transition: none; }
+        .sat-pop { animation: none; }
     }
-    html.sm-still .sat-orbit i, html.sm-still .sat-step.is-on, html.sm-still .sat-pane.is-on { animation: none; }
+    html.sm-still .sat-orbit i, html.sm-still .sat-step.is-on, html.sm-still .sat-pane.is-on, html.sm-still .sat-pop { animation: none; }
 </style>
 
 <div class="max-w-3xl mx-auto">
@@ -392,40 +427,22 @@
             {{-- Every choice is a tag that opens a sheet (the owner's rule for the
                  wizards, 2026-10-08): the province and the town, the crop, how it
                  was planted, the water, the soil and the worries. --}}
+            {{-- The lot (2026-10-16, the owner). It replaces "Where is the
+                 field?": the lot brings its place (the drawing map opens on its
+                 barangay or town), its size and its field answers (Global Lots,
+                 partials/farm-lots), and the questions it answered are hidden
+                 on the steps after it. --}}
             <section class="sat-step is-on" data-step="0">
-                <h3>Where is the field?</h3>
-                @if (\App\Support\Region::ph())
-                    <p class="sat-sub">Pick the province and the town. The map opens there, and you draw the field on it.</p>
-                    <span class="sat-label">Province</span>
-                    <button type="button" class="sat-choice is-none" id="satProvBtn"><span>Choose the province</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
-                    <span class="sat-label">Town or city</span>
-                    <button type="button" class="sat-choice is-none" id="satTownBtn" disabled><span>Pick the province first</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
-                    <div class="sat-row mt-3" style="flex-wrap:wrap">
-                        <button type="button" class="sat-pill" id="satHere">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
-                            Use my current location
-                        </button>
-                        <button type="button" class="sat-link" id="satByName">Or find a barangay by name</button>
-                    </div>
-                    <div id="satByNameBox" hidden>
-                        <div class="sat-row mt-2">
-                            <input type="text" id="satPlaceQ" class="form-input flex-1" maxlength="120" placeholder="Like Barangay Bantug, Muñoz" autocomplete="off">
-                            <button type="button" class="btn btn-white" id="satPlaceGo">Find</button>
-                        </div>
-                    </div>
-                @else
-                    <p class="sat-sub">Type the town or the county and the state, then pick it. Or use where you are standing now.</p>
-                    <div class="sat-row">
-                        <input type="text" id="satPlaceQ" class="form-input flex-1" maxlength="120" placeholder="Like Davis, California" autocomplete="off">
-                        <button type="button" class="btn btn-white" id="satPlaceGo">Find</button>
-                    </div>
-                    <button type="button" class="sat-pill mt-2" id="satHere">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
-                        Use my current location
+                <h3>Which lot is it for?{{ \App\Support\Tagalog::flag('lot') }}</h3>
+                <p class="sat-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</p>
+                <div id="satLots"></div>
+                <div class="sat-onmap" id="satOnMap" hidden>
+                    <p class="sat-picked" id="satPicked"></p>
+                    <button type="button" class="sat-pill" id="satHere">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+                        Standing in the field? Open the map where you are
                     </button>
-                @endif
-                <div class="sat-places" id="satPlaces"></div>
-                <p class="sat-picked" id="satPicked" hidden></p>
+                </div>
             </section>
 
             <section class="sat-step" data-step="1">
@@ -437,8 +454,17 @@
                     <span class="crop-tag-t is-none" id="satCropNow">Choose the crop</span>
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
-                <label class="sat-label" for="satVariety">Variety <span class="text-gray-400 font-normal">(optional)</span></label>
-                <input type="text" id="satVariety" class="form-input" maxlength="80" placeholder="Like NSIC Rc 222, or a hybrid corn name">
+                {{-- The variety, two ways (the shared sheet, partials/variety-pick):
+                     from the records, or typed as sold. The name rides in satVariety. --}}
+                <span class="sat-label">Variety <span class="text-gray-400 font-normal">(optional)</span></span>
+                <button type="button" class="crop-tag" id="satVarBtn" aria-haspopup="dialog">
+                    <span class="crop-tag-e" id="satVarIcon">🧬</span>
+                    <span class="crop-tag-t is-none" id="satVarNow">Pick from the records, or type your own</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <input type="hidden" id="satVariety" value="">
+                <div class="sat-varfacts" id="satVarFacts" hidden></div>
+                @include('partials.variety-pick')
             </section>
 
             <section class="sat-step" data-step="2">
@@ -455,23 +481,22 @@
                 </div>
             </section>
 
-            {{-- The field in detail (2026-10-15, the owner): the shared field
-                 questions (App\Support\FieldProfile), optional. The answers
-                 fill the ground and water step after it, and go to Anee whole. --}}
+            {{-- The ground and the water. The lot's answers are the field in
+                 detail (the step that asked them is gone, 2026-10-16): each
+                 question here the lot answers is filled from it and hidden, and
+                 when it answers all three the step is skipped. --}}
             <section class="sat-step" data-step="3">
-                <h3>Your field in detail</h3>
-                <p class="sat-sub">Optional. The soil, the water and last season, one short page at a time. Your answers fill in the next step, and Anee reads the pictures with every one.</p>
-                <div id="satFpc"></div>
-                @include('partials.field-profile-card')
-            </section>
-
-            <section class="sat-step" data-step="4">
                 <h3>The ground and the water</h3>
-                <p class="sat-sub">Pick what you know. Leave the rest.</p>
-                <span class="sat-label">Water</span>
-                <button type="button" class="sat-choice" id="satWaterBtn"><span>Irrigated</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
-                <span class="sat-label">Soil</span>
-                <button type="button" class="sat-choice is-none" id="satSoilBtn"><span>Not sure</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                <p class="sat-sub" id="satGroundSub">Pick what you know. Leave the rest.</p>
+                <div class="sat-blk" id="satWaterBlk" data-q>
+                    <span class="sat-label">Water</span>
+                    <button type="button" class="sat-choice" id="satWaterBtn"><span>Irrigated</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                </div>
+                <div class="sat-blk" id="satSoilBlk" data-q>
+                    <span class="sat-label">Soil</span>
+                    <button type="button" class="sat-choice is-none" id="satSoilBtn"><span>Not sure</span><svg class="sat-choice-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                </div>
+                <div class="sat-blk" id="satPhBlk" data-q>
                 <span class="sat-label">Soil pH</span>
                 <label class="sat-switch"><input type="checkbox" id="satPhOn"> <span>I know the pH, from a soil test</span></label>
                 <div class="sat-ph" id="satPhBox" hidden>
@@ -490,9 +515,10 @@
                     <p class="sat-ph-err" id="satPhErr" hidden></p>
                     <p class="sat-note">Drag the two handles, or type the numbers. One test reading? Set both to it.</p>
                 </div>
+                </div>
             </section>
 
-            <section class="sat-step" data-step="5">
+            <section class="sat-step" data-step="4">
                 <h3>Anything worrying you?</h3>
                 <p class="sat-sub">Anee looks hardest where you point. Pick any that fit.</p>
                 <span class="sat-label">What you have seen</span>
@@ -501,7 +527,7 @@
                 <textarea id="satNotes" class="form-textarea" rows="3" maxlength="800" placeholder="Like: the north end flooded last week"></textarea>
             </section>
 
-            <section class="sat-step" data-step="6">
+            <section class="sat-step" data-step="5">
                 <h3>Draw the field</h3>
                 <p class="sat-sub">Tap each corner of the field on the map, in order around it. Drag a corner to fix it.</p>
                 <div class="sat-draw">
@@ -514,11 +540,14 @@
                     <div class="sat-draw-area" id="satArea">Tap the first corner</div>
                 </div>
                 <p class="sat-draw-hint">Three corners at least. Up to 2,000 hectares. The satellite pixel is 10 meters, so very small plots read less surely.</p>
+                {{-- The drawn field gives the size Anee reads; the lot's own is only said. --}}
+                <p class="sat-draw-hint" id="satLotSize" hidden></p>
             </section>
 
-            <section class="sat-step" data-step="7">
+            <section class="sat-step" data-step="6">
                 <h3>Ready to read the field</h3>
                 <div class="sat-review" id="satReview"></div>
+                <div class="sat-lot" id="satLotSaid" hidden></div>
                 <button type="button" class="sat-run" id="satRun">
                     <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
                     <span id="satRunSays">Run the satellite analysis</span>
@@ -542,6 +571,9 @@
         <button type="button" class="btn btn-white w-full mt-3" id="satSavedMore" hidden>Show more</button>
     </div>
 </div>
+
+{{-- The farm's lots: the picker, the lot sheet, and the field questions with it. --}}
+@include('partials.farm-lots')
 
 {{-- One sheet for every choice: a list, searchable when long, one or several. --}}
 <div class="sheet hidden" id="satPickSheet" style="--sheet-width:30rem">
@@ -586,43 +618,118 @@
         del: (id) => @json(url('/app/satellite')) + '/' + id,
     };
     let OPT = null;
-    const st = { step: 0, place: null, crop: null, method: 'transplanted', water: 'irrigated', soil: [], concerns: [], ring: [], densityUnit: 'seeds_ha', prov: null, town: null };
-    const STEPS = 8;
-    /* The field in detail (partials/field-profile-card): its answers fill the
-       water, the soil and a tested pH range on the next step, each unless the
-       farmer has set it by hand. */
-    let FPC = null;
+    const st = { step: 0, place: null, location: '', crop: null, variety: '', varRecord: null, method: 'transplanted', water: 'irrigated', soil: [], concerns: [], ring: [], densityUnit: 'seeds_ha' };
+    const STEPS = 7;
+    const PH_ON = @json(\App\Support\Region::ph());
+    /* ---- the lot (2026-10-16, the owner): partials/farm-lots. Its answers
+       are the field in detail. The water, the soil and a tested pH range are
+       filled from it: each one the lot answers is hidden, and the step is
+       skipped when it answers all three. The rest stay, filled where the lot
+       gives a hint, until the farmer sets them by hand. ---- */
+    let LOTS = null;
+    const LOT = { lot: null, L: {}, n: 0, at: null };
     const TOUCH = {};
-    let phByProfile = false;
+    let phByProfile = false, cropByLot = false;
+    const lotHas = (...keys) => !!LOT.lot && !!window.aneeLots && keys.some((k) => window.aneeLots.has(LOT.lot, k));
     const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+    // Hide or show a block; one that comes back fades in rather than snapping.
+    const reveal = (el, on) => {
+        if (!el || el.hidden === !on) return;
+        el.hidden = !on;
+        if (on && !reduce()) { el.classList.remove('sat-pop'); void el.offsetWidth; el.classList.add('sat-pop'); }
+    };
     function applyProfile(answers, L) {
-        if (!OPT) return '';
+        if (!OPT) return;
+        L = L || {};
+        const wHid = lotHas('water'), sHid = lotHas('acidity', 'phFrom') && lotHas('salt'), pHid = lotHas('phFrom');
         const got = [];
+        if (wHid) TOUCH.water = false;
+        if (sHid) TOUCH.soil = false;
         if (!TOUCH.water) {
             st.water = OPT.water[L.waterNpk] ? L.waterNpk : 'irrigated';
             tagSay('satWaterBtn', words(OPT.water[st.water])[0]);
-            if (OPT.water[L.waterNpk]) got.push('the water');
+            if (!wHid && OPT.water[L.waterNpk]) got.push('the water');
         }
         if (!TOUCH.soil) {
             st.soil = (L.soilConditions || []).filter((k) => k !== 'unsure' && (OPT.soilConditions || {})[k]);
             soilSay();
-            if (st.soil.length) got.push('the soil');
+            if (!sHid && st.soil.length) got.push('the soil');
         }
-        if (!TOUCH.ph && (L.phLow != null || phByProfile)) {
+        // A tested pH comes only with the lot's own range; it leaves with it.
+        if (pHid || phByProfile) {
             const on = L.phLow != null;
             $('satPhOn').checked = on;
             $('satPhBox').hidden = !on;
-            if (on) { $('satPhLo').value = Math.max(PH_MIN, Math.min(PH_MAX, L.phLow)); $('satPhHi').value = Math.max(PH_MIN, Math.min(PH_MAX, L.phHigh ?? L.phLow)); got.push('the pH'); }
+            $('satPhErr').hidden = true;
+            if (on) { $('satPhLo').value = Math.max(PH_MIN, Math.min(PH_MAX, L.phLow)); $('satPhHi').value = Math.max(PH_MIN, Math.min(PH_MAX, L.phHigh ?? L.phLow)); }
             phByProfile = on;
+            if (on) TOUCH.ph = false;
             phPaint('lo');
         }
-        window.aneeFieldCard.hint(document.querySelector('#satWiz .sat-step[data-step="4"]'), got.length > 0);
-        return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything on the next step.' : '';
+        reveal($('satWaterBlk'), !wHid);
+        reveal($('satSoilBlk'), !sHid);
+        reveal($('satPhBlk'), !pHid);
+        $('satGroundSub').textContent = (wHid || sHid || pHid) ? 'Your lot answered the rest. Pick what you know here, or leave it.' : 'Pick what you know. Leave the rest.';
+        if (window.aneeFieldCard) window.aneeFieldCard.hint(document.querySelector('#satWiz .sat-step[data-step="3"]'), got.length > 0, 'Filled in from your lot: ' + andList(got) + '. Change anything that is not right.');
+        paintRail();
     }
-    function mountCard() {
-        if (FPC || !window.aneeFieldCard) return;
-        FPC = window.aneeFieldCard.mount($('satFpc'), { crop: () => st.crop || null, title: () => (st.place && st.place.label) || 'Your field', onChange: applyProfile });
+    // The lot picked, saved or changed: its place on the map, its crop and its answers.
+    async function lotPicked(lot) {
+        LOT.lot = lot || null;
+        st.location = lot ? (lot.where || lot.place || '') : '';
+        const at = lot ? [lot.barangay, lot.town, lot.province].join('|') : null;
+        if (at !== LOT.at) { LOT.at = at; locateLot(lot); }
+        paintLotSize();
+        // The crop usually on the lot, until the farmer picks one.
+        if (lot && lot.crop && OPT && (!st.crop || cropByLot) && st.crop !== lot.crop && OPT.crops.some((c) => c.key === lot.crop)) {
+            setCrop(lot.crop, true);
+            return;
+        }
+        await lotApply();
     }
+    async function lotApply() {
+        const lot = LOT.lot, n = ++LOT.n;
+        const L = lot && window.aneeLots ? await window.aneeLots.legacy(lot, st.crop || lot.crop) : {};
+        if (n !== LOT.n) return;
+        LOT.L = L;
+        applyProfile(lot ? lot.answers : {}, L);
+        if (st.step === STEPS - 1) review();
+    }
+    function mountLots() {
+        if (LOTS || !window.aneeLots) return;
+        LOTS = window.aneeLots.picker($('satLots'), { crop: () => st.crop || null, onPick: lotPicked });
+    }
+    /* "From North field": the answers that stood in for questions here, and a way to change them. */
+    const SAID_KEYS = ['water', 'acidity', 'phFrom', 'salt'];
+    const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L18.5 9.5a2.1 2.1 0 00-4-4L4 16v4zM13.5 6.5l4 4"/></svg>';
+    function lotSaid() {
+        const box = $('satLotSaid'), lot = LOT.lot;
+        if (!lot || !window.aneeLots) { box.hidden = true; return; }
+        const A = lot.answers || {}, sub = {};
+        SAID_KEYS.forEach((k) => { if (window.aneeLots.has(lot, k)) sub[k] = A[k]; });
+        if (sub.phFrom != null && A.phTo != null) sub.phTo = A.phTo;
+        const pairs = window.aneeFieldCard && window.aneeFieldProfile ? window.aneeFieldCard.pairs(sub, {}) : [];
+        // The other answers (the soil's feel, last season, the weeds) go to Anee whole.
+        const more = window.aneeLots.answered(lot).filter((k) => !['water', 'acidity', 'phFrom', 'phTo', 'salt'].includes(k)).length;
+        box.innerHTML = '<p class="sat-lot-h"><b>From ' + esc(lot.name) + '</b><span>' + esc([lot.place, lot.areaHa ? window.aneeLots.fmtHa(lot.areaHa) : ''].filter(Boolean).join(' · ')) + '</span></p>'
+            + (pairs.length ? window.aneeFieldCard.said(pairs) : '')
+            + '<p class="sat-lot-more">' + esc(!lot.count ? 'This lot has no field answers yet. Add them, and Anee reads the pictures with them.'
+                : (more ? (pairs.length ? 'And ' : '') + more + ' more answer' + (more === 1 ? '' : 's') + ' about its soil and last season. ' : '') + 'Anee reads the pictures with every one.') + '</p>'
+            + '<button type="button" class="sat-lot-edit" data-lot-edit>' + PEN + 'Edit the lot</button>';
+        reveal(box, true);
+    }
+    $('satLotSaid').addEventListener('click', (e) => {
+        if (!e.target.closest('[data-lot-edit]') || !LOT.lot || !window.aneeLots) return;
+        // A saved lot comes back through the picker (aneelots:changed) and is applied there.
+        window.aneeLots.edit(LOT.lot, { crop: st.crop || null });
+    });
+    // The lot's own size, said beside the drawing: the drawn field is the one Anee reads.
+    const paintLotSize = () => {
+        const lot = LOT.lot, el = $('satLotSize');
+        if (!el) return;
+        el.textContent = lot && lot.areaHa && window.aneeLots ? lot.name + ' is saved as ' + window.aneeLots.fmtHa(lot.areaHa) + '. The size Anee reads is the field you draw.' : '';
+        el.hidden = !el.textContent;
+    };
 
     /* Shops, stops and pins only clutter a field: the map keeps roads and places. */
     const QUIET = [{ featureType: 'poi', stylers: [{ visibility: 'off' }] }, { featureType: 'transit', stylers: [{ visibility: 'off' }] }];
@@ -642,6 +749,15 @@
     /* ---- the wizard ---- */
     const rail = $('satRail');
     rail.innerHTML = Array.from({ length: STEPS }, () => '<i></i>').join('');
+    /* A step whose every question the lot answered is skipped, by Next and
+       Back, and its piece of the rail folds away. */
+    const skipped = (n) => { const s = document.querySelector('.sat-step[data-step="' + n + '"]'); const qs = s ? [...s.querySelectorAll('[data-q]')] : []; return qs.length > 0 && qs.every((q) => q.hidden); };
+    const live = () => Array.from({ length: STEPS }, (_, i) => i).filter((i) => !skipped(i));
+    function paintRail() {
+        const n = st.step, L = live();
+        [...rail.children].forEach((i, k) => { i.classList.toggle('is-skip', skipped(k)); i.classList.toggle('is-done', k < n); i.classList.toggle('is-on', k === n); });
+        $('satStepNo').textContent = 'Step ' + (Math.max(0, L.indexOf(n)) + 1) + ' of ' + L.length;
+    }
     const show = (n, back = false) => {
         st.step = n;
         document.querySelectorAll('.sat-step').forEach((s) => {
@@ -649,13 +765,12 @@
             s.classList.toggle('is-on', on);
             s.classList.toggle('is-back', on && back);
         });
-        [...rail.children].forEach((i, k) => { i.classList.toggle('is-done', k < n); i.classList.toggle('is-on', k === n); });
+        paintRail();
         $('satBack').disabled = n === 0;
         $('satNext').hidden = n === STEPS - 1;
-        $('satStepNo').textContent = 'Step ' + (n + 1) + ' of ' + STEPS;
-        $('satStepName').textContent = ['The place', 'The crop', 'Planting', 'Your field', 'Ground and water', 'Your worries', 'Draw the field', 'Review'][n] || '';
-        if (n === 6) initDraw();
-        if (n === 7) review();
+        $('satStepName').textContent = ['The lot', 'The crop', 'Planting', 'Ground and water', 'Your worries', 'Draw the field', 'Review'][n] || '';
+        if (n === 5) initDraw();
+        if (n === 6) review();
         // A step starts at its title: on a phone the last one may have left the page scrolled down.
         const wiz = $('satWiz');
         if (booted && wiz.getBoundingClientRect().top < (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--app-head')) || 60)) {
@@ -714,9 +829,13 @@
 
     /* the crop */
     const cropName = (c) => String(c.label || '').replace(' — ', ', ');
-    const setCrop = (k) => {
+    function setCrop(k, byLot) {
         st.crop = k;
-        if (FPC) FPC.refresh();
+        cropByLot = !!byLot;
+        // A variety from another crop's records does not belong to this one.
+        if (st.varRecord && st.varRecord.crop !== k) varSet('', null);
+        // The lot's troubles are read by the crop's own list: read them again.
+        lotApply();
         const c = OPT.crops.find((x) => x.key === k);
         $('satCropIcon').textContent = c ? c.icon : '🌱';
         $('satCropNow').textContent = c ? cropName(c) : 'Choose the crop';
@@ -724,11 +843,45 @@
         // The usual way in for the crop: transplanted palay, seeded rows for the rest.
         st.method = c && c.perennial ? 'perennial' : (/^rice/.test(k) ? (/dsr|direct/.test(k) ? 'direct' : 'transplanted') : 'planted');
         tagSay('satMethodBtn', words(OPT.methods[st.method])[0]);
-    };
+    }
     $('satCropBtn').addEventListener('click', () => {
         if (!OPT) return;
         pick({ title: 'Choose the crop', search: true, cur: st.crop, items: OPT.crops.map((c) => ({ k: c.key, label: cropName(c), icon: c.icon, group: c.group,
-            sub: c.perennial ? 'Tree crop, counted by age' : (c.maturity ? c.maturity + ' days to harvest' : '') })), cb: (k) => { setCrop(k); if (st.step === 1) setTimeout(() => $('satVariety').focus({ preventScroll: true }), 300); } });
+            sub: c.perennial ? 'Tree crop, counted by age' : (c.maturity ? c.maturity + ' days to harvest' : '') })), cb: (k) => setCrop(k) });
+    });
+
+    /* the variety, two ways (2026-10-16, the owner): the shared sheet
+       (partials/variety-pick), searched from the records or typed as sold.
+       The name rides in the hidden satVariety, the field the server reads. */
+    const VAR_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+    function varSay() {
+        const now = $('satVarNow'), rec = st.varRecord, box = $('satVarFacts');
+        now.textContent = st.variety || 'Pick from the records, or type your own';
+        now.classList.toggle('is-none', !st.variety);
+        $('satVarIcon').textContent = rec ? '📗' : '🧬';
+        $('satVariety').value = st.variety;
+        if (!st.variety) { box.hidden = true; return; }
+        const VP = window.aneeVarietyPick;
+        box.classList.toggle('is-own', !rec);
+        box.innerHTML = VAR_ICON + '<span>' + (rec
+            ? '<b>On record.</b> ' + esc([VP ? VP.facts(rec) : '', rec.where ? 'bred for ' + rec.where : ''].filter(Boolean).join(' · ')) + '. Anee knows how tall and how green it should be by now.'
+            : 'Your own name, not on record. Anee reads the field by the crop, and by this variety where it is known.') + '</span>';
+        reveal(box, true);
+    }
+    function varSet(name, rec) {
+        st.variety = String(name || '').trim().slice(0, 80);
+        st.varRecord = rec ? Object.assign({ crop: st.crop }, rec) : null;
+        varSay();
+    }
+    $('satVarBtn').addEventListener('click', async () => {
+        if (!window.aneeVarietyPick || !OPT) return;
+        if (!st.crop) return window.toast?.('Pick the crop first.', 'error');
+        const c = OPT.crops.find((x) => x.key === st.crop) || {};
+        const res = await window.aneeVarietyPick.open({ crop: st.crop, cropLabel: c.label ? String(c.label).split(' (')[0].split(' — ')[0] : '', location: st.location,
+            water: st.water === 'partial' ? 'limited' : st.water, problems: (LOT.L && LOT.L.problemsVariety) || [],
+            value: { name: st.variety, record: st.varRecord },
+            ownNote: 'Not on record, so Anee reads the field by the crop, and by what is published on this variety where she finds it.' });
+        if (res) varSet(res.name, res.record);
     });
 
     /* how it was planted, the water, the soil, the worries */
@@ -795,74 +948,50 @@
     $('satPhOn').addEventListener('change', () => { $('satPhBox').hidden = !$('satPhOn').checked; $('satPhErr').hidden = true; phPaint('lo'); });
     phPaint('lo');
 
-    /* the place */
+    /* the place: the lot's barangay, else its town, found on the map (the
+       same place search the town tags used); the drawing map opens there. */
+    const PIN = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+    let drawFresh = true;
     const setPlace = (p) => {
         st.place = p;
-        $('satPicked').hidden = false;
-        $('satPicked').innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' + esc(p.label);
         st.ring = [];
+        drawFresh = true;
+        $('satPicked').innerHTML = PIN + '<span>' + esc(p.here ? 'The map opens where you are standing.' : 'The map opens at ' + p.label + '.') + '</span>';
     };
-    const findPlace = async () => {
-        const q = $('satPlaceQ').value.trim();
-        if (q.length < 2) return;
-        $('satPlaces').innerHTML = '<p class="sat-note">Looking…</p>';
+    const askPlace = async (q) => { const r = await window.api(U.places + '?q=' + encodeURIComponent(q)); return ((r.data && r.data.places) || [])[0] || null; };
+    let locating = 0;
+    const locateLot = async (lot) => {
+        const n = ++locating;
+        st.place = null;
+        st.ring = [];
+        const box = $('satOnMap');
+        if (!lot) { reveal(box, false); return; }
+        reveal(box, true);
+        $('satPicked').textContent = 'Finding ' + (lot.town || lot.where || 'the lot') + ' on the map…';
+        const tail = PH_ON ? ', Philippines' : '';
+        const town = String(lot.town || '').replace(/\s*\(Capital\)\s*$/i, ''), prov = String(lot.province || '');
+        const tries = [lot.barangay && town ? [lot.barangay + ', ' + town + ', ' + prov + tail, 16, [lot.barangay, town, prov]] : null,
+            town ? [town + ', ' + prov + tail, 15, [town, prov]] : null, town ? [town + ', ' + prov, 15, [town, prov]] : null, prov ? [prov + tail, 11, [prov]] : null].filter(Boolean);
         try {
-            const r = await window.api(U.places + '?q=' + encodeURIComponent(q));
-            const list = (r.data && r.data.places) || [];
-            $('satPlaces').innerHTML = list.length ? list.map((p, i) => '<button type="button" class="sat-place" data-i="' + i + '"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>' + esc(p.label || p.name) + '</span></button>').join('')
-                : '<p class="sat-note">No place by that name. Try the town and province.</p>';
-            $('satPlaces').onclick = (e) => {
-                const b = e.target.closest('.sat-place');
-                if (!b) return;
-                const p = list[Number(b.dataset.i)];
-                $('satPlaces').querySelectorAll('.sat-place').forEach((x) => x.classList.toggle('is-on', x === b));
-                setPlace({ label: p.label || p.name, lat: Number(p.lat), lng: Number(p.lng) });
-            };
-        } catch (err) { $('satPlaces').innerHTML = '<p class="sat-note">' + esc(err.message) + '</p>'; }
+            for (const [q, zoom, bits] of tries) {
+                const hit = await askPlace(q);
+                if (n !== locating) return;
+                if (hit) { setPlace({ label: bits.filter(Boolean).join(', '), lat: Number(hit.lat), lng: Number(hit.lng), zoom }); return; }
+            }
+            throw new Error('The lot could not be found on the map.');
+        } catch (err) {
+            if (n !== locating) return;
+            $('satPicked').textContent = 'The lot could not be found on the map. Open the map where you are, or edit the lot\'s place.';
+        }
     };
-    $('satPlaceGo').addEventListener('click', findPlace);
-    /* In the Philippines: the province, then the town, each from its sheet;
-       the map opens on the town (found through the same place search). */
-    let PH = null;
-    const loadPh = async () => PH ??= await (await fetch(@json(asset('data/ph-locations.json')))).json();
-    const townName = (t) => String(t).replace(/\s*\(Capital\)\s*$/i, '');
-    $('satProvBtn')?.addEventListener('click', async () => {
-        try { await loadPh(); } catch (_) { return window.toast?.('The list of provinces could not load. Find the place by name instead.', 'error'); }
-        pick({ title: 'Choose the province', search: true, cur: st.prov, items: Object.keys(PH).sort((a, b) => a.localeCompare(b)).map((p) => ({ k: p, label: p, sub: PH[p].length + ' towns and cities' })),
-            cb: (k) => {
-                if (k !== st.prov) { st.town = null; tagSay('satTownBtn', 'Choose the town', true); }
-                st.prov = k; tagSay('satProvBtn', k);
-                $('satTownBtn').disabled = false;
-                if (!st.town) setTimeout(() => $('satTownBtn').click(), 260);
-            } });
-    });
-    $('satTownBtn')?.addEventListener('click', async () => {
-        if (!st.prov) return;
-        try { await loadPh(); } catch (_) { return; }
-        pick({ title: 'Choose the town or city', hint: st.prov, search: true, cur: st.town, items: (PH[st.prov] || []).map((t) => ({ k: t, label: townName(t), sub: /\(Capital\)/i.test(t) ? 'The capital' : '' })),
-            cb: (k) => { st.town = k; tagSay('satTownBtn', townName(k)); locate(townName(k), st.prov); } });
-    });
-    const locate = async (town, prov) => {
-        $('satPicked').hidden = false;
-        $('satPicked').textContent = 'Finding ' + town + ' on the map…';
-        const ask = async (q) => { const r = await window.api(U.places + '?q=' + encodeURIComponent(q)); return ((r.data && r.data.places) || [])[0] || null; };
-        try {
-            const p = (await ask(town + ', ' + prov + ', Philippines')) || (await ask(town + ', ' + prov)) || (await ask(prov + ', Philippines'));
-            if (!p) throw new Error('That town could not be found on the map. Find it by name instead.');
-            setPlace({ label: town + ', ' + prov, lat: Number(p.lat), lng: Number(p.lng) });
-        } catch (err) { $('satPicked').hidden = true; window.toast?.(err.message, 'error'); }
-    };
-    $('satByName')?.addEventListener('click', () => { $('satByNameBox').hidden = false; $('satByName').hidden = true; $('satPlaceQ').focus(); });
-    $('satPlaceQ').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); findPlace(); } });
     $('satHere').addEventListener('click', () => {
         if (!navigator.geolocation) return window.toast?.('This phone cannot share its location.', 'error');
         $('satHere').disabled = true;
         navigator.geolocation.getCurrentPosition((pos) => {
             $('satHere').disabled = false;
-            const lat = pos.coords.latitude, lng = pos.coords.longitude;
-            setPlace({ label: 'My location (' + lat.toFixed(4) + ', ' + lng.toFixed(4) + ')', lat, lng, here: true });
-            if (!$('satPlaceQ').value.trim()) $('satPlaceQ').value = 'My location';
-        }, () => { $('satHere').disabled = false; window.toast?.('Location was not shared. Type the place instead.', 'error'); }, { enableHighAccuracy: true, timeout: 12000 });
+            locating++;
+            setPlace({ label: (LOT.lot && LOT.lot.where) || 'Where you are', lat: pos.coords.latitude, lng: pos.coords.longitude, zoom: 17, here: true });
+        }, () => { $('satHere').disabled = false; window.toast?.('Location was not shared. The map opens at the lot instead.', 'error'); }, { enableHighAccuracy: true, timeout: 12000 });
     });
 
     /* ---- drawing the field ---- */
@@ -893,13 +1022,15 @@
         if (!st.place) return;
         try { await loadMaps(); } catch (err) { $('satArea').textContent = err.message; return; }
         if (!dmap) {
-            dmap = new google.maps.Map($('satDrawMap'), { center: st.place, zoom: st.place.here ? 17 : 15, mapTypeId: 'hybrid', streetViewControl: false, fullscreenControl: false,
+            dmap = new google.maps.Map($('satDrawMap'), { center: st.place, zoom: st.place.zoom || (st.place.here ? 17 : 15), mapTypeId: 'hybrid', streetViewControl: false, fullscreenControl: false,
                 mapTypeControl: false, cameraControl: false, clickableIcons: false, gestureHandling: 'greedy', tilt: 0, mapId: OPT.mapId || 'DEMO_MAP_ID', renderingType: 'VECTOR', headingInteractionEnabled: true, tiltInteractionEnabled: false, rotateControl: true, styles: QUIET });
             dpoly = new google.maps.Polygon({ map: dmap, strokeColor: '#f5c518', strokeWeight: 2.5, fillColor: '#f5c518', fillOpacity: .18, clickable: false });
             dmap.addListener('click', (e) => { if (st.ring.length < 300) { st.ring.push({ lat: e.latLng.lat(), lng: e.latLng.lng() }); paintDraw(); } });
-        } else if (!st.ring.length) {
+        } else if (drawFresh || !st.ring.length) {
             dmap.setCenter(st.place);
+            if (drawFresh) dmap.setZoom(st.place.zoom || 15);
         }
+        drawFresh = false;
         paintDraw();
     };
     $('satUndo').addEventListener('click', () => { st.ring.pop(); paintDraw(); });
@@ -914,27 +1045,28 @@
     const review = () => {
         const c = OPT.crops.find((x) => x.key === st.crop);
         const rows = [
-            ['Place', st.place ? st.place.label : ''], ['Crop', c ? c.icon + ' ' + cropName(c) + ($('satVariety').value.trim() ? ', ' + $('satVariety').value.trim() : '') : ''],
+            ['Lot', LOT.lot ? LOT.lot.name + ', ' + (LOT.lot.place || st.location) : ''], ['Crop', c ? c.icon + ' ' + cropName(c) + ($('satVariety').value.trim() ? ', ' + $('satVariety').value.trim() : '') : ''],
             ['Planted', ($('satPlanted').value || 'Not given') + ' · ' + words(label(OPT.methods, st.method))[0]],
             ['Water and soil', words(label(OPT.water, st.water))[0] + (st.soil.length ? ' · ' + st.soil.map((k) => words(OPT.soilConditions[k] || k)[0]).join(', ') : '') + (st.ph ? ' · pH ' + (st.ph.lo === st.ph.hi ? st.ph.lo : st.ph.lo + ' to ' + st.ph.hi) : '')],
-            ...(FPC && FPC.count() ? [['Field in detail', FPC.count() + (FPC.count() === 1 ? ' answer' : ' answers')]] : []),
             ['Field', ringArea().toLocaleString(undefined, { maximumFractionDigits: 2 }) + ' ha, ' + st.ring.length + ' corners'],
         ];
         $('satReview').innerHTML = rows.map(([k, v]) => '<div><b>' + esc(k) + '</b><span>' + esc(v) + '</span></div>').join('');
+        lotSaid();
         $('satRunFine').textContent = OPT.quote ? OPT.quote + ' credits, charged only when the report is ready. Nothing is charged if the satellites have nothing new.' : '';
         $('satRun').disabled = !OPT.canUse || !OPT.connected;
         $('satRunSays').textContent = !OPT.connected ? 'The satellite link is being set up' : (OPT.canUse ? 'Run the satellite analysis' : 'Anee is not on your plan');
     };
     const canNext = () => {
-        if (st.step === 0 && !st.place) return st.town ? 'One moment, the town is still being found on the map.' : 'Pick the place first.';
+        if (st.step === 0 && !LOT.lot) return 'Pick the lot, or add one.';
+        if (st.step === 0 && !st.place) return /^Finding/.test($('satPicked').textContent) ? 'One moment, the lot is still being found on the map.' : 'Open the map where you are, or edit the lot\'s place.';
         if (st.step === 1 && !st.crop) return 'Pick the crop.';
-        if (st.step === 4 && $('satPhOn').checked && !$('satPhErr').hidden) return $('satPhErr').textContent;
-        if (st.step === 6 && st.ring.length < 3) return 'Tap at least three corners of the field.';
-        if (st.step === 6 && ringArea() > 2000) return 'That is over 2,000 hectares. Draw one field at a time.';
+        if (st.step === 3 && $('satPhOn').checked && !$('satPhErr').hidden) return $('satPhErr').textContent;
+        if (st.step === 5 && st.ring.length < 3) return 'Tap at least three corners of the field.';
+        if (st.step === 5 && ringArea() > 2000) return 'That is over 2,000 hectares. Draw one field at a time.';
         return null;
     };
-    $('satNext').addEventListener('click', () => { const why = canNext(); if (why) return window.toast?.(why, 'error'); show(st.step + 1); });
-    $('satBack').addEventListener('click', () => show(Math.max(0, st.step - 1), true));
+    $('satNext').addEventListener('click', () => { const why = canNext(); if (why) return window.toast?.(why, 'error'); show(live().find((i) => i > st.step) ?? STEPS - 1); });
+    $('satBack').addEventListener('click', () => show(live().reverse().find((i) => i < st.step) ?? 0, true));
 
     const PHASES = {
         start: { label: 'Getting started', lo: 2, hi: 6, tau: 8 },
@@ -948,10 +1080,11 @@
         const ring = st.ring.map((p) => [Number(p.lng.toFixed(7)), Number(p.lat.toFixed(7))]);
         ring.push(ring[0]);
         const body = {
-            location: st.place.label, crop: st.crop, variety: $('satVariety').value.trim(), plantedOn: $('satPlanted').value || null,
+            ...(window.aneeLots ? window.aneeLots.payload(LOT.lot) : {}), lotName: LOT.lot ? LOT.lot.name : null,
+            location: st.location, crop: st.crop, variety: $('satVariety').value.trim(), plantedOn: $('satPlanted').value || null,
             method: st.method, density: $('satDensity').value ? Number($('satDensity').value) : null, densityUnit: st.densityUnit,
             water: st.water, soilConditions: st.soil, phValue: st.ph ? Math.round((st.ph.lo + st.ph.hi) / 2 * 10) / 10 : null, phLow: st.ph ? st.ph.lo : null, phHigh: st.ph ? st.ph.hi : null,
-            concerns: st.concerns, notes: $('satNotes').value.trim(), polygon: { type: 'Polygon', coordinates: [ring] }, ...(FPC ? FPC.payload() : {}),
+            concerns: st.concerns, notes: $('satNotes').value.trim(), polygon: { type: 'Polygon', coordinates: [ring] },
         };
         $('satRun').disabled = true;
         window.aneeWait.show({ title: 'Anee is reading your field…', sub: 'Satellite pictures, then the weather and the soil. About two minutes.',
@@ -1231,7 +1364,7 @@
             $('satPlanted').max = OPT.today;
             show(0);
             booted = true;
-            if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
+            if (window.aneeLots) mountLots(); else document.addEventListener('DOMContentLoaded', mountLots, { once: true });
             const open = new URLSearchParams(location.search).get('open');
             if (open) { const o = await window.api(U.one(open)); openReport(o.data); }
         } catch (err) { window.toast?.(err.message || 'Could not load the page.', 'error'); }

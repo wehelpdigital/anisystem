@@ -97,6 +97,32 @@
     .wtp-prob input { accent-color: #4a7c2a; width: 1rem; height: 1rem; flex: none; }
     .wtp-prob.is-on { border-color: var(--color-brand-500); background: var(--color-brand-50); }
 
+    /* The lot (2026-10-16): what it answered is hidden here, and the review
+       says where the rest came from. */
+    .va-blk[hidden], .wtp-prob[hidden] { display: none; }
+    .va-land-solo { display: none; }
+    #vaSoilStep.is-solo .va-land-solo { display: block; }
+    #vaSoilStep.is-solo .va-land-and { display: none; }
+    .va-pop { animation: vaPop .28s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes vaPop { from { opacity: 0; transform: translateY(6px); } }
+    .va-lot { margin: .9rem 0 1rem; padding: .8rem .85rem; border-radius: 1rem; background: linear-gradient(160deg, #fbfdf8, #f2f8ea); border: 1px solid #e0ebd3; }
+    .va-lot[hidden] { display: none; }
+    .va-lot-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .5rem; margin-bottom: .55rem; font-size: .86rem; line-height: 1.4; }
+    .va-lot-h b { font-weight: 800; color: #2d5016; }
+    .va-lot-h span { min-width: 0; font-size: .76rem; color: var(--color-gray-500); overflow-wrap: anywhere; }
+    .va-lot-none { font-size: .8rem; line-height: 1.5; color: var(--color-gray-500); }
+    .va-lot-edit { display: inline-flex; align-items: center; gap: .4rem; min-height: 2.5rem; margin-top: .7rem; padding: .4rem .95rem; border-radius: 999px; font-size: .82rem; font-weight: 800;
+        color: #3d6823; background: var(--color-white); border: 1.5px solid #b9d39c; cursor: pointer;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .va-lot-edit:hover { background: #f3f8ec; border-color: #86b556; }
+    .va-lot-edit svg { width: .95rem; height: .95rem; }
+    html.dark .va-lot { background: #151b12; border-color: #2b3a1c; }
+    html.dark .va-lot-h b { color: #a5c97e; }
+    html.dark .va-lot-edit { background: #10150d; color: #a5c97e; border-color: #3d5a26; }
+    html.dark .va-lot-edit:hover { background: #1c2914; }
+    @media (prefers-reduced-motion: reduce) { .va-pop { animation: none; } .va-lot-edit { transition: none; } }
+    html.sm-still .va-pop { animation: none; }
+
     .wtp-nav { display: flex; gap: .6rem; margin-top: 1.1rem; }
     .wtp-run { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%;
         padding: .85rem 1rem; border-radius: 1rem; color: #fff; font-weight: 800; font-size: .95rem;
@@ -431,8 +457,6 @@
     .wp-qh { font-size: .84rem; font-weight: 800; color: var(--color-gray-800); margin-bottom: .45rem; }
     .wp-qh small { display: block; font-weight: 500; font-size: .7rem; color: var(--color-gray-400); }
     html.dark .wp-qh { color: #e8efe1; }
-    .wp-loc-country { margin-bottom: .8rem; }
-    .wp-loc-country .form-label { margin-bottom: .3rem; }
     html.dark .wtp-choice, html.dark .wtp-prob { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
     html.dark .wtp-choice.is-on { background: #22301a; border-color: #6b9f3d; color: #cfe6b8; }
     html.dark .wtp-prob.is-on { background: #22301a; border-color: #6b9f3d; }
@@ -480,19 +504,15 @@
         </div>
 
         <div class="card p-5 wtp-wiz" id="vaWiz">
-            {{-- Step 1: the place --}}
+            {{-- Step 1: the lot (2026-10-16, the owner). It replaces "Where is
+                 the field?": the lot brings its place, its size and its field
+                 answers (Global Lots, partials/farm-lots), and the questions it
+                 answered are hidden on the steps after it. The field is in the
+                 farmer's own country (the lots carry no other). --}}
             <section class="wtp-step is-on" data-step="0">
-                <p class="wtp-q">Where is the field?</p>
-                {{-- The field's country: the farmer's own unless they say
-                     otherwise. It decides the address words, the seasons on
-                     offer, and whose seed houses, trials and agencies the
-                     research reads. --}}
-                <div class="wp-loc-country">
-                    <label class="form-label">Country of the field</label>
-                    @include('partials.country-pick', ['id' => 'vaCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
-                </div>
-                <p class="wtp-sub" id="vaLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough. Weather and trial results differ by region.</p>
-                <input type="text" id="vaLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
+                <p class="wtp-q">Which lot is it for?{{ \App\Support\Tagalog::flag('lot') }}</p>
+                <p class="wtp-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</p>
+                <div id="vaLots"></div>
             </section>
             {{-- Step 2: when it will be planted -- the year, and the season
                  with the months it usually spans where the field is. --}}
@@ -505,11 +525,17 @@
                 <div class="wtp-choices" id="vaSeasons"></div>
             </section>
             {{-- Step 3: the soil, and the lay of the land --}}
-            <section class="wtp-step" data-step="2">
-                <p class="wtp-q">What is the soil like?</p>
-                <p class="wtp-sub">Pick what it feels like. No soil test needed.</p>
-                <div class="wtp-choices" id="vaSoils"></div>
-                <p class="wp-qh mt-4">And the land? <small>Lowland, upland or highland. Each variety is bred for one.</small></p>
+            {{-- The soil hides when the lot says how it feels; the land then
+                 stands alone, as the step's own question. --}}
+            <section class="wtp-step" data-step="2" id="vaSoilStep">
+                <div class="va-blk" id="vaSoilBlk">
+                    <p class="wtp-q">What is the soil like?</p>
+                    <p class="wtp-sub">Pick what it feels like. No soil test needed.</p>
+                    <div class="wtp-choices" id="vaSoils"></div>
+                </div>
+                <p class="wp-qh mt-4 va-land-and">And the land? <small>Lowland, upland or highland. Each variety is bred for one.</small></p>
+                <p class="wtp-q va-land-solo">Is the land lowland, upland or highland?</p>
+                <p class="wtp-sub va-land-solo" id="vaLandSub">Optional. Each variety is bred for one. The soil comes from your lot.</p>
                 <div class="wtp-choices" id="vaElevations"></div>
             </section>
             {{-- Step 4: the crop --}}
@@ -551,28 +577,21 @@
                 <p class="wtp-sub">Put them in order. The first counts 40%, then 30%, 20% and 10%.</p>
                 <div class="va-rank" id="vaRank"></div>
             </section>
-            {{-- Step 7: the field in detail (2026-10-15, the owner): the
-                 shared field questions (App\Support\FieldProfile), optional,
-                 asked once the crop is known. The answers fill the troubles
-                 step after it, and go to Anee whole. --}}
+            {{-- Step 7: the troubles. The lot's answers are the field in detail
+                 (the step that asked them is gone, 2026-10-16): a trouble the lot
+                 answers is ticked from it and hidden, the rest stay. --}}
             <section class="wtp-step" data-step="6">
-                <p class="wtp-q">Your field in detail</p>
-                <p class="wtp-sub">Optional. The soil, the water and last season, one short page at a time. Your answers tick the troubles on the next step, and Anee weighs every one.</p>
-                <div id="vaFpc"></div>
-                @include('partials.field-profile-card')
-            </section>
-            {{-- Step 8: the troubles --}}
-            <section class="wtp-step" data-step="7">
                 <p class="wtp-q">What problems does this field have?</p>
-                <p class="wtp-sub">Tick what you have seen. Each one changes the scores.</p>
+                <p class="wtp-sub" id="vaProbSub">Tick what you have seen. Each one changes the scores.</p>
                 <div class="wtp-probs" id="vaProbs"></div>
                 <label class="form-label mt-4" for="vaNotes">Anything else? <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="vaNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. we transplant late, the buyer wants long grain"></textarea>
             </section>
-            {{-- Step 9: the decision --}}
-            <section class="wtp-step" data-step="8">
+            {{-- Step 8: the decision --}}
+            <section class="wtp-step" data-step="7">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="vaReview"></p>
+                <div class="va-lot" id="vaLotSaid" hidden></div>
                 <button type="button" class="wtp-run" id="vaRun">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
                     <span id="vaRunSays">Run the research</span>
@@ -613,6 +632,9 @@
         <div class="wtp-report mt-4" id="vaSavedReport" hidden></div>
     </div>
 </div>
+
+{{-- The farm's lots: the picker, the lot sheet, and the field questions with it. --}}
+@include('partials.farm-lots')
 
 {{-- The crop sheet sits here, not on the 'sheets' stack: that stack prints
      after this script has run, and the script wires the sheet by id. --}}
@@ -688,24 +710,103 @@
         return crosses && y ? `${label} ${y} to ${y + 1}` : `${label} ${y || ''}`.trim();
     };
     let step = 0;
-    const STEPS = 9;
-    /* The field in detail (partials/field-profile-card): its answers tick the
-       troubles, unless the farmer has ticked them by hand. */
-    let FPC = null;
+    const STEPS = 8;
+    /* ---- the lot (2026-10-16, the owner): partials/farm-lots. Its answers
+       are the field in detail. A simple question the lot answers is filled
+       from it and hidden; the rest stay, ticked from the lot where it gives
+       a hint, until the farmer changes them by hand. ---- */
+    let LOTS = null;
+    const LOT = { lot: null, L: {}, n: 0 };
     const TOUCH = { problems: false };
+    let soilByLot = false, cropByLot = false;
+    const lotHas = (...keys) => !!LOT.lot && !!window.aneeLots && keys.some((k) => window.aneeLots.has(LOT.lot, k));
+    // Each trouble on the list, and the lot's questions that answer it.
+    const PROB_BY = { drought: ['outbreaks'], floods: ['flooding'], water_source: ['water'], salinity: ['salt'], acidic: ['acidity', 'phFrom'], alkaline: ['acidity', 'phFrom'],
+        sodic: ['salt'], acid_sulfate: ['acidity'], pests: ['outbreaks'], disease: ['outbreaks'], weeds: ['weeds'], drainage: ['drainage'], low_fertility: ['organic'], slope: ['slope'] };
+    const soilFromLot = () => lotHas('texture') || ((LOT.lot && LOT.lot.answers) || {}).rocks === 'many';
+    const probHidden = (k) => !!PROB_BY[k] && lotHas(...PROB_BY[k]);
+    const stillMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('sm-still');
+    // Hide or show a block; one that comes back fades in rather than snapping.
+    const reveal = (el, on) => {
+        if (!el || el.hidden === !on) return;
+        el.hidden = !on;
+        if (on && !stillMotion()) { el.classList.remove('va-pop'); void el.offsetWidth; el.classList.add('va-pop'); }
+    };
     function applyProfile(answers, L) {
-        if (!OPT || TOUCH.problems) return '';
+        if (!OPT) return;
+        L = L || {};
+        // The soil: the lot's, and hidden, when the lot says how it feels.
+        const soilHid = soilFromLot();
+        if (soilHid) { state.soil = OPT.soils[L.soil] ? L.soil : 'unsure'; soilByLot = true; }
+        else if (soilByLot) { state.soil = null; soilByLot = false; }
+        document.querySelectorAll('#vaSoils .wtp-choice').forEach((c) => c.classList.toggle('is-on', c.getAttribute('data-soil') === state.soil));
+        reveal($id('vaSoilBlk'), !soilHid);
+        $id('vaSoilStep').classList.toggle('is-solo', soilHid);
+        // The troubles: the lot's answers tick theirs and hide them.
         const want = [];
         (L.problemsVariety || []).filter((k) => OPT.problems[k]).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
-        document.querySelectorAll('#vaProbs input').forEach((i) => { i.checked = want.includes(i.value); i.closest('.wtp-prob')?.classList.toggle('is-on', i.checked); });
-        state.problems = want;
-        window.aneeFieldCard.hint(document.querySelector('#vaWiz .wtp-step[data-step="7"]'), want.length > 0);
-        return want.length ? 'Filled in for you: ' + (want.length === 1 ? 'one trouble' : want.length + ' troubles') + ' on the next step. Change anything there.' : '';
+        const mine = (TOUCH.problems ? state.problems : want).filter((k) => !probHidden(k));
+        state.problems = want.filter(probHidden).concat(mine);
+        let hid = 0;
+        document.querySelectorAll('#vaProbs .wtp-prob').forEach((l) => {
+            const k = l.getAttribute('data-prob'), i = l.querySelector('input');
+            i.checked = state.problems.includes(k);
+            l.classList.toggle('is-on', i.checked);
+            if (probHidden(k)) hid++;
+            reveal(l, !probHidden(k));
+        });
+        $id('vaProbSub').textContent = hid
+            ? 'Your lot answered ' + (hid === 1 ? 'one of these' : hid + ' of these') + ' already. Tick anything else you have seen. Each one changes the scores.'
+            : 'Tick what you have seen. Each one changes the scores.';
+        const ticked = !TOUCH.problems && mine.length > 0;
+        if (window.aneeFieldCard) window.aneeFieldCard.hint(document.querySelector('#vaWiz .wtp-step[data-step="6"]'), ticked, 'Ticked from your lot. Change anything that is not right.');
     }
-    function mountCard() {
-        if (FPC || !window.aneeFieldCard) return;
-        FPC = window.aneeFieldCard.mount($id('vaFpc'), { crop: () => state.crop || null, title: () => state.location || 'Your field', onChange: applyProfile });
+    // The lot picked, saved or changed: its place, its crop and its answers.
+    async function lotPicked(lot) {
+        LOT.lot = lot || null;
+        state.location = lot ? (lot.where || lot.place || '') : '';
+        // The crop usually on the lot, until the farmer picks one.
+        if (lot && lot.crop && OPT && (!state.crop || cropByLot) && state.crop !== lot.crop && OPT.crops.some((c) => c.key === lot.crop)) {
+            setCrop(lot.crop, true);
+            return;
+        }
+        await lotApply();
+        if (state.crop) loadBook();
     }
+    async function lotApply() {
+        const lot = LOT.lot, n = ++LOT.n;
+        const L = lot && window.aneeLots ? await window.aneeLots.legacy(lot, state.crop || lot.crop) : {};
+        if (n !== LOT.n) return;
+        LOT.L = L;
+        applyProfile(lot ? lot.answers : {}, L);
+        if (step === STEPS - 1) review();
+    }
+    function mountLots() {
+        if (LOTS || !window.aneeLots) return;
+        LOTS = window.aneeLots.picker($id('vaLots'), { crop: () => state.crop || null, onPick: lotPicked });
+    }
+    /* "From North field": the answers that stood in for questions here, and a way to change them. */
+    const SAID_KEYS = ['texture', 'rocks', 'water', 'acidity', 'phFrom', 'salt', 'flooding', 'drainage', 'organic', 'slope', 'weeds', 'outbreaks'];
+    const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L18.5 9.5a2.1 2.1 0 00-4-4L4 16v4zM13.5 6.5l4 4"/></svg>';
+    function lotSaid() {
+        const box = $id('vaLotSaid'), lot = LOT.lot;
+        if (!lot || !window.aneeLots) { box.hidden = true; return; }
+        const A = lot.answers || {}, sub = {};
+        SAID_KEYS.forEach((k) => { if (window.aneeLots.has(lot, k)) sub[k] = A[k]; });
+        if (sub.phFrom != null && A.phTo != null) sub.phTo = A.phTo;
+        // The stones only when they stood for the soil.
+        if (sub.rocks !== undefined && (sub.texture !== undefined || sub.rocks !== 'many')) delete sub.rocks;
+        const pairs = window.aneeFieldCard && window.aneeFieldProfile ? window.aneeFieldCard.pairs(sub, {}) : [];
+        box.innerHTML = '<p class="va-lot-h"><b>From ' + esc(lot.name) + '</b><span>' + esc([lot.place, lot.areaHa ? window.aneeLots.fmtHa(lot.areaHa) : ''].filter(Boolean).join(' · ')) + '</span></p>'
+            + (pairs.length ? window.aneeFieldCard.said(pairs) : '<p class="va-lot-none">This lot has no field answers yet. Add them, and Anee reads its soil and water from them.</p>')
+            + '<button type="button" class="va-lot-edit" data-lot-edit>' + PEN + 'Edit the lot</button>';
+        reveal(box, true);
+    }
+    $id('vaLotSaid').addEventListener('click', (e) => {
+        if (!e.target.closest('[data-lot-edit]') || !LOT.lot || !window.aneeLots) return;
+        // A saved lot comes back through the picker (aneelots:changed) and is applied there.
+        window.aneeLots.edit(LOT.lot, { crop: state.crop || null });
+    });
 
     async function boot() {
         try {
@@ -715,7 +816,7 @@
             const pre = new URLSearchParams(location.search).get('crop');
             if (pre && (OPT.crops || []).some((c) => c.key === pre)) setCrop(pre);
         } catch (err) { toast(err.message, 'error'); }
-        if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
+        if (window.aneeLots) mountLots(); else document.addEventListener('DOMContentLoaded', mountLots, { once: true });
         // Painted: the price card and the wizard arrive together, once.
         const gen = $id('vaGen');
         if (gen && gen.classList.contains('an-wait')) {
@@ -825,15 +926,16 @@
 
     function stepReady() {
         switch (step) {
-            case 0: state.location = $id('vaLocation').value.trim();
-                return !!state.location || (toast('Type where the field is.', 'error'), false);
+            case 0: if (!LOT.lot) { toast('Pick the lot, or add one.', 'error'); return false; }
+                state.location = LOT.lot.where || LOT.lot.place || '';
+                return !!state.location || (toast('Tap the lot to say where it is.', 'error'), false);
             case 1: if (!state.year) { toast('Pick the year first.', 'error'); return false; }
                 if (!state.season || !seasonsFor(state.country)[state.season]) { toast('Pick the season.', 'error'); return false; }
                 return true;
             case 2: return !!state.soil || (toast('Pick the soil closest to yours.', 'error'), false);
             case 3: return !!state.crop || (toast('Choose a crop.', 'error'), false);
             case 4: addVariety(); return true;
-            case 7: state.problems = [...document.querySelectorAll('#vaProbs input:checked')].map((i) => i.value);
+            case 6: state.problems = [...document.querySelectorAll('#vaProbs input:checked')].map((i) => i.value);
                 state.notes = $id('vaNotes').value.trim(); return true;
             default: return true;
         }
@@ -842,13 +944,13 @@
     function review() {
         const crop = OPT.crops.find((c) => c.key === state.crop) || {};
         const order = state.priorities.map((k, i) => `${i + 1}. ${OPT.priorities[k]?.label || k}`).join(' · ');
-        $id('vaReview').innerHTML = `${esc(crop.icon || '🌱')} <b>${esc(crop.label || '')}</b> · 📍 ${esc(state.location)}${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''}`
+        $id('vaReview').innerHTML = `${esc(crop.icon || '🌱')} <b>${esc(String(crop.label || '').replace(' — ', ', '))}</b> · 📍 ${esc(LOT.lot ? LOT.lot.name + ', ' + state.location : state.location)}`
             + ` · ${esc(seasonSaid(state.season, state.year))}`
             + `<br><span class="text-xs">${esc(String(OPT.soils[state.soil] || '').split(' — ')[0])}${state.elevation ? ' · ' + esc(String((OPT.elevations || {})[state.elevation] || state.elevation).split(' — ')[0]) : ''}`
             + ` · ${state.varieties.length ? esc(state.varieties.join(', ')) : 'Anee picks the varieties'}`
-            + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'} checked` : '')
-            + (FPC && FPC.count() ? ` · your field in detail, ${FPC.count()} answer${FPC.count() === 1 ? '' : 's'}` : '') + '</span>'
+            + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'} checked` : '') + '</span>'
             + `<br><span class="text-xs">${esc(order)}</span>`;
+        lotSaid();
         $id('vaRunSays').textContent = OPT.canUse && OPT.quote ? `Run the research (${OPT.quote} credits)` : 'Run the research';
         $id('vaRunFine').textContent = OPT.canUse
             ? 'Paid from your AI credits. You can see it in your credit log.'
@@ -878,6 +980,7 @@
         const b = e.target.closest('[data-soil]');
         if (!b) return;
         state.soil = b.getAttribute('data-soil');
+        soilByLot = false;
         document.querySelectorAll('#vaSoils .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
         // The land is optional; the step moves on once the soil is picked.
         setTimeout(() => show(3), 180);
@@ -888,31 +991,19 @@
         state.elevation = state.elevation === b.getAttribute('data-elevation') ? null : b.getAttribute('data-elevation');
         document.querySelectorAll('#vaElevations .wtp-choice').forEach((c) => c.classList.toggle('is-on', c.getAttribute('data-elevation') === state.elevation));
     });
-    $id('vaCountry')?.addEventListener('country:change', (e) => {
-        const code = e.detail && e.detail.code;
-        const r = e.detail && e.detail.rules;
-        if (!code || !r) return;
-        state.country = code;
-        const city = (r.address && r.address.city && r.address.city.label) || 'City';
-        const region = (r.address && r.address.region && r.address.region.label) || 'State / Region';
-        $id('vaLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough. Weather and trial results differ by region.`;
-        $id('vaLocation').placeholder = r.exampleLocation || '';
-        // The seasons on offer follow the field's country; a season that is
-        // not one of them is dropped and asked for again.
-        if (!seasonsFor(code)[state.season]) state.season = null;
-        window.__vaPaintSeasons?.();
-    });
     /* Some troubles cannot share a field: a soil is acidic or alkaline,
-       not both. Ticking one quietly unticks its opposite. */
+       not both. Ticking one quietly unticks its opposite, unless the lot
+       answered the opposite (that one is hidden, and the lot's to change). */
     const PROB_FOES = { acidic: ['alkaline'], alkaline: ['acidic'], drought: ['floods'], floods: ['drought'] };
     $id('vaProbs').addEventListener('change', (e) => {
         TOUCH.problems = true;
         const l = e.target.closest('.wtp-prob');
         if (l) l.classList.toggle('is-on', e.target.checked);
+        if (window.aneeFieldCard) window.aneeFieldCard.hint(document.querySelector('#vaWiz .wtp-step[data-step="6"]'), false);
         if (!e.target.checked) return;
         (PROB_FOES[e.target.value] || []).forEach((k) => {
             const foe = document.querySelector(`#vaProbs input[value="${k}"]`);
-            if (foe && foe.checked) { foe.checked = false; foe.closest('.wtp-prob')?.classList.remove('is-on'); }
+            if (foe && foe.checked && !probHidden(k)) { foe.checked = false; foe.closest('.wtp-prob')?.classList.remove('is-on'); }
         });
     });
 
@@ -923,14 +1014,16 @@
             setTimeout(() => $id('vaCropSearch')?.focus(), 280);
         }
     });
-    function setCrop(key) {
+    function setCrop(key, byLot) {
         state.crop = key;
+        cropByLot = !!byLot;
         const c = OPT.crops.find((x) => x.key === state.crop) || {};
         $id('vaCropIcon').textContent = c.icon || '🌱';
         const now = $id('vaCropNow');
-        now.textContent = c.label || 'Choose the crop';
+        now.textContent = c.label ? String(c.label).replace(' — ', ', ') : 'Choose the crop';
         now.classList.remove('is-none');
-        if (FPC) FPC.refresh();
+        // The lot's troubles are read by the crop's own list: read them again.
+        lotApply();
         loadBook();
     }
     $id('vaCropSheet').addEventListener('click', (e) => {
@@ -1154,10 +1247,12 @@
         let landed = false;
         try {
             const res = await api(U.generate, { method: 'POST', body: {
+                // The lot: its id, and its answers as the field in detail.
+                ...(window.aneeLots ? window.aneeLots.payload(LOT.lot) : {}), lotName: LOT.lot ? LOT.lot.name : null,
                 location: state.location, country: state.country, year: state.year, season: state.season,
                 soil: state.soil, elevation: state.elevation, crop: state.crop,
                 varieties: state.varieties, priorities: state.priorities,
-                problems: state.problems, notes: state.notes, ...(FPC ? FPC.payload() : {}),
+                problems: state.problems, notes: state.notes,
             } });
             let data = res.data;
             if (data.pending) {
@@ -1260,7 +1355,7 @@
                 <p class="h-why">${esc(sweep(top.why))}</p>
                 ${(r.bestHybrid && r.bestInbred) ? `<p class="h-best"><span>Best hybrid: <b>${esc(r.bestHybrid)}</b></span><span>Best inbred: <b>${esc(r.bestInbred)}</b></span></p>` : ''}
                 <div class="wtp-chips">
-                    <span class="wtp-chip">📍 ${esc(p.location || '')}</span>
+                    <span class="wtp-chip">📍 ${esc((p.lotName ? p.lotName + ', ' : '') + (p.location || ''))}</span>
                     <span class="wtp-chip">${esc(crop.label || '')}</span>
                     <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>
                     ${r.searched ? '<span class="wtp-chip">🔎 Deep analysis</span>' : ''}

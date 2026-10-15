@@ -9,6 +9,13 @@
 @section('content')
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'lots'])
     @include('sm.partials.tag-picker')
+    {{-- The variety sheet. Inside the season's shell (?partial=1) the shell
+         already carries it (sm/partials/activities-sheets): a second copy
+         would bind nothing, as its script waits for a DOMContentLoaded that
+         has already passed. --}}
+    @unless (request()->boolean('partial'))
+        @include('partials.variety-pick')
+    @endunless
 
     <div>
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
@@ -208,9 +215,18 @@
             <input type="hidden" id="lotTreePlanted" value="">
         </div>
 
+        {{-- The variety, two ways (2026-10-16, the owner): searched in the
+             records for the lot's crop, or typed as sold (the shared sheet,
+             partials/variety-pick). #lotVariety still holds what is saved. --}}
         <div>
-            <label for="lotVariety" class="form-label">Variety <span class="text-gray-400 font-normal">(optional)</span></label>
-            <input type="text" id="lotVariety" maxlength="255" class="form-input" placeholder="e.g. IR64">
+            <span class="form-label">Variety <span class="text-gray-400 font-normal">(optional)</span></span>
+            <button type="button" class="crop-tag" id="lotVarBtn">
+                <span class="crop-tag-e" id="lotVarIcon">🧬</span>
+                <span class="crop-tag-t is-none" id="lotVarNow">Pick from the records, or type your own</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <input type="hidden" id="lotVariety" value="">
+            <p class="form-hint lot-varfact" id="lotVarFact" hidden></p>
         </div>
 
         {{-- HOW THIS LOT'S DAYS ARE COUNTED.
@@ -569,6 +585,11 @@
     html.dark .crop-row.is-on { background: #25311b; }
     html.dark .crop-row-t b { color: #e8efe1; }
     @media (prefers-reduced-motion: reduce) { .crop-tag, .crop-row { transition: none; } }
+    /* The variety tag (partials/variety-pick): a bump when it changes, and its record's facts under it. */
+    #lotVarBtn.is-bump { animation: lotVarBump .4s cubic-bezier(.22,1,.36,1); }
+    @keyframes lotVarBump { 40% { transform: scale(1.02); } }
+    #lotVarFact[hidden] { display: none; }
+    @media (prefers-reduced-motion: reduce) { #lotVarBtn.is-bump { animation: none; } }
 
     /* HOW OLD — two numbers that mean one thing, so they share a line. */
     .tree-age { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
@@ -1113,6 +1134,8 @@ const __init = () => {
         document.getElementById('lotSize').value = lot ? parseFloat(lot.lotSize) || 0 : '';
         document.getElementById('lotSizeUnit').value = lot ? (lot.lotSizeUnit || 'hectare') : 'hectare';
         document.getElementById('lotVariety').value = lot ? (lot.variety || '') : '';
+        lotVarRecord = null;
+        lotVarSay();
         /* The crop first, and it is handed what the lot already counts in.
          *
          * It decides which timing question is asked AND which day counters
@@ -1471,10 +1494,44 @@ const __init = () => {
         }
     });
 
+    /* The variety, two ways (partials/variety-pick, 2026-10-16, the owner):
+       searched in the records for the lot's crop, or typed as sold. The
+       hidden #lotVariety keeps the name the save sends, as the box did. In
+       the season's shell the sheet is the shell's own copy. */
+    let lotVarRecord = null;
+    function lotVarSay(bump) {
+        const v = document.getElementById('lotVariety').value;
+        const now = document.getElementById('lotVarNow');
+        now.textContent = v || 'Pick from the records, or type your own';
+        now.classList.toggle('is-none', !v);
+        document.getElementById('lotVarIcon').textContent = lotVarRecord ? '📗' : '🧬';
+        const fact = document.getElementById('lotVarFact');
+        fact.textContent = lotVarRecord && window.aneeVarietyPick ? 'On record: ' + window.aneeVarietyPick.facts(lotVarRecord) : '';
+        fact.hidden = !fact.textContent;
+        if (bump) { const b = document.getElementById('lotVarBtn'); b.classList.remove('is-bump'); void b.offsetWidth; b.classList.add('is-bump'); }
+    }
+    function lotVarSet(name, rec) {
+        document.getElementById('lotVariety').value = String(name || '').trim().slice(0, 255);
+        lotVarRecord = rec ? Object.assign({ crop: document.getElementById('lotCrop').value || null }, rec) : null;
+        lotVarSay(true);
+    }
+    document.getElementById('lotVarBtn')?.addEventListener('click', async () => {
+        if (!window.aneeVarietyPick) { window.toast?.('The variety list could not open. Please reload the page.', 'error'); return; }
+        const crop = document.getElementById('lotCrop').value || '';
+        const label = crop ? document.getElementById('lotCropNow').textContent.trim() : '';
+        const res = await window.aneeVarietyPick.open({ crop, cropLabel: label.split(' (')[0].split(' — ')[0],
+            location: [document.getElementById('lotTown')?.value, document.getElementById('lotProvince')?.value].map((x) => String(x || '').trim()).filter(Boolean).join(', '),
+            value: { name: document.getElementById('lotVariety').value, record: lotVarRecord },
+            ownNote: 'Not on record. The name is kept as you typed it.' });
+        if (res) lotVarSet(res.name, res.record);
+    });
+
     document.getElementById('cropPickSheet')?.addEventListener('click', (e) => {
         const row = e.target.closest('.crop-row');
         if (!row) return;
         setLotCrop(row.getAttribute('data-crop') || '');
+        // A variety from another crop's records does not belong to this one.
+        if (lotVarRecord && lotVarRecord.crop !== (document.getElementById('lotCrop').value || null)) lotVarSet('', null);
         closeSheet('cropPickSheet');
     });
 

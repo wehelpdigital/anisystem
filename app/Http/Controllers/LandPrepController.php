@@ -13,6 +13,7 @@ use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropCatalog;
 use App\Support\CropVarieties;
+use App\Support\FarmLots;
 use App\Support\FieldCatalogue;
 use App\Support\FieldProfile;
 use App\Support\LandPrepPlanner as LP;
@@ -291,8 +292,9 @@ class LandPrepController extends Controller
         if ($standing) {
             return $this->json(true, 'Already working on it.', ['pending' => true, 'id' => $standing->id, 'research' => ! empty($case['varietyCustom'])]);
         }
-        // Each lot's answers are kept as a field profile, so the next analysis can offer them (2026-10-15).
-        FieldProfile::rememberLots((int) $payer->id, $case['crop'], $case['lots']);
+        // Each lot's answers are kept as a field profile, so the next analysis can offer them (2026-10-15);
+        // a lot from the farm's lots keeps them in itself (2026-10-16).
+        $this->rememberLots((int) $payer->id, $case['crop'], $case['lots']);
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($this->title($case), 0, 190),
             'params' => json_encode($case), 'report' => json_encode(new \stdClass), 'credits' => 0,
@@ -334,6 +336,8 @@ class LandPrepController extends Controller
             'lots.*.unit' => 'nullable|in:' . implode(',', array_keys(LP::UNITS)),
             'lots.*.planting' => 'nullable|date_format:Y-m-d',
             'lots.*.sourceLotId' => 'nullable|integer',
+            // A lot from the farm's lots (App\Support\FarmLots, 2026-10-16): its answers go back into it.
+            'lots.*.farmLotId' => 'nullable|integer',
             'lots.*.copiedFrom' => 'nullable|integer|min:0|max:11',
             'lots.*.edited' => 'nullable|boolean',
             'lots.*.soil' => 'nullable|array',
@@ -395,6 +399,7 @@ class LandPrepController extends Controller
                 ? $answers(array_merge((array) ($l['history'] ?? []), (array) ($l['soil'] ?? []), (array) ($l['profile'] ?? []))) : $shared;
             $lots[] = ['name' => $name, 'area' => round($ha, 4), 'input' => $input, 'unit' => $unit,
                 'planting' => $p->toDateString(), 'own' => ! empty($l['planting']), 'sourceLotId' => isset($l['sourceLotId']) ? (int) $l['sourceLotId'] : null,
+                'farmLotId' => isset($l['farmLotId']) && (int) $l['farmLotId'] > 0 ? (int) $l['farmLotId'] : null,
                 'copiedFrom' => isset($l['copiedFrom']) && is_numeric($l['copiedFrom']) && (int) $l['copiedFrom'] !== $i ? (int) $l['copiedFrom'] : null,
                 'edited' => ! empty($l['edited']),
                 'soil' => $own['soil'], 'history' => $own['history']];
@@ -432,6 +437,49 @@ class LandPrepController extends Controller
             ], fn ($x) => $x !== null && $x !== ''),
             'notes' => trim((string) $request->input('notes', '')),
         ];
+    }
+
+    /**
+     * Keep every lot's answers for the next analysis (2026-10-16). A lot from
+     * the farm's lots gets the answers given on this plan's pages added to its
+     * own (and its size, when it had none), so it is updated, never copied.
+     * The other lots go to FieldProfile::rememberLots as before (a season lot
+     * by its lot, a lot typed by hand by its name). Best effort.
+     */
+    private function rememberLots(int $ownerId, string $crop, array $lots): void
+    {
+        $rest = [];
+        foreach ($lots as $l) {
+            $farmId = (int) ($l['farmLotId'] ?? 0);
+            if ($farmId < 1 || ! FarmLots::ready()) {
+                $rest[] = $l;
+                continue;
+            }
+            try {
+                $had = FarmLots::one($ownerId, $farmId);
+                if (! $had) {
+                    continue;   // The lot was deleted meanwhile: nothing to bring back.
+                }
+                $given = FieldProfile::normalize(array_merge((array) ($l['history'] ?? []), (array) ($l['soil'] ?? [])), $crop);
+                $old = (array) ($had['answers'] ?? []);
+                $data = [];
+                // Its own answers stay (a question this crop does not ask among them); the plan's are added over them.
+                if ($given && array_replace($old, $given) != $old) {
+                    $data['answers'] = array_replace($old, $given);
+                }
+                if (empty($had['areaHa']) && (float) ($l['area'] ?? 0) > 0) {
+                    $data['areaHa'] = (float) $l['area'];
+                }
+                if ($data) {
+                    FarmLots::save($ownerId, $data, $farmId);
+                }
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+        if ($rest) {
+            FieldProfile::rememberLots($ownerId, $crop, $rest);
+        }
     }
 
     /** The plan's price for 1 to 12 lots, plain and with the variety lookup: [lots => [plain, research]]. */

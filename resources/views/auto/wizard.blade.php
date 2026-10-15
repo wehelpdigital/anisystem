@@ -9,7 +9,11 @@
      typed (the season already exists, in setup): the season, the lots, the
      workers, the soil, the water, the troubles, Anee's first reading, the
      fertilizer per lot (NPK Plus, framed), and the start. Back always says
-     where it goes. See App\Http\Controllers\AneeAutoController. --}}
+     where it goes. See App\Http\Controllers\AneeAutoController.
+     2026-10-16 (the owner): a lot can be filled from one of the farm's lots
+     (partials/farm-lots, saved as answers.farmLots); what that lot answered
+     is not asked again, and a step left with nothing to ask is skipped. The
+     variety is the shared sheet (partials/variety-pick). --}}
 @section('content')
 @include('partials.tag-sheet-css')
 @include('partials.user-tags')
@@ -217,6 +221,30 @@
     .au-review span { color: var(--color-gray-800); min-width: 0; }
     .au-lock { display: flex; gap: .6rem; margin-top: 1rem; padding: .8rem .9rem; border-radius: 1rem; background: #fff6dd; border: 1px solid #f3d98f; color: #6b4a00; font-size: .82rem; line-height: 1.5; }
 
+    /* The farm's lots (2026-10-16, the owner): a lot of the season can come
+       from one of the farm's lots (partials/farm-lots), and what that lot has
+       answered is not asked again. */
+    .au-rail button[hidden], .au-q[hidden], .au-from[hidden], .au-varfact[hidden] { display: none; }
+    .au-q { animation: auFade .3s var(--au-ease) both; }
+    @keyframes auFade { from { opacity: 0; transform: translateY(4px); } }
+    .au-from { margin: .1rem 0 .9rem; padding: .7rem .8rem; border-radius: .95rem; background: linear-gradient(115deg, #f3f8ec, #fff); border: 1px solid #cfe3b8; animation: auIn .3s var(--au-ease) both; }
+    .au-from p { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .7rem; margin-bottom: .5rem; font-size: .82rem; line-height: 1.45; color: #2d4a17; }
+    .au-from p b { font-weight: 800; }
+    .au-link { padding: .2rem 0; font-size: .8rem; font-weight: 800; color: var(--color-brand-700, #3d6823); text-decoration: underline; text-underline-offset: 3px; transition: color .28s var(--au-ease); }
+    .au-link:hover { color: var(--color-brand-600, #4a7c2a); }
+    .au-pin b { display: block; font-weight: 800; overflow-wrap: anywhere; }
+    .au-pin small { overflow-wrap: anywhere; }
+    .au-flot-acts { display: flex; flex-wrap: wrap; gap: .2rem 1rem; margin-top: .35rem; }
+    .au-lot-h input[readonly] { cursor: default; }
+    .au-varfact { display: block; margin-top: .3rem; font-size: .72rem; line-height: 1.45; color: var(--color-gray-500); }
+    .au-tag.is-bump { animation: auBump .4s var(--au-ease); }
+    @keyframes auBump { 40% { transform: scale(1.02); } }
+    html.dark .au-pin.is-set { background: #1c2616; border-color: #3d5a24; color: #c5e09f; }
+    html.dark .au-pin small { color: #9aa78d; }
+    html.dark .au-from { background: #17220f; border-color: #2b3a1c; }
+    html.dark .au-from p { color: #c5e09f; }
+    html.dark .au-link { color: #a5c97e; }
+
     html.dark .au-card, html.dark .au-lot, html.dark .au-w, html.dark .au-sign, html.dark .au-rl, html.dark .au-pill, html.dark .au-tag, html.dark .au-ltab:not(.is-on), html.dark .au-modal > div { background: #161c12; border-color: #2b3a1c; }
     html.dark .au-lot-h { background: linear-gradient(115deg, #1c2616, #161c12); border-color: #2b3a1c; }
     html.dark .au-lot-h input, html.dark .au-h, html.dark .au-sign b, html.dark .au-rl h4, html.dark .au-modal h3 { color: #eef3e8; }
@@ -233,8 +261,8 @@
     html.dark .au-add { background: #1a2114; border-color: #3f5a2a; color: #c5e09f; }
     html.dark .au-bar-t { background: #26301e; } html.dark .au-bar-t i { background: #f1f5e9; }
     @media (prefers-reduced-motion: reduce) {
-        .au-top::after, .au-top img, .au-reading-cta img, .au-big, .au-step.is-on, .au-lot, .au-w, .au-rl, .au-reads div, .au-note, .au-risk { animation: none; }
-        .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after { transition: none; }
+        .au-top::after, .au-top img, .au-reading-cta img, .au-big, .au-step.is-on, .au-lot, .au-w, .au-rl, .au-reads div, .au-note, .au-risk, .au-q, .au-from, .au-tag.is-bump { animation: none; }
+        .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after, .au-link { transition: none; }
     }
 </style>
 
@@ -292,26 +320,27 @@
         </div>
     </section>
 
-    {{-- 3. The soil, opened by the field in detail (2026-10-15, the owner):
-         the shared field questions (App\Support\FieldProfile), optional. Its
-         answers tick the soil signs below, the water and the troubles, and
-         Anee plans with every one. A card on this step, not a step of its
-         own, so the seasons already in setup keep their saved place. --}}
+    {{-- 3. The soil. The field in detail that used to open this step is the
+         farm's lots now (2026-10-16, the owner): a lot picked on step 1 brings
+         its soil, water and last season, its answers tick the signs, and what
+         it answered is hidden (data-q) under a line that says where it came
+         from. A step whose questions are all answered is skipped. --}}
     <section class="au-step" data-step="3">
         <div class="au-card">
-            <h3 class="au-h">Your field in detail</h3>
-            <p class="au-sub">Optional. The soil, the water and last season, one short page at a time. Your answers tick the soil signs below, the water and the troubles, and Anee plans with every one.</p>
-            <div id="auFpc"></div>
-            @include('partials.field-profile-card')
-        </div>
-        <div class="au-card">
             <h3 class="au-h">Your soil, as you see it</h3>
-            <p class="au-sub">Tick everything that sounds like your field. From these Anee reads the soil type, the salt and the sodium, and which way the pH leans.</p>
-            <div class="au-signs" id="auSigns"></div>
-            <span class="au-lab">Is the soil acidic or alkaline?</span>
-            <div class="au-pills" id="auPh"></div>
-            <label class="au-lab" for="auTested">A soil test pH, if you have one <small>(optional)</small></label>
-            <input type="number" id="auTested" class="form-input" style="max-width:9rem" min="2" max="12" step="0.1" inputmode="decimal" placeholder="Like 7.8">
+            <div class="au-from" id="auSoilFrom" hidden></div>
+            <div class="au-q" data-q="signs">
+                <p class="au-sub">Tick everything that sounds like your field. From these Anee reads the soil type, the salt and the sodium, and which way the pH leans.</p>
+                <div class="au-signs" id="auSigns"></div>
+            </div>
+            <div class="au-q" data-q="ph">
+                <span class="au-lab">Is the soil acidic or alkaline?</span>
+                <div class="au-pills" id="auPh"></div>
+            </div>
+            <div class="au-q" data-q="tested">
+                <label class="au-lab" for="auTested">A soil test pH, if you have one <small>(optional)</small></label>
+                <input type="number" id="auTested" class="form-input" style="max-width:9rem" min="2" max="12" step="0.1" inputmode="decimal" placeholder="Like 7.8">
+            </div>
             <div class="au-read" id="auSoilRead" hidden></div>
         </div>
     </section>
@@ -331,10 +360,13 @@
     <section class="au-step" data-step="5">
         <div class="au-card">
             <h3 class="au-h">What hurt your harvest before</h3>
-            <p class="au-sub">Pick the troubles of past seasons that cost you the most. Anee plans to get ahead of them.</p>
+            <div class="au-from" id="auProbFrom" hidden></div>
+            <p class="au-sub" id="auProbSub">Pick the troubles of past seasons that cost you the most. Anee plans to get ahead of them.</p>
             <div class="au-pills" id="auProblems"></div>
-            <span class="au-lab" id="auCropProbLab" hidden>Pests and diseases you have seen on these crops</span>
-            <div class="au-pills" id="auCropProblems"></div>
+            <div class="au-q" data-q="cropprob">
+                <span class="au-lab" id="auCropProbLab" hidden>Pests and diseases you have seen on these crops</span>
+                <div class="au-pills" id="auCropProblems"></div>
+            </div>
             <label class="au-lab" for="auNotes">Anything else Anee should know <small>(optional)</small></label>
             <textarea id="auNotes" class="form-textarea w-full" rows="2" maxlength="2000" placeholder="Like: rats come from the creek side every season"></textarea>
         </div>
@@ -399,6 +431,19 @@
     </div>
 </div>
 
+{{-- Which of the farm's lots a lot of this season is (partials/farm-lots).
+     A dialog like the lot sheet, so the lot sheet stacks over it. --}}
+<dialog class="fq-sheet is-small" id="auFarmSheet" aria-labelledby="auFarmTitle">
+    <div class="fq-box" tabindex="-1">
+        <div class="fq-grip" aria-hidden="true"></div>
+        <div class="fq-head"><h2 id="auFarmTitle">Which lot is it?<small>Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</small></h2><button type="button" class="fq-x" data-fq-close aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="fq-body"><div id="auFarmPick"></div></div>
+        <div class="fq-foot"><button type="button" class="btn btn-white" id="auFarmHand">Fill it by hand</button><span></span><button type="button" class="btn btn-white" data-fq-close>Close</button></div>
+    </div>
+</dialog>
+@include('partials.farm-lots')
+@include('partials.variety-pick')
+
 <div class="au-modal" id="auModal" hidden><div id="auModalBox"></div></div>
 
 <div class="au-frame" id="auFrame" hidden>
@@ -439,6 +484,29 @@
     S.answers = Array.isArray(S.answers) ? {} : (S.answers || {});
     let step = Math.min(Number(S.step) || 0, STEPS.length - 1);
 
+    /* ---- the farm's lots (partials/farm-lots, 2026-10-16) ----
+       LINK: this season's lot id to the farm lot it was filled from (saved as
+       answers.farmLots). The first linked lot that has answers is the farm's
+       field profile (SRC), and what it answered is hidden (HID). Until the
+       farm's lots load, the profile saved with the season stands in. */
+    const LINK = {};
+    (Array.isArray(S.answers.farmLots) ? S.answers.farmLots : []).forEach((x) => { if (x && x.lotId && x.farmLotId) LINK[x.lotId] = Number(x.farmLotId); });
+    const EVER = new Set(Object.values(LINK));
+    let FLROWS = null;
+    const NOHID = { signs: false, ph: false, tested: false, water: false, problems: false };
+    const filled = (a, k) => { const v = a && a[k]; return v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && !v.length); };
+    const hidFrom = (a, L) => !a ? Object.assign({}, NOHID) : (() => {
+        const tex = filled(a, 'texture') || a.rocks === 'many', acid = filled(a, 'acidity') || filled(a, 'phFrom');
+        return { signs: tex && filled(a, 'salt') && acid, ph: acid, tested: acid, water: filled(a, 'water') && (!L || !!BOOK.water[L.waterAuto]), problems: filled(a, 'outbreaks') };
+    })();
+    const fpFrom = S.answers.fieldProfileFrom;
+    let SRC = fpFrom && S.answers.fieldProfile && Object.values(LINK).includes(Number(fpFrom.id)) ? { id: Number(fpFrom.id), name: fpFrom.name || 'your lot', answers: S.answers.fieldProfile } : null;
+    let HID = hidFrom(SRC && SRC.answers);
+    // A step whose every question the lot answered is skipped, and so is its dot.
+    const stepHidden = (n) => (n === 3 && HID.signs && HID.ph && HID.tested) || (n === 4 && HID.water);
+    const nextOf = (n) => { for (let i = n + 1; i < STEPS.length; i++) if (!stepHidden(i)) return i; return n; };
+    const prevOf = (n) => { for (let i = n - 1; i >= 0; i--) if (!stepHidden(i)) return i; return -1; };
+
     /* ---- saving, quietly and often ---- */
     let busy = 0;
     const savedSay = () => { $('auSaved').textContent = busy ? 'Saving…' : 'Saved'; $('auSaved').classList.toggle('is-busy', !!busy); };
@@ -458,29 +526,36 @@
     /* ---- the rail and the steps ---- */
     $('auRail').innerHTML = STEPS.map((s, i) => '<button type="button" data-go="' + i + '"><i></i><span>' + s + '</span></button>').join('');
     const reached = () => Math.max(Number(S.step) || 0, step);
+    // The rail, the step count and the two buttons, over the steps still asked.
+    const navSay = () => {
+        const shown = STEPS.map((_, i) => i).filter((i) => !stepHidden(i));
+        document.querySelectorAll('#auRail button').forEach((b, i) => { b.hidden = stepHidden(i); b.classList.toggle('is-on', i === step); b.classList.toggle('is-done', i < step); b.disabled = i > reached(); });
+        $('auStepSay').textContent = 'Step ' + (Math.max(0, shown.indexOf(step)) + 1) + ' of ' + shown.length + ' · ' + STEPS[step];
+        const p = prevOf(step);
+        $('auBack').textContent = p < 0 ? 'My seasons' : 'Back to ' + STEPS[p];
+        $('auNext').hidden = step === STEPS.length - 1;
+        if (step !== 7) $('auNext').textContent = step === 5 ? 'Next: Anee reads it' : step === 6 ? 'Next: Fertilizer' : 'Next: ' + STEPS[nextOf(step)];
+    };
     const show = async (n, back = false) => {
         n = Math.max(0, Math.min(STEPS.length - 1, n));
+        if (stepHidden(n)) n = back ? Math.max(0, prevOf(n)) : nextOf(n);
         await flush();
         step = n;
         document.querySelectorAll('.au-step').forEach((el) => { const on = Number(el.dataset.step) === n; el.classList.toggle('is-on', on); el.classList.toggle('is-back', on && back); });
-        document.querySelectorAll('#auRail button').forEach((b, i) => { b.classList.toggle('is-on', i === n); b.classList.toggle('is-done', i < n); b.disabled = i > reached(); });
-        $('auStepSay').textContent = 'Step ' + (n + 1) + ' of ' + STEPS.length + ' · ' + STEPS[n];
-        $('auBack').textContent = n === 0 ? 'My seasons' : 'Back to ' + STEPS[n - 1];
-        $('auNext').hidden = n === STEPS.length - 1;
-        $('auNext').textContent = n === 5 ? 'Next: Anee reads it' : n === 6 ? 'Next: Fertilizer' : 'Next: ' + STEPS[n + 1];
+        navSay();
         $('auNavSay').textContent = '';
         if (n > (Number(S.step) || 0)) { S.step = n; put(U.answers, { step: n }).catch(() => {}); }
         paintStep(n);
         window.scrollTo({ top: 0, behavior: still() ? 'auto' : 'smooth' });
     };
     $('auRail').addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b && !b.disabled) show(Number(b.dataset.go), Number(b.dataset.go) < step); });
-    $('auBack').addEventListener('click', () => { if (step === 0) location.href = @json(route('auto.index')); else show(step - 1, true); });
+    $('auBack').addEventListener('click', () => { const p = prevOf(step); if (p < 0) location.href = @json(route('auto.index')); else show(p, true); });
     $('auNext').addEventListener('click', () => {
         // The fertilizer step walks the lots one by one before it moves on.
         if (step === 7) { const at = S.lots.findIndex((x) => x.id === FLOT); if (at >= 0 && at < S.lots.length - 1) { FLOT = S.lots[at + 1].id; paintFert(); window.scrollTo({ top: 0, behavior: still() ? 'auto' : 'smooth' }); return; } }
         const gap = gapOf(step);
         if (gap) return window.toast?.(gap, 'error');
-        show(step + 1);
+        show(nextOf(step));
     });
     const gapOf = (n) => {
         if (n === 0 && !$('auTitle').value.trim()) return 'Give the season a name.';
@@ -492,9 +567,9 @@
     const paintStep = (n) => {
         if (n === 1) paintLots();
         if (n === 2) paintWorkers();
-        if (n === 3) { paintSoil(); mountCard(); if (FPC) FPC.refresh(); }
+        if (n === 3) { paintSoil(); paintFrom(); }
         if (n === 4) paintWater();
-        if (n === 5) paintProblems();
+        if (n === 5) { paintProblems(); paintFrom(); }
         if (n === 6) paintReading();
         if (n === 7) paintFert();
         if (n === 8) paintReview();
@@ -545,25 +620,46 @@
         fieldDate: l.method === 'tree' ? null : l.fieldDate, treeMonths: l.method === 'tree' ? l.treeMonths : null, province: l.province, town: l.town, barangay: l.barangay,
         lat: l.pin ? l.pin.lat : null, lng: l.pin ? l.pin.lng : null }, extra)).then((r) => { if (r && r.data) { l.sowDate = r.data.sowDate; l.method = r.data.method || l.method; } paintLotNotes(l); paintLotState(l); return r; });
     const methodsOf = (l) => (cropOf(l.crop) || {}).methods || {};
+    /* The farm lot this lot was filled from: the loaded row, or (until the
+       farm's lots load) what was copied from it into this lot. */
+    const farmRow = (l) => { const id = LINK[l.id]; return id && FLROWS ? FLROWS.find((r) => r.id === id) || null : null; };
+    const farmView = (l) => {
+        if (!LINK[l.id]) return null;
+        if (FLROWS) return farmRow(l);
+        return { id: LINK[l.id], name: l.name, place: [l.barangay, townName(l.town), l.province].filter(Boolean).join(', '), areaHa: l.unit === 'ha' ? l.size : null };
+    };
+    const fmtHa = (a) => String(window.aneeLots ? window.aneeLots.fmtHa(a) : (Number(a) ? a + ' ha' : '')).replace(' ha', ' ha').replace(' sq m', ' sq m');
+    /* The variety, two ways (partials/variety-pick, 2026-10-16): searched in
+       the records for the lot's crop, or typed as sold. The name is what is
+       saved; a record picked this visit also shows its facts. */
+    const VAR_NONE = 'Pick from the records, or type your own';
+    const varTag = (l) => '<button type="button" class="au-tag' + (l.variety ? '' : ' is-none') + '" data-act="variety"><span>' + (l.varRecord ? '📗 ' : '🧬 ') + esc(l.variety || VAR_NONE) + '</span>' + CHEV + '</button>'
+        + '<small class="au-varfact"' + (l.varRecord ? '' : ' hidden') + '>' + (l.varRecord && window.aneeVarietyPick ? esc('On record: ' + window.aneeVarietyPick.facts(l.varRecord)) : '') + '</small>';
     const lotCard = (l, i) => {
         const c = cropOf(l.crop);
         const ms = methodsOf(l);
+        const fv = farmView(l);
+        const askSize = !(fv && Number(fv.areaHa) > 0);
         return '<div class="au-lot" data-lot="' + l.id + '" style="--i:' + i + '">'
-            + '<div class="au-lot-h"><span class="au-lot-n">' + (i + 1) + '</span><input type="text" data-f="name" value="' + esc(l.name) + '" maxlength="255" aria-label="Lot name"><span class="au-lot-st" data-st></span></div>'
+            + '<div class="au-lot-h"><span class="au-lot-n">' + (i + 1) + '</span><input type="text" data-f="name" value="' + esc(l.name) + '" maxlength="255" aria-label="Lot name"' + (fv ? ' readonly title="The name of your lot. Edit the lot to change it."' : '') + '><span class="au-lot-st" data-st></span></div>'
             + '<div class="au-lot-b">'
-            + '<div class="au-row is-2"><div><span class="au-lab">Crop</span><button type="button" class="au-tag' + (c ? '' : ' is-none') + '" data-act="crop"><span>' + (c ? c.icon + ' ' + esc(cropName(l.crop)) : 'Choose the crop') + '</span>' + CHEV + '</button></div>'
-            + '<div><span class="au-lab">Size</span><div class="flex gap-2"><input type="number" class="form-input flex-1" data-f="size" min="0" step="any" inputmode="decimal" value="' + (l.size ?? '') + '" placeholder="Like 1.5">'
-            + '<button type="button" class="au-pill" data-act="unit">' + (l.unit === 'sqm' ? 'm²' : 'ha') + '</button></div></div></div>'
+            + '<span class="au-lab">Which of your lots is it? <small>(optional)</small></span>'
+            + (fv ? '<button type="button" class="au-pin is-set" data-act="farm"><span aria-hidden="true">🗺️</span><span><b>' + esc(fv.name) + '</b><small>' + esc([fv.place, Number(fv.areaHa) > 0 ? fmtHa(fv.areaHa) : ''].filter(Boolean).join(' · ')) + '</small></span></button>'
+                + '<div class="au-flot-acts"><button type="button" class="au-link" data-act="farm">Change</button><button type="button" class="au-link" data-act="farmEdit">Edit the lot</button></div>'
+                : '<button type="button" class="au-pin" data-act="farm"><span aria-hidden="true">🗺️</span><span>Use one of your lots<small>Its name, size, place, soil and water come with it, so they are not asked again</small></span></button>')
+            + '<div class="au-row' + (askSize ? ' is-2' : '') + '"><div><span class="au-lab">Crop</span><button type="button" class="au-tag' + (c ? '' : ' is-none') + '" data-act="crop"><span>' + (c ? c.icon + ' ' + esc(cropName(l.crop)) : 'Choose the crop') + '</span>' + CHEV + '</button></div>'
+            + (askSize ? '<div><span class="au-lab">Size</span><div class="flex gap-2"><input type="number" class="form-input flex-1" data-f="size" min="0" step="any" inputmode="decimal" value="' + (l.size ?? '') + '" placeholder="Like 1.5">'
+                + '<button type="button" class="au-pill" data-act="unit">' + (l.unit === 'sqm' ? 'm²' : 'ha') + '</button></div></div>' : '') + '</div>'
             + (Object.keys(ms).length ? '<span class="au-lab">How it goes into the field</span><div class="au-pills">' + Object.entries(ms).map(([k, v]) => '<button type="button" class="au-pill" data-method="' + k + '" aria-pressed="' + (l.method === k) + '">' + esc(v) + '</button>').join('') + '</div>' : '')
             + (l.method === 'tree' ? '<span class="au-lab">How old are the trees?</span><div class="au-tree"><label class="text-xs font-bold text-gray-500">Years<input type="number" class="form-input" data-f="treeY" min="0" max="120" value="' + (l.treeMonths != null ? Math.floor(l.treeMonths / 12) : '') + '"></label>'
                 + '<label class="text-xs font-bold text-gray-500">Months<input type="number" class="form-input" data-f="treeM" min="0" max="11" value="' + (l.treeMonths != null ? l.treeMonths % 12 : '') + '"></label></div>' : '')
-            + '<div class="au-row is-2"><div><label class="au-lab">Variety <small>(optional, but it sharpens everything)</small></label><input type="text" class="form-input w-full" data-f="variety" maxlength="120" value="' + esc(l.variety || '') + '" placeholder="Like NSIC Rc 222 or a hybrid name"></div>'
+            + '<div class="au-row is-2"><div><span class="au-lab">Variety <small>(optional, but it sharpens everything)</small></span><div data-var>' + varTag(l) + '</div></div>'
             + (l.method === 'tree' ? '<div></div>' : '<div><span class="au-lab" data-daylab>' + dayLabel(l) + '</span><label class="date-tag w-full" data-empty="Pick the day"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span class="dt-text">Pick the day</span>'
                 + '<input type="date" data-f="fieldDate" min="' + B.today + '" max="' + B.latest + '" value="' + (l.fieldDate || '') + '"></label></div>')
             + '</div><div data-notes></div>'
-            + '<div class="au-row is-2"><div><span class="au-lab">Province</span><button type="button" class="au-tag' + (l.province ? '' : ' is-none') + '" data-act="prov"><span>' + esc(l.province || 'Choose the province') + '</span>' + CHEV + '</button></div>'
-            + '<div><span class="au-lab">Town or city</span><button type="button" class="au-tag' + (l.town ? '' : ' is-none') + '" data-act="town"' + (l.province ? '' : ' disabled') + '><span>' + esc(l.town ? townName(l.town) : (l.province ? 'Choose the town' : 'Province first')) + '</span>' + CHEV + '</button></div></div>'
-            + '<label class="au-lab">Barangay <small>(optional)</small></label><input type="text" class="form-input w-full" data-f="barangay" maxlength="120" value="' + esc(l.barangay || '') + '">'
+            + (fv ? '' : '<div class="au-row is-2"><div><span class="au-lab">Province</span><button type="button" class="au-tag' + (l.province ? '' : ' is-none') + '" data-act="prov"><span>' + esc(l.province || 'Choose the province') + '</span>' + CHEV + '</button></div>'
+                + '<div><span class="au-lab">Town or city</span><button type="button" class="au-tag' + (l.town ? '' : ' is-none') + '" data-act="town"' + (l.province ? '' : ' disabled') + '><span>' + esc(l.town ? townName(l.town) : (l.province ? 'Choose the town' : 'Province first')) + '</span>' + CHEV + '</button></div></div>'
+                + '<label class="au-lab">Barangay <small>(optional)</small></label><input type="text" class="form-input w-full" data-f="barangay" maxlength="120" value="' + esc(l.barangay || '') + '">')
             + '<span class="au-lab">Pin on the map <small>(optional)</small></span><button type="button" class="au-pin' + (l.pin ? ' is-set' : '') + '" data-act="pin"><span aria-hidden="true">📍</span><span>' + (l.pin ? 'Pinned at ' + l.pin.lat.toFixed(4) + ', ' + l.pin.lng.toFixed(4) + '<small>Tap to move it</small>' : 'Drop a pin on the lot<small>Optional: the weather and the soil are then read at the exact spot</small>') + '</span></button>'
             + '</div></div>';
     };
@@ -624,8 +720,15 @@
         if (act === 'unit') { l.unit = l.unit === 'sqm' ? 'ha' : 'sqm'; a.textContent = l.unit === 'sqm' ? 'm²' : 'ha'; later('lot' + l.id, () => saveLot(l), 50); }
         if (act === 'crop') pick('Choose the crop', CROPS.map((c) => ({ key: c.key, label: String(c.label).replace(/ — /g, ', '), icon: c.icon, group: c.group, hint: c.tree ? 'A tree crop' : (c.maturity ? 'About ' + c.maturity + ' days' : '') })), l.crop, async (k) => {
             l.crop = k; const ms = Object.keys(methodsOf(l)); if (!ms.includes(l.method)) l.method = ms[0] || null;
+            // A variety from another crop's records does not belong to this one.
+            if (l.varRecord && l.varRecord.crop !== k) { l.variety = ''; l.varRecord = null; }
             await saveLot(l).catch(() => {}); paintLots();
+            // The troubles are read for the first crop.
+            if (SRC) applyLotProfile();
         });
+        if (act === 'farm') openFarm(l);
+        if (act === 'farmEdit') editFarm(l);
+        if (act === 'variety') pickVariety(l, a);
         if (act === 'prov') { try { await loadPh(); } catch (_) { return; } pick('Choose the province', Object.keys(PHL).sort().map((p) => ({ key: p, label: p, hint: PHL[p].length + ' towns and cities' })), l.province, async (k) => { if (k !== l.province) l.town = null; l.province = k; await saveLot(l).catch(() => {}); paintLots(); setTimeout(() => lotEl(l.id)?.querySelector('[data-act="town"]')?.click(), 300); }); }
         if (act === 'town' && l.province) { await loadPh(); pick('Choose the town or city', (PHL[l.province] || []).map((t) => ({ key: t, label: townName(t), hint: /\(Capital\)/i.test(t) ? 'The capital' : '' })), l.town, async (k) => { l.town = k; await saveLot(l).catch(() => {}); paintLots(); }); }
         if (act === 'pin') openPin(l);
@@ -735,7 +838,8 @@
     $('auTested').addEventListener('input', () => { const v = Number($('auTested').value); S.answers.soil.tested = $('auTested').value !== '' && v >= 2 && v <= 12 ? v : null; later('soil', saveSoil, 800); });
 
     /* ---- 4. the water ---- */
-    const saveWater = () => put(U.answers, { water: S.answers.water, waterNote: $('auWaterNote').value });
+    // From S, not from the box: a lot can fill the water before this step is painted.
+    const saveWater = () => put(U.answers, { water: S.answers.water, waterNote: S.answers.waterNote || '' });
     const paintWater = () => {
         $('auWater').innerHTML = Object.entries(BOOK.water).map(([k, v]) => '<button type="button" class="au-sign is-radio" data-water="' + k + '" aria-pressed="' + (S.answers.water === k) + '"><i></i><span><b>' + esc(v[0]) + '</b><small>' + esc(v[1]) + '</small></span></button>').join('');
         $('auWaterNote').value = S.answers.waterNote || '';
@@ -745,9 +849,11 @@
 
     /* ---- 5. the troubles ---- */
     S.answers.problems = S.answers.problems || []; S.answers.cropProblems = S.answers.cropProblems || [];
-    const saveProblems = () => put(U.answers, { problems: S.answers.problems, cropProblems: S.answers.cropProblems, notes: $('auNotes').value });
+    const saveProblems = () => put(U.answers, { problems: S.answers.problems, cropProblems: S.answers.cropProblems, notes: S.answers.notes || '' });
+    // The troubles a lot's last season speaks for. The rest (a typhoon, late fertilizer, few hands...) are still asked.
+    const COVERED = ['weeds', 'flood', 'drought', 'insects', 'diseases', 'rats', 'birds', 'snails', 'lodging', 'salt', 'waterlog'];
     const paintProblems = async () => {
-        $('auProblems').innerHTML = Object.entries(BOOK.problems).map(([k, v]) => '<button type="button" class="au-pill" data-p="' + k + '" aria-pressed="' + S.answers.problems.includes(k) + '">' + v[1] + ' ' + esc(v[0]) + '</button>').join('');
+        $('auProblems').innerHTML = Object.entries(BOOK.problems).filter(([k]) => !HID.problems || !COVERED.includes(k)).map(([k, v]) =>'<button type="button" class="au-pill" data-p="' + k + '" aria-pressed="' + S.answers.problems.includes(k) + '">' + v[1] + ' ' + esc(v[0]) + '</button>').join('');
         $('auNotes').value = S.answers.notes || '';
         try {
             const r = await window.api(U.problems);
@@ -760,72 +866,227 @@
     $('auCropProblems').addEventListener('click', (e) => { const b = e.target.closest('[data-cp]'); if (!b) return; const k = b.dataset.cp; S.answers.cropProblems = S.answers.cropProblems.includes(k) ? S.answers.cropProblems.filter((x) => x !== k) : [...S.answers.cropProblems, k]; b.setAttribute('aria-pressed', String(S.answers.cropProblems.includes(k))); later('problems', saveProblems, 400); });
     $('auNotes').addEventListener('input', () => { S.answers.notes = $('auNotes').value; later('problems', saveProblems, 900); });
 
-    /* ---- 3, first: the field in detail (partials/field-profile-card) ----
-       Its answers fill the soil signs, the pH, the water and the troubles
-       while they are empty, or still hold what the details filled; never
-       what the farmer picked. AUTO keeps what was filled this visit. */
-    let FPC = null;
+    /* ---- the farm's lots: a lot of this season filled from one of them ----
+       (partials/farm-lots, 2026-10-16, the owner). The lot brings its name,
+       size and place to its card, and the first linked lot with answers is
+       the farm's field profile: it fills the soil signs, the pH, the water
+       and the troubles, and what it answered is hidden (HID) under a line
+       that says where it came from. A question it does not answer is still
+       asked, filled while it is empty or still holds what was filled (AUTO
+       keeps what was filled this visit); never over what the farmer picked. */
     const AUTO = {};
     const sameList = (a, b) => JSON.stringify([...(a || [])].sort()) === JSON.stringify([...(b || [])].sort());
-    const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
     let CP_ROWS = null;
     const cropProblemRows = () => CP_ROWS ??= window.api(U.problems).then((r) => (r.data && r.data.rows) || []).catch(() => { CP_ROWS = null; return []; });
-    async function applyProfile(answers, L, card) {
-        const pay = card.payload();
-        S.answers.fieldProfile = pay.fieldProfile;
-        S.answers.fieldProfileFrom = pay.fieldProfileFrom ? { id: pay.fieldProfileFrom, name: (card.from() || {}).name || '' } : null;
-        later('fieldProfile', () => put(U.answers, { fieldProfile: S.answers.fieldProfile, fieldProfileFrom: S.answers.fieldProfileFrom }), 300);
-        const got = [], lit = {};
-        const soil = S.answers.soil;
-        if (!soil.signs.length || sameList(soil.signs, AUTO.signs)) {
-            soil.signs = (L.soilSignsAuto || []).filter((k) => BOOK.signs[k]);
-            AUTO.signs = soil.signs.slice();
-            if (soil.signs.length) { got.push('the soil signs'); lit.soil = true; }
-        }
-        if ((soil.ph || 'unsure') === 'unsure' || soil.ph === AUTO.ph) {
-            soil.ph = BOOK.ph[L.phLevel] ? L.phLevel : 'unsure';
-            AUTO.ph = soil.ph;
-            if (soil.ph !== 'unsure') { got.push('the pH'); lit.soil = true; }
-        }
-        if (soil.tested == null || soil.tested === AUTO.tested) { soil.tested = L.phValue ?? null; AUTO.tested = soil.tested; }
-        paintSoil();
-        later('soil', saveSoil, 300);
-        if (!S.answers.water || S.answers.water === AUTO.water) {
-            const w = BOOK.water[L.waterAuto] ? L.waterAuto : null;
-            if (w || AUTO.water) { S.answers.water = w; AUTO.water = w; later('water', saveWater, 300); }
-            if (w) { got.push('the water'); lit.water = true; }
-        }
-        let probs = false;
-        if (!S.answers.problems.length || sameList(S.answers.problems, AUTO.problems)) {
-            S.answers.problems = (L.problemsAuto || []).filter((k) => BOOK.problems[k]);
-            AUTO.problems = S.answers.problems.slice();
-            probs = true;
-        }
-        if (!S.answers.cropProblems.length || sameList(S.answers.cropProblems, AUTO.cropProblems)) {
-            // The crops' own pests and diseases the farmer ticked in the details, where this step offers them.
-            const offered = new Set((await cropProblemRows()).map((r) => r.key));
-            S.answers.cropProblems = (answers.outbreaks || []).map((k) => k.replace(/^pest:/, 'pests:').replace(/^disease:/, 'diseases:')).filter((k) => offered.has(k));
-            AUTO.cropProblems = S.answers.cropProblems.slice();
-            probs = true;
-        }
-        if (probs) {
-            later('problems', saveProblems, 300);
-            const n = S.answers.problems.length + S.answers.cropProblems.length;
-            if (n) { got.push(n === 1 ? 'one trouble' : n + ' troubles'); lit.problems = true; }
-        }
-        window.aneeFieldCard.hint($('auSigns').closest('.au-card'), !!lit.soil);
-        window.aneeFieldCard.hint($('auWater').closest('.au-card'), !!lit.water);
-        window.aneeFieldCard.hint($('auProblems').closest('.au-card'), !!lit.problems);
-        return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything below and on the next steps.' : '';
+    const firstCrop = () => ((S.lots || []).find((l) => l.crop) || {}).crop || null;
+
+    async function loadFarm() {
+        const rows = window.aneeLots ? await window.aneeLots.rows() : [];
+        // An empty answer while lots are linked is a load that failed: keep what is shown.
+        if (rows.length || !Object.keys(LINK).length) FLROWS = rows;
+        return FLROWS;
     }
-    function mountCard() {
-        if (FPC || !window.aneeFieldCard) return;
-        const from = S.answers.fieldProfileFrom && S.answers.fieldProfile ? { id: S.answers.fieldProfileFrom.id, name: S.answers.fieldProfileFrom.name || 'a saved field', answers: S.answers.fieldProfile, edited: false } : null;
-        FPC = window.aneeFieldCard.mount($('auFpc'), {
-            crop: () => ((S.lots || []).find((l) => l.crop) || {}).crop || null,
-            title: () => { const named = (S.lots || []).filter((l) => l.name); return named.length === 1 ? named[0].name : ($('auTitle').value.trim() || 'Your farm'); },
-            value: S.answers.fieldProfile || {}, from, onChange: applyProfile,
-        });
+    function fillFromFarm(l, fl) {
+        const was = JSON.stringify([l.name, l.size, l.unit, l.province, l.town, l.barangay]);
+        if (fl.name) l.name = String(fl.name).slice(0, 255);
+        if (Number(fl.areaHa) > 0) { l.size = Number(fl.areaHa); l.unit = 'ha'; }
+        if (fl.province && fl.town) { l.province = fl.province; l.town = fl.town; l.barangay = String(fl.barangay || '').slice(0, 120); }
+        return JSON.stringify([l.name, l.size, l.unit, l.province, l.town, l.barangay]) !== was;
+    }
+    const saveLinks = () => put(U.answers, { farmLots: Object.entries(LINK).map(([lotId, farmLotId]) => ({ lotId: Number(lotId), farmLotId })) });
+    async function linkLot(l, fl) {
+        await loadFarm();
+        FLROWS = (FLROWS || []).filter((r) => r.id !== fl.id).concat([fl]);
+        LINK[l.id] = fl.id;
+        EVER.add(fl.id);
+        fillFromFarm(l, fl);
+        if (step === 1) paintLots();
+        later('links', saveLinks, 80);
+        later('lot' + l.id, () => saveLot(l), 120);
+        await applyLotProfile();
+    }
+    function unlinkLot(l) {
+        delete LINK[l.id];
+        if (step === 1) paintLots();
+        later('links', saveLinks, 80);
+        applyLotProfile();
+    }
+
+    /* The sheet that asks which lot: aneeLots.picker, in a dialog like the lot sheet's. */
+    let PICK = null, LINKFOR = null, MUTE = false;
+    const fqLock = () => document.documentElement.classList.toggle('fq-lock', !!document.querySelector('.fq-sheet[open]'));
+    function farmOpen() {
+        const d = $('auFarmSheet');
+        if (d.open) return;
+        d.showModal();
+        fqLock();
+        window.registerOverlay?.('fq:auFarmSheet', farmClose);
+        d.querySelector('.fq-box').focus({ preventScroll: true });
+    }
+    function farmClose() {
+        const d = $('auFarmSheet');
+        if (!d.open || d.classList.contains('is-closing')) return;
+        window.unregisterOverlay?.('fq:auFarmSheet');
+        const done = () => { d.classList.remove('is-closing'); d.close(); fqLock(); LINKFOR = null; };
+        if (still()) { done(); return; }
+        d.classList.add('is-closing');
+        setTimeout(done, 230);
+    }
+    $('auFarmSheet').addEventListener('click', (e) => { if (e.target === $('auFarmSheet') || e.target.closest('[data-fq-close]')) farmClose(); });
+    $('auFarmSheet').addEventListener('cancel', (e) => { e.preventDefault(); farmClose(); });
+    async function onFarmPick(lot) {
+        const d = $('auFarmSheet');
+        if (MUTE || !lot || !LINKFOR || !d.open || d.classList.contains('is-closing')) return;
+        const l = LINKFOR;
+        farmClose();
+        await linkLot(l, lot);
+    }
+    async function openFarm(l) {
+        if (!window.aneeLots) return;
+        LINKFOR = l;
+        $('auFarmHand').hidden = !LINK[l.id];
+        MUTE = true;
+        try {
+            if (!PICK) PICK = window.aneeLots.picker($('auFarmPick'), { crop: () => (LINKFOR && LINKFOR.crop) || firstCrop(), value: LINK[l.id] || null, onPick: onFarmPick });
+            else await PICK.set(LINK[l.id] || null);
+        } finally { MUTE = false; }
+        farmOpen();
+    }
+    $('auFarmHand').addEventListener('click', () => { const l = LINKFOR; farmClose(); if (l) unlinkLot(l); });
+    async function editFarm(l) {
+        if (!window.aneeLots) return;
+        if (!FLROWS) await loadFarm();
+        const fl = farmRow(l);
+        if (!fl) { openFarm(l); return; }
+        // A save fires aneelots:changed, which refills the lots below.
+        await window.aneeLots.edit(fl, { crop: l.crop || null });
+    }
+    async function editSource() {
+        if (!window.aneeLots || !SRC) return;
+        if (!FLROWS) await loadFarm();
+        const fl = (FLROWS || []).find((r) => r.id === SRC.id);
+        if (fl) await window.aneeLots.edit(fl, { crop: firstCrop() });
+    }
+    document.addEventListener('click', (e) => { if (e.target.closest('[data-au-editlot]')) editSource(); });
+    // A lot saved anywhere on the page (or in Global Lots' sheet): refill what came from it.
+    window.addEventListener('aneelots:changed', async () => {
+        if (!Object.keys(LINK).length) return;
+        await loadFarm();
+        S.lots.forEach((l) => { const fl = farmRow(l); if (fl && fillFromFarm(l, fl)) later('lot' + l.id, () => saveLot(l), 200); });
+        if (step === 1) paintLots();
+        applyLotProfile();
+    });
+
+    /* The farm's field profile, from the first linked lot that has answers. */
+    let APPLY = Promise.resolve();
+    const applyLotProfile = () => (APPLY = APPLY.then(applyNow).catch((err) => console.error(err)));
+    async function applyNow() {
+        if (!FLROWS) return;
+        let fl = null;
+        for (const l of S.lots) { const r = farmRow(l); if (r && r.count) { fl = r; break; } }
+        if (!fl) {
+            if (!FLROWS.length && Object.keys(LINK).length) return;
+            HID = Object.assign({}, NOHID);
+            SRC = null;
+            // The profile came from a lot no longer linked: it goes with it.
+            const had = S.answers.fieldProfileFrom, hid = had ? Number(had.id) : 0;
+            if (hid && EVER.has(hid) && !Object.values(LINK).includes(hid)) {
+                S.answers.fieldProfile = null; S.answers.fieldProfileFrom = null;
+                later('fieldProfile', () => put(U.answers, { fieldProfile: null, fieldProfileFrom: null }), 200);
+            }
+            afterApply();
+            return;
+        }
+        const L = await window.aneeLots.legacy(fl, firstCrop());
+        HID = hidFrom(fl.answers, L);
+        SRC = { id: fl.id, name: fl.name, answers: fl.answers };
+        const pay = window.aneeLots.payload(fl);
+        const from = { id: fl.id, name: String(fl.name || '').slice(0, 120) };
+        if (JSON.stringify([S.answers.fieldProfile || null, S.answers.fieldProfileFrom || null]) !== JSON.stringify([pay.fieldProfile, from])) {
+            S.answers.fieldProfile = pay.fieldProfile;
+            S.answers.fieldProfileFrom = from;
+            later('fieldProfile', () => put(U.answers, { fieldProfile: S.answers.fieldProfile, fieldProfileFrom: S.answers.fieldProfileFrom }), 300);
+        }
+        await fillAnswers(fl.answers || {}, L);
+        afterApply();
+    }
+    async function fillAnswers(answers, L) {
+        const soil = S.answers.soil, soilWas = JSON.stringify(soil);
+        const signs = (L.soilSignsAuto || []).filter((k) => BOOK.signs[k]);
+        if (HID.signs || !soil.signs.length || sameList(soil.signs, AUTO.signs)) { soil.signs = signs; AUTO.signs = signs.slice(); }
+        const ph = BOOK.ph[L.phLevel] ? L.phLevel : 'unsure';
+        if (HID.ph || (soil.ph || 'unsure') === 'unsure' || soil.ph === AUTO.ph) { soil.ph = ph; AUTO.ph = ph; }
+        if (HID.tested || soil.tested == null || soil.tested === AUTO.tested) { soil.tested = L.phValue ?? null; AUTO.tested = soil.tested; }
+        if (JSON.stringify(soil) !== soilWas) { if (step === 3) paintSoil(); later('soil', saveSoil, 300); }
+
+        const w = BOOK.water[L.waterAuto] ? L.waterAuto : null;
+        if ((HID.water || !S.answers.water || S.answers.water === AUTO.water) && (w || AUTO.water) && S.answers.water !== w) {
+            S.answers.water = w; AUTO.water = w;
+            if (step === 4) paintWater();
+            later('water', saveWater, 300);
+        }
+
+        const probWas = JSON.stringify([S.answers.problems, S.answers.cropProblems]);
+        const auto = (L.problemsAuto || []).filter((k) => BOOK.problems[k]);
+        if (HID.problems) { S.answers.problems = [...new Set(auto.concat(S.answers.problems.filter((k) => !COVERED.includes(k))))]; AUTO.problems = auto.slice(); }
+        else if (!S.answers.problems.length || sameList(S.answers.problems, AUTO.problems)) { S.answers.problems = auto; AUTO.problems = auto.slice(); }
+        if (HID.problems || !S.answers.cropProblems.length || sameList(S.answers.cropProblems, AUTO.cropProblems)) {
+            // The crops' own pests and diseases the lot names, where this step offers them.
+            const offered = new Set((await cropProblemRows()).map((r) => r.key));
+            S.answers.cropProblems = [].concat(answers.outbreaks || []).map((k) => k.replace(/^pest:/, 'pests:').replace(/^disease:/, 'diseases:')).filter((k) => offered.has(k));
+            AUTO.cropProblems = S.answers.cropProblems.slice();
+        }
+        if (JSON.stringify([S.answers.problems, S.answers.cropProblems]) !== probWas) { if (step === 5) paintProblems(); later('problems', saveProblems, 300); }
+    }
+    function afterApply() {
+        navSay();
+        paintFrom();
+        if (step === 5) paintProblems();
+        if (step === 8) paintReview();
+    }
+
+    /* Where the hidden answers came from: "From North field", the answers, and Edit the lot. */
+    const pairsFor = (a, keys) => {
+        const FC = window.aneeFieldCard, Q = (window.aneeFieldProfile || {}).questions || {};
+        if (!FC || !a) return [];
+        const shorts = new Set(keys.map((k) => (Q[k] || {}).short).filter(Boolean).concat(keys.includes('acidity') ? ['Known pH'] : []));
+        return FC.pairs(a, {}).filter((p) => shorts.has(p[0]));
+    };
+    const fromBox = (box, keys) => {
+        if (!box) return;
+        if (!SRC || !keys.length) { box.hidden = true; return; }
+        box.innerHTML = '<p><span>From <b>' + esc(SRC.name) + '</b>, your lot</span><button type="button" class="au-link" data-au-editlot>Edit the lot</button></p>'
+            + (window.aneeFieldCard ? window.aneeFieldCard.said(pairsFor(SRC.answers, keys)) : '');
+        box.hidden = false;
+    };
+    function paintFrom() {
+        const by = { signs: 'signs', ph: 'ph', tested: 'tested', cropprob: 'problems' };
+        document.querySelectorAll('.au [data-q]').forEach((el) => { el.hidden = !!HID[by[el.dataset.q]]; });
+        const a = (SRC && SRC.answers) || {};
+        fromBox($('auSoilFrom'), [...(HID.signs ? ['texture', 'salt'].concat(filled(a, 'texture') ? [] : ['rocks']) : []), ...(HID.ph ? ['acidity'] : [])]);
+        fromBox($('auProbFrom'), HID.problems ? ['outbreaks', 'weeds', 'flooding', 'drainage'] : []);
+        $('auProbSub').textContent = HID.problems ? 'Anything else that cost you a harvest? Your lot already says what troubled its last crop.' : 'Pick the troubles of past seasons that cost you the most. Anee plans to get ahead of them.';
+    }
+
+    /* The variety sheet, for one lot. */
+    async function pickVariety(l) {
+        if (!window.aneeVarietyPick) return;
+        const c = cropOf(l.crop) || {};
+        const w = (BOOK.water[S.answers.water] || [])[2] || '';
+        const m = l.fieldDate ? Number(String(l.fieldDate).slice(5, 7)) : 0;
+        const res = await window.aneeVarietyPick.open({ crop: l.crop || '', cropLabel: String(c.label || '').split(' (')[0].split(' — ')[0],
+            location: [townName(l.town), l.province].filter(Boolean).join(', '), season: m ? (m >= 6 && m <= 10 ? 'wet' : 'dry') : '',
+            water: w === 'partial' ? 'limited' : w, value: { name: l.variety || '', record: l.varRecord || null },
+            ownNote: 'Not on record, so Anee looks it up when she reads the farm, and says plainly if nothing is found.' });
+        if (!res) return;
+        l.variety = String(res.name || '').slice(0, 120);
+        l.varRecord = res.record ? Object.assign({ crop: l.crop }, res.record) : null;
+        const box = lotEl(l.id)?.querySelector('[data-var]');
+        if (box) {
+            box.innerHTML = varTag(l);
+            if (!still()) box.querySelector('.au-tag')?.classList.add('is-bump');
+        }
+        later('lot' + l.id, () => saveLot(l), 50);
     }
 
     /* ---- 6. Anee reads the farm ---- */
@@ -994,8 +1255,10 @@
             + '<div><b>Workers</b><span>' + (S.crewList.length ? esc(S.crewList.map((w) => w.name).filter(Boolean).join(', ')) : 'The family') + '</span></div>'
             + '<div><b>Soil</b><span>' + esc([TEX[sr.texture] || 'not sure'].concat((sr.conditions || []).map((c) => COND[c] || c)).join(', ')) + '</span></div>'
             + '<div><b>Water</b><span>' + esc((BOOK.water[S.answers.water] || ['not said'])[0]) + '</span></div>'
-            + (S.answers.fieldProfile && window.aneeFieldProfile && window.aneeFieldProfile.count(S.answers.fieldProfile) ? '<div><b>Field in detail</b><span>' + window.aneeFieldProfile.count(S.answers.fieldProfile) + ' answers about the soil, the water and last season</span></div>' : '');
+            + (SRC ? '<div><b>From your lot</b><span>' + esc(SRC.name) + ' gave ' + esc(andWords([HID.signs || HID.ph ? 'the soil' : '', HID.water ? 'the water' : '', HID.problems ? 'last season\'s troubles' : ''].filter(Boolean)) || 'its answers') + ' · <button type="button" class="au-link" data-au-editlot>Edit the lot</button></span></div>'
+                : (S.answers.fieldProfile && window.aneeFieldProfile && window.aneeFieldProfile.count(S.answers.fieldProfile) ? '<div><b>Field in detail</b><span>' + window.aneeFieldProfile.count(S.answers.fieldProfile) + ' answers about the soil, the water and last season</span></div>' : ''));
     };
+    const andWords = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
     $('auGenerate').addEventListener('click', async () => {
         await flush();
         const missing = S.lots.find((l) => !l.fert && !l.imbalance);
@@ -1027,6 +1290,13 @@
     // Resume where the farmer left off.
     $('auTitleTop').textContent = S.title || 'Anee Auto';
     show(step);
+    // The farm's lots this season was filled from, as they are now.
+    if (Object.keys(LINK).length) loadFarm().then(() => {
+        if (!FLROWS) return;
+        S.lots.forEach((l) => { const fl = farmRow(l); if (fl && fillFromFarm(l, fl)) later('lot' + l.id, () => saveLot(l), 200); });
+        if (step === 1) paintLots();
+        applyLotProfile();
+    });
 })();
 </script>
 @endpush

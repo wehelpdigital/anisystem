@@ -155,6 +155,18 @@
        variety from the records with its potential, how much is planted, a
        tested pH, and the need they make, shown before the run. */
     @keyframes cpRise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    /* The lot (2026-10-16, the owner): what it answered is not asked again. */
+    .cp-blk[hidden] { display: none; }
+    .cp-lotnote { display: flex; align-items: flex-start; gap: .5rem; margin: 0 0 .8rem; padding: .55rem .75rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5;
+        color: #24400f; background: #f3f8ec; border: 1px solid #d5e7c0; animation: cpRise .3s cubic-bezier(.22,1,.36,1) both; }
+    .cp-lotnote[hidden] { display: none; }
+    .cp-lotnote svg { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: #4a7c2a; }
+    .cp-lotline { display: block; margin-top: .35rem; }
+    .cp-lotline button { font-weight: 800; color: #3d6823; text-decoration: underline; text-underline-offset: 3px; }
+    .wtp-dot[hidden] { display: none; }
+    html.dark .cp-lotnote { color: #cfe6b8; background: #17220f; border-color: #2b3a1c; }
+    html.dark .cp-lotline button { color: #a5c97e; }
+    @media (prefers-reduced-motion: reduce) { .cp-lotnote { animation: none; } }
     .wtp-varfacts, .cp-from { display: flex; align-items: flex-start; gap: .5rem; margin-top: .6rem; padding: .6rem .75rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5;
         color: #24400f; background: #f3f8ec; border: 1px solid #d5e7c0; animation: cpRise .3s cubic-bezier(.22,1,.36,1) both; }
     .wtp-varfacts[hidden], .cp-from[hidden] { display: none; }
@@ -710,10 +722,16 @@
 
         <div class="card p-5 wtp-wiz" id="cpWiz">
             {{-- 0: the place --}}
+            {{-- 0: the lot (2026-10-16, the owner): picked from the farm's lots
+                 (partials/farm-lots), or added. Its place is where the weather is
+                 read; its size and its soil, water and last season answers are
+                 not asked again on the steps after it. --}}
             <section class="wtp-step is-on" data-step="0">
-                <p class="wtp-q">Where is the field?</p>
-                <p class="wtp-sub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough. Weather and advice change by region.</p>
-                <input type="text" id="cpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
+                <p class="wtp-q">Which lot is it for?{{ \App\Support\Tagalog::flag('lot') }}</p>
+                <p class="wtp-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</p>
+                <div id="cpLots"></div>
+                <input type="hidden" id="cpLocation" value="">
+                @include('partials.farm-lots')
             </section>
             {{-- 1: the crop --}}
             <section class="wtp-step" data-step="1">
@@ -767,27 +785,20 @@
                 <input type="number" id="cpTarget" class="form-input" min="0" step="any" inputmode="decimal" placeholder="Your own goal">
                 <p class="form-hint">The fertilizer is sized to this goal the way NPK Plus sizes it: your target held to the variety's potential, else 80 percent of the potential. Anee checks if it is realistic for your place and season.</p>
             </section>
-            {{-- 6: the field in detail (2026-10-15, the owner): the shared
-                 field questions (App\Support\FieldProfile), optional. The
-                 answers fill the soil, water, troubles, soil condition and
-                 last crop steps after it, and go to Anee whole. --}}
-            <section class="wtp-step" data-step="6">
-                <p class="wtp-q">Your field in detail</p>
-                <p class="wtp-sub">Optional. The soil, the water and last season, one short page at a time. Your answers fill in the next steps, the fertilizer need counts them as NPK Plus does, and Anee builds the protocol on every one.</p>
-                <div id="cpFpc"></div>
-                @include('partials.field-profile-card')
-            </section>
+            {{-- 6 was "Your field in detail": the lot carries it now (step 0). --}}
             {{-- 7: the field and what goes in it (2026-10-16): the stand, as
                  NPK Plus asks it. Too thin a stand cannot carry the goal, so
                  the need is sized to the plants there will be. --}}
             <section class="wtp-step" data-step="7">
-                <p class="wtp-q">How big is the field?</p>
-                <p class="wtp-sub">The bags and the shopping list are for the whole field.</p>
-                <div class="cp-area">
-                    <input type="number" id="cpArea" class="form-input" min="0.01" step="any" inputmode="decimal" placeholder="e.g. 1.5">
-                    <span class="cp-area-u">hectares</span>
+                <div class="cp-blk" data-lot="area">
+                    <p class="wtp-q">How big is the field?</p>
+                    <p class="wtp-sub">The bags and the shopping list are for the whole field.</p>
+                    <div class="cp-area mb-5">
+                        <input type="number" id="cpArea" class="form-input" min="0.01" step="any" inputmode="decimal" placeholder="e.g. 1.5">
+                        <span class="cp-area-u">hectares</span>
+                    </div>
                 </div>
-                <p class="wtp-q mt-5">How much will you plant?</p>
+                <p class="wtp-q">How much will you plant?</p>
                 <p class="wtp-sub">Optional. For the whole field. A thin stand cannot reach the goal, so the fertilizer is sized to the plants you will really have.</p>
                 <div class="cp-pills" id="cpSeedUnits" role="radiogroup" aria-label="What you plant"></div>
                 <div class="cp-two">
@@ -806,43 +817,55 @@
                 <p class="cp-hint" id="cpSeedHint"></p>
             </section>
             {{-- 8: the soil and the water --}}
-            <section class="wtp-step" data-step="8">
-                <p class="wtp-q">What is the soil like?</p>
-                <p class="wtp-sub">Go by feel. No soil test needed.</p>
-                <div class="wtp-choices" id="cpSoils"></div>
-                <p class="wtp-q mt-5">How does the field get water?</p>
-                <div class="wtp-choices" id="cpWaters"></div>
+            <section class="wtp-step" data-step="8" data-blocks-only>
+                <div class="cp-blk" data-lot="texture">
+                    <p class="wtp-q">What is the soil like?</p>
+                    <p class="wtp-sub">Go by feel. No soil test needed.</p>
+                    <div class="wtp-choices mb-5" id="cpSoils"></div>
+                </div>
+                <div class="cp-blk" data-lot="water">
+                    <p class="wtp-q">How does the field get water?</p>
+                    <div class="wtp-choices" id="cpWaters"></div>
+                </div>
             </section>
             {{-- 9: the troubles --}}
             <section class="wtp-step" data-step="9">
-                <p class="wtp-q">What problems does this field have?</p>
-                <p class="wtp-sub">Tick what you have seen. Each one changes the protocol.</p>
-                <div class="wtp-probs" id="cpProbs"></div>
-                <label class="form-label mt-4" for="cpNotes">Other notes <span class="text-gray-400 font-normal">(optional)</span></label>
+                <div class="cp-blk" data-lot="outbreaks">
+                    <p class="wtp-q">What problems does this field have?</p>
+                    <p class="wtp-sub">Tick what you have seen. Each one changes the protocol.</p>
+                    <div class="wtp-probs mb-4" id="cpProbs"></div>
+                </div>
+                <label class="form-label" for="cpNotes">Other notes <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="cpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. tungro hit us last season, we have a pump but diesel is costly"></textarea>
             </section>
             {{-- 10: the ground, closer -- what decides WHICH granular and WHEN --}}
             <section class="wtp-step" data-step="10">
                 <p class="wtp-q">A closer look at the soil</p>
                 <p class="wtp-sub">Optional. Each answer changes which fertilizer to use and when. Skip what you do not know.</p>
-                <p class="wp-qh">Soil condition <small>pH, sodium or salt. You can pick more than one.</small></p>
-                <div class="wtp-choices" id="cpSoilConds"></div>
-                <p class="wp-qh mt-4">Phosphorus in the soil <small>From a soil test or your last crops</small></p>
+                <div class="cp-blk" data-lot="cond">
+                    <p class="wp-qh">Soil condition <small>pH, sodium or salt. You can pick more than one.</small></p>
+                    <div class="wtp-choices mb-4" id="cpSoilConds"></div>
+                </div>
+                <p class="wp-qh">Phosphorus in the soil <small>From a soil test or your last crops</small></p>
                 <div class="wtp-choices is-four" id="cpTestP"></div>
                 <p class="wp-qh mt-4">Potassium in the soil</p>
                 <div class="wtp-choices is-four" id="cpTestK"></div>
-                <label class="wp-qh mt-4 block" for="cpPh">pH from a soil test <small>Optional. A number beats a guess: it decides how much phosphorus the soil locks up.</small></label>
-                <input type="number" id="cpPh" class="form-input" min="2" max="12" step="0.1" inputmode="decimal" placeholder="e.g. 6.2">
+                <div class="cp-blk" data-lot="ph">
+                    <label class="wp-qh mt-4 block" for="cpPh">pH from a soil test <small>Optional. A number beats a guess: it decides how much phosphorus the soil locks up.</small></label>
+                    <input type="number" id="cpPh" class="form-input" min="2" max="12" step="0.1" inputmode="decimal" placeholder="e.g. 6.2">
+                </div>
             </section>
             {{-- 11: the history and what can be bought --}}
             <section class="wtp-step" data-step="11">
                 <p class="wtp-q">Last crop and what you can buy</p>
                 <p class="wtp-sub">Beans and peanuts leave nitrogen in the soil. Burned straw gives back potash, not nitrogen. The plan only uses fertilizer you can buy.</p>
-                <p class="wp-qh">Last crop</p>
-                <div class="wtp-choices" id="cpPrevCrops"></div>
-                <p class="wp-qh mt-4">Its leftovers were</p>
-                <div class="wtp-choices is-two" id="cpResidues"></div>
-                <label class="form-label mt-4" for="cpFertHistory">Fertilizer used last season <span class="text-gray-400 font-normal">(optional)</span></label>
+                <div class="cp-blk" data-lot="prevCrop">
+                    <p class="wp-qh">Last crop</p>
+                    <div class="wtp-choices" id="cpPrevCrops"></div>
+                    <p class="wp-qh mt-4">Its leftovers were</p>
+                    <div class="wtp-choices is-two mb-4" id="cpResidues"></div>
+                </div>
+                <label class="form-label" for="cpFertHistory">Fertilizer used last season <span class="text-gray-400 font-normal">(optional)</span></label>
                 <input type="text" id="cpFertHistory" class="form-input" maxlength="200" placeholder="e.g. 4 bags complete at planting, 2 bags urea later">
                 <p class="wp-qh mt-4">Fertilizer sold near you <small>Pick all that apply. The plans use these.</small></p>
                 <div class="wtp-choices is-pills" id="cpGranulars" role="group" aria-label="Fertilizer sold near you"></div>
@@ -909,14 +932,14 @@
     let OPT = null;
     const state = { location: '', crop: '', variety: '', month: null, method: null, priority: null, targetYield: '', yieldUnit: '', area: '', soil: null, water: null, problems: [], notes: '',
         soilConditions: [], testP: 'unsure', testK: 'unsure', prevCrop: 'unsure', residue: 'unsure', fertHistory: '', granulars: [],
-        varRecord: null, potential: '', seedAmount: '', seedUnit: 'kg', germination: '', ph: '' };
+        varRecord: null, potential: '', seedAmount: '', seedUnit: 'kg', germination: '', ph: '', lot: null };
     let step = 0;
     const STEPS = 13;
     const phone = () => !window.matchMedia('(min-width: 640px)').matches;
-    /* The field in detail (partials/field-profile-card): its answers fill the
-       soil, the water, the troubles, the soil condition and the last crop,
-       each unless the farmer has set it by hand. */
-    let FPC = null;
+    /* The lot (partials/farm-lots, 2026-10-16): its answers fill the soil,
+       the water, the troubles, the soil condition, the pH and the last crop,
+       and what it answered is hidden (LOT_KEYS), so it is not asked twice. */
+    let LOTS = null;
     const TOUCH = {};
     const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
     // The last crop and what was left of it, from the detailed answer.
@@ -953,12 +976,66 @@
         const prev = PREV_OF[answers.prevCrop] || [null, null];
         one('prevCrop', 'cpPrevCrops', 'prevcrop', prev[0], 'unsure', 'the last crop', 11);
         one('residue', 'cpResidues', 'residue', prev[1], 'unsure', 'its leftovers', 11);
-        [8, 9, 10, 11].forEach((n) => window.aneeFieldCard.hint(document.querySelector('#cpWiz .wtp-step[data-step="' + n + '"]'), !!lit[n], '', null));
-        return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything on the next steps.' : '';
+        return got.length ? 'Filled in for you: ' + andList(got) + '.' : '';
     }
-    function mountCard() {
-        if (FPC || !window.aneeFieldCard) return;
-        FPC = window.aneeFieldCard.mount($id('cpFpc'), { crop: () => state.crop || null, title: () => state.location || 'Your field', onChange: applyProfile });
+
+    /* ---- the lot ---- */
+    // Which answers of the lot settle each hidden block, and the TOUCH keys the block's answers live under.
+    const LOT_KEYS = { area: [[], 'the size'], texture: [['soil'], 'the soil'], water: [['water'], 'the water'], outbreaks: [['problems'], 'the troubles'],
+        cond: [['soilConditions'], 'the soil condition'], ph: [['ph'], 'the pH'], prevCrop: [['prevCrop', 'residue'], 'the last crop'] };
+    const LOT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+    function lotHas(k) {
+        const l = state.lot;
+        if (!l) return false;
+        const a = l.answers || {};
+        const has = (x) => a[x] !== undefined && a[x] !== null && a[x] !== '' && !(Array.isArray(a[x]) && !a[x].length);
+        if (k === 'area') return Number(l.areaHa) > 0;
+        if (k === 'cond') return ((has('acidity') && a.acidity !== 'untested') || has('phFrom')) && has('salt');
+        if (k === 'ph') return has('phFrom');
+        return has(k);
+    }
+    // A step whose every question the lot answered is skipped by Next and Back.
+    const stepEl = (n) => document.querySelector('#cpWiz .wtp-step[data-step="' + n + '"]');
+    function skipped(n) {
+        const sec = stepEl(n);
+        if (!sec) return true;
+        if (!sec.hasAttribute('data-blocks-only')) return false;
+        return [...sec.querySelectorAll('.cp-blk')].every((b) => b.hidden);
+    }
+    function paintLot() {
+        document.querySelectorAll('#cpWiz .cp-blk[data-lot]').forEach((b) => { b.hidden = lotHas(b.getAttribute('data-lot')); });
+        // Each step says what its lot answered for it.
+        document.querySelectorAll('#cpWiz .wtp-step').forEach((sec) => {
+            const words = [...sec.querySelectorAll('.cp-blk[data-lot]')].filter((b) => b.hidden).map((b) => LOT_KEYS[b.getAttribute('data-lot')][1]);
+            let note = sec.querySelector(':scope > .cp-lotnote');
+            if (!words.length || skipped(Number(sec.getAttribute('data-step')))) { if (note) note.hidden = true; return; }
+            if (!note) { note = document.createElement('p'); note.className = 'cp-lotnote'; sec.prepend(note); }
+            note.innerHTML = LOT_ICON + '<span>From <b>' + esc(state.lot.name) + '</b>: ' + esc(andList(words)) + '.</span>';
+            note.hidden = false;
+        });
+        document.querySelectorAll('#cpDots .wtp-dot').forEach((d, i) => { d.hidden = skipped(i); });
+    }
+    async function applyLot() {
+        const lot = state.lot;
+        if (!lot || !OPT) { paintLot(); return; }
+        // What the lot settles is the lot's: a hand set answer under a hidden block gives way.
+        Object.keys(LOT_KEYS).forEach((k) => { if (lotHas(k)) LOT_KEYS[k][0].forEach((t) => { delete TOUCH[t]; }); });
+        let L = {};
+        try { L = await window.aneeLots.legacy(lot, state.crop || null); } catch (_) { L = {}; }
+        if (state.lot !== lot) return;
+        applyProfile(lot.answers || {}, L);
+        if (Number(lot.areaHa) > 0) { $id('cpArea').value = String(Math.round(Number(lot.areaHa) * 10000) / 10000); state.area = $id('cpArea').value; seedHint(); }
+        paintLot();
+    }
+    function pickLot(lot) {
+        state.lot = lot;
+        state.location = lot ? (lot.where || lot.place || '') : '';
+        $id('cpLocation').value = state.location;
+        applyLot();
+    }
+    function mountLots() {
+        if (LOTS || !window.aneeLots) return;
+        LOTS = window.aneeLots.picker($id('cpLots'), { crop: () => state.crop || null, onPick: pickLot });
     }
 
     async function boot() {
@@ -967,7 +1044,7 @@
             OPT = res.data;
             paintOptions();
         } catch (err) { toast(err.message, 'error'); }
-        if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
+        if (window.aneeLots) mountLots(); else document.addEventListener('DOMContentLoaded', mountLots, { once: true });
         // Painted: the price card and the wizard arrive together, once.
         const gen = $id('cpGen');
         if (gen && gen.classList.contains('an-wait')) {
@@ -1014,6 +1091,7 @@
         $id('cpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
             <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('cpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
+        paintLot();
         // The yield units are the country's (cavans and tons at home, tons and kg elsewhere); the first is the default.
         const units = Object.keys(OPT.yieldUnits || {});
         if (!state.yieldUnit || !units.includes(state.yieldUnit)) state.yieldUnit = units[0] || 'tons';
@@ -1066,6 +1144,8 @@
     /* ---------------- the walk ---------------- */
     function show(n, backwards) {
         step = Math.max(0, Math.min(STEPS - 1, n));
+        // Over the steps the lot answered whole (and the one that is gone).
+        while (step > 0 && step < STEPS - 1 && skipped(step)) step += backwards ? -1 : 1;
         /* Leave whatever field was being typed in: on a phone the keypad
            otherwise rides along into the next step (a button tap does not
            take focus on iOS, so the hidden field would keep it). */
@@ -1085,7 +1165,7 @@
     function stepReady() {
         switch (step) {
             case 0: state.location = $id('cpLocation').value.trim();
-                return !!state.location || (toast('Type where the field is.', 'error'), false);
+                return (!!state.lot && !!state.location) || (toast('Pick the lot, or add one.', 'error'), false);
             case 1: return !!state.crop || (toast('Choose the crop.', 'error'), false);
             case 2: state.variety = $id('cpVariety').value.trim(); return true;
             case 3: return !!state.month || (toast('Pick your planting month.', 'error'), false);
@@ -1127,7 +1207,10 @@
             + `<br><span class="text-xs">${esc(state.area)} ha · ${esc(split(OPT.soils[state.soil] || '')[0])} · ${esc(OPT.waters[state.water] || '')}${state.problems.length ? ' · ' + state.problems.length + ' problem' + (state.problems.length === 1 ? '' : 's') : ''}</span>`;
         const closer = ['testP', 'testK', 'prevCrop', 'residue'].filter((k) => state[k] && state[k] !== 'unsure').length + (state.soilConditions.length ? 1 : 0) + (state.fertHistory ? 1 : 0) + (state.granulars.length ? 1 : 0);
         if (closer) $id('cpReview').innerHTML += `<br><span class="text-xs">${state.soilConditions.length ? esc(state.soilConditions.map((k) => split((OPT.soilConditions || {})[k] || k)[0].toLowerCase()).join(', ')) + ' soil · ' : ''}${closer} extra answer${closer === 1 ? '' : 's'}${state.granulars.length ? ' · ' + state.granulars.length + ' fertilizer' + (state.granulars.length === 1 ? '' : 's') + ' you can buy' : ''}</span>`;
-        if (FPC && FPC.count()) $id('cpReview').innerHTML += `<br><span class="text-xs">Your field in detail: ${FPC.count()} answer${FPC.count() === 1 ? '' : 's'}</span>`;
+        if (state.lot) {
+            const took = Object.keys(LOT_KEYS).filter(lotHas).map((k) => LOT_KEYS[k][1]);
+            $id('cpReview').innerHTML += `<span class="cp-lotline text-xs">🗺️ <b>${esc(state.lot.name)}</b>${state.lot.place ? ', ' + esc(state.lot.place) : ''}${state.lot.count ? ' · ' + state.lot.count + ' field answers' : ''}${took.length ? '. From the lot: ' + esc(andList(took)) : ''}. <button type="button" data-cp-lotedit>Edit the lot</button></span>`;
+        }
         if (Number(state.seedAmount) > 0) $id('cpReview').innerHTML += `<br><span class="text-xs">Planting ${esc(state.seedAmount)} ${esc((OPT.seedUnits[state.seedUnit] || [])[1] || state.seedUnit)} on the whole field${Number(state.germination) > 0 ? ' at ' + esc(state.germination) + ' percent germination' : ''}</span>`;
         loadNeed();
         $id('cpRunSays').textContent = OPT.canUse && OPT.quote ? `Write the protocol (${OPT.quote} credits)` : 'Write the protocol';
@@ -1137,6 +1220,12 @@
         $id('cpRun').disabled = !OPT.canUse;
     }
     $id('cpNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
+    // The review's "Edit the lot": the lot's sheet, then the steps follow what changed.
+    $id('cpReview').addEventListener('click', async (e) => {
+        if (!e.target.closest('[data-cp-lotedit]') || !state.lot || !window.aneeLots) return;
+        const row = await window.aneeLots.edit(state.lot, { crop: state.crop || null, ask: false });
+        if (row) { pickLot(row); review(); }
+    });
     $id('cpBack').addEventListener('click', () => show(step - 1, true));
     const pickWire = (hostId, attr, key, next) => {
         $id(hostId).addEventListener('click', (e) => {
@@ -1219,7 +1308,7 @@
         const now = $id('cpCropNow');
         now.textContent = c.label || 'Choose the crop';
         now.classList.remove('is-none');
-        if (FPC) FPC.refresh();
+        applyLot();
         if (state.varRecord && state.varRecord.crop !== state.crop) varSet('', null);
         if (!TOUCH.seedUnit) state.seedUnit = c.seedUnit || 'kg';
         paintSeedUnits();
@@ -1250,7 +1339,8 @@
             soilConditions: state.soilConditions, testP: state.testP, testK: state.testK, prevCrop: state.prevCrop, residue: state.residue,
             fertHistory: state.fertHistory, granulars: state.granulars,
             potential: state.potential || null, seedAmount: state.seedAmount || null, seedUnit: state.seedUnit, germination: state.germination || null, ph: state.ph || null,
-            ...(FPC ? FPC.payload() : {}),
+            ...(state.lot ? window.aneeLots.payload(state.lot) : {}),
+            location: state.location, lotName: state.lot ? state.lot.name : null,
         };
     }
 

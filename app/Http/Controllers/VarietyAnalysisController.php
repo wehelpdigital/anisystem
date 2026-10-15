@@ -181,6 +181,9 @@ class VarietyAnalysisController extends Controller
             // The field in detail (App\Support\FieldProfile), optional.
             'fieldProfile' => 'nullable|array',
             'fieldProfileFrom' => 'nullable|integer',
+            // The lot it is for (Global Lots, App\Support\FarmLots): its name rides on the report.
+            'lotId' => 'nullable|integer',
+            'lotName' => 'nullable|string|max:120',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
@@ -217,7 +220,8 @@ class VarietyAnalysisController extends Controller
         // her own instructions, or she declines for being "set up" at home.
         $settings = $settings->forField($p['country']);
         $crop = CropCatalog::CROPS[$p['crop']];
-        $title = 'Varieties · ' . $crop['label'] . ' · ' . \App\Support\Region::seasonTitle($p['season'], (int) $p['year'], $p['country']) . ' · ' . $p['location'];
+        $title = 'Varieties · ' . $crop['label'] . ' · ' . \App\Support\Region::seasonTitle($p['season'], (int) $p['year'], $p['country']) . ' · '
+            . ($p['lotName'] ? $p['lotName'] . ', ' : '') . $p['location'];
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(),
             'kind' => 'variety',
@@ -232,8 +236,11 @@ class VarietyAnalysisController extends Controller
         ]);
 
         $prompt = $this->prompt($p);
-        // The field in detail is kept for the next analysis, named after the place.
-        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
+        // The field in detail is kept for the next analysis, named after the place. A lot's
+        // answers are already kept, in the lot: saving them again would add a second lot.
+        if (! $p['lotId']) {
+            FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
+        }
 
         /* Should PHP itself be cut off mid-run (a wall-clock limit, a fatal),
          * the row must not stay "pending" -- that blocks every next run for
@@ -681,6 +688,8 @@ class VarietyAnalysisController extends Controller
             'priorities' => array_values((array) $request->input('priorities')),
             'problems' => array_values((array) $request->input('problems', [])),
             'notes' => trim((string) $request->input('notes', '')),
+            'lotId' => (int) $request->input('lotId') ?: null,
+            'lotName' => mb_substr(trim((string) $request->input('lotName', '')), 0, 120) ?: null,
         ] + FieldProfile::forParams(FieldProfile::fromInput($request->input('fieldProfile'), (string) $request->input('crop')), (string) $request->input('crop'));
     }
 

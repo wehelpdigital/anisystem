@@ -34,7 +34,10 @@
     .crop-tag.pbh-moved { animation: pbhMoved .9s cubic-bezier(.22,1,.36,1); }
     @keyframes pbhMoved { 0% { box-shadow: 0 0 0 0 rgba(107,159,61,0); } 25% { box-shadow: 0 0 0 4px rgba(107,159,61,.35); } 100% { box-shadow: 0 0 0 0 rgba(107,159,61,0); } }
     @media (prefers-reduced-motion: reduce) { .pbh-dt .dt-row { transition: none; } .crop-tag.pbh-moved { animation: none; } }
+    .pbh-hint[hidden] { display: none; }
 </style>
+{{-- The variety sheet every head form on the page shares. --}}
+@include('partials.variety-pick')
 {{-- How the days are counted: one sheet, shared by every head form on the page. --}}
 <div class="sheet hidden" id="pbDayTypeSheet" style="--sheet-width:28rem">
     <div class="sheet-handle"></div>
@@ -137,7 +140,7 @@
         // `chosen`: the farmer (or the saved protocol) has said how the days
         // are counted. Until then a crop lands the count on how that crop is
         // usually grown; after it, only a count that no longer fits moves.
-        const state = { crop: null, dayType: 'DAS', chosen: false };
+        const state = { crop: null, dayType: 'DAS', chosen: false, varRecord: null };
         const paintCrop = () => {
             const c = state.crop ? FLAT[state.crop] : null;
             $id(pfx + 'CropIcon').textContent = c ? c.icon : '🌱';
@@ -166,11 +169,40 @@
             }
             paintDay();
         };
+        /* The variety, two ways (partials/variety-pick): a record of the
+           crop, or a name typed as sold. `${pfx}Variety` keeps the name. */
+        const VAR_NONE = 'Pick from the records, or type your own';
+        const paintVar = (bump) => {
+            const v = $id(pfx + 'Variety').value;
+            const now = $id(pfx + 'VarNow');
+            now.textContent = v || VAR_NONE;
+            now.classList.toggle('is-none', !v);
+            $id(pfx + 'VarIcon').textContent = state.varRecord ? '📗' : '🧬';
+            const hint = $id(pfx + 'VarHint');
+            hint.textContent = state.varRecord && window.aneeVarietyPick ? 'On record: ' + window.aneeVarietyPick.facts(state.varRecord) : '';
+            hint.hidden = !hint.textContent;
+            if (bump) { const b = $id(pfx + 'VarBtn'); b.classList.remove('pbh-moved'); void b.offsetWidth; b.classList.add('pbh-moved'); }
+        };
+        const setVar = (name, rec) => {
+            $id(pfx + 'Variety').value = String(name || '').trim().slice(0, 120);
+            state.varRecord = rec ? Object.assign({ crop: state.crop }, rec) : null;
+            paintVar(true);
+        };
+        $id(pfx + 'VarBtn').addEventListener('click', async () => {
+            if (!window.aneeVarietyPick) return;
+            const c = state.crop ? FLAT[state.crop] : null;
+            const res = await window.aneeVarietyPick.open({ crop: state.crop || '', cropLabel: c ? String(c.label).split(' (')[0].split(' — ')[0] : '',
+                value: { name: $id(pfx + 'Variety').value, record: state.varRecord },
+                ownNote: 'Not on record. The name is kept as you typed it.' });
+            if (res) setVar(res.name, res.record);
+        });
         $id(pfx + 'CropBtn').addEventListener('click', () => {
             onPick = (key) => {
                 state.crop = key;
                 paintCrop();
                 fitToCrop();
+                // A variety from another crop's records does not belong to this one.
+                if (state.varRecord && state.varRecord.crop !== key) setVar('', null);
             };
             $id('pbCropSearch').value = ''; sift();
             openSheet('pbCropSheet');
@@ -202,6 +234,8 @@
             fill(p) {
                 $id(pfx + 'Title').value = p.title || '';
                 $id(pfx + 'Variety').value = p.variety || '';
+                state.varRecord = null;
+                paintVar();
                 $id(pfx + 'Desc').value = p.description || '';
                 window.userTags.set($id(pfx + 'Tags'), p.tags || []);
                 state.crop = p.crop || null;
@@ -244,9 +278,19 @@
             <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
         </button>
     </div>
+    {{-- The variety, two ways (2026-10-16, the owner): searched in the
+         records for the protocol's crop, or typed as sold (the shared sheet,
+         partials/variety-pick). The hidden input keeps the name the form
+         saves, as the text box did. --}}
     <div>
-        <label class="form-label" for="{{ $pfx }}Variety">Variety <span class="text-gray-400 font-normal">(optional)</span></label>
-        <input type="text" id="{{ $pfx }}Variety" class="form-input" maxlength="120" placeholder="e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222' : 'Pioneer P1197' }}">
+        <span class="form-label">Variety <span class="text-gray-400 font-normal">(optional)</span></span>
+        <button type="button" class="crop-tag" id="{{ $pfx }}VarBtn">
+            <span class="crop-tag-e" id="{{ $pfx }}VarIcon">🧬</span>
+            <span class="crop-tag-t is-none" id="{{ $pfx }}VarNow">Pick from the records, or type your own</span>
+            <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <input type="hidden" id="{{ $pfx }}Variety" value="">
+        <p class="pbh-hint" id="{{ $pfx }}VarHint" hidden></p>
     </div>
     <div>
         <span class="form-label">How the days are counted</span>

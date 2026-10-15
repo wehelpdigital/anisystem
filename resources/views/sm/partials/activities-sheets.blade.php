@@ -62,6 +62,21 @@
     window.CARD_MENU_ROWS = @json($cardMenuRows);
 </script>
 
+{{-- The variety sheet (partials/variety-pick, 2026-10-16): the quick add
+     lot's "Search the records" opens it. It is the shell's copy too: the Lots
+     module, when the shell injects it, leans on this one rather than bringing
+     a second (whose script would wait for a DOMContentLoaded long gone). --}}
+@include('partials.variety-pick')
+<style>
+    .qal-var-find { display: inline-flex; align-items: center; gap: .35rem; margin-top: .4rem; padding: .2rem 0; font-size: .78rem; font-weight: 800;
+        color: var(--color-brand-700, #3d6823); text-decoration: underline; text-underline-offset: 3px; transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .qal-var-find:hover { color: var(--color-brand-600, #4a7c2a); }
+    .qal-var-find svg { width: .95rem; height: .95rem; flex: none; }
+    html.dark .qal-var-find { color: #a5c97e; }
+    #qalVariety.qal-var-flash { animation: qalVarFlash .9s cubic-bezier(.22,1,.36,1); }
+    @keyframes qalVarFlash { 25% { box-shadow: 0 0 0 4px rgb(107 159 61 / .35); border-color: #86b556; } }
+    @media (prefers-reduced-motion: reduce) { .qal-var-find { transition: none; } #qalVariety.qal-var-flash { animation: none; } }
+</style>
 {{-- How a control this viewer may not use looks. It lives here, beside the
      first thing that needs it, because the board is drawn by three partials
      and none of them owns the page's stylesheet. The component classes below
@@ -256,7 +271,13 @@
                         </select>
                     </div>
 
-                    <input type="text" id="qalVariety" class="form-input bg-white!" placeholder="Variety (optional), e.g. IR64" maxlength="255">
+                    {{-- The box stays (a name typed as sold); the button under it
+                         searches the crop's varieties on record and writes the
+                         chosen name into it (partials/variety-pick, 2026-10-16). --}}
+                    <div>
+                        <input type="text" id="qalVariety" class="form-input bg-white!" placeholder="Variety (optional), e.g. IR64" maxlength="255">
+                        <button type="button" class="qal-var-find" id="qalVarFind"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>Search the records</button>
+                    </div>
 
                     {{-- How this lot counts its days. Rebuilt from the crop
                          above, exactly as the Lots module does it, so a

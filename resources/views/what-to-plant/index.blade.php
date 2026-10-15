@@ -230,6 +230,22 @@
     html.dark .wp-qh { color: #e8efe1; }
     .wp-loc-country { margin-bottom: .8rem; }
     .wp-loc-country .form-label { margin-bottom: .3rem; }
+    /* The lot (2026-10-16, the owner): what it answered is not asked again.
+       A [hidden] block loses to its own display rule without these. */
+    .wp-loc-country[hidden], .wtp-lotq[hidden], .wtp-prob[hidden] { display: none; }
+    .wtp-lotnote { display: flex; align-items: flex-start; gap: .5rem; margin: 0 0 .8rem; padding: .55rem .75rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5;
+        color: #24400f; background: #f3f8ec; border: 1px solid #d5e7c0; animation: wtpLotIn .3s cubic-bezier(.22,1,.36,1) both; }
+    .wtp-lotnote[hidden] { display: none; }
+    .wtp-lotnote svg { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: #4a7c2a; }
+    @keyframes wtpLotIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .wtp-lotline { display: block; margin-top: .35rem; }
+    .wtp-lotline button { font-weight: 800; color: #3d6823; text-decoration: underline; text-underline-offset: 3px; }
+    /* A step the lot answered whole has no dot: it folds away. */
+    .wtp-dot.is-skip { width: 0; margin-left: -.35rem; opacity: 0; }
+    html.dark .wtp-lotnote { color: #cfe6b8; background: #17220f; border-color: #2b3a1c; }
+    html.dark .wtp-lotnote svg { color: #a5c97e; }
+    html.dark .wtp-lotline button { color: #a5c97e; }
+    @media (prefers-reduced-motion: reduce) { .wtp-lotnote { animation: none; } }
 
     html.dark .wtp-tab { background: #151b12; border-color: #2b3a1c; color: #93a684; }
     html.dark .wtp-tab.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
@@ -445,19 +461,23 @@
         </div>
 
         <div class="card p-5 wtp-wiz" id="wpWiz">
-            {{-- Step 1: the place --}}
+            {{-- Step 1: the lot (2026-10-16, the owner), picked from the
+                 farm's lots (partials/farm-lots) or added. Its town and
+                 province are where the weather and the markets are read, and
+                 its size, soil, water and last season are not asked again on
+                 the steps after it. The field's country is the farmer's own
+                 (their account's): the picker stays for a farm abroad and is
+                 out of sight for one at home. It decides whose climate, crops
+                 and agencies the analysis reads. --}}
             <section class="wtp-step is-on" data-step="0">
-                <p class="wtp-q">Where is the field?</p>
-                {{-- The field's country, the farmer's own unless they say
-                     otherwise: it decides the address words, the example
-                     place, and whose climate, crops and agencies the
-                     analysis reads. --}}
-                <div class="wp-loc-country">
+                <p class="wtp-q">Which lot is it for?{{ \App\Support\Tagalog::flag('lot') }}</p>
+                <p class="wtp-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</p>
+                <div class="wp-loc-country" @if (\App\Support\Region::ph()) hidden @endif>
                     <label class="form-label">Country</label>
                     @include('partials.country-pick', ['id' => 'wpCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
                 </div>
-                <p class="wtp-sub" id="wpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough. Weather and markets differ by area.</p>
-                <input type="text" id="wpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
+                <div id="wpLots"></div>
+                @include('partials.farm-lots')
             </section>
             {{-- Step 2: when they want to begin --}}
             <section class="wtp-step" data-step="1">
@@ -465,58 +485,66 @@
                 <p class="wtp-sub">The month you would prepare and plant. The list is built around it.</p>
                 <div class="wtp-choices is-two" id="wpMonths"></div>
             </section>
-            {{-- Step 3: the field in detail (2026-10-15, the owner): the
-                 shared field questions (App\Support\FieldProfile), optional.
-                 The answers fill the soil, water, land, farm and problem
-                 steps after it, and go to Anee whole. --}}
-            <section class="wtp-step" data-step="2">
-                <p class="wtp-q">Your field in detail</p>
-                <p class="wtp-sub">Optional. The soil, the water and last season, one short page at a time. Your answers fill in the next steps, and Anee reads every one.</p>
-                <div id="wpFpc"></div>
-                @include('partials.field-profile-card')
-            </section>
-            {{-- Step 4: the soil --}}
-            <section class="wtp-step" data-step="3">
+            {{-- "Your field in detail" (2026-10-15) was a step here: the lot
+                 carries those answers now (step 1). The steps below hide
+                 each question the lot answered (data-lot), and a step left
+                 with none (data-blocks-only) is skipped. --}}
+            {{-- Step 3: the soil, the lot's once it said how the soil feels --}}
+            <section class="wtp-step" data-step="2" data-blocks-only>
                 <p class="wtp-q">What is the soil like?</p>
-                <p class="wtp-sub">Go by feel. No test needed.</p>
-                <div class="wtp-choices" id="wpSoils"></div>
+                <div class="wtp-lotq" data-lot="soil">
+                    <p class="wtp-sub">Go by feel. No test needed.</p>
+                    <div class="wtp-choices" id="wpSoils"></div>
+                </div>
             </section>
-            {{-- Step 4: the water --}}
-            <section class="wtp-step" data-step="4">
+            {{-- Step 4: the water, the lot's once it said where it comes from --}}
+            <section class="wtp-step" data-step="3" data-blocks-only>
                 <p class="wtp-q">What water does the field get?</p>
-                <p class="wtp-sub">Water matters most here.</p>
-                <div class="wtp-choices" id="wpWaters"></div>
+                <div class="wtp-lotq" data-lot="water">
+                    <p class="wtp-sub">Water matters most here.</p>
+                    <div class="wtp-choices" id="wpWaters"></div>
+                </div>
             </section>
             {{-- Step 5: more about the ground -- pH, how the water looks,
                  the lay of the land, elevation, sun. Every one optional and
-                 answerable by eye; each one moves the ranking. --}}
-            <section class="wtp-step" data-step="5">
+                 answerable by eye; each one moves the ranking. The pH, the
+                 salt and the slope are the lot's once it answered them. --}}
+            <section class="wtp-step" data-step="4">
                 <p class="wtp-q">More about the land</p>
                 <p class="wtp-sub">Answer what you know and skip the rest. Each answer makes the list better.</p>
-                <p class="wp-qh">Soil pH <small>from a test kit, or by the signs</small></p>
-                <div class="wtp-choices" id="wpPhs"></div>
-                <div class="wp-ph-in" id="wpPhIn" hidden>
-                    <label class="form-label text-xs" for="wpPhValue">Test result <span class="text-gray-400 font-normal">(optional)</span></label>
-                    <input type="text" id="wpPhValue" class="form-input" maxlength="24" autocomplete="off" placeholder="e.g. 5.8, or 5.5 to 6.2">
+                <div class="wtp-lotq mb-4" data-lot="ph">
+                    <p class="wp-qh">Soil pH <small>from a test kit, or by the signs</small></p>
+                    <div class="wtp-choices" id="wpPhs"></div>
+                    <div class="wp-ph-in" id="wpPhIn" hidden>
+                        <label class="form-label text-xs" for="wpPhValue">Test result <span class="text-gray-400 font-normal">(optional)</span></label>
+                        <input type="text" id="wpPhValue" class="form-input" maxlength="24" autocomplete="off" placeholder="e.g. 5.8, or 5.5 to 6.2">
+                    </div>
                 </div>
-                <p class="wp-qh mt-4">Sodium, salt or acid sulfate? <small>pick all that apply</small></p>
-                <div class="wtp-choices" id="wpSoilExtras"></div>
-                <p class="wp-qh mt-4">How does the water look? <small>pick all that apply</small></p>
+                <div class="wtp-lotq mb-4" data-lot="extra">
+                    <p class="wp-qh">Sodium, salt or acid sulfate? <small>pick all that apply</small></p>
+                    <div class="wtp-choices" id="wpSoilExtras"></div>
+                </div>
+                <p class="wp-qh">How does the water look? <small>pick all that apply</small></p>
                 <div class="wtp-choices" id="wpWaterLooks"></div>
-                <p class="wp-qh mt-4">Slope of the land</p>
-                <div class="wtp-choices is-two" id="wpLays"></div>
+                <div class="wtp-lotq mt-4" data-lot="lay">
+                    <p class="wp-qh">Slope of the land</p>
+                    <div class="wtp-choices is-two" id="wpLays"></div>
+                </div>
                 <p class="wp-qh mt-4">Elevation</p>
                 <div class="wtp-choices" id="wpElevations"></div>
                 <p class="wp-qh mt-4">Sunlight</p>
                 <div class="wtp-choices" id="wpSuns"></div>
             </section>
-            {{-- Step 6: more about the farm -- history, hands, money, market. --}}
-            <section class="wtp-step" data-step="6">
+            {{-- Step 6: more about the farm -- history, hands, money, market.
+                 The last crop is the lot's once it answered it. --}}
+            <section class="wtp-step" data-step="5">
                 <p class="wtp-q">More about the farm</p>
                 <p class="wtp-sub">Also optional. Past crops and your means show what is realistic.</p>
-                <label class="form-label" for="wpPrevCrop">What grew there last? <span class="text-gray-400 font-normal">(optional)</span></label>
-                <input type="text" id="wpPrevCrop" class="form-input" maxlength="120" placeholder="e.g. rice, then left idle">
-                <label class="form-label mt-3" for="wpGrewWell">What grew well before? <span class="text-gray-400 font-normal">(optional)</span></label>
+                <div class="wtp-lotq mb-3" data-lot="prevCrop">
+                    <label class="form-label" for="wpPrevCrop">What grew there last? <span class="text-gray-400 font-normal">(optional)</span></label>
+                    <input type="text" id="wpPrevCrop" class="form-input" maxlength="120" placeholder="e.g. rice, then left idle">
+                </div>
+                <label class="form-label" for="wpGrewWell">What grew well before? <span class="text-gray-400 font-normal">(optional)</span></label>
                 <input type="text" id="wpGrewWell" class="form-input" maxlength="160" placeholder="e.g. onions did well, tomatoes got blight">
                 <p class="wp-qh mt-4">Workers and machines</p>
                 <div class="wtp-choices" id="wpLabors"></div>
@@ -525,36 +553,41 @@
                 <p class="wp-qh mt-4">Where will you sell? <small>pick all that apply</small></p>
                 <div class="wtp-choices" id="wpMarkets"></div>
             </section>
-            {{-- Step 7: the troubles --}}
-            <section class="wtp-step" data-step="7">
+            {{-- Step 7: the troubles. A row the lot already answered (the
+                 floods, the drainage, the water, the salt, last season's
+                 pests, the weeds, the slope) is hidden and keeps the lot's
+                 answer; a river, the wind and the shade are still asked. --}}
+            <section class="wtp-step" data-step="6" data-blocks-only>
                 <p class="wtp-q">What problems does the land have?</p>
                 <p class="wtp-sub">Tick what you have seen. Each one changes the list.</p>
                 <div class="wtp-probs" id="wpProbs"></div>
             </section>
-            {{-- Step 8: the aim and the area --}}
-            <section class="wtp-step" data-step="8">
+            {{-- Step 8: the aim and the area (the lot's size, once it has one) --}}
+            <section class="wtp-step" data-step="7">
                 <p class="wtp-q">What is the harvest for?</p>
                 <p class="wtp-sub">Crops to sell and crops for the family are not the same.</p>
                 <div class="wtp-choices" id="wpAims"></div>
-                <label class="form-label mt-4" for="wpArea">How big is the field? <span class="text-gray-400 font-normal">(optional)</span></label>
-                <input type="text" id="wpArea" class="form-input" maxlength="60" placeholder="e.g. half a hectare, 800 sqm">
+                <div class="wtp-lotq" data-lot="area">
+                    <label class="form-label mt-4" for="wpArea">How big is the field? <span class="text-gray-400 font-normal">(optional)</span></label>
+                    <input type="text" id="wpArea" class="form-input" maxlength="60" placeholder="e.g. half a hectare, 800 sqm">
+                </div>
                 <label class="form-label mt-3" for="wpNotes">Anything else? <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="wpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. thinking of ube, and my neighbor grows good onions"></textarea>
             </section>
             {{-- Step 9: what matters most -- a list the farmer reorders --}}
-            <section class="wtp-step" data-step="9">
+            <section class="wtp-step" data-step="8">
                 <p class="wtp-q">What matters most to you?</p>
                 <p class="wtp-sub">Put them in your order. The top one counts most.</p>
                 <div class="wp-prio" id="wpPrio"></div>
             </section>
             {{-- Step 10: families the farmer would rather not plant -- never all of them --}}
-            <section class="wtp-step" data-step="10">
+            <section class="wtp-step" data-step="9">
                 <p class="wtp-q">Anything you'd rather not plant?</p>
                 <p class="wtp-sub">Optional. Pick crop groups to skip. At least one must stay.</p>
                 <div class="wtp-choices" id="wpExcludes"></div>
             </section>
             {{-- Step 11: crops the farmer has in mind -- optional, each ranked honestly --}}
-            <section class="wtp-step" data-step="11">
+            <section class="wtp-step" data-step="10">
                 <p class="wtp-q">Any crops you have in mind?</p>
                 <p class="wtp-sub">Optional. Anee ranks each one with her own picks, even if it fits poorly.</p>
                 <button type="button" class="crop-tag" id="wpCropBtn">
@@ -567,7 +600,7 @@
                 <input type="text" id="wpCropsOther" class="form-input" maxlength="160" placeholder="e.g. ampalaya, ube (use commas)">
             </section>
             {{-- Step 12: the decision --}}
-            <section class="wtp-step" data-step="12">
+            <section class="wtp-step" data-step="11">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="wpReview"></p>
                 <button type="button" class="wtp-run" id="wpRun">
@@ -650,17 +683,19 @@
     const CAT_E = { 'Grain': '🌾', 'Vegetable': '🥬', 'Root crop': '🍠', 'Legume': '🫘', 'Fruit / tree': '🌳' };
 
     let OPT = null;
-    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', soilExtra: [], waterLook: [], lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: [], priorities: [], cropsAsked: [], cropsOther: '', exclude: [] };
+    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', soilExtra: [], waterLook: [], lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: [], priorities: [], cropsAsked: [], cropsOther: '', exclude: [], lot: null };
     const RULES = () => (window.ANEE_REGION_RULES || {});
     const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
     const countryName = (code) => (code === 'PH' ? 'the Philippines' : (rulesFor(code).name || code || ''));
     let step = 0;
-    const STEPS = 13;
-    /* The field in detail (partials/field-profile-card): its answers fill the
+    const STEPS = 12;
+    /* The lot's answers (partials/farm-lots, FieldProfile::legacy) fill the
        soil, the water, the pH and salt, the slope, the last crop and the
-       problems, each unless the farmer has set it by hand. */
-    let FPC = null;
+       problems, each unless the farmer has set it by hand. What the lot
+       answered is hidden and keeps the lot's answer. LIT: the steps where a
+       question still shown was filled in from the lot. */
     const TOUCH = {};
+    let LIT = {};
     const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
     const stepEl = (n) => document.querySelector('#wpWiz .wtp-step[data-step="' + n + '"]');
     const lightUp = (hostId, attr, val) => document.querySelectorAll('#' + hostId + ' .wtp-choice').forEach((c) => {
@@ -670,26 +705,28 @@
     let AUTO_PREV = '';
     function applyProfile(answers, L) {
         if (!OPT) return '';
-        const got = [], lit = {};
-        const one = (key, hostId, attr, val, word, at) => {
+        const got = [];
+        LIT = {};
+        // blk: the lot block the answer sits in; a hidden one is not "filled in", it is the lot's.
+        const one = (key, hostId, attr, val, word, at, blk) => {
             if (TOUCH[key]) return;
             state[key] = val;
             lightUp(hostId, attr, val);
             const on = Array.isArray(val) ? val.length > 0 : (val !== null && val !== 'unsure');
-            if (on) { got.push(word); lit[at] = true; }
+            if (on) { got.push(word); if (!lotHas(blk)) LIT[at] = true; }
         };
-        one('soil', 'wpSoils', 'soil', L.soil && L.soil !== 'unsure' ? L.soil : null, 'the soil', 3);
-        one('water', 'wpWaters', 'water', L.water || null, 'the water', 4);
-        one('ph', 'wpPhs', 'ph', L.phLevel || 'unsure', 'the pH', 5);
+        one('soil', 'wpSoils', 'soil', L.soil && L.soil !== 'unsure' ? L.soil : null, 'the soil', 2, 'soil');
+        one('water', 'wpWaters', 'water', L.water || null, 'the water', 3, 'water');
+        one('ph', 'wpPhs', 'ph', L.phLevel || 'unsure', 'the pH', 4, 'ph');
         if (!TOUCH.phValue) {
             const v = L.phLow != null ? (L.phHigh != null && L.phHigh !== L.phLow ? L.phLow + ' to ' + L.phHigh : String(L.phLow)) : '';
             $id('wpPhValue').value = v;
             state.phValue = v;
-            if (v) lit[5] = true;
+            if (v && !lotHas('ph')) LIT[4] = true;
         }
         $id('wpPhIn').hidden = state.ph === 'unsure';
-        one('soilExtra', 'wpSoilExtras', 'soilextra', (L.soilExtra || []).filter((k) => (OPT.soilExtras || {})[k]), 'salt or sodium', 5);
-        one('lay', 'wpLays', 'lay', L.lay || null, 'the slope', 5);
+        one('soilExtra', 'wpSoilExtras', 'soilextra', (L.soilExtra || []).filter((k) => (OPT.soilExtras || {})[k]), 'salt or sodium', 4, 'extra');
+        one('lay', 'wpLays', 'lay', L.lay || null, 'the slope', 4, 'lay');
         if (!TOUCH.prevCrop) {
             const q = window.aneeFieldProfile && window.aneeFieldProfile.questions.prevCrop;
             const said = answers.prevCrop && q && q.o[answers.prevCrop] ? q.o[answers.prevCrop][0] : '';
@@ -697,23 +734,155 @@
                 $id('wpPrevCrop').value = said;
                 state.prevCrop = said;
                 AUTO_PREV = said;
-                if (said) { got.push('the last crop'); lit[6] = true; }
+                if (said) { got.push('the last crop'); if (!lotHas('prevCrop')) LIT[5] = true; }
             }
         }
+        const want = (L.problemsWhen || []).filter((k) => OPT.problems[k]);
+        if ((L.problemsVariety || []).includes('slope') && OPT.problems.slope) want.push('slope');
         if (!TOUCH.problems) {
-            const want = (L.problemsWhen || []).filter((k) => OPT.problems[k]);
-            if ((L.problemsVariety || []).includes('slope') && OPT.problems.slope) want.push('slope');
             document.querySelectorAll('#wpProbs input').forEach((i) => { i.checked = want.includes(i.value); i.closest('.wtp-prob')?.classList.toggle('is-on', i.checked); });
             state.problems = want;
-            if (want.length) { got.push(want.length === 1 ? 'one problem' : want.length + ' problems'); lit[7] = true; }
+            if (want.length) got.push(want.length === 1 ? 'one problem' : want.length + ' problems');
+        } else {
+            // Ticked by hand: the farmer's own rows stay, the lot's hidden rows follow the lot.
+            document.querySelectorAll('#wpProbs .wtp-prob').forEach((row) => {
+                if (!row.hidden) return;
+                const i = row.querySelector('input');
+                i.checked = want.includes(i.value);
+                row.classList.toggle('is-on', i.checked);
+            });
+            state.problems = [...document.querySelectorAll('#wpProbs input:checked')].map((i) => i.value);
         }
-        [3, 4, 5, 6, 7].forEach((n) => window.aneeFieldCard.hint(stepEl(n), !!lit[n]));
-        return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything on the next steps.' : '';
+        if (want.some((k) => !lotHas('prob:' + k))) LIT[6] = true;
+        return got.length ? 'Filled in for you: ' + andList(got) + '.' : '';
     }
-    function mountCard() {
-        if (FPC || !window.aneeFieldCard) return;
-        FPC = window.aneeFieldCard.mount($id('wpFpc'), { crop: null, title: () => state.location || 'Your field', onChange: applyProfile });
+
+    /* ---- the lot (partials/farm-lots, 2026-10-16, the owner) ----
+       Picked on the first step. Each block with data-lot is a question the
+       lot may already have answered: then it is hidden, and a step whose
+       every block is hidden (data-blocks-only) is skipped by Next and Back,
+       its dot folded away. The troubles list is asked row by row: a river,
+       the wind and the shade are not the lot's to say. */
+    let LOTS = null;
+    const LOT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+    const lotA = () => (state.lot && state.lot.answers) || {};
+    const lotHasKey = (k) => { const v = lotA()[k]; return v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && !v.length); };
+    // The lot's answers that settle each row of the troubles list.
+    const PROB_LOT = { floods: ['flooding'], drainage: ['drainage'], water_source: ['water'], sea: ['salt'], pests: ['outbreaks'], weeds: ['weeds'], slope: ['slope'] };
+    const LOT_WORD = { soil: 'the soil', water: 'the water', ph: 'the pH', extra: 'any salt', lay: 'the slope', prevCrop: 'the last crop', area: 'the size',
+        flooding: 'the floods', drainage: 'the drainage', salt: 'the salt', outbreaks: 'last season\'s troubles', weeds: 'the weeds', slope: 'the slope' };
+    const lotPh = () => (lotHasKey('acidity') && lotA().acidity !== 'untested') || lotHasKey('phFrom');
+    function lotHas(k) {
+        if (!state.lot || !k || k === '-') return false;
+        if (k === 'soil') return lotHasKey('texture') || lotA().rocks === 'many';
+        // "Never tested" does not say the pH; sodium and salt need the salt answer and the acidity (acid sulfate).
+        if (k === 'ph') return lotPh();
+        if (k === 'extra') return lotPh() && lotHasKey('salt');
+        if (k === 'lay') return lotHasKey('slope');
+        if (k === 'area') return Number(state.lot.areaHa) > 0;
+        if (k.startsWith('prob:')) { const need = PROB_LOT[k.slice(5)]; return !!need && need.every(lotHasKey); }
+        return lotHasKey(k);
     }
+    const lotWordsOf = (k) => (k.startsWith('prob:') ? (PROB_LOT[k.slice(5)] || []) : [k]).map((x) => LOT_WORD[x]).filter(Boolean);
+    function skipped(n) {
+        const sec = stepEl(n);
+        if (!sec || !sec.hasAttribute('data-blocks-only')) return false;
+        const blocks = [...sec.querySelectorAll('[data-lot]')];
+        return blocks.length > 0 && blocks.every((b) => b.hidden);
+    }
+    function paintLot() {
+        document.querySelectorAll('#wpWiz [data-lot]').forEach((b) => { b.hidden = lotHas(b.getAttribute('data-lot')); });
+        // Each step says what its lot answered for it, and what it filled in.
+        document.querySelectorAll('#wpWiz .wtp-step').forEach((sec) => {
+            const n = Number(sec.getAttribute('data-step'));
+            const words = [...new Set([...sec.querySelectorAll('[data-lot]')].filter((b) => b.hidden).flatMap((b) => lotWordsOf(b.getAttribute('data-lot'))))];
+            const fill = !!LIT[n];
+            let note = sec.querySelector(':scope > .wtp-lotnote');
+            if (!state.lot || (!words.length && !fill) || skipped(n)) { if (note) note.hidden = true; return; }
+            if (!note) { note = document.createElement('p'); note.className = 'wtp-lotnote'; sec.querySelector(':scope > .wtp-q').after(note); }
+            const name = '<b>' + esc(state.lot.name) + '</b>';
+            note.innerHTML = LOT_ICON + '<span>' + (words.length
+                ? 'From ' + name + ': ' + esc(andList(words)) + '.' + (fill ? ' Some answers below are filled in from it too. Change any that is not right.' : '')
+                : 'Filled in from ' + name + '. Change anything that is not right.') + '</span>';
+            note.hidden = false;
+        });
+        document.querySelectorAll('#wpDots .wtp-dot').forEach((d, i) => d.classList.toggle('is-skip', skipped(i)));
+    }
+    let AUTO_AREA = '';
+    async function applyLot() {
+        const lot = state.lot;
+        paintLot();
+        if (!OPT) return;
+        // What the lot settles is the lot's: a hand set answer under a hidden block gives way.
+        [['soil', ['soil']], ['water', ['water']], ['ph', ['ph', 'phValue']], ['extra', ['soilExtra']], ['lay', ['lay']], ['prevCrop', ['prevCrop']]]
+            .forEach(([blk, keys]) => { if (lotHas(blk)) keys.forEach((k) => { delete TOUCH[k]; }); });
+        if (lotHas('prevCrop')) $id('wpPrevCrop').value = '';
+        // The size: the lot's, said in the farmer's words ("1.5 ha"), or what they type.
+        const area = $id('wpArea');
+        if (lotHas('area')) { area.value = window.aneeLots.fmtHa(lot.areaHa); AUTO_AREA = area.value; }
+        else if (area.value === AUTO_AREA) { area.value = ''; AUTO_AREA = ''; }
+        state.area = area.value.trim();
+        let L = {};
+        if (lot) { try { L = await window.aneeLots.legacy(lot, null); } catch (_) { L = {}; } }
+        if (state.lot !== lot) return;
+        applyProfile(lot ? lot.answers || {} : {}, L);
+        paintLot();
+    }
+    function pickLot(lot) {
+        const was = state.lot ? state.lot.id : null;
+        state.lot = lot || null;
+        state.location = lot ? (lot.where || lot.place || '') : '';
+        // Another lot is another field: what was set by hand for the last one gives way.
+        if (!lot || lot.id !== was) Object.keys(TOUCH).forEach((k) => { delete TOUCH[k]; });
+        return applyLot().then(() => { if (step === STEPS - 1 && state.lot) review(); });
+    }
+    function mountLots() {
+        if (LOTS || !window.aneeLots) return;
+        LOTS = window.aneeLots.picker($id('wpLots'), { crop: null, onPick: pickLot });
+    }
+    /* The lot's answers in a few plain words, for the review line. */
+    const SAY = { 'texture.sandy': 'gritty sandy soil', 'texture.loam': 'soft crumbly loam', 'texture.clay': 'sticky clay', 'texture.heavy_clay': 'heavy clay that cracks',
+        'rocks.none': 'no stones', 'rocks.some': 'some stones', 'rocks.many': 'many stones',
+        'water.irrigation': 'irrigation canal', 'water.pump': 'pump or well', 'water.river': 'river or spring water', 'water.reservoir': 'farm pond', 'water.rainfed': 'rain only',
+        'flooding.never': 'never floods', 'flooding.sometimes': 'floods sometimes', 'flooding.often': 'floods most wet seasons',
+        'drainage.fast': 'drains fast', 'drainage.day': 'drains within a day', 'drainage.slow': 'drains slowly', 'drainage.stands': 'water stands for days',
+        'salt.none': 'no salt', 'salt.crust': 'white salt crust', 'salt.sea': 'sea water at high tide', 'salt.tips': 'salt burned leaf tips', 'salt.sodic': 'sodic crust',
+        'acidity.untested': 'pH never tested', 'acidity.none': 'not acidic', 'acidity.mild': 'mildly acidic', 'acidity.strong': 'strongly acidic',
+        'acidity.sulfate': 'acid sulfate soil', 'acidity.alkaline': 'alkaline soil',
+        'slope.flat': 'flat land', 'slope.gentle': 'gently sloping', 'slope.steep': 'steep land', 'slope.terraced': 'terraced',
+        'prevCrop.rice_straw': 'rice last with the straw left', 'prevCrop.rice_no_straw': 'rice last with the straw gone', 'prevCrop.corn': 'corn or sorghum last',
+        'prevCrop.legume': 'beans or peanuts last', 'prevCrop.vegetable': 'vegetables last', 'prevCrop.fallow': 'left to weeds last season', 'prevCrop.new_land': 'newly opened land',
+        'weeds.few': 'few weeds' };
+    function lotSays(keys) {
+        const Q = (window.aneeFieldProfile && window.aneeFieldProfile.questions) || {};
+        const a = lotA(), out = [];
+        keys.forEach((k) => {
+            if (k === 'phFrom') {
+                if (lotHasKey('phFrom')) out.push('pH ' + (lotHasKey('phTo') && String(a.phTo) !== String(a.phFrom) ? a.phFrom + ' to ' + a.phTo : a.phFrom));
+                return;
+            }
+            if (!lotHasKey(k)) return;
+            if (k === 'outbreaks') {
+                const l = [].concat(a.outbreaks).filter((x) => x !== 'none');
+                out.push(l.length ? l.length + (l.length === 1 ? ' trouble' : ' troubles') + ' last season' : 'no troubles last season');
+                return;
+            }
+            const q = Q[k] || {};
+            out.push([].concat(a[k]).map((x) => SAY[k + '.' + x] || String(((q.o || {})[x] || [x])[0]).toLowerCase()).join(' and '));
+        });
+        return out;
+    }
+    function lotLine() {
+        const lot = state.lot;
+        if (!lot) return '';
+        const said = lotSays(['texture', 'rocks', 'water', 'acidity', 'phFrom', 'salt', 'slope', 'prevCrop', 'flooding', 'drainage', 'weeds', 'outbreaks']);
+        return `<span class="wtp-lotline text-xs">${said.length ? 'From ' + esc(lot.name) + ': ' + esc(said.join(', ')) : esc(lot.name) + ' has no field answers yet'} · <button type="button" data-lot-edit>Edit the lot</button></span>`;
+    }
+    const lotPayload = () => {
+        if (!state.lot || !window.aneeLots) return {};
+        const P = window.aneeLots.payload(state.lot);
+        return { lotId: P.lotId || null, lotName: state.lot.name || null, fieldProfile: P.fieldProfile || null, fieldProfileFrom: P.fieldProfileFrom || null };
+    };
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const PRIO_E = { profit: '💰', survival: '🛡️', ease: '🧰', speed: '⏱️', market: '🏪', food: '🍚' };
     // One word per fit, for the little bars under each ranked crop.
@@ -726,7 +895,7 @@
             OPT = res.data;
             paintOptions();
         } catch (err) { toast(err.message, 'error'); }
-        if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
+        if (window.aneeLots) mountLots(); else document.addEventListener('DOMContentLoaded', mountLots, { once: true });
         // Painted: the price card and the wizard arrive together, once.
         const gen = $id('wpGen');
         if (gen && gen.classList.contains('an-wait')) {
@@ -768,9 +937,12 @@
         const aimIcons = { sell: '🏪', family: '🍚', both: '⚖️' };
         $id('wpAims').innerHTML = Object.entries(OPT.aims).map(([k, label]) => { const [n, sub] = String(label).split(' — '); return `
             <button type="button" class="wtp-choice" data-aim="${k}"><span class="c-e">${aimIcons[k] || '🌱'}</span><span>${esc(n)}${sub ? `<small>${esc(sub)}</small>` : ''}</span></button>`; }).join('');
+        // Each row names the lot answer that settles it ("-": none can, it is always asked).
         $id('wpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
-            <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
+            <label class="wtp-prob" data-prob="${k}" data-lot="${PROB_LOT[k] ? 'prob:' + k : '-'}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('wpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
+        // A lot picked before the options came is filled in now.
+        applyLot();
         paintQuote();
     }
 
@@ -895,6 +1067,8 @@
     /* ---------------- the walk ---------------- */
     function show(n, backwards) {
         step = Math.max(0, Math.min(STEPS - 1, n));
+        // Over the steps the lot answered whole, the way the farmer is going.
+        while (step > 0 && step < STEPS - 1 && skipped(step)) step += backwards ? -1 : 1;
         document.querySelectorAll('.wtp-step').forEach((s) => {
             const on = Number(s.getAttribute('data-step')) === step;
             s.classList.toggle('is-on', on);
@@ -908,32 +1082,43 @@
 
     function stepReady() {
         switch (step) {
-            case 0: state.location = $id('wpLocation').value.trim();
-                return !!state.location || (toast('Type where the field is.', 'error'), false);
+            case 0: return (!!state.lot && !!state.location) || (toast('Pick the lot, or add one.', 'error'), false);
             case 1: return !!state.startMonth || (toast('Pick the month you would start.', 'error'), false);
-            case 2: return true;
-            case 3: return !!state.soil || (toast('Pick the soil closest to yours.', 'error'), false);
-            case 4: return !!state.water || (toast('Pick the water the field gets.', 'error'), false);
-            case 5: state.phValue = $id('wpPhValue').value.trim(); return true;
-            case 6: state.prevCrop = $id('wpPrevCrop').value.trim(); state.grewWell = $id('wpGrewWell').value.trim(); return true;
-            case 7: state.problems = [...document.querySelectorAll('#wpProbs input:checked')].map((i) => i.value); return true;
-            case 8: state.area = $id('wpArea').value.trim(); state.notes = $id('wpNotes').value.trim();
+            case 2: return !!state.soil || (toast('Pick the soil closest to yours.', 'error'), false);
+            case 3: return !!state.water || (toast('Pick the water the field gets.', 'error'), false);
+            case 4: state.phValue = $id('wpPhValue').value.trim(); return true;
+            case 5: state.prevCrop = $id('wpPrevCrop').value.trim(); state.grewWell = $id('wpGrewWell').value.trim(); return true;
+            case 6: state.problems = [...document.querySelectorAll('#wpProbs input:checked')].map((i) => i.value); return true;
+            case 7: state.area = $id('wpArea').value.trim(); state.notes = $id('wpNotes').value.trim();
                 return !!state.aim || (toast('Pick what the harvest is for.', 'error'), false);
-            case 11: state.cropsOther = $id('wpCropsOther').value.trim(); return true;
+            case 10: state.cropsOther = $id('wpCropsOther').value.trim(); return true;
+            case STEPS - 1: {
+                // The run itself: a step the lot skipped must still have its answer.
+                const back = !state.lot || !state.location ? 0 : !state.startMonth ? 1 : !state.soil ? 2 : !state.water ? 3 : !state.aim ? 7 : -1;
+                if (back < 0) return true;
+                toast({ 0: 'Pick the lot, or add one.', 1: 'Pick the month you would start.', 2: 'Pick the soil closest to yours.', 3: 'Pick the water the field gets.', 7: 'Pick what the harvest is for.' }[back], 'error');
+                // A step the lot answered whole cannot be shown, so its lot is.
+                setTimeout(() => show(skipped(back) ? 0 : back, true), 250);
+                return false;
+            }
             default: return true;
         }
     }
 
     function review() {
         const month = (OPT.months.find((m) => m.key === state.startMonth) || {}).label || '';
-        $id('wpReview').innerHTML = `📍 <b>${esc(state.location)}</b>${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''} · starting ${esc(month)}`
+        const lot = state.lot;
+        // The lot by name and where it is, then the answers, then what the lot gave.
+        $id('wpReview').innerHTML = (lot ? `🗺️ <b>${esc(lot.name)}</b>, ${esc(lot.place || state.location)}` : `📍 <b>${esc(state.location)}</b>`)
+            + `${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''} · starting ${esc(month)}`
+            + (state.area ? ` · ${esc(state.area)}` : '')
             + `<br><span class="text-xs">${esc(shortOf(OPT.soils[state.soil]))} · ${esc(OPT.waters[state.water] || '')} · ${esc(shortOf(OPT.aims[state.aim]))}`
             + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'}` : '')
             + (() => { const n = state.cropsAsked.length + (state.cropsOther ? state.cropsOther.split(',').filter((x) => x.trim()).length : 0); return n ? ` · ${n} crop${n === 1 ? '' : 's'} you picked` : ''; })()
             + (state.priorities.length ? ` · top priority: ${esc(shortOf((OPT.priorities || {})[state.priorities[0]] || state.priorities[0]).toLowerCase())}` : '')
             + (state.exclude.length ? ` · skipping ${esc(state.exclude.map((k) => shortOf((OPT.families || {})[k] || k).toLowerCase()).join(', '))}` : '')
             + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.soilExtra.length ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra answer${n === 1 ? '' : 's'}` : ''; })()
-            + (FPC && FPC.count() ? ` · your field in detail, ${FPC.count()} answer${FPC.count() === 1 ? '' : 's'}` : '') + '</span>';
+            + '</span>' + lotLine();
         $id('wpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wpRunFine').textContent = OPT.canUse
             ? 'Paid from your AI credits. It shows in your credit log.'
@@ -946,10 +1131,6 @@
         const r = e.detail && e.detail.rules;
         if (!code || !r) return;
         state.country = code;
-        const city = (r.address && r.address.city && r.address.city.label) || 'City';
-        const region = (r.address && r.address.region && r.address.region.label) || 'State / Region';
-        $id('wpLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough. Weather and markets differ by area.`;
-        $id('wpLocation').placeholder = r.exampleLocation || '';
         const qc = $id('wpQuoteCountry');
         if (qc) qc.textContent = countryName(code);
         // A crop picked for one country may not be in the other's book.
@@ -959,6 +1140,12 @@
     });
     $id('wpNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
     $id('wpBack').addEventListener('click', () => show(step - 1, true));
+    // The review's "Edit the lot": its sheet, then the steps follow what changed.
+    $id('wpReview').addEventListener('click', async (e) => {
+        if (!e.target.closest('[data-lot-edit]') || !state.lot || !window.aneeLots) return;
+        const row = await window.aneeLots.edit(state.lot, { crop: null, ask: false });
+        if (row) pickLot(row);
+    });
     const pickWire = (hostId, attr, key, next) => {
         $id(hostId).addEventListener('click', (e) => {
             const b = e.target.closest(`[data-${attr}]`);
@@ -969,9 +1156,10 @@
             if (next !== null) setTimeout(() => show(next), 180);
         });
     };
+    // On to the next step (show() steps over the ones the lot answered whole).
     pickWire('wpMonths', 'month', 'startMonth', 2);
-    pickWire('wpSoils', 'soil', 'soil', 4);
-    pickWire('wpWaters', 'water', 'water', 5);
+    pickWire('wpSoils', 'soil', 'soil', 3);
+    pickWire('wpWaters', 'water', 'water', 4);
     pickWire('wpAims', 'aim', 'aim', null);
     pickWire('wpPhs', 'ph', 'ph', null);
     // A pick-many group: answers toggle and gather in a list; "unsure" (where
@@ -1033,7 +1221,7 @@
                 problems: state.problems, country: state.country,
                 ph: state.ph, phValue: state.phValue || null, soilExtra: state.soilExtra, waterLook: state.waterLook, lay: state.lay, elevation: state.elevation, sun: state.sun,
                 prevCrop: state.prevCrop, grewWell: state.grewWell, labor: state.labor, budget: state.budget, market: state.market,
-                priorities: state.priorities, cropsAsked: state.cropsAsked, cropsOther: state.cropsOther, exclude: state.exclude, ...(FPC ? FPC.payload() : {}),
+                priorities: state.priorities, cropsAsked: state.cropsAsked, cropsOther: state.cropsOther, exclude: state.exclude, ...lotPayload(),
             } });
             let data = res.data;
             if (data.pending) {
@@ -1185,7 +1373,7 @@
                 <p class="h-why">${esc(sweep(top.why))}${top.window ? ' Plant it ' + esc(top.window) + '.' : ''}${top.daysToHarvest ? ' Harvest in about ' + esc(String(Math.round(Number(top.daysToHarvest)))) + ' days' + (top.harvestWindow ? ' (' + esc(top.harvestWindow) + ')' : '') + (top.harvestRisk && top.harvestRisk.note ? '. ' + esc(sweep(top.harvestRisk.note)) : '.') : ''}</p>
                 <div class="wtp-chips">
                     ${top.harvestRisk && top.harvestRisk.score != null ? `<span class="wtp-chip">${riskWord(top.harvestRisk.score)} risk at harvest</span>` : ''}
-                    <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(rulesFor(p.country).name || p.country) : ''}</span>
+                    <span class="wtp-chip">📍 ${p.lotName ? esc(p.lotName) + ' · ' : ''}${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(rulesFor(p.country).name || p.country) : ''}</span>
                     <span class="wtp-chip">🗓️ ${esc(month)}</span>
                     ${p.ph && p.ph !== 'unsure' ? `<span class="wtp-chip">pH ${esc(p.phValue || String((OPT && OPT.phLevels && OPT.phLevels[p.ph]) || p.ph).split(' — ')[0].toLowerCase())}</span>` : ''}
                     ${[].concat(p.soilExtra || []).filter((k) => k && k !== 'unsure').map((k) => `<span class="wtp-chip">🧪 ${esc(String((OPT && OPT.soilExtras && OPT.soilExtras[k]) || k).split(' — ')[0])}</span>`).join('')}
@@ -1256,7 +1444,7 @@
 
             ${(p.fieldProfileSaid || []).length && window.aneeFieldCard ? `
             <div class="wtp-card">
-                <h3>🌾 Your field in detail</h3>
+                <h3>🌾 ${p.lotName ? 'The lot: ' + esc(p.lotName) : 'Your field in detail'}</h3>
                 ${window.aneeFieldCard.said(p.fieldProfileSaid)}
             </div>` : ''}
 
