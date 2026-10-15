@@ -85,7 +85,8 @@ final class FieldProfile
             ]],
         'waterLook' => ['in' => 'soil', 'page' => 'water', 'short' => 'Water look', 'q' => 'How does the irrigation water look?', 'multi' => true, 'none' => 'unsure',
             'why' => 'Muddy water leaves silt, and salty or dirty water hurts young plants. It changes which crops do well here.', 'o' => [
-                'clear' => ['Clear and clean', ''], 'muddy' => ['Muddy or brown', 'It carries silt'], 'milky' => ['Cloudy white or milky', ''],
+                'clear' => ['Clear and clean', ''], 'muddy' => ['Muddy or brown', 'It carries silt'], 'gray' => ['Grayish', 'Fine silt, fine sand or volcanic ash in it'],
+                'milky' => ['Cloudy white or milky', ''],
                 'green' => ['Greenish', 'Algae in it'], 'salty' => ['Tastes salty', 'Or leaves a white crust'], 'smelly' => ['Smells bad', 'An oily film or foam'],
                 'unsure' => ['Not sure', 'Or no irrigation water'],
             ]],
