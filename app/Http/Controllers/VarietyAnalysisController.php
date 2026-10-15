@@ -131,6 +131,8 @@ class VarietyAnalysisController extends Controller
             // The farmer's own country: the field is there unless they say otherwise.
             'country' => \App\Support\Region::code(),
             'years' => range((int) now('Asia/Manila')->format('Y'), (int) now('Asia/Manila')->format('Y') + 2),
+            // The months to plant in (2026-10-16, the owner: a month is more direct than a season).
+            'months' => self::plantingMonths(),
             'problems' => self::PROBLEMS,
             'priorities' => self::PRIORITIES,
             'weights' => self::WEIGHTS,
@@ -163,10 +165,18 @@ class VarietyAnalysisController extends Controller
         $fieldCountry = \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code();
         $seasonKeys = array_keys(\App\Support\Region::as($fieldCountry, fn () => \App\Support\Region::seasons()));
         $thisYear = (int) now('Asia/Manila')->format('Y');
+        // A planting month names its season and the season's year.
+        $month = (string) $request->input('month', '');
+        if (in_array($month, array_column(self::plantingMonths(), 'key'), true)) {
+            [$season, $year] = self::seasonOfMonth($month, $seasonKeys);
+            $request->merge(['season' => $season, 'year' => $year]);
+        } elseif ($month !== '') {
+            return $this->json(false, 'Pick the month you will plant again: that one is not on the list any more.', [], 422);
+        }
         $v = Validator::make($request->all(), [
             'location' => 'required|string|max:160',
             'country' => 'nullable|string|size:2',
-            'year' => 'required|integer|min:' . $thisYear . '|max:' . ($thisYear + 2),
+            'year' => 'required|integer|min:' . ($thisYear - 1) . '|max:' . ($thisYear + 2),
             'season' => 'required|in:' . implode(',', $seasonKeys),
             'soil' => 'required|in:' . implode(',', array_keys(self::SOILS)),
             'elevation' => 'nullable|in:' . implode(',', array_keys(self::ELEVATIONS)),
@@ -220,7 +230,7 @@ class VarietyAnalysisController extends Controller
         // her own instructions, or she declines for being "set up" at home.
         $settings = $settings->forField($p['country']);
         $crop = CropCatalog::CROPS[$p['crop']];
-        $title = 'Varieties · ' . $crop['label'] . ' · ' . \App\Support\Region::seasonTitle($p['season'], (int) $p['year'], $p['country']) . ' · '
+        $title = 'Varieties · ' . $crop['label'] . ' · ' . (! empty($p['month']) ? self::monthWords($p['month']) . ' planting' : \App\Support\Region::seasonTitle($p['season'], (int) $p['year'], $p['country'])) . ' · '
             . ($p['lotName'] ? $p['lotName'] . ', ' : '') . $p['location'];
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(),
@@ -541,6 +551,63 @@ class VarietyAnalysisController extends Controller
         return $c === \App\Support\Region::HOME;
     }
 
+    /** The next eighteen months, from this one: key Y-m, label "October 2026". */
+    public static function plantingMonths(): array
+    {
+        $out = [];
+        $c = now('Asia/Manila')->startOfMonth();
+        for ($i = 0; $i < 18; $i++) {
+            $out[] = ['key' => $c->format('Y-m'), 'label' => $c->format('F Y'), 'short' => $c->format('M Y')];
+            $c = $c->addMonth();
+        }
+
+        return $out;
+    }
+
+    /** "2026-10" as "October 2026". */
+    public static function monthWords(string $ym): string
+    {
+        try {
+            return \Illuminate\Support\Carbon::createFromFormat('!Y-m', $ym, 'Asia/Manila')->format('F Y');
+        } catch (\Throwable $e) {
+            return $ym;
+        }
+    }
+
+    /**
+     * The season a planting month falls in, and the season's year. In the
+     * Philippines the wet season is planted May to October, the dry season
+     * November to February (it carries the year it starts in, so January
+     * 2027 is the dry season 2026 to 2027), the third crop March and April.
+     * Elsewhere the northern seasons; winter carries the December's year.
+     * The page has the same rule (seasonOf).
+     */
+    public static function seasonOfMonth(string $ym, array $keys): array
+    {
+        [$y, $m] = array_map('intval', explode('-', $ym) + [0, 0]);
+        $has = fn (string $k) => in_array($k, $keys, true);
+        if ($has('wet') && $has('dry')) {
+            $out = match (true) {
+                $m >= 5 && $m <= 10 => ['wet', $y],
+                $m >= 11 => ['dry', $y],
+                $m <= 2 => ['dry', $y - 1],
+                default => $has('third') ? ['third', $y] : ['dry', $y - 1],
+            };
+        } else {
+            $out = match (true) {
+                $m >= 3 && $m <= 5 => ['spring', $y],
+                $m >= 6 && $m <= 8 => ['summer', $y],
+                $m >= 9 && $m <= 11 => ['autumn', $y],
+                default => ['winter', $m === 12 ? $y : $y - 1],
+            };
+        }
+        if (! $has($out[0]) && $keys) {
+            $out[0] = $keys[0];
+        }
+
+        return $out;
+    }
+
     /** The field as the variety records read it. */
     public static function bookCase(array $p): array
     {
@@ -612,7 +679,7 @@ class VarietyAnalysisController extends Controller
             . (! empty($params['elevation']) ? '; the land ' . (self::ELEVATIONS[$params['elevation']] ?? $params['elevation']) : '')
             . '; troubles: ' . (collect($params['problems'] ?? [])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none') . "\n"
             . FieldProfile::promptLine((array) ($params['fieldProfile'] ?? []), $params['crop'] ?? null, '')
-            . (! empty($params['season']) ? 'Planned for: ' . \App\Support\Region::seasonTitle($params['season'], (int) ($params['year'] ?? now('Asia/Manila')->year), $params['country'] ?? null) . "\n" : '')
+            . (! empty($params['season']) ? 'Planned for: ' . (! empty($params['month']) ? 'planting in ' . self::monthWords($params['month']) . ', ' : '') . \App\Support\Region::seasonTitle($params['season'], (int) ($params['year'] ?? now('Asia/Manila')->year), $params['country'] ?? null) . "\n" : '')
             . 'Priorities, most important first: ' . $order . "\n"
             . 'Top pick: ' . ($top['variety'] ?? '') . ($top['by'] ?? null ? ' (' . $top['by'] . ')' : '') . ' — ' . ($top['why'] ?? '') . "\n"
             . 'Ranked: ' . collect($report['ranking'] ?? [])->map(fn ($x) => ($x['rank'] ?? '') . '. ' . ($x['variety'] ?? '')
@@ -679,6 +746,7 @@ class VarietyAnalysisController extends Controller
         return [
             'location' => trim((string) $request->input('location')),
             'country' => \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code(),
+            'month' => preg_match('/^\d{4}-\d{2}$/', (string) $request->input('month')) ? (string) $request->input('month') : null,
             'year' => (int) $request->input('year'),
             'season' => (string) $request->input('season'),
             'soil' => (string) $request->input('soil'),
@@ -734,7 +802,7 @@ class VarietyAnalysisController extends Controller
         $sources = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('sources'));
         $cropLabel = CropCatalog::label($p['crop']);
         $regionLine = \App\Support\Region::promptBlock($fc, \App\Support\Region::code());
-        $plan = ! empty($p['season']) ? \App\Support\Region::as($fc, fn () => \App\Support\Region::seasonWords($p['season'], (int) ($p['year'] ?: $year))) : 'not stated';
+        $plan = ! empty($p['season']) ? (! empty($p['month']) ? 'Planting in ' . self::monthWords($p['month']) . ', in this season: ' : '') . \App\Support\Region::as($fc, fn () => \App\Support\Region::seasonWords($p['season'], (int) ($p['year'] ?: $year))) : 'not stated';
         $land = self::ELEVATIONS[$p['elevation'] ?? ''] ?? 'not stated';
         // The records on file that fit this field: the search checks them first.
         $onFile = self::onRecord($p) ? \App\Support\VarietyBook::namedThenFit($p['crop'], $p['varieties'] ?? [], self::bookCase($p), 14) : [];
@@ -805,7 +873,7 @@ PROMPT;
         $regionBlock = \App\Support\Region::promptBlock($fc, \App\Support\Region::code());
         $cropLabel = CropCatalog::label($p['crop']);
         $climateHint = $fieldPH ? 'wet/dry timing, typhoon seasonality' : 'frost dates, growing-season length, rainfall and heat timing, the severe-weather season';
-        $plan = ! empty($p['season']) ? \App\Support\Region::as($fc, fn () => \App\Support\Region::seasonWords($p['season'], (int) ($p['year'] ?: $year))) : 'not stated';
+        $plan = ! empty($p['season']) ? (! empty($p['month']) ? 'Planting in ' . self::monthWords($p['month']) . ', in this season: ' : '') . \App\Support\Region::as($fc, fn () => \App\Support\Region::seasonWords($p['season'], (int) ($p['year'] ?: $year))) : 'not stated';
         $land = self::ELEVATIONS[$p['elevation'] ?? ''] ?? 'not stated';
 
         return <<<PROMPT

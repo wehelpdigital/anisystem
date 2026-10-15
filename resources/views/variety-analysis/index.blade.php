@@ -513,15 +513,14 @@
                 <p class="wtp-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</p>
                 <div id="vaLots"></div>
             </section>
-            {{-- Step 2: when it will be planted -- the year, and the season
-                 with the months it usually spans where the field is. --}}
+            {{-- Step 2: when it will be planted -- the month and its year
+                 (2026-10-16, the owner: more direct than a season). The
+                 season it falls in is worked out from it (seasonOf, and
+                 VarietyAnalysisController::seasonOfMonth on the server). --}}
             <section class="wtp-step" data-step="1">
                 <p class="wtp-q">When will you plant it?</p>
-                <p class="wtp-sub">Wet and dry seasons need different varieties. Anee checks the weather outlook for your season.</p>
-                <p class="wp-qh">Year</p>
-                <div class="wtp-choices is-two" id="vaYears"></div>
-                <p class="wp-qh mt-4">Season</p>
-                <div class="wtp-choices" id="vaSeasons"></div>
+                <p class="wtp-sub">The month you will sow or transplant. Anee checks the weather outlook for the months the crop stands in the field, and the season they fall in.</p>
+                <div class="wtp-choices is-two" id="vaMonths"></div>
             </section>
             {{-- Step 3: the soil. Skipped when the lot says how it feels.
                  Lowland, upland or highland is the lot's question now
@@ -692,7 +691,7 @@
     const VA_META_URL = '{{ route('vary.meta') }}';
 
     let OPT = null;
-    const state = { location: '', country: '', year: null, season: null, soil: null, elevation: null, crop: '', varieties: [], priorities: ['yield', 'protection', 'survival', 'quickness'], problems: [], notes: '' };
+    const state = { location: '', country: '', month: null, year: null, season: null, soil: null, elevation: null, crop: '', varieties: [], priorities: ['yield', 'protection', 'survival', 'quickness'], problems: [], notes: '' };
     const RULES = () => (window.ANEE_REGION_RULES || {});
     const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
     // The seasons on offer are the FIELD's country's.
@@ -703,6 +702,23 @@
         const crosses = season === 'dry' || season === 'winter';
         return crosses && y ? `${label} ${y} to ${y + 1}` : `${label} ${y || ''}`.trim();
     };
+    /* The season a planting month falls in where the field is (the server's
+       VarietyAnalysisController::seasonOfMonth): in the Philippines the wet
+       season is planted May to October, the dry November to February (it
+       carries the year it starts in), the third crop March and April. */
+    const seasonOf = (key) => {
+        const [y, m] = String(key || '').split('-').map(Number);
+        if (!y || !m) return [null, null];
+        const keys = Object.keys(seasonsFor(state.country));
+        const has = (k) => keys.includes(k);
+        let out;
+        if (has('wet') && has('dry')) out = m >= 5 && m <= 10 ? ['wet', y] : m >= 11 ? ['dry', y] : m <= 2 ? ['dry', y - 1] : [has('third') ? 'third' : 'dry', has('third') ? y : y - 1];
+        else out = m >= 3 && m <= 5 ? ['spring', y] : m >= 6 && m <= 8 ? ['summer', y] : m >= 9 && m <= 11 ? ['autumn', y] : ['winter', m === 12 ? y : y - 1];
+        if (!has(out[0])) out[0] = keys[0] || out[0];
+        return out;
+    };
+    const monthLabel = (key) => ((OPT && OPT.months) || []).find((m) => m.key === key)?.label || key || '';
+    const seasonIcons = { dry: '☀️', wet: '🌧️', third: '🌗', spring: '🌱', summer: '☀️', autumn: '🍂', winter: '❄️' };
     let step = 0;
     const STEPS = 8;
     /* ---- the lot (2026-10-16, the owner): partials/farm-lots. Its answers
@@ -811,29 +827,9 @@
 
     function paintOptions() {
         state.country = state.country || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
-        $id('vaYears').innerHTML = (OPT.years || []).map((y) => `
-            <button type="button" class="wtp-choice${state.year === y ? ' is-on' : ''}" data-year="${y}"><span class="c-e">🗓️</span><span>${y}${y === OPT.years[0] ? '<small>This year</small>' : ''}</span></button>`).join('');
-        const seasonIcons = { dry: '☀️', wet: '🌧️', third: '🌗', spring: '🌱', summer: '☀️', autumn: '🍂', winter: '❄️' };
-        /* Each season card says the months it usually spans where the
-           field is; the dry season begins at a year's end and runs into
-           the next, and the card says so with both years. */
-        const seasonSubs = (y) => ({
-            dry: `Early December ${y} to May ${y + 1} in most lowlands, including planting in ${y + 1}`,
-            wet: `About June to October ${y} in most lowlands, planting as the rains start`,
-            third: `About March to May ${y}, after the dry season harvest. Only where water is sure.`,
-            spring: `About March to May ${y} north of the equator. Anee fits it to your place.`,
-            summer: `About June to August ${y} north of the equator`,
-            autumn: `About September to November ${y} north of the equator`,
-            winter: `December ${y} to February ${y + 1} north of the equator, for cool season or covered planting`,
-        });
-        const paintSeasons = () => {
-            const y = Number(state.year || (OPT.years || [new Date().getFullYear()])[0]);
-            const subs = seasonSubs(y);
-            $id('vaSeasons').innerHTML = Object.entries(seasonsFor(state.country)).map(([k, label]) => `
-                <button type="button" class="wtp-choice${state.season === k ? ' is-on' : ''}" data-season="${k}"><span class="c-e">${seasonIcons[k] || '🌱'}</span><span>${esc(label)}${(k === 'dry' || k === 'winter') ? ' ' + y + ' to ' + (y + 1) : ''}<small>${esc(subs[k] || '')}</small></span></button>`).join('');
-        };
-        paintSeasons();
-        window.__vaPaintSeasons = paintSeasons;
+        // The months to plant in, each with the season it falls in where the field is.
+        $id('vaMonths').innerHTML = (OPT.months || []).map((m) => { const [k, y] = seasonOf(m.key); const lab = seasonSaid(k, y); return `
+            <button type="button" class="wtp-choice${state.month === m.key ? ' is-on' : ''}" data-month="${esc(m.key)}"><span class="c-e">${seasonIcons[k] || '🗓️'}</span><span>${esc(m.label)}${lab ? `<small>${esc(lab)}</small>` : ''}</span></button>`; }).join('');
         const soilIcons = { clay: '🧱', loam: '🟤', sandy: '🏖️', silty: '🌊', rocky: '⛰️', unsure: '🤷' };
         $id('vaSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => `
             <button type="button" class="wtp-choice" data-soil="${k}"><span class="c-e">${soilIcons[k] || '🟫'}</span><span>${esc(String(label).split(' — ')[0])}${String(label).includes(' — ') ? `<small>${esc(String(label).split(' — ').slice(1).join(' — '))}</small>` : ''}</span></button>`).join('');
@@ -909,9 +905,7 @@
             case 0: if (!LOT.lot) { toast('Pick the lot, or add one.', 'error'); return false; }
                 state.location = LOT.lot.where || LOT.lot.place || '';
                 return !!state.location || (toast('Tap the lot to say where it is.', 'error'), false);
-            case 1: if (!state.year) { toast('Pick the year first.', 'error'); return false; }
-                if (!state.season || !seasonsFor(state.country)[state.season]) { toast('Pick the season.', 'error'); return false; }
-                return true;
+            case 1: return !!state.month || (toast('Pick the month you will plant.', 'error'), false);
             case 2: return !!state.soil || (toast('Pick the soil closest to yours.', 'error'), false);
             case 3: return !!state.crop || (toast('Choose a crop.', 'error'), false);
             case 4: addVariety(); return true;
@@ -924,12 +918,12 @@
     const shortLabel = (l) => String(l || '').split(/ \/ | \(| — /)[0];
     function review() {
         const crop = OPT.crops.find((c) => c.key === state.crop) || {};
-        const season = seasonSaid(state.season, state.year);
+        const season = state.month ? monthLabel(state.month) + ', ' + seasonSaid(state.season, state.year).replace(/^./, (c) => c.toLowerCase()) : seasonSaid(state.season, state.year);
         $id('vaReview').innerHTML = window.aneeReview.html({
             icon: crop.icon || '🌱', kicker: 'The varieties that fit', title: String(crop.label || '').replace(' — ', ', '),
             sub: season + (LOT.lot ? ' · ' + LOT.lot.name : ''),
             rows: [
-                { e: '🗓️', k: 'Season', v: season, go: 1 },
+                { e: '🗓️', k: 'Planting month', v: season, go: 1 },
                 { e: '🟤', k: 'Soil', v: shortLabel(OPT.soils[state.soil]), go: skipped(2) ? null : 2, lot: skipped(2) },
                 { e: '⛰️', k: 'The land', v: state.elevation ? shortLabel((OPT.elevations || {})[state.elevation] || state.elevation) : '', none: 'Not in the lot', lot: true },
                 { e: crop.icon || '🌱', k: 'Crop', v: crop.label, go: 3 },
@@ -949,20 +943,13 @@
 
     $id('vaNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
     $id('vaBack').addEventListener('click', () => show(step - 1, true));
-    $id('vaYears').addEventListener('click', (e) => {
-        const b = e.target.closest('[data-year]');
+    $id('vaMonths').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-month]');
         if (!b) return;
-        state.year = Number(b.getAttribute('data-year'));
-        document.querySelectorAll('#vaYears .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
-        // The season cards say their years, and the dry one runs into the next.
-        window.__vaPaintSeasons?.();
-    });
-    $id('vaSeasons').addEventListener('click', (e) => {
-        const b = e.target.closest('[data-season]');
-        if (!b) return;
-        if (!state.year) { toast('Pick the year first.', 'error'); return; }
-        state.season = b.getAttribute('data-season');
-        document.querySelectorAll('#vaSeasons .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
+        state.month = b.getAttribute('data-month');
+        [state.season, state.year] = seasonOf(state.month);
+        document.querySelectorAll('#vaMonths .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
+        if (state.crop) loadBook();
     });
     $id('vaSoils').addEventListener('click', (e) => {
         const b = e.target.closest('[data-soil]');
@@ -1215,7 +1202,7 @@
             const res = await api(U.generate, { method: 'POST', body: {
                 // The lot: its id, and its answers as the field in detail.
                 ...(window.aneeLots ? window.aneeLots.payload(LOT.lot) : {}), lotName: LOT.lot ? LOT.lot.name : null,
-                location: state.location, country: state.country, year: state.year, season: state.season,
+                location: state.location, country: state.country, month: state.month, year: state.year, season: state.season,
                 soil: state.soil, elevation: state.elevation, crop: state.crop,
                 varieties: state.varieties, priorities: state.priorities,
                 problems: state.problems, notes: state.notes,

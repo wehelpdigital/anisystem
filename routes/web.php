@@ -134,6 +134,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && ! str_contains((string) @file_get_contents(resource_path('views/partials/farm-lots.blade.php')), 'id="flCrop"'),
             // Every crop's troubles in the field questions, with a crop filter (2026-10-16).
             'troublesAll' => str_contains((string) @file_get_contents(resource_path('views/partials/field-profile.blade.php')), 'fqCropSheet'),
+            'vaMonth' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'seasonOfMonth'),
             'soilTests' => method_exists(\App\Support\FieldProfile::class, 'cleanTests'),
             'saltMulti' => ! empty(\App\Support\FieldProfile::QUESTIONS['salt']['multi']),
             'grayWater' => isset(\App\Support\FieldProfile::QUESTIONS['waterLook']['o']['gray']),
