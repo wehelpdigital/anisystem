@@ -15,7 +15,7 @@
     "DK 8282S",
     "Dekalb 8282S",
     "DK 8282",
-    "Dekalb 8282",
+    "8282S",
     "DEKALB®8282S VTDoublePRO RIB Complete corn variety",
     "corn variety philippines",
     "NSIC 2021 GMCn 75"
@@ -69,7 +69,7 @@
         ],
         [
           "Also known as",
-          "DK 8282S, Dekalb 8282S, DK 8282, Dekalb 8282"
+          "DK 8282S, Dekalb 8282S, DK 8282, 8282S"
         ],
         [
           "Type",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "DEKALB®8282S VTDoublePRO RIB Complete corn takes 105 to 108 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 9.11 t/ha beats the average of its group, 8.13. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 110 days to full maturity (Bayer), 105 to 108 in NSIC trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "DEKALB®8282S VTDoublePRO RIB Complete corn takes 105 to 108 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 9.11 t/ha beats the average of its group, 8.13. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 110 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -157,20 +157,21 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** Company: 6.2 to 8 t/ha, about 1.7 t/ha above the national average at launch, shelling recovery 84 percent, NSIC trials averaged 9.11 t/ha.",
-        "**Traits in the seed:** VT Double PRO with Roundup Ready (MON 89034 x NK603): two Bt proteins against Asian corn borer, earworm, cutworm and fall armyworm, plus glyphosate (Roundup) tolerance, refuge seed mixed in the bag (95:5).",
+        "**Yield:** No ceiling given: Bayer claims 1.7 t/ha more than market standard hybrids, shelling recovery 84 percent.",
+        "**Traits in the seed:** VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm, the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95 percent traited seed and 5 percent refuge seed already mixed, so no separate refuge block has to be planted.",
         "**Season:** Wet and dry.",
-        "**Where:** Registered for Luzon and Mindanao, Bayer cites stable yields in Isabela and Pangasinan.",
+        "**Where:** Luzon and Visayas (Bayer's recommended area).",
+        "**Stand:** 83,000 to 90,000 plants per ha, furrows 60 cm, hills 18 or 20 cm.",
         "Orange flint grain, 16 to 18 rows.",
-        "Semi erect plant, ear set at medium height.",
+        "Semi erect plant, ears set at medium height.",
         "Good standability.",
-        "Copes better with dry spells than standard hybrids (company).",
-        "Good tolerance to stalk rots and leaf diseases."
+        "Good tolerance to stalk rots and to leaf diseases.",
+        "Copes better with moisture stress (company)."
       ]
     },
     {
       "type": "text",
-      "text": "Why farmers know it: bayer's newest and most pushed Luzon hybrid, first in the 2022 Central Luzon derby (8.42 t/ha, SunStar), first in the 2023 Camarines Norte provincial derby (DA Bicol), second in a 2024 Daanbantayan, Cebu derby. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
+      "text": "Why farmers know it: featured first on Bayer's current Philippine Dekalb list, a site banner calls it Dekalb's newest hybrid. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
     },
     {
       "type": "heading",
@@ -293,12 +294,12 @@
           "url": "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb/dekalb-product-detail-template.html/dk_8282s.html"
         },
         {
-          "label": "Notes on DEKALB®8282S VTDoublePRO RIB Complete from journalnews.com.ph",
-          "url": "https://journalnews.com.ph/9-modified-corn-hybrids-hybrid-gives-stable-yield"
+          "label": "Notes on DEKALB®8282S VTDoublePRO RIB Complete from cropscience.bayer.com.ph",
+          "url": "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb.html"
         },
         {
-          "label": "Notes on DEKALB®8282S VTDoublePRO RIB Complete from sunstar.com.ph",
-          "url": "https://www.sunstar.com.ph/pampanga/local-news/1st-corn-derby-held-in-mexico-town"
+          "label": "Notes on DEKALB®8282S VTDoublePRO RIB Complete from cropscience.bayer.com.ph",
+          "url": "https://www.cropscience.bayer.com.ph/en-ph/traits/vt2prib.html"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

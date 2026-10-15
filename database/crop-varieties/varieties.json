@@ -21903,25 +21903,28 @@
   "research": {
    "company": "Bayer (Dekalb)",
    "kind": "yellow GM hybrid",
-   "popular": "Listed by Bayer Philippines as a current hybrid aimed at farmers in Cagayan Valley and Quirino.",
+   "popular": "On Bayer's current Philippine Dekalb list (Oct 2026) as a mid priced hybrid for Cagayan Valley and Quirino.",
    "facts": {
-    "maturityDays": "115 to 120 days; 105 to 111 in NSIC trials",
-    "yield": "potential 9.3 t/ha (company says higher than rival hybrids in its class); NSIC trials averaged 7.60 t/ha Luzon and 7.11 Mindanao",
+    "maturityDays": "115 to 120 days after planting",
+    "yield": "potential 9.3 t/ha; Bayer claims more than rival mid priced hybrids; shelling recovery printed as 0.81, read as about 81%",
     "traits": [
      "orange flint grain, 16 to 18 rows",
-     "semi erect plant with stay green leaves, ear set medium high",
-     "good, steady standability; good grain quality",
-     "acceptable tolerance to rust, leaf blights and bacterial stalk rot",
-     "70,000 plants per ha; rows 70 cm, hills 20 cm"
+     "semi erect plant with stay green leaves, ears set medium high",
+     "good, steady standability",
+     "good grain quality (company)",
+     "acceptable tolerance to rust, leaf blights and bacterial stalk rot"
     ],
-    "gm": "VT Double PRO with Roundup Ready (MON 89034 x NK603): two Bt proteins against Asian corn borer, earworm, cutworm and fall armyworm, plus glyphosate (Roundup) tolerance.",
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
     "areas": "Luzon: Cagayan Valley and Quirino",
-    "season": "wet and dry season"
+    "season": "wet and dry (company says it adapts to both)",
+    "density": "70,000 plants per ha; furrows 70 cm, hills 20 cm",
+    "positioning": "Bayer's mid priced segment for Luzon"
    },
    "claims": true,
    "sources": [
     "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb/dekalb-product-detail-template.html/dk_9251s.html",
     "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/traits/vt2prib.html",
     "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
@@ -22199,25 +22202,28 @@
   "research": {
    "company": "Bayer (Dekalb)",
    "kind": "yellow GM hybrid",
-   "popular": "Listed by Bayer Philippines as a current hybrid aimed at farmers in BARMM and Cotabato.",
+   "popular": "On Bayer's current Philippine Dekalb list (Oct 2026) as a mid priced hybrid for Mindanao.",
    "facts": {
-    "maturityDays": "115 to 120 days; 104 to 105 in NSIC trials",
-    "yield": "potential 8.3 t/ha (company says higher than rival hybrids in its class); NSIC trials averaged 7.22 t/ha Luzon and 7.11 Mindanao",
+    "maturityDays": "115 to 120 days after planting",
+    "yield": "potential 8.3 t/ha; Bayer claims more than rival mid priced hybrids; shelling recovery printed as 0.8, read as about 80%",
     "traits": [
      "yellow orange flint grain, 16 to 18 rows",
-     "semi erect plant with stay green leaves, ear set medium high",
-     "good standability and grain quality",
+     "semi erect plant with stay green leaves, ears set medium high",
+     "good standability",
+     "good grain quality (company)",
      "good tolerance to Diplodia ear rot",
-     "leaf disease package: banded leaf and sheath blight, brown spot, white spot, Diplodia leaf blight, border leaf blight",
-     "70,000 plants per ha; rows 70 cm, hills 20 cm"
+     "leaf disease package: banded leaf and sheath blight, brown spot, white spot, Diplodia leaf blight and border leaf blight"
     ],
-    "gm": "VT Double PRO with Roundup Ready (MON 89034 x NK603): two Bt proteins against Asian corn borer, earworm, cutworm and fall armyworm, plus glyphosate (Roundup) tolerance.",
-    "areas": "Mindanao: BARMM and Banisilan, Cotabato"
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "areas": "Mindanao: BARMM and Banisilan, Cotabato",
+    "density": "70,000 plants per ha; furrows 70 cm, hills 20 cm",
+    "positioning": "Bayer's mid priced segment for Mindanao"
    },
    "claims": true,
    "sources": [
     "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb/dekalb-product-detail-template.html/dk_9244s.html",
     "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/traits/vt2prib.html",
     "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
@@ -22360,7 +22366,9 @@
  {
   "crop": "corn",
   "name": "NK6130 VIP",
-  "aliases": [],
+  "aliases": [
+   "NK6130 Viptera"
+  ],
   "reg": "NSIC 2025 GMCn 101",
   "year": 2025,
   "owner": "Syngenta Crop Protection AG",
@@ -22420,12 +22428,36 @@
   "sources": [
    "https://nsic.buplant.da.gov.ph/registry.php"
   ],
+  "research": {
+   "company": "Syngenta (NK)",
+   "kind": "yellow GM hybrid",
+   "popular": "On Syngenta's current Philippine corn list as the VIP version of NK6130, under its Protek Todo banner.",
+   "facts": {
+    "maturityDays": "about 105 days in NSIC trials",
+    "yield": "NSIC trials averaged 10.58 t/ha in Luzon and 7.20 in Mindanao; shelling recovery about 83%",
+    "traits": [
+     "plant about 224 cm tall in NSIC trials",
+     "ear about 16 cm long",
+     "registry rates it resistant to corn borer",
+     "Protected against fall armyworm and other corn caterpillars, the seller says"
+    ],
+    "gm": "The VIP trait, sold under Syngenta's Protek Todo banner against fall armyworm and other corn caterpillars. Its page does not list the gene events.",
+    "areas": "registered for Luzon and Mindanao"
+   },
+   "sources": [
+    "https://www.syngenta.com.ph/nk6130-vip",
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
+   ]
+  },
   "slug": "corn-nk6130-vip"
  },
  {
   "crop": "corn",
   "name": "NK6505 VIP",
-  "aliases": [],
+  "aliases": [
+   "NK6505 Viptera"
+  ],
   "reg": "NSIC 2025 GMCn 102",
   "year": 2025,
   "owner": "Syngenta Crop Protection AG",
@@ -22480,6 +22512,28 @@
   "sources": [
    "https://nsic.buplant.da.gov.ph/registry.php"
   ],
+  "research": {
+   "company": "Syngenta (NK)",
+   "kind": "yellow GM hybrid",
+   "popular": "On Syngenta's current Philippine corn list as the VIP version of NK6505, under its Protek Todo banner.",
+   "facts": {
+    "maturityDays": "about 107 days in NSIC trials",
+    "yield": "NSIC trials averaged 6.58 t/ha in Mindanao; shelling recovery about 83%",
+    "traits": [
+     "plant about 224 cm tall in NSIC trials",
+     "ear about 16.5 cm long",
+     "registry rates it resistant to corn borer",
+     "Protected against fall armyworm and other corn caterpillars, the seller says"
+    ],
+    "gm": "The VIP trait, sold under Syngenta's Protek Todo banner against fall armyworm and other corn caterpillars. Its page does not list the gene events.",
+    "areas": "registered for Mindanao, and sold for the highlands of Mindanao"
+   },
+   "sources": [
+    "https://www.syngenta.com.ph/nk6505-vip",
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
+   ]
+  },
   "slug": "corn-nk6505-vip"
  },
  {
@@ -23700,8 +23754,8 @@
   "aliases": [
    "NK6130",
    "NK 6130",
-   "Syngenta 6130",
-   "NK6130 VIP"
+   "NK6130 E Z Refuge",
+   "Syngenta 6130"
   ],
   "reg": "NSIC 2023 GMCn 93",
   "year": 2023,
@@ -23765,23 +23819,27 @@
   "research": {
    "company": "Syngenta (NK)",
    "kind": "yellow GM hybrid",
-   "popular": "First in yield and return on investment at DA Bicol's regional corn derby in Tigaon, Camarines Sur (Nov 2023); second in the GM class at DA-12's Sarangani dry season trial (2025).",
+   "popular": "On Syngenta's current corn list (listed twice, as NK6130 and NK6130 BGT); its brochure claims first place at the 2022 wet season Camarines Norte provincial derby in Daet (11.17 t/ha) and the 2022 Region 5 derby in Bombon, Camarines Sur (11.15 t/ha), plus a Cordillera derby award (11.49 t/ha).",
    "facts": {
-    "maturityDays": "110 to 115 days after planting; 106 to 109 in NSIC trials",
-    "yield": "potential 11.6 t/ha; 6.39 t/ha in DA-12's Sarangani lowland dry season trial (2025); NSIC trials averaged 10.56 t/ha Luzon and 8.92 Mindanao",
+    "maturityDays": "110 to 115 days after planting",
+    "yield": "potential 11.6 t/ha; brochure claims 20 to 30 more cavans per ha than rival hybrids, depending on fertilizer management",
     "traits": [
-     "heavy grain",
-     "good standability"
+     "heavy grain (company)",
+     "good standability, sturdy stalk",
+     "ears set at moderate height",
+     "seed comes treated with Fortenza (cyantraniliprole); the brochure says it guards seedlings against fall armyworm for 2 to 3 weeks after emergence"
     ],
-    "gm": "BGT stack Bt11 x TC1507 x GA21: built in caterpillar protection plus glyphosate tolerance. Syngenta also lists an NK6130 VIP version.",
-    "areas": "low to mid elevations in Cagayan Valley, Panay Island, CALABARZON, Bicol, Caraga, South Mindanao, Ilocos, Central Luzon and Occidental Mindoro"
+    "gm": "BGT stack Bt11 x TC1507 x GA21: Bt proteins against Asian corn borer and other caterpillars, plus glyphosate tolerance (GA21). Sold as EZ Refuge: the brochures say 5% refuge seed is already blended in the bag.",
+    "areas": "low to mid elevations in Cagayan Valley, Panay, CALABARZON, Bicol, Caraga, South Mindanao, Ilocos, Central Luzon and Occidental Mindoro",
+    "density": "70,000 to 80,000 plants per ha; furrows 70 cm (brochure: 65 to 70 cm), hills 20 cm",
+    "elevation": "low to mid elevation"
    },
    "claims": true,
    "sources": [
+    "https://www.syngenta.com.ph/nk6130-0",
     "https://www.syngenta.com.ph/product/seed/corn/nk6130",
-    "https://bicol.da.gov.ph/da-conducts-regional-corn-derby-harvest-festival-in-tigaon-camsur/",
-    "https://camsur.com/latest-pr/173",
-    "https://rfo12.da.gov.ph/?p=11822"
+    "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/08/18/nk6130_with_fortenza_brochure.pdf",
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346"
    ]
   },
   "slug": "corn-nk6130-bgt"
@@ -23854,26 +23912,27 @@
   "research": {
    "company": "Syngenta (NK)",
    "kind": "yellow GM hybrid",
-   "popular": "Fall armyworm version of the widely planted NK6410; on Syngenta's current corn list (page updated Aug 2025).",
+   "popular": "On Syngenta's current corn list as the fall armyworm version of NK6410 (page updated 19 Aug 2025).",
    "facts": {
     "maturityDays": "100 to 105 days after planting",
-    "yield": "potential 12 t/ha; NSIC trials averaged 11.64 t/ha Luzon and 8.29 Mindanao",
+    "yield": "potential 12 t/ha",
     "traits": [
-     "tolerant of fall armyworm and other corn caterpillars",
+     "tolerant to fall armyworm and other corn insect pests (company)",
      "early maturing",
-     "'Class A' grain",
+     "grain rated Class A by the company",
      "good standability",
-     "easy to dehusk"
+     "easy to dehusk and harvest"
     ],
-    "gm": "VIP stack Bt11 x MIR162 x MON89034 x GA21: three kinds of built in caterpillar protection, including the Vip3A protein against fall armyworm, plus glyphosate tolerance",
-    "areas": "Cagayan Valley (lower vega), Ilocos Region, Central Luzon, Southern Luzon, Bicol Region and low elevation Mindanao"
+    "gm": "VIP stack Bt11 x MIR162 x MON89034 x GA21: several Bt proteins, including Vip3A (from MIR162) aimed at fall armyworm, against corn borer and other caterpillars, plus glyphosate tolerance (GA21).",
+    "areas": "lower vega of Cagayan Valley, Ilocos Region, Central Luzon, Southern Luzon, Bicol Region and low elevation Mindanao",
+    "density": "71,428 plants per ha; furrows 70 cm, hills 20 cm"
    },
    "claims": true,
    "sources": [
     "https://www.syngenta.com.ph/nk6410-vip",
-    "https://biotech.buplant.da.gov.ph/2016propagation.html",
-    "https://biotech.buplant.da.gov.ph/pdf/Updated_List_of_all_GMCorn_available_for_Propa.pdf",
-    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx",
+    "https://biotech.buplant.da.gov.ph/2016propagation.html"
    ]
   },
   "slug": "corn-nk6410-vip"
@@ -23937,25 +23996,26 @@
   "research": {
    "company": "Syngenta (NK)",
    "kind": "yellow GM hybrid",
-   "popular": "The derby winning NK8840 (Region 2 top yielder 2017 and 2019) now also sold with the fall armyworm trait; company page updated Aug 2025.",
+   "popular": "On Syngenta's current corn list as the fall armyworm version of NK8840 (page updated 19 Aug 2025).",
    "facts": {
-    "maturityDays": "115 to 120 days after planting; about 111 in NSIC trials",
-    "yield": "potential 12 t/ha; NSIC trials averaged 10.99 t/ha in Luzon",
+    "maturityDays": "115 to 120 days after planting",
+    "yield": "potential 12 t/ha",
     "traits": [
-     "tolerant of fall armyworm and other corn caterpillars",
-     "big jumbo ears",
-     "better drought tolerance",
+     "tolerant to fall armyworm and other corn insect pests (company)",
+     "big jumbo ears (company)",
+     "better drought tolerance (company)",
      "easy to dehusk and harvest"
     ],
-    "gm": "VIP stack Bt11 x MIR162 x MON89034 x GA21: Bt11 and MON89034 proteins against corn borer and other caterpillars, MIR162 (the Vip3A 'Viptera' protein) against armyworms including fall armyworm, and GA21 glyphosate tolerance. BPI approved this stack for planting in January 2020.",
-    "areas": "Cagayan Valley (upper vega), Ilocos Region, Central Luzon"
+    "gm": "VIP stack Bt11 x MIR162 x MON89034 x GA21: several Bt proteins, including Vip3A (from MIR162) aimed at fall armyworm, against corn borer and other caterpillars, plus glyphosate tolerance (GA21).",
+    "areas": "upper vega of Cagayan Valley, Ilocos Region and Central Luzon",
+    "density": "71,428 plants per ha; furrows 70 cm, hills 20 cm"
    },
    "claims": true,
    "sources": [
     "https://www.syngenta.com.ph/nk8840-vip",
-    "https://biotech.buplant.da.gov.ph/2016propagation.html",
-    "https://biotech.buplant.da.gov.ph/pdf/Updated_List_of_all_GMCorn_available_for_Propa.pdf",
-    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx",
+    "https://biotech.buplant.da.gov.ph/2016propagation.html"
    ]
   },
   "slug": "corn-nk8840-vip"
@@ -24822,9 +24882,9 @@
   "aliases": [
    "DK 8131S",
    "Dekalb 8131S",
+   "DEKALB 8131S",
    "DK8131S",
    "DK 8131",
-   "Dekalb 8131",
    "8131S"
   ],
   "reg": "NSIC 2021 GMCn 76",
@@ -24879,30 +24939,30 @@
   "research": {
    "company": "Bayer (Dekalb)",
    "kind": "yellow GM hybrid",
-   "popular": "Topped DA-10's 2022 derbies at Malaybalay (12.36 t/ha) and Dangcagan, Bukidnon; topped the GM class of DA-12's 2025 dry season trial in Sultan Kudarat (10.14 t/ha); Bayer quotes Cotabato dealers saying most farmers ask for it.",
+   "popular": "One of three featured hybrids on Bayer's current Philippine Dekalb list (Oct 2026).",
    "facts": {
-    "maturityDays": "about 110 days below 300 m elevation; about 120 days above 300 m; about 107 in NSIC trials",
-    "yield": "potential 12.4 t/ha (company cites a DA corn derby at Malaybalay, Bukidnon, March 2022); shelling recovery 81%; NSIC trials averaged 7.99 t/ha in Mindanao; 9.7 to 12.4 t/ha in DA Bukidnon derbies",
+    "maturityDays": "about 110 days after planting below 300 m elevation; about 120 days at mid to high elevation (above 300 m)",
+    "yield": "12.4 t/ha, a figure Bayer takes from the DA corn derby harvest of 3 March 2022 at NMACLRC, Dalwangan, Malaybalay, Bukidnon; shelling recovery 81%; company says yield holds in both seasons",
     "traits": [
      "yellow orange semi flint grain, 18 rows",
-     "long upright leaves, ear set at medium height",
+     "long erect leaves, ears set at medium height",
      "strong stalk, good standability",
-     "disease package: Diplodia ear rot, Phaeosphaeria leaf spot (high areas), banded leaf and sheath blight and southern leaf blight (low areas)",
-     "70,000 plants per ha; rows 70 cm, hills 20 cm",
-     "shelling about 78% in NSIC trials",
-     "good ear fill",
-     "erect leaves for high density planting"
+     "high elevation disease package: Diplodia ear rot and Phaeosphaeria leaf spot",
+     "low elevation disease package: banded leaf and sheath blight, southern leaf blight and Diplodia ear rot",
+     "company claims better grain quality"
     ],
-    "gm": "VT Double PRO with Roundup Ready (MON 89034 x NK603): two Bt proteins against Asian corn borer, earworm, cutworm and fall armyworm, plus glyphosate (Roundup) tolerance; refuge seed mixed in the bag (95:5).",
-    "areas": "Mindanao, incl. Bukidnon uplands",
-    "season": "wet and dry"
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "areas": "Mindanao, high and low elevation areas",
+    "season": "wet and dry (company says yield is steady in both)",
+    "density": "70,000 plants per ha; furrows 70 cm, hills 20 cm",
+    "elevation": "low (below 300 m) and mid to high (above 300 m); about 10 days longer up high"
    },
    "claims": true,
    "sources": [
     "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb/dekalb-product-detail-template.html/dk_8131s.html",
-    "https://cagayandeoro.da.gov.ph/index.php/top-performing-seed-varieties-in-da-spearheaded-corn-derby-named/",
-    "https://rfo12.da.gov.ph/?p=11899",
-    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/south-cotabato-corn-derby.html"
+    "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/traits/vt2prib.html",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
   "slug": "corn-dekalb-8131s-vtdoublepro-rib-complete"
@@ -24913,9 +24973,9 @@
   "aliases": [
    "DK 8282S",
    "Dekalb 8282S",
+   "DEKALB 8282S",
    "DK8282S",
    "DK 8282",
-   "Dekalb 8282",
    "8282S"
   ],
   "reg": "NSIC 2021 GMCn 75",
@@ -24971,30 +25031,29 @@
   "research": {
    "company": "Bayer (Dekalb)",
    "kind": "yellow GM hybrid",
-   "popular": "Bayer's newest and most pushed Luzon hybrid (launched Oct 2021, called a blockbuster); first in the 2022 Central Luzon derby (8.42 t/ha, SunStar), first in the 2023 Camarines Norte provincial derby (DA Bicol), second in a 2024 Daanbantayan, Cebu derby.",
+   "popular": "Featured first on Bayer's current Philippine Dekalb list (Oct 2026); a site banner calls it Dekalb's newest hybrid.",
    "facts": {
-    "maturityDays": "about 110 days to full maturity (Bayer); 105 to 108 in NSIC trials",
-    "yield": "company: 6.2 to 8 t/ha, about 1.7 t/ha above the national average at launch; shelling recovery 84%; NSIC trials averaged 9.11 t/ha",
+    "maturityDays": "about 110 days",
+    "yield": "no ceiling given: Bayer claims 1.7 t/ha more than market standard hybrids; shelling recovery 84%",
     "traits": [
      "orange flint grain, 16 to 18 rows",
-     "semi erect plant, ear set at medium height",
+     "semi erect plant, ears set at medium height",
      "good standability",
-     "copes better with dry spells than standard hybrids (company)",
-     "good tolerance to stalk rots and leaf diseases",
-     "83,000 to 90,000 plants per ha; rows 60 cm, hills 18 to 20 cm",
-     "company says it works for corn after rice and corn after corn",
-     "shelling 80.6% in NSIC trials"
+     "good tolerance to stalk rots and to leaf diseases",
+     "copes better with moisture stress (company)",
+     "adapts to wet and dry seasons (company)"
     ],
-    "gm": "VT Double PRO with Roundup Ready (MON 89034 x NK603): two Bt proteins against Asian corn borer, earworm, cutworm and fall armyworm, plus glyphosate (Roundup) tolerance; refuge seed mixed in the bag (95:5).",
-    "areas": "registered for Luzon and Mindanao; Bayer cites stable yields in Isabela and Pangasinan",
-    "season": "wet and dry"
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "areas": "Luzon and Visayas (Bayer's recommended area)",
+    "season": "wet and dry",
+    "density": "83,000 to 90,000 plants per ha; furrows 60 cm, hills 18 or 20 cm"
    },
    "claims": true,
    "sources": [
     "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb/dekalb-product-detail-template.html/dk_8282s.html",
-    "https://journalnews.com.ph/9-modified-corn-hybrids-hybrid-gives-stable-yield",
-    "https://www.sunstar.com.ph/pampanga/local-news/1st-corn-derby-held-in-mexico-town",
-    "https://bicol.da.gov.ph/da-bicol-holds-provincial-corn-derby-in-cam-norte/"
+    "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/traits/vt2prib.html",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
   "slug": "corn-dekalb-8282s-vtdoublepro-rib-complete"
@@ -25139,9 +25198,9 @@
    "NK6410",
    "NK 6410",
    "NK6410BtGT",
-   "NK6410 Bt/GT",
+   "NK6410 E Z Refuge",
    "Syngenta 6410",
-   "NK641O"
+   "NK6410 Bt/GT"
   ],
   "reg": "NSIC 2021 GMCn 78",
   "year": 2021,
@@ -25205,28 +25264,29 @@
   "research": {
    "company": "Syngenta (NK)",
    "kind": "yellow GM hybrid",
-   "popular": "Won the DA Bicol corn derby in Camarines Sur (Oct 2022), where the provincial report said many farmers there already plant it; third at the Region 2 derby in 2017 and top 3 again in 2019; on the City of Ilagan's list of common hybrids.",
+   "popular": "On Syngenta's current corn list; its brochure claims first place at the Research Center for Upland Development (10.54 t/ha, 2022), second at the 2022 Region 5 derby in Bombon, Camarines Sur (10.57 t/ha), a top Masaganang Ani award in CAR (8.69 t/ha, 2021), and third places in the Region 1 Corn Banner Program (2020) and at the Cagayan Valley Research Center (11.5 t/ha, 2019).",
    "facts": {
-    "maturityDays": "100 to 105 days after planting (sold as early maturing, about 15 to 20 days ahead of others); 103 to 113 in NSIC trials",
-    "yield": "potential 12 t/ha; 12.6 t/ha (2017) and 11.5 t/ha (2019) at the Region 2 derby; NSIC trials averaged 11.19 t/ha Luzon and 10.89 Mindanao",
+    "maturityDays": "100 to 105 days after planting (the trait list prints 100 to 150, a typo; the brochure says 100 to 105)",
+    "yield": "potential 12 t/ha",
     "traits": [
      "early maturing",
-     "fair drought tolerance",
-     "good standability, resists lodging",
-     "heavy, deep yellow orange 'Class A' grain",
-     "easy to dehusk and harvest",
-     "steady yield in wet and dry seasons"
+     "grain rated Class A by the company",
+     "good standability; brochure says it stands up to wind",
+     "plant of medium height",
+     "easy to dehusk and harvest"
     ],
-    "gm": "BGT stack Bt11 x TC1507 x GA21: built in protection against corn borer and other caterpillars plus glyphosate tolerance",
-    "areas": "Cagayan Valley (lower vega), Ilocos Region, Central Luzon, Southern Luzon, Bicol Region and low elevation Mindanao",
-    "season": "wet and dry season"
+    "gm": "BGT stack Bt11 x TC1507 x GA21: Bt proteins against Asian corn borer and other caterpillars, plus glyphosate tolerance (GA21). Sold as EZ Refuge: the brochures say 5% refuge seed is already blended in the bag.",
+    "areas": "lower vega of Cagayan Valley, Ilocos Region, Central Luzon, Southern Luzon, Bicol Region and low elevation Mindanao; the brochure adds low elevation Luzon and Visayas",
+    "season": "wet and dry season",
+    "density": "71,428 plants per ha; furrows 70 cm (brochure: 65 to 70 cm), hills 20 cm",
+    "elevation": "low elevation (Mindanao below 300 m)"
    },
    "claims": true,
    "sources": [
     "https://www.syngenta.com.ph/product/seed/corn/nk6410",
-    "https://www.syngenta.com.ph/corn",
-    "https://www.bworldonline.com/?p=261005",
-    "https://camsur.com/latest-pr/173"
+    "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/08/18/nk6410_brochure.pdf",
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
   "slug": "corn-nk6410-bgt"
@@ -25238,9 +25298,9 @@
    "NK6414",
    "NK 6414",
    "NK6414BtGT",
-   "NK6414 Bt/GT",
+   "NK6414 E Z Refuge",
    "Syngenta 6414",
-   "SS6414BtGt"
+   "NK6414 Bt/GT"
   ],
   "reg": "NSIC 2021 GMCn 79",
   "year": 2021,
@@ -25295,26 +25355,28 @@
   "research": {
    "company": "Syngenta (NK)",
    "kind": "yellow GM hybrid",
-   "popular": "Second at the 2017 Region 2 derby (12.7 t/ha, BusinessWorld); on the City of Ilagan's list of common hybrids; a Mindoro farmer won a yield contest with it (Krishi Jagran farm visit report).",
+   "popular": "On Syngenta's current corn list; its brochure claims first place in the Ilocos Norte hybrid yellow corn adaptability trial in 2019 (11.51 t/ha) and 2022 (14.40 t/ha), the 2020 Ilocos Sur derby (9.53 t/ha), and 2022 farmer field schools in Bacnotan, La Union (8.94 t/ha) and Batac, Ilocos Norte (11.14 t/ha).",
    "facts": {
-    "maturityDays": "105 to 110 days after planting; about 105 (wet season) in NSIC trials",
-    "yield": "potential 15 t/ha (company claim); 12.7 t/ha at the 2017 Region 2 derby; NSIC trials averaged 11.73 t/ha",
+    "maturityDays": "105 to 110 days after planting",
+    "yield": "potential 15 t/ha",
     "traits": [
-     "made for dense planting, about 80,000 plants/ha",
-     "erect leaves and low ear placement",
-     "good standability",
-     "easy to harvest"
+     "made for dense planting, about 80,000 plants per ha",
+     "erect leaves with low ear placement",
+     "good standability; brochure says it stands up to wind",
+     "seed comes treated with Fortenza (cyantraniliprole); the brochure says it guards seedlings against fall armyworm for 2 to 3 weeks after emergence"
     ],
-    "gm": "BGT stack Bt11 x TC1507 x GA21: built in protection against corn borer and other caterpillars plus glyphosate tolerance. Syngenta also lists an NK6414 VIP (fall armyworm) version.",
+    "gm": "BGT stack Bt11 x TC1507 x GA21: Bt proteins against Asian corn borer and other caterpillars, plus glyphosate tolerance (GA21). Sold as EZ Refuge: the brochures say 5% refuge seed is already blended in the bag.",
     "areas": "Ilocos Region and Central Luzon",
-    "season": "wet and dry season"
+    "season": "wet and dry season",
+    "density": "83,333 plants per ha; furrows 60 cm, hills 20 cm",
+    "positioning": "high population planting (tagline: Hari ng hi pop planting)"
    },
    "claims": true,
    "sources": [
     "https://www.syngenta.com.ph/product/seed/corn/nk6414",
-    "https://www.syngenta.com.ph/corn",
-    "https://www.bworldonline.com/?p=261005",
-    "https://icorn.cityofilagan.com/learn-more-on-yellow-corn/"
+    "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/08/18/nk6414_with_fortenza_-_brochure.pdf",
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
   "slug": "corn-nk6414-bgt"
@@ -25325,8 +25387,8 @@
   "aliases": [
    "NK6505",
    "NK 6505",
-   "Syngenta 6505",
-   "NK6505 VIP"
+   "NK6505 E Z Refuge",
+   "Syngenta 6505"
   ],
   "reg": "NSIC 2021 GMCn 80",
   "year": 2021,
@@ -25380,26 +25442,29 @@
   "research": {
    "company": "Syngenta (NK)",
    "kind": "yellow GM hybrid",
-   "popular": "Topped the GM class (8.77 t/ha) in DA Region 12's highland wet season trial at Banisilan, Cotabato (Oct 2024); a regular Syngenta entry in DA Northern Mindanao derbies in Bukidnon.",
+   "popular": "On Syngenta's current corn list; its brochure claims the top yield at the Northern Mindanao Agricultural Crops and Livestock Research Complex in 2022 (13.83 t/ha).",
    "facts": {
-    "maturityDays": "110 to 120 days after planting; about 104 (wet season) in NSIC trials",
-    "yield": "potential 12 t/ha; DA-12 trials: 8.77 t/ha Banisilan highland (2024), 7.60 t/ha Maasim, Sarangani highland (2024), 8.38 t/ha Sultan Kudarat lowland dry season (2025); NSIC trials averaged 11.06 t/ha in Mindanao",
+    "maturityDays": "110 to 120 days after planting",
+    "yield": "potential 12 t/ha",
     "traits": [
-     "tolerant of Gibberella ear rot",
-     "'Class A' grain",
-     "good standability",
-     "easy to dehusk"
+     "tolerant to Gibberella ear rot",
+     "grain rated Class A by the company",
+     "good standability; brochure says it stands up to wind",
+     "easy to dehusk and harvest"
     ],
-    "gm": "BGT stack Bt11 x TC1507 x GA21: built in caterpillar protection plus glyphosate tolerance. Syngenta also lists an NK6505 VIP version.",
-    "areas": "mid to high elevation farms in Mindanao",
-    "season": "wet season highland trials; also tested dry season"
+    "gm": "BGT stack Bt11 x TC1507 x GA21: Bt proteins against Asian corn borer and other caterpillars, plus glyphosate tolerance (GA21). Sold as EZ Refuge: the brochures say 5% refuge seed is already blended in the bag.",
+    "areas": "mid to high elevations in Mindanao",
+    "season": "wet season highland trials; also tested dry season",
+    "density": "71,428 plants per ha; furrows 70 cm (brochure: 65 to 70 cm), hills 20 cm",
+    "elevation": "mid to high elevation",
+    "positioning": "highland Mindanao corn farms"
    },
    "claims": true,
    "sources": [
     "https://www.syngenta.com.ph/product/seed/corn/nk6505",
-    "https://rfo12.da.gov.ph/?p=9835",
-    "https://rfo12.da.gov.ph/?p=9637",
-    "https://rfo12.da.gov.ph/?p=11899"
+    "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/08/18/nk6505_-_brochure.pdf",
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
   "slug": "corn-nk6505-bgt"
@@ -25710,9 +25775,9 @@
   "aliases": [
    "DK 9118S",
    "Dekalb 9118S",
+   "DEKALB 9118S",
    "DK9118S",
    "DK 9118",
-   "Dekalb 9118",
    "9118S"
   ],
   "reg": "NSIC 2020 GMCn 70",
@@ -25781,30 +25846,28 @@
   "research": {
    "company": "Bayer (Dekalb)",
    "kind": "yellow GM hybrid",
-   "popular": "Topped a 2021 corn derby in Asturias, Cebu at 8.3 t/ha (Manila Times); Bayer says it led a 2022 Camarines Norte farmer group trial; on BPI's Jan 2025 list.",
+   "popular": "On Bayer's current Philippine Dekalb list (Oct 2026).",
    "facts": {
-    "maturityDays": "about 120 days; 106 to 108 in NSIC trials",
-    "yield": "potential 15.5 t/ha; shelling recovery 84%; NSIC trials averaged 10.06 t/ha in Luzon and 8.90 in Mindanao",
+    "maturityDays": "about 120 days",
+    "yield": "potential 15.5 t/ha; shelling recovery 84%",
     "traits": [
      "orange yellow semi dent grain, 14 to 18 rows",
-     "upright plant and leaves, ear set at medium height",
+     "erect leaves, ears set at medium height",
      "strong stalk, good standability",
-     "high tolerance to leaf diseases; tolerant to ear rots",
-     "Bayer also cites banded leaf and sheath blight and stalk rot resistance",
-     "80,000 plants per ha, hills 20 cm; for corn after rice, rows 55 cm and 90,000 plants per ha",
-     "shelling about 81.5% in NSIC trials",
-     "good husk cover, ear length and ear fill"
+     "high tolerance to leaf diseases; tolerant to ear rots"
     ],
-    "gm": "VT Double PRO with Roundup Ready (MON 89034 x NK603): two Bt proteins against Asian corn borer, earworm, cutworm and fall armyworm, plus glyphosate (Roundup) tolerance; refuge seed mixed in the bag (95:5).",
-    "areas": "Luzon and Mindanao; tested in Cebu",
-    "season": "wet and dry"
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "areas": "Luzon and Visayas (Bayer's recommended area)",
+    "season": "wet and dry",
+    "density": "80,000 plants per ha with hills 20 cm; for corn after rice, furrows 55 cm and 90,000 plants per ha",
+    "positioning": "the page gives a separate tighter spacing for corn planted after rice"
    },
    "claims": true,
    "sources": [
     "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb/dekalb-product-detail-template.html/dk_9118s.html",
-    "https://manilatimes.net/2021/06/24/business/agribusiness/bayer-hybrid-corn-gets-yield-of-83-mtha/1804421",
-    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/dekalb-story.html",
-    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/dekalb-9118s-top-hybrid.html"
+    "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/traits/vt2prib.html",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
   "slug": "corn-dekalb-9118s-vtdoublepro-rib-complete"
@@ -26477,8 +26540,8 @@
   "name": "DK8899S",
   "aliases": [
    "DK 8899",
-   "Dekalb 8899",
-   "8899S"
+   "8899S",
+   "Dekalb 8899"
   ],
   "reg": "NSIC 2019 GMCn 67",
   "year": 2019,
@@ -26546,27 +26609,28 @@
   "research": {
    "company": "Bayer (Dekalb)",
    "kind": "yellow GM hybrid",
-   "popular": "On BPI's Jan 2025 list of GM hybrids cleared for sale; second at all three DA-10 Bukidnon stations in the 2022 derby; Bayer says it won the low elevation class of the 2023 South Cotabato derby (11.81 t/ha).",
+   "popular": "One of three featured hybrids on Bayer's current Philippine Dekalb list (Oct 2026).",
    "facts": {
-    "maturityDays": "105 to 110 days in low areas; 115 to 125 days in high areas; about 106 in NSIC trials",
-    "yield": "potential 12.6 t/ha; shelling recovery 82%; NSIC trials averaged 9.20 t/ha Luzon and 8.26 Mindanao",
+    "maturityDays": "105 to 110 days at low elevation; 115 to 125 days at high elevation",
+    "yield": "potential 12.6 t/ha; shelling recovery 82%",
     "traits": [
      "orange yellow semi dent grain, 18 rows",
-     "semi erect plant with stay green leaves, ear set at medium height",
+     "semi erect plant with stay green leaves, ears set at medium height",
      "good standability",
      "tolerant to Diplodia ear rot",
-     "strong tolerance to leaf diseases (company lists PLS, NLS, GLS)",
-     "70,000 to 80,000 plants per ha; rows 60 or 70 cm, hills 20 cm"
+     "high tolerance to leaf diseases, given on the page only as PLS, NLS and GLS (PLS is Phaeosphaeria leaf spot on Bayer's other pages)"
     ],
-    "gm": "VT Double PRO with Roundup Ready (MON 89034 x NK603): two Bt proteins (Cry1A.105 and Cry2Ab2) registered against Asian corn borer, corn earworm, common cutworm and fall armyworm, plus tolerance to glyphosate (Roundup). Sold as RIB Complete: the refuge seed is already mixed in the bag (95:5).",
-    "areas": "Mindanao, high and low elevation"
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "areas": "Mindanao, high and low elevation areas",
+    "density": "70,000 to 80,000 plants per ha; furrows 60 or 70 cm, hills 20 cm",
+    "elevation": "low and high elevation Mindanao; maturity runs about 10 to 15 days longer up high"
    },
    "claims": true,
    "sources": [
     "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb/dekalb-product-detail-template.html/dk_8899s.html",
-    "https://biotech.buplant.da.gov.ph/pdf/Updated_List_of_all_GMCorn_available_for_Propa.pdf",
-    "https://biotech.buplant.da.gov.ph/pdf/Consol_Corn_MON89034xNK603-RenewalPropa.pdf",
-    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/south-cotabato-corn-derby.html"
+    "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/traits/vt2prib.html",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
   "slug": "corn-dk8899s"
@@ -27673,7 +27737,7 @@
    "NK 8840",
    "NK8840 BGT",
    "NK8840BtGT",
-   "NK8840 Bt/GT",
+   "NK8840 E Z Refuge",
    "Syngenta 8840"
   ],
   "reg": "NSIC 2018 GMCn 49",
@@ -27745,27 +27809,26 @@
   "research": {
    "company": "Syngenta (NK)",
    "kind": "yellow GM hybrid",
-   "popular": "Top yielder at the DA Region 2 (Cagayan Valley) corn derby in both 2017 and 2019, the first back to back winner (BusinessWorld); the City of Ilagan corn center lists it among the yellow hybrids most grown there.",
+   "popular": "On Syngenta's current corn list; its brochure lists top Masaganang Ani awards at the Cagayan Valley Research Center in 2017 (12.82 t/ha) and 2019 (12.15 t/ha) and the 2020 Cordillera regional derby (9.01 t/ha), and says the hybrid has been sold for 18 years.",
    "facts": {
-    "maturityDays": "115 to 120 days after planting (company page); a 2019 company write up said 110 to 115 days; 106 to 109 in NSIC trials",
-    "yield": "potential 12 t/ha on the product page (the Syngenta corn overview page says 13 t/ha); 12.8 t/ha (2017) and 12.1 t/ha (2019) at the Region 2 derby; NSIC trials averaged 8.77 t/ha (dry season) and 7.56 (wet season)",
+    "maturityDays": "115 to 120 days after planting",
+    "yield": "potential 12 t/ha",
     "traits": [
-     "very big, heavy ears with large kernels (sold as 'jumbo')",
-     "strong stalks",
-     "better drought tolerance, holds yield under stress",
-     "stays green late",
-     "easy to dehusk and harvest by hand"
+     "big, heavy jumbo ears (company)",
+     "better drought tolerance (company)",
+     "easy to dehusk and harvest"
     ],
-    "gm": "BGT stack Bt11 x TC1507 x GA21: two built in proteins against corn borer and other caterpillars, plus glyphosate tolerance (BPI lists the stack as caterpillar resistant and glyphosate and glufosinate tolerant)",
-    "areas": "Cagayan Valley (upper vega), Ilocos Region, Central Luzon",
-    "season": "wet and dry season"
+    "gm": "BGT stack Bt11 x TC1507 x GA21: Bt proteins against Asian corn borer and other caterpillars, plus glyphosate tolerance (GA21). Sold as EZ Refuge: the brochures say 5% refuge seed is already blended in the bag.",
+    "areas": "upper vega of Cagayan Valley, Ilocos Region and Central Luzon",
+    "season": "wet and dry season",
+    "density": "71,428 plants per ha; furrows 70 cm (brochure: 65 to 70 cm), hills 20 cm"
    },
    "claims": true,
    "sources": [
     "https://www.syngenta.com.ph/product/seed/corn/nk8840",
-    "https://www.syngenta.com.ph/corn",
-    "https://www.bworldonline.com/?p=261005",
-    "https://icorn.cityofilagan.com/learn-more-on-yellow-corn/"
+    "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/08/18/nk_8840_brochure.pdf",
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
   "slug": "corn-agrisure-nk8840-ez-refuge"
@@ -29753,9 +29816,9 @@
   "aliases": [
    "DK 6919S",
    "Dekalb 6919S",
+   "DEKALB 6919S",
    "DK6919S",
    "DK 6919",
-   "Dekalb 6919",
    "6919S"
   ],
   "reg": "NSIC 2016 GMCn 41",
@@ -29817,30 +29880,30 @@
   "research": {
    "company": "Bayer (Dekalb)",
    "kind": "yellow GM hybrid",
-   "popular": "On Bayer's current Philippine list and BPI's Jan 2025 list; Bayer says it placed third (7.5 t/ha) in the 2021 Asturias, Cebu derby.",
+   "popular": "On Bayer's current Philippine Dekalb list (Oct 2026).",
    "facts": {
-    "maturityDays": "110 to 115 days; about 104 (dry season) in NSIC trials",
-    "yield": "potential 12.4 t/ha; shelling recovery 81%; NSIC trials averaged 9.16 to 10.12 t/ha",
+    "maturityDays": "110 to 115 days (relative maturity)",
+    "yield": "potential 12.4 t/ha; shelling recovery 81%; company stresses a stable yield",
     "traits": [
      "orange flint grain, 14 to 16 rows",
-     "medium plant height, ear set at medium height",
+     "medium plant height, ears set at medium height",
      "good standability",
-     "often bears two ears",
+     "often bears two ears per plant",
      "grain dries down fast",
      "drought tolerant (company)",
-     "tolerant to leaf diseases",
-     "70,000 to 80,000 plants per ha; rows 60 or 65 cm, hills 20 cm"
+     "tolerant to leaf diseases"
     ],
-    "gm": "VT Double PRO with Roundup Ready (MON 89034 x NK603): two Bt proteins against Asian corn borer, earworm, cutworm and fall armyworm, plus glyphosate (Roundup) tolerance; refuge seed mixed in the bag (95:5).",
-    "areas": "Luzon and Mindanao",
-    "season": "wet and dry"
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "areas": "Luzon and Visayas (Bayer's recommended area)",
+    "season": "wet and dry",
+    "density": "70,000 to 80,000 plants per ha; furrows 60 or 65 cm apart, hills 20 cm"
    },
    "claims": true,
    "sources": [
     "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb/dekalb-product-detail-template.html/dk_6919s.html",
-    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/dekalb-story.html",
-    "https://biotech.buplant.da.gov.ph/pdf/Updated_List_of_all_GMCorn_available_for_Propa.pdf",
-    "https://www.bworldonline.com/?p=376904"
+    "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/traits/vt2prib.html",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
    ]
   },
   "slug": "corn-dekalb-6919s-genuity"
@@ -51609,8 +51672,8 @@
   "reg": null,
   "year": null,
   "owner": "Syngenta (NK)",
-  "kind": "GM hybrid",
-  "color": null,
+  "kind": "yellow GM hybrid",
+  "color": "yellow",
   "localName": null,
   "uses": null,
   "maturity": null,
@@ -51624,22 +51687,65 @@
   "sources": [],
   "research": {
    "company": "Syngenta (NK)",
-   "kind": "GM hybrid",
-   "popular": "One of the NK VIP hybrids on Syngenta Philippines' corn list, sold under the slogan Protek TODO against fall armyworm and other corn caterpillars.",
+   "kind": "yellow GM hybrid",
+   "popular": "On Syngenta's current Philippine corn list, under its Protek Todo banner.",
    "facts": {
-    "gm": "Syngenta's VIP trait: four Bt proteins built into the plant against fall armyworm, Asian corn borer, corn semilooper, common cutworm and corn earworm",
+    "gm": "The VIP trait, sold under Syngenta's Protek Todo banner against fall armyworm and other corn caterpillars. Its page does not list the gene events.",
     "traits": [
-     "yellow grain",
-     "in the NSIC national tests since 2024 and not yet on the registry"
+     "Protected against fall armyworm and other corn caterpillars, the seller says"
     ]
    },
+   "claims": true,
    "sources": [
     "https://www.syngenta.com.ph/nk313-vip",
-    "https://www.philstar.com/business/2025/11/09/2485758/syngenta-develops-breakthrough-corn-pest-solution",
-    "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx"
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx",
+    "https://www.philstar.com/business/2025/11/09/2485758/syngenta-develops-breakthrough-corn-pest-solution"
    ]
   },
   "slug": "corn-nk313-vip"
+ },
+ {
+  "crop": "corn",
+  "name": "NK6414 VIP",
+  "aliases": [
+   "NK6414 Viptera"
+  ],
+  "reg": null,
+  "year": null,
+  "owner": "Syngenta (NK)",
+  "kind": "yellow GM hybrid",
+  "color": "yellow",
+  "localName": null,
+  "uses": null,
+  "maturity": null,
+  "yield": null,
+  "height": null,
+  "traits": [],
+  "reactions": [],
+  "domain": [],
+  "seasons": [],
+  "elevation": [],
+  "sources": [],
+  "research": {
+   "company": "Syngenta (NK)",
+   "kind": "yellow GM hybrid",
+   "popular": "On Syngenta's current Philippine corn list as the VIP version of NK6414, under its Protek Todo banner.",
+   "facts": {
+    "traits": [
+     "Protected against fall armyworm and other corn caterpillars, the seller says",
+     "Sold, like NK6414, for planting at a high plant population"
+    ],
+    "gm": "The VIP trait, sold under Syngenta's Protek Todo banner against fall armyworm and other corn caterpillars. Its page does not list the gene events."
+   },
+   "claims": true,
+   "sources": [
+    "https://www.syngenta.com.ph/nk6414-vip",
+    "https://www.syngenta.com.ph/products/search/seed/category/corn-346",
+    "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
+   ]
+  },
+  "slug": "corn-nk6414-vip"
  },
  {
   "crop": "corn",

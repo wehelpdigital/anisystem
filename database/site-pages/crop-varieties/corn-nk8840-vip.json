@@ -106,7 +106,7 @@
     },
     {
       "type": "text",
-      "text": "NK8840 VIP corn takes about 111 days from planting to the harvest of dry grain. That is 5.6 days longer than the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 11 t/ha beats the average of its group, 8.13. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 115 to 120 days after planting, about 111 in NSIC trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "NK8840 VIP corn takes about 111 days from planting to the harvest of dry grain. That is 5.6 days longer than the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 11 t/ha beats the average of its group, 8.13. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 115 to 120 days after planting.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -155,18 +155,19 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** Potential 12 t/ha, NSIC trials averaged 10.99 t/ha in Luzon.",
-        "**Traits in the seed:** VIP stack Bt11 x MIR162 x MON89034 x GA21: Bt11 and MON89034 proteins against corn borer and other caterpillars, MIR162 (the Vip3A 'Viptera' protein) against armyworms including fall armyworm, and GA21 glyphosate tolerance. BPI approved this stack for planting in January 2020.",
-        "**Where:** Cagayan Valley (upper vega), Ilocos Region, Central Luzon.",
-        "Tolerant of fall armyworm and other corn caterpillars.",
-        "Big jumbo ears.",
-        "Better drought tolerance.",
+        "**Yield:** Potential 12 t/ha.",
+        "**Traits in the seed:** VIP stack Bt11 x MIR162 x MON89034 x GA21: several Bt proteins, including Vip3A (from MIR162) aimed at fall armyworm, against corn borer and other caterpillars, plus glyphosate tolerance (GA21).",
+        "**Where:** Upper vega of Cagayan Valley, Ilocos Region and Central Luzon.",
+        "**Stand:** 71,428 plants per ha, furrows 70 cm, hills 20 cm.",
+        "Tolerant to fall armyworm and other corn insect pests (company).",
+        "Big jumbo ears (company).",
+        "Better drought tolerance (company).",
         "Easy to dehusk and harvest."
       ]
     },
     {
       "type": "text",
-      "text": "Why farmers know it: the derby winning NK8840 now also sold with the fall armyworm trait, company page updated Aug 2025. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
+      "text": "Why farmers know it: on Syngenta's current corn list as the fall armyworm version of NK8840. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
     },
     {
       "type": "heading",
@@ -289,12 +290,12 @@
           "url": "https://www.syngenta.com.ph/nk8840-vip"
         },
         {
-          "label": "Notes on NK8840 VIP from biotech.buplant.da.gov.ph",
-          "url": "https://biotech.buplant.da.gov.ph/2016propagation.html"
+          "label": "Notes on NK8840 VIP from syngenta.com.ph",
+          "url": "https://www.syngenta.com.ph/products/search/seed/category/corn-346"
         },
         {
-          "label": "Notes on NK8840 VIP from biotech.buplant.da.gov.ph",
-          "url": "https://biotech.buplant.da.gov.ph/pdf/Updated_List_of_all_GMCorn_available_for_Propa.pdf"
+          "label": "Notes on NK8840 VIP from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

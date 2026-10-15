@@ -226,6 +226,29 @@
     {
       "type": "heading",
       "level": 2,
+      "text": "What Bayer says about it"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Days to harvest:** 114 to 120 days after sowing.",
+        "**How it is planted:** Direct seeded or transplanted.",
+        "**Seed:** 21 to 24 kg per hectare direct seeded, 15 kg transplanted.",
+        "About 121 cm tall, with 12 to 16 productive tillers.",
+        "Medium slender grain, with a milling recovery of 69 percent and head rice of 53.5 percent.",
+        "Cooks slightly aromatic, moderately soft and a little sticky.",
+        "Dual trait: bred to tolerate bacterial leaf blight and brown planthopper, the first such hybrid Bayer sells in the Philippines.",
+        "Planthoppers settle on other plants first and hopperburn shows later, so Bayer puts the spray threshold at 5 to 7 hoppers per tiller instead of 1."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual variety on the same ground."
+    },
+    {
+      "type": "heading",
+      "level": 2,
       "text": "Where should you plant it?"
     },
     {
@@ -327,6 +350,14 @@
         {
           "label": "Where Arize AZ 8433 DT is named as NSIC Rc 688H",
           "url": "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf"
+        },
+        {
+          "label": "Bayer: Arize AZ 8433 DT, product page",
+          "url": "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_az_8433_dt_.html"
+        },
+        {
+          "label": "Bayer: Arize AZ 8433 DT, product page",
+          "url": "https://www.cropscience.bayer.com.ph/en-ph/crops/seeds---traits/arize-dual-trait.html"
         },
         {
           "label": "NSIC registry of rice varieties: NSIC Rc 688H",

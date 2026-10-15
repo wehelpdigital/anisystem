@@ -15,7 +15,7 @@
     "DK 8131S",
     "Dekalb 8131S",
     "DK 8131",
-    "Dekalb 8131",
+    "8131S",
     "DEKALB®8131S VTDoublePRO RIB Complete corn variety",
     "corn variety philippines",
     "NSIC 2021 GMCn 76"
@@ -69,7 +69,7 @@
         ],
         [
           "Also known as",
-          "DK 8131S, Dekalb 8131S, DK 8131, Dekalb 8131"
+          "DK 8131S, Dekalb 8131S, DK 8131, 8131S"
         ],
         [
           "Type",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "DEKALB®8131S VTDoublePRO RIB Complete corn takes about 107 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8 t/ha matches the average of its group, 8.13. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 110 days below 300 m elevation, about 120 days above 300 m, about 107 in NSIC trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "DEKALB®8131S VTDoublePRO RIB Complete corn takes about 107 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8 t/ha matches the average of its group, 8.13. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 110 days after planting below 300 m elevation, about 120 days at mid to high elevation (above 300 m).\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -157,20 +157,22 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** Potential 12.4 t/ha, shelling recovery 81 percent, NSIC trials averaged 7.99 t/ha in Mindanao, 9.7 to 12.4 t/ha in DA Bukidnon derbies.",
-        "**Traits in the seed:** VT Double PRO with Roundup Ready (MON 89034 x NK603): two Bt proteins against Asian corn borer, earworm, cutworm and fall armyworm, plus glyphosate (Roundup) tolerance, refuge seed mixed in the bag (95:5).",
-        "**Season:** Wet and dry.",
-        "**Where:** Mindanao, incl. Bukidnon uplands.",
+        "**Yield:** 12.4 t/ha, a figure Bayer takes from the DA corn derby harvest of 3 March 2022 at NMACLRC, Dalwangan, Malaybalay, Bukidnon, shelling recovery 81 percent, company says yield holds in both seasons.",
+        "**Traits in the seed:** VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm, the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95 percent traited seed and 5 percent refuge seed already mixed, so no separate refuge block has to be planted.",
+        "**Season:** Wet and dry (company says yield is steady in both).",
+        "**Where:** Mindanao, high and low elevation areas.",
+        "**Elevation:** Low (below 300 m) and mid to high (above 300 m), about 10 days longer up high.",
+        "**Stand:** 70,000 plants per ha, furrows 70 cm, hills 20 cm.",
         "Yellow orange semi flint grain, 18 rows.",
-        "Long upright leaves, ear set at medium height.",
+        "Long erect leaves, ears set at medium height.",
         "Strong stalk, good standability.",
-        "Disease package: Diplodia ear rot, Phaeosphaeria leaf spot (high areas), banded leaf and sheath blight and southern leaf blight (low areas).",
-        "70,000 plants per ha, rows 70 cm, hills 20 cm."
+        "High elevation disease package: Diplodia ear rot and Phaeosphaeria leaf spot.",
+        "Low elevation disease package: banded leaf and sheath blight, southern leaf blight and Diplodia ear rot."
       ]
     },
     {
       "type": "text",
-      "text": "Why farmers know it: topped DA 10's 2022 derbies at Malaybalay (12.36 t/ha) and Dangcagan, Bukidnon, topped the GM class of DA 12's 2025 dry season trial in Sultan Kudarat (10.14 t/ha), Bayer quotes Cotabato dealers saying most farmers ask for it. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
+      "text": "Why farmers know it: one of three featured hybrids on Bayer's current Philippine Dekalb list. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
     },
     {
       "type": "heading",
@@ -293,12 +295,12 @@
           "url": "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb/dekalb-product-detail-template.html/dk_8131s.html"
         },
         {
-          "label": "Notes on DEKALB®8131S VTDoublePRO RIB Complete from cagayandeoro.da.gov.ph",
-          "url": "https://cagayandeoro.da.gov.ph/index.php/top-performing-seed-varieties-in-da-spearheaded-corn-derby-named/"
+          "label": "Notes on DEKALB®8131S VTDoublePRO RIB Complete from cropscience.bayer.com.ph",
+          "url": "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb.html"
         },
         {
-          "label": "Notes on DEKALB®8131S VTDoublePRO RIB Complete from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=11899"
+          "label": "Notes on DEKALB®8131S VTDoublePRO RIB Complete from cropscience.bayer.com.ph",
+          "url": "https://www.cropscience.bayer.com.ph/en-ph/traits/vt2prib.html"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

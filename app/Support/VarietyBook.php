@@ -373,6 +373,9 @@ class VarietyBook
             if (! $r['registered']) {
                 $bits[] = 'not registered, seller figures';
             }
+            if (! empty($r['seller'])) {
+                $bits[] = 'the seller says: ' . $r['seller'];
+            }
 
             return '- ' . $r['name'] . ' [' . implode('; ', $bits) . ']';
         }, $rows));
@@ -431,6 +434,7 @@ class VarietyBook
             'where' => implode(', ', array_map(fn ($e) => self::RICE_ENVS[$e] ?? $e, $v['environments'] ?? [])),
             'registered' => true,
             'url' => url('/rice-varieties/' . $v['slug']),
+            'seller' => self::sellerWords((array) ($v['seller']['facts'] ?? [])),
         ];
     }
 
@@ -471,7 +475,40 @@ class VarietyBook
             'where' => $where,
             'registered' => ! empty($v['reg']),
             'url' => url('/crop-varieties/' . $v['slug']),
+            'seller' => self::sellerWords((array) ($v['research']['facts'] ?? [])),
         ];
+    }
+
+    /**
+     * The seller's own figures in a line an analysis can read (2026-10-16,
+     * the owner: the Dekalb, NK and Arize profiles "can be used for AI
+     * analysis"): days, yield, the traits that decide a plan, the stand and
+     * the fertilizer it was trialled on. Short: prompts stay lean.
+     */
+    public static function sellerWords(array $f): string
+    {
+        // Brackets (who said it, which trial) stay on the page; a cut falls between words.
+        $cut = function (string $t, int $max): string {
+            $t = trim((string) preg_replace(['/\s*\([^)]*\)/u', '/\s+/u'], ['', ' '], $t));
+            if (mb_strlen($t) <= $max) {
+                return $t;
+            }
+            $t = mb_substr($t, 0, $max);
+
+            return rtrim(mb_substr($t, 0, (int) (mb_strrpos($t, ' ') ?: $max)), ' ,;:') . '…';
+        };
+        $bits = [];
+        foreach (['maturityDays' => 'days', 'yield' => 'yield', 'density' => 'stand', 'seedRate' => 'seed', 'fertilizer' => 'fertilizer', 'gm' => 'traits in the seed'] as $k => $lab) {
+            if (! empty($f[$k]) && is_string($f[$k])) {
+                $bits[] = $lab . ' ' . $cut($f[$k], $k === 'gm' ? 100 : 80);
+            }
+        }
+        $traits = array_values(array_filter(array_map(fn ($t) => is_string($t) ? $cut($t, 60) : '', (array) ($f['traits'] ?? []))));
+        if ($traits) {
+            $bits[] = implode(', ', array_slice($traits, 0, 5));
+        }
+
+        return $cut(implode('; ', $bits), 360);
     }
 
     /** The lookup keys a name gives: "NSIC Rc 222" -> nsicrc222, rc222; "Dekalb 8899S" -> dk8899s. */

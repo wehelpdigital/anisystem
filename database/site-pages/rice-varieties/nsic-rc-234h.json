@@ -238,6 +238,30 @@
     {
       "type": "heading",
       "level": 2,
+      "text": "What Syngenta says about it"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Days to harvest:** 118 days after sowing.",
+        "**Yield:** Up to 10 t/ha, or 200 cavans of 50 kg.",
+        "**How it is planted:** Transplanted: the seller's fertilizer plan counts from transplanting.",
+        "**Fertilizer:** Wet season, 90 kg of N, 30 of P2O5 and 30 of K2O per hectare in 7 bags: 3 bags of 14 14 14 at transplanting, 1 bag of 14 14 14 and 1 bag of urea at mid tillering (35 to 40 days after sowing), 1 bag of urea at early panicle initiation (50 to 60 days), 1 bag of ammonium sulfate at flowering (80 to 85 days). Dry season, 120 kg of N, 60 of P2O5 and 60 of K2O in 12 bags: 5 bags of 14 14 14 at transplanting, 2 bags of 14 14 14 with 1 of urea and 1 of ammonium sulfate at mid tillering, 1 bag of 14 14 14 and 1 of urea at early panicle initiation, 1 of ammonium sulfate at flowering.",
+        "**Season:** Wet and dry, recommended for both seasons in every region.",
+        "**Where:** Nationwide.",
+        "About 119 cm tall, with about 12 productive tillers.",
+        "Medium slender grain, with a milling recovery of 66 percent (Grade 1).",
+        "Cooks soft, white and fragrant."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual variety on the same ground."
+    },
+    {
+      "type": "heading",
+      "level": 2,
       "text": "Where should you plant it?"
     },
     {
@@ -339,6 +363,14 @@
         {
           "label": "Where NK 5017 is named as NSIC Rc 234H",
           "url": "https://nsic.buplant.da.gov.ph/downloadables/catalogue2010.pdf"
+        },
+        {
+          "label": "Syngenta: NK 5017, product page",
+          "url": "https://www.syngenta.com.ph/product/seed/rice/nk5017"
+        },
+        {
+          "label": "Syngenta: NK 5017, product page",
+          "url": "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/09/01/nk5017_flyer.pdf"
         },
         {
           "label": "PhilRice seed database: NSIC Rc 234H variety characteristics",

@@ -154,19 +154,20 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** Potential 12 t/ha, NSIC trials averaged 11.64 t/ha Luzon and 8.29 Mindanao.",
-        "**Traits in the seed:** VIP stack Bt11 x MIR162 x MON89034 x GA21: three kinds of built in caterpillar protection, including the Vip3A protein against fall armyworm, plus glyphosate tolerance.",
-        "**Where:** Cagayan Valley (lower vega), Ilocos Region, Central Luzon, Southern Luzon, Bicol Region and low elevation Mindanao.",
-        "Tolerant of fall armyworm and other corn caterpillars.",
+        "**Yield:** Potential 12 t/ha.",
+        "**Traits in the seed:** VIP stack Bt11 x MIR162 x MON89034 x GA21: several Bt proteins, including Vip3A (from MIR162) aimed at fall armyworm, against corn borer and other caterpillars, plus glyphosate tolerance (GA21).",
+        "**Where:** Lower vega of Cagayan Valley, Ilocos Region, Central Luzon, Southern Luzon, Bicol Region and low elevation Mindanao.",
+        "**Stand:** 71,428 plants per ha, furrows 70 cm, hills 20 cm.",
+        "Tolerant to fall armyworm and other corn insect pests (company).",
         "Early maturing.",
-        "'Class A' grain.",
+        "Grain rated Class A by the company.",
         "Good standability.",
-        "Easy to dehusk."
+        "Easy to dehusk and harvest."
       ]
     },
     {
       "type": "text",
-      "text": "Why farmers know it: fall armyworm version of the widely planted NK6410, on Syngenta's current corn list. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
+      "text": "Why farmers know it: on Syngenta's current corn list as the fall armyworm version of NK6410. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
     },
     {
       "type": "heading",
@@ -289,12 +290,12 @@
           "url": "https://www.syngenta.com.ph/nk6410-vip"
         },
         {
-          "label": "Notes on NK6410 VIP from biotech.buplant.da.gov.ph",
-          "url": "https://biotech.buplant.da.gov.ph/2016propagation.html"
+          "label": "Notes on NK6410 VIP from syngenta.com.ph",
+          "url": "https://www.syngenta.com.ph/products/search/seed/category/corn-346"
         },
         {
-          "label": "Notes on NK6410 VIP from biotech.buplant.da.gov.ph",
-          "url": "https://biotech.buplant.da.gov.ph/pdf/Updated_List_of_all_GMCorn_available_for_Propa.pdf"
+          "label": "Notes on NK6410 VIP from nsic.buplant.da.gov.ph",
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

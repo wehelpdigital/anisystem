@@ -667,10 +667,10 @@ def build(v, allv, st):
     if research:
         H('What its seller and farm sources say')
         notes = []
-        for k_ in ('maturityDays', 'harvest', 'yield', 'fruit', 'gm', 'season', 'areas', 'uses'):
+        for k_ in ('maturityDays', 'harvest', 'yield', 'fruit', 'gm', 'season', 'areas', 'elevation', 'density', 'uses'):
             if facts.get(k_) and not (k_ == 'maturityDays' and v.get('maturity')):
                 lab = {'maturityDays': 'Days to harvest', 'harvest': 'Harvest', 'yield': 'Yield', 'fruit': 'Fruit', 'gm': 'Traits in the seed',
-                       'season': 'Season', 'areas': 'Where', 'uses': 'Uses'}[k_]
+                       'season': 'Season', 'areas': 'Where', 'elevation': 'Elevation', 'density': 'Stand', 'uses': 'Uses'}[k_]
                 val = safe(str(facts[k_]))
                 if val:
                     notes.append('**%s:** %s' % (lab, sentence(val)))

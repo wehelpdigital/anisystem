@@ -252,6 +252,28 @@ def main():
                     e['names'].append(nm)
                 e['sources'] += [u for u in t['sources'] if u not in e['sources'] and not any(b in u for b in ('pinoyrice.com',))]
 
+    # The seller's own figures (2026-10-16, the owner: Syngenta's rice and
+    # Bayer's Arize profiles, "used for AI analysis"): sellers*.json in the
+    # trade names folder, each {nsic, tradeNames, company, kind, facts,
+    # claims, sources}. Tied to a record by its NSIC number only; the names
+    # join the trade names, the facts ride on the record as `seller`.
+    sellers = {}
+    if TRADE and os.path.isdir(TRADE):
+        for f in sorted(glob.glob(os.path.join(TRADE, 'sellers*.json'))):
+            for t in json.load(open(f, encoding='utf-8')):
+                if not t.get('nsic') or not t.get('facts') or not t.get('sources'):
+                    continue
+                key = display(t['nsic'])
+                srcs = [u for u in t['sources'] if u.startswith('http') and 'pinoyrice.com' not in u][:3]
+                sellers[key] = {'company': t.get('company'), 'kind': t.get('kind'), 'names': [re.sub(r'\s+', ' ', str(n)).strip() for n in t.get('tradeNames') or []],
+                                'facts': t['facts'], 'claims': bool(t.get('claims', True)), 'sources': srcs}
+                e = trade.setdefault(key, {'names': [], 'sources': []})
+                for nm in sellers[key]['names']:
+                    if (nm and flat(nm) not in [flat(x) for x in e['names']] and nm.lower() != key.lower() and len(nm) >= 4
+                            and not re.match(r'(?i)^(nsic\s*)?rc\s*\d', nm) and nm.lower() not in GENERIC_TRADE and (key, flat(nm)) not in DOUBTFUL_TRADE):
+                        e['names'].insert(0, nm)
+                e['sources'] = list(dict.fromkeys(e['sources'] + srcs[:1]))
+
     out, seen = [], set()
     for a in app:
         name = display(a['name'])
@@ -431,7 +453,11 @@ def main():
         if name in byname:
             byname[name]['tradeNames'] = names
             byname[name]['tradeSources'] = srcs
-    print(filled, 'filled from the NSIC registry,', added, 'added from it')
+    for name, s in sellers.items():
+        if name in byname:
+            byname[name]['seller'] = {k: s[k] for k in ('company', 'kind', 'facts', 'claims', 'sources') if s.get(k) is not None}
+    print(filled, 'filled from the NSIC registry,', added, 'added from it,', sum(1 for n in sellers if n in byname), 'with the seller\'s own figures',
+          '(not on record: %s)' % ', '.join(n for n in sellers if n not in byname) if any(n not in byname for n in sellers) else '')
     out.sort(key=lambda v: (-(v['year'] or 0), v['name']))
     json.dump(out, open(os.path.join(HERE, 'varieties.json'), 'w', encoding='utf-8', newline='\n'), indent=1, ensure_ascii=False)
     print(sum(1 for v in out if v.get('tradeNames')), 'with a trade name;', len(out), 'varieties;', sum(1 for v in out if v['maturity']), 'with trial results;', sum(1 for v in out if v['environments']),

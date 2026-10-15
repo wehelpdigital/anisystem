@@ -845,6 +845,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/crop-protocol', [App\Http\Controllers\CropProtocolController::class, 'page'])->name('proto.page');
     Route::get('/app/crop-protocol/options', [App\Http\Controllers\CropProtocolController::class, 'options'])->name('proto.options');
     Route::post('/app/crop-protocol/generate', [App\Http\Controllers\CropProtocolController::class, 'generate'])->name('proto.generate');
+    Route::post('/app/crop-protocol/need', [App\Http\Controllers\CropProtocolController::class, 'need'])->name('proto.need');
     Route::get('/app/crop-protocol/list', [App\Http\Controllers\CropProtocolController::class, 'list'])->name('proto.list');
     Route::get('/app/crop-protocol/one/{id}', [App\Http\Controllers\CropProtocolController::class, 'one'])->whereNumber('id')->name('proto.one');
     Route::post('/app/crop-protocol/meta', [App\Http\Controllers\CropProtocolController::class, 'meta'])->name('proto.meta');

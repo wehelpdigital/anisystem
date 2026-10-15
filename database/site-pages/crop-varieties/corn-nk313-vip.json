@@ -7,7 +7,7 @@
   "profile": true,
   "title": "NK313 VIP corn (NK313): Characteristics",
   "metaTitle": "NK313 VIP corn: Characteristics",
-  "metaDescription": "NK313 VIP corn is a GM hybrid corn variety from Syngenta (NK). See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "NK313 VIP corn is a yellow yellow GM hybrid corn variety from Syngenta (NK). See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "NK313 VIP corn",
   "keywords": [
     "NK313 VIP corn",
@@ -16,7 +16,7 @@
     "NK313 VIP corn variety",
     "corn variety philippines"
   ],
-  "excerpt": "NK313 VIP corn is a GM hybrid corn variety, also sold or known as NK313. It is not on the NSIC registry, so the facts here come from its seller and farm sources. It comes from Syngenta (NK).",
+  "excerpt": "NK313 VIP corn is a yellow yellow GM hybrid corn variety, also sold or known as NK313. It is not on the NSIC registry, so the facts here come from its seller and farm sources. It comes from Syngenta (NK).",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where NK313 VIP corn is grown",
@@ -31,7 +31,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Type:** GM hybrid."
+        "**Type:** Yellow yellow GM hybrid."
       ]
     },
     {
@@ -57,7 +57,7 @@
         ],
         [
           "Type",
-          "GM hybrid"
+          "Yellow yellow GM hybrid"
         ]
       ]
     },
@@ -92,14 +92,13 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Traits in the seed:** Syngenta's VIP trait: four Bt proteins built into the plant against fall armyworm, Asian corn borer, corn semilooper, common cutworm and corn earworm.",
-        "Yellow grain.",
-        "In the NSIC national tests since 2024 and not yet on the registry."
+        "**Traits in the seed:** The VIP trait, sold under Syngenta's Protek Todo banner against fall armyworm and other corn caterpillars. Its page does not list the gene events.",
+        "Protected against fall armyworm and other corn caterpillars, the seller says."
       ]
     },
     {
       "type": "text",
-      "text": "Why farmers know it: one of the NK VIP hybrids on Syngenta Philippines' corn list, sold under the slogan Protek TODO against fall armyworm and other corn caterpillars. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+      "text": "Why farmers know it: on Syngenta's current Philippine corn list, under its Protek Todo banner. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
     },
     {
       "type": "heading",
@@ -148,7 +147,7 @@
         "[AH Ultra 357](/crop-varieties/corn-ah-ultra-357)",
         "[B118G](/crop-varieties/corn-b118g)",
         "[BioCorn 108](/crop-varieties/corn-biocorn-108)",
-        "[Bravado F1](/crop-varieties/corn-bravado-f1)"
+        "[NK6414 VIP](/crop-varieties/corn-nk6414-vip)"
       ]
     },
     {
@@ -206,12 +205,12 @@
           "url": "https://www.syngenta.com.ph/nk313-vip"
         },
         {
-          "label": "Notes on NK313 VIP from philstar.com",
-          "url": "https://www.philstar.com/business/2025/11/09/2485758/syngenta-develops-breakthrough-corn-pest-solution"
+          "label": "Notes on NK313 VIP from syngenta.com.ph",
+          "url": "https://www.syngenta.com.ph/products/search/seed/category/corn-346"
         },
         {
           "label": "Notes on NK313 VIP from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/CVR-Applications_NSIC.xlsx"
+          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic%20-%20registered%20corn_sorghum_wheat.xlsx"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

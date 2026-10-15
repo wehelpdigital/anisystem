@@ -14,7 +14,7 @@
     "NK6410 BGT",
     "NK6410",
     "NK6410BtGT",
-    "NK6410 Bt/GT",
+    "NK6410 E Z Refuge",
     "Syngenta 6410",
     "NK6410 BGT corn variety",
     "corn variety philippines",
@@ -69,7 +69,7 @@
         ],
         [
           "Also known as",
-          "NK6410, NK6410BtGT, NK6410 Bt/GT, Syngenta 6410"
+          "NK6410, NK6410BtGT, NK6410 E Z Refuge, Syngenta 6410"
         ],
         [
           "Type",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "NK6410 BGT corn takes 103 to 113 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 11 t/ha beats the average of its group, 8.13. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 100 to 105 days after planting (sold as early maturing, about 15 to 20 days ahead of others), 103 to 113 in NSIC trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "NK6410 BGT corn takes 103 to 113 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 11 t/ha beats the average of its group, 8.13. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 100 to 105 days after planting.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -157,20 +157,22 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** Potential 12 t/ha, 12.6 t/ha and 11.5 t/ha at the Region 2 derby, NSIC trials averaged 11.19 t/ha Luzon and 10.89 Mindanao.",
-        "**Traits in the seed:** BGT stack Bt11 x TC1507 x GA21: built in protection against corn borer and other caterpillars plus glyphosate tolerance.",
+        "**Yield:** Potential 12 t/ha.",
+        "**Traits in the seed:** BGT stack Bt11 x TC1507 x GA21: Bt proteins against Asian corn borer and other caterpillars, plus glyphosate tolerance (GA21). Sold as EZ Refuge: the brochures say 5 percent refuge seed is already blended in the bag.",
         "**Season:** Wet and dry season.",
-        "**Where:** Cagayan Valley (lower vega), Ilocos Region, Central Luzon, Southern Luzon, Bicol Region and low elevation Mindanao.",
+        "**Where:** Lower vega of Cagayan Valley, Ilocos Region, Central Luzon, Southern Luzon, Bicol Region and low elevation Mindanao, the brochure adds low elevation Luzon and Visayas.",
+        "**Elevation:** Low elevation (Mindanao below 300 m).",
+        "**Stand:** 71,428 plants per ha, furrows 70 cm, hills 20 cm.",
         "Early maturing.",
-        "Fair drought tolerance.",
-        "Good standability, resists lodging.",
-        "Heavy, deep yellow orange 'Class A' grain.",
+        "Grain rated Class A by the company.",
+        "Good standability, brochure says it stands up to wind.",
+        "Plant of medium height.",
         "Easy to dehusk and harvest."
       ]
     },
     {
       "type": "text",
-      "text": "Why farmers know it: won the DA Bicol corn derby in Camarines Sur, where the provincial report said many farmers there already plant it, third at the Region 2 derby in 2017 and top 3 again in 2019, on the City of Ilagan's list of common hybrids. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
+      "text": "Why farmers know it: on Syngenta's current corn list, its brochure claims first place at the Research Center for Upland Development, second at the 2022 Region 5 derby in Bombon, Camarines Sur (10.57 t/ha), a top Masaganang Ani award in CAR, and third places in the Region 1 Corn Banner Program and at the Cagayan Valley Research Center. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
     },
     {
       "type": "heading",
@@ -294,11 +296,11 @@
         },
         {
           "label": "Notes on NK6410 BGT from syngenta.com.ph",
-          "url": "https://www.syngenta.com.ph/corn"
+          "url": "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/08/18/nk6410_brochure.pdf"
         },
         {
-          "label": "Notes on NK6410 BGT from bworldonline.com",
-          "url": "https://www.bworldonline.com/?p=261005"
+          "label": "Notes on NK6410 BGT from syngenta.com.ph",
+          "url": "https://www.syngenta.com.ph/products/search/seed/category/corn-346"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

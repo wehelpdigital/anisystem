@@ -95,6 +95,23 @@ def code(r):
     return m.group(1) if m else None
 
 
+def note(s):
+    """A seller's note as page text (STYLE.md): no hyphens between words, ranges
+    with "to", no percent signs, ampersands or semicolons, one sentence."""
+    if not isinstance(s, str) or not s.strip():
+        return ''
+    s = re.sub(r'\s*\((?:company|seller|per [^)]*)\)', '', s.strip())
+    # Fertilizer grades (14-14-14) are written with spaces, as on every page ("14 14 14"), never as a range.
+    grades = []
+    s = re.sub(r'\b\d+(?:\.\d+)?-\d+(?:\.\d+)?-\d+(?:\.\d+)?\b', lambda m: grades.append(m.group(0)) or '\x00%d\x00' % (len(grades) - 1), s)
+    s = re.sub(r'(?<=\d)\s*(?:-|–)\s*(?=\d)', ' to ', s)
+    s = re.sub(r'(?<=[A-Za-z])-(?=[A-Za-z0-9])|(?<=[0-9])-(?=[A-Za-z])', ' ', s)
+    s = s.replace(' - ', ', ').replace('–', ' to ').replace('—', ', ').replace('%', ' percent').replace('&', 'and').replace(';', ',')
+    s = re.sub(r'\x00(\d+)\x00', lambda m: grades[int(m.group(1))].replace('-', ' '), s)
+    s = re.sub(r'\s+', ' ', s).strip(' ,.')
+    return (s[:1].upper() + s[1:] + '.') if s else ''
+
+
 def article(word):
     return 'an' if word[:1].lower() in 'aeiou' else 'a'
 
@@ -343,6 +360,25 @@ def build(v, allv, stats):
         if words:
             T(' '.join(words))
 
+    # ---- what its seller says (2026-10-16): the company's own figures, said as theirs
+    sl = v.get('seller') or {}
+    sf = sl.get('facts') or {}
+    if sf:
+        H('What %s says about it' % (sl.get('company') or 'its seller'))
+        notes = []
+        for k_, lab in (('maturityDays', 'Days to harvest'), ('yield', 'Yield'), ('establishment', 'How it is planted'), ('seedRate', 'Seed'),
+                        ('fertilizer', 'Fertilizer'), ('season', 'Season'), ('areas', 'Where')):
+            val = note(sf.get(k_))
+            if val:
+                notes.append('**%s:** %s' % (lab, val))
+        for t_ in (sf.get('traits') or [])[:6]:
+            t2 = note(t_)
+            if t2:
+                notes.append(t2)
+        if notes:
+            blocks.append({'type': 'list', 'ordered': False, 'items': notes})
+        T('These are the seller\'s own figures, from its own trials. So plant a small area first, and compare it with your usual variety on the same ground.')
+
     # ---- where and when
     H('Where should you plant it?')
     if e:
@@ -433,6 +469,8 @@ def build(v, allv, stats):
     ]})
     sources = [SRC_PHILRICE]
     sources += [{'label': 'Where %s is named as %s' % (trade, n), 'url': u} for u in (v.get('tradeSources') or [])[:2]] if trade else []
+    sources += [{'label': '%s: %s, product page' % ((v.get('seller') or {}).get('company') or 'Seller', trade or n), 'url': u}
+                for u in ((v.get('seller') or {}).get('sources') or [])[:2] if u not in (v.get('tradeSources') or [])[:2]]
     sources += [{'label': ('PhilRice seed database: %s variety characteristics%s' % (n, ', second record' if i else '')) if 'dbmp' in u else 'NSIC registry of rice varieties: %s' % n, 'url': u}
                 for i, u in enumerate([x for x in v['sources'] if 'dbmp' in x][:2] + [x for x in v['sources'] if 'dbmp' not in x][:1])]
     sources += [SRC_NSIC, SRC_PALAYCHECK, SRC_IRRI_STAGES]

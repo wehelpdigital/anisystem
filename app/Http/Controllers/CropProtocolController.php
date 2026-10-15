@@ -12,6 +12,9 @@ use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropCatalog;
 use App\Support\FieldProfile;
+use App\Support\NpkModel;
+use App\Support\NpkNeed;
+use App\Support\NpkPlan;
 use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
@@ -190,6 +193,12 @@ class CropProtocolController extends Controller
         'cost' => ['label' => 'Lower cost', 'sub' => 'The leanest inputs that still make a decent crop', 'icon' => '💰'],
     ];
 
+    /** Tons in each yield unit: a cavan is 50 kg, as NPK Plus counts it. */
+    public static function yieldTons(): array
+    {
+        return array_intersect_key(['cavans' => 0.05, 'tons' => 1, 'kg' => 0.001], self::yieldUnits()) + array_fill_keys(array_keys(self::yieldUnits()), 1);
+    }
+
     /** Cavans and tons at home, tons and kilograms elsewhere — per hectare (App\Support\Region). */
     public static function yieldUnits(): array
     {
@@ -254,7 +263,15 @@ class CropProtocolController extends Controller
                 'maturity' => $c['maturity'] ?? null,
                 'perennial' => CropCatalog::isPerennial($key),
                 'methods' => self::methodsFor($key),
+                // NPK Plus's row for it (its seeding rate, its need), and how it is usually planted.
+                'npk' => NpkNeed::cropKey($key),
+                'seedUnit' => NpkNeed::seedUnitFor(NpkNeed::cropKey($key)),
             ])->values(),
+            // The planting step, as NPK Plus asks it: how much goes in, by what unit, against the usual.
+            'seedUnits' => NpkNeed::SEED_UNITS,
+            'seeding' => collect(NpkModel::SEEDING)->map(fn ($s) => ['w' => $s['w'], 'n' => $s['n'], 'countWord' => $s['countWord'], 'note' => $s['note']])->all(),
+            'germUsual' => NpkNeed::GERM_USUAL,
+            'yieldT' => self::yieldTons(),
             'months' => $months,
             'methods' => self::METHODS,
             'runner' => PHP_SAPI . (function_exists('fastcgi_finish_request') ? '+finish' : ''),
@@ -279,6 +296,152 @@ class CropProtocolController extends Controller
                     ? Tier::aneeNeeds($payer)
                     : 'Anee is not switched on yet. Please check back soon.'),
         ]]);
+    }
+
+    /**
+     * The answers NPK Plus's need model reads (2026-10-16, the owner): the
+     * variety's potential, how much is planted, a tested pH. Each optional.
+     */
+    public const NEED_RULES = [
+        'potential' => 'nullable|numeric|min:0|max:100000',
+        'seedAmount' => 'nullable|numeric|min:0|max:100000000',
+        'seedUnit' => 'nullable|in:kg,g,seeds,seedlings,hills,cuttings,plants',
+        'germination' => 'nullable|numeric|min:1|max:100',
+        'ph' => 'nullable|numeric|min:2|max:12',
+    ];
+
+    /**
+     * The need before the run, for the last step of the walk: the same count
+     * the protocol is held to, so the farmer sees it before paying. No AI,
+     * nothing charged, nothing kept.
+     */
+    public function need(Request $request)
+    {
+        $this->guardTier();
+        $v = Validator::make($request->all(), [
+            'crop' => 'required|in:' . implode(',', array_keys(CropCatalog::CROPS)),
+            'method' => 'nullable|string|max:24',
+            'targetYield' => 'nullable|numeric|min:0|max:100000',
+            'yieldUnit' => 'nullable|string|max:12',
+            'area' => 'nullable|numeric|min:0|max:10000',
+            'soil' => 'nullable|string|max:24',
+            'water' => 'nullable|string|max:24',
+            'soilConditions' => 'nullable|array|max:7',
+            'testP' => 'nullable|string|max:12',
+            'testK' => 'nullable|string|max:12',
+            'prevCrop' => 'nullable|string|max:24',
+            'residue' => 'nullable|string|max:24',
+            'fieldProfile' => 'nullable|array',
+        ] + self::NEED_RULES);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+
+        return $this->json(true, 'ok', ['need' => self::needFor($this->params($request))]);
+    }
+
+    /** NPK Plus's need for a protocol's answers, kept in its params and said in its prompt. */
+    public static function needFor(array $p): array
+    {
+        try {
+            $r = NpkNeed::run(self::needInput($p));
+        } catch (\Throwable $e) {
+            report($e);
+
+            return ['known' => false];
+        }
+        $g = $r['goal'];
+        $sd = $g['seed'];
+        $micro = ['likely' => [], 'watch' => []];
+        foreach ($r['micro'] as $el => $m) {
+            if (isset($micro[$m['level']])) {
+                $micro[$m['level']][] = ['el' => $el, 'name' => NpkNeed::NAMES[$el] ?? $el, 'why' => array_slice($m['why'], 0, 3)];
+            }
+        }
+
+        return [
+            'known' => $r['known'] && $r['need'] !== [],
+            'crop' => $r['crop'],
+            'need' => $r['need'],
+            'how' => $r['how'],
+            'goal' => $g['Y'] !== null ? ['t' => round($g['Y'], 2), 'eff' => round((float) $g['Yeff'], 2), 'why' => $g['why'], 'warn' => $g['warn'],
+                'capped' => $g['capped'], 'cap' => round($g['cap']['k'], 2), 'capWhy' => array_column($g['cap']['why'], 0)] : null,
+            'seed' => $sd['perHa'] !== null ? ['perHa' => round((float) $sd['raw'], $sd['raw'] >= 100 ? 0 : 1), 'unit' => $sd['unitWord'], 'usual' => $sd['usual'],
+                'germ' => $sd['germ'], 'sf' => round($sd['sf'], 2), 'thin' => $sd['sf'] < 1, 'words' => $sd['words']] : null,
+            'whys' => $r['whys'],
+            'credit' => array_filter($r['credit']),
+            'pLock' => $r['pLock'],
+            'micro' => $micro,
+        ];
+    }
+
+    /** A protocol's answers as NPK Plus's inputs: the simple answers first, the field in detail where they are silent. */
+    public static function needInput(array $p): array
+    {
+        $profile = (array) ($p['fieldProfile'] ?? []);
+        $L = $profile ? FieldProfile::legacy($profile) : [];
+        $tons = self::yieldTons()[$p['yieldUnit'] ?? ''] ?? 1;
+        $conds = self::soilConditions($p['soilConditions'] ?? ($p['soilCondition'] ?? null));
+        // As NPK Plus reads the same answers: pale, hard soil is low in organic matter; water that stands is waterlogged.
+        if (($profile['organic'] ?? '') === 'low') {
+            $conds[] = 'low_om';
+        }
+        if (($profile['drainage'] ?? '') === 'stands') {
+            $conds[] = 'waterlogged';
+        }
+        $prev = [];
+        if (($p['prevCrop'] ?? '') === 'legume') {
+            $prev[] = 'legume';
+        }
+        if (($p['prevCrop'] ?? '') === 'rice' && ($p['residue'] ?? '') === 'incorporated') {
+            $prev[] = 'rice_straw';
+        }
+        $soil = (string) ($p['soil'] ?? '');
+
+        return [
+            'crop' => $p['crop'] ?? null,
+            'method' => $p['method'] ?? null,
+            'potential' => ($p['potential'] ?? null) !== null ? (float) $p['potential'] * $tons : null,
+            'target' => ($p['targetYield'] ?? null) !== null ? (float) $p['targetYield'] * $tons : null,
+            'areaHa' => (float) ($p['area'] ?? 0),
+            'seed' => ($p['seedAmount'] ?? null) ? ['amount' => (float) $p['seedAmount'], 'unit' => $p['seedUnit'] ?? 'kg', 'germination' => $p['germination'] ?? null] : null,
+            'texture' => in_array($soil, ['sandy', 'clay', 'loam'], true) ? $soil : ($soil === 'silty' ? 'loam' : 'unsure'),
+            'conditions' => array_values(array_unique($conds)),
+            'ph' => ($p['ph'] ?? null) !== null ? (float) $p['ph'] : ($L['phValue'] ?? null),
+            'tests' => ['P2O5' => $p['testP'] ?? null, 'K2O' => $p['testK'] ?? null],
+            'water' => ['irrigated' => 'irrigated', 'limited' => 'partial', 'rainfed' => 'rainfed'][$p['water'] ?? ''] ?? 'irrigated',
+            'profile' => $profile,
+            'prev' => $prev,
+        ];
+    }
+
+    /** The need, its goal and its stand, as the prompt's facts. */
+    private static function needLines(array $n, string $unitWord, float $tons): array
+    {
+        if (empty($n['known'])) {
+            return ['seed' => '', 'goal' => '', 'need' => ''];
+        }
+        $t = fn ($x) => rtrim(rtrim(number_format((float) $x / $tons, 2, '.', ''), '0'), '.') . ' ' . $unitWord;
+        $g = $n['goal'] ?? null;
+        $s = $n['seed'] ?? null;
+        $seed = $s ? '- Seed or planting material: ' . $s['perHa'] . ' ' . $s['unit'] . ' per hectare' . ($s['germ'] ? ' at ' . round($s['germ']) . ' percent germination' : '')
+            . ($s['usual'] ? ' (the Philippine guides use ' . $s['usual'][0] . ' to ' . $s['usual'][1] . ' ' . $s['unit'] . ')' : '') . '. ' . ($s['thin'] ? 'A thin stand: the need is sized to the plants there will be, not to a full stand. Say so, and say what a fuller stand would need.' : '') . "\n"
+            : "- Seed or planting material: not given\n";
+        $goal = $g ? '- The yield goal the need is sized to: ' . $t($g['t']) . ' (' . $g['why'] . ')'
+            . (abs($g['eff'] - $g['t']) > 0.01 ? ', counted as ' . $t($g['eff']) . ($s && $s['thin'] ? ' for the thin stand' : '') . ($g['capped'] ? ' because the field\'s water, salt or sodium hold it there' : '') : '')
+            . '.' . ($g['warn'] !== '' ? ' ' . $g['warn'] : '') . "\n" : '';
+        $micro = collect($n['micro']['likely'] ?? [])->map(fn ($m) => $m['name'] . ($m['why'] ? ' (' . implode(', ', $m['why']) . ')' : ''))->implode('; ');
+        $watch = collect($n['micro']['watch'] ?? [])->pluck('name')->implode(', ');
+        $need = '- THE NUTRIENT NEED, already worked out by the app with NPK Plus\'s need model (the official guide rate for this crop scaled to the yield goal above, then sized by the soil, the soil test, the stand and the field\'s history): '
+            . NpkNeed::words($n['need']) . '.'
+            . ($n['whys'] ? ' What moved it: ' . implode('; ', array_map('lcfirst', $n['whys'])) . '.' : '')
+            . (! empty($n['credit']['N']) ? ' ' . $n['credit']['N'] . ' kg N already taken off for the legume before.' : '')
+            . (! empty($n['credit']['K2O']) ? ' ' . $n['credit']['K2O'] . ' kg K2O already taken off for the rice straw plowed back.' : '')
+            . (! empty($n['pLock']) ? ' This soil locks phosphorus: band or place it, never broadcast it.' : '')
+            . "\n" . ($micro !== '' ? '- Secondary and micro elements likely short on this ground (the same scoring): ' . $micro . ($watch !== '' ? '; worth watching: ' . $watch : '') . "\n"
+                : ($watch !== '' ? '- Secondary and micro elements worth watching on this ground: ' . $watch . "\n" : ''));
+
+        return ['seed' => $seed, 'goal' => $goal, 'need' => $need];
     }
 
     /** Run the analysis — the sisters' job walk, the question swapped. */
@@ -322,7 +485,7 @@ class CropProtocolController extends Controller
             // The field in detail (App\Support\FieldProfile), optional.
             'fieldProfile' => 'nullable|array',
             'fieldProfileFrom' => 'nullable|integer',
-        ]);
+        ] + self::NEED_RULES);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
         }
@@ -358,6 +521,8 @@ class CropProtocolController extends Controller
         }
 
         $p = $this->params($request);
+        // The need, counted as NPK Plus counts it, before Anee writes a bag.
+        $p['npkNeed'] = self::needFor($p);
         $crop = CropCatalog::CROPS[$p['crop']];
         $when = \Illuminate\Support\Carbon::parse($p['month'] . '-01')->format('M Y');
         $title = 'Protocol · ' . $crop['label'] . ($p['variety'] !== '' ? ' (' . $p['variety'] . ')' : '') . ' · ' . $when . ' · ' . $p['location'];
@@ -498,6 +663,18 @@ class CropProtocolController extends Controller
             }
         }
 
+        // Anything else the NPK Plus shelf knows (2026-10-16): the farmer's own
+        // products, sulfate of potash, gypsum and the rest, read the same way.
+        try {
+            $hit = NpkPlan::match($name);
+        } catch (\Throwable) {
+            $hit = null;
+        }
+        // A shelf product with no N, P or K (gypsum, lime, zinc) is read, and gives none.
+        if ($hit && empty($hit['estimate'])) {
+            return [(float) ($hit['pct']['N'] ?? 0), (float) ($hit['pct']['P2O5'] ?? 0), (float) ($hit['pct']['K2O'] ?? 0)];
+        }
+
         return null;
     }
 
@@ -565,6 +742,26 @@ class CropProtocolController extends Controller
         }
         $npk = (array) ($report['recommendation']['npk'] ?? []);
         $need = (array) ($npk['need'] ?? []);
+        /* The need is NPK Plus's count (2026-10-16), not the model's: the
+         * programs are checked against the same number the calculator
+         * would give for this field. The model's own reading is kept beside
+         * it, only to see how far the two drift. */
+        $app = (array) ($p['npkNeed'] ?? []);
+        if (! empty($app['known'])) {
+            $npk['modelNeed'] = $need;
+            $need = ['n' => (float) ($app['need']['N'] ?? 0), 'p' => (float) ($app['need']['P2O5'] ?? 0), 'k' => (float) ($app['need']['K2O'] ?? 0)];
+            $npk['need'] = $need;
+            $npk['source'] = 'npkplus';
+            $goal = $app['goal'] ?? null;
+            if ($goal) {
+                $tons = (float) (self::yieldTons()[$p['yieldUnit'] ?? ''] ?? 1);
+                $say = fn ($x) => rtrim(rtrim(number_format((float) $x / $tons, 2, '.', ''), '0'), '.');
+                $unit = preg_replace('/ per hectare$/', '', (string) (self::yieldUnits()[$p['yieldUnit'] ?? ''] ?? 'tons'));
+                $npk['basis'] = 'The need is counted the way NPK Plus counts it, for ' . $say($goal['eff']) . ' ' . $unit . ' per hectare'
+                    . (abs($goal['eff'] - $goal['t']) > 0.01 ? ' (' . $say($goal['t']) . ' ' . $unit . ', ' . $goal['why'] . ', less for ' . (! empty($app['seed']['thin']) ? (! empty($goal['capped']) ? 'a thin stand and what your field can carry' : 'a thin stand') : 'what your field can carry') . ')' : ' (' . $goal['why'] . ')')
+                    . ', on your soil and your field\'s history.';
+            }
+        }
 
         /* FIVE PROGRAMS (2026-09-18): each is a flat list of applications
          * naming a stage; here every program is laid onto the stages by
@@ -873,6 +1070,8 @@ class CropProtocolController extends Controller
                 . 'Fertilizer by stage: ' . $fert . "\n"
                 . 'Totals for the field: ' . collect($rec['totals'] ?? [])->map(fn ($t) => ($t['bags'] ?? '') . ' bags ' . ($t['product'] ?? ''))->implode(', ') . "\n"
                 . (! empty($rec['npk']['check']) ? 'Nutrients per hectare (program delivers / target needs): ' . collect($rec['npk']['check'])->map(fn ($c) => $c['label'] . ' ' . $c['have'] . ($c['need'] !== null ? ' / ' . $c['need'] . ' kg (' . $c['verdict'] . ')' : ' kg'))->implode('; ') . "\n" : '')
+                . (! empty($rec['npk']['basis']) ? $rec['npk']['basis'] . "\n" : '')
+                . (! empty($params['npkNeed']['seed']) ? 'Seed: ' . $params['npkNeed']['seed']['perHa'] . ' ' . $params['npkNeed']['seed']['unit'] . ' per hectare. ' . $params['npkNeed']['seed']['words'] . "\n" : '')
                 . 'Observe / intervene: ' . $watch . "\n"
                 . 'Threats: ' . collect($rec['threats'] ?? [])->map(fn ($t) => ($t['threat'] ?? '') . ' at ' . ($t['stage'] ?? '') . ' — ' . ($t['action'] ?? '') . (! empty($t['product']) ? ' (' . $t['product'] . ')' : ''))->implode(' | ') . "\n"
                 . (! empty($rec['deficiencies']) ? 'Deficiencies this soil invites: ' . collect($rec['deficiencies'])->map(fn ($d) => ($d['nutrient'] ?? '') . ' (' . ($d['when'] ?? '') . ') — ' . ($d['why'] ?? ''))->implode(' | ') . "\n" : '')
@@ -971,6 +1170,12 @@ class CropProtocolController extends Controller
             'residue' => array_key_exists((string) $request->input('residue'), self::RESIDUES) ? (string) $request->input('residue') : 'unsure',
             'granulars' => WhatToPlantController::picks(self::GRANULARS, $request->input('granulars')),
             'fertHistory' => trim((string) preg_replace('/\s+/', ' ', (string) $request->input('fertHistory', ''))),
+            // NPK Plus's own questions (2026-10-16): the potential, the seed, a tested pH.
+            'potential' => $request->filled('potential') && (float) $request->input('potential') > 0 ? (float) $request->input('potential') : null,
+            'seedAmount' => $request->filled('seedAmount') && (float) $request->input('seedAmount') > 0 ? (float) $request->input('seedAmount') : null,
+            'seedUnit' => array_key_exists((string) $request->input('seedUnit'), NpkNeed::SEED_UNITS) ? (string) $request->input('seedUnit') : 'kg',
+            'germination' => $request->filled('germination') ? max(1.0, min(100.0, (float) $request->input('germination'))) : null,
+            'ph' => $request->filled('ph') ? max(2.0, min(12.0, (float) $request->input('ph'))) : null,
         ] + FieldProfile::forParams(FieldProfile::fromInput($request->input('fieldProfile'), (string) $request->input('crop')), (string) $request->input('crop'));
     }
 
@@ -1049,7 +1254,24 @@ class CropProtocolController extends Controller
             'stageTable' => $stageTable,
             // The field in detail, when the farmer gave it: one compact line (or nothing).
             'fieldLine' => FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $p['crop']),
-        ];
+            'potential' => ($p['potential'] ?? null) !== null
+                ? rtrim(rtrim(number_format((float) $p['potential'], 2), '0'), '.') . ' ' . (self::yieldUnits()[$p['yieldUnit']] ?? 'per hectare') . ' (from the variety record or the seed bag)'
+                : 'not given',
+            'ph' => ($p['ph'] ?? null) !== null ? '; soil pH ' . $p['ph'] . ' (tested)' : '',
+            // The variety as the app's book has it (the registry, and the seller's own figures where it has them).
+            'record' => (function () use ($p) {
+                if (($p['variety'] ?? '') === '') {
+                    return '';
+                }
+                try {
+                    $r = \App\Support\VarietyBook::match($p['crop'], $p['variety']);
+                } catch (\Throwable) {
+                    $r = null;
+                }
+
+                return $r ? '- The variety on record (the NSIC registry, and the figures of its seller where marked): ' . ltrim(\App\Support\VarietyBook::promptLines([$r]), '- ') . "\n" : '';
+            })(),
+        ] + self::needLines((array) ($p['npkNeed'] ?? []), self::yieldUnits()[$p['yieldUnit']] ?? 'tons per hectare', (float) (self::yieldTons()[$p['yieldUnit']] ?? 1));
     }
 
     /**
@@ -1119,6 +1341,17 @@ PROMPT;
         $unitWord = self::yieldUnits()[$p['yieldUnit']] ?? array_values(self::yieldUnits())[0];
         $countryName = \App\Support\Region::name();
         $regionBlock = \App\Support\Region::promptBlock();
+        // The need is the app's (NPK Plus's count) when the crop has its numbers; else the model's own reading.
+        $known = ! empty($p['npkNeed']['known']);
+        $aimRule = $known
+            ? 'bend the products and the splits to the aim and to the soil and troubles, while the recommended program meets THE NUTRIENT NEED above (the aim is already in it through the yield goal: highest yield = the target held to the variety, lower cost = the cheapest products and fewest trips that still meet it, in the middle = the standard products)'
+            : 'bend them to the aim (highest yield = the fuller recommended rate with a top-up; lower cost = the lean end, dropping what pays least; in the middle = the standard recommendation) and to the soil and troubles';
+        $programRule = $known
+            ? 'The recommended program must deliver THE NUTRIENT NEED above, within about a tenth either way; each other program says in its "for" line how it differs (a lean program that falls short says so; a push program may go up to a fifth over). The app checks every program against that need and shows the farmer the gap'
+            : 'Every program must add up to the need for its own aim (the app checks each one against the need of the target and shows the shortfall)';
+        $needRule = $known
+            ? 'recommendation.npk.need: copy THE NUTRIENT NEED above exactly (n, p as P2O5, k as K2O, kg per hectare); do not recount it. The app totals the nutrients of each program from the analysis of each product and checks them against it. note ≤ 30 words: the one thing that could change the need in the field (the LCC or MOET check if rice, a soil test, a thin stand), never a different number.'
+            : 'recommendation.npk.need: the kg N, P2O5 and K2O per hectare this variety needs to reach the TARGET yield on this ground (the official recommendation for the region and season, bent to the soil and the aim; where the target is unrealistic, the need for the realistic yield instead) — and the fertilizer program above MUST add up to it: the app totals the nutrients of the program from the analysis of each product and shows the farmer where it falls short. note ≤ 30 words (the LCC/MOET check if rice, or the soil-test caveat).';
 
         return <<<PROMPT
 You are an agronomic decision-support analyst for farming in {$countryName}. Write a SEASON PROTOCOL for one field in TWO PARTS a farmer reads in five minutes: first the BACKGROUND (the place, the weather ahead, the variety as published), then the RECOMMENDATION (an introduction, then what to apply at each growth stage and why, what to observe and when to step in, the totals to use, the threats to check). Hung on the crop's GROWTH STAGES — never on day counts: the farmer acts when the crop reaches a stage, as their own eyes tell them.
@@ -1127,20 +1360,21 @@ FACTS GIVEN
 - {$regionBlock}
 - Location as the farmer wrote it: {$p['location']}
 - Crop: {$f['cropLabel']}; variety: {$f['variety']}
-- Planting: {$f['when']}; method: {$f['method']}
+{$f['record']}- Planting: {$f['when']}; method: {$f['method']}
 - The count this crop is managed by: {$f['counter']} (days after transplanting / sowing / planting). The app's own stage table for it: {$f['stageTable']}
 - Field size: {$f['area']} hectare(s)
 - Soil, as the farmer describes it: {$f['soil']}; water: {$f['water']}
 - Soil condition (pH / sodium / salt / acid sulfate), as far as the farmer knows — more than one can be true at once, and a combination (an alkaline sodic soil, a saline alkaline soil) is to be reasoned about AS a combination: {$f['soilCondition']}
 {$f['soilGuide']}
-- Soil test or history, phosphorus: {$f['testP']}; potassium: {$f['testK']}
+- Soil test or history, phosphorus: {$f['testP']}; potassium: {$f['testK']}{$f['ph']}
 - The previous crop: {$f['prevCrop']}; its residue was: {$f['residue']}
 - What the field got last season, in the farmer's words: {$f['fertHistory']}
 - Granulars the farmer can buy locally: {$f['granulars']}
 - Field troubles the farmer reports: {$f['problems']}
 {$f['fieldLine']}- The farmer's aim this season: {$f['priority']}
+- The variety's yield potential: {$f['potential']}
 - Target yield: {$f['target']}
-- The farmer's own notes: {$f['notes']}
+{$f['seed']}{$f['goal']}{$f['need']}- The farmer's own notes: {$f['notes']}
 - Weather now: {$forecast}
 {$ensoBlock}
 WHAT TO READ FROM
@@ -1149,10 +1383,10 @@ Research notes gathered from the web just now follow at the end of this brief (t
 GROUND RULES
 - EASY TO READ. Short plain sentences a farmer reads easily; no jargon without a plain word beside it; nothing repeated between the two parts. Every word limit below is a ceiling, not a target.
 - THE VARIETY comes from the notes: name, breeder, maturity, yield potential, the season it is bred for, its strengths and weaknesses. Where the farmer's variety could not be found, say so (found false) and name the variety you assumed for the numbers.
-- Every quantity is for THIS field: give fertilizer per hectare (bagsPerHa, a 50-kg bag) and the app scales it to the field size; be specific with products and rates, and bend them to the aim (highest yield = the fuller recommended rate with a top-up; lower cost = the lean end, dropping what pays least; in the middle = the standard recommendation) and to the soil and troubles. Each application carries its PURPOSE in a few words (what the plant does with it at that stage, and why THIS product).
+- Every quantity is for THIS field: give fertilizer per hectare (bagsPerHa, a 50-kg bag) and the app scales it to the field size; be specific with products and rates, and {$aimRule}. Each application carries its PURPOSE in a few words (what the plant does with it at that stage, and why THIS product).
 - GRANULARS, THOUGHT THROUGH. Which bag, not just how many: choose each product for the soil condition and the water regime, and say why in the purpose and in granulars.soilLogic. A sodic or saline soil does not want a chloride load — muriate of potash (0-0-60) only where potassium is truly short and then late and light, sulfate of potash where it can be bought; ammonium sulfate is the nitrogen that also acidifies an alkaline or sodic soil and supplies sulfur, and gypsum-type sulfate helps sodium leach; an acid soil wants its phosphorus placed (ammophos 16-20-0 or DAP 18-46-0 at planting) because it is fixed fast, and less ammonium sulfate; flooded rice loses urea nitrogen to the air and the water, so it is applied in small splits into shallow water or incorporated, never broadcast onto a full flood; a sandy soil leaks nitrogen and potassium, so smaller, more frequent doses; a heavy clay holds them, so fewer, fuller ones; complete 14-14-14 is a convenience, not a prescription — where the soil test or history says phosphorus or potassium is already high, do not buy it again. Use the granulars the farmer can buy; where a better product is not on that list, say so in cautions and build the program from what is. REASON IN THE OPEN: soilLogic and timingLogic are the agronomist thinking aloud, mechanism by mechanism — what the sodium does to the clay and what chloride does on top of it, what happens to urea broadcast on a flood, why phosphorus placed at planting beats phosphorus broadcast on this ground, what the burned straw or the legume left behind and how that changed the first dressing. Then granulars.rejected: the two to four things a farmer here would reasonably have done instead — the product on the shelf (complete 14-14-14 alone, muriate of potash), the big early dressing, potassium all up front, urea onto standing water — each named in `what` and answered in `why` with the mechanism that goes wrong on THIS ground, not a generality.
 - CRITICALITY BY STAGE. Size every application to what the crop can take up THEN. Do not dump: a young crop with a small root system cannot use eight bags of anything, and nitrogen it cannot use leaches, volatilises or burns. Basal at planting is a starter — phosphorus and a little nitrogen and potassium where the roots will be — and the bulk of nitrogen goes where the crop builds yield (tillering and panicle initiation in rice; V6–V8 and before tasselling in corn; branching and fruit set in vegetables). Potassium goes where straw strength and grain fill are decided (panicle initiation, pre-tasselling, fruit set), not all up front, and on a sodic soil not before the crop can drink it. Keep any single nitrogen dressing within the safe range for the crop (rice about 1–2 bags of urea per hectare per split, corn about 2–3), and say the ceiling in timingLogic. Where the previous crop was a legume or the residue was ploughed in, credit the nitrogen it left and cut the first dressing; where the residue was burned, potassium came back but nitrogen did not.
-- FIVE PROGRAMS. Give the farmer five fertilizer programs to choose between, each a complete season of applications for the same stages, each honest about what it is for: the first is your recommendation (the one the stages above carry); the others are genuinely different strategies — e.g. a soil-first program (sulfate nitrogen and placed phosphorus for this soil condition), a lean low-cost program, a highest-yield program with the top-up, a simple program from complete alone for a farmer who wants one product, an LCC / soil-test-guided program, a locally-available-only program — pick the five that make sense HERE. Every program must add up to the need for its own aim (the app checks each one against the target's need and shows the shortfall), name its products from the farmer's list where given, and carry a one-line "for" that says who should choose it.
+- FIVE PROGRAMS. Give the farmer five fertilizer programs to choose between, each a complete season of applications for the same stages, each honest about what it is for: the first is your recommendation (the one the stages above carry); the others are genuinely different strategies — e.g. a soil-first program (sulfate nitrogen and placed phosphorus for this soil condition), a lean low-cost program, a highest-yield program with the top-up, a simple program from complete alone for a farmer who wants one product, an LCC / soil-test-guided program, a locally-available-only program — pick the five that make sense HERE. {$programRule}. Every program names its products from the farmer's list where given, and carry a one-line "for" that says who should choose it.
 - Stage names must be the crop's real stages in order, following the app's stage table above (split or merge a stage only where the crop truly needs it, keeping the numbers consistent; for corn say the V-stages too, e.g. "Early vegetative (V4–V6)"). EVERY stage carries its day count in `days`: the count and the range, e.g. "DAT 35–49", "DAS 0–7", "DAP 45–54", the last stage "DAT 90+", and land preparation "before DAT 0" — always the numbers, never weeks alone. Adjust the ranges to the variety's own maturity where the notes give it. Timing in words is the stage and a plain sign of it; the days are the second clock.
 - OBSERVE AND INTERVENE: at each stage say in one line what to look for, and in one line what to do only if it is seen (the threshold, then the class or active ingredient) — never spray by calendar. Leave both empty at a stage with nothing to watch.
 - NO PRICES ANYWHERE. Totals are quantities only.
@@ -1177,7 +1411,7 @@ Rules for the shape:
 - recommendation.programs: EXACTLY FIVE, in order, the first being the recommended program whose applications equal the stages' fertilizer above. Each: name ≤ 4 words (e.g. "Soil-first sulfate", "Lean and cheap", "Full yield push", "Complete only", "LCC-guided"), for ≤ 22 words, applications = every application of the season as {stage (exactly one of the stage names above), product, bagsPerHa, purpose ≤ 14 words}, 3–10 applications each.
 - recommendation.intro: ≤ 80 words — the approach for this field and aim, and the one or two things that matter most this season.
 - recommendation.stages: SIX to TEN stages in order; days = the count and range as defined above (always given); signs ≤ 20 words; fertilizer = the applications at that stage (empty list when none), each with product (e.g. "Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Ammonium phosphate 16-20-0", "Muriate of potash 0-0-60"), bagsPerHa (a number, 50-kg bags per hectare; decimals allowed), purpose ≤ 14 words; observe ≤ 25 words or ""; intervene ≤ 30 words or "" (the product and the moment, no rate).
-- recommendation.npk.need: the kg N, P2O5 and K2O per hectare this variety needs to reach the TARGET yield on this ground (the official recommendation for the region and season, bent to the soil and the aim; where the target is unrealistic, the need for the realistic yield instead) — and the fertilizer program above MUST add up to it: the app totals the program's nutrients from each product's analysis and shows the farmer where it falls short. note ≤ 30 words (the LCC/MOET check if rice, or the soil-test caveat).
+- {$needRule}
 - recommendation.deficiencies: 2–5 items, the deficiencies this soil type and crop are prone to, most likely first: nutrient (e.g. "Zinc"), why ≤ 30 words (this soil, this crop), signs ≤ 25 words (what the plant shows), when = the stage or stages it shows, action ≤ 30 words in plain words with no amounts and no product names.
 - recommendation.water: plan ≤ 60 words; ifDry ≤ 25 words; ifWet ≤ 25 words.
 - recommendation.foliars: 0–4 items, each with the stage, the product as the nutrient only ("Zinc spray", "Boron spray", "Calcium spray" — no chemical, no salt, no strength) and why ≤ 16 words; [] when none pays.

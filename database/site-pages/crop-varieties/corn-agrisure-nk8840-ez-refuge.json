@@ -15,7 +15,7 @@
     "NK8840",
     "NK8840 BGT",
     "NK8840BtGT",
-    "NK8840 Bt/GT",
+    "NK8840 E Z Refuge",
     "Agrisure NK8840 EZ Refuge corn variety",
     "corn variety philippines",
     "NSIC 2018 GMCn 49"
@@ -69,7 +69,7 @@
         ],
         [
           "Also known as",
-          "NK8840, NK8840 BGT, NK8840BtGT, NK8840 Bt/GT"
+          "NK8840, NK8840 BGT, NK8840BtGT, NK8840 E Z Refuge"
         ],
         [
           "Type",
@@ -112,7 +112,7 @@
     },
     {
       "type": "text",
-      "text": "Agrisure NK8840 EZ Refuge corn takes 106 to 109 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8.16 t/ha matches the average of its group, 8.13. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 115 to 120 days after planting (company page), a 2019 company write up said 110 to 115 days, 106 to 109 in NSIC trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Agrisure NK8840 EZ Refuge corn takes 106 to 109 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8.16 t/ha matches the average of its group, 8.13. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 115 to 120 days after planting.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -176,20 +176,19 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** Potential 12 t/ha on the product page (the Syngenta corn overview page says 13 t/ha), 12.8 t/ha and 12.1 t/ha at the Region 2 derby, NSIC trials averaged 8.77 t/ha (dry season) and 7.56 (wet season).",
-        "**Traits in the seed:** BGT stack Bt11 x TC1507 x GA21: two built in proteins against corn borer and other caterpillars, plus glyphosate tolerance (BPI lists the stack as caterpillar resistant and glyphosate and glufosinate tolerant).",
+        "**Yield:** Potential 12 t/ha.",
+        "**Traits in the seed:** BGT stack Bt11 x TC1507 x GA21: Bt proteins against Asian corn borer and other caterpillars, plus glyphosate tolerance (GA21). Sold as EZ Refuge: the brochures say 5 percent refuge seed is already blended in the bag.",
         "**Season:** Wet and dry season.",
-        "**Where:** Cagayan Valley (upper vega), Ilocos Region, Central Luzon.",
-        "Very big, heavy ears with large kernels (sold as 'jumbo').",
-        "Strong stalks.",
-        "Better drought tolerance, holds yield under stress.",
-        "Stays green late.",
-        "Easy to dehusk and harvest by hand."
+        "**Where:** Upper vega of Cagayan Valley, Ilocos Region and Central Luzon.",
+        "**Stand:** 71,428 plants per ha, furrows 70 cm, hills 20 cm.",
+        "Big, heavy jumbo ears (company).",
+        "Better drought tolerance (company).",
+        "Easy to dehusk and harvest."
       ]
     },
     {
       "type": "text",
-      "text": "Why farmers know it: top yielder at the DA Region 2 (Cagayan Valley) corn derby in both 2017 and 2019, the first back to back winner (BusinessWorld), the City of Ilagan corn center lists it among the yellow hybrids most grown there. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
+      "text": "Why farmers know it: on Syngenta's current corn list, its brochure lists top Masaganang Ani awards at the Cagayan Valley Research Center in 2017 (12.82 t/ha) and 2019 (12.15 t/ha) and the 2020 Cordillera regional derby (9.01 t/ha), and says the hybrid has been sold for 18 years. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
     },
     {
       "type": "heading",
@@ -313,11 +312,11 @@
         },
         {
           "label": "Notes on Agrisure NK8840 EZ Refuge from syngenta.com.ph",
-          "url": "https://www.syngenta.com.ph/corn"
+          "url": "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/08/18/nk_8840_brochure.pdf"
         },
         {
-          "label": "Notes on Agrisure NK8840 EZ Refuge from bworldonline.com",
-          "url": "https://www.bworldonline.com/?p=261005"
+          "label": "Notes on Agrisure NK8840 EZ Refuge from syngenta.com.ph",
+          "url": "https://www.syngenta.com.ph/products/search/seed/category/corn-346"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

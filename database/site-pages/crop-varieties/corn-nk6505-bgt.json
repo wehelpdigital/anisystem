@@ -13,13 +13,13 @@
     "NK6505 BGT corn",
     "NK6505 BGT",
     "NK6505",
+    "NK6505 E Z Refuge",
     "Syngenta 6505",
-    "NK6505 VIP",
     "NK6505 BGT corn variety",
     "corn variety philippines",
     "NSIC 2021 GMCn 80"
   ],
-  "excerpt": "NK6505 BGT corn is a yellow GM hybrid corn variety, also sold or known as NK6505 or Syngenta 6505. It was registered with the National Seed Industry Council (NSIC) in 2021 as NSIC 2021 GMCn 80. Syngenta Crop Protection AG bred it. It takes about 104 days from planting to the harvest of dry grain, with 11.06 tonnes per hectare on average in the trials.",
+  "excerpt": "NK6505 BGT corn is a yellow GM hybrid corn variety, also sold or known as NK6505 or NK6505 E Z Refuge. It was registered with the National Seed Industry Council (NSIC) in 2021 as NSIC 2021 GMCn 80. Syngenta Crop Protection AG bred it. It takes about 104 days from planting to the harvest of dry grain, with 11.06 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where NK6505 BGT corn is grown",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NK6505 or Syngenta 6505, this is the same corn. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+      "text": "If you came here looking for NK6505 or NK6505 E Z Refuge, this is the same corn. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "list",
@@ -68,7 +68,7 @@
         ],
         [
           "Also known as",
-          "NK6505, Syngenta 6505, NK6505 VIP"
+          "NK6505, NK6505 E Z Refuge, Syngenta 6505"
         ],
         [
           "Type",
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "NK6505 BGT corn takes about 104 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 11.06 t/ha beats the average of its group, 8.13. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 110 to 120 days after planting, about 104 (wet season) in NSIC trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "NK6505 BGT corn takes about 104 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 11.06 t/ha beats the average of its group, 8.13. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 110 to 120 days after planting.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -156,19 +156,21 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** Potential 12 t/ha, DA 12 trials: 8.77 t/ha Banisilan highland, 7.60 t/ha Maasim, Sarangani highland, 8.38 t/ha Sultan Kudarat lowland dry season, NSIC trials averaged 11.06 t/ha in Mindanao.",
-        "**Traits in the seed:** BGT stack Bt11 x TC1507 x GA21: built in caterpillar protection plus glyphosate tolerance. Syngenta also lists an NK6505 VIP version.",
+        "**Yield:** Potential 12 t/ha.",
+        "**Traits in the seed:** BGT stack Bt11 x TC1507 x GA21: Bt proteins against Asian corn borer and other caterpillars, plus glyphosate tolerance (GA21). Sold as EZ Refuge: the brochures say 5 percent refuge seed is already blended in the bag.",
         "**Season:** Wet season highland trials, also tested dry season.",
-        "**Where:** Mid to high elevation farms in Mindanao.",
-        "Tolerant of Gibberella ear rot.",
-        "'Class A' grain.",
-        "Good standability.",
-        "Easy to dehusk."
+        "**Where:** Mid to high elevations in Mindanao.",
+        "**Elevation:** Mid to high elevation.",
+        "**Stand:** 71,428 plants per ha, furrows 70 cm, hills 20 cm.",
+        "Tolerant to Gibberella ear rot.",
+        "Grain rated Class A by the company.",
+        "Good standability, brochure says it stands up to wind.",
+        "Easy to dehusk and harvest."
       ]
     },
     {
       "type": "text",
-      "text": "Why farmers know it: topped the GM class (8.77 t/ha) in DA Region 12's highland wet season trial at Banisilan, Cotabato, a regular Syngenta entry in DA Northern Mindanao derbies in Bukidnon. These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
+      "text": "Why farmers know it: on Syngenta's current corn list, its brochure claims the top yield at the Northern Mindanao Agricultural Crops and Livestock Research Complex in 2022 (13.83 t/ha). These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual corn on the same ground."
     },
     {
       "type": "heading",
@@ -291,12 +293,12 @@
           "url": "https://www.syngenta.com.ph/product/seed/corn/nk6505"
         },
         {
-          "label": "Notes on NK6505 BGT from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=9835"
+          "label": "Notes on NK6505 BGT from syngenta.com.ph",
+          "url": "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/08/18/nk6505_-_brochure.pdf"
         },
         {
-          "label": "Notes on NK6505 BGT from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=9637"
+          "label": "Notes on NK6505 BGT from syngenta.com.ph",
+          "url": "https://www.syngenta.com.ph/products/search/seed/category/corn-346"
         },
         {
           "label": "Bureau of Plant Industry: seed and planting material certification",

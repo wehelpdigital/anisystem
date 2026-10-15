@@ -5,8 +5,9 @@ namespace App\Support;
 /**
  * NPK Plus's need model (2026-10-08): how much of each nutrient a crop needs
  * from fertilizer for the farmer's yield goal, on their soil. The arithmetic
- * runs in the page (it answers as the farmer types); this class holds the
- * numbers it runs on, in one place, with where they come from.
+ * runs in the page (it answers as the farmer types), and on the server in
+ * App\Support\NpkNeed for the Crop Protocol (2026-10-16); this class holds
+ * the numbers both run on, in one place, with where they come from.
  *
  * N, P2O5, K2O. The official guide rate for the crop (NpkCrops) is written
  * for a good harvest of about GUIDE_YIELD, or 1.25 times the national

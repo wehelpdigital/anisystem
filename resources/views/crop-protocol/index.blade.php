@@ -151,6 +151,50 @@
     .cp-area .form-input { padding-right: 5rem; }
     .cp-area-u { position: absolute; right: .9rem; top: 50%; transform: translateY(-50%); font-size: .8rem; font-weight: 700; color: var(--color-gray-400); pointer-events: none; }
 
+    /* NPK Plus's questions, asked here too (2026-10-16, the owner): the
+       variety from the records with its potential, how much is planted, a
+       tested pH, and the need they make, shown before the run. */
+    @keyframes cpRise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .wtp-varfacts, .cp-from { display: flex; align-items: flex-start; gap: .5rem; margin-top: .6rem; padding: .6rem .75rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5;
+        color: #24400f; background: #f3f8ec; border: 1px solid #d5e7c0; animation: cpRise .3s cubic-bezier(.22,1,.36,1) both; }
+    .wtp-varfacts[hidden], .cp-from[hidden] { display: none; }
+    .wtp-varfacts svg, .cp-from svg { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; color: #4a7c2a; }
+    .wtp-varfacts.is-own, .cp-from.is-own { color: var(--color-gray-600); background: var(--color-gray-50); border-color: var(--color-gray-200); }
+    .wtp-varfacts.is-own svg, .cp-from.is-own svg { color: var(--color-gray-400); }
+    .cp-from button { font-weight: 800; text-decoration: underline; text-underline-offset: 3px; color: #3d6823; }
+    .cp-units.is-free { width: max-content; max-width: 100%; }
+    .cp-units.is-free .cp-unit { padding: .55rem 1rem; }
+    .cp-pills { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .55rem; }
+    .cp-pill { padding: .38rem .75rem; border-radius: 999px; font-size: .78rem; font-weight: 700; line-height: 1.2; cursor: pointer;
+        color: var(--color-gray-600); background: var(--color-white); border: 1.5px solid var(--color-gray-200);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .cp-pill.is-on { color: #fff; background: var(--color-brand-600); border-color: var(--color-brand-600); }
+    .cp-two { display: grid; grid-template-columns: 1fr; gap: .75rem; margin-top: .75rem; }
+    @media (min-width: 520px) { .cp-two { grid-template-columns: 1fr 1fr; } }
+    .cp-two[hidden] { display: none; }
+    .cp-hint { margin-top: .45rem; font-size: .78rem; line-height: 1.5; color: var(--color-gray-500); transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .cp-hint.is-warn { color: #92400e; }
+    .cp-need { margin-top: 1rem; padding: .85rem .95rem; border-radius: 1rem; text-align: left; background: #f3f8ec; border: 1px solid #d5e7c0; animation: cpRise .3s cubic-bezier(.22,1,.36,1) both; }
+    .cp-need[hidden] { display: none; }
+    .cp-need-h { font-size: .72rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #3d6823; }
+    .cp-need-n { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .55rem; }
+    .cp-need-n span { flex: 1 1 0; min-width: 5.2rem; padding: .5rem .6rem; border-radius: .8rem; background: #fff; border: 1px solid #dfeccf; }
+    .cp-need-n b { display: block; font-size: 1.15rem; font-weight: 800; line-height: 1.2; color: #1f2a17; }
+    .cp-need-n small { font-size: .7rem; color: var(--color-gray-500); }
+    .cp-need p { margin-top: .55rem; font-size: .8rem; line-height: 1.55; color: #3f4a37; }
+    .cp-need ul { margin-top: .35rem; padding-left: 1.1rem; list-style: disc; font-size: .78rem; line-height: 1.5; color: var(--color-gray-600); }
+    .cp-need.is-wait p { color: var(--color-gray-500); }
+    html.dark .wtp-varfacts, html.dark .cp-from, html.dark .cp-need { color: #cfe6b8; background: #17220f; border-color: #2b3a1c; }
+    html.dark .wtp-varfacts.is-own, html.dark .cp-from.is-own { color: #b9caa8; background: #121a0d; border-color: #2b3a1c; }
+    html.dark .cp-from button, html.dark .cp-need-h { color: #a5c97e; }
+    html.dark .cp-pill { color: #b9caa8; background: #151b12; border-color: #2b3a1c; }
+    html.dark .cp-pill.is-on { color: #fff; background: #4a7c2a; border-color: #4a7c2a; }
+    html.dark .cp-hint.is-warn { color: #fbbf24; }
+    html.dark .cp-need-n span { background: #151b12; border-color: #2b3a1c; }
+    html.dark .cp-need-n b { color: #e8efe1; }
+    html.dark .cp-need p { color: #cdd8c0; }
+    @media (prefers-reduced-motion: reduce) { .wtp-varfacts, .cp-from, .cp-need { animation: none; } .cp-pill, .cp-hint { transition: none; } }
+
     /* ---- THE REPORT ---- */
     .wtp-report { display: grid; gap: .9rem; }
     /* A grid item's automatic minimum is its content's width — a chart's
@@ -681,11 +725,21 @@
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
             </section>
-            {{-- 2: the variety --}}
+            {{-- 2: the variety, two ways (2026-10-16, as NPK Plus asks it): from
+                 the records (its trial yield becomes the potential the need is
+                 sized to), or the name on the seed bag. The shared sheet
+                 partials/variety-pick. Optional. --}}
             <section class="wtp-step" data-step="2">
                 <p class="wtp-q">Which variety?</p>
-                <p class="wtp-sub">Type the name on the seed bag, e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222, SL-8H' : 'Pioneer P1197, DKC64-34' }}. Leave it blank and Anee picks a common one and tells you.</p>
-                <input type="text" id="cpVariety" class="form-input" maxlength="80" placeholder="Variety name (optional)">
+                <p class="wtp-sub">Optional. Pick it from the records, like {{ \App\Support\Region::ph() ? 'NSIC Rc222 or DK 8131S' : 'Pioneer P1197' }}, or type the name on the seed bag. Leave it empty and Anee picks a common one and tells you.</p>
+                <button type="button" class="crop-tag" id="cpVarBtn">
+                    <span class="crop-tag-e" id="cpVarIcon">🧬</span>
+                    <span class="crop-tag-t is-none" id="cpVarNow">Pick from the records, or type your own</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <input type="hidden" id="cpVariety" value="">
+                <div class="wtp-varfacts" id="cpVarFacts" hidden></div>
+                @include('partials.variety-pick')
             </section>
             {{-- 3: when --}}
             <section class="wtp-step" data-step="3">
@@ -704,12 +758,14 @@
                 <p class="wtp-q">What is your goal this season?</p>
                 <p class="wtp-sub">Your goal sets the rates: more for yield, less for cost.</p>
                 <div class="wtp-choices" id="cpPriorities"></div>
-                <label class="form-label mt-4" for="cpTarget">Target yield <span class="text-gray-400 font-normal">(optional, per hectare)</span></label>
-                <div class="cp-yield">
-                    <input type="number" id="cpTarget" class="form-input" min="0" step="any" inputmode="decimal" placeholder="e.g. 120">
-                    <div class="cp-units" role="radiogroup" aria-label="Unit" id="cpUnits"></div>
-                </div>
-                <p class="form-hint">Anee checks if it is realistic for your variety, place and season.</p>
+                <p class="wp-qh mt-4">Yields in</p>
+                <div class="cp-units is-free" role="radiogroup" aria-label="Yields in" id="cpUnits"></div>
+                <label class="form-label mt-3" for="cpPotential">Yield potential of the variety <span class="text-gray-400 font-normal">(optional, per hectare)</span></label>
+                <input type="number" id="cpPotential" class="form-input" min="0" step="any" inputmode="decimal" placeholder="On the seed bag or the variety's description">
+                <div class="cp-from" id="cpPotFrom" hidden></div>
+                <label class="form-label mt-3" for="cpTarget">Target yield <span class="text-gray-400 font-normal">(optional, per hectare)</span></label>
+                <input type="number" id="cpTarget" class="form-input" min="0" step="any" inputmode="decimal" placeholder="Your own goal">
+                <p class="form-hint">The fertilizer is sized to this goal the way NPK Plus sizes it: your target held to the variety's potential, else 80 percent of the potential. Anee checks if it is realistic for your place and season.</p>
             </section>
             {{-- 6: the field in detail (2026-10-15, the owner): the shared
                  field questions (App\Support\FieldProfile), optional. The
@@ -717,11 +773,13 @@
                  last crop steps after it, and go to Anee whole. --}}
             <section class="wtp-step" data-step="6">
                 <p class="wtp-q">Your field in detail</p>
-                <p class="wtp-sub">Optional. The soil, the water and last season, one short page at a time. Your answers fill in the next steps, and Anee builds the protocol on every one.</p>
+                <p class="wtp-sub">Optional. The soil, the water and last season, one short page at a time. Your answers fill in the next steps, the fertilizer need counts them as NPK Plus does, and Anee builds the protocol on every one.</p>
                 <div id="cpFpc"></div>
                 @include('partials.field-profile-card')
             </section>
-            {{-- 7: the field --}}
+            {{-- 7: the field and what goes in it (2026-10-16): the stand, as
+                 NPK Plus asks it. Too thin a stand cannot carry the goal, so
+                 the need is sized to the plants there will be. --}}
             <section class="wtp-step" data-step="7">
                 <p class="wtp-q">How big is the field?</p>
                 <p class="wtp-sub">The bags and the shopping list are for the whole field.</p>
@@ -729,22 +787,42 @@
                     <input type="number" id="cpArea" class="form-input" min="0.01" step="any" inputmode="decimal" placeholder="e.g. 1.5">
                     <span class="cp-area-u">hectares</span>
                 </div>
-                <p class="wtp-q mt-5">What is the soil like?</p>
+                <p class="wtp-q mt-5">How much will you plant?</p>
+                <p class="wtp-sub">Optional. For the whole field. A thin stand cannot reach the goal, so the fertilizer is sized to the plants you will really have.</p>
+                <div class="cp-pills" id="cpSeedUnits" role="radiogroup" aria-label="What you plant"></div>
+                <div class="cp-two">
+                    <div>
+                        <label class="form-label" for="cpSeed">Amount <span class="text-gray-400 font-normal" id="cpSeedU">(kg)</span></label>
+                        <input type="number" id="cpSeed" class="form-input" min="0" step="any" inputmode="decimal" placeholder="e.g. 40">
+                    </div>
+                    <div id="cpGermBox">
+                        <label class="form-label" for="cpGerm">Germination <span class="text-gray-400 font-normal">(optional, on the seed tag)</span></label>
+                        <div class="cp-area">
+                            <input type="number" id="cpGerm" class="form-input" min="1" max="100" step="any" inputmode="decimal" placeholder="e.g. 85">
+                            <span class="cp-area-u">percent</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="cp-hint" id="cpSeedHint"></p>
+            </section>
+            {{-- 8: the soil and the water --}}
+            <section class="wtp-step" data-step="8">
+                <p class="wtp-q">What is the soil like?</p>
                 <p class="wtp-sub">Go by feel. No soil test needed.</p>
                 <div class="wtp-choices" id="cpSoils"></div>
                 <p class="wtp-q mt-5">How does the field get water?</p>
                 <div class="wtp-choices" id="cpWaters"></div>
             </section>
-            {{-- 7: the troubles --}}
-            <section class="wtp-step" data-step="8">
+            {{-- 9: the troubles --}}
+            <section class="wtp-step" data-step="9">
                 <p class="wtp-q">What problems does this field have?</p>
                 <p class="wtp-sub">Tick what you have seen. Each one changes the protocol.</p>
                 <div class="wtp-probs" id="cpProbs"></div>
                 <label class="form-label mt-4" for="cpNotes">Other notes <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="cpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. tungro hit us last season, we have a pump but diesel is costly"></textarea>
             </section>
-            {{-- 8: the ground, closer -- what decides WHICH granular and WHEN --}}
-            <section class="wtp-step" data-step="9">
+            {{-- 10: the ground, closer -- what decides WHICH granular and WHEN --}}
+            <section class="wtp-step" data-step="10">
                 <p class="wtp-q">A closer look at the soil</p>
                 <p class="wtp-sub">Optional. Each answer changes which fertilizer to use and when. Skip what you do not know.</p>
                 <p class="wp-qh">Soil condition <small>pH, sodium or salt. You can pick more than one.</small></p>
@@ -753,9 +831,11 @@
                 <div class="wtp-choices is-four" id="cpTestP"></div>
                 <p class="wp-qh mt-4">Potassium in the soil</p>
                 <div class="wtp-choices is-four" id="cpTestK"></div>
+                <label class="wp-qh mt-4 block" for="cpPh">pH from a soil test <small>Optional. A number beats a guess: it decides how much phosphorus the soil locks up.</small></label>
+                <input type="number" id="cpPh" class="form-input" min="2" max="12" step="0.1" inputmode="decimal" placeholder="e.g. 6.2">
             </section>
-            {{-- 9: the history and what can be bought --}}
-            <section class="wtp-step" data-step="10">
+            {{-- 11: the history and what can be bought --}}
+            <section class="wtp-step" data-step="11">
                 <p class="wtp-q">Last crop and what you can buy</p>
                 <p class="wtp-sub">Beans and peanuts leave nitrogen in the soil. Burned straw gives back potash, not nitrogen. The plan only uses fertilizer you can buy.</p>
                 <p class="wp-qh">Last crop</p>
@@ -767,10 +847,11 @@
                 <p class="wp-qh mt-4">Fertilizer sold near you <small>Pick all that apply. The plans use these.</small></p>
                 <div class="wtp-choices is-pills" id="cpGranulars" role="group" aria-label="Fertilizer sold near you"></div>
             </section>
-            {{-- 10: the decision --}}
-            <section class="wtp-step" data-step="11">
+            {{-- 12: the decision, with the need it is held to --}}
+            <section class="wtp-step" data-step="12">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="cpReview"></p>
+                <div class="cp-need" id="cpNeed" hidden aria-live="polite"></div>
                 <button type="button" class="wtp-run" id="cpRun">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                     <span id="cpRunSays">Write the protocol</span>
@@ -816,6 +897,7 @@
     const U = {
         options: '{{ route('proto.options') }}',
         generate: '{{ route('proto.generate') }}',
+        need: '{{ route('proto.need') }}',
         list: '{{ route('proto.list') }}',
         one: (id) => '{{ url('/app/crop-protocol/one') }}/' + id,
         job: (id) => '{{ url('/app/crop-protocol/job') }}/' + id,
@@ -826,9 +908,10 @@
 
     let OPT = null;
     const state = { location: '', crop: '', variety: '', month: null, method: null, priority: null, targetYield: '', yieldUnit: '', area: '', soil: null, water: null, problems: [], notes: '',
-        soilConditions: [], testP: 'unsure', testK: 'unsure', prevCrop: 'unsure', residue: 'unsure', fertHistory: '', granulars: [] };
+        soilConditions: [], testP: 'unsure', testK: 'unsure', prevCrop: 'unsure', residue: 'unsure', fertHistory: '', granulars: [],
+        varRecord: null, potential: '', seedAmount: '', seedUnit: 'kg', germination: '', ph: '' };
     let step = 0;
-    const STEPS = 12;
+    const STEPS = 13;
     const phone = () => !window.matchMedia('(min-width: 640px)').matches;
     /* The field in detail (partials/field-profile-card): its answers fill the
        soil, the water, the troubles, the soil condition and the last crop,
@@ -847,25 +930,30 @@
             document.querySelectorAll('#' + hostId + ' .wtp-choice').forEach((c) => c.classList.toggle('is-on', c.getAttribute('data-' + attr) === state[key]));
             if (val) { got.push(word); lit[at] = true; }
         };
-        one('soil', 'cpSoils', 'soil', L.soil && L.soil !== 'unsure' ? L.soil : null, null, 'the soil', 7);
-        one('water', 'cpWaters', 'water', L.water, null, 'the water', 7);
+        one('soil', 'cpSoils', 'soil', L.soil && L.soil !== 'unsure' ? L.soil : null, null, 'the soil', 8);
+        one('water', 'cpWaters', 'water', L.water, null, 'the water', 8);
         if (!TOUCH.problems) {
             const want = [];
             (L.problemsVariety || []).filter((k) => OPT.problems[k]).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
             document.querySelectorAll('#cpProbs input').forEach((i) => { i.checked = want.includes(i.value); i.closest('.wtp-prob')?.classList.toggle('is-on', i.checked); });
             state.problems = want;
-            if (want.length) { got.push(want.length === 1 ? 'one trouble' : want.length + ' troubles'); lit[8] = true; }
+            if (want.length) { got.push(want.length === 1 ? 'one trouble' : want.length + ' troubles'); lit[9] = true; }
         }
         if (!TOUCH.soilConditions) {
             state.soilConditions = (L.soilConditions || []).filter((k) => (OPT.soilConditions || {})[k]);
             paintSoilConds();
-            if (state.soilConditions.length) { got.push('the soil condition'); lit[9] = true; }
+            if (state.soilConditions.length) { got.push('the soil condition'); lit[10] = true; }
+        }
+        // A tested pH range: its middle, as NPK Plus reads it.
+        if (!TOUCH.ph) {
+            state.ph = L.phValue != null ? String(L.phValue) : '';
+            $id('cpPh').value = state.ph;
+            if (state.ph) { got.push('the pH'); lit[10] = true; }
         }
         const prev = PREV_OF[answers.prevCrop] || [null, null];
-        one('prevCrop', 'cpPrevCrops', 'prevcrop', prev[0], 'unsure', 'the last crop', 10);
-        one('residue', 'cpResidues', 'residue', prev[1], 'unsure', 'its leftovers', 10);
-        // The field step opens with the size, which the details do not say: its line goes under the soil question.
-        [7, 8, 9, 10].forEach((n) => window.aneeFieldCard.hint(document.querySelector('#cpWiz .wtp-step[data-step="' + n + '"]'), !!lit[n], '', n === 7 ? $id('cpSoils').previousElementSibling : null));
+        one('prevCrop', 'cpPrevCrops', 'prevcrop', prev[0], 'unsure', 'the last crop', 11);
+        one('residue', 'cpResidues', 'residue', prev[1], 'unsure', 'its leftovers', 11);
+        [8, 9, 10, 11].forEach((n) => window.aneeFieldCard.hint(document.querySelector('#cpWiz .wtp-step[data-step="' + n + '"]'), !!lit[n], '', null));
         return got.length ? 'Filled in for you: ' + andList(got) + '. Change anything on the next steps.' : '';
     }
     function mountCard() {
@@ -931,6 +1019,7 @@
         if (!state.yieldUnit || !units.includes(state.yieldUnit)) state.yieldUnit = units[0] || 'tons';
         $id('cpUnits').innerHTML = units.map((k) => `<button type="button" class="cp-unit${k === state.yieldUnit ? ' is-on' : ''}" data-unit="${esc(k)}" role="radio" aria-checked="${k === state.yieldUnit ? 'true' : 'false'}">${esc(String(OPT.yieldUnits[k]).replace(' per hectare', ''))}</button>`).join('');
         paintMethods();
+        paintSeedUnits();
         paintQuote();
     }
     /* The ways in follow the crop: rice has its three, corn goes straight
@@ -990,6 +1079,7 @@
         $id('cpBack').disabled = step === 0;
         $id('cpNext').style.display = step === STEPS - 1 ? 'none' : '';
         if (step === 4) paintMethods();
+        if (step === 7) seedHint();
         if (step === STEPS - 1) review();
     }
     function stepReady() {
@@ -1001,14 +1091,18 @@
             case 3: return !!state.month || (toast('Pick your planting month.', 'error'), false);
             case 4: return !!state.method || (toast('Pick how you will plant.', 'error'), false);
             case 5: state.targetYield = $id('cpTarget').value.trim();
+                state.potential = $id('cpPotential').value.trim();
                 return !!state.priority || (toast('Pick your goal for this season.', 'error'), false);
             case 6: return true;
             case 7: state.area = $id('cpArea').value.trim();
                 if (!(Number(state.area) > 0)) { toast('Type the field size in hectares.', 'error'); if (!phone()) $id('cpArea').focus(); return false; }
-                if (!state.soil) { toast('Pick the soil closest to yours.', 'error'); return false; }
+                state.seedAmount = $id('cpSeed').value.trim();
+                state.germination = $id('cpGerm').value.trim();
+                return true;
+            case 8: if (!state.soil) { toast('Pick the soil closest to yours.', 'error'); return false; }
                 if (!state.water) { toast('Pick how the field gets water.', 'error'); return false; }
                 return true;
-            case 8: state.problems = [...document.querySelectorAll('#cpProbs input:checked')].map((i) => i.value);
+            case 9: state.problems = [...document.querySelectorAll('#cpProbs input:checked')].map((i) => i.value);
                 state.notes = $id('cpNotes').value.trim();
                 // A trouble ticked here answers the next step's soil
                 // condition while it is still "unsure" -- one tap fewer.
@@ -1017,7 +1111,10 @@
                     if (said && (OPT.soilConditions || {})[said]) { state.soilConditions = [said, ...state.soilConditions]; paintSoilConds(); }
                 }
                 return true;
-            case 10: state.fertHistory = $id('cpFertHistory').value.trim(); return true;
+            case 10: state.ph = $id('cpPh').value.trim();
+                if (state.ph && !(Number(state.ph) >= 2 && Number(state.ph) <= 12)) { toast('A soil pH is a number from 2 to 12.', 'error'); return false; }
+                return true;
+            case 11: state.fertHistory = $id('cpFertHistory').value.trim(); return true;
             default: return true;
         }
     }
@@ -1031,6 +1128,8 @@
         const closer = ['testP', 'testK', 'prevCrop', 'residue'].filter((k) => state[k] && state[k] !== 'unsure').length + (state.soilConditions.length ? 1 : 0) + (state.fertHistory ? 1 : 0) + (state.granulars.length ? 1 : 0);
         if (closer) $id('cpReview').innerHTML += `<br><span class="text-xs">${state.soilConditions.length ? esc(state.soilConditions.map((k) => split((OPT.soilConditions || {})[k] || k)[0].toLowerCase()).join(', ')) + ' soil · ' : ''}${closer} extra answer${closer === 1 ? '' : 's'}${state.granulars.length ? ' · ' + state.granulars.length + ' fertilizer' + (state.granulars.length === 1 ? '' : 's') + ' you can buy' : ''}</span>`;
         if (FPC && FPC.count()) $id('cpReview').innerHTML += `<br><span class="text-xs">Your field in detail: ${FPC.count()} answer${FPC.count() === 1 ? '' : 's'}</span>`;
+        if (Number(state.seedAmount) > 0) $id('cpReview').innerHTML += `<br><span class="text-xs">Planting ${esc(state.seedAmount)} ${esc((OPT.seedUnits[state.seedUnit] || [])[1] || state.seedUnit)} on the whole field${Number(state.germination) > 0 ? ' at ' + esc(state.germination) + ' percent germination' : ''}</span>`;
+        loadNeed();
         $id('cpRunSays').textContent = OPT.canUse && OPT.quote ? `Write the protocol (${OPT.quote} credits)` : 'Write the protocol';
         $id('cpRunFine').textContent = OPT.canUse
             ? 'This deep check takes a few minutes. It uses the same AI credits as your questions.'
@@ -1092,6 +1191,7 @@
         if (!b) return;
         state.yieldUnit = b.getAttribute('data-unit');
         document.querySelectorAll('.cp-unit').forEach((u) => { u.classList.toggle('is-on', u === b); u.setAttribute('aria-checked', u === b ? 'true' : 'false'); });
+        potFill(false); potSay();
     });
     const PROB_FOES = { acidic: ['alkaline'], alkaline: ['acidic'], drought: ['floods'], floods: ['drought'] };
     $id('cpProbs').addEventListener('change', (e) => {
@@ -1120,6 +1220,9 @@
         now.textContent = c.label || 'Choose the crop';
         now.classList.remove('is-none');
         if (FPC) FPC.refresh();
+        if (state.varRecord && state.varRecord.crop !== state.crop) varSet('', null);
+        if (!TOUCH.seedUnit) state.seedUnit = c.seedUnit || 'kg';
+        paintSeedUnits();
         closeSheet('cpCropSheet');
         setTimeout(() => show(2), 220);
     });
@@ -1138,6 +1241,160 @@
     $id('cpCropSearch').addEventListener('input', cropSift);
     $id('cpCropSearchX').addEventListener('click', () => { $id('cpCropSearch').value = ''; cropSift(); $id('cpCropSearch').focus(); });
 
+    /* ---- what goes to the server: the run and the need preview send the same answers ---- */
+    function answers() {
+        return {
+            location: state.location, crop: state.crop, variety: state.variety, month: state.month, method: state.method,
+            priority: state.priority, targetYield: state.targetYield || null, yieldUnit: state.yieldUnit, area: state.area,
+            soil: state.soil, water: state.water, problems: state.problems, notes: state.notes,
+            soilConditions: state.soilConditions, testP: state.testP, testK: state.testK, prevCrop: state.prevCrop, residue: state.residue,
+            fertHistory: state.fertHistory, granulars: state.granulars,
+            potential: state.potential || null, seedAmount: state.seedAmount || null, seedUnit: state.seedUnit, germination: state.germination || null, ph: state.ph || null,
+            ...(FPC ? FPC.payload() : {}),
+        };
+    }
+
+    /* ---- the variety, two ways: the records (the shared sheet) or a name as sold ---- */
+    const OK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+    const tonsIn = () => Number(((OPT && OPT.yieldT) || {})[state.yieldUnit]) || 1;
+    const unitWord = () => String(((OPT && OPT.yieldUnits) || {})[state.yieldUnit] || 'tons per hectare').replace(' per hectare', '');
+    const recT = (r) => (r ? (r.top || r.avg || null) : null);
+    const fmt2 = (v) => String(Math.round(v * 100) / 100);
+    function varSay() {
+        const now = $id('cpVarNow'), rec = state.varRecord, box = $id('cpVarFacts');
+        now.textContent = state.variety || 'Pick from the records, or type your own';
+        now.classList.toggle('is-none', !state.variety);
+        $id('cpVarIcon').textContent = rec ? '📗' : '🧬';
+        $id('cpVariety').value = state.variety;
+        if (!state.variety) { box.hidden = true; return; }
+        const VP = window.aneeVarietyPick;
+        box.classList.toggle('is-own', !rec);
+        box.innerHTML = OK_ICON + '<span>' + (rec
+            ? '<b>On record.</b> ' + esc([VP ? VP.facts(rec) : '', VP && VP.yieldSay ? VP.yieldSay(rec) : ''].filter(Boolean).join(' · ')) + '. Its trial yield becomes the potential on the goal step.'
+            : 'Your own name, not on record. Anee looks it up. Type its potential on the goal step if the seed bag gives one.') + '</span>';
+        box.hidden = false;
+    }
+    // The record's potential, in the unit on screen, while the farmer has not typed their own.
+    function potFill(force) {
+        const t = recT(state.varRecord);
+        if (!t || (TOUCH.potential && !force && $id('cpPotential').value)) return;
+        $id('cpPotential').value = fmt2(t / tonsIn());
+        state.potential = $id('cpPotential').value;
+        TOUCH.potential = false;
+    }
+    function potSay() {
+        const t = recT(state.varRecord), box = $id('cpPotFrom');
+        if (!t) { box.hidden = true; return; }
+        const rec = fmt2(t / tonsIn()) + ' ' + unitWord(), word = state.varRecord.top ? 'its best trial yield' : 'its average trial yield';
+        const own = TOUCH.potential && $id('cpPotential').value && Math.abs(Number($id('cpPotential').value) * tonsIn() - t) > 0.05;
+        box.classList.toggle('is-own', !!own);
+        box.innerHTML = OK_ICON + (own
+            ? '<span>Your own figure is used. The record says ' + esc(rec) + ', ' + word + '. <button type="button" data-pot-rec>Use the record\'s</button></span>'
+            : '<span>From the record: <b>' + esc(rec) + '</b>, ' + word + '. Change it if your seed bag or seller says otherwise.</span>');
+        box.hidden = false;
+    }
+    function varSet(name, rec) {
+        const wasRec = recT(state.varRecord) && !TOUCH.potential;
+        state.variety = (name || '').trim();
+        state.varRecord = rec ? Object.assign({ crop: state.crop }, rec) : null;
+        // A record's potential does not belong to another variety.
+        if (wasRec && !recT(state.varRecord)) { $id('cpPotential').value = ''; state.potential = ''; TOUCH.potential = false; }
+        if (recT(state.varRecord)) potFill(!$id('cpPotential').value);
+        varSay(); potSay();
+    }
+    $id('cpVarBtn').addEventListener('click', async () => {
+        if (!window.aneeVarietyPick) return;
+        if (!state.crop) { toast('Choose the crop first.', 'error'); return; }
+        const crop = (OPT && OPT.crops.find((c) => c.key === state.crop)) || {};
+        const res = await window.aneeVarietyPick.open({ crop: state.crop, cropLabel: crop.label ? String(crop.label).split(' (')[0].split(' — ')[0] : '',
+            location: $id('cpLocation').value.trim(), water: state.water === 'rainfed' ? 'rainfed' : state.water === 'limited' ? 'limited' : '',
+            value: { name: state.variety, record: state.varRecord },
+            ownNote: 'Not on record, so Anee looks it up from what is published. Type its potential on the goal step if the seed bag or the seller gives one.' });
+        if (res) varSet(res.name, res.record);
+    });
+    $id('cpPotential').addEventListener('input', () => { TOUCH.potential = true; state.potential = $id('cpPotential').value.trim(); potSay(); });
+    $id('cpPotFrom').addEventListener('click', (e) => { if (e.target.closest('[data-pot-rec]')) { potFill(true); potSay(); } });
+
+    /* ---- how much is planted (NPK Plus's planting step) ---- */
+    const npkKey = () => {
+        const c = OPT && OPT.crops.find((x) => x.key === state.crop);
+        if (!c || !c.npk) return null;
+        return c.npk === 'rice' && /^direct_(wet|dry)$/.test(state.method || '') && OPT.seeding['rice_dsr_' + state.method.slice(7)] ? 'rice_dsr_' + state.method.slice(7) : c.npk;
+    };
+    function paintSeedUnits() {
+        if (!OPT || !OPT.seedUnits) return;
+        $id('cpSeedUnits').innerHTML = Object.entries(OPT.seedUnits).map(([k, u]) => `<button type="button" class="cp-pill${k === state.seedUnit ? ' is-on' : ''}" data-seedunit="${esc(k)}" role="radio" aria-checked="${k === state.seedUnit}" title="${esc(u[2])}">${esc(u[0])}</button>`).join('');
+        $id('cpSeedU').textContent = '(' + ((OPT.seedUnits[state.seedUnit] || [])[1] || state.seedUnit) + ')';
+        $id('cpGermBox').hidden = !['kg', 'g', 'seeds', 'hills'].includes(state.seedUnit);
+        seedHint();
+    }
+    $id('cpSeedUnits').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-seedunit]');
+        if (!b) return;
+        state.seedUnit = b.getAttribute('data-seedunit');
+        TOUCH.seedUnit = true;
+        paintSeedUnits();
+    });
+    const span = (u) => { const f = (x) => Number(x).toLocaleString(undefined, { maximumFractionDigits: 2 }); return u[0] === u[1] ? f(u[0]) : f(u[0]) + ' to ' + f(u[1]); };
+    function seedHint() {
+        const sd = OPT && OPT.seeding ? OPT.seeding[npkKey()] : null;
+        const v = Number($id('cpSeed').value), a = Number($id('cpArea').value), unit = state.seedUnit;
+        const kind = unit === 'kg' || unit === 'g' ? 'w' : 'n', u = sd && sd[kind];
+        const word = kind === 'w' ? 'kg' : ((sd && sd.countWord) || 'plants');
+        const h = $id('cpSeedHint');
+        let say = '', warn = false;
+        if (v > 0 && a > 0) {
+            let perHa = (unit === 'g' ? v / 1000 : v) / a;
+            const raw = perHa, g = Number($id('cpGerm').value);
+            if (['kg', 'g', 'seeds', 'hills'].includes(unit) && g > 0) perHa = perHa * Math.min(100, g) / (OPT.germUsual || 85);
+            say = 'That is ' + Number(raw).toLocaleString(undefined, { maximumFractionDigits: raw >= 100 ? 0 : 1 }) + ' ' + word + ' per hectare.';
+            if (u) {
+                say += ' The usual is ' + span(u) + ' ' + word + '.';
+                if (perHa < u[0] * 0.75) { warn = true; say += ' Yours is thinner, so the need is counted for ' + Math.round(Math.max(0.3, perHa / (u[0] * 0.75)) * 100) + ' percent of the goal.'; }
+                else if (perHa > u[1] * 1.5) { warn = true; say += ' Yours is much more: crowded plants need no more fertilizer and give no more harvest.'; }
+            }
+        } else {
+            say = u ? 'The usual for this crop is ' + span(u) + ' ' + word + ' per hectare.' + (sd.note ? ' ' + sd.note : '') : (sd && sd.note ? sd.note : 'Leave it empty if you are not sure.');
+        }
+        h.textContent = say;
+        h.classList.toggle('is-warn', warn);
+    }
+    ['cpSeed', 'cpGerm', 'cpArea'].forEach((id) => $id(id).addEventListener('input', seedHint));
+    $id('cpPh').addEventListener('input', () => { TOUCH.ph = true; state.ph = $id('cpPh').value.trim(); });
+
+    /* ---- the need, before the run: the same count the protocol is held to ---- */
+    let needAsk = 0;
+    const kg = (v) => Number(v || 0).toLocaleString();
+    async function loadNeed() {
+        const box = $id('cpNeed'), ask = ++needAsk;
+        if (!state.crop) { box.hidden = true; return; }
+        box.classList.add('is-wait');
+        box.innerHTML = '<div class="cp-need-h">The fertilizer need</div><p>Counting it the way NPK Plus does…</p>';
+        box.hidden = false;
+        let n = null;
+        try { n = (await api(U.need, { method: 'POST', body: answers() })).data.need; } catch (_) { n = null; }
+        if (ask !== needAsk) return;
+        box.classList.remove('is-wait');
+        if (!n || !n.known) {
+            box.innerHTML = '<div class="cp-need-h">The fertilizer need</div><p>NPK Plus has no numbers for this crop yet, so Anee works the need out from the official guides for your region.</p>';
+            return;
+        }
+        const g = n.goal, t = (x) => fmt2(x / tonsIn()) + ' ' + unitWord() + ' per hectare';
+        const lines = [];
+        if (n.seed && n.seed.thin) lines.push('Your stand is thin, so the need is sized to the plants you will have.');
+        if (g && g.capped) lines.push('Your field in detail says the water, salt or sodium hold the harvest lower, so the need is too.');
+        if (n.credit && n.credit.N) lines.push(n.credit.N + ' kg less nitrogen for the legume before.');
+        if (n.credit && n.credit.K2O) lines.push(n.credit.K2O + ' kg less potassium for the rice straw plowed back.');
+        (n.whys || []).slice(0, 4).forEach((w) => lines.push(w + '.'));
+        if (n.pLock) lines.push('This soil locks phosphorus: Anee places it in a band, not spread.');
+        const likely = ((n.micro || {}).likely || []).map((m) => m.name.toLowerCase());
+        if (likely.length) lines.push('Likely short here too: ' + likely.join(', ') + '.');
+        box.innerHTML = '<div class="cp-need-h">The fertilizer need per hectare, counted like NPK Plus</div>'
+            + '<div class="cp-need-n"><span><b>' + kg(n.need.N) + '</b><small>kg N</small></span><span><b>' + kg(n.need.P2O5) + '</b><small>kg P₂O₅</small></span><span><b>' + kg(n.need.K2O) + '</b><small>kg K₂O</small></span></div>'
+            + (g ? '<p>For <b>' + esc(t(g.eff)) + '</b>' + (Math.abs(g.eff - g.t) > 0.01 ? ' (' + esc(t(g.t)) + ', ' + esc(g.why) + ', less for your field)' : ', ' + esc(g.why)) + '. Anee writes every program to meet this, and the report checks each bag against it.</p>' : '')
+            + (lines.length ? '<ul>' + lines.map((l) => '<li>' + esc(l) + '</li>').join('') + '</ul>' : '');
+    }
+
     /* ---------------- the run ---------------- */
     $id('cpRun').addEventListener('click', async () => {
         if (!stepReady()) return;
@@ -1147,13 +1404,7 @@
         $id('cpReport').hidden = true;
         let landed = false;
         try {
-            const res = await api(U.generate, { method: 'POST', body: {
-                location: state.location, crop: state.crop, variety: state.variety, month: state.month, method: state.method,
-                priority: state.priority, targetYield: state.targetYield || null, yieldUnit: state.yieldUnit, area: state.area,
-                soil: state.soil, water: state.water, problems: state.problems, notes: state.notes,
-                soilConditions: state.soilConditions, testP: state.testP, testK: state.testK, prevCrop: state.prevCrop, residue: state.residue,
-                fertHistory: state.fertHistory, granulars: state.granulars, ...(FPC ? FPC.payload() : {}),
-            } });
+            const res = await api(U.generate, { method: 'POST', body: answers() });
             let data = res.data;
             if (data.pending) {
                 // The shared poll: the bar, the clock and the hang check ride along.
@@ -1612,7 +1863,7 @@
                         <span class="vd">${c.verdict === 'ok' ? '✅ on target' : (c.verdict === 'short' ? `⚠️ short by ${esc(trimN(Math.abs(c.gap)))}` : (c.verdict === 'over' ? `↑ over by ${esc(trimN(c.gap))}` : 'not checked'))}</span>
                     </div>`; }).join('')}
                     ${(g.unknownProducts || []).length ? `<p class="cp-note">Not counted (nutrient content unknown): ${esc((g.unknownProducts || []).join(', '))}.</p>` : ''}
-                </div>${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}` : ''}
+                </div>${npk.basis ? `<p class="cp-note">${esc(npk.basis)}</p>` : ''}${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}` : ''}
             </div>` : ''}`;
             wireStages();
             if (hostEl.classList.contains('is-drawn')) { requestAnimationFrame(() => fertHost.querySelectorAll('.cp-bar, .cp2-tot-row .tr span, .cp2-nut-row .have').forEach((el) => { el.style.transition = 'none'; el.style.transform = 'none'; })); }

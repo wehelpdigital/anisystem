@@ -238,6 +238,29 @@
     {
       "type": "heading",
       "level": 2,
+      "text": "What Bayer says about it"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Days to harvest:** 104 to 110 days after sowing, an early maturing hybrid.",
+        "**Yield:** 7.98 t/ha at the 16th National Rice Technology Forum in Hagonoy, Davao del Sur.",
+        "**How it is planted:** Direct seeded or transplanted.",
+        "**Seed:** 21 to 24 kg per hectare direct seeded, 15 kg transplanted.",
+        "114 to 141 cm tall, with 13 to 22 productive tillers.",
+        "Long slender grain, with a milling recovery of 65 percent.",
+        "Cooks white, glossy, soft and smooth.",
+        "Bred to tolerate bacterial leaf blight."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual variety on the same ground."
+    },
+    {
+      "type": "heading",
+      "level": 2,
       "text": "Where should you plant it?"
     },
     {
@@ -339,6 +362,10 @@
         {
           "label": "Where Arize Habilis Plus is named as NSIC Rc 524H",
           "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+        },
+        {
+          "label": "Bayer: Arize Habilis Plus, product page",
+          "url": "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_habilis_plus.html"
         },
         {
           "label": "PhilRice seed database: NSIC Rc 524H variety characteristics",

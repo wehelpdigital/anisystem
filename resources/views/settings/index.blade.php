@@ -151,15 +151,15 @@
         </div>
 
         @if (\App\Support\Tagalog::on())
-        {{-- Tagalog help flags (partials.tagalog-flags): on unless switched off. --}}
+        {{-- Taglish help (partials.tagalog-flags): on unless switched off. --}}
         <div class="st-group">
-            <h3>Help in Tagalog</h3>
+            <h3>Help in Taglish</h3>
             <p class="st-why">For the hard words in the tools and in Anee's results.</p>
 
             <button type="button" class="st-switch" id="stTagalog" role="switch" aria-checked="true">
                 <span class="st-switch-txt">
-                    <b>Tagalog help flags{{ \App\Support\Tagalog::flag('tagalog-flags') }}</b>
-                    <span>A small flag after a technical word, like DAT{{ \App\Support\Tagalog::flag('dat') }} or urea{{ \App\Support\Tagalog::flag('urea') }}. Tap the flag to read what it means in Tagalog.</span>
+                    <b>Taglish help{{ \App\Support\Tagalog::flag('tagalog-flags') }}</b>
+                    <span>A small Taglish tag after a technical word, like DAT{{ \App\Support\Tagalog::flag('dat') }} or urea{{ \App\Support\Tagalog::flag('urea') }}. Tap it to read what the word means in Taglish.</span>
                 </span>
                 <span class="st-knob" aria-hidden="true"></span>
             </button>
@@ -223,7 +223,7 @@
     wire('stUnderline', 'sm-underline', 'sm-a11y-underline');
     wire('stMotion', 'sm-still', 'sm-a11y-motion');
 
-    /* ---- Tagalog help flags: on by default, so the class marks them off ---- */
+    /* ---- Taglish help: on by default, so the class marks it off ---- */
     (() => {
         const btn = document.getElementById('stTagalog');
         if (!btn) return;

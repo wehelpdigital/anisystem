@@ -1,12 +1,13 @@
 {{-- ================================================================
-     Tagalog help flags (2026-10-15, the owner): a small Philippine flag
-     after a technical label; tapping it explains the term in plain
-     Tagalog. A tooltip anchored to the flag on a wide screen, a bottom
+     Taglish help (2026-10-15, the owner; a flag until 2026-10-16, now a
+     small tag that says Taglish): it sits after a technical label, and
+     tapping it explains the term in plain Taglish. A tooltip anchored to
+     the tag on a wide screen, a bottom
      sheet on a phone. One open at a time; it closes on a tap outside, on
      Esc and on the phone's Back.
 
      Included once by layouts.app, in the head, so its click listener is
-     the first in line (a flag inside a tile link or a locked door must not
+     the first in line (a tag inside a tile link or a locked door must not
      open the tile). The words are App\Support\Tagalog's glossary, fetched
      on the first tap; this page carries only the list of keys.
 
@@ -17,41 +18,47 @@
      ================================================================ --}}
 @if (\App\Support\Tagalog::on())
 <style>
-    /* ---- the flag ----
-       An inline span with padding where the flag sits, and two pseudo
-       elements. ::before is the picture AND a 32 px target (the flag is its
-       centred background), so the target moves nothing. ::after is a word
-       joiner: Chrome treats an absolutely placed box inside an inline as a
-       place the line may break, and the joiner forbids it, so the flag never
-       drops to a line by itself. Neither adds to the label's textContent. */
+    /* ---- the Taglish tag (2026-10-16, the owner: "a tag like button that
+       says Taglish", in place of the Philippine flag) ----
+       An inline span with padding where the tag sits, and two pseudo
+       elements. ::before is the tag AND its tap target: a pill of fixed width
+       (--tlx-w) whose transparent border widens what a finger can hit while
+       background-clip keeps the pill its own size, so the target moves
+       nothing. ::after is a word joiner: Chrome treats an absolutely placed
+       box inside an inline as a place the line may break, and the joiner
+       forbids it, so the tag never drops to a line by itself. Neither adds
+       to the label's textContent. */
     /* Important on the box itself: page rules like ".card span { display: block }"
        would otherwise reshape it, and it lives inside every kind of page. */
-    .tlx { position: relative !important; display: inline !important; padding: 0 0 0 14px !important; margin: 0 0 0 .34em !important;
+    .tlx { --tlx-w: 45px; position: relative !important; display: inline !important; padding: 0 0 0 var(--tlx-w) !important; margin: 0 0 0 .38em !important;
         border: 0 !important; background: none !important; width: auto !important; height: auto !important; min-height: 1em;
         font-size: inherit !important; line-height: inherit !important; letter-spacing: normal !important; opacity: 1 !important;
         float: none !important; flex: none; cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent; vertical-align: baseline;
         font-style: normal; text-decoration: none; pointer-events: auto; user-select: none; -webkit-user-select: none; }
     .tlx::after { content: '\2060' !important; position: static !important; display: inline !important; }
-    .tlx::before { content: '' !important; position: absolute !important; display: block !important; left: -9px; top: 50%; width: 32px !important; height: 32px !important; margin: -16px 0 0 !important;
-        border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 20'%3E %3CclipPath id='c'%3E%3Crect width='28' height='20' rx='4'/%3E%3C/clipPath%3E %3Cg clip-path='url(%23c)'%3E%3Cpath fill='%230038a8' d='M0 0h28v10H0z'/%3E%3Cpath fill='%23ce1126' d='M0 10h28v10H0z'/%3E%3Cpath fill='%23fff' d='M0 0l17.32 10L0 20z'/%3E %3Cg fill='%23fcd116'%3E%3Ccircle cx='6.1' cy='10' r='2.2'/%3E%3Cpath stroke='%23fcd116' stroke-width='.8' d='M6.1 6.3v7.4M2.4 10h7.4M3.5 7.4l5.2 5.2M8.7 7.4l-5.2 5.2'/%3E %3Ccircle cx='2' cy='2.5' r='1'/%3E%3Ccircle cx='2' cy='17.5' r='1'/%3E%3Ccircle cx='14.3' cy='10' r='1'/%3E%3C/g%3E%3C/g%3E %3Crect x='.5' y='.5' width='27' height='19' rx='3.5' fill='none' stroke='rgba(20,33,12,.32)'/%3E%3C/svg%3E") center / 14px 10px no-repeat;
-        filter: drop-shadow(0 1px 1px rgb(20 33 12 / .2));
-        transition: transform .28s cubic-bezier(.22,1,.36,1); }
-    @media (hover: hover) { .tlx:hover::before { transform: scale(1.14); } }
-    .tlx:active::before { transform: scale(.9); }
-    /* Open, or reached by the keyboard: a gold ring around the flag. */
-    .tlx.is-open::before, .tlx:focus-visible::before { transform: scale(1.12);
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 20'%3E %3CclipPath id='c'%3E%3Crect width='28' height='20' rx='4'/%3E%3C/clipPath%3E %3Cg clip-path='url(%23c)'%3E%3Cpath fill='%230038a8' d='M0 0h28v10H0z'/%3E%3Cpath fill='%23ce1126' d='M0 10h28v10H0z'/%3E%3Cpath fill='%23fff' d='M0 0l17.32 10L0 20z'/%3E %3Cg fill='%23fcd116'%3E%3Ccircle cx='6.1' cy='10' r='2.2'/%3E%3Cpath stroke='%23fcd116' stroke-width='.8' d='M6.1 6.3v7.4M2.4 10h7.4M3.5 7.4l5.2 5.2M8.7 7.4l-5.2 5.2'/%3E %3Ccircle cx='2' cy='2.5' r='1'/%3E%3Ccircle cx='2' cy='17.5' r='1'/%3E%3Ccircle cx='14.3' cy='10' r='1'/%3E%3C/g%3E%3C/g%3E %3Crect x='.5' y='.5' width='27' height='19' rx='3.5' fill='none' stroke='rgba(20,33,12,.32)'/%3E%3C/svg%3E") center / 14px 10px no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 19'%3E%3Crect x='1.5' y='1.5' width='20' height='16' rx='4' fill='none' stroke='%23f5c518' stroke-opacity='.8' stroke-width='3'/%3E%3C/svg%3E") center / 23px 19px no-repeat; }
-    html.dark .tlx::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 20'%3E %3CclipPath id='c'%3E%3Crect width='28' height='20' rx='4'/%3E%3C/clipPath%3E %3Cg clip-path='url(%23c)'%3E%3Cpath fill='%230038a8' d='M0 0h28v10H0z'/%3E%3Cpath fill='%23ce1126' d='M0 10h28v10H0z'/%3E%3Cpath fill='%23fff' d='M0 0l17.32 10L0 20z'/%3E %3Cg fill='%23fcd116'%3E%3Ccircle cx='6.1' cy='10' r='2.2'/%3E%3Cpath stroke='%23fcd116' stroke-width='.8' d='M6.1 6.3v7.4M2.4 10h7.4M3.5 7.4l5.2 5.2M8.7 7.4l-5.2 5.2'/%3E %3Ccircle cx='2' cy='2.5' r='1'/%3E%3Ccircle cx='2' cy='17.5' r='1'/%3E%3Ccircle cx='14.3' cy='10' r='1'/%3E%3C/g%3E%3C/g%3E %3Crect x='.5' y='.5' width='27' height='19' rx='3.5' fill='none' stroke='rgba(255,255,255,.5)'/%3E%3C/svg%3E"); filter: drop-shadow(0 1px 1px rgb(0 0 0 / .5)); }
-    html.dark .tlx.is-open::before, html.dark .tlx:focus-visible::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 20'%3E %3CclipPath id='c'%3E%3Crect width='28' height='20' rx='4'/%3E%3C/clipPath%3E %3Cg clip-path='url(%23c)'%3E%3Cpath fill='%230038a8' d='M0 0h28v10H0z'/%3E%3Cpath fill='%23ce1126' d='M0 10h28v10H0z'/%3E%3Cpath fill='%23fff' d='M0 0l17.32 10L0 20z'/%3E %3Cg fill='%23fcd116'%3E%3Ccircle cx='6.1' cy='10' r='2.2'/%3E%3Cpath stroke='%23fcd116' stroke-width='.8' d='M6.1 6.3v7.4M2.4 10h7.4M3.5 7.4l5.2 5.2M8.7 7.4l-5.2 5.2'/%3E %3Ccircle cx='2' cy='2.5' r='1'/%3E%3Ccircle cx='2' cy='17.5' r='1'/%3E%3Ccircle cx='14.3' cy='10' r='1'/%3E%3C/g%3E%3C/g%3E %3Crect x='.5' y='.5' width='27' height='19' rx='3.5' fill='none' stroke='rgba(255,255,255,.5)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 19'%3E%3Crect x='1.5' y='1.5' width='20' height='16' rx='4' fill='none' stroke='%23f5c518' stroke-opacity='.8' stroke-width='3'/%3E%3C/svg%3E"); }
+    .tlx::before { content: 'Taglish' !important; position: absolute !important; display: block !important; box-sizing: content-box !important;
+        left: -7px; top: 50%; width: var(--tlx-w) !important; height: 17px !important; margin: -15.5px 0 0 !important; padding: 0 !important;
+        border: 7px solid transparent !important; border-radius: 999px !important; background-clip: padding-box !important;
+        background-color: #eef6e4; box-shadow: inset 0 0 0 1px #bfd6a6;
+        color: #2d5016; font-family: inherit; font-size: 10px !important; font-weight: 800 !important; line-height: 17px !important;
+        font-style: normal !important; letter-spacing: .02em !important; text-transform: none !important; text-decoration: none !important;
+        text-align: center !important; white-space: nowrap !important; text-indent: 0 !important; overflow: hidden;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    @media (hover: hover) { .tlx:hover::before { background-color: #e1eed2; box-shadow: inset 0 0 0 1px #9fc27c; } }
+    .tlx:active::before { transform: scale(.94); }
+    /* Open, or reached by the keyboard: the tag fills in. */
+    .tlx.is-open::before, .tlx:focus-visible::before { background-color: #3d6823; color: #fff; box-shadow: inset 0 0 0 1.5px #f5c518; }
+    html.dark .tlx::before { background-color: #22301a; color: #cfe6b8; box-shadow: inset 0 0 0 1px #3d5a26; }
+    @media (hover: hover) { html.dark .tlx:hover::before { background-color: #2b3d20; box-shadow: inset 0 0 0 1px #5a8236; } }
+    html.dark .tlx.is-open::before, html.dark .tlx:focus-visible::before { background-color: #6b9f3d; color: #10170b; box-shadow: inset 0 0 0 1.5px #f5c518; }
     .tlx-w { display: inline !important; margin: 0 !important; padding: 0 !important; border: 0 !important; background: none !important; }
-    /* Settings > Tagalog help flags, off. */
+    /* Settings > Taglish help, off. */
     html.tlx-off .tlx { display: none !important; }
     @media print { html .tlx { display: none !important; } }
 
     /* ---- what opens ----
        Both are popovers, so they rise above a modal <dialog> too (a sheet
-       the flag sits in), and both are built on the first tap. */
+       the tag sits in), and both are built on the first tap. */
     .tlx-pop { margin: 0; padding: 0; border: 0; background: transparent; color: inherit; overflow: visible; inset: auto; }
     .tlx-pop[hidden] { display: none; }
     .tlx-card:focus { outline: none; }
@@ -60,10 +67,8 @@
     .tlx-head { display: flex; align-items: center; gap: .6rem; }
     .tlx-term { flex: 1 1 auto; min-width: 0; font-size: .8rem; font-weight: 800; line-height: 1.3; letter-spacing: .04em;
         font-variant-caps: small-caps; color: #3d6823; overflow-wrap: anywhere; }
-    .tlx-lang { flex: none; display: inline-flex; align-items: center; gap: .32rem; padding: .14rem .5rem .14rem .32rem; border-radius: 999px;
+    .tlx-lang { flex: none; display: inline-flex; align-items: center; gap: .32rem; padding: .14rem .5rem; border-radius: 999px;
         font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; line-height: 1.2; color: #5b6650; background: #f2f5ee; }
-    .tlx-lang i { width: 12px; height: 8.5px; border-radius: 1.5px; box-shadow: 0 0 0 .5px rgb(20 33 12 / .3);
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 20'%3E%3Cpath fill='%230038a8' d='M0 0h28v10H0z'/%3E%3Cpath fill='%23ce1126' d='M0 10h28v10H0z'/%3E%3Cpath fill='%23fff' d='M0 0l17.32 10L0 20z'/%3E%3Ccircle fill='%23fcd116' cx='6.1' cy='10' r='2.4'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
     .tlx-tl { margin-top: .4rem; font-size: .9rem; line-height: 1.58; color: #1f2a17; }
     .tlx-tl.is-wait { color: #6b7280; }
     .tlx-tl.is-wait::after { content: ''; display: inline-block; width: .8em; height: .8em; margin-left: .45em; vertical-align: -.08em;
@@ -73,11 +78,21 @@
         font-size: .82rem; line-height: 1.5; color: #3f4a37; }
     .tlx-ex b { font-weight: 800; color: #2d5016; }
     .tlx-ex[hidden] { display: none; }
-    .tlx-tl.is-fresh, .tlx-ex.is-fresh { animation: tlxIn .28s cubic-bezier(.22,1,.36,1) both; }
-    .tlx-ex.is-fresh { animation-delay: .06s; }
+    /* Where to go next, when the words point somewhere (Anee does it for you: upgrade, buy credits). */
+    .tlx-links { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .7rem; }
+    .tlx-links[hidden] { display: none; }
+    .tlx-link { display: inline-flex; align-items: center; gap: .3rem; min-height: 2.1rem; padding: .3rem .8rem; border-radius: 999px;
+        font-size: .8rem; font-weight: 800; line-height: 1.2; text-decoration: none; color: #2d5016; background: #eef5e6; border: 1px solid #cfe0bd;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .tlx-link:first-child { color: #fff; background: #3d6823; border-color: #3d6823; }
+    .tlx-link::after { content: '\203A'; font-size: 1.05em; line-height: 1; }
+    @media (hover: hover) { .tlx-link:hover { background: #e0ecd2; } .tlx-link:first-child:hover { background: #2d5016; } }
+    .tlx-sheet .tlx-link { min-height: 2.6rem; font-size: .9rem; padding: .45rem 1rem; }
+    .tlx-tl.is-fresh, .tlx-ex.is-fresh, .tlx-links.is-fresh { animation: tlxIn .28s cubic-bezier(.22,1,.36,1) both; }
+    .tlx-ex.is-fresh, .tlx-links.is-fresh { animation-delay: .06s; }
     @keyframes tlxIn { from { opacity: 0; transform: translateY(3px); } }
 
-    /* The tooltip: anchored to the flag, flips above or below, kept inside the screen. */
+    /* The tooltip: anchored to the tag, flips above or below, kept inside the screen. */
     .tlx-tip { position: fixed; left: 0; top: 0; width: max-content; max-width: min(22rem, calc(100vw - 16px));
         opacity: 0; transform: translateY(var(--tlx-dy, 6px)) scale(.86); transform-origin: var(--tlx-ox, 50%) var(--tlx-oy, 100%);
         transition: opacity .22s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); pointer-events: none; }
@@ -87,7 +102,7 @@
     .tlx-arrow { position: absolute; left: var(--tlx-ax, 50%); bottom: -6px; width: 13px; height: 13px; margin-left: -6.5px; transform: rotate(45deg);
         background: #fff; border: 1px solid #d9e3cf; border-top-color: transparent; border-left-color: transparent; border-radius: 0 0 3px 0;
         box-shadow: 3px 3px 6px -2px rgb(16 28 8 / .22); }
-    /* Below the flag the arrow sits on the card's flag coloured top edge, so it
+    /* Below the tag the arrow sits on the card's flag coloured top edge, so it
        wears the colour of the stripe it rises from. */
     .tlx-tip.is-below .tlx-arrow { bottom: auto; top: -5px; border: 0; border-radius: 2.5px 0 0 0; background: var(--tlx-abg, #fff); box-shadow: none; }
     .tlx-tip .tlx-card::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; border-radius: .95rem .95rem 0 0;
@@ -120,13 +135,15 @@
     html.dark .tlx-tl.is-wait { color: #9fb08e; }
     html.dark .tlx-ex { background: #222d1a; color: #cdd8c0; }
     html.dark .tlx-ex b { color: #c9e0ae; }
+    html.dark .tlx-link { color: #e8efe1; background: #22301a; border-color: #3d5a26; }
+    html.dark .tlx-link:first-child { color: #10170b; background: #8fc25e; border-color: #8fc25e; }
     html.dark .tlx-grip { background: #3a4a2c; }
     html.dark .tlx-close { background: #2b3a1c; color: #e8efe1; }
     html.dark .tlx-tip .tlx-card { box-shadow: 0 22px 44px -18px rgb(0 0 0 / .8), 0 4px 12px -6px rgb(0 0 0 / .5); }
 
     @media (prefers-reduced-motion: reduce) {
-        .tlx::before, .tlx-tip, .tlx-scrim, .tlx-sheet .tlx-card, .tlx-close { transition: none; }
-        .tlx-tl.is-wait::after, .tlx-tl.is-fresh, .tlx-ex.is-fresh { animation: none; }
+        .tlx::before, .tlx-tip, .tlx-scrim, .tlx-sheet .tlx-card, .tlx-close, .tlx-link { transition: none; }
+        .tlx-tl.is-wait::after, .tlx-tl.is-fresh, .tlx-ex.is-fresh, .tlx-links.is-fresh { animation: none; }
     }
     html.sm-still .tlx::before, html.sm-still .tlx-tip, html.sm-still .tlx-scrim, html.sm-still .tlx-sheet .tlx-card { transition: none; }
 </style>
@@ -147,9 +164,10 @@
     const phone = () => matchMedia('(pointer: coarse)').matches || window.innerWidth < 640;
     const termOf = (key, term) => term || (book && book[key] ? book[key][0] : String(key).replace(/[-_]+/g, ' '));
 
-    /* ---- the flag's markup, for Blade's twin in scripts ---- */
+    /* ---- the tag's markup, for Blade's twin in scripts ---- */
+    const SAY = 'Taglish: ';
     const flag = (key, term) => KEYS.has(key)
-        ? '<span class="tlx" role="button" tabindex="0" aria-expanded="false" data-tlk="' + esc(key) + '" aria-label="' + esc('Ipaliwanag sa Tagalog: ' + termOf(key, term)) + '"></span>'
+        ? '<span class="tlx" role="button" tabindex="0" aria-expanded="false" data-tlk="' + esc(key) + '" aria-label="' + esc(SAY + termOf(key, term)) + '"></span>'
         : '';
 
     /* ---- the glossary, fetched once ---- */
@@ -168,9 +186,10 @@
     function cardHtml(sheet) {
         return '<div class="tlx-card"' + (sheet ? ' role="dialog" aria-modal="true" tabindex="-1"' : '') + '>'
             + (sheet ? '<div class="tlx-grip" aria-hidden="true"></div>' : '')
-            + '<div class="tlx-head"><span class="tlx-term"></span><span class="tlx-lang"><i aria-hidden="true"></i>Tagalog</span></div>'
+            + '<div class="tlx-head"><span class="tlx-term"></span><span class="tlx-lang">Taglish</span></div>'
             + '<p class="tlx-tl" aria-live="polite"></p>'
             + '<p class="tlx-ex" hidden><b>Halimbawa:</b> <span></span></p>'
+            + '<p class="tlx-links" hidden></p>'
             + (sheet ? '<button type="button" class="tlx-close">Isara</button>' : '')
             + '</div>';
     }
@@ -225,22 +244,26 @@
     function fill(el, key, anchor, late) {
         const row = book && book[key];
         const card = el.querySelector('.tlx-card');
-        const term = el.querySelector('.tlx-term'), p = el.querySelector('.tlx-tl'), ex = el.querySelector('.tlx-ex');
+        const term = el.querySelector('.tlx-term'), p = el.querySelector('.tlx-tl'), ex = el.querySelector('.tlx-ex'), links = el.querySelector('.tlx-links');
         const h0 = late && el.classList.contains('tlx-sheet') ? card.offsetHeight : 0;
-        term.textContent = row ? row[0] : (anchor.getAttribute('aria-label') || '').replace(/^Ipaliwanag sa Tagalog: /, '');
+        term.textContent = row ? row[0] : (anchor.getAttribute('aria-label') || '').replace(SAY, '');
         p.classList.toggle('is-wait', !row);
         if (row) {
             p.textContent = row[1];
             ex.hidden = !row[2];
             ex.querySelector('span').textContent = row[2] || '';
+            const go = Array.isArray(row[3]) ? row[3] : [];
+            links.innerHTML = go.map((l) => '<a class="tlx-link" href="' + esc(l[1]) + '">' + esc(l[0]) + '</a>').join('');
+            links.hidden = !go.length;
         } else {
-            p.textContent = failed ? 'Walang koneksyon. Pindutin ulit ang watawat mamaya.' : 'Sandali lang';
+            p.textContent = failed ? 'Walang koneksyon. Pindutin ulit ang Taglish mamaya.' : 'Sandali lang';
             ex.hidden = true;
+            links.hidden = true;
         }
         // Words that arrive after the card opened fade in, and the sheet
         // grows to them instead of jumping.
         if (late && row && !still()) {
-            [p, ex].forEach((n) => { n.classList.remove('is-fresh'); void n.offsetWidth; n.classList.add('is-fresh'); });
+            [p, ex, links].forEach((n) => { n.classList.remove('is-fresh'); void n.offsetWidth; n.classList.add('is-fresh'); });
             if (h0 && card.animate) {
                 const h1 = card.offsetHeight;
                 if (Math.abs(h1 - h0) > 2) card.animate([{ height: h0 + 'px', overflow: 'hidden' }, { height: h1 + 'px', overflow: 'hidden' }], { duration: HOUSE, easing: 'cubic-bezier(.22,1,.36,1)' });
@@ -256,13 +279,14 @@
         const rects = anchor.getClientRects(), r = rects[rects.length - 1];
         const vw = root.clientWidth, vh = window.innerHeight;
         if (r.bottom < 0 || r.top > vh || r.right < 0 || r.left > vw) { close(); return; }
-        const fy = r.top + r.height / 2;                    // the flag's middle
-        const fTop = fy - 5, fBottom = fy + 5;              // the flag is 10 px tall
+        const fy = r.top + r.height / 2;                    // the tag's middle
+        const fTop = fy - 9, fBottom = fy + 9;              // the tag is 17 px tall
         const w = el.offsetWidth, h = el.offsetHeight, gap = 11, pad = 8;
         const below = fTop - gap - h < pad && vh - fBottom > fTop;
         let top = below ? fBottom + gap : fTop - gap - h;
         top = Math.max(pad, Math.min(top, vh - h - pad));
-        const cx = r.left + 7;                              // the flag's centre (14 px wide)
+        const tw = parseFloat(getComputedStyle(anchor).getPropertyValue('--tlx-w')) || 45;
+        const cx = r.left + tw / 2;                         // the tag's centre
         const left = Math.max(pad, Math.min(cx - w / 2, vw - w - pad));
         const ax = Math.max(16, Math.min(cx - left, w - 16));
         el.style.left = Math.round(left) + 'px';
@@ -299,7 +323,7 @@
         const mode = phone() ? 'sheet' : 'tip';
 
         if (cur && cur.mode === 'sheet' && mode === 'sheet') {
-            // A second flag while the sheet is up (only from a keyboard): new words, same sheet.
+            // A second tag while the sheet is up (only from a keyboard): new words, same sheet.
             cur.anchor.classList.remove('is-open'); cur.anchor.setAttribute('aria-expanded', 'false');
             cur.anchor = anchor;
         } else {
@@ -354,7 +378,7 @@
     }
 
     /* ---- the listeners, first in line ----
-       Capture on window runs before anything the page wired, so a flag inside
+       Capture on window runs before anything the page wired, so a tag inside
        a tile link, a fold button, a label or a locked door opens only itself. */
     window.addEventListener('click', (e) => {
         const f = e.target && e.target.closest ? e.target.closest('.tlx') : null;
@@ -383,8 +407,8 @@
         }
     }, true);
 
-    /* ---- data-tl: markup drawn by scripts asks for a flag by key ----
-       The flag goes right after the element's last word (not after trailing
+    /* ---- data-tl: markup drawn by scripts asks for a tag by key ----
+       The tag goes right after the element's last word (not after trailing
        space, where the line could break and leave it alone). Kept there as
        scripts redraw: a redraw that wipes it gets it back. */
     const SKIP = /^(SCRIPT|STYLE|SVG|TEXTAREA|SELECT|OPTION|INPUT|IMG)$/;
@@ -419,7 +443,7 @@
             if (end < t.nodeValue.length) t.splitText(end);
             const box = t.parentNode;
             if (/flex|grid/.test(getComputedStyle(box).display)) {
-                // Loose text in a flex row is an item of its own: the flag
+                // Loose text in a flex row is an item of its own: the tag
                 // would be another, a gap away. One wrapper keeps them as one.
                 const w = document.createElement('span');
                 w.className = 'tlx-w';
@@ -472,9 +496,9 @@
     window.aneeTl = {
         on: true,
         has: (key) => KEYS.has(key),
-        /** The flag's HTML for a key ('' for an unknown one). Write it straight after the last word. */
+        /** The tag's HTML for a key ('' for an unknown one). Write it straight after the last word. */
         flag,
-        /** An escaped label with its flag. */
+        /** An escaped label with its tag. */
         label: (text, key) => esc(text) + flag(key, text),
         open: (anchor) => anchor && open(anchor),
         close: () => close(),
@@ -485,7 +509,7 @@
 </script>
 @else
 <script>
-    /* No Tagalog help flags on this face: the helpers answer, drawing nothing. */
+    /* No Taglish help on this face: the helpers answer, drawing nothing. */
     window.aneeTl = window.aneeTl || { on: false, has: () => false, flag: () => '',
         label: (t) => String(t == null ? '' : t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])),
         open() {}, close() {}, scan() {}, load: () => Promise.resolve({}) };

@@ -238,6 +238,26 @@
     {
       "type": "heading",
       "level": 2,
+      "text": "What Syngenta says about it"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Days to harvest:** 115 days after sowing.",
+        "**Yield:** 10 to 12 t/ha by the seller's page, which gives both figures.",
+        "About 119 cm tall, with about 14 productive tillers.",
+        "Long slender grain, with a milling recovery of 70 percent.",
+        "Cooks white and fragrant."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual variety on the same ground."
+    },
+    {
+      "type": "heading",
+      "level": 2,
       "text": "Where should you plant it?"
     },
     {
@@ -339,6 +359,14 @@
         {
           "label": "Where RH 9000 is named as NSIC Rc 362H",
           "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
+        },
+        {
+          "label": "Syngenta: RH 9000, product page",
+          "url": "https://www.syngenta.com.ph/rh-9000"
+        },
+        {
+          "label": "Syngenta: RH 9000, product page",
+          "url": "https://www.syngenta.com.ph/products/search/seed/category/rice-351"
         },
         {
           "label": "PhilRice seed database: NSIC Rc 362H variety characteristics",

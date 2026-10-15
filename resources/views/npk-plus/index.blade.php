@@ -1730,7 +1730,9 @@
         finally { $('npCSave').disabled = false; }
     });
 
-    /* ---- the need model (App\Support\NpkModel says where each number comes from) ---- */
+    /* ---- the need model (App\Support\NpkModel says where each number comes from) ----
+       App\Support\NpkNeed is its twin on the server (the Crop Protocol sizes its
+       programs with it): change the arithmetic in both. */
     const needModel = (c, g, f, cls, perHa = {}, acidEq = 0, fl = null) => {
         const out = { need: {}, raw: {}, how: {}, share: {}, adj: {}, scale: {}, whys: [], Yg: null, micro: {}, base: null, acid: null, credit: {} };
         // The plan's own acidity (kg of lime per hectare): how far it goes toward its full effect.

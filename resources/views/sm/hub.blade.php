@@ -401,14 +401,14 @@
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             }
             .hub-grid .badge { order: 2; margin-left: auto; flex-shrink: 0; }
-            /* A Tagalog help flag rides after the name: the name alone takes
-               the ellipsis, so the flag is never the part that gets cut. */
+            /* A Taglish tag rides after the name: the name alone takes
+               the ellipsis, so the tag is never the part that gets cut. */
             .hub-grid .hub-name { display: flex; align-items: center; overflow: visible; }
             .hub-grid .hub-name-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-            /* On a phone the row has no room for both: the flag moves to the
+            /* On a phone the row has no room for both: the tag moves to the
                tile's top corner, so "Documentation" keeps every letter. */
             .hub-grid > * > div { position: relative; }
-            .hub-grid .hub-name > .tlx { position: absolute !important; top: .5rem; right: .55rem; margin: 0 !important; padding-left: 14px !important; line-height: 10px !important; min-height: 0; }
+            .hub-grid .hub-name > .tlx { position: absolute !important; top: .5rem; right: .55rem; margin: 0 !important; padding-left: var(--tlx-w) !important; line-height: 10px !important; min-height: 0; }
             /* A grey badge is a zero — it says nothing the tile does not, and
                on a phone it was costing the name its last 30px: "Documentation"
                came out clipped mid-word. Counts that exist still show. */

@@ -4009,7 +4009,29 @@
    "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://nsic.buplant.da.gov.ph/downloadables/catalogue2022.pdf",
    "https://agriculture.com.ph/2019/12/15/bayers-dual-trait-arize-az-8433-dt-hybrid-rice-combats-insect-pests-as-well-as-diseases/"
-  ]
+  ],
+  "seller": {
+   "company": "Bayer",
+   "kind": "dual trait hybrid",
+   "facts": {
+    "maturityDays": "114 to 120 days after sowing",
+    "traits": [
+     "About 121 cm tall, with 12 to 16 productive tillers",
+     "Medium slender grain, with a milling recovery of 69 percent and head rice of 53.5 percent",
+     "Cooks slightly aromatic, moderately soft and a little sticky",
+     "Dual trait: bred to tolerate bacterial leaf blight and brown planthopper, the first such hybrid Bayer sells in the Philippines",
+     "Planthoppers settle on other plants first and hopperburn shows later, so Bayer puts the spray threshold at 5 to 7 hoppers per tiller instead of 1"
+    ],
+    "establishment": "Direct seeded or transplanted",
+    "seedRate": "21 to 24 kg per hectare direct seeded, 15 kg transplanted"
+   },
+   "claims": true,
+   "sources": [
+    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_az_8433_dt_.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/crops/seeds---traits/arize-dual-trait.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize.html"
+   ]
+  }
  },
  {
   "slug": "nsic-rc-690h",
@@ -10991,8 +11013,31 @@
   ],
   "tradeSources": [
    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html",
-   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
-  ]
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_habilis_plus.html"
+  ],
+  "seller": {
+   "company": "Bayer",
+   "kind": "hybrid",
+   "facts": {
+    "maturityDays": "104 to 110 days after sowing, an early maturing hybrid",
+    "yield": "7.98 t/ha at the 16th National Rice Technology Forum in Hagonoy, Davao del Sur",
+    "traits": [
+     "114 to 141 cm tall, with 13 to 22 productive tillers",
+     "Long slender grain, with a milling recovery of 65 percent",
+     "Cooks white, glossy, soft and smooth",
+     "Bred to tolerate bacterial leaf blight"
+    ],
+    "establishment": "Direct seeded or transplanted",
+    "seedRate": "21 to 24 kg per hectare direct seeded, 15 kg transplanted"
+   },
+   "claims": true,
+   "sources": [
+    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_habilis_plus.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize.html"
+   ]
+  }
  },
  {
   "slug": "nsic-rc-526h",
@@ -12602,8 +12647,29 @@
    "AZ 7888"
   ],
   "tradeSources": [
-   "https://sunstar.com.ph/article/1866672/Bacolod/Business/DA-completes-hybrid-seeds-distribution-in-Western-Visayas"
-  ]
+   "https://sunstar.com.ph/article/1866672/Bacolod/Business/DA-completes-hybrid-seeds-distribution-in-Western-Visayas",
+   "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_az_7888.html"
+  ],
+  "seller": {
+   "company": "Bayer",
+   "kind": "hybrid",
+   "facts": {
+    "maturityDays": "106 to 110 days after sowing",
+    "traits": [
+     "About 115 cm tall, with 14 to 24 productive tillers",
+     "Long slender grain, with a milling recovery of 60 to 65 percent in the national trials and head rice of 50.3 percent",
+     "Cooks slightly aromatic, white, glossy, soft and sticky",
+     "Bred to tolerate bacterial leaf blight"
+    ],
+    "establishment": "Direct seeded or transplanted",
+    "seedRate": "21 to 24 kg per hectare direct seeded, 15 kg transplanted"
+   },
+   "claims": true,
+   "sources": [
+    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_az_7888.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize.html"
+   ]
+  }
  },
  {
   "slug": "nsic-rc-496h",
@@ -17283,7 +17349,25 @@
    "https://agriculture.com.ph/2019/01/31/syngentas-hybrid-rice-tops-rice-derby/",
    "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://www.syngenta.com.ph/rh-9000"
-  ]
+  ],
+  "seller": {
+   "company": "Syngenta",
+   "kind": "hybrid",
+   "facts": {
+    "maturityDays": "115 days after sowing",
+    "yield": "10 to 12 t/ha by the seller's page, which gives both figures",
+    "traits": [
+     "About 119 cm tall, with about 14 productive tillers",
+     "Long slender grain, with a milling recovery of 70 percent",
+     "Cooks white and fragrant"
+    ]
+   },
+   "claims": true,
+   "sources": [
+    "https://www.syngenta.com.ph/rh-9000",
+    "https://www.syngenta.com.ph/products/search/seed/category/rice-351"
+   ]
+  }
  },
  {
   "slug": "nsic-rc-364h",
@@ -17843,7 +17927,31 @@
    "https://agriculture.com.ph/2019/01/31/syngentas-hybrid-rice-tops-rice-derby/",
    "https://ilocos.da.gov.ph/?p=46408",
    "https://www.syngenta.com.ph/product/seed/rice/s6003"
-  ]
+  ],
+  "seller": {
+   "company": "Syngenta",
+   "kind": "hybrid",
+   "facts": {
+    "maturityDays": "105 days after sowing by the seller, 110 to 111 in the national trials",
+    "yield": "Up to 12 t/ha, or 240 cavans of 50 kg",
+    "traits": [
+     "About 105 cm tall, with about 14 productive tillers",
+     "Long slender grain, with a milling recovery of 71 percent",
+     "Cooks white and tasty",
+     "The seller pitches it for the rainy season"
+    ],
+    "season": "Wet and dry, recommended for both seasons in every region",
+    "establishment": "Transplanted: the seller's fertilizer plan counts from transplanting",
+    "fertilizer": "Wet season, 90 kg of N, 30 of P2O5 and 30 of K2O per hectare in 7 bags: 3 bags of 14-14-14 at transplanting, 1 bag of 14-14-14 and 1 bag of urea at mid tillering (35 to 40 days after sowing), 1 bag of urea at early panicle initiation (50 to 60 days), 1 bag of ammonium sulfate at flowering (80 to 85 days). Dry season, 120 kg of N, 60 of P2O5 and 60 of K2O in 12 bags: 5 bags of 14-14-14 at transplanting, 2 bags of 14-14-14 with 1 of urea and 1 of ammonium sulfate at mid tillering, 1 bag of 14-14-14 and 1 of urea at early panicle initiation, 1 of ammonium sulfate at flowering",
+    "areas": "Nationwide"
+   },
+   "claims": true,
+   "sources": [
+    "https://www.syngenta.com.ph/product/seed/rice/s6003",
+    "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/09/01/s6003_flyer.pdf",
+    "https://www.syngenta.com.ph/products/search/seed/category/rice-351"
+   ]
+  }
  },
  {
   "slug": "nsic-rc-378h",
@@ -18911,7 +19019,30 @@
    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html",
    "https://ilocos.da.gov.ph/?p=46408",
    "https://sunstar.com.ph/article/1866672/Bacolod/Business/DA-completes-hybrid-seeds-distribution-in-Western-Visayas"
-  ]
+  ],
+  "seller": {
+   "company": "Bayer",
+   "kind": "hybrid",
+   "facts": {
+    "maturityDays": "111 to 115 days after sowing, a medium maturing hybrid",
+    "yield": "8.8 t/ha at the 16th National Rice Technology Forum in Hagonoy, Davao del Sur, second of 24 hybrids",
+    "traits": [
+     "About 114 cm tall, with 13 to 17 productive tillers",
+     "Medium slender grain, with a milling recovery of 60 percent",
+     "Cooks white, soft and fragrant",
+     "Bred to tolerate bacterial leaf blight",
+     "Bayer calls it its steadiest medium maturing hybrid across places and seasons"
+    ],
+    "establishment": "Direct seeded or transplanted",
+    "seedRate": "21 to 24 kg per hectare direct seeded, 15 kg transplanted"
+   },
+   "claims": true,
+   "sources": [
+    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_bigante%E2%84%A2_plus.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize.html"
+   ]
+  }
  },
  {
   "slug": "nsic-rc-316h",
@@ -23797,7 +23928,30 @@
    "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
    "https://nsic.buplant.da.gov.ph/downloadables/catalogue2010.pdf",
    "https://ilocos.da.gov.ph/?p=46408"
-  ]
+  ],
+  "seller": {
+   "company": "Syngenta",
+   "kind": "hybrid",
+   "facts": {
+    "maturityDays": "118 days after sowing",
+    "yield": "Up to 10 t/ha, or 200 cavans of 50 kg",
+    "traits": [
+     "About 119 cm tall, with about 12 productive tillers",
+     "Medium slender grain, with a milling recovery of 66 percent (Grade 1)",
+     "Cooks soft, white and fragrant"
+    ],
+    "season": "Wet and dry, recommended for both seasons in every region",
+    "establishment": "Transplanted: the seller's fertilizer plan counts from transplanting",
+    "fertilizer": "Wet season, 90 kg of N, 30 of P2O5 and 30 of K2O per hectare in 7 bags: 3 bags of 14-14-14 at transplanting, 1 bag of 14-14-14 and 1 bag of urea at mid tillering (35 to 40 days after sowing), 1 bag of urea at early panicle initiation (50 to 60 days), 1 bag of ammonium sulfate at flowering (80 to 85 days). Dry season, 120 kg of N, 60 of P2O5 and 60 of K2O in 12 bags: 5 bags of 14-14-14 at transplanting, 2 bags of 14-14-14 with 1 of urea and 1 of ammonium sulfate at mid tillering, 1 bag of 14-14-14 and 1 of urea at early panicle initiation, 1 of ammonium sulfate at flowering",
+    "areas": "Nationwide"
+   },
+   "claims": true,
+   "sources": [
+    "https://www.syngenta.com.ph/product/seed/rice/nk5017",
+    "https://www.syngenta.com.ph/sites/g/files/kgtney1271/files/media/document/2023/09/01/nk5017_flyer.pdf",
+    "https://www.syngenta.com.ph/products/search/seed/category/rice-351"
+   ]
+  }
  },
  {
   "slug": "nsic-rc-236h",
