@@ -601,23 +601,19 @@
             </section>
             {{-- "Your field in detail" (2026-10-15) was a step here: the lot
                  carries those answers now (step 1). --}}
-            {{-- Step 5: the troubles. A row the lot already answered (the
-                 floods, the drainage, the soil, the water, the salt, last
-                 season's pests, the weeds) is hidden and keeps the lot's
-                 answer; a river, the wind and the shade are still asked. --}}
-            <section class="wtp-step" data-step="4" data-blocks-only>
-                <p class="wtp-q">What problems does this field have?</p>
-                <p class="wtp-sub">Tick what you have seen. Each one can change the best time.</p>
-                <div class="wtp-probs" id="wtpProbs"></div>
-            </section>
-            {{-- Step 6: the soil's chemistry (the owner, 2026-09-29): acidic,
+            {{-- "What problems does this field have?" was a step here: the lot
+                 asks it now (2026-10-16, the owner), with the floods, the
+                 drainage, the salt, the weeds, the last troubles, a river,
+                 the wind and the sun. FieldProfile::legacy() turns its answers
+                 into this page's problem keys (state.problems). --}}
+            {{-- Step 5: the soil's chemistry (the owner, 2026-09-29): acidic,
                  alkaline, sodic, saline, acid sulfate. Each moves the window
                  (a correction's lead time before planting, weather that makes
                  it worse at emergence). More than one can be true; the pH
                  words exclude one another. A tested pH is optional. The
                  conditions are the lot's once it said its acidity (or a pH)
                  and its salt, the pH once it gave a tested one. --}}
-            <section class="wtp-step" data-step="5" data-blocks-only>
+            <section class="wtp-step" data-step="4" data-blocks-only>
                 <p class="wtp-q">What is the soil like?</p>
                 <div class="wtp-lotq" data-lot="cond">
                     <p class="wtp-sub">Tick what you know. Skip it if the soil was never tested. You can tick more than one.</p>
@@ -628,8 +624,8 @@
                     <input type="number" id="wtpPh" class="form-input" inputmode="decimal" min="2" max="12" step="0.1" placeholder="Like 5.4">
                 </div>
             </section>
-            {{-- Step 7: the decision --}}
-            <section class="wtp-step" data-step="6">
+            {{-- Step 6: the decision --}}
+            <section class="wtp-step" data-step="5">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="wtpReview"></p>
                 <button type="button" class="wtp-run" id="wtpRun">
@@ -765,13 +761,14 @@
         return crosses && y ? `${label} ${y} to ${y + 1}` : `${label} ${y || ''}`.trim();
     };
     let step = 0;
-    const STEPS = 7;
-    /* The lot's answers (partials/farm-lots, FieldProfile::legacy) fill the
-       problems, the soil and the pH, unless the farmer has set them by hand.
+    const STEPS = 6;
+    /* The lot's answers (partials/farm-lots, FieldProfile::legacy) are the
+       field's problems, and fill the soil and the pH unless the farmer has
+       set them by hand.
        What the lot answered is hidden: those rows and blocks keep the lot's
        answer whatever was ticked before. LIT: the steps where a question
        still shown was filled in from the lot. */
-    const TOUCH = { problems: false, soil: false, ph: false };
+    const TOUCH = { soil: false, ph: false };
     let LIT = {};
     const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
     function applyProfile(answers, L) {
@@ -783,31 +780,18 @@
         // Rain only says more than a short water source, so it wins that pair.
         const from = (L.problemsWhen || []).filter((k) => OPT.problems[k]);
         from.filter((k) => !(k === 'water_source' && from.includes('rainfed'))).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
-        if (!TOUCH.problems) {
-            tick('wtpProbs', want);
-            state.problems = want;
-            if (want.length) got.push(want.length === 1 ? 'one field problem' : want.length + ' field problems');
-        } else {
-            // Ticked by hand: the farmer's own rows stay, the lot's hidden rows follow the lot.
-            document.querySelectorAll('#wtpProbs .wtp-prob').forEach((row) => {
-                if (!row.hidden) return;
-                const i = row.querySelector('input');
-                i.checked = want.includes(i.value);
-                row.classList.toggle('is-on', i.checked);
-            });
-            state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value);
-        }
-        if (want.some((k) => !lotHas('prob:' + k))) LIT[4] = true;
+        // The field's problems are the lot's answers; no step asks them here.
+        state.problems = want;
         if (!TOUCH.soil) {
             const wantSoil = (L.soilConditions || []).filter((k) => k !== 'unsure' && (OPT.soilConditions || {})[k]);
             tick('wtpSoil', wantSoil);
             state.soil = wantSoil;
-            if (wantSoil.length) { got.push('the soil'); if (!lotHas('cond')) LIT[5] = true; }
+            if (wantSoil.length) { got.push('the soil'); if (!lotHas('cond')) LIT[4] = true; }
         }
         if (!TOUCH.ph) {
             $id('wtpPh').value = L.phValue != null ? String(L.phValue) : '';
             state.ph = $id('wtpPh').value;
-            if (L.phValue != null) { got.push('the pH'); if (!lotHas('ph')) LIT[5] = true; }
+            if (L.phValue != null) { got.push('the pH'); if (!lotHas('ph')) LIT[4] = true; }
         }
         return got.length ? 'Filled in for you: ' + andList(got) + '.' : '';
     }
@@ -816,26 +800,24 @@
        Picked on the first step. Each block with data-lot is a question the
        lot may already have answered: then it is hidden, and a step whose
        every block is hidden (data-blocks-only) is skipped by Next and Back,
-       its dot folded away. The troubles list is asked row by row: a river,
-       the wind and the shade are not the lot's to say. */
+       its dot folded away. The field's problems are not asked here at all:
+       they are the lot's questions (MISSING says which it has not answered). */
     let LOTS = null;
     const LOT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
     const lotA = () => (state.lot && state.lot.answers) || {};
     const lotHasKey = (k) => { const v = lotA()[k]; return v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && !v.length); };
-    // The lot's answers that settle each row of the troubles list.
-    const PROB_LOT = { floods: ['flooding'], drainage: ['drainage'], cracking: ['texture'], sandy: ['texture'], water_source: ['water'], rainfed: ['water'],
-        sea: ['salt'], pests: ['outbreaks'], weeds: ['weeds'] };
-    const LOT_WORD = { flooding: 'the floods', drainage: 'the drainage', texture: 'the soil', water: 'the water', salt: 'the salt', outbreaks: 'last season\'s troubles',
-        weeds: 'the weeds', cond: 'the soil condition', ph: 'the tested pH' };
+    const LOT_WORD = { cond: 'the soil condition', ph: 'the tested pH' };
+    // The lot's answers the field's problems are read from, as the review names a missing one.
+    const MISSING = { flooding: 'the floods', drainage: 'the drainage', texture: 'the soil', water: 'the water', salt: 'the salt',
+        weeds: 'the weeds', outbreaks: 'the last troubles', hazards: 'a river or the wind', sun: 'the sunlight' };
     function lotHas(k) {
         if (!state.lot || !k || k === '-') return false;
         // The pH words and the salt together; "never tested" does not say the pH.
         if (k === 'cond') return ((lotHasKey('acidity') && lotA().acidity !== 'untested') || lotHasKey('phFrom')) && lotHasKey('salt');
         if (k === 'ph') return lotHasKey('phFrom');
-        if (k.startsWith('prob:')) { const need = PROB_LOT[k.slice(5)]; return !!need && need.every(lotHasKey); }
         return lotHasKey(k);
     }
-    const lotWordsOf = (k) => (k.startsWith('prob:') ? (PROB_LOT[k.slice(5)] || []) : [k]).map((x) => LOT_WORD[x]).filter(Boolean);
+    const lotWordsOf = (k) => [LOT_WORD[k]].filter(Boolean);
     const stepEl = (n) => document.querySelector('#wtpWiz .wtp-step[data-step="' + n + '"]');
     function skipped(n) {
         const sec = stepEl(n);
@@ -893,7 +875,9 @@
         'drainage.fast': 'drains fast', 'drainage.day': 'drains within a day', 'drainage.slow': 'drains slowly', 'drainage.stands': 'water stands for days',
         'salt.none': 'no salt', 'salt.crust': 'white salt crust', 'salt.sea': 'sea water at high tide', 'salt.tips': 'salt burned leaf tips', 'salt.sodic': 'sodic crust',
         'acidity.untested': 'pH never tested', 'acidity.none': 'not acidic', 'acidity.mild': 'mildly acidic', 'acidity.strong': 'strongly acidic',
-        'acidity.sulfate': 'acid sulfate soil', 'acidity.alkaline': 'alkaline soil', 'weeds.few': 'few weeds' };
+        'acidity.sulfate': 'acid sulfate soil', 'acidity.alkaline': 'alkaline soil', 'weeds.few': 'few weeds',
+        'hazards.river': 'a river overflows into it', 'hazards.wind': 'strong winds', 'hazards.none': 'no river or wind trouble',
+        'sun.full': 'full sun', 'sun.part': 'shaded part of the day', 'sun.shade': 'mostly shaded' };
     function lotSays(keys) {
         const Q = (window.aneeFieldProfile && window.aneeFieldProfile.questions) || {};
         const a = lotA(), out = [];
@@ -916,8 +900,11 @@
     function lotLine() {
         const lot = state.lot;
         if (!lot) return '';
-        const said = lotSays(['texture', 'water', 'flooding', 'drainage', 'salt', 'acidity', 'phFrom', 'weeds', 'outbreaks']);
-        return `<span class="wtp-lotline text-xs">${said.length ? 'From ' + esc(lot.name) + ': ' + esc(said.join(', ')) : esc(lot.name) + ' has no field answers yet'} · <button type="button" data-lot-edit>Edit the lot</button></span>`;
+        const said = lotSays(['texture', 'water', 'flooding', 'drainage', 'salt', 'acidity', 'phFrom', 'weeds', 'outbreaks', 'hazards', 'sun']);
+        const miss = Object.keys(MISSING).filter((k) => !lotHasKey(k)).map((k) => MISSING[k]);
+        return `<span class="wtp-lotline text-xs">${said.length ? 'From ' + esc(lot.name) + ': ' + esc(said.join(', ')) : esc(lot.name) + ' has no field answers yet'}`
+            + (said.length && miss.length ? `. Not in the lot yet: ${esc(andList(miss))}` : '')
+            + ` · <button type="button" data-lot-edit>${miss.length ? 'Answer them in the lot' : 'Edit the lot'}</button></span>`;
     }
     const lotPayload = () => {
         if (!state.lot || !window.aneeLots) return {};
@@ -951,9 +938,6 @@
         state.country = state.country || ($id('wtpCountry') || {}).value || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
         paintMonths();
         paintCrops();
-        // Each row names the lot answer that settles it ("-": none can, it is always asked).
-        $id('wtpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
-            <label class="wtp-prob" data-prob="${k}" data-lot="${PROB_LOT[k] ? 'prob:' + k : '-'}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         // "Not sure" is the empty answer, so it is not a box to tick.
         $id('wtpSoil').innerHTML = Object.entries(OPT.soilConditions || {}).filter(([k]) => k !== 'unsure').map(([k, label]) => { const [n, sub] = String(label).split(' — '); return `
             <label class="wtp-prob" data-soil="${k}"><input type="checkbox" value="${k}"><span>${esc(n)}${sub ? `<small class="block text-xs text-gray-500">${esc(sub)}</small>` : ''}</span></label>`; }).join('');
@@ -1033,9 +1017,7 @@
         const c = e.target.closest('[data-m]');
         if (!c || c.disabled) return;
         const i = Number(c.getAttribute('data-m'));
-        let askTo = false;
         if (M_END === 'from') {
-            askTo = state.to === null;
             state.from = i;
             // The end follows a start moved past it, or more than a year before it.
             if (state.to === null || state.to < i || state.to - i + 1 > MAX_SPAN()) state.to = i;
@@ -1044,8 +1026,6 @@
         }
         paintRange();
         closeSheet('wtpMonthSheet');
-        // A first start goes straight on to asking for the end.
-        if (askTo) setTimeout(() => openMonthSheet('to'), 320);
     });
     $id('wtpMonthsSay').addEventListener('click', (e) => {
         if (!e.target.closest('[data-m-clear]')) return;
@@ -1155,8 +1135,7 @@
                 return true;
             case 2: return !!state.crop || (toast(cropDropped ? `The crop list is different for ${countryName(state.country)}. Pick the crop again.` : 'Pick the crop.', 'error'), false);
             case 3: return true;
-            case 4: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
-            case 5: {
+            case 4: {
                 state.soil = [...document.querySelectorAll('#wtpSoil input:checked')].map((i) => i.value);
                 const ph = $id('wtpPh').value.trim();
                 if (ph !== '' && (!(Number(ph) >= 2) || Number(ph) > 12)) { toast('pH must be a number from 2 to 12, like 5.4.', 'error'); return false; }
@@ -1312,31 +1291,14 @@
 
     /* Some troubles cannot share a field: clay that cracks is not sand that
        drains, a field that floods is not fast-draining, one water answer at
-       a time, one waterside at a time. Ticking one quietly unticks its
-       opposite instead of letting the form claim both. */
+       a time. The lot's answers keep the first of a pair (applyProfile). */
     const PROB_FOES = {
         cracking: ['sandy'],
         sandy: ['cracking', 'floods'],
         floods: ['sandy'],
-        river: ['sea'],
-        sea: ['river'],
         water_source: ['rainfed'],
         rainfed: ['water_source'],
     };
-    $id('wtpProbs').addEventListener('change', (e) => {
-        TOUCH.problems = true;
-        const l = e.target.closest('.wtp-prob');
-        if (l) l.classList.toggle('is-on', e.target.checked);
-        if (!e.target.checked) return;
-        (PROB_FOES[e.target.value] || []).forEach((k) => {
-            const foe = document.querySelector(`#wtpProbs input[value="${k}"]`);
-            if (foe && foe.checked) {
-                foe.checked = false;
-                foe.closest('.wtp-prob')?.classList.remove('is-on');
-            }
-        });
-    });
-
     const PH_WORDS = ['acidic', 'neutral', 'alkaline'];
     $id('wtpPh').addEventListener('input', () => { TOUCH.ph = true; });
     $id('wtpSoil').addEventListener('change', (e) => {
@@ -1442,7 +1404,7 @@
         LIT = {};
         paintLot();
         varSet('', null);
-        document.querySelectorAll('#wtpProbs input:checked, #wtpSoil input:checked').forEach((i) => { i.checked = false; i.closest('.wtp-prob')?.classList.remove('is-on'); });
+        document.querySelectorAll('#wtpSoil input:checked').forEach((i) => { i.checked = false; i.closest('.wtp-prob')?.classList.remove('is-on'); });
         $id('wtpPh').value = '';
         $id('wtpCropIcon').textContent = '🌱';
         const now = $id('wtpCropNow');

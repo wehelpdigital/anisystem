@@ -828,15 +828,13 @@
                     <div class="wtp-choices" id="cpWaters"></div>
                 </div>
             </section>
-            {{-- 9: the troubles --}}
+            {{-- 9: anything else. "What problems does this field have?" was
+                 asked here: the lot asks it now (2026-10-16, the owner), and
+                 legacy() turns its answers into state.problems. --}}
             <section class="wtp-step" data-step="9">
-                <div class="cp-blk" data-lot="outbreaks">
-                    <p class="wtp-q">What problems does this field have?</p>
-                    <p class="wtp-sub">Tick what you have seen. Each one changes the protocol.</p>
-                    <div class="wtp-probs mb-4" id="cpProbs"></div>
-                </div>
-                <label class="form-label" for="cpNotes">Other notes <span class="text-gray-400 font-normal">(optional)</span></label>
-                <textarea id="cpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. tungro hit us last season, we have a pump but diesel is costly"></textarea>
+                <p class="wtp-q">Anything else Anee should know?</p>
+                <p class="wtp-sub">Optional. The field's problems come from your lot.</p>
+                <textarea id="cpNotes" class="form-textarea" rows="2" maxlength="400" aria-label="Anything else Anee should know" placeholder="e.g. we have a pump but diesel is costly"></textarea>
             </section>
             {{-- 10: the ground, closer -- what decides WHICH granular and WHEN --}}
             <section class="wtp-step" data-step="10">
@@ -955,13 +953,10 @@
         };
         one('soil', 'cpSoils', 'soil', L.soil && L.soil !== 'unsure' ? L.soil : null, null, 'the soil', 8);
         one('water', 'cpWaters', 'water', L.water, null, 'the water', 8);
-        if (!TOUCH.problems) {
-            const want = [];
-            (L.problemsVariety || []).filter((k) => OPT.problems[k]).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
-            document.querySelectorAll('#cpProbs input').forEach((i) => { i.checked = want.includes(i.value); i.closest('.wtp-prob')?.classList.toggle('is-on', i.checked); });
-            state.problems = want;
-            if (want.length) { got.push(want.length === 1 ? 'one trouble' : want.length + ' troubles'); lit[9] = true; }
-        }
+        // The field's problems are the lot's answers (2026-10-16, the owner): no step asks them here.
+        const want = [];
+        (L.problemsVariety || []).filter((k) => OPT.problems[k]).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
+        state.problems = want;
         if (!TOUCH.soilConditions) {
             state.soilConditions = (L.soilConditions || []).filter((k) => (OPT.soilConditions || {})[k]);
             paintSoilConds();
@@ -981,8 +976,11 @@
 
     /* ---- the lot ---- */
     // Which answers of the lot settle each hidden block, and the TOUCH keys the block's answers live under.
-    const LOT_KEYS = { area: [[], 'the size'], texture: [['soil'], 'the soil'], water: [['water'], 'the water'], outbreaks: [['problems'], 'the troubles'],
+    const LOT_KEYS = { area: [[], 'the size'], texture: [['soil'], 'the soil'], water: [['water'], 'the water'], outbreaks: [[], 'the troubles'],
         cond: [['soilConditions'], 'the soil condition'], ph: [['ph'], 'the pH'], prevCrop: [['prevCrop', 'residue'], 'the last crop'] };
+    // The lot's answers the field's problems are read from, named in the review when one is missing.
+    const MISSING = { flooding: 'the floods', drainage: 'the drainage', salt: 'the salt', acidity: 'the acidity', organic: 'the organic matter', slope: 'the slope',
+        hazards: 'a river or the wind', weeds: 'the weeds', outbreaks: 'the last troubles' };
     const LOT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
     function lotHas(k) {
         const l = state.lot;
@@ -1088,8 +1086,6 @@
         $id('cpResidues').innerHTML = Object.entries(OPT.residues || {}).map(([k, label]) => choice('residue', k, resIcons[k] || '•', label, '')).join('');
         $id('cpGranulars').innerHTML = Object.entries(OPT.granulars || {}).map(([k, label]) => `<button type="button" class="wtp-choice" data-granular="${esc(k)}" aria-pressed="false"><span class="c-e"></span><span>${esc(label)}</span></button>`).join('');
         ['cpTestP', 'cpTestK', 'cpPrevCrops', 'cpResidues'].forEach((h) => { const first = $id(h).querySelector('.wtp-choice'); if (first) first.classList.add('is-on'); });
-        $id('cpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
-            <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('cpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
         paintLot();
         // The yield units are the country's (cavans and tons at home, tons and kg elsewhere); the first is the default.
@@ -1182,10 +1178,9 @@
             case 8: if (!state.soil) { toast('Pick the soil closest to yours.', 'error'); return false; }
                 if (!state.water) { toast('Pick how the field gets water.', 'error'); return false; }
                 return true;
-            case 9: state.problems = [...document.querySelectorAll('#cpProbs input:checked')].map((i) => i.value);
-                state.notes = $id('cpNotes').value.trim();
-                // A trouble ticked here answers the next step's soil
-                // condition while it is still "unsure" -- one tap fewer.
+            case 9: state.notes = $id('cpNotes').value.trim();
+                // An acidity among the lot's troubles answers the next step's
+                // soil condition while it is still "unsure" -- one tap fewer.
                 if (!state.soilConditions.some((k) => PH_WORDS.includes(k))) {
                     const said = ['acidic', 'alkaline'].find((k) => state.problems.includes(k));
                     if (said && (OPT.soilConditions || {})[said]) { state.soilConditions = [said, ...state.soilConditions]; paintSoilConds(); }
@@ -1209,7 +1204,9 @@
         if (closer) $id('cpReview').innerHTML += `<br><span class="text-xs">${state.soilConditions.length ? esc(state.soilConditions.map((k) => split((OPT.soilConditions || {})[k] || k)[0].toLowerCase()).join(', ')) + ' soil · ' : ''}${closer} extra answer${closer === 1 ? '' : 's'}${state.granulars.length ? ' · ' + state.granulars.length + ' fertilizer' + (state.granulars.length === 1 ? '' : 's') + ' you can buy' : ''}</span>`;
         if (state.lot) {
             const took = Object.keys(LOT_KEYS).filter(lotHas).map((k) => LOT_KEYS[k][1]);
-            $id('cpReview').innerHTML += `<span class="cp-lotline text-xs">🗺️ <b>${esc(state.lot.name)}</b>${state.lot.place ? ', ' + esc(state.lot.place) : ''}${state.lot.count ? ' · ' + state.lot.count + ' field answers' : ''}${took.length ? '. From the lot: ' + esc(andList(took)) : ''}. <button type="button" data-cp-lotedit>Edit the lot</button></span>`;
+            const miss = Object.keys(MISSING).filter((k) => !lotHas(k) && !(k === 'acidity' && lotHas('phFrom'))).map((k) => MISSING[k]);
+            $id('cpReview').innerHTML += `<span class="cp-lotline text-xs">🗺️ <b>${esc(state.lot.name)}</b>${state.lot.place ? ', ' + esc(state.lot.place) : ''}${state.lot.count ? ' · ' + state.lot.count + ' field answers' : ''}${took.length ? '. From the lot: ' + esc(andList(took)) : ''}`
+                + `${miss.length ? '. Not in the lot yet: ' + esc(andList(miss)) : ''}. <button type="button" data-cp-lotedit>${miss.length ? 'Answer them in the lot' : 'Edit the lot'}</button></span>`;
         }
         if (Number(state.seedAmount) > 0) $id('cpReview').innerHTML += `<br><span class="text-xs">Planting ${esc(state.seedAmount)} ${esc((OPT.seedUnits[state.seedUnit] || [])[1] || state.seedUnit)} on the whole field${Number(state.germination) > 0 ? ' at ' + esc(state.germination) + ' percent germination' : ''}</span>`;
         loadNeed();
@@ -1281,18 +1278,8 @@
         document.querySelectorAll('.cp-unit').forEach((u) => { u.classList.toggle('is-on', u === b); u.setAttribute('aria-checked', u === b ? 'true' : 'false'); });
         potFill(false); potSay();
     });
+    // Of the lot's answers, the first of a pair that cannot share a field stands.
     const PROB_FOES = { acidic: ['alkaline'], alkaline: ['acidic'], drought: ['floods'], floods: ['drought'] };
-    $id('cpProbs').addEventListener('change', (e) => {
-        TOUCH.problems = true;
-        const l = e.target.closest('.wtp-prob');
-        if (l) l.classList.toggle('is-on', e.target.checked);
-        if (!e.target.checked) return;
-        (PROB_FOES[e.target.value] || []).forEach((k) => {
-            const foe = document.querySelector(`#cpProbs input[value="${k}"]`);
-            if (foe && foe.checked) { foe.checked = false; foe.closest('.wtp-prob')?.classList.remove('is-on'); }
-        });
-    });
-
     /* ---- the crop ---- */
     $id('cpCropBtn').addEventListener('click', () => {
         openSheet('cpCropSheet');

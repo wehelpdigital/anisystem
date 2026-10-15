@@ -285,7 +285,7 @@
     const apiReady = () => (window.api ? Promise.resolve() : new Promise((r) => window.addEventListener('load', r, { once: true })));
     const call = (url, opts) => apiReady().then(() => window.api(url, opts));
     const CROPS = Object.fromEntries(D.crops.map((c) => [c[0], c]));
-    const TILE = { soil: ['🟤', 'Soil'], water: ['💧', 'Water'], acid: ['🧪', 'Acidity'], last: ['🌾', 'Last season'], weeds: ['🌿', 'Weeds'], problems: ['🐛', 'Troubles'] };
+    const TILE = { soil: ['🟤', 'Soil'], water: ['💧', 'Water'], acid: ['🧪', 'Acidity'], land: ['⛰️', 'The land'], last: ['🌾', 'Last season'], weeds: ['🌿', 'Weeds'], problems: ['🐛', 'Troubles'] };
     const CHECK = '<svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
     const CLOCK = '<svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" d="M12 7.5V12l3 2"/></svg>';
     const PLUS = '<svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>';
@@ -534,8 +534,8 @@
     }
 
     /* ---- the picked lot's answers, as cards to slide through ---- */
-    const PREV_ICON = { lot: '🗺️', soil: '🟤', water: '💧', acid: '🧪', last: '🌾', weeds: '🌿', problems: '🐛' };
-    const PREV_NAME = { lot: 'The lot', soil: 'Soil', water: 'Water', acid: 'Acidity and the land', last: 'Last season', weeds: 'Weeds', problems: 'Troubles' };
+    const PREV_ICON = { lot: '🗺️', soil: '🟤', water: '💧', acid: '🧪', land: '⛰️', last: '🌾', weeds: '🌿', problems: '🐛' };
+    const PREV_NAME = { lot: 'The lot', soil: 'Soil', water: 'Water', acid: 'Acidity and lime', land: 'The land', last: 'Last season', weeds: 'Weeds', problems: 'Troubles' };
     const ARROW = (d) => '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' + (d < 0 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7') + '"/></svg>';
     const troubleName = (k) => k.startsWith('other:') ? (D.others[k.slice(6)] || k.slice(6)) : k.replace(/^[a-z]+:/, '').replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
     function prevCards(lot, o) {

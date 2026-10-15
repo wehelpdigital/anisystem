@@ -100,9 +100,8 @@
     /* The lot (2026-10-16): what it answered is hidden here, and the review
        says where the rest came from. */
     .va-blk[hidden], .wtp-prob[hidden] { display: none; }
-    .va-land-solo { display: none; }
-    #vaSoilStep.is-solo .va-land-solo { display: block; }
-    #vaSoilStep.is-solo .va-land-and { display: none; }
+    /* A step the lot answered whole has no dot: it folds away. */
+    .wtp-dot.is-skip { width: 0; margin-left: -.35rem; opacity: 0; }
     .va-pop { animation: vaPop .28s cubic-bezier(.22,1,.36,1) both; }
     @keyframes vaPop { from { opacity: 0; transform: translateY(6px); } }
     .va-lot { margin: .9rem 0 1rem; padding: .8rem .85rem; border-radius: 1rem; background: linear-gradient(160deg, #fbfdf8, #f2f8ea); border: 1px solid #e0ebd3; }
@@ -524,19 +523,15 @@
                 <p class="wp-qh mt-4">Season</p>
                 <div class="wtp-choices" id="vaSeasons"></div>
             </section>
-            {{-- Step 3: the soil, and the lay of the land --}}
-            {{-- The soil hides when the lot says how it feels; the land then
-                 stands alone, as the step's own question. --}}
+            {{-- Step 3: the soil. Skipped when the lot says how it feels.
+                 Lowland, upland or highland is the lot's question now
+                 (2026-10-16, the owner): legacy() hands it over. --}}
             <section class="wtp-step" data-step="2" id="vaSoilStep">
                 <div class="va-blk" id="vaSoilBlk">
                     <p class="wtp-q">What is the soil like?</p>
                     <p class="wtp-sub">Pick what it feels like. No soil test needed.</p>
                     <div class="wtp-choices" id="vaSoils"></div>
                 </div>
-                <p class="wp-qh mt-4 va-land-and">And the land? <small>Lowland, upland or highland. Each variety is bred for one.</small></p>
-                <p class="wtp-q va-land-solo">Is the land lowland, upland or highland?</p>
-                <p class="wtp-sub va-land-solo" id="vaLandSub">Optional. Each variety is bred for one. The soil comes from your lot.</p>
-                <div class="wtp-choices" id="vaElevations"></div>
             </section>
             {{-- Step 4: the crop --}}
             <section class="wtp-step" data-step="3">
@@ -577,14 +572,12 @@
                 <p class="wtp-sub">Put them in order. The first counts 40%, then 30%, 20% and 10%.</p>
                 <div class="va-rank" id="vaRank"></div>
             </section>
-            {{-- Step 7: the troubles. The lot's answers are the field in detail
-                 (the step that asked them is gone, 2026-10-16): a trouble the lot
-                 answers is ticked from it and hidden, the rest stay. --}}
+            {{-- Step 7: anything else. "What problems does this field have?"
+                 was asked here: the lot asks it now (2026-10-16, the owner),
+                 and legacy() turns its answers into state.problems. --}}
             <section class="wtp-step" data-step="6">
-                <p class="wtp-q">What problems does this field have?</p>
-                <p class="wtp-sub" id="vaProbSub">Tick what you have seen. Each one changes the scores.</p>
-                <div class="wtp-probs" id="vaProbs"></div>
-                <label class="form-label mt-4" for="vaNotes">Anything else? <span class="text-gray-400 font-normal">(optional)</span></label>
+                <p class="wtp-q">Anything else Anee should know?</p>
+                <p class="wtp-sub">Optional. The field's problems come from your lot.</p>
                 <textarea id="vaNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. we transplant late, the buyer wants long grain"></textarea>
             </section>
             {{-- Step 8: the decision --}}
@@ -717,14 +710,11 @@
        a hint, until the farmer changes them by hand. ---- */
     let LOTS = null;
     const LOT = { lot: null, L: {}, n: 0 };
-    const TOUCH = { problems: false };
     let soilByLot = false, cropByLot = false;
     const lotHas = (...keys) => !!LOT.lot && !!window.aneeLots && keys.some((k) => window.aneeLots.has(LOT.lot, k));
-    // Each trouble on the list, and the lot's questions that answer it.
-    const PROB_BY = { drought: ['outbreaks'], floods: ['flooding'], water_source: ['water'], salinity: ['salt'], acidic: ['acidity', 'phFrom'], alkaline: ['acidity', 'phFrom'],
-        sodic: ['salt'], acid_sulfate: ['acidity'], pests: ['outbreaks'], disease: ['outbreaks'], weeds: ['weeds'], drainage: ['drainage'], low_fertility: ['organic'], slope: ['slope'] };
     const soilFromLot = () => lotHas('texture') || ((LOT.lot && LOT.lot.answers) || {}).rocks === 'many';
-    const probHidden = (k) => !!PROB_BY[k] && lotHas(...PROB_BY[k]);
+    // The soil step goes when the lot answered it.
+    const skipped = (n) => n === 2 && soilFromLot();
     const stillMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('sm-still');
     // Hide or show a block; one that comes back fades in rather than snapping.
     const reveal = (el, on) => {
@@ -741,25 +731,12 @@
         else if (soilByLot) { state.soil = null; soilByLot = false; }
         document.querySelectorAll('#vaSoils .wtp-choice').forEach((c) => c.classList.toggle('is-on', c.getAttribute('data-soil') === state.soil));
         reveal($id('vaSoilBlk'), !soilHid);
-        $id('vaSoilStep').classList.toggle('is-solo', soilHid);
-        // The troubles: the lot's answers tick theirs and hide them.
+        // Only the lot says these (2026-10-16, the owner): no step asks them here.
+        state.elevation = (OPT.elevations || {})[L.elevation] ? L.elevation : null;
         const want = [];
         (L.problemsVariety || []).filter((k) => OPT.problems[k]).forEach((k) => { if (!(PROB_FOES[k] || []).some((f) => want.includes(f))) want.push(k); });
-        const mine = (TOUCH.problems ? state.problems : want).filter((k) => !probHidden(k));
-        state.problems = want.filter(probHidden).concat(mine);
-        let hid = 0;
-        document.querySelectorAll('#vaProbs .wtp-prob').forEach((l) => {
-            const k = l.getAttribute('data-prob'), i = l.querySelector('input');
-            i.checked = state.problems.includes(k);
-            l.classList.toggle('is-on', i.checked);
-            if (probHidden(k)) hid++;
-            reveal(l, !probHidden(k));
-        });
-        $id('vaProbSub').textContent = hid
-            ? 'Your lot answered ' + (hid === 1 ? 'one of these' : hid + ' of these') + ' already. Tick anything else you have seen. Each one changes the scores.'
-            : 'Tick what you have seen. Each one changes the scores.';
-        const ticked = !TOUCH.problems && mine.length > 0;
-        if (window.aneeFieldCard) window.aneeFieldCard.hint(document.querySelector('#vaWiz .wtp-step[data-step="6"]'), ticked, 'Ticked from your lot. Change anything that is not right.');
+        state.problems = want;
+        document.querySelectorAll('#vaDots .wtp-dot').forEach((d, i) => d.classList.toggle('is-skip', skipped(i)));
     }
     // The lot picked, saved or changed: its place, its crop and its answers.
     async function lotPicked(lot) {
@@ -786,7 +763,11 @@
         LOTS = window.aneeLots.picker($id('vaLots'), { crop: () => state.crop || null, onPick: lotPicked });
     }
     /* "From North field": the answers that stood in for questions here, and a way to change them. */
-    const SAID_KEYS = ['texture', 'rocks', 'water', 'acidity', 'phFrom', 'salt', 'flooding', 'drainage', 'organic', 'slope', 'weeds', 'outbreaks'];
+    const SAID_KEYS = ['texture', 'rocks', 'water', 'acidity', 'phFrom', 'salt', 'flooding', 'drainage', 'organic', 'slope', 'elevation', 'hazards', 'weeds', 'outbreaks'];
+    // The lot's answers this page reads and never asks, named when the lot has not given them.
+    const MISSING = { flooding: 'the floods', drainage: 'the drainage', salt: 'the salt', acidity: 'the acidity', organic: 'the organic matter', slope: 'the slope',
+        elevation: 'the elevation', hazards: 'a river or the wind', weeds: 'the weeds', outbreaks: 'the last troubles' };
+    const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
     const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L18.5 9.5a2.1 2.1 0 00-4-4L4 16v4zM13.5 6.5l4 4"/></svg>';
     function lotSaid() {
         const box = $id('vaLotSaid'), lot = LOT.lot;
@@ -797,9 +778,11 @@
         // The stones only when they stood for the soil.
         if (sub.rocks !== undefined && (sub.texture !== undefined || sub.rocks !== 'many')) delete sub.rocks;
         const pairs = window.aneeFieldCard && window.aneeFieldProfile ? window.aneeFieldCard.pairs(sub, {}) : [];
+        const miss = Object.keys(MISSING).filter((k) => !window.aneeLots.has(lot, k) && !(k === 'acidity' && window.aneeLots.has(lot, 'phFrom'))).map((k) => MISSING[k]);
         box.innerHTML = '<p class="va-lot-h"><b>From ' + esc(lot.name) + '</b><span>' + esc([lot.place, lot.areaHa ? window.aneeLots.fmtHa(lot.areaHa) : ''].filter(Boolean).join(' · ')) + '</span></p>'
             + (pairs.length ? window.aneeFieldCard.said(pairs) : '<p class="va-lot-none">This lot has no field answers yet. Add them, and Anee reads its soil and water from them.</p>')
-            + '<button type="button" class="va-lot-edit" data-lot-edit>' + PEN + 'Edit the lot</button>';
+            + (pairs.length && miss.length ? '<p class="va-lot-none">Not in the lot yet: ' + esc(andList(miss)) + '. Add them so Anee can weigh them.</p>' : '')
+            + '<button type="button" class="va-lot-edit" data-lot-edit>' + PEN + (miss.length ? 'Answer them in the lot' : 'Edit the lot') + '</button>';
         reveal(box, true);
     }
     $id('vaLotSaid').addEventListener('click', (e) => {
@@ -851,9 +834,6 @@
         };
         paintSeasons();
         window.__vaPaintSeasons = paintSeasons;
-        const landIcons = { lowland: '🌾', upland: '🌄', highland: '🌫️' };
-        $id('vaElevations').innerHTML = Object.entries(OPT.elevations || {}).map(([k, label]) => `
-            <button type="button" class="wtp-choice${state.elevation === k ? ' is-on' : ''}" data-elevation="${k}"><span class="c-e">${landIcons[k] || '⛰️'}</span><span>${esc(String(label).split(' — ')[0])}${String(label).includes(' — ') ? `<small>${esc(String(label).split(' — ')[1])}</small>` : ''}</span></button>`).join('');
         const soilIcons = { clay: '🧱', loam: '🟤', sandy: '🏖️', silty: '🌊', rocky: '⛰️', unsure: '🤷' };
         $id('vaSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => `
             <button type="button" class="wtp-choice" data-soil="${k}"><span class="c-e">${soilIcons[k] || '🟫'}</span><span>${esc(String(label).split(' — ')[0])}${String(label).includes(' — ') ? `<small>${esc(String(label).split(' — ').slice(1).join(' — '))}</small>` : ''}</span></button>`).join('');
@@ -871,8 +851,6 @@
                         </span>
                     </button>`).join('')}
             </div>`).join('');
-        $id('vaProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
-            <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('vaDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
         if (OPT.aneeFace) $id('vaAneeFaceSlot').innerHTML = `<img src="${esc(OPT.aneeFace)}" alt="">`;
         paintRank();
@@ -910,6 +888,8 @@
     /* ---------------- the walk ---------------- */
     function show(n, backwards) {
         step = Math.max(0, Math.min(STEPS - 1, n));
+        // Over a step the lot answered whole, the way the farmer is going.
+        while (step > 0 && step < STEPS - 1 && skipped(step)) step += backwards ? -1 : 1;
         document.querySelectorAll('#vaWiz .wtp-step').forEach((s) => {
             const on = Number(s.getAttribute('data-step')) === step;
             s.classList.toggle('is-on', on);
@@ -935,8 +915,7 @@
             case 2: return !!state.soil || (toast('Pick the soil closest to yours.', 'error'), false);
             case 3: return !!state.crop || (toast('Choose a crop.', 'error'), false);
             case 4: addVariety(); return true;
-            case 6: state.problems = [...document.querySelectorAll('#vaProbs input:checked')].map((i) => i.value);
-                state.notes = $id('vaNotes').value.trim(); return true;
+            case 6: state.notes = $id('vaNotes').value.trim(); return true;
             default: return true;
         }
     }
@@ -982,28 +961,9 @@
         soilByLot = false;
         document.querySelectorAll('#vaSoils .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
     });
-    $id('vaElevations').addEventListener('click', (e) => {
-        const b = e.target.closest('[data-elevation]');
-        if (!b) return;
-        state.elevation = state.elevation === b.getAttribute('data-elevation') ? null : b.getAttribute('data-elevation');
-        document.querySelectorAll('#vaElevations .wtp-choice').forEach((c) => c.classList.toggle('is-on', c.getAttribute('data-elevation') === state.elevation));
-    });
     /* Some troubles cannot share a field: a soil is acidic or alkaline,
-       not both. Ticking one quietly unticks its opposite, unless the lot
-       answered the opposite (that one is hidden, and the lot's to change). */
+       not both. Of the lot's answers, the first of a pair stands. */
     const PROB_FOES = { acidic: ['alkaline'], alkaline: ['acidic'], drought: ['floods'], floods: ['drought'] };
-    $id('vaProbs').addEventListener('change', (e) => {
-        TOUCH.problems = true;
-        const l = e.target.closest('.wtp-prob');
-        if (l) l.classList.toggle('is-on', e.target.checked);
-        if (window.aneeFieldCard) window.aneeFieldCard.hint(document.querySelector('#vaWiz .wtp-step[data-step="6"]'), false);
-        if (!e.target.checked) return;
-        (PROB_FOES[e.target.value] || []).forEach((k) => {
-            const foe = document.querySelector(`#vaProbs input[value="${k}"]`);
-            if (foe && foe.checked && !probHidden(k)) { foe.checked = false; foe.closest('.wtp-prob')?.classList.remove('is-on'); }
-        });
-    });
-
     /* ---- the crop: the tag opens the sheet, the sheet fills the tag ---- */
     $id('vaCropBtn').addEventListener('click', () => {
         openSheet('vaCropSheet');

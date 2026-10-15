@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Schema;
  * Anee Auto next).
  *
  * The single question bank. A profile is a flat map of answers:
- *   texture, color, organic, rocks            (page soil)
- *   water[] drainage flooding salt            (page water)
- *   acidity phFrom phTo lastLimed hardpan slope (page acid)
+ *   texture, color, organic, rocks, hardpan   (page soil)
+ *   water[] waterLook[] drainage flooding salt (page water)
+ *   acidity phFrom phTo lastLimed             (page acid)
+ *   slope elevation sun hazards[]             (page land)
  *   prevCrop harvested stubble lastPlowed newLand (page last)
  *   weeds[] level                             (page weeds)
  *   outbreaks[]  (pest:slug, disease:slug, other:key, or none) (page problems)
@@ -33,7 +34,10 @@ final class FieldProfile
     public const GROUPS = [
         'soil' => ['The soil', 'What you see and feel in this lot. Skip what you do not know.'],
         'water' => ['The water', 'Where the water comes from and where it goes.'],
-        'acid' => ['Acidity and the land', 'From a soil test, or from what you know of this lot.'],
+        'acid' => ['Acidity and lime', 'From a soil test, or from what you know of this lot.'],
+        // 2026-10-16, the owner: the land questions What to Plant, When to Plant and
+        // Variety Ranking used to ask each time are the lot's now.
+        'land' => ['The land', 'Where the field sits, the sun it gets and what it faces.'],
         'last' => ['Last season', 'What grew here and what is left of it.'],
         'weeds' => ['Weeds and the field', 'What came up last season.'],
         'problems' => ['Pests, diseases and other troubles', 'Pick everything that hurt the last crop.'],
@@ -69,11 +73,21 @@ final class FieldProfile
             'why' => 'Stones slow the plow and break the harrow, so many stones are picked out first.', 'o' => [
                 'none' => ['None', ''], 'some' => ['Some', ''], 'many' => ['Many', ''],
             ]],
+        'hardpan' => ['in' => 'soil', 'page' => 'soil', 'short' => 'Hard layer', 'q' => 'Is there a hard layer under the plow depth?',
+            'why' => 'A hard layer holds the water in a paddy, but it stops the roots of upland crops.', 'o' => [
+                'yes' => ['Yes', 'The plow or a bar hits it'], 'no' => ['No', ''],
+            ]],
         'water' => ['in' => 'soil', 'page' => 'water', 'short' => 'Water', 'q' => 'Where does the field get its water?', 'multi' => true, 'none' => 'rainfed',
             'why' => 'The water decides when you can soak and plow. Pick every source this lot uses.', 'o' => [
                 'irrigation' => ['Irrigation canal', 'National or communal system'], 'pump' => ['Pump or shallow well', ''],
                 'river' => ['River, creek or spring', 'Led in by a small canal'], 'reservoir' => ['Small farm pond', 'A reservoir filled in the rains'],
                 'rainfed' => ['Rain only', 'No other water'],
+            ]],
+        'waterLook' => ['in' => 'soil', 'page' => 'water', 'short' => 'Water look', 'q' => 'How does the irrigation water look?', 'multi' => true, 'none' => 'unsure',
+            'why' => 'Muddy water leaves silt, and salty or dirty water hurts young plants. It changes which crops do well here.', 'o' => [
+                'clear' => ['Clear and clean', ''], 'muddy' => ['Muddy or brown', 'It carries silt'], 'milky' => ['Cloudy white or milky', ''],
+                'green' => ['Greenish', 'Algae in it'], 'salty' => ['Tastes salty', 'Or leaves a white crust'], 'smelly' => ['Smells bad', 'An oily film or foam'],
+                'unsure' => ['Not sure', 'Or no irrigation water'],
             ]],
         'drainage' => ['in' => 'soil', 'page' => 'water', 'short' => 'Drainage', 'q' => 'After heavy rain, how fast does the water go?',
             'why' => 'A field that stays wet drowns sown seed and bogs down the machines.', 'o' => [
@@ -99,13 +113,22 @@ final class FieldProfile
             'why' => 'Lime lasts a few years. This tells Anee whether to lime again or test first.', 'o' => [
                 'never' => ['Never', ''], 'under_year' => ['Within the year', ''], '1to3y' => ['1 to 3 years ago', ''], 'over3y' => ['Over 3 years ago', ''],
             ]],
-        'hardpan' => ['in' => 'soil', 'page' => 'acid', 'short' => 'Hard layer', 'q' => 'Is there a hard layer under the plow depth?',
-            'why' => 'A hard layer holds the water in a paddy, but it stops the roots of upland crops.', 'o' => [
-                'yes' => ['Yes', 'The plow or a bar hits it'], 'no' => ['No', ''],
-            ]],
-        'slope' => ['in' => 'soil', 'page' => 'acid', 'short' => 'Slope', 'q' => 'How does the land lie?',
+        'slope' => ['in' => 'soil', 'page' => 'land', 'short' => 'Slope', 'q' => 'How does the land lie?',
             'why' => 'Sloping land needs rows across the slope and strong dikes so the soil stays put.', 'o' => [
                 'flat' => ['Flat', ''], 'gentle' => ['Gently sloping', ''], 'steep' => ['Steep', ''], 'terraced' => ['Terraced', ''],
+            ]],
+        'elevation' => ['in' => 'soil', 'page' => 'land', 'short' => 'Elevation', 'q' => 'Is the land lowland, upland or highland?',
+            'why' => 'Each crop and each variety is bred for one. Highland is cooler, so crops grow slower there.', 'o' => [
+                'lowland' => ['Lowland', 'Near sea level, warm'], 'upland' => ['Upland or hilly', 'Rolling ground'], 'highland' => ['Highland', 'Cool, cloudy mornings'],
+            ]],
+        'sun' => ['in' => 'soil', 'page' => 'land', 'short' => 'Sunlight', 'q' => 'How much sun does the field get?',
+            'why' => 'Most field crops need full sun. Shade slows them down and keeps the leaves wet longer.', 'o' => [
+                'full' => ['Full sun all day', ''], 'part' => ['Shaded part of the day', 'By trees or buildings'], 'shade' => ['Mostly shaded', ''],
+            ]],
+        'hazards' => ['in' => 'soil', 'page' => 'land', 'short' => 'Field problems', 'q' => 'What problems does this field have?', 'multi' => true, 'none' => 'none',
+            'why' => 'The floods, the drainage and the salt are asked with the water. These two change the best time to plant and the variety that fits.', 'o' => [
+                'river' => ['A river overflows into it', 'When the river rises in heavy rain'], 'wind' => ['Strong winds pass through', 'A typhoon path, or open ground'],
+                'none' => ['None of these', ''],
             ]],
         'prevCrop' => ['in' => 'history', 'page' => 'last', 'short' => 'Last crop', 'q' => 'What grew here last?',
             'why' => 'The last crop decides what is left to clear and which pests may carry over.', 'o' => [
@@ -462,7 +485,9 @@ final class FieldProfile
      *    rainfed); waterNpk: NPK Plus and Satellite Analysis (irrigated,
      *    partial, rainfed); waterAuto: Anee Auto (AutoBook::WATER);
      *  - problemsWhen: When to Plant's PROBLEMS keys; problemsVariety:
-     *    Variety Research's; problemsAuto and soilSignsAuto: Anee Auto's.
+     *    Variety Research's; problemsAuto and soilSignsAuto: Anee Auto's;
+     *  - waterLook, elevation and sun: What to Plant's (WATER_LOOKS,
+     *    ELEVATIONS, SUNS), the elevation Variety Research's too.
      * A key with nothing to say is null or an empty list.
      */
     public static function legacy(array $answers): array
@@ -532,6 +557,8 @@ final class FieldProfile
             default => null,
         };
 
+        $hazards = (array) ($a['hazards'] ?? []);
+        $shaded = in_array($a['sun'] ?? '', ['part', 'shade'], true);
         $floods = in_array($a['flooding'] ?? '', ['sometimes', 'often'], true) || $had('flood');
         $weedy = (bool) array_intersect($weeds, ['many', 'tough', 'sedges', 'weedy_rice']);
         $poorDrain = in_array($a['drainage'] ?? '', ['slow', 'stands'], true);
@@ -540,12 +567,14 @@ final class FieldProfile
             $floods ? 'floods' : null, $texture === 'heavy_clay' ? 'cracking' : null, $texture === 'sandy' ? 'sandy' : null,
             $limitedWater ? 'water_source' : null, $water === ['rainfed'] ? 'rainfed' : null, $salt === 'sea' ? 'sea' : null,
             $isPest ? 'pests' : null, $weedy ? 'weeds' : null, $poorDrain ? 'drainage' : null,
+            in_array('river', $hazards, true) ? 'river' : null, in_array('wind', $hazards, true) ? 'wind' : null, $shaded ? 'shade' : null,
         ]));
         $variety = array_values(array_filter([
             $drought ? 'drought' : null, $floods ? 'floods' : null, $limitedWater ? 'water_source' : null, $saline ? 'salinity' : null,
             $phWord === 'acidic' ? 'acidic' : null, $phWord === 'alkaline' ? 'alkaline' : null, $sodic ? 'sodic' : null, $sulfate ? 'acid_sulfate' : null,
             $isPest ? 'pests' : null, $isDisease ? 'disease' : null, $weedy ? 'weeds' : null, $poorDrain ? 'drainage' : null,
             ($a['organic'] ?? '') === 'low' || $had('nutrient') ? 'low_fertility' : null, in_array($a['slope'] ?? '', ['gentle', 'steep'], true) ? 'slope' : null,
+            in_array('wind', $hazards, true) ? 'wind' : null,
         ]));
         $autoProblems = array_values(array_filter([
             $weedy ? 'weeds' : null, $floods ? 'flood' : null, $drought ? 'drought' : null,
@@ -567,6 +596,7 @@ final class FieldProfile
             'soil' => $soil, 'phLevel' => $phWord ?? 'unsure', 'soilExtra' => $extras, 'lay' => $lay,
             'water' => $w, 'waterNpk' => $w === 'limited' ? 'partial' : $w, 'waterAuto' => $auto,
             'problemsWhen' => $when, 'problemsVariety' => $variety, 'problemsAuto' => $autoProblems, 'soilSignsAuto' => $signs,
+            'waterLook' => array_values(array_diff((array) ($a['waterLook'] ?? []), ['unsure'])), 'elevation' => $a['elevation'] ?? null, 'sun' => $a['sun'] ?? null,
         ];
     }
 

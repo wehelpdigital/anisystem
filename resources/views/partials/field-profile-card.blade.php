@@ -145,7 +145,7 @@
     const CHECK = '<svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
     const PEN = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L18.5 9.5a2.1 2.1 0 00-4-4L4 16v4zM13.5 6.5l4 4"/></svg>';
     const LIST = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>';
-    const TILES = { soil: ['🟤', 'Soil'], water: ['💧', 'Water'], acid: ['🧪', 'Acidity'], last: ['🌾', 'Last season'], weeds: ['🌿', 'Weeds'], problems: ['🐛', 'Troubles'] };
+    const TILES = { soil: ['🟤', 'Soil'], water: ['💧', 'Water'], acid: ['🧪', 'Acidity'], land: ['⛰️', 'The land'], last: ['🌾', 'Last season'], weeds: ['🌿', 'Weeds'], problems: ['🐛', 'Troubles'] };
     const FP = () => window.aneeFieldProfile;
 
     /* window.api comes with app.js, a module that may land after a page's own
@@ -201,6 +201,7 @@
         const w = reliable && !drought ? 'irrigated' : (reliable || partly) ? 'limited' : rainOnly ? 'rainfed' : null;
         const auto = water.includes('irrigation') ? (drought ? 'canal_late' : 'canal_ok') : water.includes('pump') ? 'pump_own' : water.includes('river') ? 'river'
             : water.includes('reservoir') ? 'reservoir' : rainOnly ? 'rain_only' : null;
+        const hazards = [].concat(a.hazards || []), shaded = ['part', 'shade'].includes(a.sun);
         const floods = ['sometimes', 'often'].includes(a.flooding) || had('flood');
         const weedy = has(weeds, ['many', 'tough', 'sedges', 'weedy_rice']);
         const poorDrain = ['slow', 'stands'].includes(a.drainage);
@@ -213,15 +214,17 @@
             soil, phLevel: phWord || 'unsure', soilExtra: keep([sodic && 'sodic', saline && 'saline', sulfate && 'acid_sulfate']), lay,
             water: w, waterNpk: w === 'limited' ? 'partial' : w, waterAuto: auto,
             problemsWhen: keep([floods && 'floods', texture === 'heavy_clay' && 'cracking', texture === 'sandy' && 'sandy', limitedWater && 'water_source', rainOnly && 'rainfed',
-                salt === 'sea' && 'sea', isPest && 'pests', weedy && 'weeds', poorDrain && 'drainage']),
+                salt === 'sea' && 'sea', isPest && 'pests', weedy && 'weeds', poorDrain && 'drainage',
+                hazards.includes('river') && 'river', hazards.includes('wind') && 'wind', shaded && 'shade']),
             problemsVariety: keep([drought && 'drought', floods && 'floods', limitedWater && 'water_source', saline && 'salinity', phWord === 'acidic' && 'acidic', phWord === 'alkaline' && 'alkaline',
                 sodic && 'sodic', sulfate && 'acid_sulfate', isPest && 'pests', isDisease && 'disease', weedy && 'weeds', poorDrain && 'drainage',
-                (a.organic === 'low' || had('nutrient')) && 'low_fertility', ['gentle', 'steep'].includes(a.slope) && 'slope']),
+                (a.organic === 'low' || had('nutrient')) && 'low_fertility', ['gentle', 'steep'].includes(a.slope) && 'slope', hazards.includes('wind') && 'wind']),
             problemsAuto: keep([weedy && 'weeds', floods && 'flood', drought && 'drought', kinds.some((k) => !BUGLESS.includes(k)) && 'insects', kinds.some((k) => SICK.includes(k)) && 'diseases',
                 kinds.includes('Rodent') && 'rats', kinds.includes('Bird') && 'birds', kinds.includes('Snail') && 'snails', had('lodging') && 'lodging', saline && 'salt', a.drainage === 'stands' && 'waterlog']),
             soilSignsAuto: keep([texture === 'heavy_clay' && 'cracks', texture === 'clay' && 'sticky', texture === 'sandy' && 'gritty', texture === 'loam' && 'crumbly',
                 salt === 'crust' && 'white_crust', salt === 'sodic' && 'black_crust', salt === 'sea' && 'salty', salt === 'tips' && 'burnt_tips', sulfate && 'rusty', a.color === 'red' && 'red_soil',
                 (a.organic === 'high' || a.color === 'dark') && 'dark_rich', a.organic === 'low' && 'pale_hard', a.drainage === 'stands' && 'stays_wet']),
+            waterLook: [].concat(a.waterLook || []).filter((k) => k !== 'unsure'), elevation: a.elevation || null, sun: a.sun || null,
         };
     }
     async function legacy(answers, crop) {
