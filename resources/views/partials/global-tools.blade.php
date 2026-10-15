@@ -127,6 +127,11 @@
             transition: transform .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
         @media (hover: hover) {.qa-tile:hover .qa-go { transform: translateX(2px); } }
         @media (hover: hover) {.qa-notes:hover { border-color: #f0dcae; } .qa-notes:hover .qa-go { color: #b45309; } }
+        /* Global Lots: how many lots are due for their six month check. */
+        .qa-lots-old { display: inline-flex; align-items: center; gap: .2rem; margin-left: .4rem; padding: .05rem .45rem; border-radius: 999px; vertical-align: .1em;
+            font-size: .68rem; font-weight: 800; color: #92400e; background: #fef3c7; }
+        .qa-lots-old svg { width: .75rem; height: .75rem; }
+        html.dark .qa-lots-old { color: #fcd34d; background: #3a2a0c; }
         @media (hover: hover) {.qa-gallery:hover { border-color: #c7dbf5; } .qa-gallery:hover .qa-go { color: #1d4ed8; } }
         @media (hover: hover) {.qa-cap:hover { border-color: #cfe3b8; } .qa-cap:hover .qa-go { color: #3d6823; } }
         @media (hover: hover) {.qa-rec:hover { border-color: #f3c4c4; } .qa-rec:hover .qa-go { color: #b91c1c; } }
@@ -465,6 +470,18 @@
                 @endif
             </a>
             @endunless
+            {{-- Global Lots (2026-10-16, the owner): each lot answered once (its place,
+                 size, soil, water and last season) for every analysis. A clock and a
+                 count when a lot's answers are six months old. --}}
+            @php $qLotsOld = \App\Support\FarmLots::staleCount(\App\Support\WorkerContext::effectiveOwnerId()); @endphp
+            <a href="{{ route('farmlots.index') }}" class="qa-tile qa-lots">
+                <span class="qa-ico"><img src="{{ asset('images/treasure-map.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                <span class="qa-txt">
+                    <b>Global Lots{{ \App\Support\Tagalog::flag('global-lots') }}@if ($qLotsOld)<span class="qa-lots-old" title="{{ $qLotsOld }} {{ $qLotsOld === 1 ? 'lot is' : 'lots are' }} due for a check"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" d="M12 7.5V12l3 2"/></svg>{{ $qLotsOld }}</span>@endif</b>
+                    <i>Each lot once: where it is, its size, its soil and water. Every analysis reads it from here.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
             <a href="{{ route('draw.page') }}" class="qa-tile qa-draw">
                 <span class="qa-ico"><img src="{{ asset('images/writting.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">

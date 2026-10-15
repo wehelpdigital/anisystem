@@ -126,6 +126,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-15: the Land Prep Planner's own clock and the error that stays on the page.
             // 2026-10-15: the Land Prep Planner's round 2 and the field profiles table.
             'lpRound2' => Illuminate\Support\Facades\Route::has('landprep.check') && Illuminate\Support\Facades\Schema::hasTable('as_field_profiles'),
+            // Global Lots (2026-10-16): the routes, and the lot columns the migration adds.
+            'farmLots' => Illuminate\Support\Facades\Route::has('farmlots.index') && Illuminate\Support\Facades\Schema::hasColumn('as_field_profiles', 'barangay'),
             'lpClock' => str_contains((string) @file_get_contents(app_path('Http/Controllers/LandPrepController.php')), 'private const AI_TIMEOUT = 330;')
                 && str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpErr"'),
         ],
@@ -808,6 +810,14 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/field-profiles/troubles', [App\Http\Controllers\FieldProfileController::class, 'troubles'])->middleware('throttle:120,1')->name('fieldprofile.troubles');
     Route::post('/app/field-profiles', [App\Http\Controllers\FieldProfileController::class, 'save'])->middleware('throttle:60,1')->name('fieldprofile.save');
     Route::post('/app/field-profiles/{id}', [App\Http\Controllers\FieldProfileController::class, 'update'])->whereNumber('id')->middleware('throttle:60,1')->name('fieldprofile.update');
+    // Global Lots (2026-10-16): the farm's lots, with their place, size and field answers, picked by every analysis (App\Support\FarmLots).
+    Route::get('/app/farm-lots', [App\Http\Controllers\FarmLotController::class, 'page'])->name('farmlots.index');
+    Route::get('/app/farm-lots/list', [App\Http\Controllers\FarmLotController::class, 'list'])->name('farmlots.list');
+    Route::get('/app/farm-lots/places', [App\Http\Controllers\FarmLotController::class, 'places'])->middleware('throttle:240,1')->name('farmlots.places');
+    Route::post('/app/farm-lots', [App\Http\Controllers\FarmLotController::class, 'save'])->middleware('throttle:60,1')->name('farmlots.save');
+    Route::post('/app/farm-lots/{id}', [App\Http\Controllers\FarmLotController::class, 'update'])->whereNumber('id')->middleware('throttle:60,1')->name('farmlots.update');
+    Route::post('/app/farm-lots/{id}/checked', [App\Http\Controllers\FarmLotController::class, 'confirm'])->whereNumber('id')->middleware('throttle:60,1')->name('farmlots.confirm');
+    Route::delete('/app/farm-lots/{id}', [App\Http\Controllers\FarmLotController::class, 'destroy'])->whereNumber('id')->name('farmlots.delete');
     // The old free field helper now opens the planner (defined before fh.page so it wins).
     Route::get('/app/field-helpers/landprep', fn () => redirect()->route('landprep.page'))->name('landprep.legacy');
     // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.

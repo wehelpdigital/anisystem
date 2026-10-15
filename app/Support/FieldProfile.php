@@ -552,9 +552,12 @@ final class FieldProfile
     {
         $answers = json_decode((string) $r->answers, true) ?: [];
 
-        return ['id' => (int) $r->id, 'name' => (string) $r->name, 'crop' => $r->crop, 'cropLabel' => $r->crop ? (FieldCatalogue::crops()[$r->crop][1] ?? null) : null,
+        $row = ['id' => (int) $r->id, 'name' => (string) $r->name, 'crop' => $r->crop, 'cropLabel' => $r->crop ? (FieldCatalogue::crops()[$r->crop][1] ?? null) : null,
             'scheduleId' => $r->scheduleId !== null ? (int) $r->scheduleId : null, 'lotId' => $r->lotId !== null ? (int) $r->lotId : null,
             'answers' => $answers, 'count' => self::count($answers), 'updated' => Carbon::parse($r->updated_at ?: $r->created_at)->format('M j, Y')];
+
+        // A saved profile is a farm lot (App\Support\FarmLots): its place, size and age ride along.
+        return FarmLots::decorate($row, $r);
     }
 
     /** An owner's saved profiles, the newest first. */

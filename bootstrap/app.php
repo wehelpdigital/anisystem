@@ -111,6 +111,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('sky:batch')->cron('2 0,3,6,9,12,15,18,21 * * *')->timezone('UTC')->withoutOverlapping(20)->runInBackground();
         // Anee Auto's morning (2026-10-12): re-plan, brief and mail each running season.
         $schedule->command('auto:daily')->dailyAt('05:00')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
+        // Global Lots (2026-10-16): the bell asks to check a lot whose answers are six months old.
+        $schedule->command('lots:remind')->dailyAt('08:30')->timezone('Asia/Manila')->withoutOverlapping(30)->runInBackground();
         $schedule->command('fertilizers:fpa-sync')->monthlyOn(3, '04:30')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
         $schedule->command('fertilizers:fpa-sync')->dailyAt('04:45')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground()
             ->when(fn () => \Illuminate\Support\Facades\Schema::hasTable('as_ph_fertilizers') && ! \Illuminate\Support\Facades\DB::table('as_ph_fertilizers')->where('curated', 0)->exists());
