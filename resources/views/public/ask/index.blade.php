@@ -542,7 +542,6 @@
         pickList('Province', Object.keys(loc), (p) => {
             if (p !== state.province) { state.town = ''; setTag($('akTown'), 'Town', false); }
             state.province = p; setTag($('akProv'), p, true);
-            setTimeout(() => $('akTown').click(), 320);
         });
     });
     $('akTown').addEventListener('click', async () => {

@@ -455,11 +455,11 @@
                 if (t.id === 'flProv') {
                     const list = await places();
                     const r = await pickFrom({ title: 'Choose the province', items: list.map((n) => ({ v: n, l: n })), value: st.province, find: 'Search a province' });
-                    if (r && r.v && r.v !== st.province) { st.province = r.v; st.town = ''; st.barangay = ''; paintPlace(); bump($('flProv')); setTimeout(() => $('flTown') && $('flTown').click(), 260); }
+                    if (r && r.v && r.v !== st.province) { st.province = r.v; st.town = ''; st.barangay = ''; paintPlace(); bump($('flProv')); }
                 } else if (t.id === 'flTown') {
                     const list = await places(st.province);
                     const r = await pickFrom({ title: 'Choose the town or city', sub: st.province, items: list.map((n) => ({ v: n, l: n })), value: st.town, find: 'Search a town or city' });
-                    if (r && r.v && r.v !== st.town) { st.town = r.v; st.barangay = ''; paintPlace(); bump($('flTown')); setTimeout(() => $('flBrgy') && $('flBrgy').click(), 260); }
+                    if (r && r.v && r.v !== st.town) { st.town = r.v; st.barangay = ''; paintPlace(); bump($('flTown')); }
                 } else if (t.id === 'flBrgy') {
                     const list = await places(st.province, st.town);
                     const r = await pickFrom({ title: 'Choose the barangay', sub: st.town + ', ' + st.province, items: list.map((n) => ({ v: n, l: n })), value: st.barangay,

@@ -739,7 +739,7 @@
             }
         }
         if (act === 'variety') pickVariety(l, a);
-        if (act === 'prov') { try { await loadPh(); } catch (_) { return; } pick('Choose the province', Object.keys(PHL).sort().map((p) => ({ key: p, label: p, hint: PHL[p].length + ' towns and cities' })), l.province, async (k) => { if (k !== l.province) l.town = null; l.province = k; await saveLot(l).catch(() => {}); paintLots(); setTimeout(() => lotEl(l.id)?.querySelector('[data-act="town"]')?.click(), 300); }); }
+        if (act === 'prov') { try { await loadPh(); } catch (_) { return; } pick('Choose the province', Object.keys(PHL).sort().map((p) => ({ key: p, label: p, hint: PHL[p].length + ' towns and cities' })), l.province, async (k) => { if (k !== l.province) l.town = null; l.province = k; await saveLot(l).catch(() => {}); paintLots(); }); }
         if (act === 'town' && l.province) { await loadPh(); pick('Choose the town or city', (PHL[l.province] || []).map((t) => ({ key: t, label: townName(t), hint: /\(Capital\)/i.test(t) ? 'The capital' : '' })), l.town, async (k) => { l.town = k; await saveLot(l).catch(() => {}); paintLots(); }); }
         if (act === 'pin') openPin(l);
     });

@@ -2260,7 +2260,6 @@
         pick('Choose the province', Object.keys(PHL).sort((a, b) => a.localeCompare(b)).map((p) => ({ key: p, label: p, hint: PHL[p].length + ' towns and cities' })), S.loc.province, (k) => {
             if (k !== S.loc.province) { S.loc.town = ''; S.loc.lat = null; S.loc.lng = null; }
             S.loc.province = k; paintPlace(); $('lpPlaceErr').hidden = true;
-            if (!S.loc.town) setTimeout(() => $('lpTown').click(), 300);
         });
     });
     $('lpTown').addEventListener('click', async () => {

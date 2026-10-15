@@ -1341,7 +1341,6 @@
             if (k !== st.prov) { st.town = null; tagWide('npTownBtn', 'Choose the town', true); }
             st.prov = k; tagWide('npProvBtn', k, false);
             $('npTownBtn').disabled = false;
-            if (!st.town) setTimeout(() => $('npTownBtn').click(), 260);
             seasonSoon();
         }, false, true);
     });
