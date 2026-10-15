@@ -19,8 +19,19 @@ class FieldProfileController extends Controller
     public function troubles(Request $request)
     {
         $crop = (string) $request->query('crop', 'rice');
+        $rows = FieldProfile::troubles($crop, true);
+        // Every crop's list (2026-10-16): the crops it can be filtered by, those with a trouble of their own.
+        $crops = [];
+        if ($crop === 'all') {
+            $have = array_flip(array_merge(...array_map(fn ($r) => (array) ($r['c'] ?? []), $rows)));
+            foreach (\App\Support\FieldCatalogue::crops() as $k => $c) {
+                if (isset($have[$k])) {
+                    $crops[] = [$k, $c[1], $c[2], $c[0]];
+                }
+            }
+        }
 
-        return $this->json(true, 'ok', ['crop' => $crop, 'rows' => FieldProfile::troubles($crop, true)]);
+        return $this->json(true, 'ok', ['crop' => $crop, 'rows' => $rows, 'crops' => $crops]);
     }
 
     /** The farm's saved profiles, the newest first. */

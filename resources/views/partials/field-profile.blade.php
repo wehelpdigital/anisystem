@@ -168,6 +168,23 @@
     .fq-x { flex: none; width: 2.4rem; height: 2.4rem; border-radius: 999px; display: grid; place-items: center; color: #4b5563; background: #f3f5ef; transition: background-color .28s ease; }
     .fq-x:hover { background: #e7ecdf; }
     .fq-x svg { width: 1.1rem; height: 1.1rem; }
+    /* The troubles sheet's crop filter (2026-10-16): every crop's troubles, narrowed on request. */
+    .fq-cropf { flex: none; display: flex; align-items: center; gap: .55rem; margin: 0 1rem .55rem; min-width: 0; }
+    .fq-cropf > span { flex: none; font-size: .78rem; font-weight: 700; color: #5b6650; }
+    .fq-cropbtn { flex: 1; min-width: 0; display: flex; align-items: center; gap: .45rem; min-height: 2.6rem; padding: .3rem .8rem; border-radius: 999px; text-align: left;
+        background: #fff; border: 1.5px solid #d5e3c5; color: #2d5016; transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .fq-cropbtn:hover { border-color: #86b556; background: #f8fbf4; }
+    .fq-cropbtn.is-on { background: #eef5e6; border-color: #86b556; }
+    .fq-cropbtn i { flex: none; font-style: normal; font-size: 1rem; }
+    .fq-cropbtn b { flex: 1; min-width: 0; font-size: .86rem; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .fq-cropbtn svg { flex: none; width: .95rem; height: .95rem; color: #6b7a5c; }
+    .fq-cropbtn.is-bump { animation: fqBump .4s cubic-bezier(.22,1,.36,1); }
+    @keyframes fqBump { 40% { transform: scale(1.03); } }
+    .fq-gh small { display: inline; margin-left: .35rem; font-size: .66rem; font-weight: 700; letter-spacing: 0; text-transform: none; color: #8a9480; }
+    html.dark .fq-cropf > span { color: #a9b69c; }
+    html.dark .fq-cropbtn { background: #151b12; border-color: #2b3a1c; color: #cfe6b8; }
+    html.dark .fq-cropbtn.is-on { background: #1c2914; border-color: #6b9f3d; }
+    @media (prefers-reduced-motion: reduce) { .fq-cropbtn { transition: none; } .fq-cropbtn.is-bump { animation: none; } }
     .fq-find { flex: none; margin: 0 1rem .5rem; display: flex; align-items: center; gap: .5rem; padding: 0 .8rem; border-radius: .9rem; background: #f6f8f3; border: 1px solid #e1e9d7; }
     .fq-find:focus-within { border-color: #86b556; background: #fff; }
     .fq-find svg { flex: none; width: 1.05rem; height: 1.05rem; color: #6b9f3d; }
@@ -245,10 +262,21 @@
 <dialog class="fq-sheet" id="fqTroubleSheet" aria-labelledby="fqTroubleTitle">
     <div class="fq-box" tabindex="-1">
         <div class="fq-grip" aria-hidden="true"></div>
-        <div class="fq-head"><h2 id="fqTroubleTitle">What troubled the last crop?<small>Tick everything that hurt it</small></h2><button type="button" class="fq-x" data-fq-close aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="fq-head"><h2 id="fqTroubleTitle">What troubled the last crop?<small>The last crop grown on this lot, whatever it was, not the one you plan to plant now. Tick everything that hurt it.</small></h2><button type="button" class="fq-x" data-fq-close aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="fq-cropf"><span>Show the troubles of</span><button type="button" class="fq-cropbtn" id="fqTroubleCrop" aria-haspopup="dialog"><i aria-hidden="true">🌱</i><b>Every crop</b><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button></div>
         <label class="fq-find"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg><span class="sr-only">Search</span><input type="search" id="fqTroubleQ" placeholder="Search, like tungro or rats" autocomplete="off" maxlength="40"></label>
         <div class="fq-list" id="fqTroubleList"></div>
         <div class="fq-foot"><span id="fqTroubleCount">None ticked</span><button type="button" class="btn btn-primary" data-fq-close>Done</button></div>
+    </div>
+</dialog>
+
+{{-- The crop filter of the troubles sheet: every crop with troubles of its own. --}}
+<dialog class="fq-sheet" id="fqCropSheet" aria-labelledby="fqCropTitle">
+    <div class="fq-box" tabindex="-1">
+        <div class="fq-grip" aria-hidden="true"></div>
+        <div class="fq-head"><h2 id="fqCropTitle">Which crop was it?<small>Only to narrow the list. Pick Every crop to see them all.</small></h2><button type="button" class="fq-x" data-fq-close aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <label class="fq-find"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg><span class="sr-only">Search</span><input type="search" id="fqCropQ" placeholder="Search a crop" autocomplete="off" maxlength="40"></label>
+        <div class="fq-list" id="fqCropList"></div>
     </div>
 </dialog>
 
@@ -334,11 +362,15 @@
     }
 
     /* ---- the data the sheets need ---- */
+    /* Every crop's troubles, once a page (2026-10-16, the owner): the last crop on a lot can be
+       any crop, so nothing is narrowed to one; the sheet filters by crop on request. `crop` is
+       only remembered as the filter to suggest. */
     const TROUBLES = {};
-    async function troublesFor(crop) {
-        const key = crop || 'rice';
+    let TCROPS = [];
+    async function troublesFor() {
+        const key = 'all';
         if (!TROUBLES[key]) {
-            TROUBLES[key] = window.api(D.urls.troubles + '?crop=' + encodeURIComponent(key)).then((r) => { const rows = (r.data && r.data.rows) || []; rows.forEach((x) => { TNAMES[x.k] = x.n; }); return rows; })
+            TROUBLES[key] = window.api(D.urls.troubles + '?crop=all').then((r) => { const rows = (r.data && r.data.rows) || []; TCROPS = (r.data && r.data.crops) || []; rows.forEach((x) => { TNAMES[x.k] = x.n; }); return rows; })
                 .catch(() => { delete TROUBLES[key]; return []; });
         }
         return TROUBLES[key];
@@ -375,23 +407,60 @@
     const once = (dlg) => new Promise((res) => dlg.addEventListener('fqclosed', res, { once: true }));
 
     /* The troubles sheet works on one lot of one form at a time. */
-    let TS = null;   // { form, lot, rows }
+    let TS = null;   // { form, lot, rows, crop }
+    const cropOf = (k) => TCROPS.find((c) => c[0] === k) || null;
+    function paintCropBtn() {
+        const b = $('fqTroubleCrop'), c = TS && TS.crop ? cropOf(TS.crop) : null;
+        b.classList.toggle('is-on', !!c);
+        b.querySelector('i').textContent = c ? (c[2] || '🌱') : '🌱';
+        b.querySelector('b').textContent = c ? c[1] : 'Every crop';
+    }
     function paintTroubles() {
         if (!TS) return;
         const v = TS.form.lot(TS.lot).value;
         const on = new Set((v.outbreaks || []).filter((x) => x !== 'none'));
         const q = $('fqTroubleQ').value.trim().toLowerCase();
-        const hit = (r) => !q || (r.n + ' ' + (r.l || '')).toLowerCase().includes(q);
+        // A ticked trouble always shows, whatever the filter, so it can be unticked.
+        const fits = (r) => !TS.crop || !(r.c && r.c.length) || r.c.includes(TS.crop) || on.has(r.k);
+        const hit = (r) => fits(r) && (!q || (r.n + ' ' + (r.l || '')).toLowerCase().includes(q));
         const row = (r) => '<button type="button" class="fq-row" role="checkbox" aria-checked="' + on.has(r.k) + '" data-t="' + esc(r.k) + '"><span class="fq-ri">'
             + (r.img ? '<img src="' + esc(r.img) + '" alt="" loading="lazy">' : esc(r.icon || '•')) + '</span><span class="fq-rt"><b>' + esc(r.n) + '</b>' + (r.l ? '<small>' + esc(r.l) + '</small>' : '') + '</span><span class="fq-ck">' + CHECK + '</span></button>';
         const parts = [['other', 'Other troubles'], ['pest', 'Pests'], ['disease', 'Diseases']].map(([g, label]) => {
             const rows = TS.rows.filter((r) => r.g === g && hit(r));
-            return rows.length ? '<b class="fq-gh">' + label + '</b>' + rows.map(row).join('') : '';
+            return rows.length ? '<b class="fq-gh">' + label + '<small>' + rows.length + '</small></b>' + rows.map(row).join('') : '';
         }).join('');
-        $('fqTroubleList').innerHTML = parts || '<p class="fq-nothing">' + (TS.rows.length ? 'Nothing by that name.' : 'Loading the list…') + '</p>';
+        $('fqTroubleList').innerHTML = parts || '<p class="fq-nothing">' + (TS.rows.length ? (q ? 'Nothing by that name.' : 'No troubles listed for this crop.') : 'Loading the list…') + '</p>';
         $('fqTroubleCount').textContent = on.size ? on.size + (on.size === 1 ? ' ticked' : ' ticked') : 'None ticked';
     }
+    /* The crop filter's own list. */
+    function paintCrops() {
+        const q = $('fqCropQ').value.trim().toLowerCase();
+        const cur = TS ? TS.crop : null;
+        const rows = TCROPS.filter((c) => !q || (c[1] + ' ' + (c[3] || '')).toLowerCase().includes(q));
+        $('fqCropList').innerHTML = (q ? '' : '<button type="button" class="fq-row" data-crop="" aria-checked="' + !cur + '"><span class="fq-ri">🌱</span><span class="fq-rt"><b>Every crop</b><small>All the troubles, of any crop</small></span><span class="fq-ck">' + CHECK + '</span></button>')
+            + (rows.length ? rows.map((c) => '<button type="button" class="fq-row" data-crop="' + esc(c[0]) + '" aria-checked="' + (cur === c[0]) + '"><span class="fq-ri">' + esc(c[2] || '🌱') + '</span><span class="fq-rt"><b>' + esc(c[1]) + '</b>'
+                + (c[3] && c[3] !== c[1] ? '<small>' + esc(c[3]) + '</small>' : '') + '</span><span class="fq-ck">' + CHECK + '</span></button>').join('') : '<p class="fq-nothing">No crop by that name.</p>');
+    }
     document.addEventListener('DOMContentLoaded', () => {
+        $('fqTroubleCrop').addEventListener('click', async () => {
+            if (!TS) return;
+            await troublesFor();
+            $('fqCropQ').value = '';
+            paintCrops();
+            sheetOpen($('fqCropSheet'), $('fqCropQ'));
+        });
+        $('fqCropQ').addEventListener('input', paintCrops);
+        $('fqCropList').addEventListener('click', (e) => {
+            const b = e.target.closest('[data-crop]');
+            if (!b || !TS) return;
+            TS.crop = b.dataset.crop || null;
+            sheetClose($('fqCropSheet'));
+            paintCropBtn();
+            paintTroubles();
+            $('fqTroubleList').scrollTop = 0;
+            const btn = $('fqTroubleCrop');
+            if (!reduce()) { btn.classList.remove('is-bump'); void btn.offsetWidth; btn.classList.add('is-bump'); }
+        });
         $('fqTroubleQ').addEventListener('input', paintTroubles);
         $('fqTroubleList').addEventListener('click', (e) => {
             const b = e.target.closest('[data-t]');
@@ -429,12 +498,12 @@
         function troubleHtml(v) {
             const picked = (v.outbreaks || []).filter((x) => x !== 'none');
             const none = (v.outbreaks || []).includes('none');
-            const rows = TROUBLES[st.crop || 'rice'];
+            const rows = TROUBLES.all;
             return '<div class="fq-tchips">' + picked.map((k) => '<span class="fq-tc"><span data-timg="' + esc(k) + '">•</span><em>' + esc(tname(k)) + '</em><button type="button" data-tx="' + esc(k) + '" aria-label="Remove ' + esc(tname(k)) + '">' + XS + '</button></span>').join('') + '</div>'
                 + '<div class="fq-tacts"><button type="button" class="fq-add" data-topen>' + PLUS + (picked.length ? 'Add or change' : 'Choose the troubles') + '</button><button type="button" class="fq-none' + (none ? ' is-on' : '') + '" data-tnone aria-pressed="' + none + '">None last season</button></div>';
         }
         async function fillThumbs() {
-            const rows = await troublesFor(st.crop);
+            const rows = await troublesFor();
             const by = Object.fromEntries(rows.map((r) => [r.k, r]));
             el.querySelectorAll('[data-timg]').forEach((s) => { const r = by[s.dataset.timg]; if (r) { s.innerHTML = r.img ? '<img src="' + esc(r.img) + '" alt="">' : esc(r.icon || '•'); const em = s.parentNode.querySelector('em'); if (em) em.textContent = r.n; } });
         }
@@ -477,7 +546,7 @@
             h += '<p class="fq-t">' + esc(G[st.page][0]) + '</p><p class="fq-s">' + esc(G[st.page][1]) + '</p>';
             h += qsFor(st.crop, st.page).map(([k, q]) => qHtml(k, q, v)).join('') + '</div>';
             el.innerHTML = h;
-            if (st.page === 'problems') { troublesFor(st.crop).then(fillThumbs); }
+            if (st.page === 'problems') { troublesFor().then(fillThumbs); }
             if (first && st.saved && l.copiedFrom === null && !l.from) {
                 const rows = await savedList();
                 const slot = el.querySelector('[data-savedrow]');
@@ -541,11 +610,13 @@
             const o2 = e.target.closest('.fq-o');
             if (o2) { pick(o2.closest('.fq-q').dataset.k, o2.dataset.v); return; }
             if (e.target.closest('[data-topen]')) {
-                TS = { form: api, lot: st.lot, rows: [] };
+                // Every crop's troubles open; the crop filter starts on Every crop.
+                TS = { form: api, lot: st.lot, rows: [], crop: null };
                 $('fqTroubleQ').value = '';
+                paintCropBtn();
                 paintTroubles();
                 sheetOpen($('fqTroubleSheet'), $('fqTroubleQ'));
-                TS.rows = await troublesFor(st.crop);
+                TS.rows = await troublesFor();
                 paintTroubles();
                 await once($('fqTroubleSheet'));
                 repaintQ('outbreaks');

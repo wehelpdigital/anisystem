@@ -132,6 +132,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // The lot's answers as question and answer cards, and no crop on a lot (2026-10-16).
             'lotAnswers' => str_contains((string) @file_get_contents(resource_path('views/partials/farm-lots.blade.php')), 'fl-qa')
                 && ! str_contains((string) @file_get_contents(resource_path('views/partials/farm-lots.blade.php')), 'id="flCrop"'),
+            // Every crop's troubles in the field questions, with a crop filter (2026-10-16).
+            'troublesAll' => str_contains((string) @file_get_contents(resource_path('views/partials/field-profile.blade.php')), 'fqCropSheet'),
             'lpClock' => str_contains((string) @file_get_contents(app_path('Http/Controllers/LandPrepController.php')), 'private const AI_TIMEOUT = 330;')
                 && str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpErr"'),
         ],

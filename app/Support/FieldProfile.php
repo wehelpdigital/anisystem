@@ -140,8 +140,8 @@ final class FieldProfile
             'why' => 'An uneven field wastes water and drowns seedlings in the low spots, so it gets extra leveling.', 'o' => [
                 'level' => ['No, the water spread evenly', ''], 'some' => ['A few high and low spots', ''], 'uneven' => ['Very uneven', ''],
             ]],
-        'outbreaks' => ['in' => 'history', 'page' => 'problems', 'short' => 'Troubles', 'q' => 'What troubled the last crop?', 'multi' => true, 'sheet' => true,
-            'why' => 'Last season\'s pests and diseases shape the clean up before planting, like a longer rest, a clean seedbed or a rat campaign.', 'o' => []],
+        'outbreaks' => ['in' => 'history', 'page' => 'problems', 'short' => 'Troubles', 'q' => 'What troubled the last crop grown on this lot?', 'multi' => true, 'sheet' => true,
+            'why' => 'The last crop on this lot, whatever it was, not the crop you plan to plant now. Its pests and diseases can stay in the soil and the stubble, and they shape the clean up before planting.', 'o' => []],
     ];
 
     /**
@@ -206,6 +206,9 @@ final class FieldProfile
      */
     public static function troubles(string $crop, bool $photos = false): array
     {
+        if ($crop === 'all') {
+            return self::allTroubles($photos);
+        }
         $crop = FieldCatalogue::cropKey($crop) ?? $crop;
         $rows = [];
         $kinds = [];
@@ -247,6 +250,48 @@ final class FieldProfile
         return array_merge($others, $rows);
     }
 
+    /**
+     * Every crop's troubles at once (2026-10-16, the owner: the last crop on a
+     * lot can be any crop, so the list is not filtered by one; the page filters
+     * by crop on request). Each row carries `c`, the crops it hits ([] for a
+     * trouble of any crop), commonest first: a pest's best rank on any crop.
+     */
+    private static function allTroubles(bool $photos): array
+    {
+        $rows = [];
+        foreach (['pests', 'diseases'] as $sec) {
+            $live = $photos ? SitePages::inSection($sec)->keyBy('slug') : collect();
+            foreach (FieldCatalogue::problems($sec) as $slug => $e) {
+                $img = null;
+                if ($photos) {
+                    $page = $live->get($slug);
+                    $h = $page && is_array($page->heroImage) ? $page->heroImage : (FieldCatalogue::photo($sec, $slug) ?? []);
+                    $src = (string) ($h['thumb'] ?? '');
+                    if ($src === '') {
+                        $src = (string) ($h['src'] ?? '');
+                        $twin = str_starts_with($src, '/images/') ? preg_replace('/\.(jpe?g|png|webp)$/i', '-480.webp', $src) : null;
+                        if ($twin && is_file(public_path(ltrim($twin, '/')))) {
+                            $src = $twin;
+                        }
+                    }
+                    $img = SitePages::img($src);
+                }
+                $ranks = array_values(array_filter(array_map('intval', (array) ($e['ranks'] ?? []))));
+                $rows[] = array_filter(['k' => ($sec === 'pests' ? 'pest:' : 'disease:') . $slug, 'n' => $e['name'], 'l' => $e['local'], 'g' => $sec === 'pests' ? 'pest' : 'disease',
+                    'kind' => $e['kind'], 'img' => $img, 'icon' => FieldBook::KIND_ICONS[$e['kind']] ?? '🐛', 'r' => $ranks ? min($ranks) : 999,
+                    'c' => array_values(array_unique(array_filter(array_map(fn ($c) => FieldCatalogue::cropKey((string) $c), (array) $e['crops']))))], fn ($v) => $v !== null && $v !== '');
+            }
+        }
+        usort($rows, fn ($a, $b) => [$a['g'] === 'disease', $a['r'], $a['n']] <=> [$b['g'] === 'disease', $b['r'], $b['n']]);
+        $grain = array_values(array_filter(array_keys(FieldCatalogue::crops()), fn ($c) => self::isGrain($c)));
+        $others = [];
+        foreach (self::OTHER as $k => [$label, $line, $icon, $kind, $only]) {
+            $others[] = ['k' => 'other:' . $k, 'n' => $label, 'l' => $line, 'g' => 'other', 'icon' => $icon, 'c' => $only === 'rice' ? ['rice'] : ($only === 'grain' ? $grain : [])];
+        }
+
+        return array_merge($others, $rows);
+    }
+
     /** One trouble key's facts: {key, kind, slug, name}, or null when it is not one. */
     public static function trouble(string $key): ?array
     {
@@ -277,7 +322,8 @@ final class FieldProfile
             $answers = array_merge((array) ($answers['history'] ?? []), (array) ($answers['soil'] ?? []), array_diff_key($answers, ['soil' => 1, 'history' => 1]));
         }
         $qs = self::questions($crop);
-        $allowed = $crop !== null ? array_flip(array_column(self::troubles($crop), 'k')) : null;
+        // Any known trouble stays (2026-10-16): the last crop need not be the crop planted now.
+        $allowed = null;
         $out = [];
         foreach ($qs as $k => $q) {
             $v = $answers[$k] ?? null;

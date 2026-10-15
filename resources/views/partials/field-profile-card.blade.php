@@ -155,8 +155,9 @@
 
     /* ---- the troubles of a crop: their names and kinds (cached) ---- */
     const ROWS = {};
-    function troubleRows(crop) {
-        const key = crop || 'rice';
+    // Every crop's troubles (2026-10-16): the last crop on a lot can be any crop.
+    function troubleRows() {
+        const key = 'all';
         if (!ROWS[key]) {
             ROWS[key] = get(D.urls.troubles + '?crop=' + encodeURIComponent(key))
                 .then((r) => (r.data && r.data.rows) || []).catch(() => { delete ROWS[key]; return []; });
@@ -166,7 +167,7 @@
     async function troubleMap(crop, keys) {
         const want = (keys || []).filter((k) => /^(pest|disease):/.test(k));
         if (!want.length) return {};
-        const rows = await troubleRows(crop);
+        const rows = await troubleRows();
         return Object.fromEntries(rows.map((r) => [r.k, r]));
     }
     const kindOf = (k, map) => {
