@@ -25,6 +25,10 @@
        aneeFieldProfile.groups   page key -> [title, line]
        aneeFieldProfile.count(value)  aneeFieldProfile.words(value)  (a short summary)
        aneeFieldProfile.save({ name, crop, answers, lotId, scheduleId }) -> Promise<row or null>
+       aneeFieldProfile.tests: the soil test log (answers.tests, newest first; FieldProfile::cleanTests)
+           .list(answers)  .html(answers)  .edit(test or null) -> Promise<{test} | {remove} | null>
+           .apply(answers, list)  (sorts it and sets phFrom/phTo from the newest pH)
+           .latest(list)  .levels(test)  .words(test)  .date(test)
      The answers are FieldProfile's flat map; the server's FieldProfile::normalize is the judge. --}}
 @once
 @push('head')
@@ -123,6 +127,65 @@
     .fq-phr span { padding-bottom: .7rem; font-size: .84rem; font-weight: 700; color: #6b7280; }
     .fq-phr input.is-bad { border-color: #ef4444; }
     .fq-err { margin-top: .4rem; font-size: .76rem; font-weight: 700; color: #b91c1c; }
+
+    /* The soil test log (2026-10-16, the owner): each result with the day it was
+       sampled, newest first. It sits under the acidity question and in the lot sheet. */
+    .fq-tests { --fq-e: cubic-bezier(.22,1,.36,1); --fq-g: #4a7c2a; --fq-gd: #2d5016; margin-top: .85rem; padding: .8rem; border-radius: 1rem; background: #f8faf6; border: 1px solid #e8eee1; min-width: 0; }
+    .fq-tests-h { display: flex; align-items: flex-start; gap: .6rem; }
+    .fq-tests-h > span { flex: none; width: 2.2rem; height: 2.2rem; border-radius: .8rem; display: grid; place-items: center; font-size: 1.1rem; background: #fff; border: 1px solid #e1e9d7; }
+    .fq-tests-h > div { flex: 1; min-width: 0; }
+    .fq-tests-h b { display: block; font-size: .92rem; font-weight: 800; color: #14210c; }
+    .fq-tests-h small { display: block; margin-top: .1rem; font-size: .77rem; line-height: 1.45; color: #6b7280; }
+    .fq-tl { list-style: none; margin: .7rem 0 0; padding: 0; display: grid; gap: .45rem; }
+    .fq-tl li { display: flex; align-items: center; gap: .6rem; min-width: 0; padding: .6rem .65rem; border-radius: .9rem; background: #fff; border: 1px solid #e5e9e0; animation: fqPop .3s var(--fq-e) both; }
+    .fq-tl li > div { flex: 1; min-width: 0; }
+    .fq-tl b { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; font-size: .86rem; font-weight: 800; color: #14210c; }
+    .fq-tl b em { font-style: normal; font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: .1rem .45rem; border-radius: 999px; color: #3d6823; background: #eef5e6; }
+    .fq-tl b em.is-old { color: #6b7280; background: #f1f3ee; }
+    .fq-tl small { display: block; margin-top: .15rem; font-size: .77rem; line-height: 1.45; color: #4b5563; overflow-wrap: anywhere; }
+    .fq-tl button { flex: none; min-height: 2.4rem; padding: .25rem .85rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: #3d6823; background: #fff; border: 1.5px solid #cfe0bd;
+        transition: background-color .28s var(--fq-e), border-color .28s var(--fq-e); }
+    .fq-tl button:hover { background: #eef5e6; border-color: #86b556; }
+    .fq-tests .fq-add { margin-top: .7rem; }
+    .fqt-f { margin-top: 1rem; }
+    .fqt-f:first-child { margin-top: .3rem; }
+    .fqt-l { display: block; margin-bottom: .4rem; font-size: .86rem; font-weight: 800; color: #1f2937; }
+    .fqt-l small { font-weight: 600; color: #9ca3af; }
+    .fqt-f .form-input { width: 100%; }
+    .fqt-n { max-width: 9rem; text-align: center; font-weight: 700; }
+    .fqt-kind { display: grid; gap: .45rem; }
+    @container (min-width: 30rem) { .fqt-kind { grid-template-columns: 1fr 1fr; } }
+    .fqt-sec { margin-top: 1rem; padding: .85rem; border-radius: 1rem; background: #f8faf6; border: 1px solid #e8eee1; animation: fqPop .3s var(--fq-e) both; }
+    .fqt-sec[hidden] { display: none; }
+    .fqt-sec > p { margin: 0 0 .6rem; font-size: .78rem; line-height: 1.45; color: #6b7280; }
+    .fqt-lv { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .6rem; padding: .45rem 0; border-top: 1px dashed #e3eadb; }
+    .fqt-lv:first-of-type { border-top: 0; }
+    .fqt-lv > span { flex: 1 1 8rem; font-size: .86rem; font-weight: 700; color: #1f2937; }
+    .fqt-pills { display: inline-flex; gap: .3rem; flex-wrap: wrap; }
+    .fqt-pills button { min-height: 2.4rem; padding: .3rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: #374151; background: #fff; border: 1.5px solid #e1e7da;
+        transition: background-color .28s var(--fq-e), border-color .28s var(--fq-e), color .28s var(--fq-e); }
+    .fqt-pills button:hover { border-color: #b7d595; }
+    .fqt-pills button.is-on { color: #fff; background: #4a7c2a; border-color: #4a7c2a; }
+    .fqt-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem .7rem; }
+    .fqt-grid label { display: flex; flex-direction: column; gap: .25rem; min-width: 0; font-size: .76rem; font-weight: 800; color: #374151; }
+    .fqt-grid label small { font-weight: 600; color: #9ca3af; }
+    .fqt-grid .fqt-pills { margin-top: .2rem; }
+    .fqt-grid .fqt-pills button { min-height: 2rem; padding: .15rem .6rem; font-size: .72rem; }
+    .fqt-was { margin-top: .35rem; font-size: .74rem; color: #6b7280; }
+    .fq-foot .fqt-del { color: #b91c1c; }
+    .fq-foot .fqt-del[hidden] { display: none; }
+    html.dark .fq-tests, html.dark .fqt-sec { background: #1a2114; border-color: #2b3a1c; }
+    html.dark .fq-tests-h > span, html.dark .fq-tl li { background: #151b12; border-color: #2b3a1c; }
+    html.dark .fq-tests-h b, html.dark .fq-tl b, html.dark .fqt-l, html.dark .fqt-lv > span, html.dark .fqt-grid label { color: #e8efe1; }
+    html.dark .fq-tests-h small, html.dark .fq-tl small, html.dark .fqt-sec > p, html.dark .fqt-was { color: #a9b69c; }
+    html.dark .fq-tl b em { color: #a5c97e; background: #22301a; }
+    html.dark .fq-tl b em.is-old { color: #a9b69c; background: #1c2616; }
+    html.dark .fq-tl button, html.dark .fqt-pills button { color: #cfe6b8; background: #151b12; border-color: #2b3a1c; }
+    html.dark .fqt-pills button.is-on { color: #fff; background: #4a7c2a; border-color: #6b9f3d; }
+    html.dark .fqt-lv { border-color: #22301a; }
+    html.dark .fq-foot .fqt-del { color: #fca5a5; }
+    @media (prefers-reduced-motion: reduce) { .fq-tl li, .fqt-sec { animation: none !important; } .fq-tl button, .fqt-pills button { transition: none !important; } }
+    html.sm-still .fq-tl li, html.sm-still .fqt-sec { animation: none !important; }
 
     /* The troubles: chips of what is picked, a button that opens the sheet. */
     .fq-tchips { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
@@ -280,6 +343,16 @@
     </div>
 </dialog>
 
+{{-- One soil test result: when, kit or lab, and what it said. --}}
+<dialog class="fq-sheet" id="fqTestSheet" aria-labelledby="fqTestTitle">
+    <div class="fq-box" tabindex="-1">
+        <div class="fq-grip" aria-hidden="true"></div>
+        <div class="fq-head"><h2 id="fqTestTitle">A soil test result<small>Type what the result paper says. Leave out anything it does not have.</small></h2><button type="button" class="fq-x" data-fq-close aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="fq-body fq" id="fqTestBody"></div>
+        <div class="fq-foot"><button type="button" class="btn btn-white fqt-del" id="fqTestDel" hidden>Remove it</button><span></span><button type="button" class="btn btn-white" data-fq-close>Cancel</button><button type="button" class="btn btn-primary" id="fqTestSave">Save the result</button></div>
+    </div>
+</dialog>
+
 {{-- Copy another lot's answers. --}}
 <dialog class="fq-sheet is-small" id="fqCopySheet" aria-labelledby="fqCopyTitle">
     <div class="fq-box" tabindex="-1">
@@ -360,6 +433,157 @@
         });
         return bits.join(' · ');
     }
+
+    /* ---- the soil test log (2026-10-16, the owner) ----
+       The browser's side of FieldProfile::cleanTests, testLatest, testLevels
+       and testWords: one list of results, newest first, an undated one last.
+       The newest pH is the lot's pH (phFrom, phTo). A lot from before the log
+       kept one pH range: it shows as an undated first result. */
+    const T_NUMS = { ph: [3, 10], om: [0, 100], n: [0, 5], p: [0, 1000], k: [0, 5000], zn: [0, 200], s: [0, 1000], b: [0, 50], ec: [0, 100] };
+    const T_KIT = [['nL', 'Nitrogen (N)'], ['pL', 'Phosphorus (P)'], ['kL', 'Potassium (K)']];
+    const T_LAB = [['om', 'Organic matter', '%'], ['n', 'Total nitrogen', '%'], ['p', 'Phosphorus', 'ppm'], ['k', 'Potassium', ''], ['zn', 'Zinc', 'ppm'], ['s', 'Sulfur', 'ppm'], ['b', 'Boron', 'ppm'], ['ec', 'Salinity (EC)', 'dS/m']];
+    const T_LV = { low: 'Low', medium: 'Medium', high: 'High' };
+    const T_KIND = { kit: 'Soil test kit', lab: 'Laboratory' };
+    const tNum = (v) => String(Math.round(Number(v) * 1000) / 1000);
+    function tList(v) {
+        v = v || {};
+        if (Array.isArray(v.tests)) return v.tests.slice();
+        return v.phFrom != null ? [{ id: 't0', date: null, kind: '', ph: Number(v.phFrom), ...(v.phTo != null && Number(v.phTo) !== Number(v.phFrom) ? { phTo: Number(v.phTo) } : {}) }] : [];
+    }
+    function tSort(list) {
+        return list.map((t, i) => [t, i]).sort((a, b) => ((a[0].date ? 0 : 1) - (b[0].date ? 0 : 1)) || String(b[0].date || '').localeCompare(String(a[0].date || '')) || (a[1] - b[1])).map((x) => x[0]);
+    }
+    function tApply(v, list) {
+        v.tests = tSort(list);
+        const w = v.tests.find((t) => t.ph != null);
+        if (w) { v.phFrom = w.ph; v.phTo = w.phTo != null ? w.phTo : w.ph; } else { delete v.phFrom; delete v.phTo; }
+        return v;
+    }
+    function tLatest(list) {
+        let out = null;
+        const twin = { nL: ['om', 'n'], om: ['nL'], n: ['nL'], pL: ['p'], p: ['pL'], kL: ['k'], k: ['kL'] };
+        (list || []).forEach((t) => {
+            if (!t) return;
+            if (!out) out = { date: t.date || null, kind: t.kind || '' };
+            Object.keys(T_NUMS).concat(['nL', 'pL', 'kL', 'phTo']).forEach((k) => {
+                if (t[k] == null || out[k] != null || (twin[k] || []).some((x) => out[x] != null)) return;
+                if (k === 'phTo' && out.ph !== t.ph) return;
+                out[k] = t[k];
+                if (k === 'p') out.pMethod = t.pMethod || 'olsen';
+                if (k === 'k') out.kUnit = t.kUnit || 'ppm';
+            });
+        });
+        return out;
+    }
+    function tLevels(t) {
+        if (!t) return {};
+        const band = (v, lo, hi) => (v < lo ? 'low' : (v <= hi ? 'medium' : 'high'));
+        const out = {};
+        if (t.nL) out.N = t.nL; else if (t.om != null) out.N = band(t.om, 2, 4); else if (t.n != null) out.N = band(t.n, 0.1, 0.2);
+        if (t.pL) out.P2O5 = t.pL; else if (t.p != null) out.P2O5 = t.pMethod === 'bray' ? band(t.p, 15, 30) : band(t.p, 10, 20);
+        if (t.kL) out.K2O = t.kL; else if (t.k != null) out.K2O = band(t.kUnit === 'meq' ? t.k : t.k / 391, 0.2, 0.4);
+        if (t.zn != null) out.Zn = t.zn < 0.8 ? 'low' : 'ok';
+        return out;
+    }
+    function tWords(t) {
+        const lv = tLevels(t), bits = [];
+        if (t.ph != null) bits.push('pH ' + tNum(t.ph) + (t.phTo != null ? ' to ' + tNum(t.phTo) : ''));
+        T_KIT.forEach(([k, l]) => { if (t[k]) bits.push(l.replace(/ \(.*$/, '') + ' ' + t[k]); });
+        const lab = { om: (x) => 'organic matter ' + x + '%', n: (x) => 'nitrogen ' + x + '%', p: (x) => 'P ' + x + ' ppm' + (lv.P2O5 && !t.pL ? ', ' + lv.P2O5 : ''),
+            k: (x) => 'K ' + x + (t.kUnit === 'meq' ? ' meq/100 g' : ' ppm') + (lv.K2O && !t.kL ? ', ' + lv.K2O : ''), zn: (x) => 'zinc ' + x + ' ppm', s: (x) => 'sulfur ' + x + ' ppm', b: (x) => 'boron ' + x + ' ppm', ec: (x) => 'EC ' + x + ' dS/m' };
+        Object.entries(lab).forEach(([k, f]) => { if (t[k] != null) bits.push(f(tNum(t[k]))); });
+        return bits.join(' · ');
+    }
+    const tDate = (t) => (t && t.date ? new Date(t.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Date not known');
+    function testsHtml(v) {
+        const list = tList(v);
+        return '<div class="fq-tests" data-tests><div class="fq-tests-h"><span aria-hidden="true">🧪</span><div><b>Soil tests</b><small>'
+            + (list.length ? 'Newest first. The newest pH counts for the lot. Older results stay here for comparing.' : 'Had the soil tested, by a kit or a laboratory? Add the result with the day it was sampled. Older results can go in too.')
+            + '</small></div></div>'
+            + (list.length ? '<ul class="fq-tl">' + list.map((t, i) => '<li><div><b>' + esc(tDate(t)) + '<em' + (i ? ' class="is-old"' : '') + '>' + (i ? 'Older' : 'Newest') + '</em></b><small>'
+                + esc([T_KIND[t.kind], tWords(t)].filter(Boolean).join(' · ')) + (t.note ? '<br>' + esc(t.note) : '') + '</small></div><button type="button" data-st-edit="' + esc(t.id) + '">Edit</button></li>').join('') + '</ul>' : '')
+            + '<button type="button" class="fq-add" data-st-add>' + PLUS + (list.length ? 'Add another result' : 'Add a soil test result') + '</button></div>';
+    }
+    /* One result in its sheet. Resolves {test}, {remove: true}, or null when closed. */
+    function editTest(t) {
+        return new Promise((resolve) => {
+            const dlg = $('fqTestSheet'), body = $('fqTestBody');
+            const w = Object.assign({ kind: '' }, t ? JSON.parse(JSON.stringify(t)) : {});
+            const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+            const pills = (k, opts, on) => '<div class="fqt-pills" role="radiogroup" data-pk="' + k + '">' + Object.entries(opts).map(([x, l]) => '<button type="button" data-pv="' + x + '" aria-pressed="' + (on === x) + '"' + (on === x ? ' class="is-on"' : '') + '>' + esc(l) + '</button>').join('') + '</div>';
+            const kindBtn = (k, b, sm) => '<button type="button" class="fq-o' + (w.kind === k ? ' is-on' : '') + '" data-kind="' + k + '" aria-pressed="' + (w.kind === k) + '"><span class="fq-m" aria-hidden="true"></span><span class="fq-ot"><b>' + b + '</b><small>' + sm + '</small></span></button>';
+            body.innerHTML = '<div class="fqt-f"><label class="fqt-l" for="fqtDate">When was the soil sampled? <small>(leave it empty if you do not remember)</small></label><input type="date" class="form-input" id="fqtDate" max="' + today + '" value="' + esc(w.date || '') + '"></div>'
+                + '<div class="fqt-f"><span class="fqt-l">How was it tested?</span><div class="fq-opts fqt-kind" role="radiogroup">'
+                + kindBtn('kit', 'A soil test kit', 'Colors on a chart, read as low, medium or high. Often from the MAO or the DA.') + kindBtn('lab', 'A soils laboratory', 'A printed result with numbers') + '</div></div>'
+                + '<div class="fqt-f"><label class="fqt-l" for="fqtPh">pH <small>(optional)</small></label><input type="text" inputmode="decimal" maxlength="4" class="form-input fqt-n" id="fqtPh" placeholder="Like 5.8" value="' + esc(w.ph != null ? tNum(w.ph) : '') + '">'
+                + (w.phTo != null ? '<p class="fqt-was">It was saved as a range, ' + esc(tNum(w.ph)) + ' to ' + esc(tNum(w.phTo)) + '. Change the number to save just one.</p>' : '') + '</div>'
+                + '<div class="fqt-sec" data-for="kit"' + (w.kind === 'kit' ? '' : ' hidden') + '><p>Tap the level the kit showed. Skip what it did not test.</p>'
+                + T_KIT.map(([k, l]) => '<div class="fqt-lv"><span>' + esc(l) + '</span>' + pills(k, T_LV, w[k]) + '</div>').join('') + '</div>'
+                + '<div class="fqt-sec" data-for="lab"' + (w.kind === 'lab' ? '' : ' hidden') + '><p>Type the numbers as printed. Leave a box empty if the result does not have it.</p><div class="fqt-grid">'
+                + T_LAB.map(([k, l, u]) => '<label><span>' + esc(l) + (u ? ' <small>' + esc(u) + '</small>' : '') + '</span><input type="text" inputmode="decimal" maxlength="8" class="form-input" data-tn="' + k + '" value="' + esc(w[k] != null ? tNum(w[k]) : '') + '">'
+                    + (k === 'p' ? pills('pMethod', { olsen: 'Olsen', bray: 'Bray' }, w.pMethod || 'olsen') : '') + (k === 'k' ? pills('kUnit', { ppm: 'ppm', meq: 'meq/100 g' }, w.kUnit || 'ppm') : '') + '</label>').join('')
+                + '</div></div>'
+                + '<div class="fqt-f"><label class="fqt-l" for="fqtNote">A note <small>(optional)</small></label><input type="text" class="form-input" id="fqtNote" maxlength="120" placeholder="Like the laboratory, or which part of the lot" value="' + esc(w.note || '') + '"></div>'
+                + '<p class="fq-err" id="fqtErr" hidden></p>';
+            $('fqTestDel').hidden = !t;
+            let out = null;
+            const err = (m) => { $('fqtErr').textContent = m; $('fqtErr').hidden = !m; if (m) $('fqtErr').scrollIntoView({ block: 'nearest', behavior: reduce() ? 'auto' : 'smooth' }); };
+            body.onclick = (e) => {
+                const kb = e.target.closest('[data-kind]');
+                if (kb) {
+                    w.kind = kb.dataset.kind;
+                    body.querySelectorAll('[data-kind]').forEach((b) => { const on = b === kb; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); });
+                    body.querySelectorAll('[data-for]').forEach((sec) => { sec.hidden = sec.dataset.for !== w.kind; });
+                    return;
+                }
+                const pv = e.target.closest('[data-pv]');
+                if (pv) {
+                    const k = pv.closest('[data-pk]').dataset.pk, x = pv.dataset.pv;
+                    // A kit level taps off again; the P method and the K unit always keep one.
+                    w[k] = (w[k] === x && k.endsWith('L')) ? undefined : x;
+                    pv.parentNode.querySelectorAll('[data-pv]').forEach((b) => { const on = w[k] === b.dataset.pv; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); });
+                }
+            };
+            $('fqTestSave').onclick = () => {
+                const r = { id: (t && t.id) || ('t' + Math.random().toString(36).slice(2, 9)), date: $('fqtDate').value || null, kind: w.kind || '' };
+                if (r.date && r.date > today) { err('The day it was sampled cannot be after today.'); return; }
+                const num = (raw, k) => { raw = String(raw || '').trim().replace(',', '.'); if (raw === '') return null; const n = Number(raw); const [lo, hi] = T_NUMS[k]; return isFinite(n) && n >= lo && n <= hi ? n : NaN; };
+                const ph = num($('fqtPh').value, 'ph');
+                if (Number.isNaN(ph)) { err('A pH is a number from 3 to 10, like 5.8.'); return; }
+                if (ph != null) { r.ph = Math.round(ph * 10) / 10; if (t && t.phTo != null && t.ph === r.ph) r.phTo = t.phTo; }
+                if (r.kind === 'kit') T_KIT.forEach(([k]) => { if (w[k]) r[k] = w[k]; });
+                if (r.kind === 'lab') {
+                    for (const inp of body.querySelectorAll('[data-tn]')) {
+                        const n = num(inp.value, inp.dataset.tn);
+                        if (Number.isNaN(n)) { err('Check the ' + T_LAB.find((x) => x[0] === inp.dataset.tn)[1].toLowerCase() + ': it is not a number in the usual range.'); inp.focus(); return; }
+                        if (n != null) r[inp.dataset.tn] = n;
+                    }
+                    if (r.p != null) r.pMethod = w.pMethod === 'bray' ? 'bray' : 'olsen';
+                    if (r.k != null) r.kUnit = w.kUnit === 'meq' ? 'meq' : 'ppm';
+                }
+                const note = $('fqtNote').value.trim().replace(/\s+/g, ' ').slice(0, 120);
+                if (note) r.note = note;
+                if (!Object.keys(r).some((k) => !['id', 'date', 'kind', 'note'].includes(k))) { err(r.kind ? 'Add at least one result: the pH, a level or a number.' : 'Pick how it was tested, then add what it said.'); return; }
+                out = { test: r };
+                sheetClose(dlg);
+            };
+            $('fqTestDel').onclick = () => { out = { remove: true }; sheetClose(dlg); };
+            once(dlg).then(() => resolve(out));
+            sheetOpen(dlg);
+            body.scrollTop = 0;
+        });
+    }
+    /* A log edit from a page: add, change or remove one result, then hand the new answers back. */
+    async function editTestIn(v, id) {
+        const list = tList(v);
+        const cur = id ? list.find((t) => t.id === id) : null;
+        const r = await editTest(cur);
+        if (!r) return false;
+        tApply(v, r.remove ? list.filter((t) => t !== cur) : (cur ? list.map((t) => (t === cur ? r.test : t)) : list.concat(r.test)));
+        window.toast?.(r.remove ? 'The result is removed. Save to keep the change.' : 'The result is in the log. Save to keep it.');
+        return true;
+    }
+    const TESTS = { list: tList, html: testsHtml, edit: editTest, editIn: editTestIn, apply: tApply, latest: tLatest, levels: tLevels, words: tWords, date: tDate };
 
     /* ---- the data the sheets need ---- */
     /* Every crop's troubles, once a page (2026-10-16, the owner): the last crop on a lot can be
@@ -513,11 +737,7 @@
                 + '<p class="fq-why">' + BULB + '<span>' + esc(q.why) + '</span></p>'
                 + (q.multi && k !== 'outbreaks' ? '<p class="fq-many">Pick all that fit</p>' : '');
             h += k === 'outbreaks' ? troubleHtml(v) : optHtml(k, q, v);
-            if (q.ph) {
-                h += '<div class="fq-ph"><label>Known pH' + tlFlag('ph') + ' from a soil test <small>(optional)</small></label><div class="fq-phr">'
-                    + '<label>From<input type="text" inputmode="decimal" maxlength="4" data-ph="phFrom" value="' + esc(v.phFrom ?? '') + '" aria-label="pH from"></label><span>to</span>'
-                    + '<label>To<input type="text" inputmode="decimal" maxlength="4" data-ph="phTo" value="' + esc(v.phTo ?? '') + '" aria-label="pH to"></label></div><p class="fq-err" data-pherr hidden>A pH is a number from 3 to 10.</p></div>';
-            }
+            if (q.ph) h += testsHtml(v);
             return h + '</section>';
         }
         async function show(lot, page, back) {
@@ -607,6 +827,16 @@
             window.toast?.('Lot ' + (i + 1) + ' now has the answers of Lot ' + (from + 1) + '.');
         }
         el.addEventListener('click', async (e) => {
+            const tb = e.target.closest('[data-st-add], [data-st-edit]');
+            if (tb) {
+                const i = st.lot, v = lotOf(i).value;
+                if (!(await editTestIn(v, tb.dataset.stEdit || null))) return;
+                const box = el.querySelector('[data-tests]');
+                if (box && i === st.lot) box.outerHTML = testsHtml(v);
+                changed(i);
+                if (lotOf(i).copiedFrom !== null || lotOf(i).from) refreshBanner();
+                return;
+            }
             const o2 = e.target.closest('.fq-o');
             if (o2) { pick(o2.closest('.fq-q').dataset.k, o2.dataset.v); return; }
             if (e.target.closest('[data-topen]')) {
@@ -651,7 +881,7 @@
                     sheetClose($('fqSavedSheet'));
                     if (!r) return;
                     const l = lotOf(me);
-                    const keep = Object.fromEntries(Object.entries(r.answers || {}).filter(([k]) => Q[k] || k === 'phFrom' || k === 'phTo'));
+                    const keep = Object.fromEntries(Object.entries(r.answers || {}).filter(([k]) => Q[k] || k === 'phFrom' || k === 'phTo' || k === 'tests'));
                     if (!isRice(st.crop)) { delete keep.level; ['weeds', 'stubble'].forEach((k) => { if (keep[k]) keep[k] = [].concat(keep[k]).filter((x) => !(Q[k].o[x] && Q[k].o[x][2] === 'rice')); }); }
                     l.value = keep; l.from = r.name; l.copiedFrom = null; l.edited = false;
                     if (st.onChange) st.onChange(me, clone(l.value), Object.assign({}, l, { value: undefined }));
@@ -659,18 +889,6 @@
                 };
             }
         });
-        el.addEventListener('input', (e) => {
-            const inp = e.target.closest('[data-ph]');
-            if (!inp) return;
-            const v = lotOf(st.lot).value, raw = inp.value.trim().replace(',', '.'), n = parseFloat(raw);
-            const bad = raw !== '' && !(n >= 3 && n <= 10);
-            inp.classList.toggle('is-bad', bad);
-            const err = inp.closest('.fq-ph').querySelector('[data-pherr]');
-            err.hidden = !el.querySelector('[data-ph].is-bad');
-            if (raw === '' || bad) delete v[inp.dataset.ph]; else v[inp.dataset.ph] = Math.round(n * 10) / 10;
-            changed(st.lot);
-        });
-
         const api = {
             el, pages: () => pagesFor(st.crop), show, value: (i) => clone(lotOf(i ?? st.lot).value), values: () => st.lots.map((l) => clone(l.value)),
             lot: (i) => lotOf(i ?? st.lot), count: (i) => count(lotOf(i ?? st.lot).value), toggleTrouble,
@@ -710,7 +928,7 @@
         try { const r = await window.api(D.urls.save, { method: 'POST', body: p }); SAVED = null; return (r.data && r.data.row) || null; } catch (_) { return null; }
     }
 
-    window.aneeFieldProfile = { mount, open, save, groups: G, questions: Q, count, words, pagesFor };
+    window.aneeFieldProfile = { mount, open, save, groups: G, questions: Q, count, words, pagesFor, tests: TESTS };
 })();
 </script>
 @endpush

@@ -711,6 +711,7 @@
                                         <label>P method <button type="button" class="np-utag" id="npPMethod"><span>Olsen</span>{!! $chev !!}</button></label>
                                         <label>K in <button type="button" class="np-utag" id="npKUnit"><span>ppm</span>{!! $chev !!}</button></label>
                                     </div>
+                                    <p class="np-hint" id="npKitSay" hidden></p>
                                 </div></div>
                             </div>
                         </section>
@@ -1433,8 +1434,17 @@
     $('npPh').addEventListener('input', () => { TOUCH.ph = true; });
     const SOIL = [['om', 'Organic matter %'], ['n', 'Total N %'], ['p', 'P ppm'], ['k', 'K'], ['zn', 'Zn ppm'], ['b', 'B ppm'], ['s', 'S ppm']];
     $('npSoilGrid').innerHTML = SOIL.map(([k, l]) => '<label>' + esc(l) + '<input type="number" class="form-input" step="any" min="0" inputmode="decimal" data-s="' + k + '"></label>').join('');
-    $('npSoilOn').addEventListener('change', () => { $('npSoil').classList.toggle('is-on', $('npSoilOn').checked); calc(); });
-    $('npSoil').addEventListener('input', () => calc());
+    $('npSoilOn').addEventListener('change', () => { TOUCH.soilTest = true; $('npSoil').classList.toggle('is-on', $('npSoilOn').checked); calc(); });
+    $('npSoil').addEventListener('input', () => { TOUCH.soilTest = true; calc(); });
+    /* A soil test kit's levels (2026-10-16): a lot's log can hold a kit result, read
+       as low, medium or high. They stand for a nutrient no number was typed for. */
+    const kitSay = (from) => {
+        const el = $('npKitSay'), k = st.kit || {};
+        const lv = [['N', 'N'], ['P2O5', 'P'], ['K2O', 'K']].filter(([x]) => k[x]).map(([x, l]) => l + ' ' + k[x]);
+        if (!from && !lv.length) { el.hidden = true; return; }
+        el.textContent = (from ? 'From ' + from + '.' : '') + (lv.length ? ' Soil test kit levels: ' + lv.join(', ') + '.' : '');
+        el.hidden = false;
+    };
     $('npPMethod').addEventListener('click', () => pick('How phosphorus was measured', 'It is printed on the soil test result.', P_METHOD, st.pMethod, (k) => { st.pMethod = k; tagSay('npPMethod', P_METHOD, k); calc(); }));
     $('npKUnit').addEventListener('click', () => pick('Potassium is given in', 'It is printed beside the number.', K_UNIT, st.kUnit, (k) => { st.kUnit = k; tagSay('npKUnit', K_UNIT, k); calc(); }));
     const phVal = () => { const v = Number($('npPh').value); return $('npPh').value !== '' && v >= 2 && v <= 12 ? v : null; };
@@ -1442,6 +1452,7 @@
         const s = {};
         if ($('npSoilOn').checked) $('npSoilGrid').querySelectorAll('input').forEach((i) => { if (i.value !== '') s[i.dataset.s] = Number(i.value); });
         const ph = phVal(); if (ph != null) s.ph = ph;
+        if ($('npSoilOn').checked && st.kit && Object.keys(st.kit).length) s.levels = Object.assign({}, st.kit);
         if (!Object.keys(s).length) return null;
         s.pMethod = st.pMethod; s.kUnit = st.kUnit;
         return s;
@@ -1458,6 +1469,8 @@
             const v = s[el.toLowerCase()], crit = (M.elements[el] || {}).critical;
             if (v != null && crit) out[el] = v < crit ? 'low' : 'ok';
         });
+        // A kit's level stands for a nutrient with no number.
+        if (s.levels) ['N', 'P2O5', 'K2O'].forEach((k) => { if (!out[k] && ['low', 'medium', 'high'].includes(s.levels[k])) out[k] = s.levels[k]; });
         return out;
     };
     // What is true of this field, as the model's factors.
@@ -2431,6 +2444,20 @@
         mountCard();
         // The lot's answers are the field in detail; applyProfile fills the simple questions from them.
         if (FPC) await FPC.set(lot.answers || {}, { id: lot.id, name: lot.name, answers: JSON.parse(JSON.stringify(lot.answers || {})), edited: false });
+        // The lot's soil test log (2026-10-16): its newest results fill the soil test, unless it was typed here.
+        const T = window.aneeFieldProfile && window.aneeFieldProfile.tests;
+        const tl = T ? T.latest(T.list(lot.answers || {})) : null;
+        if (tl && !TOUCH.soilTest) {
+            const kit = {}; if (tl.nL) kit.N = tl.nL; if (tl.pL) kit.P2O5 = tl.pL; if (tl.kL) kit.K2O = tl.kL;
+            if (SOIL.some(([k]) => tl[k] != null) || Object.keys(kit).length) {
+                $('npSoilOn').checked = true; $('npSoil').classList.add('is-on');
+                $('npSoilGrid').querySelectorAll('input').forEach((i) => { i.value = tl[i.dataset.s] != null ? tl[i.dataset.s] : ''; });
+                st.pMethod = tl.pMethod === 'bray' ? 'bray' : 'olsen'; st.kUnit = tl.kUnit === 'meq' ? 'meq' : 'ppm';
+                tagSay('npPMethod', P_METHOD, st.pMethod); tagSay('npKUnit', K_UNIT, st.kUnit);
+                st.kit = Object.keys(kit).length ? kit : null;
+                kitSay(lot.name + ', the soil test of ' + T.date(tl));
+            }
+        }
         if (LOT !== lot) return;
         if (H.place) seasonSoon();
         hints(); calc(); paintLot();
@@ -2568,7 +2595,9 @@
             st.conds = Array.isArray(set.conditions) ? set.conditions.filter((k) => M.conditions[k]) : [];
             const s = d.soil || {};
             $('npPh').value = set.ph != null ? set.ph : (s.ph != null ? s.ph : '');
-            const hasTest = SOIL.some(([k]) => s[k] != null);
+            st.kit = s.levels && typeof s.levels === 'object' ? s.levels : null;
+            const hasTest = SOIL.some(([k]) => s[k] != null) || !!st.kit;
+            kitSay('');
             $('npSoilOn').checked = hasTest; $('npSoil').classList.toggle('is-on', hasTest);
             $('npSoilGrid').querySelectorAll('input').forEach((i) => { i.value = s[i.dataset.s] != null ? s[i.dataset.s] : ''; });
             st.pMethod = s.pMethod === 'bray' ? 'bray' : 'olsen'; st.kUnit = s.kUnit === 'meq' ? 'meq' : 'ppm';

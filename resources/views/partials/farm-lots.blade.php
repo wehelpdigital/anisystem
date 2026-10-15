@@ -443,14 +443,21 @@
             + '<div class="fl-f"><label class="fl-lab" for="flArea">How big is it? <small>(optional)</small></label><div class="fl-size"><input type="number" class="form-input" id="flArea" min="0" step="any" inputmode="decimal" placeholder="e.g. 1.5" value="' + esc(st.area) + '">'
             + '<button type="button" class="fl-tag" id="flUnit" aria-haspopup="dialog"><span class="ti" aria-hidden="true">📐</span><span class="tt"><small>Unit</small><b>' + esc(UNITS[st.areaUnit][0]) + '</b></span>' + CHEV + '</button></div></div>'
             + '<div class="fl-f"><span class="fl-lab">Its soil, water and last season</span><div id="flQ"></div></div>'
+            + '<div class="fl-f" id="flTests"></div>'
             + '<p class="fl-err" id="flErr" hidden></p>';
-        paintPlace(); paintQ();
+        // The soil test log (2026-10-16, the owner): kept with the lot when it is saved.
+        const paintTests = () => { const box = $('flTests'); if (box && TESTS()) box.innerHTML = TESTS().html(st.answers); };
+        paintPlace(); paintQ(); paintTests();
         const err = (msg, el) => { const e = $('flErr'); e.textContent = msg; e.hidden = !msg; if (el && !reduce()) { el.classList.remove('fl-shake'); void el.offsetWidth; el.classList.add('fl-shake'); } };
         const bump = (el) => { if (el && !reduce()) { el.classList.remove('is-bump'); void el.offsetWidth; el.classList.add('is-bump'); } };
 
         body.onclick = async (e) => {
             const t = e.target.closest('button');
             if (!t || t.disabled) return;
+            if (t.matches('[data-st-add], [data-st-edit]') && TESTS()) {
+                if (await TESTS().editIn(st.answers, t.dataset.stEdit || null)) { paintTests(); paintQ(); }
+                return;
+            }
             try {
                 if (t.id === 'flProv') {
                     const list = await places();
@@ -485,7 +492,7 @@
             read();
             if (!window.aneeFieldProfile) return;
             const got = await window.aneeFieldProfile.open({ crop: lastCrop(st.answers, st.crop), value: st.answers, title: st.name || 'Your lot', saved: false });
-            if (got) { st.answers = got; paintQ(); }
+            if (got) { st.answers = got; paintQ(); paintTests(); }
         }
         $('flEditSave').onclick = async () => {
             read();
@@ -534,8 +541,9 @@
     }
 
     /* ---- the picked lot's answers, as cards to slide through ---- */
-    const PREV_ICON = { lot: '🗺️', soil: '🟤', water: '💧', acid: '🧪', land: '⛰️', last: '🌾', weeds: '🌿', problems: '🐛' };
-    const PREV_NAME = { lot: 'The lot', soil: 'Soil', water: 'Water', acid: 'Acidity and lime', land: 'The land', last: 'Last season', weeds: 'Weeds', problems: 'Troubles' };
+    const PREV_ICON = { lot: '🗺️', soil: '🟤', water: '💧', acid: '🧪', tests: '🧫', land: '⛰️', last: '🌾', weeds: '🌿', problems: '🐛' };
+    const PREV_NAME = { lot: 'The lot', soil: 'Soil', water: 'Water', acid: 'Acidity and lime', tests: 'Soil tests', land: 'The land', last: 'Last season', weeds: 'Weeds', problems: 'Troubles' };
+    const TESTS = () => (window.aneeFieldProfile && window.aneeFieldProfile.tests) || null;
     const ARROW = (d) => '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' + (d < 0 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7') + '"/></svg>';
     const troubleName = (k) => k.startsWith('other:') ? (D.others[k.slice(6)] || k.slice(6)) : k.replace(/^[a-z]+:/, '').replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
     function prevCards(lot, o) {
@@ -552,14 +560,15 @@
                     words = k === 'outbreaks' ? ([].concat(v).includes('none') ? 'None' : [].concat(v).map(troubleName).join(', '))
                         : [].concat(v).map((x) => (q[2] && q[2][x]) || x).join(', ');
                 }
-                // A tested pH rides with the acidity question.
-                if (k === 'acidity' && a.phFrom != null) {
-                    const ph = 'pH ' + (a.phTo != null && Number(a.phTo) !== Number(a.phFrom) ? a.phFrom + ' to ' + a.phTo : a.phFrom);
-                    words = words && v !== 'untested' ? words + ', ' + ph : ph;
-                }
                 rows.push([q[3] || q[0], words]);
             });
             cards.push({ key: g, rows });
+            // The soil test log follows the acidity: each result by its date, newest first.
+            const T = TESTS();
+            if (g === 'acid' && T) {
+                const list = T.list(a);
+                cards.push({ key: 'tests', extra: true, none: 'No soil test logged. A test is optional.', rows: list.length ? list.map((t) => [T.date(t), T.words(t)]) : [['Soil test', '']] });
+            }
         });
         return cards;
     }
@@ -567,15 +576,16 @@
         o = o || {};
         const cards = prevCards(lot, o);
         const n = cards.length;
-        const asked = cards.filter((c) => !c.lot).reduce((t, c) => t + c.rows.length, 0);
-        const got = cards.filter((c) => !c.lot).reduce((t, c) => t + c.rows.filter((r) => r[1]).length, 0);
+        const asked = cards.filter((c) => !c.lot && !c.extra).reduce((t, c) => t + c.rows.length, 0);
+        const got = cards.filter((c) => !c.lot && !c.extra).reduce((t, c) => t + c.rows.filter((r) => r[1]).length, 0);
         const body = cards.map((cd, i) => {
             const done = cd.rows.filter((r) => r[1]).length;
             return '<article class="fl-pc" aria-label="' + esc(PREV_NAME[cd.key]) + '"><header><span aria-hidden="true">' + PREV_ICON[cd.key] + '</span>'
                 + '<div><b>' + esc(PREV_NAME[cd.key]) + '</b>' + (cd.lot ? '<small>Where it is and its size</small>'
+                    : cd.extra ? '<small' + (done ? ' class="is-done"' : '') + '>' + (done ? done + (done === 1 ? ' result logged' : ' results logged') : 'Optional') + '</small>'
                     : '<small' + (done === cd.rows.length ? ' class="is-done"' : '') + '>' + (done ? done + ' of ' + cd.rows.length + ' answered' : 'Not answered yet') + '</small>') + '</div>'
                 + '<em>' + (i + 1) + ' of ' + n + '</em></header>'
-                + '<ul class="fl-qa">' + cd.rows.map((r) => '<li' + (r[1] ? '' : ' class="is-empty"') + '><span>' + esc(r[0]) + '</span><b>' + esc(r[1] || 'Not answered yet') + '</b></li>').join('') + '</ul>'
+                + '<ul class="fl-qa">' + cd.rows.map((r) => '<li' + (r[1] ? '' : ' class="is-empty"') + '><span>' + esc(r[0]) + '</span><b>' + esc(r[1] || cd.none || 'Not answered yet') + '</b></li>').join('') + '</ul>'
                 + '</article>';
         }).join('');
         const head = o.sheet

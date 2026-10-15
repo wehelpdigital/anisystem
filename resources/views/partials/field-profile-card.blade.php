@@ -193,9 +193,11 @@
             : (['mild', 'strong'].includes(a.acidity) ? 'acidic' : (a.acidity === 'none' ? 'neutral' : (a.acidity === 'alkaline' ? 'alkaline' : null)));
         // A list since 2026-10-16; an older lot's single answer reads as a list of one.
         const salt = [].concat(a.salt || []);
-        const saline = has(salt, ['crust', 'sea', 'tips']) || had('salt'), sodic = salt.includes('sodic'), sulfate = a.acidity === 'sulfate';
+        const T = FP() && FP().tests ? FP().tests : null;
+        const test = T ? T.latest(T.list(a)) : null, levels = T ? T.levels(test) : {};
+        const saline = has(salt, ['crust', 'sea', 'tips']) || had('salt') || Number((test || {}).ec || 0) >= 4, sodic = salt.includes('sodic'), sulfate = a.acidity === 'sulfate';
         const texture = a.texture || '';
-        const soil = ['clay', 'heavy_clay'].includes(texture) ? 'clay' : texture === 'loam' ? 'loam' : texture === 'sandy' ? 'sandy' : a.rocks === 'many' ? 'rocky' : 'unsure';
+        const soil = ['clay', 'heavy_clay'].includes(texture) ? 'clay' : texture === 'loam' ? 'loam' : texture === 'silt' ? 'silty' : texture === 'sandy' ? 'sandy' : a.rocks === 'many' ? 'rocky' : 'unsure';
         const lay = (a.drainage === 'stands' || a.flooding === 'often') ? 'low' : a.slope === 'steep' ? 'steep' : a.slope === 'gentle' ? 'gentle' : ['flat', 'terraced'].includes(a.slope) ? 'flat' : null;
         const reliable = has(water, ['irrigation', 'pump']), partly = has(water, ['river', 'reservoir']), drought = had('drought');
         const rainOnly = water.length === 1 && water[0] === 'rainfed';
@@ -219,13 +221,14 @@
                 hazards.includes('river') && 'river', hazards.includes('wind') && 'wind', shaded && 'shade']),
             problemsVariety: keep([drought && 'drought', floods && 'floods', limitedWater && 'water_source', saline && 'salinity', phWord === 'acidic' && 'acidic', phWord === 'alkaline' && 'alkaline',
                 sodic && 'sodic', sulfate && 'acid_sulfate', isPest && 'pests', isDisease && 'disease', weedy && 'weeds', poorDrain && 'drainage',
-                (a.organic === 'low' || had('nutrient')) && 'low_fertility', ['gentle', 'steep'].includes(a.slope) && 'slope', hazards.includes('wind') && 'wind']),
+                (a.organic === 'low' || had('nutrient') || has([].concat(a.cropLook || []), ['pale', 'purple', 'edges']) || has([].concat(a.wild || []), ['makahiya', 'bare']) || levels.N === 'low') && 'low_fertility', ['gentle', 'steep'].includes(a.slope) && 'slope', hazards.includes('wind') && 'wind']),
             problemsAuto: keep([weedy && 'weeds', floods && 'flood', drought && 'drought', kinds.some((k) => !BUGLESS.includes(k)) && 'insects', kinds.some((k) => SICK.includes(k)) && 'diseases',
                 kinds.includes('Rodent') && 'rats', kinds.includes('Bird') && 'birds', kinds.includes('Snail') && 'snails', had('lodging') && 'lodging', saline && 'salt', a.drainage === 'stands' && 'waterlog']),
             soilSignsAuto: keep([texture === 'heavy_clay' && 'cracks', texture === 'clay' && 'sticky', texture === 'sandy' && 'gritty', texture === 'loam' && 'crumbly',
                 salt.includes('crust') && 'white_crust', sodic && 'black_crust', salt.includes('sea') && 'salty', salt.includes('tips') && 'burnt_tips', sulfate && 'rusty', a.color === 'red' && 'red_soil',
-                (a.organic === 'high' || a.color === 'dark') && 'dark_rich', a.organic === 'low' && 'pale_hard', a.drainage === 'stands' && 'stays_wet']),
+                (a.organic === 'high' || a.color === 'dark') && 'dark_rich', a.organic === 'low' && 'pale_hard', (a.drainage === 'stands' || has([].concat(a.signs || []), ['rust', 'smell'])) && 'stays_wet']),
             waterLook: [].concat(a.waterLook || []).filter((k) => k !== 'unsure'), elevation: a.elevation || null, sun: a.sun || null,
+            soilTest: test, testN: levels.N || null, testP: levels.P2O5 || null, testK: levels.K2O || null,
         };
     }
     async function legacy(answers, crop) {
@@ -246,9 +249,9 @@
             }
             const words = [].concat(a).map((x) => (q.o[x] || [])[0]).filter(Boolean);
             if (words.length) out.push([q.short, words.join(', ')]);
-            if (k === 'acidity' && v.phFrom != null) out.push(['Known pH', v.phFrom === (v.phTo ?? v.phFrom) ? String(v.phFrom) : v.phFrom + ' to ' + v.phTo]);
         });
-        if (v.phFrom != null && !v.acidity) out.push(['Known pH', v.phFrom === (v.phTo ?? v.phFrom) ? String(v.phFrom) : v.phFrom + ' to ' + v.phTo]);
+        const T = FP().tests;
+        if (T) T.list(v).slice(0, 4).forEach((t, i) => { const w = T.words(t); if (w) out.push([(i ? 'Older soil test, ' : 'Soil test, ') + T.date(t), w]); });
         return out;
     }
     const chip = (p, i) => '<span class="fpc-p" style="animation-delay:' + Math.min(i, 10) * 25 + 'ms"><i>' + esc(p[0]) + '</i><span>' + esc(p[1]) + '</span></span>';

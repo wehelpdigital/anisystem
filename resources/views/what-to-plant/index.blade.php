@@ -846,6 +846,13 @@
                 if (lotHasKey('phFrom')) out.push('pH ' + (lotHasKey('phTo') && String(a.phTo) !== String(a.phFrom) ? a.phFrom + ' to ' + a.phTo : a.phFrom));
                 return;
             }
+            // The soil test log: the newest test's day, and the pH it gave.
+            if (k === 'tests') {
+                const T = window.aneeFieldProfile && window.aneeFieldProfile.tests;
+                const l = T ? T.list(a) : [];
+                if (l.length) out.push('soil test ' + T.date(l[0]).replace('Date not known', 'with no date') + (a.phFrom != null ? ', pH ' + (a.phTo != null && String(a.phTo) !== String(a.phFrom) ? a.phFrom + ' to ' + a.phTo : a.phFrom) : '') + (l.length > 1 ? ' (' + l.length + ' in the log)' : ''));
+                return;
+            }
             if (!lotHasKey(k)) return;
             if (k === 'outbreaks') {
                 const l = [].concat(a.outbreaks).filter((x) => x !== 'none');
@@ -862,7 +869,7 @@
         const lot = state.lot;
         if (!lot) return null;
         return { name: lot.name, place: lot.place || state.location, size: window.aneeLots ? window.aneeLots.fmtSize(lot) : '',
-            said: lotSays(['texture', 'rocks', 'water', 'waterLook', 'acidity', 'phFrom', 'salt', 'slope', 'elevation', 'sun', 'hazards', 'prevCrop', 'flooding', 'drainage', 'weeds', 'outbreaks']),
+            said: lotSays(['texture', 'rocks', 'water', 'waterLook', 'acidity', 'tests', 'salt', 'slope', 'elevation', 'sun', 'hazards', 'prevCrop', 'flooding', 'drainage', 'weeds', 'outbreaks']),
             missing: Object.keys(MISSING).filter((k) => !lotHasKey(k)).map((k) => MISSING[k]) };
     }
     const lotPayload = () => {

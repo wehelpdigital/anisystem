@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Schema;
  * Anee Auto next).
  *
  * The single question bank. A profile is a flat map of answers:
- *   texture, color, organic, rocks, hardpan   (page soil)
- *   water[] waterLook[] drainage flooding salt (page water)
- *   acidity phFrom phTo lastLimed             (page acid)
+ *   texture, color, organic, rocks, hardpan, depth, signs[] (page soil)
+ *   water[] waterLook[] drainage flooding salt[] (page water)
+ *   acidity lastLimed, tests[] (the soil test log, which sets phFrom phTo) (page acid)
  *   slope elevation sun hazards[]             (page land)
- *   prevCrop harvested stubble lastPlowed newLand (page last)
- *   weeds[] level                             (page weeds)
+ *   prevCrop harvested stubble lastPlowed newLand cropLook[] yieldLast fertUse (page last)
+ *   weeds[] level wild[]                      (page weeds)
  *   outbreaks[]  (pest:slug, disease:slug, other:key, or none) (page problems)
  *
  * The page shows it with the shared partial partials/field-profile
@@ -57,6 +57,7 @@ final class FieldProfile
             'why' => 'Clay holds water and needs a longer soak. Sand drains fast and dries out.', 'o' => [
                 'sandy' => ['Gritty and loose', 'Falls apart in the hand (galas, sandy)'],
                 'loam' => ['Soft and crumbly', 'Holds a loose ball (loam)'],
+                'silt' => ['Smooth like flour', 'Silky when wet, not gritty or sticky (silt)'],
                 'clay' => ['Sticky and heavy', 'Makes a ribbon between the fingers (lagkitin, clay)'],
                 'heavy_clay' => ['Heavy clay that cracks', 'Opens wide cracks when it dries'],
             ]],
@@ -76,6 +77,15 @@ final class FieldProfile
         'hardpan' => ['in' => 'soil', 'page' => 'soil', 'short' => 'Hard layer', 'q' => 'Is there a hard layer under the plow depth?',
             'why' => 'A hard layer holds the water in a paddy, but it stops the roots of upland crops.', 'o' => [
                 'yes' => ['Yes', 'The plow or a bar hits it'], 'no' => ['No', ''],
+            ]],
+        'depth' => ['in' => 'soil', 'page' => 'soil', 'short' => 'Soil depth', 'q' => 'How deep can you dig before you hit rock or gravel?',
+            'why' => 'Shallow soil holds little water and food, and corn, root crops and trees need depth for their roots.', 'o' => [
+                'shallow' => ['Less than a hand span', 'About 20 cm or less'], 'medium' => ['About an arm deep', '20 to 50 cm'], 'deep' => ['Deeper than an arm', 'More than 50 cm'],
+            ]],
+        'signs' => ['in' => 'soil', 'page' => 'soil', 'short' => 'Soil signs', 'q' => 'Any of these when you dig, or when water stands on it?', 'multi' => true, 'none' => 'none',
+            'why' => 'They show, without a test, how long water sits in the soil and whether iron builds up and burns young rice.', 'o' => [
+                'rust' => ['Rusty orange streaks in the soil', 'Water sits in it for long'], 'sheen' => ['An oily film on standing water', 'It breaks into pieces when you poke it'],
+                'smell' => ['A rotten egg smell', 'When you dig the wet soil'], 'none' => ['None of these', ''],
             ]],
         'water' => ['in' => 'soil', 'page' => 'water', 'short' => 'Water', 'q' => 'Where does the field get its water?', 'multi' => true, 'none' => 'rainfed',
             'why' => 'The water decides when you can soak and plow. Pick every source this lot uses.', 'o' => [
@@ -128,9 +138,9 @@ final class FieldProfile
                 'full' => ['Full sun all day', ''], 'part' => ['Shaded part of the day', 'By trees or buildings'], 'shade' => ['Mostly shaded', ''],
             ]],
         'hazards' => ['in' => 'soil', 'page' => 'land', 'short' => 'Field problems', 'q' => 'What problems does this field have?', 'multi' => true, 'none' => 'none',
-            'why' => 'The floods, the drainage and the salt are asked with the water. These two change the best time to plant and the variety that fits.', 'o' => [
+            'why' => 'The floods, the drainage and the salt are asked with the water. These change the best time to plant, the variety that fits and how the land is prepared.', 'o' => [
                 'river' => ['A river overflows into it', 'When the river rises in heavy rain'], 'wind' => ['Strong winds pass through', 'A typhoon path, or open ground'],
-                'none' => ['None of these', ''],
+                'erosion' => ['Rain washes the soil away', 'Gullies or bare spots after heavy rain'], 'none' => ['None of these', ''],
             ]],
         'prevCrop' => ['in' => 'history', 'page' => 'last', 'short' => 'Last crop', 'q' => 'What grew here last?',
             'why' => 'The last crop decides what is left to clear and which pests may carry over.', 'o' => [
@@ -155,6 +165,21 @@ final class FieldProfile
             'why' => 'Idle or new land is cleared and roughly plowed first, before the regular work.', 'o' => [
                 'no' => ['No, farmed every season', ''], 'idle' => ['Idle for a few seasons', ''],
             ]],
+        'cropLook' => ['in' => 'history', 'page' => 'last', 'short' => 'Last crop looked', 'q' => 'How did the last crop look as it grew?', 'multi' => true, 'none' => 'green',
+            'why' => 'The leaves tell which plant food ran short, much as a soil test would. Pick every sign you saw.', 'o' => [
+                'green' => ['Even and dark green', 'It grew well all over'], 'pale' => ['Pale green or yellow', 'The older leaves first'],
+                'purple' => ['Dark or purplish leaves, slow to grow', ''], 'edges' => ['Brown, burned leaf edges', 'The older leaves first'],
+                'zinc' => ['Stunted, with dusty brown spots or pale stripes', 'On young plants, weeks after planting'], 'patchy' => ['Good in some spots, poor in others', ''],
+            ]],
+        'yieldLast' => ['in' => 'history', 'page' => 'last', 'short' => 'Last harvest', 'q' => 'How did the last harvest compare with the farms around it?',
+            'why' => 'A lot that yields less than its neighbors, with the same crop and care, usually lacks plant food or has a problem worth finding.', 'o' => [
+                'better' => ['Better than most', ''], 'same' => ['About the same', ''], 'worse' => ['Worse than most', ''],
+            ]],
+        'fertUse' => ['in' => 'history', 'page' => 'last', 'short' => 'Past fertilizer', 'q' => 'How much fertilizer did it get in recent seasons?',
+            'why' => 'Years without fertilizer wear the soil down. Heavy use leaves phosphorus behind, so less may be needed.', 'o' => [
+                'none' => ['None for years', ''], 'organic' => ['Manure or compost only', ''], 'light' => ['Less than the usual bags', ''],
+                'usual' => ['The usual bags for the crop', ''], 'heavy' => ['More than the usual', ''],
+            ]],
         'weeds' => ['in' => 'history', 'page' => 'weeds', 'short' => 'Weeds', 'q' => 'How weedy was it last season?', 'multi' => true, 'none' => 'few',
             'why' => 'Weedy rice and tough weeds need extra passes before planting. Pick every one that fits.', 'o' => [
                 'few' => ['Few or none', 'The field was mostly clean'], 'many' => ['Many weeds', 'They covered much of the field'],
@@ -165,6 +190,11 @@ final class FieldProfile
             'why' => 'An uneven field wastes water and drowns seedlings in the low spots, so it gets extra leveling.', 'o' => [
                 'level' => ['No, the water spread evenly', ''], 'some' => ['A few high and low spots', ''], 'uneven' => ['Very uneven', ''],
             ]],
+        'wild' => ['in' => 'history', 'page' => 'weeds', 'short' => 'Grows wild', 'q' => 'Which of these grow wild on it?', 'multi' => true, 'none' => 'none',
+            'why' => 'Wild plants read the soil for free: ferns like sour soil, makahiya likes poor packed soil, and lush leafy weeds like rich soil.', 'o' => [
+                'ferns' => ['Ferns', 'Pako'], 'makahiya' => ['Makahiya', 'Leaves that fold when touched'], 'lush' => ['Soft leafy weeds, lush and green', 'Like kulitis or olasiman'],
+                'bare' => ['Little grows at all', 'Bare patches stay bare'], 'none' => ['None of these', ''],
+            ]],
         'outbreaks' => ['in' => 'history', 'page' => 'problems', 'short' => 'Troubles', 'q' => 'What troubled the last crop grown on this lot?', 'multi' => true, 'sheet' => true,
             'why' => 'The last crop on this lot, whatever it was, not the crop you plan to plant now. Its pests and diseases can stay in the soil and the stubble, and they shape the clean up before planting.', 'o' => []],
     ];
@@ -173,7 +203,10 @@ final class FieldProfile
      * The other troubles of a last season, beside the catalogue's pests and
      * diseases: key => [label, line, icon, kind, only]. `kind` is how the rules
      * read it (a rat is a Rodent wherever it comes from); `only`: null for
-     * every crop, 'rice', or 'grain' (rice, corn, sorghum, sugarcane).
+     * every crop, 'rice', or 'grain' (rice, corn, sorghum, sugarcane). A sixth
+     * value of true retires one from the list: an old answer still reads, but
+     * the question that replaced it asks it now (zinc and a pale crop are
+     * cropLook since 2026-10-16).
      */
     public const OTHER = [
         'rats' => ['Rats', 'Burrows in the dikes, cut tillers or stalks', '🐀', 'Rodent', null],
@@ -183,8 +216,8 @@ final class FieldProfile
         'drought' => ['Drought', 'The field ran short of water', '☀️', 'Other', null],
         'lodging' => ['Lodging', 'The plants fell over before harvest', '🌾', 'Other', 'grain'],
         'salt' => ['Salt damage', 'White leaf tips and stunted patches', '🧂', 'Other', null],
-        'zinc' => ['Zinc shortage', 'Dusty brown spots and stunting after planting', '🟤', 'Other', 'grain'],
-        'nutrient' => ['Pale or yellow crop', 'Short of nitrogen or other plant food', '🍂', 'Other', null],
+        'zinc' => ['Zinc shortage', 'Dusty brown spots and stunting after planting', '🟤', 'Other', 'grain', true],
+        'nutrient' => ['Pale or yellow crop', 'Short of nitrogen or other plant food', '🍂', 'Other', null, true],
     ];
 
     /* ============================================================ the bank */
@@ -266,7 +299,7 @@ final class FieldProfile
         $grain = self::isGrain($crop);
         $others = [];
         foreach (self::OTHER as $k => [$label, $line, $icon, $kind, $only]) {
-            if (($only === 'rice' && ! self::isRice($crop)) || ($only === 'grain' && ! $grain) || ($kind !== 'Other' && isset($kinds[$kind]))) {
+            if (! empty(self::OTHER[$k][5]) || ($only === 'rice' && ! self::isRice($crop)) || ($only === 'grain' && ! $grain) || ($kind !== 'Other' && isset($kinds[$kind]))) {
                 continue;
             }
             $others[] = ['k' => 'other:' . $k, 'n' => $label, 'l' => $line, 'g' => 'other', 'icon' => $icon];
@@ -311,6 +344,9 @@ final class FieldProfile
         $grain = array_values(array_filter(array_keys(FieldCatalogue::crops()), fn ($c) => self::isGrain($c)));
         $others = [];
         foreach (self::OTHER as $k => [$label, $line, $icon, $kind, $only]) {
+            if (! empty(self::OTHER[$k][5])) {
+                continue;
+            }
             $others[] = ['k' => 'other:' . $k, 'n' => $label, 'l' => $line, 'g' => 'other', 'icon' => $icon, 'c' => $only === 'rice' ? ['rice'] : ($only === 'grain' ? $grain : [])];
         }
 
@@ -397,14 +433,32 @@ final class FieldProfile
         if ($old && ! in_array('none', $out['outbreaks'] ?? [], true)) {
             $out['outbreaks'] = array_values(array_unique(array_merge($out['outbreaks'] ?? [], $old)));
         }
-        // A known pH, as a range from a soil test.
-        $lo = $answers['phFrom'] ?? $answers['phLow'] ?? $answers['ph'] ?? null;
-        $hi = $answers['phTo'] ?? $answers['phHigh'] ?? $lo;
-        $lo = is_numeric($lo) && $lo >= 3 && $lo <= 10 ? round((float) $lo, 1) : null;
-        $hi = is_numeric($hi) && $hi >= 3 && $hi <= 10 ? round((float) $hi, 1) : $lo;
-        if ($lo !== null || $hi !== null) {
-            $out['phFrom'] = min($lo ?? $hi, $hi ?? $lo);
-            $out['phTo'] = max($lo ?? $hi, $hi ?? $lo);
+        // A pale crop and a zinc shortage were troubles; the leaf question asks them now.
+        $old = array_values(array_filter([in_array('other:nutrient', $out['outbreaks'] ?? [], true) ? 'pale' : null, in_array('other:zinc', $out['outbreaks'] ?? [], true) ? 'zinc' : null]));
+        if ($old && isset($qs['cropLook']) && ! in_array('green', $out['cropLook'] ?? [], true)) {
+            $out['cropLook'] = array_values(array_unique(array_merge($out['cropLook'] ?? [], $old)));
+        }
+        /* The soil tests (2026-10-16, the owner): a dated log, newest first, that
+           the farmer can edit. The newest pH in it is the lot's pH. A profile from
+           before the log kept one known pH range: it becomes the log's first test. */
+        if (array_key_exists('tests', $answers)) {
+            $tests = self::cleanTests($answers['tests']);
+        } else {
+            $lo = $answers['phFrom'] ?? $answers['phLow'] ?? $answers['ph'] ?? null;
+            $hi = $answers['phTo'] ?? $answers['phHigh'] ?? $lo;
+            $lo = is_numeric($lo) && $lo >= 3 && $lo <= 10 ? round((float) $lo, 1) : null;
+            $hi = is_numeric($hi) && $hi >= 3 && $hi <= 10 ? round((float) $hi, 1) : $lo;
+            $tests = $lo !== null || $hi !== null ? self::cleanTests([['id' => 't0', 'date' => null, 'kind' => '', 'ph' => min($lo ?? $hi, $hi ?? $lo), 'phTo' => max($lo ?? $hi, $hi ?? $lo)]]) : [];
+        }
+        if ($tests) {
+            $out['tests'] = $tests;
+            foreach ($tests as $t) {
+                if (isset($t['ph'])) {
+                    $out['phFrom'] = $t['ph'];
+                    $out['phTo'] = $t['phTo'] ?? $t['ph'];
+                    break;
+                }
+            }
         }
 
         return $out;
@@ -415,7 +469,7 @@ final class FieldProfile
     {
         $out = ['soil' => [], 'history' => []];
         foreach ($answers as $k => $v) {
-            $in = self::QUESTIONS[$k]['in'] ?? (in_array($k, ['phFrom', 'phTo'], true) ? 'soil' : null);
+            $in = self::QUESTIONS[$k]['in'] ?? (in_array($k, ['phFrom', 'phTo', 'tests'], true) ? 'soil' : null);
             if ($in) {
                 $out[$in][$k] = $v;
             }
@@ -450,12 +504,225 @@ final class FieldProfile
             if ($labels) {
                 $out[] = [$q['short'], implode(', ', $labels)];
             }
-            if ($k === 'acidity' && isset($answers['phFrom'])) {
+            if ($k === 'acidity' && isset($answers['phFrom']) && empty($answers['tests'])) {
                 $out[] = ['Known pH', self::phWords($answers)];
             }
         }
-        if (isset($answers['phFrom']) && ! isset($answers['acidity'])) {
+        if (isset($answers['phFrom']) && ! isset($answers['acidity']) && empty($answers['tests'])) {
             $out[] = ['Known pH', self::phWords($answers)];
+        }
+        foreach (array_slice(array_values((array) ($answers['tests'] ?? [])), 0, 4) as $i => $t) {
+            if (is_array($t) && ($said = self::testWords($t)) !== '') {
+                $out[] = [($i ? 'Older soil test, ' : 'Soil test, ') . self::testDate($t), $said];
+            }
+        }
+
+        return $out;
+    }
+
+    /* ======================================================= the soil tests */
+
+    /** A test's numbers and their sane range. phTo only comes from a profile that kept a pH range. */
+    public const TEST_NUMS = ['ph' => [3, 10], 'phTo' => [3, 10], 'om' => [0, 100], 'n' => [0, 5], 'p' => [0, 1000], 'k' => [0, 5000],
+        'zn' => [0, 200], 's' => [0, 1000], 'b' => [0, 50], 'ec' => [0, 100]];
+
+    /** A soil test kit's levels: nitrogen, phosphorus and potassium. */
+    public const TEST_LEVELS = ['low', 'medium', 'high'];
+
+    /** The log, checked: known numbers in range, kit levels, a real past date or none; newest first, undated last. */
+    public static function cleanTests($list): array
+    {
+        $rows = [];
+        $latest = Carbon::now('Asia/Manila')->addDay()->toDateString();
+        foreach (array_slice(array_values(array_filter((array) $list, 'is_array')), 0, 40) as $i => $t) {
+            $c = [];
+            foreach (self::TEST_NUMS as $k => [$min, $max]) {
+                $v = $t[$k] ?? null;
+                $v = is_string($v) ? str_replace(',', '.', trim($v)) : $v;
+                if ($v !== null && $v !== '' && is_numeric($v) && $v >= $min && $v <= $max) {
+                    $c[$k] = round((float) $v, in_array($k, ['ph', 'phTo'], true) ? 1 : 3);
+                }
+            }
+            foreach (['nL', 'pL', 'kL'] as $k) {
+                if (in_array($t[$k] ?? null, self::TEST_LEVELS, true)) {
+                    $c[$k] = $t[$k];
+                }
+            }
+            if (isset($c['phTo']) && (! isset($c['ph']) || $c['phTo'] === $c['ph'])) {
+                unset($c['phTo']);
+            }
+            // A test with no result in it is not a test.
+            if (! $c) {
+                continue;
+            }
+            $date = is_string($t['date'] ?? null) && preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $t['date'], $m) && checkdate((int) $m[2], (int) $m[3], (int) $m[1])
+                && $t['date'] >= '1970-01-01' && $t['date'] <= $latest ? $t['date'] : null;
+            $id = is_string($t['id'] ?? null) && preg_match('/^[a-z0-9]{1,16}$/i', $t['id']) ? $t['id'] : 't' . substr(md5(json_encode($t) . $i), 0, 7);
+            $row = ['id' => $id, 'date' => $date, 'kind' => in_array($t['kind'] ?? '', ['kit', 'lab'], true) ? $t['kind'] : ''] + $c;
+            if (isset($c['p'])) {
+                $row['pMethod'] = ($t['pMethod'] ?? '') === 'bray' ? 'bray' : 'olsen';
+            }
+            if (isset($c['k'])) {
+                $row['kUnit'] = ($t['kUnit'] ?? '') === 'meq' ? 'meq' : 'ppm';
+            }
+            $note = trim((string) preg_replace('/\s+/', ' ', strip_tags((string) ($t['note'] ?? ''))));
+            if ($note !== '') {
+                $row['note'] = mb_substr($note, 0, 120);
+            }
+            $rows[] = [$row, $i];
+        }
+        usort($rows, fn ($a, $b) => [$a[0]['date'] === null, $b[0]['date'] ?? '', $a[1]] <=> [$b[0]['date'] === null, $a[0]['date'] ?? '', $b[1]]);
+        $out = [];
+        $ids = [];
+        foreach ($rows as [$row]) {
+            while (isset($ids[$row['id']])) {
+                $row['id'] = 't' . substr(md5($row['id'] . count($ids)), 0, 7);
+            }
+            $ids[$row['id']] = true;
+            $out[] = $row;
+        }
+
+        return array_slice($out, 0, 30);
+    }
+
+    /** A test's nitrogen, phosphorus, potassium and zinc as low, medium or high: the kit's own levels, else the usual bands (NPK Plus's soilClass). */
+    public static function testLevels(?array $t): array
+    {
+        if (! $t) {
+            return [];
+        }
+        $band = fn (float $v, float $lo, float $hi) => $v < $lo ? 'low' : ($v <= $hi ? 'medium' : 'high');
+        $out = [];
+        if (isset($t['nL'])) {
+            $out['N'] = $t['nL'];
+        } elseif (isset($t['om'])) {
+            $out['N'] = $band($t['om'], 2, 4);
+        } elseif (isset($t['n'])) {
+            $out['N'] = $band($t['n'], 0.1, 0.2);
+        }
+        if (isset($t['pL'])) {
+            $out['P2O5'] = $t['pL'];
+        } elseif (isset($t['p'])) {
+            $out['P2O5'] = ($t['pMethod'] ?? 'olsen') === 'bray' ? $band($t['p'], 15, 30) : $band($t['p'], 10, 20);
+        }
+        if (isset($t['kL'])) {
+            $out['K2O'] = $t['kL'];
+        } elseif (isset($t['k'])) {
+            $out['K2O'] = $band(($t['kUnit'] ?? 'ppm') === 'meq' ? $t['k'] : $t['k'] / 391, 0.2, 0.4);
+        }
+        if (isset($t['zn'])) {
+            $out['Zn'] = $t['zn'] < 0.8 ? 'low' : 'ok';
+        }
+
+        return $out;
+    }
+
+    /**
+     * The newest result of each kind across the log: a kit test this year says
+     * the N, P and K, a lab test two years ago may still be the only salinity.
+     * Its date is the newest test's. Null for an empty log.
+     */
+    public static function testLatest(array $tests): ?array
+    {
+        $out = null;
+        foreach ($tests as $t) {
+            if (! is_array($t)) {
+                continue;
+            }
+            $out ??= ['date' => $t['date'] ?? null, 'kind' => $t['kind'] ?? ''];
+            foreach (array_merge(array_keys(self::TEST_NUMS), ['nL', 'pL', 'kL']) as $k) {
+                // A nutrient read by the kit is not read again from an older lab number, nor the other way round.
+                $twin = ['nL' => ['om', 'n'], 'om' => ['nL'], 'n' => ['nL'], 'pL' => ['p'], 'p' => ['pL'], 'kL' => ['k'], 'k' => ['kL']][$k] ?? [];
+                if (! isset($t[$k]) || isset($out[$k]) || array_intersect_key($out, array_flip($twin)) || ($k === 'phTo' && isset($out['ph']) && ! isset($t['ph']))) {
+                    continue;
+                }
+                if ($k === 'phTo' && ($out['ph'] ?? null) !== ($t['ph'] ?? null)) {
+                    continue;
+                }
+                $out[$k] = $t[$k];
+                if ($k === 'p') {
+                    $out['pMethod'] = $t['pMethod'] ?? 'olsen';
+                }
+                if ($k === 'k') {
+                    $out['kUnit'] = $t['kUnit'] ?? 'ppm';
+                }
+            }
+        }
+
+        return $out;
+    }
+
+    /** When a test was taken, in words. */
+    public static function testDate(array $t): string
+    {
+        return ! empty($t['date']) ? Carbon::parse($t['date'])->format('M j, Y') : 'date not known';
+    }
+
+    /** A test's results in plain words: "laboratory: pH 5.4, organic matter 1.8 percent, ... (N low, P low)". */
+    public static function testWords(array $t): string
+    {
+        $n = fn ($v) => rtrim(rtrim(number_format((float) $v, 3, '.', ''), '0'), '.');
+        $bits = [];
+        if (isset($t['ph'])) {
+            $bits[] = 'pH ' . $n($t['ph']) . (isset($t['phTo']) ? ' to ' . $n($t['phTo']) : '');
+        }
+        foreach (['nL' => 'nitrogen', 'pL' => 'phosphorus', 'kL' => 'potassium'] as $k => $w) {
+            if (isset($t[$k])) {
+                $bits[] = $w . ' ' . $t[$k];
+            }
+        }
+        $lab = ['om' => ['organic matter', ' percent'], 'n' => ['total nitrogen', ' percent'], 'p' => ['phosphorus', ' ppm'], 'k' => ['potassium', ''],
+            'zn' => ['zinc', ' ppm'], 's' => ['sulfur', ' ppm'], 'b' => ['boron', ' ppm'], 'ec' => ['salinity (EC)', ' dS/m']];
+        foreach ($lab as $k => [$w, $u]) {
+            if (isset($t[$k])) {
+                $unit = $k === 'k' ? (($t['kUnit'] ?? 'ppm') === 'meq' ? ' meq per 100 g' : ' ppm') : $u;
+                $bits[] = $w . ' ' . $n($t[$k]) . $unit . ($k === 'p' ? ' (' . ucfirst($t['pMethod'] ?? 'olsen') . ')' : '');
+            }
+        }
+        if (! $bits) {
+            return '';
+        }
+        $lv = self::testLevels($t);
+        $said = array_filter(['N' => $lv['N'] ?? null, 'P' => $lv['P2O5'] ?? null, 'K' => $lv['K2O'] ?? null]);
+        $levels = $said && ! isset($t['nL']) && ! isset($t['pL']) && ! isset($t['kL'])
+            ? ' (that is ' . implode(', ', array_map(fn ($k, $v) => $k . ' ' . $v, array_keys($said), $said)) . ')' : '';
+        $kind = ['kit' => 'soil test kit', 'lab' => 'laboratory'][$t['kind'] ?? ''] ?? '';
+
+        return ($kind ? $kind . ': ' : '') . implode(', ', $bits) . $levels . (! empty($t['note']) ? '. ' . $t['note'] : '');
+    }
+
+    /**
+     * What the answers hint at, without a soil test, as short sentences for
+     * Anee (the wild plants, the last crop's leaves, the soil signs, the depth,
+     * the fertilizer history and the harvest beside the neighbors').
+     */
+    public static function hints(array $a): array
+    {
+        $has = fn (string $k, string $v) => in_array($v, (array) ($a[$k] ?? []), true);
+        $out = [];
+        $map = [
+            ['wild', 'ferns', 'ferns grow wild on it, a sign of acidic soil'],
+            ['wild', 'makahiya', 'makahiya grows wild on it, a sign of poor or packed soil'],
+            ['wild', 'lush', 'lush leafy weeds grow on it, a sign of fertile soil'],
+            ['wild', 'bare', 'parts of it stay bare, a sign of salt, strong acidity, a hard layer or very poor soil there'],
+            ['cropLook', 'pale', 'the last crop was pale or yellow from the older leaves, so nitrogen likely ran short'],
+            ['cropLook', 'purple', 'the last crop had dark or purplish leaves and grew slowly, so phosphorus likely ran short'],
+            ['cropLook', 'edges', 'the last crop had brown, burned leaf edges on the older leaves, so potassium likely ran short'],
+            ['cropLook', 'zinc', 'the last crop was stunted with dusty brown spots or pale stripes, so zinc likely ran short'],
+            ['cropLook', 'patchy', 'the last crop was good in some spots and poor in others, so the soil or the water differs across the lot'],
+            ['signs', 'rust', 'rusty streaks in the soil show that water sits in it for long stretches'],
+            ['signs', 'sheen', 'an oily film on standing water points to iron building up, which can burn rice leaves (iron toxicity)'],
+            ['signs', 'smell', 'a rotten egg smell when dug shows the soil stays wet and airless'],
+            ['depth', 'shallow', 'the soil is shallow before rock or gravel, so it holds little water and limits deep roots'],
+            ['fertUse', 'none', 'it had no fertilizer for years, so the soil is likely worn down'],
+            ['fertUse', 'heavy', 'it had more fertilizer than usual in past seasons, so phosphorus may have built up'],
+            ['yieldLast', 'worse', 'it yields less than the farms around it'],
+            ['yieldLast', 'better', 'it yields better than the farms around it'],
+        ];
+        foreach ($map as [$k, $v, $line]) {
+            if ($has($k, $v)) {
+                $out[] = $line;
+            }
         }
 
         return $out;
@@ -470,8 +737,10 @@ final class FieldProfile
     public static function words(array $answers, ?string $crop = null): string
     {
         $p = self::pairs($answers, $crop);
+        $h = self::hints($answers);
 
-        return $p ? implode('. ', array_map(fn ($x) => $x[0] . ': ' . $x[1], $p)) . '.' : 'Nothing given.';
+        return ($p ? implode('. ', array_map(fn ($x) => $x[0] . ': ' . $x[1], $p)) . '.' : 'Nothing given.')
+            . ($h ? ' What these hint at, without a soil test: ' . implode('; ', $h) . '.' : '');
     }
 
     /**
@@ -519,7 +788,9 @@ final class FieldProfile
         };
         // A list since 2026-10-16; an older lot's single answer reads as a list of one.
         $salt = (array) ($a['salt'] ?? []);
-        $saline = (bool) array_intersect($salt, ['crust', 'sea', 'tips']) || $had('salt');
+        $test = self::testLatest((array) ($a['tests'] ?? []));
+        $levels = self::testLevels($test);
+        $saline = (bool) array_intersect($salt, ['crust', 'sea', 'tips']) || $had('salt') || (float) ($test['ec'] ?? 0) >= 4;
         $sodic = in_array('sodic', $salt, true);
         $sulfate = ($a['acidity'] ?? '') === 'sulfate';
         $conditions = array_values(array_filter([$phWord, $sodic ? 'sodic' : null, $saline ? 'saline' : null, $sulfate ? 'acid_sulfate' : null]));
@@ -529,6 +800,7 @@ final class FieldProfile
         $soil = match (true) {
             in_array($texture, ['clay', 'heavy_clay'], true) => 'clay',
             $texture === 'loam' => 'loam',
+            $texture === 'silt' => 'silty',
             $texture === 'sandy' => 'sandy',
             ($a['rocks'] ?? '') === 'many' => 'rocky',
             default => 'unsure',
@@ -576,7 +848,8 @@ final class FieldProfile
             $drought ? 'drought' : null, $floods ? 'floods' : null, $limitedWater ? 'water_source' : null, $saline ? 'salinity' : null,
             $phWord === 'acidic' ? 'acidic' : null, $phWord === 'alkaline' ? 'alkaline' : null, $sodic ? 'sodic' : null, $sulfate ? 'acid_sulfate' : null,
             $isPest ? 'pests' : null, $isDisease ? 'disease' : null, $weedy ? 'weeds' : null, $poorDrain ? 'drainage' : null,
-            ($a['organic'] ?? '') === 'low' || $had('nutrient') ? 'low_fertility' : null, in_array($a['slope'] ?? '', ['gentle', 'steep'], true) ? 'slope' : null,
+            ($a['organic'] ?? '') === 'low' || $had('nutrient') || array_intersect((array) ($a['cropLook'] ?? []), ['pale', 'purple', 'edges'])
+                || array_intersect((array) ($a['wild'] ?? []), ['makahiya', 'bare']) || ($levels['N'] ?? '') === 'low' ? 'low_fertility' : null, in_array($a['slope'] ?? '', ['gentle', 'steep'], true) ? 'slope' : null,
             in_array('wind', $hazards, true) ? 'wind' : null,
         ]));
         $autoProblems = array_values(array_filter([
@@ -591,7 +864,7 @@ final class FieldProfile
             in_array('crust', $salt, true) ? 'white_crust' : null, $sodic ? 'black_crust' : null, in_array('sea', $salt, true) ? 'salty' : null, in_array('tips', $salt, true) ? 'burnt_tips' : null,
             $sulfate ? 'rusty' : null, ($a['color'] ?? '') === 'red' ? 'red_soil' : null,
             ($a['organic'] ?? '') === 'high' || ($a['color'] ?? '') === 'dark' ? 'dark_rich' : null, ($a['organic'] ?? '') === 'low' ? 'pale_hard' : null,
-            ($a['drainage'] ?? '') === 'stands' ? 'stays_wet' : null,
+            ($a['drainage'] ?? '') === 'stands' || array_intersect((array) ($a['signs'] ?? []), ['rust', 'smell']) ? 'stays_wet' : null,
         ]));
 
         return [
@@ -600,6 +873,8 @@ final class FieldProfile
             'water' => $w, 'waterNpk' => $w === 'limited' ? 'partial' : $w, 'waterAuto' => $auto,
             'problemsWhen' => $when, 'problemsVariety' => $variety, 'problemsAuto' => $autoProblems, 'soilSignsAuto' => $signs,
             'waterLook' => array_values(array_diff((array) ($a['waterLook'] ?? []), ['unsure'])), 'elevation' => $a['elevation'] ?? null, 'sun' => $a['sun'] ?? null,
+            // The newest soil test, and its N, P and K as Crop Protocol's levels.
+            'soilTest' => $test, 'testN' => $levels['N'] ?? null, 'testP' => $levels['P2O5'] ?? null, 'testK' => $levels['K2O'] ?? null,
         ];
     }
 

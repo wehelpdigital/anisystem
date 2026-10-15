@@ -1046,8 +1046,11 @@ final class LandPrepPlanner
         if ($had('lodging')) {
             $note('info', 'The crop lodged last season: go easy on nitrogen, keep the right spacing, and choose a sturdier variety.', 'history');
         }
-        if ($had('nutrient')) {
-            $add(self::step('soil_test', -60, -45, 'Test the soil', 'Take a soil sample to the regional soils laboratory or check it with a soil test kit, so this season\'s fertilizer fits what the soil lacks.', 'anee', null, 'soil', 'The last crop was pale or yellow.'));
+        // A hungry last crop (its leaves, or the old "pale crop" trouble), unless a soil test from the last two years already says what the soil lacks.
+        $hungry = $had('nutrient') || array_intersect((array) ($h['cropLook'] ?? []), ['pale', 'purple', 'edges']);
+        $tested = collect((array) ($s['tests'] ?? []))->contains(fn ($t) => is_array($t) && ! empty($t['date']) && $t['date'] >= now('Asia/Manila')->subYears(2)->toDateString());
+        if ($hungry && ! $tested) {
+            $add(self::step('soil_test', -60, -45, 'Test the soil', 'Take a soil sample to the regional soils laboratory or check it with a soil test kit, so this season\'s fertilizer fits what the soil lacks.', 'anee', null, 'soil', 'The last crop showed it was short of plant food.'));
         }
 
         /* ---- seed source (asked once for the whole farm) ---- */
@@ -1069,7 +1072,7 @@ final class LandPrepPlanner
                 $note('warn', 'A very uneven field drowns sown seed in its low spots. Level it well, or think of laser leveling, before direct seeding.', 'history');
             }
         }
-        $zinc = (string) ($h['zinc'] ?? ($had('zinc') ? 'zinc' : ''));
+        $zinc = (string) ($h['zinc'] ?? ($had('zinc') || in_array('zinc', (array) ($h['cropLook'] ?? []), true) ? 'zinc' : ''));
         if ($rice && in_array($zinc, ['mild', 'severe', 'zinc'], true)) {
             $txt = match ($zinc) {
                 'severe' => 'Zinc shortage was bad here: use 2 kg of zinc sulfate on the seedbed, or dip the seedling roots in a 2 percent zinc oxide mix before transplanting.',

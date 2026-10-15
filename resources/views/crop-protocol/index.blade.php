@@ -836,18 +836,22 @@
                 <p class="wtp-sub">Optional. The field's problems come from your lot.</p>
                 <textarea id="cpNotes" class="form-textarea" rows="2" maxlength="400" aria-label="Anything else Anee should know" placeholder="e.g. we have a pump but diesel is costly"></textarea>
             </section>
-            {{-- 10: the ground, closer -- what decides WHICH granular and WHEN --}}
-            <section class="wtp-step" data-step="10">
+            {{-- 10: the ground, closer -- what decides WHICH granular and WHEN.
+                 The lot's soil test log answers the phosphorus and the
+                 potassium (2026-10-16), and the step goes when it answers all. --}}
+            <section class="wtp-step" data-step="10" data-blocks-only>
                 <p class="wtp-q">A closer look at the soil</p>
                 <p class="wtp-sub">Optional. Each answer changes which fertilizer to use and when. Skip what you do not know.</p>
                 <div class="cp-blk" data-lot="cond">
                     <p class="wp-qh">Soil condition <small>pH, sodium or salt. You can pick more than one.</small></p>
                     <div class="wtp-choices mb-4" id="cpSoilConds"></div>
                 </div>
-                <p class="wp-qh">Phosphorus in the soil <small>From a soil test or your last crops</small></p>
-                <div class="wtp-choices is-four" id="cpTestP"></div>
-                <p class="wp-qh mt-4">Potassium in the soil</p>
-                <div class="wtp-choices is-four" id="cpTestK"></div>
+                <div class="cp-blk" data-lot="test">
+                    <p class="wp-qh">Phosphorus in the soil <small>From a soil test or your last crops</small></p>
+                    <div class="wtp-choices is-four" id="cpTestP"></div>
+                    <p class="wp-qh mt-4">Potassium in the soil</p>
+                    <div class="wtp-choices is-four" id="cpTestK"></div>
+                </div>
                 <div class="cp-blk" data-lot="ph">
                     <label class="wp-qh mt-4 block" for="cpPh">pH from a soil test <small>Optional. A number beats a guess: it decides how much phosphorus the soil locks up.</small></label>
                     <input type="number" id="cpPh" class="form-input" min="2" max="12" step="0.1" inputmode="decimal" placeholder="e.g. 6.2">
@@ -970,6 +974,9 @@
             $id('cpPh').value = state.ph;
             if (state.ph) { got.push('the pH'); lit[10] = true; }
         }
+        // The lot's newest soil test, read as low, medium or high (FieldProfile::testLevels).
+        one('testP', 'cpTestP', 'testp', L.testP || null, 'unsure', 'the phosphorus', 10);
+        one('testK', 'cpTestK', 'testk', L.testK || null, 'unsure', 'the potassium', 10);
         const prev = PREV_OF[answers.prevCrop] || [null, null];
         one('prevCrop', 'cpPrevCrops', 'prevcrop', prev[0], 'unsure', 'the last crop', 11);
         one('residue', 'cpResidues', 'residue', prev[1], 'unsure', 'its leftovers', 11);
@@ -979,7 +986,7 @@
     /* ---- the lot ---- */
     // Which answers of the lot settle each hidden block, and the TOUCH keys the block's answers live under.
     const LOT_KEYS = { area: [[], 'the size'], texture: [['soil'], 'the soil'], water: [['water'], 'the water'], outbreaks: [[], 'the troubles'],
-        cond: [['soilConditions'], 'the soil condition'], ph: [['ph'], 'the pH'], prevCrop: [['prevCrop', 'residue'], 'the last crop'] };
+        cond: [['soilConditions'], 'the soil condition'], ph: [['ph'], 'the pH'], test: [['testP', 'testK'], 'the soil test'], prevCrop: [['prevCrop', 'residue'], 'the last crop'] };
     // The lot's answers the field's problems are read from, named in the review when one is missing.
     const MISSING = { flooding: 'the floods', drainage: 'the drainage', salt: 'the salt', acidity: 'the acidity', organic: 'the organic matter', slope: 'the slope',
         hazards: 'a river or the wind', weeds: 'the weeds', outbreaks: 'the last troubles' };
@@ -992,6 +999,8 @@
         if (k === 'area') return Number(l.areaHa) > 0;
         if (k === 'cond') return ((has('acidity') && a.acidity !== 'untested') || has('phFrom')) && has('salt');
         if (k === 'ph') return has('phFrom');
+        // The soil test log settles the phosphorus and the potassium once its newest results give both.
+        if (k === 'test') { const T = window.aneeFieldProfile && window.aneeFieldProfile.tests; const lv = T ? T.levels(T.latest(T.list(a))) : {}; return !!(lv.P2O5 && lv.K2O); }
         return has(k);
     }
     // A step whose every question the lot answered is skipped by Next and Back.
