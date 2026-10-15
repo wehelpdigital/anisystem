@@ -591,7 +591,9 @@
             {{-- Step 11: the decision --}}
             <section class="wtp-step" data-step="10">
                 <p class="wtp-q">Ready to run it?</p>
-                <p class="wtp-sub" id="wpReview"></p>
+                <p class="wtp-sub">Check your answers. Tap a row to change it.</p>
+                <div id="wpReview"></div>
+                @include('partials.run-review')
                 <button type="button" class="wtp-run" id="wpRun">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z"/></svg>
                     <span id="wpRunSays">Run the analysis</span>
@@ -855,14 +857,13 @@
         });
         return out;
     }
-    function lotLine() {
+    // The lot for the review: what it says, and what it has not said yet.
+    function lotReview() {
         const lot = state.lot;
-        if (!lot) return '';
-        const said = lotSays(['texture', 'rocks', 'water', 'waterLook', 'acidity', 'phFrom', 'salt', 'slope', 'elevation', 'sun', 'hazards', 'prevCrop', 'flooding', 'drainage', 'weeds', 'outbreaks']);
-        const miss = Object.keys(MISSING).filter((k) => !lotHasKey(k)).map((k) => MISSING[k]);
-        return `<span class="wtp-lotline text-xs">${said.length ? 'From ' + esc(lot.name) + ': ' + esc(said.join(', ')) : esc(lot.name) + ' has no field answers yet'}`
-            + (said.length && miss.length ? `. Not in the lot yet: ${esc(andList(miss))}` : '')
-            + ` · <button type="button" data-lot-edit>${miss.length ? 'Answer them in the lot' : 'Edit the lot'}</button></span>`;
+        if (!lot) return null;
+        return { name: lot.name, place: lot.place || state.location, size: window.aneeLots ? window.aneeLots.fmtSize(lot) : '',
+            said: lotSays(['texture', 'rocks', 'water', 'waterLook', 'acidity', 'phFrom', 'salt', 'slope', 'elevation', 'sun', 'hazards', 'prevCrop', 'flooding', 'drainage', 'weeds', 'outbreaks']),
+            missing: Object.keys(MISSING).filter((k) => !lotHasKey(k)).map((k) => MISSING[k]) };
     }
     const lotPayload = () => {
         if (!state.lot || !window.aneeLots) return {};
@@ -1084,20 +1085,36 @@
         }
     }
 
+    // A list label's first words: "Floods / standing water after rain" is "Floods".
+    const shortLabel = (l) => String(l || '').split(/ \/ | \(| — /)[0];
     function review() {
         const month = (OPT.months.find((m) => m.key === state.startMonth) || {}).label || '';
         const lot = state.lot;
-        // The lot by name and where it is, then the answers, then what the lot gave.
-        $id('wpReview').innerHTML = (lot ? `🗺️ <b>${esc(lot.name)}</b>, ${esc(lot.place || state.location)}` : `📍 <b>${esc(state.location)}</b>`)
-            + `${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''} · starting ${esc(month)}`
-            + (state.area ? ` · ${esc(state.area)}` : '')
-            + `<br><span class="text-xs">${esc(shortOf(OPT.soils[state.soil]))} · ${esc(OPT.waters[state.water] || '')} · ${esc(shortOf(OPT.aims[state.aim]))}`
-            + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'}` : '')
-            + (() => { const n = state.cropsAsked.length + (state.cropsOther ? state.cropsOther.split(',').filter((x) => x.trim()).length : 0); return n ? ` · ${n} crop${n === 1 ? '' : 's'} you picked` : ''; })()
-            + (state.priorities.length ? ` · top priority: ${esc(shortOf((OPT.priorities || {})[state.priorities[0]] || state.priorities[0]).toLowerCase())}` : '')
-            + (state.exclude.length ? ` · skipping ${esc(state.exclude.map((k) => shortOf((OPT.families || {})[k] || k).toLowerCase()).join(', '))}` : '')
-            + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.soilExtra.length ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra answer${n === 1 ? '' : 's'}` : ''; })()
-            + '</span>' + lotLine();
+        const of = (table, k) => (k && k !== 'unsure' ? shortLabel((OPT[table] || {})[k] || k) : '');
+        const land = [of('elevations', state.elevation), of('suns', state.sun), ...state.waterLook.map((k) => 'water ' + of('waterLooks', k).toLowerCase())].filter(Boolean);
+        const ground = [state.ph && state.ph !== 'unsure' ? of('phLevels', state.ph) + (state.phValue ? ' (' + state.phValue + ')' : '') : '', ...state.soilExtra.map((k) => of('soilExtras', k)), of('lays', state.lay)].filter(Boolean);
+        const farm = [state.prevCrop ? 'Last crop: ' + state.prevCrop : '', state.grewWell ? 'Grew well: ' + state.grewWell : '', of('labors', state.labor), of('budgets', state.budget), ...state.market.map((k) => of('markets', k))].filter(Boolean);
+        const book = bookFor();
+        const asked = [...state.cropsAsked.map((k) => shortLabel((book.find((c) => c.key === k) || {}).label || k)), ...(state.cropsOther ? state.cropsOther.split(',').map((x) => x.trim()).filter(Boolean) : [])];
+        $id('wpReview').innerHTML = window.aneeReview.html({
+            icon: '🌱', kicker: 'Crops that fit your field', title: lot ? lot.name : state.location, sub: 'Starting ' + month + (state.area ? ' · ' + state.area : ''),
+            rows: [
+                { e: '🗓️', k: 'Starting', v: month, go: 1 },
+                state.country && state.country !== (OPT.country || '') ? { e: '🌍', k: 'Country', v: rulesFor(state.country).name || state.country } : null,
+                { e: '🟤', k: 'Soil', v: shortOf(OPT.soils[state.soil]), go: skipped(2) ? null : 2, lot: skipped(2) },
+                { e: '💧', k: 'Water', v: OPT.waters[state.water], go: skipped(3) ? null : 3, lot: skipped(3) },
+                { e: '⛰️', k: 'The land', v: land, none: 'Not in the lot', lot: true },
+                { e: '🧪', k: 'Acidity, salt and slope', v: ground, none: 'Not given', go: skipped(4) ? null : 4, lot: skipped(4) },
+                { e: '⚠️', k: 'Field problems', v: state.problems.map((k) => shortLabel(OPT.problems[k] || k)), none: 'None in the lot', lot: true },
+                { e: '🧑‍🌾', k: 'The farm', v: farm, none: 'Not given', go: 5 },
+                { e: '🎯', k: 'The harvest is for', v: shortOf(OPT.aims[state.aim]), go: 6 },
+                { e: '📐', k: 'Field size', v: state.area, none: 'Not given', go: 6 },
+                { e: '⭐', k: 'What matters most', v: state.priorities.slice(0, 3).map((k, i) => (i + 1) + '. ' + shortOf((OPT.priorities || {})[k] || k)), go: 7 },
+                { e: '🚫', k: 'Not planting', v: state.exclude.map((k) => shortOf((OPT.families || {})[k] || k)), none: 'Nothing left out', go: 8 },
+                { e: '📝', k: 'Crops you have in mind', v: asked, none: 'None, Anee picks', go: 9 },
+            ],
+            lot: lotReview(),
+        });
         $id('wpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wpRunFine').textContent = OPT.canUse
             ? 'Paid from your AI credits. It shows in your credit log.'
@@ -1121,6 +1138,8 @@
     $id('wpBack').addEventListener('click', () => show(step - 1, true));
     // The review's "Edit the lot": its sheet, then the steps follow what changed.
     $id('wpReview').addEventListener('click', async (e) => {
+        const go = e.target.closest('[data-rv-go]');
+        if (go) { show(Number(go.getAttribute('data-rv-go')), true); return; }
         if (!e.target.closest('[data-lot-edit]') || !state.lot || !window.aneeLots) return;
         const row = await window.aneeLots.edit(state.lot, { crop: null, ask: false });
         if (row) pickLot(row);

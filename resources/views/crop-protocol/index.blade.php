@@ -871,7 +871,9 @@
             {{-- 12: the decision, with the need it is held to --}}
             <section class="wtp-step" data-step="12">
                 <p class="wtp-q">Ready to run it?</p>
-                <p class="wtp-sub" id="cpReview"></p>
+                <p class="wtp-sub">Check your answers. Tap a row to change it.</p>
+                <div id="cpReview"></div>
+                @include('partials.run-review')
                 <div class="cp-need" id="cpNeed" hidden aria-live="polite"></div>
                 <button type="button" class="wtp-run" id="cpRun">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -1193,22 +1195,47 @@
             default: return true;
         }
     }
+    // A list label's first words: "Floods / standing water after rain" is "Floods".
+    const shortLabel = (l) => String(l || '').split(/ \/ | \(| — /)[0];
+    // The lot for the review: its answers as chips, and what it has not said yet.
+    function lotReview() {
+        const lot = state.lot;
+        if (!lot) return null;
+        const pairs = window.aneeFieldCard && window.aneeFieldProfile ? window.aneeFieldCard.pairs(lot.answers || {}, {}) : [];
+        return { name: lot.name, place: lot.place || state.location, size: window.aneeLots ? window.aneeLots.fmtSize(lot) : '',
+            said: pairs.map(([k, v]) => k + ': ' + v),
+            missing: Object.keys(MISSING).filter((k) => !lotHas(k) && !(k === 'acidity' && lotHas('phFrom'))).map((k) => MISSING[k]) };
+    }
     function review() {
         const crop = OPT.crops.find((c) => c.key === state.crop) || {};
         const month = (OPT.months.find((m) => m.key === state.month) || {}).label || '';
-        const target = state.targetYield ? `${state.targetYield} ${state.yieldUnit}/ha` : 'no target';
-        $id('cpReview').innerHTML = `${esc(crop.icon || '🌱')} <b>${esc(crop.label || '')}</b>${state.variety ? ' · ' + esc(state.variety) : ''} · 📍 ${esc(state.location)}`
-            + `<br><span class="text-xs">${esc(month)} · ${esc(OPT.methods[state.method]?.label || '')} · ${esc(OPT.priorities[state.priority]?.label || '')} · ${esc(target)}</span>`
-            + `<br><span class="text-xs">${esc(state.area)} ha · ${esc(split(OPT.soils[state.soil] || '')[0])} · ${esc(OPT.waters[state.water] || '')}${state.problems.length ? ' · ' + state.problems.length + ' problem' + (state.problems.length === 1 ? '' : 's') : ''}</span>`;
-        const closer = ['testP', 'testK', 'prevCrop', 'residue'].filter((k) => state[k] && state[k] !== 'unsure').length + (state.soilConditions.length ? 1 : 0) + (state.fertHistory ? 1 : 0) + (state.granulars.length ? 1 : 0);
-        if (closer) $id('cpReview').innerHTML += `<br><span class="text-xs">${state.soilConditions.length ? esc(state.soilConditions.map((k) => split((OPT.soilConditions || {})[k] || k)[0].toLowerCase()).join(', ')) + ' soil · ' : ''}${closer} extra answer${closer === 1 ? '' : 's'}${state.granulars.length ? ' · ' + state.granulars.length + ' fertilizer' + (state.granulars.length === 1 ? '' : 's') + ' you can buy' : ''}</span>`;
-        if (state.lot) {
-            const took = Object.keys(LOT_KEYS).filter(lotHas).map((k) => LOT_KEYS[k][1]);
-            const miss = Object.keys(MISSING).filter((k) => !lotHas(k) && !(k === 'acidity' && lotHas('phFrom'))).map((k) => MISSING[k]);
-            $id('cpReview').innerHTML += `<span class="cp-lotline text-xs">🗺️ <b>${esc(state.lot.name)}</b>${state.lot.place ? ', ' + esc(state.lot.place) : ''}${state.lot.count ? ' · ' + state.lot.count + ' field answers' : ''}${took.length ? '. From the lot: ' + esc(andList(took)) : ''}`
-                + `${miss.length ? '. Not in the lot yet: ' + esc(andList(miss)) : ''}. <button type="button" data-cp-lotedit>${miss.length ? 'Answer them in the lot' : 'Edit the lot'}</button></span>`;
-        }
-        if (Number(state.seedAmount) > 0) $id('cpReview').innerHTML += `<br><span class="text-xs">Planting ${esc(state.seedAmount)} ${esc((OPT.seedUnits[state.seedUnit] || [])[1] || state.seedUnit)} on the whole field${Number(state.germination) > 0 ? ' at ' + esc(state.germination) + ' percent germination' : ''}</span>`;
+        const method = OPT.methods[state.method]?.label || '';
+        const unit = (OPT.seedUnits[state.seedUnit] || [])[1] || state.seedUnit;
+        const seed = Number(state.seedAmount) > 0 ? state.seedAmount + ' ' + unit + (Number(state.germination) > 0 ? ' at ' + state.germination + ' percent germination' : '') : '';
+        const lvl = (k, w) => (state[k] && state[k] !== 'unsure' ? w + ' ' + String((OPT.testLevels || {})[state[k]] || state[k]).toLowerCase() : '');
+        const closer = [...state.soilConditions.map((k) => shortLabel((OPT.soilConditions || {})[k] || k)), state.ph ? 'pH ' + state.ph : '', lvl('testP', 'phosphorus'), lvl('testK', 'potassium')].filter(Boolean);
+        const bought = [state.prevCrop && state.prevCrop !== 'unsure' ? 'Last crop: ' + shortLabel((OPT.prevCrops || {})[state.prevCrop] || state.prevCrop) : '',
+            state.residue && state.residue !== 'unsure' ? 'leftovers ' + String((OPT.residues || {})[state.residue] || state.residue).toLowerCase() : '',
+            state.fertHistory ? 'last season: ' + state.fertHistory : '', state.granulars.length ? state.granulars.length + ' fertilizer' + (state.granulars.length === 1 ? '' : 's') + ' you can buy' : ''].filter(Boolean);
+        $id('cpReview').innerHTML = window.aneeReview.html({
+            icon: crop.icon || '🌱', kicker: 'Your crop protocol', title: String(crop.label || '').replace(' — ', ', ') + (state.variety ? ' · ' + state.variety : ''),
+            sub: [month, method, state.lot ? state.lot.name : ''].filter(Boolean).join(' · '),
+            rows: [
+                { e: crop.icon || '🌱', k: 'Crop', v: crop.label, go: 1 },
+                { e: '🏷️', k: 'Variety', v: state.variety, none: 'Not named', go: 2 },
+                { e: '🗓️', k: 'Planting month', v: month, go: 3 },
+                { e: '🌾', k: 'How you plant it', v: method, go: 4 },
+                { e: '🎯', k: 'Your goal', v: [OPT.priorities[state.priority]?.label || '', state.targetYield ? state.targetYield + ' ' + state.yieldUnit + ' per hectare' : 'no target yield'], go: 5 },
+                { e: '📐', k: 'Field and seed', v: [state.area ? state.area + ' ha' : '', seed], go: 7 },
+                { e: '🟤', k: 'Soil and water', v: [shortLabel(OPT.soils[state.soil]), OPT.waters[state.water] || ''], go: skipped(8) ? null : 8, lot: skipped(8) },
+                { e: '⚠️', k: 'Field problems', v: state.problems.map((k) => shortLabel(OPT.problems[k] || k)), none: 'None in the lot', lot: true },
+                { e: '📝', k: 'Your note', v: state.notes, none: 'No note', go: 9 },
+                { e: '🧪', k: 'The soil, closer', v: closer, none: 'Not given', go: 10 },
+                { e: '🛒', k: 'Last crop and what you can buy', v: bought, none: 'Not given', go: 11 },
+            ],
+            lot: lotReview(),
+            editAttr: 'data-cp-lotedit',
+        });
         loadNeed();
         $id('cpRunSays').textContent = OPT.canUse && OPT.quote ? `Write the protocol (${OPT.quote} credits)` : 'Write the protocol';
         $id('cpRunFine').textContent = OPT.canUse
@@ -1219,6 +1246,8 @@
     $id('cpNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
     // The review's "Edit the lot": the lot's sheet, then the steps follow what changed.
     $id('cpReview').addEventListener('click', async (e) => {
+        const go = e.target.closest('[data-rv-go]');
+        if (go) { show(Number(go.getAttribute('data-rv-go')), true); return; }
         if (!e.target.closest('[data-cp-lotedit]') || !state.lot || !window.aneeLots) return;
         const row = await window.aneeLots.edit(state.lot, { crop: state.crop || null, ask: false });
         if (row) { pickLot(row); review(); }

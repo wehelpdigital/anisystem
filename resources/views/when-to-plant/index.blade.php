@@ -627,7 +627,9 @@
             {{-- Step 6: the decision --}}
             <section class="wtp-step" data-step="5">
                 <p class="wtp-q">Ready to run it?</p>
-                <p class="wtp-sub" id="wtpReview"></p>
+                <p class="wtp-sub">Check your answers. Tap a row to change it.</p>
+                <div id="wtpReview"></div>
+                @include('partials.run-review')
                 <button type="button" class="wtp-run" id="wtpRun">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     <span id="wtpRunSays">Run the analysis</span>
@@ -897,14 +899,13 @@
         });
         return out;
     }
-    function lotLine() {
+    // The lot for the review: what it says, and what it has not said yet.
+    function lotReview() {
         const lot = state.lot;
-        if (!lot) return '';
-        const said = lotSays(['texture', 'water', 'flooding', 'drainage', 'salt', 'acidity', 'phFrom', 'weeds', 'outbreaks', 'hazards', 'sun']);
-        const miss = Object.keys(MISSING).filter((k) => !lotHasKey(k)).map((k) => MISSING[k]);
-        return `<span class="wtp-lotline text-xs">${said.length ? 'From ' + esc(lot.name) + ': ' + esc(said.join(', ')) : esc(lot.name) + ' has no field answers yet'}`
-            + (said.length && miss.length ? `. Not in the lot yet: ${esc(andList(miss))}` : '')
-            + ` · <button type="button" data-lot-edit>${miss.length ? 'Answer them in the lot' : 'Edit the lot'}</button></span>`;
+        if (!lot) return null;
+        return { name: lot.name, place: lot.place || state.location, size: window.aneeLots ? window.aneeLots.fmtSize(lot) : '',
+            said: lotSays(['texture', 'water', 'flooding', 'drainage', 'salt', 'acidity', 'phFrom', 'weeds', 'outbreaks', 'hazards', 'sun']),
+            missing: Object.keys(MISSING).filter((k) => !lotHasKey(k)).map((k) => MISSING[k]) };
     }
     const lotPayload = () => {
         if (!state.lot || !window.aneeLots) return {};
@@ -1154,18 +1155,25 @@
         }
     }
 
+    // A list label's first words: "Floods / standing water after rain" is "Floods".
+    const shortLabel = (l) => String(l || '').split(/ \/ | \(| — /)[0];
     function review() {
         const crop = (OPT.crops.find((c) => c.key === state.crop) || {});
-        const lot = state.lot;
-        const size = lot && Number(lot.areaHa) > 0 && window.aneeLots ? window.aneeLots.fmtHa(lot.areaHa) : '';
-        $id('wtpReview').innerHTML = `${esc(crop.icon || '')} <b>${esc(crop.label || '')}</b>`
-            + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(whenSaid(rangeParams()))}`
-            + `${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(nameOf(state.country)) : ''}`
-            // The lot by name, where it is and its size, then what it answered.
-            + (lot ? `<br>🗺️ <b>${esc(lot.name)}</b>, ${esc(lot.place || state.location)}${size ? ' · ' + esc(size) : ''}` : ` · ${esc(state.location)}`)
-            + lotLine()
-            + (state.problems.length ? `<span class="block text-xs mt-1">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '')
-            + ((state.soil.length || state.ph) ? `<span class="block text-xs">Soil: ${esc([...state.soil.map((k) => ((OPT.soilConditions || {})[k] || k).split(' — ')[0]), state.ph ? 'pH ' + state.ph : ''].filter(Boolean).join(', '))}</span>` : '');
+        const when = whenSaid(rangeParams());
+        const soil = [...state.soil.map((k) => shortLabel((OPT.soilConditions || {})[k] || k)), state.ph ? 'pH ' + state.ph : ''].filter(Boolean);
+        $id('wtpReview').innerHTML = window.aneeReview.html({
+            icon: crop.icon || '🌱', kicker: 'The best weeks to plant', title: String(crop.label || '').replace(' — ', ', ') + (state.variety ? ' · ' + state.variety : ''),
+            sub: when + (state.lot ? ' · ' + state.lot.name : ''),
+            rows: [
+                { e: '🗓️', k: 'Months you might plant', v: when, go: 1 },
+                { e: crop.icon || '🌱', k: 'Crop', v: crop.label, go: 2 },
+                { e: '🏷️', k: 'Variety', v: state.variety, none: 'Any variety', go: 3 },
+                state.country && state.country !== (OPT.country || '') ? { e: '🌍', k: 'Country', v: nameOf(state.country) } : null,
+                { e: '⚠️', k: 'Field problems', v: state.problems.map((k) => shortLabel(OPT.problems[k] || k)), none: 'None in the lot', lot: true },
+                { e: '🧪', k: 'Soil', v: soil, none: 'Not tested', go: skipped(4) ? null : 4, lot: skipped(4) },
+            ],
+            lot: lotReview(),
+        });
         $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${priceNow()} credits)` : 'Run the analysis';
         $id('wtpRunFine').textContent = OPT.canUse
             ? 'Paid from your AI credits. It shows in your credit log.'
@@ -1183,6 +1191,8 @@
     $id('wtpBack').addEventListener('click', () => show(step - 1, true));
     // The review's "Edit the lot": its sheet, then the steps follow what changed.
     $id('wtpReview').addEventListener('click', async (e) => {
+        const go = e.target.closest('[data-rv-go]');
+        if (go) { show(Number(go.getAttribute('data-rv-go')), true); return; }
         if (!e.target.closest('[data-lot-edit]') || !state.lot || !window.aneeLots) return;
         const row = await window.aneeLots.edit(state.lot, { crop: state.crop || null, ask: false });
         if (row) pickLot(row);

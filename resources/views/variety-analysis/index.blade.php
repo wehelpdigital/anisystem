@@ -583,8 +583,9 @@
             {{-- Step 8: the decision --}}
             <section class="wtp-step" data-step="7">
                 <p class="wtp-q">Ready to run it?</p>
-                <p class="wtp-sub" id="vaReview"></p>
-                <div class="va-lot" id="vaLotSaid" hidden></div>
+                <p class="wtp-sub">Check your answers. Tap a row to change it.</p>
+                <div id="vaReview"></div>
+                @include('partials.run-review')
                 <button type="button" class="wtp-run" id="vaRun">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
                     <span id="vaRunSays">Run the research</span>
@@ -768,24 +769,23 @@
     const MISSING = { flooding: 'the floods', drainage: 'the drainage', salt: 'the salt', acidity: 'the acidity', organic: 'the organic matter', slope: 'the slope',
         elevation: 'the elevation', hazards: 'a river or the wind', weeds: 'the weeds', outbreaks: 'the last troubles' };
     const andList = (a) => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
-    const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L18.5 9.5a2.1 2.1 0 00-4-4L4 16v4zM13.5 6.5l4 4"/></svg>';
-    function lotSaid() {
-        const box = $id('vaLotSaid'), lot = LOT.lot;
-        if (!lot || !window.aneeLots) { box.hidden = true; return; }
+    // The lot for the review: its answers as chips, and what it has not said yet.
+    function lotReview() {
+        const lot = LOT.lot;
+        if (!lot || !window.aneeLots) return null;
         const A = lot.answers || {}, sub = {};
         SAID_KEYS.forEach((k) => { if (window.aneeLots.has(lot, k)) sub[k] = A[k]; });
         if (sub.phFrom != null && A.phTo != null) sub.phTo = A.phTo;
         // The stones only when they stood for the soil.
         if (sub.rocks !== undefined && (sub.texture !== undefined || sub.rocks !== 'many')) delete sub.rocks;
         const pairs = window.aneeFieldCard && window.aneeFieldProfile ? window.aneeFieldCard.pairs(sub, {}) : [];
-        const miss = Object.keys(MISSING).filter((k) => !window.aneeLots.has(lot, k) && !(k === 'acidity' && window.aneeLots.has(lot, 'phFrom'))).map((k) => MISSING[k]);
-        box.innerHTML = '<p class="va-lot-h"><b>From ' + esc(lot.name) + '</b><span>' + esc([lot.place, lot.areaHa ? window.aneeLots.fmtHa(lot.areaHa) : ''].filter(Boolean).join(' · ')) + '</span></p>'
-            + (pairs.length ? window.aneeFieldCard.said(pairs) : '<p class="va-lot-none">This lot has no field answers yet. Add them, and Anee reads its soil and water from them.</p>')
-            + (pairs.length && miss.length ? '<p class="va-lot-none">Not in the lot yet: ' + esc(andList(miss)) + '. Add them so Anee can weigh them.</p>' : '')
-            + '<button type="button" class="va-lot-edit" data-lot-edit>' + PEN + (miss.length ? 'Answer them in the lot' : 'Edit the lot') + '</button>';
-        reveal(box, true);
+        return { name: lot.name, place: lot.place || state.location, size: window.aneeLots.fmtSize(lot),
+            said: pairs.map(([k, v]) => k + ': ' + v),
+            missing: Object.keys(MISSING).filter((k) => !window.aneeLots.has(lot, k) && !(k === 'acidity' && window.aneeLots.has(lot, 'phFrom'))).map((k) => MISSING[k]) };
     }
-    $id('vaLotSaid').addEventListener('click', (e) => {
+    $id('vaReview').addEventListener('click', (e) => {
+        const go = e.target.closest('[data-rv-go]');
+        if (go) { show(Number(go.getAttribute('data-rv-go')), true); return; }
         if (!e.target.closest('[data-lot-edit]') || !LOT.lot || !window.aneeLots) return;
         // A saved lot comes back through the picker (aneelots:changed) and is applied there.
         window.aneeLots.edit(LOT.lot, { crop: state.crop || null });
@@ -920,16 +920,26 @@
         }
     }
 
+    // A list label's first words: "Floods / standing water after rain" is "Floods".
+    const shortLabel = (l) => String(l || '').split(/ \/ | \(| — /)[0];
     function review() {
         const crop = OPT.crops.find((c) => c.key === state.crop) || {};
-        const order = state.priorities.map((k, i) => `${i + 1}. ${OPT.priorities[k]?.label || k}`).join(' · ');
-        $id('vaReview').innerHTML = `${esc(crop.icon || '🌱')} <b>${esc(String(crop.label || '').replace(' — ', ', '))}</b> · 📍 ${esc(LOT.lot ? LOT.lot.name + ', ' + state.location : state.location)}`
-            + ` · ${esc(seasonSaid(state.season, state.year))}`
-            + `<br><span class="text-xs">${esc(String(OPT.soils[state.soil] || '').split(' — ')[0])}${state.elevation ? ' · ' + esc(String((OPT.elevations || {})[state.elevation] || state.elevation).split(' — ')[0]) : ''}`
-            + ` · ${state.varieties.length ? esc(state.varieties.join(', ')) : 'Anee picks the varieties'}`
-            + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'} checked` : '') + '</span>'
-            + `<br><span class="text-xs">${esc(order)}</span>`;
-        lotSaid();
+        const season = seasonSaid(state.season, state.year);
+        $id('vaReview').innerHTML = window.aneeReview.html({
+            icon: crop.icon || '🌱', kicker: 'The varieties that fit', title: String(crop.label || '').replace(' — ', ', '),
+            sub: season + (LOT.lot ? ' · ' + LOT.lot.name : ''),
+            rows: [
+                { e: '🗓️', k: 'Season', v: season, go: 1 },
+                { e: '🟤', k: 'Soil', v: shortLabel(OPT.soils[state.soil]), go: skipped(2) ? null : 2, lot: skipped(2) },
+                { e: '⛰️', k: 'The land', v: state.elevation ? shortLabel((OPT.elevations || {})[state.elevation] || state.elevation) : '', none: 'Not in the lot', lot: true },
+                { e: crop.icon || '🌱', k: 'Crop', v: crop.label, go: 3 },
+                { e: '🏷️', k: 'Varieties to compare', v: state.varieties, none: 'Anee picks the top yielding ones', go: 4 },
+                { e: '⭐', k: 'What matters most', v: state.priorities.map((k, i) => (i + 1) + '. ' + (OPT.priorities[k]?.label || k)), go: 5 },
+                { e: '⚠️', k: 'Field problems', v: state.problems.map((k) => shortLabel(OPT.problems[k] || k)), none: 'None in the lot', lot: true },
+                { e: '📝', k: 'Your note', v: state.notes, none: 'No note', go: 6 },
+            ],
+            lot: lotReview(),
+        });
         $id('vaRunSays').textContent = OPT.canUse && OPT.quote ? `Run the research (${OPT.quote} credits)` : 'Run the research';
         $id('vaRunFine').textContent = OPT.canUse
             ? 'Paid from your AI credits. You can see it in your credit log.'
