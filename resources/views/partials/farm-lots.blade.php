@@ -82,6 +82,10 @@
     @keyframes flPrevOut { to { opacity: 0; transform: translateY(-6px); } }
     .fl-prev-h { display: flex; align-items: center; gap: .5rem; padding: 0 .85rem; min-width: 0; }
     .fl-prev-h b { flex: 1; min-width: 0; font-size: .8rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; color: #3d6823; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .fl-prev-h b small { display: block; margin-top: .1rem; font-size: .72rem; font-weight: 700; letter-spacing: 0; text-transform: none; color: #6b7a5c; white-space: normal; }
+    .fl-prev-h button.is-main { color: #fff; background: #4a7c2a; border-color: #4a7c2a; }
+    .fl-prev-h button.is-main:hover { background: #3d6823; border-color: #3d6823; }
+    .fl-prev.is-sheet { margin: 0; }
     .fl-prev-h button { flex: none; min-height: 2.2rem; padding: .25rem .8rem; border-radius: 999px; font-size: .76rem; font-weight: 800; color: #3d6823; background: #fff; border: 1.5px solid #cfe0bd;
         transition: background-color .28s var(--fl-e), border-color .28s var(--fl-e); }
     .fl-prev-h button:hover { background: #eef5e6; border-color: #86b556; }
@@ -89,20 +93,25 @@
         scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .fl-prev-row::-webkit-scrollbar { display: none; }
     .fl-prev-row:focus-visible { outline: 2px solid #86b556; outline-offset: -2px; border-radius: .9rem; }
-    .fl-pc { flex: 0 0 82%; max-width: 19rem; min-width: 0; scroll-snap-align: start; padding: .7rem .8rem .75rem; border-radius: 1rem; background: #fff; border: 1px solid #e3ecd9;
-        box-shadow: 0 8px 18px -16px rgb(20 33 12 / .5); }
-    @media (min-width: 640px) { .fl-pc { flex-basis: 15.5rem; } }
-    .fl-pc header { display: flex; align-items: center; gap: .45rem; margin-bottom: .45rem; }
-    .fl-pc header > span { flex: none; width: 1.9rem; height: 1.9rem; border-radius: .7rem; display: grid; place-items: center; font-size: 1rem; background: #f1f6ea; }
-    .fl-pc header b { flex: 1; min-width: 0; font-size: .86rem; font-weight: 800; color: #14210c; }
-    .fl-pc header small { flex: none; font-size: .66rem; font-weight: 800; color: #8a9480; }
-    .fl-pc dl { display: grid; gap: .3rem; margin: 0; }
-    .fl-pc dl > div { display: grid; grid-template-columns: minmax(0, 6.2rem) minmax(0, 1fr); gap: .5rem; font-size: .78rem; line-height: 1.4; }
-    .fl-pc dt { color: var(--color-gray-500); font-weight: 600; }
-    .fl-pc dd { margin: 0; color: #1f2a17; font-weight: 700; overflow-wrap: anywhere; }
-    .fl-pc .is-none { color: var(--color-gray-400); font-weight: 600; font-style: italic; }
-    .fl-pc .fl-pc-go { margin-top: .55rem; width: 100%; min-height: 2.4rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: #fff; background: #4a7c2a; transition: background-color .28s var(--fl-e); }
-    .fl-pc .fl-pc-go:hover { background: #3d6823; }
+    .fl-prev-row { align-items: stretch; }
+    .fl-pc { flex: 0 0 84%; max-width: 20rem; min-width: 0; scroll-snap-align: start; display: flex; flex-direction: column; padding: .8rem .85rem .85rem; border-radius: 1.05rem;
+        background: #fff; border: 1px solid #e3ecd9; box-shadow: 0 10px 22px -18px rgb(20 33 12 / .55); }
+    @media (min-width: 640px) { .fl-pc { flex-basis: 17.5rem; } }
+    .fl-pc header { display: flex; align-items: center; gap: .55rem; padding-bottom: .55rem; margin-bottom: .2rem; border-bottom: 1px solid #edf2e6; }
+    .fl-pc header > span { flex: none; width: 2.1rem; height: 2.1rem; border-radius: .75rem; display: grid; place-items: center; font-size: 1.1rem; background: #f1f6ea; }
+    .fl-pc header > div { flex: 1; min-width: 0; }
+    .fl-pc header b { display: block; font-size: .9rem; font-weight: 800; line-height: 1.25; color: #14210c; }
+    .fl-pc header small { display: block; font-size: .7rem; font-weight: 700; color: #6b7a5c; }
+    .fl-pc header small.is-done { color: #3d6823; }
+    .fl-pc header em { flex: none; font-style: normal; font-size: .66rem; font-weight: 800; color: #9aa68d; }
+    .fl-qa { list-style: none; margin: 0; padding: 0; display: grid; }
+    .fl-qa li { display: grid; gap: .12rem; padding: .5rem 0; border-bottom: 1px dashed #e7eee0; min-width: 0; }
+    .fl-qa li:last-child { border-bottom: 0; padding-bottom: 0; }
+    .fl-qa span { font-size: .74rem; line-height: 1.4; color: #6b7280; overflow-wrap: anywhere; }
+    .fl-qa b { display: flex; align-items: flex-start; gap: .35rem; font-size: .86rem; font-weight: 800; line-height: 1.35; color: #1f3a10; overflow-wrap: anywhere; }
+    .fl-qa b::before { content: ''; flex: none; width: .5rem; height: .5rem; margin-top: .38em; border-radius: 999px; background: #6b9f3d; }
+    .fl-qa li.is-empty b { font-weight: 600; font-style: italic; color: #a1a8a0; }
+    .fl-qa li.is-empty b::before { background: transparent; box-shadow: inset 0 0 0 1.5px #c9d3c0; }
     .fl-prev-f { display: flex; align-items: center; gap: .6rem; padding: 0 .85rem; min-width: 0; }
     .fl-dots { display: flex; gap: .3rem; flex: none; }
     .fl-dots i { width: .4rem; height: .4rem; border-radius: 999px; background: #cfdcc0; transition: width .28s var(--fl-e), background-color .28s var(--fl-e); }
@@ -136,7 +145,16 @@
     html.dark .fl-prev-h button, html.dark .fl-arrows button { color: #a5c97e; background: #10150d; border-color: #3d5a26; }
     html.dark .fl-pc { background: #10150d; border-color: #2b3a1c; }
     html.dark .fl-pc header > span { background: #1c2616; }
-    html.dark .fl-pc header b, html.dark .fl-pc dd { color: #e8efe1; }
+    html.dark .fl-pc header b { color: #e8efe1; }
+    html.dark .fl-pc header { border-color: #22301a; }
+    html.dark .fl-pc header small { color: #93a684; }
+    html.dark .fl-pc header small.is-done { color: #a5c97e; }
+    html.dark .fl-qa li { border-color: #22301a; }
+    html.dark .fl-qa span { color: #9aa78d; }
+    html.dark .fl-qa b { color: #d5ebc0; }
+    html.dark .fl-qa b::before { background: #8fc25e; }
+    html.dark .fl-qa li.is-empty b { color: #6f7b66; }
+    html.dark .fl-qa li.is-empty b::before { box-shadow: inset 0 0 0 1.5px #3a4a2c; }
     html.dark .fl-dots i { background: #3a4a2c; }
     html.dark .fl-dots i.is-on { background: #8fc25e; }
     html.dark .fl-hint { color: #b9caa8; }
@@ -252,7 +270,7 @@
         'icon' => asset('images/treasure-map.png'),
         'units' => \App\Support\FarmLots::AREA_UNITS,
         // The questions in words, for the picked lot's preview: key => [short name, page, option => label].
-        'qs' => collect(\App\Support\FieldProfile::QUESTIONS)->map(fn ($q) => [$q['short'], $q['page'], collect($q['o'])->map(fn ($o) => $o[0])->all()])->all(),
+        'qs' => collect(\App\Support\FieldProfile::QUESTIONS)->map(fn ($q) => [$q['short'], $q['page'], collect($q['o'])->map(fn ($o) => $o[0])->all(), $q['q']])->all(),
         'others' => collect(\App\Support\FieldProfile::OTHER)->map(fn ($o) => $o[0])->all(),
     ];
 @endphp
@@ -414,18 +432,17 @@
         const paintQ = () => {
             const box = $('flQ');
             if (!box) return;
-            const FP = window.aneeFieldProfile;
-            const n = FP ? FP.count(st.answers) : Object.keys(st.answers).length;
-            box.innerHTML = '<div class="fl-q-tiles">' + Object.keys(D.groups).map((g) => '<div class="fl-qt' + (pageDone(st.answers, g) ? ' is-on' : '') + '"><span aria-hidden="true">' + ((TILE[g] || [])[0] || '•') + '</span><b>' + esc((TILE[g] || [])[1] || D.groups[g]) + '</b><small>' + (pageDone(st.answers, g) ? 'Answered' : 'Not yet') + '</small></div>').join('') + '</div>'
-                + '<p class="fl-q-say">' + (n ? esc(n + ' answer' + (n === 1 ? '' : 's') + ': ' + (FP && FP.words ? FP.words(st.answers) : '')) : 'Not answered yet. Every analysis reads these answers, so they are asked only once, here.') + '</p>'
-                + '<button type="button" class="btn ' + (n ? 'btn-white' : 'btn-primary') + '" id="flQBtn">' + (n ? 'Change the answers' : 'Answer the questions') + '</button>';
+            box.innerHTML = prevHtml({ name: st.name, answers: st.answers }, { sheet: true });
+            const pv = box.firstElementChild;
+            pv.style.animation = 'none';
+            wirePrev(pv);
         };
         body.innerHTML = (st.stale ? '<div class="fl-warn">These answers were saved on ' + esc(st.updated) + ', over six months ago. Check each one and change what is different now, then save.</div>' : '')
             + '<div class="fl-f"><label class="fl-lab" for="flName">Name of the lot</label><input type="text" class="form-input" id="flName" maxlength="120" placeholder="Like North field, or the lot by the creek" value="' + esc(st.name) + '"></div>'
             + '<div class="fl-f"><span class="fl-lab">Where is it?</span><p class="fl-sub">The weather, the season and the advice follow the place.</p><div class="fl-tags is-3" id="flPlace"></div></div>'
             + '<div class="fl-f"><label class="fl-lab" for="flArea">How big is it? <small>(optional)</small></label><div class="fl-size"><input type="number" class="form-input" id="flArea" min="0" step="any" inputmode="decimal" placeholder="e.g. 1.5" value="' + esc(st.area) + '">'
             + '<button type="button" class="fl-tag" id="flUnit" aria-haspopup="dialog"><span class="ti" aria-hidden="true">📐</span><span class="tt"><small>Unit</small><b>' + esc(UNITS[st.areaUnit][0]) + '</b></span>' + CHEV + '</button></div></div>'
-            + '<div class="fl-f"><span class="fl-lab">Its soil, water and last season</span><div class="fl-q" id="flQ"></div></div>'
+            + '<div class="fl-f"><span class="fl-lab">Its soil, water and last season</span><div id="flQ"></div></div>'
             + '<p class="fl-err" id="flErr" hidden></p>';
         paintPlace(); paintQ();
         const err = (msg, el) => { const e = $('flErr'); e.textContent = msg; e.hidden = !msg; if (el && !reduce()) { el.classList.remove('fl-shake'); void el.offsetWidth; el.classList.add('fl-shake'); } };
@@ -521,34 +538,53 @@
     const PREV_NAME = { lot: 'The lot', soil: 'Soil', water: 'Water', acid: 'Acidity and the land', last: 'Last season', weeds: 'Weeds', problems: 'Troubles' };
     const ARROW = (d) => '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' + (d < 0 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7') + '"/></svg>';
     const troubleName = (k) => k.startsWith('other:') ? (D.others[k.slice(6)] || k.slice(6)) : k.replace(/^[a-z]+:/, '').replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
-    function prevCards(lot) {
+    function prevCards(lot, o) {
         const a = (lot && lot.answers) || {};
-        const cards = [{ key: 'lot', rows: [['Place', lot.place || ''], ['Size', fmtSize(lot)], ['Last checked', lot.updated + (lot.stale ? ', due for a check' : '')]] }];
+        const said = (v) => !(v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length));
+        const cards = o.sheet ? [] : [{ key: 'lot', rows: [['Where is it?', lot.place || ''], ['How big is it?', fmtSize(lot)], ['Last checked', lot.updated ? lot.updated + (lot.stale ? ', due for a check' : '') : '']], lot: true }];
         Object.keys(D.groups).forEach((g) => {
             const rows = [];
             Object.entries(D.qs).forEach(([k, q]) => {
                 if (q[1] !== g) return;
                 const v = a[k];
-                if (v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length)) return;
-                const words = k === 'outbreaks' ? (v.includes('none') ? 'None' : [].concat(v).map(troubleName).join(', '))
-                    : [].concat(v).map((x) => (q[2] && q[2][x]) || x).join(', ');
-                rows.push([q[0], words]);
+                let words = '';
+                if (said(v)) {
+                    words = k === 'outbreaks' ? ([].concat(v).includes('none') ? 'None' : [].concat(v).map(troubleName).join(', '))
+                        : [].concat(v).map((x) => (q[2] && q[2][x]) || x).join(', ');
+                }
+                // A tested pH rides with the acidity question.
+                if (k === 'acidity' && a.phFrom != null) {
+                    const ph = 'pH ' + (a.phTo != null && Number(a.phTo) !== Number(a.phFrom) ? a.phFrom + ' to ' + a.phTo : a.phFrom);
+                    words = words && v !== 'untested' ? words + ', ' + ph : ph;
+                }
+                rows.push([q[3] || q[0], words]);
             });
-            if (g === 'acid' && a.phFrom != null) rows.push(['pH', a.phTo != null && Number(a.phTo) !== Number(a.phFrom) ? a.phFrom + ' to ' + a.phTo : String(a.phFrom)]);
             cards.push({ key: g, rows });
         });
         return cards;
     }
-    function prevHtml(lot) {
-        const cards = prevCards(lot);
+    function prevHtml(lot, o) {
+        o = o || {};
+        const cards = prevCards(lot, o);
         const n = cards.length;
-        const body = cards.map((cd, i) => '<article class="fl-pc" aria-label="' + esc(PREV_NAME[cd.key]) + '"><header><span aria-hidden="true">' + PREV_ICON[cd.key] + '</span><b>' + esc(PREV_NAME[cd.key]) + '</b><small>' + (i + 1) + ' of ' + n + '</small></header>'
-            + (cd.rows.some((r) => r[1]) ? '<dl>' + cd.rows.map((r) => '<div><dt>' + esc(r[0]) + '</dt><dd' + (r[1] ? '' : ' class="is-none"') + '>' + esc(r[1] || 'Not given') + '</dd></div>').join('') + '</dl>'
-                : '<p class="is-none" style="font-size:.8rem">Not answered yet.</p><button type="button" class="fl-pc-go" data-fl-edit>Answer it</button>')
-            + '</article>').join('');
-        return '<div class="fl-prev" data-fl-prev>'
-            + '<div class="fl-prev-h"><b>Its answers</b><button type="button" data-fl-edit>Edit the lot</button></div>'
-            + '<div class="fl-prev-row" tabindex="0" role="group" aria-label="' + esc(lot.name) + ': its answers, ' + n + ' cards">' + body + '</div>'
+        const asked = cards.filter((c) => !c.lot).reduce((t, c) => t + c.rows.length, 0);
+        const got = cards.filter((c) => !c.lot).reduce((t, c) => t + c.rows.filter((r) => r[1]).length, 0);
+        const body = cards.map((cd, i) => {
+            const done = cd.rows.filter((r) => r[1]).length;
+            return '<article class="fl-pc" aria-label="' + esc(PREV_NAME[cd.key]) + '"><header><span aria-hidden="true">' + PREV_ICON[cd.key] + '</span>'
+                + '<div><b>' + esc(PREV_NAME[cd.key]) + '</b>' + (cd.lot ? '<small>Where it is and its size</small>'
+                    : '<small' + (done === cd.rows.length ? ' class="is-done"' : '') + '>' + (done ? done + ' of ' + cd.rows.length + ' answered' : 'Not answered yet') + '</small>') + '</div>'
+                + '<em>' + (i + 1) + ' of ' + n + '</em></header>'
+                + '<ul class="fl-qa">' + cd.rows.map((r) => '<li' + (r[1] ? '' : ' class="is-empty"') + '><span>' + esc(r[0]) + '</span><b>' + esc(r[1] || 'Not answered yet') + '</b></li>').join('') + '</ul>'
+                + '</article>';
+        }).join('');
+        const head = o.sheet
+            ? '<div class="fl-prev-h"><b>' + (got ? got + ' of ' + asked + ' questions answered' : 'Not answered yet') + '<small>' + (got ? 'Slide through them below. Change any that is different now.' : 'Every analysis reads these answers, so they are asked once, here.') + '</small></b>'
+                + '<button type="button" id="flQBtn"' + (got ? '' : ' class="is-main"') + '>' + (got ? 'Change the answers' : 'Answer the questions') + '</button></div>'
+            : '<div class="fl-prev-h"><b>Its answers<small>' + got + ' of ' + asked + ' questions answered</small></b><button type="button" data-fl-edit>Edit the lot</button></div>';
+        return '<div class="fl-prev' + (o.sheet ? ' is-sheet' : '') + '" data-fl-prev>'
+            + head
+            + '<div class="fl-prev-row" tabindex="0" role="group" aria-label="' + esc(lot.name || 'The lot') + ': its answers, ' + n + ' cards">' + body + '</div>'
             + '<div class="fl-prev-f"><span class="fl-dots" aria-hidden="true">' + cards.map((_, i) => '<i' + (i ? '' : ' class="is-on"') + '></i>').join('') + '</span>'
             + '<span class="fl-hint" aria-hidden="true"><svg class="fl-touch" viewBox="0 0 52 24"><path class="fl-trail" d="M46 12H10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="36"/>'
             + '<g class="fl-finger"><circle class="fl-f1" cx="30" cy="12" r="8.5"/><circle class="fl-f2" cx="30" cy="12" r="5"/></g></svg>'

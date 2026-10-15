@@ -129,6 +129,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // Global Lots (2026-10-16): the routes, and the lot columns the migration adds.
             'farmLots' => Illuminate\Support\Facades\Route::has('farmlots.index') && Illuminate\Support\Facades\Schema::hasColumn('as_field_profiles', 'barangay'),
             'lotUnit' => Illuminate\Support\Facades\Schema::hasColumn('as_field_profiles', 'areaUnit'),
+            // The lot's answers as question and answer cards, and no crop on a lot (2026-10-16).
+            'lotAnswers' => str_contains((string) @file_get_contents(resource_path('views/partials/farm-lots.blade.php')), 'fl-qa')
+                && ! str_contains((string) @file_get_contents(resource_path('views/partials/farm-lots.blade.php')), 'id="flCrop"'),
             'lpClock' => str_contains((string) @file_get_contents(app_path('Http/Controllers/LandPrepController.php')), 'private const AI_TIMEOUT = 330;')
                 && str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpErr"'),
         ],
