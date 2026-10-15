@@ -99,8 +99,9 @@ final class FieldProfile
             'why' => 'A field that floods needs a backup seedbed or high beds, and a variety that can take it.', 'o' => [
                 'never' => ['Never', ''], 'sometimes' => ['Sometimes', 'In a strong typhoon'], 'often' => ['Most wet seasons', ''],
             ]],
-        'salt' => ['in' => 'soil', 'page' => 'water', 'short' => 'Salt', 'q' => 'Any signs of salt?',
-            'why' => 'Salt stunts young plants. A salty field is flushed with good water and gets a salt tolerant variety.', 'o' => [
+        // Several at once (2026-10-16, the owner): one corner of a field can crust while another seals.
+        'salt' => ['in' => 'soil', 'page' => 'water', 'short' => 'Salt', 'q' => 'Any signs of salt?', 'multi' => true, 'none' => 'none',
+            'why' => 'Salt stunts young plants. It often shows in some spots and not others, so pick every sign you see anywhere on the lot.', 'o' => [
                 'none' => ['None', ''], 'crust' => ['White crust in the dry season', ''], 'sea' => ['Sea water comes in at high tide', ''],
                 'tips' => ['White leaf tips and stunted patches', 'On the last crop'], 'sodic' => ['A hard crust that seals', 'Water sits on top (sodium)'],
             ]],
@@ -516,9 +517,10 @@ final class FieldProfile
             ($a['acidity'] ?? '') === 'alkaline' => 'alkaline',
             default => null,
         };
-        $salt = $a['salt'] ?? '';
-        $saline = in_array($salt, ['crust', 'sea', 'tips'], true) || $had('salt');
-        $sodic = $salt === 'sodic';
+        // A list since 2026-10-16; an older lot's single answer reads as a list of one.
+        $salt = (array) ($a['salt'] ?? []);
+        $saline = (bool) array_intersect($salt, ['crust', 'sea', 'tips']) || $had('salt');
+        $sodic = in_array('sodic', $salt, true);
         $sulfate = ($a['acidity'] ?? '') === 'sulfate';
         $conditions = array_values(array_filter([$phWord, $sodic ? 'sodic' : null, $saline ? 'saline' : null, $sulfate ? 'acid_sulfate' : null]));
         $extras = array_values(array_filter([$sodic ? 'sodic' : null, $saline ? 'saline' : null, $sulfate ? 'acid_sulfate' : null]));
@@ -566,7 +568,7 @@ final class FieldProfile
         $limitedWater = $partly && ! $reliable || $drought;
         $when = array_values(array_filter([
             $floods ? 'floods' : null, $texture === 'heavy_clay' ? 'cracking' : null, $texture === 'sandy' ? 'sandy' : null,
-            $limitedWater ? 'water_source' : null, $water === ['rainfed'] ? 'rainfed' : null, $salt === 'sea' ? 'sea' : null,
+            $limitedWater ? 'water_source' : null, $water === ['rainfed'] ? 'rainfed' : null, in_array('sea', $salt, true) ? 'sea' : null,
             $isPest ? 'pests' : null, $weedy ? 'weeds' : null, $poorDrain ? 'drainage' : null,
             in_array('river', $hazards, true) ? 'river' : null, in_array('wind', $hazards, true) ? 'wind' : null, $shaded ? 'shade' : null,
         ]));
@@ -586,7 +588,7 @@ final class FieldProfile
         ]));
         $signs = array_values(array_filter([
             $texture === 'heavy_clay' ? 'cracks' : null, $texture === 'clay' ? 'sticky' : null, $texture === 'sandy' ? 'gritty' : null, $texture === 'loam' ? 'crumbly' : null,
-            $salt === 'crust' ? 'white_crust' : null, $salt === 'sodic' ? 'black_crust' : null, $salt === 'sea' ? 'salty' : null, $salt === 'tips' ? 'burnt_tips' : null,
+            in_array('crust', $salt, true) ? 'white_crust' : null, $sodic ? 'black_crust' : null, in_array('sea', $salt, true) ? 'salty' : null, in_array('tips', $salt, true) ? 'burnt_tips' : null,
             $sulfate ? 'rusty' : null, ($a['color'] ?? '') === 'red' ? 'red_soil' : null,
             ($a['organic'] ?? '') === 'high' || ($a['color'] ?? '') === 'dark' ? 'dark_rich' : null, ($a['organic'] ?? '') === 'low' ? 'pale_hard' : null,
             ($a['drainage'] ?? '') === 'stands' ? 'stays_wet' : null,

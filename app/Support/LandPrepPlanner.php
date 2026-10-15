@@ -785,7 +785,7 @@ final class LandPrepPlanner
             $h['flooding'] = 'sometimes';
         }
         if ($had('salt') && empty($s['salt'])) {
-            $s['salt'] = 'tips';
+            $s['salt'] = ['tips'];
         }
 
         // The soil's hardness: soften it before the plow only where it is hard.
@@ -901,15 +901,16 @@ final class LandPrepPlanner
         }
 
         /* ---- salt and sodium ---- */
-        $salt = $s['salt'] ?? '';
-        if (in_array($salt, ['crust', 'sea', 'tips'], true)) {
+        // Several signs at once since 2026-10-16 (an older single answer is a list of one).
+        $salt = (array) ($s['salt'] ?? []);
+        if (array_intersect($salt, ['crust', 'sea', 'tips'])) {
             $add(self::step('salt_variety', $tpr ? -35 : -15, $tpr ? -25 : -5, 'Choose a salt tolerant variety', 'Pick a salt tolerant variety before you buy or soak the seed, not at planting time.', 'anee', null, 'soil', 'Salt shows on this field.'));
             $add(self::step('flush_salt', -21, -7, 'Flush the salt', $rice ? 'Flood the field with good water and drain it, two or three times, between plowing and the final harrowing. Keep water standing afterwards so the salt does not climb back.' : 'Flood the field with good water and drain it, two or three times, to wash the salt below the roots, then plant on raised beds.', 'anee', null, 'soil', 'Salt shows on this field.'));
             if ($wet || $dry) {
                 $note('warn', 'Young rice is most sensitive to salt: strong transplanted seedlings do better here than direct seeding.', 'soil');
             }
         }
-        if ($salt === 'sodic') {
+        if (in_array('sodic', $salt, true)) {
             foreach (LandPrep::SOIL_STEPS['sodic'] as $x) {
                 $add(self::step($x[4], $x[0], $x[1], $x[2], $x[3], 'anee', null, 'soil', 'The soil crusts and seals (sodium).'));
             }

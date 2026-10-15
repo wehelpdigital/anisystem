@@ -191,8 +191,9 @@
         const mid = lo !== null ? Math.round(Number((((lo + (hi ?? lo)) / 2) * 10).toPrecision(15))) / 10 : null;
         const phWord = mid !== null ? (mid < 6 ? 'acidic' : (mid > 7.5 ? 'alkaline' : 'neutral'))
             : (['mild', 'strong'].includes(a.acidity) ? 'acidic' : (a.acidity === 'none' ? 'neutral' : (a.acidity === 'alkaline' ? 'alkaline' : null)));
-        const salt = a.salt || '';
-        const saline = ['crust', 'sea', 'tips'].includes(salt) || had('salt'), sodic = salt === 'sodic', sulfate = a.acidity === 'sulfate';
+        // A list since 2026-10-16; an older lot's single answer reads as a list of one.
+        const salt = [].concat(a.salt || []);
+        const saline = has(salt, ['crust', 'sea', 'tips']) || had('salt'), sodic = salt.includes('sodic'), sulfate = a.acidity === 'sulfate';
         const texture = a.texture || '';
         const soil = ['clay', 'heavy_clay'].includes(texture) ? 'clay' : texture === 'loam' ? 'loam' : texture === 'sandy' ? 'sandy' : a.rocks === 'many' ? 'rocky' : 'unsure';
         const lay = (a.drainage === 'stands' || a.flooding === 'often') ? 'low' : a.slope === 'steep' ? 'steep' : a.slope === 'gentle' ? 'gentle' : ['flat', 'terraced'].includes(a.slope) ? 'flat' : null;
@@ -214,7 +215,7 @@
             soil, phLevel: phWord || 'unsure', soilExtra: keep([sodic && 'sodic', saline && 'saline', sulfate && 'acid_sulfate']), lay,
             water: w, waterNpk: w === 'limited' ? 'partial' : w, waterAuto: auto,
             problemsWhen: keep([floods && 'floods', texture === 'heavy_clay' && 'cracking', texture === 'sandy' && 'sandy', limitedWater && 'water_source', rainOnly && 'rainfed',
-                salt === 'sea' && 'sea', isPest && 'pests', weedy && 'weeds', poorDrain && 'drainage',
+                salt.includes('sea') && 'sea', isPest && 'pests', weedy && 'weeds', poorDrain && 'drainage',
                 hazards.includes('river') && 'river', hazards.includes('wind') && 'wind', shaded && 'shade']),
             problemsVariety: keep([drought && 'drought', floods && 'floods', limitedWater && 'water_source', saline && 'salinity', phWord === 'acidic' && 'acidic', phWord === 'alkaline' && 'alkaline',
                 sodic && 'sodic', sulfate && 'acid_sulfate', isPest && 'pests', isDisease && 'disease', weedy && 'weeds', poorDrain && 'drainage',
@@ -222,7 +223,7 @@
             problemsAuto: keep([weedy && 'weeds', floods && 'flood', drought && 'drought', kinds.some((k) => !BUGLESS.includes(k)) && 'insects', kinds.some((k) => SICK.includes(k)) && 'diseases',
                 kinds.includes('Rodent') && 'rats', kinds.includes('Bird') && 'birds', kinds.includes('Snail') && 'snails', had('lodging') && 'lodging', saline && 'salt', a.drainage === 'stands' && 'waterlog']),
             soilSignsAuto: keep([texture === 'heavy_clay' && 'cracks', texture === 'clay' && 'sticky', texture === 'sandy' && 'gritty', texture === 'loam' && 'crumbly',
-                salt === 'crust' && 'white_crust', salt === 'sodic' && 'black_crust', salt === 'sea' && 'salty', salt === 'tips' && 'burnt_tips', sulfate && 'rusty', a.color === 'red' && 'red_soil',
+                salt.includes('crust') && 'white_crust', sodic && 'black_crust', salt.includes('sea') && 'salty', salt.includes('tips') && 'burnt_tips', sulfate && 'rusty', a.color === 'red' && 'red_soil',
                 (a.organic === 'high' || a.color === 'dark') && 'dark_rich', a.organic === 'low' && 'pale_hard', a.drainage === 'stands' && 'stays_wet']),
             waterLook: [].concat(a.waterLook || []).filter((k) => k !== 'unsure'), elevation: a.elevation || null, sun: a.sun || null,
         };
