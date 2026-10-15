@@ -1847,6 +1847,7 @@
             + (ask ? '<span class="is-ask">' + (n ? ask + (ask === 1 ? ' page' : ' pages') + ' of questions next' : 'Its questions come next') + '</span>' : '')
             + (l.stale ? '<span class="is-old">Check it</span>' : '') + '</span></div>'
             + '<button type="button" class="lp-fledit" data-lot-edit="' + l.uid + '" aria-label="Edit ' + esc(l.name) + '">Edit</button></div>'
+            + '<button type="button" class="lp-flprev" data-lot-prev="' + l.uid + '" aria-expanded="false">See its answers</button><div class="lp-flprevhost" data-prevhost="' + l.uid + '"></div>'
             + (l.stale ? '<div class="lp-flold"><span><b>' + esc(l.name) + '</b> was last checked on ' + esc(l.updated) + ', over six months ago. Are its answers still right?</span>'
                 + '<div><button type="button" class="is-main" data-lot-edit="' + l.uid + '">Check them</button><button type="button" data-lot-fine="' + l.uid + '">Still correct</button></div></div>' : '');
     }
@@ -1937,6 +1938,17 @@
         if (ed) {
             const l = S.lots.find((y) => String(y.uid) === ed.dataset.lotEdit);
             if (l && await editFarm(l)) { paintLots(); syncFq(); }
+            return;
+        }
+        // The lot's answers as cards to slide through (partials/farm-lots), under its card.
+        const pv = e.target.closest('[data-lot-prev]');
+        if (pv) {
+            const l = S.lots.find((y) => String(y.uid) === pv.dataset.lotPrev);
+            if (!l || !window.aneeLots || !window.aneeLots.togglePreview) return;
+            const lot = Object.assign({}, l.lot || {}, { id: l.farmLotId, name: l.name, answers: clone(l.profile), count: window.aneeFieldProfile ? window.aneeFieldProfile.count(l.profile) : 0 });
+            const open = window.aneeLots.togglePreview($('lpLots').querySelector('[data-prevhost="' + l.uid + '"]'), lot, { crop: S.crop, onEdit: async () => { await editFarm(l); paintLots(); } });
+            pv.textContent = open ? 'Hide its answers' : 'See its answers';
+            pv.setAttribute('aria-expanded', String(open));
             return;
         }
         const fine = e.target.closest('[data-lot-fine]');

@@ -3,7 +3,7 @@
      "Most of these analyses ask the same questions about the soil and the
      water, and they always pertain to a specific lot": a lot is answered once,
      with where it is (province, town or city and barangay, each a tag that
-     opens a list), its size, the crop usually on it, and its soil, water and
+     opens a list), its size, and its soil, water and
      last season (the shared field questions, partials/field-profile), and an
      analysis then asks only which lot. App\Support\FarmLots and
      FarmLotController keep them (as_field_profiles).
@@ -25,13 +25,17 @@
        aneeLots.legacy(lot, crop) -> Promise of FieldProfile::legacy() for the lot's answers
        aneeLots.payload(lot) -> { lotId, location, place, areaHa, fieldProfile, fieldProfileFrom }
        aneeLots.confirm(lot) -> Promise<lot>   "Still correct": the six months start again
-     A lot: { id, name, province, town, barangay, place, where, areaHa, crop, cropLabel,
+       aneeLots.togglePreview(host, lot, { crop, onEdit }) -> bool   the lot's answers as cards to
+                                     slide through, opened in (or closed from) any host element
+     A lot has no crop (2026-10-16, the owner: what grows on a lot changes often; the analysis says it).
+     A lot: { id, name, province, town, barangay, place, where, areaHa, areaUnit,
               answers, count, updated, updatedAt, ageDays, stale, staleOn }
      Every save fires `aneelots:changed` on window, and every picker on the page repaints. --}}
 @include('partials.field-profile-card')
 @once
 @push('head')
 <style>
+    :root { --fl-e: cubic-bezier(.22,1,.36,1); }
     .fl-pick { --fl-e: cubic-bezier(.22,1,.36,1); display: grid; gap: .55rem; min-width: 0; }
     .fl-card { position: relative; display: flex; align-items: center; gap: .75rem; width: 100%; min-width: 0; padding: .75rem .8rem; border-radius: 1.1rem; text-align: left;
         background: var(--color-white); border: 1.5px solid var(--color-gray-200); color: var(--color-gray-900); cursor: pointer;
@@ -212,7 +216,7 @@
 @endpush
 
 @push('sheets')
-{{-- One lot: its name, where it is, its size, its crop and its field answers. --}}
+{{-- One lot: its name, where it is, its size and its field answers. --}}
 <dialog class="fq-sheet is-full" id="flEditSheet" aria-labelledby="flEditTitle">
     <div class="fq-box" tabindex="-1">
         <div class="fq-grip" aria-hidden="true"></div>
@@ -222,7 +226,7 @@
     </div>
 </dialog>
 
-{{-- A list to pick from: the provinces, the towns, the barangays, the crops. --}}
+{{-- A list to pick from: the provinces, the towns, the barangays, the units. --}}
 <dialog class="fq-sheet" id="flPickSheet" aria-labelledby="flPickTitle">
     <div class="fq-box" tabindex="-1">
         <div class="fq-grip" aria-hidden="true"></div>
@@ -289,7 +293,7 @@
     const answered = (lot) => Object.keys((lot && lot.answers) || {}).filter((k) => { const v = lot.answers[k]; return v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && !v.length); });
     const has = (lot, key) => answered(lot).includes(key);
     const pageDone = (answers, page) => Object.keys(answers || {}).some((k) => D.pages[k] === page && answers[k] !== undefined && !(Array.isArray(answers[k]) && !answers[k].length));
-    const legacy = (lot, crop) => (window.aneeFieldCard ? window.aneeFieldCard.legacy((lot && lot.answers) || {}, crop || (lot && lot.crop) || null) : Promise.resolve({}));
+    const legacy = (lot, crop) => (window.aneeFieldCard ? window.aneeFieldCard.legacy((lot && lot.answers) || {}, crop || lastCrop(lot && lot.answers)) : Promise.resolve({}));
     const payload = (lot) => !lot ? {} : ({ lotId: lot.id, location: lot.where || lot.place || '', place: lot.place || '', areaHa: lot.areaHa || null,
         fieldProfile: lot.count ? clone(lot.answers) : null, fieldProfileFrom: lot.count ? lot.id : null });
 
@@ -318,7 +322,17 @@
         dlg.addEventListener('cancel', (e) => { e.preventDefault(); sheetClose(dlg); });
     }
 
-    /* ---- a list to pick from (provinces, towns, barangays, crops) ---- */
+    /* The crop whose troubles the "what troubled the last crop" question lists: the lot's last
+       crop when it says one, else the analysis's crop (a lot keeps no crop of its own). */
+    function lastCrop(a, fallback) {
+        const pc = (a || {}).prevCrop || '';
+        if (pc.startsWith('rice')) return 'rice';
+        if (pc === 'corn') return 'corn_yellow';
+        if (pc === 'legume') return 'mungbean';
+        return fallback || null;
+    }
+
+    /* ---- a list to pick from (provinces, towns, barangays, units) ---- */
     function pickFrom(o) {
         const dlg = $('flPickSheet');
         bind(dlg);
@@ -372,12 +386,13 @@
         bind(dlg);
         const st = {
             id: lot && lot.id ? lot.id : null, name: (lot && lot.name) || '', province: (lot && lot.province) || '', town: (lot && lot.town) || '',
-            barangay: (lot && lot.barangay) || '', crop: (lot && lot.crop) || o.crop || '',
+            barangay: (lot && lot.barangay) || '', crop: o.crop || '',
             areaUnit: lot && UNITS[lot.areaUnit] ? lot.areaUnit : 'ha', area: '',
             answers: clone(lot && lot.answers), stale: !!(lot && lot.stale), updated: (lot && lot.updated) || '',
         };
         if (lot && Number(lot.areaHa) > 0) st.area = String(inUnit(lot.areaHa, st.areaUnit));
         // A crop the catalogue keys differently (corn is yellow corn, every rice is rice).
+        // The analysis's crop, keyed as the catalogue keys it, only lists the troubles: it is not saved.
         if (st.crop && !CROPS[st.crop]) st.crop = String(st.crop).startsWith('rice') ? 'rice' : (st.crop === 'corn' ? 'corn_yellow' : '');
         editing = st;
         $('flEditTitle').firstChild.textContent = st.id ? st.name || 'Your lot' : 'New lot';
@@ -396,14 +411,6 @@
                 : '<input type="text" class="form-input" id="flTownIn" maxlength="120" placeholder="Town or city" value="' + esc(st.town) + '">'
                     + '<input type="text" class="form-input" id="flProvIn" maxlength="120" placeholder="Province, state or region" value="' + esc(st.province) + '">';
         };
-        const paintCrop = () => {
-            const c = CROPS[st.crop];
-            const b = $('flCrop');
-            if (!b) return;
-            b.classList.toggle('is-none', !c);
-            b.querySelector('.ti').textContent = c ? c[2] || '🌱' : '🌱';
-            b.querySelector('b').textContent = c ? c[1] : 'Pick the crop (optional)';
-        };
         const paintQ = () => {
             const box = $('flQ');
             if (!box) return;
@@ -418,11 +425,9 @@
             + '<div class="fl-f"><span class="fl-lab">Where is it?</span><p class="fl-sub">The weather, the season and the advice follow the place.</p><div class="fl-tags is-3" id="flPlace"></div></div>'
             + '<div class="fl-f"><label class="fl-lab" for="flArea">How big is it? <small>(optional)</small></label><div class="fl-size"><input type="number" class="form-input" id="flArea" min="0" step="any" inputmode="decimal" placeholder="e.g. 1.5" value="' + esc(st.area) + '">'
             + '<button type="button" class="fl-tag" id="flUnit" aria-haspopup="dialog"><span class="ti" aria-hidden="true">📐</span><span class="tt"><small>Unit</small><b>' + esc(UNITS[st.areaUnit][0]) + '</b></span>' + CHEV + '</button></div></div>'
-            + '<div class="fl-f"><span class="fl-lab">What grows on it? <small>(optional)</small></span><p class="fl-sub">Its pests and diseases fill the troubles question.</p>'
-            + '<button type="button" class="fl-tag is-none" id="flCrop" aria-haspopup="dialog"><span class="ti" aria-hidden="true">🌱</span><span class="tt"><small>Crop</small><b>Pick the crop (optional)</b></span>' + CHEV + '</button></div>'
             + '<div class="fl-f"><span class="fl-lab">Its soil, water and last season</span><div class="fl-q" id="flQ"></div></div>'
             + '<p class="fl-err" id="flErr" hidden></p>';
-        paintPlace(); paintCrop(); paintQ();
+        paintPlace(); paintQ();
         const err = (msg, el) => { const e = $('flErr'); e.textContent = msg; e.hidden = !msg; if (el && !reduce()) { el.classList.remove('fl-shake'); void el.offsetWidth; el.classList.add('fl-shake'); } };
         const bump = (el) => { if (el && !reduce()) { el.classList.remove('is-bump'); void el.offsetWidth; el.classList.add('is-bump'); } };
 
@@ -447,10 +452,6 @@
                     const r = await pickFrom({ title: 'The size is in', sub: 'The number you typed stays: pick the unit it is in', value: st.areaUnit,
                         items: Object.entries(UNITS).map(([k, u]) => ({ v: k, l: u[0], s: u[3], i: k === 'ha' ? '🌾' : k === 'sqm' ? '📏' : '🗺️' })) });
                     if (r && r.v && UNITS[r.v]) { st.areaUnit = r.v; t.querySelector('b').textContent = UNITS[r.v][0]; bump(t); }
-                } else if (t.id === 'flCrop') {
-                    const r = await pickFrom({ title: 'What grows on this lot?', sub: 'Its pests and diseases fill the troubles question', value: st.crop, find: 'Search a crop',
-                        items: D.crops.map((c) => ({ v: c[0], l: c[1], s: c[3] !== c[1] ? c[3] : '', i: c[2] || '🌱', f: c[3] })), none: st.crop ? 'No crop' : null });
-                    if (r) { st.crop = r.v || ''; paintCrop(); bump($('flCrop')); }
                 } else if (t.id === 'flQBtn') {
                     await askQuestions();
                 }
@@ -466,7 +467,7 @@
         async function askQuestions() {
             read();
             if (!window.aneeFieldProfile) return;
-            const got = await window.aneeFieldProfile.open({ crop: st.crop || null, value: st.answers, title: st.name || 'Your lot', saved: false });
+            const got = await window.aneeFieldProfile.open({ crop: lastCrop(st.answers, st.crop), value: st.answers, title: st.name || 'Your lot', saved: false });
             if (got) { st.answers = got; paintQ(); }
         }
         $('flEditSave').onclick = async () => {
@@ -480,7 +481,7 @@
             btn.disabled = true;
             try {
                 const body = { name: st.name, province: st.province, town: st.town, barangay: st.barangay || null, areaHa: Number(st.area) > 0 ? Number(st.area) * UNITS[st.areaUnit][2] : null, areaUnit: st.areaUnit,
-                    crop: st.crop || null, answers: st.answers };
+                    crop: null, answers: st.answers };
                 const r = await call(st.id ? D.urls.update + '/' + st.id : D.urls.save, { method: 'POST', body });
                 result = r.data.row;
                 window.toast?.(r.message, 'success');
@@ -505,14 +506,12 @@
 
     /* ---- a lot as a card ---- */
     function card(lot, on, i) {
-        const c = CROPS[lot.crop];
         const chips = [];
         if (lot.areaHa) chips.push('<span class="fl-chip">' + esc(fmtSize(lot)) + '</span>');
-        if (c) chips.push('<span class="fl-chip">' + esc((c[2] ? c[2] + ' ' : '') + c[1]) + '</span>');
         chips.push(lot.count ? '<span class="fl-chip">' + lot.count + ' answer' + (lot.count === 1 ? '' : 's') + '</span>' : '<span class="fl-chip is-none">No answers yet</span>');
         if (lot.stale) chips.push('<span class="fl-chip is-old" title="Saved on ' + esc(lot.updated) + '">' + CLOCK + 'Check it</span>');
         return '<button type="button" class="fl-card' + (on ? ' is-on' : '') + '" data-fl-lot="' + lot.id + '" role="radio" aria-checked="' + !!on + '" style="animation-delay:' + Math.min(i || 0, 8) * 30 + 'ms">'
-            + '<span class="fl-ic" aria-hidden="true">' + (c && c[2] ? esc(c[2]) : '<img src="' + esc(D.icon) + '" alt="">') + '</span>'
+            + '<span class="fl-ic" aria-hidden="true"><img src="' + esc(D.icon) + '" alt=""></span>'
             + '<span class="fl-tx"><b>' + esc(lot.name) + '</b>' + (lot.place ? '<small>' + esc(lot.place) + '</small>' : '<small class="is-none">No place yet: tap to add it</small>')
             + '<span class="fl-chips">' + chips.join('') + '</span></span><span class="fl-ck">' + CHECK + '</span></button>';
     }
@@ -524,8 +523,7 @@
     const troubleName = (k) => k.startsWith('other:') ? (D.others[k.slice(6)] || k.slice(6)) : k.replace(/^[a-z]+:/, '').replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
     function prevCards(lot) {
         const a = (lot && lot.answers) || {};
-        const c = CROPS[lot.crop];
-        const cards = [{ key: 'lot', rows: [['Place', lot.place || ''], ['Size', fmtSize(lot)], ['Crop', c ? c[1] : ''], ['Last checked', lot.updated + (lot.stale ? ', due for a check' : '')]] }];
+        const cards = [{ key: 'lot', rows: [['Place', lot.place || ''], ['Size', fmtSize(lot)], ['Last checked', lot.updated + (lot.stale ? ', due for a check' : '')]] }];
         Object.keys(D.groups).forEach((g) => {
             const rows = [];
             Object.entries(D.qs).forEach(([k, q]) => {
@@ -588,6 +586,35 @@
         });
         // Everything fits (a wide screen): nothing to slide, so no hint and no arrows.
         requestAnimationFrame(() => { if (row.scrollWidth <= row.clientWidth + 4) { hint.classList.add('is-gone'); box.querySelector('.fl-arrows').style.display = 'none'; } sync(); });
+    }
+
+    /* The same cards anywhere (Global Lots, the Land Prep and Anee Auto lot cards): opened in a
+       host, closed again on a second tap. Its own "Edit the lot" opens the lot's sheet. */
+    function preview(host, lot, o) {
+        o = o || {};
+        host.innerHTML = prevHtml(lot);
+        const box = host.firstElementChild;
+        if (o.still) box.style.animation = 'none';
+        wirePrev(box);
+        box.addEventListener('click', async (e) => {
+            if (!e.target.closest('[data-fl-edit]')) return;
+            const row = await edit(lot, { crop: o.crop || null, ask: false });
+            if (!row) return;
+            if (o.onEdit) o.onEdit(row); else preview(host, row, Object.assign({}, o, { still: true }));
+        });
+        return box;
+    }
+    function togglePreview(host, lot, o) {
+        if (!host || !lot) return false;
+        const open = host.querySelector(':scope > .fl-prev');
+        if (open) {
+            if (reduce()) { open.remove(); return false; }
+            open.classList.add('is-out');
+            setTimeout(() => open.remove(), 240);
+            return false;
+        }
+        preview(host, lot, o);
+        return true;
     }
 
     /* ---- the picker an analysis wears ---- */
@@ -673,7 +700,7 @@
         };
     }
 
-    window.aneeLots = { picker, edit, rows, answered, has, legacy, payload, confirm, card, meta: () => META, staleDays: D.staleDays, crops: CROPS, fmtHa, fmtSize, units: UNITS };
+    window.aneeLots = { picker, edit, rows, answered, has, legacy, payload, confirm, card, meta: () => META, staleDays: D.staleDays, crops: CROPS, fmtHa, fmtSize, units: UNITS, preview, togglePreview };
 })();
 </script>
 @endpush

@@ -34,6 +34,8 @@
     .gl-item.is-old { border-color: #fcd34d; }
     .gl-item .fl-card { border-color: transparent; animation: none; }
     .gl-item .fl-card .fl-ck { display: none; }
+    .gl-item .fl-prev { margin: 0; }
+    .gl-prevhost:empty { display: none; }
     @keyframes glRise { from { opacity: 0; transform: translateY(8px); } }
     .gl-meta { padding: 0 .35rem; font-size: .74rem; color: var(--color-gray-500); }
     .gl-acts { display: flex; flex-wrap: wrap; gap: .4rem; padding: 0 .25rem .2rem; }
@@ -93,8 +95,9 @@
         if (!list.length) { $('glGrid').innerHTML = '<div class="gl-empty">No lot by that name or place.</div>'; return; }
         $('glGrid').innerHTML = list.map((l, i) => '<div class="gl-item' + (l.stale ? ' is-old' : '') + '" style="--i:' + Math.min(i, 10) + '" data-id="' + l.id + '">'
             + L().card(l, false, 0)
+            + '<div class="gl-prevhost" data-prev></div>'
             + '<p class="gl-meta">' + (l.stale ? 'Last checked ' + esc(l.updated) + '. Due for a check.' : 'Last checked ' + esc(l.updated) + '. Next check by ' + esc(l.staleOn) + '.') + '</p>'
-            + '<div class="gl-acts"><button type="button" class="btn btn-white" data-act="edit">Edit</button>'
+            + '<div class="gl-acts"><button type="button" class="btn btn-white" data-act="answers" aria-expanded="false">See its answers</button><button type="button" class="btn btn-white" data-act="edit">Edit</button>'
             + (l.stale ? '<button type="button" class="btn btn-white" data-act="fine">Still correct</button>' : '')
             + '<button type="button" class="btn btn-ghost gl-del" data-act="del">Delete</button></div></div>').join('');
     }
@@ -109,8 +112,16 @@
         if (!item) return;
         const lot = lotOf(item);
         if (!lot) return;
-        const act = e.target.closest('[data-act]')?.dataset.act || (e.target.closest('.fl-card') ? 'edit' : null);
+        if (e.target.closest('.fl-prev')) return;
+        const act = e.target.closest('[data-act]')?.dataset.act || (e.target.closest('.fl-card') ? 'answers' : null);
         try {
+            if (act === 'answers') {
+                // The lot's answers as cards to slide through, under its card.
+                const open = L().togglePreview(item.querySelector('[data-prev]'), lot, { onEdit: () => {} });
+                const b = item.querySelector('[data-act="answers"]');
+                if (b) { b.textContent = open ? 'Hide its answers' : 'See its answers'; b.setAttribute('aria-expanded', String(open)); }
+                return;
+            }
             if (act === 'edit') await L().edit(lot, { ask: false });
             else if (act === 'fine') await L().confirm(lot);
             else if (act === 'del') {

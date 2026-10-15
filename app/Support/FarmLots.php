@@ -142,9 +142,9 @@ final class FarmLots
         if ($id && ! $have) {
             return null;
         }
-        $crop = array_key_exists('crop', $data)
-            ? (($data['crop'] ?? '') !== '' ? FieldCatalogue::cropKey((string) $data['crop']) : null)
-            : ($have->crop ?? null);
+        // A lot keeps no crop (2026-10-16, the owner: what grows on it changes often). The answers
+        // are kept whole, every crop's options and troubles alike.
+        $crop = null;
         $name = mb_substr(trim((string) ($data['name'] ?? ($have->name ?? ''))), 0, 120) ?: 'My lot';
         // A second lot of the same name gets a number: two "North field" rows would be one lot to the farmer.
         $taken = (clone $q)->when($have, fn ($x) => $x->where('id', '!=', $have->id))->pluck('name')->map(fn ($n) => mb_strtolower((string) $n))->all();

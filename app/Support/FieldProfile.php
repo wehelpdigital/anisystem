@@ -596,7 +596,8 @@ final class FieldProfile
         if ($id && ! $have) {
             return null;
         }
-        $row = ['name' => $name, 'crop' => $crop, 'answers' => json_encode($answers, JSON_UNESCAPED_UNICODE), 'updated_at' => now()];
+        // The crop only fits the answers to it; a lot keeps none (2026-10-16, the owner).
+        $row = ['name' => $name, 'crop' => null, 'answers' => json_encode($answers, JSON_UNESCAPED_UNICODE), 'updated_at' => now()];
         if ($lotId) {
             $row['lotId'] = $lotId;
             $row['scheduleId'] = $scheduleId;
