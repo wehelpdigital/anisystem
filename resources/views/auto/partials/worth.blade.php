@@ -40,7 +40,6 @@
     .aw-ico { flex: none; width: 2.2rem; height: 2.2rem; border-radius: .75rem; display: grid; place-items: center; font-size: 1.15rem; background: rgb(245 197 24 / .16); }
     .aw-item b { display: block; font-size: .86rem; font-weight: 800; color: var(--aw-head); line-height: 1.3; }
     .aw-item p { margin-top: .15rem; font-size: .76rem; line-height: 1.45; color: var(--aw-soft); }
-    .aw-item em { display: inline-block; margin-top: .3rem; padding: .08rem .5rem; border-radius: 999px; font-style: normal; font-size: .68rem; font-weight: 800; color: #2b3a1c; background: #f5c518; }
     /* Five cards in two columns: the last one takes the whole row, so none sits alone. */
     @container (min-width: 620px) { .aw-list > .aw-item:last-child:nth-child(odd) { grid-column: 1 / -1; } }
     /* The question that closes it: the farmer does the sum. */
@@ -50,7 +49,7 @@
     .aw-ask-ico { flex: none; width: 2.4rem; height: 2.4rem; border-radius: .8rem; display: grid; place-items: center; font-size: 1.25rem; background: rgb(245 197 24 / .22); }
     .aw-ask b { display: block; font-family: var(--font-heading); font-size: .98rem; font-weight: 800; line-height: 1.3; color: var(--aw-head); }
     .aw-ask p { margin-top: .25rem; font-size: .82rem; line-height: 1.5; color: var(--aw-ink); }
-    .aw-ask p strong { color: var(--aw-gold); }
+    .aw-ask p strong { color: var(--aw-head); }
     .aw.is-light .aw-ask { background: #fffbeb; box-shadow: inset 0 0 0 1px #fde68a; }
     html.dark .aw.is-light .aw-ask { background: rgb(245 197 24 / .1); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35); }
     .aw-fine { font-size: .68rem; line-height: 1.45; color: var(--aw-soft); opacity: .85; }
@@ -72,11 +71,9 @@
         <div class="aw-item" style="--i:1"><span class="aw-ico" aria-hidden="true">🐛</span><div><b>Pests caught early, disease cured accurately</b>
             <p>She tells you when to check the field and the right cure for what you find, before the damage spreads.</p></div></div>
         <div class="aw-item" style="--i:2"><span class="aw-ico" aria-hidden="true">📈</span><div><b>A plan made for more harvest</b>
-            <p>The right seed amount, the right water, and nutrients when the plant asks for them. Following good practice step by step is how fields close the gap to their potential.</p>
-            <em>Every extra sack is yours</em></div></div>
+            <p>The right seed amount, the right water, and nutrients when the plant asks for them. Following good practice step by step is how fields close the gap to their potential.</p></div></div>
         <div class="aw-item" style="--i:3"><span class="aw-ico" aria-hidden="true">🌧️</span><div><b>Work moved around the rain and your crew</b>
-            <p>Every morning she reads the forecast and your workers' days. When rain is coming or a worker cannot come, she moves the work to the best day it can be done, so nothing is done in the rain or left undone.</p>
-            <em>No more wasted trips and idle workers</em></div></div>
+            <p>Every morning she reads the forecast and your workers' days. When rain is coming or a worker cannot come, she moves the work to the best day it can be done, so nothing is done in the rain or left undone.</p></div></div>
         <div class="aw-item" style="--i:4"><span class="aw-ico" aria-hidden="true">⏰</span><div><b>Your time back</b>
             <p>No guessing what to do today. She writes it, you follow, and you ask her anything, any time.</p></div></div>
     </div>
