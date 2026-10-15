@@ -1146,22 +1146,20 @@
         const row = await window.aneeLots.edit(state.lot, { crop: null, ask: false });
         if (row) pickLot(row);
     });
-    const pickWire = (hostId, attr, key, next) => {
+    const pickWire = (hostId, attr, key) => {
         $id(hostId).addEventListener('click', (e) => {
             const b = e.target.closest(`[data-${attr}]`);
             if (!b) return;
             TOUCH[key] = true;
             state[key] = b.getAttribute(`data-${attr}`);
             document.querySelectorAll(`#${hostId} .wtp-choice`).forEach((c) => c.classList.toggle('is-on', c === b));
-            if (next !== null) setTimeout(() => show(next), 180);
         });
     };
-    // On to the next step (show() steps over the ones the lot answered whole).
-    pickWire('wpMonths', 'month', 'startMonth', 2);
-    pickWire('wpSoils', 'soil', 'soil', 3);
-    pickWire('wpWaters', 'water', 'water', 4);
-    pickWire('wpAims', 'aim', 'aim', null);
-    pickWire('wpPhs', 'ph', 'ph', null);
+    pickWire('wpMonths', 'month', 'startMonth');
+    pickWire('wpSoils', 'soil', 'soil');
+    pickWire('wpWaters', 'water', 'water');
+    pickWire('wpAims', 'aim', 'aim');
+    pickWire('wpPhs', 'ph', 'ph');
     // A pick-many group: answers toggle and gather in a list; "unsure" (where
     // the group has one) clears the list and stands alone.
     const manyWire = (hostId, attr, key) => {
@@ -1180,11 +1178,11 @@
     };
     manyWire('wpWaterLooks', 'waterlook', 'waterLook');
     manyWire('wpSoilExtras', 'soilextra', 'soilExtra');
-    pickWire('wpLays', 'lay', 'lay', null);
-    pickWire('wpElevations', 'elevation', 'elevation', null);
-    pickWire('wpSuns', 'sun', 'sun', null);
-    pickWire('wpLabors', 'labor', 'labor', null);
-    pickWire('wpBudgets', 'budget', 'budget', null);
+    pickWire('wpLays', 'lay', 'lay');
+    pickWire('wpElevations', 'elevation', 'elevation');
+    pickWire('wpSuns', 'sun', 'sun');
+    pickWire('wpLabors', 'labor', 'labor');
+    pickWire('wpBudgets', 'budget', 'budget');
     manyWire('wpMarkets', 'market', 'market');
     $id('wpExcludes').addEventListener('click', (e) => {
         const b = e.target.closest('[data-exclude]');

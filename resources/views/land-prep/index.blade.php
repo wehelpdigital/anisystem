@@ -1519,7 +1519,6 @@
         S.crop = e.detail.crop;
         S.method = null; S.variety = ''; S.varRec = null; S.seedType = ''; S.custom = false;
         paintMethods(); syncFq();
-        setTimeout(() => show(1), 220);
     });
     const dayWordOf = () => (['tpr_manual', 'tpr_mechanical', 'transplant'].includes(S.method) ? 'transplant' : (['dsr_wet_broadcast', 'dsr_wet_drum', 'dsr_dry', 'direct'].includes(S.method) ? 'sow' : 'plant'));
     function paintMethods() {
@@ -1541,7 +1540,6 @@
         S.method = b.dataset.method;
         $('lpMethods').querySelectorAll('.lp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
         loadSeed();
-        setTimeout(() => show(pos + 1), 200);
     });
 
     /* ---------------- the variety and its seed ---------------- */
@@ -1690,7 +1688,6 @@
         if (!b) return;
         S.seedSource = S.seedSource === b.dataset.src ? '' : b.dataset.src;
         $('lpSeedSrc').querySelectorAll('[data-src]').forEach((c) => c.classList.toggle('is-on', c.dataset.src === S.seedSource));
-        if (S.seedSource) setTimeout(() => show(pos + 1), 220);
     });
 
     /* ---------------- the planting day (and a lot's own) ---------------- */

@@ -1286,7 +1286,6 @@
         // The lot's troubles are read for this crop (a pest of one is not of another).
         applyLot();
         closeSheet('wtpCropSheet');
-        setTimeout(() => show(3), 220);
     });
     const cropSift = () => {
         const q = ($id('wtpCropSearch').value || '').trim().toLowerCase();

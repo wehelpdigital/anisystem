@@ -1171,7 +1171,6 @@
         if (!r) return;
         setCrop(r.dataset.crop || null);
         setTimeout(() => window.closeSheet('npCropSheet'), 120);
-        if (st.step === 0) setTimeout(() => go(1), 380);
     });
     const setCrop = (k) => {
         // A variety picked from another crop's records does not belong to this one.

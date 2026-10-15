@@ -1227,21 +1227,20 @@
         if (row) { pickLot(row); review(); }
     });
     $id('cpBack').addEventListener('click', () => show(step - 1, true));
-    const pickWire = (hostId, attr, key, next) => {
+    const pickWire = (hostId, attr, key) => {
         $id(hostId).addEventListener('click', (e) => {
             const b = e.target.closest(`[data-${attr}]`);
             if (!b) return;
             TOUCH[key] = true;
             state[key] = b.getAttribute(`data-${attr}`);
             document.querySelectorAll(`#${hostId} .wtp-choice`).forEach((c) => c.classList.toggle('is-on', c === b));
-            if (next !== null) setTimeout(() => show(next), 180);
         });
     };
-    pickWire('cpMonths', 'month', 'month', 4);
-    pickWire('cpMethods', 'method', 'method', 5);
-    pickWire('cpPriorities', 'priority', 'priority', null);
-    pickWire('cpSoils', 'soil', 'soil', null);
-    pickWire('cpWaters', 'water', 'water', null);
+    pickWire('cpMonths', 'month', 'month');
+    pickWire('cpMethods', 'method', 'method');
+    pickWire('cpPriorities', 'priority', 'priority');
+    pickWire('cpSoils', 'soil', 'soil');
+    pickWire('cpWaters', 'water', 'water');
     // The soil condition is a pick-many: a ground can be alkaline AND sodic.
     // The pH words exclude one another; "not sure" clears the lot.
     const PH_WORDS = ['acidic', 'neutral', 'alkaline'];
@@ -1263,10 +1262,10 @@
         else state.soilConditions = [...state.soilConditions.filter((x) => !(PH_WORDS.includes(k) && PH_WORDS.includes(x))), k];
         paintSoilConds();
     });
-    pickWire('cpTestP', 'testp', 'testP', null);
-    pickWire('cpTestK', 'testk', 'testK', null);
-    pickWire('cpPrevCrops', 'prevcrop', 'prevCrop', null);
-    pickWire('cpResidues', 'residue', 'residue', null);
+    pickWire('cpTestP', 'testp', 'testP');
+    pickWire('cpTestK', 'testk', 'testK');
+    pickWire('cpPrevCrops', 'prevcrop', 'prevCrop');
+    pickWire('cpResidues', 'residue', 'residue');
     // The granulars are a pick-many: what the farmer can buy.
     $id('cpGranulars').addEventListener('click', (e) => {
         const b = e.target.closest('[data-granular]');
@@ -1313,7 +1312,6 @@
         if (!TOUCH.seedUnit) state.seedUnit = c.seedUnit || 'kg';
         paintSeedUnits();
         closeSheet('cpCropSheet');
-        setTimeout(() => show(2), 220);
     });
     const cropSift = () => {
         const q = ($id('cpCropSearch').value || '').trim().toLowerCase();

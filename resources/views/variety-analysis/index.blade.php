@@ -974,7 +974,6 @@
         if (!state.year) { toast('Pick the year first.', 'error'); return; }
         state.season = b.getAttribute('data-season');
         document.querySelectorAll('#vaSeasons .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
-        setTimeout(() => show(2), 180);
     });
     $id('vaSoils').addEventListener('click', (e) => {
         const b = e.target.closest('[data-soil]');
@@ -982,8 +981,6 @@
         state.soil = b.getAttribute('data-soil');
         soilByLot = false;
         document.querySelectorAll('#vaSoils .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
-        // The land is optional; the step moves on once the soil is picked.
-        setTimeout(() => show(3), 180);
     });
     $id('vaElevations').addEventListener('click', (e) => {
         const b = e.target.closest('[data-elevation]');
@@ -1031,7 +1028,6 @@
         if (!row) return;
         setCrop(row.getAttribute('data-crop'));
         closeSheet('vaCropSheet');
-        setTimeout(() => show(4), 220);
     });
 
     /* ---- the variety records (2026-10-14): every name on file to type
