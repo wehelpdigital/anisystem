@@ -1,0 +1,1041 @@
+{
+ "v": 1,
+ "levels": {
+  "ok": "Mixes fine",
+  "care": "Jar test first",
+  "no": "Do not mix"
+ },
+ "pairs": [
+  {
+   "id": "propanil_op_carb",
+   "on": [
+    "tank",
+    "near"
+   ],
+   "level": "no",
+   "a": [
+    "propanil"
+   ],
+   "b": [
+    "op",
+    "carb"
+   ],
+   "gap": 14,
+   "why": "Organophosphate and carbamate insecticides stop rice from breaking down propanil, so the weed killer burns the rice itself.",
+   "fix": "Keep at least 14 days between {a} and {b}, before or after. Choose an insecticide from another group if you must spray sooner."
+  },
+  {
+   "id": "sucorn_op",
+   "on": [
+    "tank",
+    "near"
+   ],
+   "level": "no",
+   "a": [
+    "su_corn"
+   ],
+   "b": [
+    "op"
+   ],
+   "gap": 7,
+   "why": "Corn cannot break down these sulfonylurea weed killers while an organophosphate insecticide is in it, and the corn is stunted or burned.",
+   "fix": "Do not spray {a} with {b}. Keep about 7 days between them, and check the label if an organophosphate went into the soil at planting."
+  },
+  {
+   "id": "accase_broadleaf",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "accase"
+   ],
+   "b": [
+    "auxin",
+    "bentazon",
+    "als",
+    "propanil"
+   ],
+   "why": "Broadleaf weed killers can weaken grass killers like {a} when they share a tank, so the grasses may survive.",
+   "fix": "Spray {a} on the grasses first and {b} a few days apart, or use a product sold with both in one label."
+  },
+  {
+   "id": "glyphosate_contact",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "glyphosate"
+   ],
+   "b": [
+    "glufosinate",
+    "bipyridyl",
+    "ppo"
+   ],
+   "why": "A fast burning weed killer kills the leaves before glyphosate can travel to the roots, so tough and perennial weeds grow back.",
+   "fix": "For grasses with deep roots, spray glyphosate alone and wait about a week before a burndown."
+  },
+  {
+   "id": "glyphosate_cations",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "glyphosate"
+   ],
+   "b": [
+    "fe_calcium",
+    "fe_magnesium",
+    "fe_metal",
+    "fe_chelate",
+    "fe_boron",
+    "fe_humic",
+    "fe_lime",
+    "fe_silicate"
+   ],
+   "why": "Calcium, magnesium, iron, zinc and other minerals bind glyphosate in the tank, and it kills fewer weeds.",
+   "fix": "Never add a foliar fertilizer to glyphosate. The only fertilizer that helps it is spray grade ammonium sulfate, added to the water first."
+  },
+  {
+   "id": "glyphosate_ams",
+   "on": [
+    "tank"
+   ],
+   "level": "ok",
+   "a": [
+    "glyphosate",
+    "auxin_salt",
+    "glufosinate"
+   ],
+   "b": [
+    "fe_ams"
+   ],
+   "why": "Ammonium sulfate ties up the hard water minerals before they reach the weed killer, a mix many labels ask for.",
+   "fix": "Dissolve the ammonium sulfate in the water before you add {a}."
+  },
+  {
+   "id": "auxinsalt_cations",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "auxin_salt"
+   ],
+   "b": [
+    "fe_calcium",
+    "fe_magnesium",
+    "fe_metal"
+   ],
+   "why": "Calcium and magnesium can settle the amine salt of 2,4-D or MCPA out of the water, and the spray works less.",
+   "fix": "Spray the weed killer without the fertilizer, or do a jar test first."
+  },
+  {
+   "id": "herbicide_fert",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "herb_selective"
+   ],
+   "b": [
+    "fert_salt"
+   ],
+   "why": "Fertilizer in the tank can make a weed killer burn the crop, and some salts weaken it.",
+   "fix": "Mix fertilizer with {a} only if its label allows it. Otherwise spray them on different days."
+  },
+  {
+   "id": "nonselective_crop",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "herb_nonselective"
+   ],
+   "b": [
+    "fert_salt",
+    "fung",
+    "insect"
+   ],
+   "why": "{a} kills any green plant it touches, so a tank mixed for the crop will hurt the crop.",
+   "fix": "Use {a} only on weeds before planting, between rows with a shield, or where its label allows. Spray crop products in their own tank."
+  },
+  {
+   "id": "oil_sulfur",
+   "on": [
+    "tank",
+    "near"
+   ],
+   "level": "no",
+   "a": [
+    "oil"
+   ],
+   "b": [
+    "sulfur"
+   ],
+   "gap": 14,
+   "why": "Oil and sulfur together, or close together, burn leaves and fruit.",
+   "fix": "Keep about two weeks between an oil spray and a sulfur spray. In hot weather keep a month."
+  },
+  {
+   "id": "oil_captan",
+   "on": [
+    "tank",
+    "near"
+   ],
+   "level": "no",
+   "a": [
+    "oil"
+   ],
+   "b": [
+    "captan"
+   ],
+   "gap": 7,
+   "why": "Captan and folpet with an oil burn the leaves.",
+   "fix": "Spray {b} alone and keep about a week between it and any oil spray."
+  },
+  {
+   "id": "oil_chlorothalonil",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "oil"
+   ],
+   "b": [
+    "chlorothalonil"
+   ],
+   "why": "Chlorothalonil with an oil can scorch the leaves of some crops.",
+   "fix": "Spray them apart unless the chlorothalonil label allows the oil for your crop. Test on a few plants first."
+  },
+  {
+   "id": "oil_organosilicone",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "oil"
+   ],
+   "b": [
+    "organosilicone"
+   ],
+   "why": "Two strong spreaders together wet the leaf so much that the spray can burn it and runs off.",
+   "fix": "Use one spreader only, the one the main product label names."
+  },
+  {
+   "id": "strobi_ec_silicone",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "strobi"
+   ],
+   "b": [
+    "f_ec",
+    "organosilicone",
+    "oil"
+   ],
+   "why": "Strobilurin fungicides with an EC product, an oil or a silicone spreader can spot or burn the leaves of some crops and varieties.",
+   "fix": "Jar test, then spray a few plants and look again after two to three days before you spray the field."
+  },
+  {
+   "id": "limesulfur_any",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "limesulfur"
+   ],
+   "b": [
+    "pest",
+    "fert",
+    "adjuvant_any"
+   ],
+   "why": "Lime sulfur is strongly alkaline and reacts with most products, breaking them down or burning the crop.",
+   "fix": "Spray lime sulfur alone, and keep a week or two before and after other sprays, two weeks or more from any oil."
+  },
+  {
+   "id": "bordeaux_sensitive",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "bordeaux"
+   ],
+   "b": [
+    "alk_fast",
+    "alk_slow",
+    "op",
+    "carb",
+    "pyr",
+    "dtc",
+    "captan",
+    "fe_phosphate",
+    "fe_ammonium"
+   ],
+   "why": "Bordeaux mixture carries lime, and the high pH breaks down {b} within hours.",
+   "fix": "Spray Bordeaux alone. Choose a copper without lime if you need copper with {b}."
+  },
+  {
+   "id": "alkaline_sensitive",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "alkaline",
+    "fe_silicate",
+    "fe_lime"
+   ],
+   "b": [
+    "alk_fast"
+   ],
+   "bnot": [
+    "alkaline"
+   ],
+   "why": "{a} makes the water strongly alkaline, and {b} breaks down quickly in alkaline water, so the spray loses its strength in the tank.",
+   "fix": "Spray them on different days, or spray {b} in water that is neutral or slightly acid."
+  },
+  {
+   "id": "alkaline_slow",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "alkaline",
+    "fe_silicate",
+    "fe_lime"
+   ],
+   "b": [
+    "alk_slow"
+   ],
+   "bnot": [
+    "alkaline"
+   ],
+   "why": "{a} raises the pH of the tank, and {b} slowly breaks down in alkaline water.",
+   "fix": "If you mix them, spray at once and never leave the tank standing."
+  },
+  {
+   "id": "ethephon_alkaline",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "ethephon"
+   ],
+   "b": [
+    "alkaline",
+    "fe_silicate",
+    "fe_lime",
+    "fe_salt_alk",
+    "conditioner"
+   ],
+   "why": "Ethephon must stay acid. In alkaline water it turns into ethylene gas in the tank and is lost.",
+   "fix": "Spray ethephon alone in clean water, at once after mixing."
+  },
+  {
+   "id": "ethephon_any",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "ethephon"
+   ],
+   "b": [
+    "pest",
+    "fert"
+   ],
+   "bnot": [
+    "ethephon"
+   ],
+   "why": "Ethephon is very acid and works only in its own acid mix; other products can change it and it can change them.",
+   "fix": "Spray ethephon in its own tank unless its label names the mix."
+  },
+  {
+   "id": "copper_phosphonate",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "copper"
+   ],
+   "b": [
+    "phosphonate"
+   ],
+   "why": "Phosphonates such as fosetyl and phosphite make copper dissolve, and the loose copper burns leaves and fruit.",
+   "fix": "Spray copper and {b} on different days, about a week apart."
+  },
+  {
+   "id": "copper_acid",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "copper"
+   ],
+   "b": [
+    "acidic",
+    "acidifier",
+    "fe_acidic"
+   ],
+   "bnot": [
+    "copper",
+    "phosphonate"
+   ],
+   "why": "Acid spray water dissolves copper, and loose copper can burn the leaves.",
+   "fix": "Do not lower the pH of a copper spray. Keep the tank near neutral and spray at once."
+  },
+  {
+   "id": "copper_dtc",
+   "on": [
+    "tank"
+   ],
+   "level": "ok",
+   "a": [
+    "copper"
+   ],
+   "b": [
+    "dtc"
+   ],
+   "bnot": [
+    "bordeaux"
+   ],
+   "why": "Copper with mancozeb is an old, common mix against blights and leaf spots.",
+   "fix": "Premix each powder in a little water before it goes into the tank."
+  },
+  {
+   "id": "fungicide_livingfungus",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "fung_chem"
+   ],
+   "b": [
+    "living_fungus",
+    "fe_living_fungus"
+   ],
+   "why": "{a} kills fungi, and {b} is a living fungus.",
+   "fix": "Spray {b} alone, and keep a few days between it and any fungicide, as its label says."
+  },
+  {
+   "id": "copper_living",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "copper",
+    "antibiotic",
+    "oxidizer",
+    "quat",
+    "aldehyde"
+   ],
+   "b": [
+    "living_bact",
+    "living_fungus",
+    "bt",
+    "fe_living_bact",
+    "fe_living_fungus",
+    "virus"
+   ],
+   "why": "{a} kills the living organisms in {b}.",
+   "fix": "Spray the living product alone, in clean water without chlorine, a few days apart from {a}."
+  },
+  {
+   "id": "bt_alkaline",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "bt",
+    "virus"
+   ],
+   "b": [
+    "alkaline",
+    "fe_silicate",
+    "fe_lime",
+    "fe_salt_alk"
+   ],
+   "why": "Bt and insect viruses lose their strength in alkaline water.",
+   "fix": "Spray {a} in water near neutral, late in the afternoon, at once after mixing."
+  },
+  {
+   "id": "living_living",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "living_fungus",
+    "fe_living_fungus"
+   ],
+   "b": [
+    "living_bact",
+    "fe_living_bact"
+   ],
+   "why": "Two living products can compete in the tank, and some bacteria make substances that stop fungi.",
+   "fix": "Mix them only if one of the labels says they go together."
+  },
+  {
+   "id": "oxidizer_any",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "oxidizer"
+   ],
+   "b": [
+    "pest",
+    "fert",
+    "adjuvant_any"
+   ],
+   "bnot": [
+    "oxidizer"
+   ],
+   "why": "Peroxides and chlorine products react with other products and break them down. They are not for a crop tank mix.",
+   "fix": "Use {a} alone, only as its label says."
+  },
+  {
+   "id": "calcium_sulfate_phosphate",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "fe_calcium"
+   ],
+   "b": [
+    "fe_sulfate",
+    "fe_phosphate",
+    "fe_ams"
+   ],
+   "why": "Calcium with sulfates makes gypsum, and calcium with phosphates makes a calcium phosphate that settles out. At spray strength it may stay clear, strong it will not.",
+   "fix": "Jar test at the real strength. Better, spray the calcium on its own day, or use a chelated calcium."
+  },
+  {
+   "id": "calcium_silicate",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "fe_calcium",
+    "fe_magnesium",
+    "fe_metal"
+   ],
+   "b": [
+    "fe_silicate"
+   ],
+   "why": "Potassium silicate turns into a gel or a white sludge with calcium, magnesium and metal salts.",
+   "fix": "Spray potassium silicate alone, in its own tank."
+  },
+  {
+   "id": "silicate_acid",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "fe_silicate"
+   ],
+   "b": [
+    "acidic",
+    "acidifier",
+    "fe_acidic",
+    "fe_phosphate",
+    "fe_ams"
+   ],
+   "why": "Potassium silicate is strongly alkaline and sets into a gel when it meets acids or acid fertilizers.",
+   "fix": "Spray potassium silicate alone. Add it to the water first, then nothing else."
+  },
+  {
+   "id": "phosphate_metals",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "fe_phosphate"
+   ],
+   "b": [
+    "fe_metal",
+    "fe_magnesium"
+   ],
+   "why": "Phosphate locks zinc, iron, manganese, copper and magnesium salts into solids that settle out and clog the nozzle.",
+   "fix": "Use chelated micronutrients with a phosphate fertilizer, or spray them on different days."
+  },
+  {
+   "id": "boron_calcium",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "fe_boron"
+   ],
+   "b": [
+    "fe_calcium"
+   ],
+   "why": "Boron and calcium can settle out together when they are strong.",
+   "fix": "Jar test at the real strength, or use a calcium and boron product made to go together."
+  },
+  {
+   "id": "thiosulfate_acid",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "fe_thiosulfate"
+   ],
+   "b": [
+    "acidic",
+    "acidifier",
+    "fe_acidic"
+   ],
+   "why": "Thiosulfate breaks down in acid and drops sulfur and gas.",
+   "fix": "Keep thiosulfate fertilizers away from acids and acid fertilizers."
+  },
+  {
+   "id": "humic_acid_ca",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "fe_humic"
+   ],
+   "b": [
+    "acidic",
+    "acidifier",
+    "fe_acidic",
+    "fe_calcium",
+    "fe_metal"
+   ],
+   "why": "Humic and fulvic products clump in acid water and with calcium and metal salts.",
+   "fix": "Jar test first. Spray the humic product alone if it clumps."
+  },
+  {
+   "id": "soap_hard",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "soap"
+   ],
+   "b": [
+    "fe_calcium",
+    "fe_magnesium",
+    "fe_metal",
+    "acidic",
+    "acidifier"
+   ],
+   "why": "Insecticidal soap curdles with calcium, magnesium and acids, and stops working.",
+   "fix": "Spray the soap alone in soft water."
+  },
+  {
+   "id": "phosphite_calcium",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "phosphonate"
+   ],
+   "b": [
+    "fe_calcium"
+   ],
+   "why": "Phosphite and calcium can settle out as a solid when strong.",
+   "fix": "Jar test first, or spray them apart."
+  },
+  {
+   "id": "urea_nitrate_blend",
+   "on": [
+    "blend"
+   ],
+   "level": "no",
+   "a": [
+    "fe_urea"
+   ],
+   "b": [
+    "fe_nitrate"
+   ],
+   "why": "Urea mixed with ammonium nitrate or calcium nitrate pulls water from the air and turns into a wet paste.",
+   "fix": "Spread them separately, or spread one right after the other without mixing them in the bag."
+  },
+  {
+   "id": "urea_superphosphate_blend",
+   "on": [
+    "blend"
+   ],
+   "level": "care",
+   "a": [
+    "fe_urea"
+   ],
+   "b": [
+    "fe_superphosphate"
+   ],
+   "why": "Urea and superphosphate (solophos, triple superphosphate) react and get wet and lumpy when they sit mixed.",
+   "fix": "Mix them only just before you spread, and spread the same hour."
+  },
+  {
+   "id": "ammonium_lime_blend",
+   "on": [
+    "blend",
+    "near"
+   ],
+   "level": "no",
+   "a": [
+    "fe_ammonium",
+    "fe_urea"
+   ],
+   "b": [
+    "fe_lime"
+   ],
+   "gap": 14,
+   "why": "Lime and other alkaline materials turn the nitrogen of urea and ammonium fertilizers into ammonia gas that is lost to the air.",
+   "fix": "Spread the lime first and work it in, then wait about two weeks before urea or ammonium fertilizers. If you must, work the nitrogen into the soil or water it in at once."
+  },
+  {
+   "id": "superphosphate_lime_blend",
+   "on": [
+    "blend"
+   ],
+   "level": "care",
+   "a": [
+    "fe_superphosphate",
+    "fe_phosphate"
+   ],
+   "b": [
+    "fe_lime"
+   ],
+   "why": "Lime mixed with phosphate fertilizer turns part of the phosphorus into a form the roots take up slowly.",
+   "fix": "Spread the lime first and the phosphate later, or place the phosphate in a band."
+  },
+  {
+   "id": "calcium_nitrate_blend",
+   "on": [
+    "blend"
+   ],
+   "level": "care",
+   "a": [
+    "fe_calcium"
+   ],
+   "b": [
+    "fert_gran"
+   ],
+   "bnot": [
+    "fe_calcium"
+   ],
+   "why": "Calcium nitrate pulls water from the air very fast, so a blend with it goes wet and sticky.",
+   "fix": "Spread calcium nitrate on its own, or mix only what you spread in the next few minutes."
+  },
+  {
+   "id": "pesticide_in_fertilizer",
+   "on": [
+    "blend"
+   ],
+   "level": "care",
+   "a": [
+    "pest_gran"
+   ],
+   "b": [
+    "fert_gran"
+   ],
+   "why": "Mixing a pesticide into fertilizer by hand spreads it unevenly and puts the person mixing it at risk.",
+   "fix": "Apply the pesticide granules as their label says, or buy a fertilizer that already carries them."
+  },
+  {
+   "id": "lime_living",
+   "on": [
+    "blend"
+   ],
+   "level": "care",
+   "a": [
+    "fe_lime"
+   ],
+   "b": [
+    "fe_living_bact",
+    "fe_living_fungus"
+   ],
+   "why": "Fresh lime is harsh on the living microbes of a biofertilizer.",
+   "fix": "Spread the biofertilizer a week or two after the lime."
+  }
+ ],
+ "tank": {
+  "hard_glyphosate": {
+   "level": "care",
+   "why": "Hard water (deep wells, water that leaves a white crust) weakens {a}.",
+   "fix": "Dissolve spray grade ammonium sulfate in the water first, as the label of the weed killer or the ammonium sulfate says, then add the weed killer. Or use rain water."
+  },
+  "muddy_binders": {
+   "level": "no",
+   "why": "Clay in muddy water binds {a} and takes it out of the spray.",
+   "fix": "Use clear water from a well or a clean drum, never canal or river water that is brown."
+  },
+  "alk_water": {
+   "level": "care",
+   "why": "{a} breaks down in alkaline water, and well water here is often alkaline.",
+   "fix": "Spray within an hour or two of mixing and never leave the tank overnight. A spray buffer helps, unless the tank has copper or a sulfonylurea weed killer."
+  },
+  "ph_conflict": {
+   "level": "care",
+   "why": "{a} last longer in slightly acid water, but {b} break down in acid water.",
+   "fix": "Do not add an acidifier. Keep the water near neutral, pH 6.5 to 7, and spray at once."
+  },
+  "too_many": {
+   "level": "care",
+   "why": "Five or more products in one tank raise the chance that something settles, clumps or burns.",
+   "fix": "Jar test the whole mix first. Leave out what is not needed this time."
+  },
+  "same_ai": {
+   "level": "care",
+   "why": "{a} and {b} carry the same active ingredient, {ai}. Two doses in one tank is double the dose.",
+   "fix": "Keep one of them."
+  },
+  "same_group": {
+   "level": "care",
+   "why": "{a} and {b} work the same way ({grp}). Two of one group adds little, and the pest learns to survive it sooner.",
+   "fix": "Keep one, and pair it with a product from another group."
+  },
+  "salt_emulsion": {
+   "level": "care",
+   "why": "Strong fertilizer in the tank can break the milky emulsion of EC products or clump powders.",
+   "fix": "Add the fertilizer last and stir well, or spray the fertilizer on its own day."
+  },
+  "bait_in_tank": {
+   "level": "no",
+   "why": "{a} is a bait or granule that goes on as it is. It is not mixed in water.",
+   "fix": "Put it out as its label says, on its own."
+  },
+  "seed_in_tank": {
+   "level": "care",
+   "why": "{a} is a seed treatment. It goes on the seed before planting, not in a field spray.",
+   "fix": "Treat the seed with it as its label says."
+  },
+  "heat_sulfur": {
+   "level": "no",
+   "why": "Sulfur burns leaves when it is hotter than about 32 C.",
+   "fix": "Spray sulfur early in the morning on a cool day, or choose another fungicide in hot weather."
+  },
+  "heat_oil": {
+   "level": "care",
+   "why": "Spray oils burn leaves in the heat and on plants short of water.",
+   "fix": "Spray oil early in the morning or late in the afternoon, on watered plants, below about 32 C."
+  },
+  "heat_fert": {
+   "level": "care",
+   "why": "Foliar fertilizer dries fast in the heat and the salt left on the leaf burns it.",
+   "fix": "Spray early in the morning or late in the afternoon, and keep the strength at the lower end."
+  },
+  "rain_soon": {
+   "level": "care",
+   "why": "Rain soon after spraying washes contact products and foliar fertilizer off the leaves.",
+   "fix": "Spray when no rain is expected for a few hours. A sticker helps contact products stay on."
+  },
+  "copper_young_cucurbit": {
+   "level": "care",
+   "why": "Young cucurbit and bean leaves burn easily with copper.",
+   "fix": "Use the lowest label rate on young plants, spray in dry weather, and test on a few plants first."
+  },
+  "sulfur_cucurbit": {
+   "level": "care",
+   "why": "Some melons, cucumbers and squash are hurt by sulfur, even at mild temperatures.",
+   "fix": "Test on a few plants first, or choose another fungicide."
+  },
+  "oil_flowers": {
+   "level": "care",
+   "why": "Oil on open flowers can burn them and keep bees away.",
+   "fix": "Do not spray oil on open flowers. Spray before flowering or after the fruit sets."
+  },
+  "not_labelled": {
+   "level": "care",
+   "why": "The label of {a} does not name {crop}.",
+   "fix": "Use a product labelled for your crop, or check with your agriculture technician first."
+  },
+  "herb_crop_not_labelled": {
+   "level": "no",
+   "why": "The label of {a} does not name {crop}. A weed killer not made for your crop can kill it.",
+   "fix": "Choose a weed killer labelled for {crop}."
+  },
+  "fpa_banned_crop": {
+   "level": "no",
+   "why": "{why}",
+   "fix": "Choose another product."
+  },
+  "fpa_restricted": {
+   "level": "care",
+   "why": "{why}",
+   "fix": "Use it only as the FPA allows."
+  },
+  "strength_fert": {
+   "level": "care",
+   "why": "The fertilizer in this spray comes to {pct} percent ({gl} grams in a liter). For {crop} {stage}, keep it under {lim} percent or the leaves can burn.",
+   "fix": "Use more water or less fertilizer: about {max} in the tank you set."
+  },
+  "strength_urea": {
+   "level": "care",
+   "why": "Urea in this spray comes to {pct} percent. For {crop} {stage}, keep urea under {lim} percent.",
+   "fix": "Use about {max} of urea in the tank you set."
+  },
+  "salt_seedling": {
+   "level": "care",
+   "why": "{a} is a high salt fertilizer and young roots burn when it lies close to them.",
+   "fix": "Keep it a hand width away from the seedlings and water it in. Split the dose into two applications."
+  },
+  "urea_wet_leaves": {
+   "level": "care",
+   "why": "Granules that stay on wet leaves burn spots in them.",
+   "fix": "Spread when the leaves are dry and shake or wash the granules off the plants."
+  }
+ },
+ "order": [
+  {
+   "k": "water",
+   "say": "Fill the tank about half way with clean water. Shake or stir as you add each product, one at a time."
+  },
+  {
+   "k": "conditioner",
+   "say": "Add the water conditioner first ({items}) and let it dissolve."
+  },
+  {
+   "k": "dry",
+   "say": "Add the powders and granules ({items}). Premix each in a small pail of water into a smooth milk first, then pour it in."
+  },
+  {
+   "k": "agitate",
+   "say": "Shake or stir well until the powder is spread through the water."
+  },
+  {
+   "k": "flow",
+   "say": "Add the liquid suspensions ({items}). Shake each bottle first."
+  },
+  {
+   "k": "ec",
+   "say": "Add the emulsions and oil dispersions ({items}). The water turns milky."
+  },
+  {
+   "k": "sl",
+   "say": "Add the solutions and soluble powders ({items})."
+  },
+  {
+   "k": "fert",
+   "say": "Add the foliar fertilizer ({items}). Dissolve powders in a pail of water first."
+  },
+  {
+   "k": "helper",
+   "say": "Add the spreader, sticker or oil last ({items})."
+  },
+  {
+   "k": "top",
+   "say": "Top up with water to the mark, shake well, and spray at once. Do not leave the mix standing."
+  }
+ ],
+ "jar": [
+  "Take a clear bottle or jar and pour in 1 liter of the same water you will spray.",
+  "Add each product in the same order as in the tank, at the amounts below (the tank rate made small).",
+  "Close it, shake it, and let it stand for 15 to 30 minutes.",
+  "Look for flakes, clumps, a layer of oil or cream on top, sludge at the bottom, heat, or foam that will not go down.",
+  "Any of those: do not mix them. Clear and smooth: they mix. Spray a few plants first and look again after two to three days."
+ ],
+ "foliar": {
+  "groups": {
+   "tolerant": [
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous",
+    "sorghum",
+    "sugarcane",
+    "pineapple",
+    "banana",
+    "coconut",
+    "oilpalm",
+    "abaca",
+    "rubber",
+    "bamboo"
+   ],
+   "sensitive": [
+    "mungbean",
+    "peanut",
+    "soybean",
+    "stringbean",
+    "cowpea",
+    "wingedbean",
+    "limabean",
+    "pigeonpea",
+    "pechay",
+    "lettuce",
+    "kangkong",
+    "mustard",
+    "alugbati",
+    "saluyot",
+    "celery",
+    "cucumber",
+    "squash",
+    "ampalaya",
+    "patola",
+    "upo",
+    "sayote",
+    "watermelon",
+    "melon",
+    "strawberry",
+    "onion_spring"
+   ]
+  },
+  "total": {
+   "tolerant": 2.0,
+   "moderate": 1.0,
+   "sensitive": 0.5
+  },
+  "urea": {
+   "tolerant": 2.0,
+   "moderate": 1.0,
+   "sensitive": 0.5
+  },
+  "stage": {
+   "seedling": 0.5,
+   "flowering": 0.75
+  },
+  "hot": 0.75
+ },
+ "cucurbits": [
+  "cucumber",
+  "squash",
+  "ampalaya",
+  "patola",
+  "upo",
+  "sayote",
+  "watermelon",
+  "melon"
+ ],
+ "beans": [
+  "mungbean",
+  "peanut",
+  "soybean",
+  "stringbean",
+  "cowpea",
+  "wingedbean",
+  "limabean",
+  "pigeonpea"
+ ]
+}

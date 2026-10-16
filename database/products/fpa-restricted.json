@@ -1,0 +1,110 @@
+{
+ "v": 1,
+ "asOf": "2026-10-17",
+ "note": "The FPA list of banned and restricted pesticides, in our own words.",
+ "items": [
+  {
+   "match": [
+    "deltamethrin"
+   ],
+   "crops": [
+    "banana"
+   ],
+   "level": "banned",
+   "say": "The FPA bans deltamethrin on banana."
+  },
+  {
+   "match": [
+    "fipronil"
+   ],
+   "crops": [
+    "banana"
+   ],
+   "level": "restricted",
+   "say": "The FPA bans fipronil on banana when it is injected into the bud. Use it only as its label says."
+  },
+  {
+   "match": [
+    "paraquat"
+   ],
+   "crops": [],
+   "level": "restricted",
+   "say": "The FPA restricts paraquat to institutional use, by approved users only."
+  },
+  {
+   "match": [
+    "monocrotophos"
+   ],
+   "crops": [],
+   "level": "restricted",
+   "say": "The FPA allows monocrotophos only against beanfly on legumes."
+  },
+  {
+   "match": [
+    "methidathion"
+   ],
+   "crops": [],
+   "level": "restricted",
+   "say": "The FPA allows methidathion only in banana plantations."
+  },
+  {
+   "match": [
+    "fenamiphos",
+    "phenamiphos"
+   ],
+   "crops": [],
+   "level": "restricted",
+   "say": "The FPA allows fenamiphos only in banana and pineapple plantations."
+  },
+  {
+   "match": [
+    "lindane"
+   ],
+   "crops": [],
+   "level": "restricted",
+   "say": "The FPA allows lindane only on pineapple plantations, in the soil before planting."
+  },
+  {
+   "match": [
+    "aldicarb"
+   ],
+   "crops": [],
+   "level": "restricted",
+   "say": "The FPA does not allow aldicarb to be imported except in an emergency it declares."
+  },
+  {
+   "match": [
+    "endosulfan"
+   ],
+   "crops": [],
+   "level": "banned",
+   "say": "The FPA has banned endosulfan since 2015. Do not use old stock."
+  },
+  {
+   "match": [
+    "ddt",
+    "aldrin",
+    "dieldrin",
+    "endrin",
+    "heptachlor",
+    "chlordane",
+    "toxaphene",
+    "chlordimeform",
+    "parathion",
+    "leptophos",
+    "nitrofen",
+    "azinphos ethyl",
+    "2,4,5-t",
+    "mercur",
+    "triphenyltin",
+    "organotin",
+    "strychnine",
+    "thallium",
+    "sodium fluoroacetate"
+   ],
+   "crops": [],
+   "level": "banned",
+   "say": "The FPA bans this ingredient. Do not use it."
+  }
+ ]
+}

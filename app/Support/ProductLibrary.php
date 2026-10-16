@@ -54,9 +54,25 @@ final class ProductLibrary
         'helpers' => ['adjuvant', 'chemical'],
     ];
 
+    /** The connection the book is read through: the app's own, unless config('products.connection') names a rehearsal. */
+    public static function conn(): string
+    {
+        $c = (string) (config('products.connection') ?: '');
+        if ($c === 'products_local' && ! config('database.connections.products_local')) {
+            config(['database.connections.products_local' => array_merge((array) config('database.connections.mysql'), (array) config('products.local'), ['url' => null, 'options' => [], 'strict' => true])]);
+        }
+
+        return $c !== '' ? $c : DB::getDefaultConnection();
+    }
+
+    public static function db(): \Illuminate\Database\Connection
+    {
+        return DB::connection(self::conn());
+    }
+
     public static function ready(): bool
     {
-        return (bool) Cache::remember('products:ready', 600, fn () => Schema::hasTable(self::TABLE));
+        return (bool) Cache::remember('products:ready:' . self::conn(), 600, fn () => Schema::connection(self::conn())->hasTable(self::TABLE));
     }
 
     /** One file's rows (the fallback and the sync's input). */
@@ -125,7 +141,7 @@ final class ProductLibrary
     {
         $now = now();
         $enc = fn ($v) => $v === null ? null : json_encode($v, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        $theirs = DB::table(self::TABLE)->where('source', '!=', 'file')->pluck('pkey')->flip();
+        $theirs = self::db()->table(self::TABLE)->where('source', '!=', 'file')->pluck('pkey')->flip();
         $all = [];
         $n = [];
         foreach (self::FILES as $file) {
@@ -137,7 +153,7 @@ final class ProductLibrary
                 }
                 $info = array_diff_key($p, array_flip(['k', 'b', 'c', 't', 'f', 'form', 'ai', 'n', 'tr', 'crops', 'uses', 'src']));
                 $all[$p['k']] = [
-                    'pkey' => mb_substr($p['k'], 0, 120), 'brand' => mb_substr((string) $p['b'], 0, 190), 'company' => mb_substr((string) ($p['c'] ?? ''), 0, 120),
+                    'pkey' => mb_substr($p['k'], 0, 120), 'brand' => mb_substr((string) $p['b'], 0, 190), 'brandKey' => mb_substr(self::key((string) $p['b']), 0, 190), 'company' => mb_substr((string) ($p['c'] ?? ''), 0, 120),
                     'type' => mb_substr((string) ($p['t'] ?? 'other'), 0, 24), 'form' => mb_substr((string) (($p['f'] ?? '') !== '' ? $p['f'] : ($p['form'] ?? '')), 0, 16),
                     'applied' => self::applied($p), 'ai' => $enc($p['ai'] ?? []), 'nutrients' => $enc((object) ($p['n'] ?? [])), 'traits' => $enc($p['tr'] ?? []),
                     'crops' => $enc($p['crops'] ?? []), 'uses' => $enc($p['uses'] ?? []), 'info' => $enc((object) $info), 'search' => self::haystack($p),
@@ -147,15 +163,31 @@ final class ProductLibrary
             }
         }
         foreach (array_chunk(array_values($all), 200) as $chunk) {
-            DB::table(self::TABLE)->upsert($chunk, ['pkey'],
-                ['brand', 'company', 'type', 'form', 'applied', 'ai', 'nutrients', 'traits', 'crops', 'uses', 'info', 'search', 'sourceRef', 'status', 'updated_at']);
+            self::db()->table(self::TABLE)->upsert($chunk, ['pkey'],
+                ['brand', 'brandKey', 'company', 'type', 'form', 'applied', 'ai', 'nutrients', 'traits', 'crops', 'uses', 'info', 'search', 'sourceRef', 'status', 'updated_at']);
+        }
+        // The other names a file row carries (an old brand, a local word) become aliases, so find() knows them.
+        $aka = [];
+        foreach (self::FILES as $file) {
+            foreach (self::file($file) as $p) {
+                if (! empty($p['aka']) && isset($all[$p['k'] ?? ''])) {
+                    $aka[$p['k']] = (array) $p['aka'];
+                }
+            }
+        }
+        if ($aka && self::aliasesReady()) {
+            foreach (array_chunk(array_keys($aka), 300) as $keys) {
+                foreach (self::db()->table(self::TABLE)->whereIn('pkey', $keys)->pluck('id', 'pkey') as $pk => $id) {
+                    self::alias((int) $id, $aka[$pk], 'file');
+                }
+            }
         }
         $keep = array_keys($all);
-        DB::table(self::TABLE)->where('source', 'file')->where('status', 1)->orderBy('id')->select(['id', 'pkey'])
+        self::db()->table(self::TABLE)->where('source', 'file')->where('status', 1)->orderBy('id')->select(['id', 'pkey'])
             ->chunkById(1000, function ($rs) use ($keep, $now) {
                 $gone = $rs->filter(fn ($r) => ! in_array($r->pkey, $keep, true))->pluck('id')->all();
                 if ($gone) {
-                    DB::table(self::TABLE)->whereIn('id', $gone)->update(['status' => 0, 'updated_at' => $now]);
+                    self::db()->table(self::TABLE)->whereIn('id', $gone)->update(['status' => 0, 'updated_at' => $now]);
                 }
             });
         self::forget();
@@ -165,7 +197,7 @@ final class ProductLibrary
 
     public static function forget(): void
     {
-        Cache::forget('products:ready');
+        Cache::forget('products:ready:' . self::conn());
         Cache::forget('products:index:' . self::version());
     }
 
@@ -203,7 +235,7 @@ final class ProductLibrary
             return [];
         }
         if (self::ready()) {
-            return DB::table(self::TABLE)->whereIn('id', $ids)->get()->mapWithKeys(fn ($r) => [(int) $r->id => self::fromRow($r)])->all();
+            return self::db()->table(self::TABLE)->whereIn('id', $ids)->get()->mapWithKeys(fn ($r) => [(int) $r->id => self::fromRow($r)])->all();
         }
 
         return [];
@@ -212,7 +244,7 @@ final class ProductLibrary
     public static function byKey(string $key): ?array
     {
         if (self::ready()) {
-            $r = DB::table(self::TABLE)->where('pkey', $key)->where('status', 1)->first();
+            $r = self::db()->table(self::TABLE)->where('pkey', $key)->where('status', 1)->first();
 
             return $r ? self::fromRow($r) : null;
         }
@@ -227,10 +259,220 @@ final class ProductLibrary
         return null;
     }
 
+    /* ================================================================ learning */
+
+    public const ALIASES = 'as_product_aliases';
+
+    /** A name squeezed for matching: letters and digits only ("S&P Topdex 50 EC" = "sandptopdex50ec"). */
+    public static function key(string $s): string
+    {
+        $s = mb_strtolower($s);
+        $s = str_replace('&', 'and', $s);
+
+        return (string) preg_replace('/[^a-z0-9]+/', '', $s);
+    }
+
+    private static function aliasesReady(): bool
+    {
+        return (bool) Cache::remember('products:aliases:' . self::conn(), 600, fn () => Schema::connection(self::conn())->hasTable(self::ALIASES));
+    }
+
+    /**
+     * The book's product a name means, or null: the brand as written (letters
+     * and digits compared, any spacing or case), then a learned alias. Rows
+     * from the files win over rows Anee added, and live rows over retired ones.
+     * The row comes back as fromRow() shapes it (id, k, b, c, t, f, ai, n, tr,
+     * crops, uses, source, and the info fields).
+     */
+    public static function find(string $name): ?array
+    {
+        $k = self::key($name);
+        if (strlen($k) < 2 || ! self::ready()) {
+            return null;
+        }
+        try {
+            $r = self::db()->table(self::TABLE)->where('brandKey', mb_substr($k, 0, 190))->where('status', 1)->orderByRaw("source = 'file' desc")->orderBy('id')->first();
+            if ($r) {
+                return self::fromRow($r);
+            }
+            if (self::aliasesReady()) {
+                $pid = self::db()->table(self::ALIASES)->where('aliasKey', $k)->orderBy('id')->value('productId');
+                if ($pid) {
+                    $r = self::db()->table(self::TABLE)->where('id', $pid)->where('status', 1)->first();
+
+                    return $r ? self::fromRow($r) : null;
+                }
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
+        return null;
+    }
+
+    /**
+     * Keep a product Anee found online (or any module researched), so the
+     * next farmer who names it finds it in the book and nothing is looked up
+     * again. Returns the product's id, or null when the row says too little
+     * to keep (no brand, low confidence, or neither ingredients nor an
+     * analysis) or the book is not there yet.
+     *
+     * A product the book already holds from its files (the FPA lists, the
+     * companies' labels) is never changed: the name it was asked by becomes
+     * an alias of that row instead. A product Anee added before is filled in
+     * (missing facts, more mixing notes, the higher confidence), never emptied.
+     *
+     * $row: brand (required), company, type (a TYPES key), formulation (EC,
+     * WP...), form (granular|soluble|liquid, for fertilizers), ai [{name,
+     * amount, unit}], nutrients {N: %, P2O5: %...}, crops [crop keys], rates
+     * [{crop, text, amount: [lo, hi], unit, per, phi}], mixing [plain lines],
+     * flags [the rules' flags, for an ingredient the book does not know],
+     * aliases [other names it is called by], confidence high|medium|low,
+     * sources [{title, url}] (kept for audit, never shown), ownerId (who paid).
+     * $via: the module that learned it (compat, npk, protocol, builder...).
+     */
+    public static function learn(array $row, string $via): ?int
+    {
+        $brand = trim((string) preg_replace('/\s+/', ' ', (string) ($row['brand'] ?? '')));
+        $conf = in_array($row['confidence'] ?? '', ['high', 'medium', 'low'], true) ? $row['confidence'] : 'low';
+        $ai = [];
+        foreach (array_slice((array) ($row['ai'] ?? []), 0, 8) as $a) {
+            $n = trim((string) ($a['name'] ?? $a['n'] ?? ''));
+            if ($n === '') {
+                continue;
+            }
+            $ing = CompatBook::ingredient($n);
+            $amt = $a['amount'] ?? $a['a'] ?? null;
+            $ai[] = array_filter(['n' => $ing['name'] ?? mb_substr($n, 0, 80), 'raw' => $ing ? null : mb_substr($n, 0, 80),
+                'a' => is_numeric($amt) && (float) $amt > 0 ? (float) $amt : null, 'u' => in_array($a['unit'] ?? $a['u'] ?? '', ['g/L', 'g/kg', '%', 'mL/L', 'CFU/g', 'CFU/mL'], true) ? ($a['unit'] ?? $a['u']) : null],
+                fn ($x) => $x !== null);
+        }
+        $nut = [];
+        foreach ((array) ($row['nutrients'] ?? []) as $el => $v) {
+            if (in_array($el, ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'SiO2', 'Cl'], true) && is_numeric($v) && (float) $v > 0 && (float) $v <= 100) {
+                $nut[$el] = round((float) $v, 4);
+            }
+        }
+        if (mb_strlen($brand) < 2 || $conf === 'low' || (! $ai && ! $nut) || ! self::ready()) {
+            return null;
+        }
+        $type = array_key_exists($row['type'] ?? '', self::TYPES) ? $row['type'] : ($nut ? 'foliar' : 'other');
+        $form = strtoupper((string) preg_replace('/[^A-Za-z]/', '', (string) ($row['formulation'] ?? '')));
+        $form = isset(CompatBook::FORM_GROUP[$form]) ? $form : '';
+        $fform = in_array($row['form'] ?? '', ['granular', 'soluble', 'liquid'], true) ? $row['form'] : '';
+        $aliases = array_values(array_unique(array_filter(array_map(fn ($x) => trim((string) $x), (array) ($row['aliases'] ?? [])), fn ($x) => mb_strlen($x) >= 2)));
+        $mix = array_values(array_filter(array_map(fn ($x) => mb_substr(trim((string) preg_replace(['/\s+[-–—]\s+/u', '/[–—]/u'], [', ', ' to '], (string) $x)), 0, 240), array_slice((array) ($row['mixing'] ?? []), 0, 8))));
+        $uses = [];
+        foreach (array_slice((array) ($row['rates'] ?? []), 0, 20) as $r) {
+            $crop = FieldCatalogue::cropKey((string) ($r['crop'] ?? '')) ?: mb_substr((string) ($r['crop'] ?? ''), 0, 40);
+            $amt = (array) ($r['amount'] ?? []);
+            $parsed = $amt && in_array($r['unit'] ?? '', ['mL', 'L', 'g', 'kg', 'tbsp', 'tsp'], true) && in_array($r['per'] ?? '', ['16L', '20L', '200L', '1L', 'ha', 'plant'], true)
+                ? [(float) $amt[0], (float) ($amt[1] ?? $amt[0]), $r['unit'], $r['per']] : null;
+            $uses[] = [$crop, '', mb_substr((string) ($r['text'] ?? ''), 0, 200), $parsed, mb_substr((string) ($r['phi'] ?? ''), 0, 80)];
+        }
+        $crops = array_values(array_unique(array_filter(array_merge((array) ($row['crops'] ?? []), array_column($uses, 0)), fn ($c) => is_string($c) && isset(FieldCatalogue::crops()[$c]))));
+        $src = array_values(array_filter(array_map(fn ($s) => is_array($s) ? trim(($s['title'] ?? '') . ' ' . ($s['url'] ?? '')) : (string) $s, (array) ($row['sources'] ?? []))));
+        $now = now();
+        $db = self::db();
+
+        $existing = self::find($brand);
+        if (! $existing) {
+            foreach ($aliases as $al) {
+                if ($existing = self::find($al)) {
+                    break;
+                }
+            }
+        }
+        if ($existing && ($existing['source'] ?? 'file') !== 'anee') {
+            // A product of the files: never changed. The names it was asked by point at it.
+            self::alias((int) $existing['id'], array_merge([$brand], $aliases), $via);
+
+            return (int) $existing['id'];
+        }
+        $p = ['k' => '', 'b' => $brand, 'c' => (string) ($row['company'] ?? ''), 't' => $type, 'f' => $form, 'form' => $fform, 'ai' => $ai, 'n' => $nut, 'aka' => $aliases];
+        $traits = $nut ? FertTraits::infer($brand, $nut, $fform) : [];
+        $enc = fn ($v) => json_encode($v, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        if ($existing) {
+            // Anee's own row from before: filled in, never emptied.
+            $r = $db->table(self::TABLE)->where('id', $existing['id'])->first();
+            $info = json_decode((string) $r->info, true) ?: [];
+            $rank = ['low' => 0, 'medium' => 1, 'high' => 2];
+            $info['mix'] = array_values(array_unique(array_merge((array) ($info['mix'] ?? []), $mix)));
+            $info['aka'] = array_values(array_unique(array_merge((array) ($info['aka'] ?? []), $aliases)));
+            $info['via'] = array_values(array_unique(array_merge((array) ($info['via'] ?? []), [$via])));
+            $info['aiFlags'] = array_values(array_unique(array_merge((array) ($info['aiFlags'] ?? []), (array) ($row['flags'] ?? []))));
+            $info['confidence'] = ($rank[$conf] ?? 0) > ($rank[$info['confidence'] ?? 'low'] ?? 0) ? $conf : ($info['confidence'] ?? $conf);
+            $info['learnedAt'] = $now->toDateString();
+            $oldAi = json_decode((string) $r->ai, true) ?: [];
+            $oldN = json_decode((string) $r->nutrients, true) ?: [];
+            $oldUses = json_decode((string) $r->uses, true) ?: [];
+            $have = array_column($oldUses, 0);
+            foreach ($uses as $u) {
+                if (! in_array($u[0], $have, true)) {
+                    $oldUses[] = $u;
+                }
+            }
+            $newAi = $oldAi ?: $ai;
+            $newN = $oldN ?: $nut;
+            $db->table(self::TABLE)->where('id', $r->id)->update([
+                'company' => $r->company !== '' ? $r->company : mb_substr($p['c'], 0, 120), 'form' => $r->form !== '' ? $r->form : ($form ?: $fform),
+                'ai' => $enc($newAi), 'nutrients' => $enc((object) $newN), 'traits' => $enc($newN ? FertTraits::infer($r->brand, $newN, $fform) : []),
+                'crops' => $enc(array_values(array_unique(array_merge(json_decode((string) $r->crops, true) ?: [], $crops)))), 'uses' => $enc(array_slice($oldUses, 0, 30)),
+                'info' => $enc((object) $info), 'search' => self::haystack(['b' => $r->brand, 'c' => $r->company ?: $p['c'], 't' => $r->type, 'ai' => $newAi, 'n' => $newN, 'aka' => $info['aka']]),
+                'sourceRef' => mb_substr(trim($r->sourceRef . ' ' . implode(' ', $src)), 0, 255), 'updated_at' => $now,
+            ]);
+            self::alias((int) $r->id, $aliases, $via);
+
+            return (int) $r->id;
+        }
+        $info = ['mix' => $mix, 'aka' => $aliases, 'via' => [$via], 'aiFlags' => array_values(array_filter((array) ($row['flags'] ?? []), 'is_string')),
+            'confidence' => $conf, 'learnedAt' => $now->toDateString(), 'sources' => array_slice($src, 0, 12)];
+        $pkey = 'anee-' . substr(\Illuminate\Support\Str::slug($brand), 0, 80) . '-' . substr(md5(self::key($brand) . '|' . self::key((string) ($row['company'] ?? ''))), 0, 6);
+        try {
+            $id = (int) $db->table(self::TABLE)->insertGetId([
+                'pkey' => $pkey, 'brand' => mb_substr($brand, 0, 190), 'brandKey' => mb_substr(self::key($brand), 0, 190), 'company' => mb_substr($p['c'], 0, 120), 'type' => $type, 'form' => $form ?: $fform,
+                'applied' => self::applied($p), 'ai' => $enc($ai), 'nutrients' => $enc((object) $nut), 'traits' => $enc($traits), 'crops' => $enc($crops), 'uses' => $enc($uses),
+                'info' => $enc((object) $info), 'search' => self::haystack($p), 'source' => 'anee', 'sourceRef' => mb_substr(implode(' ', $src), 0, 255),
+                'ownerId' => isset($row['ownerId']) ? (int) $row['ownerId'] : null, 'status' => 1, 'created_at' => $now, 'updated_at' => $now,
+            ]);
+        } catch (\Illuminate\Database\QueryException $e) {
+            // The same key from a run a moment ago: that row is the answer.
+            $id = (int) $db->table(self::TABLE)->where('pkey', $pkey)->value('id');
+        }
+        self::alias($id, $aliases, $via);
+        Cache::forget('products:counts:' . self::conn() . ':' . self::version());
+
+        return $id ?: null;
+    }
+
+    /** Point other names at a product (kept apart from the rows, so a sync never loses them). */
+    public static function alias(int $productId, array $names, string $via = ''): void
+    {
+        if ($productId <= 0 || ! self::aliasesReady()) {
+            return;
+        }
+        $rows = [];
+        foreach (array_unique($names) as $n) {
+            $n = trim((string) $n);
+            $k = self::key($n);
+            if (strlen($k) >= 2) {
+                $rows[$k] = ['productId' => $productId, 'alias' => mb_substr($n, 0, 190), 'aliasKey' => mb_substr($k, 0, 190), 'via' => mb_substr($via, 0, 24), 'created_at' => now(), 'updated_at' => now()];
+            }
+        }
+        if ($rows) {
+            try {
+                self::db()->table(self::ALIASES)->upsert(array_values($rows), ['productId', 'aliasKey'], ['alias', 'updated_at']);
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+    }
+
     /**
      * Products whose brand, company or ingredients hold every word asked,
-     * the brand's own matches first. $shelf narrows to sprays, fertilizers
-     * or helpers; $crop puts products labelled for it first.
+     * the brand's own matches first, and products a learned alias points at.
+     * $shelf narrows to sprays, fertilizers or helpers; $crop puts products
+     * labelled for it first.
      */
     public static function search(string $q, ?string $shelf = null, ?string $crop = null, int $limit = 30): array
     {
@@ -238,10 +480,21 @@ final class ProductLibrary
         if (! $words || ! self::ready()) {
             return [];
         }
-        $qb = DB::table(self::TABLE)->where('status', 1);
-        foreach (array_slice($words, 0, 6) as $w) {
-            $qb->where('search', 'like', '%' . str_replace(['%', '_'], ['\%', '\_'], $w) . '%');
+        $qb = self::db()->table(self::TABLE)->where('status', 1);
+        $byAlias = [];
+        if (self::aliasesReady() && strlen(self::key($q)) >= 3) {
+            $byAlias = self::db()->table(self::ALIASES)->where('aliasKey', 'like', self::key($q) . '%')->limit(20)->pluck('productId')->all();
         }
+        $qb->where(function ($w) use ($words, $byAlias) {
+            $w->where(function ($x) use ($words) {
+                foreach (array_slice($words, 0, 6) as $word) {
+                    $x->where('search', 'like', '%' . str_replace(['%', '_'], ['\%', '\_'], $word) . '%');
+                }
+            });
+            if ($byAlias) {
+                $w->orWhereIn('id', $byAlias);
+            }
+        });
         if ($shelf && isset(self::SHELVES[$shelf])) {
             $qb->whereIn('type', self::SHELVES[$shelf]);
         }
@@ -296,7 +549,7 @@ final class ProductLibrary
             return [];
         }
 
-        return Cache::remember('products:counts:' . self::version(), 3600, fn () => DB::table(self::TABLE)->where('status', 1)
+        return Cache::remember('products:counts:' . self::conn() . ':' . self::version(), 3600, fn () => self::db()->table(self::TABLE)->where('status', 1)
             ->selectRaw('type, count(*) as n')->groupBy('type')->pluck('n', 'type')->map(fn ($n) => (int) $n)->all());
     }
 }

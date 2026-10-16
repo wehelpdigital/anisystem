@@ -159,7 +159,7 @@ class CompatController extends Controller
             }
         }
         $prods = ProductLibrary::many($pids);
-        $mine = $mids ? DB::table('as_user_products')->whereIn('id', $mids)->where('ownerId', WorkerContext::effectiveOwnerId())->where('deleteStatus', 1)->get()->keyBy('id') : collect();
+        $mine = $mids ? ProductLibrary::db()->table('as_user_products')->whereIn('id', $mids)->where('ownerId', WorkerContext::effectiveOwnerId())->where('deleteStatus', 1)->get()->keyBy('id') : collect();
         $items = [];
         foreach ($raw as $r) {
             $ref = (string) $r['ref'];
@@ -189,7 +189,7 @@ class CompatController extends Controller
         if (! ProductLibrary::ready()) {
             return null;
         }
-        $r = DB::table(ProductLibrary::TABLE)->where('status', 1)->whereRaw('lower(brand) = ?', [mb_strtolower($name)])->orderByRaw("source = 'file' desc")->first();
+        $r = ProductLibrary::db()->table(ProductLibrary::TABLE)->where('status', 1)->whereRaw('lower(brand) = ?', [mb_strtolower($name)])->orderByRaw("source = 'file' desc")->first();
 
         return $r ? ProductLibrary::fromRow($r) : null;
     }
@@ -212,10 +212,10 @@ class CompatController extends Controller
     public static function mineList(): array
     {
         try {
-            if (! Auth::check() || ! \Illuminate\Support\Facades\Schema::hasTable('as_user_products')) {
+            if (! Auth::check() || ! \Illuminate\Support\Facades\Schema::connection(ProductLibrary::conn())->hasTable('as_user_products')) {
                 return [];
             }
-            $rows = DB::table('as_user_products')->where('ownerId', WorkerContext::effectiveOwnerId())->where('deleteStatus', 1)->orderByDesc('updated_at')->limit(200)->get();
+            $rows = ProductLibrary::db()->table('as_user_products')->where('ownerId', WorkerContext::effectiveOwnerId())->where('deleteStatus', 1)->orderByDesc('updated_at')->limit(200)->get();
         } catch (\Throwable $e) {
             return [];
         }
@@ -271,15 +271,15 @@ class CompatController extends Controller
         $owner = WorkerContext::effectiveOwnerId();
         $id = (int) $request->input('id');
         if ($id) {
-            $n = DB::table('as_user_products')->where('id', $id)->where('ownerId', $owner)->where('deleteStatus', 1)->update($row);
+            $n = ProductLibrary::db()->table('as_user_products')->where('id', $id)->where('ownerId', $owner)->where('deleteStatus', 1)->update($row);
             if (! $n) {
                 return $this->json(false, 'That product is gone.', [], 404);
             }
         } else {
-            if (DB::table('as_user_products')->where('ownerId', $owner)->where('deleteStatus', 1)->count() >= 200) {
+            if (ProductLibrary::db()->table('as_user_products')->where('ownerId', $owner)->where('deleteStatus', 1)->count() >= 200) {
                 return $this->json(false, 'You have 200 products of your own. Remove one you no longer use first.', [], 422);
             }
-            $id = DB::table('as_user_products')->insertGetId($row + ['ownerId' => $owner, 'userId' => Auth::id(), 'deleteStatus' => 1, 'created_at' => now()]);
+            $id = ProductLibrary::db()->table('as_user_products')->insertGetId($row + ['ownerId' => $owner, 'userId' => Auth::id(), 'deleteStatus' => 1, 'created_at' => now()]);
         }
         $mine = self::mineList();
 
@@ -288,7 +288,7 @@ class CompatController extends Controller
 
     public function deleteMine(int $id)
     {
-        DB::table('as_user_products')->where('id', $id)->where('ownerId', WorkerContext::effectiveOwnerId())->update(['deleteStatus' => 0, 'updated_at' => now()]);
+        ProductLibrary::db()->table('as_user_products')->where('id', $id)->where('ownerId', WorkerContext::effectiveOwnerId())->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Removed.', ['mine' => self::mineList()]);
     }
@@ -539,26 +539,15 @@ class CompatController extends Controller
                 continue;
             }
             $brand = $hit['brand'] !== '' ? $hit['brand'] : $x['name'];
-            $existing = DB::table(ProductLibrary::TABLE)->where('status', 1)->whereRaw('lower(brand) = ?', [mb_strtolower($brand)])->first();
-            if ($existing && $existing->source === 'file') {
-                $out[$x['i']] = (int) $existing->id;
-
-                continue;
-            }
-            $p = ['k' => 'anee-' . Str::slug($brand) . '-' . substr(md5($brand . ($hit['company'] ?? '')), 0, 6), 'b' => $brand, 'c' => $hit['company'], 't' => $hit['type'],
-                'f' => in_array($hit['formulation'], array_keys(CompatBook::FORM_GROUP), true) ? $hit['formulation'] : '', 'ai' => $hit['ai'], 'n' => $hit['nutrients']];
-            $p['tr'] = $hit['nutrients'] ? FertTraits::infer($brand, $hit['nutrients']) : [];
-            $info = ['mix' => $hit['mixing'], 'labelRate' => $hit['labelRate'], 'phiText' => $hit['phi'], 'aiFlags' => $hit['flags'], 'confidence' => $hit['confidence'], 'at' => now('Asia/Manila')->toDateString()];
-            $enc = fn ($v) => json_encode($v, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-            $row = ['brand' => mb_substr($brand, 0, 190), 'company' => mb_substr((string) $hit['company'], 0, 120), 'type' => $p['t'], 'form' => $p['f'], 'applied' => ProductLibrary::applied($p),
-                'ai' => $enc($p['ai']), 'nutrients' => $enc((object) $p['n']), 'traits' => $enc($p['tr']), 'crops' => '[]', 'uses' => '[]', 'info' => $enc((object) $info),
-                'search' => ProductLibrary::haystack($p), 'source' => 'anee', 'ownerId' => $payerId,
-                'sourceRef' => mb_substr(trim($hit['source'] . ' ' . implode(' ', array_slice(array_column($sources, 'title'), 0, 4))), 0, 255), 'status' => 1, 'updated_at' => now()];
-            if ($existing) {
-                DB::table(ProductLibrary::TABLE)->where('id', $existing->id)->update($row);
-                $out[$x['i']] = (int) $existing->id;
-            } else {
-                $out[$x['i']] = (int) DB::table(ProductLibrary::TABLE)->insertGetId($row + ['pkey' => mb_substr($p['k'], 0, 120), 'created_at' => now()]);
+            // Learnt once (the owner, 2026-10-18): a row of the book from now on, or an alias of the row the files already hold.
+            $id = ProductLibrary::learn([
+                'brand' => $brand, 'company' => $hit['company'], 'type' => $hit['type'], 'formulation' => $hit['formulation'], 'ai' => $hit['ai'], 'nutrients' => $hit['nutrients'],
+                'rates' => $hit['labelRate'] !== '' ? [['crop' => '', 'text' => $hit['labelRate'], 'phi' => $hit['phi']]] : [], 'mixing' => $hit['mixing'], 'flags' => $hit['flags'],
+                'aliases' => mb_strtolower($brand) !== mb_strtolower($x['name']) ? [$x['name']] : [], 'confidence' => $hit['confidence'],
+                'sources' => array_merge($hit['source'] !== '' ? [['title' => $hit['source'], 'url' => '']] : [], array_slice($sources, 0, 8)), 'ownerId' => $payerId,
+            ], 'compat');
+            if ($id) {
+                $out[$x['i']] = $id;
             }
         }
 

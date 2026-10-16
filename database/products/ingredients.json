@@ -1,0 +1,5336 @@
+{
+"v": 1,
+"note": "Active ingredients: kind, chemical class, mode of action group, the flags the compatibility rules read, and the patterns that recognise the name.",
+"ingredients": {
+"Chlorpyrifos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"CHLORPYRIFOS(?! ?METHYL)"
+],
+"dt50ph7": 53.5,
+"ph9": "not given; 16 to 23 days at pH 8"
+},
+"Chlorpyrifos methyl": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"CHLORPYRIFOS ?METHYL"
+]
+},
+"Profenofos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_fast"
+],
+"rx": [
+"PROFENOFOS"
+],
+"dt50ph7": null,
+"ph9": "5.7 hours at 20 °C"
+},
+"Malathion": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_fast"
+],
+"rx": [
+"MALATHION"
+],
+"dt50ph7": 6.2,
+"ph9": "0.49 days at 25 °C"
+},
+"Diazinon": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"acid_sens"
+],
+"rx": [
+"DIAZINON"
+],
+"dt50ph7": 138.0,
+"ph9": "77 days"
+},
+"Dimethoate": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"DIMETHOATE"
+],
+"dt50ph7": 68.0,
+"ph9": "4.4 days at 25 °C"
+},
+"Acephate": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"ACEPHATE"
+]
+},
+"Phenthoate": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"PHENTHOATE"
+]
+},
+"Fenitrothion": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op"
+],
+"rx": [
+"FENITROTHION"
+],
+"dt50ph7": 183.0,
+"ph9": "100 days"
+},
+"Quinalphos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"QUINALPHOS"
+]
+},
+"Triazophos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"TRIAZOPHOS"
+]
+},
+"Fenthion": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"FENTHION"
+]
+},
+"Pirimiphos methyl": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"PIRIMIPHOS"
+]
+},
+"Azamethiphos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_fast"
+],
+"rx": [
+"AZAMETHIPHOS"
+],
+"dt50ph7": 11.0,
+"ph9": "4.3 hours"
+},
+"Cadusafos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op"
+],
+"rx": [
+"CADUSAFOS"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Fosthiazate": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"FOSTHIAZATE"
+],
+"dt50ph7": 104.0,
+"ph9": "3.2 days at 25 °C"
+},
+"Terbufos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"TERBUFOS"
+]
+},
+"Fenamiphos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"FENAMIPHOS",
+"PHENAMIPHOS"
+]
+},
+"Monocrotophos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"MONOCROTOPHOS"
+]
+},
+"Methamidophos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"METHAMIDOPHOS"
+]
+},
+"Ethoprophos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"ETHOPRO(PHOS|P)"
+]
+},
+"Dichlorvos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_fast"
+],
+"rx": [
+"DICHLORVOS",
+"\\bDDVP\\b"
+]
+},
+"Trichlorfon": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_fast"
+],
+"rx": [
+"TRICHLORFON"
+]
+},
+"Methidathion": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"METHIDATHION"
+]
+},
+"Phosalone": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"PHOSALONE"
+]
+},
+"Prothiofos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"PROTHIOFOS"
+]
+},
+"Temephos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"TEMEPHOS"
+]
+},
+"Isazofos": {
+"kind": "insecticide",
+"cls": "Organophosphate",
+"grp": "IRAC 1B",
+"flags": [
+"op",
+"alk_slow"
+],
+"rx": [
+"ISAZOFOS"
+]
+},
+"Fenobucarb (BPMC)": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_slow"
+],
+"rx": [
+"FENOBUCARB",
+"\\bBPMC\\b"
+],
+"dt50ph7": 20.0,
+"ph9": "16.9 days at 20 °C; 2 days at pH 10"
+},
+"Carbaryl": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_fast"
+],
+"rx": [
+"CARBARYL"
+],
+"dt50ph7": 12.0,
+"ph9": "3 hours"
+},
+"Methomyl": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_slow"
+],
+"rx": [
+"METHOMYL"
+],
+"dt50ph7": null,
+"ph9": "36 days at 25 °C"
+},
+"Carbofuran": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_fast"
+],
+"rx": [
+"CARBOFURAN"
+],
+"dt50ph7": 37.0,
+"ph9": "0.1 day"
+},
+"Carbosulfan": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"acid_sens",
+"alk_fast"
+],
+"rx": [
+"CARBOSULFAN"
+],
+"dt50ph7": 0.5,
+"ph9": "7.2 days"
+},
+"Thiodicarb": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_fast"
+],
+"rx": [
+"THIODICARB"
+],
+"dt50ph7": 30.8,
+"ph9": "0.26 days at 25 °C"
+},
+"Isoprocarb (MIPC)": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_slow"
+],
+"rx": [
+"ISOPROCARB",
+"\\bMIPC\\b",
+"MIPCIN"
+]
+},
+"Oxamyl": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_fast"
+],
+"rx": [
+"OXAMYL"
+],
+"dt50ph7": 21.1,
+"ph9": "0.2 days"
+},
+"Propoxur": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_slow"
+],
+"rx": [
+"PROPOXUR"
+]
+},
+"Metolcarb": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_slow"
+],
+"rx": [
+"METOLCARB"
+]
+},
+"Benfuracarb": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_slow"
+],
+"rx": [
+"BENFURACARB"
+]
+},
+"Furathiocarb": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_slow"
+],
+"rx": [
+"FURATHIOCARB"
+]
+},
+"Formetanate": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_fast"
+],
+"rx": [
+"FORMETANATE"
+],
+"dt50ph7": 1.5,
+"ph9": "2.8 hours at 20 °C"
+},
+"Aldicarb": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_slow"
+],
+"rx": [
+"ALDICARB"
+]
+},
+"Bendiocarb": {
+"kind": "insecticide",
+"cls": "Carbamate",
+"grp": "IRAC 1A",
+"flags": [
+"carb",
+"alk_slow"
+],
+"rx": [
+"BENDIOCARB"
+]
+},
+"Lambda cyhalothrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"LAMBDA ?-? ?CYHALOTHRIN",
+"LAMBD-?ACYHALOTHRIN"
+],
+"dt50ph7": null,
+"ph9": "about 7 days"
+},
+"Gamma cyhalothrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"GAMMA ?-?CYHALOTHRIN"
+]
+},
+"Alpha cypermethrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"ALPHA ?-?CYPERMETHRIN"
+],
+"dt50ph7": 70.0,
+"ph9": "3.3 days at 25 °C"
+},
+"Beta cypermethrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"BETA ?-?CYPERMETHRIN"
+]
+},
+"Zeta cypermethrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"ZETA ?-?CYPERMETHRIN"
+]
+},
+"Cypermethrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"(?<![A-Z-])CYPERMETHRIN"
+],
+"dt50ph7": null,
+"ph9": "not given; at pH 8, 21.2 days (cis isomer) and 9.1 days (trans isomer); about 30 minutes at pH 11"
+},
+"Deltamethrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"DELTAMETHRIN"
+],
+"dt50ph7": null,
+"ph9": "8 to 9 days at 20 °C"
+},
+"Bifenthrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr"
+],
+"rx": [
+"BIFENTHRIN"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Etofenprox": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr"
+],
+"rx": [
+"ETOFENPROX"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Permethrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"PERMETHRIN"
+]
+},
+"Esfenvalerate": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"ESFENVALERATE"
+]
+},
+"Fenvalerate": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"(?<!ES)FENVALERATE"
+]
+},
+"Beta cyfluthrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"BETA ?-?CYFLUTHRIN"
+],
+"dt50ph7": 160.0,
+"ph9": "33 hours"
+},
+"Cyfluthrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"(?<![A-Z-])CYFLUTHRIN"
+]
+},
+"Tetramethrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"TETRAMETHRIN"
+]
+},
+"Fenpropathrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"FENPROPATHRIN"
+]
+},
+"Tau fluvalinate": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"FLUVALINATE"
+]
+},
+"Cyhalothrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"(?<![A-Z-])CYHALOTHRIN"
+]
+},
+"Transfluthrin": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"TRANSFLUTHRIN"
+]
+},
+"Silafluofen": {
+"kind": "insecticide",
+"cls": "Pyrethroid",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"alk_slow"
+],
+"rx": [
+"SILAFLUOFEN"
+]
+},
+"Pyrethrins": {
+"kind": "insecticide",
+"cls": "Natural pyrethrins (botanical)",
+"grp": "IRAC 3A",
+"flags": [
+"pyr",
+"botanical",
+"alk_slow"
+],
+"rx": [
+"PYRETHRIN(S)?\\b(?!OID)"
+]
+},
+"Imidacloprid": {
+"kind": "insecticide",
+"cls": "Neonicotinoid",
+"grp": "IRAC 4A",
+"flags": [
+"neo"
+],
+"rx": [
+"IMIDACLOPRID"
+],
+"dt50ph7": null,
+"ph9": "about 1 year at 25 °C"
+},
+"Thiamethoxam": {
+"kind": "insecticide",
+"cls": "Neonicotinoid",
+"grp": "IRAC 4A",
+"flags": [
+"neo",
+"alk_slow"
+],
+"rx": [
+"THIAMETHOXAM"
+],
+"dt50ph7": null,
+"ph9": "11.5 days at 20 °C"
+},
+"Clothianidin": {
+"kind": "insecticide",
+"cls": "Neonicotinoid",
+"grp": "IRAC 4A",
+"flags": [
+"neo"
+],
+"rx": [
+"CLOTHIANIDIN"
+],
+"dt50ph7": null,
+"ph9": "stable at 20 °C; 14.4 days at 50 °C"
+},
+"Acetamiprid": {
+"kind": "insecticide",
+"cls": "Neonicotinoid",
+"grp": "IRAC 4A",
+"flags": [
+"neo"
+],
+"rx": [
+"ACETAMIPRID"
+],
+"dt50ph7": null,
+"ph9": "420 days at 25 °C; 13 days at 45 °C"
+},
+"Dinotefuran": {
+"kind": "insecticide",
+"cls": "Neonicotinoid",
+"grp": "IRAC 4A",
+"flags": [
+"neo"
+],
+"rx": [
+"DINOTEFURAN"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Thiacloprid": {
+"kind": "insecticide",
+"cls": "Neonicotinoid",
+"grp": "IRAC 4A",
+"flags": [
+"neo"
+],
+"rx": [
+"THIACLOPRID"
+]
+},
+"Nitenpyram": {
+"kind": "insecticide",
+"cls": "Neonicotinoid",
+"grp": "IRAC 4A",
+"flags": [
+"neo"
+],
+"rx": [
+"NITENPYRAM"
+]
+},
+"Sulfoxaflor": {
+"kind": "insecticide",
+"cls": "Sulfoximine",
+"grp": "IRAC 4C",
+"flags": [
+"neo"
+],
+"rx": [
+"SULFOXAFLOR"
+]
+},
+"Flupyradifurone": {
+"kind": "insecticide",
+"cls": "Butenolide",
+"grp": "IRAC 4D",
+"flags": [
+"neo"
+],
+"rx": [
+"FLUPYRADIFURONE"
+]
+},
+"Triflumezopyrim": {
+"kind": "insecticide",
+"cls": "Mesoionic",
+"grp": "IRAC 4E",
+"flags": [
+"neo"
+],
+"rx": [
+"TRIFLUMEZOPYRIM"
+]
+},
+"Chlorantraniliprole": {
+"kind": "insecticide",
+"cls": "Diamide",
+"grp": "IRAC 28",
+"flags": [
+"diamide",
+"alk_slow"
+],
+"rx": [
+"CHLORANTRANILIPROLE",
+"RYNAXYPYR"
+],
+"dt50ph7": null,
+"ph9": "unstable at 25 °C, no figure given"
+},
+"Cyantraniliprole": {
+"kind": "insecticide",
+"cls": "Diamide",
+"grp": "IRAC 28",
+"flags": [
+"diamide",
+"alk_slow"
+],
+"rx": [
+"CYANTRANILIPROLE",
+"CYAZYPYR"
+],
+"dt50ph7": 61.0,
+"ph9": "1.8 days at 20 °C"
+},
+"Flubendiamide": {
+"kind": "insecticide",
+"cls": "Diamide",
+"grp": "IRAC 28",
+"flags": [
+"diamide"
+],
+"rx": [
+"FLUBENDIAMIDE"
+]
+},
+"Tetraniliprole": {
+"kind": "insecticide",
+"cls": "Diamide",
+"grp": "IRAC 28",
+"flags": [
+"diamide",
+"alk_slow"
+],
+"rx": [
+"TETRANILIPROLE"
+],
+"dt50ph7": 58.0,
+"ph9": "1.27 days"
+},
+"Cyclaniliprole": {
+"kind": "insecticide",
+"cls": "Diamide",
+"grp": "IRAC 28",
+"flags": [
+"diamide"
+],
+"rx": [
+"CYCLANILIPROLE"
+]
+},
+"Cyhalodiamide": {
+"kind": "insecticide",
+"cls": "Diamide",
+"grp": "IRAC 28",
+"flags": [
+"diamide"
+],
+"rx": [
+"CYHALODIAMIDE"
+]
+},
+"Broflanilide": {
+"kind": "insecticide",
+"cls": "Meta diamide",
+"grp": "IRAC 30",
+"flags": [
+"diamide"
+],
+"rx": [
+"BROFLANILIDE"
+]
+},
+"Isocycloseram": {
+"kind": "insecticide",
+"cls": "Isoxazoline",
+"grp": "IRAC 30",
+"flags": [],
+"rx": [
+"ISOCYCLOSERAM"
+]
+},
+"Abamectin": {
+"kind": "insecticide",
+"cls": "Avermectin",
+"grp": "IRAC 6",
+"flags": [
+"aver"
+],
+"rx": [
+"ABAMECTIN",
+"AVERMECTIN"
+]
+},
+"Emamectin benzoate": {
+"kind": "insecticide",
+"cls": "Avermectin",
+"grp": "IRAC 6",
+"flags": [
+"aver"
+],
+"rx": [
+"EMAMECTIN"
+]
+},
+"Milbemectin": {
+"kind": "insecticide",
+"cls": "Milbemycin",
+"grp": "IRAC 6",
+"flags": [
+"aver"
+],
+"rx": [
+"MILBEMECTIN"
+]
+},
+"Spinosad": {
+"kind": "insecticide",
+"cls": "Spinosyn",
+"grp": "IRAC 5",
+"flags": [
+"spino"
+],
+"rx": [
+"SPINOSAD"
+],
+"dt50ph7": null,
+"ph9": "200 days (spinosyn A), 259 days (spinosyn D) at 25 °C"
+},
+"Spinetoram": {
+"kind": "insecticide",
+"cls": "Spinosyn",
+"grp": "IRAC 5",
+"flags": [
+"spino"
+],
+"rx": [
+"SPINETORAM"
+]
+},
+"Cartap hydrochloride": {
+"kind": "insecticide",
+"cls": "Nereistoxin analogue",
+"grp": "IRAC 14",
+"flags": [
+"nereis",
+"alk_fast"
+],
+"rx": [
+"CARTAP"
+]
+},
+"Bensultap": {
+"kind": "insecticide",
+"cls": "Nereistoxin analogue",
+"grp": "IRAC 14",
+"flags": [
+"nereis",
+"alk_slow"
+],
+"rx": [
+"BENSULTAP"
+]
+},
+"Thiocyclam": {
+"kind": "insecticide",
+"cls": "Nereistoxin analogue",
+"grp": "IRAC 14",
+"flags": [
+"nereis",
+"alk_slow"
+],
+"rx": [
+"THIOCYCLAM"
+]
+},
+"Thiosultap (dimehypo)": {
+"kind": "insecticide",
+"cls": "Nereistoxin analogue",
+"grp": "IRAC 14",
+"flags": [
+"nereis",
+"alk_slow"
+],
+"rx": [
+"DIMEHYPO",
+"THIOSULTAP"
+]
+},
+"Fipronil": {
+"kind": "insecticide",
+"cls": "Phenylpyrazole",
+"grp": "IRAC 2B",
+"flags": [
+"fipr"
+],
+"rx": [
+"FIPRONIL"
+]
+},
+"Ethiprole": {
+"kind": "insecticide",
+"cls": "Phenylpyrazole",
+"grp": "IRAC 2B",
+"flags": [
+"fipr"
+],
+"rx": [
+"ETHIPROLE"
+]
+},
+"Buprofezin": {
+"kind": "insecticide",
+"cls": "Thiadiazine growth regulator",
+"grp": "IRAC 16",
+"flags": [
+"igr"
+],
+"rx": [
+"BUPROFEZIN",
+"BUFROFEZIN"
+]
+},
+"Pymetrozine": {
+"kind": "insecticide",
+"cls": "Pyridine azomethine",
+"grp": "IRAC 9B",
+"flags": [
+"acid_sens"
+],
+"rx": [
+"PYMETROZINE"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Pyriproxyfen": {
+"kind": "insecticide",
+"cls": "Juvenile hormone mimic",
+"grp": "IRAC 7C",
+"flags": [
+"igr"
+],
+"rx": [
+"PYRIPROXYFEN"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"S methoprene": {
+"kind": "insecticide",
+"cls": "Juvenile hormone mimic",
+"grp": "IRAC 7A",
+"flags": [
+"igr"
+],
+"rx": [
+"METHOPRENE"
+]
+},
+"Cyromazine": {
+"kind": "insecticide",
+"cls": "Triazine growth regulator",
+"grp": "IRAC 17",
+"flags": [
+"igr"
+],
+"rx": [
+"CYROMAZINE"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Chlorfenapyr": {
+"kind": "insecticide",
+"cls": "Pyrrole",
+"grp": "IRAC 13",
+"flags": [],
+"rx": [
+"CHLORFENAPYR",
+"CLORFENAPYR"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Diafenthiuron": {
+"kind": "insecticide",
+"cls": "Thiourea",
+"grp": "IRAC 12A",
+"flags": [],
+"rx": [
+"DIAFENTHIURON"
+],
+"dt50ph7": null,
+"ph9": "796 days at 20 °C"
+},
+"Indoxacarb": {
+"kind": "insecticide",
+"cls": "Oxadiazine",
+"grp": "IRAC 22A",
+"flags": [
+"alk_fast"
+],
+"rx": [
+"INDOXACARB"
+],
+"dt50ph7": 17.6,
+"ph9": "0.4 days at 20 °C"
+},
+"Metaflumizone": {
+"kind": "insecticide",
+"cls": "Semicarbazone",
+"grp": "IRAC 22B",
+"flags": [],
+"rx": [
+"METAFLUMIZONE"
+]
+},
+"Lufenuron": {
+"kind": "insecticide",
+"cls": "Benzoylurea growth regulator",
+"grp": "IRAC 15",
+"flags": [
+"igr"
+],
+"rx": [
+"LUFENURON"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Novaluron": {
+"kind": "insecticide",
+"cls": "Benzoylurea growth regulator",
+"grp": "IRAC 15",
+"flags": [
+"igr"
+],
+"rx": [
+"NOVALURON"
+],
+"dt50ph7": null,
+"ph9": "101 days at 25 °C"
+},
+"Chlorfluazuron": {
+"kind": "insecticide",
+"cls": "Benzoylurea growth regulator",
+"grp": "IRAC 15",
+"flags": [
+"igr"
+],
+"rx": [
+"CHLORFLUAZURON"
+]
+},
+"Diflubenzuron": {
+"kind": "insecticide",
+"cls": "Benzoylurea growth regulator",
+"grp": "IRAC 15",
+"flags": [
+"igr",
+"alk_slow"
+],
+"rx": [
+"DIFLUBENZURON"
+],
+"dt50ph7": 96.0,
+"ph9": "some breakdown, no figure given"
+},
+"Teflubenzuron": {
+"kind": "insecticide",
+"cls": "Benzoylurea growth regulator",
+"grp": "IRAC 15",
+"flags": [
+"igr"
+],
+"rx": [
+"TEFLUBENZURON"
+]
+},
+"Hexaflumuron": {
+"kind": "insecticide",
+"cls": "Benzoylurea growth regulator",
+"grp": "IRAC 15",
+"flags": [
+"igr"
+],
+"rx": [
+"HEXAFLUMURON"
+]
+},
+"Flufenoxuron": {
+"kind": "insecticide",
+"cls": "Benzoylurea growth regulator",
+"grp": "IRAC 15",
+"flags": [
+"igr"
+],
+"rx": [
+"FLUFENOXURON"
+]
+},
+"Triflumuron": {
+"kind": "insecticide",
+"cls": "Benzoylurea growth regulator",
+"grp": "IRAC 15",
+"flags": [
+"igr"
+],
+"rx": [
+"TRIFLUMURON"
+]
+},
+"Tebufenozide": {
+"kind": "insecticide",
+"cls": "Diacylhydrazine growth regulator",
+"grp": "IRAC 18",
+"flags": [
+"igr"
+],
+"rx": [
+"TEBUFENOZIDE"
+]
+},
+"Methoxyfenozide": {
+"kind": "insecticide",
+"cls": "Diacylhydrazine growth regulator",
+"grp": "IRAC 18",
+"flags": [
+"igr"
+],
+"rx": [
+"METHOXYFENOZIDE"
+]
+},
+"Spirotetramat": {
+"kind": "insecticide",
+"cls": "Tetramic acid",
+"grp": "IRAC 23",
+"flags": [
+"alk_fast"
+],
+"rx": [
+"SPIROTETRAMAT"
+],
+"dt50ph7": 8.6,
+"ph9": "0.32 days at 25 °C"
+},
+"Spiromesifen": {
+"kind": "insecticide",
+"cls": "Tetronic acid",
+"grp": "IRAC 23",
+"flags": [],
+"rx": [
+"SPIROMESIFEN"
+]
+},
+"Spirodiclofen": {
+"kind": "insecticide",
+"cls": "Tetronic acid",
+"grp": "IRAC 23",
+"flags": [],
+"rx": [
+"SPIRODICLOFEN"
+]
+},
+"Flonicamid": {
+"kind": "insecticide",
+"cls": "Flonicamid",
+"grp": "IRAC 29",
+"flags": [],
+"rx": [
+"FLONICAMID"
+],
+"dt50ph7": null,
+"ph9": "204 days"
+},
+"Hydramethylnon": {
+"kind": "insecticide",
+"cls": "Amidinohydrazone (ant and cockroach bait)",
+"grp": "IRAC 20A",
+"flags": [
+"bait"
+],
+"rx": [
+"HYDRAMETHYLNON"
+]
+},
+"Pyridalyl": {
+"kind": "insecticide",
+"cls": "Pyridalyl",
+"grp": "IRAC UN",
+"flags": [],
+"rx": [
+"PYRIDALYL"
+]
+},
+"Hexythiazox": {
+"kind": "acaricide",
+"cls": "Mite growth inhibitor",
+"grp": "IRAC 10A",
+"flags": [],
+"rx": [
+"HEXYTHIAZOX"
+]
+},
+"Fenpyroximate": {
+"kind": "acaricide",
+"cls": "METI acaricide",
+"grp": "IRAC 21A",
+"flags": [],
+"rx": [
+"FENPYROXIMATE"
+]
+},
+"Tolfenpyrad": {
+"kind": "insecticide",
+"cls": "METI",
+"grp": "IRAC 21A",
+"flags": [],
+"rx": [
+"TOLFENPYRAD"
+]
+},
+"Fenazaquin": {
+"kind": "acaricide",
+"cls": "METI acaricide",
+"grp": "IRAC 21A",
+"flags": [
+"acid_sens"
+],
+"rx": [
+"FENAZAQUIN"
+],
+"dt50ph7": 130.0,
+"ph9": "219 days at 25 °C"
+},
+"Pyridaben": {
+"kind": "acaricide",
+"cls": "METI acaricide",
+"grp": "IRAC 21A",
+"flags": [],
+"rx": [
+"PYRIDABEN"
+]
+},
+"Afidopyropen": {
+"kind": "insecticide",
+"cls": "Pyropene",
+"grp": "IRAC 9D",
+"flags": [],
+"rx": [
+"AFIDOPYROPEN"
+]
+},
+"Flometoquin": {
+"kind": "insecticide",
+"cls": "Quinoline",
+"grp": "IRAC 34",
+"flags": [],
+"rx": [
+"FLOMETOQUIN"
+]
+},
+"Etoxazole": {
+"kind": "acaricide",
+"cls": "Mite growth inhibitor",
+"grp": "IRAC 10B",
+"flags": [],
+"rx": [
+"ETOXAZOLE"
+]
+},
+"Propargite": {
+"kind": "acaricide",
+"cls": "Sulfite ester",
+"grp": "IRAC 12C",
+"flags": [],
+"rx": [
+"PROPARGITE"
+]
+},
+"Bifenazate": {
+"kind": "acaricide",
+"cls": "Bifenazate",
+"grp": "IRAC 20D",
+"flags": [],
+"rx": [
+"BIFENAZATE"
+]
+},
+"Piperonyl butoxide": {
+"kind": "insecticide",
+"cls": "Synergist",
+"grp": "",
+"flags": [],
+"rx": [
+"PIPERONYL"
+],
+"dt50ph7": 250.0,
+"ph9": "stable"
+},
+"Azadirachtin": {
+"kind": "insecticide",
+"cls": "Neem (botanical)",
+"grp": "IRAC UN",
+"flags": [
+"botanical"
+],
+"rx": [
+"AZADIRACHTIN",
+"\\bNEEM\\b"
+]
+},
+"Matrine": {
+"kind": "insecticide",
+"cls": "Plant extract (botanical)",
+"grp": "IRAC UN",
+"flags": [
+"botanical"
+],
+"rx": [
+"MATRINE"
+]
+},
+"Sabadilla alkaloids": {
+"kind": "insecticide",
+"cls": "Plant extract (botanical)",
+"grp": "IRAC UN",
+"flags": [
+"botanical"
+],
+"rx": [
+"SABADILLA"
+]
+},
+"Rotenone": {
+"kind": "insecticide",
+"cls": "Plant extract (botanical)",
+"grp": "IRAC 21B",
+"flags": [
+"botanical"
+],
+"rx": [
+"ROTENONE"
+]
+},
+"Potassium salts of fatty acids": {
+"kind": "insecticide",
+"cls": "Insecticidal soap",
+"grp": "",
+"flags": [
+"soap",
+"alkaline",
+"hard"
+],
+"rx": [
+"POTASSIUM SALTS? OF FATTY ACID",
+"INSECTICIDAL SOAP"
+]
+},
+"Bacillus thuringiensis aizawai": {
+"kind": "insecticide",
+"cls": "Bt, a living bacterium",
+"grp": "IRAC 11A",
+"flags": [
+"bt",
+"alk_slow"
+],
+"rx": [
+"THURINGIENSIS.*AIZAWAI"
+]
+},
+"Bacillus thuringiensis kurstaki": {
+"kind": "insecticide",
+"cls": "Bt, a living bacterium",
+"grp": "IRAC 11A",
+"flags": [
+"bt",
+"alk_slow"
+],
+"rx": [
+"THURINGIENSIS"
+]
+},
+"Beauveria bassiana": {
+"kind": "insecticide",
+"cls": "Living fungus",
+"grp": "IRAC UNF",
+"flags": [
+"living_fungus"
+],
+"rx": [
+"BEAUVERIA"
+]
+},
+"Metarhizium anisopliae": {
+"kind": "insecticide",
+"cls": "Living fungus",
+"grp": "IRAC UNF",
+"flags": [
+"living_fungus"
+],
+"rx": [
+"METARHIZIUM"
+]
+},
+"Paecilomyces fumosoroseus": {
+"kind": "insecticide",
+"cls": "Living fungus",
+"grp": "IRAC UNF",
+"flags": [
+"living_fungus"
+],
+"rx": [
+"PAEC[EI]LOMYCES",
+"ISARIA"
+]
+},
+"Lecanicillium lecanii": {
+"kind": "insecticide",
+"cls": "Living fungus",
+"grp": "IRAC UNF",
+"flags": [
+"living_fungus"
+],
+"rx": [
+"VERTIC[IU]L+UM LECAN",
+"LECANICILLIUM"
+]
+},
+"Nuclear polyhedrosis virus": {
+"kind": "insecticide",
+"cls": "Insect virus",
+"grp": "IRAC 31",
+"flags": [
+"virus",
+"alk_slow"
+],
+"rx": [
+"POLYHEDROSIS",
+"\\bNPV\\b"
+]
+},
+"Insect traits in seed": {
+"kind": "insecticide",
+"cls": "Plant incorporated protectant (in the seed)",
+"grp": "",
+"flags": [
+"pip"
+],
+"rx": [
+"\\bCRY[0-9]",
+"\\bVIP3",
+"VIPAA20"
+]
+},
+"Pheromone lure": {
+"kind": "insecticide",
+"cls": "Lure for traps",
+"grp": "",
+"flags": [
+"pheromone"
+],
+"rx": [
+"HEXADECEN",
+"TETRADECEN",
+"TETRADECADIEN",
+"DODECENYL",
+"4-METHYLOCTANOATE",
+"PHEROMONE"
+]
+},
+"Methyl eugenol": {
+"kind": "insecticide",
+"cls": "Lure for traps",
+"grp": "",
+"flags": [
+"pheromone"
+],
+"rx": [
+"METHYL EUGENOL"
+]
+},
+"Niclosamide": {
+"kind": "molluscicide",
+"cls": "Salicylanilide",
+"grp": "",
+"flags": [],
+"rx": [
+"NICLOSAMIDE"
+]
+},
+"Metaldehyde": {
+"kind": "molluscicide",
+"cls": "Metaldehyde bait",
+"grp": "",
+"flags": [
+"bait"
+],
+"rx": [
+"METALDEHYDE"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Saponin (tea seed)": {
+"kind": "molluscicide",
+"cls": "Plant saponin (botanical)",
+"grp": "",
+"flags": [
+"botanical"
+],
+"rx": [
+"SAPONIN",
+"TEA SEED"
+]
+},
+"Zinc phosphide": {
+"kind": "rodenticide",
+"cls": "Rodent bait",
+"grp": "",
+"flags": [
+"bait"
+],
+"rx": [
+"ZINC PHOSPHIDE"
+]
+},
+"Brodifacoum": {
+"kind": "rodenticide",
+"cls": "Rodent bait",
+"grp": "",
+"flags": [
+"bait"
+],
+"rx": [
+"BRODIFACOUM"
+]
+},
+"Bromadiolone": {
+"kind": "rodenticide",
+"cls": "Rodent bait",
+"grp": "",
+"flags": [
+"bait"
+],
+"rx": [
+"BROMADIOLONE"
+]
+},
+"Coumatetralyl": {
+"kind": "rodenticide",
+"cls": "Rodent bait",
+"grp": "",
+"flags": [
+"bait"
+],
+"rx": [
+"COUMATETRALYL"
+]
+},
+"Diphacinone": {
+"kind": "rodenticide",
+"cls": "Rodent bait",
+"grp": "",
+"flags": [
+"bait"
+],
+"rx": [
+"DIPHACINONE"
+]
+},
+"Flocoumafen": {
+"kind": "rodenticide",
+"cls": "Rodent bait",
+"grp": "",
+"flags": [
+"bait"
+],
+"rx": [
+"FLOCOUMAFEN"
+]
+},
+"Difenacoum": {
+"kind": "rodenticide",
+"cls": "Rodent bait",
+"grp": "",
+"flags": [
+"bait"
+],
+"rx": [
+"DIFENACOUM"
+]
+},
+"Aluminium phosphide": {
+"kind": "fumigant",
+"cls": "Fumigant",
+"grp": "",
+"flags": [
+"fumigant"
+],
+"rx": [
+"ALUMINUM PHOSPHIDE",
+"ALUMINIUM PHOSPHIDE"
+]
+},
+"Magnesium phosphide": {
+"kind": "fumigant",
+"cls": "Fumigant",
+"grp": "",
+"flags": [
+"fumigant",
+"alk_fast"
+],
+"rx": [
+"MAGNESIUM PHOSPHIDE"
+],
+"dt50ph7": null,
+"ph9": "not given"
+},
+"Phosphine": {
+"kind": "fumigant",
+"cls": "Fumigant",
+"grp": "",
+"flags": [
+"fumigant"
+],
+"rx": [
+"^PHOSPHINE"
+]
+},
+"Methyl bromide": {
+"kind": "fumigant",
+"cls": "Fumigant",
+"grp": "",
+"flags": [
+"fumigant"
+],
+"rx": [
+"METHYL BROMIDE"
+]
+},
+"Chloropicrin": {
+"kind": "fumigant",
+"cls": "Fumigant",
+"grp": "",
+"flags": [
+"fumigant"
+],
+"rx": [
+"CHLOROPICRIN"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Dazomet": {
+"kind": "fumigant",
+"cls": "Fumigant",
+"grp": "",
+"flags": [
+"fumigant",
+"acid_sens",
+"alk_fast"
+],
+"rx": [
+"DAZOMET"
+],
+"dt50ph7": 0.2,
+"ph9": "0.1 days at 25 °C"
+},
+"Metam sodium": {
+"kind": "fumigant",
+"cls": "Fumigant",
+"grp": "",
+"flags": [
+"fumigant"
+],
+"rx": [
+"METAM"
+]
+},
+"1,3 dichloropropene": {
+"kind": "fumigant",
+"cls": "Fumigant",
+"grp": "",
+"flags": [
+"fumigant"
+],
+"rx": [
+"DICHLOROPROPENE"
+]
+},
+"Sulfuryl fluoride": {
+"kind": "fumigant",
+"cls": "Fumigant",
+"grp": "",
+"flags": [
+"fumigant"
+],
+"rx": [
+"SULFURYL"
+]
+},
+"Ethyl formate": {
+"kind": "fumigant",
+"cls": "Fumigant",
+"grp": "",
+"flags": [
+"fumigant"
+],
+"rx": [
+"ETHYL FORMATE"
+]
+},
+"Mancozeb": {
+"kind": "fungicide",
+"cls": "Dithiocarbamate",
+"grp": "FRAC M03",
+"flags": [
+"dtc",
+"acid_sens",
+"alk_fast"
+],
+"rx": [
+"MANCOZEB"
+],
+"dt50ph7": 1.3,
+"ph9": "15 hours"
+},
+"Maneb": {
+"kind": "fungicide",
+"cls": "Dithiocarbamate",
+"grp": "FRAC M03",
+"flags": [
+"dtc",
+"alk_fast"
+],
+"rx": [
+"\\bMANEB"
+]
+},
+"Zineb": {
+"kind": "fungicide",
+"cls": "Dithiocarbamate",
+"grp": "FRAC M03",
+"flags": [
+"dtc",
+"alk_fast"
+],
+"rx": [
+"ZINEB"
+]
+},
+"Propineb": {
+"kind": "fungicide",
+"cls": "Dithiocarbamate",
+"grp": "FRAC M03",
+"flags": [
+"dtc",
+"acid_sens",
+"alk_fast"
+],
+"rx": [
+"PROPINEB"
+],
+"dt50ph7": 1.5,
+"ph9": "53 hours at 22 °C"
+},
+"Metiram": {
+"kind": "fungicide",
+"cls": "Dithiocarbamate",
+"grp": "FRAC M03",
+"flags": [
+"dtc",
+"alk_fast"
+],
+"rx": [
+"METIRAM"
+]
+},
+"Thiram": {
+"kind": "fungicide",
+"cls": "Dithiocarbamate",
+"grp": "FRAC M03",
+"flags": [
+"dtc",
+"alk_fast"
+],
+"rx": [
+"THIRAM"
+],
+"dt50ph7": 3.5,
+"ph9": "6.9 hours at 25 °C"
+},
+"Ziram": {
+"kind": "fungicide",
+"cls": "Dithiocarbamate",
+"grp": "FRAC M03",
+"flags": [
+"dtc",
+"alk_fast"
+],
+"rx": [
+"ZIRAM"
+]
+},
+"Chlorothalonil": {
+"kind": "fungicide",
+"cls": "Chloronitrile",
+"grp": "FRAC M05",
+"flags": [
+"chlorothalonil"
+],
+"rx": [
+"CHLOROTHALONIL"
+]
+},
+"Captan": {
+"kind": "fungicide",
+"cls": "Phthalimide",
+"grp": "FRAC M04",
+"flags": [
+"captan",
+"acid_sens",
+"alk_fast"
+],
+"rx": [
+"CAPTAN"
+],
+"dt50ph7": 0.6,
+"ph9": "6 minutes"
+},
+"Folpet": {
+"kind": "fungicide",
+"cls": "Phthalimide",
+"grp": "FRAC M04",
+"flags": [
+"captan",
+"alk_fast"
+],
+"rx": [
+"FOLPET"
+]
+},
+"Bordeaux mixture": {
+"kind": "fungicide",
+"cls": "Copper (Bordeaux, with lime)",
+"grp": "FRAC M01",
+"flags": [
+"copper",
+"bordeaux",
+"alkaline"
+],
+"rx": [
+"BORDEAUX"
+]
+},
+"Copper hydroxide": {
+"kind": "fungicide",
+"cls": "Copper",
+"grp": "FRAC M01",
+"flags": [
+"copper"
+],
+"rx": [
+"COPPER HYDROXIDE",
+"CUPRIC HYDROXIDE"
+]
+},
+"Copper oxychloride": {
+"kind": "fungicide",
+"cls": "Copper",
+"grp": "FRAC M01",
+"flags": [
+"copper"
+],
+"rx": [
+"COPPER OXYCHLORIDE"
+]
+},
+"Cuprous oxide": {
+"kind": "fungicide",
+"cls": "Copper",
+"grp": "FRAC M01",
+"flags": [
+"copper"
+],
+"rx": [
+"CUPROUS OXIDE"
+]
+},
+"Copper sulfate": {
+"kind": "fungicide",
+"cls": "Copper",
+"grp": "FRAC M01",
+"flags": [
+"copper"
+],
+"rx": [
+"COPPER SUL(?:PH|F)ATE",
+"TRIBASIC COPPER"
+]
+},
+"Copper gluconate": {
+"kind": "fungicide",
+"cls": "Copper",
+"grp": "FRAC M01",
+"flags": [
+"copper"
+],
+"rx": [
+"COPPER GLUCONATE"
+]
+},
+"Thiodiazole copper": {
+"kind": "fungicide",
+"cls": "Copper",
+"grp": "FRAC M01",
+"flags": [
+"copper"
+],
+"rx": [
+"THIODIAZOLE COPPER"
+]
+},
+"Copper (other)": {
+"kind": "fungicide",
+"cls": "Copper",
+"grp": "FRAC M01",
+"flags": [
+"copper"
+],
+"rx": [
+"\\bCOPPER\\b"
+]
+},
+"Lime sulfur": {
+"kind": "fungicide",
+"cls": "Lime sulfur",
+"grp": "FRAC M02",
+"flags": [
+"sulfur",
+"limesulfur",
+"alkaline",
+"heat"
+],
+"rx": [
+"LIME SUL(?:PH|F)UR",
+"CALCIUM POLYSULFIDE"
+]
+},
+"Sulfur": {
+"kind": "fungicide",
+"cls": "Sulfur",
+"grp": "FRAC M02",
+"flags": [
+"sulfur",
+"heat"
+],
+"rx": [
+"(?<!THIO)(?<!LIME )SUL(?:PH|F)UR\\b(?! ?(DIOXIDE|YL))",
+"ELEMENTAL SUL(?:PH|F)UR"
+]
+},
+"Iminoctadine": {
+"kind": "fungicide",
+"cls": "Guanidine",
+"grp": "FRAC M07",
+"flags": [],
+"rx": [
+"IMINOCTADINE"
+]
+},
+"Dodine": {
+"kind": "fungicide",
+"cls": "Guanidine",
+"grp": "FRAC U12",
+"flags": [],
+"rx": [
+"DODINE"
+],
+"dt50ph7": 914.0,
+"ph9": "1198 days at 25 °C"
+},
+"Carbendazim": {
+"kind": "fungicide",
+"cls": "Benzimidazole",
+"grp": "FRAC 1",
+"flags": [
+"benzim"
+],
+"rx": [
+"CARBENDAZIM"
+],
+"dt50ph7": 350.0,
+"ph9": "54 to 124 days"
+},
+"Benomyl": {
+"kind": "fungicide",
+"cls": "Benzimidazole",
+"grp": "FRAC 1",
+"flags": [
+"benzim",
+"alk_fast"
+],
+"rx": [
+"BENOMYL"
+],
+"dt50ph7": 0.8,
+"ph9": "not given"
+},
+"Thiophanate methyl": {
+"kind": "fungicide",
+"cls": "Benzimidazole",
+"grp": "FRAC 1",
+"flags": [
+"benzim",
+"alk_slow"
+],
+"rx": [
+"THIOPHANATE"
+],
+"dt50ph7": 46.8,
+"ph9": "1.0 day at 22 °C"
+},
+"Thiabendazole": {
+"kind": "fungicide",
+"cls": "Benzimidazole",
+"grp": "FRAC 1",
+"flags": [
+"benzim"
+],
+"rx": [
+"THIABENDAZOLE"
+]
+},
+"Diethofencarb": {
+"kind": "fungicide",
+"cls": "N phenyl carbamate",
+"grp": "FRAC 10",
+"flags": [],
+"rx": [
+"DIETHOFENCARB"
+]
+},
+"Azoxystrobin": {
+"kind": "fungicide",
+"cls": "Strobilurin (QoI)",
+"grp": "FRAC 11",
+"flags": [
+"strobi"
+],
+"rx": [
+"AZOXYSTROBIN"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Pyraclostrobin": {
+"kind": "fungicide",
+"cls": "Strobilurin (QoI)",
+"grp": "FRAC 11",
+"flags": [
+"strobi"
+],
+"rx": [
+"PYRACLOSTROBIN"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Trifloxystrobin": {
+"kind": "fungicide",
+"cls": "Strobilurin (QoI)",
+"grp": "FRAC 11",
+"flags": [
+"strobi",
+"alk_slow"
+],
+"rx": [
+"TRIFLOXYSTROBIN"
+],
+"dt50ph7": 40.0,
+"ph9": "1.2 days at 25 °C"
+},
+"Kresoxim methyl": {
+"kind": "fungicide",
+"cls": "Strobilurin (QoI)",
+"grp": "FRAC 11",
+"flags": [
+"strobi"
+],
+"rx": [
+"KRESOXIM"
+]
+},
+"Picoxystrobin": {
+"kind": "fungicide",
+"cls": "Strobilurin (QoI)",
+"grp": "FRAC 11",
+"flags": [
+"strobi"
+],
+"rx": [
+"PICOXYSTROBIN"
+]
+},
+"Fluoxastrobin": {
+"kind": "fungicide",
+"cls": "Strobilurin (QoI)",
+"grp": "FRAC 11",
+"flags": [
+"strobi"
+],
+"rx": [
+"FLUOXASTROBIN"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Metominostrobin": {
+"kind": "fungicide",
+"cls": "Strobilurin (QoI)",
+"grp": "FRAC 11",
+"flags": [
+"strobi"
+],
+"rx": [
+"METOMINOSTROBIN"
+]
+},
+"Famoxadone": {
+"kind": "fungicide",
+"cls": "Strobilurin (QoI)",
+"grp": "FRAC 11",
+"flags": [
+"strobi",
+"alk_fast"
+],
+"rx": [
+"FAMOXADONE"
+],
+"dt50ph7": 2.0,
+"ph9": "1.5 hours at 25 °C"
+},
+"Fenamidone": {
+"kind": "fungicide",
+"cls": "Strobilurin (QoI)",
+"grp": "FRAC 11",
+"flags": [
+"strobi"
+],
+"rx": [
+"FENAMIDONE"
+]
+},
+"Orysastrobin": {
+"kind": "fungicide",
+"cls": "Strobilurin (QoI)",
+"grp": "FRAC 11",
+"flags": [
+"strobi"
+],
+"rx": [
+"ORYSASTROBIN"
+]
+},
+"Difenoconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"DIFENOCONAZOLE"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Propiconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"PROPICONAZOLE"
+]
+},
+"Tebuconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"TEBUCONAZOLE"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Hexaconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"HEXACONAZOLE"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Tetraconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"TETRACONAZOLE"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Epoxiconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"EPOXICONAZOLE"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Flutriafol": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"FLUTRIAFOL"
+]
+},
+"Triadimefon": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"TRIADIMEFON"
+]
+},
+"Triadimenol": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"TRIADIMENOL"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Bitertanol": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"BITERTANOL"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Diniconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"DINICONAZOLE"
+]
+},
+"Fenbuconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"FENBUCONAZOLE"
+]
+},
+"Mefentrifluconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"MEFENTRIFLUCONAZOLE"
+]
+},
+"Prothioconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"PROTHIOCONAZOLE"
+]
+},
+"Cyproconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"CYPROCONAZOLE"
+]
+},
+"Myclobutanil": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"MYCLOBUTANIL"
+]
+},
+"Metconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"METCONAZOLE"
+]
+},
+"Ipconazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"IPCONAZOLE"
+]
+},
+"Flusilazole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"FLUSILAZOLE"
+]
+},
+"Prochloraz": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"PROCHLORAZ"
+],
+"dt50ph7": null,
+"ph9": "78.9 days at 22 °C"
+},
+"Imazalil": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"IMAZALIL"
+]
+},
+"Triflumizole": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"TRIFLUMIZOLE"
+]
+},
+"Triforine": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"TRIFORINE"
+]
+},
+"Fenarimol": {
+"kind": "fungicide",
+"cls": "Triazole or imidazole (DMI)",
+"grp": "FRAC 3",
+"flags": [
+"dmi"
+],
+"rx": [
+"FENARIMOL"
+]
+},
+"Tridemorph": {
+"kind": "fungicide",
+"cls": "Amine (morpholine)",
+"grp": "FRAC 5",
+"flags": [],
+"rx": [
+"TRIDEMORPH"
+]
+},
+"Fenpropimorph": {
+"kind": "fungicide",
+"cls": "Amine (morpholine)",
+"grp": "FRAC 5",
+"flags": [],
+"rx": [
+"FENPROPIMORPH"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Spiroxamine": {
+"kind": "fungicide",
+"cls": "Amine (morpholine)",
+"grp": "FRAC 5",
+"flags": [
+"alk_slow"
+],
+"rx": [
+"SPIROXAMINE"
+],
+"dt50ph7": null,
+"ph9": "slow breakdown, no figure given"
+},
+"Fenpropidin": {
+"kind": "fungicide",
+"cls": "Amine (morpholine)",
+"grp": "FRAC 5",
+"flags": [],
+"rx": [
+"FENPROPIDIN"
+]
+},
+"Boscalid": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"BOSCALID"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Fluopyram": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"FLUOPYRAM"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Fluxapyroxad": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"FLUXAPYROXAD"
+]
+},
+"Isopyrazam": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"ISOPYRAZAM"
+]
+},
+"Pydiflumetofen": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"PYDIFLUMETOFEN"
+]
+},
+"Fluindapyr": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"FLUINDAPYR"
+]
+},
+"Benzovindiflupyr": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"BENZOVINDIFLUPYR"
+]
+},
+"Thifluzamide": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"THIFLUZAMIDE"
+]
+},
+"Flutolanil": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"FLUTOLANIL"
+]
+},
+"Penflufen": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"PENFLUFEN"
+]
+},
+"Sedaxane": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"SEDAXANE"
+]
+},
+"Cyclobutrifluram": {
+"kind": "fungicide",
+"cls": "SDHI",
+"grp": "FRAC 7",
+"flags": [
+"sdhi"
+],
+"rx": [
+"CYCLOBUTRIFLURAM"
+]
+},
+"Metalaxyl M": {
+"kind": "fungicide",
+"cls": "Phenylamide",
+"grp": "FRAC 4",
+"flags": [
+"phenylamide"
+],
+"rx": [
+"METALAXYL ?-?M\\b",
+"MEFENOXAM"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Metalaxyl": {
+"kind": "fungicide",
+"cls": "Phenylamide",
+"grp": "FRAC 4",
+"flags": [
+"phenylamide"
+],
+"rx": [
+"METALAXYL"
+],
+"dt50ph7": 106.0,
+"ph9": "115 days; 12 days at pH 10"
+},
+"Benalaxyl M": {
+"kind": "fungicide",
+"cls": "Phenylamide",
+"grp": "FRAC 4",
+"flags": [
+"phenylamide"
+],
+"rx": [
+"BENALAXYL"
+]
+},
+"Cymoxanil": {
+"kind": "fungicide",
+"cls": "Cyanoacetamide oxime",
+"grp": "FRAC 27",
+"flags": [
+"cymoxanil",
+"alk_fast"
+],
+"rx": [
+"CYMOXANIL"
+],
+"dt50ph7": 1.1,
+"ph9": "0.02 days at 25 °C"
+},
+"Dimethomorph": {
+"kind": "fungicide",
+"cls": "Carboxylic acid amide (CAA)",
+"grp": "FRAC 40",
+"flags": [],
+"rx": [
+"DIMETHOMORPH"
+],
+"dt50ph7": 70.0,
+"ph9": "stable"
+},
+"Mandipropamid": {
+"kind": "fungicide",
+"cls": "Carboxylic acid amide (CAA)",
+"grp": "FRAC 40",
+"flags": [],
+"rx": [
+"MANDIPROPAMID"
+]
+},
+"Iprovalicarb": {
+"kind": "fungicide",
+"cls": "Carboxylic acid amide (CAA)",
+"grp": "FRAC 40",
+"flags": [],
+"rx": [
+"IPROVALICARB"
+]
+},
+"Benthiavalicarb": {
+"kind": "fungicide",
+"cls": "Carboxylic acid amide (CAA)",
+"grp": "FRAC 40",
+"flags": [],
+"rx": [
+"BENTHIAVALICARB"
+]
+},
+"Propamocarb": {
+"kind": "fungicide",
+"cls": "Carbamate fungicide",
+"grp": "FRAC 28",
+"flags": [
+"acidic"
+],
+"rx": [
+"PROPAMOCARB"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Fosetyl aluminium": {
+"kind": "fungicide",
+"cls": "Phosphonate",
+"grp": "FRAC P07",
+"flags": [
+"phosphonate",
+"acidic"
+],
+"rx": [
+"FOSETYL"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Phosphorous acid": {
+"kind": "fungicide",
+"cls": "Phosphonate",
+"grp": "FRAC P07",
+"flags": [
+"phosphonate",
+"acidic"
+],
+"rx": [
+"PHOSPHOROUS ACID",
+"PHOSPHONIC ACID"
+]
+},
+"Potassium phosphonate": {
+"kind": "fungicide",
+"cls": "Phosphonate",
+"grp": "FRAC P07",
+"flags": [
+"phosphonate"
+],
+"rx": [
+"POTASSIUM PHOSPH(ON|IT)ATE",
+"POTASSIUM PHOSPHITE"
+]
+},
+"Fluazinam": {
+"kind": "fungicide",
+"cls": "Pyridinamine",
+"grp": "FRAC 29",
+"flags": [
+"alk_slow"
+],
+"rx": [
+"FLUAZINAM"
+],
+"dt50ph7": 8.7,
+"ph9": "4.7 days"
+},
+"Pyrimethanil": {
+"kind": "fungicide",
+"cls": "Anilinopyrimidine",
+"grp": "FRAC 9",
+"flags": [],
+"rx": [
+"PYRIMETHANIL"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Cyprodinil": {
+"kind": "fungicide",
+"cls": "Anilinopyrimidine",
+"grp": "FRAC 9",
+"flags": [],
+"rx": [
+"CYPRODINIL"
+]
+},
+"Iprodione": {
+"kind": "fungicide",
+"cls": "Dicarboximide",
+"grp": "FRAC 2",
+"flags": [
+"alk_fast"
+],
+"rx": [
+"IPRODIONE"
+],
+"dt50ph7": 4.5,
+"ph9": "not given; 0.2 days at pH 8"
+},
+"Procymidone": {
+"kind": "fungicide",
+"cls": "Dicarboximide",
+"grp": "FRAC 2",
+"flags": [],
+"rx": [
+"PROCYMIDONE"
+]
+},
+"Fludioxonil": {
+"kind": "fungicide",
+"cls": "Phenylpyrrole",
+"grp": "FRAC 12",
+"flags": [],
+"rx": [
+"FLUDIOX[IO]N[IO]L"
+]
+},
+"Cyazofamid": {
+"kind": "fungicide",
+"cls": "QiI",
+"grp": "FRAC 21",
+"flags": [
+"alk_slow"
+],
+"rx": [
+"CYAZOFAMID"
+],
+"dt50ph7": 25.0,
+"ph9": "25 days at 20 °C"
+},
+"Amisulbrom": {
+"kind": "fungicide",
+"cls": "QiI",
+"grp": "FRAC 21",
+"flags": [],
+"rx": [
+"AMISULBROM"
+]
+},
+"Fenpicoxamid": {
+"kind": "fungicide",
+"cls": "Picolinamide",
+"grp": "FRAC 21",
+"flags": [],
+"rx": [
+"FENPICOXAMID"
+]
+},
+"Fluopicolide": {
+"kind": "fungicide",
+"cls": "Benzamide",
+"grp": "FRAC 43",
+"flags": [],
+"rx": [
+"FL[OU]+PICOLIDE"
+]
+},
+"Oxathiapiprolin": {
+"kind": "fungicide",
+"cls": "OSBPI",
+"grp": "FRAC 49",
+"flags": [],
+"rx": [
+"OXATHIAPIPROLIN"
+]
+},
+"Fluoxapiprolin": {
+"kind": "fungicide",
+"cls": "OSBPI",
+"grp": "FRAC 49",
+"flags": [],
+"rx": [
+"FLUOXAPIPROLIN"
+]
+},
+"Zoxamide": {
+"kind": "fungicide",
+"cls": "Benzamide",
+"grp": "FRAC 22",
+"flags": [],
+"rx": [
+"ZOXAMIDE"
+]
+},
+"Ethaboxam": {
+"kind": "fungicide",
+"cls": "Thiazole carboxamide",
+"grp": "FRAC 22",
+"flags": [],
+"rx": [
+"ETHABOXAM"
+]
+},
+"Ametoctradin": {
+"kind": "fungicide",
+"cls": "QoSI",
+"grp": "FRAC 45",
+"flags": [],
+"rx": [
+"AMETOCTRADIN",
+"AMECTROTRADIN"
+]
+},
+"Tricyclazole": {
+"kind": "fungicide",
+"cls": "Melanin inhibitor",
+"grp": "FRAC 16.1",
+"flags": [],
+"rx": [
+"TRICYCLAZOLE"
+]
+},
+"Isoprothiolane": {
+"kind": "fungicide",
+"cls": "Dithiolane",
+"grp": "FRAC 6",
+"flags": [],
+"rx": [
+"ISOPROTHIOLANE"
+]
+},
+"Isotianil": {
+"kind": "fungicide",
+"cls": "Plant defence inducer",
+"grp": "FRAC P03",
+"flags": [],
+"rx": [
+"ISOTIANIL"
+],
+"dt50ph7": 60.8,
+"ph9": "71.4 days"
+},
+"Probenazole": {
+"kind": "fungicide",
+"cls": "Plant defence inducer",
+"grp": "FRAC P02",
+"flags": [],
+"rx": [
+"PROBENAZOLE"
+]
+},
+"Acibenzolar S methyl": {
+"kind": "fungicide",
+"cls": "Plant defence inducer",
+"grp": "FRAC P01",
+"flags": [],
+"rx": [
+"ACIBENZOLAR"
+]
+},
+"Pencycuron": {
+"kind": "fungicide",
+"cls": "Phenylurea",
+"grp": "FRAC 20",
+"flags": [],
+"rx": [
+"PENCYCURON"
+]
+},
+"Flusulfamide": {
+"kind": "fungicide",
+"cls": "Benzenesulfonamide",
+"grp": "FRAC 36",
+"flags": [],
+"rx": [
+"FLUSULFAMIDE"
+]
+},
+"Hymexazol": {
+"kind": "fungicide",
+"cls": "Isoxazole",
+"grp": "FRAC 32",
+"flags": [],
+"rx": [
+"HYMEXAZOL"
+]
+},
+"Kasugamycin": {
+"kind": "fungicide",
+"cls": "Antibiotic",
+"grp": "FRAC 24",
+"flags": [
+"antibiotic",
+"alk_slow"
+],
+"rx": [
+"KASUGAMYCIN"
+]
+},
+"Validamycin": {
+"kind": "fungicide",
+"cls": "Antibiotic",
+"grp": "FRAC U18",
+"flags": [
+"antibiotic"
+],
+"rx": [
+"VALIDAMYCIN"
+]
+},
+"Streptomycin": {
+"kind": "fungicide",
+"cls": "Antibiotic (for bacteria)",
+"grp": "FRAC 25",
+"flags": [
+"antibiotic"
+],
+"rx": [
+"STREPTOMYCIN"
+]
+},
+"Oxytetracycline": {
+"kind": "fungicide",
+"cls": "Antibiotic (for bacteria)",
+"grp": "FRAC 41",
+"flags": [
+"antibiotic"
+],
+"rx": [
+"OXYTETRACYCLINE",
+"TETRACYCLINE"
+]
+},
+"Natamycin": {
+"kind": "fungicide",
+"cls": "Antibiotic",
+"grp": "FRAC 48",
+"flags": [
+"antibiotic"
+],
+"rx": [
+"NATAMYCIN"
+]
+},
+"Reynoutria extract": {
+"kind": "fungicide",
+"cls": "Plant extract (botanical)",
+"grp": "FRAC P05",
+"flags": [
+"botanical"
+],
+"rx": [
+"REYNOUTRIA"
+]
+},
+"Cerevisane": {
+"kind": "fungicide",
+"cls": "Yeast cell walls (defence inducer)",
+"grp": "FRAC P06",
+"flags": [],
+"rx": [
+"CEREVISANE"
+]
+},
+"Heat killed Burkholderia": {
+"kind": "insecticide",
+"cls": "Killed bacteria and their products",
+"grp": "IRAC UNB",
+"flags": [],
+"rx": [
+"BURKHOLDERIA"
+]
+},
+"Bacillus subtilis": {
+"kind": "fungicide",
+"cls": "Living bacterium",
+"grp": "FRAC BM02",
+"flags": [
+"living_bact"
+],
+"rx": [
+"BACILLUS SUBTILIS"
+]
+},
+"Bacillus amyloliquefaciens": {
+"kind": "fungicide",
+"cls": "Living bacterium",
+"grp": "FRAC BM02",
+"flags": [
+"living_bact"
+],
+"rx": [
+"AMYLOLIQUEFACIENS"
+]
+},
+"Bacillus (other)": {
+"kind": "fungicide",
+"cls": "Living bacterium",
+"grp": "FRAC BM02",
+"flags": [
+"living_bact"
+],
+"rx": [
+"BACILLUS (SP|PARALICHENIFORMIS|LICHENIFORMIS|PUMILUS|MEGATERIUM)"
+]
+},
+"Trichoderma": {
+"kind": "fungicide",
+"cls": "Living fungus",
+"grp": "FRAC BM02",
+"flags": [
+"living_fungus"
+],
+"rx": [
+"TRICHODERMA"
+]
+},
+"Pseudomonas": {
+"kind": "fungicide",
+"cls": "Living bacterium",
+"grp": "FRAC BM02",
+"flags": [
+"living_bact"
+],
+"rx": [
+"PSEUDOMONAS"
+]
+},
+"Lactobacillus": {
+"kind": "fungicide",
+"cls": "Living bacterium",
+"grp": "",
+"flags": [
+"living_bact"
+],
+"rx": [
+"LACTOBACILLUS"
+]
+},
+"Chitosan and oligosaccharides": {
+"kind": "fungicide",
+"cls": "Plant defence inducer",
+"grp": "FRAC P04",
+"flags": [],
+"rx": [
+"CHITOSAN",
+"OLIGOSACCHARIDE"
+]
+},
+"Potassium bicarbonate": {
+"kind": "fungicide",
+"cls": "Inorganic salt",
+"grp": "FRAC NC",
+"flags": [
+"alkaline"
+],
+"rx": [
+"POTASSIUM (HYDROGEN(ERATED)? )?(BI)?CARBONATE"
+]
+},
+"Sodium bicarbonate": {
+"kind": "fungicide",
+"cls": "Inorganic salt",
+"grp": "FRAC NC",
+"flags": [
+"alkaline"
+],
+"rx": [
+"SODIUM (BI)?CARBONATE"
+]
+},
+"Orthophenylphenol": {
+"kind": "fungicide",
+"cls": "Phenol (post harvest and disinfectant)",
+"grp": "",
+"flags": [
+"aldehyde"
+],
+"rx": [
+"PHENYLPHENOL",
+"BIPHENYL-2-OL"
+]
+},
+"Glyphosate": {
+"kind": "herbicide",
+"cls": "Glycine (glyphosate)",
+"grp": "HRAC 9",
+"flags": [
+"glyphosate",
+"hard",
+"mud"
+],
+"rx": [
+"GLYPHOSATE"
+]
+},
+"Glufosinate ammonium": {
+"kind": "herbicide",
+"cls": "Phosphinic acid (glufosinate)",
+"grp": "HRAC 10",
+"flags": [
+"glufosinate"
+],
+"rx": [
+"GLUFOSINATE"
+],
+"dt50ph7": 300.0,
+"ph9": "stable"
+},
+"Paraquat": {
+"kind": "herbicide",
+"cls": "Bipyridylium",
+"grp": "HRAC 22",
+"flags": [
+"bipyridyl",
+"mud"
+],
+"rx": [
+"PARAQUAT"
+]
+},
+"Diquat": {
+"kind": "herbicide",
+"cls": "Bipyridylium",
+"grp": "HRAC 22",
+"flags": [
+"bipyridyl",
+"mud"
+],
+"rx": [
+"DIQUAT"
+]
+},
+"2,4-D ester": {
+"kind": "herbicide",
+"cls": "Phenoxy (auxin), ester",
+"grp": "HRAC 4",
+"flags": [
+"auxin",
+"heat"
+],
+"rx": [
+"2,4-?D (IBE|ISOBUTYL|BUTYL|ESTER|ETHYLHEXYL)",
+"2,4 ?D IBE"
+]
+},
+"2,4-D amine": {
+"kind": "herbicide",
+"cls": "Phenoxy (auxin), amine salt",
+"grp": "HRAC 4",
+"flags": [
+"auxin",
+"auxin_salt",
+"hard"
+],
+"rx": [
+"2,4-?D( DMA| DIMETHYL)? ?AMINE",
+"2,4-?D (DMA|SODIUM|SALT)"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"2,4-D": {
+"kind": "herbicide",
+"cls": "Phenoxy (auxin)",
+"grp": "HRAC 4",
+"flags": [
+"auxin"
+],
+"rx": [
+"^2,4-?D$",
+"2,4-?D\\b"
+]
+},
+"MCPA": {
+"kind": "herbicide",
+"cls": "Phenoxy (auxin)",
+"grp": "HRAC 4",
+"flags": [
+"auxin",
+"auxin_salt",
+"hard"
+],
+"rx": [
+"MCPA"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Triclopyr": {
+"kind": "herbicide",
+"cls": "Pyridine (auxin)",
+"grp": "HRAC 4",
+"flags": [
+"auxin"
+],
+"rx": [
+"TRICLOPYR"
+]
+},
+"Picloram": {
+"kind": "herbicide",
+"cls": "Pyridine (auxin)",
+"grp": "HRAC 4",
+"flags": [
+"auxin"
+],
+"rx": [
+"P[IL]+CHLORAM",
+"PICLORAM"
+]
+},
+"Dicamba": {
+"kind": "herbicide",
+"cls": "Benzoic acid (auxin)",
+"grp": "HRAC 4",
+"flags": [
+"auxin"
+],
+"rx": [
+"DICAMBA"
+]
+},
+"Fluroxypyr": {
+"kind": "herbicide",
+"cls": "Pyridine (auxin)",
+"grp": "HRAC 4",
+"flags": [
+"auxin"
+],
+"rx": [
+"FLUROXYPYR"
+]
+},
+"Florpyrauxifen benzyl": {
+"kind": "herbicide",
+"cls": "Arylpicolinate (auxin)",
+"grp": "HRAC 4",
+"flags": [
+"auxin"
+],
+"rx": [
+"FLORPYRAUXIFEN"
+]
+},
+"Quinclorac": {
+"kind": "herbicide",
+"cls": "Quinoline carboxylic acid (auxin)",
+"grp": "HRAC 4",
+"flags": [
+"auxin"
+],
+"rx": [
+"QUINCLORAC"
+]
+},
+"Cyhalofop butyl": {
+"kind": "herbicide",
+"cls": "Aryloxyphenoxypropionate grass killer (fop)",
+"grp": "HRAC 1",
+"flags": [
+"accase",
+"alk_slow"
+],
+"rx": [
+"CYHALOFOP"
+],
+"dt50ph7": 97.0,
+"ph9": "2 days at 25 °C"
+},
+"Fenoxaprop P ethyl": {
+"kind": "herbicide",
+"cls": "Aryloxyphenoxypropionate grass killer (fop)",
+"grp": "HRAC 1",
+"flags": [
+"accase"
+],
+"rx": [
+"FENOXAPROP"
+]
+},
+"Quizalofop P ethyl": {
+"kind": "herbicide",
+"cls": "Aryloxyphenoxypropionate grass killer (fop)",
+"grp": "HRAC 1",
+"flags": [
+"accase"
+],
+"rx": [
+"QUIZALOFOP"
+]
+},
+"Fluazifop P butyl": {
+"kind": "herbicide",
+"cls": "Aryloxyphenoxypropionate grass killer (fop)",
+"grp": "HRAC 1",
+"flags": [
+"accase",
+"alk_slow"
+],
+"rx": [
+"FLUAZIFOP"
+],
+"dt50ph7": 78.0,
+"ph9": "29 hours at 25 °C"
+},
+"Haloxyfop R methyl": {
+"kind": "herbicide",
+"cls": "Aryloxyphenoxypropionate grass killer (fop)",
+"grp": "HRAC 1",
+"flags": [
+"accase"
+],
+"rx": [
+"HALOXYFOP"
+]
+},
+"Metamifop": {
+"kind": "herbicide",
+"cls": "Aryloxyphenoxypropionate grass killer (fop)",
+"grp": "HRAC 1",
+"flags": [
+"accase"
+],
+"rx": [
+"METAMIFOP"
+]
+},
+"Propaquizafop": {
+"kind": "herbicide",
+"cls": "Aryloxyphenoxypropionate grass killer (fop)",
+"grp": "HRAC 1",
+"flags": [
+"accase"
+],
+"rx": [
+"PROPAQUIZAFOP"
+]
+},
+"Clethodim": {
+"kind": "herbicide",
+"cls": "Cyclohexanedione grass killer (dim)",
+"grp": "HRAC 1",
+"flags": [
+"accase",
+"hard",
+"acid_sens"
+],
+"rx": [
+"CLETHODIM"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Sethoxydim": {
+"kind": "herbicide",
+"cls": "Cyclohexanedione grass killer (dim)",
+"grp": "HRAC 1",
+"flags": [
+"accase",
+"hard"
+],
+"rx": [
+"SETHOXYDIM"
+]
+},
+"Profoxydim": {
+"kind": "herbicide",
+"cls": "Cyclohexanedione grass killer (dim)",
+"grp": "HRAC 1",
+"flags": [
+"accase",
+"hard"
+],
+"rx": [
+"PROFOXYDIM"
+]
+},
+"Bensulfuron methyl": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"BENSULFURON"
+]
+},
+"Pyrazosulfuron ethyl": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"PYRAZOSULFURON"
+]
+},
+"Metsulfuron methyl": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"METSULFURON"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Chlorimuron ethyl": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"CHLORIMURON"
+]
+},
+"Ethoxysulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"ETHOXYSULFURON"
+],
+"dt50ph7": 259.0,
+"ph9": "stable in slightly alkaline water"
+},
+"Halosulfuron methyl": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"su_corn",
+"acid_sens"
+],
+"rx": [
+"HALOSULF[OU]R"
+]
+},
+"Nicosulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"su_corn",
+"acid_sens"
+],
+"rx": [
+"NICOSULFURON"
+]
+},
+"Imazosulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"IMAZOSULFURON"
+]
+},
+"Flazasulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"FLAZASULFURON"
+]
+},
+"Propyrisulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"PROPYRISULFURON"
+]
+},
+"Flucetosulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"FLUCETOSULFURON"
+]
+},
+"Azimsulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"AZIMSULFURON"
+]
+},
+"Cinosulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"CINOSULFURON"
+]
+},
+"Foramsulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"su_corn",
+"acid_sens"
+],
+"rx": [
+"FORAMSULFURON"
+]
+},
+"Rimsulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"su_corn",
+"acid_sens"
+],
+"rx": [
+"RIMSULFURON"
+]
+},
+"Trifloxysulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"TRIFLOXYSULFURON"
+]
+},
+"Orthosulfamuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"ORTHOSULFAMURON"
+]
+},
+"Iodosulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"IODOSULFURON"
+]
+},
+"Mesosulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"MESOSULFURON"
+]
+},
+"Sulfometuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"SULFOMETURON"
+]
+},
+"Primisulfuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"su_corn",
+"acid_sens"
+],
+"rx": [
+"PRIMISULFURON"
+]
+},
+"Bispyribac sodium": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als",
+"acid_sens"
+],
+"rx": [
+"BISPYRIBAC"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Pyribenzoxim": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"PYRIBENZOXIM"
+]
+},
+"Penoxsulam": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"PENOXSULAM"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Imazapic": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"IMAZAPIC"
+]
+},
+"Imazethapyr": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"IMAZETHAPYR"
+]
+},
+"Imazapyr": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"IMAZAPYR"
+]
+},
+"Thiencarbazone methyl": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"THIENCARBAZONE"
+],
+"dt50ph7": 146.0,
+"ph9": "153 days at 25 °C"
+},
+"Florasulam": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"FLORASULAM"
+]
+},
+"Pyriftalid": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"PYRIFTALID"
+]
+},
+"Triafamone": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"TRIAFAMONE"
+]
+},
+"Pyrithiobac": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"PYRITHIOBAC"
+]
+},
+"Pyriminobac": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"PYRIMINOBAC"
+]
+},
+"Bispyribac": {
+"kind": "herbicide",
+"cls": "ALS inhibitor",
+"grp": "HRAC 2",
+"flags": [
+"als"
+],
+"rx": [
+"BISPYRIBAC"
+]
+},
+"Propanil": {
+"kind": "herbicide",
+"cls": "Anilide (PSII)",
+"grp": "HRAC 7",
+"flags": [
+"propanil"
+],
+"rx": [
+"PROPANIL"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Diuron": {
+"kind": "herbicide",
+"cls": "Urea herbicide (PSII)",
+"grp": "HRAC 7",
+"flags": [
+"psii_urea"
+],
+"rx": [
+"DIURON"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Linuron": {
+"kind": "herbicide",
+"cls": "Urea herbicide (PSII)",
+"grp": "HRAC 7",
+"flags": [
+"psii_urea"
+],
+"rx": [
+"LINURON"
+],
+"dt50ph7": 1460.0,
+"ph9": "stable"
+},
+"Isoproturon": {
+"kind": "herbicide",
+"cls": "Urea herbicide (PSII)",
+"grp": "HRAC 7",
+"flags": [
+"psii_urea"
+],
+"rx": [
+"ISOPROTURON"
+]
+},
+"Tebuthiuron": {
+"kind": "herbicide",
+"cls": "Urea herbicide (PSII)",
+"grp": "HRAC 7",
+"flags": [
+"psii_urea"
+],
+"rx": [
+"TEBUTHIURON"
+]
+},
+"Atrazine": {
+"kind": "herbicide",
+"cls": "Triazine (PSII)",
+"grp": "HRAC 5",
+"flags": [
+"triazine"
+],
+"rx": [
+"ATRAZINE"
+]
+},
+"Ametryn": {
+"kind": "herbicide",
+"cls": "Triazine (PSII)",
+"grp": "HRAC 5",
+"flags": [
+"triazine"
+],
+"rx": [
+"AMETRYNE?"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Simazine": {
+"kind": "herbicide",
+"cls": "Triazine (PSII)",
+"grp": "HRAC 5",
+"flags": [
+"triazine"
+],
+"rx": [
+"SIMAZINE"
+]
+},
+"Prometryn": {
+"kind": "herbicide",
+"cls": "Triazine (PSII)",
+"grp": "HRAC 5",
+"flags": [
+"triazine"
+],
+"rx": [
+"PROMETRYNE?"
+]
+},
+"Terbuthylazine": {
+"kind": "herbicide",
+"cls": "Triazine (PSII)",
+"grp": "HRAC 5",
+"flags": [
+"triazine"
+],
+"rx": [
+"TERBUTHYLAZINE"
+]
+},
+"Metribuzin": {
+"kind": "herbicide",
+"cls": "Triazinone (PSII)",
+"grp": "HRAC 5",
+"flags": [
+"triazine"
+],
+"rx": [
+"METRIBUZIN"
+],
+"dt50ph7": null,
+"ph9": "stable over 34 days at 25 °C; slow breakdown at 50 °C"
+},
+"Hexazinone": {
+"kind": "herbicide",
+"cls": "Triazinone (PSII)",
+"grp": "HRAC 5",
+"flags": [
+"triazine"
+],
+"rx": [
+"HEXAZINONE"
+]
+},
+"Bromacil": {
+"kind": "herbicide",
+"cls": "Uracil (PSII)",
+"grp": "HRAC 5",
+"flags": [],
+"rx": [
+"BROMACIL"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Bentazone": {
+"kind": "herbicide",
+"cls": "Benzothiadiazinone (PSII)",
+"grp": "HRAC 6",
+"flags": [
+"bentazon"
+],
+"rx": [
+"BENTAZON"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Butachlor": {
+"kind": "herbicide",
+"cls": "Chloroacetamide or thiocarbamate (VLCFA)",
+"grp": "HRAC 15",
+"flags": [
+"vlcfa"
+],
+"rx": [
+"BUTACHLOR"
+]
+},
+"Pretilachlor": {
+"kind": "herbicide",
+"cls": "Chloroacetamide or thiocarbamate (VLCFA)",
+"grp": "HRAC 15",
+"flags": [
+"vlcfa"
+],
+"rx": [
+"PRETILACHLOR"
+],
+"dt50ph7": null,
+"ph9": "about 200 days; 14 days at pH 13"
+},
+"S metolachlor": {
+"kind": "herbicide",
+"cls": "Chloroacetamide or thiocarbamate (VLCFA)",
+"grp": "HRAC 15",
+"flags": [
+"vlcfa"
+],
+"rx": [
+"METOLACHLOR",
+"S-METACHLOR"
+]
+},
+"Acetochlor": {
+"kind": "herbicide",
+"cls": "Chloroacetamide or thiocarbamate (VLCFA)",
+"grp": "HRAC 15",
+"flags": [
+"vlcfa"
+],
+"rx": [
+"ACETOCHLOR"
+]
+},
+"Alachlor": {
+"kind": "herbicide",
+"cls": "Chloroacetamide or thiocarbamate (VLCFA)",
+"grp": "HRAC 15",
+"flags": [
+"vlcfa"
+],
+"rx": [
+"ALACHLOR"
+]
+},
+"Thiobencarb": {
+"kind": "herbicide",
+"cls": "Chloroacetamide or thiocarbamate (VLCFA)",
+"grp": "HRAC 15",
+"flags": [
+"vlcfa"
+],
+"rx": [
+"THIOBENCARB"
+]
+},
+"Mefenacet": {
+"kind": "herbicide",
+"cls": "Chloroacetamide or thiocarbamate (VLCFA)",
+"grp": "HRAC 15",
+"flags": [
+"vlcfa"
+],
+"rx": [
+"MEFENACET"
+]
+},
+"Anilofos": {
+"kind": "herbicide",
+"cls": "Chloroacetamide or thiocarbamate (VLCFA)",
+"grp": "HRAC 15",
+"flags": [
+"vlcfa"
+],
+"rx": [
+"ANILOFOS"
+]
+},
+"Oxadiazon": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo",
+"alk_slow"
+],
+"rx": [
+"OXADIAZON"
+],
+"dt50ph7": 31.0,
+"ph9": "11.7 days at 20 °C"
+},
+"Oxyfluorfen": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo"
+],
+"rx": [
+"OXYFL[OU]+RFEN"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Flumioxazin": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo"
+],
+"rx": [
+"FLUMIOXAZIN"
+]
+},
+"Sulfentrazone": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo"
+],
+"rx": [
+"SULFENTRAZONE"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Carfentrazone ethyl": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo"
+],
+"rx": [
+"CARFENTRAZONE"
+]
+},
+"Saflufenacil": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo"
+],
+"rx": [
+"SAFLUFENACIL"
+]
+},
+"Tiafenacil": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo"
+],
+"rx": [
+"TIAFENACIL"
+]
+},
+"Pyraflufen ethyl": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo"
+],
+"rx": [
+"PYRAFLUFEN"
+]
+},
+"Oxadiargyl": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo"
+],
+"rx": [
+"OXADIARGYL"
+]
+},
+"Fomesafen": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo"
+],
+"rx": [
+"FOMESAFEN"
+]
+},
+"Lactofen": {
+"kind": "herbicide",
+"cls": "PPO inhibitor",
+"grp": "HRAC 14",
+"flags": [
+"ppo"
+],
+"rx": [
+"LACTOFEN"
+]
+},
+"Mesotrione": {
+"kind": "herbicide",
+"cls": "HPPD inhibitor",
+"grp": "HRAC 27",
+"flags": [
+"hppd"
+],
+"rx": [
+"MESOTRIONE"
+]
+},
+"Tembotrione": {
+"kind": "herbicide",
+"cls": "HPPD inhibitor",
+"grp": "HRAC 27",
+"flags": [
+"hppd"
+],
+"rx": [
+"TEMBOTRIONE"
+]
+},
+"Topramezone": {
+"kind": "herbicide",
+"cls": "HPPD inhibitor",
+"grp": "HRAC 27",
+"flags": [
+"hppd"
+],
+"rx": [
+"TOPRAMEZONE"
+]
+},
+"Isoxaflutole": {
+"kind": "herbicide",
+"cls": "HPPD inhibitor",
+"grp": "HRAC 27",
+"flags": [
+"hppd",
+"alk_fast"
+],
+"rx": [
+"ISOXAFLUTOLE"
+],
+"dt50ph7": 0.8,
+"ph9": "3.2 hours at 25 °C"
+},
+"Tefuryltrione": {
+"kind": "herbicide",
+"cls": "HPPD inhibitor",
+"grp": "HRAC 27",
+"flags": [
+"hppd"
+],
+"rx": [
+"TEFURYLTRIONE"
+]
+},
+"Tolpyralate": {
+"kind": "herbicide",
+"cls": "HPPD inhibitor",
+"grp": "HRAC 27",
+"flags": [
+"hppd"
+],
+"rx": [
+"TOLPYRALATE"
+]
+},
+"Benzobicyclon": {
+"kind": "herbicide",
+"cls": "HPPD inhibitor",
+"grp": "HRAC 27",
+"flags": [
+"hppd"
+],
+"rx": [
+"BENZOBICYCLON"
+]
+},
+"Pendimethalin": {
+"kind": "herbicide",
+"cls": "Dinitroaniline",
+"grp": "HRAC 3",
+"flags": [
+"dinitro"
+],
+"rx": [
+"PENDIMETHALIN"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Trifluralin": {
+"kind": "herbicide",
+"cls": "Dinitroaniline",
+"grp": "HRAC 3",
+"flags": [
+"dinitro"
+],
+"rx": [
+"TRIFLURALIN"
+]
+},
+"Clomazone": {
+"kind": "herbicide",
+"cls": "Isoxazolidinone",
+"grp": "HRAC 13",
+"flags": [],
+"rx": [
+"CLOMAZONE"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Indaziflam": {
+"kind": "herbicide",
+"cls": "Alkylazine",
+"grp": "HRAC 29",
+"flags": [],
+"rx": [
+"INDAZIFLAM"
+]
+},
+"Tetflupyrolimet": {
+"kind": "herbicide",
+"cls": "DHODH inhibitor",
+"grp": "HRAC 28",
+"flags": [],
+"rx": [
+"TETFLUPYROLIMET"
+]
+},
+"Cyclosulfamuron": {
+"kind": "herbicide",
+"cls": "Sulfonylurea (ALS)",
+"grp": "HRAC 2",
+"flags": [
+"su",
+"als",
+"acid_sens"
+],
+"rx": [
+"CYCLOSULFAMURON"
+]
+},
+"Safener": {
+"kind": "herbicide",
+"cls": "Safener (protects the crop)",
+"grp": "",
+"flags": [],
+"rx": [
+"^SAFENER$",
+"CLOQUINTOCET",
+"FENCLORIM",
+"ISOXADIFEN",
+"CYPROSULFAMIDE",
+"MEFENPYR"
+]
+},
+"Ethephon": {
+"kind": "pgr",
+"cls": "Ethylene releaser",
+"grp": "",
+"flags": [
+"pgr",
+"ethephon",
+"acidic",
+"alk_fast"
+],
+"rx": [
+"ETHEPHON"
+],
+"dt50ph7": 2.5,
+"ph9": "1.4 days at 20 °C"
+},
+"Paclobutrazol": {
+"kind": "pgr",
+"cls": "Triazole growth regulator",
+"grp": "",
+"flags": [
+"pgr"
+],
+"rx": [
+"PACLOBUTRAZOL"
+],
+"dt50ph7": null,
+"ph9": "stable"
+},
+"Gibberellic acid": {
+"kind": "pgr",
+"cls": "Gibberellin",
+"grp": "",
+"flags": [
+"pgr"
+],
+"rx": [
+"GIBBERELL"
+]
+},
+"Aviglycine": {
+"kind": "pgr",
+"cls": "Ethylene blocker",
+"grp": "",
+"flags": [
+"pgr"
+],
+"rx": [
+"AVIGLYCINE"
+]
+},
+"Mepiquat chloride": {
+"kind": "pgr",
+"cls": "Growth retardant",
+"grp": "",
+"flags": [
+"pgr"
+],
+"rx": [
+"MEPIQUAT"
+]
+},
+"Chlormequat": {
+"kind": "pgr",
+"cls": "Growth retardant",
+"grp": "",
+"flags": [
+"pgr"
+],
+"rx": [
+"CHLORMEQUAT"
+]
+},
+"Flumetralin": {
+"kind": "pgr",
+"cls": "Sucker control",
+"grp": "",
+"flags": [
+"pgr"
+],
+"rx": [
+"FLUMETRALIN"
+]
+},
+"Forchlorfenuron": {
+"kind": "pgr",
+"cls": "Cytokinin",
+"grp": "",
+"flags": [
+"pgr"
+],
+"rx": [
+"FORCHLORFENURON"
+]
+},
+"Naphthalene acetic acid": {
+"kind": "pgr",
+"cls": "Auxin",
+"grp": "",
+"flags": [
+"pgr"
+],
+"rx": [
+"NAPHTHALENE ?ACETIC",
+"\\bNAA\\b"
+]
+},
+"2-(3-chlorophenoxy) propionic acid": {
+"kind": "pgr",
+"cls": "Auxin (pineapple)",
+"grp": "",
+"flags": [
+"pgr"
+],
+"rx": [
+"CHLOROPHENOXY\\) ?PROPIONIC",
+"^2-\\(3-CHLOROPHENOXY\\)$"
+]
+},
+"Ripener (other)": {
+"kind": "pgr",
+"cls": "Ripener",
+"grp": "",
+"flags": [
+"pgr"
+],
+"rx": [
+"RIPENER"
+]
+},
+"Mineral oil": {
+"kind": "adjuvant",
+"cls": "Spray oil",
+"grp": "",
+"flags": [
+"oil",
+"heat"
+],
+"rx": [
+"PARAFFIN",
+"MINERAL OIL",
+"PETROLEUM",
+"NAP[H]?THENIC",
+"HYDROCARBONS?",
+"C18-C24",
+"KEROSENE",
+"\\bDISTILLATES?\\b"
+]
+},
+"Plant oil": {
+"kind": "adjuvant",
+"cls": "Spray oil",
+"grp": "",
+"flags": [
+"oil",
+"heat"
+],
+"rx": [
+"SOYBEAN OIL(?!, ETHOX)",
+"CANOLA OIL(?! METHYL)",
+"COCONUT OIL",
+"VEGETABLE OIL"
+]
+},
+"Methylated seed oil": {
+"kind": "adjuvant",
+"cls": "Spray oil",
+"grp": "",
+"flags": [
+"oil",
+"heat"
+],
+"rx": [
+"METHYLATED SEED",
+"METHYL ESTER",
+"ETHYL & METHYL ESTERS",
+"CANOLA OIL METHYL"
+]
+},
+"Organosilicone surfactant": {
+"kind": "adjuvant",
+"cls": "Organosilicone spreader",
+"grp": "",
+"flags": [
+"organosilicone",
+"surfactant"
+],
+"rx": [
+"SILOXANE",
+"TRISILOXANE",
+"POLYETHER-?POLYMETHYLSILOXANE",
+"SILICONE"
+]
+},
+"Non ionic surfactant": {
+"kind": "adjuvant",
+"cls": "Spreader (non ionic surfactant)",
+"grp": "",
+"flags": [
+"surfactant"
+],
+"rx": [
+"POLYOXY",
+"POLYETH[YE]LENE",
+"ETHOXYLAT",
+"POLYGLYCO",
+"ALKYLPHENOL",
+"NONYPHENOL",
+"NONYLPHENOL",
+"PEG\\b",
+"PEG[ -]",
+"POLY ETHYLENE GLYCOL",
+"SORBITAN",
+"ALCOHOL C13",
+"ALKYL POLY",
+"POLYALKYLENE",
+"GLYCEROL MONOESTER",
+"ALLYL ETHOX",
+"TRIBUTYLPENOL",
+"NONYPENOL",
+"DIBENZYL",
+"FATTY ALCOHOL",
+"LAURYL ALCOHOL"
+]
+},
+"Anionic surfactant": {
+"kind": "adjuvant",
+"cls": "Emulsifier (anionic surfactant)",
+"grp": "",
+"flags": [
+"emulsifier",
+"surfactant"
+],
+"rx": [
+"DODECYL ?BENZENE ?SUL(?:F|PH)",
+"ALKYL BENZENE SULFONATE",
+"DODECYLBENZENE",
+"LAURETH SULFATE",
+"LAUROYL SAR"
+]
+},
+"Sticker (terpene)": {
+"kind": "adjuvant",
+"cls": "Sticker",
+"grp": "",
+"flags": [
+"sticker"
+],
+"rx": [
+"P-MENTHENE",
+"PINOLENE",
+"POLYMERIC TERPENE",
+"LIMONENE",
+"ALKYD",
+"LATEX"
+]
+},
+"Propylene glycol": {
+"kind": "adjuvant",
+"cls": "Humectant",
+"grp": "",
+"flags": [],
+"rx": [
+"PROPYLENE GLYCOL"
+]
+},
+"Water conditioner (EDTA)": {
+"kind": "adjuvant",
+"cls": "Water conditioner",
+"grp": "",
+"flags": [
+"conditioner"
+],
+"rx": [
+"EDTA",
+"ETHYLENEDIAMINETETRAACETATE"
+]
+},
+"Sodium hexametaphosphate": {
+"kind": "adjuvant",
+"cls": "Water conditioner",
+"grp": "",
+"flags": [
+"conditioner"
+],
+"rx": [
+"HEXAMETAPHOSPHATE"
+]
+},
+"Citric acid": {
+"kind": "adjuvant",
+"cls": "Acid",
+"grp": "",
+"flags": [
+"acidifier",
+"acidic"
+],
+"rx": [
+"CITRIC ACID"
+]
+},
+"Sulfamic acid": {
+"kind": "adjuvant",
+"cls": "Acid",
+"grp": "",
+"flags": [
+"acidifier",
+"acidic"
+],
+"rx": [
+"SUL(?:PH|F)AMIC"
+]
+},
+"Glycolic acid": {
+"kind": "adjuvant",
+"cls": "Acid",
+"grp": "",
+"flags": [
+"acidifier",
+"acidic"
+],
+"rx": [
+"GLYCOLIC"
+]
+},
+"Lactic acid": {
+"kind": "adjuvant",
+"cls": "Acid",
+"grp": "",
+"flags": [
+"acidifier",
+"acidic"
+],
+"rx": [
+"LACTIC ACID"
+]
+},
+"Malic acid": {
+"kind": "adjuvant",
+"cls": "Acid",
+"grp": "",
+"flags": [
+"acidifier",
+"acidic"
+],
+"rx": [
+"MALIC ACID"
+]
+},
+"Acetic acid": {
+"kind": "adjuvant",
+"cls": "Acid",
+"grp": "",
+"flags": [
+"acidifier",
+"acidic"
+],
+"rx": [
+"ACETIC ACID(?!.*PER)",
+"^ACETIC ACID$"
+]
+},
+"Sodium hydroxide": {
+"kind": "adjuvant",
+"cls": "Strong alkali",
+"grp": "",
+"flags": [
+"alkaline"
+],
+"rx": [
+"SODIUM HYDROXIDE"
+]
+},
+"Sodium chloride": {
+"kind": "adjuvant",
+"cls": "Salt",
+"grp": "",
+"flags": [],
+"rx": [
+"SODIUM CHLORIDE"
+]
+},
+"Potassium silicate": {
+"kind": "adjuvant",
+"cls": "Silicate (alkaline)",
+"grp": "",
+"flags": [
+"alkaline"
+],
+"rx": [
+"POT+AS+IUM SILICATE"
+]
+},
+"Calcium carbonate": {
+"kind": "adjuvant",
+"cls": "Lime (carrier)",
+"grp": "",
+"flags": [
+"alkaline"
+],
+"rx": [
+"CALCIUM CARBONATE"
+]
+},
+"Aluminium potassium sulfate": {
+"kind": "adjuvant",
+"cls": "Alum",
+"grp": "",
+"flags": [
+"acidic"
+],
+"rx": [
+"ALUMINUM POTASSIUM SULFATE",
+"\\bALUM\\b"
+]
+},
+"Ethanol or isopropanol": {
+"kind": "adjuvant",
+"cls": "Solvent",
+"grp": "",
+"flags": [],
+"rx": [
+"^ETHANOL",
+"ISOPROPANOL",
+"2\\(2-BUTOXYETHOXY\\)"
+]
+},
+"Dye": {
+"kind": "adjuvant",
+"cls": "Dye",
+"grp": "",
+"flags": [],
+"rx": [
+"RHODAMINE",
+"ERYTHROSINE"
+]
+},
+"Masterbatch (bag film)": {
+"kind": "insecticide",
+"cls": "Treated bunch cover film",
+"grp": "",
+"flags": [
+"bait"
+],
+"rx": [
+"MASTERBATCH",
+"BANAFLEX",
+"STARBUNCH",
+"PYRITILINE"
+]
+},
+"Plant essential oil": {
+"kind": "fungicide",
+"cls": "Plant oil (botanical)",
+"grp": "",
+"flags": [
+"botanical",
+"oil"
+],
+"rx": [
+"TEA TREE",
+"CINNAMALDEHYDE",
+"1,8 CINEOLE",
+"THYMOL",
+"EUGENOL(?! METHYL)"
+]
+},
+"Hydrogen peroxide": {
+"kind": "disinfectant",
+"cls": "Oxidizer or disinfectant",
+"grp": "",
+"flags": [
+"oxidizer"
+],
+"rx": [
+"HYDROGEN PEROXIDE"
+]
+},
+"Peracetic acid": {
+"kind": "disinfectant",
+"cls": "Oxidizer or disinfectant",
+"grp": "",
+"flags": [
+"oxidizer"
+],
+"rx": [
+"PERACETIC"
+]
+},
+"Peroxymonosulfate": {
+"kind": "disinfectant",
+"cls": "Oxidizer or disinfectant",
+"grp": "",
+"flags": [
+"oxidizer"
+],
+"rx": [
+"PERSUL(?:F|PH)",
+"PEROXYMONO",
+"MONOPERSUL(?:F|PH)",
+"TRIPLE SALT"
+]
+},
+"Sodium percarbonate": {
+"kind": "disinfectant",
+"cls": "Oxidizer or disinfectant",
+"grp": "",
+"flags": [
+"oxidizer"
+],
+"rx": [
+"PERCARBONATE"
+]
+},
+"Chlorine": {
+"kind": "disinfectant",
+"cls": "Oxidizer or disinfectant",
+"grp": "",
+"flags": [
+"oxidizer"
+],
+"rx": [
+"HYPOCHLORITE",
+"CHLORINE DIOXIDE",
+"DICHLOROIS[O]?CYANURATE",
+"CHLORAMINE",
+"TOSYLCHLORAMIDE"
+]
+},
+"Iodine": {
+"kind": "disinfectant",
+"cls": "Oxidizer or disinfectant",
+"grp": "",
+"flags": [
+"oxidizer"
+],
+"rx": [
+"IODINE"
+]
+},
+"Silver": {
+"kind": "disinfectant",
+"cls": "Oxidizer or disinfectant",
+"grp": "",
+"flags": [
+"oxidizer"
+],
+"rx": [
+"SILVER"
+]
+},
+"Quaternary ammonium": {
+"kind": "disinfectant",
+"cls": "Disinfectant",
+"grp": "",
+"flags": [
+"quat"
+],
+"rx": [
+"AMMONI+UM ?CHLORIDE",
+"AMMONIUM BROMIDE",
+"BENZALKONIUM",
+"BENZOXONIUM",
+"QUATERNARY",
+"PYRIDIUM",
+"CHLORHEXIDINE",
+"ALKYLDIMETHYL",
+"DIDECYL",
+"DEDICYL"
+]
+},
+"Aldehyde": {
+"kind": "disinfectant",
+"cls": "Disinfectant",
+"grp": "",
+"flags": [
+"aldehyde"
+],
+"rx": [
+"GLUTARALDEHYDE",
+"FORMALDEHYDE",
+"FORMALIN",
+"PARAFORMALDEHYDE",
+"GLYOXAL"
+]
+},
+"Phenol": {
+"kind": "disinfectant",
+"cls": "Disinfectant",
+"grp": "",
+"flags": [
+"aldehyde"
+],
+"rx": [
+"CHLOROCRESOL",
+"CRESOL",
+"AMYPHENOL",
+"CHLOROPHENOL",
+"TOTAL PHENOL"
+]
+},
+"Bronopol": {
+"kind": "disinfectant",
+"cls": "Disinfectant",
+"grp": "",
+"flags": [
+"aldehyde"
+],
+"rx": [
+"BRONOPOL",
+"NITROPROPIONAMI",
+"ISOTHIAZOLINONE"
+]
+}
+}
+}
