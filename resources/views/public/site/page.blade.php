@@ -219,7 +219,7 @@
                 </div>
             @endif
             <div class="sp-wrap">
-                <div class="sp-body" id="spBody">
+                <div class="sp-body{{ $isNews ? ' is-news' : '' }}" id="spBody">
                     @if ($yieldNote)
                         <div class="sp-yield-note">@include('partials.yield-note', ['compact' => true, 'flush' => true])</div>
                     @endif

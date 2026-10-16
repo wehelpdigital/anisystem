@@ -66,6 +66,8 @@
     .article-body { font-size:.98rem; line-height:1.7; color:var(--color-gray-800); }
     .article-body p { margin:0 0 .9rem; }
     .article-body h3, .article-body h4 { font-family:var(--font-heading); font-weight:700; color:var(--color-gray-900); margin:1.3rem 0 .5rem; }
+    /* A news story's headline (h3): bigger than the words, with room before its picture (2026-10-17, the owner). */
+    .article-body h3 { font-size:1.16rem; font-weight:800; line-height:1.3; margin:1.6rem 0 .85rem; }
     .article-body ul, .article-body ol { margin:0 0 .9rem 1.3rem; }
     .article-body blockquote { border-left:3px solid var(--color-brand-300); padding-left:.9rem; color:var(--color-gray-500); font-style:italic; }
     /* The rest of what a built page can hold. An article writes h2 for its

@@ -155,6 +155,22 @@
     .sp-call.tip { background: #f3f8ec; border-color: #c9e0ad; color: #24400f; } .sp-call.tip svg { color: #4a7c2a; }
     .sp-call.warn { background: #fff8e6; border-color: #f5d98a; color: #6b4a00; } .sp-call.warn svg { color: #c79e00; }
     .sp-call.info { background: #eef4fd; border-color: #c7dbf5; color: #1e3a6b; } .sp-call.info svg { color: #2563eb; }
+    /* On a phone the icon sits beside the title only and the words take the card's whole width
+       (2026-10-17, the owner: the content "is indented ... it should be filled"). */
+    @media (max-width: 639.98px) {
+        .sp-call { display: block; padding: .95rem 1rem; }
+        .sp-call > svg { float: left; margin: .12rem .55rem 0 0; }
+        .sp-call > div { min-width: 0; }
+        .sp-call::after { content: ''; display: block; clear: both; }
+    }
+    /* A news story's headline: bigger, with room before its picture or words (2026-10-17, the owner). */
+    .sp-body.is-news > h3 { font-size: 1.34rem; line-height: 1.28; letter-spacing: -.005em; }
+    .sp-body.is-news > h3 + * { margin-top: 1.1rem; }
+    .sp-body.is-news > h3 + .sp-img { margin-top: 1.5rem; }
+    @media (max-width: 639.98px) {
+        .sp-body.is-news > h3 { font-size: 1.27rem; margin-top: 2rem; }
+        .sp-body.is-news > h3 + .sp-img { margin-top: 1.4rem; }
+    }
     /* A news story's "so what" in English and Taglish (partials/lang-tabs): the words take the
        card's whole width, the switch sits by the title (under it on a narrow phone). */
     .sp-call.lt { --lt-track: #fff; --lt-line: #c9e0ad; --lt-on: #4a7c2a; --lt-ink: #2d5016; --lt-on-ink: #fff; }
