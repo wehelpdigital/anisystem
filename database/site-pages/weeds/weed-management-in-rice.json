@@ -29,7 +29,7 @@
     },
     {
       "type": "text",
-      "text": "Left alone, weeds can cut rice yield by 44 to 96 percent, says PhilRice, because they take the nutrients, sunlight and water meant for the palay. They also raise your cost of production, and their seeds in the harvest lower its price. Weeds shelter diseases, insects and rats too. For example, the [rice bug](/pests/rice-bug) lives on wild grasses between crops, and the [rice black bug](/pests/rice-black-bug) feeds on weeds as well.\n\nIRRI's Rice Knowledge Bank says to control weeds from planting until the rice canopy closes. The PhilRice steps cover the first 40 days, so weed management in rice is won or lost early."
+      "text": "Left alone, weeds can cut rice yield by 44 to 96 percent, because they take the nutrients, sunlight and water meant for the palay. They also raise your cost of production, and their seeds in the harvest lower its price. Weeds shelter diseases, insects and rats too. For example, the [rice bug](/pests/rice-bug) lives on wild grasses between crops, and the [rice black bug](/pests/rice-black-bug) feeds on weeds as well.\n\nControl weeds from planting until the rice canopy closes. The usual steps cover the first 40 days, so weed management in rice is won or lost early."
     },
     {
       "type": "heading",
@@ -47,7 +47,7 @@
     },
     {
       "type": "text",
-      "text": "The cheapest weed never reaches your paddy. IRRI quotes an old saying: one year of seeds, seven years of weeds. So keep each door shut."
+      "text": "The cheapest weed never reaches your paddy. An old saying goes: one year of seeds, seven years of weeds. So keep each door shut."
     },
     {
       "type": "list",
@@ -67,7 +67,7 @@
     },
     {
       "type": "text",
-      "text": "Good land preparation buries weeds, tears shoots from roots and makes dormant seeds sprout so you can kill them. It also drains the food stored in perennial weeds. PhilRice gives this sequence."
+      "text": "Good land preparation buries weeds, tears shoots from roots and makes dormant seeds sprout so you can kill them. It also drains the food stored in perennial weeds. Follow this sequence."
     },
     {
       "type": "steps",
@@ -101,7 +101,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI calls water the best weed control, because most grasses and some sedges cannot sprout or grow under a flood. Keep about 2 to 5 cm of water in the field. If water allows, keep it flooded from transplanting until the canopy covers the soil. Still, wet land weeds such as [gabi gabi](/weeds/monochoria-vaginalis) thrive in flooded paddies, and dry land weeds take over rainfed fields that dry out.\n\nWater also finishes a post emergence spray. Bring it back 1 to 3 days after spraying, 3 to 5 cm deep, and hold it for 4 to 5 days to keep the weeds under but the young rice above it."
+      "text": "Water is the best weed control, because most grasses and some sedges cannot sprout or grow under a flood. Keep about 2 to 5 cm of water in the field. If water allows, keep it flooded from transplanting until the canopy covers the soil. Still, wet land weeds such as [gabi gabi](/weeds/monochoria-vaginalis) thrive in flooded paddies, and dry land weeds take over rainfed fields that dry out.\n\nWater also finishes a post emergence spray. Bring it back 1 to 3 days after spraying, 3 to 5 cm deep, and hold it for 4 to 5 days to keep the weeds under but the young rice above it."
     },
     {
       "type": "heading",
@@ -110,7 +110,7 @@
     },
     {
       "type": "text",
-      "text": "Hand weeding with a sickle or bolo is slow but thorough. Pull the whole plant or cut off the seed head before it ripens, so a weed that survived a spray leaves no seed. IRRI advises starting within two weeks of planting. Pile pulled weeds on the bund, since some survive in standing water.\n\nA rotary weeder works faster but needs straight rows. It cuts, tramples and buries the weeds between them. Run it when weeds have three to four leaves, with 2 to 3 cm of water, then hand pull the weeds near the hills."
+      "text": "Hand weeding with a sickle or bolo is slow but thorough. Pull the whole plant or cut off the seed head before it ripens, so a weed that survived a spray leaves no seed. Start within two weeks of planting. Pile pulled weeds on the bund, since some survive in standing water.\n\nA rotary weeder works faster but needs straight rows. It cuts, tramples and buries the weeds between them. Run it when weeds have three to four leaves, with 2 to 3 cm of water, then hand pull the weeds near the hills."
     },
     {
       "type": "heading",
@@ -125,7 +125,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Azolla.** This freshwater fern fixes nitrogen with blue green algae. PhilRice says it can cut weed growth by up to 80 percent in transplanted and direct seeded rice.",
+        "**Azolla.** This freshwater fern fixes nitrogen with blue green algae. It can cut weed growth by up to 80 percent in transplanted and direct seeded rice.",
         "**The Altica beetle.** This small black beetle eats the leaves of [Ludwigia weeds](/weeds/ludwigia-hyssopifolia), the kahoy kahoy of the paddies. Spare it from needless insecticide sprays.",
         "**Two fungi.** Alternaria alternata f.sp. sphenocleae blights [gooseweed](/weeds/gooseweed), and the rust Puccinia philippinensis attacks purple nutsedge."
       ]
@@ -152,11 +152,11 @@
     },
     {
       "type": "text",
-      "text": "PhilRice sets out these steps by days after planting, for lipat tanim and sabog tanim. Broadcast rice has no rows, so a rotary weeder does not fit it."
+      "text": "These steps go by days after planting, for lipat tanim and sabog tanim. Broadcast rice has no rows, so a rotary weeder does not fit it."
     },
     {
       "type": "table",
-      "caption": "Steps by rice age, from PhilRice",
+      "caption": "Steps by rice age",
       "rows": [
         [
           "Rice age",
@@ -192,7 +192,7 @@
     },
     {
       "type": "text",
-      "text": "The direct seeded steps stop at day 30, so the last cell follows IRRI's rule: never let weeds set seed. After any post emergence spray, follow the water rule above. The [weed control helper in anee.io](/features/pest-and-disease-finders) lists the active ingredients for each window and weed group."
+      "text": "The direct seeded steps stop at day 30, so the last cell follows one rule: never let weeds set seed. After any post emergence spray, follow the water rule above. The [weed control helper in anee.io](/features/pest-and-disease-finders) lists the active ingredients for each window and weed group."
     },
     {
       "type": "heading",
@@ -238,7 +238,7 @@
       "items": [
         {
           "q": "When should I weed my rice field?",
-          "a": "Start within two weeks of planting, says IRRI, and keep the field clean until the canopy shades the soil, about the first 40 days."
+          "a": "Start within two weeks of planting, and keep the field clean until the canopy shades the soil, about the first 40 days."
         },
         {
           "q": "Can I control weeds in rice without herbicides?",

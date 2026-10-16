@@ -19,7 +19,7 @@
     "grass in tagalog",
     "sofit"
   ],
-  "excerpt": "The common weeds in the Philippines fall into three groups: grasses, sedges and broadleaves. In rice and corn fields they steal light, water and fertilizer, and they shelter pests. This guide names the main weeds of each group, with the local names PhilRice uses, and shows how to control them before they cut your harvest.",
+  "excerpt": "The common weeds in the Philippines fall into three groups: grasses, sedges and broadleaves. In rice and corn fields they steal light, water and fertilizer, and they shelter pests. This guide names the main weeds of each group, with the local names farmers use, and shows how to control them before they cut your harvest.",
   "heroImage": {
     "src": "/images/site/guides/problems-common-weeds-philippines.webp",
     "alt": "Barnyard grass, Echinochloa crus galli, one of the common weeds in the Philippines, with its seed head above other plants",
@@ -33,11 +33,11 @@
     },
     {
       "type": "text",
-      "text": "Weeds take the sunlight, nutrients and water that should go to the palay, as PhilRice puts it. PhilRice adds that weeds shelter insects, rats and diseases. For example, IRRI's fact sheet on Ischaemum rugosum lists it as an alternate host of tungro.\n\nTiming decides the damage. PhilRice advises keeping the rice field free of weeds from planting or sowing up to about 40 days, the critical age when young palay competes poorly. In corn, the Department of Agriculture's Cagayan Valley corn guide puts the most destructive period in the first 30 days."
+      "text": "Weeds take the sunlight, nutrients and water that should go to the palay. They also shelter insects, rats and diseases. For example, Ischaemum rugosum is an alternate host of tungro.\n\nTiming decides the damage. Keep the rice field free of weeds from planting or sowing up to about 40 days, the critical age when young palay competes poorly. In corn, the most destructive period is the first 30 days."
     },
     {
       "type": "text",
-      "text": "The losses add up fast. PhilRice notes that Ischaemum rugosum left uncontrolled can cut rice yield by as much as 60 percent. Chinese sprangletop can cut it by as much as 48 percent when 16 plants compete in each square meter. So a few weeks of neglect early in the season can cost more than the herbicide or the weeding labor you tried to save."
+      "text": "The losses add up fast. Ischaemum rugosum left uncontrolled can cut rice yield by as much as 60 percent. Chinese sprangletop can cut it by as much as 48 percent when 16 plants compete in each square meter. So a few weeks of neglect early in the season can cost more than the herbicide or the weeding labor you tried to save."
     },
     {
       "type": "heading",
@@ -46,7 +46,7 @@
     },
     {
       "type": "text",
-      "text": "Weeds in Tagalog are damo, and so is grass in Tagalog. That is why farmers name each weed by its look, and the names change from province to province. The names below come from PhilRice and DA handouts. For more field words, see our glossary of [farm words in Tagalog](/blog/farm-words-in-tagalog).\n\nFirst, learn the three groups, because each group needs a different herbicide. Grasses have narrow leaves and round, hollow stems. Sedges look like grass, but most have solid, triangular stems. Broadleaves have wide leaves with a net of veins. You can search 81 weeds of rice by their local names in our [catalogue of rice weeds](/weeds)."
+      "text": "Weeds in Tagalog are damo, and so is grass in Tagalog. That is why farmers name each weed by its look, and the names change from province to province. The names below are the common local names. For more field words, see our glossary of [farm words in Tagalog](/blog/farm-words-in-tagalog).\n\nFirst, learn the three groups, because each group needs a different herbicide. Grasses have narrow leaves and round, hollow stems. Sedges look like grass, but most have solid, triangular stems. Broadleaves have wide leaves with a net of veins. You can search 81 weeds of rice by their local names in our [catalogue of rice weeds](/weeds)."
     },
     {
       "type": "heading",
@@ -61,11 +61,11 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**[Barnyard grass](/weeds/barnyard-grass), Echinochloa crus galli.** A tall grass whose seed head rises above the rice. PhilRice's weed guide gives the local names telebisyon, antena and bayakibok. In Iloilo and Nueva Ecija, some populations already resist butachlor and propanil, with cross resistance to pretilachlor.",
-        "**[Chinese sprangletop](/weeds/chinese-sprangletop), Leptochloa chinensis.** Called kuring kuring, salay maya or palay maya. It is a growing problem in wet seeded rice and it contaminates rice seed. PhilRice's herbicide table for direct seeded rice also lists bispyribac sodium for annual grasses except this one.",
+        "**[Barnyard grass](/weeds/barnyard-grass), Echinochloa crus galli.** A tall grass whose seed head rises above the rice. Its local names are telebisyon, antena and bayakibok. In Iloilo and Nueva Ecija, some populations already resist butachlor and propanil, with cross resistance to pretilachlor.",
+        "**[Chinese sprangletop](/weeds/chinese-sprangletop), Leptochloa chinensis.** Called kuring kuring, salay maya or palay maya. It is a growing problem in wet seeded rice and it contaminates rice seed. In direct seeded rice, bispyribac sodium is recommended for annual grasses, except this one.",
         "**Ischaemum rugosum.** Called bulo bulo, limba limba or tinitrigo. It is aggressive in wet direct seeded rice, tolerates shade, and is one of the commonest seed contaminants.",
-        "**Weedy rice, or damong palay.** A wild type of rice that looks like the crop but shatters its grain early. PhilRice recommends the stale seedbed technique against it.",
-        "**Itchgrass or aguingay, Rottboellia cochinchinensis.** A main grass weed of corn. The DA corn guide controls it with recommended pre emergence herbicides."
+        "**Weedy rice, or damong palay.** A wild type of rice that looks like the crop but shatters its grain early. Use the stale seedbed technique against it.",
+        "**Itchgrass or aguingay, Rottboellia cochinchinensis.** A main grass weed of corn. Control it with recommended pre emergence herbicides."
       ]
     },
     {
@@ -81,14 +81,14 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**[Purple nutsedge](/weeds/purple-nutsedge), Cyperus rotundus.** Called mutha, sudsud or barsanga. It spreads by underground tubers. PhilRice warns that it has adapted from dry uplands to flooded lowlands, so flooding alone no longer controls it.",
-        "**[Smallflower umbrella sedge](/weeds/smallflower-umbrella-sedge), Cyperus difformis.** PhilRice's weed guide gives the local names payong payong and siraw siraw. It grows thick in wet rice fields.",
+        "**[Purple nutsedge](/weeds/purple-nutsedge), Cyperus rotundus.** Called mutha, sudsud or barsanga. It spreads by underground tubers. It has adapted from dry uplands to flooded lowlands, so flooding alone no longer controls it.",
+        "**[Smallflower umbrella sedge](/weeds/smallflower-umbrella-sedge), Cyperus difformis.** Its local names are payong payong and siraw siraw. It grows thick in wet rice fields.",
         "**[Globe fringerush](/weeds/globe-fringerush), Fimbristylis miliacea.** Called gumi or bungot bungot. Another sedge weed of wet rice fields, with fine, grasslike leaves."
       ]
     },
     {
       "type": "text",
-      "text": "For mutha, PhilRice recommends the stale seedbed method. Plow the field again and again during the fallow period so the weed sprouts, then kill the new shoots. PhilRice also warns that herbicides reach only some of the tubers, and new shoots grow from the rest. If you spray, its weed guide lists glyphosate among the pre plant herbicides, used before the rice is transplanted or sown."
+      "text": "For mutha, use the stale seedbed method. Plow the field again and again during the fallow period so the weed sprouts, then kill the new shoots. Herbicides reach only some of the tubers, and new shoots grow from the rest. If you spray, glyphosate is one of the pre plant herbicides, used before the rice is transplanted or sown."
     },
     {
       "type": "heading",
@@ -104,9 +104,9 @@
       "ordered": false,
       "items": [
         "**Monochoria vaginalis.** Called gabi gabi, bilagut or lapalapa. It has shiny, heart shaped leaves like a small gabi and purple blue flowers.",
-        "**[Gooseweed](/weeds/gooseweed), Sphenoclea zeylanica.** PhilRice's weed guide lists mais mais and silisilihan. It grows upright with narrow, pointed leaves and a short spike of flowers at the tip.",
+        "**[Gooseweed](/weeds/gooseweed), Sphenoclea zeylanica.** Its local names are mais mais and silisilihan. It grows upright with narrow, pointed leaves and a short spike of flowers at the tip.",
         "**Water primrose, Ludwigia species.** Several species with yellow flowers, some upright, that grow in wet paddies and along levees.",
-        "**Corn broadleaves.** The DA corn guide names mara kamote (Ipomoea triloba) and kalunay or kulitis (Amaranthus), which grow fast in the wet season."
+        "**Corn broadleaves.** They include mara kamote (Ipomoea triloba) and kalunay or kulitis (Amaranthus), which grow fast in the wet season."
       ]
     },
     {
@@ -182,7 +182,7 @@
     },
     {
       "type": "text",
-      "text": "No single method works alone. PhilRice and IRRI both recommend combining clean seed, good land preparation, water, hand weeding and herbicides. In most lowland fields, this order works:\n\nFor what to do at each age of your rice, open the [weed control helper in anee.io](/features/pest-and-disease-finders). For the whole season in order, read our [weed management guide](/weeds/weed-management-in-rice)."
+      "text": "No single method works alone. Combine clean seed, good land preparation, water, hand weeding and herbicides. In most lowland fields, this order works:\n\nFor what to do at each age of your rice, open the [weed control helper in anee.io](/features/pest-and-disease-finders). For the whole season in order, read our [weed management guide](/weeds/weed-management-in-rice)."
     },
     {
       "type": "steps",
@@ -216,7 +216,7 @@
     },
     {
       "type": "text",
-      "text": "A pre emergence herbicide stops weeds as they germinate, before you can even see them. Sofit 300 EC from Syngenta Philippines is a well known example. Its product page lists 300 grams per liter of pretilachlor, an emulsifiable concentrate in herbicide group K3. It targets grasses, sedges and broadleaves in both direct seeded and transplanted rice, including the hard to control Leptochloa chinensis.\n\nThe label window for Sofit is 0 to 4 days after sowing or transplanting, at 10 tablespoons per 16 liter tank. Still, follow the label on your own pack, since rates and conditions can change. Also remember that some barnyard grass populations already show cross resistance to pretilachlor. So rotate to a herbicide with a different mode of action in later seasons, as PhilRice advises."
+      "text": "A pre emergence herbicide stops weeds as they germinate, before you can even see them. Sofit 300 EC from Syngenta Philippines is a well known example. Its product page lists 300 grams per liter of pretilachlor, an emulsifiable concentrate in herbicide group K3. It targets grasses, sedges and broadleaves in both direct seeded and transplanted rice, including the hard to control Leptochloa chinensis.\n\nThe label window for Sofit is 0 to 4 days after sowing or transplanting, at 10 tablespoons per 16 liter tank. Still, follow the label on your own pack, since rates and conditions can change. Also remember that some barnyard grass populations already show cross resistance to pretilachlor. So rotate to a herbicide with a different mode of action in later seasons."
     },
     {
       "type": "callout",
@@ -231,7 +231,7 @@
     },
     {
       "type": "text",
-      "text": "Corn needs clean rows in its first 30 days. For conventional hybrids and open pollinated varieties, the DA corn guide recommends two cultivations, off barring and then hilling up, followed by spot weeding. Where aguingay dominates, use a recommended pre emergence herbicide. For fast growing broadleaves like kulitis and mara kamote, the guide recommends 2,4 D.\n\nApply a pre emergence herbicide when the soil surface is moist, and do not disturb the soil after spraying. Spray post emergence herbicides before the corn reaches its reproductive stage. With paraquat or other contact herbicides, aim at the weeds only and keep the spray off the corn leaves. For glyphosate tolerant corn, follow the seed company's recommendation. Our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais) covers the rest of the season."
+      "text": "Corn needs clean rows in its first 30 days. For conventional hybrids and open pollinated varieties, do two cultivations, off barring and then hilling up, followed by spot weeding. Where aguingay dominates, use a recommended pre emergence herbicide. For fast growing broadleaves like kulitis and mara kamote, use 2,4 D.\n\nApply a pre emergence herbicide when the soil surface is moist, and do not disturb the soil after spraying. Spray post emergence herbicides before the corn reaches its reproductive stage. With paraquat or other contact herbicides, aim at the weeds only and keep the spray off the corn leaves. For glyphosate tolerant corn, follow the seed company's recommendation. Our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais) covers the rest of the season."
     },
     {
       "type": "heading",

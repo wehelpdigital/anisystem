@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "Giant salvinia, or Salvinia molesta, is a floating fern from the family Salviniaceae. It has no local name in the PhilRice weed list, so it goes by its English name or simply salvinia. It floats on still or slow water. In the Philippines, it is a weed of irrigated lowland rice fields, where water stays in the field for most of the season.\n\nIt is a perennial and keeps growing as long as it has water. As a fern, it never flowers or makes seeds. Instead, it spreads mainly by broken pieces of stem, and it also forms spores. Moving water and farm tools carry these pieces to new spots. In fact, farmers brought it into rice fields by mistake, thinking it was azolla, the small fern they use as green manure."
+      "text": "Giant salvinia, or Salvinia molesta, is a floating fern from the family Salviniaceae. It has no common local name, so it goes by its English name or simply salvinia. It floats on still or slow water. In the Philippines, it is a weed of irrigated lowland rice fields, where water stays in the field for most of the season.\n\nIt is a perennial and keeps growing as long as it has water. As a fern, it never flowers or makes seeds. Instead, it spreads mainly by broken pieces of stem, and it also forms spores. Moving water and farm tools carry these pieces to new spots. In fact, farmers brought it into rice fields by mistake, thinking it was azolla, the small fern they use as green manure."
     },
     {
       "type": "table",
@@ -136,7 +136,7 @@
     },
     {
       "type": "text",
-      "text": "If water and weeding cannot hold giant salvinia down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows PhilRice recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper in anee.io](/features/pest-and-disease-finders) finds the ingredients that cover all of them."
+      "text": "If water and weeding cannot hold giant salvinia down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the usual recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper in anee.io](/features/pest-and-disease-finders) finds the ingredients that cover all of them."
     },
     {
       "type": "table",
@@ -230,7 +230,7 @@
       "items": [
         {
           "q": "What is giant salvinia commonly called?",
-          "a": "It has no local name in the PhilRice weed list. Most people use its English name, or simply salvinia, from its scientific name Salvinia molesta. Some farmers mistake it for azolla, but they are different ferns. Azolla helps rice as green manure, while this one only spreads and competes with your crop."
+          "a": "It has no common local name. Most people use its English name, or simply salvinia, from its scientific name Salvinia molesta. Some farmers mistake it for azolla, but they are different ferns. Azolla helps rice as green manure, while this one only spreads and competes with your crop."
         },
         {
           "q": "How do I get rid of salvinia in my rice field?",
