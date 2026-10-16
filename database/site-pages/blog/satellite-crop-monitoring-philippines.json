@@ -39,7 +39,7 @@
         "Sentinel 2 passes about every five days near the equator, and its data are free under the Copernicus open data policy.",
         "Clouds block optical pictures, but Sentinel 1 radar sees through them.",
         "Satellites show where a field is weaker, not why. You still walk the spot to find the cause.",
-        "PhilRice runs PRISM, a satellite based rice monitoring system for planning, not for one farm.",
+        "PRISM is a satellite based rice monitoring system for planning, not for one farm.",
         "Satellite Analysis in anee.io reads both kinds of pictures for a field you draw, and it uses credits."
       ]
     },
@@ -90,7 +90,7 @@
     },
     {
       "type": "text",
-      "text": "The government uses the same idea at a larger scale. PRISM, the Philippine Rice Information System based at PhilRice with the DA and IRRI among its partners, uses remote sensing to map rice areas, planting dates, flooded rice areas and yields. It also assesses rice areas hit by flood or drought, to help the DA plan. So it works for whole provinces, not for the day to day care of your lot."
+      "text": "The government uses the same idea at a larger scale. PRISM, the Philippine Rice Information System, uses remote sensing to map rice areas, planting dates, flooded rice areas and yields. It also assesses rice areas hit by flood or drought, to help government planning. So it works for whole provinces, not for the day to day care of your lot."
     },
     {
       "type": "heading",
@@ -214,7 +214,7 @@
         },
         {
           "q": "Does the government use satellites for rice?",
-          "a": "Yes. PRISM, the Philippine Rice Information System based at PhilRice, uses remote sensing to map rice areas, planting dates, flooded areas and yields for planning. It also assesses rice areas hit by flood or drought."
+          "a": "Yes. PRISM, the Philippine Rice Information System, uses remote sensing to map rice areas, planting dates, flooded areas and yields for planning. It also assesses rice areas hit by flood or drought."
         }
       ]
     },

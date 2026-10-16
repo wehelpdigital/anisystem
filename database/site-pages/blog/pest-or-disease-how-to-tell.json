@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The answer decides what you buy. An insecticide does nothing for a fungus, and no spray at all cures a virus. IRRI's Rice Knowledge Bank puts the average loss of rice to pests and diseases at an estimated 37 percent of the crop each year. It also says that timely, accurate diagnosis can cut those losses.\n\nNot every sick plant has a pest or a disease, either. IRRI notes that crop problems also come from wind, water, temperature and soil acidity. So keep a third answer in mind: the soil, the water or the weather."
+      "text": "The answer decides what you buy. An insecticide does nothing for a fungus, and no spray at all cures a virus. Pests and diseases take an estimated 37 percent of the rice crop each year on average. Timely, accurate diagnosis can cut those losses.\n\nNot every sick plant has a pest or a disease, either. Crop problems also come from wind, water, temperature and soil acidity. So keep a third answer in mind: the soil, the water or the weather."
     },
     {
       "type": "list",
@@ -114,7 +114,7 @@
     },
     {
       "type": "text",
-      "text": "Some diseases ride on pests. Tungro is a virus disease, but leafhoppers carry it from plant to plant, and the green leafhopper is the most efficient one. IRRI says spraying the leafhoppers often fails, because they keep moving in from nearby fields. Prevention works better: resistant varieties, planting at the same time as your neighbors, and plowing infected stubble after harvest.\n\nThe brown planthopper does the same with [rice grassy stunt](/diseases/rice-grassy-stunt). In both cases the plant shows a disease, but the cause walks in on legs. That is why the finders and Anee ask about insects even when you report yellow leaves."
+      "text": "Some diseases ride on pests. Tungro is a virus disease, but leafhoppers carry it from plant to plant, and the green leafhopper is the most efficient one. Spraying the leafhoppers often fails, because they keep moving in from nearby fields. Prevention works better: resistant varieties, planting at the same time as your neighbors, and plowing infected stubble after harvest.\n\nThe brown planthopper does the same with [rice grassy stunt](/diseases/rice-grassy-stunt). In both cases the plant shows a disease, but the cause walks in on legs. That is why the finders and Anee ask about insects even when you report yellow leaves."
     },
     {
       "type": "heading",
@@ -134,7 +134,7 @@
         },
         {
           "title": "Pull a tiller",
-          "text": "A stem borer deadheart pulls out easily. Kresek, the seedling wilt of bacterial leaf blight, does not, IRRI notes."
+          "text": "A stem borer deadheart pulls out easily. Kresek, the seedling wilt of bacterial leaf blight, does not."
         },
         {
           "title": "Do the ooze test",
@@ -142,7 +142,7 @@
         },
         {
           "title": "Check your records",
-          "text": "Note the growth stage, the last fertilizer and the recent weather. IRRI warns that tungro can look like nitrogen or zinc deficiency or water stress, so your records help rule those out."
+          "text": "Note the growth stage, the last fertilizer and the recent weather. Tungro can look like nitrogen or zinc deficiency or water stress, so your records help rule those out."
         }
       ]
     },
@@ -186,7 +186,7 @@
         },
         {
           "q": "Can a virus be sprayed away?",
-          "a": "No. IRRI says a rice plant infected by tungro cannot be cured. Prevention works instead: resistant varieties, synchronous planting and plowing infected stubble after harvest."
+          "a": "No. A rice plant infected by tungro cannot be cured. Prevention works instead: resistant varieties, synchronous planting and plowing infected stubble after harvest."
         },
         {
           "q": "What if I still cannot tell pest or disease?",
@@ -194,7 +194,7 @@
         },
         {
           "q": "Can weather damage look like disease?",
-          "a": "Yes. IRRI lists wind, water, temperature and soil acidity among the non living causes of crop problems. Check the weather and your water before you blame a pest or a disease."
+          "a": "Yes. Wind, water, temperature and soil acidity are among the non living causes of crop problems. Check the weather and your water before you blame a pest or a disease."
         }
       ]
     },

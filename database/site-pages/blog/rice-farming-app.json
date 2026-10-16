@@ -6,14 +6,14 @@
   "category": "Farm Apps",
   "title": "What Is the Best Rice Farming App for Filipino Palay Farmers?",
   "metaTitle": "Rice Farming App for Palay Farmers: What to Look For",
-  "metaDescription": "The best rice farming app counts DAT for each lot, times fertilizer by stage, tracks labor and harvest, and works offline. A checklist built on PalayCheck.",
+  "metaDescription": "The best rice farming app counts DAT for each lot, times fertilizer by stage, tracks labor and harvest, and works offline. A checklist from seed to drying.",
   "focusKeyword": "rice farming app",
   "keywords": [
     "rice farming app",
     "palay farming",
     "fertilizer application for rice"
   ],
-  "excerpt": "The best rice farming app counts the days after sowing or transplanting from each lot's own day zero. It times fertilizer, water and pest checks by growth stage, keeps labor and harvest records, and works without signal. anee.io, a farm app built for Filipino farmers, does this from a free plan. Keep the free PhilRice and DA tools beside it.",
+  "excerpt": "The best rice farming app counts the days after sowing or transplanting from each lot's own day zero. It times fertilizer, water and pest checks by growth stage, keeps labor and harvest records, and works without signal. anee.io, a farm app built for Filipino farmers, does this from a free plan. Keep the free rice tools beside it.",
   "heroImage": {
     "src": "/images/site/guides/blog-rice-farming-app.webp",
     "alt": "Three phones showing a rice farming app: a wet season palay protocol counted in DAS and DAT, the activities board, and the weed helper asking how old the rice is",
@@ -22,7 +22,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Palay farming runs on a count. PhilRice ties its advice to days after transplanting (DAT) or after sowing (DAS). So a top dressing that is right on day 25 is a week late on day 32.\n\nPhilRice's PalayCheck System sums up good rice management in nine Key Checks, from quality seed to dry, clean grain. Each season then ends with a loop: observe, measure and record, compare, and fix the weak spot next time. A good rice farming app is a tool for that loop. This guide covers rice only. For farms with other crops too, read our guide to the [best farm management app in the Philippines](/blog/farm-management-app-philippines)."
+      "text": "Palay farming runs on a count. Rice advice is tied to days after transplanting (DAT) or after sowing (DAS). So a top dressing that is right on day 25 is a week late on day 32.\n\nGood rice management can be summed up in nine Key Checks, from quality seed to dry, clean grain. Each season then ends with a loop: observe, measure and record, compare, and fix the weak spot next time. A good rice farming app is a tool for that loop. This guide covers rice only. For farms with other crops too, read our guide to the [best farm management app in the Philippines](/blog/farm-management-app-philippines)."
     },
     {
       "type": "heading",
@@ -34,9 +34,9 @@
       "ordered": false,
       "items": [
         "Pick an app that counts DAS or DAT from each lot's own day zero.",
-        "Check it against the PalayCheck areas, from seed to postharvest.",
+        "Check it against every area of the season, from seed to postharvest.",
         "It should also keep labor and harvest records, track typhoons, work offline and cost little.",
-        "anee.io does this from its free Libre plan up. The free PhilRice and DA tools answer other questions."
+        "anee.io does this from its free Libre plan up. Free rice tools answer other questions."
       ]
     },
     {
@@ -63,7 +63,7 @@
           "Every task counts from its lot's own day zero"
         ],
         [
-          "The PalayCheck Key Checks",
+          "The nine Key Checks",
           "Nine checks, from seed to drying",
           "Write each check as a task in the Protocol Builder"
         ],
@@ -121,7 +121,7 @@
     },
     {
       "type": "text",
-      "text": "Few farmers plant every paddy on one day. PalayCheck's Key Check 3 asks you to plant within 14 days of the regular schedule of your irrigation service area. So two lots on one farm can sit ten days apart and both be on time.\n\nThat is why each lot needs its own count. In anee.io, every lot keeps its own day zero and its own growth stage. If a lot falls behind after a dry spell, Realign by Anee reads its records and moves its stage count to match, using credits."
+      "text": "Few farmers plant every paddy on one day. The usual rule is to plant within 14 days of the regular schedule of your irrigation service area. So two lots on one farm can sit ten days apart and both be on time.\n\nThat is why each lot needs its own count. In anee.io, every lot keeps its own day zero and its own growth stage. If a lot falls behind after a dry spell, Realign by Anee reads its records and moves its stage count to match, using credits."
     },
     {
       "type": "heading",
@@ -168,13 +168,13 @@
     },
     {
       "type": "text",
-      "text": "Fertilizer application for rice follows the stage, not the month. PalayCheck's Key Check 5 asks for enough nutrients from tillering to early panicle initiation and flowering. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) gives the PhilRice timings by DAT. Once those doses sit in your protocol, the app dates each one for every lot."
+      "text": "Fertilizer application for rice follows the stage, not the month. The crop needs enough nutrients from tillering to early panicle initiation and flowering. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) gives the usual timings by DAT. Once those doses sit in your protocol, the app dates each one for every lot."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "Put the Key Checks on the board",
-      "text": "Add a short task for each check you can see. For example, count the hills per square meter after transplanting, and look at the grains before harvest. PalayCheck says to harvest by hand once 85 to 90 percent of the grains turn golden yellow. A check on the board gets ticked, while one in a booklet slips."
+      "text": "Add a short task for each check you can see. For example, count the hills per square meter after transplanting, and look at the grains before harvest. Harvest by hand once 85 to 90 percent of the grains turn golden yellow. A check on the board gets ticked, while one in a booklet slips."
     },
     {
       "type": "heading",
@@ -189,7 +189,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Free from PhilRice and the DA:** the Rice Crop Manager Advisory Service on the web. The PalayCheck App and Binhing Palay also show a price of zero on Google Play.",
+        "**Free rice tools:** the Rice Crop Manager Advisory Service on the web. The PalayCheck App and Binhing Palay also show a price of zero on Google Play.",
         "**anee.io Libre, free:** one active season with one lot, the board, growth stages, harvest observations and the labor report, with a few ads.",
         "**Libre plus Anee, PHP 70 a month:** adds Anee and her analyses, which use credits.",
         "**Solo Farmer, PHP 200 a month or PHP 1,800 a year:** up to 5 lots per season, payroll, inventory, all reports, no ads.",
@@ -210,19 +210,19 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "Which PhilRice tools should sit beside your rice farming app?"
+      "text": "Which free rice tools should sit beside your rice farming app?"
     },
     {
       "type": "text",
-      "text": "Each government tool answers one question well. Use it, then carry the answer into your season."
+      "text": "Each free tool answers one question well. Use it, then carry the answer into your season."
     },
     {
       "type": "table",
-      "caption": "PhilRice and DA rice tools, and where their answers go in anee.io",
+      "caption": "Free rice tools, and where their answers go in anee.io",
       "rows": [
         [
           "Your question",
-          "Tool from PhilRice or the DA",
+          "Free tool",
           "Where the answer goes in anee.io"
         ],
         [
@@ -249,7 +249,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice reports that the Rice Crop Manager Advisory Service is free. In Tarlac, one farmer who followed it cut his fertilizer from 12 bags to 6, and his yield rose from 4 to 5.5 tons per hectare. That is one farmer's season, not a promise. Our guide to the [PalayCheck key checks](/blog/palaycheck-key-checks) explains each check."
+      "text": "The Rice Crop Manager Advisory Service is free. In Tarlac, one farmer who followed it cut his fertilizer from 12 bags to 6, and his yield rose from 4 to 5.5 tons per hectare. That is one farmer's season, not a promise. Our guide to the [PalayCheck key checks](/blog/palaycheck-key-checks) explains each check."
     },
     {
       "type": "heading",
@@ -261,7 +261,7 @@
       "ordered": false,
       "items": [
         "Anee needs internet and uses credits. The board and notes work offline, but her answers wait for a signal.",
-        "It does not run PalayCheck assessments or count panicles. You write the checks into your plan.",
+        "It does not run Key Check assessments or count panicles. You write the checks into your plan.",
         "Libre holds one active season with one lot, and shows a few ads.",
         "Its screens are in English. Anee is the part that answers in Tagalog, Bisaya or Ilocano."
       ]
@@ -280,7 +280,7 @@
         },
         {
           "q": "Is there a free rice farming app?",
-          "a": "Yes. PhilRice's PalayCheck App and Binhing Palay show a price of zero on Google Play, and the Rice Crop Manager Advisory Service is free on the web. Libre, the anee.io free plan, works too, with a few ads."
+          "a": "Yes. The PalayCheck App and Binhing Palay show a price of zero on Google Play, and the Rice Crop Manager Advisory Service is free on the web. Libre, the anee.io free plan, works too, with a few ads."
         },
         {
           "q": "Can a rice farming app tell me when to apply fertilizer?",

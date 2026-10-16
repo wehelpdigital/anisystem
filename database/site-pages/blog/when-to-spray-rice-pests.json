@@ -17,7 +17,7 @@
     "insecticide for rice",
     "integrated pest management"
   ],
-  "excerpt": "Knowing when to spray palay saves money and keeps pests from coming back stronger. The answer is rarely the moment you see an insect. PhilRice's rule is to count first, let natural enemies work, and spray only when a pest crosses its action threshold. Below are those thresholds for eight common rice pests and diseases.",
+  "excerpt": "Knowing when to spray palay saves money and keeps pests from coming back stronger. The answer is rarely the moment you see an insect. The rule is to count first, let natural enemies work, and spray only when a pest crosses its action threshold. Below are those thresholds for eight common rice pests and diseases.",
   "heroImage": {
     "src": "/images/site/guides/blog-rice-insecticides-alika-virtako-chess.webp",
     "alt": "A farmer with a knapsack sprayer working across a young rice paddy, a reminder to count pests and know when to spray",
@@ -35,7 +35,7 @@
     },
     {
       "type": "text",
-      "text": "Do not spray insecticide in the first 30 days after transplanting, or 40 days after sowing for direct seeded rice. PalayCheck gives this rule for leaf eating pests, and a 2021 PhilRice advisory repeats it for brown planthopper.\n\nThere are two reasons. Young rice makes up for early leaf damage by growing new leaves and tillers. And an early spray kills the spiders, mirid bugs and wasps that feed on planthoppers. IRRI's Rice Knowledge Bank names early season spraying as one cause of planthopper outbreaks, because the surviving hoppers multiply once nothing eats them."
+      "text": "Do not spray insecticide in the first 30 days after transplanting, or 40 days after sowing for direct seeded rice. The rule holds for leaf eating pests and for brown planthopper.\n\nThere are two reasons. Young rice makes up for early leaf damage by growing new leaves and tillers. And an early spray kills the spiders, mirid bugs and wasps that feed on planthoppers. Early season spraying is one cause of planthopper outbreaks, because the surviving hoppers multiply once nothing eats them."
     },
     {
       "type": "heading",
@@ -44,11 +44,11 @@
     },
     {
       "type": "text",
-      "text": "Walk each lot along a diagonal and check 10 hills spread across it. Count insects early in the morning, from 5 to 7, or late in the afternoon around 5, as PalayCheck advises. For planthoppers, tap each hill three times so they drop onto the water, then count them. Write the numbers down every week, so you judge the trend and not one bad day."
+      "text": "Walk each lot along a diagonal and check 10 hills spread across it. Count insects early in the morning, from 5 to 7, or late in the afternoon around 5. For planthoppers, tap each hill three times so they drop onto the water, then count them. Write the numbers down every week, so you judge the trend and not one bad day."
     },
     {
       "type": "table",
-      "caption": "Action thresholds for palay from PhilRice field advice, the PalayCheck System and IRRI. Always confirm with your local agriculturist.",
+      "caption": "Action thresholds for palay. Always confirm with your local agriculturist.",
       "rows": [
         [
           "Problem",
@@ -113,7 +113,7 @@
     },
     {
       "type": "text",
-      "text": "If you find no more than 1 brown planthopper per tiller, leave your sprayer in the shed. PhilRice treats 1 or more per tiller, or about 30 per hill, as a high count that calls for action. Even then, start by draining the field completely for about a week, then irrigate only as needed. From booting to ripening, PhilRice's field advice allows a recommended insecticide once counts reach about 25 per hill.\n\nIRRI adds one more check: if spiders, mirid bugs and other natural enemies outnumber the hoppers, do not spray, even with some hopperburn. For the long run, plant a resistant variety, keep nitrogen to the recommended rate and practice [alternate wetting and drying](/blog/alternate-wetting-and-drying). Avoid broadcast seeding while planthoppers are attacking your area. Our [brown planthopper](/pests/brown-planthopper) profile has the details."
+      "text": "If you find no more than 1 brown planthopper per tiller, leave your sprayer in the shed. A count of 1 or more per tiller, or about 30 per hill, is high and calls for action. Even then, start by draining the field completely for about a week, then irrigate only as needed. From booting to ripening, a recommended insecticide is allowed once counts reach about 25 per hill.\n\nAdd one more check: if spiders, mirid bugs and other natural enemies outnumber the hoppers, do not spray, even with some hopperburn. For the long run, plant a resistant variety, keep nitrogen to the recommended rate and practice [alternate wetting and drying](/blog/alternate-wetting-and-drying). Avoid broadcast seeding while planthoppers are attacking your area. Our [brown planthopper](/pests/brown-planthopper) profile has the details."
     },
     {
       "type": "heading",
@@ -122,7 +122,7 @@
     },
     {
       "type": "text",
-      "text": "At 5 or fewer black bugs per hill, spray the fungus Metarhizium anisopliae, a biological control. Above 5 per hill, a recommended insecticide becomes an option. First raise the water to about 15 cm so the bugs climb up the stems, then spray in cool weather while they sit on top of the plants.\n\nFlooding also works on the eggs. PhilRice found that eggs kept under water for more than 24 hours do not hatch, so keep water in the field from tillering to ripening. In heavy attacks, light traps with bright bulbs pull in huge numbers, best run around the full moon. Plow under any field the bugs have ruined right away. Read more on the [rice black bug](/pests/rice-black-bug)."
+      "text": "At 5 or fewer black bugs per hill, spray the fungus Metarhizium anisopliae, a biological control. Above 5 per hill, a recommended insecticide becomes an option. First raise the water to about 15 cm so the bugs climb up the stems, then spray in cool weather while they sit on top of the plants.\n\nFlooding also works on the eggs. Eggs kept under water for more than 24 hours do not hatch, so keep water in the field from tillering to ripening. In heavy attacks, light traps with bright bulbs pull in huge numbers, best run around the full moon. Plow under any field the bugs have ruined right away. Read more on the [rice black bug](/pests/rice-black-bug)."
     },
     {
       "type": "heading",
@@ -149,7 +149,7 @@
     },
     {
       "type": "text",
-      "text": "No spray cures bacterial leaf blight, and IRRI calls resistant varieties the cheapest and most reliable control. So the first steps are water and hygiene. Drain the field when you see infection, and never let water from a sick paddy flow into healthy ones. Do not walk from sick plants into healthy ones while the leaves are wet.\n\nPhilRice's field advice allows a copper based fungicide only when about 30 percent or more of the field shows the disease, and only if needed. Next season, plant a resistant variety and split your nitrogen, as our [bacterial leaf blight](/diseases/bacterial-leaf-blight) guide explains."
+      "text": "No spray cures bacterial leaf blight, and resistant varieties are the cheapest and most reliable control. So the first steps are water and hygiene. Drain the field when you see infection, and never let water from a sick paddy flow into healthy ones. Do not walk from sick plants into healthy ones while the leaves are wet.\n\nUse a copper based fungicide only when about 30 percent or more of the field shows the disease, and only if needed. Next season, plant a resistant variety and split your nitrogen, as our [bacterial leaf blight](/diseases/bacterial-leaf-blight) guide explains."
     },
     {
       "type": "heading",
@@ -158,7 +158,7 @@
     },
     {
       "type": "text",
-      "text": "Blast, or mata mata, shows as diamond shaped spots with grey centers and reddish brown edges. If leaf blast appears during tillering, protect the panicles. PhilRice advises a fungicide at the start of heading, then again when about half the panicles are out, to head off neck and panicle blast. Tricyclazole and pyroquilon are among the active ingredients it names.\n\nKeep the field irrigated, because blast strikes water short fields hardest, and avoid too much nitrogen. After harvest, plow under infected stubble right away so it rots fast. The [rice blast](/diseases/rice-blast) guide shows each form of the disease."
+      "text": "Blast, or mata mata, shows as diamond shaped spots with grey centers and reddish brown edges. If leaf blast appears during tillering, protect the panicles. Apply a fungicide at the start of heading, then again when about half the panicles are out, to head off neck and panicle blast. Tricyclazole and pyroquilon are among the usual active ingredients.\n\nKeep the field irrigated, because blast strikes water short fields hardest, and avoid too much nitrogen. After harvest, plow under infected stubble right away so it rots fast. The [rice blast](/diseases/rice-blast) guide shows each form of the disease."
     },
     {
       "type": "heading",
@@ -167,7 +167,7 @@
     },
     {
       "type": "text",
-      "text": "Golden apple snails eat young rice, so the danger runs from seedling to tillering. Keep the soil saturated but not flooded up to 15 DAT or 25 DAS, as PalayCheck advises. Snails cannot swim through mud to reach the seedlings, and a PhilRice study found this the most practical control.\n\nIf you still need a molluscicide, match the active ingredient to your water. Choose metaldehyde where water flows in strongly or sudden rain is likely, and niclosamide where water is scarce and no rain is expected. Apply it to a paddy with water, early in the morning or late in the afternoon. More on the [golden apple snail](/pests/golden-apple-snail)."
+      "text": "Golden apple snails eat young rice, so the danger runs from seedling to tillering. Keep the soil saturated but not flooded up to 15 DAT or 25 DAS. Snails cannot swim through mud to reach the seedlings, and a study found this the most practical control.\n\nIf you still need a molluscicide, match the active ingredient to your water. Choose metaldehyde where water flows in strongly or sudden rain is likely, and niclosamide where water is scarce and no rain is expected. Apply it to a paddy with water, early in the morning or late in the afternoon. More on the [golden apple snail](/pests/golden-apple-snail)."
     },
     {
       "type": "heading",
@@ -214,7 +214,7 @@
         },
         {
           "q": "Should I spray insecticide to prevent pests?",
-          "a": "No. PalayCheck treats insecticide as a last resort, for when cultural, biological and physical controls fail. A spray with no pest to hit only kills the natural enemies that keep planthoppers down."
+          "a": "No. Insecticide is a last resort, for when cultural, biological and physical controls fail. A spray with no pest to hit only kills the natural enemies that keep planthoppers down."
         },
         {
           "q": "What time of day is best for spraying rice?",

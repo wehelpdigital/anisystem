@@ -16,7 +16,7 @@
     "PalayCheck Tagalog",
     "ask in Tagalog"
   ],
-  "excerpt": "anee.io is the closest thing to a full Tagalog farm app today: Anee, its smart farm technician, answers in Tagalog, Bisaya, Ilocano, Taglish or English, and she reads your own lots, crop stage and weather before she answers. The menus of anee.io are in plain English, so you tap in English and talk in your own language. For rice, PhilRice also publishes its PalayCheck guide in Tagalog, as Sistemang PalayCheck.",
+  "excerpt": "anee.io is the closest thing to a full Tagalog farm app today: Anee, its smart farm technician, answers in Tagalog, Bisaya, Ilocano, Taglish or English, and she reads your own lots, crop stage and weather before she answers. The menus of anee.io are in plain English, so you tap in English and talk in your own language. For rice, the PalayCheck guide also comes in Tagalog, as Sistemang PalayCheck.",
   "heroImage": {
     "src": "/images/site/guides/blog-tagalog-farm-app.webp",
     "alt": "A farmer in Guiguinto, Bulacan, drags palay seedlings on a tarp across a flooded paddy, the kind of grower a Tagalog farm app is for",
@@ -33,7 +33,7 @@
       "items": [
         "Few farm apps are fully in Tagalog. Most mix English screens with Filipino guides or chat.",
         "In anee.io, the menus are in plain English, and Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English.",
-        "PhilRice publishes its PalayCheck guide in Tagalog, and describes its rice apps in Filipino.",
+        "The PalayCheck guide comes in Tagalog, and several rice apps are described in Filipino.",
         "Anee uses credits. She comes with Libre + Anee for PHP 70 a month and with every paid plan."
       ]
     },
@@ -144,7 +144,7 @@
     },
     {
       "type": "text",
-      "text": "Besides Anee, several trusted sources already write for farmers in Filipino and other Philippine languages. Use them side by side."
+      "text": "Besides Anee, several free guides already speak to farmers in Filipino and other Philippine languages. Use them side by side."
     },
     {
       "type": "table",
@@ -156,17 +156,17 @@
           "What it covers"
         ],
         [
-          "Sistemang PalayCheck, PhilRice",
+          "Sistemang PalayCheck",
           "Tagalog",
-          "The PhilRice rice crop management system, key check by key check"
+          "A rice crop management system, key check by key check"
         ],
         [
-          "PhilRice Rice Apps page",
+          "A rice apps page",
           "Descriptions in Filipino",
           "Binhing Palay, PalayCheck, MOET, LCC and Rice Crop Manager apps"
         ],
         [
-          "ATI guide to lowland vegetables",
+          "A guide to lowland vegetables",
           "Tagalog",
           "Ampalaya, kalabasa, kamatis, mustasa, okra, patola, sili, sitaw and talong"
         ],
@@ -243,7 +243,7 @@
       "items": [
         {
           "q": "Is there a farm app in Tagalog?",
-          "a": "Fully translated farm apps are rare. In anee.io, the menus are in plain English, while Anee, its smart farm technician, answers in Tagalog, Bisaya, Ilocano, Taglish or English. PhilRice also publishes its PalayCheck guide in Tagalog."
+          "a": "Fully translated farm apps are rare. In anee.io, the menus are in plain English, while Anee, its smart farm technician, answers in Tagalog, Bisaya, Ilocano, Taglish or English. The PalayCheck guide also comes in Tagalog."
         },
         {
           "q": "Can Anee answer in Bisaya or Ilocano?",
@@ -259,7 +259,7 @@
         },
         {
           "q": "Where can I read farm guides in Tagalog?",
-          "a": "Try Sistemang PalayCheck from PhilRice, the ATI guide to lowland vegetables, and the Tagalog guides on anee.io, such as Pagtatanim ng Palay and Pagtatanim ng Gulay."
+          "a": "Try Sistemang PalayCheck, a Tagalog guide to lowland vegetables, and the Tagalog guides on anee.io, such as Pagtatanim ng Palay and Pagtatanim ng Gulay."
         }
       ]
     },

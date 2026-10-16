@@ -6,14 +6,14 @@
   "category": "Planning",
   "title": "What Crop to Plant This Season in the Philippines",
   "metaTitle": "What Crop to Plant This Season: 6 Checks for Your Farm",
-  "metaDescription": "Not sure what crop to plant this season? Weigh your water, the El Nino outlook, soil, market, cash and labor, plus crops PhilRice suggests for dry years.",
+  "metaDescription": "Not sure what crop to plant this season? Weigh your water, the El Nino outlook, soil, market, cash and labor, plus crops that suit dry years.",
   "focusKeyword": "what crop to plant this season",
   "keywords": [
     "what crop to plant this season",
     "crops for El Nino",
     "Palayamanan"
   ],
-  "excerpt": "What crop to plant this season comes down to six checks: water, the season ahead, soil, market, cash and labor. For the coming dry season, PAGASA expects a strong El Nino that may last until mid 2027. So on fields without sure irrigation, low water crops such as munggo deserve a hard look. The What to Plant Analysis in anee.io, run by Anee, weighs your climate, forecast, soil and water to rank the crops for your land.",
+  "excerpt": "What crop to plant this season comes down to six checks: water, the season ahead, soil, market, cash and labor. For the coming dry season, a strong El Nino is forecast that may last until mid 2027. So on fields without sure irrigation, low water crops such as munggo deserve a hard look. The What to Plant Analysis in anee.io, run by Anee, weighs your climate, forecast, soil and water to rank the crops for your land.",
   "heroImage": {
     "src": "/images/site/guides/blog-what-crop-to-plant-this-season.webp",
     "alt": "A munggo field near harvest in San Mateo, Isabela, one answer to what crop to plant this season in a dry year",
@@ -22,7 +22,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Many farmers plant palay every season out of habit. Yet PhilRice itself promotes Palayamanan Plus, which mixes rice with vegetables, other crops and livestock, and returns straw and hull to the soil. The right crop for your field this season may still be rice. The point is to choose it on purpose, after checking what the season will give you."
+      "text": "Many farmers plant palay every season out of habit. Yet the Palayamanan Plus system mixes rice with vegetables, other crops and livestock, and returns straw and hull to the soil. The right crop for your field this season may still be rice. The point is to choose it on purpose, after checking what the season will give you."
     },
     {
       "type": "heading",
@@ -35,7 +35,7 @@
       "items": [
         "Start with water. A crop that runs dry halfway loses more than a cheaper crop that finishes.",
         "Read the PAGASA ENSO alert. As of 7 October 2026, a strong to very strong El Nino is present.",
-        "In a dry year, PhilRice names munggo, root crops and high value cucurbits as options where water is short.",
+        "In a dry year, munggo, root crops and high value cucurbits are options where water is short.",
         "Check the buyer and the price before you plant, not after you harvest."
       ]
     },
@@ -96,15 +96,15 @@
     },
     {
       "type": "text",
-      "text": "PhilRice's question and answer guide on El Nino lists what farmers can plant when water is short. Here is the gist of it."
+      "text": "Here is what farmers can plant when water is short in an El Nino year."
     },
     {
       "type": "table",
-      "caption": "Crop options PhilRice gives for El Nino",
+      "caption": "Crop options for El Nino",
       "rows": [
         [
           "Crop",
-          "What PhilRice says about it"
+          "Why it fits"
         ],
         [
           "Munggo (mung bean)",
@@ -130,7 +130,7 @@
     },
     {
       "type": "text",
-      "text": "At PhilRice's Lakbay Palay field day in September 2026, farmers' groups also set their El Nino priorities. These included drought tolerant varieties such as NSIC Rc 480, crop insurance, rainwater harvesting and small irrigation pumps.\n\nCorn is another choice after rice where the field drains well. Our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais) covers its season, and [legume land preparation](/land-preparation/legume-land-preparation) covers munggo and peanut beds."
+      "text": "At the Lakbay Palay field day in September 2026, farmers' groups also set their El Nino priorities. These included drought tolerant varieties such as NSIC Rc 480, crop insurance, rainwater harvesting and small irrigation pumps.\n\nCorn is another choice after rice where the field drains well. Our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais) covers its season, and [legume land preparation](/land-preparation/legume-land-preparation) covers munggo and peanut beds."
     },
     {
       "type": "heading",
@@ -139,7 +139,7 @@
     },
     {
       "type": "text",
-      "text": "In a wet year, low fields stay with rice. PhilRice advises flood tolerant varieties such as NSIC Rc194 (Submarino 1), repaired dikes and canals, and drainage after heavy rain. Vegetables in a wet season need raised ground and good drainage, as our guide to [vegetables in the Philippines](/crops/vegetables-philippines) explains."
+      "text": "In a wet year, low fields stay with rice. The usual advice is flood tolerant varieties such as NSIC Rc194 (Submarino 1), repaired dikes and canals, and drainage after heavy rain. Vegetables in a wet season need raised ground and good drainage, as our guide to [vegetables in the Philippines](/crops/vegetables-philippines) explains."
     },
     {
       "type": "callout",
@@ -161,7 +161,7 @@
         },
         {
           "title": "Find the cost per hectare",
-          "text": "Use a production guide with a cost and return table. For example, the BPI ampalaya guide lists a total cost of PHP 132,480 per hectare, with its own price assumptions."
+          "text": "Use a production guide with a cost and return table. For example, one ampalaya guide puts the total cost at PHP 132,480 per hectare, with its own price assumptions."
         },
         {
           "title": "Check the days to first sale",
@@ -203,11 +203,11 @@
       "items": [
         {
           "q": "What is the most profitable crop to plant in the Philippines?",
-          "a": "No crop is the most profitable everywhere. Profit depends on your yield, your price and your costs, which change by place and season. Compare crops with cost and return tables, such as those in the BPI production guides, then check them against your own water and market."
+          "a": "No crop is the most profitable everywhere. Profit depends on your yield, your price and your costs, which change by place and season. Compare crops with cost and return tables, such as those in crop production guides, then check them against your own water and market."
         },
         {
           "q": "What should I plant after rice in the dry season?",
-          "a": "Where irrigation is short, PhilRice suggests munggo, which lives on little water, or vegetables in place of a second rice crop. Root crops such as kamote and kamoteng kahoy also survive dry spells. Where water is sure, a second rice crop with an early or drought tolerant variety is still an option."
+          "a": "Where irrigation is short, try munggo, which lives on little water, or vegetables in place of a second rice crop. Root crops such as kamote and kamoteng kahoy also survive dry spells. Where water is sure, a second rice crop with an early or drought tolerant variety is still an option."
         },
         {
           "q": "Is it better to plant rice or vegetables this season?",
@@ -215,7 +215,7 @@
         },
         {
           "q": "How do I know if El Nino will affect my area?",
-          "a": "Check the PAGASA ENSO alert and its seasonal outlook for your province. As of 7 October 2026, PAGASA says a strong to very strong El Nino is present and may last until the first half of 2027."
+          "a": "Check the PAGASA ENSO alert and its seasonal outlook for your province. As of 7 October 2026, a strong to very strong El Nino is present and may last until the first half of 2027."
         },
         {
           "q": "Can an app tell me what crop to plant?",

@@ -30,7 +30,7 @@
       "items": [
         "Growth enhancers include biostimulants, foliar fertilizers, biofertilizers and plant growth regulators, and each works differently.",
         "None of them replaces urea, complete or potash, because leaves cannot take in a season's worth of NPK.",
-        "In PhilRice trials, biostimulants added to inorganic fertilizer gave high yields, and two products cut fertilizer use by 25 to 50 percent.",
+        "In field trials, biostimulants added to inorganic fertilizer gave high yields, and two products cut fertilizer use by 25 to 50 percent.",
         "A review of 180 field studies found an average gain of 17.9 percent, but mostly on poor soils and stressed crops.",
         "Buy only FPA registered products, then test one strip against a check strip before you spray the whole farm."
       ]
@@ -55,7 +55,7 @@
         ],
         [
           "Biostimulant",
-          "Seaweed extract, amino acids, humic substances and the like. FAO says it works apart from its nutrient content",
+          "Seaweed extract, amino acids, humic substances and the like. It works apart from its nutrient content",
           "Help the plant use nutrients better or cope with stress such as drought"
         ],
         [
@@ -86,7 +86,7 @@
     },
     {
       "type": "text",
-      "text": "The honest answer is sometimes, by a modest amount, under the right conditions.\n\nPhilRice ran a derby of biostimulants and biofertilizers, mostly from private companies, for three to four seasons. Combined with inorganic fertilizer, the three best products gave 6.35 to 7 tons per hectare, while the other entries averaged 5.83 to 6.25 tons. All three did best in the dry season, at 7.91 tons on average, and fell to 5.22 tons in the wet season. Two of them let farmers cut inorganic fertilizer by 25 to 50 percent. The products cost PHP 900 to 6,900 per hectare, depending on the number of sprays.\n\nThe PhilRice report gives no yield for inorganic fertilizer alone. So it shows the products can sit in a high yielding program, not how many cavans the products themselves added."
+      "text": "The honest answer is sometimes, by a modest amount, under the right conditions.\n\nA derby tested biostimulants and biofertilizers, mostly from private companies, for three to four seasons. Combined with inorganic fertilizer, the three best products gave 6.35 to 7 tons per hectare, while the other entries averaged 5.83 to 6.25 tons. All three did best in the dry season, at 7.91 tons on average, and fell to 5.22 tons in the wet season. Two of them let farmers cut inorganic fertilizer by 25 to 50 percent. The products cost PHP 900 to 6,900 per hectare, depending on the number of sprays.\n\nThe derby report gives no yield for inorganic fertilizer alone. So it shows the products can sit in a high yielding program, not how many cavans the products themselves added."
     },
     {
       "type": "text",
@@ -99,7 +99,7 @@
     },
     {
       "type": "text",
-      "text": "A 5 ton palay crop takes up about 80 kg of nitrogen and 95 kg of potash, by IRRI's count. A foliar fertilizer spray adds grams of nutrient per hectare, not kilos, as our [foliar fertilizer](/blog/foliar-fertilizer) guide works out. Leaves also take in only part of what lands on them. So the nitrogen, phosphorus and potassium still have to come from the soil, the bags and the straw. Our guide to [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) shows that base program."
+      "text": "A 5 ton palay crop takes up about 80 kg of nitrogen and 95 kg of potash. A foliar fertilizer spray adds grams of nutrient per hectare, not kilos, as our [foliar fertilizer](/blog/foliar-fertilizer) guide works out. Leaves also take in only part of what lands on them. So the nitrogen, phosphorus and potassium still have to come from the soil, the bags and the straw. Our guide to [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) shows that base program."
     },
     {
       "type": "heading",
@@ -192,7 +192,7 @@
     },
     {
       "type": "text",
-      "text": "We do not rank or review brands. Many companies sell foliar fertilizer and growth enhancers in the Philippines, and the FPA lists show every registered product with its type and analysis. Compare products by what is in them and what they cost per hectare, not by the name on the bottle.\n\nFor reviews, trust trials over testimonials. A PhilRice or university trial with a check plot counts, and so does your own strip test. Ask your municipal agriculturist which products local trials have tested. Before any fertilizer spray, also check the forecast, as our page on [rain before spraying](/blog/rain-before-spraying) explains."
+      "text": "We do not rank or review brands. Many companies sell foliar fertilizer and growth enhancers in the Philippines, and the FPA lists show every registered product with its type and analysis. Compare products by what is in them and what they cost per hectare, not by the name on the bottle.\n\nFor reviews, trust trials over testimonials. A research trial with a check plot counts, and so does your own strip test. Ask your municipal agriculturist which products local trials have tested. Before any fertilizer spray, also check the forecast, as our page on [rain before spraying](/blog/rain-before-spraying) explains."
     },
     {
       "type": "heading",
@@ -204,11 +204,11 @@
       "items": [
         {
           "q": "Do biostimulants work on rice?",
-          "a": "They can, modestly. In PhilRice trials, biostimulants paired with inorganic fertilizer gave high yields, and some cut fertilizer use, but results changed with the season. A fair strip test on your own field is the best proof."
+          "a": "They can, modestly. In field trials, biostimulants paired with inorganic fertilizer gave high yields, and some cut fertilizer use, but results changed with the season. A fair strip test on your own field is the best proof."
         },
         {
           "q": "Can a foliar fertilizer replace urea?",
-          "a": "No. A 5 ton palay crop takes up about 80 kg of nitrogen by IRRI's count, and leaves cannot absorb that much. Use foliar sprays only to top up a soil program."
+          "a": "No. A 5 ton palay crop takes up about 80 kg of nitrogen, and leaves cannot absorb that much. Use foliar sprays only to top up a soil program."
         },
         {
           "q": "Are plant growth regulators safe to use?",

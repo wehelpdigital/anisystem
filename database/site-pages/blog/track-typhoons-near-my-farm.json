@@ -16,7 +16,7 @@
     "typhoon preparation",
     "super typhoon"
   ],
-  "excerpt": "To track typhoons that may hit your farm, follow PAGASA's tropical cyclone bulletins and wind signals, and use a storm map that shows each storm's track, its cone and its distance from your field. Start early, because PAGASA's Wind Signal Number 1 gives about 36 hours of warning and higher signals give less. The farm app anee.io, built for Filipino farmers, has Satellite Weather, which shows every typhoon's path and how far it is from your lots.",
+  "excerpt": "To track typhoons that may hit your farm, follow PAGASA's tropical cyclone bulletins and wind signals, and use a storm map that shows each storm's track, its cone and its distance from your field. Start early, because Wind Signal Number 1 gives about 36 hours of warning and higher signals give less. The farm app anee.io, built for Filipino farmers, has Satellite Weather, which shows every typhoon's path and how far it is from your lots.",
   "heroImage": {
     "src": "/images/site/guides/blog-track-typhoons-near-my-farm.webp",
     "alt": "A satellite picture of a large typhoon with a clear eye covering Luzon in November 2024, the kind of storm farmers track",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Typhoons are part of every farm season in the Philippines. PAGASA counts an average of 20 tropical cyclones in its area of responsibility each year, and about 8 or 9 of them cross the country. The peak runs from July through October, right when much of the wet season palay is flowering or ripening.\n\nA storm warning on the radio tells you a typhoon is coming. To protect a crop, you need more: when the worst reaches your own barangay, how strong it will be, and whether your field is ready to harvest. That is what it means to track typhoons as a farmer."
+      "text": "Typhoons are part of every farm season in the Philippines. An average of 20 tropical cyclones enter the Philippine area of responsibility each year, and about 8 or 9 of them cross the country. The peak runs from July through October, right when much of the wet season palay is flowering or ripening.\n\nA storm warning on the radio tells you a typhoon is coming. To protect a crop, you need more: when the worst reaches your own barangay, how strong it will be, and whether your field is ready to harvest. That is what it means to track typhoons as a farmer."
     },
     {
       "type": "heading",
@@ -50,11 +50,11 @@
     },
     {
       "type": "text",
-      "text": "PAGASA's Tropical Cyclone Wind Signals warn of winds of at least 39 km/h. Each level comes with a lead time and a list of likely impacts, including on rice and bananas. The table keeps the farm parts of that list."
+      "text": "The Tropical Cyclone Wind Signals warn of winds of at least 39 km/h. Each level comes with a lead time and a list of likely impacts, including on rice and bananas. The table keeps the farm parts of that list."
     },
     {
       "type": "table",
-      "caption": "Tropical Cyclone Wind Signals and their likely effect on crops, from PAGASA",
+      "caption": "Tropical Cyclone Wind Signals and their likely effect on crops",
       "rows": [
         [
           "Signal",
@@ -151,9 +151,9 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Ripe palay.** PalayCheck says to harvest when 85 to 90 percent of the grains are golden for hand harvest, or 90 to 95 percent for a combine. Thresh within one day in the wet season, and do not pile the cut crop in the field for more than a day.",
-        "**Palay almost ripe.** Harvesting too early gives immature grain, and PalayCheck warns that milling recovery can drop as low as 53 percent. Weigh that loss against the storm's strength and distance.",
-        "**Flowering rice.** There is little to do except keep drains open, since PAGASA lists flowering and ripening rice as the most exposed.",
+        "**Ripe palay.** Harvest when 85 to 90 percent of the grains are golden for hand harvest, or 90 to 95 percent for a combine. Thresh within one day in the wet season, and do not pile the cut crop in the field for more than a day.",
+        "**Palay almost ripe.** Harvesting too early gives immature grain, and milling recovery can drop as low as 53 percent. Weigh that loss against the storm's strength and distance.",
+        "**Flowering rice.** There is little to do except keep drains open, since flowering and ripening rice are the most exposed.",
         "**Young crops.** Clear the canals and outlets so floodwater leaves fast.",
         "**Harvested grain and inputs.** Move palay and fertilizer sacks off the floor to a dry, covered place."
       ]
@@ -207,11 +207,11 @@
         },
         {
           "q": "How many typhoons reach the Philippines each year?",
-          "a": "PAGASA counts an average of 20 tropical cyclones in its area of responsibility each year. About 8 or 9 of them cross the country, and the peak runs from July through October."
+          "a": "An average of 20 tropical cyclones enter the Philippine area of responsibility each year. About 8 or 9 of them cross the country, and the peak runs from July through October."
         },
         {
           "q": "What is the difference between a typhoon and a super typhoon?",
-          "a": "PAGASA calls a tropical cyclone a typhoon at 118 to 184 km/h of sustained wind. Above 185 km/h, it becomes a super typhoon, and Signal 5 covers those winds."
+          "a": "A tropical cyclone is a typhoon at 118 to 184 km/h of sustained wind. Above 185 km/h, it becomes a super typhoon, and Signal 5 covers those winds."
         },
         {
           "q": "How early should I harvest before a typhoon?",

@@ -6,7 +6,7 @@
   "category": "Yield and Fertilizer",
   "title": "Rice Fertilizer Schedule by Target Yield, in Bags per Hectare",
   "metaTitle": "Rice Fertilizer Schedule: Bags per Hectare by Target Yield",
-  "metaDescription": "A rice fertilizer schedule for palay with no soil test: the bags per hectare and the day of each dose for 3 to 8 tons, by variety maturity, from PhilRice.",
+  "metaDescription": "A rice fertilizer schedule for palay with no soil test: the bags per hectare and the day of each dose for 3 to 8 tons, by variety maturity.",
   "focusKeyword": "rice fertilizer schedule",
   "keywords": [
     "rice fertilizer schedule",
@@ -17,7 +17,7 @@
     "hybrid rice fertilizer",
     "14 14 14 fertilizer"
   ],
-  "excerpt": "A rice fertilizer schedule tells you what to apply, how many 50 kg bags per hectare, and on which day. The plan below is PhilRice's general recommendation for fields with no soil test. Pick the table for your target yield and the column for your variety's maturity. Then count the days from transplanting (DAT) or sowing (DAS).",
+  "excerpt": "A rice fertilizer schedule tells you what to apply, how many 50 kg bags per hectare, and on which day. The plan below is the general recommendation for fields with no soil test. Pick the table for your target yield and the column for your variety's maturity. Then count the days from transplanting (DAT) or sowing (DAS).",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-rice.webp",
     "alt": "A farmer broadcasting fertilizer by hand over a young green paddy, one dose in a rice fertilizer schedule",
@@ -35,7 +35,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI's Rice Knowledge Bank explains that the yield you aim for sets how much nutrient the crop must take up. So pick a target you have reached before on the same field, not the best harvest you have heard about. Then check the seed bag for the variety's days to maturity, or look it up in our [rice varieties](/rice-varieties) finder.\n\nPhilRice sets three targets for inbred rice: 3 to 4, 5 to 6 and 7 to 8 tons per hectare. Hybrid rice gets its own plan for 6 to 7 tons. Each target then splits by maturity into 100 to 110 days, 111 to 120 days and 121 to 130 days. Longer varieties get their top dressings later, because they reach tillering and panicle initiation later."
+      "text": "The yield you aim for sets how much nutrient the crop must take up. So pick a target you have reached before on the same field, not the best harvest you have heard about. Then check the seed bag for the variety's days to maturity, or look it up in our [rice varieties](/rice-varieties) finder.\n\nThe plan sets three targets for inbred rice: 3 to 4, 5 to 6 and 7 to 8 tons per hectare. Hybrid rice gets its own plan for 6 to 7 tons. Each target then splits by maturity into 100 to 110 days, 111 to 120 days and 121 to 130 days. Longer varieties get their top dressings later, because they reach tillering and panicle initiation later."
     },
     {
       "type": "heading",
@@ -48,7 +48,7 @@
     },
     {
       "type": "table",
-      "caption": "Steps before and around sowing, per hectare, from PhilRice's general plan",
+      "caption": "Steps before and around sowing, per hectare, from the general plan",
       "rows": [
         [
           "Step",
@@ -89,7 +89,7 @@
     },
     {
       "type": "text",
-      "text": "Add zinc only where the soil lacks it. PalayCheck describes the sign: dusty brown spots on the upper leaves of stunted plants, 2 to 4 weeks after transplanting. For a mild shortage, it puts 0.5 kg of zinc sulfate on a 400 square meter seedbed. A severe one gets 2 kg. Our page on [micronutrients for rice](/blog/micronutrients-for-rice) covers zinc in full."
+      "text": "Add zinc only where the soil lacks it. The sign is dusty brown spots on the upper leaves of stunted plants, 2 to 4 weeks after transplanting. For a mild shortage, use 0.5 kg of zinc sulfate on a 400 square meter seedbed. A severe one gets 2 kg. Our page on [micronutrients for rice](/blog/micronutrients-for-rice) covers zinc in full."
     },
     {
       "type": "heading",
@@ -288,7 +288,7 @@
       "ordered": false,
       "items": [
         "Mix the basal dose into the mud during the final harrowing or by 14 DAT, so it sits where the young roots grow.",
-        "Keep the first dose light on nitrogen. PalayCheck puts only about 30 percent of the season's nitrogen in the first application.",
+        "Keep the first dose light on nitrogen. Only about 30 percent of the season's nitrogen goes in the first application.",
         "Top dress into a shallow 2 to 3 cm of water, and close the outlets so the fertilizer stays in your paddy.",
         "Spread in the afternoon, after 3 PM, because cooler air means less nitrogen lost as gas.",
         "If you practice [alternate wetting and drying](/blog/alternate-wetting-and-drying), pause it on fertilizer days."
@@ -297,8 +297,8 @@
     {
       "type": "callout",
       "tone": "info",
-      "title": "Why some PhilRice lists show fewer bags",
-      "text": "PhilRice's 2022 Abonong Swak news release prints the same 5 to 6 ton plan, but its other two are lighter. Its 3 to 4 ton plan uses 1 bag of 14 14 14. Its 7 to 8 ton plan uses 2 bags of 14 14 14 and half a bag of potash. It also dates the manure at 14 days after transplanting instead of before. Both are general plans, so treat the gap as one more reason to test your soil. Our page on [bags of fertilizer per hectare](/blog/bags-of-fertilizer-per-hectare) compares them with the Nueva Ecija quick guide."
+      "title": "Why some lists show fewer bags",
+      "text": "The 2022 Abonong Swak plans have the same 5 to 6 ton plan, but the other two are lighter. Their 3 to 4 ton plan uses 1 bag of 14 14 14. Their 7 to 8 ton plan uses 2 bags of 14 14 14 and half a bag of potash. They also date the manure at 14 days after transplanting instead of before. Both are general plans, so treat the gap as one more reason to test your soil. Our page on [bags of fertilizer per hectare](/blog/bags-of-fertilizer-per-hectare) compares them with the Nueva Ecija quick guide."
     },
     {
       "type": "heading",
@@ -330,7 +330,7 @@
       "items": [
         {
           "q": "What is the fertilizer schedule for 5 to 6 tons of palay?",
-          "a": "PhilRice's general plan uses 2 bags of 14 14 14 or 16 20 0 per hectare by 14 DAT. Then comes 1 bag of urea between 18 and 31 DAT. The last dose, 1 bag of urea with half a bag of 0 0 60, lands between 28 and 40 DAT. The exact days follow your variety's maturity."
+          "a": "The general plan uses 2 bags of 14 14 14 or 16 20 0 per hectare by 14 DAT. Then comes 1 bag of urea between 18 and 31 DAT. The last dose, 1 bag of urea with half a bag of 0 0 60, lands between 28 and 40 DAT. The exact days follow your variety's maturity."
         },
         {
           "q": "Can I use this schedule for direct seeded rice?",

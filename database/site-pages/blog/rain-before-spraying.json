@@ -16,7 +16,7 @@
     "product label",
     "spray day"
   ],
-  "excerpt": "Read the hourly forecast for your farm's exact location the evening before and again that morning, and spray only if no rain is expected for the dry period your product label asks for. FAO guidance says most products survive a shower 2 hours after spraying without a respray, but the label decides. The farm app anee.io, built for Filipino farmers, shows the forecast beside your plan and flags a spray task that falls on a rainy day, so you can move it before you mix.",
+  "excerpt": "Read the hourly forecast for your farm's exact location the evening before and again that morning, and spray only if no rain is expected for the dry period your product label asks for. Most products survive a shower 2 hours after spraying without a respray, but the label decides. The farm app anee.io, built for Filipino farmers, shows the forecast beside your plan and flags a spray task that falls on a rainy day, so you can move it before you mix.",
   "heroImage": {
     "src": "/images/site/guides/blog-rain-before-spraying.webp",
     "alt": "A farmer sprays young rice against pests at dawn under a few clouds, a calm hour to check for rain before spraying",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "A shower that comes too soon after a spray washes much of it off the leaves. Then you pay twice: once for the first tank and again for the respray, plus the labor. A herbicide can also wash into the paddy water and drift to the lots nearby. So a check for rain before spraying matters as much as picking the right product.\n\nThe dry time a product needs is called rainfastness. Ohio State University Extension defines it as the time needed between an application and a rain event for the product to keep its effect. It depends on the product, its formulation, any sticker or surfactant, and the weather at the time."
+      "text": "A shower that comes too soon after a spray washes much of it off the leaves. Then you pay twice: once for the first tank and again for the respray, plus the labor. A herbicide can also wash into the paddy water and drift to the lots nearby. So a check for rain before spraying matters as much as picking the right product.\n\nThe dry time a product needs is called rainfastness. It is the time needed between an application and a rain event for the product to keep its effect. It depends on the product, its formulation, any sticker or surfactant, and the weather at the time."
     },
     {
       "type": "heading",
@@ -37,9 +37,9 @@
       "ordered": false,
       "items": [
         "The product label is the first place to look for the rainfast period.",
-        "FAO's guidelines say a shower 2 hours after treatment does not call for a respray with most products, though some need longer.",
+        "A shower 2 hours after treatment does not call for a respray with most products, though some need longer.",
         "Read the hourly forecast for your farm, the night before and again in the morning.",
-        "Wind matters too. FAO calls 3 to 7 km/h, when leaves rustle, the ideal for spraying.",
+        "Wind matters too. The ideal for spraying is 3 to 7 km/h, when leaves rustle.",
         "Spray on a dry canopy, because dew slows how fast a spray becomes rainfast."
       ]
     },
@@ -50,7 +50,7 @@
     },
     {
       "type": "text",
-      "text": "There is no single number. The FAO guidelines on ground application say rainfastness information can usually be found on the label. They add that for most products, showers 2 hours after treatment will not need a respray. Treat that as the general rule, and the label as the law.\n\nConditions in the field change the answer. In an Ohio State test, a wheat fungicide applied before infection was rainfast after 15 minutes under dry conditions. In the field, with dew on the wheat heads, it took about 60 minutes. The authors warn not to apply those numbers to other products, but the lesson travels: a dry canopy helps, so let the dew lift first."
+      "text": "There is no single number. Rainfastness information can usually be found on the label. For most products, showers 2 hours after treatment will not need a respray. Treat that as the general rule, and the label as the law.\n\nConditions in the field change the answer. In one test, a wheat fungicide applied before infection was rainfast after 15 minutes under dry conditions. In the field, with dew on the wheat heads, it took about 60 minutes. The authors warn not to apply those numbers to other products, but the lesson travels: a dry canopy helps, so let the dew lift first."
     },
     {
       "type": "heading",
@@ -59,11 +59,11 @@
     },
     {
       "type": "text",
-      "text": "Rain is only one part of the spray decision. The FAO guide also covers wind, heat and humidity, because they decide where the droplets land."
+      "text": "Rain is only one part of the spray decision. Wind, heat and humidity count too, because they decide where the droplets land."
     },
     {
       "type": "table",
-      "caption": "Weather check before you spray, after the FAO guidelines on ground application of pesticides",
+      "caption": "Weather check before you spray",
       "rows": [
         [
           "Condition",
@@ -132,7 +132,7 @@
         },
         {
           "title": "Write it down",
-          "text": "Note the time, the product, the rate and the weather at and after spraying, as the FAO spray record suggests."
+          "text": "Note the time, the product, the rate and the weather at and after spraying."
         }
       ]
     },
@@ -186,7 +186,7 @@
       "items": [
         {
           "q": "How many dry hours do I need after spraying?",
-          "a": "Look at the product label first, because it gives the rainfast period. FAO guidelines say most products survive a shower 2 hours after treatment without a respray. Some products need longer, so the label decides."
+          "a": "Look at the product label first, because it gives the rainfast period. Most products survive a shower 2 hours after treatment without a respray. Some products need longer, so the label decides."
         },
         {
           "q": "What should I do if it rains right after I spray?",
@@ -194,7 +194,7 @@
         },
         {
           "q": "Is morning or afternoon better for spraying?",
-          "a": "Avoid the hottest, driest hours, because FAO notes that heat and low humidity shrink droplets and raise drift. Also wait for the morning dew to dry, since a wet canopy slows rainfastness. Read the label for any time of day it sets."
+          "a": "Avoid the hottest, driest hours, because heat and low humidity shrink droplets and raise drift. Also wait for the morning dew to dry, since a wet canopy slows rainfastness. Read the label for any time of day it sets."
         },
         {
           "q": "Can a weather app tell me exactly when rain will start?",
@@ -202,7 +202,7 @@
         },
         {
           "q": "What wind speed is safe for spraying?",
-          "a": "FAO calls 3 to 7 km/h ideal, when leaves rustle and you feel the wind on your face. Do not spray in dead calm or in stronger wind, and avoid herbicides once leaves are in constant motion."
+          "a": "The ideal is 3 to 7 km/h, when leaves rustle and you feel the wind on your face. Do not spray in dead calm or in stronger wind, and avoid herbicides once leaves are in constant motion."
         }
       ]
     },

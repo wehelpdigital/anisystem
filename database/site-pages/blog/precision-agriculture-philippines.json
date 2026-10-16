@@ -37,7 +37,7 @@
       "ordered": false,
       "items": [
         "Precision agriculture is an idea, not a machine: measure, then match the inputs to the need.",
-        "For rice, PhilRice already teaches precision tools: the leaf color chart, the MOET App and the Rice Crop Manager Advisory Service.",
+        "For rice, there are already precision tools: the leaf color chart, the MOET App and the Rice Crop Manager Advisory Service.",
         "Timing each lot by its own day count is precision too, because lots planted a week apart need their fertilizer a week apart.",
         "Satellites and drones add a view from above, but they are optional on small farms.",
         "Records close the loop, because they show which change paid off."
@@ -50,7 +50,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice's PalayCheck System names the tools to set the right amount of nitrogen, phosphorus and potassium. These are the leaf color chart or its app, the MOET kit and app, the Nutrient Omission Plot Technique and the Rice Crop Manager Advisory Service. Each one measures your field instead of trusting a general rate."
+      "text": "Four tools help set the right amount of nitrogen, phosphorus and potassium for rice. These are the leaf color chart or its app, the MOET kit and app, the Nutrient Omission Plot Technique and the Rice Crop Manager Advisory Service. Each one measures your field instead of trusting a general rate."
     },
     {
       "type": "table",
@@ -66,19 +66,19 @@
           "Leaf color chart or LCC App",
           "When rice needs nitrogen, from leaf color",
           "Low",
-          "PhilRice, part of PalayCheck"
+          "A plastic chart or a phone app"
         ],
         [
           "MOET kit and MOET App",
           "Which nutrients your soil lacks, from a pot test",
           "Low",
-          "PhilRice, part of PalayCheck"
+          "A pot test kit and a phone app"
         ],
         [
           "Rice Crop Manager Advisory Service",
           "A nutrient and crop guide for one field",
-          "Free when PhilRice launched it",
-          "IRRI with PhilRice"
+          "Free at launch",
+          "A web service"
         ],
         [
           "Soil test",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "The leaf color chart shows how simple precision can be. PalayCheck says to read it every 7 days from 14 DAT or 21 DAS until early flowering. Apply nitrogen only when 6 or more of 10 leaves read below 4 in transplanted rice. So the nitrogen follows the crop, not the calendar. Our guide on [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice) shows what a hungry crop looks like."
+      "text": "The leaf color chart shows how simple precision can be. Read it every 7 days from 14 DAT or 21 DAS until early flowering. Apply nitrogen only when 6 or more of 10 leaves read below 4 in transplanted rice. So the nitrogen follows the crop, not the calendar. Our guide on [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice) shows what a hungry crop looks like."
     },
     {
       "type": "heading",
@@ -157,7 +157,7 @@
     },
     {
       "type": "text",
-      "text": "No. They help on large farms, but small farms get most of the gain from the steps above. Our guide to [farm sensors in the Philippines](/blog/farm-sensors-philippines) covers them for when you are ready. If you hire a spraying drone, check the product first. The Fertilizer and Pesticide Authority keeps a separate list of pesticide products registered for drone use, apart from its main list. Follow the label and the FPA registration.\n\nSatellites are cheaper than drones, because the Sentinel data are free. They show weak zones across a field about every five days when clouds allow. PhilRice also runs PRISM, a satellite based system that maps rice areas, planting dates and flood or drought damage for planning. Our guide to [satellite images of my farm](/blog/satellite-crop-monitoring-philippines) explains what a picture can and cannot show."
+      "text": "No. They help on large farms, but small farms get most of the gain from the steps above. Our guide to [farm sensors in the Philippines](/blog/farm-sensors-philippines) covers them for when you are ready. If you hire a spraying drone, check the product first. The Fertilizer and Pesticide Authority keeps a separate list of pesticide products registered for drone use, apart from its main list. Follow the label and the FPA registration.\n\nSatellites are cheaper than drones, because the Sentinel data are free. They show weak zones across a field about every five days when clouds allow. There is also PRISM, a satellite based system that maps rice areas, planting dates and flood or drought damage for planning. Our guide to [satellite images of my farm](/blog/satellite-crop-monitoring-philippines) explains what a picture can and cannot show."
     },
     {
       "type": "heading",
@@ -204,11 +204,11 @@
         },
         {
           "q": "Is precision agriculture only for big farms?",
-          "a": "No. PhilRice tools like the leaf color chart and the MOET App were made for ordinary rice farms. A mapped field, lots timed by their own day count and good records are precision steps any farmer can take."
+          "a": "No. Tools like the leaf color chart and the MOET App were made for ordinary rice farms. A mapped field, lots timed by their own day count and good records are precision steps any farmer can take."
         },
         {
           "q": "What is the MOET App?",
-          "a": "MOET stands for the Minus One Element Technique. PalayCheck describes it as a pot test of your soil, paired with an app, that shows which nutrients your soil lacks and how much fertilizer a target yield needs."
+          "a": "MOET stands for the Minus One Element Technique. It is a pot test of your soil, paired with an app, that shows which nutrients your soil lacks and how much fertilizer a target yield needs."
         },
         {
           "q": "Can I use a drone to spray my rice?",

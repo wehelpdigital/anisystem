@@ -31,9 +31,9 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "Each PAGASA wind signal has a lead time: 36 hours for Signal 1, 24 for Signal 2, 18 for Signal 3, and 12 for Signals 4 and 5.",
-        "PhilRice says palay is ready when 85 to 90 percent of the grains are golden yellow for hand harvest, or 90 to 95 percent for a combine.",
-        "The DA advises farmers to harvest matured crops, secure seed and inputs, and move animals and machines to higher ground.",
+        "Each wind signal has a lead time: 36 hours for Signal 1, 24 for Signal 2, 18 for Signal 3, and 12 for Signals 4 and 5.",
+        "Palay is ready when 85 to 90 percent of the grains are golden yellow for hand harvest, or 90 to 95 percent for a combine.",
+        "Harvest matured crops, secure seed and inputs, and move animals and machines to higher ground.",
         "After the storm, dry wet threshed palay within 24 hours, using a mechanical dryer if you can."
       ]
     },
@@ -44,17 +44,17 @@
     },
     {
       "type": "text",
-      "text": "PAGASA uses five Tropical Cyclone Wind Signals. A higher number means stronger wind and less time to act. The lead time counts from the first time a signal goes up over your area. So when PAGASA raises Signal 1, you may have about a day and a half."
+      "text": "There are five Tropical Cyclone Wind Signals. A higher number means stronger wind and less time to act. The lead time counts from the first time a signal goes up over your area. So when PAGASA raises Signal 1, you may have about a day and a half."
     },
     {
       "type": "table",
-      "caption": "PAGASA Tropical Cyclone Wind Signals and the possible damage to crops",
+      "caption": "Tropical Cyclone Wind Signals and the possible damage to crops",
       "rows": [
         [
           "Signal",
           "Wind",
           "Lead time",
-          "What PAGASA says about crops"
+          "Possible damage to crops"
         ],
         [
           "1",
@@ -99,7 +99,7 @@
     },
     {
       "type": "text",
-      "text": "Harvest early only a crop that is truly mature. For palay, PhilRice PalayCheck sets the mark at 85 to 90 percent golden yellow grains for hand harvest, or 90 to 95 percent with a combine harvester. Grain cut too early is immature, and its milling recovery can fall as low as 53 percent.\n\nStill, a mature crop left standing in a storm can lodge, shatter or sprout. That is why the DA, ahead of bad weather, tells farmers to harvest matured crops and use postharvest facilities."
+      "text": "Harvest early only a crop that is truly mature. For palay, the mark is 85 to 90 percent golden yellow grains for hand harvest, or 90 to 95 percent with a combine harvester. Grain cut too early is immature, and its milling recovery can fall as low as 53 percent.\n\nStill, a mature crop left standing in a storm can lodge, shatter or sprout. That is why, ahead of bad weather, farmers should harvest matured crops and use postharvest facilities."
     },
     {
       "type": "table",
@@ -155,7 +155,7 @@
         },
         {
           "title": "Clear drains and outlets",
-          "text": "The DA asks farmers to clear drainage, irrigation canals and rice paddies of anything that blocks water. A field that drains in hours suffers less than one that stays under."
+          "text": "Clear drainage, irrigation canals and rice paddies of anything that blocks water. A field that drains in hours suffers less than one that stays under."
         },
         {
           "title": "Secure seed, fertilizer and chemicals",
@@ -188,7 +188,7 @@
     },
     {
       "type": "text",
-      "text": "Move fast, because wet rice spoils in a day or two. PhilRice gives these steps for palay hit by a typhoon."
+      "text": "Move fast, because wet rice spoils in a day or two. Here are the steps for palay hit by a typhoon."
     },
     {
       "type": "list",
@@ -251,7 +251,7 @@
         },
         {
           "q": "Can I harvest palay early if a typhoon is coming?",
-          "a": "Only if it is close to maturity. PhilRice sets ripe palay at 85 to 90 percent golden grains for hand harvest. Grain cut much earlier is immature and mills poorly, so weigh that against the risk of losing the crop."
+          "a": "Only if it is close to maturity. Palay is ripe at 85 to 90 percent golden grains for hand harvest. Grain cut much earlier is immature and mills poorly, so weigh that against the risk of losing the crop."
         },
         {
           "q": "What should I do with palay that got wet?",

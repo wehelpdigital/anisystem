@@ -16,7 +16,7 @@
     "grain moisture",
     "combine harvester"
   ],
-  "excerpt": "When to harvest rice comes down to the grains. Cut by hand when 85 to 90 percent of them have turned golden yellow, or wait for 90 to 95 percent if a combine will do the work. Drain the field 1 to 2 weeks before, cut only after the dew dries, and thresh within a day in the wet season or two in the dry season. These are the targets of Key Check 8 in PhilRice's PalayCheck System.",
+  "excerpt": "When to harvest rice comes down to the grains. Cut by hand when 85 to 90 percent of them have turned golden yellow, or wait for 90 to 95 percent if a combine will do the work. Drain the field 1 to 2 weeks before, cut only after the dew dries, and thresh within a day in the wet season or two in the dry season. These are the standard harvest targets for palay.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Palay heads turning golden and bending over in a rice field, close to the time to harvest rice",
@@ -37,10 +37,10 @@
       "ordered": false,
       "items": [
         "**Grain color.** Most grains on the panicles have turned golden yellow. Judge the whole field, not one hill, and look at the grains near the base of the panicle, which ripen last.",
-        "**Days after heading.** IRRI's Rice Knowledge Bank puts the best harvest at 28 to 35 days after heading in the dry season, and 32 to 38 days in the wet season.",
-        "**Variety maturity.** The days to maturity on your seed bag give you the expected date. Our [rice varieties](/rice-varieties) finder lists them for every NSIC variety.",
-        "**Grain moisture.** PalayCheck gives a typical moisture at harvest of 18 to 21 percent in the dry season, and 20 to 25 percent in the wet season. Use a moisture meter if your cooperative has one.",
-        "**Bite test.** IRRI says a ripe grain feels firm, but not brittle, when you bite it."
+        "**Days after heading.** The best harvest comes 28 to 35 days after heading in the dry season, and 32 to 38 days in the wet season.",
+        "**Variety maturity.** The days to maturity on your seed bag give you the expected date. Our [rice varieties](/rice-varieties) finder lists them for every registered variety.",
+        "**Grain moisture.** Typical moisture at harvest is 18 to 21 percent in the dry season, and 20 to 25 percent in the wet season. Use a moisture meter if your cooperative has one.",
+        "**Bite test.** A ripe grain feels firm, but not brittle, when you bite it."
       ]
     },
     {
@@ -54,7 +54,7 @@
     },
     {
       "type": "table",
-      "caption": "When to drain the field before harvest, from PhilRice's PalayCheck System",
+      "caption": "When to drain the field before harvest",
       "rows": [
         [
           "Soil or season",
@@ -85,7 +85,7 @@
     },
     {
       "type": "table",
-      "caption": "Ripeness targets for Key Check 8 of PhilRice's PalayCheck System",
+      "caption": "Ripeness targets at harvest",
       "rows": [
         [
           "Harvest method",
@@ -111,7 +111,7 @@
     },
     {
       "type": "text",
-      "text": "PalayCheck puts numbers on both mistakes. Harvest too early, and field losses stay small, under 1 to 1.5 percent, but milling recovery can drop as low as 53 percent. Harvest too late, and shattering pushes losses past 3 percent with hand harvesting.\n\nLate grain also breaks more at the mill. Head rice, the whole grains that sell best, can fall to 32 percent with hand harvesting or 38 percent with machines. So a few days either way shows up in your price per kilo."
+      "text": "The numbers show what both mistakes cost. Harvest too early, and field losses stay small, under 1 to 1.5 percent, but milling recovery can drop as low as 53 percent. Harvest too late, and shattering pushes losses past 3 percent with hand harvesting.\n\nLate grain also breaks more at the mill. Head rice, the whole grains that sell best, can fall to 32 percent with hand harvesting or 38 percent with machines. So a few days either way shows up in your price per kilo."
     },
     {
       "type": "heading",
@@ -120,7 +120,7 @@
     },
     {
       "type": "text",
-      "text": "Do not start cutting while dew still wets the field. Wet panicles weigh more to haul, thresh poorly and take longer to dry. IRRI advises harvesting when the crop carries the least surface moisture from dew or rain. So start once the sun has dried the leaves, and stop if rain comes in."
+      "text": "Do not start cutting while dew still wets the field. Wet panicles weigh more to haul, thresh poorly and take longer to dry. Harvest when the crop carries the least surface moisture from dew or rain. So start once the sun has dried the leaves, and stop if rain comes in."
     },
     {
       "type": "heading",
@@ -135,7 +135,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "Run an engine driven thresher at a drum speed of about 800 rpm, the PalayCheck setting for most machines.",
+        "Run an engine driven thresher at a drum speed of about 800 rpm, the usual setting for most machines.",
         "Do not push for speed. A faster drum moves more palay, but you lose more grain through the blower and in poor separation.",
         "Do not feed dripping wet palay into a thresher, because it cleans and separates poorly.",
         "Bag the threshed grain in clean sacks, and label each sack inside and out."
@@ -154,7 +154,7 @@
     },
     {
       "type": "text",
-      "text": "Threshed palay still holds a lot of water. Dry it evenly within 12 to 24 hours to 12 to 14 percent moisture, the PalayCheck target for Key Check 9. While it waits for cleaning, keep the dried grain on pallets, away from damp floors, and clean it 2 to 3 days after drying.\n\nOur guide to [palay drying](/blog/palay-drying) compares sun drying with a mechanical dryer. The [palay price](/blog/palay-price-philippines) page shows how buyers pay more for dry palay than for wet."
+      "text": "Threshed palay still holds a lot of water. Dry it evenly within 12 to 24 hours to 12 to 14 percent moisture, the usual target. While it waits for cleaning, keep the dried grain on pallets, away from damp floors, and clean it 2 to 3 days after drying.\n\nOur guide to [palay drying](/blog/palay-drying) compares sun drying with a mechanical dryer. The [palay price](/blog/palay-price-philippines) page shows how buyers pay more for dry palay than for wet."
     },
     {
       "type": "heading",
@@ -182,7 +182,7 @@
       "items": [
         {
           "q": "How many days after flowering is rice ready to harvest?",
-          "a": "IRRI puts the best time at 28 to 35 days after heading in the dry season, and 32 to 38 days in the wet season. Confirm it with the grain color before you cut."
+          "a": "The best time is 28 to 35 days after heading in the dry season, and 32 to 38 days in the wet season. Confirm it with the grain color before you cut."
         },
         {
           "q": "Can I harvest rice early in the morning?",
@@ -194,7 +194,7 @@
         },
         {
           "q": "What thresher speed should I use?",
-          "a": "About 800 rpm at the drum for most engine driven threshers, PalayCheck says. A faster drum loses more grain."
+          "a": "About 800 rpm at the drum for most engine driven threshers. A faster drum loses more grain."
         },
         {
           "q": "Why drain the field before harvest?",

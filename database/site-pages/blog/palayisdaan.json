@@ -46,7 +46,7 @@
     },
     {
       "type": "text",
-      "text": "In 1979 the Department of Agriculture launched a National Rice Fish Culture Program called Palay isdaan, an FAO report on Philippine aquaculture explains. The name joins palay with palaisdaan, the fishpond, and the Freshwater Aquaculture Center supplied the technology.\n\nFarmers dug a half meter deep trench lengthwise across the field and made the dikes a little higher and wider, with a screened gate. They stocked Nile tilapia or common carp at 5,500 to 9,900 per hectare. On average, the farms harvested 4,825 kg of rice and 232 kg of fish per hectare.\n\nStill, the program faded, from 1,397 hectares in 1982 to 185 hectares by 1986. A status report blamed modern varieties that needed heavy fertilizer and pesticide use."
+      "text": "In 1979 the Department of Agriculture launched a National Rice Fish Culture Program called Palay isdaan. The name joins palay with palaisdaan, the fishpond, and the Freshwater Aquaculture Center supplied the technology.\n\nFarmers dug a half meter deep trench lengthwise across the field and made the dikes a little higher and wider, with a screened gate. They stocked Nile tilapia or common carp at 5,500 to 9,900 per hectare. On average, the farms harvested 4,825 kg of rice and 232 kg of fish per hectare.\n\nStill, the program faded, from 1,397 hectares in 1982 to 185 hectares by 1986. A status report blamed modern varieties that needed heavy fertilizer and pesticide use."
     },
     {
       "type": "heading",
@@ -55,16 +55,16 @@
     },
     {
       "type": "text",
-      "text": "For part of the year, the paddy becomes a shallow pond. Fish feed on plankton, weeds, insects and snails, and their droppings return nutrients to the field. According to FAO and the WorldFish Center, the refuge is where fish go when the water dries up. It also serves as the catch basin at harvest."
+      "text": "For part of the year, the paddy becomes a shallow pond. Fish feed on plankton, weeds, insects and snails, and their droppings return nutrients to the field. The refuge is where fish go when the water dries up. It also serves as the catch basin at harvest."
     },
     {
       "type": "table",
-      "caption": "The parts of a palayisdaan field, from FAO and WorldFish, Culture of Fish in Rice Fields (2004)",
+      "caption": "The parts of a palayisdaan field",
       "rows": [
         [
           "Part",
           "What it does",
-          "What FAO reports"
+          "Typical build"
         ],
         [
           "Raised dikes",
@@ -95,7 +95,7 @@
     },
     {
       "type": "text",
-      "text": "In the Philippines, tilapia is the usual choice because carp sells well only in a few places, FAO notes. Common carp has its own strength, though. In Philippine tests it was the better hunter of [golden apple snails](/pests/golden-apple-snail), eating up to 1,000 young snails a day. That is why many farms stock both."
+      "text": "In the Philippines, tilapia is the usual choice because carp sells well only in a few places. Common carp has its own strength, though. In Philippine tests it was the better hunter of [golden apple snails](/pests/golden-apple-snail), eating up to 1,000 young snails a day. That is why many farms stock both."
     },
     {
       "type": "heading",
@@ -114,7 +114,7 @@
     },
     {
       "type": "text",
-      "text": "What about the rice? Philippine trials with tilapia found rice yields on average no lower than in rice only plots. But FAO warns that farmers who take up rice fish farming may simply be better farmers to begin with. So count the fish as the extra, not a promise of more palay."
+      "text": "What about the rice? Philippine trials with tilapia found rice yields on average no lower than in rice only plots. But farmers who take up rice fish farming may simply be better farmers to begin with. So count the fish as the extra, not a promise of more palay."
     },
     {
       "type": "heading",
@@ -136,7 +136,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "Before any spray, move the fish",
-      "text": "FAO notes that most experts advise driving the fish into the refuge and closing it off with a temporary dike until the chemical breaks down. Choose the product least toxic to fish, follow the label and the FPA registration, and try [integrated pest management](/pests/integrated-pest-management) first."
+      "text": "Most experts advise driving the fish into the refuge and closing it off with a temporary dike until the chemical breaks down. Choose the product least toxic to fish, follow the label and the FPA registration, and try [integrated pest management](/pests/integrated-pest-management) first."
     },
     {
       "type": "heading",
@@ -145,7 +145,7 @@
     },
     {
       "type": "text",
-      "text": "These steps follow FAO's guidance and the case of Mang Isko, a rice fish farmer in Cavite whom FAO studied."
+      "text": "These steps follow common practice and the case of Mang Isko, a rice fish farmer in Cavite."
     },
     {
       "type": "steps",
@@ -168,7 +168,7 @@
         },
         {
           "title": "Stock after transplanting",
-          "text": "He stocked about 1 tilapia per square meter and 1 carp per 5 square meters. If you use a herbicide right after transplanting, FAO says fish go in 10 to 14 days later."
+          "text": "He stocked about 1 tilapia per square meter and 1 carp per 5 square meters. If you use a herbicide right after transplanting, the fish go in 10 to 14 days later."
         },
         {
           "title": "Feed lightly and drain slowly",
@@ -183,7 +183,7 @@
     },
     {
       "type": "text",
-      "text": "Prices change by town, so here are the cost lines instead of pesos. In most country studies FAO reviewed, total labor rose by 10 to 234 percent with fish. In Thailand, the first year investment even left rice fish fields earning less than rice alone."
+      "text": "Prices change by town, so here are the cost lines instead of pesos. In most country studies, total labor rose by 10 to 234 percent with fish. In Thailand, the first year investment even left rice fish fields earning less than rice alone."
     },
     {
       "type": "table",
@@ -263,7 +263,7 @@
       "items": [
         {
           "q": "Is palayisdaan profitable?",
-          "a": "It can be. An FAO review cites a Philippine study with 27 percent higher net returns than a single rice crop. A Thai study, however, found lower returns because of the high first investment, so try one field first."
+          "a": "It can be. A Philippine study found 27 percent higher net returns than a single rice crop. A Thai study, however, found lower returns because of the high first investment, so try one field first."
         },
         {
           "q": "What fish is best for a palayisdaan?",
@@ -275,7 +275,7 @@
         },
         {
           "q": "Can I do rice fish farming in a rainfed field?",
-          "a": "It is risky. The fish need water all season, and FAO's review of Philippine rice fish farming lists poor water supply among the reasons farmers gave it up. A field with a reliable canal or pump is a safer start."
+          "a": "It is risky. The fish need water all season, and poor water supply is among the reasons Filipino farmers gave it up. A field with a reliable canal or pump is a safer start."
         }
       ]
     },

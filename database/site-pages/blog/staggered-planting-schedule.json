@@ -15,7 +15,7 @@
     "synchronous planting",
     "day zero"
   ],
-  "excerpt": "To plan a season for lots planted on different days, give each lot its own day zero and count every task from it. A staggered planting schedule then spreads labor, water, cash and harvest across the season. For rice, keep the spread tight: PhilRice's PalayCheck asks you to plant within 14 days of your area's schedule, because a long spread feeds pests. In anee.io, a farm app built for Filipino farmers, each lot counts from its own day zero on one board.",
+  "excerpt": "To plan a season for lots planted on different days, give each lot its own day zero and count every task from it. A staggered planting schedule then spreads labor, water, cash and harvest across the season. For rice, keep the spread tight: plant within 14 days of your area's schedule, because a long spread feeds pests. In anee.io, a farm app built for Filipino farmers, each lot counts from its own day zero on one board.",
   "heroImage": {
     "src": "/images/site/guides/blog-staggered-planting-schedule.webp",
     "alt": "Rice paddies in Bohol at different stages, newly transplanted beside taller rice, as in a staggered planting schedule",
@@ -58,12 +58,12 @@
         [
           "Rice lots under one irrigation turnout",
           "Stagger only within 14 days",
-          "PalayCheck Key Check 3, so pests do not carry over"
+          "So pests do not carry over"
         ],
         [
           "Rice in a rainfed community",
           "Plant together with neighbors",
-          "PhilRice says synchronous planting cuts pests and diseases"
+          "Synchronous planting cuts pests and diseases"
         ],
         [
           "Short crew or one hand tractor",
@@ -78,7 +78,7 @@
         [
           "Vine crops like ampalaya",
           "Start the next planting before picking slows",
-          "The BPI guide says picking runs 2 to 3 months"
+          "Picking runs 2 to 3 months"
         ]
       ]
     },
@@ -86,7 +86,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "A wide spread feeds rice pests",
-      "text": "When planting in one area stretches over many weeks, insects and diseases move from early fields to late ones. An IRRI and PhilRice study found planting in most regions spans more than 100 days, and warned that this can raise pest and disease problems. PhilRice's Oplan Iwas Peste asks communities to plant within a month of their planting calendar."
+      "text": "When planting in one area stretches over many weeks, insects and diseases move from early fields to late ones. In most regions, planting spans more than 100 days, and that can raise pest and disease problems. So plant within a month of your community's planting calendar."
     },
     {
       "type": "heading",
@@ -129,7 +129,7 @@
     },
     {
       "type": "text",
-      "text": "Here are three lots of a 111 to 120 day variety, hand transplanted 11 days apart for the dry season. That keeps them inside PalayCheck's 14 day window. The timings come from PalayCheck and PhilRice's Abonong Swak fertilizer plan."
+      "text": "Here are three lots of a 111 to 120 day variety, hand transplanted 11 days apart for the dry season. That keeps them inside the 14 day window. The timings follow the usual rice calendar and the Abonong Swak fertilizer plan."
     },
     {
       "type": "table",
@@ -196,7 +196,7 @@
     },
     {
       "type": "text",
-      "text": "For gulay, the goal is the opposite of rice: a harvest that never stops. The BPI ampalaya guide says the first fruits come 45 to 75 days from planting. Then picking runs 2 to 3 times a week for 2 to 3 months. So start the next planting early enough that it bears as the first one slows. For more crops, see [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay). Our guide to [multiple cropping](/blog/multiple-cropping) looks at growing more than one crop on the same land."
+      "text": "For gulay, the goal is the opposite of rice: a harvest that never stops. Ampalaya gives its first fruits 45 to 75 days from planting. Then picking runs 2 to 3 times a week for 2 to 3 months. So start the next planting early enough that it bears as the first one slows. For more crops, see [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay). Our guide to [multiple cropping](/blog/multiple-cropping) looks at growing more than one crop on the same land."
     },
     {
       "type": "cta",
@@ -228,7 +228,7 @@
         },
         {
           "q": "Is staggered planting good for rice?",
-          "a": "Only within a short window. PalayCheck asks farmers to plant within 14 days before or after the area's regular schedule, after a 30 day rest of the field. A wider spread lets pests and diseases move from early lots to late ones."
+          "a": "Only within a short window. Plant within 14 days before or after the area's regular schedule, after a 30 day rest of the field. A wider spread lets pests and diseases move from early lots to late ones."
         },
         {
           "q": "How far apart should I plant vegetable batches?",

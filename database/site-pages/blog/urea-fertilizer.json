@@ -33,7 +33,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Fertilizer in Tagalog is abono or pataba, and most farmers simply call this one urea. The agri supply sells two kinds. Prilled urea comes as small round beads, and granular urea as bigger, harder grains. Both are 46 0 0 fertilizer, and the Fertilizer and Pesticide Authority (FPA) tracks the price of each weekly. Our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) covers the other names you will hear.\n\nUrea is cheap per kilo of nitrogen, but it is easy to waste. If it goes on at the wrong stage or sits on wet ground, part of it never reaches the plant."
+      "text": "Fertilizer in Tagalog is abono or pataba, and most farmers simply call this one urea. The agri supply sells two kinds. Prilled urea comes as small round beads, and granular urea as bigger, harder grains. Both are 46 0 0 fertilizer, and the price of each is tracked weekly. Our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) covers the other names you will hear.\n\nUrea is cheap per kilo of nitrogen, but it is easy to waste. If it goes on at the wrong stage or sits on wet ground, part of it never reaches the plant."
     },
     {
       "type": "text",
@@ -55,7 +55,7 @@
     },
     {
       "type": "text",
-      "text": "The IRRI Rice Knowledge Bank calls nitrogen the most limiting element in almost all soils. The PalayCheck guide of PhilRice lists what it does in rice. It adds plant height, tillers and leaf size, and more panicles per hill and spikelets per panicle. Corn also needs it for its leaves, stalk and ears.\n\nToo much is also a problem. PhilRice warns that excess nitrogen at panicle initiation and flowering invites lodging and [pests](/pests/rice-insects). It also raises the share of unfilled grains and wastes money. So a good plan splits urea into doses instead of putting it all on at once."
+      "text": "Nitrogen is the most limiting element in almost all soils. In rice, it adds plant height, tillers and leaf size, and more panicles per hill and spikelets per panicle. Corn also needs it for its leaves, stalk and ears.\n\nToo much is also a problem. Excess nitrogen at panicle initiation and flowering invites lodging and [pests](/pests/rice-insects). It also raises the share of unfilled grains and wastes money. So a good plan splits urea into doses instead of putting it all on at once."
     },
     {
       "type": "heading",
@@ -79,11 +79,11 @@
     },
     {
       "type": "text",
-      "text": "The PalayCheck system ties nitrogen to growth stages, not to a fixed date. Without a leaf color chart, Key Check 5 splits nitrogen by variety maturity, as in the table below. In PhilRice bag plans, the first dose usually comes from complete fertilizer or 16 20 0. Those also carry phosphorus and potassium, and urea supplies the later doses."
+      "text": "Nitrogen follows growth stages, not a fixed date. Without a leaf color chart, split nitrogen by variety maturity, as in the table below. In most bag plans, the first dose comes from complete fertilizer or 16 20 0. Those also carry phosphorus and potassium, and urea supplies the later doses."
     },
     {
       "type": "table",
-      "caption": "Nitrogen timing for palay from PhilRice PalayCheck Key Check 5, for farms without a leaf color chart",
+      "caption": "Nitrogen timing for palay, for farms without a leaf color chart",
       "rows": [
         [
           "Variety maturity",
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "DAT means days after transplanting. DAS means days after sowing, for direct seeded rice. If you own a leaf color chart, read it every 7 days from 14 DAT, or 21 DAS, until early flowering. Apply nitrogen only when the leaves call for it.\n\nA DA, PhilRice and IRRI quick guide for Nueva Ecija gives windows for the top dressing fertilizer in the wet season. Active tillering comes at 23 to 27 DAT for early varieties and 28 to 32 DAT for medium ones. Panicle initiation follows at 33 to 37 DAT and 43 to 47 DAT for the same groups. Treat these as a guide, since fields differ. The full season plan is on our [fertilizer for rice](/blog/fertilizer-for-rice) page."
+      "text": "DAT means days after transplanting. DAS means days after sowing, for direct seeded rice. If you own a leaf color chart, read it every 7 days from 14 DAT, or 21 DAS, until early flowering. Apply nitrogen only when the leaves call for it.\n\nIn Nueva Ecija, the wet season windows for top dressing fertilizer run like this. Active tillering comes at 23 to 27 DAT for early varieties and 28 to 32 DAT for medium ones. Panicle initiation follows at 33 to 37 DAT and 43 to 47 DAT for the same groups. Treat these as a guide, since fields differ. The full season plan is on our [fertilizer for rice](/blog/fertilizer-for-rice) page."
     },
     {
       "type": "heading",
@@ -116,7 +116,7 @@
     },
     {
       "type": "text",
-      "text": "At planting, the DA Region 2 corn guide puts all the phosphorus and potassium and half the nitrogen in the furrow. It goes in a band about 5 cm beside and 5 cm below the seed. The rest of the nitrogen goes on as a side dress 21 to 30 days after planting, during hilling up. That second dose is where urea fits best.\n\nHilling up covers the urea with soil right away, which also cuts losses. For a dry season crop, the guide says to apply all the fertilizer at planting while the soil is still moist. Read more in our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais)."
+      "text": "At planting, put all the phosphorus and potassium and half the nitrogen in the furrow. It goes in a band about 5 cm beside and 5 cm below the seed. The rest of the nitrogen goes on as a side dress 21 to 30 days after planting, during hilling up. That second dose is where urea fits best.\n\nHilling up covers the urea with soil right away, which also cuts losses. For a dry season crop, apply all the fertilizer at planting while the soil is still moist. Read more in our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "heading",
@@ -125,15 +125,15 @@
     },
     {
       "type": "text",
-      "text": "Once urea touches moist soil, an enzyme called urease turns it into ammonium within about two days. The water around each granule turns alkaline. Part of the ammonium then changes into ammonia gas and floats away. Agronomists call this loss volatilization.\n\nThe loss is worst when urea sits on a wet soil surface or goes straight into floodwater. IRRI also flags calcareous and alkaline soils as high risk. So the aim is simple: get the urea into the soil, or into the plant, fast."
+      "text": "Once urea touches moist soil, an enzyme called urease turns it into ammonium within about two days. The water around each granule turns alkaline. Part of the ammonium then changes into ammonia gas and floats away. Agronomists call this loss volatilization.\n\nThe loss is worst when urea sits on a wet soil surface or goes straight into floodwater. Calcareous and alkaline soils are also high risk. So the aim is simple: get the urea into the soil, or into the plant, fast."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "Mix the basal dose into the mud during the last harrowing, as IRRI advises",
+        "Mix the basal dose into the mud during the last harrowing",
         "On corn, cover the side dress with soil when you hill up",
-        "Split nitrogen into two or three doses by growth stage, as PalayCheck recommends",
+        "Split nitrogen into two or three doses by growth stage",
         "Spread evenly so no corner of the paddy gets a double dose",
         "Keep bunds and outlets closed after top dressing so the dissolved fertilizer stays in your field",
         "On upland crops, apply just before a light rain or an irrigation that carries the urea into the soil"
@@ -143,7 +143,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Check the price for your own region",
-      "text": "The FPA weekly list gives the average dealer price per region and province. Check it so you know if your dealer's quote is fair."
+      "text": "The weekly price list of the Fertilizer and Pesticide Authority (FPA) gives the average dealer price per region and province. Check it so you know if your dealer's quote is fair."
     },
     {
       "type": "heading",
@@ -152,11 +152,11 @@
     },
     {
       "type": "text",
-      "text": "Prices move every week, so check before you buy. The FPA dealer survey for September 14 to 18, 2026 gives the national weighted averages. Prilled urea stood at **PHP 2,320.69** per 50 kg bag and granular urea at **PHP 2,322.28**. By region, prilled urea ran from PHP 2,156.05 in the Cordillera to PHP 2,677.79 in Region X.\n\nIn the week of January 5 to 9, 2026, prilled urea averaged PHP 1,694.25. That is about PHP 626 more per bag in eight months. The PSA also publishes a monthly update on fertilizer prices."
+      "text": "Prices move every week, so check before you buy. The weekly dealer survey for September 14 to 18, 2026 gives the national weighted averages. Prilled urea stood at **PHP 2,320.69** per 50 kg bag and granular urea at **PHP 2,322.28**. By region, prilled urea ran from PHP 2,156.05 in the Cordillera to PHP 2,677.79 in Region X.\n\nIn the week of January 5 to 9, 2026, prilled urea averaged PHP 1,694.25. That is about PHP 626 more per bag in eight months."
     },
     {
       "type": "table",
-      "caption": "National average dealer prices per 50 kg bag from the FPA weekly survey. Prices change every week.",
+      "caption": "National average dealer prices per 50 kg bag from the weekly survey. Prices change every week.",
       "rows": [
         [
           "Fertilizer",
@@ -221,7 +221,7 @@
       "items": [
         {
           "title": "Know your nitrogen target",
-          "text": "Start from a soil test, the Rice Crop Manager, MOET or your technician. As a general guide only, the modified general recommendation of PhilRice lists 97 kg of nitrogen per hectare for irrigated lowland rice in the wet season and 139 kg in the dry season."
+          "text": "Start from a soil test, the Rice Crop Manager, MOET or your technician. As a general guide only, the modified general recommendation is 97 kg of nitrogen per hectare for irrigated lowland rice in the wet season and 139 kg in the dry season."
         },
         {
           "title": "Subtract the nitrogen from other fertilizers",
@@ -233,7 +233,7 @@
         },
         {
           "title": "Scale it to your lot",
-          "text": "For a 0.75 hectare lot, multiply by 0.75 to get about 135 kg, or 2.7 bags. Then split it by stage as PalayCheck shows."
+          "text": "For a 0.75 hectare lot, multiply by 0.75 to get about 135 kg, or 2.7 bags. Then split it by growth stage."
         }
       ]
     },
@@ -275,7 +275,7 @@
         },
         {
           "q": "When should I apply urea as top dressing on palay?",
-          "a": "Follow the growth stage. PalayCheck puts the later doses at mid tillering and around panicle initiation. For a variety of 110 days or less, the second dose goes on 5 to 7 days before panicle initiation."
+          "a": "Follow the growth stage. The later doses go on at mid tillering and around panicle initiation. For a variety of 110 days or less, the second dose goes on 5 to 7 days before panicle initiation."
         },
         {
           "q": "What is fertilizer in Tagalog?",
@@ -283,7 +283,7 @@
         },
         {
           "q": "Is granular urea fertilizer better than prilled urea?",
-          "a": "Both are 46 0 0 with the same nitrogen per bag. Granules are larger and harder than prills. Compare prices, since the September 2026 FPA averages for the two were almost equal."
+          "a": "Both are 46 0 0 with the same nitrogen per bag. Granules are larger and harder than prills. Compare prices, since the September 2026 national averages for the two were almost equal."
         }
       ]
     },

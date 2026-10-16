@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Yellow is a symptom, not a diagnosis. IRRI's tungro fact sheet warns that the yellowing and stunting of this virus can pass for nitrogen or zinc deficiency, water stress or planthopper damage. If you add urea to a field with tungro, you spend money and the plants stay sick.\n\nAlso, old lower leaves yellow and die as the crop ripens, and that alone is no problem. Worry when the yellow comes early, comes in patches or spreads fast."
+      "text": "Yellow is a symptom, not a diagnosis. The yellowing and stunting of the tungro virus can pass for nitrogen or zinc deficiency, water stress or planthopper damage. If you add urea to a field with tungro, you spend money and the plants stay sick.\n\nAlso, old lower leaves yellow and die as the crop ripens, and that alone is no problem. Worry when the yellow comes early, comes in patches or spreads fast."
     },
     {
       "type": "list",
@@ -45,7 +45,7 @@
     },
     {
       "type": "text",
-      "text": "Nitrogen deficiency is one of the most common problems of rice in Asia, IRRI says. It often hits at tillering and panicle initiation, when the crop needs the most. But four other causes look much like it. Use the table to narrow them down."
+      "text": "Nitrogen deficiency is one of the most common problems of rice in Asia. It often hits at tillering and panicle initiation, when the crop needs the most. But four other causes look much like it. Use the table to narrow them down."
     },
     {
       "type": "table",
@@ -107,7 +107,7 @@
         },
         {
           "title": "Find the first yellow leaves",
-          "text": "Old leaves first suggests nitrogen. Young leaves first suggests sulfur, which IRRI calls the less common of the two."
+          "text": "Old leaves first suggests nitrogen. Young leaves first suggests sulfur, the less common of the two."
         },
         {
           "title": "Read the pattern",
@@ -119,7 +119,7 @@
         },
         {
           "title": "Check before you feed",
-          "text": "Read a leaf color chart and your fertilizer record. If the cause stays unclear, send soil and plant samples to a lab, as IRRI advises."
+          "text": "Read a leaf color chart and your fertilizer record. If the cause stays unclear, send soil and plant samples to a lab."
         }
       ]
     },
@@ -130,7 +130,7 @@
     },
     {
       "type": "text",
-      "text": "PalayCheck, the crop management system of PhilRice, sets a simple rule. Read the chart every 7 days from 14 days after transplanting, or 21 days after sowing, until early flowering. Apply nitrogen when 6 or more of 10 leaves read below 4 for transplanted rice, or below 3 for direct seeded rice. PalayCheck also warns that too much nitrogen at panicle initiation and flowering invites lodging and pests."
+      "text": "The rule is simple. Read the chart every 7 days from 14 days after transplanting, or 21 days after sowing, until early flowering. Apply nitrogen when 6 or more of 10 leaves read below 4 for transplanted rice, or below 3 for direct seeded rice. Too much nitrogen at panicle initiation and flowering invites lodging and pests."
     },
     {
       "type": "heading",
@@ -141,17 +141,17 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Nitrogen:** top dress by growth stage, as in our guides to [fertilizer for rice](/blog/fertilizer-for-rice) and [urea fertilizer](/blog/urea-fertilizer). IRRI advises keeping water in the field but stopping runoff over the bunds right after you apply.",
-        "**Zinc:** confirm it with a soil and plant test, then ask your municipal agriculturist about a zinc source. IRRI says mild cases can recover in 4 to 6 weeks, though maturity is delayed and yield drops.",
-        "**Tungro:** there is no cure. For the next season, IRRI advises resistant varieties, planting at the same time as your neighbors and plowing infected stubble after harvest.",
-        "**Planthoppers:** count before you act. IRRI says that at 1 planthopper per stem or fewer, there is still time, and that natural enemies keep the risk low when they outnumber the hoppers."
+        "**Nitrogen:** top dress by growth stage, as in our guides to [fertilizer for rice](/blog/fertilizer-for-rice) and [urea fertilizer](/blog/urea-fertilizer). Keep water in the field but stop runoff over the bunds right after you apply.",
+        "**Zinc:** confirm it with a soil and plant test, then ask your municipal agriculturist about a zinc source. Mild cases can recover in 4 to 6 weeks, though maturity is delayed and yield drops.",
+        "**Tungro:** there is no cure. For the next season, use resistant varieties, plant at the same time as your neighbors and plow infected stubble after harvest.",
+        "**Planthoppers:** count before you act. At 1 planthopper per stem or fewer, there is still time, and natural enemies keep the risk low when they outnumber the hoppers."
       ]
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "More urea will not fix a virus",
-      "text": "IRRI says there is no cure for a tungro infected plant. Extra nitrogen also favors planthoppers, so feeding a sick field can make things worse. Find the cause first."
+      "text": "There is no cure for a tungro infected plant. Extra nitrogen also favors planthoppers, so feeding a sick field can make things worse. Find the cause first."
     },
     {
       "type": "heading",
@@ -187,7 +187,7 @@
         },
         {
           "q": "Can yellow rice recover?",
-          "a": "If the cause is nitrogen and you feed in time, the crop can green up again. IRRI says a crop with a mild zinc shortage can recover in 4 to 6 weeks, though it matures later. A plant with tungro does not recover."
+          "a": "If the cause is nitrogen and you feed in time, the crop can green up again. A crop with a mild zinc shortage can recover in 4 to 6 weeks, though it matures later. A plant with tungro does not recover."
         },
         {
           "q": "Is yellowing near harvest a problem?",
@@ -195,7 +195,7 @@
         },
         {
           "q": "Who can test my soil and leaves?",
-          "a": "Ask your municipal agriculturist where to send soil and plant samples. IRRI advises a lab test to confirm nitrogen, sulfur and zinc problems."
+          "a": "Ask your municipal agriculturist where to send soil and plant samples. A lab test confirms nitrogen, sulfur and zinc problems."
         }
       ]
     },

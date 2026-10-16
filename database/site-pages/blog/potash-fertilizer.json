@@ -15,7 +15,7 @@
     "fertilizer for coconut plants",
     "fertilizer for flowering plants"
   ],
-  "excerpt": "Potash fertilizer in the Philippines usually means muriate of potash, the 0 0 60 sold in 50 kg bags. It carries 60 percent potash (K2O), and IRRI calls it the most common fertilizer with potassium. This guide covers what potassium does, when to apply it on palay, banana and coconut, and how to tell if your crop needs it.",
+  "excerpt": "Potash fertilizer in the Philippines usually means muriate of potash, the 0 0 60 sold in 50 kg bags. It carries 60 percent potash (K2O), and it is the most common fertilizer with potassium. This guide covers what potassium does, when to apply it on palay, banana and coconut, and how to tell if your crop needs it.",
   "heroImage": {
     "src": "/images/site/guides/blog-potash-fertilizer.webp",
     "alt": "Compacted muriate of potash granules, the potash fertilizer farmers broadcast on rice and banana",
@@ -24,7 +24,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Muriate is an old word for chloride, so muriate of potash is simply potassium chloride. Farmers call it MOP or just potash. The Fertilizer and Pesticide Authority (FPA) tracks its price every week, along with urea and complete.\n\nPotassium is easy to forget, because its signs show late. By the time the leaf edges turn brown, the grains may already be light. So it pays to plan potash from the start."
+      "text": "Muriate is an old word for chloride, so muriate of potash is simply potassium chloride. Farmers call it MOP or just potash. Its price is tracked every week, along with urea and complete.\n\nPotassium is easy to forget, because its signs show late. By the time the leaf edges turn brown, the grains may already be light. So it pays to plan potash from the start."
     },
     {
       "type": "heading",
@@ -33,7 +33,7 @@
     },
     {
       "type": "text",
-      "text": "The grade 0 0 60 means no nitrogen, no phosphate and 60 percent potash, written as K2O. So a 50 kg bag holds 30 kg of K2O. IRRI puts it the other way around: 30 kg of K2O equals 50 kg of muriate of potash. Counted as pure potassium, MOP is about 50 percent K.\n\nBrands of muriate of potash on the FPA list of registered fertilizers declare 60 percent K2O. The grade is the same across brands, so compare the price per bag and buy from a registered dealer."
+      "text": "The grade 0 0 60 means no nitrogen, no phosphate and 60 percent potash, written as K2O. So a 50 kg bag holds 30 kg of K2O. Put the other way around, 30 kg of K2O equals 50 kg of muriate of potash. Counted as pure potassium, MOP is about 50 percent K.\n\nBrands of muriate of potash registered with the Fertilizer and Pesticide Authority (FPA) declare 60 percent K2O. The grade is the same across brands, so compare the price per bag and buy from a registered dealer."
     },
     {
       "type": "heading",
@@ -42,7 +42,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI calls potassium often the most limiting nutrient after nitrogen in high yielding rice. The PalayCheck guide of PhilRice lists what it does in the rice plant:"
+      "text": "Potassium is often the most limiting nutrient after nitrogen in high yielding rice. Here is what it does in the rice plant:"
     },
     {
       "type": "list",
@@ -56,7 +56,7 @@
     },
     {
       "type": "text",
-      "text": "That is why potash matters most for grain filling and for stems that stay standing in a typhoon month. IRRI adds that potassium helps prevent lodging and raises resistance to pests and diseases."
+      "text": "That is why potash matters most for grain filling and for stems that stay standing in a typhoon month. Potassium also helps prevent lodging and raises resistance to pests and diseases."
     },
     {
       "type": "heading",
@@ -75,7 +75,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI warns that these leaf signs can look like tungro. But tungro shows in patches, while potassium deficiency covers the whole field. Signs often appear only in the later growth stages, so do not wait for them."
+      "text": "These leaf signs can look like tungro. But tungro shows in patches, while potassium deficiency covers the whole field. Signs often appear only in the later growth stages, so do not wait for them."
     },
     {
       "type": "heading",
@@ -84,39 +84,39 @@
     },
     {
       "type": "table",
-      "caption": "Potassium timing for palay from PhilRice and IRRI. Adjust the amount to a soil test.",
+      "caption": "Potassium timing for palay. Adjust the amount to a soil test.",
       "rows": [
         [
-          "Source",
+          "Plan",
           "When to apply"
         ],
         [
-          "PhilRice PalayCheck",
+          "Two doses by stage",
           "First dose at 0 to 14 DAT, or 7 to 10 DAS. Second dose 5 to 7 days before or after panicle initiation."
         ],
         [
-          "PhilRice general recommendation",
+          "General recommendation",
           "70 percent at 7 to 14 DAT and 30 percent 5 to 7 days before or after panicle initiation"
         ],
         [
-          "PhilRice Abonong Swak plans",
+          "Abonong Swak bag plans",
           "Half a bag of 0 0 60 per hectare with the last urea, at 28 to 40 DAT depending on variety maturity"
         ],
         [
-          "IRRI",
+          "By the size of the rate",
           "All at basal if the rate is small. For larger rates, split it between basal and early panicle initiation."
         ]
       ]
     },
     {
       "type": "text",
-      "text": "DAT means days after transplanting, and DAS means days after sowing. PhilRice recommends the extra muriate of potash around panicle initiation, especially where the sun is strong, like Nueva Ecija, Bicol and Isabela. There it raises grain size and weight. IRRI also advises splitting potassium into at least two doses on sandy soils that leach.\n\nIf you use [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14) at basal, it already gives 7 kg of K2O per bag. With [16 20 0](/blog/16-20-0-fertilizer), you get none, so the potash has to come from MOP. Our [fertilizer for rice](/blog/fertilizer-for-rice) page puts it all in one season plan."
+      "text": "DAT means days after transplanting, and DAS means days after sowing. The extra muriate of potash goes on around panicle initiation, especially where the sun is strong, like Nueva Ecija, Bicol and Isabela. There it raises grain size and weight. On sandy soils that leach, split potassium into at least two doses.\n\nIf you use [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14) at basal, it already gives 7 kg of K2O per bag. With [16 20 0](/blog/16-20-0-fertilizer), you get none, so the potash has to come from MOP. Our [fertilizer for rice](/blog/fertilizer-for-rice) page puts it all in one season plan."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "Your straw is a potash fertilizer",
-      "text": "IRRI counts about 16.8 kg of K2O in the straw for every ton of grain, against only 2.2 kg in the grain. Burn or haul away the straw and most of that potassium leaves the field. Work it back into the soil and much of it stays."
+      "text": "The straw holds about 16.8 kg of K2O for every ton of grain, against only 2.2 kg in the grain. Burn or haul away the straw and most of that potassium leaves the field. Work it back into the soil and much of it stays."
     },
     {
       "type": "heading",
@@ -125,7 +125,7 @@
     },
     {
       "type": "text",
-      "text": "Banana is a heavy potassium crop. Yara Philippines says potassium has a large effect on banana yield, with peak demand around flowering. Potassium deficiency in banana shows first on older leaves, as yellow to orange zones from the tips that later turn brown. Too much is not good either. Yara warns that overuse of potassium can bring on calcium and magnesium deficiencies. Our guide to [banana farming in the Philippines](/crops/banana-farming-philippines) covers the full program.\n\nMuriate of potash also suits coconut. Since it is potassium chloride, it brings chloride along with the potassium, and coconut needs chlorine. A technology guide of the Philippine Coconut Authority found chlorine deficiency widespread in inland coconut areas. Our [coconut fertilizer](/crops/coconut-fertilizer) guide covers fertilizer for coconut plants in full, salt included."
+      "text": "Banana is a heavy potassium crop. Yara Philippines says potassium has a large effect on banana yield, with peak demand around flowering. Potassium deficiency in banana shows first on older leaves, as yellow to orange zones from the tips that later turn brown. Too much is not good either. Yara warns that overuse of potassium can bring on calcium and magnesium deficiencies. Our guide to [banana farming in the Philippines](/crops/banana-farming-philippines) covers the full program.\n\nMuriate of potash also suits coconut. Since it is potassium chloride, it brings chloride along with the potassium, and coconut needs chlorine. Chlorine deficiency is widespread in inland coconut areas. Our [coconut fertilizer](/crops/coconut-fertilizer) guide covers fertilizer for coconut plants in full, salt included."
     },
     {
       "type": "heading",
@@ -143,7 +143,7 @@
     },
     {
       "type": "text",
-      "text": "The FPA dealer survey for September 14 to 18, 2026 put the national average for muriate of potash at **PHP 1,668.08** per 50 kg bag. In the week of January 5 to 9, 2026 it was PHP 1,731.94. Of the six grades on the FPA list, only potash got cheaper between those two weeks. Prices change every week, so check the FPA list for your province.\n\nAt the September average, a kilo of K2O from MOP costs about PHP 55.60. The PhilRice plan of half a bag per hectare gives 15 kg of K2O for about PHP 834.04. If your soil test calls for 30 kg of K2O, buy one full bag per hectare. The [fertilizer calculation](/blog/fertilizer-calculation) guide shows the steps."
+      "text": "The weekly dealer survey for September 14 to 18, 2026 put the national average for muriate of potash at **PHP 1,668.08** per 50 kg bag. In the week of January 5 to 9, 2026 it was PHP 1,731.94. Of the six grades in the survey, only potash got cheaper between those two weeks. Prices change every week, so check the FPA list for your province.\n\nAt the September average, a kilo of K2O from MOP costs about PHP 55.60. The Abonong Swak plan of half a bag per hectare gives 15 kg of K2O for about PHP 834.04. If your soil test calls for 30 kg of K2O, buy one full bag per hectare. The [fertilizer calculation](/blog/fertilizer-calculation) guide shows the steps."
     },
     {
       "type": "heading",
@@ -179,11 +179,11 @@
         },
         {
           "q": "When should I apply 0 0 60 on palay?",
-          "a": "PalayCheck puts the first dose at 0 to 14 DAT and the second 5 to 7 days before or after panicle initiation. The PhilRice Abonong Swak plans add half a bag per hectare with the last urea."
+          "a": "Put the first dose at 0 to 14 DAT and the second 5 to 7 days before or after panicle initiation. The Abonong Swak plans add half a bag per hectare with the last urea."
         },
         {
           "q": "Is muriate of potash good for coconut?",
-          "a": "Yes. It gives potassium and chloride together, and the Philippine Coconut Authority has found chlorine deficiency in many inland coconut areas."
+          "a": "Yes. It gives potassium and chloride together, and chlorine deficiency is common in many inland coconut areas."
         },
         {
           "q": "Can too much potash hurt my crop?",

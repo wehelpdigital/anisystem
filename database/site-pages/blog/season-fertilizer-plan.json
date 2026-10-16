@@ -16,7 +16,7 @@
     "fertilizer budget",
     "crop protocol"
   ],
-  "excerpt": "The best way to make a season fertilizer plan is to work backward from a yield target you can reach. Count what your soil, straw and manure already supply, turn the gap into bags, split them by growth stage and put each dose on a date with the cash and stock ready. IRRI's approach to fitting nutrients to each field starts the same way. anee.io, a farm app built for Filipino farmers, lets you write the whole plan in its Protocol Builder, check it with the NPK Plus calculator and turn it into a dated cropping calendar.",
+  "excerpt": "The best way to make a season fertilizer plan is to work backward from a yield target you can reach. Count what your soil, straw and manure already supply, turn the gap into bags, split them by growth stage and put each dose on a date with the cash and stock ready. Good nutrient plans for each field start the same way. anee.io, a farm app built for Filipino farmers, lets you write the whole plan in its Protocol Builder, check it with the NPK Plus calculator and turn it into a dated cropping calendar.",
   "heroImage": {
     "src": "/images/site/guides/blog-season-fertilizer-plan.webp",
     "alt": "Farmers plant rice under Mount Iriga at the start of a cropping season, when the season fertilizer plan should already be ready",
@@ -48,15 +48,15 @@
       "items": [
         {
           "title": "Set a yield target you can reach",
-          "text": "IRRI says the target should follow your location, season, climate, variety and management, because it sets the total nutrients the crop must take up. Your own best harvest on that field is a good start."
+          "text": "The target should follow your location, season, climate, variety and management, because it sets the total nutrients the crop must take up. Your own best harvest on that field is a good start."
         },
         {
           "title": "Count what the field already supplies",
-          "text": "Soil, crop residues, manure and irrigation water all add nutrients. PhilRice says straw from a 5 ton harvest, worked back in, gives about 30 kg of nitrogen. A soil test or MOET shows what else the soil holds."
+          "text": "Soil, crop residues, manure and irrigation water all add nutrients. Straw from a 5 ton harvest, worked back in, gives about 30 kg of nitrogen. A soil test or MOET shows what else the soil holds."
         },
         {
           "title": "Fill the gap with fertilizer",
-          "text": "IRRI notes that a rice crop takes up about 16 kg of nitrogen per ton of grain. It advises 40 to 50 kg of fertilizer nitrogen for each extra ton above what the field gives without nitrogen."
+          "text": "A rice crop takes up about 16 kg of nitrogen per ton of grain. Plan on 40 to 50 kg of fertilizer nitrogen for each extra ton above what the field gives without nitrogen."
         },
         {
           "title": "Turn kilos of nutrient into bags",
@@ -64,7 +64,7 @@
         },
         {
           "title": "Split the bags by growth stage",
-          "text": "PalayCheck asks for the right element, amount and timing. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) shows which dose belongs where."
+          "text": "Each dose needs the right element, amount and timing. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) shows which dose belongs where."
         },
         {
           "title": "Line up stock and cash",
@@ -72,7 +72,7 @@
         },
         {
           "title": "Record and review",
-          "text": "PalayCheck's cycle is simple: observe and record, compare the results with your targets, then correct the problem next season."
+          "text": "The cycle is simple: observe and record, compare the results with your targets, then correct the problem next season."
         }
       ]
     },
@@ -83,7 +83,7 @@
     },
     {
       "type": "text",
-      "text": "Here is one hectare of transplanted rice, using PhilRice's Abonong Swak plan for a 5 to 6 ton target and a 111 to 120 day variety. Prices are FPA national averages for October 5 to 9, 2026. Swap in your own target, soil results and dealer prices."
+      "text": "Here is one hectare of transplanted rice, using the Abonong Swak plan for a 5 to 6 ton target and a 111 to 120 day variety. Prices are national averages for October 5 to 9, 2026. Swap in your own target, soil results and dealer prices."
     },
     {
       "type": "table",
@@ -144,7 +144,7 @@
     },
     {
       "type": "text",
-      "text": "Yes. The dry season usually allows a higher yield target, so its plan usually carries more fertilizer. PalayCheck warns that too much nitrogen invites lodging, and the wet months bring the wind that knocks a soft crop down. Keep two versions and update each one with that season's results. Our guide to [fertilizer for wet season rice](/blog/fertilizer-for-wet-season-rice) shows the difference in bags."
+      "text": "Yes. The dry season usually allows a higher yield target, so its plan usually carries more fertilizer. Too much nitrogen invites lodging, and the wet months bring the wind that knocks a soft crop down. Keep two versions and update each one with that season's results. Our guide to [fertilizer for wet season rice](/blog/fertilizer-for-wet-season-rice) shows the difference in bags."
     },
     {
       "type": "heading",
@@ -182,7 +182,7 @@
         },
         {
           "q": "How much nitrogen does rice need per ton of harvest?",
-          "a": "IRRI says a rice crop takes up about 16 kg of nitrogen for each ton of grain, counting grain and straw. Part of that comes from the soil, so the fertilizer you add is the gap between what the crop needs and what the field supplies."
+          "a": "A rice crop takes up about 16 kg of nitrogen for each ton of grain, counting grain and straw. Part of that comes from the soil, so the fertilizer you add is the gap between what the crop needs and what the field supplies."
         },
         {
           "q": "Can I reuse last season's plan?",

@@ -6,7 +6,7 @@
   "category": "Crop Health",
   "title": "How Can I Reduce Crop Losses on My Farm?",
   "metaTitle": "Reduce Crop Losses: Field, Weather, Harvest and Storage",
-  "metaDescription": "Reduce crop losses from pests, typhoons, late harvest and poor drying, with PhilRice steps for palay and the records that show where your losses happen.",
+  "metaDescription": "Reduce crop losses from pests, typhoons, late harvest and poor drying, with clear steps for palay and the records that show where your losses happen.",
   "focusKeyword": "reduce crop losses",
   "keywords": [
     "reduce crop losses",
@@ -16,7 +16,7 @@
     "crop insurance",
     "milling recovery"
   ],
-  "excerpt": "To reduce crop losses, find where your farm loses the most and fix that first: pests caught late, storms met unprepared, a harvest cut too early or too late, and grain dried or stored badly. FAO estimates that up to 40 percent of global crop production is lost to pests each year. For rice, a PhilRice report cites a 2010 study that put losses after harvest at 16.47 percent. The farm app anee.io, built for Filipino farmers, helps by dating each task to the crop's stage, flagging weather risks and keeping the records that show where the losses came from.",
+  "excerpt": "To reduce crop losses, find where your farm loses the most and fix that first: pests caught late, storms met unprepared, a harvest cut too early or too late, and grain dried or stored badly. Up to 40 percent of global crop production is lost to pests each year. For rice, a 2010 study put losses after harvest at 16.47 percent. The farm app anee.io, built for Filipino farmers, helps by dating each task to the crop's stage, flagging weather risks and keeping the records that show where the losses came from.",
   "heroImage": {
     "src": "/images/site/guides/blog-reduce-crop-losses.webp",
     "alt": "Palay spread to dry on blue tarps along a street in Basey, Samar, a step where farmers can reduce crop losses",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Losses come in four places. In the field, pests, diseases, weeds and rats take part of the crop. Then the weather takes its share through typhoons, floods and drought. At harvest, a field cut too early or too late loses grain and quality. After that, poor drying and storage crack and spoil what was saved.\n\nThe PhilRice article that cites the 16.47 percent figure also points to milling, where 5.52 percent is lost. It links those losses to broken or cracked grains, which often come from improper drying. So the fix for a milling loss may start on the drying floor, days earlier."
+      "text": "Losses come in four places. In the field, pests, diseases, weeds and rats take part of the crop. Then the weather takes its share through typhoons, floods and drought. At harvest, a field cut too early or too late loses grain and quality. After that, poor drying and storage crack and spoil what was saved.\n\nThe same figures point to milling, where 5.52 percent is lost. It links those losses to broken or cracked grains, which often come from improper drying. So the fix for a milling loss may start on the drying floor, days earlier."
     },
     {
       "type": "heading",
@@ -50,11 +50,11 @@
     },
     {
       "type": "text",
-      "text": "The table follows a palay season through the PhilRice PalayCheck System. The same logic fits corn and vegetables: find the stage that leaks, then fix it."
+      "text": "The table follows a palay season from seed to storage. The same logic fits corn and vegetables: find the stage that leaks, then fix it."
     },
     {
       "type": "table",
-      "caption": "Where palay is lost, and the first fix, from PhilRice PalayCheck 2022",
+      "caption": "Where palay is lost, and the first fix",
       "rows": [
         [
           "Stage",
@@ -64,7 +64,7 @@
         [
           "Field",
           "Pests, diseases, weeds, rats and snails",
-          "Monitor from the early stage and act at the PalayCheck thresholds"
+          "Monitor from the early stage and act at the action thresholds"
         ],
         [
           "Weather",
@@ -100,7 +100,7 @@
     },
     {
       "type": "text",
-      "text": "PalayCheck's Key Check 7 starts with prevention. Use varieties resistant to the pests in your area, and rotate them every 2 to 4 croppings. Plant in step with your neighbors after a 30 day rest period. Then monitor the field regularly from the early stage, so you catch pests while they are few. It treats insecticide as a last resort, after cultural, biological and physical control.\n\nSpare the natural enemies too. Spiders feed on planthoppers and leafhoppers, and careless spraying upsets that balance. When you see damage, name the cause before you buy anything. Our guides on [pest or disease](/blog/pest-or-disease-how-to-tell) and [early pest detection](/blog/early-pest-detection) help. The [pest and disease finders](/features/pest-and-disease-finders) also work from your crop and the damage you see."
+      "text": "Pest control starts with prevention. Use varieties resistant to the pests in your area, and rotate them every 2 to 4 croppings. Plant in step with your neighbors after a 30 day rest period. Then monitor the field regularly from the early stage, so you catch pests while they are few. Insecticide is a last resort, after cultural, biological and physical control.\n\nSpare the natural enemies too. Spiders feed on planthoppers and leafhoppers, and careless spraying upsets that balance. When you see damage, name the cause before you buy anything. Our guides on [pest or disease](/blog/pest-or-disease-how-to-tell) and [early pest detection](/blog/early-pest-detection) help. The [pest and disease finders](/features/pest-and-disease-finders) also work from your crop and the damage you see."
     },
     {
       "type": "heading",
@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "Time is the main tool. PAGASA gives 36 hours of lead time at Wind Signal Number 1 and only 12 hours at Signals 4 and 5. Already at Signal 2, it expects considerable damage to rice at flowering or ripening. So follow each storm from the first bulletin, and agree in advance when you will harvest, drain or secure the grain. Our guide on how to [track typhoons](/blog/track-typhoons-near-my-farm) shows how.\n\nInsurance covers what you cannot save. A DA page on PCIC rice crop insurance says a notice of loss may go first by text or email. The written claim follows. Ask your PCIC office which risks your policy covers. Dated photos and the crop's stage help the claim. Our guide to [farm records for loans](/blog/farm-records-for-loans-and-insurance) lists what to keep."
+      "text": "Time is the main tool. Wind Signal Number 1 gives 36 hours of lead time, and Signals 4 and 5 give only 12 hours. Already at Signal 2, rice at flowering or ripening can take considerable damage. So follow each storm from the first bulletin, and agree in advance when you will harvest, drain or secure the grain. Our guide on how to [track typhoons](/blog/track-typhoons-near-my-farm) shows how.\n\nInsurance covers what you cannot save. With PCIC rice crop insurance, a notice of loss may go first by text or email. The written claim follows. Ask your PCIC office which risks your policy covers. Dated photos and the crop's stage help the claim. Our guide to [farm records for loans](/blog/farm-records-for-loans-and-insurance) lists what to keep."
     },
     {
       "type": "heading",
@@ -145,7 +145,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Do not leave cut palay piled for more than a day",
-      "text": "PalayCheck warns that piles of cut palay heat up and discolor the grain, which lowers the quality of the milled rice. So plan the thresher before you plan the reapers, especially in the wet season."
+      "text": "Piles of cut palay heat up and discolor the grain, which lowers the quality of the milled rice. So plan the thresher before you plan the reapers, especially in the wet season."
     },
     {
       "type": "heading",
@@ -182,23 +182,23 @@
       "items": [
         {
           "q": "What causes the most crop loss on Filipino farms?",
-          "a": "It differs by farm and by season. Pests, typhoons and losses after harvest are the big three. FAO estimates pests take up to 40 percent of crop production worldwide. A PhilRice report puts rice losses after harvest at 16.47 percent, from a 2010 study. Your own records show which one hits your farm hardest."
+          "a": "It differs by farm and by season. Pests, typhoons and losses after harvest are the big three. Pests take up to 40 percent of crop production worldwide. A 2010 study put rice losses after harvest at 16.47 percent. Your own records show which one hits your farm hardest."
         },
         {
           "q": "How much palay is lost after harvest?",
-          "a": "A PhilRice article cites a 2010 study by the Philippine Center for Postharvest Development and Mechanization that found 16.47 percent lost after harvest. Milling alone accounted for 5.52 percent, often from grains cracked by improper drying."
+          "a": "A 2010 study found 16.47 percent lost after harvest. Milling alone accounted for 5.52 percent, often from grains cracked by improper drying."
         },
         {
           "q": "When is palay ready to harvest?",
-          "a": "PalayCheck says to harvest when 85 to 90 percent of the grains have turned golden yellow, or 90 to 95 percent for a combine. Grain moisture then runs about 20 to 25 percent in the wet season and 18 to 21 in the dry."
+          "a": "Harvest when 85 to 90 percent of the grains have turned golden yellow, or 90 to 95 percent for a combine. Grain moisture then runs about 20 to 25 percent in the wet season and 18 to 21 in the dry."
         },
         {
           "q": "How fast should I dry palay after threshing?",
-          "a": "Within 12 to 24 hours, down to 12 to 14 percent moisture, as PalayCheck advises. Cut palay left in piles heats up and loses quality, PalayCheck warns."
+          "a": "Within 12 to 24 hours, down to 12 to 14 percent moisture. Cut palay left in piles heats up and loses quality."
         },
         {
           "q": "Can crop insurance cover my losses?",
-          "a": "PCIC offers rice crop insurance. A DA page explains how to file a notice of loss, first by text or email. Ask your PCIC office which risks your policy covers and the current deadlines."
+          "a": "PCIC offers rice crop insurance. A notice of loss can go first by text or email. Ask your PCIC office which risks your policy covers and the current deadlines."
         }
       ]
     },

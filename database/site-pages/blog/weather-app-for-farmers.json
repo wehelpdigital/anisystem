@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "A city forecast says rain in Nueva Ecija. What you need to know is whether rain falls on your lot on Thursday afternoon, the day you planned to spray. That gap is why the question of the best weather app matters to farmers more than to anyone else.\n\nThere are three kinds of tools. PAGASA gives the official forecasts, warnings and a daily farm weather forecast. General phone apps give a city forecast by the hour. Farm apps put the forecast beside the work you planned. Most farmers do best with PAGASA plus one app that knows their field."
+      "text": "A city forecast says rain in Nueva Ecija. What you need to know is whether rain falls on your lot on Thursday afternoon, the day you planned to spray. That gap is why the question of the best weather app matters to farmers more than to anyone else.\n\nThere are three kinds of tools. PAGASA issues the official forecasts, warnings and a daily farm weather forecast. General phone apps give a city forecast by the hour. Farm apps put the forecast beside the work you planned. Most farmers do best with PAGASA plus one app that knows their field."
     },
     {
       "type": "heading",
@@ -100,7 +100,7 @@
     },
     {
       "type": "text",
-      "text": "For many decisions, yes. The PAGASA Farm Weather Forecast comes out at 7:00 AM and stays valid for 24 hours. It gives each region its sky, wind, temperature, humidity and leaf wetness, for lowland and upland areas. It also maps soil moisture, gives farming advisories and shows the El Nino or La Nina status. All of it is free on the PAGASA website.\n\nThe limit is scale. A regional line cannot say which hour rain reaches your barangay, and it does not know you planned to spray Lot 2 on Thursday. That is where an app tied to your field and your plan helps. During storm season, PAGASA counts an average of 20 tropical cyclones in its area of responsibility each year, with 8 or 9 of them crossing the country. So also follow its bulletins, whatever app you use."
+      "text": "For many decisions, yes. The PAGASA Farm Weather Forecast comes out at 7:00 AM and stays valid for 24 hours. It gives each region its sky, wind, temperature, humidity and leaf wetness, for lowland and upland areas. It also maps soil moisture, gives farming advisories and shows the El Nino or La Nina status. All of it is free on the PAGASA website.\n\nThe limit is scale. A regional line cannot say which hour rain reaches your barangay, and it does not know you planned to spray Lot 2 on Thursday. That is where an app tied to your field and your plan helps. In an average year, 20 tropical cyclones enter the Philippine area of responsibility, and 8 or 9 of them cross the country. So also follow the PAGASA bulletins, whatever app you use."
     },
     {
       "type": "heading",
@@ -149,7 +149,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Spray on a dry canopy",
-      "text": "Ohio State University found that a fungicide became rainfast faster on dry heads than on dewy ones. So wait for the dew to lift before you spray, and check the leaf wetness line in the PAGASA farm forecast for your region."
+      "text": "In one test, a fungicide became rainfast faster on dry heads than on dewy ones. So wait for the dew to lift before you spray, and check the leaf wetness line in the PAGASA farm forecast for your region."
     },
     {
       "type": "heading",
