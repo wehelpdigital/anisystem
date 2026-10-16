@@ -6,7 +6,7 @@ namespace App\Support\Newsletter;
  * HOW JOHN WRITES (2026-10-16, the owner: "we want the persona of John
  * Pagulayan on how he writes"). The newsletter is written as John of anee.io:
  * a farmer writing to a fellow farmer, not a company writing to a customer.
- * Read off the 356 emails of his sequence (their subjects: "Ang pinakamurang
+ * Read off the 356 emails of John's sequence (their subjects: "Ang pinakamurang
  * farm tool: ballpen", "Kailan ka huling nag-abono? Sigurado ka?", "Si Juan
  * Tamad at ang bayabas", "Bakit lumalaki ang ani pag gabi na? (lol)").
  *
@@ -19,7 +19,7 @@ final class Voice
 
     public const SIGN_OFF = "Kasama mo sa bukid,\nJohn";
 
-    /** [the rule, an example in his words] */
+    /** [the rule, an example in John's words] */
     public const RULES = [
         ['Taglish, Tagalog first. English only for the words farmers already say in English.', 'Ang LCC mo, nasa level 3 na. Oras na ng abono.'],
         ['A fellow farmer talking. Call the reader kasama. Say ako, ko, tayo, never "we at anee.io".', 'Kasama, may aaminin ako.'],

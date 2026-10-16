@@ -20,34 +20,43 @@ final class AiPrices
     public const KEY = 'ai.prices';
 
     /** The analyses, their default prices, and how they read on a screen. */
+    /* The owner's price list of 2026-10-16. Every price here is what a run of
+       the usual size costs; the pricing engine (App\Support\AiPricing) raises
+       one only when a big job would earn under its target. The three the owner
+       did not name (skyweather, npkplan, npkproto) keep the engine's 4x to 6x
+       prices of the same day. */
     public const DEFAULTS = [
         'wtp' => 100,
-        'what' => 100,
-        'variety' => 120,
+        // When to Plant with a named variety: the research leads with the variety.
+        'wtpVariety' => 150,
+        'what' => 50,
+        'variety' => 100,
         'protocol' => 150,
-        'season' => 300,
-        'sofar' => 200,
+        'season' => 100,
+        'sofar' => 50,
         'compare' => 30,
-        'realign' => 60,
+        'realign' => 30,
         'builder' => 100,
         // 2026-10-07: the satellite pair and the NPK Plus readings.
-        'satellite' => 120,
-        'skyweather' => 60,
-        'npk' => 60,
-        'npkplan' => 60,
-        'npkproto' => 60,
+        'satellite' => 100,
+        'skyweather' => 20,
+        'npk' => 80,
+        'npkplan' => 25,
+        'npkproto' => 20,
         // 2026-10-12: Anee Auto, per lot, for the whole season.
         'auto' => 1000,
         // Satellite Weather, a week of the page (App\Support\SkyPass keeps it above cost).
-        'skypass' => 30,
+        'skypass' => 50,
         // 2026-10-14: the LCC Checker, Anee reading leaf photos against the leaf color chart.
         'lcc' => 30,
         // 2026-10-14: the Land Prep Planner, Anee planning every lot's land preparation.
-        'landprep' => 60,
+        // Per lot since 2026-10-16.
+        'landprep' => 50,
     ];
 
     public const NAMES = [
         'wtp' => 'When to Plant analysis',
+        'wtpVariety' => 'When to Plant analysis with a named variety',
         'what' => 'What to Plant analysis',
         'variety' => 'Variety Ranking (searches the web)',
         'protocol' => 'Crop Protocol Analysis (season plan by growth stage, searches the web)',
@@ -64,7 +73,7 @@ final class AiPrices
         'auto' => 'Anee Auto, per lot (a whole season planned and kept on track by Anee)',
         'skypass' => 'Satellite Weather, a week pass (never sold below what a week costs the house)',
         'lcc' => 'LCC Checker (Anee reads rice leaf photos against the leaf color chart)',
-        'landprep' => 'Land Prep Planner (every lot\'s land preparation, around the crew and the weather)',
+        'landprep' => 'Land Prep Planner, per lot (every lot\'s land preparation, around the crew and the weather)',
     ];
 
     /** @var array<string, int>|null */

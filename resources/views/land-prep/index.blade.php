@@ -1495,7 +1495,7 @@
         } else {
             q.className = 'lp-quote';
             q.innerHTML = (OPT.aneeFace ? '<img src="' + esc(OPT.aneeFace) + '" alt="">' : '')
-                + '<span>Anee plans every step of your land preparation, lot by lot, from PhilRice and extension practice, your soil, the weather and your crew. One plan costs <b>' + OPT.quote + ' credits' + tlf('credits') + '</b>, more when Anee has to look up your variety. You have '
+                + '<span>Anee plans every step of your land preparation, lot by lot, from PhilRice and extension practice, your soil, the weather and your crew. A plan costs <b>' + OPT.quote + ' credits' + tlf('credits') + ' a lot</b>, more when Anee has to look up your variety. You have '
                 + (window.creditCoin ? window.creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()) : '<b>' + esc(OPT.balance) + '</b>') + '. Nothing is charged until the plan is ready.</span>';
         }
         q.hidden = false;

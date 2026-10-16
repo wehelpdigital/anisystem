@@ -718,7 +718,7 @@
             let vOpen = false;
             try { vOpen = localStorage.getItem('nlk.voice') === '1'; } catch (e) { vOpen = false; }
             pane.innerHTML =
-                '<details class="nlk-voice"' + (vOpen ? ' open' : '') + '><summary><span class="nlk-voice-ic">' + ic('anee') + '</span><b>How ' + h(V.name || 'John') + ' writes</b><small>Every email is his voice</small></summary>' +
+                '<details class="nlk-voice"' + (vOpen ? ' open' : '') + '><summary><span class="nlk-voice-ic">' + ic('anee') + '</span><b>How ' + h(V.name || 'John') + ' writes</b><small>Every email is in ' + h(V.name || 'John') + '’s voice</small></summary>' +
                 '<ol>' + V.rules.map((r) => '<li><b>' + h(r.rule) + '</b><em>' + h(r.example).replace(/\n/g, '<br>') + '</em></li>').join('') + '</ol></details>' +
                 '<div class="nlk-head-card" data-headcard><b>The top of the email</b>' +
                 '  <label class="nlk-field"><span>Small line above the title</span><input class="nlk-in" data-h="kicker" value="' + h(c.kicker) + '" placeholder="Bago sa anee.io"></label>' +

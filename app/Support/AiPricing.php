@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Schema;
  * the owner: "some users might have really lots of lots ... we want a 6x to
  * 10x profit margin, always, in the credits"). LOWERED 2026-10-16 (the owner:
  * "let's lower the cost of the anee products ... what if we just make it 4-6x
- * profit"): the target is 5x, the floor 4x and the ceiling 6x, and the
- * engine now sets the price itself, under today's flat price too.
+ * profit"): the target is 5x, the floor 4x and the ceiling 6x. The same day
+ * the owner set the price list himself (App\Support\AiPrices), so the flat
+ * prices are the floor again (flatFloor on) and the engine only raises a
+ * price when a big job would earn under the target.
  *
  * WHAT A RUN COSTS THE HOUSE is modelled per kind at the 90th percentile
  * (p90), never the mean, so a heavy farm cannot drag a run under the floor:
@@ -76,8 +78,8 @@ final class AiPricing
         'target' => 5.0,
         'minMargin' => 4.0,
         'maxMargin' => 6.0,
-        // Today's flat prices as a floor under the engine (the rule until 2026-10-16). Off: the engine sets every price.
-        'flatFloor' => false,
+        // The owner's price list (AiPrices) as the floor under the engine. Off: the engine sets every price at the target.
+        'flatFloor' => true,
         // Pesos per credit; null = the cheapest channel, computed (pesoPerCredit()).
         'pesoPerCredit' => null,
         'usdRate' => 58.0,
@@ -131,10 +133,13 @@ final class AiPricing
             // A week of Satellite Weather: per opening a Google map load plus the shared forecast grid and the tiles.
             'skypass' => ['unit' => 'open', 'free' => 0, 'units' => 14, 'max' => 40, 'mapsUnit' => 1, 'unitUsd' => 0.0017],
             'lcc' => ['unit' => 'leaf', 'free' => 10, 'units' => 10, 'max' => 12, 'baseIn' => 4500, 'baseOut' => 3600, 'unitOut' => 150, 'outCap' => 5048],
-            'landprep' => ['unit' => 'lot', 'free' => 1, 'units' => 1, 'max' => 12, 'baseIn' => 7000, 'baseOut' => 4500, 'unitIn' => 400, 'unitOut' => 250, 'outCap' => 8048, 'om' => 3,
+            'landprep' => ['unit' => 'lot', 'free' => 1, 'units' => 1, 'max' => 12, 'perUnitPrice' => true, 'baseIn' => 7000, 'baseOut' => 4500, 'unitIn' => 400, 'unitOut' => 250, 'outCap' => 8048, 'om' => 3,
                 'opts' => ['research' => ['in' => 2600, 'out' => 3800, 'search' => 1]]],
         ],
     ];
+
+    /** A job option with its own price on the list: When to Plant with a named variety is 150, not 100. */
+    public const OPT_PRICES = ['wtp' => ['variety' => 'wtpVariety']];
 
     /** How each unit reads in the margin table and the why line. */
     public const UNIT_WORDS = [
@@ -420,6 +425,11 @@ final class AiPricing
         $s = self::settings();
         $k = self::kind($kind);
         $flatOne = AiPrices::of($kind);
+        foreach (self::OPT_PRICES[$kind] ?? [] as $opt => $key) {
+            if (! empty($size[$opt])) {
+                $flatOne = max($flatOne, AiPrices::of($key));
+            }
+        }
         if (! $k) {
             return ['credits' => $flatOne, 'base' => $flatOne, 'perUnit' => 0.0, 'units' => 1, 'unitWord' => 'run', 'costPhp' => 0.0, 'margin' => 0.0, 'flat' => $flatOne,
                 'raised' => false, 'under' => false, 'over' => false, 'pesoPerCredit' => self::pesoPerCredit(), 'why' => 'No cost model for this kind: today\'s flat price.'];
