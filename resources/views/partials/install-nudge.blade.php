@@ -11,7 +11,12 @@
      own prompt, or the steps for iPhone and for browsers without one) ends
      it on this browser. The browser's install prompt is shared with the
      account menu's button (resources/js/app.js keeps it on
-     window.aneeInstallPrompt). --}}
+     window.aneeInstallPrompt).
+
+     It names the device it shows on (iPhone, iPad, phone, tablet, Mac,
+     computer) and says one thing: tap the button, no store needed (the App
+     Store on Apple, the Play Store on other phones). The three reasons that
+     were under it are gone (both 2026-10-17, the owner). --}}
 <div class="in-wrap" id="installNudge" hidden aria-hidden="true">
     <div class="in-backdrop" data-in-close></div>
     <div class="in-card" role="dialog" aria-modal="true" aria-labelledby="inTitle" aria-describedby="inSub">
@@ -21,13 +26,9 @@
         </button>
         <div class="in-body">
             <span class="in-icon" aria-hidden="true"><img src="{{ asset('images/pwa/icon-192.png') }}?v=anee" alt="" width="64" height="64"></span>
+            {{-- Named for the device it shows on (the script below sets both lines). --}}
             <h3 class="in-title" id="inTitle">Get anee.io on your phone</h3>
-            <p class="in-sub" id="inSub">Install it like any app. It is free and takes a few seconds.</p>
-            <ul class="in-why">
-                <li><span aria-hidden="true">📲</span><span><b>One tap from your home screen</b><small>No browser, no typing the address.</small></span></li>
-                <li><span aria-hidden="true">📶</span><span><b>Works with a weak signal</b><small>Your season stays open out in the field.</small></span></li>
-                <li><span aria-hidden="true">🔔</span><span><b>Tells you when you are needed</b><small>Tasks, your team's messages and Anee's answers.</small></span></li>
-            </ul>
+            <p class="in-sub" id="inSub">Tap the button below to install the app. No need to go to the Play Store.</p>
             {{-- How to, where the browser has no install prompt of its own. --}}
             <div class="in-steps" id="inSteps" hidden></div>
             <div class="in-acts">
@@ -74,12 +75,7 @@
     .in-icon img { width: 4rem; height: 4rem; border-radius: 1rem; }
     @keyframes inBob { 50% { transform: translateY(-4px); } }
     .in-title { margin-top: .75rem; font-family: var(--font-heading, inherit); font-size: 1.22rem; font-weight: 800; line-height: 1.25; color: var(--color-gray-900, #111827); }
-    .in-sub { margin-top: .3rem; font-size: .86rem; line-height: 1.5; color: var(--color-gray-500, #6b7280); }
-    .in-why { display: grid; gap: .45rem; margin: 1rem 0 0; padding: 0; list-style: none; text-align: left; }
-    .in-why li { display: flex; align-items: flex-start; gap: .65rem; padding: .55rem .7rem; border-radius: .9rem; background: #f6f9f2; border: 1px solid #e3edd8; }
-    .in-why li > span:first-child { flex: none; font-size: 1.15rem; line-height: 1.4; }
-    .in-why b { display: block; font-size: .86rem; font-weight: 800; color: var(--color-gray-900, #111827); }
-    .in-why small { display: block; font-size: .76rem; line-height: 1.4; color: var(--color-gray-500, #6b7280); }
+    .in-sub { margin: .35rem auto 0; max-width: 21rem; font-size: .92rem; line-height: 1.5; color: var(--color-gray-500, #6b7280); }
     .in-steps { margin-top: .9rem; padding: .75rem .85rem; border-radius: .95rem; text-align: left; background: #fffbeb; border: 1px solid #fde68a; animation: inFade .3s ease both; }
     .in-steps p { font-size: .8rem; font-weight: 800; color: #92400e; }
     .in-steps ol { margin: .4rem 0 0; padding-left: 1.2rem; display: grid; gap: .3rem; list-style: decimal; }
@@ -95,9 +91,8 @@
         transition: background-color .28s cubic-bezier(.22,1,.36,1); }
     .in-later:hover { background: var(--color-gray-100, #f3f4f6); }
     html.dark .in-card { background: #151b12; }
-    html.dark .in-title, html.dark .in-why b { color: #e8efe1; }
-    html.dark .in-sub, html.dark .in-why small { color: #b7c2ad; }
-    html.dark .in-why li { background: #1a2414; border-color: #2b3a1c; }
+    html.dark .in-title { color: #e8efe1; }
+    html.dark .in-sub { color: #b7c2ad; }
     html.dark .in-steps { background: #2a210a; border-color: #5c4a24; }
     html.dark .in-steps p, html.dark .in-steps li { color: #fcd34d; }
     html.dark .in-x:hover, html.dark .in-later:hover { background: #22301a; }
@@ -125,6 +120,17 @@
     const android = /android/i.test(ua);
     const inApp = /FBAN|FBAV|FB_IAB|Instagram|Line\/|Messenger|TikTok/i.test(ua);
     const phone = iOS || android || (window.matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 820);
+    // The card names the device it shows on, and the store it saves a trip to (2026-10-17, the owner).
+    const apple = iOS || /Macintosh|Mac OS X/.test(ua);
+    const device = /iphone|ipod/i.test(ua) ? 'iPhone'
+        : iOS ? 'iPad'
+            : android ? (/mobile/i.test(ua) ? 'phone' : 'tablet')
+                : phone ? 'phone'
+                    : apple ? 'Mac' : 'computer';
+    const tap = phone ? 'Tap' : 'Click';
+    const storeName = apple ? 'the App Store' : (phone ? 'the Play Store' : 'an app store');
+    document.getElementById('inTitle').textContent = 'Get anee.io on your ' + device;
+    document.getElementById('inSub').textContent = tap + ' the button below to install the app. No need to go to ' + storeName + '.';
     // The browser's own install prompt, kept by app.js; caught here too in case it comes later.
     const deferred = () => window.aneeInstallPrompt || null;
     window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); window.aneeInstallPrompt = e; });
@@ -137,7 +143,9 @@
         ? '<p>Open anee.io in your phone\'s browser first</p><ol><li>Tap the menu ' + DOTS + ' at the top of this screen.</li><li>Tap <b>Open in browser</b> (or Open in Chrome or Safari).</li><li>There, tap <b>Install the app</b> when this card shows again.</li></ol>'
         : iOS
             ? '<p>On iPhone and iPad, in Safari</p><ol><li>Tap the Share button ' + SHARE + ' at the bottom of the screen.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>. anee.io is now on your home screen.</li></ol>'
-            : '<p>In your browser</p><ol><li>Tap the menu ' + DOTS + ' at the top right.</li><li>Tap <b>Install app</b> or <b>Add to Home screen</b>.</li><li>Tap <b>Install</b>. anee.io is now on your home screen.</li></ol>';
+            : phone
+                ? '<p>In your browser</p><ol><li>Tap the menu ' + DOTS + ' at the top right.</li><li>Tap <b>Install app</b> or <b>Add to Home screen</b>.</li><li>Tap <b>Install</b>. anee.io is now on your home screen.</li></ol>'
+                : '<p>In your browser</p><ol><li>Click the install icon at the right end of the address bar, or the menu ' + DOTS + ' at the top right.</li><li>Click <b>Install</b>. anee.io opens in its own window, and stays on your ' + device + '.</li></ol>';
 
     // Not over another card, a sheet, a wait or a field being typed in, and not in a hidden tab.
     const busy = () => document.hidden
@@ -156,7 +164,7 @@
         const st = document.getElementById('inSteps');
         st.hidden = true; st.innerHTML = '';
         const go = document.getElementById('inGo');
-        go.textContent = deferred() ? 'Install the app' : 'Show me how';
+        go.textContent = 'Install the app';
         delete go.dataset.step;
         wrap.classList.remove('is-out');
         wrap.hidden = false;
