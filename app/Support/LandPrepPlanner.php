@@ -317,6 +317,12 @@ final class LandPrepPlanner
      * [{name, days: [0..6, Sunday 0]}], the fleet as [{type, own, hired}],
      * and whether planting days may be staggered. A plan saved before round
      * two (workers as a number, one machine, days a week) reads the same.
+     *
+     * Since 2026-10-16 (the owner) a worker may carry their pay (pay, payUnit
+     * day or half) and the roster person they are (globalId, Global
+     * Workers), and a hired machine its service price (cost, costUnit ha,
+     * day or job) and who is hired from the Contact List (hire {contactId,
+     * name, phone}). All optional; costs() turns them into money.
      */
     public static function crew(array $c): array
     {
@@ -328,7 +334,16 @@ final class LandPrepPlanner
                 if (! $days) {
                     continue;
                 }
-                $workers[] = ['name' => mb_substr(trim((string) ($w['name'] ?? '')), 0, 40) ?: 'Worker ' . ($i + 1), 'days' => $days];
+                $row = ['name' => mb_substr(trim((string) ($w['name'] ?? '')), 0, 40) ?: 'Worker ' . ($i + 1), 'days' => $days];
+                $pay = is_numeric($w['pay'] ?? null) ? round(max(0, min(1000000, (float) $w['pay'])), 2) : 0.0;
+                if ($pay > 0) {
+                    $row['pay'] = $pay;
+                    $row['payUnit'] = ($w['payUnit'] ?? 'day') === 'half' ? 'half' : 'day';
+                }
+                if ((int) ($w['globalId'] ?? 0) > 0) {
+                    $row['globalId'] = (int) $w['globalId'];
+                }
+                $workers[] = $row;
             }
         } else {
             $n = max(1, min(200, (int) ($c['workers'] ?? 2)));
@@ -350,6 +365,19 @@ final class LandPrepPlanner
                 $hired = max(0, min(20, (int) ($f['hired'] ?? 0)));
                 if (isset($items[$t]) && $own + $hired > 0 && ! isset($fleet[$t])) {
                     $fleet[$t] = ['type' => $t, 'own' => $own, 'hired' => $hired];
+                    if ($hired > 0) {
+                        $cost = is_numeric($f['cost'] ?? null) ? round(max(0, min(10000000, (float) $f['cost'])), 2) : 0.0;
+                        if ($cost > 0) {
+                            $fleet[$t]['cost'] = $cost;
+                            $fleet[$t]['costUnit'] = in_array($f['costUnit'] ?? '', ['ha', 'day', 'job'], true) ? $f['costUnit'] : 'ha';
+                        }
+                        $hire = is_array($f['hire'] ?? null) ? $f['hire'] : [];
+                        $who = mb_substr(trim((string) ($hire['name'] ?? '')), 0, 80);
+                        if ($who !== '') {
+                            $fleet[$t]['hire'] = ['contactId' => (int) ($hire['contactId'] ?? 0) ?: null, 'name' => $who,
+                                'phone' => mb_substr(trim((string) ($hire['phone'] ?? '')), 0, 40)];
+                        }
+                    }
                 }
             }
         } elseif (isset($c['equipment'])) {
@@ -1874,6 +1902,8 @@ final class LandPrepPlanner
         }
         $calendar = [];
         $firstHired = [];
+        // What the hired machines did, for the bill: days on the field and hectares of passes, per lot.
+        $hiredUse = [];
         if ($jobs && array_sum($cap) > 0) {
             $from = max(min(array_column($jobs, 'es')), $T);
             $until = max(array_column($jobs, 'le')) + 120;
@@ -1936,6 +1966,13 @@ final class LandPrepPlanner
                                 $drivers++;
                             } else {
                                 $firstHired[$units[$u]['type']] ??= ['day' => $d, 'lot' => $jobs[$j]['lot'], 'key' => $jobs[$j]['key']];
+                                $ty = $units[$u]['type'];
+                                $lt = $jobs[$j]['lot'];
+                                $did = min($jobs[$j]['left'], 1 / $units[$u]['rates'][$c]);
+                                $hiredUse[$ty]['days'] = ($hiredUse[$ty]['days'] ?? 0) + 1;
+                                $hiredUse[$ty]['ha'] = ($hiredUse[$ty]['ha'] ?? 0) + $did;
+                                $hiredUse[$ty]['lots'][$lt]['days'] = ($hiredUse[$ty]['lots'][$lt]['days'] ?? 0) + 1;
+                                $hiredUse[$ty]['lots'][$lt]['ha'] = ($hiredUse[$ty]['lots'][$lt]['ha'] ?? 0) + $did;
                             }
                             $jobs[$j]['left'] = round(max(0, $jobs[$j]['left'] - 1 / $units[$u]['rates'][$c]), 4);
                             $used[] = $units[$u]['type'];
@@ -2105,7 +2142,139 @@ final class LandPrepPlanner
 
         return ['perLot' => $perLot, 'calendar' => $calendar, 'conflicts' => $conflicts, 'plantDays' => $plantDays,
             'hiredFirst' => array_map(fn ($x) => ['day' => $iso($x['day']), 'lot' => $x['lot'], 'key' => $x['key']], $firstHired),
+            'hiredUse' => $hiredUse,
             'late' => $late + array_fill(0, count($lots), 0)];
+    }
+
+    /**
+     * WHAT THE PLAN COSTS (2026-10-16, the owner: "add the costings based on
+     * the costing in the wizard so that user will know"), from the pay and
+     * the service prices the farmer gave, nothing guessed:
+     *
+     *  - workers: each day of the crew calendar takes its people from the
+     *    workers of that weekday in the order they were listed (worker 1
+     *    first), a driver of an owned machine included; a worker's day is
+     *    their day pay, or twice their half day pay;
+     *  - the planting days: the people they need, at the average day pay of
+     *    the workers who have one;
+     *  - each hired machine: its price a hectare (every pass counts), a day
+     *    on the field, or one price for the whole job; a planting machine
+     *    covers the lots' area on their planting days.
+     *
+     * Per lot and in all. A worker or a machine with no price is counted in
+     * days only and named in `missing`, so the total never pretends.
+     *
+     * @param  array  $lots  [{name, area (ha)}] in the schedule's order
+     */
+    public static function costs(array $crew, array $sched, array $lots): array
+    {
+        $n = count($lots);
+        $per = array_fill(0, $n, ['labor' => 0.0, 'planting' => 0.0, 'hired' => 0.0]);
+        $people = [];
+        foreach ($crew['workers'] as $i => $w) {
+            $rate = isset($w['pay']) ? (float) $w['pay'] * (($w['payUnit'] ?? 'day') === 'half' ? 2 : 1) : null;
+            $people[$i] = ['name' => $w['name'], 'pay' => $w['pay'] ?? null, 'payUnit' => $w['payUnit'] ?? null, 'rate' => $rate, 'days' => 0, 'cost' => $rate === null ? null : 0.0];
+        }
+        foreach ((array) ($sched['calendar'] ?? []) as $date => $items) {
+            $wd = (int) gmdate('w', strtotime($date . ' 00:00:00 UTC'));
+            $free = array_values(array_filter(array_keys($crew['workers']), fn ($i) => in_array($wd, $crew['workers'][$i]['days'], true)));
+            foreach ($items as $it) {
+                $lot = (int) ($it['lot'] ?? 0);
+                for ($k = 0; $k < (int) ($it['people'] ?? 0) && $free; $k++) {
+                    $i = array_shift($free);
+                    $people[$i]['days']++;
+                    if ($people[$i]['rate'] !== null) {
+                        $people[$i]['cost'] += $people[$i]['rate'];
+                        if (isset($per[$lot])) {
+                            $per[$lot]['labor'] += $people[$i]['rate'];
+                        }
+                    }
+                }
+            }
+        }
+        $rates = array_values(array_filter(array_column($people, 'rate'), fn ($r) => $r !== null));
+        $avg = $rates ? array_sum($rates) / count($rates) : null;
+        $plantPeople = 0;
+        $plantDates = [];
+        foreach ((array) ($sched['plantDays'] ?? []) as $p) {
+            $plantPeople += (int) $p['people'];
+            $plantDates[(int) $p['lot']][$p['date']] = true;
+            if ($avg !== null && isset($per[(int) $p['lot']])) {
+                $per[(int) $p['lot']]['planting'] += (int) $p['people'] * $avg;
+            }
+        }
+
+        $items = (array) (self::equipmentBook()['items'] ?? []);
+        $use = (array) ($sched['hiredUse'] ?? []);
+        $area = array_map(fn ($l) => max(0.0, (float) ($l['area'] ?? 0)), array_values($lots));
+        $hired = [];
+        foreach ($crew['fleet'] as $f) {
+            if ((int) $f['hired'] < 1) {
+                continue;
+            }
+            $u = $use[$f['type']] ?? [];
+            $lotsUse = [];
+            if (! empty($items[$f['type']]['plants'])) {
+                // A seeder or a transplanter works the planting days, outside the crew calendar.
+                foreach ($area as $i => $a) {
+                    $lotsUse[$i] = ['ha' => $a, 'days' => max(1, count($plantDates[$i] ?? []))];
+                }
+            } else {
+                foreach ((array) ($u['lots'] ?? []) as $i => $x) {
+                    $lotsUse[(int) $i] = ['ha' => (float) $x['ha'], 'days' => (int) $x['days']];
+                }
+            }
+            $ha = array_sum(array_column($lotsUse, 'ha'));
+            $days = array_sum(array_column($lotsUse, 'days'));
+            $row = ['type' => $f['type'], 'name' => (string) ($items[$f['type']]['name'] ?? $f['type']), 'count' => (int) $f['hired'],
+                'who' => $f['hire']['name'] ?? null, 'phone' => $f['hire']['phone'] ?? null,
+                'ha' => round($ha, 2), 'days' => $days, 'amount' => $f['cost'] ?? null, 'unit' => $f['costUnit'] ?? null, 'cost' => null];
+            if (isset($f['cost'])) {
+                $unit = $f['costUnit'] ?? 'ha';
+                $cost = $unit === 'job' ? (float) $f['cost'] : (float) $f['cost'] * ($unit === 'day' ? $days : $ha);
+                $row['cost'] = round($cost, 2);
+                // Each lot's share: by its hectares (a whole job and a hectare price) or its days.
+                $basis = $unit === 'day' ? $days : $ha;
+                if ($basis <= 0 && $unit === 'job') {
+                    // A whole job price with no work on the calendar: shared by the lots' size.
+                    $lotsUse = array_map(fn ($a) => ['ha' => $a, 'days' => 0], $area);
+                    $basis = array_sum($area);
+                }
+                foreach ($lotsUse as $i => $x) {
+                    if ($basis > 0 && isset($per[$i])) {
+                        $per[$i]['hired'] += $cost * (($unit === 'day' ? $x['days'] : $x['ha']) / $basis);
+                    }
+                }
+            }
+            $hired[] = $row;
+        }
+
+        $labor = $rates ? array_sum(array_filter(array_column($people, 'cost'), fn ($c) => $c !== null)) : null;
+        $planting = $avg !== null && $plantPeople > 0 ? $plantPeople * $avg : null;
+        $hiredCost = array_sum(array_filter(array_column($hired, 'cost'), fn ($c) => $c !== null));
+        $total = (float) ($labor ?? 0) + (float) ($planting ?? 0) + $hiredCost;
+        $perLot = [];
+        foreach ($per as $i => $p) {
+            $perLot[] = ['lot' => $i, 'labor' => round($p['labor'], 2), 'planting' => round($p['planting'], 2), 'hired' => round($p['hired'], 2),
+                'total' => round($p['labor'] + $p['planting'] + $p['hired'], 2), 'area' => $area[$i] ?? 0];
+        }
+        $sumArea = array_sum($area);
+
+        return [
+            'workers' => array_map(fn ($p) => ['name' => $p['name'], 'pay' => $p['pay'], 'payUnit' => $p['payUnit'], 'days' => $p['days'],
+                'cost' => $p['cost'] === null ? null : round($p['cost'], 2)], array_values($people)),
+            'labor' => $labor === null ? null : round($labor, 2),
+            'planting' => $plantPeople > 0 ? ['people' => $plantPeople, 'rate' => $avg === null ? null : round($avg, 2), 'cost' => $planting === null ? null : round($planting, 2)] : null,
+            'hired' => $hired,
+            'perLot' => $perLot,
+            'total' => round($total, 2),
+            'perHa' => $sumArea > 0 && $total > 0 ? round($total / $sumArea, 2) : null,
+            'missing' => [
+                'pay' => count(array_filter($people, fn ($p) => $p['rate'] === null && $p['days'] > 0)),
+                'hired' => count(array_filter($hired, fn ($h) => $h['cost'] === null)),
+            ],
+            'priced' => $total > 0,
+        ];
     }
 
     /**

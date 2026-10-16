@@ -141,6 +141,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // The newsletter module (2026-10-17): the code, the kit, and whether the migration ran.
             'newsletter' => class_exists(\App\Support\Newsletter\Planner::class) && is_file(public_path('nl-kit/nl.js'))
                 && Illuminate\Support\Facades\Schema::hasTable('as_nl_emails'),
+            'lpCosts' => method_exists(\App\Support\LandPrepPlanner::class, 'costs'),
             'nlMergeTags' => class_exists(\App\Support\Newsletter\MergeTags::class),
             'saltMulti' => ! empty(\App\Support\FieldProfile::QUESTIONS['salt']['multi']),
             'grayWater' => isset(\App\Support\FieldProfile::QUESTIONS['waterLook']['o']['gray']),
@@ -820,6 +821,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/land-prep/varieties', [App\Http\Controllers\LandPrepController::class, 'varieties'])->middleware('throttle:120,1')->name('landprep.varieties');
     Route::get('/app/land-prep/seed', [App\Http\Controllers\LandPrepController::class, 'seed'])->middleware('throttle:240,1')->name('landprep.seed');
     Route::get('/app/land-prep/seasons', [App\Http\Controllers\LandPrepController::class, 'seasons'])->name('landprep.seasons');
+    Route::get('/app/land-prep/people', [App\Http\Controllers\LandPrepController::class, 'people'])->name('landprep.people');
     Route::post('/app/land-prep/check', [App\Http\Controllers\LandPrepController::class, 'check'])->middleware('throttle:120,1')->name('landprep.check');
     // A plan made into a new cropping schedule (2026-10-15).
     Route::post('/app/land-prep/season', [App\Http\Controllers\LandPrepController::class, 'season'])->middleware('throttle:20,1')->name('landprep.season');

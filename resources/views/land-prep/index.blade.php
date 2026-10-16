@@ -259,6 +259,75 @@
     .lp-same { display: flex; justify-content: flex-end; margin-top: .55rem; }
     .lp-same button { min-height: 2.4rem; padding: .3rem .85rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--lp-gd); background: var(--lp-gl); transition: background-color .28s var(--lp-e); }
     .lp-same button:hover { background: #d9e9c4; }
+    .lp-same { gap: .45rem; flex-wrap: wrap; }
+
+    /* Pay, the roster and who is hired (2026-10-16, the owner). */
+    .lp-roster { margin-bottom: .8rem; }
+    .lp-wk.is-roster { border-color: #cfe3b8; background: #f7fbf2; }
+    .lp-wk-from { display: inline-flex; align-items: center; gap: .25rem; margin: .4rem 0 0 2.55rem; padding: .1rem .5rem; border-radius: 999px; font-size: .68rem; font-weight: 800; color: var(--lp-gd); background: var(--lp-gl); }
+    .lp-pay { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; margin-top: .5rem; min-width: 0; }
+    .lp-pay > span { flex: none; min-width: 2.2rem; font-size: .76rem; font-weight: 800; color: var(--color-gray-600); }
+    .lp-money { flex: 1 1 7rem; min-width: 6rem; display: flex; align-items: center; gap: .3rem; min-height: 2.5rem; padding: 0 .6rem; border-radius: .7rem; border: 1.5px solid #e1e7da; background: #fff; transition: border-color .28s var(--lp-e); }
+    .lp-money:focus-within { border-color: #86b556; }
+    .lp-money em { font-style: normal; font-weight: 800; color: var(--color-gray-500); }
+    .lp-money input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 0; font-size: .95rem; font-weight: 700; color: #14210c; outline: none; box-shadow: none; }
+    .lp-unit2 { flex: none; display: inline-flex; gap: .15rem; padding: .2rem; border-radius: .8rem; background: #f1f5ec; max-width: 100%; flex-wrap: wrap; }
+    .lp-unit2 button { min-height: 2.1rem; padding: 0 .65rem; border-radius: .6rem; font-size: .76rem; font-weight: 800; color: var(--color-gray-500); transition: background-color .28s var(--lp-e), color .28s var(--lp-e), box-shadow .28s var(--lp-e); }
+    .lp-unit2 button.is-on { color: var(--lp-gd); background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .1); }
+    .lp-savenew { display: flex; align-items: flex-start; gap: .6rem; margin-top: .7rem; padding: .65rem .75rem; border-radius: .9rem; background: var(--lp-gx); border: 1px solid #e1edd3; cursor: pointer; animation: lpPop .28s var(--lp-e) both; }
+    .lp-savenew input { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .15rem; accent-color: #4a7c2a; }
+    .lp-savenew b { display: block; font-size: .84rem; font-weight: 800; color: var(--color-gray-900); }
+    .lp-savenew small { display: block; font-size: .74rem; line-height: 1.4; color: var(--color-gray-500); }
+    .lp-hire { width: 100%; display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .32s var(--lp-e), opacity .28s var(--lp-e); }
+    .lp-hire.is-closed { grid-template-rows: 0fr; opacity: 0; }
+    .lp-hire > div { min-height: 0; overflow: hidden; }
+    .lp-hire-in { display: grid; gap: .45rem; margin: .55rem 0 0 4.15rem; padding: .7rem .75rem; border-radius: .9rem; background: #fffaf0; border: 1px solid #fde9c0; min-width: 0; }
+    @media (max-width: 400px) { .lp-hire-in { margin-left: 0; } }
+    .lp-hire-h { font-size: .76rem; font-weight: 800; color: #92400e; }
+    .lp-hire-h small { font-weight: 700; color: #b45309; }
+    .lp-hpick { display: flex; align-items: center; gap: .5rem; min-height: 2.6rem; padding: .3rem .75rem; border-radius: .8rem; font-size: .84rem; font-weight: 800; text-align: left; color: #92400e; background: #fff; border: 1.5px dashed #f5c97a; transition: background-color .28s var(--lp-e), border-color .28s var(--lp-e); }
+    .lp-hpick:hover { background: #fff7e6; border-color: #e9a93f; }
+    .lp-hchip { display: flex; align-items: center; gap: .55rem; padding: .35rem .4rem .35rem .45rem; border-radius: .85rem; background: #fff; border: 1px solid #fde1a8; min-width: 0; animation: lpPop .26s var(--lp-e) both; }
+    .lp-hchip > i { flex: none; width: 2rem; height: 2rem; border-radius: 999px; display: grid; place-items: center; font-style: normal; font-weight: 900; color: #fff; background: #d97706; }
+    .lp-hchip > span { flex: 1; min-width: 0; }
+    .lp-hchip b { display: block; font-size: .86rem; font-weight: 800; color: #78350f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lp-hchip small { display: block; font-size: .72rem; color: #a16207; }
+    .lp-hchip button { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; color: #92400e; transition: background-color .28s var(--lp-e); }
+    .lp-hchip button:hover { background: #fef3c7; }
+    .lp-hchip button svg { width: 1rem; height: 1rem; }
+    .lp-hire .lp-unit2 { background: #fdf0d5; }
+    .lp-hire .lp-money { border-color: #f6dca6; }
+    .lp-hire-note { font-size: .7rem; line-height: 1.4; color: #a16207; }
+    /* The stagger choice, shown on three lots. */
+    .lp-ex { margin-top: .65rem; padding: .75rem .8rem; border-radius: 1rem; background: #f8faf6; border: 1px solid var(--color-gray-200); min-width: 0; }
+    .lp-ex > p { font-size: .78rem; line-height: 1.5; color: var(--color-gray-600); }
+    .lp-ex-rows { display: grid; gap: .35rem; margin-top: .55rem; }
+    .lp-ex-row { display: grid; grid-template-columns: 3.3rem minmax(0, 1fr); align-items: center; gap: .5rem; font-size: .76rem; animation: lpPop .3s var(--lp-e) both; }
+    .lp-ex-row > b { font-weight: 800; color: var(--color-gray-700); }
+    .lp-ex-row > span { min-width: 0; padding: .4rem .55rem; border-radius: .6rem; font-weight: 700; line-height: 1.35; }
+    .lp-ex-row .is-ok { color: #2d5016; background: #e9f3dd; }
+    .lp-ex-row .is-late { color: #991b1b; background: #fde8e8; }
+    .lp-ex-row .is-moved { color: #5b21b6; background: #efe9fd; }
+    .lp-ex-sum { margin-top: .55rem; font-size: .76rem; font-weight: 700; line-height: 1.45; color: var(--color-gray-700); }
+    html.dark .lp-wk.is-roster { background: #18210f; border-color: #2f4220; }
+    html.dark .lp-money { background: #12170f; border-color: #2b3a1c; }
+    html.dark .lp-money input { color: #e8efe1; }
+    html.dark .lp-unit2 { background: #1c2416; }
+    html.dark .lp-unit2 button.is-on { color: #e8efe1; background: #2b3a1c; }
+    html.dark .lp-savenew { background: #18210f; border-color: #2b3a1c; }
+    html.dark .lp-savenew b { color: #e8efe1; }
+    html.dark .lp-hire-in { background: #2a2010; border-color: #5c4413; }
+    html.dark .lp-hire-h, html.dark .lp-hire-h small, html.dark .lp-hire-note { color: #fcd34d; }
+    html.dark .lp-hpick, html.dark .lp-hchip { color: #fcd34d; background: #1a1408; border-color: #5c4413; }
+    html.dark .lp-hchip b { color: #fde68a; }
+    html.dark .lp-hire .lp-unit2 { background: #3a2a0c; }
+    html.dark .lp-hire .lp-money { border-color: #5c4413; }
+    html.dark .lp-ex { background: #12170f; border-color: #2b3a1c; }
+    html.dark .lp-ex > p, html.dark .lp-ex-row > b, html.dark .lp-ex-sum { color: #d5e3c5; }
+    html.dark .lp-ex-row .is-ok { color: #cfe6b8; background: #22301a; }
+    html.dark .lp-ex-row .is-late { color: #fca5a5; background: #3a1414; }
+    html.dark .lp-ex-row .is-moved { color: #d8ccfb; background: #2a1f45; }
+    @media (prefers-reduced-motion: reduce) { .lp-hire, .lp-ex-row, .lp-hchip, .lp-savenew { transition: none !important; animation: none !important; } }
 
     /* The lot pages host the shared field profile. */
     .lp-fqhost { min-height: 10rem; }
@@ -571,6 +640,22 @@
     .lp-crew-chip { display: inline-flex; align-items: center; gap: .45rem; min-height: 2.4rem; padding: .25rem .7rem .25rem .3rem; border-radius: 999px; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); font-size: .78rem; font-weight: 700; color: var(--color-gray-700); max-width: 100%; }
     .lp-crew-chip .lp-ph { width: 1.9rem; height: 1.9rem; font-size: 1rem; box-shadow: none; }
     .lp-crew-chip em { font-style: normal; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* What it costs (2026-10-16). */
+    .lp-cost-big { display: flex; align-items: baseline; flex-wrap: wrap; gap: .2rem .55rem; padding: .7rem .8rem; margin-bottom: .6rem; border-radius: 1rem; background: linear-gradient(120deg, #f3f8ec, #e8f1dc); }
+    .lp-cost-big b { font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #1f3510; }
+    .lp-cost-big span { font-size: .8rem; font-weight: 700; color: #3d5226; }
+    .lp-cost-rows { display: grid; margin: .3rem 0 .6rem; }
+    .lp-cost-rows > div { display: flex; align-items: center; gap: .6rem; padding: .5rem 0; border-top: 1px solid var(--color-gray-100); min-width: 0; animation: lpPop .3s var(--lp-e) both; }
+    .lp-cost-rows > div:first-child { border-top: 0; }
+    .lp-cost-rows > div > span { flex: 1; min-width: 0; }
+    .lp-cost-rows b { display: block; font-size: .86rem; font-weight: 800; color: var(--color-gray-900); }
+    .lp-cost-rows small { display: block; font-size: .74rem; line-height: 1.4; color: var(--color-gray-500); }
+    .lp-cost-rows em { flex: none; font-style: normal; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
+    .lp-cost-rows em.is-none { font-size: .74rem; font-weight: 700; color: var(--color-gray-400); }
+    .lp-cost-rows b > i { display: inline-block; width: .6rem; height: .6rem; margin-right: .35rem; border-radius: 999px; background: var(--lc); }
+    html.dark .lp-cost-big { background: linear-gradient(120deg, #1c2a12, #22301a); }
+    html.dark .lp-cost-big b { color: #e8efe1; }
+    html.dark .lp-cost-big span { color: #cfe6b8; }
     .lp-book { display: flex; gap: .6rem; padding: .6rem .7rem; margin-bottom: .55rem; border-radius: .9rem; background: #fff8eb; border: 1px solid #fde9c0; font-size: .8rem; line-height: 1.45; color: #78350f; min-width: 0; }
     .lp-book > span:first-child { flex: none; font-size: 1.05rem; }
     .lp-book b { color: #92400e; }
@@ -953,8 +1038,10 @@
             {{-- The workers --}}
             <section class="lp-step" data-screen="workers">
                 <p class="lp-q">Who will do the work?{{ \App\Support\Tagalog::flag('crew') }}</p>
-                <p class="lp-sub">Each worker keeps their own days. Anee gives each day only the hands that work it.</p>
+                <p class="lp-sub">Each worker keeps their own days and pay. Anee gives each day only the hands that work it, and adds up what the work costs.</p>
                 <div id="lpRec"></div>
+                {{-- The farm's own workers (Global Workers): picked, they bring their days off and pay (2026-10-16, the owner). --}}
+                <button type="button" class="lp-tag lp-roster" id="lpRosterOpen" hidden><span class="ti" aria-hidden="true">👥</span><span class="tt"><b>Pick from My workers</b><small id="lpRosterLine">Your workers from every season</small></span><span class="tc">Pick{!! $chev !!}</span></button>
                 <div class="lp-stepper">
                     <button type="button" data-wstep="-1" aria-label="One worker less">−</button>
                     <output id="lpWCount">2</output>
@@ -962,13 +1049,16 @@
                     <span id="lpWWord">workers</span>
                 </div>
                 <div class="lp-wks" id="lpWorkers"></div>
-                <div class="lp-same" id="lpSameDays"><button type="button">Same days for all</button></div>
+                <div class="lp-same" id="lpSameDays"><button type="button" data-same="days">Same days for all</button><button type="button" data-same="pay">Same pay for all</button></div>
+                <label class="lp-savenew" id="lpSaveNew" hidden><input type="checkbox" id="lpSaveNewOn" checked><span><b>Add the new names to My workers</b><small>Next season you pick them instead of typing them again.</small></span></label>
                 <p class="lp-ferr" id="lpWErr" hidden>Give at least one worker a work day.</p>
-                <span class="lp-label">If the crew cannot finish a lot in time</span>
+                {{-- Said plainly (2026-10-16, the owner: "me myself is confused"), with three lots to show it. --}}
+                <span class="lp-label">When your crew is too small to finish a lot before its planting day</span>
                 <div class="lp-choices" id="lpStagger">
-                    <button type="button" class="lp-choice is-on" data-stagger="0"><span class="ce">📅</span><span class="ct"><b>Keep my planting days</b><small>Anee shows what runs late and how to fix it</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
-                    <button type="button" class="lp-choice" data-stagger="1"><span class="ce">🔀</span><span class="ct"><b>Let Anee stagger the lots{{ \App\Support\Tagalog::flag('stagger') }}</b><small>She moves a planting day later only as much as the crew needs</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
+                    <button type="button" class="lp-choice is-on" data-stagger="0"><span class="ce">📅</span><span class="ct"><b>Keep my planting days</b><small>Every lot is planted on the day you set. Work that cannot be done by then is marked late, and Anee says how to catch up: another worker, a hired machine, or starting sooner.</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
+                    <button type="button" class="lp-choice" data-stagger="1"><span class="ce">🔀</span><span class="ct"><b>Let Anee move planting days{{ \App\Support\Tagalog::flag('stagger') }}</b><small>A lot your crew cannot get ready in time is planted a few days later, only as many days as the crew needs. Lots that can be ready keep their day.</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
                 </div>
+                <div class="lp-ex" id="lpStagEx" aria-live="polite"></div>
             </section>
 
             {{-- Every lot's soil, water and history: the shared field profile --}}
@@ -1137,6 +1227,42 @@
     </div>
 </dialog>
 
+{{-- My workers (Global Workers): tick who works on this plan. --}}
+<dialog class="lp-sheet is-tall" id="lpRosterSheet" aria-labelledby="lpRosterTitle">
+    <div class="lp-sbox" tabindex="-1">
+        <div class="lp-grip" aria-hidden="true"></div>
+        <div class="lp-shead"><h2 id="lpRosterTitle">My workers<small>Tick who will work. They bring their days off and their pay.</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
+        <label class="lp-sfind">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>
+            <span class="sr-only">Search your workers</span>
+            <input type="search" id="lpRosterQ" placeholder="Search your workers" autocomplete="off" maxlength="60">
+        </label>
+        <div class="lp-slist" id="lpRosterList" role="listbox" aria-multiselectable="true" aria-label="Your workers"></div>
+        <div class="lp-sfoot">
+            <div class="lp-pickline"><b id="lpRosterCount">None ticked</b><span><a href="{{ route('workers.global') }}" target="_blank" rel="noopener" class="underline">Manage your workers</a></span></div>
+            <button type="button" class="btn btn-primary" id="lpRosterUse">Use them</button>
+        </div>
+    </div>
+</dialog>
+
+{{-- Who is hired for a machine: one from the Contact List, or nobody. --}}
+<dialog class="lp-sheet is-tall" id="lpConSheet" aria-labelledby="lpConTitle">
+    <div class="lp-sbox" tabindex="-1">
+        <div class="lp-grip" aria-hidden="true"></div>
+        <div class="lp-shead"><h2 id="lpConTitle">Who do you hire?<small id="lpConSub">From your Contact List</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
+        <label class="lp-sfind">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>
+            <span class="sr-only">Search your contacts</span>
+            <input type="search" id="lpConQ" placeholder="Search a name, a number or a town" autocomplete="off" maxlength="60">
+        </label>
+        <div class="lp-slist" id="lpConList" role="listbox" aria-label="Your contacts"></div>
+        <div class="lp-sfoot">
+            <div class="lp-pickline"><b>Not in your contacts?</b><span>Skip this, or add them in <a href="{{ route('contacts.page') }}" target="_blank" rel="noopener" class="underline">Contact List</a></span></div>
+            <button type="button" class="btn btn-white" data-close>Skip</button>
+        </div>
+    </div>
+</dialog>
+
 {{-- One step or crew job, explained. --}}
 <dialog class="lp-sheet is-tall" id="lpStepSheet" aria-labelledby="lpStepTitle">
     <div class="lp-sbox" tabindex="-1">
@@ -1259,6 +1385,7 @@
         job: (id) => @json(url('/app/land-prep/job')) + '/' + id, one: (id) => @json(url('/app/land-prep/one')) + '/' + id, del: (id) => @json(url('/app/land-prep')) + '/' + id,
         ph: @json(asset('data/ph-locations.json')),
         lots: @json(route('farmlots.index')), lotIcon: @json(asset('images/treasure-map.png')),
+        people: @json(route('landprep.people')),
     };
     const TODAY = @json($today);
     const CROPS = @json($lpCropJs);
@@ -1306,7 +1433,18 @@
        picked or last edited, which decide the pages still to ask. */
     const newLot = (o) => Object.assign({ uid: ++uid, name: '', area: '', unit: 'ha', planting: null, sourceLotId: null, from: null, profile: {}, copiedFrom: null, edited: false, savedFrom: null,
         farmLotId: null, lot: null, base: null, crop: null, province: '', town: '', where: '', place: '', stale: false, updated: '', areaFromLot: false }, o || {});
-    const newWorker = (o) => Object.assign({ uid: ++uid, name: '', days: [1, 2, 3, 4, 5, 6] }, o || {});
+    // A worker's pay (a day, or half a day) and the roster person they are, when picked from My workers.
+    const newWorker = (o) => Object.assign({ uid: ++uid, name: '', days: [1, 2, 3, 4, 5, 6], pay: '', payUnit: 'day', globalId: null }, o || {});
+    const CUR = @json(\App\Support\Region::symbol());
+    const money = (v) => CUR + Math.round(num(v)).toLocaleString('en-US');
+    // The people the wizard can pick: the farm's workers and the Contact List (LandPrepController::people).
+    let PEOPLE = null;
+    const loadPeople = async () => {
+        if (PEOPLE) return PEOPLE;
+        try { PEOPLE = (await window.api(U.people)).data; } catch (_) { PEOPLE = { roster: [], contacts: [], canSave: false }; }
+        return PEOPLE;
+    };
+    S.saveNew = true;
     const clone = (o) => JSON.parse(JSON.stringify(o || {}));
     // The plan starts with no lot: they come from the farm's lots, or from a season.
     S.workers.push(newWorker(), newWorker());
@@ -1405,8 +1543,8 @@
         if (sc === 'seed') paintSeedSrc();
         if (sc === 'date') paintDate();
         if (sc === 'lots') paintLots();
-        if (sc === 'equip') paintEquip();
-        if (sc === 'workers') { paintWorkers(); recommend(); }
+        if (sc === 'equip') { paintEquip(); loadPeople(); }
+        if (sc === 'workers') { paintWorkers(); recommend(); paintStagEx(false); loadPeople().then(paintRosterBtn); }
         if (sc === 'place') paintPlace();
         if (sc === 'review') review();
         const top = $('lpWiz').getBoundingClientRect().top;
@@ -1776,7 +1914,7 @@
             crop: S.crop, method: S.method, planting: S.planting,
             lots: S.lots.map((l, i) => Object.assign({ name: l.name.trim() || 'Lot ' + (i + 1), area: numOk(l.area) ? num(l.area) : null, unit: l.unit, planting: l.planting },
                 withAnswers ? { profile: l.profile } : {})),
-            crew: { workers: S.workers.map((w) => ({ name: w.name, days: w.days })), fleet: fleetList() },
+            crew: { workers: S.workers.map((w) => ({ name: w.name, days: w.days })), fleet: fleetList().map(({ type, own, hired }) => ({ type, own, hired })) },
         };
     }
     async function timeCheck(withAnswers) {
@@ -2054,7 +2192,20 @@
     /* ---------------- the machines ---------------- */
     const eqFor = () => Object.fromEntries(Object.entries(OPT.equipment).filter(([, e]) => e.for === 'all' || (e.for === 'rice_wet' && rice() && S.method !== 'dsr_dry') || (Array.isArray(e.for) && e.for.includes(S.method))));
     const fleetNow = () => { const ok = eqFor(); return Object.fromEntries(Object.entries(S.fleet).filter(([k, f]) => ok[k] && (f.own + f.hired) > 0)); };
-    const fleetList = () => Object.entries(fleetNow()).map(([type, f]) => ({ type, own: f.own, hired: f.hired }));
+    const fleetList = () => Object.entries(fleetNow()).map(([type, f]) => ({ type, own: f.own, hired: f.hired,
+        cost: f.hired && num(f.cost) > 0 ? num(f.cost) : null, costUnit: f.costUnit || 'ha', hire: f.hired && f.hire ? f.hire : null }));
+    const newFleet = (o) => Object.assign({ own: 0, hired: 0, cost: '', costUnit: 'ha', hire: null }, o || {});
+    const HUNITS = [['ha', 'a hectare'], ['day', 'a day'], ['job', 'whole job']];
+    // Under a machine with a hired one: who is hired (Contact List) and the service price. Both optional.
+    const hireHtml = (k, f, closed) => '<div class="lp-hire' + (closed ? ' is-closed' : '') + '" data-hire="' + k + '"><div><div class="lp-hire-in">'
+        + '<span class="lp-hire-h">Who do you hire? <small>(optional)</small></span>'
+        + (f.hire ? '<div class="lp-hchip"><i>' + esc((f.hire.name || '?').trim().charAt(0).toUpperCase()) + '</i><span><b>' + esc(f.hire.name) + '</b><small>' + esc(f.hire.phone || 'No number saved') + '</small></span><button type="button" data-hclear="' + k + '" aria-label="Remove ' + esc(f.hire.name) + '">' + XSM + '</button></div>'
+            : '<button type="button" class="lp-hpick" data-hpick="' + k + '"><span aria-hidden="true">📇</span><span>Pick from your contacts</span></button>')
+        + '<span class="lp-hire-h">Their price <small>(optional)</small></span>'
+        + '<div class="lp-pay"><label class="lp-money"><em>' + esc(CUR) + '</em><input type="text" inputmode="decimal" data-hcost="' + k + '" value="' + esc(f.cost || '') + '" placeholder="0" aria-label="Price of the hired ' + esc(String((OPT.equipment[k] || {}).name || '').toLowerCase()) + '"></label>'
+        + '<div class="lp-unit2" role="group" aria-label="The price is for">' + HUNITS.map(([u, w]) => '<button type="button" data-hunit="' + k + ':' + u + '" class="' + ((f.costUnit || 'ha') === u ? 'is-on' : '') + '" aria-pressed="' + ((f.costUnit || 'ha') === u) + '">' + w + '</button>').join('') + '</div></div>'
+        + '<small class="lp-hire-note">' + ((f.costUnit || 'ha') === 'ha' ? 'A hectare counts every pass: plowing once and harrowing twice is three hectares on one hectare.' : (f.costUnit === 'day' ? 'Every day the machine is on your lots counts.' : 'One price for all the work it does on your lots.')) + '</small>'
+        + '</div></div></div>';
     const photo = (e, alt) => '<span class="lp-ph">' + (e.photo ? '<img src="' + esc(e.photo) + '" alt="' + esc(alt || '') + '" loading="lazy">' : '🚜') + '</span>';
     const counters = (k, f) => '<div class="lp-ct"><span>Own</span><div><button type="button" data-ct="' + k + ':own:-1" aria-label="One less owned"' + (f.own < 1 ? ' disabled' : '') + '>−</button><output>' + f.own + '</output><button type="button" data-ct="' + k + ':own:1" aria-label="One more owned">+</button></div></div>'
         + '<div class="lp-ct is-hire"><span>Hired</span><div><button type="button" data-ct="' + k + ':hired:-1" aria-label="One less hired"' + (f.hired < 1 ? ' disabled' : '') + '>−</button><output>' + f.hired + '</output><button type="button" data-ct="' + k + ':hired:1" aria-label="One more hired">+</button></div></div>';
@@ -2063,8 +2214,8 @@
         const keys = Object.keys(fleet);
         let h = '';
         if (keys.length) {
-            h += '<div class="lp-eqs">' + keys.map((k, i) => '<div class="lp-eq" style="animation-delay:' + (i * 40) + 'ms">' + photo(items[k], items[k].name) + '<span class="et"><b>' + esc(items[k].name) + tlf(EQ_TL[k]) + (items[k].local ? '<span class="lp-loc">' + esc(items[k].local) + '</span>' : '') + '</b><small>' + esc(items[k].line) + '</small></span>'
-                + '<div class="lp-cts">' + counters(k, fleet[k]) + '</div></div>').join('') + '</div>';
+            h += '<div class="lp-eqs">' + keys.map((k, i) => '<div class="lp-eq" data-eqc="' + k + '" style="animation-delay:' + (i * 40) + 'ms">' + photo(items[k], items[k].name) + '<span class="et"><b>' + esc(items[k].name) + tlf(EQ_TL[k]) + (items[k].local ? '<span class="lp-loc">' + esc(items[k].local) + '</span>' : '') + '</b><small>' + esc(items[k].line) + '</small></span>'
+                + '<div class="lp-cts">' + counters(k, fleet[k]) + '</div>' + (fleet[k].hired > 0 ? hireHtml(k, fleet[k], !!fleet[k]._opening) : '') + '</div>').join('') + '</div>';
             h += '<button type="button" class="lp-tag lp-eqadd" id="lpEqOpen"><span class="ti">➕</span><span class="tt"><b>Change the machines</b><small>' + keys.length + ' picked</small></span><span class="tc">Open' + CHEV + '</span></button>';
         } else {
             h += '<button type="button" class="lp-tag' + (S.handOnly ? '' : ' is-none') + '" id="lpEqOpen"><span class="ti">🚜</span><span class="tt"><b>Choose the machines</b><small>Hand tractor, four wheel tractor, carabao and more</small></span><span class="tc">Open' + CHEV + '</span></button>';
@@ -2072,6 +2223,8 @@
         h += '<span class="lp-label">Or</span><button type="button" class="lp-choice' + (S.handOnly && !keys.length ? ' is-on' : '') + '" id="lpHandOnly"><span class="ce">🧑‍🌾</span><span class="ct"><b>By hand only</b><small>Hoes and shovels, no machine and no animal</small></span><span class="ck">' + CHECK + '</span></button>';
         h += '<p class="lp-ferr" id="lpEqErr" hidden>Pick the machines, or choose By hand only.</p>';
         $('lpEquipBox').innerHTML = h;
+        // A hired machine just added: its panel opens.
+        keys.forEach((k) => { if (fleet[k]._opening) { delete fleet[k]._opening; const p = $('lpEquipBox').querySelector('[data-hire="' + k + '"]'); if (p) requestAnimationFrame(() => requestAnimationFrame(() => p.classList.remove('is-closed'))); } });
     }
     function paintEqSheet() {
         const items = eqFor();
@@ -2084,8 +2237,10 @@
         $('lpEqCount').textContent = n ? n + (n === 1 ? ' picked' : ' picked') : 'None picked';
     }
     function setCount(k, which, d) {
-        const f = S.fleet[k] || (S.fleet[k] = { own: 0, hired: 0 });
+        const f = S.fleet[k] || (S.fleet[k] = newFleet());
+        const had = f.hired;
         f[which] = Math.max(0, Math.min(20, f[which] + d));
+        if (which === 'hired' && had === 0 && f.hired > 0 && !reduce()) f._opening = true;
         if (f.own + f.hired === 0) delete S.fleet[k];
         S.handOnly = false;
     }
@@ -2095,16 +2250,72 @@
         const c = e.target.closest('[data-ct]');
         if (c) {
             const [k, which, d] = c.dataset.ct.split(':');
+            const hadHire = (S.fleet[k] || {}).hired > 0;
             setCount(k, which, Number(d));
             if (!S.fleet[k]) { const card = c.closest('.lp-eq'); if (card && !reduce()) { card.style.transition = 'opacity .22s, transform .22s'; card.style.opacity = '0'; card.style.transform = 'scale(.97)'; setTimeout(paintEquip, 220); return; } }
+            // The last hired one gone: its panel folds away first.
+            const panel = $('lpEquipBox').querySelector('[data-hire="' + k + '"]');
+            if (hadHire && S.fleet[k].hired === 0 && panel && !reduce()) { panel.classList.add('is-closed'); c.closest('.lp-cts').innerHTML = counters(k, S.fleet[k]); setTimeout(paintEquip, 300); return; }
+            if (panel && S.fleet[k].hired > 0) { c.closest('.lp-cts').innerHTML = counters(k, S.fleet[k]); return; }   // the panel stays as it is
             paintEquip();
+            return;
         }
+        const hp = e.target.closest('[data-hpick]');
+        if (hp) { openContacts(hp.dataset.hpick); return; }
+        const hc = e.target.closest('[data-hclear]');
+        if (hc) { const f = S.fleet[hc.dataset.hclear]; if (f) f.hire = null; paintEquip(); return; }
+        const hu = e.target.closest('[data-hunit]');
+        if (hu) {
+            const [k, u] = hu.dataset.hunit.split(':');
+            const f = S.fleet[k];
+            if (!f) return;
+            f.costUnit = u;
+            hu.parentNode.querySelectorAll('button').forEach((b) => { const on = b === hu; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); });
+            const note = hu.closest('.lp-hire-in').querySelector('.lp-hire-note');
+            if (note) note.textContent = u === 'ha' ? 'A hectare counts every pass: plowing once and harrowing twice is three hectares on one hectare.' : (u === 'day' ? 'Every day the machine is on your lots counts.' : 'One price for all the work it does on your lots.');
+        }
+    });
+    $('lpEquipBox').addEventListener('input', (e) => { const i = e.target.closest('[data-hcost]'); if (!i) return; const f = S.fleet[i.dataset.hcost]; if (f) f.cost = i.value.replace(/[^\d.,]/g, ''); });
+
+    /* Who is hired: one of the member's contacts. */
+    let CON_FOR = null;
+    function paintContacts() {
+        const q = $('lpConQ').value.trim().toLowerCase();
+        const all = (PEOPLE && PEOPLE.contacts) || [];
+        // The people who rent out machines first (their tags or role say so), then by name.
+        const MACH = /tractor|rent|plow|araro|harrow|suyod|kuliglig|carabao|kalabaw|machine|makina|service|operator|transplanter|seeder|custom/i;
+        const hit = (c) => (MACH.test([c.company, (c.tags || []).join(' ')].join(' ')) ? 0 : 1);
+        const rows = all.filter((c) => !q || [c.name, c.phone, c.company, c.town, (c.tags || []).join(' ')].join(' ').toLowerCase().includes(q))
+            .sort((a, b) => hit(a) - hit(b) || String(a.name).localeCompare(String(b.name)));
+        const cur = (S.fleet[CON_FOR] || {}).hire;
+        $('lpConList').innerHTML = rows.length ? rows.slice(0, 200).map((c) => '<button type="button" class="lp-row" role="option" data-con="' + c.id + '" aria-selected="' + !!(cur && cur.contactId === c.id) + '"><span class="ri">' + esc((c.name || '?').trim().charAt(0).toUpperCase()) + '</span><span class="rt"><b>' + esc(c.name) + '</b><small>'
+            + esc([c.phone, c.company, c.town].filter(Boolean).join(' · ') || 'No number saved') + '</small></span>' + ((c.tags || []).length ? '<span class="rn">' + esc(c.tags[0]) + '</span>' : '') + '</button>').join('')
+            : '<p class="lp-snone">' + (all.length ? 'Nobody by that name.' : 'Your Contact List is empty. You can skip this, and add the people you hire there later.') + '</p>';
+    }
+    async function openContacts(k) {
+        CON_FOR = k;
+        await loadPeople();
+        $('lpConTitle').firstChild.textContent = 'Who do you hire?';
+        $('lpConSub').textContent = 'For the ' + String((OPT.equipment[k] || {}).name || 'machine').toLowerCase() + ', from your Contact List';
+        $('lpConQ').value = '';
+        paintContacts();
+        sheetOpen($('lpConSheet'), $('lpConQ'));
+    }
+    $('lpConQ').addEventListener('input', paintContacts);
+    $('lpConList').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-con]');
+        if (!b || !S.fleet[CON_FOR]) return;
+        const c = ((PEOPLE && PEOPLE.contacts) || []).find((x) => String(x.id) === b.dataset.con);
+        if (!c) return;
+        S.fleet[CON_FOR].hire = { contactId: c.id, name: c.name, phone: c.phone || '' };
+        sheetClose($('lpConSheet'));
+        paintEquip();
     });
     $('lpEqList').addEventListener('click', (e) => {
         const t = e.target.closest('[data-eqt]');
         if (t) {
             const k = t.dataset.eqt;
-            if (S.fleet[k]) delete S.fleet[k]; else S.fleet[k] = { own: 1, hired: 0 };
+            if (S.fleet[k]) delete S.fleet[k]; else S.fleet[k] = newFleet({ own: 1 });
             S.handOnly = false;
             const row = t.closest('.lp-eqrow'), on = !!S.fleet[k];
             row.classList.toggle('is-on', on);
@@ -2136,10 +2347,79 @@
     function paintWorkers() {
         $('lpWCount').textContent = S.workers.length;
         $('lpWWord').textContent = S.workers.length === 1 ? 'worker' : 'workers';
-        $('lpWorkers').innerHTML = S.workers.map((w, i) => '<div class="lp-wk" data-w="' + w.uid + '" style="animation-delay:' + Math.min(i, 8) * 30 + 'ms"><div class="lp-wk-top"><i>' + (i + 1) + '</i><input type="text" data-wname maxlength="40" value="' + esc(w.name) + '" placeholder="Name (optional)" aria-label="Name of worker ' + (i + 1) + '"><small data-wdays>' + daysWord(w.days) + '</small></div>'
-            + '<div class="lp-d7" role="group" aria-label="Work days of worker ' + (i + 1) + '">' + DAYN.map((n, d) => '<button type="button" data-wd="' + d + '" class="' + (w.days.includes(d) ? 'is-on' : '') + '" aria-pressed="' + w.days.includes(d) + '">' + n + '</button>').join('') + '</div></div>').join('');
+        $('lpWorkers').innerHTML = S.workers.map((w, i) => '<div class="lp-wk' + (w.globalId ? ' is-roster' : '') + '" data-w="' + w.uid + '" style="animation-delay:' + Math.min(i, 8) * 30 + 'ms"><div class="lp-wk-top"><i>' + (i + 1) + '</i><input type="text" data-wname maxlength="40" value="' + esc(w.name) + '" placeholder="Name (optional)" aria-label="Name of worker ' + (i + 1) + '"><small data-wdays>' + daysWord(w.days) + '</small></div>'
+            + (w.globalId ? '<span class="lp-wk-from">👥 From My workers</span>' : '')
+            + '<div class="lp-d7" role="group" aria-label="Work days of worker ' + (i + 1) + '">' + DAYN.map((n, d) => '<button type="button" data-wd="' + d + '" class="' + (w.days.includes(d) ? 'is-on' : '') + '" aria-pressed="' + w.days.includes(d) + '">' + n + '</button>').join('') + '</div>'
+            + '<div class="lp-pay"><span>Pay</span><label class="lp-money"><em>' + esc(CUR) + '</em><input type="text" inputmode="decimal" data-wpay value="' + esc(w.pay || '') + '" placeholder="0" aria-label="Pay of worker ' + (i + 1) + '"></label>'
+            + '<div class="lp-unit2" role="group" aria-label="The pay is for">' + [['day', 'a day'], ['half', 'half a day']].map(([u, t]) => '<button type="button" data-wunit="' + u + '" class="' + (w.payUnit === u ? 'is-on' : '') + '" aria-pressed="' + (w.payUnit === u) + '">' + t + '</button>').join('') + '</div></div></div>').join('');
         $('lpSameDays').hidden = S.workers.length < 2;
+        paintSaveNew();
     }
+    // New names may join the roster (the Workers module's plan gate decides, LandPrepController::people).
+    const paintSaveNew = () => {
+        const box = $('lpSaveNew');
+        const any = !!(PEOPLE && PEOPLE.canSave) && S.workers.some((w) => !w.globalId && w.name.trim());
+        if (box.hidden === !any) return;
+        box.hidden = !any;
+    };
+    function paintRosterBtn() {
+        const r = (PEOPLE && PEOPLE.roster) || [];
+        const b = $('lpRosterOpen');
+        b.hidden = !r.length;
+        const inPlan = S.workers.filter((w) => w.globalId).length;
+        $('lpRosterLine').textContent = r.length + (r.length === 1 ? ' worker' : ' workers') + ' on your list' + (inPlan ? ', ' + inPlan + ' in this plan' : '') + '. They bring their days off and pay.';
+        paintSaveNew();
+    }
+    $('lpSaveNewOn').addEventListener('change', (e) => { S.saveNew = e.target.checked; });
+
+    /* My workers: tick who works; picked, a worker brings their days off and pay. */
+    let RPICK = new Set();
+    function paintRoster() {
+        const q = $('lpRosterQ').value.trim().toLowerCase();
+        const rows = ((PEOPLE && PEOPLE.roster) || []).filter((g) => !q || (g.name + ' ' + g.phone).toLowerCase().includes(q));
+        const DN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        $('lpRosterList').innerHTML = rows.length ? rows.map((g) => '<button type="button" class="lp-row" role="option" data-gw="' + g.id + '" aria-checked="' + RPICK.has(g.id) + '" aria-selected="' + RPICK.has(g.id) + '"><span class="ri">' + esc((g.name || '?').trim().charAt(0).toUpperCase()) + '</span><span class="rt"><b>' + esc(g.name) + '</b><small>'
+            + esc([g.halfDay > 0 ? money(g.halfDay) + ' a half day' : 'No pay saved', (g.off || []).length ? 'off ' + g.off.map((d) => DN[d]).join(', ') : '', g.phone].filter(Boolean).join(' · ')) + '</small></span><span class="lp-check">' + CHECK + '</span></button>').join('')
+            : '<p class="lp-snone">Nobody by that name.</p>';
+        $('lpRosterCount').textContent = RPICK.size ? RPICK.size + ' ticked' : 'None ticked';
+    }
+    $('lpRosterOpen').addEventListener('click', async () => {
+        await loadPeople();
+        RPICK = new Set(S.workers.filter((w) => w.globalId).map((w) => w.globalId));
+        $('lpRosterQ').value = '';
+        paintRoster();
+        sheetOpen($('lpRosterSheet'), $('lpRosterQ'));
+    });
+    $('lpRosterQ').addEventListener('input', paintRoster);
+    $('lpRosterList').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-gw]');
+        if (!b) return;
+        const id = Number(b.dataset.gw);
+        if (RPICK.has(id)) RPICK.delete(id); else RPICK.add(id);
+        b.setAttribute('aria-checked', String(RPICK.has(id)));
+        b.setAttribute('aria-selected', String(RPICK.has(id)));
+        $('lpRosterCount').textContent = RPICK.size ? RPICK.size + ' ticked' : 'None ticked';
+    });
+    $('lpRosterUse').addEventListener('click', () => {
+        const roster = (PEOPLE && PEOPLE.roster) || [];
+        // Unticked ones leave, ticked ones fill the empty cards first, then come as new cards.
+        S.workers = S.workers.filter((w) => !w.globalId || RPICK.has(w.globalId));
+        const have = new Set(S.workers.map((w) => w.globalId).filter(Boolean));
+        let added = 0;
+        roster.filter((g) => RPICK.has(g.id) && !have.has(g.id)).forEach((g) => {
+            const days = [0, 1, 2, 3, 4, 5, 6].filter((d) => !(g.off || []).includes(d));
+            const facts = { name: g.name, days: (g.off || []).length ? days : [1, 2, 3, 4, 5, 6], globalId: g.id, pay: g.halfDay > 0 ? String(g.halfDay) : '', payUnit: 'half' };
+            const empty = S.workers.find((w) => !w.globalId && !w.name.trim() && !num(w.pay));
+            if (empty) Object.assign(empty, facts); else if (S.workers.length < 100) S.workers.push(newWorker(facts));
+            added++;
+        });
+        if (!S.workers.length) S.workers.push(newWorker());
+        sheetClose($('lpRosterSheet'));
+        paintWorkers();
+        paintRosterBtn();
+        if (S.workers.some((x) => x.days.length)) $('lpWErr').hidden = true;
+        if (added) window.toast?.(added + (added === 1 ? ' worker' : ' workers') + ' from My workers. Check their days and pay below.');
+    });
     const setWorkers = (n) => {
         n = Math.max(1, Math.min(100, Math.round(n) || 1));
         while (S.workers.length < n) S.workers.push(newWorker({ days: (S.workers[S.workers.length - 1] || {}).days ? S.workers[S.workers.length - 1].days.slice() : [1, 2, 3, 4, 5, 6] }));
@@ -2158,9 +2438,53 @@
         b.closest('.lp-wk').querySelector('[data-wdays]').textContent = daysWord(w.days);
         if (S.workers.some((x) => x.days.length)) $('lpWErr').hidden = true;
     });
-    $('lpWorkers').addEventListener('input', (e) => { const inp = e.target.closest('[data-wname]'); if (!inp) return; const w = S.workers.find((x) => String(x.uid) === inp.closest('.lp-wk').dataset.w); if (w) w.name = inp.value; });
-    $('lpSameDays').addEventListener('click', () => { const d = S.workers[0].days.slice(); S.workers.forEach((w) => { w.days = d.slice(); }); paintWorkers(); window.toast?.('Every worker now works ' + (d.length === 7 ? 'every day' : d.map((x) => DAYN[x]).join(', ')) + '.'); });
-    $('lpStagger').addEventListener('click', (e) => { const b = e.target.closest('[data-stagger]'); if (!b) return; S.stagger = b.dataset.stagger === '1'; $('lpStagger').querySelectorAll('.lp-choice').forEach((c) => c.classList.toggle('is-on', c === b)); });
+    $('lpWorkers').addEventListener('input', (e) => {
+        const card = e.target.closest('.lp-wk');
+        const w = card && S.workers.find((x) => String(x.uid) === card.dataset.w);
+        if (!w) return;
+        if (e.target.closest('[data-wname]')) { w.name = e.target.value; paintSaveNew(); }
+        if (e.target.closest('[data-wpay]')) w.pay = e.target.value.replace(/[^\d.,]/g, '');
+    });
+    $('lpWorkers').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-wunit]');
+        if (!b) return;
+        const w = S.workers.find((x) => String(x.uid) === b.closest('.lp-wk').dataset.w);
+        if (!w) return;
+        w.payUnit = b.dataset.wunit;
+        b.parentNode.querySelectorAll('button').forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', String(on)); });
+    });
+    $('lpSameDays').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-same]');
+        if (!b) return;
+        const first = S.workers[0];
+        if (b.dataset.same === 'pay') {
+            if (!num(first.pay)) { window.toast?.('Type the pay of worker 1 first.', 'error'); return; }
+            S.workers.forEach((w) => { w.pay = first.pay; w.payUnit = first.payUnit; });
+            paintWorkers();
+            window.toast?.('Every worker now gets ' + money(first.pay) + (first.payUnit === 'half' ? ' a half day.' : ' a day.'));
+            return;
+        }
+        const d = first.days.slice(); S.workers.forEach((w) => { w.days = d.slice(); }); paintWorkers(); window.toast?.('Every worker now works ' + (d.length === 7 ? 'every day' : d.map((x) => DAYN[x]).join(', ')) + '.');
+    });
+    $('lpStagger').addEventListener('click', (e) => { const b = e.target.closest('[data-stagger]'); if (!b) return; S.stagger = b.dataset.stagger === '1'; $('lpStagger').querySelectorAll('.lp-choice').forEach((c) => c.classList.toggle('is-on', c === b)); paintStagEx(true); });
+    /* The choice on three lots planted the same day by a crew that readies one lot a week. */
+    function paintStagEx(swap) {
+        const base = S.planting || TODAY;
+        const d = (n) => fmt(ds(dn(base) + n), { month: 'short', day: 'numeric' });
+        const rows = S.stagger
+            ? [['Lot 1', 'is-ok', 'Planted ' + d(0), ' as you set'], ['Lot 2', 'is-moved', 'Planted ' + d(7), ', a week later'], ['Lot 3', 'is-moved', 'Planted ' + d(14), ', two weeks later']]
+            : [['Lot 1', 'is-ok', 'Ready, planted ' + d(0), ''], ['Lot 2', 'is-late', 'Planted ' + d(0) + ',', ' its harrowing a week late'], ['Lot 3', 'is-late', 'Planted ' + d(0) + ',', ' its work two weeks late']];
+        const box = $('lpStagEx');
+        const draw = () => {
+            box.innerHTML = '<p><b>For example:</b> three lots to be planted on ' + esc(d(0)) + ', and a crew that can get one lot ready a week.</p><div class="lp-ex-rows">'
+                + rows.map(([l, c, a, b], i) => '<div class="lp-ex-row" style="animation-delay:' + i * 60 + 'ms"><b>' + l + '</b><span class="' + c + '">' + esc(a) + esc(b) + '</span></div>').join('') + '</div>'
+                + '<p class="lp-ex-sum">' + (S.stagger ? 'Every lot is planted on well prepared ground, a little later. Anee says which lots moved and by how many days.' : 'Every lot is planted on your day. The plan shows the late work in red, so you can add hands or hire a machine for it.') + '</p>';
+        };
+        if (!swap || reduce()) { draw(); return; }
+        box.style.transition = 'opacity .16s';
+        box.style.opacity = '0';
+        setTimeout(() => { draw(); box.style.opacity = '1'; }, 160);
+    }
     let recAsk = 0;
     async function recommend() {
         const box = $('lpRec');
@@ -2235,7 +2559,8 @@
         rows.push(['date', '📅', 'Planting day', S.planting ? day(S.planting) + (own ? ', ' + own + ' with their own day' : '') : 'Not chosen'],
             ['lots', '🟩', 'Lots', S.lots.length + (S.lots.length === 1 ? ' lot' : ' lots') + (a ? ', ' + ha(a) : '')],
             ['equip', '🚜', 'Machines', machines || (S.handOnly ? 'By hand only' : 'None picked')],
-            ['workers', '👷', 'Workers', S.workers.length + (S.workers.length === 1 ? ' worker' : ' workers') + (S.stagger ? ', staggering allowed' : '')]);
+            ['workers', '👷', 'Workers', S.workers.length + (S.workers.length === 1 ? ' worker' : ' workers')
+                + (S.workers.some((w) => num(w.pay) > 0) ? ', pay set for ' + S.workers.filter((w) => num(w.pay) > 0).length : '') + (S.stagger ? ', planting days may move' : '')]);
         S.lots.forEach((l, i) => {
             const n = window.aneeFieldProfile.count(l.profile);
             // A farm lot says where its answers came from, and opens its own sheet.
@@ -2297,7 +2622,8 @@
         const body = {
             crop: S.crop, method: S.method, variety: S.variety, seedType: S.seedType || null, seedSource: rice() ? (S.seedSource || null) : null, planting: S.planting,
             lots: S.lots.map((l) => ({ name: l.name.trim(), area: num(l.area), unit: l.unit, planting: l.planting, sourceLotId: l.sourceLotId, farmLotId: l.farmLotId, copiedFrom: l.copiedFrom, edited: !!l.edited, profile: l.profile })),
-            crew: { workers: S.workers.map((w) => ({ name: w.name.trim(), days: w.days })), fleet: fleetList(), stagger: S.stagger },
+            crew: { workers: S.workers.map((w) => ({ name: w.name.trim(), days: w.days, pay: num(w.pay) > 0 ? num(w.pay) : null, payUnit: w.payUnit, globalId: w.globalId || null })),
+                fleet: fleetList(), stagger: S.stagger, saveNew: !!(S.saveNew && PEOPLE && PEOPLE.canSave) },
             // The first farm lot's place when the lots have one, else the place screen's.
             location: lp ? { province: lp.province, town: townName(lp.town), place: '', lat: null, lng: null }
                 : { province: S.loc.province, town: townName(S.loc.town), place: S.loc.place, lat: S.loc.lat, lng: S.loc.lng }, notes: S.notes,
@@ -2505,6 +2831,7 @@
                 + '</ul></div>';
         }
         h += crewHtml(r, a);
+        h += costHtml(r);
         h += '<div class="lp-c"><h3><span>📊 Across your lots' + tlf('lots-timeline') + '</span></h3>' + timelineHtml(r) + '</div>';
         h += seedHtml(r);
         h += weatherHtml(r, a);
@@ -2568,7 +2895,9 @@
         }
         h += '<div class="lp-crew-top">' + chips.join('') + '</div>';
         (r.bookings || []).forEach((b, bi) => {
-            h += '<div class="lp-book"><span>📞</span><span><b>Book the hired' + (bi === 0 ? tlf('hired') : '') + ' ' + esc(String(b.name).toLowerCase()) + ' by ' + esc(day(b.by)) + '.</b> It is first needed on ' + esc(day(b.use)) + (b.for ? ' for ' + esc(b.for) : '') + (lots.length > 1 ? ' on ' + esc(lotName(r, b.lot)) : '') + '.</span></div>';
+            const hire = ((crew.fleet || []).find((f) => f.type === b.type) || {}).hire;
+            h += '<div class="lp-book"><span>📞</span><span><b>Book the hired' + (bi === 0 ? tlf('hired') : '') + ' ' + esc(String(b.name).toLowerCase()) + ' by ' + esc(day(b.by)) + '.</b> It is first needed on ' + esc(day(b.use)) + (b.for ? ' for ' + esc(b.for) : '') + (lots.length > 1 ? ' on ' + esc(lotName(r, b.lot)) : '') + '.'
+                + (hire ? ' Call <b>' + esc(hire.name) + '</b>' + (hire.phone ? ' at <a href="tel:' + esc(String(hire.phone).replace(/[^\d+]/g, '')) + '" class="underline">' + esc(hire.phone) + '</a>' : '') + '.' : '') + '</span></div>';
         });
         if (a.crew) h += '<p class="lp-p" style="margin:.2rem 0 .6rem">' + esc(a.crew) + '</p>';
         if (jobs.length) {
@@ -2584,6 +2913,43 @@
         }
         const cal = calendarHtml(r);
         if (cal) h += '<button type="button" class="lp-more2" data-act="crewdays" aria-expanded="false">Day by day' + CHEV + '</button><div class="lp-cal2" id="lpCrewDays"><div>' + cal + '</div></div>';
+        return h + '</div>';
+    }
+    /* What it costs (2026-10-16): from the pay and the prices given in the wizard (LandPrepPlanner::costs). */
+    function costHtml(r) {
+        const c = r.costs;
+        if (!c) return '';
+        const cur = c.currency || '₱';
+        const m = (v) => cur + Math.round(Number(v || 0)).toLocaleString('en-US');
+        const lots = r.lots || [];
+        if (!c.priced) {
+            return '<div class="lp-c"><h3><span>💰 What it costs</span></h3><p class="lp-p">Give your workers their pay and the hired machines their price in the wizard, and Anee adds up what this preparation costs, lot by lot.</p></div>';
+        }
+        const row = (title, line, cost, k) => '<div style="animation-delay:' + Math.min(k || 0, 10) * 30 + 'ms"><span><b>' + title + '</b><small>' + line + '</small></span>' + (cost === null || cost === undefined ? '<em class="is-none">No price</em>' : '<em>' + m(cost) + '</em>') + '</div>';
+        let h = '<div class="lp-c"><h3><span>💰 What it costs</span><em>' + esc(m(c.total)) + '</em></h3>'
+            + '<div class="lp-cost-big"><b>' + esc(m(c.total)) + '</b><span>in all' + (c.perHa ? ', about ' + esc(m(c.perHa)) + ' a hectare' : '') + '</span></div>';
+        const ws = (c.workers || []).filter((w) => w.days > 0);
+        if (ws.length) {
+            h += '<p class="lp-sk">Your workers</p><div class="lp-cost-rows">' + ws.map((w, k) => row(esc(w.name), w.days + (w.days === 1 ? ' day' : ' days')
+                + (w.pay ? ' × ' + esc(m(w.payUnit === 'half' ? w.pay * 2 : w.pay)) + ' a day' + (w.payUnit === 'half' ? ' (' + esc(m(w.pay)) + ' a half day)' : '') : ', no pay given'), w.cost, k)).join('') + '</div>';
+        }
+        if (c.planting) {
+            h += '<div class="lp-cost-rows">' + row('Planting day hands', c.planting.people + ' people in all' + (c.planting.rate ? ' × ' + esc(m(c.planting.rate)) + ', the average day pay of your workers' : ', no pay to go by'), c.planting.cost) + '</div>';
+        }
+        if ((c.hired || []).length) {
+            h += '<p class="lp-sk">Hired machines</p><div class="lp-cost-rows">' + c.hired.map((x, k) => {
+                const basis = x.unit === 'job' ? 'One price for the whole job' : (x.unit === 'day' ? x.days + (x.days === 1 ? ' day' : ' days') + ' × ' + esc(m(x.amount)) : (x.unit === 'ha' ? x.ha + ' ha of passes × ' + esc(m(x.amount)) : x.days + (x.days === 1 ? ' day' : ' days') + ' on your lots, no price given'));
+                return row(esc(x.name) + (x.who ? ', ' + esc(x.who) : ''), basis, x.cost, k);
+            }).join('') + '</div>';
+        }
+        if (lots.length > 1 && (c.perLot || []).length) {
+            h += '<p class="lp-sk">Lot by lot</p><div class="lp-cost-rows">' + c.perLot.map((p, k) => row('<i style="--lc:' + lc(p.lot) + '"></i>' + esc(lotName(r, p.lot)),
+                [p.labor + p.planting > 0 ? 'Workers ' + esc(m(p.labor + p.planting)) : '', p.hired > 0 ? 'hired ' + esc(m(p.hired)) : ''].filter(Boolean).join(', ') || 'Nothing priced', p.total, k)).join('') + '</div>';
+        }
+        const miss = [];
+        if ((c.missing || {}).pay) miss.push(c.missing.pay + (c.missing.pay === 1 ? ' worker has' : ' workers have') + ' no pay yet, so their days are not in the total.');
+        if ((c.missing || {}).hired) miss.push(c.missing.hired + (c.missing.hired === 1 ? ' hired machine has' : ' hired machines have') + ' no price yet.');
+        h += '<p class="lp-fineprint">' + esc(miss.concat(['Each day goes to the workers who work that weekday, in the order you listed them.', 'Fuel for your own machines, seed and fertilizer are not counted. The days come from typical work rates, so the real bill can differ.']).join(' ')) + '</p>';
         return h + '</div>';
     }
     function calendarHtml(r) {
@@ -2746,6 +3112,7 @@
             + (lot.copiedFrom != null && lots[lot.copiedFrom] ? '<span class="lp-copytag">⧉ ' + (lot.edited ? 'Started from the answers of ' : 'Same answers as ') + esc(lots[lot.copiedFrom].name) + '</span>' : '')
             + (lot.shift ? '<p class="lp-moved">Anee moved this lot ' + lot.shift + (lot.shift === 1 ? ' day' : ' days') + ' later than the ' + esc(day(lot.asked)) + ' you asked, so the crew can finish it in time.</p>' : '')
             + (lot.squeeze ? '<p class="lp-moved">⏳ ' + lot.squeeze.left + ' days left, the full preparation needs ' + lot.squeeze.needed + '. ' + lot.squeeze.count + ' steps were squeezed to fit, each marked below.</p>' : '')
+            + (() => { const cc = r.costs, p = cc && cc.priced && (cc.perLot || [])[i]; return p && p.total > 0 ? '<p class="lp-moved">💰 This lot costs about <b>' + esc((cc.currency || '₱') + Math.round(p.total).toLocaleString('en-US')) + '</b>' + (p.hired > 0 && p.labor + p.planting > 0 ? ': workers ' + esc((cc.currency || '₱') + Math.round(p.labor + p.planting).toLocaleString('en-US')) + ', hired ' + esc((cc.currency || '₱') + Math.round(p.hired).toLocaleString('en-US')) : '') + '.</p>' : ''; })()
             + ((lot.answers || []).length ? '<div class="lp-ans">' + lot.answers.map((x) => '<span><b' + tlAt(ANS_TL[x[0]]) + '>' + esc(x[0]) + '</b>' + esc(x[1]) + '</span>').join('') + '</div>' : '')
             + (own.length ? '<ul class="lp-rules" style="margin-top:.6rem">' + own.map((n) => '<li><span>' + (n.level === 'warn' ? '⚠️' : '💡') + '</span><div>' + esc(n.text) + '</div></li>').join('') + '</ul>' : '')
             + '</div>';

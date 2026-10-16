@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\AiSetting;
+use App\Models\AsContact;
+use App\Models\AsGlobalWorker;
 use App\Models\AsProtocol;
 use App\Models\AsProtocolVersion;
 use App\Models\User;
@@ -17,6 +19,7 @@ use App\Support\FarmLots;
 use App\Support\FieldCatalogue;
 use App\Support\FieldProfile;
 use App\Support\LandPrepPlanner as LP;
+use App\Support\Region;
 use App\Support\RiceVarieties;
 use App\Support\Tier;
 use App\Support\WorkerContext;
@@ -238,6 +241,28 @@ class LandPrepController extends Controller
     }
 
     /**
+     * The people the wizard can pick (2026-10-16, the owner): the farm's own
+     * workers (Global Workers, the owner's; not for a worker acting in
+     * someone's farm) for "Who will do the work?", and the member's Contact
+     * List for who is hired to plow and harrow. Whether new names may join
+     * the roster follows the Workers module's own plan gate.
+     */
+    public function people()
+    {
+        $this->guardTier();
+        $me = (int) Auth::id();
+        $owner = ! WorkerContext::inWorkerContext();
+        $roster = $owner ? AsGlobalWorker::where('userId', $me)->where('deleteStatus', 1)->orderBy('workerName')->limit(300)->get()
+            ->map(fn ($g) => ['id' => (int) $g->id, 'name' => (string) $g->workerName, 'phone' => (string) ($g->phone ?? ''),
+                'halfDay' => (float) $g->costPerHalfDay, 'off' => array_values(array_map('intval', (array) ($g->offWeekdays ?: [])))])->all() : [];
+        $contacts = AsContact::active()->where('userId', $me)->orderBy('name')->limit(500)->get()
+            ->map(fn ($c) => ['id' => (int) $c->id, 'name' => (string) $c->name, 'phone' => (string) ($c->phone ?? ''),
+                'company' => mb_substr((string) ($c->company ?? ''), 0, 80), 'town' => (string) ($c->town ?? ''), 'tags' => array_values((array) $c->tags)])->all();
+
+        return $this->json(true, 'ok', ['roster' => $roster, 'canSave' => $owner && Tier::can('workers'), 'contacts' => $contacts, 'currency' => Region::symbol()]);
+    }
+
+    /**
      * Is there time, and how big a crew? Before the run: for each lot, the
      * days the recommended preparation needs against the days left, and the
      * steps a short run squeezes (with the lot answers when given, so lime,
@@ -295,6 +320,9 @@ class LandPrepController extends Controller
         // Each lot's answers are kept as a field profile, so the next analysis can offer them (2026-10-15);
         // a lot from the farm's lots keeps them in itself (2026-10-16).
         $this->rememberLots((int) $payer->id, $case['crop'], $case['lots']);
+        if ($request->boolean('crew.saveNew')) {
+            $this->rememberWorkers($case['crew']['workers']);
+        }
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($this->title($case), 0, 190),
             'params' => json_encode($case), 'report' => json_encode(new \stdClass), 'credits' => 0,
@@ -347,10 +375,20 @@ class LandPrepController extends Controller
             'crew.workers' => 'nullable|array|max:100',
             'crew.workers.*.name' => 'nullable|string|max:40',
             'crew.workers.*.days' => 'nullable|array|max:7',
+            'crew.workers.*.pay' => 'nullable|numeric|min:0|max:1000000',
+            'crew.workers.*.payUnit' => 'nullable|in:day,half',
+            'crew.workers.*.globalId' => 'nullable|integer',
+            'crew.saveNew' => 'nullable|boolean',
             'crew.fleet' => 'nullable|array|max:12',
             'crew.fleet.*.type' => 'nullable|string|max:40',
             'crew.fleet.*.own' => 'nullable|integer|min:0|max:20',
             'crew.fleet.*.hired' => 'nullable|integer|min:0|max:20',
+            'crew.fleet.*.cost' => 'nullable|numeric|min:0|max:10000000',
+            'crew.fleet.*.costUnit' => 'nullable|in:ha,day,job',
+            'crew.fleet.*.hire' => 'nullable|array',
+            'crew.fleet.*.hire.contactId' => 'nullable|integer',
+            'crew.fleet.*.hire.name' => 'nullable|string|max:120',
+            'crew.fleet.*.hire.phone' => 'nullable|string|max:60',
             'crew.stagger' => 'nullable|boolean',
             'soil' => 'nullable|array',
             'history' => 'nullable|array',
@@ -479,6 +517,48 @@ class LandPrepController extends Controller
         }
         if ($rest) {
             FieldProfile::rememberLots($ownerId, $crop, $rest);
+        }
+    }
+
+    /**
+     * The plan's workers onto the farm's roster (2026-10-16, the owner: "to
+     * avoid add and add and add the same people every season"): a named
+     * worker typed here joins Global Workers with their weekdays off and
+     * pay, unless the same person is there already; someone picked from the
+     * roster who had no pay there gets the pay given here. Only the owner,
+     * only where the plan has Workers, best effort.
+     */
+    private function rememberWorkers(array $workers): void
+    {
+        if (WorkerContext::inWorkerContext() || ! Tier::can('workers')) {
+            return;
+        }
+        $me = (int) Auth::id();
+        try {
+            foreach ($workers as $w) {
+                $half = isset($w['pay']) ? round((float) $w['pay'] / (($w['payUnit'] ?? 'day') === 'half' ? 1 : 2), 2) : 0.0;
+                if (! empty($w['globalId'])) {
+                    $g = AsGlobalWorker::where('id', (int) $w['globalId'])->where('userId', $me)->where('deleteStatus', 1)->first();
+                    if ($g && $half > 0 && (float) $g->costPerHalfDay <= 0) {
+                        $g->update(['costPerHalfDay' => $half]);
+                    }
+
+                    continue;
+                }
+                $name = trim((string) $w['name']);
+                if ($name === '' || preg_match('/^Worker \d+$/', $name)) {
+                    continue;   // no name was typed
+                }
+                $key = AsGlobalWorker::personKey($name, null, null);
+                if (AsGlobalWorker::where('userId', $me)->where('deleteStatus', 1)->where(fn ($q) => $q->where('personKey', $key)->orWhere('workerName', $name))->exists()) {
+                    continue;
+                }
+                $off = array_values(array_diff([0, 1, 2, 3, 4, 5, 6], array_map('intval', (array) $w['days'])));
+                AsGlobalWorker::create(['userId' => $me, 'workerName' => mb_substr($name, 0, 255), 'costPerHalfDay' => $half, 'offWeekdays' => $off ?: null,
+                    'notes' => 'Added from the Land Prep Planner.', 'personKey' => $key, 'deleteStatus' => 1]);
+            }
+        } catch (\Throwable $e) {
+            report($e);
         }
     }
 
@@ -974,6 +1054,7 @@ PROMPT;
             'conflicts' => $sched['conflicts'],
             'plantDays' => $sched['plantDays'],
             'bookings' => $final['bookings'],
+            'costs' => LP::costs($crew, $sched, $full['lots']) + ['currency' => Region::symbol()],
             'rules' => $final['notes'],
             'seed' => $prep + ['timeline' => $timeline, 'amounts' => $amounts],
             'research' => $research ? array_intersect_key($research, array_flip(['ok', 'found', 'searched', 'days', 'type', 'company'])) : null,
