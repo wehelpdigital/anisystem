@@ -17,7 +17,7 @@
     "synchronous planting",
     "climate type"
   ],
-  "excerpt": "The best time to plant rice in your province depends on two things: sure water, and flowering and harvest that miss your typhoon months. Nationwide, wet season planting peaks in June and July and dry season planting in November and December, but each region differs. In irrigated areas, PhilRice's PalayCheck says to plant within 14 days of your irrigation schedule. The When to Plant Analysis in anee.io, a farm app built for Filipino farmers, reads your own town's weather record to name the best window.",
+  "excerpt": "The best time to plant rice in your province depends on two things: sure water, and flowering and harvest that miss your typhoon months. Nationwide, wet season planting peaks in June and July and dry season planting in November and December, but each region differs. In irrigated areas, plant within 14 days of your irrigation schedule. The When to Plant Analysis in anee.io, a farm app built for Filipino farmers, reads your own town's weather record to name the best window.",
   "heroImage": {
     "src": "/images/site/guides/blog-best-time-to-plant-rice-philippines.webp",
     "alt": "Farmers transplanting rice seedlings in a flooded paddy in Pandi, Bulacan, at the best time to plant rice in their area",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "PAGASA divides the year into a rainy season from June to November and a dry season from December to May. Yet rain does not fall the same way everywhere. The country's yearly rainfall runs from 965 to 4,064 millimeters. Most typhoons also track northwest, sparing much of Mindanao from direct hits. That is why your neighbor's calendar in another province may be wrong for you."
+      "text": "The year divides into a rainy season from June to November and a dry season from December to May. Yet rain does not fall the same way everywhere. The country's yearly rainfall runs from 965 to 4,064 millimeters. Most typhoons also track northwest, sparing much of Mindanao from direct hits. That is why your neighbor's calendar in another province may be wrong for you."
     },
     {
       "type": "heading",
@@ -50,11 +50,11 @@
     },
     {
       "type": "text",
-      "text": "Researchers from IRRI and PhilRice mapped planting dates across the country with satellite radar from 2016 to 2018. Their findings give a fair picture of the two main seasons."
+      "text": "Researchers mapped planting dates across the country with satellite radar from 2016 to 2018. Their findings give a fair picture of the two main seasons."
     },
     {
       "type": "table",
-      "caption": "Rice planting seasons in the Philippines (IRRI and PhilRice, 2019)",
+      "caption": "Rice planting seasons in the Philippines, from a 2019 satellite study",
       "rows": [
         [
           "",
@@ -99,7 +99,7 @@
     },
     {
       "type": "text",
-      "text": "PAGASA sorts places into four climate types by how the rain spreads through the year. The study above describes them this way, and your type tells you how much room you have."
+      "text": "The country has four climate types, sorted by how the rain spreads through the year. The study above describes them this way, and your type tells you how much room you have."
     },
     {
       "type": "table",
@@ -147,11 +147,11 @@
       "items": [
         {
           "title": "Get your water schedule",
-          "text": "Ask your irrigators' association when the water comes. PalayCheck counts a farm as synchronous if it plants within 14 days of the area's regular schedule, before or after."
+          "text": "Ask your irrigators' association when the water comes. A farm counts as synchronous if it plants within 14 days of the area's regular schedule, before or after."
         },
         {
           "title": "Count back from the danger months",
-          "text": "Write down when typhoons or floods usually hit your area. Then pick a variety and a sowing date so flowering and harvest fall outside them. PalayCheck notes that PSB Rc 10, an early variety of 106 days, can fit the crop calendar before the typhoon months."
+          "text": "Write down when typhoons or floods usually hit your area. Then pick a variety and a sowing date so flowering and harvest fall outside them. PSB Rc 10, an early variety of 106 days, can fit the crop calendar before the typhoon months."
         },
         {
           "title": "Read the season outlook",
@@ -159,7 +159,7 @@
         },
         {
           "title": "Get the field and seedbed ready",
-          "text": "Let the field rest at least 30 days after the last harvest. PalayCheck wants seedlings 18 to 21 days old for hand transplanting, so sow the seedbed that many days before."
+          "text": "Let the field rest at least 30 days after the last harvest. Use seedlings 18 to 21 days old for hand transplanting, so sow the seedbed that many days before."
         },
         {
           "title": "Rainfed fields wait for real rain",
@@ -171,7 +171,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "Do not race ahead of your neighbors",
-      "text": "A lone early lot, or a late lot after everyone has harvested, feeds pests that have nowhere else to eat. If an area plants together, PalayCheck says, everyone harvests at about the same time. Then pests run out of food. Tungro, spread by the green leafhopper, is the classic example."
+      "text": "A lone early lot, or a late lot after everyone has harvested, feeds pests that have nowhere else to eat. If an area plants together, everyone harvests at about the same time. Then pests run out of food. Tungro, spread by the green leafhopper, is the classic example."
     },
     {
       "type": "heading",
@@ -180,7 +180,7 @@
     },
     {
       "type": "text",
-      "text": "PAGASA updates its ENSO alert every month, so read the latest before each season. In its 7 October 2026 update, it said a strong to very strong El Nino was present, which may peak before the end of 2026 and last until the first half of 2027. For an El Nino dry season, PhilRice advises drought tolerant or early maturing varieties. It also suggests dry direct seeding and controlled irrigation to save water.\n\nIn a La Nina year the danger flips to floods and storms. PhilRice advises planning the planting so that flowering, grain filling and harvest do not meet strong rain or wind. Our guide to [El Nino farming tips](/blog/el-nino-la-nina-farming-tips) covers both seasons. For seed, see [best rice variety for your area](/blog/best-rice-variety-for-my-area)."
+      "text": "PAGASA updates its ENSO alert every month, so read the latest before each season. In its 7 October 2026 update, it said a strong to very strong El Nino was present, which may peak before the end of 2026 and last until the first half of 2027. For an El Nino dry season, choose drought tolerant or early maturing varieties. Dry direct seeding and controlled irrigation also save water.\n\nIn a La Nina year the danger flips to floods and storms. Plan the planting so that flowering, grain filling and harvest do not meet strong rain or wind. Our guide to [El Nino farming tips](/blog/el-nino-la-nina-farming-tips) covers both seasons. For seed, see [best rice variety for your area](/blog/best-rice-variety-for-my-area)."
     },
     {
       "type": "cta",
@@ -212,15 +212,15 @@
         },
         {
           "q": "Can I plant rice during El Nino?",
-          "a": "Yes, where water is sure. PhilRice advises drought tolerant and early maturing varieties, dry direct seeding and water saving methods such as controlled irrigation. If you have no stored water, a low water crop like munggo may use the season better."
+          "a": "Yes, where water is sure. Use drought tolerant and early maturing varieties, dry direct seeding and water saving methods such as controlled irrigation. If you have no stored water, a low water crop like munggo may use the season better."
         },
         {
           "q": "How many days before transplanting should I sow the seedbed?",
-          "a": "PalayCheck recommends seedlings 18 to 21 days old for hand transplanting. So sow the seedbed 18 to 21 days before you transplant. Seedlings older than 25 days recover slowly and produce fewer tillers."
+          "a": "Use seedlings 18 to 21 days old for hand transplanting. So sow the seedbed 18 to 21 days before you transplant. Seedlings older than 25 days recover slowly and produce fewer tillers."
         },
         {
           "q": "Why should I plant at the same time as my neighbors?",
-          "a": "Synchronous planting leaves pests with no young crop to move to after harvest. PalayCheck also asks you to rest the field for 30 days. Most insect pests live about 30 days, so they starve without a host."
+          "a": "Synchronous planting leaves pests with no young crop to move to after harvest. Also rest the field for 30 days. Most insect pests live about 30 days, so they starve without a host."
         },
         {
           "q": "Does anee.io tell me when to plant?",

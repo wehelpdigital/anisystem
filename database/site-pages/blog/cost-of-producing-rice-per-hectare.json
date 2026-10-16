@@ -6,7 +6,7 @@
   "category": "Farm Business",
   "title": "How Do I Compute the Cost of Producing Rice per Hectare?",
   "metaTitle": "Cost of Producing Rice per Hectare: How to Compute It",
-  "metaDescription": "Compute the cost of producing rice per hectare line by line: seed, fertilizer, labor, machines, rent and interest, with 2024 PSA averages to compare.",
+  "metaDescription": "Compute the cost of producing rice per hectare line by line: seed, fertilizer, labor, machines, rent and interest, with 2024 national averages to compare.",
   "focusKeyword": "cost of producing rice per hectare",
   "keywords": [
     "cost of producing rice per hectare",
@@ -16,7 +16,7 @@
     "costs and returns",
     "break even price"
   ],
-  "excerpt": "To compute the cost of producing rice per hectare, add every cost of the season, whether paid in cash, paid in palay or supplied by you, then divide by the hectares you planted. Divide the same total by your harvest in kilos to get the cost per kilo. In 2024 the national average was PHP 59,695 per hectare, or PHP 14.52 per kilo of palay, based on PSA data. anee.io, a farm app built for Filipino farmers, adds these costs up from the tasks you tick done.",
+  "excerpt": "To compute the cost of producing rice per hectare, add every cost of the season, whether paid in cash, paid in palay or supplied by you, then divide by the hectares you planted. Divide the same total by your harvest in kilos to get the cost per kilo. In 2024 the national average was PHP 59,695 per hectare, or PHP 14.52 per kilo of palay. anee.io, a farm app built for Filipino farmers, adds these costs up from the tasks you tick done.",
   "heroImage": {
     "src": "/images/site/guides/blog-cost-of-producing-rice-per-hectare.webp",
     "alt": "Sacks of harvested palay stacked by the road beside a carabao cart in Gapan City, Nueva Ecija",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Knowing your cost per hectare tells you two things. First, it shows whether the season paid. Second, it shows where to cut next time. Yet many farmers only count the cash they handed out, so they miss the palay given to harvesters, their own work and the rent on land they own.\n\nThe method below follows the costs and returns guide that PhilRice and IRRI used to compare rice farms across Asia. It works for a quarter hectare or for ten."
+      "text": "Knowing your cost per hectare tells you two things. First, it shows whether the season paid. Second, it shows where to cut next time. Yet many farmers only count the cash they handed out, so they miss the palay given to harvesters, their own work and the rent on land they own.\n\nThe method below follows a costs and returns guide used to compare rice farms across Asia. It works for a quarter hectare or for ten."
     },
     {
       "type": "list",
@@ -45,11 +45,11 @@
     },
     {
       "type": "text",
-      "text": "PhilRice and IRRI split the cost of a rice crop into the lines below. Some you pay in cash, some you pay in palay, and some you supply yourself. Put a peso value on all of them."
+      "text": "The cost of a rice crop splits into the lines below. Some you pay in cash, some you pay in palay, and some you supply yourself. Put a peso value on all of them."
     },
     {
       "type": "table",
-      "caption": "Cost lines for one rice season, based on the PhilRice and IRRI costs and returns guide",
+      "caption": "Cost lines for one rice season",
       "rows": [
         [
           "Cost line",
@@ -135,7 +135,7 @@
         },
         {
           "title": "Add interest",
-          "text": "If you borrowed for the crop, add the interest you paid. PhilRice and IRRI count up to four months of interest on the cash spent before harvest."
+          "text": "If you borrowed for the crop, add the interest you paid. Count up to four months of interest on the cash spent before harvest."
         },
         {
           "title": "Divide by the hectares",
@@ -163,7 +163,7 @@
     },
     {
       "type": "table",
-      "caption": "Sample lines for one hectare. Fertilizer uses FPA national average prices for October 5 to 9, 2026, on the PhilRice plan for 5 to 6 tons. Seed and labor are 2024 PSA averages reported by Philstar.",
+      "caption": "Sample lines for one hectare. Fertilizer uses FPA national average prices for October 5 to 9, 2026, on the usual plan for 5 to 6 tons. Seed and labor are 2024 national averages reported by Philstar.",
       "rows": [
         [
           "Line",
@@ -210,7 +210,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "A higher yield lowers your cost per kilo",
-      "text": "Many costs stay about the same whether you harvest 3 tons or 5, so every extra cavan spreads them thinner. PhilRice and IRRI found Philippine farms produced a kilo of palay for PHP 11.13 in the high yielding season of 2013 and 2014, but PHP 14.31 in the low yielding season. Raising yield often cuts cost per kilo faster than cutting inputs."
+      "text": "Many costs stay about the same whether you harvest 3 tons or 5, so every extra cavan spreads them thinner. In 2013 and 2014, Philippine farms produced a kilo of palay for PHP 11.13 in the high yielding season, but PHP 14.31 in the low yielding season. Raising yield often cuts cost per kilo faster than cutting inputs."
     },
     {
       "type": "heading",
@@ -247,7 +247,7 @@
       "items": [
         {
           "q": "What is the average cost of producing rice per hectare in the Philippines?",
-          "a": "Based on PSA data reported by Philstar, it was PHP 59,695 per hectare in 2024, up from PHP 56,491 in 2023. Labor made up close to PHP 30,000 of that."
+          "a": "Based on national data reported by Philstar, it was PHP 59,695 per hectare in 2024, up from PHP 56,491 in 2023. Labor made up close to PHP 30,000 of that."
         },
         {
           "q": "What is the cost per kilo of palay?",
@@ -255,11 +255,11 @@
         },
         {
           "q": "Should I count my own labor?",
-          "a": "Yes. PhilRice and IRRI value the farmer's own, family and exchange labor at the going wage. Without it, you cannot tell whether farming paid better than working for someone else."
+          "a": "Yes. Value your own, family and exchange labor at the going wage. Without it, you cannot tell whether farming paid better than working for someone else."
         },
         {
           "q": "Is land rent a cost if I own the land?",
-          "a": "Yes, as a value you give up. PhilRice and IRRI count owned land at the rent that tenants and lessees pay nearby, because you could rent it out instead."
+          "a": "Yes, as a value you give up. Count owned land at the rent that tenants and lessees pay nearby, because you could rent it out instead."
         },
         {
           "q": "How can I lower my cost per kilo?",

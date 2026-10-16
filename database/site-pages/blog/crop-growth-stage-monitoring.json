@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Every big decision of the season follows the stage of the crop, not the date on the wall. The top dressing, the deep water at flowering, the drain and the harvest all hang on it. So if you misread the stage by a week, the fertilizer lands on a plant that cannot use it.\n\nThat is why PhilRice built its PalayCheck System around checks at set stages. It asks farmers to walk the field, measure with a ruler, count or weigh, and write it down. Any tool you buy or download should help you do exactly that, only faster."
+      "text": "Every big decision of the season follows the stage of the crop, not the date on the wall. The top dressing, the deep water at flowering, the drain and the harvest all hang on it. So if you misread the stage by a week, the fertilizer lands on a plant that cannot use it.\n\nThat is why good rice management runs on checks at set stages. Walk the field, measure with a ruler, count or weigh, and write it down. Any tool you buy or download should help you do exactly that, only faster."
     },
     {
       "type": "heading",
@@ -50,11 +50,11 @@
     },
     {
       "type": "text",
-      "text": "For palay (rice still in its husk), crop growth stage monitoring means knowing where each lot stands between planting and harvest, then matching the work to it. PalayCheck checks the crop at establishment, early to mid tillering, maximum tillering, panicle initiation, flowering to grain filling and maturity.\n\nEach check drives a decision, as the table shows. Our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) covers the whole season."
+      "text": "For palay (rice still in its husk), crop growth stage monitoring means knowing where each lot stands between planting and harvest, then matching the work to it. Check the crop at establishment, early to mid tillering, maximum tillering, panicle initiation, flowering to grain filling and maturity.\n\nEach check drives a decision, as the table shows. Our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) covers the whole season."
     },
     {
       "type": "table",
-      "caption": "Rice stages to watch and the decision each one drives, from the PhilRice PalayCheck System 2022",
+      "caption": "Rice stages to watch and the decision each one drives",
       "rows": [
         [
           "Stage",
@@ -95,7 +95,7 @@
     },
     {
       "type": "text",
-      "text": "Corn growers use a leaf and kernel code that Iowa State University Extension explains well. Vegetative stages count the leaves with a visible collar, so V6 means six collars. VT is when the lowest tassel branch shows, and R1 is when silks come out of the husk.\n\nAfter that, the kernels go from blister (R2) to milk, dough and dent, up to R6, physiological maturity, when a black layer forms at the kernel base. Iowa State adds a rule worth copying: a stage applies to the field once at least half the plants have reached it. It also notes that hail, drought, pests and sprays hurt corn differently at each stage. For the full corn season, see [pagtatanim ng mais](/crops/pagtatanim-ng-mais)."
+      "text": "Corn growers use a leaf and kernel code. Vegetative stages count the leaves with a visible collar, so V6 means six collars. VT is when the lowest tassel branch shows, and R1 is when silks come out of the husk.\n\nAfter that, the kernels go from blister (R2) to milk, dough and dent, up to R6, physiological maturity, when a black layer forms at the kernel base. One rule is worth copying: a stage applies to the field once at least half the plants have reached it. Hail, drought, pests and sprays also hurt corn differently at each stage. For the full corn season, see [pagtatanim ng mais](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "heading",
@@ -127,12 +127,12 @@
         ],
         [
           "Say what to do and what to watch",
-          "Carry the PalayCheck booklet",
+          "Carry a printed crop guide",
           "A do list and a watch list per lot, on any date"
         ],
         [
           "Put the weather beside the stage",
-          "Read the PAGASA farm weather forecast",
+          "Read the farm weather forecast",
           "Forecast beside the stages, and a reminder when rain falls on a spray day"
         ],
         [
@@ -169,7 +169,7 @@
         },
         {
           "title": "Measure instead of guessing",
-          "text": "Count tillers, measure the water and read the leaf color chart every 7 days from 14 DAT or 21 DAS until early flowering, as PalayCheck advises."
+          "text": "Count tillers, measure the water and read the leaf color chart every 7 days from 14 DAT or 21 DAS until early flowering."
         },
         {
           "title": "Act on the gap",

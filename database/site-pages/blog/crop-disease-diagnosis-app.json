@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "A photo of a sick leaf looks like a simple question, but it is not. A 2016 study in Frontiers in Plant Science tested a deep learning model on leaf photos. On test images taken in controlled conditions, it named the crop and the disease correctly 99.35 percent of the time. On photos from other sources, its accuracy fell to about 31 percent. The authors also noted that it worked on single leaves, facing up, on a plain background. A palay field never looks like that.\n\nRice also has look alikes that fool the eye and the camera. IRRI warns that the yellowing and stunting of tungro can pass for nitrogen or zinc deficiency or water stress. They can also pass for planthopper or stem borer damage. So the best app asks the right questions, then tells you how to check its answer."
+      "text": "A photo of a sick leaf looks like a simple question, but it is not. A 2016 study in Frontiers in Plant Science tested a deep learning model on leaf photos. On test images taken in controlled conditions, it named the crop and the disease correctly 99.35 percent of the time. On photos from other sources, its accuracy fell to about 31 percent. The authors also noted that it worked on single leaves, facing up, on a plain background. A palay field never looks like that.\n\nRice also has look alikes that fool the eye and the camera. The yellowing and stunting of tungro can pass for nitrogen or zinc deficiency or water stress. They can also pass for planthopper or stem borer damage. So the best app asks the right questions, then tells you how to check its answer."
     },
     {
       "type": "list",
@@ -77,7 +77,7 @@
         ],
         [
           "Says when no spray helps",
-          "IRRI says a rice plant infected by tungro cannot be cured",
+          "A rice plant infected by tungro cannot be cured",
           "Ask it about a virus and read what it says"
         ],
         [
@@ -94,7 +94,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI gives simple tests that any farmer can do. For kresek, the seedling stage of bacterial leaf blight, squeeze the lower end of a sick seedling. Yellowish bacterial ooze comes out of the cut end. Unlike plants hit by stem borer, plants with kresek do not pull out easily. On older leaves, cut a young lesion, put it in a clear glass of water and hold it against the light. A cloudy stream from the cut end points to bacteria.\n\nFor tungro, IRRI notes that lab tests such as ELISA can confirm it where available. No photo can do that. That is why an honest app sends you to your municipal agriculturist when it suspects a virus."
+      "text": "Any farmer can do a few simple tests. For kresek, the seedling stage of bacterial leaf blight, squeeze the lower end of a sick seedling. Yellowish bacterial ooze comes out of the cut end. Unlike plants hit by stem borer, plants with kresek do not pull out easily. On older leaves, cut a young lesion, put it in a clear glass of water and hold it against the light. A cloudy stream from the cut end points to bacteria.\n\nFor tungro, lab tests such as ELISA can confirm it where available. No photo can do that. That is why an honest app sends you to your municipal agriculturist when it suspects a virus."
     },
     {
       "type": "heading",
@@ -211,7 +211,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI's Rice Doctor is a free tool on its Rice Knowledge Bank. It helps you identify problems in a rice crop and gives advice to manage them. For corn and vegetables, the Plant Doctor Online of East West Seed shows symptoms photographed in Philippine fields.\n\nIf you want a person to answer, see where to [ask an agriculturist online](/blog/ask-an-agriculturist-online). Our [guide to rice diseases](/diseases/rice-diseases) and the page on [corn downy mildew](/diseases/corn-downy-mildew) also show what to look for."
+      "text": "Rice Doctor is a free tool on the web. It helps you identify problems in a rice crop and gives advice to manage them. For corn and vegetables, the Plant Doctor Online of East West Seed shows symptoms photographed in Philippine fields.\n\nIf you want a person to answer, see where to [ask an agriculturist online](/blog/ask-an-agriculturist-online). Our [guide to rice diseases](/diseases/rice-diseases) and the page on [corn downy mildew](/diseases/corn-downy-mildew) also show what to look for."
     },
     {
       "type": "heading",
@@ -257,7 +257,7 @@
         },
         {
           "q": "Is there a free crop disease diagnosis app in the Philippines?",
-          "a": "Yes. IRRI's Rice Doctor is free on the web and helps you identify problems in a rice crop. In anee.io, photo reading by Anee needs a plan with Anee, from PHP 70 a month, and those plans also open the Disease Finder and Pest Finder."
+          "a": "Yes. Rice Doctor is free on the web and helps you identify problems in a rice crop. In anee.io, photo reading by Anee needs a plan with Anee, from PHP 70 a month, and those plans also open the Disease Finder and Pest Finder."
         },
         {
           "q": "What if the app and my technician disagree?",

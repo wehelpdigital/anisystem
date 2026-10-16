@@ -6,7 +6,7 @@
   "category": "Yield and Fertilizer",
   "title": "How Many Bags of Fertilizer per Hectare Does Rice Need?",
   "metaTitle": "Bags of Fertilizer per Hectare of Rice: Counts by Yield",
-  "metaDescription": "How many bags of fertilizer per hectare of rice? About 2.5 to 6.5 bags for 3 to 8 tons in PhilRice's plan, plus how to scale and price it for your own lot.",
+  "metaDescription": "How many bags of fertilizer per hectare of rice? About 2.5 to 6.5 bags for 3 to 8 tons, plus how to scale and price it for your own lot.",
   "focusKeyword": "bags of fertilizer per hectare",
   "keywords": [
     "bags of fertilizer per hectare",
@@ -16,7 +16,7 @@
     "50 kg bag nutrients",
     "fertilizer cost per hectare"
   ],
-  "excerpt": "Irrigated palay usually needs about 2.5 to 6.5 bags of inorganic fertilizer per hectare, depending on the yield you aim for. PhilRice's Abonong Swak plan uses 2.5 bags for 3 to 4 tons, 4.5 bags for 5 to 6 tons and 6.5 bags for 7 to 8 tons, plus 10 bags of organic fertilizer. Treat these bags of fertilizer per hectare as a starting point and adjust them with a soil test. anee.io, a farm app built for Filipino farmers, has an NPK Plus calculator that checks your bag count against what rice needs.",
+  "excerpt": "Irrigated palay usually needs about 2.5 to 6.5 bags of inorganic fertilizer per hectare, depending on the yield you aim for. The Abonong Swak plan uses 2.5 bags for 3 to 4 tons, 4.5 bags for 5 to 6 tons and 6.5 bags for 7 to 8 tons, plus 10 bags of organic fertilizer. Treat these bags of fertilizer per hectare as a starting point and adjust them with a soil test. anee.io, a farm app built for Filipino farmers, has an NPK Plus calculator that checks your bag count against what rice needs.",
   "heroImage": {
     "src": "/images/site/guides/blog-bags-of-fertilizer-per-hectare.webp",
     "alt": "A wide field of ripening palay in Muñoz, Nueva Ecija, where fertilizer is counted in bags per hectare",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Farmers buy fertilizer by the bag, but the crop needs it by the kilo of nutrient. A 50 kg bag of urea and a 50 kg bag of 14 14 14 look the same on the tricycle. Yet one carries 23 kg of nitrogen and the other only 7 kg each of nitrogen, phosphate and potash.\n\nSo the honest answer depends on two things: the harvest you aim for and the grades you buy. The counts below come from PhilRice and from a DA, PhilRice and IRRI quick guide. Prices are FPA national averages for October 5 to 9, 2026."
+      "text": "Farmers buy fertilizer by the bag, but the crop needs it by the kilo of nutrient. A 50 kg bag of urea and a 50 kg bag of 14 14 14 look the same on the tricycle. Yet one carries 23 kg of nitrogen and the other only 7 kg each of nitrogen, phosphate and potash.\n\nSo the honest answer depends on two things: the harvest you aim for and the grades you buy. Prices below are FPA national averages for October 5 to 9, 2026."
     },
     {
       "type": "list",
@@ -34,7 +34,7 @@
         "**3 to 4 tons:** about 2.5 bags, that is 1 bag of 14 14 14, 1 bag of urea and half a bag of potash.",
         "**5 to 6 tons:** about 4.5 bags, with 2 bags of 14 14 14 or 16 20 0, 2 bags of urea and half a bag of potash.",
         "**7 to 8 tons:** about 6.5 bags, with 4 bags of urea instead of 2.",
-        "**Organic matter cuts the count.** PhilRice adds 10 bags of organic fertilizer and returns the rice straw.",
+        "**Organic matter cuts the count.** The plan adds 10 bags of organic fertilizer and returns the rice straw.",
         "**Scale it to your lot.** Multiply every bag by your area in hectares."
       ]
     },
@@ -45,7 +45,7 @@
     },
     {
       "type": "text",
-      "text": "Two well known plans give the count. PhilRice's Abonong Swak plan counts on rice straw and 10 bags of organic fertilizer to supply part of the nitrogen. The Nueva Ecija wet season quick guide assumes no straw and no organic matter, and it uses more bags for a similar harvest."
+      "text": "Two well known plans give the count. Abonong Swak counts on rice straw and 10 bags of organic fertilizer to supply part of the nitrogen. The Nueva Ecija wet season quick guide assumes no straw and no organic matter, and it uses more bags for a similar harvest."
     },
     {
       "type": "table",
@@ -177,11 +177,11 @@
         },
         {
           "title": "Choose the plan for that target",
-          "text": "Use a soil test, the MOET kit or your province's quick guide if you have one. Otherwise, use the PhilRice plan above."
+          "text": "Use a soil test, the MOET kit or your province's quick guide if you have one. Otherwise, use the Abonong Swak plan above."
         },
         {
           "title": "Credit what you return to the soil",
-          "text": "PhilRice says the straw from a 5 ton harvest, worked back in, supplies about 30 kg of nitrogen. That equals about 1.3 bags of urea."
+          "text": "The straw from a 5 ton harvest, worked back in, supplies about 30 kg of nitrogen. That equals about 1.3 bags of urea."
         },
         {
           "title": "Multiply by your area",
@@ -200,7 +200,7 @@
     },
     {
       "type": "text",
-      "text": "Some recommendations come in kilos of nutrient, not bags. PhilRice's general recommendation for irrigated lowland, for example, gives 97 kg of nitrogen per hectare in the wet season. If 2 bags of 14 14 14 already supply 14 kg, then 83 kg remain. Dividing 83 by 0.46 gives about 180 kg of urea, or 3.6 bags."
+      "text": "Some recommendations come in kilos of nutrient, not bags. The general recommendation for irrigated lowland, for example, gives 97 kg of nitrogen per hectare in the wet season. If 2 bags of 14 14 14 already supply 14 kg, then 83 kg remain. Dividing 83 by 0.46 gives about 180 kg of urea, or 3.6 bags."
     },
     {
       "type": "callout",
@@ -234,7 +234,7 @@
       "items": [
         {
           "q": "How many bags of urea do I need per hectare of rice?",
-          "a": "PhilRice's Abonong Swak plan uses 1 bag of urea for 3 to 4 tons, 2 bags for 5 to 6 tons and 4 bags for 7 to 8 tons. The Nueva Ecija wet season guide uses 2 to 4 bags. Split them between tillering and panicle initiation."
+          "a": "The Abonong Swak plan uses 1 bag of urea for 3 to 4 tons, 2 bags for 5 to 6 tons and 4 bags for 7 to 8 tons. The Nueva Ecija wet season guide uses 2 to 4 bags. Split them between tillering and panicle initiation."
         },
         {
           "q": "How much fertilizer does a quarter hectare of rice need?",
@@ -242,11 +242,11 @@
         },
         {
           "q": "How much does the fertilizer for one hectare of rice cost?",
-          "a": "At FPA national average prices for October 5 to 9, 2026, the PhilRice plan for 5 to 6 tons costs about PHP 9,114 per hectare. Prices change every week and differ by province, so check the latest FPA list."
+          "a": "At FPA national average prices for October 5 to 9, 2026, the Abonong Swak plan for 5 to 6 tons costs about PHP 9,114 per hectare. Prices change every week and differ by province, so check the latest FPA list."
         },
         {
           "q": "Do I still need organic fertilizer if I buy enough bags?",
-          "a": "PhilRice adds 10 bags of decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost per hectare at 14 days after transplanting. It also returns the rice straw. Together they supply part of the nitrogen and build the soil, which keeps the inorganic bag count lower."
+          "a": "The Abonong Swak plan adds 10 bags of decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost per hectare at 14 days after transplanting. It also returns the rice straw. Together they supply part of the nitrogen and build the soil, which keeps the inorganic bag count lower."
         }
       ]
     },

@@ -6,7 +6,7 @@
   "category": "Planning",
   "title": "What Is the Best Rice Variety for My Area in the Philippines?",
   "metaTitle": "Best Rice Variety for My Area: How to Choose in the PH",
-  "metaDescription": "Asking for the best rice variety for my area? Match it to your field, season and market with PhilRice's checks, plus varieties for drought and flood.",
+  "metaDescription": "Asking for the best rice variety for my area? Match it to your field, season and market with four simple checks, plus varieties for drought and flood.",
   "focusKeyword": "best rice variety for my area",
   "keywords": [
     "best rice variety for my area",
@@ -14,7 +14,7 @@
     "certified seed",
     "Binhing Palay"
   ],
-  "excerpt": "If you are asking \"what is the best rice variety for my area\", look for one that suits your field, season, pests and buyers. PhilRice's PalayCheck adds one more test: it should have done well in at least two seasons of local trials. Start with the varieties your DA regional office recommends, look them up in PhilRice's Binhing Palay app, and buy certified seed. Variety Ranking in anee.io, a farm app built for Filipino farmers, compares varieties for your own town and lists its sources.",
+  "excerpt": "If you are asking \"what is the best rice variety for my area\", look for one that suits your field, season, pests and buyers. Add one more test: it should have done well in at least two seasons of local trials. Start with the varieties your DA regional office recommends, look them up in the Binhing Palay app, and buy certified seed. Variety Ranking in anee.io, a farm app built for Filipino farmers, compares varieties for your own town and lists its sources.",
   "heroImage": {
     "src": "/images/site/guides/blog-best-rice-variety-for-my-area.webp",
     "alt": "Grains of many rice varieties side by side from the IRRI collection, each suited to different fields and seasons",
@@ -23,7 +23,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "When PhilRice launched its Binhing Palay app in 2018, the catalogue already held 289 released rice varieties. No single one wins everywhere. A variety that tops the yield list in irrigated Nueva Ecija may lodge in a typhoon belt. It may also drown in a flood prone barangay. So the best choice starts with your field, not with the seed bag ad. To compare every NSIC variety by farm type, days to harvest and pest ratings, use our [rice variety finder](/rice-varieties)."
+      "text": "When the Binhing Palay app came out in 2018, its catalogue already held 289 released rice varieties. No single one wins everywhere. A variety that tops the yield list in irrigated Nueva Ecija may lodge in a typhoon belt. It may also drown in a flood prone barangay. So the best choice starts with your field, not with the seed bag ad. To compare every NSIC variety by farm type, days to harvest and pest ratings, use our [rice variety finder](/rice-varieties)."
     },
     {
       "type": "heading",
@@ -37,7 +37,7 @@
         "Match the variety to your environment: irrigated, rainfed, upland, flood prone or drought prone.",
         "Choose one that solves your local problem, such as typhoons, floods, drought or a common pest.",
         "Prefer varieties that did well in at least two seasons of trials near you, and that buyers want.",
-        "Buy certified seed with a valid NSQCS tag. PalayCheck says high quality seed can raise yield by 10 percent or more."
+        "Buy certified seed with a valid NSQCS tag. High quality seed can raise yield by 10 percent or more."
       ]
     },
     {
@@ -47,7 +47,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice's PalayCheck System puts variety choice first, as Key Check 1. It asks you to use high quality seed of a recommended variety, and it defines recommended in four ways."
+      "text": "Variety choice is the first key check. Use high quality seed of a recommended variety, one that passes four tests."
     },
     {
       "type": "list",
@@ -55,7 +55,7 @@
       "items": [
         "**It suits your environment or season.** In rainfed areas, give priority to varieties bred for rainfed fields. In the wet season, think about local pests like the [brown planthopper](/pests/brown-planthopper) and how easily a variety lodges or shatters.",
         "**It answers a local field problem.** Where typhoons, drought or floods hit, pick a variety whose maturity lets the crop escape them.",
-        "**It has proven itself nearby.** It should have performed well in at least two seasons of adaptability trials by PhilRice or the local DA office.",
+        "**It has proven itself nearby.** It should have performed well in at least two seasons of local adaptability trials.",
         "**It sells.** It should have high market demand, so your buyer pays well for the grain."
       ]
     },
@@ -66,16 +66,16 @@
     },
     {
       "type": "text",
-      "text": "The table gathers examples that PhilRice has named in its own publications. Use it as a starting list, then check what is new for your region."
+      "text": "The table gathers common examples for each field condition. Use it as a starting list, then check what is new for your region."
     },
     {
       "type": "table",
-      "caption": "Examples of varieties PhilRice has named for each condition",
+      "caption": "Examples of varieties for each condition",
       "rows": [
         [
           "Field condition",
-          "Varieties PhilRice has named",
-          "What PhilRice says"
+          "Example varieties",
+          "Why they fit"
         ],
         [
           "Irrigated lowland, both seasons",
@@ -122,7 +122,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "Check the tag before you pay",
-      "text": "Certified seed carries a BPI NSQCS tag, and PalayCheck says to make sure the tag is still valid. Old stock or seed carried over from last season should pass a germination retest before sowing. High quality seed germinates at 85 percent or more."
+      "text": "Certified seed carries an NSQCS tag. Make sure the tag is still valid. Old stock or seed carried over from last season should pass a germination retest before sowing. High quality seed germinates at 85 percent or more."
     },
     {
       "type": "heading",
@@ -138,7 +138,7 @@
         },
         {
           "title": "Look them up",
-          "text": "Open the Binhing Palay app. PhilRice built it so you can filter released varieties by location, environment, season and crop establishment, and it works offline."
+          "text": "Open the Binhing Palay app. You can filter released varieties by location, environment, season and crop establishment, and it works offline."
         },
         {
           "title": "Plant a strip beside your usual variety",
@@ -150,7 +150,7 @@
         },
         {
           "title": "Repeat for a second season",
-          "text": "PalayCheck asks for at least two good seasons before a variety counts as proven. Switch the whole farm only after that."
+          "text": "Wait for at least two good seasons before a variety counts as proven. Switch the whole farm only after that."
         }
       ]
     },
@@ -180,23 +180,23 @@
       "items": [
         {
           "q": "What is the highest yielding rice variety in the Philippines?",
-          "a": "Maximum yields on paper differ from farm yields. PhilRice lists, for example, a maximum of 10.4 tons per hectare for NSIC Rc 300 when transplanted, and 10 tons for Rc 222. Your own yield depends on the field, season and management, so compare varieties in your own conditions."
+          "a": "Maximum yields on paper differ from farm yields. For example, NSIC Rc 300 has a maximum of 10.4 tons per hectare when transplanted, and Rc 222 has 10 tons. Your own yield depends on the field, season and management, so compare varieties in your own conditions."
         },
         {
           "q": "Which rice variety is best for flood prone fields?",
-          "a": "PhilRice names NSIC Rc194 (Submarino 1), which can survive 10 to 14 days of complete submergence. PSB Rc18 (Ala) survives 5 to 7 days. Both can recover when submerged during the vegetative stage."
+          "a": "NSIC Rc194 (Submarino 1) can survive 10 to 14 days of complete submergence. PSB Rc18 (Ala) survives 5 to 7 days. Both can recover when submerged during the vegetative stage."
         },
         {
           "q": "Which variety should I plant during El Nino?",
-          "a": "Choose drought tolerant or early maturing varieties. For rainfed fields, PhilRice suggests NSIC Rc192 (Sahod Ulan 1), PSB Rc14 and Rc68. For irrigated fields where water may run short, it names PSB Rc10 and NSIC Rc134, and our [El Nino farming tips](/blog/el-nino-la-nina-farming-tips) cover saving water too."
+          "a": "Choose drought tolerant or early maturing varieties. For rainfed fields, try NSIC Rc192 (Sahod Ulan 1), PSB Rc14 and Rc68. For irrigated fields where water may run short, try PSB Rc10 and NSIC Rc134, and our [El Nino farming tips](/blog/el-nino-la-nina-farming-tips) cover saving water too."
         },
         {
           "q": "Where can I buy certified rice seed?",
-          "a": "Buy from accredited seed growers and check that the NSQCS tag is valid. If there is no accredited grower nearby, PalayCheck suggests seed from reliable farmers whose fields grow evenly, tested for germination first."
+          "a": "Buy from accredited seed growers and check that the NSQCS tag is valid. If there is no accredited grower nearby, use seed from reliable farmers whose fields grow evenly, tested for germination first."
         },
         {
           "q": "How many seasons should I test a variety?",
-          "a": "At least two. PalayCheck counts a variety as recommended when it performed well in at least two seasons of adaptability trials. A single good season may only mean the weather was kind."
+          "a": "At least two. A variety counts as recommended when it performed well in at least two seasons of adaptability trials. A single good season may only mean the weather was kind."
         }
       ]
     },

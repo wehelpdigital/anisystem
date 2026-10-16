@@ -35,7 +35,7 @@
         "Trust it least for naming a virus or a nutrient problem from a photo alone, where look alikes are common.",
         "Never take a spray rate or a product from AI alone. Read the label and check the FPA registration.",
         "Give it context: crop, variety, age, place, photos and what you applied.",
-        "Check any answer against PhilRice, the DA or your municipal agriculturist before money changes hands."
+        "Check any answer with your municipal agriculturist before money changes hands."
       ]
     },
     {
@@ -78,7 +78,7 @@
         [
           "Name a disease or nutrient problem from a leaf photo",
           "Low to medium",
-          "IRRI warns that tungro can look like nitrogen or zinc deficiency",
+          "Tungro can look like nitrogen or zinc deficiency",
           "A field or lab test"
         ],
         [
@@ -91,7 +91,7 @@
           "Time a spray around the rain",
           "Medium",
           "Forecasts change by the hour",
-          "The latest PAGASA forecast"
+          "The latest weather forecast"
         ]
       ]
     },
@@ -106,7 +106,7 @@
       "items": [
         "**Bad photos.** Blurry, dark or distant pictures hide the details that separate one problem from another.",
         "**Missing context.** Without the variety, the age and the place, AI falls back on textbook answers that may not fit your field.",
-        "**Look alikes.** IRRI notes that tungro, nitrogen or zinc deficiency and water stress can all yellow and stunt rice.",
+        "**Look alikes.** Tungro, nitrogen or zinc deficiency and water stress can all yellow and stunt rice.",
         "**Different conditions.** Advice built for another country, crop or season may not fit a rainfed palay field in the Visayas.",
         "**Confident mistakes.** A chatbot can state a wrong number in a sure voice, so every number deserves a second source."
       ]
@@ -129,7 +129,7 @@
         },
         {
           "title": "Compare with a trusted guide",
-          "text": "Use PhilRice's PalayCheck system for rice, the guides of your DA region, or our own [crop guides](/crops) and [pest pages](/pests)."
+          "text": "Use a farm guide you trust, such as our own [crop guides](/crops) and [pest pages](/pests)."
         },
         {
           "title": "Check the product",

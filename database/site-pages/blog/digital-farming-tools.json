@@ -79,7 +79,7 @@
         [
           "Variety guide",
           "Seed that fits your field and season",
-          "Binhing Palay app by PhilRice",
+          "Binhing Palay app",
           "Variety Ranking on credits"
         ],
         [
@@ -112,8 +112,8 @@
       "ordered": false,
       "items": [
         "**PAGASA Agri Weather** posts farm weather forecasts, ten day regional agri weather information and tropical cyclone warnings for agriculture.",
-        "**RCMAS** is a free service developed by IRRI and PhilRice that gives crop and nutrient advice for your own field. DA offices, the Agricultural Training Institute and local extension workers run it.",
-        "**Binhing Palay** is PhilRice's catalogue of released rice varieties. You filter it by location, environment, season and crop establishment, and it works offline.",
+        "**RCMAS** is a free service that gives crop and nutrient advice for your own field. DA offices, the Agricultural Training Institute and local extension workers run it.",
+        "**Binhing Palay** is a catalogue of released rice varieties. You filter it by location, environment, season and crop establishment, and it works offline.",
         "**DA Price Monitoring** publishes weekly average retail prices and a daily price index."
       ]
     },
@@ -154,7 +154,7 @@
     },
     {
       "type": "text",
-      "text": "According to the DA's RSBSA guide, you must be a Filipino citizen, at least 18 years old, and a farmer, farm worker, fisherfolk or agri youth. Get the enrollment form from your City or Municipal Agriculture Office. Bring a valid government ID and proof of land ownership, tenancy or lease. You then receive a stub with a temporary RSBSA control number.\n\nOnce registered, you can apply for DA programs such as agricultural loans, crop and livestock insurance, seeds, fertilizer, technical help and soil analysis."
+      "text": "To register in the RSBSA, you must be a Filipino citizen, at least 18 years old, and a farmer, farm worker, fisherfolk or agri youth. Get the enrollment form from your City or Municipal Agriculture Office. Bring a valid government ID and proof of land ownership, tenancy or lease. You then receive a stub with a temporary RSBSA control number.\n\nOnce registered, you can apply for DA programs such as agricultural loans, crop and livestock insurance, seeds, fertilizer, technical help and soil analysis."
     },
     {
       "type": "callout",

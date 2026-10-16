@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Vegetables move fast. A pechay crop is ready 3 to 4 weeks after transplanting, says a production guide of the Agricultural Training Institute. So one missed week of scouting can cover a big part of the crop's life, and a small aphid colony becomes a sticky bed of leaves.\n\nFarmer factsheets from an Australian funded vegetable project in the southern Philippines put it plainly. Each farm has a few pests and diseases that come back every crop, and usually one or two cause major loss unless managed. Monitoring is how you find yours early."
+      "text": "Vegetables move fast. A pechay crop is ready 3 to 4 weeks after transplanting. So one missed week of scouting can cover a big part of the crop's life, and a small aphid colony becomes a sticky bed of leaves.\n\nFarmer factsheets from an Australian funded vegetable project in the southern Philippines put it plainly. Each farm has a few pests and diseases that come back every crop, and usually one or two cause major loss unless managed. Monitoring is how you find yours early."
     },
     {
       "type": "heading",
@@ -50,7 +50,7 @@
     },
     {
       "type": "text",
-      "text": "The checks change with the stage of the crop. The table follows the tomato and ampalaya IPM factsheets of that project, with the pechay harvest from the ATI guide. Our page on [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay) covers growing each crop."
+      "text": "The checks change with the stage of the crop. The table follows the tomato and ampalaya IPM factsheets of that project, plus the usual pechay harvest time. Our page on [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay) covers growing each crop."
     },
     {
       "type": "table",
@@ -232,7 +232,7 @@
         },
         {
           "q": "Do yellow sticky traps replace walking the beds?",
-          "a": "No. A PhilRice field guide notes that sticky traps catch flying insects but not the ones that cannot fly. Eggs, larvae and disease spots only show when you turn the leaves yourself."
+          "a": "No. Sticky traps catch flying insects but not the ones that cannot fly. Eggs, larvae and disease spots only show when you turn the leaves yourself."
         },
         {
           "q": "Can an app tell me what pest is on my pechay?",

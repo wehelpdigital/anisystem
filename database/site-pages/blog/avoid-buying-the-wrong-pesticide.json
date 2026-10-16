@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The wrong pesticide costs you three times. You pay for the bottle, the problem keeps growing, and the spray kills the spiders and wasps that were working for you for free. PhilRice warns that early spraying kills the natural enemies of pests, and that continuous pesticide use makes pests resistant.\n\nMany wrong purchases start the same way: a farmer describes the problem at the store, and the store picks a product. The fix is to arrive with a name for the problem and a list of active ingredients, not a brand."
+      "text": "The wrong pesticide costs you three times. You pay for the bottle, the problem keeps growing, and the spray kills the spiders and wasps that were working for you for free. Early spraying kills the natural enemies of pests, and continuous pesticide use makes pests resistant.\n\nMany wrong purchases start the same way: a farmer describes the problem at the store, and the store picks a product. The fix is to arrive with a name for the problem and a list of active ingredients, not a brand."
     },
     {
       "type": "list",
@@ -182,11 +182,11 @@
         },
         {
           "q": "Is there a spray for tungro?",
-          "a": "No. IRRI says there is no cure for a rice plant infected by tungro, and spraying the leafhoppers that carry it often fails. Prevent it with resistant varieties and by planting at the same time as your neighbors."
+          "a": "No. There is no cure for a rice plant infected by tungro, and spraying the leafhoppers that carry it often fails. Prevent it with resistant varieties and by planting at the same time as your neighbors."
         },
         {
           "q": "Why does the same pesticide stop working?",
-          "a": "Pests adapt when they meet the same group of pesticide again and again. PhilRice warns that continuous use makes pests resistant, so rotate groups as IRAC advises."
+          "a": "Pests adapt when they meet the same group of pesticide again and again. Continuous use makes pests resistant, so rotate groups as IRAC advises."
         },
         {
           "q": "Are pesticides sold online safe to buy?",

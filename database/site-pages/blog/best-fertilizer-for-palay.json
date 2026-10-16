@@ -6,7 +6,7 @@
   "category": "Fertilizer",
   "title": "What Is the Best Fertilizer for Palay in the Philippines?",
   "metaTitle": "Best Fertilizer for Palay: Grades, Timing and Price per Kilo",
-  "metaDescription": "The best fertilizer for palay is the right grade at the right stage for your soil. See the PhilRice bag plan and how to compare brands by nutrient cost.",
+  "metaDescription": "The best fertilizer for palay is the right grade at the right stage for your soil. See the usual bag plan and how to compare brands by nutrient cost.",
   "focusKeyword": "best fertilizer for palay",
   "keywords": [
     "best fertilizer for palay",
@@ -16,7 +16,7 @@
     "fertilizer npk",
     "fertilizer application for rice"
   ],
-  "excerpt": "There is no single best fertilizer for palay. The best one is the right grade, at the right growth stage, in the amount your soil needs. In PhilRice plans, that means complete 14 14 14 or 16 20 0 at basal, urea for top dressing and muriate of potash with the last dose. On anee.io, a farm app built for Filipino farmers, each dose gets a date on your lots, and the NPK Plus calculator checks the nutrients first.",
+  "excerpt": "There is no single best fertilizer for palay. The best one is the right grade, at the right growth stage, in the amount your soil needs. In the usual plans, that means complete 14 14 14 or 16 20 0 at basal, urea for top dressing and muriate of potash with the last dose. On anee.io, a farm app built for Filipino farmers, each dose gets a date on your lots, and the NPK Plus calculator checks the nutrients first.",
   "heroImage": {
     "src": "/images/site/guides/blog-best-fertilizer-for-palay.webp",
     "alt": "A farmer broadcasts fertilizer by hand over a green rice field at dusk",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Every agri supply sells bags in many colors and names. The names change from store to store, but the three numbers on each bag do not. That grade tells you what your palay really gets.\n\nPhilRice sums up good fertilizer use in its PalayCheck System as Make EAT right: the right Element, Amount and Timing. So the best fertilizer for palay is a plan, not a brand."
+      "text": "Every agri supply sells bags in many colors and names. The names change from store to store, but the three numbers on each bag do not. That grade tells you what your palay really gets.\n\nGood fertilizer use comes down to Make EAT right: the right Element, Amount and Timing. So the best fertilizer for palay is a plan, not a brand."
     },
     {
       "type": "list",
@@ -48,7 +48,7 @@
     },
     {
       "type": "table",
-      "caption": "Nutrients per bag are the grade times 50 kg. Timing follows PhilRice plans.",
+      "caption": "Nutrients per bag are the grade times 50 kg. Timing follows the usual plans.",
       "rows": [
         [
           "Fertilizer",
@@ -90,16 +90,16 @@
     },
     {
       "type": "text",
-      "text": "Complete 14 14 14 and 16 20 0 put phosphorus in early, when PalayCheck says it helps roots and tillers grow. Urea then feeds the tillers and panicles. Potash goes in with the last nitrogen, because PalayCheck links it to grain size and filled grains. Each grade has its own guide: [urea](/blog/urea-fertilizer), [14 14 14](/blog/complete-fertilizer-14-14-14), [16 20 0](/blog/16-20-0-fertilizer), [ammonium sulfate](/blog/ammonium-sulfate-21-0-0) and [potash](/blog/potash-fertilizer)."
+      "text": "Complete 14 14 14 and 16 20 0 put phosphorus in early, when it helps roots and tillers grow. Urea then feeds the tillers and panicles. Potash goes in with the last nitrogen, because it supports grain size and filled grains. Each grade has its own guide: [urea](/blog/urea-fertilizer), [14 14 14](/blog/complete-fertilizer-14-14-14), [16 20 0](/blog/16-20-0-fertilizer), [ammonium sulfate](/blog/ammonium-sulfate-21-0-0) and [potash](/blog/potash-fertilizer)."
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "What fertilizer plan do the DA and PhilRice recommend for palay?"
+      "text": "What fertilizer plan works for palay?"
     },
     {
       "type": "text",
-      "text": "PhilRice turned the PalayCheck rules into bag plans per hectare for its Abonong Swak campaign in 2022. Here is the plan for 5 to 6 tons with a 100 to 110 day variety. DAT means days after transplanting, and longer varieties move each top dressing a few days later."
+      "text": "The Abonong Swak plans of 2022 turn these rules into bags per hectare. Here is the plan for 5 to 6 tons with a 100 to 110 day variety. DAT means days after transplanting, and longer varieties move each top dressing a few days later."
     },
     {
       "type": "steps",
@@ -124,7 +124,7 @@
     },
     {
       "type": "text",
-      "text": "For 3 to 4 tons, the plan drops to 1 bag of complete, then 1 bag of urea with half a bag of 0 0 60. For 7 to 8 tons, each urea dose doubles to 2 bags. Treat these as starting points only. PalayCheck sets the amount from MOET, the leaf color chart or the Rice Crop Manager Advisory Service, as our [fertilizer for rice](/blog/fertilizer-for-rice) guide explains."
+      "text": "For 3 to 4 tons, the plan drops to 1 bag of complete, then 1 bag of urea with half a bag of 0 0 60. For 7 to 8 tons, each urea dose doubles to 2 bags. Treat these as starting points only. Set the amount from MOET, the leaf color chart or the Rice Crop Manager Advisory Service, as our [fertilizer for rice](/blog/fertilizer-for-rice) guide explains."
     },
     {
       "type": "heading",
@@ -135,7 +135,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "Mix granular fertilizer into the soil, PalayCheck says, so fewer nutrients leach away or escape as gas.",
+        "Mix granular fertilizer into the soil, so fewer nutrients leach away or escape as gas.",
         "Give only 30 percent of the total nitrogen at the first application.",
         "Top dress into shallow water, 2 to 5 cm deep, in the cooler hours after 3 PM.",
         "Work last season's rice straw into the soil instead of burning it. More in [fertilizer application methods](/blog/fertilizer-application-methods)."
@@ -145,7 +145,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Let the leaves decide the last nitrogen",
-      "text": "Own a leaf color chart? PalayCheck says to read it every 7 days from 14 DAT until early flowering. Apply nitrogen only when 6 or more of 10 leaves read below 4, or below 3 in direct seeded rice."
+      "text": "Own a leaf color chart? Read it every 7 days from 14 DAT until early flowering. Apply nitrogen only when 6 or more of 10 leaves read below 4, or below 3 in direct seeded rice."
     },
     {
       "type": "heading",
@@ -246,11 +246,11 @@
       "items": [
         {
           "q": "Is urea the best fertilizer for palay?",
-          "a": "Urea gave the cheapest nitrogen per kilo of the straight nitrogen grades in the FPA prices for October 5 to 9, 2026. But it has no phosphorus or potassium. So PhilRice plans pair it with 14 14 14 or 16 20 0 at basal and potash with the last dose."
+          "a": "Urea gave the cheapest nitrogen per kilo of the straight nitrogen grades in the FPA prices for October 5 to 9, 2026. But it has no phosphorus or potassium. So the usual plans pair it with 14 14 14 or 16 20 0 at basal and potash with the last dose."
         },
         {
           "q": "What is the best fertilizer for palay at tillering?",
-          "a": "Urea, as the first top dressing. The PhilRice plan for 5 to 6 tons uses 1 bag per hectare at 18 to 22 DAT for a 100 to 110 day variety. See [fertilizer for rice tillering](/blog/fertilizer-for-rice-tillering)."
+          "a": "Urea, as the first top dressing. The plan for 5 to 6 tons uses 1 bag per hectare at 18 to 22 DAT for a 100 to 110 day variety. See [fertilizer for rice tillering](/blog/fertilizer-for-rice-tillering)."
         },
         {
           "q": "Are expensive fertilizer brands better for palay?",

@@ -6,13 +6,13 @@
   "category": "Farm Apps",
   "title": "Where Can I Download a Farm Management App for Android?",
   "metaTitle": "Farm App for Android: Where to Get It and How to Install",
-  "metaDescription": "Need a farm app for Android? Get PhilRice's rice apps on Google Play, or add anee.io to your home screen from Chrome. Steps, checks and costs here.",
+  "metaDescription": "Need a farm app for Android? Get rice apps on Google Play, or add anee.io to your home screen from Chrome. Steps, checks and costs here.",
   "focusKeyword": "farm app for android",
   "keywords": [
     "farm app for android",
     "farm management app"
   ],
-  "excerpt": "You can download a farm app for Android from Google Play, where PhilRice lists rice apps such as the PalayCheck App and Binhing Palay. anee.io, a farm app built for Filipino farmers, works another way. It is a web app, so you open anee.io in Chrome and install it to your home screen. It then opens like any other app, offline mode included, but it is not in the Play Store.",
+  "excerpt": "You can download a farm app for Android from Google Play, where you will find rice apps such as the PalayCheck App and Binhing Palay. anee.io, a farm app built for Filipino farmers, works another way. It is a web app, so you open anee.io in Chrome and install it to your home screen. It then opens like any other app, offline mode included, but it is not in the Play Store.",
   "heroImage": {
     "src": "/images/site/guides/blog-farm-app-for-android.webp",
     "alt": "A farm app for Android on three phone screens: Quick Capture taking a photo of the crop, Anee saying hello, and a farm map centred on the phone's location",
@@ -32,7 +32,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "PhilRice's rice apps are on Google Play, and its Rice Apps page also offers APK files.",
+        "The main rice apps are on Google Play, and their maker's Rice Apps page also offers APK files.",
         "anee.io is not in the Play Store. Open it in Chrome, log in, then choose Install from the menu.",
         "Before you install any farm app, check its permissions, storage, offline use, data use and language.",
         "anee.io's Libre plan is free, with a few ads. Paid plans start at PHP 70 a month."
@@ -59,12 +59,12 @@
         [
           "Google Play Store",
           "An app installed and updated by the store",
-          "The PalayCheck App and Binhing Palay from PhilRice"
+          "The PalayCheck App and Binhing Palay"
         ],
         [
           "An official APK file",
           "The same app as a file, for phones without Google Play",
-          "The APK links on PhilRice's Rice Apps page"
+          "The APK links on the maker's Rice Apps page"
         ],
         [
           "A web app, installed from Chrome",
@@ -74,7 +74,7 @@
         [
           "A web page",
           "A tool you open in the browser each time",
-          "The Rice Crop Manager Advisory Service of the DA and PhilRice"
+          "The Rice Crop Manager Advisory Service"
         ]
       ]
     },
@@ -128,7 +128,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "Install APK files only from the maker",
-      "text": "If your phone has no Google Play, an APK file is the other way in. Download it only from the maker's own page, such as PhilRice's Rice Apps page. Never install one that a stranger forwards in a group chat, because nobody can tell what someone changed inside it."
+      "text": "If your phone has no Google Play, an APK file is the other way in. Download it only from the maker's own page. Never install one that a stranger forwards in a group chat, because nobody can tell what someone changed inside it."
     },
     {
       "type": "cta",
@@ -214,7 +214,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Rice advisory apps:** PhilRice lists Binhing Palay, the PalayCheck App, the MOET app, the LCC app and the RCM Advisory Service on its Rice Apps page.",
+        "**Rice advisory apps:** Binhing Palay, the PalayCheck App, the MOET app, the LCC app and the RCM Advisory Service all sit on one Rice Apps page.",
         "**Planning and record apps:** they date the work and add up costs and harvests. anee.io is one, built for Filipino farmers, and our guide to the [best farm management app](/blog/farm-management-app-philippines) shows what to expect.",
         "**Pest and disease photo apps:** you take a photo and get a likely cause. See our guide to the [plant disease identification app](/blog/plant-disease-identification-app).",
         "**Weather apps:** forecasts, rain radar and typhoon warnings for your town.",
@@ -223,7 +223,7 @@
     },
     {
       "type": "text",
-      "text": "You do not need one app for everything. A rice farmer might keep the PhilRice apps for advice, a weather app for rain, and one app for the season's plan and records."
+      "text": "You do not need one app for everything. A rice farmer might keep the rice advisory apps for advice, a weather app for rain, and one app for the season's plan and records."
     },
     {
       "type": "heading",
@@ -260,7 +260,7 @@
         },
         {
           "q": "Is it safe to install an APK file?",
-          "a": "Only from the maker's own page, such as the APK links on PhilRice's Rice Apps page. A file passed around in a chat group may not be the original. When in doubt, use the Play Store or a web app instead."
+          "a": "Only from the maker's own page, such as its official APK links. A file passed around in a chat group may not be the original. When in doubt, use the Play Store or a web app instead."
         }
       ]
     },

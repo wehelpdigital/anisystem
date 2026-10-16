@@ -6,7 +6,7 @@
   "category": "Crop Health",
   "title": "How to Stop Pests Before They Destroy Your Harvest: Early Pest Detection",
   "metaTitle": "Early Pest Detection: Stop Pests Before They Ruin Your Crop",
-  "metaDescription": "Early pest detection for rice and corn: when to walk the field, what to count, the PalayCheck action levels, and how anee.io keeps scouting on time.",
+  "metaDescription": "Early pest detection for rice and corn: when to walk the field, what to count, the action levels, and how anee.io keeps scouting on time.",
   "focusKeyword": "early pest detection",
   "keywords": [
     "early pest detection",
@@ -16,7 +16,7 @@
     "PalayCheck pest management",
     "brown planthopper monitoring"
   ],
-  "excerpt": "Early pest detection means walking your field on a fixed routine and counting pests and their natural enemies. You act only when a count crosses an action level, long before the damage shows from the road. PhilRice advises checking fields early every morning and holding insecticide in the first 30 days after transplanting. With anee.io, a farm app built for Filipino farmers, the routine lives on your board, and Anee, its smart farm technician, reads the photos you take.",
+  "excerpt": "Early pest detection means walking your field on a fixed routine and counting pests and their natural enemies. You act only when a count crosses an action level, long before the damage shows from the road. Check fields early every morning, and hold insecticide in the first 30 days after transplanting. With anee.io, a farm app built for Filipino farmers, the routine lives on your board, and Anee, its smart farm technician, reads the photos you take.",
   "heroImage": {
     "src": "/images/site/guides/blog-early-pest-detection.webp",
     "alt": "Pink egg clusters of the golden apple snail on young rice in Bulacan, an early sign that early pest detection should catch",
@@ -25,16 +25,16 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Damage you can see from the road is late damage. IRRI says brown planthoppers cause hopperburn near maturity at about 400 to 500 nymphs per plant. At 1 planthopper per stem or fewer, there is still time to act. The gap between those two numbers is your window.\n\nThe risk is current. In January 2026, PhilRice cited Bureau of Plant Industry data from 2021 to 2025 on the top threats to rice in the first quarter. They were brown planthoppers, stem borers, rodents, bacterial leaf blight and leaffolders. Central Luzon was the most exposed, with Bicol and Eastern Visayas also at high risk."
+      "text": "Damage you can see from the road is late damage. Brown planthoppers cause hopperburn near maturity at about 400 to 500 nymphs per plant. At 1 planthopper per stem or fewer, there is still time to act. The gap between those two numbers is your window.\n\nThe risk is current. Records from 2021 to 2025, shared in January 2026, show the top threats to rice in the first quarter. They were brown planthoppers, stem borers, rodents, bacterial leaf blight and leaffolders. Central Luzon was the most exposed, with Bicol and Eastern Visayas also at high risk."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "Walk each lot on a schedule: daily in the seedbed, weekly in the field, as IRRI advises for planthoppers.",
-        "Go from 5 to 7 in the morning or late in the afternoon, the hours PalayCheck gives for monitoring insects.",
-        "Count pests and their natural enemies, then compare with the PalayCheck action levels below.",
-        "Hold insecticide in the first 30 days after transplanting or 40 days after sowing, as PhilRice advises.",
+        "Walk each lot on a schedule: daily in the seedbed, weekly in the field, the usual rhythm for planthoppers.",
+        "Go from 5 to 7 in the morning or late in the afternoon, the best hours for monitoring insects.",
+        "Count pests and their natural enemies, then compare with the action levels below.",
+        "Hold insecticide in the first 30 days after transplanting or 40 days after sowing.",
         "Put the walks on your calendar, so they happen even in busy weeks."
       ]
     },
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Set the rhythm",
-          "text": "Check the seedbed every day and each field once a week, more often in risky stages. IRRI gives this rhythm for planthoppers."
+          "text": "Check the seedbed every day and each field once a week, more often in risky stages. This rhythm works for planthoppers."
         },
         {
           "title": "Walk a diagonal",
@@ -60,11 +60,11 @@
         },
         {
           "title": "Count the friends too",
-          "text": "Note spiders, water striders and mirid bugs. IRRI says that when natural enemies outnumber the planthoppers, the risk of hopperburn is low."
+          "text": "Note spiders, water striders and mirid bugs. When natural enemies outnumber the planthoppers, the risk of hopperburn is low."
         },
         {
           "title": "Use a light at night",
-          "text": "A lamp near a light colored wall or over a pan of water shows when planthoppers fly in. IRRI advises keeping it away from the seedbed and the field."
+          "text": "A lamp near a light colored wall or over a pan of water shows when planthoppers fly in. Keep it away from the seedbed and the field."
         },
         {
           "title": "Write it down",
@@ -79,11 +79,11 @@
     },
     {
       "type": "text",
-      "text": "PalayCheck, the rice crop management system of PhilRice, lists pest levels linked to real yield loss for a 120 day variety. Use them as your action levels. Then read the full table for your own variety and stage."
+      "text": "The pest levels below match real yield loss for a 120 day variety. Use them as your action levels. Then read the full table for your own variety and stage."
     },
     {
       "type": "table",
-      "caption": "Selected PalayCheck pest levels linked to yield loss, for a 120 day rice variety",
+      "caption": "Selected pest levels linked to yield loss, for a 120 day rice variety",
       "rows": [
         [
           "Growth stage",
@@ -136,13 +136,13 @@
     },
     {
       "type": "text",
-      "text": "Fall armyworm is a newer threat to corn here. The report filed with the International Plant Protection Convention dates the first suspected case to June 20, 2019, in Piat, Cagayan. The Bureau of Plant Industry's national action plan uses pheromone lures and traps for monitoring, plus scouting to confirm what the traps catch. Our [fall armyworm guide](/pests/fall-armyworm) shows the signs on corn."
+      "text": "Fall armyworm is a newer threat to corn here. The report filed with the International Plant Protection Convention dates the first suspected case to June 20, 2019, in Piat, Cagayan. The national action plan uses pheromone lures and traps for monitoring, plus scouting to confirm what the traps catch. Our [fall armyworm guide](/pests/fall-armyworm) shows the signs on corn."
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "Do not spray in the first 30 days",
-      "text": "PhilRice advises against spraying for leaf feeders within 30 days after transplanting or 40 days after sowing. Young rice recovers by making new leaves and tillers, while early sprays kill the natural enemies that keep pests down."
+      "text": "Skip sprays for leaf feeders within 30 days after transplanting or 40 days after sowing. Young rice recovers by making new leaves and tillers, while early sprays kill the natural enemies that keep pests down."
     },
     {
       "type": "heading",
@@ -170,23 +170,23 @@
       "items": [
         {
           "q": "How often should I check my rice field for pests?",
-          "a": "IRRI advises checking the seedbed daily and the field weekly for planthoppers. PhilRice adds that early morning checks catch insects before many of them move on later in the day."
+          "a": "Check the seedbed daily and the field weekly for planthoppers. Early morning checks also catch insects before many of them move on later in the day."
         },
         {
           "q": "What is an action level?",
-          "a": "It is the count at which a pest starts to cost you real yield. PalayCheck lists them by growth stage, such as 25 or more planthoppers per hill at early tillering."
+          "a": "It is the count at which a pest starts to cost you real yield. They change by growth stage, such as 25 or more planthoppers per hill at early tillering."
         },
         {
           "q": "Should I spray as soon as I see a pest?",
-          "a": "No. Count first and compare with the action level. IRRI notes that planthopper outbreaks follow pesticides that kill their natural enemies."
+          "a": "No. Count first and compare with the action level. Planthopper outbreaks follow pesticides that kill their natural enemies."
         },
         {
           "q": "Do light traps replace field walks?",
-          "a": "No. IRRI treats a light trap as an alarm. If hundreds of planthoppers come to the light, check the field at once and scout daily for the next few weeks. If you already walk the field every day, IRRI says you do not need the trap."
+          "a": "No. A light trap is only an alarm. If hundreds of planthoppers come to the light, check the field at once and scout daily for the next few weeks. If you already walk the field every day, you do not need the trap."
         },
         {
           "q": "When should we hunt rats?",
-          "a": "PhilRice advises rat hunting at the start of the rats' breeding season, or one month after crop establishment. Pair it with burrow management and safe handling of baits."
+          "a": "Hunt rats at the start of their breeding season, or one month after crop establishment. Pair it with burrow management and safe handling of baits."
         }
       ]
     },

@@ -6,7 +6,7 @@
   "category": "Weather",
   "title": "How Do I Plan My Planting Around El Nino and La Nina? Farming Tips for Filipino Farmers",
   "metaTitle": "El Nino Farming Tips and La Nina Planting Advice",
-  "metaDescription": "El Nino farming tips for Filipino farmers: how to read PAGASA's ENSO alert, the varieties and crops PhilRice suggests, saving water, and La Nina steps.",
+  "metaDescription": "El Nino farming tips for Filipino farmers: how to read PAGASA's ENSO alert, the varieties and crops to choose, saving water, and La Nina steps.",
   "focusKeyword": "El Nino farming tips",
   "keywords": [
     "El Nino farming tips",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "El Nino and La Nina are two sides of one climate swing in the Pacific Ocean. In the Philippines, PhilRice explains, El Nino brings a longer dry season and hotter days. The rains start late, end early and bring fewer typhoons. La Nina brings the reverse: more rain, a short dry season, more typhoons and cooler air.\n\nEach episode usually lasts 9 months to 2 years and comes back every 2 to 7 years. PhilRice's guide recalls the strong El Nino of 2015 and 2016, and before it the one of 1997 and 1998."
+      "text": "El Nino and La Nina are two sides of one climate swing in the Pacific Ocean. In the Philippines, El Nino brings a longer dry season and hotter days. The rains start late, end early and bring fewer typhoons. La Nina brings the reverse: more rain, a short dry season, more typhoons and cooler air.\n\nEach episode usually lasts 9 months to 2 years and comes back every 2 to 7 years. Recent strong ones came in 2015 and 2016, and before that in 1997 and 1998."
     },
     {
       "type": "heading",
@@ -38,7 +38,7 @@
       "items": [
         "PAGASA updates its ENSO alert every month. As of 7 October 2026, it expected El Nino to peak before the end of 2026 and last until the first half of 2027.",
         "In a dry year, plant rice only where water is sure, and use drought tolerant or early maturing varieties.",
-        "Where water is short, PhilRice suggests munggo, root crops, cucurbits or vegetables instead of rice.",
+        "Where water is short, plant munggo, root crops, cucurbits or vegetables instead of rice.",
         "In a La Nina year, use flood tolerant rice, repair dikes and time harvest away from storms."
       ]
     },
@@ -49,20 +49,20 @@
     },
     {
       "type": "text",
-      "text": "PAGASA posts its ENSO alert status every month on its El Nino and La Nina monitoring page, listed in the sources below, so check it before each season. As of September 2026, PAGASA said about 45 provinces may face dry conditions beginning October, and 8 provinces may face drought. PhilRice and PAGASA then signed an agreement to share weather and rice data, including 10 day forecasts. PhilRice's executive director also urged farmers to align the rice cropping calendar with the weather and the water on hand.\n\nHistory shows why this matters. An IRRI and PhilRice satellite study looked at the 2016 drought in Mindanao. It found almost no rice planted from March to mid May. Creeks dried up and irrigation came late, so most planting moved to June. Expect the same pattern in any El Nino year wherever water comes late."
+      "text": "PAGASA posts its ENSO alert status every month on its El Nino and La Nina monitoring page, so check it before each season. As of September 2026, PAGASA said about 45 provinces may face dry conditions beginning October, and 8 provinces may face drought. PhilRice and PAGASA then signed an agreement to share weather and rice data, including 10 day forecasts. So align your rice cropping calendar with the weather and the water on hand.\n\nHistory shows why this matters. A satellite study looked at the 2016 drought in Mindanao. It found almost no rice planted from March to mid May. Creeks dried up and irrigation came late, so most planting moved to June. Expect the same pattern in any El Nino year wherever water comes late."
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "What El Nino farming tips does PhilRice give?"
+      "text": "Which El Nino farming tips work for rice farms?"
     },
     {
       "type": "text",
-      "text": "PhilRice's question and answer guide lists these El Nino farming tips for rice farms. Each one is cheap to plan now and costly to fix later."
+      "text": "These El Nino farming tips suit rice farms. Each one is cheap to plan now and costly to fix later."
     },
     {
       "type": "table",
-      "caption": "PhilRice's El Nino steps for rice farmers",
+      "caption": "El Nino steps for rice farmers",
       "rows": [
         [
           "Step",
@@ -104,7 +104,7 @@
     },
     {
       "type": "text",
-      "text": "At PhilRice's Lakbay Palay field day in September 2026, farmers' groups ranked their own priorities. They named drought tolerant varieties such as NSIC Rc 480, Palayamanan, crop insurance, rainwater harvesting, water impounding, small irrigation pumps and MOET soil testing. Read our guides to [best rice variety for your area](/blog/best-rice-variety-for-my-area) and [what crop to plant this season](/blog/what-crop-to-plant-this-season) for the details."
+      "text": "At the Lakbay Palay field day in September 2026, farmers' groups ranked their own priorities. They named drought tolerant varieties such as NSIC Rc 480, Palayamanan, crop insurance, rainwater harvesting, water impounding, small irrigation pumps and MOET soil testing. Read our guides to [best rice variety for your area](/blog/best-rice-variety-for-my-area) and [what crop to plant this season](/blog/what-crop-to-plant-this-season) for the details."
     },
     {
       "type": "heading",
@@ -149,7 +149,7 @@
     },
     {
       "type": "text",
-      "text": "La Nina is the wet side of the swing, and its risks are floods, overflowing rivers and palay you cannot sun dry. PhilRice's guide gives these steps."
+      "text": "La Nina is the wet side of the swing, and its risks are floods, overflowing rivers and palay you cannot sun dry. Take these steps."
     },
     {
       "type": "list",
@@ -198,15 +198,15 @@
         },
         {
           "q": "How long does El Nino last?",
-          "a": "PhilRice says an episode usually lasts 9 months to 2 years and returns every 2 to 7 years. As of 7 October 2026, PAGASA expected the El Nino then present to last until the first half of 2027. Check its monthly ENSO alert for the latest."
+          "a": "An episode usually lasts 9 months to 2 years and returns every 2 to 7 years. As of 7 October 2026, PAGASA expected the El Nino then present to last until the first half of 2027. Check its monthly ENSO alert for the latest."
         },
         {
           "q": "Should I still plant rice during El Nino?",
-          "a": "Yes, where water is sure until harvest. Use drought tolerant or early maturing varieties, dry direct seeding and controlled irrigation. Where water is short, PhilRice suggests munggo or vegetables instead."
+          "a": "Yes, where water is sure until harvest. Use drought tolerant or early maturing varieties, dry direct seeding and controlled irrigation. Where water is short, plant munggo or vegetables instead."
         },
         {
           "q": "What crops grow well during El Nino in the Philippines?",
-          "a": "PhilRice names munggo, which lives on little water, and root crops like kamoteng kahoy, kamote and ube. It also suggests pakwan, kalabasa and melon for extra income."
+          "a": "Good choices are munggo, which lives on little water, and root crops like kamoteng kahoy, kamote and ube. Pakwan, kalabasa and melon also bring extra income."
         },
         {
           "q": "Where can I check the El Nino status?",

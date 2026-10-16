@@ -20,7 +20,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Many Filipino farms keep both crops and animals. Ducks feed in the paddy after harvest and a carabao eats the straw. A few pigs or a layer flock pay the bills between harvests. PhilRice builds a whole system on this idea, called Palayamanan Plus.\n\nSo the question is fair. Can one app hold the animals and the crops? Here is what each side needs, the free tools that exist, and where anee.io fits, limits included."
+      "text": "Many Filipino farms keep both crops and animals. Ducks feed in the paddy after harvest and a carabao eats the straw. A few pigs or a layer flock pay the bills between harvests. Palayamanan Plus, a whole farming system, rests on this idea.\n\nSo the question is fair. Can one app hold the animals and the crops? Here is what each side needs, the free tools that exist, and where anee.io fits, limits included."
     },
     {
       "type": "heading",
@@ -45,7 +45,7 @@
     },
     {
       "type": "text",
-      "text": "List the records each side needs, then test each app against that list. For the animal side, the Bureau of Agriculture and Fisheries Standards (BAFS) lists them. Its guide is the Good Animal Husbandry Practices standard, PNS/BAFS 60:2008."
+      "text": "List the records each side needs, then test each app against that list. For the animal side, the Good Animal Husbandry Practices standard, PNS/BAFS 60:2008, lists them."
     },
     {
       "type": "heading",
@@ -148,7 +148,7 @@
     },
     {
       "type": "text",
-      "text": "Yes. A daily flock notebook or a spreadsheet costs nothing, and it covers what the BAFS guide asks for. Set it up like this."
+      "text": "Yes. A daily flock notebook or a spreadsheet costs nothing, and it covers what the standard asks for. Set it up like this."
     },
     {
       "type": "steps",
@@ -183,7 +183,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "Write the withdrawal date where everyone sees it",
-      "text": "The BAFS guide asks you to record the withdrawal period with every treatment. Write the end date on the pen or cage card too, so no worker sells eggs or birds before it."
+      "text": "Record the withdrawal period with every treatment. Write the end date on the pen or cage card too, so no worker sells eggs or birds before it."
     },
     {
       "type": "heading",
@@ -192,7 +192,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice's Palayamanan Plus shows how the two sides feed each other. Straw feeds carabao, cattle and goats. Leftover palay grains feed chickens and ducks, and ducks and fish can live in the paddy. Then manure and crop residue go back to the field as organic fertilizer.\n\nanee.io handles the crop half of that loop. The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. [Workers and payroll](/features/farm-workers-and-payroll) count labor cost, and the inventory keeps fertilizer and seed in stock. After harvest, the records keep yield, buyer and price per lot.\n\nThe [NPK Plus Calculator](/features/npk-plus-calculator) also counts chicken and carabao manure in a crop's fertilizer plan. So the manure from your animals shows up as nutrients, not guesswork. The [Contact List](/features/farm-contact-list) keeps your buyers, suppliers and the nearest veterinarian in one phonebook.\n\nBe clear on the limits. anee.io and Anee, its smart farm technician, are built around crops and seasons. They will not track doses, due dates or feed per bird. For a sick animal, call your city or municipal agriculture or veterinary office, or report it through BAI ADIR."
+      "text": "Palayamanan Plus shows how the two sides feed each other. Straw feeds carabao, cattle and goats. Leftover palay grains feed chickens and ducks, and ducks and fish can live in the paddy. Then manure and crop residue go back to the field as organic fertilizer.\n\nanee.io handles the crop half of that loop. The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. [Workers and payroll](/features/farm-workers-and-payroll) count labor cost, and the inventory keeps fertilizer and seed in stock. After harvest, the records keep yield, buyer and price per lot.\n\nThe [NPK Plus Calculator](/features/npk-plus-calculator) also counts chicken and carabao manure in a crop's fertilizer plan. So the manure from your animals shows up as nutrients, not guesswork. The [Contact List](/features/farm-contact-list) keeps your buyers, suppliers and the nearest veterinarian in one phonebook.\n\nBe clear on the limits. anee.io and Anee, its smart farm technician, are built around crops and seasons. They will not track doses, due dates or feed per bird. For a sick animal, call your city or municipal agriculture or veterinary office, or report it through BAI ADIR."
     },
     {
       "type": "cta",

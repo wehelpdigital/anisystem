@@ -32,7 +32,7 @@
       "ordered": false,
       "items": [
         "AI helps most by catching costly mistakes early: wrong diagnosis, wrong fertilizer, bad timing.",
-        "Advice built from field data works. IRRI reported higher yield and net benefit for farmers who followed Rice Crop Manager advice.",
+        "Advice built from field data works. Farmers who followed Rice Crop Manager advice had higher yield and net benefit.",
         "AI is a helper, not an agriculturist. Check every pesticide against its label and FPA registration.",
         "On anee.io, Anee comes with Libre + Anee for PHP 70 a month and with every paid plan, and she uses credits."
       ]
@@ -103,7 +103,7 @@
     },
     {
       "type": "text",
-      "text": "Chat style AI for farms is new, so long studies on it are still few. But advice built from field data has a record in the Philippines. The Rice Crop Manager, developed by IRRI with PhilRice and deployed nationwide with the DA, gives each farmer fertilizer and crop advice for their own field.\n\nIRRI reported that in a 2018 assessment, farmers who followed Rice Crop Manager advice harvested 640 kg more per hectare on average than farmers who did not. They also had about PHP 11,146 more net benefit per hectare. That is not a promise for every farm, since it compares farmers who followed with those who did not. Still, it shows why advice that fits your own field beats a fixed recipe.\n\nThe same idea is spreading. FAO, for example, has piloted generative AI that supports advisory services for farmers in Malawi, Rwanda and Zimbabwe."
+      "text": "Chat style AI for farms is new, so long studies on it are still few. But advice built from field data has a record in the Philippines. The Rice Crop Manager, used nationwide, gives each farmer fertilizer and crop advice for their own field.\n\nIn a 2018 assessment, farmers who followed Rice Crop Manager advice harvested 640 kg more per hectare on average than farmers who did not. They also had about PHP 11,146 more net benefit per hectare. That is not a promise for every farm, since it compares farmers who followed with those who did not. Still, it shows why advice that fits your own field beats a fixed recipe.\n\nThe same idea is spreading. FAO, for example, has piloted generative AI that supports advisory services for farmers in Malawi, Rwanda and Zimbabwe."
     },
     {
       "type": "heading",
@@ -218,7 +218,7 @@
       "items": [
         {
           "q": "Can AI really increase my farm income?",
-          "a": "It can help, mostly by cutting costly mistakes and improving timing, but no tool can promise a number. IRRI found that rice farmers who followed Rice Crop Manager advice for their own fields earned more on average than those who did not. Your result depends on how you use the advice."
+          "a": "It can help, mostly by cutting costly mistakes and improving timing, but no tool can promise a number. Rice farmers who followed Rice Crop Manager advice for their own fields earned more on average than those who did not. Your result depends on how you use the advice."
         },
         {
           "q": "Is AI farm advice accurate?",

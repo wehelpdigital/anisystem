@@ -24,7 +24,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Every farmer wants to know the harvest early. The buyer asks, the lender asks, and reaping and drying need cash. So know what you can measure before harvest, and what an app can honestly add.\n\nThis guide uses palay, because IRRI and PhilRice have studied its yield closely. The same idea works for mais and gulay too: weigh a measured sample, then scale it up."
+      "text": "Every farmer wants to know the harvest early. The buyer asks, the lender asks, and reaping and drying need cash. So know what you can measure before harvest, and what an app can honestly add.\n\nThis guide uses palay, because researchers have studied its yield closely. The same idea works for mais and gulay too: weigh a measured sample, then scale it up."
     },
     {
       "type": "heading",
@@ -49,7 +49,7 @@
     },
     {
       "type": "text",
-      "text": "Crop yield is how much you harvest from a given area of land. FAO, the United Nations food agency, defines it as the harvested production per hectare of the area under cultivation. Filipino farmers say it in kilos, tons or cavans per hectare.\n\nThe per hectare part makes crop yields useful. For example, 50 cavans from half a hectare is 100 cavans per hectare. So a small lot compares fairly with a big one. Our page on [ani meaning](/blog/ani-meaning) explains the Filipino word.\n\nFor rice, the IRRI textbook by Shouichi Yoshida says the usual way to report yield is as palay at 14 percent moisture. It adds that grain yield usually ranges from 3 to 10 tons per hectare per crop, unless the crop lodges."
+      "text": "Crop yield is how much you harvest from a given area of land. Put more exactly, it is the harvested production per hectare of the area under cultivation. Filipino farmers say it in kilos, tons or cavans per hectare.\n\nThe per hectare part makes crop yields useful. For example, 50 cavans from half a hectare is 100 cavans per hectare. So a small lot compares fairly with a big one. Our page on [ani meaning](/blog/ani-meaning) explains the Filipino word.\n\nFor rice, Shouichi Yoshida's textbook says the usual way to report yield is as palay at 14 percent moisture. It adds that grain yield usually ranges from 3 to 10 tons per hectare per crop, unless the crop lodges."
     },
     {
       "type": "heading",
@@ -62,7 +62,7 @@
     },
     {
       "type": "table",
-      "caption": "The four parts of rice yield. Source: Yoshida, Fundamentals of Rice Crop Science, IRRI.",
+      "caption": "The four parts of rice yield. Source: Yoshida, Fundamentals of Rice Crop Science.",
       "rows": [
         [
           "Yield part",
@@ -101,7 +101,7 @@
       "items": [
         {
           "title": "Take three small samples",
-          "text": "PalayCheck, the rice crop management system of PhilRice, counts three samples of 4 hills, 2 by 2. At 20 by 20 cm spacing, 4 hills cover 0.16 square meters."
+          "text": "Take three samples of 4 hills, 2 by 2. At 20 by 20 cm spacing, 4 hills cover 0.16 square meters."
         },
         {
           "title": "Count the panicles",
@@ -113,7 +113,7 @@
         },
         {
           "title": "Get the grain weight",
-          "text": "PalayCheck weighs 1,000 dry filled grains. Without a fine scale, ask your seed source for the variety's figure."
+          "text": "Weigh 1,000 dry filled grains. Without a fine scale, ask your seed source for the variety's figure."
         },
         {
           "title": "Multiply and average",
@@ -123,13 +123,13 @@
     },
     {
       "type": "text",
-      "text": "Yoshida shows the sum for IR8, an older variety. It assumes 250 panicles per square meter, 100 grains each, 85 percent filled and 29 grams per 1,000 grains. That gave 6.16 tons per hectare in the cloudy wet season. With 375 panicles in the sunny dry season, it gave 9.24 tons.\n\nTreat it as a range, since PalayCheck says yield parts only partly explain why one field outyields another."
+      "text": "Yoshida shows the sum for IR8, an older variety. It assumes 250 panicles per square meter, 100 grains each, 85 percent filled and 29 grams per 1,000 grains. That gave 6.16 tons per hectare in the cloudy wet season. With 375 panicles in the sunny dry season, it gave 9.24 tons.\n\nTreat it as a range, since yield parts only partly explain why one field outyields another."
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "A count on your best patch flatters the field",
-      "text": "Samples from the best looking spots read high. PalayCheck picks crop cut areas with a good stand, and for a whole parcel it has you record the share of missing hills. Walk the weak spots too, and plan your cash on the lower figure."
+      "text": "Samples from the best looking spots read high. Pick crop cut areas with a good stand, and for a whole parcel, record the share of missing hills. Walk the weak spots too, and plan your cash on the lower figure."
     },
     {
       "type": "heading",
@@ -138,16 +138,16 @@
     },
     {
       "type": "text",
-      "text": "Weigh it. PalayCheck has two ways, and both correct the weight to 14 percent moisture, because wet palay weighs more."
+      "text": "Weigh it. There are two ways, and both correct the weight to 14 percent moisture, because wet palay weighs more."
     },
     {
       "type": "table",
-      "caption": "Two PalayCheck ways to measure palay yield, with PhilRice's own sample numbers",
+      "caption": "Two ways to measure palay yield, with sample numbers",
       "rows": [
         [
           "Method",
           "What you do",
-          "PhilRice sample"
+          "Sample"
         ],
         [
           "Crop cut",
@@ -212,7 +212,7 @@
     },
     {
       "type": "text",
-      "text": "Weather matters most around flowering. Yoshida found that sunlight in the reproductive stage has the biggest effect on rice yield. IRRI also warns that drought at flowering leaves more empty grains. So the forecast for those weeks tells you more than any greenness map.\n\nA satellite picture still shows where to walk, as our guides on [satellite images of your farm](/blog/satellite-crop-monitoring-philippines) and [crop health without a drone](/blog/monitor-crop-health-without-a-drone) explain."
+      "text": "Weather matters most around flowering. Yoshida found that sunlight in the reproductive stage has the biggest effect on rice yield. Drought at flowering also leaves more empty grains. So the forecast for those weeks tells you more than any greenness map.\n\nA satellite picture still shows where to walk, as our guides on [satellite images of your farm](/blog/satellite-crop-monitoring-philippines) and [crop health without a drone](/blog/monitor-crop-health-without-a-drone) explain."
     },
     {
       "type": "heading",
@@ -244,11 +244,11 @@
         },
         {
           "q": "Why is my wet season yield lower than my dry season yield?",
-          "a": "Cloudy weeks give the crop less sunlight. In Yoshida's IRRI model for IR8, that meant 250 panicles per square meter in the wet season against 375 in the dry season."
+          "a": "Cloudy weeks give the crop less sunlight. In Yoshida's model for IR8, that meant 250 panicles per square meter in the wet season against 375 in the dry season."
         },
         {
           "q": "Should I record my harvest wet or dry?",
-          "a": "Record the weight with its moisture. PalayCheck corrects every yield to 14 percent moisture, so seasons compare fairly. The anee.io harvest record asks for both."
+          "a": "Record the weight with its moisture. Correct every yield to 14 percent moisture, so seasons compare fairly. The anee.io harvest record asks for both."
         },
         {
           "q": "Is the yield line in NPK Plus my expected harvest?",

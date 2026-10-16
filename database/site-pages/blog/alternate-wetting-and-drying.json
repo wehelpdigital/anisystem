@@ -16,7 +16,7 @@
     "water management in rice",
     "save irrigation water"
   ],
-  "excerpt": "Alternate wetting and drying, or AWD, is a way to irrigate palay only when the field needs it. Instead of keeping the paddy flooded all season, you let the water sink below the soil surface, then flood again. A simple tube in the field, the observation well, tells you when. PhilRice says it can cut irrigation water by up to half when done right.",
+  "excerpt": "Alternate wetting and drying, or AWD, is a way to irrigate palay only when the field needs it. Instead of keeping the paddy flooded all season, you let the water sink below the soil surface, then flood again. A simple tube in the field, the observation well, tells you when. Done right, it can cut irrigation water by up to half.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-wet-season-rice.webp",
     "alt": "Tillering palay beside an irrigation canal at PhilRice in Muñoz, Nueva Ecija, the kind of irrigated field where alternate wetting and drying saves water",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "AWD belongs to Key Check 6 of PalayCheck: no stress from too little or too much water. It fits irrigated lowland fields where you decide when water comes in, from a pump, a canal or a shallow tube well.\n\nFarmers who pump with diesel or electricity feel the savings first. One Zambales farmer told PhilRice that AWD cut his fuel use by up to 25 percent. Our list of the [PalayCheck key checks](/blog/palaycheck-key-checks) shows where water fits in the season."
+      "text": "AWD belongs to Key Check 6: no stress from too little or too much water. It fits irrigated lowland fields where you decide when water comes in, from a pump, a canal or a shallow tube well.\n\nFarmers who pump with diesel or electricity feel the savings first. One Zambales farmer found that AWD cut his fuel use by up to 25 percent. Our list of the [PalayCheck key checks](/blog/palaycheck-key-checks) shows where water fits in the season."
     },
     {
       "type": "heading",
@@ -34,7 +34,7 @@
     },
     {
       "type": "text",
-      "text": "Drying the soil for a few days at a time does more than save water. PhilRice lists these gains for the plant itself:"
+      "text": "Drying the soil for a few days at a time does more than save water. It brings these gains for the plant itself:"
     },
     {
       "type": "list",
@@ -48,7 +48,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI's Rice Knowledge Bank says farmers can cut irrigation water this way without lowering yield. PalayCheck also warns that a field kept too wet costs more to irrigate, upsets the nutrient balance and gives off more greenhouse gas."
+      "text": "Farmers can cut irrigation water this way without lowering yield. A field kept too wet also costs more to irrigate, upsets the nutrient balance and gives off more greenhouse gas."
     },
     {
       "type": "heading",
@@ -86,7 +86,7 @@
     },
     {
       "type": "table",
-      "caption": "How the observation well sits in each season, from PhilRice's field advice",
+      "caption": "How the observation well sits in each season",
       "rows": [
         [
           "Season",
@@ -113,7 +113,7 @@
     },
     {
       "type": "text",
-      "text": "So in the wet season, the soil can dry to about 20 cm down before you irrigate. In the dry season, when sun and wind dry a field faster, the tube stops at 15 cm. That is the same safe depth IRRI uses for its field water tube."
+      "text": "So in the wet season, the soil can dry to about 20 cm down before you irrigate. In the dry season, when sun and wind dry a field faster, the tube stops at 15 cm. That is the usual safe depth for a field water tube."
     },
     {
       "type": "heading",
@@ -122,7 +122,7 @@
     },
     {
       "type": "text",
-      "text": "Do not start right after planting. Start AWD 21 to 30 days after transplanting or sowing, and only once your weed control is done. Until then, keep the usual shallow water, because standing water holds down young weeds. Our guide to [weed management in rice](/weeds/weed-management-in-rice) shows that timing.\n\nIRRI's Rice Knowledge Bank allows an earlier start, 1 to 2 weeks after transplanting. But it also says to wait 2 to 3 more weeks where weeds are many."
+      "text": "Do not start right after planting. Start AWD 21 to 30 days after transplanting or sowing, and only once your weed control is done. Until then, keep the usual shallow water, because standing water holds down young weeds. Our guide to [weed management in rice](/weeds/weed-management-in-rice) shows that timing.\n\nAn earlier start, 1 to 2 weeks after transplanting, also works. But wait 2 to 3 more weeks where weeds are many."
     },
     {
       "type": "heading",
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "From then on, the well decides. Look into it every day or two. While you can still see water inside the tube, wait. Once the tube is dry to the bottom, irrigate.\n\nRefill to about 5 cm of standing water. That is the top of the tube in the wet season, or the WS mark in the dry season. Then let it sink again. PhilRice's field advice puts the usual wait at about 3 to 5 days after the surface water disappears. IRRI notes that the dry spell can run from 1 to more than 10 days, depending on soil, weather and crop stage."
+      "text": "From then on, the well decides. Look into it every day or two. While you can still see water inside the tube, wait. Once the tube is dry to the bottom, irrigate.\n\nRefill to about 5 cm of standing water. That is the top of the tube in the wet season, or the WS mark in the dry season. Then let it sink again. The usual wait is about 3 to 5 days after the surface water disappears. The dry spell can run from 1 to more than 10 days, depending on soil, weather and crop stage."
     },
     {
       "type": "heading",
@@ -140,7 +140,7 @@
     },
     {
       "type": "text",
-      "text": "Pause AWD when you top dress. PhilRice advises a shallow 2 to 3 cm of water in the paddy as you spread urea, so the fertilizer dissolves and stays in the field. IRRI offers another way: spread the nitrogen on the drained soil just before you irrigate, so the water carries it down. Our [rice fertilizer schedule](/blog/rice-fertilizer-schedule) gives the days for each dose."
+      "text": "Pause AWD when you top dress. Keep a shallow 2 to 3 cm of water in the paddy as you spread urea, so the fertilizer dissolves and stays in the field. Another way works too: spread the nitrogen on the drained soil just before you irrigate, so the water carries it down. Our [rice fertilizer schedule](/blog/rice-fertilizer-schedule) gives the days for each dose."
     },
     {
       "type": "heading",
@@ -149,13 +149,13 @@
     },
     {
       "type": "text",
-      "text": "Stop AWD when the crop starts to flower. From flowering through grain filling, keep about 5 cm of water standing in the paddy. A dry field at this stage brings tulyapis, the empty or half filled grains that cut your harvest.\n\nPalayCheck asks for 5 to 7 cm at flowering. IRRI keeps the field flooded from a week before to a week after flowering. Either way, flowering is the one stage when you should never let the well run dry."
+      "text": "Stop AWD when the crop starts to flower. From flowering through grain filling, keep about 5 cm of water standing in the paddy. A dry field at this stage brings tulyapis, the empty or half filled grains that cut your harvest.\n\nAim for 5 to 7 cm at flowering, and keep the field flooded from a week before to a week after it. Flowering is the one stage when you should never let the well run dry."
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "Signs you let it dry too far",
-      "text": "Deep cracks in the soil for more than three days, rolled leaves, dry leaf tips, stunted plants and fewer than 10 tillers per hill all point to drought stress, PalayCheck says. Irrigate right away, and check the well. Too much water hurts as well. More than 5 cm for a week or longer leaves fewer tillers, smaller leaves and dark roots."
+      "text": "Deep cracks in the soil for more than three days, rolled leaves, dry leaf tips, stunted plants and fewer than 10 tillers per hill all point to drought stress. Irrigate right away, and check the well. Too much water hurts as well. More than 5 cm for a week or longer leaves fewer tillers, smaller leaves and dark roots."
     },
     {
       "type": "heading",
@@ -168,7 +168,7 @@
     },
     {
       "type": "table",
-      "caption": "When to stop irrigating before harvest, from PhilRice's PalayCheck System",
+      "caption": "When to stop irrigating before harvest",
       "rows": [
         [
           "Soil or season",
@@ -218,7 +218,7 @@
         },
         {
           "q": "Does AWD lower the yield?",
-          "a": "Not when you follow the rules. IRRI says farmers can cut irrigation water without lowering yield. Keep the field flooded around flowering, and never let the water drop below the bottom of the well."
+          "a": "Not when you follow the rules. Farmers can cut irrigation water without lowering yield. Keep the field flooded around flowering, and never let the water drop below the bottom of the well."
         },
         {
           "q": "How deep do I set the observation well?",
