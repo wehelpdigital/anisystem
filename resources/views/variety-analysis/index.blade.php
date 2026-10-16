@@ -321,6 +321,9 @@
     .va-file-row .f-in { align-self: flex-start; font-size: .6rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .1rem .45rem; border-radius: 999px; color: #2d5016; background: #e4f1d6; }
     .va-file-all { display: inline-block; margin-top: .7rem; font-size: .78rem; font-weight: 800; color: var(--color-brand-700); text-decoration: underline; text-underline-offset: 3px; }
     /* The two ways to add a variety (2026-10-15). */
+    .va-ways-h { margin-top: 1rem; font-size: .8rem; font-weight: 800; color: var(--color-gray-700); }
+    .va-ways-h + .va-ways { margin-top: .45rem; }
+    html.dark .va-ways-h { color: #d5e3c5; }
     .va-ways { display: grid; gap: .7rem; margin-top: .9rem; }
     .va-way { display: flex; align-items: center; gap: .75rem; width: 100%; padding: .75rem .85rem; border-radius: 1rem; text-align: left;
         background: linear-gradient(135deg, #f3f9ec, #fff); border: 1.5px solid #cfe5b8; cursor: pointer;
@@ -365,22 +368,12 @@
     html.dark .va-find-foot { background: #11160d; border-color: #222b1a; }
     html.dark .va-own-l { color: #b9caa8; }
     @media (prefers-reduced-motion: reduce) { .va-way, .va-find-r, .va-find-r .ck, .va-find-filt button { transition: none; } .va-way:hover { transform: none; } }
-    .va-book-h { margin-top: .9rem; font-size: .78rem; font-weight: 800; color: var(--color-gray-700); }
-    .va-book-h small { display: block; font-weight: 600; color: var(--color-gray-500); }
-    .va-book { display: grid; gap: .4rem; margin-top: .5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
-    .va-book-c { display: flex; flex-direction: column; align-items: flex-start; gap: .1rem; padding: .5rem .65rem; border-radius: .8rem; text-align: left;
-        background: #fff; border: 1px dashed #cfe1bb; cursor: pointer; transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
-    .va-book-c:hover { border-color: #86b556; background: #f6faf1; }
-    .va-book-c b { font-size: .8rem; color: var(--color-gray-900); }
-    .va-book-c small { font-size: .68rem; font-weight: 700; color: #8a6a00; }
-    .va-book-c span { font-size: .66rem; color: var(--color-gray-500); }
     html.dark .va-onfile { background: #1a2414; border-color: #2b3a1c; color: #b7c2ad; }
     html.dark .va-onfile b { color: #a5c97e; }
-    html.dark .va-file-row, html.dark .va-book-c { background: #151b12; border-color: #2b3a1c; }
-    html.dark .va-file-row b, html.dark .va-book-c b { color: #e8efe1; }
+    html.dark .va-file-row { background: #151b12; border-color: #2b3a1c; }
+    html.dark .va-file-row b { color: #e8efe1; }
     html.dark .va-file-row .f-in { background: #22301a; color: #cfe3b8; }
-    html.dark .va-book-h { color: #d5e3c5; }
-    @media (prefers-reduced-motion: reduce) { .va-onfile, .va-file-row, .va-book-c { transition: none; } .va-file-row:hover { transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .va-onfile, .va-file-row { transition: none; } .va-file-row:hover { transform: none; } }
     html.dark .va-rec { border-color: #222b1a; }
     html.dark .va-rec-top .v-name b { color: #e8efe1; }
     html.dark .va-fact { background: #222b1a; color: #93a684; }
@@ -550,11 +543,14 @@
             </section>
             {{-- Step 5: the varieties --}}
             <section class="wtp-step" data-step="4">
-                <p class="wtp-q">Which varieties are you comparing?</p>
-                <p class="wtp-sub">Pick up to eight from our records, or type one that is not on record. Leave it empty and Anee picks the top yielding ones.</p>
+                <p class="wtp-q">Which varieties are you comparing?{{ \App\Support\Tagalog::flag('compare-varieties') }}</p>
+                {{-- Said plainly (2026-10-16, the owner: "right now its not that clear"). --}}
+                <p class="wtp-sub">Thinking of planting some varieties? Add them here, up to eight, and Anee compares them on your field and ranks them. No varieties in mind? Leave it empty and Anee picks the top yielding ones.</p>
                 <div class="va-chips" id="vaChips"></div>
                 {{-- Two ways to add (2026-10-15, the owner): search every variety on record, or type your own.
-                     The ones on record that suit the field follow, to add with a tap. --}}
+                     The ones on record that suit the field are no longer offered here (2026-10-16, the owner:
+                     they gave the answer away before the run); the results name them. --}}
+                <p class="va-ways-h">Add a variety to compare</p>
                 <div class="va-ways">
                     <button type="button" class="va-way" id="vaSearchBtn" hidden>
                         <span class="va-way-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></span>
@@ -568,7 +564,6 @@
                         </div>
                     </div>
                 </div>
-                <div id="vaBook" hidden></div>
                 <div class="va-anee" id="vaAneePicks"><span id="vaAneeFaceSlot">🤖</span><span>No varieties yet. <b>Anee will pick the top yielding released varieties</b> for your crop and field, and compare them.</span></div>
             </section>
             {{-- Step 6: the priorities --}}
@@ -1014,28 +1009,11 @@
     }
     const asAdded = (r) => r.alias && (r.name + ' (' + r.alias + ')').length <= 60 ? r.name + ' (' + r.alias + ')' : r.name;
     function paintBook() {
-        // The search door shows when this crop has records (the Philippines' registry).
+        // The search door shows when this crop has records (the Philippines' registry). The ones that
+        // suit the field are not offered here (2026-10-16, the owner): the results name them.
         $id('vaSearchBtn').hidden = !BOOK.count;
         $id('vaSearchSub').textContent = BOOK.count ? 'All ' + BOOK.count + ' on record for this crop, by name, local or trade name' : '';
-        const have = state.varieties.map((v) => v.toLowerCase());
-        const picks = (BOOK.picks || []).filter((r) => !have.some((v) => v.startsWith(r.name.toLowerCase()) || (r.alias && v.includes(r.alias.toLowerCase()))));
-        const box = $id('vaBook');
-        box.hidden = !picks.length || state.varieties.length >= 8;
-        box.innerHTML = picks.length ? `
-            <p class="va-book-h">On record and suited to your field<small>${esc(String(BOOK.count))} ${esc(((OPT.crops.find((x) => x.key === state.crop) || {}).label || 'crop').split(' (')[0].split(' — ')[0].toLowerCase())} varieties on file. Tap one to compare it.</small></p>
-            <div class="va-book">${picks.map((r) => `
-                <button type="button" class="va-book-c" data-book-add="${esc(asAdded(r))}">
-                    <b>${esc(r.name)}</b>${r.alias ? `<small>${esc(r.alias)}</small>` : ''}
-                    <span>${esc([r.type === 'hybrid' ? 'Hybrid' : '', r.days ? Math.round(r.days) + ' ' + (r.daysUnit || 'days') : '', r.yield ? fmtN(r.yield) + ' ' + (r.yieldUnit || 't/ha') : '', r.where || ''].filter(Boolean).join(' · '))}</span>
-                </button>`).join('')}</div>` : '';
     }
-    $id('vaBook').addEventListener('click', (e) => {
-        const b = e.target.closest('[data-book-add]');
-        if (!b) return;
-        if (state.varieties.length >= 8) { toast('You can add up to eight.', 'error'); return; }
-        state.varieties.push(b.getAttribute('data-book-add'));
-        paintChips();
-    });
     const cropSift = () => {
         const q = ($id('vaCropSearch').value || '').trim().toLowerCase();
         $id('vaCropSearchX').classList.toggle('hidden', !q);
