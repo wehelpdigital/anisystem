@@ -176,6 +176,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'newsTaglish' => method_exists(\App\Support\Newsletter\NewsEmail::class, 'retaglish'),
             'lpLotsFirst' => str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpSamePick"'),
             'climate20' => class_exists(\App\Support\ClimateRecord::class) && class_exists(\App\Support\NutrientBook::class) && defined(\App\Support\ClimateStore::class . '::YEARS') && \App\Support\ClimateStore::YEARS === 20,
+            'newsTaglishTabs' => class_exists(\App\Support\NewsTaglish::class) && str_contains((string) @file_get_contents(resource_path('views/partials/lang-tabs.blade.php')), 'anee.soWhat.lang'),
             'tlBesideChip' => str_contains((string) @file_get_contents(resource_path('views/partials/tagalog-flags.blade.php')), 'tlx-wc'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
