@@ -17,7 +17,7 @@
     "sugarcane variety philippines",
     "NSIC 2002 Sc 1"
   ],
-  "excerpt": "Phil 8013 is a registered sugarcane variety, also sold or known as NSIC Sc 1. It was registered with the National Seed Industry Council (NSIC) in 2002 as NSIC 2002 Sc 1. Sugar Regulatory Administration bred it. It takes about 11.5 months from planting to harvest, with 98 LKg of sugar per hectare on average in the trials.",
+  "excerpt": "Phil 8013 is a registered sugarcane variety, also sold or known as NSIC Sc 1. It was registered with the National Seed Industry Council in 2002 as NSIC 2002 Sc 1. Sugar Regulatory Administration bred it. It takes about 11.5 months from planting to harvest, with 98 LKg of sugar per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/sugarcane-land-preparation.webp",
     "alt": "Cane setts laid in deep furrows on red soil, the start of a sugarcane crop, the kind of farm where Phil 8013 sugarcane is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Sc 1, this is the same sugarcane. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [sugarcane variety finder](/crop-varieties/sugarcane), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for sugarcane](/land-preparation/sugarcane-land-preparation)."
+      "text": "If you came here looking for NSIC Sc 1, this is the same sugarcane. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [sugarcane variety finder](/crop-varieties/sugarcane), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for sugarcane](/land-preparation/sugarcane-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Phil 8013",
       "rows": [
         [
           "Trait",
@@ -127,7 +127,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -302,23 +302,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Phil 8013 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-sugarcane.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

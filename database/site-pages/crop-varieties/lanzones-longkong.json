@@ -17,7 +17,7 @@
     "lanzones variety philippines",
     "NSIC 2007 Ln 01"
   ],
-  "excerpt": "Longkong is a registered lanzones variety, also sold or known as NSIC Ln 01. It was registered with the National Seed Industry Council (NSIC) in 2007 as NSIC 2007 Ln 01. Alfonso Abad bred it. Its record notes a yield of 80.",
+  "excerpt": "Longkong is a registered lanzones variety, also sold or known as NSIC Ln 01. It was registered with the National Seed Industry Council in 2007 as NSIC 2007 Ln 01. Alfonso Abad bred it. Its record notes a yield of 80.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Longkong lanzones is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Ln 01, this is the same lanzones. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [lanzones variety finder](/crop-varieties/lanzones), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "If you came here looking for NSIC Ln 01, this is the same lanzones. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [lanzones variety finder](/crop-varieties/lanzones), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Longkong",
       "rows": [
         [
           "Trait",
@@ -138,7 +138,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -151,7 +151,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Longkong weighs about 22.38 grams, and its shape is spheroid. The flesh is translucent white and firm. Its sweetness measured 19.8 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 76.3 percent of the fruit. The registry notes its fruiting season as July September, bearing annual."
+      "text": "A fruit of Longkong weighs about 22.38 grams, and its shape is spheroid. The flesh is translucent white and firm. Its sweetness measured 19.8 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 76.3 percent of the fruit. Its fruiting season is July September, bearing annual."
     },
     {
       "type": "heading",
@@ -274,20 +274,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Longkong from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
           "label": "Notes on Longkong from en.wikipedia.org",
           "url": "https://en.wikipedia.org/wiki/Langsat"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

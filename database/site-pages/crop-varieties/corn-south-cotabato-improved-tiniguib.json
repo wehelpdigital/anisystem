@@ -20,7 +20,7 @@
     "corn variety philippines",
     "NSIC 2023 Cn 337"
   ],
-  "excerpt": "South Cotabato Improved Tiniguib corn is a white open pollinated corn variety, also sold or known as Tupi 1 White Improved Tiniguib or Tupi 1 WIT. It was registered with the National Seed Industry Council (NSIC) in 2023 as NSIC 2023 Cn 337. Department of Agriculture Regional Field Office XII bred it. It takes 104 to 108 days from planting to the harvest of dry grain, with 5.16 tonnes per hectare on average in the trials.",
+  "excerpt": "South Cotabato Improved Tiniguib corn is a white open pollinated corn variety, also sold or known as Tupi 1 White Improved Tiniguib or Tupi 1 WIT. It was registered with the National Seed Industry Council in 2023 as NSIC 2023 Cn 337. Department of Agriculture Regional Field Office XII bred it. It takes 104 to 108 days from planting to the harvest of dry grain, with 5.16 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where South Cotabato Improved Tiniguib corn is grown",
@@ -29,7 +29,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Tupi 1 White Improved Tiniguib or Tupi 1 WIT, this is the same corn. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+      "text": "If you came here looking for Tupi 1 White Improved Tiniguib or Tupi 1 WIT, this is the same corn. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "list",
@@ -49,7 +49,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of South Cotabato Improved Tiniguib",
       "rows": [
         [
           "Trait",
@@ -117,7 +117,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -169,7 +169,7 @@
     },
     {
       "type": "text",
-      "text": "Why farmers know it: launched by DA BAR in December 2023 under the CGUARD program and handed out to Mindanao farmers (DA RFO12, Inquirer). Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+      "text": "Why farmers know it: launched by DA BAR in December 2023 under the CGUARD program and handed out to Mindanao farmers (Inquirer). Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -178,7 +178,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Mindanao. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
+      "text": "It is recommended for Mindanao. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
     },
     {
       "type": "heading",
@@ -242,7 +242,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Mindanao. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Mindanao. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of South Cotabato Improved Tiniguib?",
@@ -284,24 +284,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on South Cotabato Improved Tiniguib from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=5383"
-        },
-        {
-          "label": "Notes on South Cotabato Improved Tiniguib from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=6393"
-        },
-        {
           "label": "Notes on South Cotabato Improved Tiniguib from plus.inquirer.net",
           "url": "https://plus.inquirer.net/?p=40531"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

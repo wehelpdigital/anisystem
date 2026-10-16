@@ -25,8 +25,8 @@
     $total = $all->count() + $riceCount;
     $fmt = fn ($x) => number_format((float) $x, 0, '.', '');
     $faq = [
-        ['How many crop varieties are registered in the Philippines?', 'This list holds ' . number_format($total) . ' varieties of ' . ($crops->count() + 1) . ' crops, ' . number_format($registered + $riceCount) . ' of them on the national registry of the National Seed Industry Council. Corn has the most, with ' . ($crops['corn']['count'] ?? 0) . ', then rice with ' . $riceCount . '.'],
-        ['What is the NSIC?', 'The National Seed Industry Council approves new crop varieties after trials in several places, and the Bureau of Plant Industry keeps the registry. A registered variety has passed those trials, so its numbers are more than a seller\'s promise.'],
+        ['How many crop varieties are registered in the Philippines?', 'This list holds ' . number_format($total) . ' varieties of ' . ($crops->count() + 1) . ' crops, ' . number_format($registered + $riceCount) . ' of them registered with the National Seed Industry Council. Corn has the most, with ' . ($crops['corn']['count'] ?? 0) . ', then rice with ' . $riceCount . '.'],
+        ['What is the NSIC?', 'The National Seed Industry Council approves new crop varieties after trials in several places. A registered variety has passed those trials, so its numbers are more than a seller\'s promise.'],
         ['Why is a variety I buy not on the list of registered ones?', 'Many vegetable hybrids sold by seed companies are never registered with the NSIC. We list the popular ones too, with the facts their sellers give, and mark them as not on the registry.'],
         ['How do I choose the right variety?', 'Pick by your buyer first, then by your season and your area. Compare days to harvest and yield within the same type, check the pest and disease ratings, and plant a small area of a new variety before you switch the whole farm.'],
     ];
@@ -89,7 +89,7 @@
                 <div class="rv-stats" aria-label="The list in numbers">
                     <div class="rv-stat"><b>{{ number_format($total) }}</b><span>varieties, each with its own page</span></div>
                     <div class="rv-stat is-gold"><b>{{ $crops->count() + 1 }}</b><span>crops, from rice and corn to mango and cacao</span></div>
-                    <div class="rv-stat"><b>{{ number_format($registered + $riceCount) }}</b><span>on the national NSIC registry</span></div>
+                    <div class="rv-stat"><b>{{ number_format($registered + $riceCount) }}</b><span>registered varieties</span></div>
                     <div class="rv-stat"><b>{{ $all->count() - $registered }}</b><span>sold by seed companies, never registered</span></div>
                 </div>
             </div>
@@ -192,7 +192,7 @@
                     </details>
                 @endforeach
             </div></div>
-            <p class="rv-src">Sources include the <a href="https://nsic.buplant.da.gov.ph/registry.php" rel="noopener" target="_blank">NSIC registry of crop varieties</a> kept by the Bureau of Plant Industry, and for the varieties not on it, their sellers and farm sources, named on each variety page. The words and pictures are anee.io's own.</p>
+            <p class="rv-src">For the varieties not registered, their sellers and farm sources are named on each variety page. The words and pictures are anee.io's own.</p>
         </div>
     </section>
 @endsection

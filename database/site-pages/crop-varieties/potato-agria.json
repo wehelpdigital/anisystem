@@ -16,7 +16,7 @@
     "potato variety philippines",
     "NSIC 1994 Po 02"
   ],
-  "excerpt": "Agria is a registered potato variety. It was registered with the National Seed Industry Council (NSIC) in 1994 as NSIC 1994 Po 02. It takes 80 to 90 days from planting to harvest, with 22.58 tonnes per hectare on average in the trials.",
+  "excerpt": "Agria is a registered potato variety. It was registered with the National Seed Industry Council in 1994 as NSIC 1994 Po 02. It takes 80 to 90 days from planting to harvest, with 22.58 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-vegetables-philippines.webp",
     "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet, the kind of farm where Agria potato is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [potato variety finder](/crop-varieties/potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
+      "text": "Compare it with the others in our [potato variety finder](/crop-varieties/potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Agria",
       "rows": [
         [
           "Trait",
@@ -102,7 +102,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -227,19 +227,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

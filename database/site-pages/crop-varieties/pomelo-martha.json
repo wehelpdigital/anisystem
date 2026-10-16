@@ -17,7 +17,7 @@
     "pomelo variety philippines",
     "NSIC 1996 Pm 01"
   ],
-  "excerpt": "Martha is a registered pomelo variety, also sold or known as NSIC Pm 01. It was registered with the National Seed Industry Council (NSIC) in 1996 as NSIC 1996 Pm 01. Cornelio Maligalig bred it. Its record notes a yield of 50 to 60 fruits/cropping.",
+  "excerpt": "Martha is a registered pomelo variety, also sold or known as NSIC Pm 01. It was registered with the National Seed Industry Council in 1996 as NSIC 1996 Pm 01. Cornelio Maligalig bred it. Its record notes a yield of 50 to 60 fruits/cropping.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-fruit-trees.webp",
     "alt": "Rows of young calamansi trees in an orchard in Victoria, Tarlac, the kind of farm where Martha pomelo is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Pm 01, this is the same pomelo. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [pomelo variety finder](/crop-varieties/pomelo), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
+      "text": "If you came here looking for NSIC Pm 01, this is the same pomelo. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [pomelo variety finder](/crop-varieties/pomelo), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Martha",
       "rows": [
         [
           "Trait",
@@ -94,7 +94,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -210,23 +210,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Martha from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

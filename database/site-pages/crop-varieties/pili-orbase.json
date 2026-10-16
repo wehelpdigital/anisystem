@@ -16,7 +16,7 @@
     "pili variety philippines",
     "NSIC 2012 Pl 12"
   ],
-  "excerpt": "Orbase is a registered pili variety. It was registered with the National Seed Industry Council (NSIC) in 2012 as NSIC 2012 Pl 12. Albay Expt. Station, Tabaco City bred it. Its record notes a yield of 3320 pcs. With 130.47 kilos.",
+  "excerpt": "Orbase is a registered pili variety. It was registered with the National Seed Industry Council in 2012 as NSIC 2012 Pl 12. Albay Expt. Station, Tabaco City bred it. Its record notes a yield of 3320 pcs. With 130.47 kilos.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Orbase pili is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [pili variety finder](/crop-varieties/pili), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "Compare it with the others in our [pili variety finder](/crop-varieties/pili), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -41,7 +41,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Orbase",
       "rows": [
         [
           "Trait",
@@ -129,7 +129,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "heading",
@@ -138,7 +138,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Orbase weighs about 42.25 grams, and its shape is oblong. The flesh is black. The registry notes its fruiting season as July November, bearing year round."
+      "text": "A fruit of Orbase weighs about 42.25 grams, and its shape is oblong. The flesh is black. Its fruiting season is July November, bearing year round."
     },
     {
       "type": "heading",
@@ -230,19 +230,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

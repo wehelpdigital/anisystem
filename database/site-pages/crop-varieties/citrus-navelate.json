@@ -16,7 +16,7 @@
     "citrus variety philippines",
     "NSIC 2005 On 02"
   ],
-  "excerpt": "Navelate citrus is a navel orange citrus variety. It was registered with the National Seed Industry Council (NSIC) in 2005 as NSIC 2005 On 02. BPI Baguio NCRDC, Baguio City bred it.",
+  "excerpt": "Navelate citrus is a navel orange citrus variety. It was registered with the National Seed Industry Council in 2005 as NSIC 2005 On 02. BPI Baguio NCRDC, Baguio City bred it.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-fruit-trees.webp",
     "alt": "Rows of young calamansi trees in an orchard in Victoria, Tarlac, the kind of farm where Navelate citrus is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [citrus variety finder](/crop-varieties/citrus), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
+      "text": "Compare it with the others in our [citrus variety finder](/crop-varieties/citrus), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
     },
     {
       "type": "list",
@@ -41,7 +41,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Navelate",
       "rows": [
         [
           "Trait",
@@ -129,7 +129,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -142,7 +142,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Navelate weighs about 300 grams, and its shape is ellipsoid. The flesh is yellow and soft. Its sweetness measured 12.2 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 85 percent of the fruit. The registry notes its fruiting season as March November, bearing annual."
+      "text": "A fruit of Navelate weighs about 300 grams, and its shape is ellipsoid. The flesh is yellow and soft. Its sweetness measured 12.2 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 85 percent of the fruit. Its fruiting season is March November, bearing annual."
     },
     {
       "type": "heading",
@@ -230,19 +230,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

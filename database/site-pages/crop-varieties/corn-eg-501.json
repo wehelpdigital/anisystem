@@ -19,7 +19,7 @@
     "corn variety philippines",
     "*NSIC 2012 Cn 261"
   ],
-  "excerpt": "EG 501 corn is a yellow hybrid corn variety, also sold or known as Evo Gene EG501 or Evogene 501. It was registered with the National Seed Industry Council (NSIC) in 2016 as *NSIC 2012 Cn 261. Evo Gene Seed bred it. It takes about 108 days from planting to the harvest of dry grain, with 7.12 tonnes per hectare on average in the trials.",
+  "excerpt": "EG 501 corn is a yellow hybrid corn variety, also sold or known as Evo Gene EG501 or Evogene 501. It was registered with the National Seed Industry Council in 2016 as *NSIC 2012 Cn 261. Evo Gene Seed bred it. It takes about 108 days from planting to the harvest of dry grain, with 7.12 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where EG 501 corn is grown",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Evo Gene EG501 or Evogene 501, this is the same corn. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+      "text": "If you came here looking for Evo Gene EG501 or Evogene 501, this is the same corn. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "list",
@@ -48,7 +48,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of EG 501",
       "rows": [
         [
           "Trait",
@@ -120,7 +120,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -176,7 +176,7 @@
       "ordered": false,
       "items": [
         "**Yield:** DA 12 trials: 8.28 t/ha Sultan Kudarat highland, 5.45 t/ha Sarangani highland, 7.80 t/ha Sultan Kudarat lowland, 5.31 t/ha Sarangani lowland, NSIC trials averaged 7.12 to 7.48 t/ha.",
-        "**Traits in the seed:** None (DA lists it as a conventional hybrid).",
+        "**Traits in the seed:** None (it is listed as a conventional hybrid).",
         "**Season:** Wet and dry.",
         "**Where:** First registered for Luzon and Visayas, later expanded nationwide.",
         "Non GM.",
@@ -195,7 +195,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for anywhere in the country. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
+      "text": "It is recommended for anywhere in the country. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
     },
     {
       "type": "heading",
@@ -259,7 +259,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for anywhere in the country. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for anywhere in the country. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of EG 501?",
@@ -294,31 +294,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on EG 501 from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=9358"
-        },
-        {
-          "label": "Notes on EG 501 from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=9637"
-        },
-        {
-          "label": "Notes on EG 501 from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=11899"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

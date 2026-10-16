@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [chico variety finder](/crop-varieties/chico), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "Compare it with the others in our [chico variety finder](/crop-varieties/chico), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "heading",
@@ -34,7 +34,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Ponderosa (QAES Ch 06)",
       "rows": [
         [
           "Trait",
@@ -118,7 +118,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -219,19 +219,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

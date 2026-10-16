@@ -16,7 +16,7 @@
     "eggplant variety philippines",
     "NSIC 2007 Eg 01"
   ],
-  "excerpt": "Mara is a registered eggplant variety. It was registered with the National Seed Industry Council (NSIC) in 2007 as NSIC 2007 Eg 01. IPB UPLB bred it. It takes 65 to 68 days from transplanting to the first harvest, with 11.59 tonnes per hectare on average in the trials.",
+  "excerpt": "Mara is a registered eggplant variety. It was registered with the National Seed Industry Council in 2007 as NSIC 2007 Eg 01. IPB UPLB bred it. It takes 65 to 68 days from transplanting to the first harvest, with 11.59 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/vegetable-land-preparation.webp",
     "alt": "Rows of young eggplant on furrowed beds in Norzagaray, Bulacan, the kind of farm where Mara eggplant is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [eggplant variety finder](/crop-varieties/eggplant), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
+      "text": "Compare it with the others in our [eggplant variety finder](/crop-varieties/eggplant), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Mara",
       "rows": [
         [
           "Trait",
@@ -123,7 +123,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -248,19 +248,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

@@ -18,7 +18,7 @@
     "peanut variety philippines",
     "NSIC 2011 Pn 16"
   ],
-  "excerpt": "USM Pn1 is a registered peanut variety, also sold or known as NSIC Pn 16 or USM peanut. It was registered with the National Seed Industry Council (NSIC) in 2011 as NSIC 2011 Pn 16. University of Southern Mindanao bred it. It takes about 88 days from sowing to harvest, with 2.11 tonnes per hectare on average in the trials.",
+  "excerpt": "USM Pn1 is a registered peanut variety, also sold or known as NSIC Pn 16 or USM peanut. It was registered with the National Seed Industry Council in 2011 as NSIC 2011 Pn 16. University of Southern Mindanao bred it. It takes about 88 days from sowing to harvest, with 2.11 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where USM Pn1 peanut is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Pn 16 or USM peanut, this is the same peanut. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [peanut variety finder](/crop-varieties/peanut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for NSIC Pn 16 or USM peanut, this is the same peanut. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [peanut variety finder](/crop-varieties/peanut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -46,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of USM Pn1",
       "rows": [
         [
           "Trait",
@@ -122,7 +122,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -185,7 +185,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Mindanao in both the wet and the dry season. Mani needs loose, well drained soil to fill its pods. Pick a variety by seed size for your buyer, and one rated against rust and leaf spot for the wet season."
+      "text": "It is recommended for Mindanao in both the wet and the dry season. Mani needs loose, well drained soil to fill its pods. Pick a variety by seed size for your buyer, and one rated against rust and leaf spot for the wet season."
     },
     {
       "type": "heading",
@@ -245,7 +245,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Mindanao in both the wet and the dry season. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Mindanao in both the wet and the dry season. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of USM Pn1?",
@@ -272,23 +272,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on USM Pn1 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-fieldlegume.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

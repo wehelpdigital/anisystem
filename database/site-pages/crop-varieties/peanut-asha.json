@@ -18,7 +18,7 @@
     "peanut variety philippines",
     "NSIC 2009 Pn 15"
   ],
-  "excerpt": "Asha is a registered peanut variety, also sold or known as NSIC Pn 15 or mani Asha. It was registered with the National Seed Industry Council (NSIC) in 2009 as NSIC 2009 Pn 15. DA CVIARC bred it. It takes about 122 days from sowing to harvest, with 1.66 tonnes per hectare on average in the trials.",
+  "excerpt": "Asha is a registered peanut variety, also sold or known as NSIC Pn 15 or mani Asha. It was registered with the National Seed Industry Council in 2009 as NSIC 2009 Pn 15. DA CVIARC bred it. It takes about 122 days from sowing to harvest, with 1.66 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where Asha peanut is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Pn 15 or mani Asha, this is the same peanut. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [peanut variety finder](/crop-varieties/peanut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for NSIC Pn 15 or mani Asha, this is the same peanut. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [peanut variety finder](/crop-varieties/peanut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -46,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Asha",
       "rows": [
         [
           "Trait",
@@ -138,7 +138,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -187,14 +187,14 @@
         "**Fruit:** Big seeds, about 77 to 93 g per 100 seeds, about 72 to 74 percent shelling.",
         "**Where:** National dry season variety, Cagayan Valley.",
         "**Uses:** Nuts and forage.",
-        "Resistant to bacterial wilt, Cercospora leaf spot and rust (BPI).",
+        "Resistant to bacterial wilt, Cercospora leaf spot and rust.",
         "High biomass, also used as livestock forage.",
         "Introduced from ICRISAT in 2005."
       ]
     },
     {
       "type": "text",
-      "text": "Why farmers know it: the only introduced peanut NSIC had released by then, with a record 3,991 kg/ha, double the usual commercial varieties (BPI), pushed to Cagayan Valley corn farmers. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+      "text": "Why farmers know it: the only introduced peanut NSIC had released by then, with a record 3,991 kg/ha, double the usual commercial varieties, pushed to Cagayan Valley corn farmers. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -203,7 +203,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for anywhere in the country in the dry season. Mani needs loose, well drained soil to fill its pods. Pick a variety by seed size for your buyer, and one rated against rust and leaf spot for the wet season."
+      "text": "It is recommended for anywhere in the country in the dry season. Mani needs loose, well drained soil to fill its pods. Pick a variety by seed size for your buyer, and one rated against rust and leaf spot for the wet season."
     },
     {
       "type": "heading",
@@ -263,7 +263,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for anywhere in the country in the dry season. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for anywhere in the country in the dry season. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of Asha?",
@@ -290,31 +290,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Asha from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-fieldlegume.xlsx"
-        },
-        {
-          "label": "Notes on Asha from buplant.da.gov.ph",
-          "url": "https://buplant.da.gov.ph/wp-content/uploads/2024/07/Completed-Research-on-ICRISAT-and-AVRDC-Legumes.pdf"
-        },
-        {
-          "label": "Notes on Asha from newport.pcaarrd.dost.gov.ph",
-          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/peanut-seen-as-the-next-big-thing-in-cagayan-valley"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

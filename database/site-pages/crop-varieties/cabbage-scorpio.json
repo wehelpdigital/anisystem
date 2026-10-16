@@ -62,7 +62,7 @@
         ],
         [
           "Days to harvest, per the seller",
-          "55 to 60 days in DA's guide, Allied gives 65 to 70 days after transplanting"
+          "55 to 60 days in the guide, Allied gives 65 to 70 days after transplanting"
         ],
         [
           "Yield, per the seller",
@@ -77,7 +77,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -86,7 +86,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -101,7 +101,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Days to harvest:** 55 to 60 days in DA's guide, Allied gives 65 to 70 days after transplanting.",
+        "**Days to harvest:** 55 to 60 days in the guide, Allied gives 65 to 70 days after transplanting.",
         "**Yield:** About 21 t/ha marketable, averaged over three Benguet sites and four seasons under organic growing (BSU trial).",
         "**Fruit:** Head: round, compact, small core, purple veins, about 1 to 1.2 kg (Allied).",
         "**Season:** All year in the highlands.",
@@ -215,20 +215,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Notes on Scorpio from journals.bsu.edu.ph",
-          "url": "https://journals.bsu.edu.ph/mjsir/article/view/41"
-        },
-        {
-          "label": "Notes on Scorpio from caraga.da.gov.ph",
-          "url": "https://caraga.da.gov.ph/wp-content/uploads/Publication/tips_cabbage.pdf"
-        },
-        {
           "label": "Notes on Scorpio from alliedbotanical.com",
           "url": "https://alliedbotanical.com/project/scorpio-f1-hybrid-cabbage/"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

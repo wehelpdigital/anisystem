@@ -16,7 +16,7 @@
     "ube variety philippines",
     "NSIC 1997 VU 05"
   ],
-  "excerpt": "LA 153 is a registered ube variety. It was registered with the National Seed Industry Council (NSIC) in 1997 as NSIC 1997 VU 05. It takes about 7.5 months from planting to harvest, with 16.81 tonnes per hectare on average in the trials.",
+  "excerpt": "LA 153 is a registered ube variety. It was registered with the National Seed Industry Council in 1997 as NSIC 1997 VU 05. It takes about 7.5 months from planting to harvest, with 16.81 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/root-crop-land-preparation.webp",
     "alt": "Kamote vines on long raised ridges in San Rafael, Bulacan, the kind of farm where LA 153 ube is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [ube variety finder](/crop-varieties/ube), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
+      "text": "Compare it with the others in our [ube variety finder](/crop-varieties/ube), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of LA 153",
       "rows": [
         [
           "Trait",
@@ -107,7 +107,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -150,7 +150,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for anywhere in the country. Processors pay for a deep purple flesh that stays purple when cooked. Pick a registered variety for color and yield, and plant whole small tubers or setts."
+      "text": "It is recommended for anywhere in the country. Processors pay for a deep purple flesh that stays purple when cooked. Pick a registered variety for color and yield, and plant whole small tubers or setts."
     },
     {
       "type": "heading",
@@ -206,7 +206,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for anywhere in the country. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for anywhere in the country. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of LA 153?",
@@ -233,19 +233,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

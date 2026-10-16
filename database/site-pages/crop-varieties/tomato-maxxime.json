@@ -16,7 +16,7 @@
     "tomato variety philippines",
     "NSIC 2020 Tm 20"
   ],
-  "excerpt": "Maxxime is a registered tomato variety. It was registered with the National Seed Industry Council (NSIC) in 2020 as NSIC 2020 Tm 20. BSU IPB HCRS bred it. It takes about 67 days from transplanting to the first harvest, with 20.66 tonnes per hectare on average in the trials.",
+  "excerpt": "Maxxime is a registered tomato variety. It was registered with the National Seed Industry Council in 2020 as NSIC 2020 Tm 20. BSU IPB HCRS bred it. It takes about 67 days from transplanting to the first harvest, with 20.66 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-tomatoes.webp",
     "alt": "Young tomato plants on silver plastic mulch beds with bamboo stakes in San Ildefonso, Bulacan, the kind of farm where Maxxime tomato is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [tomato variety finder](/crop-varieties/tomato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for tomatoes, stage by stage](/blog/fertilizer-for-tomatoes)."
+      "text": "Compare it with the others in our [tomato variety finder](/crop-varieties/tomato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for tomatoes, stage by stage](/blog/fertilizer-for-tomatoes)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Maxxime",
       "rows": [
         [
           "Trait",
@@ -131,7 +131,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -271,19 +271,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

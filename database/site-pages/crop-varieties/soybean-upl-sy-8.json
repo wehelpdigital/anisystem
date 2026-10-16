@@ -16,7 +16,7 @@
     "soybean variety philippines",
     "NSIC 1996 Sy 03"
   ],
-  "excerpt": "UPL Sy 8 soybean is a grain soybean variety. It was registered with the National Seed Industry Council (NSIC) in 1996 as NSIC 1996 Sy 03. IPB, UPLB CA, College, Laguna bred it. It takes about 91 days from sowing to harvest, with 2.09 tonnes per hectare on average in the trials.",
+  "excerpt": "UPL Sy 8 soybean is a grain soybean variety. It was registered with the National Seed Industry Council in 1996 as NSIC 1996 Sy 03. IPB, UPLB CA, College, Laguna bred it. It takes about 91 days from sowing to harvest, with 2.09 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where UPL Sy 8 soybean is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [soybean variety finder](/crop-varieties/soybean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "Compare it with the others in our [soybean variety finder](/crop-varieties/soybean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of UPL Sy 8",
       "rows": [
         [
           "Trait",
@@ -100,7 +100,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -113,7 +113,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Luzon and Mindanao in the dry season. Grain soybean goes to feed and food processors, while vegetable soybean, or edamame, is picked green. Pick a variety rated against rust, the main soybean disease here."
+      "text": "It is recommended for Luzon and Mindanao in the dry season. Grain soybean goes to feed and food processors, while vegetable soybean, or edamame, is picked green. Pick a variety rated against rust, the main soybean disease here."
     },
     {
       "type": "heading",
@@ -169,7 +169,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Luzon and Mindanao in the dry season. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Luzon and Mindanao in the dry season. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of UPL Sy 8?",
@@ -196,19 +196,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

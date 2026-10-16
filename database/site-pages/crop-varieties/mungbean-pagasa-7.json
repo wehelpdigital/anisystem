@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for UPL Mg 7 or munggo Pag asa 7, this is the same mungbean. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [mungbean variety finder](/crop-varieties/mungbean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for UPL Mg 7 or munggo Pag asa 7, this is the same mungbean. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [mungbean variety finder](/crop-varieties/mungbean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -45,7 +45,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Pagasa 7",
       "rows": [
         [
           "Trait",
@@ -101,7 +101,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -246,24 +246,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Pagasa 7 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-fieldlegume.xlsx"
-        },
-        {
-          "label": "Notes on Pagasa 7 from agris.fao.org",
-          "url": "https://agris.fao.org/search/ar/records/647239efe17b74d2224eef12"
-        },
-        {
-          "label": "Notes on Pagasa 7 from sunstar.com.ph",
+          "label": "Notes from sunstar.com.ph",
           "url": "https://www.sunstar.com.ph/more-articles/mung-bean-the-cheapest-protein-source"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

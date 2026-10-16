@@ -1,8 +1,8 @@
 @extends('layouts.public')
 
-{{-- /rice-varieties (2026-10-13): the rice variety finder. Every variety in
-     PhilRice's catalogue of released varieties (facts from PhilRice, among
-     other sources, and its public seed database), each card a link to its own page; filter by the kind of farm, the
+{{-- /rice-varieties (2026-10-13): the rice variety finder. Every released
+     rice variety (no agency is shown as the source, the owner 2026-10-17),
+     each card a link to its own page; filter by the kind of farm, the
      days to harvest and the pests and diseases it holds up against, sort by
      year, yield or maturity. All the cards are in the page (so search
      engines read every link); the script only hides and orders them. --}}
@@ -29,15 +29,15 @@
     $faq = [
         ['What is the best rice variety in the Philippines?', 'There is no single best one. The best variety is the one bred for your kind of farm, your season and the pests in your area. Start with the filters above: pick your farm type, how many days you can wait for harvest and the problems you fear most, then compare the average yields. Your municipal agriculturist knows which ones do well in your town.'],
         ['What do the NSIC and PSB numbers mean?', 'NSIC is the National Seed Industry Council, which approves rice varieties for planting in the Philippines. Before it, the Philippine Seed Board (PSB) did the job. Rc stands for rice, and a number ending in H marks a hybrid. So NSIC Rc 222 is an inbred, and NSIC Rc 204H is a hybrid.'],
-        ['Where does this rice variety list come from?', 'Our sources include PhilRice and its public seed database' . ($brands->count() ? ', the National Seed Industry Council registry, and seed company pages for the brand names. ' : ', and the National Seed Industry Council registry. ') . 'PhilRice lists each variety\'s maturity, yields, pest and disease ratings, grain quality, season and regions. The words on our pages are our own, and each page links to its PhilRice record where there is one.'],
-        ['Are hybrid rice varieties better than inbreds?', 'In PhilRice\'s table the irrigated hybrids average ' . $irrHybrid . ' tonnes per hectare, against ' . $irrInbred . ' for the irrigated inbreds. But you must buy new hybrid seed every season, and hybrids need good water and fertilizer to give that much. Inbreds cost less, and their seed grows true. Compare both kinds above with the Type filter.'],
-        ['Which rice varieties are for saline or flood prone fields?', 'Use the Kind of farm filter. Saline prone varieties are bred to stand salt in the soil, and flood prone ones to survive a spell under water. They yield less than irrigated varieties on good land: the saline prone ones in PhilRice\'s table average ' . $saline . ' tonnes per hectare, because they are bred to survive where others fail.'],
+        ['What does this rice variety list show?', 'Every released rice variety, with its maturity, yields, pest and disease ratings, grain quality, season and regions' . ($brands->count() ? ', and the brand names it is sold under, with links to the seed companies\' own pages. ' : '. ') . 'The words on our pages are our own.'],
+        ['Are hybrid rice varieties better than inbreds?', 'In the trials the irrigated hybrids average ' . $irrHybrid . ' tonnes per hectare, against ' . $irrInbred . ' for the irrigated inbreds. But you must buy new hybrid seed every season, and hybrids need good water and fertilizer to give that much. Inbreds cost less, and their seed grows true. Compare both kinds above with the Type filter.'],
+        ['Which rice varieties are for saline or flood prone fields?', 'Use the Kind of farm filter. Saline prone varieties are bred to stand salt in the soil, and flood prone ones to survive a spell under water. They yield less than irrigated varieties on good land: the saline prone ones average ' . $saline . ' tonnes per hectare, because they are bred to survive where others fail.'],
     ];
     // The members' gate (2026-10-14): a guest sees the finder's first rows.
     $hg = \App\Support\ContentGate::hubApplies($section);
     $member = auth()->check() && ! $hg;
     if ($brands->count()) {
-        array_splice($faq, 4, 0, [['Why does my seed bag show a brand name and not an NSIC number?', 'Seed companies sell their varieties under their own brand names, while PhilRice and the National Seed Industry Council list them by their NSIC number. They are the same seed. Type the brand name into the search box above, and the card shows the NSIC number with the PhilRice numbers for it.']]);
+        array_splice($faq, 4, 0, [['Why does my seed bag show a brand name and not an NSIC number?', 'Seed companies sell their varieties under their own brand names, while each is registered under its NSIC number. They are the same seed. Type the brand name into the search box above, and the card shows the NSIC number with its numbers.']]);
     }
 @endphp
 
@@ -184,7 +184,7 @@
             @if ($brands->count())
                 <div class="mt-12" id="brands" style="scroll-margin-top: 5rem">
                     <div class="wk-sec-h"><h2>Rice Varieties by Brand Name</h2>
-                        <p>Seed bags often carry the company's brand name, not the NSIC number. Here is the NSIC variety behind each name, so you can read PhilRice's numbers for the seed you were offered.</p></div>
+                        <p>Seed bags often carry the company's brand name, not the NSIC number. Here is the NSIC variety behind each name, so you can read the numbers of the seed you were offered.</p></div>
                     <div class="rv-pop rv-brands {{ $hg ? 'hg-soft' : '' }}" @if ($hg) inert @endif>
                         @foreach ($brands as $v)
                             <a href="{{ $S::url('rice-varieties', $v['slug']) }}">{{ $tradeName($v['tradeNames'][0]) }} <small>{{ $v['name'] }}</small></a>
@@ -201,10 +201,10 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
             <div class="wk-sec-h">
                 <h2>How to Read a Rice Variety's Numbers</h2>
-                <p>Every card and page shows the same few numbers from PhilRice. Here is what each one tells you before you buy seed.</p>
+                <p>Every card and page shows the same few numbers. Here is what each one tells you before you buy seed.</p>
             </div>
             <div class="rv-how">
-                <div><h3>Days to harvest</h3><p>Counted from sowing. IRRI groups 100 to 120 days as short duration and 120 to 140 as medium. A direct seeded crop is often ready a week sooner than a transplanted one.</p></div>
+                <div><h3>Days to harvest</h3><p>Counted from sowing. Varieties of 100 to 120 days count as short duration and 120 to 140 as medium. A direct seeded crop is often ready a week sooner than a transplanted one.</p></div>
                 <div><h3>Average and top yield</h3><p>The average is what the variety gave across trials, in tonnes per hectare. The top is its best trial, with ideal care. One tonne is about 20 cavans of 50 kilograms.</p></div>
                 <div><h3>Pest and disease ratings</h3><p>R means resistant and MR moderately resistant. I is intermediate. MS and S mean the variety took clear or heavy damage, so scout it often.</p></div>
                 <div><h3>Amylose and grain</h3><p>Amylose decides how rice cooks: low is soft, intermediate is soft but not sticky, high is firm. Head rice is the share of whole grains after milling.</p></div>
@@ -233,9 +233,7 @@
                     </details>
                 @endforeach
             </div></div>
-            <p class="rv-src">Sources include <a href="https://www.philrice.gov.ph/" rel="noopener" target="_blank">PhilRice</a>,
-                its <a href="https://dbmp.philrice.gov.ph/seeds/" rel="noopener" target="_blank">seed information database</a>
-                and the <a href="https://nsic.buplant.da.gov.ph/registry.php" rel="noopener" target="_blank">NSIC registry</a>. The words and pictures are anee.io's own.
+            <p class="rv-src">The words and pictures are anee.io's own.
                 Some of the newest releases, up to {{ $years->max() }}, have no days to harvest or yield listed yet: ask your municipal agriculturist for their regional trial results.</p>
         </div>
     </section>

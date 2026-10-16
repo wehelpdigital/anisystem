@@ -19,7 +19,7 @@
     "garlic variety philippines",
     "NSIC 2017 Gr 04"
   ],
-  "excerpt": "Mexican (Sanikua) is a registered garlic variety, also sold or known as Mexican or Sanikua. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Gr 04. DA RFO I bred it. It takes about 111 days from planting to harvest, with 8,050 kilograms per hectare on average in the trials.",
+  "excerpt": "Mexican (Sanikua) is a registered garlic variety, also sold or known as Mexican or Sanikua. It was registered with the National Seed Industry Council in 2017 as NSIC 2017 Gr 04. DA RFO I bred it. It takes about 111 days from planting to harvest, with 8,050 kilograms per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/onion-garlic-land-preparation.webp",
     "alt": "Onion plants in beds separated by grassy paths on a Philippine farm, the kind of farm where Mexican (Sanikua) garlic is grown",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Mexican or Sanikua, this is the same garlic. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
+      "text": "If you came here looking for Mexican or Sanikua, this is the same garlic. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
     },
     {
       "type": "list",
@@ -46,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Mexican (Sanikua)",
       "rows": [
         [
           "Trait",
@@ -130,7 +130,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -195,10 +195,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** 8.05 t/ha on raised beds, 4.98 t/ha with minimum tillage (NSIC trials).",
+        "**Yield:** 8.05 t/ha on raised beds, 4.98 t/ha with minimum tillage.",
         "**Fruit:** Globe shaped bulb with several layers of cloves, beige clove skin, cream outer skin.",
         "**Season:** Dry season, needs cool, windy weather during the growing period.",
-        "Moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot (NSIC).",
+        "Moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot.",
         "Only slight thrips, leaf folder and mite damage in the NSIC trials."
       ]
     },
@@ -304,23 +304,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Mexican (Sanikua) from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

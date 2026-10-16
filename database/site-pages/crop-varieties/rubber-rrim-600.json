@@ -17,7 +17,7 @@
     "rubber variety philippines",
     "NSIC 1999 Rb 01"
   ],
-  "excerpt": "RRIM 600 is a registered rubber variety, also sold or known as NSIC Rb 01. It was registered with the National Seed Industry Council (NSIC) in 1999 as NSIC 1999 Rb 01. Rubber Res. Institute bred it.",
+  "excerpt": "RRIM 600 is a registered rubber variety, also sold or known as NSIC Rb 01. It was registered with the National Seed Industry Council in 1999 as NSIC 1999 Rb 01. Rubber Res. Institute bred it.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where RRIM 600 rubber is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Rb 01, this is the same rubber. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [rubber variety finder](/crop-varieties/rubber), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for tree crops](/land-preparation/fruit-tree-land-preparation)."
+      "text": "If you came here looking for NSIC Rb 01, this is the same rubber. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [rubber variety finder](/crop-varieties/rubber), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for tree crops](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "heading",
@@ -35,7 +35,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of RRIM 600",
       "rows": [
         [
           "Trait",
@@ -107,7 +107,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -266,23 +266,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on RRIM 600 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-plantation.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

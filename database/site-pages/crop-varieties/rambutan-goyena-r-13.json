@@ -16,7 +16,7 @@
     "rambutan variety philippines",
     "NSIC 2002 Rm 04"
   ],
-  "excerpt": "Goyena R 13 is a registered rambutan variety. It was registered with the National Seed Industry Council (NSIC) in 2002 as NSIC 2002 Rm 04. Jaime Goyena, Sr bred it.",
+  "excerpt": "Goyena R 13 is a registered rambutan variety. It was registered with the National Seed Industry Council in 2002 as NSIC 2002 Rm 04. Jaime Goyena, Sr bred it.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Goyena R 13 rambutan is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [rambutan variety finder](/crop-varieties/rambutan), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "Compare it with the others in our [rambutan variety finder](/crop-varieties/rambutan), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "heading",
@@ -34,7 +34,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Goyena R 13",
       "rows": [
         [
           "Trait",
@@ -118,7 +118,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Goyena R 13 weighs about 36.99 grams, and its shape is ovoid. The flesh is pearly white and smooth and firm. Its sweetness measured 20.94 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 46.74 percent of the fruit. The registry notes its fruiting season as July October, bearing annual."
+      "text": "A fruit of Goyena R 13 weighs about 36.99 grams, and its shape is ovoid. The flesh is pearly white and smooth and firm. Its sweetness measured 20.94 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 46.74 percent of the fruit. Its fruiting season is July October, bearing annual."
     },
     {
       "type": "heading",
@@ -219,19 +219,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

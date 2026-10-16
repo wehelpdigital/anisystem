@@ -18,7 +18,7 @@
     "calamansi variety philippines",
     "NSIC 2023 Cl 01"
   ],
-  "excerpt": "Calamansi Makasim is a registered calamansi variety, also sold or known as Makasim or Makasim calamansi. It was registered with the National Seed Industry Council (NSIC) in 2023 as NSIC 2023 Cl 01. BPI BNSCRDPSC bred it. Its record notes a yield of average of 30kg/year.",
+  "excerpt": "Calamansi Makasim is a registered calamansi variety, also sold or known as Makasim or Makasim calamansi. It was registered with the National Seed Industry Council in 2023 as NSIC 2023 Cl 01. BPI BNSCRDPSC bred it. Its record notes a yield of average of 30kg/year.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-fruit-trees.webp",
     "alt": "Rows of young calamansi trees in an orchard in Victoria, Tarlac, the kind of farm where Calamansi Makasim is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Makasim or Makasim calamansi, this is the same calamansi. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [calamansi variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
+      "text": "If you came here looking for Makasim or Makasim calamansi, this is the same calamansi. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [calamansi variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Calamansi Makasim",
       "rows": [
         [
           "Trait",
@@ -139,7 +139,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -261,23 +261,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Calamansi Makasim from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

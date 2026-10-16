@@ -18,7 +18,7 @@
     "potato variety philippines",
     "NSIC 2007 Po 08"
   ],
-  "excerpt": "Bengueta Patatas is a registered potato variety, also sold or known as Bengueta potato or NSIC Po 08. It was registered with the National Seed Industry Council (NSIC) in 2007 as NSIC 2007 Po 08. It comes from BSU NPRCRTC. It takes 120 to 150 days from planting to harvest, with 23.8 tonnes per hectare on average in the trials.",
+  "excerpt": "Bengueta Patatas is a registered potato variety, also sold or known as Bengueta potato or NSIC Po 08. It was registered with the National Seed Industry Council in 2007 as NSIC 2007 Po 08. It comes from BSU NPRCRTC. It takes 120 to 150 days from planting to harvest, with 23.8 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-vegetables-philippines.webp",
     "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet, the kind of farm where Bengueta Patatas potato is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Bengueta potato or NSIC Po 08, this is the same potato. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [potato variety finder](/crop-varieties/potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
+      "text": "If you came here looking for Bengueta potato or NSIC Po 08, this is the same potato. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [potato variety finder](/crop-varieties/potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Bengueta Patatas",
       "rows": [
         [
           "Trait",
@@ -112,7 +112,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -261,27 +261,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Bengueta Patatas from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-rootcrops.xlsx"
-        },
-        {
-          "label": "Notes on Bengueta Patatas from agris.fao.org",
-          "url": "https://agris.fao.org/search/zh/records/64724affe17b74d2224fa25a"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

@@ -32,11 +32,11 @@
     $member = auth()->check() && ! $hg;
     $metaTitle = collect([$title . ': Every Registered Variety', $title . ': Yield and Maturity', $title])->first(fn ($t) => mb_strlen($t) <= 60);
     $desc = collect([
-        'Every ' . $lname . ' variety on the NSIC registry' . ($sold ? ', plus the seed farmers buy most' : '') . ($local ? ' (' . $local . ')' : '') . ': days to harvest, yield, ratings and where each grows best.',
-        'Every ' . $lname . ' variety on the NSIC registry' . ($sold ? ', plus the seed farmers buy most' : '') . ': days to harvest, yield, ratings and where each grows best.',
-        'Every ' . $lname . ' variety on the NSIC registry: days to harvest, yield and where each grows best.',
+        'Every registered ' . $lname . ' variety' . ($sold ? ', plus the seed farmers buy most' : '') . ($local ? ' (' . $local . ')' : '') . ': days to harvest, yield, ratings and where each grows best.',
+        'Every registered ' . $lname . ' variety' . ($sold ? ', plus the seed farmers buy most' : '') . ': days to harvest, yield, ratings and where each grows best.',
+        'Every registered ' . $lname . ' variety: days to harvest, yield and where each grows best.',
     ])->first(fn ($d) => mb_strlen($d) <= 156);
-    $intro = trim(($crop['hub'] ?? '') . ' ' . $all->count() . ' varieties' . ($sold ? ', ' . $registered . ' of them on the national registry and ' . $sold . ' sold by seed companies or grown by farmers' : ' from the national registry') . ', each with a page of its own.');
+    $intro = trim(($crop['hub'] ?? '') . ' ' . $all->count() . ' varieties' . ($sold ? ', ' . $registered . ' of them registered and ' . $sold . ' sold by seed companies or grown by farmers' : ', every one registered') . ', each with a page of its own.');
     $guides = $crop['guides'] ?? [];
     $faq = [];
     if ($mats->count() >= 3) {
@@ -49,8 +49,8 @@
     if ($hybrids) {
         $faq[] = ['Should I plant a hybrid ' . $lname . '?', 'A hybrid often yields more, but you must buy new seed every season, and it pays back only with good water and fertilizer. Open pollinated varieties cost less, and you can save their seed.'];
     }
-    $faq[] = ['What does it mean when a variety is on the NSIC registry?', 'The National Seed Industry Council approved it after trials in several places, and the Bureau of Plant Industry keeps the record. A variety that is not on the registry can still be good, but its numbers come only from its seller.'];
-    $faq[] = ['Where do these numbers come from?', 'From the NSIC registry of crop varieties kept by the Bureau of Plant Industry, and for unregistered varieties from their sellers and farm sources, each one named on the variety page. The words on our pages are our own.'];
+    $faq[] = ['What does it mean when a variety is on the NSIC registry?', 'The National Seed Industry Council approved it after trials in several places. A variety that is not registered can still be good, but its numbers come only from its seller.'];
+    $faq[] = ['Where do these numbers come from?', 'From each registered variety\'s own trials, and for unregistered varieties from their sellers and farm sources, each one named on the variety page. The words on our pages are our own.'];
 @endphp
 
 @section('title_full', $metaTitle . ' | anee.io')
@@ -199,7 +199,7 @@
                     </details>
                 @endforeach
             </div></div>
-            <p class="rv-src">Sources include the <a href="https://nsic.buplant.da.gov.ph/registry.php" rel="noopener" target="_blank">NSIC registry of crop varieties</a> kept by the Bureau of Plant Industry{{ $sold ? ', and for the varieties not on it, their sellers and farm sources, named on each variety page' : '' }}. The words and pictures are anee.io's own.</p>
+            <p class="rv-src">{{ $sold ? 'For the varieties not registered, their sellers and farm sources are named on each variety page. ' : '' }}The words and pictures are anee.io's own.</p>
         </div>
     </section>
 @endsection

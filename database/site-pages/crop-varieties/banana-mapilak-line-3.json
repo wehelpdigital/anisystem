@@ -16,7 +16,7 @@
     "banana variety philippines",
     "NSIC 2021 Bn 03"
   ],
-  "excerpt": "Mapilak Line 3 is a registered banana variety. It was registered with the National Seed Industry Council (NSIC) in 2021 as NSIC 2021 Bn 03. Institute of Plant Breeding bred it. Its record notes a yield of 12.19kg.",
+  "excerpt": "Mapilak Line 3 is a registered banana variety. It was registered with the National Seed Industry Council in 2021 as NSIC 2021 Bn 03. Institute of Plant Breeding bred it. Its record notes a yield of 12.19kg.",
   "heroImage": {
     "src": "/images/site/guides/crops-banana-farming-philippines.webp",
     "alt": "Banana plants with bagged bunches along a farm road in Panabo City, the kind of farm where Mapilak Line 3 banana is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [banana variety finder](/crop-varieties/banana), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [banana farming in the Philippines](/crops/banana-farming-philippines)."
+      "text": "Compare it with the others in our [banana variety finder](/crop-varieties/banana), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [banana farming in the Philippines](/crops/banana-farming-philippines)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Mapilak Line 3",
       "rows": [
         [
           "Trait",
@@ -122,7 +122,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -227,19 +227,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

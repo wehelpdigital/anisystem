@@ -16,7 +16,7 @@
     "garden pea variety philippines",
     "NSIC 2008 GP 01"
   ],
-  "excerpt": "Betag is a registered pea variety. It was registered with the National Seed Industry Council (NSIC) in 2008 as NSIC 2008 GP 01. BSU IPB Highland Crop Research Station bred it. Its record notes 7.56 tonnes per hectare on average in the trials.",
+  "excerpt": "Betag is a registered pea variety. It was registered with the National Seed Industry Council in 2008 as NSIC 2008 GP 01. BSU IPB Highland Crop Research Station bred it. Its record notes 7.56 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-vegetables-philippines.webp",
     "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet, the kind of farm where Betag pea is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [garden pea variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "Compare it with the others in our [garden pea variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Betag",
       "rows": [
         [
           "Trait",
@@ -118,7 +118,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -229,19 +229,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

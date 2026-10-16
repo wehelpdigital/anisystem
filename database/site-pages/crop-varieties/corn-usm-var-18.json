@@ -16,7 +16,7 @@
     "corn variety philippines",
     "NSIC 2006 Cn 185"
   ],
-  "excerpt": "USM Var 18 corn is a white open pollinated corn variety. It was registered with the National Seed Industry Council (NSIC) in 2006 as NSIC 2006 Cn 185. USMARC USM bred it. It takes 100 to 103 days from planting to the harvest of dry grain, with 5.41 tonnes per hectare on average in the trials.",
+  "excerpt": "USM Var 18 corn is a white open pollinated corn variety. It was registered with the National Seed Industry Council in 2006 as NSIC 2006 Cn 185. USMARC USM bred it. It takes 100 to 103 days from planting to the harvest of dry grain, with 5.41 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where USM Var 18 corn is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+      "text": "Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "list",
@@ -45,7 +45,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of USM Var 18",
       "rows": [
         [
           "Trait",
@@ -117,7 +117,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -170,7 +170,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Luzon and Mindanao in both the wet and the dry season. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
+      "text": "It is recommended for Luzon and Mindanao in both the wet and the dry season. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
     },
     {
       "type": "heading",
@@ -230,7 +230,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Luzon and Mindanao in both the wet and the dry season. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Luzon and Mindanao in both the wet and the dry season. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of USM Var 18?",
@@ -265,19 +265,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

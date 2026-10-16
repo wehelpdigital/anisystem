@@ -16,7 +16,7 @@
     "sugar apple variety philippines",
     "NSIC 1995 Sa 01"
   ],
-  "excerpt": "Purple is a registered atis variety. It was registered with the National Seed Industry Council (NSIC) in 1995 as NSIC 1995 Sa 01. Roberto Coronel bred it. Its record notes a yield of 30 to 40 fruits/year.",
+  "excerpt": "Purple is a registered atis variety. It was registered with the National Seed Industry Council in 1995 as NSIC 1995 Sa 01. Roberto Coronel bred it. Its record notes a yield of 30 to 40 fruits/year.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Purple atis is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [sugar apple variety finder](/crop-varieties/atis), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "Compare it with the others in our [sugar apple variety finder](/crop-varieties/atis), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -41,7 +41,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Purple",
       "rows": [
         [
           "Trait",
@@ -129,7 +129,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -142,7 +142,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Purple weighs about 94.7 grams, and its shape is oblate. The flesh is creamy and white and fine. The edible part is 53.7 percent of the fruit. The registry notes its fruiting season as Aug. Sept, bearing annual."
+      "text": "A fruit of Purple weighs about 94.7 grams, and its shape is oblate. The flesh is creamy and white and fine. The edible part is 53.7 percent of the fruit. Its fruiting season is Aug. Sept, bearing annual."
     },
     {
       "type": "heading",
@@ -232,19 +232,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

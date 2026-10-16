@@ -63,7 +63,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -89,7 +89,7 @@
       "items": [
         "**Season:** Dry season, on Lubang, garlic is planted from October to mid December as the southwest monsoon ends.",
         "**Where:** First planted on Lubang Island, Occidental Mindoro in 1971.",
-        "BPI lists it as available but not yet officially recommended for commercial planting."
+        "it is listed as available but not yet officially recommended for commercial planting."
       ]
     },
     {
@@ -189,16 +189,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Notes on Batanes White from buplant.da.gov.ph",
-          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Garlic-Production-Guide.pdf"
-        },
-        {
           "label": "Notes on Batanes White from agriculture.com.ph",
           "url": "https://agriculture.com.ph/2019/11/05/lubangs-edible-gold-mine/"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

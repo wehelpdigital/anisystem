@@ -18,7 +18,7 @@
     "pomelo variety philippines",
     "NSIC 2006 Pm 03"
   ],
-  "excerpt": "Helmar is a registered pomelo variety, also sold or known as Helmar suha or NSIC Pm 03. It was registered with the National Seed Industry Council (NSIC) in 2006 as NSIC 2006 Pm 03. Aklan State University bred it. Its record notes a yield of 50 fruits.",
+  "excerpt": "Helmar is a registered pomelo variety, also sold or known as Helmar suha or NSIC Pm 03. It was registered with the National Seed Industry Council in 2006 as NSIC 2006 Pm 03. Aklan State University bred it. Its record notes a yield of 50 fruits.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-fruit-trees.webp",
     "alt": "Rows of young calamansi trees in an orchard in Victoria, Tarlac, the kind of farm where Helmar pomelo is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Helmar suha or NSIC Pm 03, this is the same pomelo. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [pomelo variety finder](/crop-varieties/pomelo), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
+      "text": "If you came here looking for Helmar suha or NSIC Pm 03, this is the same pomelo. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [pomelo variety finder](/crop-varieties/pomelo), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Helmar",
       "rows": [
         [
           "Trait",
@@ -139,7 +139,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -152,7 +152,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Helmar weighs about 938.3 grams, and its shape is pyriform. The flesh is white and soft. Its sweetness measured 11.38 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 57.66 percent of the fruit. The registry notes its fruiting season as Jan., Feb. and Nov, bearing annual."
+      "text": "A fruit of Helmar weighs about 938.3 grams, and its shape is pyriform. The flesh is white and soft. Its sweetness measured 11.38 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 57.66 percent of the fruit. Its fruiting season is Jan., Feb. and Nov, bearing annual."
     },
     {
       "type": "heading",
@@ -267,23 +267,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Helmar from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

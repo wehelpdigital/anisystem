@@ -16,7 +16,7 @@
     "cotton variety philippines",
     "NSIC 2000 Ct 11"
   ],
-  "excerpt": "CRD 50 95 4 1 3 B is a registered cotton variety. It was registered with the National Seed Industry Council (NSIC) in 2000 as NSIC 2000 Ct 11. Cotton Development Administration bred it. Its record notes 2.44 tonnes per hectare on average in the trials.",
+  "excerpt": "CRD 50 95 4 1 3 B is a registered cotton variety. It was registered with the National Seed Industry Council in 2000 as NSIC 2000 Ct 11. Cotton Development Administration bred it. Its record notes 2.44 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where CRD 50 95 4 1 3 B cotton is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [cotton variety finder](/crop-varieties/cotton), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
+      "text": "Compare it with the others in our [cotton variety finder](/crop-varieties/cotton), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
     },
     {
       "type": "list",
@@ -41,7 +41,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of CRD 50 95 4 1 3 B",
       "rows": [
         [
           "Trait",
@@ -105,7 +105,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -218,19 +218,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

@@ -16,7 +16,7 @@
     "garlic variety philippines",
     "NSIC 2017 Gr 02"
   ],
-  "excerpt": "Batanes Red is a registered garlic variety. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Gr 02. DA RFO I bred it. It takes about 150 days from planting to harvest, with 8,440 kilograms per hectare on average in the trials.",
+  "excerpt": "Batanes Red is a registered garlic variety. It was registered with the National Seed Industry Council in 2017 as NSIC 2017 Gr 02. DA RFO I bred it. It takes about 150 days from planting to harvest, with 8,440 kilograms per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/onion-garlic-land-preparation.webp",
     "alt": "Onion plants in beds separated by grassy paths on a Philippine farm, the kind of farm where Batanes Red garlic is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
+      "text": "Its seller and farm sources add notes, listed at the end. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Batanes Red",
       "rows": [
         [
           "Trait",
@@ -123,7 +123,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -188,10 +188,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** 8.44 t/ha on raised beds, 6.70 t/ha with minimum tillage (NSIC trials).",
+        "**Yield:** 8.44 t/ha on raised beds, 6.70 t/ha with minimum tillage.",
         "**Fruit:** Rhomboid bulb with a prominent base plate, violet cloves and violet outer skin.",
         "**Season:** Dry season, needs cool, windy weather during the growing period.",
-        "Moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot (NSIC).",
+        "Moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot.",
         "Only slight thrips, leaf folder and mite damage in the NSIC trials."
       ]
     },
@@ -293,23 +293,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Batanes Red from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

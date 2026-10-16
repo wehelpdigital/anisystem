@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for patatas Granola, this is the same potato. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [potato variety finder](/crop-varieties/potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
+      "text": "If you came here looking for patatas Granola, this is the same potato. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [potato variety finder](/crop-varieties/potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Granola",
       "rows": [
         [
           "Trait",
@@ -95,7 +95,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -227,24 +227,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Granola from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-rootcrops.xlsx"
-        },
-        {
-          "label": "Notes on Granola from journals.bsu.edu.ph",
-          "url": "https://journals.bsu.edu.ph/mjsir/article/view/261"
-        },
-        {
-          "label": "Notes on Granola from agris.fao.org",
-          "url": "https://agris.fao.org/search/zh/records/64724affe17b74d2224fa25a"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
+          "label": "Notes on Granola from freshplaza.com",
+          "url": "https://www.freshplaza.com/article/9872544/philippines-trials-seven-potato-varieties-in-benguet/"
         }
       ]
     }

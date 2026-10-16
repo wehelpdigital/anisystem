@@ -17,7 +17,7 @@
     "papaya variety philippines",
     "NSIC 1996 Pp 01"
   ],
-  "excerpt": "Sinta is a registered papaya variety, also sold or known as NSIC Pp 01. It was registered with the National Seed Industry Council (NSIC) in 1996 as NSIC 1996 Pp 01. IPB UPLB bred it. Its record notes a yield of 45 to 50t/ha.",
+  "excerpt": "Sinta is a registered papaya variety, also sold or known as NSIC Pp 01. It was registered with the National Seed Industry Council in 1996 as NSIC 1996 Pp 01. IPB UPLB bred it. Its record notes a yield of 45 to 50t/ha.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Sinta papaya is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Pp 01, this is the same papaya. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [papaya variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "If you came here looking for NSIC Pp 01, this is the same papaya. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [papaya variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Sinta",
       "rows": [
         [
           "Trait",
@@ -138,7 +138,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -151,7 +151,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Sinta weighs about 1200 grams, and its shape is oblong. The flesh is deep yellow orange and smooth and firm. Its sweetness measured 11.5 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 77.57 percent of the fruit. The registry notes its fruiting season as 8 to 9 mo. After Transplant, bearing all year round."
+      "text": "A fruit of Sinta weighs about 1200 grams, and its shape is oblong. The flesh is deep yellow orange and smooth and firm. Its sweetness measured 11.5 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 77.57 percent of the fruit. Its fruiting season is 8 to 9 mo. After Transplant, bearing all year round."
     },
     {
       "type": "heading",
@@ -244,23 +244,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Sinta from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

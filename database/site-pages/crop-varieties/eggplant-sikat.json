@@ -18,7 +18,7 @@
     "eggplant variety philippines",
     "NSIC 2015 Eg 05H"
   ],
-  "excerpt": "Sikat is a registered eggplant variety, also sold or known as Sikat F1 or Sikat talong. It was registered with the National Seed Industry Council (NSIC) in 2015 as NSIC 2015 Eg 05H. IPB UPLB bred it.",
+  "excerpt": "Sikat is a registered eggplant variety, also sold or known as Sikat F1 or Sikat talong. It was registered with the National Seed Industry Council in 2015 as NSIC 2015 Eg 05H. IPB UPLB bred it.",
   "heroImage": {
     "src": "/images/site/land/vegetable-land-preparation.webp",
     "alt": "Rows of young eggplant on furrowed beds in Norzagaray, Bulacan, the kind of farm where Sikat eggplant is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Sikat F1 or Sikat talong, this is the same eggplant. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [eggplant variety finder](/crop-varieties/eggplant), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
+      "text": "If you came here looking for Sikat F1 or Sikat talong, this is the same eggplant. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [eggplant variety finder](/crop-varieties/eggplant), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Sikat",
       "rows": [
         [
           "Trait",
@@ -98,7 +98,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -107,7 +107,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -172,7 +172,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Luzon, the Visayas and Mindanao in both the wet and the dry season. Buyers in each market want their own talong: long and slim and dark purple in most of Luzon, rounder or striped in some towns. Pick a variety with bacterial wilt resistance, and plan for the fruit and shoot borer whatever you plant, because no variety on the market resists it. Before planting, get the field ready with our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+      "text": "It is recommended for Luzon, the Visayas and Mindanao in both the wet and the dry season. Buyers in each market want their own talong: long and slim and dark purple in most of Luzon, rounder or striped in some towns. Pick a variety with bacterial wilt resistance, and plan for the fruit and shoot borer whatever you plant, because no variety on the market resists it. Before planting, get the field ready with our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
     },
     {
       "type": "heading",
@@ -224,7 +224,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Luzon, the Visayas and Mindanao in both the wet and the dry season. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Luzon, the Visayas and Mindanao in both the wet and the dry season. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of Sikat?",
@@ -266,24 +266,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Sikat from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
-        },
-        {
-          "label": "Notes on Sikat from ukdr.uplb.edu.ph",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4490"
-        },
-        {
           "label": "Notes on Sikat from ramgoseeds.com",
           "url": "https://www.ramgoseeds.com/eggplant-1/sikat-f1"
         },
         {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
+          "label": "Notes on Sikat from agriculture.com.ph",
+          "url": "https://agriculture.com.ph/2018/04/15/new-veggie-varieties-showcased/"
         }
       ]
     }

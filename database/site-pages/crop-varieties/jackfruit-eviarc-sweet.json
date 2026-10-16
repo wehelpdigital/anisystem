@@ -19,7 +19,7 @@
     "jackfruit variety philippines",
     "NSIC 2006 Jf 05"
   ],
-  "excerpt": "EVIARC Sweet is a registered jackfruit variety, also sold or known as EVIARC Sweet langka or EVIARC jackfruit. It was registered with the National Seed Industry Council (NSIC) in 2006 as NSIC 2006 Jf 05. RIARC Satellite Abuyog bred it. Its record notes a yield of 30 to 40 mature fruits.",
+  "excerpt": "EVIARC Sweet is a registered jackfruit variety, also sold or known as EVIARC Sweet langka or EVIARC jackfruit. It was registered with the National Seed Industry Council in 2006 as NSIC 2006 Jf 05. RIARC Satellite Abuyog bred it. Its record notes a yield of 30 to 40 mature fruits.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where EVIARC Sweet jackfruit is grown",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for EVIARC Sweet langka or EVIARC jackfruit, this is the same jackfruit. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [jackfruit variety finder](/crop-varieties/jackfruit), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "If you came here looking for EVIARC Sweet langka or EVIARC jackfruit, this is the same jackfruit. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [jackfruit variety finder](/crop-varieties/jackfruit), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of EVIARC Sweet",
       "rows": [
         [
           "Trait",
@@ -140,7 +140,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -153,7 +153,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of EVIARC Sweet weighs about 12066.67 grams, and its shape is ovoid. The flesh is golden yellow and smooth and crispy. Its sweetness measured 25.14 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 42.58 percent of the fruit. The registry notes its fruiting season as Jun Aug. (Major Fruiting) Dec. Feb. (Minor fruiting), bearing annual."
+      "text": "A fruit of EVIARC Sweet weighs about 12066.67 grams, and its shape is ovoid. The flesh is golden yellow and smooth and crispy. Its sweetness measured 25.14 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 42.58 percent of the fruit. Its fruiting season is Jun Aug. (Major Fruiting) Dec. Feb. (Minor fruiting), bearing annual."
     },
     {
       "type": "heading",
@@ -276,20 +276,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on EVIARC Sweet from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
           "label": "Notes on EVIARC Sweet from en.wikipedia.org",
           "url": "https://en.wikipedia.org/wiki/Jackfruit"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

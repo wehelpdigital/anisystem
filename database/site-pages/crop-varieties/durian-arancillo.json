@@ -18,7 +18,7 @@
     "durian variety philippines",
     "NSIC 1995 Dr 01"
   ],
-  "excerpt": "Arancillo is a registered durian variety, also sold or known as ACC.1497 or NSIC Dr 01. It was registered with the National Seed Industry Council (NSIC) in 1995 as NSIC 1995 Dr 01. BPI DNCRC bred it. Its record notes a yield of 105 fruits.",
+  "excerpt": "Arancillo is a registered durian variety, also sold or known as ACC.1497 or NSIC Dr 01. It was registered with the National Seed Industry Council in 1995 as NSIC 1995 Dr 01. BPI DNCRC bred it. Its record notes a yield of 105 fruits.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Arancillo durian is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for ACC.1497 or NSIC Dr 01, this is the same durian. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [durian variety finder](/crop-varieties/durian), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "If you came here looking for ACC.1497 or NSIC Dr 01, this is the same durian. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [durian variety finder](/crop-varieties/durian), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Arancillo",
       "rows": [
         [
           "Trait",
@@ -139,7 +139,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -152,7 +152,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Arancillo weighs about 1560 grams, and its shape is ovoid. The flesh is mimosa yellow and firm. Its sweetness measured 21.8 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 38.4 percent of the fruit. The registry notes its fruiting season as August October, bearing annual."
+      "text": "A fruit of Arancillo weighs about 1560 grams, and its shape is ovoid. The flesh is mimosa yellow and firm. Its sweetness measured 21.8 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 38.4 percent of the fruit. Its fruiting season is August October, bearing annual."
     },
     {
       "type": "heading",
@@ -275,20 +275,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Arancillo from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
           "label": "Notes on Arancillo from en.wikipedia.org",
           "url": "https://en.wikipedia.org/wiki/Durian"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

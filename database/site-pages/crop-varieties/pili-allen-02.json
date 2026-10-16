@@ -16,7 +16,7 @@
     "pili variety philippines",
     "NSIC 2009 Pl 11"
   ],
-  "excerpt": "Allen 02 is a registered pili variety. It was registered with the National Seed Industry Council (NSIC) in 2009 as NSIC 2009 Pl 11. Incarnation Lim Francisco bred it. Its record notes a yield of 10,000 pcs/harvest.",
+  "excerpt": "Allen 02 is a registered pili variety. It was registered with the National Seed Industry Council in 2009 as NSIC 2009 Pl 11. Incarnation Lim Francisco bred it. Its record notes a yield of 10,000 pcs/harvest.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Allen 02 pili is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [pili variety finder](/crop-varieties/pili), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "Compare it with the others in our [pili variety finder](/crop-varieties/pili), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -41,7 +41,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Allen 02",
       "rows": [
         [
           "Trait",
@@ -129,7 +129,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "heading",
@@ -138,7 +138,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Allen 02 weighs about 39.69 grams, and its shape is oblong. The flesh is black. The registry notes its fruiting season as June September, bearing annual."
+      "text": "A fruit of Allen 02 weighs about 39.69 grams, and its shape is oblong. The flesh is black. Its fruiting season is June September, bearing annual."
     },
     {
       "type": "heading",
@@ -230,19 +230,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

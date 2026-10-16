@@ -17,7 +17,7 @@
     "banana variety philippines",
     "NSIC 2017 Bn 01"
   ],
-  "excerpt": "Mapilak is a registered banana variety, also sold or known as NSIC Bn 01. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Bn 01. Institute of Plant Breeding bred it. Its record notes a yield of 12.96 kg.",
+  "excerpt": "Mapilak is a registered banana variety, also sold or known as NSIC Bn 01. It was registered with the National Seed Industry Council in 2017 as NSIC 2017 Bn 01. Institute of Plant Breeding bred it. Its record notes a yield of 12.96 kg.",
   "heroImage": {
     "src": "/images/site/guides/crops-banana-farming-philippines.webp",
     "alt": "Banana plants with bagged bunches along a farm road in Panabo City, the kind of farm where Mapilak banana is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Bn 01, this is the same banana. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [banana variety finder](/crop-varieties/banana), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [banana farming in the Philippines](/crops/banana-farming-philippines)."
+      "text": "If you came here looking for NSIC Bn 01, this is the same banana. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [banana variety finder](/crop-varieties/banana), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [banana farming in the Philippines](/crops/banana-farming-philippines)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Mapilak",
       "rows": [
         [
           "Trait",
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -261,23 +261,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Mapilak from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

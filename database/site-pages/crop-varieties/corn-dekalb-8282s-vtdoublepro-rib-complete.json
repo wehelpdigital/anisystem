@@ -20,7 +20,7 @@
     "corn variety philippines",
     "NSIC 2021 GMCn 75"
   ],
-  "excerpt": "DEKALB®8282S VTDoublePRO RIB Complete corn is a yellow GM hybrid corn variety, also sold or known as DK 8282S or Dekalb 8282S. It was registered with the National Seed Industry Council (NSIC) in 2021 as NSIC 2021 GMCn 75. Bayer Crop Science bred it. It takes 105 to 108 days from planting to the harvest of dry grain, with 9.11 tonnes per hectare on average in the trials.",
+  "excerpt": "DEKALB®8282S VTDoublePRO RIB Complete corn is a yellow GM hybrid corn variety, also sold or known as DK 8282S or Dekalb 8282S. It was registered with the National Seed Industry Council in 2021 as NSIC 2021 GMCn 75. Bayer Crop Science bred it. It takes 105 to 108 days from planting to the harvest of dry grain, with 9.11 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where DEKALB®8282S VTDoublePRO RIB Complete corn is grown",
@@ -29,7 +29,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for DK 8282S or Dekalb 8282S, this is the same corn. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+      "text": "If you came here looking for DK 8282S or Dekalb 8282S, this is the same corn. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "list",
@@ -49,7 +49,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of DEKALB®8282S VTDoublePRO RIB Complete",
       "rows": [
         [
           "Trait",
@@ -117,7 +117,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -158,7 +158,7 @@
       "ordered": false,
       "items": [
         "**Yield:** No ceiling given: Bayer claims 1.7 t/ha more than market standard hybrids, shelling recovery 84 percent.",
-        "**Traits in the seed:** VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm, the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95 percent traited seed and 5 percent refuge seed already mixed, so no separate refuge block has to be planted.",
+        "**Traits in the seed:** VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm, its registered events are MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95 percent traited seed and 5 percent refuge seed already mixed, so no separate refuge block has to be planted.",
         "**Season:** Wet and dry.",
         "**Where:** Luzon and Visayas (Bayer's recommended area).",
         "**Stand:** 83,000 to 90,000 plants per ha, furrows 60 cm, hills 18 or 20 cm.",
@@ -180,7 +180,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Luzon and Mindanao. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
+      "text": "It is recommended for Luzon and Mindanao. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
     },
     {
       "type": "heading",
@@ -244,7 +244,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Luzon and Mindanao. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Luzon and Mindanao. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of DEKALB®8282S VTDoublePRO RIB Complete?",
@@ -286,10 +286,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
           "label": "Notes on DEKALB®8282S VTDoublePRO RIB Complete from cropscience.bayer.com.ph",
           "url": "https://www.cropscience.bayer.com.ph/en-ph/products/dekalb-hybrid-corn-seeds/choose-your-dekalb/dekalb-product-detail-template.html/dk_8282s.html"
         },
@@ -300,10 +296,6 @@
         {
           "label": "Notes on DEKALB®8282S VTDoublePRO RIB Complete from cropscience.bayer.com.ph",
           "url": "https://www.cropscience.bayer.com.ph/en-ph/traits/vt2prib.html"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

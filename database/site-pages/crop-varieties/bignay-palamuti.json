@@ -16,7 +16,7 @@
     "bignay variety philippines",
     "NSIC 2002 Bg 01"
   ],
-  "excerpt": "Palamuti is a registered bignay variety. It was registered with the National Seed Industry Council (NSIC) in 2002 as NSIC 2002 Bg 01. IPB UPLB bred it.",
+  "excerpt": "Palamuti is a registered bignay variety. It was registered with the National Seed Industry Council in 2002 as NSIC 2002 Bg 01. IPB UPLB bred it.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Palamuti bignay is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [bignay variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "Compare it with the others in our [bignay variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "heading",
@@ -34,7 +34,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Palamuti",
       "rows": [
         [
           "Trait",
@@ -118,7 +118,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "heading",
@@ -127,7 +127,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Palamuti weighs about 0.3 grams, and its shape is irregular spheroid. The flesh is reddish purple and smooth. Its sweetness measured 8.2 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 70 percent of the fruit. The registry notes its fruiting season as July August, bearing annual."
+      "text": "A fruit of Palamuti weighs about 0.3 grams, and its shape is irregular spheroid. The flesh is reddish purple and smooth. Its sweetness measured 8.2 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 70 percent of the fruit. Its fruiting season is July August, bearing annual."
     },
     {
       "type": "heading",
@@ -192,19 +192,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

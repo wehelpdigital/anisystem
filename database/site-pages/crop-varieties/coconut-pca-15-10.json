@@ -18,7 +18,7 @@
     "coconut variety philippines",
     "NSIC 2000 Co 21"
   ],
-  "excerpt": "PCA 15 10 is a registered coconut variety, also sold or known as Tacunan Dwarf x Laguna Tall or TACD x LAGT. It was registered with the National Seed Industry Council (NSIC) in 2000 as NSIC 2000 Co 21. PCA bred it. Its record notes 1.75 tonnes of copra per hectare on average in the trials.",
+  "excerpt": "PCA 15 10 is a registered coconut variety, also sold or known as Tacunan Dwarf x Laguna Tall or TACD x LAGT. It was registered with the National Seed Industry Council in 2000 as NSIC 2000 Co 21. PCA bred it. Its record notes 1.75 tonnes of copra per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-coconut-fertilizer.webp",
     "alt": "Tall coconut palms over a grassy field in Sipocot, Camarines Sur, the kind of farm where PCA 15 10 coconut is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Tacunan Dwarf x Laguna Tall or TACD x LAGT, this is the same coconut. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [coconut variety finder](/crop-varieties/coconut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [coconut fertilizer by age](/crops/coconut-fertilizer)."
+      "text": "If you came here looking for Tacunan Dwarf x Laguna Tall or TACD x LAGT, this is the same coconut. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [coconut variety finder](/crop-varieties/coconut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [coconut fertilizer by age](/crops/coconut-fertilizer)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of PCA 15 10",
       "rows": [
         [
           "Trait",
@@ -140,7 +140,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -153,7 +153,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of PCA 15 10 weighs about 1,270.5 g grams, and its shape is almost round (polar) and round (equatorial). The edible part is 56 percent of the fruit. The registry notes its fruiting season as 12, bearing biennial. Each palm gave about 76 nuts a year in the records, with 262 grams of copra per nut."
+      "text": "A fruit of PCA 15 10 weighs about 1,270.5 g grams, and its shape is almost round (polar) and round (equatorial). The edible part is 56 percent of the fruit. Its fruiting season is 12, bearing biennial. Each palm gave about 76 nuts a year in the records, with 262 grams of copra per nut."
     },
     {
       "type": "heading",
@@ -268,31 +268,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on PCA 15 10 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-plantation.xlsx"
-        },
-        {
-          "label": "Notes on PCA 15 10 from ispweb.pcaarrd.dost.gov.ph",
-          "url": "https://ispweb.pcaarrd.dost.gov.ph/coconut-hybridization-program/"
-        },
-        {
-          "label": "Notes on PCA 15 10 from pcaarrd.dost.gov.ph",
-          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/project-to-replace-davaos-damaged-typhoon-hit-coconut-palms-with-high-yielding-hybrids"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

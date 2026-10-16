@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+      "text": "Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of SMC 308",
       "rows": [
         [
           "Trait",
@@ -96,7 +96,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -216,19 +216,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

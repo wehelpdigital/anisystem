@@ -18,7 +18,7 @@
     "coconut variety philippines",
     "NSIC 2008 Co 28"
   ],
-  "excerpt": "VMAC 2 is a registered coconut variety, also sold or known as makapuno or makapuno hybrid 2. It was registered with the National Seed Industry Council (NSIC) in 2008 as NSIC 2008 Co 28. VSU bred it.",
+  "excerpt": "VMAC 2 is a registered coconut variety, also sold or known as makapuno or makapuno hybrid 2. It was registered with the National Seed Industry Council in 2008 as NSIC 2008 Co 28. VSU bred it.",
   "heroImage": {
     "src": "/images/site/guides/crops-coconut-fertilizer.webp",
     "alt": "Tall coconut palms over a grassy field in Sipocot, Camarines Sur, the kind of farm where VMAC 2 coconut is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for makapuno or makapuno hybrid 2, this is the same coconut. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [coconut variety finder](/crop-varieties/coconut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [coconut fertilizer by age](/crops/coconut-fertilizer)."
+      "text": "If you came here looking for makapuno or makapuno hybrid 2, this is the same coconut. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [coconut variety finder](/crop-varieties/coconut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [coconut fertilizer by age](/crops/coconut-fertilizer)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of VMAC 2",
       "rows": [
         [
           "Trait",
@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -148,7 +148,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of VMAC 2 weighs about 1,690.31 g grams, and its shape is ovoid, angled. The edible part is 29.57 percent of the fruit. The registry notes its fruiting season as 12, bearing perennial. Each palm gave about 144 nuts a year in the records."
+      "text": "A fruit of VMAC 2 weighs about 1,690.31 g grams, and its shape is ovoid, angled. The edible part is 29.57 percent of the fruit. Its fruiting season is 12, bearing perennial. Each palm gave about 144 nuts a year in the records."
     },
     {
       "type": "heading",
@@ -259,27 +259,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on VMAC 2 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-plantation.xlsx"
-        },
-        {
-          "label": "Notes on VMAC 2 from atr.vsu.edu.ph",
-          "url": "https://atr.vsu.edu.ph/article/download/78/66/127"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

@@ -68,7 +68,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -77,7 +77,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -190,20 +190,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Notes on Baligonhon from dost.gov.ph",
-          "url": "https://www.dost.gov.ph/knowledge-resources/news/87-2026-news/4402-can-ph-meet-global-demand-for-purple-yams-experts-try-propagation-techniques-to-produce-quality-planting-materials-amid-ube-craze"
-        },
-        {
-          "label": "Notes on Baligonhon from pcaarrd.dost.gov.ph",
-          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/dost-pcaarrd-funded-project-advances-year-round-ubi-production-and-propagation-technologies-in-bohol"
-        },
-        {
           "label": "Notes on Baligonhon from verafiles.org",
           "url": "https://verafiles.org/articles/know-your-philippine-ube-history-culture-and-identity"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

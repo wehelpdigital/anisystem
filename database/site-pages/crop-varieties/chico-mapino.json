@@ -17,7 +17,7 @@
     "chico variety philippines",
     "NSIC 2000 Sd 01"
   ],
-  "excerpt": "Mapino is a registered chico variety, also sold or known as NSIC Sd 01. It was registered with the National Seed Industry Council (NSIC) in 2000 as NSIC 2000 Sd 01. Roman Carandang bred it. Its record notes a yield of 40 to 70 kg/harvest.",
+  "excerpt": "Mapino is a registered chico variety, also sold or known as NSIC Sd 01. It was registered with the National Seed Industry Council in 2000 as NSIC 2000 Sd 01. Roman Carandang bred it. Its record notes a yield of 40 to 70 kg/harvest.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Mapino chico is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Sd 01, this is the same chico. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [chico variety finder](/crop-varieties/chico), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "If you came here looking for NSIC Sd 01, this is the same chico. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [chico variety finder](/crop-varieties/chico), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Mapino",
       "rows": [
         [
           "Trait",
@@ -138,7 +138,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -151,7 +151,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Mapino weighs about 114.05 grams, and its shape is ovoid. The flesh is brown and fine. Its sweetness measured 19.35 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 81.56 percent of the fruit. The registry notes its fruiting season as Jan, Mar and Dec, bearing twice a year."
+      "text": "A fruit of Mapino weighs about 114.05 grams, and its shape is ovoid. The flesh is brown and fine. Its sweetness measured 19.35 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 81.56 percent of the fruit. Its fruiting season is Jan, Mar and Dec, bearing twice a year."
     },
     {
       "type": "heading",
@@ -274,20 +274,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Mapino from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
           "label": "Notes on Mapino from en.wikipedia.org",
           "url": "https://en.wikipedia.org/wiki/Sapodilla"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

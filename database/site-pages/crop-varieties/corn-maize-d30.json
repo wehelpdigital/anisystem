@@ -75,7 +75,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -84,7 +84,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -203,27 +203,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Notes on Maize D30 from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=11899"
-        },
-        {
-          "label": "Notes on Maize D30 from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=11822"
-        },
-        {
-          "label": "Notes on Maize D30 from cagayandeoro.da.gov.ph",
-          "url": "https://cagayandeoro.da.gov.ph/?p=76449"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

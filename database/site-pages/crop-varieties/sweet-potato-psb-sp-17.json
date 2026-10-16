@@ -77,7 +77,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -86,7 +86,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -116,7 +116,7 @@
         "**Fruit:** White skin, yellow flesh, flesh dry matter 30.1 percent, flour recovery about 21 percent, light green leaves.",
         "**Where:** Can be planted anywhere in the Philippines.",
         "**Uses:** Table, fries, flour.",
-        "Resistant to scab and weevil (DA Caraga).",
+        "Resistant to scab and weevil.",
         "Good keeping quality for fries."
       ]
     },
@@ -206,27 +206,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Notes on PSB Sp 17 from caraga.da.gov.ph",
-          "url": "https://caraga.da.gov.ph/wp-content/uploads/Publication/HVCDP/Mga-Giya-sa-Pagpananum-ug-Kamote.pdf"
-        },
-        {
-          "label": "Notes on PSB Sp 17 from newport.pcaarrd.dost.gov.ph",
-          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/max-s-engages-with-pcaarrd-for-quality-sweetpotato-produce"
-        },
-        {
-          "label": "Notes on PSB Sp 17 from agris.fao.org",
-          "url": "https://agris.fao.org/search/ar/records/64724e67e17b74d2224fc44e"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

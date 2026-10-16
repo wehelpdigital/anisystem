@@ -17,7 +17,7 @@
     "abaca variety philippines",
     "NSIC 2017 Mt 01"
   ],
-  "excerpt": "Abuab is a registered abaca variety, also sold or known as NSIC Mt 01. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Mt 01. PHILFIDA bred it. It takes 20 to 24 months from planting to the first harvest.",
+  "excerpt": "Abuab is a registered abaca variety, also sold or known as NSIC Mt 01. It was registered with the National Seed Industry Council in 2017 as NSIC 2017 Mt 01. PHILFIDA bred it. It takes 20 to 24 months from planting to the first harvest.",
   "heroImage": {
     "src": "/images/site/guides/crops-banana-farming-philippines.webp",
     "alt": "Banana plants with bagged bunches along a farm road in Panabo City, the kind of farm where Abuab abaca is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Mt 01, this is the same abaca. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [abaca variety finder](/crop-varieties/abaca), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
+      "text": "If you came here looking for NSIC Mt 01, this is the same abaca. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [abaca variety finder](/crop-varieties/abaca), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Abuab",
       "rows": [
         [
           "Trait",
@@ -122,7 +122,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -274,20 +274,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Abuab from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-fiber.xlsx"
-        },
-        {
           "label": "Notes on Abuab from en.wikipedia.org",
           "url": "https://en.wikipedia.org/wiki/Abac%C3%A1"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

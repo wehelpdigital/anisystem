@@ -15,7 +15,7 @@
     "mango variety philippines",
     "NSIC 2018 Mn 14"
   ],
-  "excerpt": "Mangoming Mango is a registered mango variety. It was registered with the National Seed Industry Council (NSIC) in 2018 as NSIC 2018 Mn 14. Maria Socorro M. Bodiongan bred it. Its record notes a yield of more than 100 kg.",
+  "excerpt": "Mangoming Mango is a registered mango variety. It was registered with the National Seed Industry Council in 2018 as NSIC 2018 Mn 14. Maria Socorro M. Bodiongan bred it. Its record notes a yield of more than 100 kg.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Mangoming Mango is grown",
@@ -24,7 +24,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [mango variety finder](/crop-varieties/mango), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "Compare it with the others in our [mango variety finder](/crop-varieties/mango), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -40,7 +40,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Mangoming Mango",
       "rows": [
         [
           "Trait",
@@ -128,7 +128,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -141,7 +141,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Mangoming Mango weighs about 1275.4 grams, and its shape is ellipsoid. The flesh is yellow orange and firm. Its sweetness measured 12.8 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 84.8 percent of the fruit. The registry notes its fruiting season as June July December January, bearing biennial."
+      "text": "A fruit of Mangoming Mango weighs about 1275.4 grams, and its shape is ellipsoid. The flesh is yellow orange and firm. Its sweetness measured 12.8 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 84.8 percent of the fruit. Its fruiting season is June July December January, bearing biennial."
     },
     {
       "type": "heading",
@@ -233,19 +233,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

@@ -19,7 +19,7 @@
     "corn variety philippines",
     "NSIC 2008 Cn 224"
   ],
-  "excerpt": "Var 6 corn is a white open pollinated corn variety, also sold or known as IPB Var 6 or IPB Variety 6. It was registered with the National Seed Industry Council (NSIC) in 2008 as NSIC 2008 Cn 224. IPB,College, Laguna bred it. It takes 101 to 105 days from planting to the harvest of dry grain, with 5.84 tonnes per hectare on average in the trials.",
+  "excerpt": "Var 6 corn is a white open pollinated corn variety, also sold or known as IPB Var 6 or IPB Variety 6. It was registered with the National Seed Industry Council in 2008 as NSIC 2008 Cn 224. IPB,College, Laguna bred it. It takes 101 to 105 days from planting to the harvest of dry grain, with 5.84 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where Var 6 corn is grown",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for IPB Var 6 or IPB Variety 6, this is the same corn. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+      "text": "If you came here looking for IPB Var 6 or IPB Variety 6, this is the same corn. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "list",
@@ -48,7 +48,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Var 6",
       "rows": [
         [
           "Trait",
@@ -124,7 +124,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -200,7 +200,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Luzon and the Visayas in the dry season. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
+      "text": "It is recommended for Luzon and the Visayas in the dry season. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
     },
     {
       "type": "heading",
@@ -264,7 +264,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Luzon and the Visayas in the dry season. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Luzon and the Visayas in the dry season. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of Var 6?",
@@ -306,24 +306,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Var 6 from agris.fao.org",
-          "url": "https://agris.fao.org/search/fr/records/64746af279cbb2c2c1af6537"
-        },
-        {
           "label": "Notes on Var 6 from newsinfo.inquirer.net",
           "url": "https://newsinfo.inquirer.net/8121/da-to-promote-white-corn-to-ease-demand-for-rice"
-        },
-        {
-          "label": "Notes on Var 6 from ukdr.uplb.edu.ph",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/1522"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

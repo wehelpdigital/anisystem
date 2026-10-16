@@ -3,8 +3,11 @@
 are the NSIC registry's and the research notes'; every sentence around them is
 anee.io's own: what the numbers mean, how the variety compares with others of
 its crop, and which pests, diseases and guides matter for it. The heroes are
-anee.io's own farm photos. Pages follow database/site-pages/STYLE.md and pass
-check.py.
+anee.io's own farm photos. No page names the NSIC registry, the Bureau of Plant
+Industry or any other agency or institute as where its facts come from (the
+owner, 2026-10-17): the facts are said as our own, and the sources block keeps
+only the seller's and farm sources' own pages. Pages follow
+database/site-pages/STYLE.md and pass check.py.
 
     python database/crop-varieties/build_pages.py
 """
@@ -12,6 +15,7 @@ import json
 import os
 import re
 import statistics
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, '..', 'site-pages')
@@ -21,8 +25,8 @@ CROPS = json.load(open(os.path.join(HERE, 'crops.json'), encoding='utf-8'))
 C = CROPS['crops']
 HEROES = CROPS['heroes']
 
-SRC_NSIC = {'label': 'Bureau of Plant Industry: NSIC registry of crop varieties', 'url': 'https://nsic.buplant.da.gov.ph/registry.php'}
-SRC_SEED = {'label': 'Bureau of Plant Industry: seed and planting material certification', 'url': 'https://bpi.da.gov.ph/'}
+sys.path.insert(0, SITE)
+from check import is_gov, is_gov_url  # noqa: E402  (the checker's own list of what may not show as a source)
 RATING = {
     'HR': ('Highly resistant', 'held up very well'),
     'R': ('Resistant', 'held up well'),
@@ -75,6 +79,49 @@ def safe(s):
     if BANNED.search(s):
         return ''
     return s
+
+
+# ---- no agency or institute as the source of a fact (the owner, 2026-10-17)
+# The research notes cite them in brackets and as subjects ("(DA Caraga)",
+# "BPI gives 90 to 110 days"). The fact stays, said as our own; a variety
+# named after one (BPI Cp 4, PCA 15 3, UPLB Gold, Pagasa 7) keeps its name.
+GOVN = (r"(?:the\s+)?(?:DA(?:\s+(?:BAR|RFO\s*\d+|Caraga|CAR|Region\s+\d+))?|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)(?:\s+station)?"
+        r"|PCA(?!\s*\d)|PhilRice|PCAARRD|BSWM|IRRI|FAO|NSIC(?:\s+registry)?(?!\s*(?:\d{4}\s*)?(?:Rc|Cn|Mn|Pn|Sg|Sc|Hy|Rg|Pk|Bn|Ct|Tm|Eg|Ok|Cb|\d))"
+        r"|the\s+registry)")
+GOV_PART = re.compile(GOVN + r"(?:\s+(?:derby|derbies|trials?|data|guide|station|records?|list))?", re.I)
+GOV_SAYS = [
+    (re.compile(r"\bthe NSIC registry gives the events as\b"), 'its registered events are'),
+    (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA|PhilRice)'s\s+guide\b"), 'the guide'),
+    (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice|NSIC)\s+gives\b"), 'trials give'),
+    (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice|NSIC)\s+lists it\b"), 'it is listed'),
+    (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice|NSIC)\s+lists\b"), 'the list has'),
+    (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice)\s+recommends\b"), 'the usual advice is'),
+    (re.compile(r"\bthe (?:NSIC )?registry gives\b"), 'its record gives'),
+]
+
+
+def unsource_text(t):
+    if not isinstance(t, str) or not t:
+        return t
+
+    def paren(m):
+        parts = [x.strip() for x in re.split(r'\s*[,;]\s*', m.group(1))]
+        left = [x for x in parts if x and not GOV_PART.fullmatch(x)]
+        if len(left) == len(parts):
+            return m.group(0)
+        return (' (' + ', '.join(left) + ')') if left else ''
+    t = re.sub(r'\s?\(([^()\n]{1,120})\)', paren, t)
+    for rx, rep in GOV_SAYS:
+        t = rx.sub(rep, t)
+    return re.sub(r'(?<=\S) {2,}', ' ', t)
+
+
+def unsource_page(o):
+    if isinstance(o, dict):
+        return {k: (v if k in ('url', 'src', 'slug', 'credit') else unsource_page(v)) for k, v in o.items()}
+    if isinstance(o, list):
+        return [unsource_page(x) for x in o]
+    return unsource_text(o)
 
 
 def sentence(s):
@@ -336,7 +383,7 @@ def what_like(v, key, n):
         if ep:
             bits.append('The edible part is %s%s of the fruit.' % (ep, '' if 'percent' in ep else ' percent'))
         if sea:
-            bits.append('The registry notes its fruiting season as %s%s.' % (sea, (', bearing %s' % reg.lower()) if reg else ''))
+            bits.append('Its fruiting season is %s%s.' % (sea, (', bearing %s' % reg.lower()) if reg else ''))
         if key == 'coconut':
             np_ = trait(v, r'^nuts/palm')
             cp = trait(v, r'copra/nut')
@@ -485,7 +532,7 @@ def build(v, allv, st):
     search = ''
     if aliases:
         search = 'If you came here looking for %s, this is the same %s. ' % (' or '.join(aliases[:2]), cw)
-    intro = search + ('The facts below come from the NSIC registry kept by the Bureau of Plant Industry%s. ' % (', with notes from its seller and farm sources' if research else '')
+    intro = search + (('Its seller and farm sources add notes, listed at the end. ' if research else '')
                       if v.get('reg') else 'The facts below come from its seller and from farm sources, each one listed at the end. ')
     intro += 'Compare it with the others in our [%s variety finder](%s), or see [every crop variety](/crop-varieties) we list. ' % (cw, hub)
     gl = guides_of(key)
@@ -551,7 +598,7 @@ def build(v, allv, st):
     if facts.get('yield') and y.get('value') is None:
         rows.append(['Yield, per the seller', safe(str(facts['yield']))])
     rows = [r for r in rows if r[1]]
-    blocks.append({'type': 'table', 'caption': 'From the NSIC registry%s' % (' and its seller' if research else '') if v.get('reg') else 'From its seller and farm sources', 'rows': rows})
+    blocks.append({'type': 'table', 'caption': 'Key facts of %s' % n if v.get('reg') else 'From its seller and farm sources', 'rows': rows})
 
     # ---- days and yield, against the others of its crop
     s_kind = st.get((key, kind), {})
@@ -616,7 +663,7 @@ def build(v, allv, st):
         line += ' A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.'
         para.append(line)
     if not para:
-        para.append('The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.')
+        para.append('No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.')
     if facts.get('maturityDays') and v.get('maturity'):
         para.append('Its seller gives %s.' % safe(str(facts['maturityDays'])).rstrip('.'))
     T(re.sub(r' *\n\n *', '\n\n', ' '.join(para)).strip() + ('\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them.'
@@ -634,7 +681,7 @@ def build(v, allv, st):
             rrows.append([safe(lab), RATING[val][0] if val in RATING else safe(val), meaning[:1].upper() + meaning[1:]])
             if val in BAD:
                 weak.append(lab)
-        blocks.append({'type': 'table', 'caption': 'Reactions in the registry trials, rated under natural field conditions', 'rows': rrows})
+        blocks.append({'type': 'table', 'caption': 'Reactions in trials, rated under natural field conditions', 'rows': rrows})
         linked = []
         for lab, val in reacts:
             p = page_for(lab, key)
@@ -651,7 +698,7 @@ def build(v, allv, st):
         if txt:
             T(' '.join(txt))
     else:
-        T('The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week.')
+        T('No pest or disease ratings are published for this variety. So treat it as untested, and scout every week.')
     common = [p for p in problems_of(key) if not any(p['name'].lower() in (r[0] or '').lower() for r in reacts)][:5]
     if common:
         T('The pests and diseases that hit %s fields most often: %s. Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see.' % (
@@ -694,7 +741,7 @@ def build(v, allv, st):
     H('Where and when to plant %s' % fk)
     ww = []
     if where:
-        ww.append('The registry recommends it for %s%s.' % (where, (' in %s' % seas) if seas else ''))
+        ww.append('It is recommended for %s%s.' % (where, (' in %s' % seas) if seas else ''))
     elif seas:
         ww.append('It is recommended for %s.' % seas)
     if v.get('elevation'):
@@ -761,7 +808,7 @@ def build(v, allv, st):
     elif kind and 'open pollinated' in kind.lower():
         faq.append({'q': 'Can I save its seed?', 'a': 'Yes. It is open pollinated, so seed from a clean, isolated field grows true. Still, certified seed gives the best start every few seasons.'})
     if where:
-        faq.append({'q': 'Where does it grow best?', 'a': 'The registry recommends it for %s%s. Ask your municipal agriculturist how it has done in your town.' % (where, (' in %s' % seas) if seas else '')})
+        faq.append({'q': 'Where does it grow best?', 'a': 'It is recommended for %s%s. Ask your municipal agriculturist how it has done in your town.' % (where, (' in %s' % seas) if seas else '')})
     if c.get('group') == 'fruit' or key in ('coconut', 'cacao', 'coffee', 'rubber'):
         faq.append({'q': 'Where can I buy planting material of %s?' % n,
                     'a': 'Buy grafted, budded or marcotted trees from a nursery accredited by the Bureau of Plant Industry, so you get the true variety. Ask your provincial agriculture office for the nearest one.'})
@@ -776,14 +823,12 @@ def build(v, allv, st):
     reads.append({'label': 'Rice varieties of the Philippines', 'url': '/rice-varieties'})
     blocks.append({'type': 'links', 'title': 'Read next', 'items': reads[:6]})
 
-    sources = [SRC_NSIC] if v.get('reg') else []
-    for u in (research.get('sources') or [])[:3]:
+    sources = []
+    for u in [x for x in (research.get('sources') or []) if not is_gov_url(x)][:3]:
         host = re.sub(r'^https?://(www\.)?', '', u).split('/')[0].replace('-', ' ')
-        sources.append({'label': 'Notes on %s from %s' % (n, host), 'url': u})
-    if not sources:
-        sources.append(SRC_NSIC)
-    sources.append(SRC_SEED)
-    blocks.append({'type': 'sources', 'items': sources})
+        sources.append({'label': ('Notes on %s from %s' % (n, host)) if not is_gov(n) else 'Notes from %s' % host, 'url': u})
+    if sources:
+        blocks.append({'type': 'sources', 'items': sources})
 
     hero = HEROES.get(c.get('hero') or 'orchard')
     kw = [fk, n] + aliases + ['%s %s variety' % (n, cw), '%s variety philippines' % cw]
@@ -848,6 +893,7 @@ def main():
             p['sortOrder'] = placed.get(p['slug'], prev if prev is not None else p['sortOrder'])
         prev = p['sortOrder']
         keep.add(p['slug'] + '.json')
+        p = unsource_page(p)
         json.dump(p, open(os.path.join(OUT, p['slug'] + '.json'), 'w', encoding='utf-8', newline='\n'), indent=2, ensure_ascii=False)
     for f in os.listdir(OUT):
         if f.endswith('.json') and f not in keep:

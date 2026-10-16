@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for kangkong upland or dry land kangkong, this is the same kangkong. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [kangkong variety finder](/crop-varieties/kangkong), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+      "text": "If you came here looking for kangkong upland or dry land kangkong, this is the same kangkong. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [kangkong variety finder](/crop-varieties/kangkong), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Upland Kangkong",
       "rows": [
         [
           "Trait",
@@ -86,7 +86,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -193,23 +193,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Upland Kangkong from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

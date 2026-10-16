@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Sugar Baby F1 or pakwan Sugar Baby, this is the same watermelon. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [watermelon variety finder](/crop-varieties/watermelon), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for gourds and melons](/land-preparation/cucurbit-land-preparation)."
+      "text": "If you came here looking for Sugar Baby F1 or pakwan Sugar Baby, this is the same watermelon. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [watermelon variety finder](/crop-varieties/watermelon), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for gourds and melons](/land-preparation/cucurbit-land-preparation)."
     },
     {
       "type": "heading",
@@ -36,7 +36,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Sugar Baby",
       "rows": [
         [
           "Trait",
@@ -71,7 +71,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no day count or trial yield for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -80,7 +80,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -205,24 +205,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Sugar Baby from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
-        },
-        {
           "label": "Notes on Sugar Baby from 00fd91a1 d2c1 45e1 b1e8 e68b1993d66d.usrfiles.com",
           "url": "https://00fd91a1-d2c1-45e1-b1e8-e68b1993d66d.usrfiles.com/ugd/00fd91_c872cf54e6fe463382ba39f7238cc3e9.pdf"
         },
         {
           "label": "Notes on Sugar Baby from alliedbotanical.com",
           "url": "https://alliedbotanical.com/project/sugar-baby-f1-hybrid-watermelon/"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

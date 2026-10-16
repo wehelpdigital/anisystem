@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Cardaba or Cardava, this is the same banana. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [banana variety finder](/crop-varieties/banana), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [banana farming in the Philippines](/crops/banana-farming-philippines)."
+      "text": "If you came here looking for Cardaba or Cardava, this is the same banana. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [banana variety finder](/crop-varieties/banana), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [banana farming in the Philippines](/crops/banana-farming-philippines)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Saba Cardaba",
       "rows": [
         [
           "Trait",
@@ -120,7 +120,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -254,24 +254,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Saba Cardaba from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
           "label": "Notes on Saba Cardaba from en.wikipedia.org",
           "url": "https://en.wikipedia.org/wiki/Saba_banana"
         },
         {
           "label": "Notes on Saba Cardaba from en.wikipedia.org",
           "url": "https://en.wikipedia.org/wiki/List_of_banana_cultivars"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

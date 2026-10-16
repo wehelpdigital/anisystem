@@ -16,7 +16,7 @@
     "eggplant variety philippines",
     "NSIC 2013 Eg 03H"
   ],
-  "excerpt": "Tanglaw is a registered eggplant variety. It was registered with the National Seed Industry Council (NSIC) in 2013 as NSIC 2013 Eg 03H. IPB UPLB bred it. It takes about 82 days from transplanting to the first harvest, with 16.7 tonnes per hectare on average in the trials.",
+  "excerpt": "Tanglaw is a registered eggplant variety. It was registered with the National Seed Industry Council in 2013 as NSIC 2013 Eg 03H. IPB UPLB bred it. It takes about 82 days from transplanting to the first harvest, with 16.7 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/vegetable-land-preparation.webp",
     "alt": "Rows of young eggplant on furrowed beds in Norzagaray, Bulacan, the kind of farm where Tanglaw eggplant is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [eggplant variety finder](/crop-varieties/eggplant), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
+      "text": "Compare it with the others in our [eggplant variety finder](/crop-varieties/eggplant), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Tanglaw",
       "rows": [
         [
           "Trait",
@@ -111,7 +111,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -140,7 +140,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Luzon, the Visayas and Mindanao in both the wet and the dry season. Buyers in each market want their own talong: long and slim and dark purple in most of Luzon, rounder or striped in some towns. Pick a variety with bacterial wilt resistance, and plan for the fruit and shoot borer whatever you plant, because no variety on the market resists it. Before planting, get the field ready with our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+      "text": "It is recommended for Luzon, the Visayas and Mindanao in both the wet and the dry season. Buyers in each market want their own talong: long and slim and dark purple in most of Luzon, rounder or striped in some towns. Pick a variety with bacterial wilt resistance, and plan for the fruit and shoot borer whatever you plant, because no variety on the market resists it. Before planting, get the field ready with our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
     },
     {
       "type": "heading",
@@ -196,7 +196,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Luzon, the Visayas and Mindanao in both the wet and the dry season. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Luzon, the Visayas and Mindanao in both the wet and the dry season. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of Tanglaw?",
@@ -231,19 +231,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

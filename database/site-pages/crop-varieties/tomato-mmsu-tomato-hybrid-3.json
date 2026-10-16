@@ -15,7 +15,7 @@
     "tomato variety philippines",
     "NSIC 2004 Tm 11"
   ],
-  "excerpt": "MMSU Tomato Hybrid 3 is a registered tomato variety. It was registered with the National Seed Industry Council (NSIC) in 2004 as NSIC 2004 Tm 11. MMSU Batac, Ilocos Norte bred it. It takes about 93 days from transplanting to the first harvest, with 28.79 tonnes per hectare on average in the trials.",
+  "excerpt": "MMSU Tomato Hybrid 3 is a registered tomato variety. It was registered with the National Seed Industry Council in 2004 as NSIC 2004 Tm 11. MMSU Batac, Ilocos Norte bred it. It takes about 93 days from transplanting to the first harvest, with 28.79 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-tomatoes.webp",
     "alt": "Young tomato plants on silver plastic mulch beds with bamboo stakes in San Ildefonso, Bulacan, the kind of farm where MMSU Tomato Hybrid 3 is grown",
@@ -24,7 +24,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [tomato variety finder](/crop-varieties/tomato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for tomatoes, stage by stage](/blog/fertilizer-for-tomatoes)."
+      "text": "Compare it with the others in our [tomato variety finder](/crop-varieties/tomato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for tomatoes, stage by stage](/blog/fertilizer-for-tomatoes)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of MMSU Tomato Hybrid 3",
       "rows": [
         [
           "Trait",
@@ -135,7 +135,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -188,7 +188,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Luzon, the Visayas and Mindanao in the wet season. Bacterial wilt kills more lowland tomato than any other disease, so in the wet season pick a variety rated resistant to it. Choose a firm, oblong fruit if you sell to a far market, and a round, juicy one for fresh sale nearby. Heat tolerant hybrids set fruit in the hot months, when open pollinated tomatoes often drop their flowers. Before planting, get the field ready with our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
+      "text": "It is recommended for Luzon, the Visayas and Mindanao in the wet season. Bacterial wilt kills more lowland tomato than any other disease, so in the wet season pick a variety rated resistant to it. Choose a firm, oblong fruit if you sell to a far market, and a round, juicy one for fresh sale nearby. Heat tolerant hybrids set fruit in the hot months, when open pollinated tomatoes often drop their flowers. Before planting, get the field ready with our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
     },
     {
       "type": "heading",
@@ -244,7 +244,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Luzon, the Visayas and Mindanao in the wet season. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Luzon, the Visayas and Mindanao in the wet season. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of MMSU Tomato Hybrid 3?",
@@ -279,19 +279,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

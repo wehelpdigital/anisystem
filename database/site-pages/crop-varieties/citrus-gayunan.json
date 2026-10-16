@@ -18,7 +18,7 @@
     "citrus variety philippines",
     "NSIC 2004 Md 01"
   ],
-  "excerpt": "Gayunan citrus is a satsuma mandarin citrus variety, also sold or known as Gayunan mandarin or NSIC Md 01. It was registered with the National Seed Industry Council (NSIC) in 2004 as NSIC 2004 Md 01. Joseph Ganagan bred it. Its record notes a yield of 60 kg/tree.",
+  "excerpt": "Gayunan citrus is a satsuma mandarin citrus variety, also sold or known as Gayunan mandarin or NSIC Md 01. It was registered with the National Seed Industry Council in 2004 as NSIC 2004 Md 01. Joseph Ganagan bred it. Its record notes a yield of 60 kg/tree.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-fruit-trees.webp",
     "alt": "Rows of young calamansi trees in an orchard in Victoria, Tarlac, the kind of farm where Gayunan citrus is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Gayunan mandarin or NSIC Md 01, this is the same citrus. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [citrus variety finder](/crop-varieties/citrus), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
+      "text": "If you came here looking for Gayunan mandarin or NSIC Md 01, this is the same citrus. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [citrus variety finder](/crop-varieties/citrus), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Gayunan",
       "rows": [
         [
           "Trait",
@@ -144,7 +144,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -157,7 +157,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Gayunan weighs about 220 grams, and its shape is obloid. The flesh is orange and soft. Its sweetness measured 12.5 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 77 percent of the fruit. The registry notes its fruiting season as March October, bearing annual."
+      "text": "A fruit of Gayunan weighs about 220 grams, and its shape is obloid. The flesh is orange and soft. Its sweetness measured 12.5 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 77 percent of the fruit. Its fruiting season is March October, bearing annual."
     },
     {
       "type": "heading",
@@ -273,23 +273,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Gayunan from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

@@ -16,7 +16,7 @@
     "tomato variety philippines",
     "NSIC 2015 Tm 14"
   ],
-  "excerpt": "AniMax 1 is a registered tomato variety. It was registered with the National Seed Industry Council (NSIC) in 2015 as NSIC 2015 Tm 14. DA BPI Lbncrdc bred it. It takes 59 to 63 days from transplanting to the first harvest, with 22.82 tonnes per hectare on average in the trials.",
+  "excerpt": "AniMax 1 is a registered tomato variety. It was registered with the National Seed Industry Council in 2015 as NSIC 2015 Tm 14. DA BPI Lbncrdc bred it. It takes 59 to 63 days from transplanting to the first harvest, with 22.82 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-tomatoes.webp",
     "alt": "Young tomato plants on silver plastic mulch beds with bamboo stakes in San Ildefonso, Bulacan, the kind of farm where AniMax 1 tomato is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [tomato variety finder](/crop-varieties/tomato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for tomatoes, stage by stage](/blog/fertilizer-for-tomatoes)."
+      "text": "Its seller and farm sources add notes, listed at the end. Compare it with the others in our [tomato variety finder](/crop-varieties/tomato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for tomatoes, stage by stage](/blog/fertilizer-for-tomatoes)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of AniMax 1",
       "rows": [
         [
           "Trait",
@@ -124,7 +124,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -192,7 +192,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Luzon. Bacterial wilt kills more lowland tomato than any other disease, so in the wet season pick a variety rated resistant to it. Choose a firm, oblong fruit if you sell to a far market, and a round, juicy one for fresh sale nearby. Heat tolerant hybrids set fruit in the hot months, when open pollinated tomatoes often drop their flowers. Before planting, get the field ready with our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
+      "text": "It is recommended for Luzon. Bacterial wilt kills more lowland tomato than any other disease, so in the wet season pick a variety rated resistant to it. Choose a firm, oblong fruit if you sell to a far market, and a round, juicy one for fresh sale nearby. Heat tolerant hybrids set fruit in the hot months, when open pollinated tomatoes often drop their flowers. Before planting, get the field ready with our guide: [Land preparation for vegetables](/land-preparation/vegetable-land-preparation)."
     },
     {
       "type": "heading",
@@ -248,7 +248,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Luzon. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Luzon. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of AniMax 1?",
@@ -283,23 +283,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on AniMax 1 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

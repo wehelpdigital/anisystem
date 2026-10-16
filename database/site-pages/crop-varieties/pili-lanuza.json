@@ -16,7 +16,7 @@
     "pili variety philippines",
     "NSIC 2000 Pl 04"
   ],
-  "excerpt": "Lanuza is a registered pili variety. It was registered with the National Seed Industry Council (NSIC) in 2000 as NSIC 2000 Pl 04. DA ROS AES bred it.",
+  "excerpt": "Lanuza is a registered pili variety. It was registered with the National Seed Industry Council in 2000 as NSIC 2000 Pl 04. DA ROS AES bred it.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Lanuza pili is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [pili variety finder](/crop-varieties/pili), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "Compare it with the others in our [pili variety finder](/crop-varieties/pili), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "heading",
@@ -34,7 +34,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Lanuza",
       "rows": [
         [
           "Trait",
@@ -118,7 +118,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "heading",
@@ -127,7 +127,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Lanuza weighs about 36.52 grams, and its shape is short oblong. The flesh is dark puple to black. The registry notes its fruiting season as year round, bearing annual."
+      "text": "A fruit of Lanuza weighs about 36.52 grams, and its shape is short oblong. The flesh is dark puple to black. Its fruiting season is year round, bearing annual."
     },
     {
       "type": "heading",
@@ -215,19 +215,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

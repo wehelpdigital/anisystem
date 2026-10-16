@@ -19,7 +19,7 @@
     "coffee variety philippines",
     "NSIC 2008 Cf A 06"
   ],
-  "excerpt": "BPI Baguio Arabica Caturra coffee is an arabica coffee variety, also sold or known as Caturra or Arabica Caturra. It was registered with the National Seed Industry Council (NSIC) in 2008 as NSIC 2008 Cf A 06. BPI Baguio NCRDC bred it.",
+  "excerpt": "BPI Baguio Arabica Caturra coffee is an arabica coffee variety, also sold or known as Caturra or Arabica Caturra. It was registered with the National Seed Industry Council in 2008 as NSIC 2008 Cf A 06. BPI Baguio NCRDC bred it.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where BPI Baguio Arabica Caturra coffee is grown",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Caturra or Arabica Caturra, this is the same coffee. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [coffee variety finder](/crop-varieties/coffee), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for tree crops](/land-preparation/fruit-tree-land-preparation)."
+      "text": "If you came here looking for Caturra or Arabica Caturra, this is the same coffee. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [coffee variety finder](/crop-varieties/coffee), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for tree crops](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -45,7 +45,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of BPI Baguio Arabica Caturra",
       "rows": [
         [
           "Trait",
@@ -145,7 +145,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -320,23 +320,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on BPI Baguio Arabica Caturra from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-plantation.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

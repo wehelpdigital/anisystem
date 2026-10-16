@@ -17,7 +17,7 @@
     "sitao variety philippines",
     "NSIC 2020 Ps 09"
   ],
-  "excerpt": "Hitik #4 sitao is a pole sitao variety, also sold or known as Hitik No. 4. It was registered with the National Seed Industry Council (NSIC) in 2020 as NSIC 2020 Ps 09. BPI Lbncrdpsc bred it. It takes 36 to 38 days from sowing to the first harvest, with 13.21 tonnes per hectare on average in the trials.",
+  "excerpt": "Hitik #4 sitao is a pole sitao variety, also sold or known as Hitik No. 4. It was registered with the National Seed Industry Council in 2020 as NSIC 2020 Ps 09. BPI Lbncrdpsc bred it. It takes 36 to 38 days from sowing to the first harvest, with 13.21 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-gulay.webp",
     "alt": "A farmer watering vegetable beds in Pulilan, Bulacan, the kind of farm where Hitik #4 sitao is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Hitik No. 4, this is the same sitao. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [sitao variety finder](/crop-varieties/sitao), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for Hitik No. 4, this is the same sitao. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [sitao variety finder](/crop-varieties/sitao), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -45,7 +45,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Hitik #4",
       "rows": [
         [
           "Trait",
@@ -125,7 +125,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -286,23 +286,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Hitik #4 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

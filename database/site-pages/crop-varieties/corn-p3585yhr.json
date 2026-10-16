@@ -18,7 +18,7 @@
     "corn variety philippines",
     "NSIC 2021 GMCn 74"
   ],
-  "excerpt": "P3585YHR corn is a yellow GM hybrid corn variety, also sold or known as Pioneer P3585YHR or 3585YHR. It was registered with the National Seed Industry Council (NSIC) in 2021 as NSIC 2021 GMCn 74. Corteva Agriscience bred it. It takes 105 to 107 days from planting to the harvest of dry grain, with 8.89 tonnes per hectare on average in the trials.",
+  "excerpt": "P3585YHR corn is a yellow GM hybrid corn variety, also sold or known as Pioneer P3585YHR or 3585YHR. It was registered with the National Seed Industry Council in 2021 as NSIC 2021 GMCn 74. Corteva Agriscience bred it. It takes 105 to 107 days from planting to the harvest of dry grain, with 8.89 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where P3585YHR corn is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Pioneer P3585YHR or 3585YHR, this is the same corn. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+      "text": "If you came here looking for Pioneer P3585YHR or 3585YHR, this is the same corn. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "list",
@@ -47,7 +47,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of P3585YHR",
       "rows": [
         [
           "Trait",
@@ -115,7 +115,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -177,7 +177,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Luzon and Mindanao. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
+      "text": "It is recommended for Luzon and Mindanao. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
     },
     {
       "type": "heading",
@@ -241,7 +241,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Luzon and Mindanao. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Luzon and Mindanao. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of P3585YHR?",
@@ -283,24 +283,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
           "label": "Notes on P3585YHR from corteva.com",
           "url": "https://www.corteva.com/content/dam/dpagco/corteva/as/ph/ph/files/BVC%20LUZON%20AND%20VISAYAS_P3585YHR_2021.pdf"
         },
         {
-          "label": "Notes on P3585YHR from biotech.buplant.da.gov.ph",
-          "url": "https://biotech.buplant.da.gov.ph/pdf/Updated_List_of_all_GMCorn_available_for_Propa.pdf"
-        },
-        {
-          "label": "Notes on P3585YHR from biotech.buplant.da.gov.ph",
-          "url": "https://biotech.buplant.da.gov.ph/pdf/FINAL-CONSOLIDATED-REPORT-INTRASECT.pdf"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
+          "label": "Notes on P3585YHR from sunstar.com.ph",
+          "url": "https://www.sunstar.com.ph/pampanga/local-news/1st-corn-derby-held-in-mexico-town"
         }
       ]
     }

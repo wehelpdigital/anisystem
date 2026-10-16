@@ -20,7 +20,7 @@
     "citrus variety philippines",
     "NSIC 2005 Md 04"
   ],
-  "excerpt": "Okitsu citrus is a satsuma mandarin citrus variety, also sold or known as Okitsu (Satsuma mandarin) or Satsuma. It was registered with the National Seed Industry Council (NSIC) in 2005 as NSIC 2005 Md 04. BPI Bncrdc bred it. Its record notes a yield of 10 kg/tree.",
+  "excerpt": "Okitsu citrus is a satsuma mandarin citrus variety, also sold or known as Okitsu (Satsuma mandarin) or Satsuma. It was registered with the National Seed Industry Council in 2005 as NSIC 2005 Md 04. BPI Bncrdc bred it. Its record notes a yield of 10 kg/tree.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-fruit-trees.webp",
     "alt": "Rows of young calamansi trees in an orchard in Victoria, Tarlac, the kind of farm where Okitsu citrus is grown",
@@ -29,7 +29,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Okitsu (Satsuma mandarin) or Satsuma, this is the same citrus. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [citrus variety finder](/crop-varieties/citrus), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
+      "text": "If you came here looking for Okitsu (Satsuma mandarin) or Satsuma, this is the same citrus. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [citrus variety finder](/crop-varieties/citrus), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
     },
     {
       "type": "list",
@@ -46,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Okitsu",
       "rows": [
         [
           "Trait",
@@ -146,7 +146,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -159,7 +159,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Okitsu weighs about 128 grams, and its shape is oblate. The flesh is orange and soft. Its sweetness measured 10.53 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 81.04 percent of the fruit. The registry notes its fruiting season as March August, bearing annual."
+      "text": "A fruit of Okitsu weighs about 128 grams, and its shape is oblate. The flesh is orange and soft. Its sweetness measured 10.53 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 81.04 percent of the fruit. Its fruiting season is March August, bearing annual."
     },
     {
       "type": "heading",
@@ -173,7 +173,7 @@
         "**Harvest:** Fruits March to August.",
         "**Yield:** About 10 kg per young tree.",
         "**Fruit:** Small, flat, about 128 g, green yellow peel, juicy orange flesh, about 10.5 Brix.",
-        "**Where:** Baguio (BPI station).",
+        "**Where:** Baguio.",
         "**Uses:** Table."
       ]
     },
@@ -275,23 +275,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Okitsu from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

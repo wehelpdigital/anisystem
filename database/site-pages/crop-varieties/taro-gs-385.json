@@ -19,7 +19,7 @@
     "taro variety philippines",
     "NSIC 2004 Gb 09"
   ],
-  "excerpt": "GS 385 is a registered taro variety, also sold or known as NSIC G 9 or NSIC Gb 09. It was registered with the National Seed Industry Council (NSIC) in 2004 as NSIC 2004 Gb 09. It comes from PhilRootcrops, LSU (now VSU). It takes about 8 months from planting to harvest, with 8.85 tonnes per hectare on average in the trials.",
+  "excerpt": "GS 385 is a registered taro variety, also sold or known as NSIC G 9 or NSIC Gb 09. It was registered with the National Seed Industry Council in 2004 as NSIC 2004 Gb 09. It comes from PhilRootcrops, LSU (now VSU). It takes about 8 months from planting to harvest, with 8.85 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/root-crop-land-preparation.webp",
     "alt": "Kamote vines on long raised ridges in San Rafael, Bulacan, the kind of farm where GS 385 taro is grown",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC G 9 or NSIC Gb 09, this is the same taro. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [taro variety finder](/crop-varieties/taro), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
+      "text": "If you came here looking for NSIC G 9 or NSIC Gb 09, this is the same taro. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [taro variety finder](/crop-varieties/taro), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
     },
     {
       "type": "list",
@@ -46,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of GS 385",
       "rows": [
         [
           "Trait",
@@ -122,7 +122,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -182,7 +182,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for anywhere in the country. Gabi grows in wet lowland or on upland beds. Pick a variety for the land you have, and for the corm, the leaves or both."
+      "text": "It is recommended for anywhere in the country. Gabi grows in wet lowland or on upland beds. Pick a variety for the land you have, and for the corm, the leaves or both."
     },
     {
       "type": "heading",
@@ -242,7 +242,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for anywhere in the country. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for anywhere in the country. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of GS 385?",
@@ -269,27 +269,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on GS 385 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-rootcrops.xlsx"
-        },
-        {
-          "label": "Notes on GS 385 from philrootcrops.vsu.edu.ph",
-          "url": "https://philrootcrops.vsu.edu.ph/research-development/research-highlights"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

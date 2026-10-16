@@ -20,7 +20,7 @@
     "garlic variety philippines",
     "NSIC 2017 Gr 01"
   ],
-  "excerpt": "Ilocos White (Balitok is a registered garlic variety, also sold or known as Ilocos White or Balitok. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Gr 01. DA RFO I bred it. It takes about 103 days from planting to harvest, with 5,550 kilograms per hectare on average in the trials.",
+  "excerpt": "Ilocos White (Balitok is a registered garlic variety, also sold or known as Ilocos White or Balitok. It was registered with the National Seed Industry Council in 2017 as NSIC 2017 Gr 01. DA RFO I bred it. It takes about 103 days from planting to harvest, with 5,550 kilograms per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/onion-garlic-land-preparation.webp",
     "alt": "Onion plants in beds separated by grassy paths on a Philippine farm, the kind of farm where Ilocos White (Balitok garlic is grown",
@@ -29,7 +29,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Ilocos White or Balitok, this is the same garlic. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
+      "text": "If you came here looking for Ilocos White or Balitok, this is the same garlic. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [garlic variety finder](/crop-varieties/garlic), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for onion and garlic](/land-preparation/onion-garlic-land-preparation)."
     },
     {
       "type": "list",
@@ -47,7 +47,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Ilocos White (Balitok",
       "rows": [
         [
           "Trait",
@@ -122,7 +122,7 @@
     },
     {
       "type": "text",
-      "text": "Ilocos White (Balitok garlic takes about 103 days from planting to harvest. That is 10.7 days faster than the average of the 7 garlic varieties with a day count, 113.7 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 5,550 kg/ha trails the average of its group, 5817.14. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 103 days after planting (NSIC), BPI gives 90 to 110 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Ilocos White (Balitok garlic takes about 103 days from planting to harvest. That is 10.7 days faster than the average of the 7 garlic varieties with a day count, 113.7 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 5,550 kg/ha trails the average of its group, 5817.14. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 103 days after planting, trials give 90 to 110 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -131,7 +131,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -197,12 +197,12 @@
       "ordered": false,
       "items": [
         "**Yield:** 5.55 t/ha on raised beds and 4.33 t/ha with minimum tillage in the NSIC trials, BPI cites 3.5 t/ha potential.",
-        "**Fruit:** Flat globe bulb with several layers of cloves, white outer skin, beige clove skin (NSIC), BPI describes purple to white scales.",
-        "**Season:** Dry season, needs cool, windy weather during the growing period, plant October to November in Ilocos (BPI).",
+        "**Fruit:** Flat globe bulb with several layers of cloves, white outer skin, beige clove skin, BPI describes purple to white scales.",
+        "**Season:** Dry season, needs cool, windy weather during the growing period, plant October to November in Ilocos.",
         "**Where:** Ilocos lowlands.",
-        "Moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot (NSIC).",
+        "Moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot.",
         "Only slight thrips, leaf folder and mite damage in the NSIC trials.",
-        "Long shelf life (BPI)."
+        "Long shelf life."
       ]
     },
     {
@@ -307,27 +307,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Ilocos White (Balitok from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
-        },
-        {
-          "label": "Notes on Ilocos White (Balitok from buplant.da.gov.ph",
-          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Garlic-Production-Guide.pdf"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

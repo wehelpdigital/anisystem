@@ -17,7 +17,7 @@
     "cassava variety philippines",
     "NSIC 1999 Cv 16"
   ],
-  "excerpt": "CMP 32 10 is a registered cassava variety, also sold or known as PSB Cv 16. It was registered with the National Seed Industry Council (NSIC) in 1999 as NSIC 1999 Cv 16. It takes 10 to 12 months from planting to harvest, with 33.6 tonnes per hectare on average in the trials.",
+  "excerpt": "CMP 32 10 is a registered cassava variety, also sold or known as PSB Cv 16. It was registered with the National Seed Industry Council in 1999 as NSIC 1999 Cv 16. It takes 10 to 12 months from planting to harvest, with 33.6 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/root-crop-land-preparation.webp",
     "alt": "Kamote vines on long raised ridges in San Rafael, Bulacan, the kind of farm where CMP 32 10 cassava is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for PSB Cv 16, this is the same cassava. The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [cassava variety finder](/crop-varieties/cassava), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
+      "text": "If you came here looking for PSB Cv 16, this is the same cassava. Compare it with the others in our [cassava variety finder](/crop-varieties/cassava), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of CMP 32 10",
       "rows": [
         [
           "Trait",
@@ -116,7 +116,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -164,7 +164,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for anywhere in the country. Pick by buyer first. Starch and feed plants pay for yield and starch content, while the table wants a sweet, low cyanide variety that boils soft. A high starch variety needs a buyer within a day of harvest, because the roots spoil fast."
+      "text": "It is recommended for anywhere in the country. Pick by buyer first. Starch and feed plants pay for yield and starch content, while the table wants a sweet, low cyanide variety that boils soft. A high starch variety needs a buyer within a day of harvest, because the roots spoil fast."
     },
     {
       "type": "heading",
@@ -224,7 +224,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for anywhere in the country. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for anywhere in the country. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of CMP 32 10?",
@@ -251,19 +251,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

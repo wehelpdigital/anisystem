@@ -18,7 +18,7 @@
     "mangosteen variety philippines",
     "NSIC 2006 Mt 02"
   ],
-  "excerpt": "Roxas Purple is a registered mangosteen variety, also sold or known as Roxas mangosteen or NSIC Mt 02. It was registered with the National Seed Industry Council (NSIC) in 2006 as NSIC 2006 Mt 02. Marino Roxas bred it. Its record notes a yield of 850 fruits.",
+  "excerpt": "Roxas Purple is a registered mangosteen variety, also sold or known as Roxas mangosteen or NSIC Mt 02. It was registered with the National Seed Industry Council in 2006 as NSIC 2006 Mt 02. Marino Roxas bred it. Its record notes a yield of 850 fruits.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Roxas Purple mangosteen is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Roxas mangosteen or NSIC Mt 02, this is the same mangosteen. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [mangosteen variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "If you came here looking for Roxas mangosteen or NSIC Mt 02, this is the same mangosteen. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [mangosteen variety finder](/crop-varieties), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Roxas Purple",
       "rows": [
         [
           "Trait",
@@ -139,7 +139,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -152,7 +152,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of Roxas Purple weighs about 65.6 grams, and its shape is oblong. The flesh is snowy white and smooth. Its sweetness measured 21.4 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 27.2 percent of the fruit. The registry notes its fruiting season as July August, bearing annual."
+      "text": "A fruit of Roxas Purple weighs about 65.6 grams, and its shape is oblong. The flesh is snowy white and smooth. Its sweetness measured 21.4 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 27.2 percent of the fruit. Its fruiting season is July August, bearing annual."
     },
     {
       "type": "heading",
@@ -268,20 +268,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Roxas Purple from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
-        },
-        {
           "label": "Notes on Roxas Purple from en.wikipedia.org",
           "url": "https://en.wikipedia.org/wiki/Purple_mangosteen"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

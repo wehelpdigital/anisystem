@@ -16,7 +16,7 @@
     "peanut variety philippines",
     "NSIC 1995 Pn 03"
   ],
-  "excerpt": "EGPn2 1 is a registered peanut variety. It was registered with the National Seed Industry Council (NSIC) in 1995 as NSIC 1995 Pn 03. BPI NCRDC, Los Baños, Laguna bred it. It takes about 104 days from sowing to harvest, with 1.81 tonnes per hectare on average in the trials.",
+  "excerpt": "EGPn2 1 is a registered peanut variety. It was registered with the National Seed Industry Council in 1995 as NSIC 1995 Pn 03. BPI NCRDC, Los Baños, Laguna bred it. It takes about 104 days from sowing to harvest, with 1.81 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where EGPn2 1 peanut is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [peanut variety finder](/crop-varieties/peanut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "Compare it with the others in our [peanut variety finder](/crop-varieties/peanut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of EGPn2 1",
       "rows": [
         [
           "Trait",
@@ -119,7 +119,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -241,19 +241,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

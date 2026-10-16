@@ -17,7 +17,7 @@
     "corn variety philippines",
     "NSIC 2020 Cn 329"
   ],
-  "excerpt": "FARCO 88 corn is a yellow hybrid corn variety, also sold or known as Farco 88W. It was registered with the National Seed Industry Council (NSIC) in 2020 as NSIC 2020 Cn 329. Fareast Agricultural Seeds Multipurpose Cooperative bred it. It takes about 106 days from planting to the harvest of dry grain, with 6.34 tonnes per hectare on average in the trials.",
+  "excerpt": "FARCO 88 corn is a yellow hybrid corn variety, also sold or known as Farco 88W. It was registered with the National Seed Industry Council in 2020 as NSIC 2020 Cn 329. Fareast Agricultural Seeds Multipurpose Cooperative bred it. It takes about 106 days from planting to the harvest of dry grain, with 6.34 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where FARCO 88 corn is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Farco 88W, this is the same corn. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+      "text": "If you came here looking for Farco 88W, this is the same corn. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "list",
@@ -46,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of FARCO 88",
       "rows": [
         [
           "Trait",
@@ -114,7 +114,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -140,7 +140,7 @@
       "items": [
         "**Yield:** DA 12 trials: 5.66 t/ha Sultan Kudarat highland, 4.84 t/ha Sarangani lowland, 3.23 t/ha Sarangani highland.",
         "**Traits in the seed:** None (conventional).",
-        "**Where:** Sarangani and Sultan Kudarat (DA trials)."
+        "**Where:** Sarangani and Sultan Kudarat."
       ]
     },
     {
@@ -154,7 +154,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Mindanao. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
+      "text": "It is recommended for Mindanao. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
     },
     {
       "type": "heading",
@@ -218,7 +218,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Mindanao. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Mindanao. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of FARCO 88?",
@@ -253,31 +253,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on FARCO 88 from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=9358"
-        },
-        {
-          "label": "Notes on FARCO 88 from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=11822"
-        },
-        {
-          "label": "Notes on FARCO 88 from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=9637"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

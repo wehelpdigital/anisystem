@@ -17,7 +17,7 @@
     "cowpea variety philippines",
     "NSIC 1995 Cp 07"
   ],
-  "excerpt": "RLV is a registered cowpea variety, also sold or known as RLV paayap. It was registered with the National Seed Industry Council (NSIC) in 1995 as NSIC 1995 Cp 07. IPB UPLB, Laguna bred it. It takes 45 to 47 days from sowing to the first harvest, with 8.38 tonnes per hectare on average in the trials.",
+  "excerpt": "RLV is a registered cowpea variety, also sold or known as RLV paayap. It was registered with the National Seed Industry Council in 1995 as NSIC 1995 Cp 07. IPB UPLB, Laguna bred it. It takes 45 to 47 days from sowing to the first harvest, with 8.38 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where RLV cowpea is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for RLV paayap, this is the same cowpea. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [cowpea variety finder](/crop-varieties/cowpea), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for RLV paayap, this is the same cowpea. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [cowpea variety finder](/crop-varieties/cowpea), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of RLV",
       "rows": [
         [
           "Trait",
@@ -136,7 +136,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -307,23 +307,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on RLV from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

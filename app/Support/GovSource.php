@@ -59,7 +59,7 @@ final class GovSource
         . '|\btnau\b|tnau\.ac\.in|kerala\s+agricultural\s+university|\bkau\.in|uf\s+ifas|\bifas\b|ufl\.edu|phivolcs|ndrrmc|\bnoaa\b|noaa\.gov|\bjtwc\b|jma\.go\.jp/i';
 
     /** The acronyms, matched as capitals only (BPI Ri 1 is a variety, not a source). */
-    private const CAPS = '/\b(?:DA|BPI(?!\s*Ri)|ATI|NIA|PCA|FPA|SRA|NFA|PSA|BFAR|DOST|NSIC(?!\s*(?:\d{4}\s*)?(?:Rc|Rice|Cn|Mn|Pn|Sg|Sc|Hy|Rg|Pk|Bn|Ct|Tm|Eg|Ok|Cb))|UPLB|CLSU|VSU|CMU|ISU|BSU|MMSU|USM|CvSU|RFO|TNAU|KAU|OCD|JMA|JTWC|NOAA|PHIVOLCS|NDRRMC)\b/';
+    private const CAPS = '/\b(?:DA|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)|ATI|NIA|PCA|FPA|SRA|NFA|PSA|BFAR|DOST|NSIC(?!\s*(?:\d{4}\s*)?(?:Rc|Rice|Cn|Mn|Pn|Sg|Sc|Hy|Rg|Pk|Bn|Ct|Tm|Eg|Ok|Cb))|UPLB|CLSU|VSU|CMU|ISU|BSU|MMSU|USM|CvSU|RFO|TNAU|KAU|OCD|JMA|JTWC|NOAA|PHIVOLCS|NDRRMC)\b/';
 
     /** "Department of Agriculture" of another country is not covered by the rule. */
     private const ABROAD = '/u\.\s?s\.|united\s+states|usda|florida|thailand|australia|india|malaysia|indonesia|vietnam|california|texas|hawai/i';
@@ -131,7 +131,7 @@ final class GovSource
             . '|NSIC\s+registry|(?:the\s+)?(?:national\s+)?(?:variety|seed)\s+registry|NSIC(?!\s*(?:\d{4}\s*)?(?:Rc|Rice|Cn|Mn|Pn|Sg|Sc|Hy|Rg|Pk|Bn|Ct|Tm|Eg|Ok|Cb|\d))|UPLB|International\s+Rice\s+Research\s+Institute|Food\s+and\s+Agriculture\s+Organi[sz]ation'
             . '|(?:IRRI|PhilRice)\s+Rice\s+Knowledge\s+Bank|Rice\s+Knowledge\s+Bank|World\s+Vegetable\s+Center|CIMMYT|AVRDC|CABI(?:\s+Plantwise)?'
             . '|TNAU|Kerala\s+Agricultural\s+University|UF\s+IFAS|PHIVOLCS|NDRRMC|NOAA(?:\s+CPC)?|JTWC|Joint\s+Typhoon\s+Warning\s+Center|Japan\s+Meteorological\s+Agency'
-            . '|(?-i:IRRI|FAO|DA|BPI(?!\s*Ri)|ATI|NIA|PCA|PSA|SRA|KAU|OCD|JMA))';
+            . '|(?-i:IRRI|FAO|DA|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)|ATI|NIA|PCA|PSA|SRA|KAU|OCD|JMA))';
 
         // An office after the name, capitals only: "Caraga", "RFO 02", "Region 7", "Davao", "ATI CAR".
         return '(?:the\s+)?' . $names . '(?-i:\s+(?:RFO|RFU|Region|Regional|ATI|CAR|[A-Z][a-z]+)\b(?:\s+[A-Z0-9][A-Za-z0-9]*\b)?)?';

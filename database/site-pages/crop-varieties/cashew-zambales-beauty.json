@@ -16,7 +16,7 @@
     "cashew variety philippines",
     "NSIC 2001 Cs 04"
   ],
-  "excerpt": "Zambales Beauty is a registered cashew variety. It was registered with the National Seed Industry Council (NSIC) in 2001 as NSIC 2001 Cs 04. RMTU bred it. Its record notes a yield of 552 fruits.",
+  "excerpt": "Zambales Beauty is a registered cashew variety. It was registered with the National Seed Industry Council in 2001 as NSIC 2001 Cs 04. RMTU bred it. Its record notes a yield of 552 fruits.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Zambales Beauty cashew is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [cashew variety finder](/crop-varieties/cashew), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "Compare it with the others in our [cashew variety finder](/crop-varieties/cashew), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -41,7 +41,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Zambales Beauty",
       "rows": [
         [
           "Trait",
@@ -129,7 +129,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -142,7 +142,7 @@
     },
     {
       "type": "text",
-      "text": "Its sweetness measured 14.75 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The registry notes its fruiting season as March April, bearing annual."
+      "text": "Its sweetness measured 14.75 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. Its fruiting season is March April, bearing annual."
     },
     {
       "type": "heading",
@@ -234,19 +234,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

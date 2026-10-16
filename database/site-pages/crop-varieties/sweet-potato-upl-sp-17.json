@@ -17,7 +17,7 @@
     "sweet potato variety philippines",
     "NSIC 2016 Sp36"
   ],
-  "excerpt": "UPL Sp 17 is a registered sweet potato variety, also sold or known as SG 08 09 02. It was registered with the National Seed Industry Council (NSIC) in 2016 as NSIC 2016 Sp36. It takes 105 to 120 days from planting to harvest, with 13.55 tonnes per hectare on average in the trials.",
+  "excerpt": "UPL Sp 17 is a registered sweet potato variety, also sold or known as SG 08 09 02. It was registered with the National Seed Industry Council in 2016 as NSIC 2016 Sp36. It takes 105 to 120 days from planting to harvest, with 13.55 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/root-crop-land-preparation.webp",
     "alt": "Kamote vines on long raised ridges in San Rafael, Bulacan, the kind of farm where UPL Sp 17 sweet potato is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for SG 08 09 02, this is the same sweet potato. The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [sweet potato variety finder](/crop-varieties/sweet-potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
+      "text": "If you came here looking for SG 08 09 02, this is the same sweet potato. Compare it with the others in our [sweet potato variety finder](/crop-varieties/sweet-potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of UPL Sp 17",
       "rows": [
         [
           "Trait",
@@ -107,7 +107,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -233,19 +233,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

@@ -1,4 +1,4 @@
-{{-- The rice variety finder (2026-10-13): every variety in PhilRice's
+{{-- The rice variety finder (2026-10-13): every released variety in the
      catalogue of released varieties as a card, with chips, selects and a search box that hide and
      order them. On the public /rice-varieties and in the app's field helpers
      (FieldHelperController). Every card is in the page, so search engines
@@ -90,7 +90,7 @@
                         </span>
                         <span class="rv-bar" aria-hidden="true"><i style="width: {{ min(100, round(($v['yieldAvg'] ?? 0) / 8 * 100)) }}%"></i></span>
                         @else
-                            <span class="rv-nodata">Days to harvest and yield not listed by PhilRice yet</span>
+                            <span class="rv-nodata">Days to harvest and yield not published yet</span>
                         @endif
                         @if ($res)
                             <span class="rv-res">
@@ -102,7 +102,7 @@
                     </a>
                 @endforeach
             </div>
-            <p class="rv-none" data-rv-none hidden>No variety in PhilRice's list matches all of these. Clear a filter or two.</p>
+            <p class="rv-none" data-rv-none hidden>No variety on the list matches all of these. Clear a filter or two.</p>
             <button type="button" class="rv-more" data-rv-more>Show more varieties</button>
             @if ($hubGate)
                 @include('public.site.partials.content-gate-card', $hubGate)

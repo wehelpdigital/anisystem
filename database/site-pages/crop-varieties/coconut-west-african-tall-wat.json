@@ -16,7 +16,7 @@
     "coconut variety philippines",
     "NSIC 2000 Co 16"
   ],
-  "excerpt": "West African Tall (WAT) is a registered coconut variety. It was registered with the National Seed Industry Council (NSIC) in 2000 as NSIC 2000 Co 16. PCA bred it. Its record notes 1.1 tonnes of copra per hectare on average in the trials.",
+  "excerpt": "West African Tall (WAT) is a registered coconut variety. It was registered with the National Seed Industry Council in 2000 as NSIC 2000 Co 16. PCA bred it. Its record notes 1.1 tonnes of copra per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-coconut-fertilizer.webp",
     "alt": "Tall coconut palms over a grassy field in Sipocot, Camarines Sur, the kind of farm where West African Tall (WAT) coconut is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [coconut variety finder](/crop-varieties/coconut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [coconut fertilizer by age](/crops/coconut-fertilizer)."
+      "text": "Compare it with the others in our [coconut variety finder](/crop-varieties/coconut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [coconut fertilizer by age](/crops/coconut-fertilizer)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of West African Tall (WAT)",
       "rows": [
         [
           "Trait",
@@ -134,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -147,7 +147,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of West African Tall (WAT) weighs about 942.6 g grams, and its shape is round (polar) and angle (equatorial). The edible part is 43.3 percent of the fruit. The registry notes its fruiting season as 12, bearing biennial. Each palm gave about 68.4 nuts a year in the records, with 184.6 grams of copra per nut."
+      "text": "A fruit of West African Tall (WAT) weighs about 942.6 g grams, and its shape is round (polar) and angle (equatorial). The edible part is 43.3 percent of the fruit. Its fruiting season is 12, bearing biennial. Each palm gave about 68.4 nuts a year in the records, with 184.6 grams of copra per nut."
     },
     {
       "type": "heading",
@@ -239,19 +239,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

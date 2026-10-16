@@ -19,7 +19,7 @@
     "soybean variety philippines",
     "NSIC 2020 Sy 17"
   ],
-  "excerpt": "Select Tudela Black soybean is a grain soybean variety, also sold or known as Tudela Black or black soybean. It was registered with the National Seed Industry Council (NSIC) in 2020 as NSIC 2020 Sy 17. IPB, UPLB CA, College, Laguna bred it. It takes about 74 days from sowing to harvest, with 2 tonnes per hectare on average in the trials.",
+  "excerpt": "Select Tudela Black soybean is a grain soybean variety, also sold or known as Tudela Black or black soybean. It was registered with the National Seed Industry Council in 2020 as NSIC 2020 Sy 17. IPB, UPLB CA, College, Laguna bred it. It takes about 74 days from sowing to harvest, with 2 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where Select Tudela Black soybean is grown",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Tudela Black or black soybean, this is the same soybean. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [soybean variety finder](/crop-varieties/soybean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for Tudela Black or black soybean, this is the same soybean. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [soybean variety finder](/crop-varieties/soybean), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -48,7 +48,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Select Tudela Black",
       "rows": [
         [
           "Trait",
@@ -124,7 +124,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -179,7 +179,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Mindanao in the wet season. Grain soybean goes to feed and food processors, while vegetable soybean, or edamame, is picked green. Pick a variety rated against rust, the main soybean disease here."
+      "text": "It is recommended for Mindanao in the wet season. Grain soybean goes to feed and food processors, while vegetable soybean, or edamame, is picked green. Pick a variety rated against rust, the main soybean disease here."
     },
     {
       "type": "heading",
@@ -239,7 +239,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Mindanao in the wet season. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Mindanao in the wet season. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of Select Tudela Black?",
@@ -266,27 +266,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Select Tudela Black from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-fieldlegume.xlsx"
-        },
-        {
-          "label": "Notes on Select Tudela Black from lakasa.dmmmsu.edu.ph",
-          "url": "https://lakasa.dmmmsu.edu.ph/items/a21d8741-28c2-429d-9cb1-e081142b4906"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

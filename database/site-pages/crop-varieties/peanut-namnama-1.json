@@ -18,7 +18,7 @@
     "peanut variety philippines",
     "NSIC 2002 Pn 11"
   ],
-  "excerpt": "Namnama 1 is a registered peanut variety, also sold or known as NSIC Pn 11 or Namnama peanut. It was registered with the National Seed Industry Council (NSIC) in 2002 as NSIC 2002 Pn 11. DA CVIARC bred it. It takes about 98 days from sowing to harvest, with 1.62 tonnes per hectare on average in the trials.",
+  "excerpt": "Namnama 1 is a registered peanut variety, also sold or known as NSIC Pn 11 or Namnama peanut. It was registered with the National Seed Industry Council in 2002 as NSIC 2002 Pn 11. DA CVIARC bred it. It takes about 98 days from sowing to harvest, with 1.62 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where Namnama 1 peanut is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Pn 11 or Namnama peanut, this is the same peanut. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [peanut variety finder](/crop-varieties/peanut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "If you came here looking for NSIC Pn 11 or Namnama peanut, this is the same peanut. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [peanut variety finder](/crop-varieties/peanut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -46,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Namnama 1",
       "rows": [
         [
           "Trait",
@@ -134,7 +134,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -280,27 +280,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Namnama 1 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-fieldlegume.xlsx"
-        },
-        {
-          "label": "Notes on Namnama 1 from agris.fao.org",
-          "url": "https://agris.fao.org/search/zh/records/64738d47ce9437aa76fed9f0"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

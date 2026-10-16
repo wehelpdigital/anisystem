@@ -16,7 +16,7 @@
     "santol variety philippines",
     "NSIC 2001 Sn 02"
   ],
-  "excerpt": "La Granja #2 is a registered santol variety. It was registered with the National Seed Industry Council (NSIC) in 2001 as NSIC 2001 Sn 02. BPI Lgncrdc bred it. Its record notes a yield of 1,200 kg.",
+  "excerpt": "La Granja #2 is a registered santol variety. It was registered with the National Seed Industry Council in 2001 as NSIC 2001 Sn 02. BPI Lgncrdc bred it. Its record notes a yield of 1,200 kg.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where La Granja #2 santol is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [santol variety finder](/crop-varieties/santol), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
+      "text": "Compare it with the others in our [santol variety finder](/crop-varieties/santol), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for fruit trees](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "list",
@@ -41,7 +41,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of La Granja #2",
       "rows": [
         [
           "Trait",
@@ -129,7 +129,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -142,7 +142,7 @@
     },
     {
       "type": "text",
-      "text": "A fruit of La Granja #2 weighs about 378.5 grams, and its shape is globose. The flesh is white and soft. Its sweetness measured 19.62 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 45.52 percent of the fruit. The registry notes its fruiting season as December February, bearing annual."
+      "text": "A fruit of La Granja #2 weighs about 378.5 grams, and its shape is globose. The flesh is white and soft. Its sweetness measured 19.62 degrees Brix, the share of sugar in the juice. Most table fruit tastes sweet from about 12 Brix up. The edible part is 45.52 percent of the fruit. Its fruiting season is December February, bearing annual."
     },
     {
       "type": "heading",
@@ -234,19 +234,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

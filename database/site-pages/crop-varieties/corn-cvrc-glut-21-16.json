@@ -19,7 +19,7 @@
     "corn variety philippines",
     "NSIC 2023 Cn 335"
   ],
-  "excerpt": "CVRC Glut 21 16 corn is a glutinous open pollinated corn variety, also sold or known as Deco Glut 21 16 or Deko Glut. It was registered with the National Seed Industry Council (NSIC) in 2023 as NSIC 2023 Cn 335. Cagayan Valley Research Center bred it. It takes 100 to 108 days from planting to the harvest of dry grain, with 5.14 tonnes per hectare in the trials (6 in Luzon, 4.3 in Mindanao).",
+  "excerpt": "CVRC Glut 21 16 corn is a glutinous open pollinated corn variety, also sold or known as Deco Glut 21 16 or Deko Glut. It was registered with the National Seed Industry Council in 2023 as NSIC 2023 Cn 335. Cagayan Valley Research Center bred it. It takes 100 to 108 days from planting to the harvest of dry grain, with 5.14 tonnes per hectare in the trials (6 in Luzon, 4.3 in Mindanao).",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where CVRC Glut 21 16 corn is grown",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Deco Glut 21 16 or Deko Glut, this is the same corn. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
+      "text": "If you came here looking for Deco Glut 21 16 or Deko Glut, this is the same corn. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [corn variety finder](/crop-varieties/corn), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Pagtatanim ng mais, step by step](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "list",
@@ -48,7 +48,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of CVRC Glut 21 16",
       "rows": [
         [
           "Trait",
@@ -116,7 +116,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -158,7 +158,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Luzon and Mindanao. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
+      "text": "It is recommended for Luzon and Mindanao. Start with the color your buyer pays for: yellow corn goes to feed mills, while white and glutinous corn go to the table. Next, pick between a hybrid, which yields more but needs new seed every season, and an open pollinated variety, whose seed you can save. Then match the island group in its recommendation, because trials in Luzon and Mindanao give different winners. Before planting, get the field ready with our guide: [Land preparation for corn](/land-preparation/corn-land-preparation)."
     },
     {
       "type": "heading",
@@ -222,7 +222,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Luzon and Mindanao. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Luzon and Mindanao. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of CVRC Glut 21 16?",
@@ -264,24 +264,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on CVRC Glut 21 16 from bar.gov.ph",
-          "url": "https://bar.gov.ph/media-resources/news-and-events/details?id=172"
-        },
-        {
           "label": "Notes on CVRC Glut 21 16 from plus.inquirer.net",
           "url": "https://plus.inquirer.net/?p=40531"
-        },
-        {
-          "label": "Notes on CVRC Glut 21 16 from rfo12.da.gov.ph",
-          "url": "https://rfo12.da.gov.ph/?p=6393"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

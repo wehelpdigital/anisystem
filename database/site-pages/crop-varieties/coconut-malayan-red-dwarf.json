@@ -18,7 +18,7 @@
     "coconut variety philippines",
     "NSIC 1996 Co 14"
   ],
-  "excerpt": "Malayan Red Dwarf is a registered coconut variety, also sold or known as MRD or red dwarf coconut. It was registered with the National Seed Industry Council (NSIC) in 1996 as NSIC 1996 Co 14. PCA ZRA bred it. Its record notes 2 tonnes of copra per hectare on average in the trials.",
+  "excerpt": "Malayan Red Dwarf is a registered coconut variety, also sold or known as MRD or red dwarf coconut. It was registered with the National Seed Industry Council in 1996 as NSIC 1996 Co 14. PCA ZRA bred it. Its record notes 2 tonnes of copra per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-coconut-fertilizer.webp",
     "alt": "Tall coconut palms over a grassy field in Sipocot, Camarines Sur, the kind of farm where Malayan Red Dwarf coconut is grown",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for MRD or red dwarf coconut, this is the same coconut. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [coconut variety finder](/crop-varieties/coconut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [coconut fertilizer by age](/crops/coconut-fertilizer)."
+      "text": "If you came here looking for MRD or red dwarf coconut, this is the same coconut. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [coconut variety finder](/crop-varieties/coconut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [coconut fertilizer by age](/crops/coconut-fertilizer)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Malayan Red Dwarf",
       "rows": [
         [
           "Trait",
@@ -116,7 +116,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -145,7 +145,7 @@
     },
     {
       "type": "text",
-      "text": "The registry notes its fruiting season as 12, bearing regular. Each palm gave about 110.6 nuts a year in the records, with 193.4 grams of copra per nut."
+      "text": "Its fruiting season is 12, bearing regular. Each palm gave about 110.6 nuts a year in the records, with 193.4 grams of copra per nut."
     },
     {
       "type": "heading",
@@ -166,7 +166,7 @@
     },
     {
       "type": "text",
-      "text": "Why farmers know it: one of the most prolific registered palms (about 111 nuts a year) and mother of PCA 15 2 and 15 to 3, PCA lists it for sap sugar. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+      "text": "Why farmers know it: one of the most prolific registered palms (about 111 nuts a year) and mother of PCA 15 2 and 15 to 3, it is listed for sap sugar. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
     },
     {
       "type": "heading",
@@ -262,27 +262,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Malayan Red Dwarf from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-plantation.xlsx"
-        },
-        {
-          "label": "Notes on Malayan Red Dwarf from ispweb.pcaarrd.dost.gov.ph",
-          "url": "https://ispweb.pcaarrd.dost.gov.ph/pca-recommended-coconut-hybrids-and-cultivars-for-vco-and-coconut-sap-sugar/"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

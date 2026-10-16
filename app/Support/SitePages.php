@@ -91,14 +91,14 @@ class SitePages
             'kicker' => 'Crop problems',
         ],
         // Land preparation (2026-10-07): how to ready the ground for each
-        // crop, from IRRI, PhilRice and DA guidelines, and for problem soils.
+        // crop, in standard practice (no agency named, 2026-10-17), and for problem soils.
         'land-preparation' => [
             'label' => 'Land Preparation',
             'crumb' => 'Land preparation',
             'hubTitle' => 'Land Preparation Guides for Philippine Farms',
             'metaTitle' => 'Land Preparation in the Philippines: Guides by Crop',
             'metaDescription' => 'How to prepare the land for palay, mais, vegetables, root crops, sugarcane, banana and fruit trees, plus sodic, acidic and saline soils.',
-            'intro' => 'A good season starts before planting. Each guide shows how to plow, harrow, level and shape the field for one crop, following IRRI, PhilRice and DA practice, and what to change on sodic, acidic or saline ground.',
+            'intro' => 'A good season starts before planting. Each guide shows how to plow, harrow, level and shape the field for one crop, following standard practice, and what to change on sodic, acidic or saline ground.',
             'kicker' => 'Land preparation',
         ],
         // Rice varieties (2026-10-13): one page per variety in PhilRice's
@@ -109,8 +109,8 @@ class SitePages
             'crumb' => 'Rice varieties',
             'hubTitle' => 'Philippine Rice Variety List and Finder',
             'metaTitle' => 'Philippine Rice Variety List: Every NSIC Rice Variety',
-            'metaDescription' => 'Find the right rice variety: every NSIC variety in PhilRice data with its maturity, yield, pest ratings and grain quality, by farm type.',
-            'intro' => 'Every rice variety in the PhilRice catalogue of released varieties, from PSB Rc 18 to the newest NSIC Rc releases. Filter by the kind of farm you have, how long you can wait for harvest and the pests you fear most.',
+            'metaDescription' => 'Find the right rice variety: every released NSIC and PSB variety with its maturity, yield, pest ratings and grain quality, by farm type.',
+            'intro' => 'Every released rice variety, from PSB Rc 18 to the newest NSIC Rc releases. Filter by the kind of farm you have, how long you can wait for harvest and the pests you fear most.',
             'kicker' => 'Rice varieties',
         ],
         // Crop varieties (2026-10-13): every other crop, from the NSIC
@@ -122,7 +122,7 @@ class SitePages
             'hubTitle' => 'Crop Varieties in the Philippines',
             'metaTitle' => 'Crop Varieties in the Philippines: Rice, Corn, Vegetables',
             'metaDescription' => 'Every registered variety of rice, corn, vegetables, root crops, legumes, sugarcane and fruit trees in the Philippines, plus the seed farmers buy most.',
-            'intro' => 'Rice and corn hybrids, vegetable seed, root crops, legumes, sugarcane and fruit trees: every variety on the national registry, plus the ones farmers buy most, each with its days to harvest, yield and where it grows best.',
+            'intro' => 'Rice and corn hybrids, vegetable seed, root crops, legumes, sugarcane and fruit trees: every registered variety, plus the ones farmers buy most, each with its days to harvest, yield and where it grows best.',
             'kicker' => 'Crop varieties',
         ],
         'blog' => [

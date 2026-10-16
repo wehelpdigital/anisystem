@@ -16,7 +16,7 @@
     "peanut variety philippines",
     "NSIC 1999 Pn 06"
   ],
-  "excerpt": "Biyaya 14 is a registered peanut variety. It was registered with the National Seed Industry Council (NSIC) in 1999 as NSIC 1999 Pn 06. IPB UPLB, College, Laguna bred it. Its record notes 1.93 tonnes per hectare on average in the trials.",
+  "excerpt": "Biyaya 14 is a registered peanut variety. It was registered with the National Seed Industry Council in 1999 as NSIC 1999 Pn 06. IPB UPLB, College, Laguna bred it. Its record notes 1.93 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where Biyaya 14 peanut is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [peanut variety finder](/crop-varieties/peanut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
+      "text": "Compare it with the others in our [peanut variety finder](/crop-varieties/peanut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for legumes](/land-preparation/legume-land-preparation)."
     },
     {
       "type": "list",
@@ -41,7 +41,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of Biyaya 14",
       "rows": [
         [
           "Trait",
@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -206,19 +206,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

@@ -16,7 +16,7 @@
     "coconut variety philippines",
     "NSIC 1996 Co 07"
   ],
-  "excerpt": "PCA 15 7 is a registered coconut variety. It was registered with the National Seed Industry Council (NSIC) in 1996 as NSIC 1996 Co 07. PCA ZRA bred it. Its record notes 1.6 tonnes of copra per hectare on average in the trials.",
+  "excerpt": "PCA 15 7 is a registered coconut variety. It was registered with the National Seed Industry Council in 1996 as NSIC 1996 Co 07. PCA ZRA bred it. Its record notes 1.6 tonnes of copra per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-coconut-fertilizer.webp",
     "alt": "Tall coconut palms over a grassy field in Sipocot, Camarines Sur, the kind of farm where PCA 15 7 coconut is grown",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the NSIC registry kept by the Bureau of Plant Industry. Compare it with the others in our [coconut variety finder](/crop-varieties/coconut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [coconut fertilizer by age](/crops/coconut-fertilizer)."
+      "text": "Compare it with the others in our [coconut variety finder](/crop-varieties/coconut), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [coconut fertilizer by age](/crops/coconut-fertilizer)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry",
+      "caption": "Key facts of PCA 15 7",
       "rows": [
         [
           "Trait",
@@ -110,7 +110,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -139,7 +139,7 @@
     },
     {
       "type": "text",
-      "text": "The registry notes its fruiting season as 12, bearing regular. Each palm gave about 78 nuts a year in the records, with 230.6 grams of copra per nut."
+      "text": "Its fruiting season is 12, bearing regular. Each palm gave about 78 nuts a year in the records, with 230.6 grams of copra per nut."
     },
     {
       "type": "heading",
@@ -231,19 +231,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

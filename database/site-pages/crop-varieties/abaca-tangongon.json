@@ -17,7 +17,7 @@
     "abaca variety philippines",
     "NSIC 2017 Mt 03"
   ],
-  "excerpt": "Tangongon is a registered abaca variety, also sold or known as NSIC Mt 03. It was registered with the National Seed Industry Council (NSIC) in 2017 as NSIC 2017 Mt 03. PHILFIDA bred it. It takes 18 to 21 months from planting to the first harvest.",
+  "excerpt": "Tangongon is a registered abaca variety, also sold or known as NSIC Mt 03. It was registered with the National Seed Industry Council in 2017 as NSIC 2017 Mt 03. PHILFIDA bred it. It takes 18 to 21 months from planting to the first harvest.",
   "heroImage": {
     "src": "/images/site/guides/crops-banana-farming-philippines.webp",
     "alt": "Banana plants with bagged bunches along a farm road in Panabo City, the kind of farm where Tangongon abaca is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Mt 03, this is the same abaca. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [abaca variety finder](/crop-varieties/abaca), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
+      "text": "If you came here looking for NSIC Mt 03, this is the same abaca. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [abaca variety finder](/crop-varieties/abaca), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
     },
     {
       "type": "list",
@@ -43,7 +43,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Tangongon",
       "rows": [
         [
           "Trait",
@@ -127,7 +127,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -192,7 +192,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for Mindanao. Abaca needs rain spread through the year and a little shade. Pick a variety by fiber yield and strength, and plant clean suckers or tissue cultured plantlets. A registered tree variety is a selection from one proven mother tree, and only grafted, budded or marcotted plants carry its traits. A seedling grown from its seed can turn out quite different. So buy from a nursery accredited by the Bureau of Plant Industry, and ask which mother tree the scions came from. Before planting, get the field ready with our guide: [Pagtatanim ng puno](/crops/pagtatanim-ng-puno)."
+      "text": "It is recommended for Mindanao. Abaca needs rain spread through the year and a little shade. Pick a variety by fiber yield and strength, and plant clean suckers or tissue cultured plantlets. A registered tree variety is a selection from one proven mother tree, and only grafted, budded or marcotted plants carry its traits. A seedling grown from its seed can turn out quite different. So buy from a nursery accredited by the Bureau of Plant Industry, and ask which mother tree the scions came from. Before planting, get the field ready with our guide: [Pagtatanim ng puno](/crops/pagtatanim-ng-puno)."
     },
     {
       "type": "heading",
@@ -246,7 +246,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for Mindanao. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for Mindanao. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of Tangongon?",
@@ -277,23 +277,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Tangongon from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-fiber.xlsx"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

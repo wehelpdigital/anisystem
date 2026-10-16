@@ -17,7 +17,7 @@
     "potato variety philippines",
     "NSIC 2004 Po 07"
   ],
-  "excerpt": "Ganza is a registered potato variety, also sold or known as NSIC Po 07. It was registered with the National Seed Industry Council (NSIC) in 2004 as NSIC 2004 Po 07. It comes from BSU NPRCRTC. Its record notes 19.68 tonnes per hectare on average in the trials.",
+  "excerpt": "Ganza is a registered potato variety, also sold or known as NSIC Po 07. It was registered with the National Seed Industry Council in 2004 as NSIC 2004 Po 07. It comes from BSU NPRCRTC. Its record notes 19.68 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-vegetables-philippines.webp",
     "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet, the kind of farm where Ganza potato is grown",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for NSIC Po 07, this is the same potato. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [potato variety finder](/crop-varieties/potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
+      "text": "If you came here looking for NSIC Po 07, this is the same potato. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [potato variety finder](/crop-varieties/potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
     },
     {
       "type": "list",
@@ -42,7 +42,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Ganza",
       "rows": [
         [
           "Trait",
@@ -110,7 +110,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -260,27 +260,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Ganza from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-rootcrops.xlsx"
-        },
-        {
-          "label": "Notes on Ganza from agris.fao.org",
-          "url": "https://agris.fao.org/search/zh/records/64724affe17b74d2224fa25a"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

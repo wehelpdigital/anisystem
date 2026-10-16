@@ -19,7 +19,7 @@
     "sweet potato variety philippines",
     "NSIC 2005 Sp 31"
   ],
-  "excerpt": "SG99 09 02 is a registered sweet potato variety, also sold or known as UPL Sp 11 or NSIC Sp 31. It was registered with the National Seed Industry Council (NSIC) in 2005 as NSIC 2005 Sp 31. It comes from UPLB. It takes about 120 days from planting to harvest, with 16.3 tonnes per hectare on average in the trials.",
+  "excerpt": "SG99 09 02 is a registered sweet potato variety, also sold or known as UPL Sp 11 or NSIC Sp 31. It was registered with the National Seed Industry Council in 2005 as NSIC 2005 Sp 31. It comes from UPLB. It takes about 120 days from planting to harvest, with 16.3 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/root-crop-land-preparation.webp",
     "alt": "Kamote vines on long raised ridges in San Rafael, Bulacan, the kind of farm where SG99 09 02 sweet potato is grown",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for UPL Sp 11 or NSIC Sp 31, this is the same sweet potato. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [sweet potato variety finder](/crop-varieties/sweet-potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
+      "text": "If you came here looking for UPL Sp 11 or NSIC Sp 31, this is the same sweet potato. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [sweet potato variety finder](/crop-varieties/sweet-potato), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
     },
     {
       "type": "list",
@@ -46,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of SG99 09 02",
       "rows": [
         [
           "Trait",
@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "SG99 09 02 sweet potato takes about 120 days from planting to harvest. That is 5.5 days longer than the average of the 26 sweet potato varieties with a day count, 114.5 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 16.3 t/ha beats the average of its group, 15.15. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 120 days, 105 to 120 days (DA Caraga).\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "SG99 09 02 sweet potato takes about 120 days from planting to harvest. That is 5.5 days longer than the average of the 26 sweet potato varieties with a day count, 114.5 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 16.3 t/ha beats the average of its group, 15.15. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives about 120 days, 105 to 120 days.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -118,7 +118,7 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in the registry trials, rated under natural field conditions",
+      "caption": "Reactions in trials, rated under natural field conditions",
       "rows": [
         [
           "Pest or disease",
@@ -181,7 +181,7 @@
     },
     {
       "type": "text",
-      "text": "The registry recommends it for anywhere in the country. Pick by use and market: yellow or orange flesh for snacks and fries, purple for processing, white for boiling. Weevils are the main enemy, so plant clean cuttings and harvest on time."
+      "text": "It is recommended for anywhere in the country. Pick by use and market: yellow or orange flesh for snacks and fries, purple for processing, white for boiling. Weevils are the main enemy, so plant clean cuttings and harvest on time."
     },
     {
       "type": "heading",
@@ -241,7 +241,7 @@
         },
         {
           "q": "Where does it grow best?",
-          "a": "The registry recommends it for anywhere in the country. Ask your municipal agriculturist how it has done in your town."
+          "a": "It is recommended for anywhere in the country. Ask your municipal agriculturist how it has done in your town."
         },
         {
           "q": "Where can I buy seed of SG99 09 02?",
@@ -268,31 +268,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on SG99 09 02 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-rootcrops.xlsx"
-        },
-        {
-          "label": "Notes on SG99 09 02 from caraga.da.gov.ph",
-          "url": "https://caraga.da.gov.ph/wp-content/uploads/Publication/HVCDP/Mga-Giya-sa-Pagpananum-ug-Kamote.pdf"
-        },
-        {
-          "label": "Notes on SG99 09 02 from agris.fao.org",
-          "url": "https://agris.fao.org/search/ar/records/64724e67e17b74d2224fc44e"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }

@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Zambal (VU 2) or Zambal, this is the same ube. The facts below come from the NSIC registry kept by the Bureau of Plant Industry, with notes from its seller and farm sources. Compare it with the others in our [ube variety finder](/crop-varieties/ube), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
+      "text": "If you came here looking for Zambal (VU 2) or Zambal, this is the same ube. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [ube variety finder](/crop-varieties/ube), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
     },
     {
       "type": "list",
@@ -44,7 +44,7 @@
     },
     {
       "type": "table",
-      "caption": "From the NSIC registry and its seller",
+      "caption": "Key facts of Vu 2",
       "rows": [
         [
           "Trait",
@@ -92,7 +92,7 @@
     },
     {
       "type": "text",
-      "text": "The registry gives no pest or disease ratings for this variety. So treat it as untested, and scout every week."
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
     },
     {
       "type": "text",
@@ -209,31 +209,6 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: NSIC registry of crop varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "Notes on Vu 2 from nsic.buplant.da.gov.ph",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-rootcrops.xlsx"
-        },
-        {
-          "label": "Notes on Vu 2 from dost.gov.ph",
-          "url": "https://www.dost.gov.ph/knowledge-resources/news/87-2026-news/4402-can-ph-meet-global-demand-for-purple-yams-experts-try-propagation-techniques-to-produce-quality-planting-materials-amid-ube-craze"
-        },
-        {
-          "label": "Notes on Vu 2 from pcaarrd.dost.gov.ph",
-          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/dost-pcaarrd-funded-project-advances-year-round-ubi-production-and-propagation-technologies-in-bohol"
-        },
-        {
-          "label": "Bureau of Plant Industry: seed and planting material certification",
-          "url": "https://bpi.da.gov.ph/"
         }
       ]
     }
