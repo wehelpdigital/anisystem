@@ -227,6 +227,7 @@
             {{-- Grouped by Anee (2026-10-12): what she does for you, what has her inside, and the rest. --}}
             <div class="qa-sub" data-sub="anee">
             <button type="button" class="qa-group is-first" aria-expanded="true">
+                <span class="qa-group-dot" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.5l1.7 4.4 4.4 1.7-4.4 1.7L11 15.7l-1.7-4.4-4.4-1.7 4.4-1.7zM18 14.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span>
                 <b>Anee does it for you{{ \App\Support\Tagalog::flag('anee-does-it') }}</b>
                 {!! $qAnee(false, 9) !!}
                 <svg class="qa-group-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
@@ -327,6 +328,7 @@
             </div></div></div>
             <div class="qa-sub" data-sub="inside">
             <button type="button" class="qa-group" aria-expanded="true">
+                <span class="qa-group-dot" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.5 5.2a4.2 4.2 0 00-5.3 5.3L4 15.7 7.3 19l5.2-5.2a4.2 4.2 0 005.3-5.3l-2.6 2.6-2.4-.7-.7-2.4z"/></svg></span>
                 <b>Your tools</b>
                 {!! $qAnee(true) !!}
                 <svg class="qa-group-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>

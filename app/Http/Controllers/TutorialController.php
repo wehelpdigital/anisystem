@@ -106,12 +106,16 @@ class TutorialController extends Controller
      * null. Read whole and indexed: route names hold dots, which config()'s
      * own path would walk into.
      */
-    public static function forRoute(?string $routeName): ?string
+    public static function forRoute(?string $routeName, array $params = []): ?string
     {
         if (! $routeName) {
             return null;
         }
         $key = ((array) config('tutorials.routes', []))[$routeName] ?? null;
+        // A route shared by several tools names its key by its parameter ('tool.field.{tool}').
+        if (is_string($key) && str_contains($key, '{')) {
+            $key = preg_replace_callback('/\{(\w+)\}/', fn ($m) => is_scalar($params[$m[1]] ?? null) ? (string) $params[$m[1]] : '', $key);
+        }
 
         return is_string($key) && isset(config('tutorials.pages', [])[$key]) ? $key : null;
     }

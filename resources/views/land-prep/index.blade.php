@@ -1101,7 +1101,7 @@
             </section>
 
             <div class="lp-nav">
-                <button type="button" class="btn btn-white" id="lpBack" disabled>Back</button>
+                <button type="button" class="btn btn-white" id="lpBack">Back</button>
                 <button type="button" class="btn btn-primary" id="lpNext">Next</button>
             </div>
             @include('sm.partials.anee-wait')
@@ -1536,7 +1536,7 @@
         }
         $('lpStepNo').textContent = 'Step ' + (pos + 1) + ' of ' + FLOW.length;
         $('lpBar').style.width = ((pos + 1) / FLOW.length * 100) + '%';
-        $('lpBack').disabled = pos === 0;
+        $('lpBack').disabled = false;   // on the first page it goes back where they came from
         $('lpNext').hidden = sc === 'review';
         $('lpNext').textContent = sc === 'lotq' && FLOW[pos + 1] && !String(FLOW[pos + 1]).startsWith('lot:') ? 'Next' : 'Next';
         if (sc === 'variety') paintVarTag(true);
@@ -1560,7 +1560,7 @@
         finally { busy = false; $('lpNext').disabled = false; }
     }
     $('lpNext').addEventListener('click', next);
-    $('lpBack').addEventListener('click', () => show(pos - 1, true));
+    $('lpBack').addEventListener('click', () => (pos === 0 ? window.aneeLeave() : show(pos - 1, true)));
 
     async function ready() {
         const sc = screenOf(FLOW[pos]);

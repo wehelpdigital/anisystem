@@ -129,6 +129,18 @@
     {{-- The country this farmer is in, for every script that says money,
          a label or a greeting (App\Support\Region). Before app.js. --}}
     <script>window.ANEE_REGION = @json(\App\Support\Region::js());</script>
+    {{-- A wizard's Back on its first page goes back where the person came from (2026-10-16, the owner):
+         the page before when it is ours, else the dashboard. --}}
+    <script>
+        window.aneeLeave = (fallback) => {
+            try {
+                const ref = document.referrer ? new URL(document.referrer) : null;
+                // Opened, not walked back to: the overlays keep entries of their own in the history.
+                if (ref && ref.origin === location.origin && ref.pathname !== location.pathname && !/\/(login|register)/.test(ref.pathname)) { location.assign(ref.href); return; }
+            } catch (_) {}
+            location.href = fallback || @json(route('app.dashboard'));
+        };
+    </script>
     @auth
         @php $__auGrant = \App\Support\WorkerContext::activeGrant(); @endphp
         <script>

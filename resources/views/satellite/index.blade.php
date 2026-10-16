@@ -528,8 +528,10 @@
             </section>
 
             <section class="sat-step" data-step="5">
-                <h3>Draw the field</h3>
-                <p class="sat-sub">Tap each corner of the field on the map, in order around it. Drag a corner to fix it.</p>
+                {{-- The lot's own boundary (Global Lots, 2026-10-16, the owner): drawn once, it
+                     opens here every time, and what is drawn or fixed here is saved to the lot. --}}
+                <h3 id="satDrawH">Draw the field</h3>
+                <p class="sat-sub" id="satDrawSub">Tap each corner of the field on the map, in order around it. Drag a corner to fix it.</p>
                 <div class="sat-draw">
                     <div class="sat-draw-map" id="satDrawMap"></div>
                     <div class="sat-draw-bar">
@@ -558,7 +560,7 @@
             @include('sm.partials.anee-wait')
 
             <div class="sat-nav">
-                <button type="button" class="btn btn-white flex-1" id="satBack" disabled>Back</button>
+                <button type="button" class="btn btn-white flex-1" id="satBack">Back</button>
                 <button type="button" class="btn btn-primary flex-1" id="satNext">Next</button>
             </div>
         </div>
@@ -616,6 +618,7 @@
         job: (id) => @json(url('/app/satellite/job')) + '/' + id, list: @json(route('sat.list')),
         one: (id) => @json(url('/app/satellite/one')) + '/' + id, tiles: (id) => @json(url('/app/satellite/tiles')) + '/' + id,
         del: (id) => @json(url('/app/satellite')) + '/' + id,
+        boundary: (id) => @json(url('/app/farm-lots')) + '/' + id + '/boundary',
     };
     let OPT = null;
     const st = { step: 0, place: null, location: '', crop: null, variety: '', varRecord: null, method: 'transplanted', water: 'irrigated', soil: [], concerns: [], ring: [], densityUnit: 'seeds_ha' };
@@ -766,10 +769,10 @@
             s.classList.toggle('is-back', on && back);
         });
         paintRail();
-        $('satBack').disabled = n === 0;
+        $('satBack').disabled = false;   // on the first page it goes back where they came from
         $('satNext').hidden = n === STEPS - 1;
         $('satStepName').textContent = ['The lot', 'The crop', 'Planting', 'Ground and water', 'Your worries', 'Draw the field', 'Review'][n] || '';
-        if (n === 5) initDraw();
+        if (n === 5) { paintDrawHead(); initDraw(); }
         if (n === 6) review();
         // A step starts at its title: on a phone the last one may have left the page scrolled down.
         const wiz = $('satWiz');
@@ -960,6 +963,8 @@
     };
     const askPlace = async (q) => { const r = await window.api(U.places + '?q=' + encodeURIComponent(q)); return ((r.data && r.data.places) || [])[0] || null; };
     let locating = 0;
+    // A lot's saved boundary as the drawing's corners ({lat, lng}), or none.
+    const lotRing = (lot) => (lot && Array.isArray(lot.boundary) && lot.boundary.length >= 3 ? lot.boundary.map((q) => ({ lat: Number(q[0]), lng: Number(q[1]) })) : []);
     const locateLot = async (lot) => {
         const n = ++locating;
         st.place = null;
@@ -967,6 +972,15 @@
         const box = $('satOnMap');
         if (!lot) { reveal(box, false); return; }
         reveal(box, true);
+        // Its boundary or its pin from Global Lots: no search needed.
+        const ring = lotRing(lot);
+        if (ring.length || lot.pin) {
+            const at = ring.length ? ring.reduce((a, q) => ({ lat: a.lat + q.lat / ring.length, lng: a.lng + q.lng / ring.length }), { lat: 0, lng: 0 }) : lot.pin;
+            setPlace({ label: lot.name, lat: Number(at.lat), lng: Number(at.lng), zoom: 17 });
+            st.ring = ring;
+            $('satPicked').innerHTML = PIN + '<span>' + esc(ring.length ? 'The map opens on the boundary of ' + lot.name + '.' : 'The map opens at the pin of ' + lot.name + '.') + '</span>';
+            return;
+        }
         $('satPicked').textContent = 'Finding ' + (lot.town || lot.where || 'the lot') + ' on the map…';
         const tail = PH_ON ? ', Philippines' : '';
         const town = String(lot.town || '').replace(/\s*\(Capital\)\s*$/i, ''), prov = String(lot.province || '');
@@ -1030,9 +1044,31 @@
             dmap.setCenter(st.place);
             if (drawFresh) dmap.setZoom(st.place.zoom || 15);
         }
+        if (drawFresh && st.ring.length >= 3) { const b = new google.maps.LatLngBounds(); st.ring.forEach((q) => b.extend(q)); dmap.fitBounds(b, 40); }
         drawFresh = false;
         paintDraw();
     };
+    const paintDrawHead = () => {
+        const lot = LOT.lot, has = lotRing(lot).length >= 3;
+        $('satDrawH').textContent = has ? 'The field of ' + lot.name : 'Draw the field';
+        $('satDrawSub').textContent = has
+            ? 'This is the boundary saved with ' + lot.name + ' in Global Lots. Drag a corner to fix it, and the lot keeps the change.'
+            : 'Tap each corner of the field on the map, in order around it. Drag a corner to fix it.' + (lot ? ' It is saved as the boundary of ' + lot.name + ', so you draw it once.' : '');
+    };
+    /* What is drawn here becomes the lot's boundary, unless it is the same. */
+    const sameRing = (a, b) => a.length === b.length && a.every((q, i) => Math.abs(q.lat - b[i].lat) < 1e-7 && Math.abs(q.lng - b[i].lng) < 1e-7);
+    async function keepBoundary() {
+        const lot = LOT.lot;
+        if (!lot || !lot.id || st.ring.length < 3 || sameRing(st.ring, lotRing(lot))) return;
+        const points = st.ring.map((q) => [Number(q.lat.toFixed(7)), Number(q.lng.toFixed(7))]);
+        try {
+            const r = await window.api(U.boundary(lot.id), { method: 'POST', body: { points } });
+            if (LOT.lot && LOT.lot.id === lot.id) LOT.lot = Object.assign({}, LOT.lot, (r.data && r.data.row) || { boundary: points });
+            window.toast?.('Saved as the boundary of ' + lot.name + ' in Global Lots.');
+        } catch (err) {
+            window.toast?.('The boundary was not saved to ' + lot.name + '. This reading still uses it.', 'error');
+        }
+    }
     $('satUndo').addEventListener('click', () => { st.ring.pop(); paintDraw(); });
     $('satClear').addEventListener('click', () => { st.ring = []; paintDraw(); });
     $('satFit').addEventListener('click', () => {
@@ -1065,8 +1101,8 @@
         if (st.step === 5 && ringArea() > 2000) return 'That is over 2,000 hectares. Draw one field at a time.';
         return null;
     };
-    $('satNext').addEventListener('click', () => { const why = canNext(); if (why) return window.toast?.(why, 'error'); show(live().find((i) => i > st.step) ?? STEPS - 1); });
-    $('satBack').addEventListener('click', () => show(live().reverse().find((i) => i < st.step) ?? 0, true));
+    $('satNext').addEventListener('click', () => { const why = canNext(); if (why) return window.toast?.(why, 'error'); if (st.step === 5) keepBoundary(); show(live().find((i) => i > st.step) ?? STEPS - 1); });
+    $('satBack').addEventListener('click', () => { const p = live().reverse().find((i) => i < st.step); if (p === undefined) { window.aneeLeave(); return; } show(p, true); });
 
     const PHASES = {
         start: { label: 'Getting started', lo: 2, hi: 6, tau: 8 },

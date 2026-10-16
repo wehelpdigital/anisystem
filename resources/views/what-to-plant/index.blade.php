@@ -611,7 +611,7 @@
 
             <div class="wtp-dots" id="wpDots"></div>
             <div class="wtp-nav" id="wpNav">
-                <button type="button" class="btn btn-white flex-1" id="wpBack" disabled>Back</button>
+                <button type="button" class="btn btn-white flex-1" id="wpBack">Back</button>
                 <button type="button" class="btn btn-primary flex-1" id="wpNext">Next</button>
             </div>
         </div>
@@ -1066,7 +1066,7 @@
             s.classList.toggle('is-back', on && !!backwards);
         });
         document.querySelectorAll('.wtp-dot').forEach((d, i) => d.classList.toggle('is-on', i <= step));
-        $id('wpBack').disabled = step === 0;
+        $id('wpBack').disabled = false;   // on the first page it goes back where they came from
         $id('wpNext').style.display = step === STEPS - 1 ? 'none' : '';
         if (step === STEPS - 1) review();
     }
@@ -1145,7 +1145,7 @@
         paintAsked();
     });
     $id('wpNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
-    $id('wpBack').addEventListener('click', () => show(step - 1, true));
+    $id('wpBack').addEventListener('click', () => (step === 0 ? window.aneeLeave() : show(step - 1, true)));
     // The review's "Edit the lot": its sheet, then the steps follow what changed.
     $id('wpReview').addEventListener('click', async (e) => {
         const go = e.target.closest('[data-rv-go]');

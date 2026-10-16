@@ -228,6 +228,24 @@ return [
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
+        'analysis.satellite' => [
+            'title' => 'Satellite Analysis',
+            'blurb' => 'Pick your lot and its boundary, and Anee reads the newest satellite pictures and radar of it: how green it is, the weak spots, and what to check first.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'analysis.land-prep' => [
+            'title' => 'Land Prep Planner',
+            'blurb' => 'Anee plans every step of getting your lots ready, dated back from your planting day, around your soil, the weather, your workers and your machines, with what it all costs.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'analysis.anee-auto' => [
+            'title' => 'Anee Auto',
+            'blurb' => 'Tell Anee about your lot once, and she plans the whole season for you and plans it again when things change.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
         /* ---- the tools that reach across every season ---- */
 
         'tool.notes' => [
@@ -269,6 +287,72 @@ return [
         'tool.compare' => [
             'title' => 'Compare Reports',
             'blurb' => 'Choose two saved reports of the same kind, like this season and the last one, and see them side by side. Anee can also tell you what changed.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.sky-weather' => [
+            'title' => 'Satellite Weather',
+            'blurb' => 'Watch the clouds, the rain and any typhoon over your farm, see where the rain is heading, and ask Anee what it means for your lot.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.npk' => [
+            'title' => 'NPK Plus Calculator',
+            'blurb' => 'Add up every fertilizer in your plan and see if it gives your crop enough nitrogen, phosphorus and potassium, and what yield it can feed.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.lcc' => [
+            'title' => 'LCC Checker',
+            'blurb' => 'Is it time to add nitrogen to your rice? Tap the color of your leaf color chart, or let Anee read a photo of your leaves.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.field.weeds' => [
+            'title' => 'Weed Control Helper',
+            'blurb' => 'Pick your crop and how old it is, and see what to do first against the weeds and which herbicide fits.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.field.pests' => [
+            'title' => 'Pest Finder',
+            'blurb' => 'Pick your crop and where you see the damage, and find the pest and what to spray against it.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.field.diseases' => [
+            'title' => 'Disease Finder',
+            'blurb' => 'Pick your crop and the signs you see, and find the disease and what to spray against it.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.field.varieties' => [
+            'title' => 'Variety Finder',
+            'blurb' => 'Every registered variety of your crop, with its days to harvest, its yield and what it resists. Filter them to find the one for your farm.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.workers' => [
+            'title' => 'My Workers',
+            'blurb' => 'Each of your workers once, with their contact, their pay and their days off. Add them to any season and any plan in a tap.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.lots' => [
+            'title' => 'Global Lots',
+            'blurb' => 'Each of your lots once: where it is, its size, its pin and boundary on the map, and its soil and water. Every analysis reads them from here.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.maps' => [
+            'title' => 'Global Maps',
+            'blurb' => 'Your farm maps from every season, in one place. Draw a new one, or open one to add notes and shapes.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.draw' => [
+            'title' => 'Global Draw',
+            'blurb' => 'Your sketches and drawings from every season. Draw your farm plan, a layout, or a quick note by hand.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
@@ -325,6 +409,19 @@ return [
         'whatp.page' => 'analysis.what-to-plant',
         'vary.page'  => 'analysis.variety',
         'proto.page' => 'analysis.crop-protocol',
+        // Every tool of Global and Quick Tools has its own card (2026-10-16, the owner; the clips come later).
+        'sat.page'      => 'analysis.satellite',
+        'landprep.page' => 'analysis.land-prep',
+        'auto.index'    => 'analysis.anee-auto',
+        'sky.page'      => 'tool.sky-weather',
+        'npk.page'      => 'tool.npk',
+        'lcc.page'      => 'tool.lcc',
+        // One route for the field helpers: {tool} is the route's own parameter.
+        'fh.page'        => 'tool.field.{tool}',
+        'workers.global' => 'tool.workers',
+        'farmlots.index' => 'tool.lots',
+        'maps.page'      => 'tool.maps',
+        'draw.page'      => 'tool.draw',
 
         // The tools that reach across every season
         'notes.hub'     => 'tool.notes',

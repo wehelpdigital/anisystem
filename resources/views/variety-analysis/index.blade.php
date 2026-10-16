@@ -602,7 +602,7 @@
 
             <div class="wtp-dots" id="vaDots"></div>
             <div class="wtp-nav" id="vaNav">
-                <button type="button" class="btn btn-white flex-1" id="vaBack" disabled>Back</button>
+                <button type="button" class="btn btn-white flex-1" id="vaBack">Back</button>
                 <button type="button" class="btn btn-primary flex-1" id="vaNext">Next</button>
             </div>
         </div>
@@ -893,7 +893,7 @@
             s.classList.toggle('is-back', on && !!backwards);
         });
         document.querySelectorAll('#vaDots .wtp-dot').forEach((d, i) => d.classList.toggle('is-on', i <= step));
-        $id('vaBack').disabled = step === 0;
+        $id('vaBack').disabled = false;   // on the first page it goes back where they came from
         $id('vaNext').style.display = step === STEPS - 1 ? 'none' : '';
         // The field is focused on a desk, where a cursor is a courtesy; on a
         // phone the keypad would land on the step before it is read.
@@ -943,7 +943,7 @@
     }
 
     $id('vaNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
-    $id('vaBack').addEventListener('click', () => show(step - 1, true));
+    $id('vaBack').addEventListener('click', () => (step === 0 ? window.aneeLeave() : show(step - 1, true)));
     $id('vaMonthBtn').addEventListener('click', async () => {
         if (!OPT || !window.aneeMonthPick) return;
         const k = await window.aneeMonthPick.open({ months: OPT.months, value: state.month, title: 'Which month will you plant?' });

@@ -644,7 +644,7 @@
 
             <div class="wtp-dots" id="wtpDots"></div>
             <div class="wtp-nav" id="wtpNav">
-                <button type="button" class="btn btn-white flex-1" id="wtpBack" disabled>Back</button>
+                <button type="button" class="btn btn-white flex-1" id="wtpBack">Back</button>
                 <button type="button" class="btn btn-primary flex-1" id="wtpNext">Next</button>
             </div>
         </div>
@@ -1100,7 +1100,7 @@
             s.classList.toggle('is-back', on && !!backwards);
         });
         document.querySelectorAll('.wtp-dot').forEach((d, i) => d.classList.toggle('is-on', i <= step));
-        $id('wtpBack').disabled = step === 0;
+        $id('wtpBack').disabled = false;   // on the first page it goes back where they came from
         $id('wtpNext').style.display = step === STEPS - 1 ? 'none' : '';
         if (step === STEPS - 1) review();
     }
@@ -1165,7 +1165,7 @@
         return { fromMonth: a.month, fromYear: a.year, toMonth: b.month, toYear: b.year };
     };
     $id('wtpNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
-    $id('wtpBack').addEventListener('click', () => show(step - 1, true));
+    $id('wtpBack').addEventListener('click', () => (step === 0 ? window.aneeLeave() : show(step - 1, true)));
     // The review's "Edit the lot": its sheet, then the steps follow what changed.
     $id('wtpReview').addEventListener('click', async (e) => {
         const go = e.target.closest('[data-rv-go]');

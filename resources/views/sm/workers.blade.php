@@ -112,6 +112,10 @@
         </div>
 
         <div id="workerNewPane" class="wa-pane space-y-4">
+        @if ($gwWaiting !== null)
+            {{-- Every card is a person of the farm's roster (AsGlobalWorker::forCard), said where it is made (2026-10-16, the owner). --}}
+            <p class="text-sm text-gray-500" id="workerNewRoster">Someone new joins <a href="{{ route('workers.global') }}" class="font-bold text-brand-700 underline">My workers</a> too, so next season you add them in a tap instead of typing them again.</p>
+        @endif
         <div>
             <label for="workerName" class="form-label">Worker Name <span class="text-red-500">*</span></label>
             <input type="text" id="workerName" maxlength="255" class="form-input" placeholder="e.g. Juan Dela Cruz">

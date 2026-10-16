@@ -723,7 +723,7 @@
                         </section>
                     </div>
                     <div class="np-wnav">
-                        <button type="button" class="btn btn-white" id="npBack" disabled>Back</button>
+                        <button type="button" class="btn btn-white" id="npBack">Back</button>
                         <small id="npStepOf">Step 1 of 6</small>
                         <button type="button" class="btn btn-primary" id="npNext">Next</button>
                     </div>
@@ -1072,13 +1072,13 @@
         });
         document.querySelectorAll('.np-ws').forEach((b, i) => { b.classList.toggle('is-on', i === n); b.classList.toggle('is-done', i < n); b.setAttribute('aria-current', i === n ? 'step' : 'false'); });
         $('npWLine').style.setProperty('--p', (n / (STEPS - 1) * 100) + '%');
-        $('npBack').disabled = n === 0;
+        $('npBack').disabled = false;   // on the first page it goes back where they came from
         $('npNext').textContent = n === STEPS - 1 ? 'See results' : 'Next';
         $('npStepOf').textContent = 'Step ' + (n + 1) + ' of ' + STEPS;
         st.step = n;
         if ($('npWiz').getBoundingClientRect().top < 70) $('npWiz').scrollIntoView({ behavior: still() ? 'auto' : 'smooth', block: 'start' });
     };
-    $('npBack').addEventListener('click', () => go(st.step - 1));
+    $('npBack').addEventListener('click', () => (st.step === 0 ? window.aneeLeave() : go(st.step - 1)));
     $('npNext').addEventListener('click', () => {
         if (st.step === 0 && !st.cropPicked) return window.toast?.('Choose the crop, or No crop for the totals only.', 'error');
         if (st.step === STEPS - 1) {

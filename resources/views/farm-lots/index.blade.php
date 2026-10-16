@@ -38,11 +38,18 @@
     .gl-prevhost:empty { display: none; }
     @keyframes glRise { from { opacity: 0; transform: translateY(8px); } }
     .gl-meta { padding: 0 .35rem; font-size: .74rem; color: var(--color-gray-500); }
-    .gl-acts { display: flex; flex-wrap: wrap; gap: .4rem; padding: 0 .25rem .2rem; }
-    .gl-acts .btn { padding: .4rem .8rem; font-size: .8rem; }
-    .gl-acts .gl-del { margin-left: auto; color: #b91c1c; }
+    .gl-acts { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; padding: 0 0 .2rem; }
+    @media (min-width: 420px) { .gl-acts { gap: .4rem; padding: 0 .25rem .2rem; } }
+    .gl-acts .btn { padding: .4rem .62rem; font-size: .78rem; }
+    @media (min-width: 420px) { .gl-acts .btn { padding: .4rem .8rem; font-size: .8rem; } }
+    /* Delete is an icon beside the map buttons, and the labels are short so a row holds them (2026-10-16, the owner). */
+    .gl-acts .gl-del { flex: none; width: 2.1rem; height: 2.1rem; padding: 0; display: inline-grid; place-items: center; border-radius: .8rem; color: #b91c1c; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .gl-acts .gl-del:hover { background: #fee2e2; }
+    .gl-acts .gl-del svg { width: 1.05rem; height: 1.05rem; }
+    html.dark .gl-acts .gl-del { color: #fca5a5; }
+    html.dark .gl-acts .gl-del:hover { background: #3a1414; }
     /* The lot on the map (2026-10-16, the owner): its pin and its boundary. */
-    .gl-acts .gl-map { display: inline-flex; align-items: center; gap: .35rem; }
+    .gl-acts .gl-map { display: inline-flex; align-items: center; gap: .3rem; white-space: nowrap; }
     .gl-acts .gl-map svg { width: .95rem; height: .95rem; flex: none; }
     .gl-acts .gl-map.is-set { color: var(--color-brand-700); border-color: var(--color-brand-300); background: var(--color-brand-50); }
     .gl-onmap { display: flex; flex-wrap: wrap; gap: .35rem; padding: 0 .35rem; }
@@ -108,11 +115,12 @@
             + '<p class="gl-meta">' + (l.stale ? 'Last checked ' + esc(l.updated) + '. Due for a check.' : 'Last checked ' + esc(l.updated) + '. Next check by ' + esc(l.staleOn) + '.') + '</p>'
             + onMap(l)
             + '<div class="gl-acts"><button type="button" class="btn btn-white" data-act="edit">Edit</button>'
-            + '<button type="button" class="btn btn-white gl-map' + (l.pin ? ' is-set' : '') + '" data-act="pin">' + PIN + (l.pin ? 'Move the pin' : 'Set the pin location') + '</button>'
-            + '<button type="button" class="btn btn-white gl-map' + (l.boundary ? ' is-set' : '') + '" data-act="draw">' + SHAPE + (l.boundary ? 'Change the boundary' : 'Draw the map boundary') + '</button>'
             + (l.stale ? '<button type="button" class="btn btn-white" data-act="fine">Still correct</button>' : '')
-            + '<button type="button" class="btn btn-ghost gl-del" data-act="del">Delete</button></div></div>').join('');
+            + '<button type="button" class="btn btn-white gl-map' + (l.pin ? ' is-set' : '') + '" data-act="pin">' + PIN + (l.pin ? 'Move pin' : 'Set pin') + '</button>'
+            + '<button type="button" class="btn btn-white gl-map' + (l.boundary ? ' is-set' : '') + '" data-act="draw">' + SHAPE + (l.boundary ? 'Edit boundary' : 'Draw boundary') + '</button>'
+            + '<button type="button" class="btn btn-ghost gl-del" data-act="del" aria-label="Delete ' + esc(l.name) + '" title="Delete this lot">' + TRASH + '</button></div></div>').join('');
     }
+    const TRASH = '<svg fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 7h15M10 11v6m4-6v6M6.5 7l.9 12a2 2 0 002 1.8h5.2a2 2 0 002-1.8l.9-12M9.5 7V4.8c0-.5.4-.8.8-.8h3.4c.4 0 .8.3.8.8V7"/></svg>';
     const PIN = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linejoin="round" d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0113 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></svg>';
     const SHAPE = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linejoin="round" d="M5 7l8-3 6 6-3 9-10-2z"/><circle cx="5" cy="7" r="1.6" fill="currentColor"/><circle cx="13" cy="4" r="1.6" fill="currentColor"/><circle cx="19" cy="10" r="1.6" fill="currentColor"/><circle cx="16" cy="19" r="1.6" fill="currentColor"/><circle cx="6" cy="17" r="1.6" fill="currentColor"/></svg>';
     // What the lot has on the map: its pin (with a link to Google Maps) and the size its boundary encloses.

@@ -1939,12 +1939,12 @@
         LXI = Math.max(0, Math.min(LX.length - 1, i));
         $('lxStage').querySelectorAll('.lx-step').forEach((f, j) => f.classList.toggle('is-on', j === LXI));
         $('lxDots').querySelectorAll('button').forEach((b, j) => { b.classList.toggle('is-on', j === LXI); b.setAttribute('aria-current', j === LXI ? 'step' : 'false'); });
-        $('lxBack').disabled = LXI === 0;
+        $('lxBack').disabled = false;   // on the first page it goes back where they came from
         $('lxBack').style.visibility = LXI === 0 ? 'hidden' : '';
         $('lxNext').textContent = LXI === LX.length - 1 ? 'Start my check' : 'Next';
     }
     $('lcHowOpen').addEventListener('click', () => { lxBuild(); lxGo(0); sheetOpen($('lcHowSheet')); });
-    $('lxBack').addEventListener('click', () => lxGo(LXI - 1));
+    $('lxBack').addEventListener('click', () => (LXI === 0 ? window.aneeLeave() : lxGo(LXI - 1)));
     $('lxNext').addEventListener('click', () => {
         if (LXI < LX.length - 1) { lxGo(LXI + 1); return; }
         sheetClose($('lcHowSheet'));

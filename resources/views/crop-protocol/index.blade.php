@@ -895,7 +895,7 @@
 
             <div class="wtp-dots" id="cpDots"></div>
             <div class="wtp-nav" id="cpNav">
-                <button type="button" class="btn btn-white flex-1" id="cpBack" disabled>Back</button>
+                <button type="button" class="btn btn-white flex-1" id="cpBack">Back</button>
                 <button type="button" class="btn btn-primary flex-1" id="cpNext">Next</button>
             </div>
         </div>
@@ -1167,7 +1167,7 @@
             s.classList.toggle('is-back', on && !!backwards);
         });
         document.querySelectorAll('#cpDots .wtp-dot').forEach((d, i) => d.classList.toggle('is-on', i <= step));
-        $id('cpBack').disabled = step === 0;
+        $id('cpBack').disabled = false;   // on the first page it goes back where they came from
         $id('cpNext').style.display = step === STEPS - 1 ? 'none' : '';
         if (step === 4) paintMethods();
         if (step === 7) seedHint();
@@ -1265,7 +1265,7 @@
         const row = await window.aneeLots.edit(state.lot, { crop: state.crop || null, ask: false });
         if (row) { pickLot(row); review(); }
     });
-    $id('cpBack').addEventListener('click', () => show(step - 1, true));
+    $id('cpBack').addEventListener('click', () => (step === 0 ? window.aneeLeave() : show(step - 1, true)));
     const pickWire = (hostId, attr, key) => {
         $id(hostId).addEventListener('click', (e) => {
             const b = e.target.closest(`[data-${attr}]`);

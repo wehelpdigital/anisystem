@@ -25,7 +25,7 @@
 @auth
 @php
     if (! empty($byRoute)) {
-        $__key = \App\Http\Controllers\TutorialController::forRoute(optional(request()->route())->getName());
+        $__key = \App\Http\Controllers\TutorialController::forRoute(optional(request()->route())->getName(), (array) (optional(request()->route())->parameters() ?? []));
         $__keys = $__key ? [$__key] : [];
         $__auto = $__key;
     } else {
