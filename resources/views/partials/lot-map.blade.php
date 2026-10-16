@@ -171,6 +171,8 @@
         });
         map.addListener('click', (e) => onTap(e.latLng));
         map.addListener('heading_changed', paintNorth);
+        // Vector or raster, as Google settled it (a raster map cannot turn): kept on the dialog for a look.
+        map.addListener('renderingtype_changed', () => { $('lmView').dataset.render = String(map.getRenderingType() || ''); });
         map.addListener('dragstart', () => { if (S && S.mode === 'pin') $('lmCross').classList.add('is-lift'); });
         map.addListener('idle', () => { $('lmCross').classList.remove('is-lift'); if (S && S.mode === 'pin') say(); });
         return map;
