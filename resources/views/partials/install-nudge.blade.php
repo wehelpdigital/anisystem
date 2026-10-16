@@ -19,7 +19,7 @@
      were under it are gone (both 2026-10-17, the owner). --}}
 <div class="in-wrap" id="installNudge" hidden aria-hidden="true">
     <div class="in-backdrop" data-in-close></div>
-    <div class="in-card" role="dialog" aria-modal="true" aria-labelledby="inTitle" aria-describedby="inSub">
+    <div class="in-card" role="dialog" aria-modal="true" aria-labelledby="inTitle" aria-describedby="inSub inSub2">
         <span class="in-shine" aria-hidden="true"></span>
         <button type="button" class="in-x" data-in-close aria-label="Close">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -29,10 +29,13 @@
             {{-- Named for the device it shows on (the script below sets both lines). --}}
             <h3 class="in-title" id="inTitle">Get anee.io on your phone</h3>
             <p class="in-sub" id="inSub">Tap the button below to install the app. No need to go to the Play Store.</p>
+            {{-- Why it is worth it (2026-10-17, the owner: "no need to relogin often or remember where to access anee"). --}}
+            <p class="in-sub2" id="inSub2"><span aria-hidden="true">✨</span><span>No need to log in again and again, or to remember where to find anee.io. It waits on your home screen.</span></p>
             {{-- How to, where the browser has no install prompt of its own. --}}
             <div class="in-steps" id="inSteps" hidden></div>
             <div class="in-acts">
-                <button type="button" class="in-go" id="inGo">Install the app</button>
+                {{-- Important calls to action are yellow (2026-10-17, the owner), with an arrow that keeps nudging. --}}
+                <button type="button" class="in-go" id="inGo"><span class="in-go-t">Install the app</span><span class="in-go-a" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
                 <button type="button" class="in-later" id="inLater">Do not show for 1 day</button>
             </div>
         </div>
@@ -83,21 +86,30 @@
     .in-steps li { font-size: .84rem; line-height: 1.45; color: #78350f; }
     .in-steps svg { display: inline-block; width: 1.05rem; height: 1.05rem; vertical-align: -.2rem; margin: 0 .1rem; }
     .in-acts { display: grid; gap: .5rem; margin-top: 1.05rem; }
-    .in-go { min-height: 3rem; border-radius: .95rem; font-size: .98rem; font-weight: 800; color: #fff; background: #4a7c2a;
-        box-shadow: 0 12px 24px -14px rgb(61 104 35 / .9); transition: background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
-    .in-go:hover { background: #3d6823; }
+    .in-sub2 { display: flex; align-items: flex-start; justify-content: center; gap: .4rem; margin: .7rem auto 0; max-width: 22rem; padding: .55rem .75rem; border-radius: .9rem;
+        font-size: .84rem; line-height: 1.45; font-weight: 600; color: #2d5016; background: #f1f7e9; border: 1px solid #dcebc9; text-align: left; }
+    .in-sub2 > span:first-child { flex: none; }
+    .in-go { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 3.1rem; border-radius: .95rem; font-size: 1rem; font-weight: 800;
+        color: #3b2f00; background: #f5c518; box-shadow: 0 12px 24px -14px rgb(180 140 0 / .95), inset 0 -2px 0 rgb(0 0 0 / .08);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .in-go:hover { background: #ffd23f; box-shadow: 0 14px 26px -14px rgb(180 140 0 / 1), inset 0 -2px 0 rgb(0 0 0 / .08); }
     .in-go:active { transform: scale(.98); }
+    .in-go:focus-visible { outline: 3px solid #4a7c2a; outline-offset: 2px; }
+    .in-go-a { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 999px; background: rgb(59 47 0 / .12); }
+    .in-go-a svg { width: 1.05rem; height: 1.05rem; animation: inNudge 1.4s cubic-bezier(.22,1,.36,1) infinite; }
+    @keyframes inNudge { 0%, 100% { transform: translateX(-2px); } 50% { transform: translateX(4px); } }
     .in-later { min-height: 2.75rem; border-radius: .9rem; font-size: .86rem; font-weight: 700; color: var(--color-gray-500, #6b7280);
         transition: background-color .28s cubic-bezier(.22,1,.36,1); }
     .in-later:hover { background: var(--color-gray-100, #f3f4f6); }
     html.dark .in-card { background: #151b12; }
     html.dark .in-title { color: #e8efe1; }
     html.dark .in-sub { color: #b7c2ad; }
+    html.dark .in-sub2 { color: #cfe6b8; background: #1a2414; border-color: #2b3a1c; }
     html.dark .in-steps { background: #2a210a; border-color: #5c4a24; }
     html.dark .in-steps p, html.dark .in-steps li { color: #fcd34d; }
     html.dark .in-x:hover, html.dark .in-later:hover { background: #22301a; }
     @media (prefers-reduced-motion: reduce) {
-        .in-card, .in-backdrop, .in-shine, .in-icon, .in-steps, .in-wrap.is-out .in-card, .in-wrap.is-out .in-backdrop { animation: none; transition: none; }
+        .in-card, .in-backdrop, .in-shine, .in-icon, .in-steps, .in-go-a svg, .in-wrap.is-out .in-card, .in-wrap.is-out .in-backdrop { animation: none; transition: none; }
     }
 </style>
 
@@ -131,6 +143,7 @@
     const storeName = apple ? 'the App Store' : (phone ? 'the Play Store' : 'an app store');
     document.getElementById('inTitle').textContent = 'Get anee.io on your ' + device;
     document.getElementById('inSub').textContent = tap + ' the button below to install the app. No need to go to ' + storeName + '.';
+    document.getElementById('inSub2').lastElementChild.textContent = 'No need to log in again and again, or to remember where to find anee.io. It waits on your ' + (phone ? 'home screen' : 'desktop') + '.';
     // The browser's own install prompt, kept by app.js; caught here too in case it comes later.
     const deferred = () => window.aneeInstallPrompt || null;
     window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); window.aneeInstallPrompt = e; });
@@ -164,7 +177,7 @@
         const st = document.getElementById('inSteps');
         st.hidden = true; st.innerHTML = '';
         const go = document.getElementById('inGo');
-        go.textContent = 'Install the app';
+        go.querySelector('.in-go-t').textContent = 'Install the app';
         delete go.dataset.step;
         wrap.classList.remove('is-out');
         wrap.hidden = false;
@@ -199,7 +212,7 @@
             const st = document.getElementById('inSteps');
             st.innerHTML = steps();
             st.hidden = false;
-            go.textContent = 'Got it';
+            go.querySelector('.in-go-t').textContent = 'Got it';
             go.dataset.step = 'shown';
             return;
         }
