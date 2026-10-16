@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\AiSetting;
 use App\Models\AsSitePage;
 use App\Support\ArticleStyle;
+use App\Support\CopyCheck;
 use App\Support\SitePages;
 use Illuminate\Support\Str;
 
@@ -59,7 +60,10 @@ class PageWriter
          * meta tags, the headings, the keyphrase, the main keywords. A page
          * that misses any goes back once with the list, and the better of
          * the two is kept. */
-        $problems = self::audit($page);
+        // Our own words too (2026-10-17, the owner): a stretch the page shares with the research
+        // notes (which carry what the web pages said) goes back with the rest.
+        $notes = (string) ($result['researchText'] ?? '');
+        $problems = array_merge(self::audit($page), self::copied($page, $notes));
         if ($problems) {
             $fix = $this->ai->askForJson($settings, $this->repairPrompt($page, $problems), 9000, $parse,
                 ['onPhase' => $beat ? fn (string $phase, int $try = 1) => $beat('document-json', $try) : null]);
@@ -68,7 +72,7 @@ class PageWriter
             }
             if (is_array($fix['data'] ?? null)) {
                 $again = $this->shape($fix['data'], $brief, (array) ($result['sources'] ?? []));
-                if (count(self::audit($again)) < count($problems)) {
+                if (count(self::audit($again)) + count(self::copied($again, $notes)) < count($problems)) {
                     $page = $again;
                 }
             }
@@ -163,6 +167,41 @@ class PageWriter
     }
 
     /** The page handed back with what to fix. */
+    /**
+     * The parts of a page that repeat its research notes word for word (CopyCheck: a
+     * stretch of 8 or more ordinary words; names and numbers do not count), one problem each.
+     *
+     * @return list<string>
+     */
+    public static function copied(array $page, string $notes): array
+    {
+        if (trim($notes) === '') {
+            return [];
+        }
+        $out = [];
+        $parts = ['the excerpt' => (string) ($page['excerpt'] ?? ''), 'the metaDescription' => (string) ($page['metaDescription'] ?? '')];
+        foreach ((array) ($page['blocks'] ?? []) as $i => $b) {
+            if (in_array($b['type'] ?? '', ['sources', 'links', 'cta', 'image'], true)) {
+                continue;
+            }
+            $t = [];
+            array_walk_recursive($b, function ($v, $k) use (&$t) {
+                if (is_string($v) && ! in_array($k, ['type', 'url', 'src', 'tone', 'level', 'id', 'style'], true)) {
+                    $t[] = $v;
+                }
+            });
+            $parts['block ' . ($i + 1) . ' (' . ($b['type'] ?? 'text') . ')'] = implode("\n", $t);
+        }
+        foreach ($parts as $where => $text) {
+            $run = CopyCheck::first($text, $notes);
+            if ($run !== null) {
+                $out[] = "In {$where} these words are copied from a source (\"{$run}\"). Say it in your own words, keeping names and numbers exact.";
+            }
+        }
+
+        return $out;
+    }
+
     private function repairPrompt(array $page, array $problems): string
     {
         $show = array_intersect_key($page, array_flip(['title', 'slug', 'metaTitle', 'metaDescription', 'focusKeyword', 'mainKeywords', 'keywords', 'excerpt', 'category', 'lang', 'crop', 'blocks']));
@@ -216,7 +255,7 @@ class PageWriter
             . (! empty($b['notes']) ? 'The editor\'s notes: ' . $b['notes'] . "\n" : '')
             . "\nUse the search tool. Find what the official and expert sources say: PhilRice, the Department of Agriculture and its regional offices, BPI, FPA, IRRI, PCA, PhilMech, ATI, UPLB and other universities, and manufacturers' own label pages for any product. "
             . "Collect exact figures with their source: rates per hectare, timing in days after sowing or transplanting, varieties, thresholds, prices (with the date), local Tagalog names, and warnings. "
-            . "Note where sources disagree. Write plain research notes, a short paragraph per point, each with the URL it came from. Do not write the page yet.";
+            . "Note where sources disagree. Write plain research notes, a short paragraph per point, each with the URL it came from, in your own words: the facts, figures and names exact, never a page's own sentences. Do not write the page yet.";
     }
 
     private function jsonPrompt(array $b): string
@@ -292,7 +331,9 @@ class PageWriter
 
     public static function honestRules(): string
     {
-        return "\n--- anee.io, honestly ---\nOnly claim what anee.io really does: a cropping calendar that dates every task from each lot's own day zero (DAS, DAT or DAP), Anee the smart farm technician who answers in Tagalog or English and can look at a photo of a pest or a sick plant, growth stages for 85 Philippine crops with the weather forecast per lot, When to Plant and What to Plant analyses, Variety Ranking, Crop Protocol Analysis, the Protocol Builder, workers and payroll, inventory that tracks fertilizer and chemicals, labor, expenses and profit reports, notes with photos and voice, farm maps, a farmer community. Free to start (Libre), paid plans for more.\n";
+        return "\n--- anee.io, honestly ---\nOnly claim what anee.io really does: a cropping calendar that dates every task from each lot's own day zero (DAS, DAT or DAP), Anee the smart farm technician who answers in Tagalog or English and can look at a photo of a pest or a sick plant, growth stages for 85 Philippine crops with the weather forecast per lot, When to Plant and What to Plant analyses, Variety Ranking, Crop Protocol Analysis, the Protocol Builder, workers and payroll, inventory that tracks fertilizer and chemicals, labor, expenses and profit reports, notes with photos and voice, farm maps, a farmer community. Free to start (Libre), paid plans for more.\n"
+            // The owner, 2026-10-17: what a source says goes on the page in our own words.
+            . "\n--- Our own words ---\nEvery sentence is ours. Take the facts from the research notes, the stories or the pages you read and say them your way, in plain words: never copy a sentence, and never repeat a stretch of " . CopyCheck::RUN . " words or more from a source. Names (crops, varieties, pests, products, active ingredients, people, places), numbers, rates, prices, dates and standard terms stay exact. A part that copies a source is sent back to be rewritten.\n";
     }
 
     private function parse(string $text): ?array

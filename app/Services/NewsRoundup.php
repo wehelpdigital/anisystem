@@ -8,6 +8,7 @@ use App\Models\AsSiteSetting;
 use App\Support\AiUsage;
 use App\Support\Newsletter\NewsEmail;
 use App\Support\ArticleStyle;
+use App\Support\CopyCheck;
 use App\Support\NewsTaglish;
 use App\Support\SeoKeywords;
 use App\Support\SitePages;
@@ -630,8 +631,9 @@ class NewsRoundup
             return ['ok' => false, 'skip' => true, 'error' => 'Anee found fewer than ' . self::MIN_STORIES . ' stories worth a farmer\'s time.', 'result' => $result];
         }
 
-        // The house rules, checked; one round back to fix what is missed.
-        $problems = PageWriter::audit($built['page']);
+        // The house rules, checked, and our own words (no stretch of a report copied, CopyCheck);
+        // one round back to fix what is missed.
+        $problems = array_merge(PageWriter::audit($built['page']), $this->copied($data, $byId, $also, $pool)['problems']);
         if ($problems) {
             $fix = $this->ai->askForJson($settings, $this->repair($data, $problems), 9000, $parse, ['keepAgencies' => true]);
             foreach (['tokensIn', 'tokensOut'] as $k) {
@@ -639,9 +641,24 @@ class NewsRoundup
             }
             if (is_array($fix['data'] ?? null)) {
                 $again = $this->build($fix['data'], $byId, $also, $pool);
-                if (count($again['used']) >= self::MIN_STORIES && count(PageWriter::audit($again['page'])) < count($problems)) {
+                $left = count(PageWriter::audit($again['page'])) + count($this->copied($fix['data'], $byId, $also, $pool)['problems']);
+                if (count($again['used']) >= self::MIN_STORIES && $left < count($problems)) {
                     $built = $again;
+                    $data = $fix['data'];
                 }
+            }
+        }
+        // What still copies a report after the repair is never saved: the story leaves the page, and
+        // a page whose own title or opening copies one is not written at all.
+        $copied = $this->copied($data, $byId, $also, $pool);
+        if ($copied['page']) {
+            return ['ok' => false, 'error' => 'The roundup kept a report\'s own sentences in its ' . implode(', ', $copied['page']) . '.', 'result' => $result];
+        }
+        if ($copied['stories'] || $copied['drop']) {
+            $data = self::without($data, $copied['stories'], $copied['drop']);
+            $built = $this->build($data, $byId, $also, $pool);
+            if (count($built['used']) < self::MIN_STORIES) {
+                return ['ok' => false, 'skip' => true, 'error' => 'Too few stories were left in our own words.', 'result' => $result];
             }
         }
         $used = $built['used'];
@@ -694,9 +711,10 @@ class NewsRoundup
             . "--- What to do ---\n"
             . "1. Pick the " . self::MIN_STORIES . ' to ' . self::MAX_STORIES . " stories that matter most to a Filipino farmer: rice and palay, corn, vegetables, prices of farm goods, fertilizer and fuel costs, weather and typhoons, government programs and aid, trade and imports, research a farmer can use. Leave out stories with nothing for a farmer, and when two stories report the same news, keep one.\n"
             . "2. Group them by theme, 2 to 5 themes, never one story per theme unless it stands alone. Each theme gets an H2 heading in Title Case that names the topic exactly (for example \"Palay Prices and Rice Supply\", \"Fuel and Farm Costs\", \"Weather and Typhoon Watch\", \"Help From the Government\", \"Exports and Markets\"). Order the themes by how much they matter to a farmer this week.\n"
-            . "3. For every story: a headline in your own words (at most 12 words, Title Case) that keeps the story's key terms exact (a cartel stays a cartel, a fine stays a fine), a summary of the core facts in your own words in 1 or 2 sentences (never copy the source's sentences), and the \"so what\": 2 or 3 sentences on why this news matters to a Filipino farmer and what they can do about it, in plain field terms (palay, cavans, hectares, inputs, the planting window, the harvest). The so what is our own commentary: it is what makes this page worth reading. Never add a number, name or claim that is not in the story given.\n"
+            . "3. For every story: a headline in your own words (at most 12 words, Title Case) that keeps the story's key terms exact (a cartel stays a cartel, a fine stays a fine), a summary of the core facts in your own words in 1 or 2 sentences, and the \"so what\": 2 or 3 sentences on why this news matters to a Filipino farmer and what they can do about it, in plain field terms (palay, cavans, hectares, inputs, the planting window, the harvest). The so what is our own commentary: it is what makes this page worth reading. Never add a number, name or claim that is not in the story given.\n"
             . "   Then soWhatTl: the same so what in Taglish, for the page's Taglish tab beside the English one (a farmer reads one or the other, so it says what soWhat says):\n"
             . preg_replace('/^/m', '   ', NewsTaglish::rules(NewsTaglish::PAGE_CHARS))
+            . "   Our own words, always: never copy a sentence, or a stretch of " . CopyCheck::RUN . " words or more, from a story's title, description or otherReports, in a headline, summary, so what, the title, the excerpt, the intro, the actions or the faq. Read the facts, then say them your way in plain words. Only names (people, places, agencies, storms, products), numbers, prices and dates stay exactly as the story has them. A part that still copies a report is taken off the page.\n"
             . "4. The title: lead with the most important story in specific words, then the rest (for example \"Palay Stocks Fall Before Harvest, Plus Fuel Prices and Typhoon Watch\"). Never a generic \"news roundup\" title. It must contain the focus keyphrase.\n"
             . "5. The excerpt: the first paragraph, 2 or 3 sentences, naming today's date ({$range}) and the top story, with the focus keyphrase.\n"
             . "6. The intro: one short paragraph on what today's news means for farm work.\n"
@@ -723,6 +741,90 @@ class NewsRoundup
             . "The theme headings and actionsHeading and faqHeading are the page's H2 headings: put the focus keyphrase in one of them.\n\n"
             . json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
             . "\n\nReturn ONLY the corrected JSON object in the same format, no fences, no commentary.";
+    }
+
+    /**
+     * Where the writing copies a report (2026-10-17, the owner: our own words, never the
+     * source's): a stretch of CopyCheck::RUN or more ordinary words shared with the feed's own
+     * title and description (and the other newsrooms' reports of the same news). Names, dates
+     * and numbers stay exact and do not count.
+     *
+     * @return array{problems: list<string>, stories: list<int>, page: list<string>, drop: list<string>}
+     */
+    private function copied(array $d, Collection $byId, array $also = [], ?Collection $pool = null): array
+    {
+        $pool = ($pool ?? $byId)->keyBy('id');
+        $out = ['problems' => [], 'stories' => [], 'page' => [], 'drop' => []];
+        $all = [];
+        foreach ((array) ($d['themes'] ?? []) as $theme) {
+            foreach ((array) ($theme['stories'] ?? []) as $s) {
+                $id = (int) ($s['id'] ?? 0);
+                if (! is_array($s) || ! isset($byId[$id])) {
+                    continue;
+                }
+                $item = $byId[$id];
+                $src = [(string) $item->title, (string) ($item->summary ?? '')];
+                foreach ((array) ($also[$id] ?? []) as $other) {
+                    if (isset($pool[$other])) {
+                        $src[] = (string) $pool[$other]->title;
+                        $src[] = (string) ($pool[$other]->summary ?? '');
+                    }
+                }
+                $all = array_merge($all, $src);
+                foreach (['headline', 'summary', 'soWhat', 'soWhatTl'] as $f) {
+                    $run = CopyCheck::first((string) ($s[$f] ?? ''), $src);
+                    if ($run !== null) {
+                        $out['problems'][] = "Story {$id}'s {$f} repeats the report word for word (\"{$run}\"). Say it in your own words, keeping the names, numbers and dates exact.";
+                        $out['stories'][] = $id;
+                    }
+                }
+            }
+        }
+        if (! $all) {
+            return $out;
+        }
+        foreach (['title', 'excerpt', 'metaDescription', 'metaTitle'] as $f) {
+            $run = CopyCheck::first((string) ($d[$f] ?? ''), $all);
+            if ($run !== null) {
+                $out['problems'][] = "The {$f} repeats a report word for word (\"{$run}\"). Say it in your own words.";
+                $out['page'][] = $f;
+            }
+        }
+        $more = ['intro' => (string) ($d['intro'] ?? '')];
+        foreach (array_values((array) ($d['actions'] ?? [])) as $i => $a) {
+            $more["actions.{$i}"] = (string) $a;
+        }
+        foreach (array_values((array) ($d['faq'] ?? [])) as $i => $f) {
+            $more["faq.{$i}"] = is_array($f) ? trim(($f['q'] ?? '') . "\n" . ($f['a'] ?? '')) : '';
+        }
+        foreach ($more as $f => $text) {
+            $run = CopyCheck::first($text, $all);
+            if ($run !== null) {
+                $out['problems'][] = "The {$f} repeats a report word for word (\"{$run}\"). Say it in your own words.";
+                $out['drop'][] = $f;
+            }
+        }
+        $out['stories'] = array_values(array_unique($out['stories']));
+
+        return $out;
+    }
+
+    /** The answer without the stories and parts that still copy a report. */
+    private static function without(array $d, array $storyIds, array $drop): array
+    {
+        foreach ((array) ($d['themes'] ?? []) as $t => $theme) {
+            $d['themes'][$t]['stories'] = array_values(array_filter((array) ($theme['stories'] ?? []),
+                fn ($s) => is_array($s) && ! in_array((int) ($s['id'] ?? 0), $storyIds, true)));
+        }
+        if (in_array('intro', $drop, true)) {
+            $d['intro'] = '';
+        }
+        foreach (['actions', 'faq'] as $list) {
+            $d[$list] = array_values(array_filter(array_values((array) ($d[$list] ?? [])),
+                fn ($v, $i) => ! in_array("{$list}.{$i}", $drop, true), ARRAY_FILTER_USE_BOTH));
+        }
+
+        return $d;
     }
 
     private function parse(string $text): ?array
