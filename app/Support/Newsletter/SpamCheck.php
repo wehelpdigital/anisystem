@@ -186,7 +186,9 @@ class SpamCheck
             if ($done >= $limit) {
                 break;
             }
-            if (self::badge($e)) {
+            // A badge without a score is one SpamAssassin could not give: ask again.
+            $b = self::badge($e);
+            if ($b && $b['score'] !== null) {
                 continue;
             }
             $r = self::forSaved($e);
