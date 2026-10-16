@@ -1540,11 +1540,14 @@
     function closeView() {
         const v = $('lcView');
         if (v.hidden) return;
+        // A check just made, closed: a new check starts at step 1 (2026-10-17, the owner).
+        // The field stays, as the page remembers it; the photos and the readings go.
+        const fresh = !!(VIEW && VIEW.fresh);
         v.classList.remove('is-on');
         document.documentElement.classList.remove('lc-lock');
         if (window.unregisterOverlay) window.unregisterOverlay('lcc-view');
         VIEW = null;
-        setTimeout(() => { if (!v.classList.contains('is-on')) { v.hidden = true; $('lcViewBody').innerHTML = ''; } }, reduce() ? 0 : 300);
+        setTimeout(() => { if (!v.classList.contains('is-on')) { v.hidden = true; $('lcViewBody').innerHTML = ''; } if (fresh) newCheck(); }, reduce() ? 0 : 300);
     }
     $('lcViewX').addEventListener('click', closeView);
     $('lcViewName').addEventListener('click', () => { if (VIEW) openRename(VIEW.item.id); });
@@ -1556,7 +1559,7 @@
     $('lcViewBody').addEventListener('click', (e) => {
         const b = e.target.closest('[data-vact]');
         if (!b || !VIEW) return;
-        if (b.dataset.vact === 'new') { closeView(); newCheck(); }
+        if (b.dataset.vact === 'new') { VIEW.fresh = false; closeView(); newCheck(); }
         if (b.dataset.vact === 'ren') openRename(VIEW.item.id);
         if (b.dataset.vact === 'del') delCheck(VIEW.item.id);
         if (b.dataset.vact === 'fert') openFert();

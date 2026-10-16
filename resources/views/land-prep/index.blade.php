@@ -2988,7 +2988,36 @@
             if (!landed) requestAnimationFrame(() => $('lpErr').scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'center' }));
         }
     });
-    window.lpWizardAgain = () => { show(0); };
+    /* A plan made leaves a clean form (2026-10-17, the owner): closing it,
+       "Plan another field" or deleting it brings the wizard back at the
+       crop with every answer as the page first opens it: rice, no lots, no
+       day, no machines, two blank workers, no place and no notes. The
+       options, the varieties, the farm's lots and people stay loaded. */
+    function resetWizard() {
+        Object.assign(S, { crop: 'rice', method: null, variety: '', varRec: null, custom: false, seedType: '', seedSource: '', planting: null,
+            lots: [], fleet: {}, handOnly: false, workers: [newWorker(), newWorker()], dateMode: 'first',
+            loc: { province: '', town: '', place: '', lat: null, lng: null }, notes: '', saveNew: true });
+        ACK.date = null;
+        ACK.review = null;
+        DS.sel = null;
+        DS.target = null;
+        // Answers still on their way for the last plan are let go.
+        seedAsk++; recAsk++; castAsk++;
+        clearTimeout(castT);
+        castSig = '';
+        const tag = document.querySelector('#lpWiz [data-screen="crop"] .cp-tag');
+        if (tag && window.cropPickSet) window.cropPickSet(tag, 'rice');
+        $('lpNotes').value = '';
+        $('lpPlaceText').value = '';
+        $('lpSaveNewOn').checked = true;
+        $('lpSeed').hidden = true;
+        ['lpRec', 'lpCast', 'lpCastRev', 'lpTimeCard', 'lpReview'].forEach((id) => { const el = $(id); el._html = ''; el.innerHTML = ''; el.classList.remove('is-busy'); });
+        ['lpDateErr', 'lpWErr', 'lpPlaceErr', 'lpErr'].forEach((id) => { $(id).hidden = true; });
+        if (OPT) { paintMethods(); paintVarTag(false); paintQuote(); }
+        syncFq();
+        show(0, true);
+    }
+    window.lpWizardAgain = resetWizard;
 
     /* ---------------- the sheets ---------------- */
     const sheetLock = () => document.documentElement.classList.toggle('lp-lock', !!document.querySelector('.lp-sheet[open]') || !$('lpView').hidden);
@@ -3101,8 +3130,16 @@
         if (v.hidden) return;
         if (window.unregisterOverlay) window.unregisterOverlay('lp:view');
         v.classList.remove('is-on', 'is-drawn');
-        const fresh = VIEW && VIEW.mode === 'fresh';
-        setTimeout(() => { v.hidden = true; $('lpViewBody').innerHTML = ''; sheetLock(); if (fresh) tab('list'); }, reduce() ? 0 : 300);
+        /* A plan just made closes onto the wizard, started again and empty
+           (2026-10-17, the owner: "the wizard should be back to 0 or reset");
+           the plan waits in Your plans. 'again' ("Plan another field", or a
+           fresh plan deleted) does the same. */
+        const mode = VIEW ? VIEW.mode : null;
+        setTimeout(() => {
+            v.hidden = true; $('lpViewBody').innerHTML = ''; sheetLock();
+            if (mode === 'fresh' || mode === 'again') tab('plan');
+            if (mode === 'fresh' || mode === 'again') window.lpWizardAgain();
+        }, reduce() ? 0 : 300);
         if (new URLSearchParams(location.search).has('open')) history.replaceState(null, '', location.pathname);
     }
     $('lpViewX').addEventListener('click', closeView);
@@ -3581,7 +3618,7 @@
         if (act === 'send') { openPort(); return; }
         if (act === 'season') { openSeason(); return; }
         if (act === 'rename') { openRename(VIEW.item); return; }
-        if (act === 'again') { closeView(); setTimeout(() => { tab('plan'); window.lpWizardAgain(); }, 320); return; }
+        if (act === 'again') { VIEW.mode = 'again'; closeView(); return; }
         if (act === 'delete') {
             const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this plan?', message: 'Only the plan is deleted. The credits are not refunded.', confirmText: 'Delete' }) : confirm('Delete this plan?');
             if (!ok) return;
@@ -3589,7 +3626,7 @@
                 const res = await window.api(U.del(VIEW.item.id), { method: 'DELETE' });
                 window.toast?.(res.message);
                 LIST.stale = true;
-                VIEW.mode = 'saved';
+                VIEW.mode = VIEW.mode === 'fresh' ? 'again' : 'saved';
                 closeView();
                 if (!$('lpListPane').hidden) loadList(false);
             } catch (err) { window.toast?.(err.message, 'error'); }

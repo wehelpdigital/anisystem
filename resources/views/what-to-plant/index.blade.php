@@ -1237,7 +1237,7 @@
             let data = res.data;
             if (data.pending) {
                 // The shared poll: the bar, the clock and the hang check ride along.
-                data = await window.aneeWait.poll({ id: data.id || res.data.id, job: U.job, phases: window.aneeWait.phases.plain });
+                data = await window.aneeWait.poll({ id: data.id || res.data.id, job: U.job, phases: window.aneeWait.phases.research });
             }
             OPT.balance = data.balance;
             landed = true;
@@ -1253,7 +1253,9 @@
             if (!landed) window.aneeWait.fail();
             wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = '');
             show(step);
-            if (landed) { wiz.hidden = true; $id('wpQuote').hidden = true; }
+            // Only while the fresh view is still up: closed during the veil's last
+            // moments (Escape), the wizard has already come back and stays.
+            if (landed && VIEW_MODE === 'fresh' && !$id('wpView').hidden) { wiz.hidden = true; $id('wpQuote').hidden = true; }
         }
     });
 
@@ -1284,13 +1286,42 @@
     $id('wpViewX').addEventListener('click', closeView);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(); });
 
+    /* A finished run leaves a clean form (2026-10-17, the owner): the lot,
+       the month, every choice, the typed words and the crops in mind all
+       cleared, the order of what matters as it came, back at the first
+       step as if the page had just opened. The options, the lots and the
+       price stay loaded; the field's country stays, a setting more than an
+       answer. */
+    function resetWizard() {
+        Object.assign(state, { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], ph: 'unsure', phValue: '',
+            soilExtra: [], waterLook: [], lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: [],
+            priorities: [], cropsAsked: [], cropsOther: '', exclude: [], lot: null });
+        Object.keys(TOUCH).forEach((k) => { delete TOUCH[k]; });
+        LIT = {};
+        AUTO_PREV = '';
+        AUTO_AREA = '';
+        if (LOTS) LOTS.set(null);
+        ['wpPhValue', 'wpPrevCrop', 'wpGrewWell', 'wpArea', 'wpNotes', 'wpCropsOther', 'wpCropSearch'].forEach((id) => { if ($id(id)) $id(id).value = ''; });
+        $id('wpPhIn').hidden = true;
+        const now = $id('wpMonthNow');
+        now.textContent = 'Pick the month and year';
+        now.classList.add('is-none');
+        // The choices drawn again, none lit, the order of what matters as it came.
+        if (OPT) { paintOptions(); paintAsked(); }
+        paintLot();
+        show(0);
+    }
+
+    // Every way back from a fresh result: the X, Escape, "Run another analysis", Delete.
     function wizardBack() {
         $id('wpWiz').hidden = false;
         if (OPT && OPT.canUse && OPT.quote) $id('wpQuote').hidden = false;
         $id('wpReport').hidden = true;
         $id('wpReport').classList.remove('is-drawn');
-        show(0);
-        $id('wpWiz').scrollIntoView({ behavior: 'auto', block: 'start' });
+        // Shown first, so the last step fades out where it stood and the first fades in.
+        resetWizard();
+        if (window.aneeStepTop) window.aneeStepTop($id('wpWiz'));
+        else $id('wpWiz').scrollIntoView({ behavior: 'auto', block: 'start' });
     }
 
     /* ---------------- the harvest: words for a risk score, the timeline ---------------- */

@@ -1133,7 +1133,7 @@
             await window.aneeWait.done({ title: 'Your field is read.', line: 'Here is what the satellites saw.' });
             OPT.balance = d.balance;
             quote();
-            openReport(d);
+            openReport(d, true);
         } catch (err) {
             window.aneeWait.fail();
             window.toast?.(err.message || 'The analysis did not finish. Nothing was charged.', 'error');
@@ -1194,8 +1194,11 @@
         cloud: '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 18a4 4 0 01-.6-8A6 6 0 0118 8.5 4.5 4.5 0 0117.5 18H7z"/></svg>',
     };
 
-    const openReport = (d) => {
+    // fresh: just run, so closing it starts the wizard again (2026-10-17, the owner).
+    let viewFresh = false;
+    const openReport = (d, fresh) => {
         cur = d;
+        viewFresh = !!fresh;
         const rep = d.report || {}, a = rep.anee || {}, s = rep.satellite || {}, s2 = s.sentinel2 || {}, s1 = s.sentinel1 || {}, cx = rep.context || {};
         const score = Math.max(0, Math.min(100, Number(a.healthScore) || 0));
         const ringColor = score >= 75 ? '#66bd63' : score >= 55 ? '#d9ef8b' : score >= 35 ? '#fdae61' : '#f46d43';
@@ -1294,8 +1297,56 @@
         const view = $('satView');
         view.classList.remove('is-on');
         document.documentElement.classList.remove('sat-lock');
-        setTimeout(() => { view.hidden = true; }, reduce() ? 0 : 300);
+        const fresh = viewFresh;
+        viewFresh = false;
+        setTimeout(() => { view.hidden = true; if (fresh) resetWizard(); }, reduce() ? 0 : 300);
     };
+    /* A finished reading leaves a clean form (2026-10-17, the owner): the
+       lot, the crop, the variety, the planting, the ground, the worries and
+       the drawn field all let go, back at the first step as the page first
+       opens. The options, the lots and the price stay loaded. */
+    function resetWizard() {
+        Object.assign(st, { place: null, location: '', crop: null, variety: '', varRecord: null, method: 'transplanted', water: 'irrigated', soil: [], concerns: [], ring: [], densityUnit: 'seeds_ha' });
+        Object.assign(LOT, { lot: null, L: {}, at: null });
+        LOT.n++;
+        locating++;
+        Object.keys(TOUCH).forEach((k) => { delete TOUCH[k]; });
+        phByProfile = false;
+        cropByLot = false;
+        drawFresh = true;
+        if (LOTS) LOTS.set(null);
+        reveal($('satOnMap'), false);
+        $('satPicked').textContent = '';
+        $('satLotSaid').hidden = true;
+        paintLotSize();
+        $('satCropIcon').textContent = '🌱';
+        $('satCropNow').textContent = 'Choose the crop';
+        $('satCropNow').classList.add('is-none');
+        varSet('', null);
+        $('satPlanted').value = '';
+        window.smDateTags?.($('satWiz'));
+        $('satDensity').value = '';
+        $('satNotes').value = '';
+        // The pH as the page opens: not known, the handles at 6 and 6.8.
+        $('satPhOn').checked = false;
+        $('satPhBox').hidden = true;
+        $('satPhErr').hidden = true;
+        $('satPhLo').value = 6;
+        $('satPhHi').value = 6.8;
+        phPaint('lo');
+        // The drawing map keeps its tiles; the old field's corners leave it.
+        dmarks.forEach((m) => m.setMap(null));
+        dmarks = [];
+        if (dpoly) dpoly.setPath([]);
+        if (OPT) {
+            tagSay('satMethodBtn', words(OPT.methods[st.method])[0]);
+            tagSay('satDensityUnitBtn', DENSITY[st.densityUnit]);
+            concernsSay();
+            // No lot: the water, the soil and the pH blocks all come back, nothing filled in.
+            applyProfile({}, {});
+        }
+        show(0, true);
+    }
     $('satViewX').addEventListener('click', closeView);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('satView').hidden) closeView(); });
 

@@ -1553,13 +1553,17 @@
             if (!landed) window.aneeWait.fail();
             wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = '');
             show(step);
-            if (landed) { wiz.hidden = true; $id('cpQuote').hidden = true; }
+            // Only while the fresh view is still up: closed during the veil's last
+            // moments (Escape), the wizard has already come back and stays.
+            if (landed && VIEW_MODE === 'fresh' && !$id('cpView').hidden) { wiz.hidden = true; $id('cpQuote').hidden = true; }
         }
     });
 
     /* Full screen when it lands; the page's copy underneath. */
+    let VIEW_MODE = null;
     function openView(item, mode) {
         const view = $id('cpView');
+        VIEW_MODE = mode;
         const crop = (OPT ? OPT.crops.find((c) => c.key === (item.params || {}).crop) : null) || {};
         $id('cpViewTitle').textContent = crop.label ? crop.label + ' crop protocol' : 'Crop protocol analysis';
         const host = $id('cpViewReport');
@@ -1575,18 +1579,53 @@
         if (view.hidden) return;
         view.classList.remove('is-on');
         document.documentElement.classList.remove('va-view-lock');
-        setTimeout(() => { view.hidden = true; $id('cpViewReport').innerHTML = ''; }, 300);
+        // Closing a fresh protocol brings the wizard back, empty (2026-10-17, the owner); it is on the Saved tab.
+        const wasFresh = VIEW_MODE === 'fresh';
+        VIEW_MODE = null;
+        setTimeout(() => { view.hidden = true; $id('cpViewReport').innerHTML = ''; if (wasFresh) wizardBack(); }, 300);
     }
     $id('cpViewX').addEventListener('click', closeView);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(); });
 
+    /* A finished run leaves a clean form (2026-10-17, the owner): the lot,
+       the crop, the variety, the month, every choice and every typed number
+       cleared, back at the first step as if the page had just opened. The
+       options, the lots and the price stay loaded. */
+    function resetWizard() {
+        Object.assign(state, { location: '', crop: '', variety: '', month: null, method: null, priority: null, targetYield: '', yieldUnit: '', area: '', soil: null, water: null, problems: [], notes: '',
+            soilConditions: [], testP: 'unsure', testK: 'unsure', prevCrop: 'unsure', residue: 'unsure', fertHistory: '', granulars: [],
+            varRecord: null, potential: '', seedAmount: '', seedUnit: 'kg', germination: '', ph: '', lot: null });
+        Object.keys(TOUCH).forEach((k) => { delete TOUCH[k]; });
+        if (LOTS) LOTS.set(null);
+        ['cpLocation', 'cpVariety', 'cpPotential', 'cpTarget', 'cpArea', 'cpSeed', 'cpGerm', 'cpNotes', 'cpPh', 'cpFertHistory', 'cpCropSearch'].forEach((id) => { if ($id(id)) $id(id).value = ''; });
+        $id('cpCropIcon').textContent = '🌱';
+        const crop = $id('cpCropNow');
+        crop.textContent = 'Choose the crop';
+        crop.classList.add('is-none');
+        const month = $id('cpMonthNow');
+        month.textContent = 'Pick the month and year';
+        month.classList.add('is-none');
+        cropSift();
+        $id('cpNeed').hidden = true;
+        needAsk++;
+        // The choices drawn again, none lit but each "not sure", the first yield unit, seeds in kilos.
+        if (OPT) paintOptions();
+        varSay();
+        potSay();
+        paintLot();
+        show(0);
+    }
+
+    // Every way back from a fresh protocol: the X, Escape, "Write another protocol", Delete.
     function wizardBack() {
         $id('cpWiz').hidden = false;
         if (OPT && OPT.canUse && OPT.quote) $id('cpQuote').hidden = false;
         $id('cpReport').hidden = true;
         $id('cpReport').classList.remove('is-drawn');
-        show(0);
-        $id('cpWiz').scrollIntoView({ behavior: 'auto', block: 'start' });
+        // Shown first, so the last step fades out where it stood and the first fades in.
+        resetWizard();
+        if (window.aneeStepTop) window.aneeStepTop($id('cpWiz'));
+        else $id('cpWiz').scrollIntoView({ behavior: 'auto', block: 'start' });
     }
 
     /* ---------------- the report, drawn ---------------- */
@@ -2057,7 +2096,7 @@
         }
 
         hostEl.querySelector('[data-cp-attach]').addEventListener('click', () => { if (item.savedId) window.location.href = U.anee + '?analysis=' + item.savedId; });
-        hostEl.querySelector('[data-cp-again]')?.addEventListener('click', () => { closeView(); wizardBack(); });
+        hostEl.querySelector('[data-cp-again]')?.addEventListener('click', () => { VIEW_MODE = null; closeView(); wizardBack(); });
         hostEl.querySelector('[data-cp-delete]').addEventListener('click', async () => {
             const ok = window.confirmAction
                 ? await confirmAction({ title: 'Delete this protocol?', message: 'Only the report is deleted. Credits already used are not returned.', confirmText: 'Delete', danger: true })
@@ -2066,6 +2105,7 @@
             try {
                 const res = await api(U.del(item.savedId), { method: 'DELETE' });
                 toast(res.message);
+                VIEW_MODE = null;
                 closeView();
                 $id('cpReport').hidden = true;
                 loadSaved().catch(() => {});

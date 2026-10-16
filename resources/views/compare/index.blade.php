@@ -876,9 +876,28 @@ const __init = () => {
             const rest = keep.toString();
             try { history.replaceState(history.state, '', location.pathname + (rest ? '?' + rest : '')); } catch (_) { /* the address keeps it */ }
         }
-        // A fresh one, or one the address opened, closes onto the shelf it lives on.
-        if ((mode === 'fresh' || fromAddress) && CAN_WRITE && $id('cmpSavedPane').hidden) tab('saved');
+        // A fresh one leaves the wizard as the page first opens it.
+        if (mode === 'fresh') resetWizard();
+        // A fresh one closes onto the wizard, started again (2026-10-17, the owner); one the address opened, onto the shelf it lives on.
+        if (mode === 'fresh') { if ($id('cmpGenPane').hidden) tab('gen'); }
+        else if (fromAddress && CAN_WRITE && $id('cmpSavedPane').hidden) tab('saved');
         else if (S.savedDirty) loadSaved(true);
+    }
+
+    /* A finished comparison leaves a clean form (2026-10-17, the owner):
+       the kind, both seasons and both reports let go, and Anee's read off,
+       as the page first opens. The seasons and their shelves stay loaded.
+       Behind the Saved tab it fades in with the tab; in sight, it fades. */
+    function resetWizard() {
+        S.kind = null;
+        Object.assign(S.a, { season: null, report: null });
+        Object.assign(S.b, { season: null, report: null });
+        S.picking = 'a';
+        const box = $id('cmpWithAi');
+        if (box) box.checked = false;
+        paintAi();
+        paintAll();
+        if (!$id('cmpGenPane').hidden && !$id('cmpWizard').hidden) reveal($id('cmpWizard'));
     }
 
     async function removeViewing() {

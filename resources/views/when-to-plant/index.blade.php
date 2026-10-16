@@ -1353,8 +1353,12 @@
             wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = '');
             show(step);
             // The view has the floor; closing it brings the wizard back at
-            // its first step, EMPTY, with the run already on the Saved tab.
-            if (landed) { resetWizard(); wiz.hidden = true; $id('wtpQuote').hidden = true; }
+            // its first step, EMPTY, with the run already on the Saved tab
+            // (wizardBack, 2026-10-17: the reset waits for the close, so the
+            // farmer sees the wizard fade back to its start).
+            // Only while that view is still up: closed during the veil's last
+            // moments (Escape), the wizard has already come back and stays.
+            if (landed && VIEW_MODE === 'fresh' && !$id('wtpView').hidden) { wiz.hidden = true; $id('wtpQuote').hidden = true; }
         }
     });
 
@@ -1407,13 +1411,16 @@
         show(0);
     }
 
+    // Every way back from a fresh result: the X, Escape, "Run another analysis", Delete.
     function wizardBack() {
         $id('wtpWiz').hidden = false;
         if (OPT && OPT.canUse && OPT.quote) $id('wtpQuote').hidden = false;
         $id('wtpReport').hidden = true;
         $id('wtpReport').classList.remove('is-drawn');
-        show(0);
-        $id('wtpWiz').scrollIntoView({ behavior: 'auto', block: 'start' });
+        // Shown first, so the last step fades out where it stood and the first fades in.
+        resetWizard();
+        if (window.aneeStepTop) window.aneeStepTop($id('wtpWiz'));
+        else $id('wtpWiz').scrollIntoView({ behavior: 'auto', block: 'start' });
     }
 
     // The host a source came from, or nothing for a search redirect — the
