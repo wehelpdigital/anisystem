@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Farmers buy fertilizer by the bag, but the crop needs it by the kilo of nutrient. A 50 kg bag of urea and a 50 kg bag of 14 14 14 look the same on the tricycle. Yet one carries 23 kg of nitrogen and the other only 7 kg each of nitrogen, phosphate and potash.\n\nSo the honest answer depends on two things: the harvest you aim for and the grades you buy. Prices below are FPA national averages for October 5 to 9, 2026."
+      "text": "Farmers buy fertilizer by the bag, but the crop needs it by the kilo of nutrient. A 50 kg bag of urea and a 50 kg bag of 14 14 14 look the same on the tricycle. Yet one carries 23 kg of nitrogen and the other only 7 kg each of nitrogen, phosphate and potash.\n\nSo the honest answer depends on two things: the harvest you aim for and the grades you buy. Prices below are national averages for October 5 to 9, 2026."
     },
     {
       "type": "list",
@@ -49,7 +49,7 @@
     },
     {
       "type": "table",
-      "caption": "Inorganic bags per hectare of transplanted rice, and their cost at FPA national average prices for October 5 to 9, 2026 (plain 14 14 14 and prilled urea). One cavan in the quick guide is 56 kg.",
+      "caption": "Inorganic bags per hectare of transplanted rice, and their cost at national average prices for October 5 to 9, 2026 (plain 14 14 14 and prilled urea). One cavan in the quick guide is 56 kg.",
       "rows": [
         [
           "Plan and target",
@@ -124,7 +124,7 @@
     },
     {
       "type": "table",
-      "caption": "Nutrients in a 50 kg bag and FPA national average price per bag, October 5 to 9, 2026. Prices change every week.",
+      "caption": "Nutrients in a 50 kg bag and national average price per bag, October 5 to 9, 2026. Prices change every week.",
       "rows": [
         [
           "Grade",
@@ -189,7 +189,7 @@
         },
         {
           "title": "Price it before you buy",
-          "text": "Check the latest FPA weekly prices, then compare with your dealer. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows the full formula."
+          "text": "Check the latest weekly prices, then compare with your dealer. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows the full formula."
         }
       ]
     },
@@ -206,7 +206,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Compare by the kilo when bags are repacked",
-      "text": "FPA prices are for 50 kg bags. If your dealer sells repacked 25 kg sacks or loose kilos, divide the price by the weight first. Then compare it with the bag price so you know which one is cheaper."
+      "text": "Prices are for 50 kg bags. If your dealer sells repacked 25 kg sacks or loose kilos, divide the price by the weight first. Then compare it with the bag price so you know which one is cheaper."
     },
     {
       "type": "heading",
@@ -242,7 +242,7 @@
         },
         {
           "q": "How much does the fertilizer for one hectare of rice cost?",
-          "a": "At FPA national average prices for October 5 to 9, 2026, the Abonong Swak plan for 5 to 6 tons costs about PHP 9,114 per hectare. Prices change every week and differ by province, so check the latest FPA list."
+          "a": "At national average prices for October 5 to 9, 2026, the Abonong Swak plan for 5 to 6 tons costs about PHP 9,114 per hectare. Prices change every week and differ by province, so check the latest weekly price list."
         },
         {
           "q": "Do I still need organic fertilizer if I buy enough bags?",

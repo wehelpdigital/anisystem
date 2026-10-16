@@ -6,7 +6,7 @@
   "category": "Farm inputs",
   "title": "Fertilizer Dealer Guide: Yara, Atlas and How to Compare Urea Prices",
   "metaTitle": "Fertilizer Dealer Guide: Brands, Urea Price and Fakes",
-  "metaDescription": "Buy from a licensed fertilizer dealer: what Yara and Atlas sell, the latest FPA urea price, how to compare cost per kg of nutrient, and how to avoid fakes.",
+  "metaDescription": "Buy from a licensed fertilizer dealer: what Yara and Atlas sell, the latest urea price, how to compare cost per kg of nutrient, and how to avoid fakes.",
   "focusKeyword": "fertilizer dealer",
   "keywords": [
     "fertilizer dealer",
@@ -51,7 +51,7 @@
         "Check that each bag is sealed, clean and marked with its grade and FPA registration number.",
         "Weigh one bag now and then. A 50 kg bag should weigh 50 kg.",
         "Ask the fertilizer dealer where the stock came from and how long it has sat in the store.",
-        "Compare prices with the FPA weekly price report for your province before you pay."
+        "Compare prices with the weekly price report for your province before you pay."
       ]
     },
     {
@@ -105,7 +105,7 @@
     },
     {
       "type": "table",
-      "caption": "Source: FPA national weighted average retail prices, September 14 to 18, 2026. Price per kg is the bag price divided by the kilograms of N, P2O5 and K2O in a 50 kg bag, our own arithmetic from those prices.",
+      "caption": "Prices: national weighted average retail prices, September 14 to 18, 2026. Price per kg is the bag price divided by the kilograms of N, P2O5 and K2O in a 50 kg bag, our own arithmetic from those prices.",
       "rows": [
         [
           "Fertilizer",
@@ -208,7 +208,7 @@
         },
         {
           "q": "What is the urea fertilizer price today?",
-          "a": "It changes every week. For September 14 to 18, 2026, the FPA national average was about PHP 2,321 per 50 kg bag of prilled urea. Check the FPA weekly price report for your province."
+          "a": "It changes every week. For September 14 to 18, 2026, the national average was about PHP 2,321 per 50 kg bag of prilled urea. Check the weekly price report for your province."
         },
         {
           "q": "Is the cheapest bag the best buy?",

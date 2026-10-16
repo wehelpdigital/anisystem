@@ -44,7 +44,7 @@
     },
     {
       "type": "text",
-      "text": "Five inorganic fertilizer types cover most palay plans here. The Fertilizer and Pesticide Authority (FPA) also checks the price of each one every week, so they are easy to compare."
+      "text": "Five inorganic fertilizer types cover most palay plans here. Their prices are checked every week, so they are easy to compare."
     },
     {
       "type": "table",
@@ -172,11 +172,11 @@
     },
     {
       "type": "text",
-      "text": "Divide the bag price by the kilos of nutrient inside. Kilos of nutrient equal the bag weight times the grade number, divided by 100. Here is that arithmetic at the FPA national average prices for October 5 to 9, 2026."
+      "text": "Divide the bag price by the kilos of nutrient inside. Kilos of nutrient equal the bag weight times the grade number, divided by 100. Here is that arithmetic at the national average prices for October 5 to 9, 2026."
     },
     {
       "type": "table",
-      "caption": "FPA national average retail prices, October 5 to 9, 2026. Price per kilo is our own arithmetic. Prices change every week.",
+      "caption": "national average retail prices, October 5 to 9, 2026. Price per kilo is our own arithmetic. Prices change every week.",
       "rows": [
         [
           "Grade",
@@ -246,7 +246,7 @@
       "items": [
         {
           "q": "Is urea the best fertilizer for palay?",
-          "a": "Urea gave the cheapest nitrogen per kilo of the straight nitrogen grades in the FPA prices for October 5 to 9, 2026. But it has no phosphorus or potassium. So the usual plans pair it with 14 14 14 or 16 20 0 at basal and potash with the last dose."
+          "a": "Urea gave the cheapest nitrogen per kilo of the straight nitrogen grades in the national prices for October 5 to 9, 2026. But it has no phosphorus or potassium. So the usual plans pair it with 14 14 14 or 16 20 0 at basal and potash with the last dose."
         },
         {
           "q": "What is the best fertilizer for palay at tillering?",

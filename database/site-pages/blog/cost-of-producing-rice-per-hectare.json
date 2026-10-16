@@ -163,7 +163,7 @@
     },
     {
       "type": "table",
-      "caption": "Sample lines for one hectare. Fertilizer uses FPA national average prices for October 5 to 9, 2026, on the usual plan for 5 to 6 tons. Seed and labor are 2024 national averages reported by Philstar.",
+      "caption": "Sample lines for one hectare. Fertilizer uses national average prices for October 5 to 9, 2026, on the usual plan for 5 to 6 tons. Seed and labor are 2024 national averages reported by Philstar.",
       "rows": [
         [
           "Line",
@@ -204,7 +204,7 @@
     },
     {
       "type": "text",
-      "text": "Fertilizer prices move every week, so check the latest FPA list before you budget. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) explains the bag plan and its timing."
+      "text": "Fertilizer prices move every week, so check the latest weekly price list before you budget. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) explains the bag plan and its timing."
     },
     {
       "type": "callout",

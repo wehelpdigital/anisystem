@@ -6,7 +6,7 @@
   "category": "Farm Business",
   "title": "Farm Cash Flow: How Do I Prepare the Cash for Each Week of the Season?",
   "metaTitle": "Farm Cash Flow: Prepare the Cash for Each Week",
-  "metaDescription": "Plan your farm cash flow week by week: when rice season costs fall due, a fertilizer cash plan at current FPA prices, and what to do if cash runs short.",
+  "metaDescription": "Plan your farm cash flow week by week: when rice season costs fall due, a fertilizer cash plan at current prices, and what to do if cash runs short.",
   "focusKeyword": "farm cash flow",
   "keywords": [
     "farm cash flow",
@@ -45,11 +45,11 @@
     },
     {
       "type": "text",
-      "text": "Here is the usual rhythm for transplanted rice, using the usual fertilizer plan for a 5 to 6 ton crop on a 111 to 120 day variety. The fertilizer amounts use FPA national average prices for October 5 to 9, 2026."
+      "text": "Here is the usual rhythm for transplanted rice, using the usual fertilizer plan for a 5 to 6 ton crop on a 111 to 120 day variety. The fertilizer amounts use national average prices for October 5 to 9, 2026."
     },
     {
       "type": "table",
-      "caption": "When cash goes out in a rice season, per hectare. Fertilizer from the usual plan at FPA national average prices. Other lines vary by farm.",
+      "caption": "When cash goes out in a rice season, per hectare. Fertilizer from the usual plan at national average prices. Other lines vary by farm.",
       "rows": [
         [
           "When",
@@ -175,7 +175,7 @@
         },
         {
           "q": "How much cash do I need for fertilizer per hectare?",
-          "a": "On the usual 5 to 6 ton plan, about PHP 9,151.72 per hectare at FPA national average prices for October 5 to 9, 2026. Prices change every week, so check the latest FPA list."
+          "a": "On the usual 5 to 6 ton plan, about PHP 9,151.72 per hectare at national average prices for October 5 to 9, 2026. Prices change every week, so check the latest weekly price list."
         },
         {
           "q": "Where can a small farmer borrow for the season?",

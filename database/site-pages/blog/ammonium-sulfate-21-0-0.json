@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Ammosul comes as small white or beige crystals that dissolve fast in water. The Fertilizer and Pesticide Authority (FPA) tracks its price every week, right beside urea and complete.\n\nIt is a nitrogen fertilizer first. But the sulfur it carries is the reason to pick it over urea on some farms, so it pays to know when that sulfur matters."
+      "text": "Ammosul comes as small white or beige crystals that dissolve fast in water. Its price is tracked every week, right beside urea and complete.\n\nIt is a nitrogen fertilizer first. But the sulfur it carries is the reason to pick it over urea on some farms, so it pays to know when that sulfur matters."
     },
     {
       "type": "heading",
@@ -52,7 +52,7 @@
     },
     {
       "type": "table",
-      "caption": "Ammonium sulfate and urea side by side. Prices are FPA national averages for September 14 to 18, 2026 and change every week.",
+      "caption": "Ammonium sulfate and urea side by side. Prices are national averages for September 14 to 18, 2026 and change every week.",
       "rows": [
         [
           "",
@@ -175,7 +175,7 @@
         },
         {
           "q": "How much is ammonium sulfate per bag?",
-          "a": "The FPA national average for September 14 to 18, 2026 was PHP 1,213.63 per 50 kg bag, up from PHP 841.47 in early January 2026. Check the FPA list for your province."
+          "a": "The national average for September 14 to 18, 2026 was PHP 1,213.63 per 50 kg bag, up from PHP 841.47 in early January 2026. Check the FPA list for your province."
         },
         {
           "q": "Can I buy ammonium nitrate fertilizer in the Philippines?",

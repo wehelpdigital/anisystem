@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Many farmers just call it 16 20 fertilizer. The price lists of the Fertilizer and Pesticide Authority (FPA) call it ammophos, and they track it right beside urea and complete. It is a fertilizer with phosphorus and nitrogen together, which makes it a good first dose for a young crop.\n\nBut it has one gap you must plan around: zero potassium. Get that part right and 16 20 0 can save you money at planting."
+      "text": "Many farmers just call it 16 20 fertilizer. The weekly price lists call it ammophos, and they track it right beside urea and complete. It is a fertilizer with phosphorus and nitrogen together, which makes it a good first dose for a young crop.\n\nBut it has one gap you must plan around: zero potassium. Get that part right and 16 20 0 can save you money at planting."
     },
     {
       "type": "heading",
@@ -77,7 +77,7 @@
     },
     {
       "type": "table",
-      "caption": "Nutrients per 50 kg bag and FPA national average price for September 14 to 18, 2026. Prices change every week.",
+      "caption": "Nutrients per 50 kg bag and national average price for September 14 to 18, 2026. Prices change every week.",
       "rows": [
         [
           "Grade",
@@ -184,7 +184,7 @@
         },
         {
           "q": "How much is 16 20 0 per bag?",
-          "a": "The FPA national average for September 14 to 18, 2026 was PHP 1,753.71 per 50 kg bag. In January 2026 it was PHP 1,460.84. Check the FPA list for your province before you buy."
+          "a": "The national average for September 14 to 18, 2026 was PHP 1,753.71 per 50 kg bag. In January 2026 it was PHP 1,460.84. Check the FPA list for your province before you buy."
         },
         {
           "q": "What fertilizer is highest in phosphorus?",
