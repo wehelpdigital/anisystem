@@ -1,5 +1,5 @@
 {
- "v": 1,
+ "v": 2,
  "levels": {
   "ok": "Mixes fine",
   "care": "Jar test first",
@@ -22,7 +22,51 @@
    ],
    "gap": 14,
    "why": "Organophosphate and carbamate insecticides stop rice from breaking down propanil, so the weed killer burns the rice itself.",
-   "fix": "Keep at least 14 days between {a} and {b}, before or after. Choose an insecticide from another group if you must spray sooner."
+   "fix": "Keep at least 14 days between {a} and {b}, before or after. Choose an insecticide from another group if you must spray sooner.",
+   "src": [
+    "https://www.greenbook.net/api/products/65889/documents/38824/download",
+    "https://www.greenbook.net/api/products/46656/documents/9112/download",
+    "https://www.greenbook.net/api/products/65885/documents/38816/download"
+   ]
+  },
+  {
+   "id": "bispyribac_propanil",
+   "on": [
+    "tank",
+    "near"
+   ],
+   "level": "no",
+   "a": [
+    "ai:Bispyribac sodium"
+   ],
+   "b": [
+    "propanil",
+    "ai:Malathion"
+   ],
+   "gap": 7,
+   "why": "The bispyribac label warns that propanil and malathion weaken it or injure the rice.",
+   "fix": "Keep about 7 days between {a} and {b}.",
+   "src": [
+    "https://www.greenbook.net/api/products/41432/documents/7756/download"
+   ]
+  },
+  {
+   "id": "bispyribac_oil",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "ai:Bispyribac sodium"
+   ],
+   "b": [
+    "oil"
+   ],
+   "why": "The bispyribac label bans crop oil with it.",
+   "fix": "Use the spreader its label names instead of an oil.",
+   "src": [
+    "https://www.greenbook.net/api/products/41432/documents/7756/download"
+   ]
   },
   {
    "id": "sucorn_op",
@@ -39,7 +83,58 @@
    ],
    "gap": 7,
    "why": "Corn cannot break down these sulfonylurea weed killers while an organophosphate insecticide is in it, and the corn is stunted or burned.",
-   "fix": "Do not spray {a} with {b}. Keep about 7 days between them, and check the label if an organophosphate went into the soil at planting."
+   "fix": "Do not spray {a} with {b}. Keep about 7 days between them, and check the label if an organophosphate went into the soil at planting.",
+   "src": [
+    "https://www.greenbook.net/api/products/65179/documents/36585/download",
+    "https://www.greenbook.net/api/products/46560/documents/9043/download"
+   ]
+  },
+  {
+   "id": "nicosulfuron_bentazon_24d",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "ai:Nicosulfuron"
+   ],
+   "b": [
+    "ai:Bentazone",
+    "ai:2,4-D amine",
+    "ai:2,4-D ester",
+    "ai:2,4-D"
+   ],
+   "why": "Bentazon with nicosulfuron can badly injure corn, and 2,4-D in the same tank weakens its grass control.",
+   "fix": "Spray {a} on its own day.",
+   "src": [
+    "https://www.greenbook.net/api/products/65179/documents/36585/download"
+   ]
+  },
+  {
+   "id": "cyhalofop_named",
+   "on": [
+    "tank",
+    "near"
+   ],
+   "level": "no",
+   "a": [
+    "ai:Cyhalofop butyl"
+   ],
+   "b": [
+    "ai:2,4-D amine",
+    "ai:2,4-D ester",
+    "ai:2,4-D",
+    "ai:MCPA",
+    "ai:Carfentrazone ethyl",
+    "ai:Bensulfuron methyl"
+   ],
+   "gap": 7,
+   "why": "The cyhalofop rice label bans these partners because grass control drops.",
+   "fix": "Spray {a} on the grasses first and {b} about a week later.",
+   "src": [
+    "https://www.greenbook.net/api/products/42762/documents/7944/download",
+    "https://www.greenbook.net/api/products/41526/documents/7801/download"
+   ]
   },
   {
    "id": "accase_broadleaf",
@@ -54,10 +149,127 @@
     "auxin",
     "bentazon",
     "als",
+    "propanil",
+    "ppo"
+   ],
+   "gap": 7,
+   "weak": true,
+   "why": "Broadleaf weed killers often weaken grass killers like {a} when they share a tank, so the grasses may survive.",
+   "fix": "Spray {a} on the grasses first and {b} some days apart, or use a product sold with both on one label.",
+   "src": [
+    "https://www.greenbook.net/api/products/65119/documents/36372/download",
+    "https://www.greenbook.net/api/products/45369/documents/8283/download",
+    "https://www.greenbook.net/api/products/12561/documents/7108/download"
+   ]
+  },
+  {
+   "id": "cyhalofop_partners",
+   "on": [
+    "tank"
+   ],
+   "level": "ok",
+   "a": [
+    "ai:Cyhalofop butyl"
+   ],
+   "b": [
+    "ai:Penoxsulam",
+    "ai:Pendimethalin",
+    "ai:Quinclorac",
+    "ai:Clomazone"
+   ],
+   "why": "The cyhalofop rice label names {b} as a partner.",
+   "fix": "",
+   "src": [
+    "https://www.greenbook.net/api/products/41526/documents/7801/download",
+    "https://www.greenbook.net/api/products/45221/documents/8245/download"
+   ]
+  },
+  {
+   "id": "fenoxaprop_partners",
+   "on": [
+    "tank"
+   ],
+   "level": "ok",
+   "a": [
+    "ai:Fenoxaprop P ethyl"
+   ],
+   "b": [
+    "ai:Bentazone",
+    "ai:Bensulfuron methyl",
+    "ai:Halosulfuron methyl",
+    "ai:Carfentrazone ethyl"
+   ],
+   "why": "The fenoxaprop rice label names {b} as a partner.",
+   "fix": "",
+   "src": [
+    "https://www.greenbook.net/api/products/45485/documents/8342/download"
+   ]
+  },
+  {
+   "id": "propanil_partners",
+   "on": [
+    "tank"
+   ],
+   "level": "ok",
+   "a": [
     "propanil"
    ],
-   "why": "Broadleaf weed killers can weaken grass killers like {a} when they share a tank, so the grasses may survive.",
-   "fix": "Spray {a} on the grasses first and {b} a few days apart, or use a product sold with both in one label."
+   "b": [
+    "ai:Bensulfuron methyl",
+    "ai:Bentazone",
+    "ai:Penoxsulam",
+    "ai:Butachlor"
+   ],
+   "why": "Propanil and {b} are sold together on labels here.",
+   "fix": "",
+   "src": [
+    "https://www.greenbook.net/api/products/65602/documents/37822/download",
+    "https://www.greenbook.net/api/products/65885/documents/38816/download",
+    "https://www.greenbook.net/api/products/57436/documents/4643/download"
+   ]
+  },
+  {
+   "id": "bispyribac_partners",
+   "on": [
+    "tank"
+   ],
+   "level": "ok",
+   "a": [
+    "ai:Bispyribac sodium"
+   ],
+   "b": [
+    "ai:Fenoxaprop P ethyl",
+    "ai:Bensulfuron methyl",
+    "ai:Halosulfuron methyl",
+    "ai:Penoxsulam",
+    "ai:Cyhalofop butyl"
+   ],
+   "why": "The bispyribac rice label names {b} as a partner.",
+   "fix": "",
+   "src": [
+    "https://www.greenbook.net/api/products/41432/documents/7756/download"
+   ]
+  },
+  {
+   "id": "herb_herb",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "herb"
+   ],
+   "b": [
+    "herb"
+   ],
+   "weak": true,
+   "why": "Two weed killers in one tank can each work less, or together burn the crop, unless a label names the mix.",
+   "fix": "Mix them only if one of the labels names the other. Jar test first.",
+   "src": [
+    "http://www.knowledgebank.irri.org/step-by-step-production/growth/weed-management/herbicides",
+    "https://www.greenbook.net/api/products/46656/documents/9112/download",
+    "https://www.greenbook.net/api/products/10005/documents/7066/download"
+   ]
   },
   {
    "id": "glyphosate_contact",
@@ -73,8 +285,47 @@
     "bipyridyl",
     "ppo"
    ],
-   "why": "A fast burning weed killer kills the leaves before glyphosate can travel to the roots, so tough and perennial weeds grow back.",
-   "fix": "For grasses with deep roots, spray glyphosate alone and wait about a week before a burndown."
+   "why": "A fast burning weed killer can kill the leaves before glyphosate travels to the roots, so tough and perennial weeds may grow back.",
+   "fix": "For grasses with deep roots, spray glyphosate alone and wait about a week before a burndown.",
+   "src": [
+    "https://www.greenbook.net/api/products/45780/documents/8517/download"
+   ]
+  },
+  {
+   "id": "atrazine_glyphosate",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "ai:Atrazine"
+   ],
+   "b": [
+    "glyphosate"
+   ],
+   "why": "Atrazine can make glyphosate work less when they are mixed.",
+   "fix": "Spray glyphosate first to clear the weeds, then atrazine.",
+   "src": [
+    "https://extensionpubs.unl.edu/publication/g2350/na/html/view"
+   ]
+  },
+  {
+   "id": "atrazine_oil",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "ai:Atrazine"
+   ],
+   "b": [
+    "oil"
+   ],
+   "why": "Oil helps atrazine on weeds that are up, but in some weather it can burn the corn.",
+   "fix": "Use the oil only as the atrazine label says, and not on stressed corn.",
+   "src": [
+    "https://www.greenbook.net/api/products/9517/documents/7002/download"
+   ]
   },
   {
    "id": "glyphosate_cations",
@@ -96,10 +347,41 @@
     "fe_silicate"
    ],
    "why": "Calcium, magnesium, iron, zinc and other minerals bind glyphosate in the tank, and it kills fewer weeds.",
-   "fix": "Never add a foliar fertilizer to glyphosate. The only fertilizer that helps it is spray grade ammonium sulfate, added to the water first."
+   "fix": "Never add a foliar fertilizer to glyphosate. The only fertilizer that helps it is spray grade ammonium sulfate, added to the water first.",
+   "src": [
+    "https://www.greenbook.net/api/products/65007/documents/35926/download",
+    "https://edis.ifas.ufl.edu/publication/PI245",
+    "https://pubs.ext.vt.edu/BSE/bse-350/bse-350.html",
+    "https://pubs.ext.vt.edu/BSE/bse-352/bse-352.html"
+   ]
   },
   {
-   "id": "glyphosate_ams",
+   "id": "weakacid_fert",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "auxin",
+    "glufosinate"
+   ],
+   "b": [
+    "fe_calcium",
+    "fe_magnesium",
+    "fe_metal",
+    "fe_chelate"
+   ],
+   "why": "Metals in foliar fertilizer bind weak acid weed killers like {a}, and they work less.",
+   "fix": "Spray the weed killer without the fertilizer.",
+   "src": [
+    "https://www.greenbook.net/api/products/65007/documents/35926/download",
+    "https://edis.ifas.ufl.edu/publication/PI245",
+    "https://pubs.ext.vt.edu/BSE/bse-350/bse-350.html",
+    "https://pubs.ext.vt.edu/BSE/bse-352/bse-352.html"
+   ]
+  },
+  {
+   "id": "herb_ams_ok",
    "on": [
     "tank"
    ],
@@ -107,16 +389,25 @@
    "a": [
     "glyphosate",
     "auxin_salt",
-    "glufosinate"
+    "glufosinate",
+    "ai:Nicosulfuron",
+    "bipyridyl"
    ],
    "b": [
     "fe_ams"
    ],
-   "why": "Ammonium sulfate ties up the hard water minerals before they reach the weed killer, a mix many labels ask for.",
-   "fix": "Dissolve the ammonium sulfate in the water before you add {a}."
+   "why": "Ammonium sulfate ties up hard water minerals before they reach the weed killer, a mix the labels allow.",
+   "fix": "Dissolve the ammonium sulfate in the water before you add {a}.",
+   "src": [
+    "https://www.greenbook.net/api/products/65179/documents/36585/download",
+    "https://www.greenbook.net/api/products/45780/documents/8517/download",
+    "https://www.greenbook.net/api/products/64790/documents/35298/download",
+    "https://edis.ifas.ufl.edu/publication/PI245",
+    "https://pubs.ext.vt.edu/BSE/bse-352/bse-352.html"
+   ]
   },
   {
-   "id": "auxinsalt_cations",
+   "id": "amine_npk",
    "on": [
     "tank"
    ],
@@ -125,12 +416,39 @@
     "auxin_salt"
    ],
    "b": [
-    "fe_calcium",
-    "fe_magnesium",
-    "fe_metal"
+    "fe_phosphate",
+    "fe_chloride"
    ],
-   "why": "Calcium and magnesium can settle the amine salt of 2,4-D or MCPA out of the water, and the spray works less.",
-   "fix": "Spray the weed killer without the fertilizer, or do a jar test first."
+   "why": "The amine salt of 2,4-D mixes well with nitrogen fertilizer only; with NPK solutions it may not stay mixed.",
+   "fix": "Jar test first, or spray them on different days.",
+   "src": [
+    "https://www.greenbook.net/api/products/41118/documents/7631/download"
+   ]
+  },
+  {
+   "id": "herb_carrier",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "ai:Atrazine",
+    "ai:Nicosulfuron",
+    "propanil"
+   ],
+   "b": [
+    "fert_salt"
+   ],
+   "notStage": [
+    "preplant"
+   ],
+   "why": "Fertilizer in the tank raises crop injury from {a}.",
+   "fix": "Spray the weed killer in water only, and the fertilizer on another day.",
+   "src": [
+    "https://www.greenbook.net/api/products/9517/documents/7002/download",
+    "https://www.greenbook.net/api/products/65179/documents/36585/download",
+    "https://www.greenbook.net/api/products/46656/documents/9112/download"
+   ]
   },
   {
    "id": "herbicide_fert",
@@ -144,8 +462,17 @@
    "b": [
     "fert_salt"
    ],
-   "why": "Fertilizer in the tank can make a weed killer burn the crop, and some salts weaken it.",
-   "fix": "Mix fertilizer with {a} only if its label allows it. Otherwise spray them on different days."
+   "notStage": [
+    "preplant"
+   ],
+   "weak": true,
+   "why": "Fertilizer in the tank can make a weed killer burn the crop, and the salt can keep products from mixing.",
+   "fix": "Mix fertilizer with {a} only if its label allows it. Otherwise spray them on different days.",
+   "src": [
+    "https://pubs.ext.vt.edu/content/dam/pubs_ext_vt_edu/BSE/bse-351/BSE-351.pdf",
+    "https://pubs.ext.vt.edu/BSE/bse-352/bse-352.html",
+    "https://extensionpubs.unl.edu/publication/g2350/na/html/view"
+   ]
   },
   {
    "id": "nonselective_crop",
@@ -161,8 +488,14 @@
     "fung",
     "insect"
    ],
-   "why": "{a} kills any green plant it touches, so a tank mixed for the crop will hurt the crop.",
-   "fix": "Use {a} only on weeds before planting, between rows with a shield, or where its label allows. Spray crop products in their own tank."
+   "notStage": [
+    "preplant"
+   ],
+   "why": "{a} kills or hurts any green plant it touches, so a tank mixed for the crop will hurt the crop.",
+   "fix": "Use {a} only on weeds before planting, between rows with a shield, or where its label allows. Spray crop products in their own tank.",
+   "src": [
+    "https://www.greenbook.net/api/products/65007/documents/35926/download"
+   ]
   },
   {
    "id": "oil_sulfur",
@@ -177,12 +510,20 @@
    "b": [
     "sulfur"
    ],
+   "bnot": [
+    "limesulfur"
+   ],
    "gap": 14,
    "why": "Oil and sulfur together, or close together, burn leaves and fruit.",
-   "fix": "Keep about two weeks between an oil spray and a sulfur spray. In hot weather keep a month."
+   "fix": "Keep at least two weeks between an oil spray and a sulfur spray.",
+   "src": [
+    "https://www.greenbook.net/api/products/55968/documents/3114/download",
+    "https://ipm.ucanr.edu/agriculture/grape/powdery-mildew/",
+    "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7408.html"
+   ]
   },
   {
-   "id": "oil_captan",
+   "id": "oil_limesulfur",
    "on": [
     "tank",
     "near"
@@ -192,26 +533,107 @@
     "oil"
    ],
    "b": [
+    "limesulfur"
+   ],
+   "gap": 30,
+   "why": "Lime sulfur soon after an oil burns the leaves.",
+   "fix": "Keep a month between an oil spray and lime sulfur.",
+   "src": [
+    "https://www.greenbook.net/api/products/57620/documents/4773/download"
+   ]
+  },
+  {
+   "id": "oil_captan",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "oil"
+   ],
+   "b": [
     "captan"
    ],
-   "gap": 7,
-   "why": "Captan and folpet with an oil burn the leaves.",
-   "fix": "Spray {b} alone and keep about a week between it and any oil spray."
+   "why": "Captan and folpet with an oil, or sprayed close to one, burn the crop.",
+   "fix": "Spray {b} alone, days away from any oil spray.",
+   "src": [
+    "https://www.greenbook.net/api/products/66517/documents/40667/download",
+    "https://www.greenbook.net/api/products/48917/documents/10639/download"
+   ]
   },
   {
    "id": "oil_chlorothalonil",
    "on": [
     "tank"
    ],
-   "level": "care",
+   "level": "no",
    "a": [
     "oil"
    ],
    "b": [
     "chlorothalonil"
    ],
-   "why": "Chlorothalonil with an oil can scorch the leaves of some crops.",
-   "fix": "Spray them apart unless the chlorothalonil label allows the oil for your crop. Test on a few plants first."
+   "why": "Chlorothalonil with an oil can injure the plants.",
+   "fix": "Spray them on different days.",
+   "src": [
+    "https://www.greenbook.net/api/products/39549/documents/7258/download",
+    "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7408.html"
+   ]
+  },
+  {
+   "id": "oil_op",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "oil"
+   ],
+   "b": [
+    "ai:Carbaryl",
+    "ai:Dimethoate"
+   ],
+   "why": "The oil labels ban carbaryl and dimethoate in the mix.",
+   "fix": "Spray them on different days.",
+   "src": [
+    "https://www.greenbook.net/api/products/48917/documents/10639/download"
+   ]
+  },
+  {
+   "id": "oil_npk",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "oil"
+   ],
+   "b": [
+    "fe_phosphate&fert_salt"
+   ],
+   "why": "Spray oil labels ban NPK foliar fertilizer in the mix.",
+   "fix": "Spray the foliar fertilizer on its own day.",
+   "src": [
+    "https://www.greenbook.net/api/products/48917/documents/10639/download"
+   ]
+  },
+  {
+   "id": "captan_ec_op",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "captan"
+   ],
+   "b": [
+    "op&f_ec"
+   ],
+   "why": "The captan label bans organophosphate EC products, with their solvents, in the mix.",
+   "fix": "Use another formulation of the insecticide, or spray them apart.",
+   "src": [
+    "https://www.greenbook.net/api/products/66517/documents/40667/download"
+   ]
   },
   {
    "id": "oil_organosilicone",
@@ -226,7 +648,12 @@
     "organosilicone"
    ],
    "why": "Two strong spreaders together wet the leaf so much that the spray can burn it and runs off.",
-   "fix": "Use one spreader only, the one the main product label names."
+   "fix": "Use one spreader only, the one the main product label names.",
+   "src": [
+    "https://pubs.ext.vt.edu/content/dam/pubs_ext_vt_edu/BSE/bse-351/BSE-351.pdf",
+    "https://www.greenbook.net/api/products/64438/documents/34287/download",
+    "https://extensionpubs.unl.edu/publication/g2350/na/html/view"
+   ]
   },
   {
    "id": "strobi_ec_silicone",
@@ -242,8 +669,77 @@
     "organosilicone",
     "oil"
    ],
-   "why": "Strobilurin fungicides with an EC product, an oil or a silicone spreader can spot or burn the leaves of some crops and varieties.",
-   "fix": "Jar test, then spray a few plants and look again after two to three days before you spray the field."
+   "why": "Strobilurin fungicides like {a} mixed with an EC product, an oil or a silicone spreader have burned some crops, more so in cool cloudy weather.",
+   "fix": "Jar test, then spray a few plants and look again after three to seven days before you spray the field.",
+   "src": [
+    "https://www.greenbook.net/api/products/40146/documents/3162/download"
+   ]
+  },
+  {
+   "id": "soap_sulfur",
+   "on": [
+    "tank",
+    "near"
+   ],
+   "level": "no",
+   "a": [
+    "soap"
+   ],
+   "b": [
+    "sulfur"
+   ],
+   "gap": 3,
+   "why": "Insecticidal soap with sulfur can injure plants.",
+   "fix": "Keep three days between them.",
+   "src": [
+    "https://www.greenbook.net/api/products/57289/documents/4561/download",
+    "https://ipm.ucanr.edu/agriculture/grape/powdery-mildew/"
+   ]
+  },
+  {
+   "id": "soap_others",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "soap"
+   ],
+   "b": [
+    "fe_calcium",
+    "fert_salt",
+    "fe_chelate",
+    "conditioner",
+    "phosphonate",
+    "acidifier",
+    "acidic"
+   ],
+   "why": "Insecticidal soap does not stay mixed with calcium, foliar fertilizers, chelates, fosetyl or acids, and may burn the crop.",
+   "fix": "Spray the soap alone in soft water.",
+   "src": [
+    "https://www.greenbook.net/api/products/57289/documents/4561/download",
+    "https://www.greenbook.net/api/products/52585/documents/2767/download",
+    "https://www.greenbook.net/api/products/52585/documents/12808/download"
+   ]
+  },
+  {
+   "id": "soap_ok",
+   "on": [
+    "tank"
+   ],
+   "level": "ok",
+   "a": [
+    "soap"
+   ],
+   "b": [
+    "bt",
+    "spino"
+   ],
+   "why": "The soap label says it mixes with Bt and spinosad.",
+   "fix": "",
+   "src": [
+    "https://www.greenbook.net/api/products/57289/documents/4561/download"
+   ]
   },
   {
    "id": "limesulfur_any",
@@ -259,8 +755,18 @@
     "fert",
     "adjuvant_any"
    ],
-   "why": "Lime sulfur is strongly alkaline and reacts with most products, breaking them down or burning the crop.",
-   "fix": "Spray lime sulfur alone, and keep a week or two before and after other sprays, two weeks or more from any oil."
+   "bnot": [
+    "limesulfur"
+   ],
+   "why": "Lime sulfur is strongly alkaline and reacts with most products, breaking them down, burning the crop, or with acids and phosphates giving off a toxic gas.",
+   "fix": "Spray lime sulfur alone, and keep a week or two before and after other sprays, a month from any oil.",
+   "src": [
+    "https://www.greenbook.net/api/products/57620/documents/4773/download",
+    "https://www.greenbook.net/api/products/57620/documents/15677/download",
+    "https://edis.ifas.ufl.edu/publication/PI193",
+    "https://www.greenbook.net/api/products/66517/documents/40667/download",
+    "https://www.greenbook.net/api/products/66158/documents/39604/download"
+   ]
   },
   {
    "id": "bordeaux_sensitive",
@@ -272,21 +778,25 @@
     "bordeaux"
    ],
    "b": [
-    "alk_fast",
-    "alk_slow",
     "op",
     "carb",
-    "pyr",
-    "dtc",
     "captan",
+    "cymoxanil",
+    "ai:Thiophanate methyl",
+    "alk_fast",
     "fe_phosphate",
     "fe_ammonium"
    ],
-   "why": "Bordeaux mixture carries lime, and the high pH breaks down {b} within hours.",
-   "fix": "Spray Bordeaux alone. Choose a copper without lime if you need copper with {b}."
+   "why": "Bordeaux mixture carries lime, and its high pH breaks down {b} in the tank.",
+   "fix": "Spray Bordeaux alone. Choose a copper without lime if you need copper with {b}.",
+   "src": [
+    "https://www.greenbook.net/api/products/66517/documents/40667/download",
+    "https://www.greenbook.net/api/products/66158/documents/39604/download",
+    "https://www.greenbook.net/api/products/47276/documents/9542/download"
+   ]
   },
   {
-   "id": "alkaline_sensitive",
+   "id": "alkaline_opcarb",
    "on": [
     "tank"
    ],
@@ -297,13 +807,25 @@
     "fe_lime"
    ],
    "b": [
+    "op",
+    "carb",
+    "captan",
+    "cymoxanil",
     "alk_fast"
    ],
    "bnot": [
-    "alkaline"
+    "alkaline",
+    "dtc"
    ],
    "why": "{a} makes the water strongly alkaline, and {b} breaks down quickly in alkaline water, so the spray loses its strength in the tank.",
-   "fix": "Spray them on different days, or spray {b} in water that is neutral or slightly acid."
+   "fix": "Spray them on different days, or spray {b} in water that is neutral or slightly acid.",
+   "src": [
+    "https://www.greenbook.net/api/products/66517/documents/40667/download",
+    "https://www.greenbook.net/api/products/66158/documents/39604/download",
+    "https://www.greenbook.net/api/products/47276/documents/9542/download",
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/Reports/114.htm",
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/Reports/196.htm"
+   ]
   },
   {
    "id": "alkaline_slow",
@@ -314,16 +836,68 @@
    "a": [
     "alkaline",
     "fe_silicate",
-    "fe_lime"
+    "fe_lime",
+    "fe_salt_alk"
    ],
    "b": [
-    "alk_slow"
+    "alk_slow",
+    "pyr",
+    "bt",
+    "virus"
    ],
    "bnot": [
-    "alkaline"
+    "alkaline",
+    "op",
+    "carb"
    ],
-   "why": "{a} raises the pH of the tank, and {b} slowly breaks down in alkaline water.",
-   "fix": "If you mix them, spray at once and never leave the tank standing."
+   "why": "{a} raises the pH of the tank, and {b} slowly loses strength in alkaline water.",
+   "fix": "If you mix them, spray at once and never leave the tank standing.",
+   "src": [
+    "https://bookstore.ksre.ksu.edu/download/effect-of-water-and-spray-solution-ph-on-pesticide-activity_MF3272",
+    "https://www.umass.edu/agriculture-food-environment/greenhouse-floriculture/fact-sheets/effects-of-ph-on-pesticides-growth-regulators",
+    "https://www.greenbook.net/api/products/52650/documents/2806/download",
+    "https://www.greenbook.net/api/products/39414/documents/7249/download"
+   ]
+  },
+  {
+   "id": "tmethyl_copper",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "ai:Thiophanate methyl"
+   ],
+   "b": [
+    "copper"
+   ],
+   "why": "The thiophanate methyl label bans copper in the tank.",
+   "fix": "Spray them on different days.",
+   "src": [
+    "https://www.greenbook.net/api/products/66158/documents/39604/download"
+   ]
+  },
+  {
+   "id": "bicarbonate_acid",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "ai:Potassium bicarbonate",
+    "ai:Sodium bicarbonate"
+   ],
+   "b": [
+    "acidifier",
+    "acidic",
+    "alk_fast"
+   ],
+   "why": "Potassium bicarbonate makes the spray mildly alkaline: acids weaken it, and it breaks down products that do not like alkaline water.",
+   "fix": "Spray it alone.",
+   "src": [
+    "https://www.greenbook.net/api/products/52585/documents/2767/download",
+    "https://www.greenbook.net/api/products/52585/documents/12808/download"
+   ]
   },
   {
    "id": "ethephon_alkaline",
@@ -342,29 +916,31 @@
     "conditioner"
    ],
    "why": "Ethephon must stay acid. In alkaline water it turns into ethylene gas in the tank and is lost.",
-   "fix": "Spray ethephon alone in clean water, at once after mixing."
+   "fix": "Spray ethephon alone in clean water, at once after mixing.",
+   "src": [
+    "https://www.extension.purdue.edu/extmedia/PPP/PPP-86.pdf"
+   ]
   },
   {
-   "id": "ethephon_any",
+   "id": "glyphosate_buffer",
    "on": [
     "tank"
    ],
    "level": "care",
    "a": [
-    "ethephon"
+    "glyphosate"
    ],
    "b": [
-    "pest",
-    "fert"
+    "acidifier"
    ],
-   "bnot": [
-    "ethephon"
-   ],
-   "why": "Ethephon is very acid and works only in its own acid mix; other products can change it and it can change them.",
-   "fix": "Spray ethephon in its own tank unless its label names the mix."
+   "why": "Glyphosate products already carry what they need; the labels say not to add buffers or acidifiers when it is sprayed alone.",
+   "fix": "Leave the acidifier out. For hard water use spray grade ammonium sulfate.",
+   "src": [
+    "https://www.greenbook.net/api/products/65007/documents/35926/download"
+   ]
   },
   {
-   "id": "copper_phosphonate",
+   "id": "copper_fosetyl",
    "on": [
     "tank"
    ],
@@ -373,31 +949,65 @@
     "copper"
    ],
    "b": [
-    "phosphonate"
+    "ai:Fosetyl aluminium"
    ],
-   "why": "Phosphonates such as fosetyl and phosphite make copper dissolve, and the loose copper burns leaves and fruit.",
-   "fix": "Spray copper and {b} on different days, about a week apart."
+   "why": "Fosetyl aluminium is acid and frees copper into a form that burns leaves and fruit.",
+   "fix": "Spray copper and fosetyl on different days.",
+   "src": [
+    "https://www.greenbook.net/api/products/18193/documents/7278/download",
+    "https://www.greenbook.net/api/products/64438/documents/34287/download",
+    "https://www.greenbook.net/api/products/60616/documents/5404/download"
+   ]
   },
   {
-   "id": "copper_acid",
+   "id": "copper_phosphite",
    "on": [
-    "tank"
+    "tank",
+    "near"
    ],
    "level": "care",
    "a": [
     "copper"
    ],
    "b": [
-    "acidic",
+    "phosphonate"
+   ],
+   "bnot": [
+    "ai:Fosetyl aluminium"
+   ],
+   "gap": 20,
+   "why": "Acid phosphite sprays on copper, or copper on fresh phosphite, can burn the leaves.",
+   "fix": "Keep about three weeks between them, or raise the phosphite spray to pH 6 or more as its label says.",
+   "src": [
+    "https://www.greenbook.net/api/products/47261/documents/9529/download",
+    "https://extension.unh.edu/resource/water-ph-pesticide-mixing-quick-reference-new-hampshire-applicators"
+   ]
+  },
+  {
+   "id": "copper_acid",
+   "on": [
+    "tank"
+   ],
+   "level": "no",
+   "a": [
+    "copper"
+   ],
+   "b": [
     "acidifier",
+    "acidic",
     "fe_acidic"
    ],
    "bnot": [
     "copper",
     "phosphonate"
    ],
-   "why": "Acid spray water dissolves copper, and loose copper can burn the leaves.",
-   "fix": "Do not lower the pH of a copper spray. Keep the tank near neutral and spray at once."
+   "why": "Acid spray water dissolves copper into free ions that burn the leaves.",
+   "fix": "Never lower the pH of a copper spray. Keep it at pH 6.5 or more.",
+   "src": [
+    "https://www.greenbook.net/api/products/64438/documents/34287/download",
+    "https://www.greenbook.net/api/products/60616/documents/5404/download",
+    "https://edis.ifas.ufl.edu/publication/PI193"
+   ]
   },
   {
    "id": "copper_dtc",
@@ -414,15 +1024,64 @@
    "bnot": [
     "bordeaux"
    ],
-   "why": "Copper with mancozeb is an old, common mix against blights and leaf spots.",
-   "fix": "Premix each powder in a little water before it goes into the tank."
+   "why": "Copper with mancozeb is a common mix against blights and leaf spots; the labels list it and premixes are sold.",
+   "fix": "Premix each powder in a little water before it goes into the tank.",
+   "src": [
+    "https://www.greenbook.net/api/products/2069/documents/7057/download",
+    "https://www.greenbook.net/api/products/55970/documents/5415/download",
+    "https://www.greenbook.net/api/products/63071/documents/28911/download"
+   ]
+  },
+  {
+   "id": "copper_sulfur",
+   "on": [
+    "tank"
+   ],
+   "level": "ok",
+   "a": [
+    "sulfur"
+   ],
+   "b": [
+    "copper"
+   ],
+   "bnot": [
+    "limesulfur"
+   ],
+   "why": "The sulfur label lists copper fungicides as compatible.",
+   "fix": "",
+   "src": [
+    "https://www.greenbook.net/api/products/55968/documents/3114/download"
+   ]
+  },
+  {
+   "id": "fert_fungicide_burn",
+   "on": [
+    "tank"
+   ],
+   "level": "care",
+   "a": [
+    "ai:Fosetyl aluminium",
+    "phosphonate",
+    "copper",
+    "ai:Pyraclostrobin"
+   ],
+   "b": [
+    "fert_salt"
+   ],
+   "why": "Foliar fertilizer with {a} has burned some crops.",
+   "fix": "Spray the fertilizer on another day, or test a few plants first.",
+   "src": [
+    "https://www.greenbook.net/api/products/18193/documents/7278/download",
+    "https://www.greenbook.net/api/products/47261/documents/9529/download",
+    "https://www.greenbook.net/api/products/44863/documents/8005/download"
+   ]
   },
   {
    "id": "fungicide_livingfungus",
    "on": [
     "tank"
    ],
-   "level": "no",
+   "level": "care",
    "a": [
     "fung_chem"
    ],
@@ -431,14 +1090,44 @@
     "fe_living_fungus"
    ],
    "why": "{a} kills fungi, and {b} is a living fungus.",
-   "fix": "Spray {b} alone, and keep a few days between it and any fungicide, as its label says."
+   "fix": "Spray {b} alone, and keep a few days between it and any fungicide, as its label says.",
+   "src": [
+    "https://www.greenbook.net/api/products/64267/documents/33601/download",
+    "https://www.greenbook.net/api/products/65946/documents/39032/download"
+   ]
+  },
+  {
+   "id": "trichoderma_named",
+   "on": [
+    "tank",
+    "near"
+   ],
+   "level": "no",
+   "a": [
+    "ai:Trichoderma",
+    "fe_living_fungus"
+   ],
+   "b": [
+    "ai:Benomyl",
+    "ai:Imazalil",
+    "ai:Propiconazole",
+    "ai:Tebuconazole",
+    "ai:Triflumizole",
+    "ai:Carbendazim"
+   ],
+   "gap": 7,
+   "why": "{b} harms the living Trichoderma in {a}.",
+   "fix": "Keep about a week between them.",
+   "src": [
+    "https://www.greenbook.net/api/products/48916/documents/1801/download"
+   ]
   },
   {
    "id": "copper_living",
    "on": [
     "tank"
    ],
-   "level": "no",
+   "level": "care",
    "a": [
     "copper",
     "antibiotic",
@@ -454,27 +1143,31 @@
     "fe_living_fungus",
     "virus"
    ],
-   "why": "{a} kills the living organisms in {b}.",
-   "fix": "Spray the living product alone, in clean water without chlorine, a few days apart from {a}."
+   "why": "{a} can kill the living organisms in {b}.",
+   "fix": "Spray the living product alone, in clean water, a few days apart from {a}.",
+   "src": [
+    "https://www.greenbook.net/api/products/57395/documents/4624/download",
+    "https://www.greenbook.net/api/products/64267/documents/33601/download",
+    "https://www.greenbook.net/api/products/65946/documents/39032/download"
+   ]
   },
   {
-   "id": "bt_alkaline",
+   "id": "bt_chlorothalonil",
    "on": [
     "tank"
    ],
    "level": "care",
    "a": [
-    "bt",
-    "virus"
+    "bt"
    ],
    "b": [
-    "alkaline",
-    "fe_silicate",
-    "fe_lime",
-    "fe_salt_alk"
+    "chlorothalonil"
    ],
-   "why": "Bt and insect viruses lose their strength in alkaline water.",
-   "fix": "Spray {a} in water near neutral, late in the afternoon, at once after mixing."
+   "why": "One chlorothalonil label bans mixing with Bt because some plants were injured.",
+   "fix": "Spray them on different days.",
+   "src": [
+    "https://www.greenbook.net/api/products/39549/documents/7258/download"
+   ]
   },
   {
    "id": "living_living",
@@ -490,8 +1183,11 @@
     "living_bact",
     "fe_living_bact"
    ],
-   "why": "Two living products can compete in the tank, and some bacteria make substances that stop fungi.",
-   "fix": "Mix them only if one of the labels says they go together."
+   "why": "Two living products can compete in the tank.",
+   "fix": "Mix them only if one of the labels says they go together.",
+   "src": [
+    "https://www.greenbook.net/api/products/57395/documents/4624/download"
+   ]
   },
   {
    "id": "oxidizer_any",
@@ -511,7 +1207,12 @@
     "oxidizer"
    ],
    "why": "Peroxides and chlorine products react with other products and break them down. They are not for a crop tank mix.",
-   "fix": "Use {a} alone, only as its label says."
+   "fix": "Use {a} alone, only as its label says.",
+   "src": [
+    "https://www.greenbook.net/api/products/41526/documents/7801/download",
+    "https://www.greenbook.net/api/products/57395/documents/4624/download",
+    "https://extensionpubs.unl.edu/publication/g2350/na/html/view"
+   ]
   },
   {
    "id": "calcium_sulfate_phosphate",
@@ -527,8 +1228,11 @@
     "fe_phosphate",
     "fe_ams"
    ],
-   "why": "Calcium with sulfates makes gypsum, and calcium with phosphates makes a calcium phosphate that settles out. At spray strength it may stay clear, strong it will not.",
-   "fix": "Jar test at the real strength. Better, spray the calcium on its own day, or use a chelated calcium."
+   "why": "Calcium with phosphate, and strong calcium with sulfates, can settle out as a solid in the tank.",
+   "fix": "Jar test at the real strength. Better, spray the calcium on its own day, or use a chelated calcium.",
+   "src": [
+    "https://www.greenbook.net/api/products/47630/documents/9791/download"
+   ]
   },
   {
    "id": "calcium_silicate",
@@ -545,7 +1249,10 @@
     "fe_silicate"
    ],
    "why": "Potassium silicate turns into a gel or a white sludge with calcium, magnesium and metal salts.",
-   "fix": "Spray potassium silicate alone, in its own tank."
+   "fix": "Spray potassium silicate alone, in its own tank.",
+   "src": [
+    "https://www.greenbook.net/api/products/66206/documents/39748/download"
+   ]
   },
   {
    "id": "silicate_acid",
@@ -563,8 +1270,11 @@
     "fe_phosphate",
     "fe_ams"
    ],
-   "why": "Potassium silicate is strongly alkaline and sets into a gel when it meets acids or acid fertilizers.",
-   "fix": "Spray potassium silicate alone. Add it to the water first, then nothing else."
+   "why": "Potassium silicate is strongly alkaline (pH 11 to 12) and reacts with acids and acid fertilizers, setting into a gel.",
+   "fix": "Spray potassium silicate alone. Add it to the water first, then nothing else.",
+   "src": [
+    "https://www.greenbook.net/api/products/66206/documents/39748/download"
+   ]
   },
   {
    "id": "phosphate_metals",
@@ -580,7 +1290,10 @@
     "fe_magnesium"
    ],
    "why": "Phosphate locks zinc, iron, manganese, copper and magnesium salts into solids that settle out and clog the nozzle.",
-   "fix": "Use chelated micronutrients with a phosphate fertilizer, or spray them on different days."
+   "fix": "Use chelated micronutrients with a phosphate fertilizer, or spray them on different days.",
+   "src": [
+    "https://extensionpubs.unl.edu/publication/g2350/na/html/view"
+   ]
   },
   {
    "id": "boron_calcium",
@@ -594,8 +1307,13 @@
    "b": [
     "fe_calcium"
    ],
-   "why": "Boron and calcium can settle out together when they are strong.",
-   "fix": "Jar test at the real strength, or use a calcium and boron product made to go together."
+   "why": "Boron and calcium can settle out together when strong, and boron burns crops at rates only a little above need.",
+   "fix": "Jar test at the real strength, or use a calcium and boron product made to go together.",
+   "src": [
+    "https://www.greenbook.net/api/products/63529/documents/30486/download",
+    "https://www.greenbook.net/api/products/50105/documents/24/download",
+    "https://www.greenbook.net/api/products/65496/documents/37527/download"
+   ]
   },
   {
    "id": "thiosulfate_acid",
@@ -609,10 +1327,14 @@
    "b": [
     "acidic",
     "acidifier",
-    "fe_acidic"
+    "fe_acidic",
+    "fe_calcium"
    ],
-   "why": "Thiosulfate breaks down in acid and drops sulfur and gas.",
-   "fix": "Keep thiosulfate fertilizers away from acids and acid fertilizers."
+   "why": "Thiosulfate breaks down in acid, dropping sulfur and gas, and settles out with calcium.",
+   "fix": "Keep thiosulfate fertilizers away from acids and calcium.",
+   "src": [
+    "https://www.extension.purdue.edu/extmedia/PPP/PPP-86.pdf"
+   ]
   },
   {
    "id": "humic_acid_ca",
@@ -631,26 +1353,12 @@
     "fe_metal"
    ],
    "why": "Humic and fulvic products clump in acid water and with calcium and metal salts.",
-   "fix": "Jar test first. Spray the humic product alone if it clumps."
-  },
-  {
-   "id": "soap_hard",
-   "on": [
-    "tank"
-   ],
-   "level": "care",
-   "a": [
-    "soap"
-   ],
-   "b": [
-    "fe_calcium",
-    "fe_magnesium",
-    "fe_metal",
-    "acidic",
-    "acidifier"
-   ],
-   "why": "Insecticidal soap curdles with calcium, magnesium and acids, and stops working.",
-   "fix": "Spray the soap alone in soft water."
+   "fix": "Jar test first. Spray the humic product alone if it clumps.",
+   "src": [
+    "https://extensionpubs.unl.edu/publication/g2350/na/html/view",
+    "https://www.ctahr.hawaii.edu/oc/freepubs/pdf/PRRE-11.pdf",
+    "https://pubs.ext.vt.edu/content/dam/pubs_ext_vt_edu/BSE/bse-351/BSE-351.pdf"
+   ]
   },
   {
    "id": "phosphite_calcium",
@@ -665,7 +1373,10 @@
     "fe_calcium"
    ],
    "why": "Phosphite and calcium can settle out as a solid when strong.",
-   "fix": "Jar test first, or spray them apart."
+   "fix": "Jar test first, or spray them apart.",
+   "src": [
+    "https://www.greenbook.net/api/products/47630/documents/9791/download"
+   ]
   },
   {
    "id": "urea_nitrate_blend",
@@ -680,7 +1391,8 @@
     "fe_nitrate"
    ],
    "why": "Urea mixed with ammonium nitrate or calcium nitrate pulls water from the air and turns into a wet paste.",
-   "fix": "Spread them separately, or spread one right after the other without mixing them in the bag."
+   "fix": "Spread them separately, or spread one right after the other without mixing them in the bag.",
+   "src": []
   },
   {
    "id": "urea_superphosphate_blend",
@@ -695,7 +1407,8 @@
     "fe_superphosphate"
    ],
    "why": "Urea and superphosphate (solophos, triple superphosphate) react and get wet and lumpy when they sit mixed.",
-   "fix": "Mix them only just before you spread, and spread the same hour."
+   "fix": "Mix them only just before you spread, and spread the same hour.",
+   "src": []
   },
   {
    "id": "ammonium_lime_blend",
@@ -713,7 +1426,8 @@
    ],
    "gap": 14,
    "why": "Lime and other alkaline materials turn the nitrogen of urea and ammonium fertilizers into ammonia gas that is lost to the air.",
-   "fix": "Spread the lime first and work it in, then wait about two weeks before urea or ammonium fertilizers. If you must, work the nitrogen into the soil or water it in at once."
+   "fix": "Spread the lime first and work it in, then wait about two weeks before urea or ammonium fertilizers. If you must, work the nitrogen into the soil or water it in at once.",
+   "src": []
   },
   {
    "id": "superphosphate_lime_blend",
@@ -729,7 +1443,25 @@
     "fe_lime"
    ],
    "why": "Lime mixed with phosphate fertilizer turns part of the phosphorus into a form the roots take up slowly.",
-   "fix": "Spread the lime first and the phosphate later, or place the phosphate in a band."
+   "fix": "Spread the lime first and the phosphate later, or place the phosphate in a band.",
+   "src": []
+  },
+  {
+   "id": "calcium_phosphate_blend",
+   "on": [
+    "blend"
+   ],
+   "level": "no",
+   "a": [
+    "fe_calcium"
+   ],
+   "b": [
+    "fe_phosphate",
+    "fe_superphosphate"
+   ],
+   "why": "Calcium nitrate with water soluble phosphates turns the phosphate into a form roots take up poorly, and the blend goes wet.",
+   "fix": "Spread them separately.",
+   "src": []
   },
   {
    "id": "calcium_nitrate_blend",
@@ -746,8 +1478,10 @@
    "bnot": [
     "fe_calcium"
    ],
+   "weak": true,
    "why": "Calcium nitrate pulls water from the air very fast, so a blend with it goes wet and sticky.",
-   "fix": "Spread calcium nitrate on its own, or mix only what you spread in the next few minutes."
+   "fix": "Spread calcium nitrate on its own, or mix only what you spread in the next few minutes.",
+   "src": []
   },
   {
    "id": "pesticide_in_fertilizer",
@@ -762,7 +1496,8 @@
     "fert_gran"
    ],
    "why": "Mixing a pesticide into fertilizer by hand spreads it unevenly and puts the person mixing it at risk.",
-   "fix": "Apply the pesticide granules as their label says, or buy a fertilizer that already carries them."
+   "fix": "Apply the pesticide granules as their label says, or buy a fertilizer that already carries them.",
+   "src": []
   },
   {
    "id": "lime_living",
@@ -778,184 +1513,333 @@
     "fe_living_fungus"
    ],
    "why": "Fresh lime is harsh on the living microbes of a biofertilizer.",
-   "fix": "Spread the biofertilizer a week or two after the lime."
+   "fix": "Spread the biofertilizer a week or two after the lime.",
+   "src": []
   }
  ],
  "tank": {
   "hard_glyphosate": {
    "level": "care",
    "why": "Hard water (deep wells, water that leaves a white crust) weakens {a}.",
-   "fix": "Dissolve spray grade ammonium sulfate in the water first, as the label of the weed killer or the ammonium sulfate says, then add the weed killer. Or use rain water."
+   "fix": "Dissolve spray grade ammonium sulfate in the water first, as the label of the weed killer or the ammonium sulfate says, then add the weed killer. Or use rain water.",
+   "src": [
+    "https://edis.ifas.ufl.edu/publication/PI245",
+    "https://pubs.ext.vt.edu/BSE/bse-350/bse-350.html",
+    "https://pubs.ext.vt.edu/BSE/bse-352/bse-352.html",
+    "https://www.greenbook.net/api/products/65007/documents/35926/download"
+   ]
   },
   "muddy_binders": {
    "level": "no",
    "why": "Clay in muddy water binds {a} and takes it out of the spray.",
-   "fix": "Use clear water from a well or a clean drum, never canal or river water that is brown."
+   "fix": "Use clear water from a well or a clean drum, never canal or river water that is brown.",
+   "src": [
+    "https://www.greenbook.net/api/products/65007/documents/35926/download",
+    "https://www.greenbook.net/api/products/64369/documents/34099/download",
+    "https://www.greenbook.net/api/products/45780/documents/8517/download"
+   ]
   },
   "alk_water": {
    "level": "care",
    "why": "{a} breaks down in alkaline water, and well water here is often alkaline.",
-   "fix": "Spray within an hour or two of mixing and never leave the tank overnight. A spray buffer helps, unless the tank has copper or a sulfonylurea weed killer."
+   "fix": "Spray within an hour or two of mixing and never leave the tank overnight. A spray buffer helps, unless the tank has copper or a sulfonylurea weed killer.",
+   "src": [
+    "https://edis.ifas.ufl.edu/publication/PI193",
+    "https://bookstore.ksre.ksu.edu/download/effect-of-water-and-spray-solution-ph-on-pesticide-activity_MF3272",
+    "https://www.umass.edu/agriculture-food-environment/greenhouse-floriculture/fact-sheets/effects-of-ph-on-pesticides-growth-regulators",
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/Reports/114.htm",
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/Reports/196.htm"
+   ]
   },
   "ph_conflict": {
    "level": "care",
    "why": "{a} last longer in slightly acid water, but {b} break down in acid water.",
-   "fix": "Do not add an acidifier. Keep the water near neutral, pH 6.5 to 7, and spray at once."
+   "fix": "Do not add an acidifier. Keep the water near neutral, pH 6.5 to 7, and spray at once.",
+   "src": [
+    "https://www.extension.purdue.edu/extmedia/PPP/PPP-86.pdf",
+    "https://pubs.ext.vt.edu/BSE/bse-352/bse-352.html",
+    "https://extension.unh.edu/resource/water-ph-pesticide-mixing-quick-reference-new-hampshire-applicators"
+   ]
   },
   "too_many": {
    "level": "care",
-   "why": "Five or more products in one tank raise the chance that something settles, clumps or burns.",
-   "fix": "Jar test the whole mix first. Leave out what is not needed this time."
+   "why": "Four or more products in one tank raise the chance that something settles, fails or burns.",
+   "fix": "Jar test the whole mix first. Leave out what is not needed this time.",
+   "src": [
+    "https://pubs.ext.vt.edu/content/dam/pubs_ext_vt_edu/BSE/bse-351/BSE-351.pdf",
+    "https://www.greenbook.net/api/products/64438/documents/34287/download",
+    "https://extensionpubs.unl.edu/publication/g2350/na/html/view"
+   ]
   },
   "same_ai": {
    "level": "care",
    "why": "{a} and {b} carry the same active ingredient, {ai}. Two doses in one tank is double the dose.",
-   "fix": "Keep one of them."
+   "fix": "Keep one of them.",
+   "src": [
+    "https://www.greenbook.net/api/products/65179/documents/36585/download",
+    "https://www.greenbook.net/api/products/65007/documents/35926/download"
+   ]
   },
   "same_group": {
    "level": "care",
    "why": "{a} and {b} work the same way ({grp}). Two of one group adds little, and the pest learns to survive it sooner.",
-   "fix": "Keep one, and pair it with a product from another group."
+   "fix": "Keep one, and pair it with a product from another group.",
+   "src": [
+    "https://www.frac.info/fungicide-resistance-management/background-information/",
+    "https://irac-online.org/training/resistance/mixtures/",
+    "https://www.greenbook.net/api/products/40146/documents/3162/download"
+   ]
   },
   "salt_emulsion": {
    "level": "care",
    "why": "Strong fertilizer in the tank can break the milky emulsion of EC products or clump powders.",
-   "fix": "Add the fertilizer last and stir well, or spray the fertilizer on its own day."
+   "fix": "Add the fertilizer last and stir well, or spray the fertilizer on its own day.",
+   "src": [
+    "https://pubs.ext.vt.edu/content/dam/pubs_ext_vt_edu/BSE/bse-351/BSE-351.pdf",
+    "https://pubs.ext.vt.edu/BSE/bse-352/bse-352.html",
+    "https://extensionpubs.unl.edu/publication/g2350/na/html/view",
+    "https://uvm.edu/d10-files/documents/2024-11/PSEP_VTPA23CentrellaMixingOrderHandout.pdf",
+    "https://www.greenbook.net/api/products/40253/documents/7334/download"
+   ]
   },
   "bait_in_tank": {
    "level": "no",
    "why": "{a} is a bait or granule that goes on as it is. It is not mixed in water.",
-   "fix": "Put it out as its label says, on its own."
+   "fix": "Put it out as its label says, on its own.",
+   "src": []
   },
   "seed_in_tank": {
    "level": "care",
    "why": "{a} is a seed treatment. It goes on the seed before planting, not in a field spray.",
-   "fix": "Treat the seed with it as its label says."
+   "fix": "Treat the seed with it as its label says.",
+   "src": []
   },
   "heat_sulfur": {
    "level": "no",
-   "why": "Sulfur burns leaves when it is hotter than about 32 C.",
-   "fix": "Spray sulfur early in the morning on a cool day, or choose another fungicide in hot weather."
+   "why": "Sulfur burns leaves and fruit when it is hotter than about 32 C, now or in the next days. Spreaders make it worse.",
+   "fix": "Spray sulfur early in the morning on a cool day, or choose another fungicide in hot weather.",
+   "src": [
+    "https://www.greenbook.net/api/products/55968/documents/3114/download",
+    "https://ipm.ucanr.edu/agriculture/cucurbits/powdery-mildew/",
+    "https://ipm.ucanr.edu/agriculture/grape/powdery-mildew/"
+   ]
   },
   "heat_oil": {
-   "level": "care",
-   "why": "Spray oils burn leaves in the heat and on plants short of water.",
-   "fix": "Spray oil early in the morning or late in the afternoon, on watered plants, below about 32 C."
+   "level": "no",
+   "why": "Spray oils burn leaves in the heat, in very humid air and on plants short of water.",
+   "fix": "Spray oil early in the morning or late in the afternoon, on watered plants, below about 32 C.",
+   "src": [
+    "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7408.html",
+    "https://www.greenbook.net/api/products/48917/documents/10639/download",
+    "https://www.greenbook.net/api/products/55001/documents/3510/download"
+   ]
   },
   "heat_fert": {
    "level": "care",
    "why": "Foliar fertilizer dries fast in the heat and the salt left on the leaf burns it.",
-   "fix": "Spray early in the morning or late in the afternoon, and keep the strength at the lower end."
+   "fix": "Spray early in the morning or late in the afternoon, and keep the strength at the lower end.",
+   "src": []
   },
   "rain_soon": {
    "level": "care",
    "why": "Rain soon after spraying washes contact products and foliar fertilizer off the leaves.",
-   "fix": "Spray when no rain is expected for a few hours. A sticker helps contact products stay on."
+   "fix": "Spray when no rain is expected for a few hours. A sticker helps contact products stay on.",
+   "src": [
+    "https://www.greenbook.net/api/products/65007/documents/35926/download",
+    "https://www.greenbook.net/api/products/42762/documents/7944/download",
+    "https://www.greenbook.net/api/products/40253/documents/7334/download"
+   ]
   },
   "copper_young_cucurbit": {
    "level": "care",
-   "why": "Young cucurbit and bean leaves burn easily with copper.",
-   "fix": "Use the lowest label rate on young plants, spray in dry weather, and test on a few plants first."
+   "why": "{crop} and all young, tender growth burn easily with copper, more so when the leaves stay wet.",
+   "fix": "Use the lowest label rate on young plants, spray in dry weather, and test on a few plants first.",
+   "src": [
+    "https://www.vegetables.cornell.edu/files/2022/08/Copper-Fungicides-Minimizing-Injury_McGrath-2022.pdf",
+    "https://www.greenbook.net/api/products/64438/documents/34287/download",
+    "https://www.greenbook.net/api/products/60616/documents/5404/download"
+   ]
   },
   "sulfur_cucurbit": {
    "level": "care",
-   "why": "Some melons, cucumbers and squash are hurt by sulfur, even at mild temperatures.",
-   "fix": "Test on a few plants first, or choose another fungicide."
+   "why": "Sulfur can injure melons, cucumbers, squash and gourds, more so in heat.",
+   "fix": "Test on a few plants first, or choose another fungicide.",
+   "src": [
+    "https://ipm.ucanr.edu/agriculture/cucurbits/powdery-mildew/",
+    "https://www.greenbook.net/api/products/55968/documents/3114/download"
+   ]
   },
-  "oil_flowers": {
-   "level": "care",
-   "why": "Oil on open flowers can burn them and keep bees away.",
-   "fix": "Do not spray oil on open flowers. Spray before flowering or after the fruit sets."
+  "heat_propanil": {
+   "level": "no",
+   "why": "Propanil labels ban spraying when it is hotter than 32 C.",
+   "fix": "Spray {a} early in the morning or late in the afternoon on a cooler day.",
+   "src": [
+    "https://www.greenbook.net/api/products/65484/documents/37497/download",
+    "https://www.greenbook.net/api/products/46656/documents/9112/download"
+   ]
+  },
+  "heat_limesulfur": {
+   "level": "no",
+   "why": "Lime sulfur burns the leaves when it is hotter than about 29 C.",
+   "fix": "Spray it on a cool morning, or choose another product in the hot season.",
+   "src": [
+    "https://www.greenbook.net/api/products/57620/documents/4773/download"
+   ]
   },
   "not_labelled": {
    "level": "care",
    "why": "The label of {a} does not name {crop}.",
-   "fix": "Use a product labelled for your crop, or check with your agriculture technician first."
+   "fix": "Use a product labelled for your crop, or check with your agriculture technician first.",
+   "src": []
   },
   "herb_crop_not_labelled": {
    "level": "no",
    "why": "The label of {a} does not name {crop}. A weed killer not made for your crop can kill it.",
-   "fix": "Choose a weed killer labelled for {crop}."
+   "fix": "Choose a weed killer labelled for {crop}.",
+   "src": []
   },
   "fpa_banned_crop": {
    "level": "no",
    "why": "{why}",
-   "fix": "Choose another product."
+   "fix": "Choose another product.",
+   "src": []
   },
   "fpa_restricted": {
    "level": "care",
    "why": "{why}",
-   "fix": "Use it only as the FPA allows."
+   "fix": "Use it only as the FPA allows.",
+   "src": []
   },
   "strength_fert": {
    "level": "care",
    "why": "The fertilizer in this spray comes to {pct} percent ({gl} grams in a liter). For {crop} {stage}, keep it under {lim} percent or the leaves can burn.",
-   "fix": "Use more water or less fertilizer: about {max} in the tank you set."
+   "fix": "Use more water or less fertilizer: about {max} in the tank you set.",
+   "src": []
   },
   "strength_urea": {
    "level": "care",
    "why": "Urea in this spray comes to {pct} percent. For {crop} {stage}, keep urea under {lim} percent.",
-   "fix": "Use about {max} of urea in the tank you set."
+   "fix": "Use about {max} of urea in the tank you set.",
+   "src": []
   },
   "salt_seedling": {
    "level": "care",
-   "why": "{a} is a high salt fertilizer and young roots burn when it lies close to them.",
-   "fix": "Keep it a hand width away from the seedlings and water it in. Split the dose into two applications."
+   "why": "High salt fertilizers ({a}) burn young roots when they lie close to them.",
+   "fix": "Keep it a hand width away from the seedlings and water it in. Split the dose into two applications.",
+   "src": []
   },
   "urea_wet_leaves": {
    "level": "care",
    "why": "Granules that stay on wet leaves burn spots in them.",
-   "fix": "Spread when the leaves are dry and shake or wash the granules off the plants."
+   "fix": "Spread when the leaves are dry and shake or wash the granules off the plants.",
+   "src": []
   }
  },
  "order": [
   {
    "k": "water",
-   "say": "Fill the tank about half way with clean water. Shake or stir as you add each product, one at a time."
+   "say": "Start with a clean sprayer and clear water. Fill it about half way and keep it moving: shake or stir as you add each product, one at a time.",
+   "src": [
+    "https://pubs.ext.vt.edu/content/dam/pubs_ext_vt_edu/BSE/bse-351/BSE-351.pdf",
+    "https://extension.okstate.edu/fact-sheets/herbicide-mixing-order.html",
+    "https://extension.sdstate.edu/preparing-spray-solutions-mixing-order",
+    "https://uvm.edu/d10-files/documents/2024-11/PSEP_VTPA23CentrellaMixingOrderHandout.pdf",
+    "https://extensionpubs.unl.edu/publication/g2350/na/html/view"
+   ]
   },
   {
    "k": "conditioner",
-   "say": "Add the water conditioner first ({items}) and let it dissolve."
+   "say": "Add the water conditioner first ({items}) and let it dissolve fully.",
+   "src": [
+    "https://edis.ifas.ufl.edu/publication/PI245",
+    "https://pubs.ext.vt.edu/BSE/bse-352/bse-352.html",
+    "https://www.greenbook.net/api/products/65007/documents/35926/download",
+    "https://bookstore.ksre.ksu.edu/download/effect-of-water-and-spray-solution-ph-on-pesticide-activity_MF3272",
+    "https://www.umass.edu/agriculture-food-environment/greenhouse-floriculture/fact-sheets/effects-of-ph-on-pesticides-growth-regulators"
+   ]
   },
   {
    "k": "dry",
-   "say": "Add the powders and granules ({items}). Premix each in a small pail of water into a smooth milk first, then pour it in."
+   "say": "Add the powders and granules ({items}), one at a time. Premix each in a small pail of water into a smooth milk first, then pour it in.",
+   "src": [
+    "https://pubs.ext.vt.edu/content/dam/pubs_ext_vt_edu/BSE/bse-351/BSE-351.pdf",
+    "https://www.ctahr.hawaii.edu/oc/freepubs/pdf/PRRE-11.pdf",
+    "https://www.extension.purdue.edu/extmedia/PPP/PPP-86.pdf",
+    "https://extension.sdstate.edu/preparing-spray-solutions-mixing-order",
+    "https://extension.okstate.edu/fact-sheets/herbicide-mixing-order.html"
+   ]
   },
   {
    "k": "agitate",
-   "say": "Shake or stir well until the powder is spread through the water."
+   "say": "Shake or stir well until the powder is spread through the water.",
+   "src": [
+    "https://pubs.ext.vt.edu/content/dam/pubs_ext_vt_edu/BSE/bse-351/BSE-351.pdf",
+    "https://www.ctahr.hawaii.edu/oc/freepubs/pdf/PRRE-11.pdf",
+    "https://www.extension.purdue.edu/extmedia/PPP/PPP-86.pdf"
+   ]
   },
   {
    "k": "flow",
-   "say": "Add the liquid suspensions ({items}). Shake each bottle first."
-  },
-  {
-   "k": "ec",
-   "say": "Add the emulsions and oil dispersions ({items}). The water turns milky."
+   "say": "Add the water based liquids ({items}). Shake each bottle first.",
+   "src": [
+    "https://uvm.edu/d10-files/documents/2024-11/PSEP_VTPA23CentrellaMixingOrderHandout.pdf",
+    "https://www.greenbook.net/api/products/40253/documents/7334/download",
+    "https://www.greenbook.net/api/products/44863/documents/8005/download"
+   ]
   },
   {
    "k": "sl",
-   "say": "Add the solutions and soluble powders ({items})."
+   "say": "Add the solutions and soluble powders ({items}).",
+   "src": [
+    "https://uvm.edu/d10-files/documents/2024-11/PSEP_VTPA23CentrellaMixingOrderHandout.pdf",
+    "https://www.greenbook.net/api/products/40253/documents/7334/download",
+    "https://www.greenbook.net/api/products/44863/documents/8005/download"
+   ]
   },
   {
-   "k": "fert",
-   "say": "Add the foliar fertilizer ({items}). Dissolve powders in a pail of water first."
+   "k": "ec",
+   "say": "Add the oil based liquids ({items}). The water turns milky.",
+   "src": [
+    "https://uvm.edu/d10-files/documents/2024-11/PSEP_VTPA23CentrellaMixingOrderHandout.pdf",
+    "https://www.greenbook.net/api/products/40253/documents/7334/download",
+    "https://www.greenbook.net/api/products/44863/documents/8005/download"
+   ]
   },
   {
    "k": "helper",
-   "say": "Add the spreader, sticker or oil last ({items})."
+   "say": "Add the spreader, sticker or oil ({items}).",
+   "src": [
+    "https://pubs.ext.vt.edu/content/dam/pubs_ext_vt_edu/BSE/bse-351/BSE-351.pdf",
+    "https://extension.sdstate.edu/preparing-spray-solutions-mixing-order",
+    "https://extension.okstate.edu/fact-sheets/herbicide-mixing-order.html"
+   ]
+  },
+  {
+   "k": "fert",
+   "say": "Add the foliar fertilizer last ({items}). Dissolve powders in a pail of water first.",
+   "src": [
+    "https://uvm.edu/d10-files/documents/2024-11/PSEP_VTPA23CentrellaMixingOrderHandout.pdf",
+    "https://www.greenbook.net/api/products/40253/documents/7334/download",
+    "https://www.greenbook.net/api/products/63529/documents/30486/download"
+   ]
   },
   {
    "k": "top",
-   "say": "Top up with water to the mark, shake well, and spray at once. Do not leave the mix standing."
+   "say": "Top up with water to the mark, keep mixing, and spray at once. Never leave the mix standing or overnight.",
+   "src": [
+    "https://extensionpubs.unl.edu/publication/g2350/na/html/view",
+    "https://www.ctahr.hawaii.edu/oc/freepubs/pdf/PRRE-11.pdf",
+    "https://www.extension.purdue.edu/extmedia/PPP/PPP-86.pdf"
+   ]
   }
  ],
  "jar": [
-  "Take a clear bottle or jar and pour in 1 liter of the same water you will spray.",
-  "Add each product in the same order as in the tank, at the amounts below (the tank rate made small).",
-  "Close it, shake it, and let it stand for 15 to 30 minutes.",
-  "Look for flakes, clumps, a layer of oil or cream on top, sludge at the bottom, heat, or foam that will not go down.",
-  "Any of those: do not mix them. Clear and smooth: they mix. Spray a few plants first and look again after two to three days."
+  "Use a clean, clear glass jar or bottle with a lid, only for this. Wear the gloves the labels ask for.",
+  "Pour in half a liter of the same water you will spray, from the same source.",
+  "Add each product in the tank order, at the amounts below (the tank rate for one liter), closing and turning the jar over about 10 times after each.",
+  "Top up to one liter, mix again, and let it stand at least 15 minutes, 30 is safer.",
+  "Look for layers, oil on top, flakes or lumps, sludge or gel, heavy foam, heat or a strong smell. If it stays even, or comes back with a gentle shake, it mixes.",
+  "If it fails, spray the products separately. A jar test cannot show burn or loss of strength: spray a few plants first and look again after three to seven days."
  ],
  "foliar": {
   "groups": {
@@ -1037,5 +1921,924 @@
   "wingedbean",
   "limabean",
   "pigeonpea"
- ]
+ ],
+ "copperSensitive": [
+  "cucumber",
+  "squash",
+  "ampalaya",
+  "patola",
+  "upo",
+  "sayote",
+  "watermelon",
+  "melon",
+  "cabbage",
+  "pechay",
+  "broccoli",
+  "cauliflower",
+  "mustard",
+  "lettuce",
+  "strawberry"
+ ],
+ "blendChart": {
+  "ammonium_nitrate|ammonium_sulfate": [
+   "care",
+   "Safety: ammonium nitrate mixed with ammonium sulfate can become easier to detonate and may fall under legal limits; free acid or organic dirt adds to the risk. Pacific Fertiliser rates it fine."
+  ],
+  "ammonium_nitrate|calcium_nitrate": [
+   "care",
+   "Both pull water from the air; how the ammonium nitrate is stabilized decides whether the blend stores well."
+  ],
+  "ammonium_nitrate|calcium_nitrate_gg": [
+   "care",
+   "Both pull water from the air; how the ammonium nitrate is stabilized decides whether the blend stores well."
+  ],
+  "ammonium_nitrate|can": [
+   "care",
+   "ICL tests rate it limited: blending possible with care. Fertilizers Europe (2018 table) rates it fine."
+  ],
+  "ammonium_nitrate|dap": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|dolomite": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|elemental_sulfur": [
+   "no",
+   "Sulfur burns and can react with nitrates; a fire risk. Pacific Fertiliser rates it fine."
+  ],
+  "ammonium_nitrate|gypsum": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|kieserite": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|lime": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|map": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|map_tech": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|mop": [
+   "care",
+   "Safety: the blend can start a slow, self sustaining breakdown that smoulders; keep oil coating low. Pacific Fertiliser rates it fine."
+  ],
+  "ammonium_nitrate|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_nitrate|ssp": [
+   "care",
+   "Any free acid in the superphosphate slowly breaks down ammonium nitrate and can damage the bags."
+  ],
+  "ammonium_nitrate|tsp": [
+   "care",
+   "Any free acid in the superphosphate slowly breaks down ammonium nitrate and can damage the bags. Pacific Fertiliser rates it fine."
+  ],
+  "ammonium_nitrate|urea": [
+   "no",
+   "Together they pull water from the air so fast that the mix turns to slush or liquid; there may be safety risks too. TVA advises keeping urea and ammonium nitrate well apart even in storage; a mix of the two takes up water at about 18% humid"
+  ],
+  "ammonium_sulfate|calcium_nitrate": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "ammonium_sulfate|calcium_nitrate_gg": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "ammonium_sulfate|can": [
+   "care",
+   "Safety: ammonium nitrate mixed with ammonium sulfate can become easier to detonate and may fall under legal limits. Pacific Fertiliser rates it fine."
+  ],
+  "ammonium_sulfate|dap": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_sulfate|dolomite": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+  ],
+  "ammonium_sulfate|elemental_sulfur": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_sulfate|gypsum": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_sulfate|kieserite": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_sulfate|lime": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+  ],
+  "ammonium_sulfate|map": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_sulfate|map_tech": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_sulfate|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_sulfate|mop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_sulfate|potassium_nitrate": [
+   "care",
+   "The blend takes up water more easily than either part, and impurities in the ammonium sulfate add to this."
+  ],
+  "ammonium_sulfate|sodium_nitrate": [
+   "care",
+   "The blend takes up water more easily than either part, and impurities in the ammonium sulfate add to this."
+  ],
+  "ammonium_sulfate|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_sulfate|ssp": [
+   "care",
+   "Pacific Fertiliser rates it limited: spread soon after mixing and do not store, or it reacts and sets hard. Fertilizers Europe (2018 table) rates it fine."
+  ],
+  "ammonium_sulfate|tsp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ammonium_sulfate|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "calcium_nitrate|can": [
+   "care",
+   "Both pull water from the air; how the ammonium nitrate is stabilized decides whether the blend stores well."
+  ],
+  "calcium_nitrate_gg|can": [
+   "care",
+   "Both pull water from the air; how the ammonium nitrate is stabilized decides whether the blend stores well."
+  ],
+  "calcium_nitrate|complete_14_14_14": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "calcium_nitrate_gg|complete_14_14_14": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "calcium_nitrate|dap": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+  ],
+  "calcium_nitrate_gg|dap": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+  ],
+  "calcium_nitrate|dolomite": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "calcium_nitrate_gg|dolomite": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "calcium_nitrate|elemental_sulfur": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate_gg|elemental_sulfur": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate|gypsum": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "calcium_nitrate_gg|gypsum": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "calcium_nitrate|kieserite": [
+   "care",
+   "Gypsum can form in the blend."
+  ],
+  "calcium_nitrate_gg|kieserite": [
+   "care",
+   "Gypsum can form in the blend."
+  ],
+  "calcium_nitrate|lime": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "calcium_nitrate_gg|lime": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "calcium_nitrate|map": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+  ],
+  "calcium_nitrate|map_tech": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+  ],
+  "calcium_nitrate_gg|map": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+  ],
+  "calcium_nitrate_gg|map_tech": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+  ],
+  "calcium_nitrate|mkp": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate_gg|mkp": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate|mop": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate_gg|mop": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate|potassium_nitrate": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate_gg|potassium_nitrate": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate|sodium_nitrate": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate_gg|sodium_nitrate": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate|sop": [
+   "care",
+   "Gypsum can form in the blend."
+  ],
+  "calcium_nitrate_gg|sop": [
+   "care",
+   "Gypsum can form in the blend."
+  ],
+  "calcium_nitrate|ssp": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+  ],
+  "calcium_nitrate_gg|ssp": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+  ],
+  "calcium_nitrate|tsp": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+  ],
+  "calcium_nitrate_gg|tsp": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+  ],
+  "calcium_nitrate|urea": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "calcium_nitrate_gg|urea": [
+   "care",
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
+  ],
+  "can|dap": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "can|dolomite": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+  ],
+  "can|elemental_sulfur": [
+   "no",
+   "Sulfur burns and can react with nitrates; a fire risk."
+  ],
+  "can|gypsum": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "can|kieserite": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "can|lime": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+  ],
+  "can|map": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "can|map_tech": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "can|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "can|mop": [
+   "care",
+   "Safety: the blend can start a slow, self sustaining breakdown that smoulders; keep oil coating low."
+  ],
+  "can|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "can|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "can|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "can|ssp": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe (2018 table) rates it limited."
+  ],
+  "can|tsp": [
+   "care",
+   "Works only if the superphosphate is dry; moisture in it causes trouble. Pacific Fertiliser rates it fine."
+  ],
+  "can|urea": [
+   "no",
+   "Together they pull water from the air so fast that the mix turns to slush or liquid; there may be safety risks too."
+  ],
+  "complete_14_14_14|dap": [
+   "ok",
+   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "complete_14_14_14|dolomite": [
+   "ok",
+   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "complete_14_14_14|gypsum": [
+   "ok",
+   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "complete_14_14_14|kieserite": [
+   "ok",
+   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "complete_14_14_14|lime": [
+   "ok",
+   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "complete_14_14_14|map": [
+   "ok",
+   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "complete_14_14_14|map_tech": [
+   "ok",
+   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "complete_14_14_14|mkp": [
+   "ok",
+   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "complete_14_14_14|potassium_nitrate": [
+   "care",
+   "With an ammonium nitrate based compound: Safety: adds extra nitrate to an ammonium nitrate compound; check safety and legal limits. With a urea based compound: The nitrate, or the ammonium phosphate in the compound, can react with the urea"
+  ],
+  "complete_14_14_14|sodium_nitrate": [
+   "care",
+   "With an ammonium nitrate based compound: Safety: adds extra nitrate to an ammonium nitrate compound; check safety and legal limits. With a urea based compound: The nitrate, or the ammonium phosphate in the compound, can react with the urea"
+  ],
+  "complete_14_14_14|sop": [
+   "ok",
+   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+  ],
+  "complete_14_14_14|ssp": [
+   "care",
+   "With an ammonium nitrate based compound: Any free acid in the superphosphate slowly breaks down ammonium nitrate and can damage the bags. With a urea based compound: If the superphosphate carries free acid, the urea can break down and give"
+  ],
+  "complete_14_14_14|tsp": [
+   "care",
+   "With an ammonium nitrate based compound: Any free acid in the superphosphate slowly breaks down ammonium nitrate and can damage the bags. With a urea based compound: If the superphosphate carries free acid, the urea can break down and give"
+  ],
+  "dap|dolomite": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+  ],
+  "dap|elemental_sulfur": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dap|gypsum": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dap|kieserite": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dap|lime": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+  ],
+  "dap|map": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dap|map_tech": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dap|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dap|mop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dap|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dap|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dap|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dap|ssp": [
+   "care",
+   "If the superphosphate carries free acid, it reacts with the ammonia in DAP. IFDC and FAO advise avoiding DAP with superphosphate: it can cake or change how soluble the phosphate is."
+  ],
+  "dap|tsp": [
+   "care",
+   "If the superphosphate carries free acid, it reacts with the ammonia in DAP. Pacific Fertiliser rates it fine. IFDC and FAO advise avoiding DAP with superphosphate: it can cake or change how soluble the phosphate is."
+  ],
+  "dap|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dolomite|elemental_sulfur": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dolomite|gypsum": [
+   "ok",
+   "Compatible on the Pacific Fertiliser chart."
+  ],
+  "dolomite|kieserite": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dolomite|lime": [
+   "ok",
+   "Compatible on the Pacific Fertiliser chart."
+  ],
+  "dolomite|map": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+  ],
+  "dolomite|map_tech": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+  ],
+  "dolomite|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dolomite|mop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dolomite|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dolomite|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dolomite|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "dolomite|ssp": [
+   "care",
+   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite. Pacific Fertiliser rates it fine. The 2014 Fertilizers Europe guidance rated it compatible."
+  ],
+  "dolomite|tsp": [
+   "care",
+   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite. Pacific Fertiliser rates it fine. The 2014 Fertilizers Europe guidance rated it compatible."
+  ],
+  "dolomite|urea": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. Pacific lists a separate limestone and dolomite lin"
+  ],
+  "elemental_sulfur|gypsum": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "elemental_sulfur|kieserite": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "elemental_sulfur|lime": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "elemental_sulfur|map": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "elemental_sulfur|map_tech": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "elemental_sulfur|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "elemental_sulfur|mop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "elemental_sulfur|potassium_nitrate": [
+   "no",
+   "Sulfur burns and can react with nitrates; a fire risk."
+  ],
+  "elemental_sulfur|sodium_nitrate": [
+   "no",
+   "Sulfur burns and can react with nitrates; a fire risk."
+  ],
+  "elemental_sulfur|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "elemental_sulfur|ssp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "elemental_sulfur|tsp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "elemental_sulfur|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "gypsum|kieserite": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "gypsum|lime": [
+   "ok",
+   "Compatible on the Pacific Fertiliser chart."
+  ],
+  "gypsum|map": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "gypsum|map_tech": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "gypsum|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "gypsum|mop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "gypsum|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "gypsum|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "gypsum|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "gypsum|ssp": [
+   "care",
+   "Fertilizers Europe groups gypsum with limestone and dolomite and rates this limited, as free acid in the superphosphate can react. The 2014 Fertilizers Europe guidance rated it compatible."
+  ],
+  "gypsum|tsp": [
+   "care",
+   "Fertilizers Europe groups gypsum with limestone and dolomite and rates this limited, as free acid in the superphosphate can react. Pacific Fertiliser rates it fine. The 2014 Fertilizers Europe guidance rated it compatible."
+  ],
+  "gypsum|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "kieserite|lime": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "kieserite|map": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "kieserite|map_tech": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "kieserite|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "kieserite|mop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "kieserite|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "kieserite|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "kieserite|ssp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "kieserite|tsp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "kieserite|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "lime|map": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+  ],
+  "lime|map_tech": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+  ],
+  "lime|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "lime|mop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "lime|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "lime|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "lime|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "lime|ssp": [
+   "care",
+   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite. The 2014 Fertilizers Europe guidance rated it compatible."
+  ],
+  "lime|tsp": [
+   "care",
+   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite. The 2014 Fertilizers Europe guidance rated it compatible."
+  ],
+  "lime|urea": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. Pacific lists a separate limestone and dolomite lin"
+  ],
+  "map|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map_tech|mkp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map|mop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map_tech|mop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map_tech|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map_tech|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map_tech|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map|ssp": [
+   "care",
+   "Pacific Fertiliser rates it limited: spread soon after mixing and do not store, or it reacts and sets hard. Fertilizers Europe (2018 table) rates it fine."
+  ],
+  "map_tech|ssp": [
+   "care",
+   "Pacific Fertiliser rates it limited: spread soon after mixing and do not store, or it reacts and sets hard. Fertilizers Europe (2018 table) rates it fine."
+  ],
+  "map|tsp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map_tech|tsp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "map_tech|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mkp|mop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mkp|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mkp|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mkp|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mkp|ssp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mkp|tsp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mkp|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mop|potassium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mop|sodium_nitrate": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mop|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mop|ssp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mop|tsp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "mop|urea": [
+   "care",
+   "Can cake when it takes up moisture; keep it dry. ICL rates it fine. Pacific Fertiliser rates it fine. IFDC also calls urea and MOP partly compatible."
+  ],
+  "potassium_nitrate|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "potassium_nitrate|ssp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "potassium_nitrate|tsp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "potassium_nitrate|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "sodium_nitrate|sop": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "sodium_nitrate|ssp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "sodium_nitrate|tsp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "sodium_nitrate|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "sop|ssp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "sop|tsp": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "sop|urea": [
+   "ok",
+   "No problem expected when blended."
+  ],
+  "ssp|tsp": [
+   "ok",
+   "Compatible on the Pacific Fertiliser chart."
+  ],
+  "ssp|urea": [
+   "no",
+   "Pacific Fertiliser rates it not compatible: the mix takes up water and turns wet, or heats up. Fertilizers Europe (2018 table) rates it limited. TVA found such mixes are usually fine if taken straight to the field and spread at once, but ba"
+  ],
+  "ssp|zinc_sulfate_hepta": [
+   "care",
+   "Pacific Fertiliser lists single superphosphate with zinc sulfate monohydrate as limited: the blend takes up water easily and can set hard in storage, sometimes within hours."
+  ],
+  "ssp|zinc_sulfate_mono": [
+   "care",
+   "Pacific Fertiliser lists single superphosphate with zinc sulfate monohydrate as limited: the blend takes up water easily and can set hard in storage, sometimes within hours."
+  ],
+  "tsp|urea": [
+   "no",
+   "ICL tests rate it incompatible: do not blend. Fertilizers Europe (2018 table) rates it limited. Pacific Fertiliser rates it limited. TVA found such mixes are usually fine if taken straight to the field and spread at once, but bagging them c"
+  ],
+  "urea|zinc_sulfate_hepta": [
+   "care",
+   "Pacific Fertiliser lists urea with zinc sulfate monohydrate as limited: the blend takes up water easily and can set hard in storage, sometimes within hours."
+  ],
+  "urea|zinc_sulfate_mono": [
+   "care",
+   "Pacific Fertiliser lists urea with zinc sulfate monohydrate as limited: the blend takes up water easily and can set hard in storage, sometimes within hours."
+  ]
+ }
 }

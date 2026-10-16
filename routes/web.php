@@ -178,6 +178,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'climate20' => class_exists(\App\Support\ClimateRecord::class) && class_exists(\App\Support\NutrientBook::class) && defined(\App\Support\ClimateStore::class . '::YEARS') && \App\Support\ClimateStore::YEARS === 20,
             'newsTaglishTabs' => class_exists(\App\Support\NewsTaglish::class) && str_contains((string) @file_get_contents(resource_path('views/partials/lang-tabs.blade.php')), 'anee.soWhat.lang'),
             'tlBesideChip' => str_contains((string) @file_get_contents(resource_path('views/partials/tagalog-flags.blade.php')), 'tlx-wc'),
+            // 2026-10-18: the Compatibility Checker and its product book.
+            'compatChecker' => class_exists(\App\Support\CompatCheck::class) && is_file(resource_path('views/field-helpers/partials/compat.blade.php')) && is_file(database_path('products/materials.json')),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.
@@ -884,7 +886,16 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // The old free field helper now opens the planner (defined before fh.page so it wins).
     Route::get('/app/field-helpers/landprep', fn () => redirect()->route('landprep.page'))->name('landprep.legacy');
     // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.
-    Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases|nutrients|varieties|landprep')->name('fh.page');
+    // The Compatibility Checker's calls (2026-10-18): the product book, the free check, the farmer's own products, and Anee's online check.
+    Route::get('/app/field-helpers/compat/find', [App\Http\Controllers\CompatController::class, 'find'])->middleware('throttle:240,1')->name('compat.find');
+    Route::get('/app/field-helpers/compat/product/{id}', [App\Http\Controllers\CompatController::class, 'product'])->whereNumber('id')->middleware('throttle:240,1')->name('compat.product');
+    Route::post('/app/field-helpers/compat/check', [App\Http\Controllers\CompatController::class, 'check'])->middleware('throttle:120,1')->name('compat.check');
+    Route::post('/app/field-helpers/compat/mine', [App\Http\Controllers\CompatController::class, 'saveMine'])->middleware('throttle:60,1')->name('compat.mine.save');
+    Route::delete('/app/field-helpers/compat/mine/{id}', [App\Http\Controllers\CompatController::class, 'deleteMine'])->whereNumber('id')->name('compat.mine.delete');
+    Route::get('/app/field-helpers/compat/anee', [App\Http\Controllers\CompatController::class, 'aneeOptions'])->name('compat.anee.options');
+    Route::post('/app/field-helpers/compat/anee', [App\Http\Controllers\CompatController::class, 'anee'])->middleware('throttle:10,1')->name('compat.anee');
+    Route::get('/app/field-helpers/compat/anee/{id}', [App\Http\Controllers\CompatController::class, 'job'])->whereNumber('id')->name('compat.anee.job');
+    Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases|nutrients|varieties|compat|landprep')->name('fh.page');
     // The Variety Finder's data (2026-10-14): one crop's varieties, or every variety's names (?index=1).
     Route::get('/app/field-helpers/{tool}/data', [App\Http\Controllers\FieldHelperController::class, 'data'])->where('tool', 'varieties')->middleware('throttle:120,1')->name('fh.data');
     // NPK Plus (2026-10-07): the free fertilizer calculator, and Anee's reading of a plan.

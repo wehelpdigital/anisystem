@@ -502,9 +502,15 @@ final class ProductLibrary
         $rows = $qb->orderByRaw('case when lower(brand) like ? then 0 when lower(brand) like ? then 1 else 2 end', [$first . '%', '% ' . $first . '%'])
             ->orderByRaw("case when source = 'file' and company = '' then 0 else 1 end")->orderBy('brand')->limit(200)->get();
         $list = $rows->map(fn ($r) => self::fromRow($r))->all();
-        if ($crop) {
-            usort($list, fn ($a, $b) => (int) in_array($crop, $b['crops'], true) <=> (int) in_array($crop, $a['crops'], true));
-        }
+        // The brand that starts with the word first, a plain material before a branded one, then a product labelled for the crop.
+        $phrase = self::norm($q);
+        $rank = function (array $p) use ($first, $crop, $phrase): array {
+            $b = self::norm($p['b']);
+            $starts = str_starts_with($b, $phrase) ? 0 : (str_contains($b, $phrase) ? 1 : (str_starts_with($b, $first) ? 2 : (str_contains($b, ' ' . $first) ? 3 : 4)));
+
+            return [$starts, ($p['source'] ?? '') === 'file' && ($p['c'] ?? '') === '' ? 0 : 1, $crop && in_array($crop, (array) $p['crops'], true) ? 0 : 1, $b];
+        };
+        usort($list, fn ($a, $b) => $rank($a) <=> $rank($b));
 
         return array_slice($list, 0, $limit);
     }

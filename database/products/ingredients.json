@@ -1104,7 +1104,7 @@
 "grp": "IRAC 14",
 "flags": [
 "nereis",
-"alk_fast"
+"alk_slow"
 ],
 "rx": [
 "CARTAP"
@@ -1978,9 +1978,7 @@
 "cls": "Dithiocarbamate",
 "grp": "FRAC M03",
 "flags": [
-"dtc",
-"acid_sens",
-"alk_fast"
+"dtc"
 ],
 "rx": [
 "MANCOZEB"
@@ -1993,8 +1991,7 @@
 "cls": "Dithiocarbamate",
 "grp": "FRAC M03",
 "flags": [
-"dtc",
-"alk_fast"
+"dtc"
 ],
 "rx": [
 "\\bMANEB"
@@ -2005,8 +2002,7 @@
 "cls": "Dithiocarbamate",
 "grp": "FRAC M03",
 "flags": [
-"dtc",
-"alk_fast"
+"dtc"
 ],
 "rx": [
 "ZINEB"
@@ -2017,9 +2013,7 @@
 "cls": "Dithiocarbamate",
 "grp": "FRAC M03",
 "flags": [
-"dtc",
-"acid_sens",
-"alk_fast"
+"dtc"
 ],
 "rx": [
 "PROPINEB"
@@ -2032,8 +2026,7 @@
 "cls": "Dithiocarbamate",
 "grp": "FRAC M03",
 "flags": [
-"dtc",
-"alk_fast"
+"dtc"
 ],
 "rx": [
 "METIRAM"
@@ -2044,8 +2037,7 @@
 "cls": "Dithiocarbamate",
 "grp": "FRAC M03",
 "flags": [
-"dtc",
-"alk_fast"
+"dtc"
 ],
 "rx": [
 "THIRAM"
@@ -2058,8 +2050,7 @@
 "cls": "Dithiocarbamate",
 "grp": "FRAC M03",
 "flags": [
-"dtc",
-"alk_fast"
+"dtc"
 ],
 "rx": [
 "ZIRAM"
@@ -3817,8 +3808,7 @@
 "flags": [
 "su",
 "als",
-"su_corn",
-"acid_sens"
+"su_corn"
 ],
 "rx": [
 "HALOSULF[OU]R"

@@ -238,10 +238,23 @@ final class CompatCheck
 
     /* ================================================================ pairs */
 
-    private function has(array $x, array $flags): bool
+    /**
+     * Whether an item carries any of the tokens: a flag ("copper"), an
+     * ingredient by the dictionary's name ("ai:Cyhalofop butyl"), or flags
+     * that must all hold ("op&f_ec").
+     */
+    private function has(array $x, array $tokens): bool
     {
-        foreach ($flags as $f) {
-            if (isset($x['flags'][$f])) {
+        foreach ($tokens as $t) {
+            $all = true;
+            foreach (explode('&', (string) $t) as $part) {
+                $ok = str_starts_with($part, 'ai:') ? in_array(substr($part, 3), array_column($x['tr']['known'], 'name'), true) : isset($x['flags'][$part]);
+                if (! $ok) {
+                    $all = false;
+                    break;
+                }
+            }
+            if ($all) {
                 return true;
             }
         }
@@ -265,6 +278,9 @@ final class CompatCheck
                 $hits = [];
                 foreach ((array) ($this->rules['pairs'] ?? []) as $r) {
                     $on = (array) $r['on'];
+                    if (! empty($r['notStage']) && in_array($this->ctx['stage'], (array) $r['notStage'], true)) {
+                        continue;
+                    }
                     if (! in_array($mode, $on, true) && ! (in_array('near', $on, true) && ! empty($r['gap']))) {
                         continue;
                     }
@@ -279,7 +295,22 @@ final class CompatCheck
                     if ($mode !== 'tank' && ! in_array($mode, $on, true)) {
                         $level = $level === 'no' ? 'care' : $level;
                     }
-                    $hits[] = ['id' => $r['id'], 'level' => $level, 'why' => $this->fill($r['why'], $a, $b), 'fix' => $this->fill($r['fix'], $a, $b), 'gap' => $r['gap'] ?? null];
+                    $hits[] = ['id' => $r['id'], 'level' => $level, 'why' => $this->fill($r['why'], $a, $b), 'fix' => $this->fill($r['fix'], $a, $b), 'gap' => $r['gap'] ?? null,
+                        'weak' => ! empty($r['weak'])];
+                }
+                // A partner a label names (an ok rule) sets aside the general cautions (weak rules) for that pair.
+                if (array_filter($hits, fn ($h) => $h['level'] === 'ok' && ! $h['weak'])) {
+                    $hits = array_values(array_filter($hits, fn ($h) => ! $h['weak']));
+                }
+                // Two plain fertilizers mixed in one bag: the blending chart's own word (the strictest source's).
+                if ($mode === 'blend' && ! empty($x['p']['mat']) && ! empty($y['p']['mat'])) {
+                    $pair = [(string) $x['p']['mat'], (string) $y['p']['mat']];
+                    sort($pair);
+                    $c = $this->rules['blendChart'][implode('|', $pair)] ?? null;
+                    if ($c && ! ($c[0] === 'ok' && $hits)) {
+                        $hits[] = ['id' => 'blend_chart', 'level' => $c[0], 'why' => $c[1] ?: ($c[0] === 'ok' ? 'These two blend well in one bag.' : ''),
+                            'fix' => $c[0] === 'no' ? 'Spread them separately.' : ($c[0] === 'care' ? 'Mix only what you spread right away, in dry weather.' : ''), 'gap' => null];
+                    }
                 }
                 $known = $x['tr']['fact'] && $y['tr']['fact'];
                 $level = 'ok';
@@ -401,7 +432,7 @@ final class CompatCheck
             if ($a1 && $b1) {
                 $this->note('ph_conflict', 'care', array_merge($a1, $b1), [], ['name' => implode(', ', array_map(fn ($x) => $x['name'], $a1))], ['name' => implode(', ', array_map(fn ($x) => $x['name'], $b1))]);
             }
-            if (count($sprays) >= 5) {
+            if (count($sprays) >= 4) {
                 $this->note('too_many', 'care', $sprays);
             }
             // The same active ingredient twice, the same group twice.
@@ -429,21 +460,32 @@ final class CompatCheck
                 $this->note('salt_emulsion', 'care', $this->with($sprays, ['f_ec', 'f_dry']));
             }
             // Heat, rain and the crop.
-            $sulfur = $this->with($sprays, ['sulfur']);
+            $sulfur = array_values(array_filter($this->with($sprays, ['sulfur']), fn ($x) => ! isset($x['flags']['limesulfur'])));
+            $lime = $this->with($sprays, ['limesulfur']);
             $oil = $this->with($sprays, ['oil']);
             $fert = $this->with($sprays, ['fert_salt']);
+            $propanil = $this->with($sprays, ['propanil']);
             if ($weather === 'hot') {
                 if ($sulfur) {
                     $this->note('heat_sulfur', 'no', $sulfur);
                 }
+                if ($lime) {
+                    $this->note('heat_limesulfur', 'no', $lime);
+                }
                 if ($oil) {
-                    $this->note('heat_oil', 'care', $oil);
+                    $this->note('heat_oil', 'no', $oil);
+                }
+                if ($propanil) {
+                    $this->note('heat_propanil', 'no', $propanil);
                 }
                 if ($fert) {
                     $this->note('heat_fert', 'care', $fert);
                 }
-            } elseif ($weather === '' && ($sulfur || $oil)) {
-                $this->tips[] = 'Do not spray ' . implode(' or ', array_map(fn ($x) => $x['name'], array_merge($sulfur, $oil))) . ' when it is hotter than about 32 C. Spray early in the morning.';
+            } elseif ($weather === '' && ($sulfur || $oil || $lime || $propanil)) {
+                $this->tips[] = 'Do not spray ' . implode(' or ', array_map(fn ($x) => $x['name'], array_merge($sulfur, $lime, $oil, $propanil))) . ' when it is hotter than about 32 C (29 C for lime sulfur). Spray early in the morning or late in the afternoon.';
+            }
+            if ($this->with($sprays, ['auxin'])) {
+                $this->tips[] = 'Keep the drift of ' . $this->with($sprays, ['auxin'])[0]['name'] . ' off nearby vegetables and other broadleaf crops: even a little vapor can twist and kill them. Spray when the air is still.';
             }
             if ($weather === 'rain') {
                 $contact = array_values(array_filter($sprays, fn ($x) => $this->has($x, ['dtc', 'copper', 'chlorothalonil', 'sulfur', 'captan', 'fert_salt', 'pyr'])));
@@ -452,16 +494,13 @@ final class CompatCheck
                 }
             }
             $cuc = (array) ($this->rules['cucurbits'] ?? []);
-            $beans = (array) ($this->rules['beans'] ?? []);
             $copper = $this->with($sprays, ['copper']);
-            if ($copper && $crop && (in_array($crop, $cuc, true) || in_array($crop, $beans, true)) && in_array($stage, ['seedling', 'vegetative', 'flowering', ''], true)) {
+            // Copper burns crucifers, lettuce, strawberry and the cucurbits easily, and any crop's young growth.
+            if ($copper && $crop && (in_array($crop, (array) ($this->rules['copperSensitive'] ?? $cuc), true) || $stage === 'seedling')) {
                 $this->note('copper_young_cucurbit', 'care', $copper);
             }
             if ($sulfur && $crop && in_array($crop, $cuc, true)) {
                 $this->note('sulfur_cucurbit', 'care', $sulfur);
-            }
-            if ($oil && $stage === 'flowering') {
-                $this->note('oil_flowers', 'care', $oil);
             }
             if ($strength && ($strength['level'] ?? 'ok') !== 'ok') {
                 foreach ((array) ($strength['notes'] ?? []) as $n) {
@@ -570,6 +609,10 @@ final class CompatCheck
         }
         $slot = function (array $x): string {
             $fl = $x['flags'];
+            if (! $x['tr']['fact'] && ! isset($fl['fert'])) {
+                // A product the book does not know goes in with the solutions, where its label does not say otherwise.
+                return 'sl';
+            }
             if (isset($fl['conditioner']) || isset($fl['fe_ams']) || isset($fl['acidifier'])) {
                 return 'conditioner';
             }
@@ -681,8 +724,10 @@ final class CompatCheck
 
         return match ($worst) {
             'no' => ['t' => 'Do not mix all of these', 's' => ($no ? $no . ' ' . ($no === 1 ? 'pair' : 'pairs') . ' must not go together. ' : '')
-                . ($sprayTrips > 1 ? 'Split the sprays into ' . $sprayTrips . ' trips, as shown below.' : 'Read what to do instead below.')],
-            'care' => ['t' => 'Jar test first', 's' => 'These can go together with care. Read the notes, then test a small jar before you fill the tank.'],
+                . ($sprayTrips > 1 ? 'Split the sprays into ' . $sprayTrips . ' trips, as shown below.' : 'Read what to do instead below.')
+                . ($unknownItems ? ' We do not know ' . (count($unknownItems) === 1 ? 'one of them' : count($unknownItems) . ' of them') . ' well enough yet.' : '')],
+            'care' => ['t' => 'Jar test first', 's' => 'These can go together with care. Read the notes, then test a small jar before you fill the tank.'
+                . ($unknownItems ? ' We do not know ' . (count($unknownItems) === 1 ? 'one of them' : count($unknownItems) . ' of them') . ' well enough yet.' : '')],
             'unknown' => ['t' => 'We cannot check all of it', 's' => 'We do not know ' . (count($unknownItems) === 1 ? 'one of these' : count($unknownItems) . ' of these') . ' well enough. What we know mixes fine.'],
             default => ['t' => $n < 2 ? 'Nothing to mix with yet' : 'Mixes fine', 's' => $n < 2 ? 'Add one more product to check them together.'
                 : 'No known clash between these. The label wins, and a jar test is wise when a mix is new to you.'],

@@ -332,6 +332,12 @@ return [
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
+        'tool.field.compat' => [
+            'title' => 'Compatibility Checker',
+            'blurb' => 'Add the sprays and fertilizers you want to put on together, with how much of each, and see if they mix, in what order, and how strong the spray is for your crop.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
         'tool.field.varieties' => [
             'title' => 'Variety Finder',
             'blurb' => 'Every registered variety of your crop, with its days to harvest, its yield and what it resists. Filter them to find the one for your farm.',

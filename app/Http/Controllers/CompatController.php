@@ -108,7 +108,8 @@ class CompatController extends Controller
             'reg' => (string) ($p['reg'] ?? ''), 'mode' => (string) ($p['mode'] ?? ''), 'tox' => (string) ($p['tox'] ?? ''),
             'analysis' => (string) ($p['analysis'] ?? ''), 'crops' => array_values(array_map(fn ($k) => $crops[$k][1] ?? $k, (array) $p['crops'])),
             'other' => array_values((array) ($p['other'] ?? [])), 'aka' => array_values((array) ($p['aka'] ?? [])), 'chem' => $p['chem'] ?? null,
-            'notes' => (string) ($p['notes'] ?? ''),
+            // Only the field catalogue's own one line notes (fh): the research notes are for the build, not the farmer.
+            'notes' => ! empty($p['fh']) ? (string) ($p['notes'] ?? '') : '',
         ]]);
     }
 
