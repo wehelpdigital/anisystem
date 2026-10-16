@@ -525,7 +525,7 @@ def build(v, allv, st):
     lead_kind = kind_txt if kind else ('registered %s' % fkword if v.get('reg') else fkword)
     excerpt = '%s is %s %s variety%s. %s%s' % (
         lead, article(lead_kind), lead_kind, (', also sold or known as %s' % ' or '.join(aliases[:2])) if aliases else '',
-        (regt + ' ') if regt else 'It is not on the NSIC registry, so the facts here come from its seller and farm sources. ', who)
+        (regt + ' ') if regt else 'It is not a registered variety, so the facts here come from its seller and farm sources. ', who)
     if mat:
         excerpt += 'It takes %s%s.' % (mat, (', with %s' % yld) if yld else '')
     elif yld:
