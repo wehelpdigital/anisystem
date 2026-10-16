@@ -108,11 +108,13 @@
         .pm-from { opacity: 0; transform: translateY(-.75rem); }
         .pm-to { opacity: 1; transform: none; }
         .pm-scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 1rem 1rem 1.25rem; }
-        .pm-pages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+        /* One page a row (2026-10-17, the owner: "1 column per row, not 2 columns"). */
+        .pm-pages { display: grid; grid-template-columns: minmax(0, 1fr); gap: .5rem; }
         .pm-page { display: flex; align-items: center; gap: .65rem; padding: .85rem .9rem; border-radius: 1rem; background: #fff; border: 1px solid #edf1e8;
             font-weight: 700; color: #1f2937; text-decoration: none; animation: pmRow .36s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i) * 25ms);
             transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
         .pm-page svg { width: 1.25rem; height: 1.25rem; color: #4d7c2a; flex: none; }
+        .pm-page .pm-chev { width: 1rem; height: 1rem; color: #9ca3af; }
         .pm-page.is-on { background: #eef6e6; border-color: #cfe3b8; color: #2f5219; }
         .pm-page:active { background: #f3f8ec; }
         .pm-label { margin: 1.25rem .25rem .6rem; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #4d7c2a; }
@@ -392,6 +394,7 @@
                         <a href="{{ route($r) }}" class="pm-page {{ $on ? 'is-on' : '' }}" style="--i: {{ $i }}">
                             <svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
                             <span>{{ $label }}</span>
+                            <svg class="pm-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         </a>
                     @endforeach
                 </nav>
