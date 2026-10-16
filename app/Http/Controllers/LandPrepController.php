@@ -371,6 +371,12 @@ class LandPrepController extends Controller
             'lots.*.soil' => 'nullable|array',
             'lots.*.history' => 'nullable|array',
             'lots.*.profile' => 'nullable|array',
+            // Its own crop (2026-10-16, the owner: "you can plant different crops per lot").
+            'lots.*.crop' => 'nullable|string|in:' . implode(',', array_keys($crops)),
+            'lots.*.method' => 'nullable|string|max:24',
+            'lots.*.variety' => 'nullable|string|max:120',
+            'lots.*.seedType' => 'nullable|in:inbred,hybrid',
+            'lots.*.seedSource' => 'nullable|in:certified,own,old',
             'crew' => 'nullable|array',
             'crew.workers' => 'nullable|array|max:100',
             'crew.workers.*.name' => 'nullable|string|max:40',
@@ -414,7 +420,7 @@ class LandPrepController extends Controller
             return 'Pick a planting day from today to a year ahead.';
         }
         // Each lot's soil, water and history, one profile a lot (App\Support\FieldProfile), kept split the way the planner reads it.
-        $answers = fn (array $raw): array => FieldProfile::split(FieldProfile::normalize($raw, $crop));
+        $answers = fn (array $raw, ?string $forCrop = null): array => FieldProfile::split(FieldProfile::normalize($raw, $forCrop ?? $crop));
         $shared = $answers(['soil' => (array) $request->input('soil', []), 'history' => (array) $request->input('history', [])]);
         $lots = [];
         $given = array_values((array) $request->input('lots', []));
@@ -433,17 +439,39 @@ class LandPrepController extends Controller
             if ($ha < 0.001 || $ha > 500) {
                 return 'The size of ' . $name . ' must be from 10 square meters to 500 hectares.';
             }
-            $own = isset($l['profile']) || isset($l['soil']) || isset($l['history'])
-                ? $answers(array_merge((array) ($l['history'] ?? []), (array) ($l['soil'] ?? []), (array) ($l['profile'] ?? []))) : $shared;
-            $lots[] = ['name' => $name, 'area' => round($ha, 4), 'input' => $input, 'unit' => $unit,
+            // The lot's own crop, method and variety, when it grows something else than the plan's (or plants it another way).
+            $lCrop = isset($l['crop'], $crops[$l['crop']]) ? (string) $l['crop'] : $crop;
+            $lMethod = trim((string) ($l['method'] ?? ''));
+            $own = [];
+            if ($lCrop !== $crop || ($lMethod !== '' && $lMethod !== $method) || trim((string) ($l['variety'] ?? '')) !== '') {
+                $ms = LP::methodsFor($lCrop);
+                if (! isset($ms[$lMethod])) {
+                    $lMethod = count($ms) === 1 ? (string) array_key_first($ms) : ($lCrop === $crop ? $method : '');
+                }
+                if ($lMethod === '') {
+                    return 'Pick how ' . strtolower($crops[$lCrop][1] ?? $lCrop) . ' goes in on ' . $name . '.';
+                }
+                $lVar = trim((string) ($l['variety'] ?? ''));
+                $own = ['crop' => $lCrop, 'cropLabel' => $crops[$lCrop][1] ?? CropCatalog::label($lCrop), 'method' => $lMethod, 'variety' => $lVar,
+                    'varietyCustom' => $lVar !== '' && ! LP::knownVariety($lCrop, $lVar), 'seedType' => (string) ($l['seedType'] ?? ''),
+                    'seedSource' => str_starts_with($lCrop, 'rice') ? (string) ($l['seedSource'] ?? '') : ''];
+            }
+            $answersOf = isset($l['profile']) || isset($l['soil']) || isset($l['history'])
+                ? $answers(array_merge((array) ($l['history'] ?? []), (array) ($l['soil'] ?? []), (array) ($l['profile'] ?? [])), $lCrop) : $shared;
+            $lots[] = $own + ['name' => $name, 'area' => round($ha, 4), 'input' => $input, 'unit' => $unit,
                 'planting' => $p->toDateString(), 'own' => ! empty($l['planting']), 'sourceLotId' => isset($l['sourceLotId']) ? (int) $l['sourceLotId'] : null,
                 'farmLotId' => isset($l['farmLotId']) && (int) $l['farmLotId'] > 0 ? (int) $l['farmLotId'] : null,
                 'copiedFrom' => isset($l['copiedFrom']) && is_numeric($l['copiedFrom']) && (int) $l['copiedFrom'] !== $i ? (int) $l['copiedFrom'] : null,
                 'edited' => ! empty($l['edited']),
-                'soil' => $own['soil'], 'history' => $own['history']];
+                'soil' => $answersOf['soil'], 'history' => $answersOf['history']];
         }
-        // The crew: each worker with their own days; the machines this crop and method can use.
+        // The crew: each worker with their own days; the machines any lot's crop and method can use.
         $usable = LP::equipmentFor($crop, $method);
+        foreach ($lots as $l) {
+            if (! empty($l['crop'])) {
+                $usable += LP::equipmentFor($l['crop'], $l['method']);
+            }
+        }
         $c = (array) $request->input('crew', []);
         $c['fleet'] = array_values(array_filter((array) ($c['fleet'] ?? []), fn ($f) => is_array($f) && isset($usable[$f['type'] ?? ''])));
         if (! isset($c['workers'])) {
@@ -460,7 +488,8 @@ class LandPrepController extends Controller
             'cropLabel' => $crops[$crop][1] ?? CropCatalog::label($crop),
             'method' => $method,
             'variety' => $variety,
-            'varietyCustom' => $variety !== '' && ! LP::knownVariety($crop, $variety),
+            // A lookup is needed when any variety is not on our list (the plan's or a lot's own).
+            'varietyCustom' => ($variety !== '' && ! LP::knownVariety($crop, $variety)) || (bool) array_filter($lots, fn ($l) => ! empty($l['varietyCustom'])),
             'seedType' => (string) $request->input('seedType', ''),
             'seedSource' => $rice ? (string) $request->input('seedSource', '') : '',
             'planting' => $main->toDateString(),
@@ -586,6 +615,24 @@ class LandPrepController extends Controller
             if ($research) {
                 $case['research'] = $research;
             }
+            // A lot's own variety that is not on our list is looked up too (the same variety once).
+            $looked = [($case['crop'] ?? '') . '|' . mb_strtolower((string) ($case['variety'] ?? ''))];
+            foreach ($case['lots'] as $i => $l) {
+                if (empty($l['varietyCustom']) || count($looked) >= 3) {
+                    continue;
+                }
+                $k = $l['crop'] . '|' . mb_strtolower((string) $l['variety']);
+                if (in_array($k, $looked, true)) {
+                    continue;
+                }
+                $looked[] = $k;
+                $more = $this->research(LP::forLot($case, $i), $field, $beat);
+                if ($more) {
+                    $case['lots'][$i]['research'] = $more;
+                    $research = $research ? array_merge($research, ['tokensIn' => (int) $research['tokensIn'] + (int) $more['tokensIn'], 'tokensOut' => (int) $research['tokensOut'] + (int) $more['tokensOut'],
+                        'searched' => ! empty($research['searched']) || ! empty($more['searched'])]) : array_merge($more, ['ok' => true, 'found' => false, 'lotOnly' => true]);
+                }
+            }
             $plan = $this->plan($case);
             $weather = $this->weather($case, $plan);
             $beat('document');
@@ -631,7 +678,7 @@ class LandPrepController extends Controller
      */
     private function research(array $case, AiSetting $settings, callable $beat): ?array
     {
-        if (empty($case['varietyCustom']) || $case['variety'] === '') {
+        if (empty($case['varietyCustom']) || $case['variety'] === '' || ($case['variety'] !== '' && LP::knownVariety($case['crop'], $case['variety']))) {
             return null;
         }
         $beat('research');
@@ -788,7 +835,15 @@ PROMPT;
         $method = lcfirst($methods[$case['method']][0] ?? $case['method']);
         $word = $plan['dayWord'];
         $sched = $plan['sched'];
-        $lots = implode("\n", array_map(fn ($l, $i) => '- ' . $l['name'] . ': ' . $l['area'] . ' ha, ' . $word . ' ' . Carbon::parse($sched['plantings'][$i])->format('D M j, Y')
+        $ownCrop = function (array $l): string {
+            if (empty($l['crop'])) {
+                return '';
+            }
+            $m = LP::methodsFor($l['crop'])[$l['method']][0] ?? $l['method'];
+
+            return ', ITS OWN CROP: ' . $l['cropLabel'] . ', ' . lcfirst($m) . ($l['variety'] !== '' ? ', variety ' . $l['variety'] : '') . ' (day 0 is its ' . ($l['dayWord'] ?? 'planting') . ' day)';
+        };
+        $lots = implode("\n", array_map(fn ($l, $i) => '- ' . $l['name'] . ': ' . $l['area'] . ' ha' . $ownCrop($l) . ', ' . ($l['dayWord'] ?? $word) . ' ' . Carbon::parse($sched['plantings'][$i])->format('D M j, Y')
             . ($sched['shift'][$i] ? ' (moved ' . $sched['shift'][$i] . ($sched['shift'][$i] === 1 ? ' day' : ' days') . ' later than asked so the crew can finish)' : ''), $case['lots'], array_keys($case['lots'])));
         // Lots with the same answers are told once.
         $groups = [];
@@ -835,6 +890,7 @@ PROMPT;
         $enso = $weather['ensoText'] ?: 'not available';
         $place = $weather['place']['label'] ?? (trim(($case['location']['town'] ?? '') . ', ' . ($case['location']['province'] ?? ''), ', ') ?: 'not given');
         $variety = $case['variety'] !== '' ? $case['variety'] : 'not chosen yet';
+        $mixedLine = LP::mixed($case) ? ' Some lots grow their own crop or plant another way (see LOTS): the steps of each lot follow its own crop, and an added step for one crop names its lots.' : '';
         $seedSource = $case['seedSource'] !== '' ? (self::SEED_Q['o'][$case['seedSource']][0] ?? $case['seedSource']) : 'not given';
         $today = now('Asia/Manila')->format('D M j, Y');
         $lotNames = implode(', ', array_map(fn ($n) => '"' . $n . '"', $names));
@@ -846,7 +902,7 @@ PROMPT;
 You are Anee, the smart farm technician of anee.io, planning the LAND PREPARATION of a Filipino farmer's lots. The app has already worked out the base plan: for rice, PhilRice practice (the PalayCheck System); for other crops, DA and extension practice; plus rules from each lot's answers and a crew calendar. Your job: read it against the soil, each field's history, the weather forecast, the ENSO outlook and the area's climate history, and ADD your judgement: your own extra steps where they are needed, notes on the steps that need them, the risks, and a plain analysis of why. Do NOT rewrite or remove the base steps, and do NOT compute dates: give day offsets, the app does the dates.
 
 TODAY: {$today}
-CROP: {$case['cropLabel']}, {$method}. Variety: {$variety}. Seed: {$seedSource}. Day 0 is the {$word} day, negative days come before it.
+CROP: {$case['cropLabel']}, {$method}. Variety: {$variety}. Seed: {$seedSource}. Day 0 is the {$word} day, negative days come before it.{$mixedLine}
 PLACE: {$place}
 LOTS:
 {$lots}
@@ -1011,13 +1067,14 @@ PROMPT;
                 }
             }
             $sow ??= $pl['planting'];
-            $timeline[] = ['lot' => $pl['lot'], 'sow' => $sow, 'events' => LP::seedTimeline($final['prep'], $sow)];
+            $timeline[] = ['lot' => $pl['lot'], 'sow' => $sow, 'events' => LP::seedTimeline($final['preps'][$pl['lot']] ?? $final['prep'], $sow)];
         }
         $prep = $final['prep'];
         $amounts = [];
-        if (! empty($prep['seedKgPerHa'])) {
-            foreach ($full['lots'] as $i => $l) {
-                $amounts[] = ['lot' => $i, 'lo' => round($prep['seedKgPerHa'][0] * $l['area'], 1), 'hi' => round($prep['seedKgPerHa'][1] * $l['area'], 1)];
+        foreach ($full['lots'] as $i => $l) {
+            $lp = $final['preps'][$i] ?? $prep;
+            if (! empty($lp['seedKgPerHa'])) {
+                $amounts[] = ['lot' => $i, 'lo' => round($lp['seedKgPerHa'][0] * $l['area'], 1), 'hi' => round($lp['seedKgPerHa'][1] * $l['area'], 1)];
             }
         }
         $methods = LP::methodsFor($case['crop']);
@@ -1040,7 +1097,14 @@ PROMPT;
                 'asked' => $l['planting'], 'planting' => $sched['plantings'][$i], 'shift' => $sched['shift'][$i],
                 'copiedFrom' => $l['copiedFrom'] ?? null, 'edited' => ! empty($l['edited']), 'answers' => $this->answerWords($l, $case['crop']),
                 'squeeze' => isset($final['squeeze'][$i]) ? array_diff_key($final['squeeze'][$i], ['notes' => 1]) : null,
-            ], $full['lots'], array_keys($full['lots'])),
+                'dayWord' => $l['dayWord'] ?? null,
+            ] + (! empty($l['crop']) ? [
+                // Its own crop (2026-10-16): the lot pages, the season it becomes and its seed follow it.
+                'crop' => ['key' => $l['crop'], 'label' => $l['cropLabel'], 'icon' => FieldCatalogue::crops()[$l['crop']][2] ?? '🌱', 'local' => FieldCatalogue::crops()[$l['crop']][0] ?? $l['cropLabel']],
+                'method' => ['key' => $l['method'], 'label' => LP::methodsFor($l['crop'])[$l['method']][0] ?? $l['method']],
+                'variety' => $l['variety'], 'seed' => ($final['preps'][$i] ?? null) ? array_diff_key($final['preps'][$i], ['timeline' => 1]) : null,
+            ] : []), $full['lots'], array_keys($full['lots'])),
+            'mixed' => LP::mixed($full),
             'crew' => [
                 'workers' => count($crew['workers']), 'workerList' => $crew['workers'], 'stagger' => $crew['stagger'],
                 'fleet' => array_map(fn ($f) => $f + ['name' => $items[$f['type']]['name'] ?? $f['type'], 'local' => $items[$f['type']]['local'] ?? '',
@@ -1075,8 +1139,14 @@ PROMPT;
         $m = LP::methodsFor($case['crop'])[$case['method']][0] ?? '';
         $dates = array_unique(array_column($case['lots'], 'planting'));
         sort($dates);
+        // Lots with crops of their own: the crops, by name.
+        $labels = array_values(array_unique(array_map(fn ($i) => (string) LP::forLot($case, $i)['cropLabel'], array_keys($case['lots']))));
+        $c0 = LP::forLot($case, 0);
+        $head = count($labels) > 1
+            ? implode(', ', array_slice(array_map(fn ($x) => preg_replace('/\s*,.*$/', '', $x), $labels), 0, -1)) . ' and ' . preg_replace('/\s*,.*$/', '', end($labels))
+            : $c0['cropLabel'] . ', ' . lcfirst(LP::methodsFor($c0['crop'])[$c0['method']][0] ?? $m);
 
-        return $case['cropLabel'] . ', ' . lcfirst($m) . ' · ' . Carbon::parse($dates[0])->format('M j, Y') . ' · '
+        return $head . ' · ' . Carbon::parse($dates[0])->format('M j, Y') . ' · '
             . count($case['lots']) . ' ' . (count($case['lots']) === 1 ? 'lot' : 'lots');
     }
 
@@ -1324,13 +1394,15 @@ PROMPT;
         $title = trim((string) $request->input('title')) ?: mb_substr((string) $r->title, 0, 255);
         $made = ['activities' => 0, 'lots' => 0];
 
-        $schedule = DB::transaction(function () use ($report, $lots, $params, $crop, $cropKey, $variety, $loc, $units, $tagWord, $title, $dayType, $nursery, $r, &$made) {
+        // Lots with crops of their own (2026-10-16): the season names them all, and each lot keeps its own.
+        $cropNames = array_values(array_unique(array_map(fn ($l) => preg_replace('/\s*,.*$/', '', (string) ($l['crop']['label'] ?? ($report['crop']['label'] ?? ($params['cropLabel'] ?? $crop)))), $lots)));
+        $schedule = DB::transaction(function () use ($report, $lots, $params, $crop, $method, $cropKey, $variety, $loc, $units, $tagWord, $title, $dayType, $nursery, $r, $cropNames, &$made) {
             $schedule = \App\Models\AsCroppingSchedule::create([
                 'anisystemUserId' => (int) Auth::id(),
                 'usersId' => (int) config('anisystem.order_users_id', 1),
                 'title' => mb_substr($title, 0, 255),
                 'description' => mb_substr('Made from the Land Prep Planner plan "' . $r->title . '". Every land preparation step is on the board on the day your crew starts it.', 0, 5000),
-                'cropType' => (string) ($report['crop']['label'] ?? ($params['cropLabel'] ?? $crop)),
+                'cropType' => count($cropNames) > 1 ? mb_substr(implode(', ', array_slice($cropNames, 0, -1)) . ' and ' . end($cropNames), 0, 255) : (string) ($report['crop']['label'] ?? ($params['cropLabel'] ?? $crop)),
                 'cropVariety' => $variety !== '' ? mb_substr($variety, 0, 255) : null,
                 'dayType' => $dayType,
                 'status' => 'setup',
@@ -1342,12 +1414,20 @@ PROMPT;
             ]);
             $perDate = [];
             $first = null;
+            $mainNursery = $nursery;
             foreach ($lots as $i => $l) {
                 $pl = (array) ($report['perLot'][$i] ?? []);
                 $planting = (string) ($pl['planting'] ?? ($l['planting'] ?? ''));
                 if ($planting === '') {
                     continue;
                 }
+                // The lot's own crop, way of planting and variety, when it has them.
+                $lCrop = (string) ($l['crop']['key'] ?? $crop);
+                $lMethod = (string) ($l['method']['key'] ?? $method);
+                $nursery = isset($l['crop']) ? LP::hasNursery($lCrop, $lMethod) : $mainNursery;
+                $lDayType = isset($l['crop']) ? ($nursery ? 'DAT' : (in_array($lMethod, ['dsr_wet_broadcast', 'dsr_wet_drum', 'dsr_dry', 'direct'], true) ? 'DAS' : 'DAP')) : $dayType;
+                $lCropKey = isset($l['crop']) ? (\App\Support\CropStages::normalize($lCrop) ?? \App\Support\CropStages::normalize(\App\Support\CropCatalog::label($lCrop)) ?? $lCrop) : $cropKey;
+                $lVariety = isset($l['crop']) ? trim((string) ($l['variety'] ?? '')) : $variety;
                 $defs = [];
                 foreach ((array) ($report['lotSteps'][$i] ?? $report['steps'] ?? []) as $s) {
                     $defs[$s['key']] = $s;
@@ -1371,11 +1451,11 @@ PROMPT;
                     'lotName' => mb_substr((string) ($l['name'] ?? ('Lot ' . ($i + 1))), 0, 255),
                     'lotSize' => (float) (($l['input'] ?? null) ?: ($l['area'] ?? 1)),
                     'lotSizeUnit' => $units[$l['unit'] ?? 'ha'] ?? 'hectare',
-                    'variety' => $variety !== '' ? mb_substr($variety, 0, 255) : null,
-                    'crop' => $cropKey ?: null,
+                    'variety' => $lVariety !== '' ? mb_substr($lVariety, 0, 255) : null,
+                    'crop' => $lCropKey ?: null,
                     'locTown' => ! empty($loc['town']) ? mb_substr((string) $loc['town'], 0, 120) : null,
                     'locProvince' => ! empty($loc['province']) ? mb_substr((string) $loc['province'], 0, 120) : null,
-                    'dayType' => $dayType,
+                    'dayType' => $lDayType,
                     'dayZeroDate' => $dayZero,
                     'transplantDate' => $nursery ? $planting : null,
                     'deleteStatus' => 1,

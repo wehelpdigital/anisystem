@@ -596,9 +596,38 @@ final class LandPrepPlanner
         return $case;
     }
 
-    /** One lot's own steps and notes: the base plan bent by that lot's answers. */
+    /** The lot fields that may be the lot's own (2026-10-16, the owner: "you can plant different crops per lot"). */
+    public const LOT_CROP = ['crop', 'cropLabel', 'method', 'variety', 'varietyCustom', 'seedType', 'seedSource', 'research'];
+
+    /** A case seen from one lot: the lot's own crop, method, variety and seed in place of the plan's, when it has them. */
+    public static function forLot(array $case, int $i): array
+    {
+        $l = $case['lots'][$i] ?? [];
+        foreach (self::LOT_CROP as $k) {
+            if (array_key_exists($k, $l) && $l[$k] !== null && $l[$k] !== '') {
+                $case[$k] = $l[$k];
+            }
+        }
+
+        return $case;
+    }
+
+    /** Whether the lots grow more than one crop or plant more than one way. */
+    public static function mixed(array $case): bool
+    {
+        $seen = [];
+        foreach (array_keys((array) ($case['lots'] ?? [])) as $i) {
+            $c = self::forLot($case, $i);
+            $seen[$c['crop'] . '|' . $c['method']] = true;
+        }
+
+        return count($seen) > 1;
+    }
+
+    /** One lot's own steps and notes: the base plan of its crop bent by that lot's answers. */
     public static function lotSteps(array $case, int $i): array
     {
+        $case = self::forLot($case, $i);
         $lot = $case['lots'][$i];
         $sub = $case;
         $sub['soil'] = (array) ($lot['soil'] ?? []);
@@ -641,12 +670,23 @@ final class LandPrepPlanner
         foreach ($notes as $k => $n) {
             $notes[$k]['lots'] = count(array_unique($n['lots'])) >= $count ? [] : array_values(array_unique($n['lots']));
         }
-        $prep = self::seedPrep($case['crop'], $case['method'], $case['variety'], $case['seedType'], $case['research'] ?? null);
+        // Each lot's seed preparation, from its own crop and variety (one look up for lots that share them).
+        $preps = [];
+        $byKey = [];
+        foreach ($case['lots'] as $i => $lot) {
+            $c = self::forLot($case, $i);
+            $k = implode('|', [$c['crop'], $c['method'], $c['variety'], $c['seedType']]);
+            $byKey[$k] ??= self::seedPrep($c['crop'], $c['method'], $c['variety'], $c['seedType'], $c['research'] ?? null);
+            $preps[$i] = $byKey[$k];
+            $case['lots'][$i]['dayWord'] = self::dayWord($c['crop'], $c['method']);
+        }
+        $prep = $preps[0] ?? self::seedPrep($case['crop'], $case['method'], $case['variety'], $case['seedType'], $case['research'] ?? null);
         // Too little time is never refused (2026-10-15, the owner): the early steps are squeezed into the days left.
         $squeeze = [];
-        $prepDays = ! empty($prep['found']) && ! empty($prep['applies']) && isset($prep['soakHours']) ? (int) ceil(((int) $prep['soakHours'] + (int) $prep['incubateHours']) / 24) : 2;
         foreach ($case['lots'] as $i => $lot) {
-            [$lotSteps[$i], $sq] = self::squeeze($lotSteps[$i], $case, $lot, $prepDays);
+            $p = $preps[$i] ?? $prep;
+            $prepDays = ! empty($p['found']) && ! empty($p['applies']) && isset($p['soakHours']) ? (int) ceil(((int) $p['soakHours'] + (int) $p['incubateHours']) / 24) : 2;
+            [$lotSteps[$i], $sq] = self::squeeze($lotSteps[$i], self::forLot($case, $i), $lot, $prepDays);
             if ($sq) {
                 $squeeze[$i] = $sq;
                 $case['lots'][$i]['gapScale'] = $sq['ratio'];
@@ -671,6 +711,7 @@ final class LandPrepPlanner
             'squeeze' => $squeeze,
             'notes' => array_values($notes),
             'prep' => $prep,
+            'preps' => $preps,
             'sched' => $sched,
             'bookings' => $bookings,
             'dayWord' => self::dayWord($case['crop'], $case['method']),
@@ -1185,9 +1226,10 @@ final class LandPrepPlanner
     {
         $case = self::normalize($case);
         $T = Carbon::parse($today ?: now('Asia/Manila')->toDateString(), 'UTC')->startOfDay();
-        $rice = str_starts_with((string) $case['crop'], 'rice');
         $out = [];
         foreach ($case['lots'] as $i => $lot) {
+            $lc = self::forLot($case, $i);
+            $rice = str_starts_with((string) $lc['crop'], 'rice');
             [$steps] = self::lotSteps($case, $i);
             $work = array_values(array_filter($steps, fn ($s) => ! in_array($s['key'], self::NOT_WORK, true) && ! in_array($s['key'], self::PLANT_KEYS, true) && $s['key'] !== 'pull' && (int) $s['from'] < 0));
             usort($work, fn ($a, $b) => [$a['from'], $a['to']] <=> [$b['from'], $b['to']]);
@@ -1203,7 +1245,7 @@ final class LandPrepPlanner
                 if ($ago === null) {
                     $restNotYet = true;
                 } else {
-                    $rest = max(0, 30 - $ago - self::sowOffset($steps, (string) $case['method']));
+                    $rest = max(0, 30 - $ago - self::sowOffset($steps, (string) $lc['method']));
                 }
             }
             $need = max($needed, (int) $rest);
@@ -1431,8 +1473,9 @@ final class LandPrepPlanner
         $plantPeople = 0;
         $plantWords = '';
         foreach ($lots as $i => $l) {
+            $lc = self::forLot($case, $i);
             foreach ($lotSteps[$i] as $s) {
-                $rate = self::PLANTING[$s['key'] . ':' . $case['method']] ?? self::PLANTING[$s['key'] . ':' . self::groupFor($case['crop'])] ?? null;
+                $rate = self::PLANTING[$s['key'] . ':' . $lc['method']] ?? self::PLANTING[$s['key'] . ':' . self::groupFor($lc['crop'])] ?? null;
                 if ($rate && in_array($s['key'], self::PLANT_KEYS, true)) {
                     $plantPeople = max($plantPeople, (int) ceil($rate[0] * (float) $l['area']));
                     $plantWords = $rate[1];
@@ -2120,11 +2163,11 @@ final class LandPrepPlanner
             $perLot[] = ['lot' => $i, 'planting' => $plantings[$i], 'steps' => $out, 'area' => $area];
         }
 
-        // The planting days: how many hands each takes.
-        $method = (string) ($case['method'] ?? '');
-        $group = self::groupFor((string) ($case['crop'] ?? ''));
+        // The planting days: how many hands each takes, by the lot's own crop and method.
         $plantDays = [];
         foreach ($lots as $i => $lot) {
+            $method = (string) (($lot['method'] ?? '') ?: ($case['method'] ?? ''));
+            $group = self::groupFor((string) (($lot['crop'] ?? '') ?: ($case['crop'] ?? '')));
             $area = max(0.001, (float) $lot['area']);
             foreach ($stepsByLot[$lot['idx'] ?? $i] ?? [] as $s) {
                 if (! in_array($s['key'], array_merge(self::PLANT_KEYS, ['pull']), true)) {
@@ -2292,16 +2335,23 @@ final class LandPrepPlanner
         foreach ($sched['hiredFirst'] ?? [] as $type => $f) {
             $need[$type] = $f;
         }
-        // Planting machines are needed on the first planting day.
+        // Planting machines are needed on the first planting day of the lots planted that way.
         foreach ($case['crew']['fleet'] as $f) {
             if (! empty($items[$f['type']]['plants']) && $f['hired'] > 0 && $lots) {
-                $first = 0;
+                $for = $items[$f['type']]['for'] ?? 'all';
+                $first = null;
                 foreach ($sched['plantings'] as $i => $p) {
-                    if ($p < $sched['plantings'][$first]) {
+                    $m = (string) self::forLot($case, $i)['method'];
+                    if (is_array($for) && ! in_array($m, $for, true)) {
+                        continue;
+                    }
+                    if ($first === null || $p < $sched['plantings'][$first]) {
                         $first = $i;
                     }
                 }
-                $need[$f['type']] = ['day' => $sched['plantings'][$first], 'lot' => $first, 'key' => null];
+                if ($first !== null) {
+                    $need[$f['type']] = ['day' => $sched['plantings'][$first], 'lot' => $first, 'key' => null];
+                }
             }
         }
         $bookings = [];
@@ -2332,7 +2382,7 @@ final class LandPrepPlanner
                     }
                 }
             }
-            $how = 'Call the operator now and fix the days. It is first needed on ' . $use->format('D M j') . ($forWhat !== '' ? ' (' . $forWhat . ', ' . $lots[$i]['name'] . ')' : ', the ' . self::dayWord($case['crop'], $case['method']) . ' day')
+            $how = 'Call the operator now and fix the days. It is first needed on ' . $use->format('D M j') . ($forWhat !== '' ? ' (' . $forWhat . ', ' . $lots[$i]['name'] . ')' : ', the ' . self::dayWord((string) self::forLot($case, $i)['crop'], (string) self::forLot($case, $i)['method']) . ' day')
                 . '. Operators are busiest when the whole area plants together, so book early.';
             $step = self::step('book_' . $type, $off, $off, 'Book the hired ' . $word, $how, 'anee', null, 'crew');
             $step['type'] = 'other';

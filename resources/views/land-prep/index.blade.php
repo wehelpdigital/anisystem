@@ -262,6 +262,14 @@
     .lp-same button:hover { background: #d9e9c4; }
     .lp-same { gap: .45rem; flex-wrap: wrap; }
 
+    /* A lot's own crop, and its sheet (2026-10-16, the owner). */
+    .lp-lcbody { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 1.15rem 1rem; }
+    .lp-lcfind { margin: 0 0 .5rem !important; }
+    .lp-lcvars { display: grid; gap: .1rem; max-height: 15rem; overflow-y: auto; overscroll-behavior: contain; padding: .1rem; border-radius: .9rem; border: 1px solid var(--color-gray-200); }
+    .lp-lcvars:empty { display: none; }
+    .lp-lot-crop { display: inline-flex; align-items: center; gap: .4rem; }
+    html.dark .lp-lcvars { border-color: #2b3a1c; }
+
     /* Pay, the roster and who is hired (2026-10-16, the owner). */
     .lp-roster { margin-bottom: .8rem; }
     .lp-wk.is-roster { border-color: #cfe3b8; background: #f7fbf2; }
@@ -963,7 +971,7 @@
             {{-- The crop --}}
             <section class="lp-step is-on" data-screen="crop">
                 <p class="lp-q">Which crop are you preparing for?</p>
-                <p class="lp-sub">Tap to change it. Every step is dated back from its planting day.</p>
+                <p class="lp-sub">Tap to change it. Every step is dated back from its planting day. A lot can grow another crop: you set that on each lot later.</p>
                 @include('public.site.partials.crop-pick', ['id' => 'lpCropSheet', 'crops' => $lpCrops, 'current' => 'rice', 'title' => 'Which crop?', 'noun' => null])
             </section>
 
@@ -1228,6 +1236,39 @@
     </div>
 </dialog>
 
+{{-- A lot's own crop (2026-10-16, the owner: "you can plant different crops per lot"): crop, way of planting, variety. --}}
+<dialog class="lp-sheet is-tall" id="lpLcSheet" aria-labelledby="lpLcTitle">
+    <div class="lp-sbox" tabindex="-1">
+        <div class="lp-grip" aria-hidden="true"></div>
+        <div class="lp-shead"><h2 id="lpLcTitle">Crop on this lot<small id="lpLcSub">Its own crop, way of planting and variety</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
+        <div class="lp-lcbody">
+            <span class="lp-label" style="margin-top:.2rem">Crop</span>
+            <div id="lpLcCrop">
+                @include('public.site.partials.crop-pick', ['id' => 'lpLcCropSheet', 'crops' => $lpCrops, 'current' => 'rice', 'title' => 'Which crop on this lot?', 'noun' => null])
+            </div>
+            <span class="lp-label" id="lpLcMethodL">How will you plant it?</span>
+            <div class="lp-choices" id="lpLcMethods"></div>
+            <span class="lp-label">Variety <small>(optional)</small></span>
+            <label class="lp-sfind lp-lcfind">
+                <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>
+                <span class="sr-only">Search a variety</span>
+                <input type="search" id="lpLcVarQ" placeholder="Search, or type the variety" autocomplete="off" maxlength="80">
+            </label>
+            <div class="lp-lcvars" id="lpLcVarList" role="listbox" aria-label="Varieties"></div>
+            <div id="lpLcType" hidden>
+                <span class="lp-label">Is the seed inbred or hybrid?</span>
+                <div class="lp-chips" id="lpLcTypes">
+                    <button type="button" class="lp-chipb" data-lctype="inbred">Inbred</button>
+                    <button type="button" class="lp-chipb" data-lctype="hybrid">Hybrid</button>
+                    <button type="button" class="lp-chipb" data-lctype="">Not sure</button>
+                </div>
+            </div>
+            <p class="lp-ferr" id="lpLcErr" hidden>Pick how it goes in.</p>
+        </div>
+        <div class="lp-sfoot"><button type="button" class="btn btn-white" data-close>Cancel</button><button type="button" class="btn btn-primary lp-wide" id="lpLcUse">Use for this lot</button></div>
+    </div>
+</dialog>
+
 {{-- My workers (Global Workers): tick who works on this plan. --}}
 <dialog class="lp-sheet is-tall" id="lpRosterSheet" aria-labelledby="lpRosterTitle">
     <div class="lp-sbox" tabindex="-1">
@@ -1433,7 +1474,12 @@
        farmLotId, its row (lot), its place, and `base`: its answers when it was
        picked or last edited, which decide the pages still to ask. */
     const newLot = (o) => Object.assign({ uid: ++uid, name: '', area: '', unit: 'ha', planting: null, sourceLotId: null, from: null, profile: {}, copiedFrom: null, edited: false, savedFrom: null,
-        farmLotId: null, lot: null, base: null, crop: null, province: '', town: '', where: '', place: '', stale: false, updated: '', areaFromLot: false }, o || {});
+        farmLotId: null, lot: null, base: null, crop: null, province: '', town: '', where: '', place: '', stale: false, updated: '', areaFromLot: false, lc: null }, o || {});
+    // A lot's crop: its own (lc) when it grows another, else the plan's (2026-10-16, the owner).
+    const lcOf = (l) => (l && l.lc ? l.lc : { crop: S.crop, method: S.method, variety: S.variety, custom: S.custom, seedType: S.seedType });
+    const dayWordFor = (m) => (['tpr_manual', 'tpr_mechanical', 'transplant'].includes(m) ? 'transplant' : (['dsr_wet_broadcast', 'dsr_wet_drum', 'dsr_dry', 'direct'].includes(m) ? 'sow' : 'plant'));
+    const cropLine = (c) => (CROPS[c.crop] ? CROPS[c.crop].icon + ' ' + CROPS[c.crop].en : c.crop) + (OPT && OPT.methods[c.crop] && OPT.methods[c.crop][c.method] ? ', ' + OPT.methods[c.crop][c.method][0].toLowerCase() : '') + (c.variety ? ' · ' + c.variety : '');
+    const anyCustom = () => !!S.custom || S.lots.some((l) => l.lc && l.lc.custom);
     // A worker's pay (a day, or half a day) and the roster person they are, when picked from My workers.
     const newWorker = (o) => Object.assign({ uid: ++uid, name: '', days: [1, 2, 3, 4, 5, 6], pay: '', payUnit: 'day', globalId: null }, o || {});
     const CUR = @json(\App\Support\Region::symbol());
@@ -1454,15 +1500,17 @@
     const isRiceCrop = () => String(S.crop || '').startsWith('rice');
     const answeredVal = (x) => x !== undefined && x !== null && x !== '' && !(Array.isArray(x) && !x.length);
     // A page of the field questions the answers already cover (any of its questions for this crop).
-    const pageDone = (v, p) => {
+    const pageDone = (v, p, crop) => {
         const FP = window.aneeFieldProfile;
         if (!FP || !v) return false;
-        return Object.entries(FP.questions).some(([k, q]) => q.page === p && !(q.only === 'rice' && !isRiceCrop()) && answeredVal(v[k])) || (p === 'acid' && v.phFrom != null);
+        const riceHere = String(crop || S.crop || '').startsWith('rice');
+        return Object.entries(FP.questions).some(([k, q]) => q.page === p && !(q.only === 'rice' && !riceHere) && answeredVal(v[k])) || (p === 'acid' && v.phFrom != null);
     };
     // The pages a lot is asked: all of them, or for a farm lot only the ones it has not answered.
     const askedPages = (l) => {
-        const pages = window.aneeFieldProfile ? window.aneeFieldProfile.pagesFor(S.crop) : [];
-        return l.farmLotId ? pages.filter((p) => !pageDone(l.base, p)) : pages;
+        const crop = lcOf(l).crop;
+        const pages = window.aneeFieldProfile ? window.aneeFieldProfile.pagesFor(crop) : [];
+        return l.farmLotId ? pages.filter((p) => !pageDone(l.base, p, crop)) : pages;
     };
     // The place the plan reads the weather at, when the lots have one: the first farm lot with a place.
     function lotPlace() {
@@ -1532,6 +1580,7 @@
             const [i, p] = lotPage(id);
             const l = S.lots[i] || {};
             $('lpStepName').textContent = (S.lots.length > 1 ? 'Lot ' + (i + 1) + (l.name ? ', ' + l.name : '') : (l.farmLotId && l.name ? l.name : 'Your field')) + ' · ' + window.aneeFieldProfile.groups[p][0];
+            FQ.setCrop(lcOf(l).crop);   // its own crop's questions
             FQ.show(i, p, back);
         } else {
             $('lpStepName').textContent = NAMES[sc] || '';
@@ -1620,12 +1669,12 @@
        variety lookup when the variety is not on our list. Sent back on the run as `quote`, so
        the price on the button is the price charged; a 409 hands back a newer one. */
     const QUOTE_NOW = {};
-    const quoteKey = () => Math.min(12, Math.max(1, (S.lots || []).length)) + ':' + (S.custom ? 1 : 0);
+    const quoteKey = () => Math.min(12, Math.max(1, (S.lots || []).length)) + ':' + (anyCustom() ? 1 : 0);
     function planQuote() {
         const n = Math.min(12, Math.max(1, (S.lots || []).length)), k = quoteKey();
         if (QUOTE_NOW[k]) return QUOTE_NOW[k];
         const row = OPT.quoteFor && OPT.quoteFor[n];
-        return row ? Number(row[S.custom ? 1 : 0]) : Number(OPT.quote);
+        return row ? Number(row[anyCustom() ? 1 : 0]) : Number(OPT.quote);
     }
     function paintQuote() {
         const q = $('lpQuote');
@@ -1672,11 +1721,12 @@
 
     /* ---------------- the variety and its seed ---------------- */
     const VAR = {};
-    async function varieties() {
-        if (VAR[S.crop]) return VAR[S.crop];
-        try { VAR[S.crop] = (await window.api(U.varieties + '?crop=' + encodeURIComponent(S.crop))).data.rows || []; }
-        catch (_) { VAR[S.crop] = []; }
-        return VAR[S.crop];
+    async function varieties(crop) {
+        const c = crop || S.crop;
+        if (VAR[c]) return VAR[c];
+        try { VAR[c] = (await window.api(U.varieties + '?crop=' + encodeURIComponent(c))).data.rows || []; }
+        catch (_) { VAR[c] = []; }
+        return VAR[c];
     }
     function paintVarTag(fetchSeed) {
         const t = $('lpVarTag');
@@ -1911,11 +1961,12 @@
     $('lpDateTag').addEventListener('click', () => openDate(null));
 
     /* ---------------- the time check: a warning, never a stop ---------------- */
+    const lotCropBody = (l) => (l.lc ? { crop: l.lc.crop, method: l.lc.method, variety: l.lc.variety || null, seedType: l.lc.seedType || null } : {});
     function checkBody(withAnswers) {
         return {
             crop: S.crop, method: S.method, planting: S.planting,
             lots: S.lots.map((l, i) => Object.assign({ name: l.name.trim() || 'Lot ' + (i + 1), area: numOk(l.area) ? num(l.area) : null, unit: l.unit, planting: l.planting },
-                withAnswers ? { profile: l.profile } : {})),
+                lotCropBody(l), withAnswers ? { profile: l.profile } : {})),
             crew: { workers: S.workers.map((w) => ({ name: w.name, days: w.days })), fleet: fleetList().map(({ type, own, hired }) => ({ type, own, hired })) },
         };
     }
@@ -1986,6 +2037,12 @@
             : 'The place comes from your lots: <b>' + esc(lp.where) + '</b>. Anee reads the weather there.';
         h.hidden = false;
     }
+    document.addEventListener('click', (e) => {
+        const a = e.target.closest('[data-lot-crop]');
+        if (a && a.closest('#lpLots')) { const l = S.lots.find((x) => String(x.uid) === a.dataset.lotCrop); if (l) openLc(l); return; }
+        const b = e.target.closest('[data-lot-crop-same]');
+        if (b && b.closest('#lpLots')) { const l = S.lots.find((x) => String(x.uid) === b.dataset.lotCropSame); if (l) { l.lc = null; paintLots(); syncFq(); paintQuote(); } }
+    });
     function paintLots() {
         if (!S.lots.length) {
             $('lpLots').innerHTML = '<div class="lp-lotsnone"><span aria-hidden="true">🗺️</span><div><b>No lots in this plan yet</b><small>Add them from your lots: each brings its place, size and answers. Or tick the lots of one of your seasons.</small></div></div>';
@@ -2001,7 +2058,10 @@
             + '<div class="lp-field" data-f="area"><label for="lpLa' + l.uid + '">Size</label><div class="lp-size"><input type="text" id="lpLa' + l.uid + '" class="form-input" data-in="area" inputmode="decimal" maxlength="10" value="' + esc(l.area) + '" autocomplete="off">'
             + '<button type="button" class="lp-unit" data-unit="' + l.uid + '" aria-haspopup="dialog" aria-label="Unit: ' + esc(UNITS[l.unit][0]) + '">' + esc(UNITS[l.unit][1]) + (i === haAt ? tlf('hectare') : '') + CHEV + '</button></div>'
             + '<p class="lp-size-eq" data-eq>' + eqWords(l) + '</p><p class="lp-ferr" data-err hidden></p></div>'
-            + '<div class="lp-field"><span class="lp-fl">' + esc(dayWordOf().replace(/^\w/, (c) => c.toUpperCase())) + 'ing day</span><div class="lp-own">' + (l.planting
+            + '<div class="lp-field"><span class="lp-fl">Crop on this lot</span><div class="lp-own">' + (l.lc
+                ? '<button type="button" data-lot-crop="' + l.uid + '">' + esc(cropLine(l.lc)) + '</button><button type="button" class="is-x" data-lot-crop-same="' + l.uid + '">Same crop as the plan</button>'
+                : '<span class="lp-same-day">' + esc(cropLine(lcOf(null))) + ', the plan\'s</span><button type="button" data-lot-crop="' + l.uid + '">Another crop</button>') + '</div></div>'
+            + '<div class="lp-field"><span class="lp-fl">' + esc(dayWordFor(lcOf(l).method).replace(/^\w/, (c) => c.toUpperCase())) + 'ing day</span><div class="lp-own">' + (l.planting
                 ? '<button type="button" data-lot-date="' + l.uid + '">📅 ' + esc(day(l.planting)) + '</button><button type="button" class="is-x" data-lot-same="' + l.uid + '">Same day as the others</button>'
                 : '<span class="lp-same-day">📅 ' + (S.planting ? esc(day(S.planting)) + ', same as the others' : 'Same as the others') + '</span><button type="button" data-lot-date="' + l.uid + '">Pick its own day</button>') + '</div></div>'
             + '</div>').join('');
@@ -2009,6 +2069,69 @@
         paintLotPlace();
     }
     const eqWords = (l) => (l.unit !== 'ha' && num(l.area) > 0 && toHa(l.area, l.unit) >= 0.01 ? '= ' + ha(toHa(l.area, l.unit)) : '');
+
+    /* ---- a lot's own crop (2026-10-16, the owner): crop, how it goes in, variety ---- */
+    let LC = null;   // the sheet's choice: {uid, crop, method, variety, custom, seedType}
+    const lcRice = () => String(LC && LC.crop).startsWith('rice');
+    function paintLc() {
+        const ms = (OPT.methods[LC.crop]) || {};
+        const keys = Object.keys(ms);
+        if (!ms[LC.method]) LC.method = keys.length === 1 ? keys[0] : null;
+        $('lpLcMethodL').textContent = keys.length === 1 ? 'How it goes in' : 'How will you plant it?';
+        $('lpLcMethods').innerHTML = keys.map((k) => '<button type="button" class="lp-choice' + (LC.method === k ? ' is-on' : '') + '" data-lcm="' + esc(k) + '"><span class="ce">' + esc(ms[k][2]) + '</span><span class="ct"><b>' + esc(ms[k][0]) + '</b><small>' + esc(ms[k][1]) + '</small></span><span class="ck">' + CHECK + '</span></button>').join('');
+        paintLcVars();
+    }
+    async function paintLcVars() {
+        const crop = LC.crop;
+        const rows = await varieties(crop);
+        if (!LC || LC.crop !== crop) return;
+        const q = $('lpLcVarQ').value.trim(), nq = norm(q);
+        const hit = rows.filter((r) => !nq || norm(r.n).includes(nq) || norm(r.l).includes(nq) || norm(r.t).includes(nq));
+        const exact = nq && rows.some((r) => norm(r.n) === nq || norm(r.l) === nq);
+        let h = '<button type="button" class="lp-row" data-lcv="" aria-selected="' + (!LC.variety) + '"><span class="ri">🤔</span><span class="rt"><b>I don\'t know yet</b><small>The plan uses the general practice</small></span></button>';
+        if (q && !exact) h += '<button type="button" class="lp-row is-add" data-lcv="' + esc(q) + '" data-lcnew="1"><span class="ri">' + PLUS + '</span><span class="rt"><b>Use “' + esc(q) + '”</b><small>Not on our list: Anee looks it up when the plan is made</small></span></button>';
+        h += (q ? hit : hit.filter((r) => r.p).concat(hit.filter((r) => !r.p))).slice(0, 40).map((r) => '<button type="button" class="lp-row" data-lcv="' + esc(r.n) + '" aria-selected="' + (LC.variety === r.n) + '"><span class="rt"><b>' + esc(r.n) + (r.l ? ' · ' + esc(r.l) : '') + '</b><small>'
+            + esc([r.t, r.d ? r.d + ' ' + (r.u || 'days') : '', r.k].filter(Boolean).join(' · ')) + '</small></span>' + (r.h ? '<span class="rn is-hy">Hybrid</span>' : '') + '</button>').join('');
+        $('lpLcVarList').innerHTML = h;
+        $('lpLcType').hidden = !(lcRice() && LC.method !== 'dsr_dry' && LC.custom);
+        $('lpLcTypes').querySelectorAll('[data-lctype]').forEach((b) => b.classList.toggle('is-on', b.dataset.lctype === (LC.seedType || '')));
+    }
+    function openLc(l) {
+        // A farm lot's usual crop is the first offer when it is not the plan's.
+        const c = l.lc || { crop: l.crop && CROPS[l.crop] && l.crop !== S.crop ? l.crop : S.crop, method: null, variety: '', custom: false, seedType: '' };
+        LC = Object.assign({ uid: l.uid }, clone(c));
+        if (!l.lc && LC.crop === S.crop) LC.method = S.method;
+        $('lpLcSub').textContent = (l.name.trim() || 'This lot') + ': its own crop, way of planting and variety';
+        window.cropPickSet?.($('lpLcCrop').querySelector('.cp-tag'), LC.crop);
+        $('lpLcVarQ').value = '';
+        $('lpLcErr').hidden = true;
+        paintLc();
+        sheetOpen($('lpLcSheet'));
+    }
+    $('lpLcCrop').addEventListener('croppick', (e) => { if (!LC) return; LC.crop = e.detail.crop; LC.method = null; LC.variety = ''; LC.custom = false; LC.seedType = ''; paintLc(); });
+    $('lpLcMethods').addEventListener('click', (e) => { const b = e.target.closest('[data-lcm]'); if (!b || !LC) return; LC.method = b.dataset.lcm; $('lpLcMethods').querySelectorAll('.lp-choice').forEach((c) => c.classList.toggle('is-on', c === b)); $('lpLcErr').hidden = true; paintLcVars(); });
+    $('lpLcVarQ').addEventListener('input', () => { if (LC) paintLcVars(); });
+    $('lpLcVarList').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-lcv]');
+        if (!b || !LC) return;
+        LC.variety = b.dataset.lcv;
+        LC.custom = !!b.dataset.lcnew;
+        if (!LC.custom) LC.seedType = '';
+        $('lpLcVarQ').value = LC.custom ? LC.variety : '';
+        paintLcVars();
+    });
+    $('lpLcTypes').addEventListener('click', (e) => { const b = e.target.closest('[data-lctype]'); if (!b || !LC) return; LC.seedType = b.dataset.lctype; $('lpLcTypes').querySelectorAll('[data-lctype]').forEach((x) => x.classList.toggle('is-on', x === b)); });
+    $('lpLcUse').addEventListener('click', () => {
+        if (!LC) return;
+        if (!LC.method) { $('lpLcErr').hidden = false; shake($('lpLcMethods')); return; }
+        const l = S.lots.find((x) => x.uid === LC.uid);
+        if (!l) return;
+        const same = LC.crop === S.crop && LC.method === S.method && !LC.variety;
+        l.lc = same ? null : { crop: LC.crop, method: LC.method, variety: LC.variety, custom: LC.custom, seedType: LC.seedType };
+        sheetClose($('lpLcSheet'));
+        paintLots(); syncFq(); paintQuote();
+        window.toast?.(same ? 'This lot grows the plan\'s crop.' : (l.name.trim() || 'The lot') + ' now grows ' + (CROPS[LC.crop] ? CROPS[LC.crop].en.toLowerCase() : 'its own crop') + '. Its questions and steps follow it.');
+    });
     function total() {
         const a = S.lots.reduce((s, l) => s + toHa(l.area, l.unit), 0);
         $('lpLotTotal').textContent = S.lots.length + (S.lots.length === 1 ? ' lot' : ' lots') + (a > 0 ? ' · ' + ha(a) + ' in all' : '');
@@ -2192,7 +2315,13 @@
         sheetClose($('lpFarmSheet'));
     });
     /* ---------------- the machines ---------------- */
-    const eqFor = () => Object.fromEntries(Object.entries(OPT.equipment).filter(([, e]) => e.for === 'all' || (e.for === 'rice_wet' && rice() && S.method !== 'dsr_dry') || (Array.isArray(e.for) && e.for.includes(S.method))));
+    // A machine any lot can use: the plan's crop, or a lot's own.
+    const eqFor = () => {
+        const cs = [lcOf(null)].concat(S.lots.filter((l) => l.lc).map((l) => l.lc));
+        return Object.fromEntries(Object.entries(OPT.equipment).filter(([, e]) => e.for === 'all'
+            || (e.for === 'rice_wet' && cs.some((c) => String(c.crop).startsWith('rice') && c.method !== 'dsr_dry'))
+            || (Array.isArray(e.for) && cs.some((c) => e.for.includes(c.method)))));
+    };
     const fleetNow = () => { const ok = eqFor(); return Object.fromEntries(Object.entries(S.fleet).filter(([k, f]) => ok[k] && (f.own + f.hired) > 0)); };
     const fleetList = () => Object.entries(fleetNow()).map(([type, f]) => ({ type, own: f.own, hired: f.hired,
         cost: f.hired && num(f.cost) > 0 ? num(f.cost) : null, costUnit: f.costUnit || 'ha', hire: f.hired && f.hire ? f.hire : null }));
@@ -2572,6 +2701,7 @@
                     'From ' + l.name + ': ' + (n ? (w.length > 120 ? w.slice(0, 118).replace(/\s+\S*$/, '') + '…' : w) : 'no answers yet'), 'Edit the lot']);
                 return;
             }
+            if (l.lc) rows.push(['lots', CROPS[l.lc.crop] ? CROPS[l.lc.crop].icon : '🌱', (S.lots.length > 1 ? 'Lot ' + (i + 1) : 'The lot') + ', its own crop', cropLine(l.lc).replace(/^\S+\s/, '')]);
             const src = l.copiedFrom !== null && S.lots[l.copiedFrom] ? 'same as Lot ' + (l.copiedFrom + 1) + (l.edited ? ', changed' : '') : (l.savedFrom ? 'from your saved ' + l.savedFrom : '');
             rows.push(['lot:' + i + ':' + pages[0], '<i style="--lc:' + lc(i) + '"></i>', S.lots.length > 1 ? 'Lot ' + (i + 1) + (l.name.trim() ? ', ' + l.name.trim() : '') : 'Your field',
                 'Soil and history: ' + (n ? n + (n === 1 ? ' answer' : ' answers') : 'skipped') + (src ? ', ' + src : '')]);
@@ -2623,7 +2753,7 @@
         const lp = lotPlace();
         const body = {
             crop: S.crop, method: S.method, variety: S.variety, seedType: S.seedType || null, seedSource: rice() ? (S.seedSource || null) : null, planting: S.planting,
-            lots: S.lots.map((l) => ({ name: l.name.trim(), area: num(l.area), unit: l.unit, planting: l.planting, sourceLotId: l.sourceLotId, farmLotId: l.farmLotId, copiedFrom: l.copiedFrom, edited: !!l.edited, profile: l.profile })),
+            lots: S.lots.map((l) => Object.assign({ name: l.name.trim(), area: num(l.area), unit: l.unit, planting: l.planting, sourceLotId: l.sourceLotId, farmLotId: l.farmLotId, copiedFrom: l.copiedFrom, edited: !!l.edited, profile: l.profile }, lotCropBody(l))),
             crew: { workers: S.workers.map((w) => ({ name: w.name.trim(), days: w.days, pay: num(w.pay) > 0 ? num(w.pay) : null, payUnit: w.payUnit, globalId: w.globalId || null })),
                 fleet: fleetList(), stagger: S.stagger, saveNew: !!(S.saveNew && PEOPLE && PEOPLE.canSave) },
             // The first farm lot's place when the lots have one, else the place screen's.
@@ -2631,8 +2761,8 @@
                 : { province: S.loc.province, town: townName(S.loc.town), place: S.loc.place, lat: S.loc.lat, lng: S.loc.lng }, notes: S.notes,
             quote: planQuote(),
         };
-        const phases = S.custom
-            ? { start: { label: 'Getting started', lo: 2, hi: 6, tau: 10 }, research: { label: 'Looking up ' + S.variety, lo: 6, hi: 34, tau: 70 }, document: { label: 'Writing your plan', lo: 34, hi: 93, tau: 80 }, 'document-json': { label: 'Tidying the plan', lo: 93, hi: 97, tau: 25 } }
+        const phases = anyCustom()
+            ? { start: { label: 'Getting started', lo: 2, hi: 6, tau: 10 }, research: { label: 'Looking up ' + (S.custom ? S.variety : 'your varieties'), lo: 6, hi: 34, tau: 70 }, document: { label: 'Writing your plan', lo: 34, hi: 93, tau: 80 }, 'document-json': { label: 'Tidying the plan', lo: 93, hi: 97, tau: 25 } }
             : { start: { label: 'Getting started', lo: 2, hi: 10, tau: 10 }, document: { label: 'Writing your plan', lo: 10, hi: 93, tau: 75 }, 'document-json': { label: 'Tidying the plan', lo: 93, hi: 97, tau: 25 } };
         const lines = ['Laying out the ' + (rice() ? 'PhilRice' : 'extension') + ' steps for ' + (CROPS[S.crop] ? CROPS[S.crop].en.toLowerCase() : 'your crop') + '…', 'Reading every lot\'s soil and history…', 'Sharing the crew and the machines between your lots…', 'Reading the forecast and ten years of weather…', 'Timing the seed soak to the hour…'];
         if (S.custom) lines.unshift('Looking up ' + S.variety + ' on the web…');
@@ -2780,6 +2910,16 @@
     $('lpViewX').addEventListener('click', closeView);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('lpView').hidden && !document.querySelector('.lp-sheet[open], .fq-sheet[open]')) closeView(); });
 
+    // The plan's crop and way of planting, or every crop when lots grow their own (2026-10-16).
+    function heroTitle(r) {
+        const names = [];
+        (r.lots || []).forEach((l) => { const c = (l.crop || r.crop || {}).label; if (c && !names.includes(c)) names.push(c); });
+        if (names.length > 1) return names.map((x) => String(x).replace(/\s*,.*$/, '')).join(', ').replace(/, ([^,]*)$/, ' and $1');
+        // Every lot grows one crop of its own: that crop, not the plan's first answer.
+        const l0 = (r.lots || [])[0] || {};
+        const c = l0.crop || r.crop || {}, m = l0.crop ? (l0.method || {}) : (r.method || {});
+        return (c.label || '') + ', ' + (m.label || '').toLowerCase();
+    }
     function drawPlan() {
         const it = VIEW.item, r = it.report || {};
         const lots = r.lots || [];
@@ -2791,7 +2931,7 @@
         const crew = r.crew || {};
         const nMach = (crew.fleet || []).reduce((s, f) => s + (f.own || 0) + (f.hired || 0), 0);
         $('lpViewBody').innerHTML = ''
-            + '<div class="lp-hero"><div class="lp-hero-top"><span class="lp-hero-ico">' + esc((r.crop || {}).icon || '🌱') + '</span><div style="min-width:0"><small data-tl="land-prep-planner">Land preparation plan</small><h2>' + esc((r.crop || {}).label || '') + ', ' + esc(((r.method || {}).label || '').toLowerCase()) + '</h2></div></div>'
+            + '<div class="lp-hero"><div class="lp-hero-top"><span class="lp-hero-ico">' + esc((r.crop || {}).icon || '🌱') + '</span><div style="min-width:0"><small data-tl="land-prep-planner">Land preparation plan</small><h2>' + esc(heroTitle(r)) + '</h2></div></div>'
             + '<div class="lp-hero-chips"><span>📅 ' + esc(dates[0] ? day(dates[0]) : '') + (dates.length > 1 && dates[dates.length - 1] !== dates[0] ? ' to ' + esc(day(dates[dates.length - 1])) : '') + '</span>'
             + '<span>🟩 ' + lots.length + (lots.length === 1 ? ' lot' : ' lots') + ', ' + ha(area) + '</span>'
             + '<span>👷 ' + esc((crew.workers || '') + ((crew.workers === 1) ? ' worker' : ' workers')) + (crew.fleet ? (nMach ? ', ' + nMach + (nMach === 1 ? ' machine' : ' machines') : ', by hand') : (crew.equipmentLabel ? ', ' + esc(String(crew.equipmentLabel).toLowerCase()) : '')) + '</span>'
@@ -3106,11 +3246,13 @@
         const people = {};
         Object.values(r.calendar || {}).forEach((items) => items.forEach((x) => { if (x.lot === i) people[x.key] = Math.max(people[x.key] || 0, x.people || 0); }));
         const plant = (r.plantDays || []).filter((p) => p.lot === i);
-        const word = r.dayWord || 'planting';
+        // A lot with its own crop (2026-10-16) wears it: its icon, its words, its planting day word.
+        const word = lot.dayWord || r.dayWord || 'planting';
+        const lcrop = lot.crop || r.crop || {};
         let h = lots.length > 1 ? '<div class="lp-lotpick" id="lpLotPick">' + lots.map((l, j) => '<button type="button" class="' + (j === i ? 'is-on' : '') + '" data-lot="' + j + '" style="--lc:' + lc(j) + '"><i></i>' + esc(l.name) + '</button>').join('') + '</div>' : '';
         const amt = ((r.seed || {}).amounts || []).find((x) => x.lot === i);
         const own = (r.rules || []).filter((n) => (n.lots || []).includes(i) && lots.length > 1);
-        h += '<div class="lp-c"><div class="lp-lothead" style="--lc:' + lc(i) + '"><i>' + esc((r.crop || {}).icon || '🌱') + '</i><div><b>' + esc(lot.name || '') + '</b><small>' + esc(sizeOf(lot)) + ' · ' + esc(word) + ' ' + esc(lot.planting ? fmt(lot.planting, { weekday: 'long', month: 'long', day: 'numeric' }) : '') + (amt ? ' · seed ' + (amt.lo === amt.hi ? amt.lo : amt.lo + ' to ' + amt.hi) + ' kg' : '') + '</small></div></div>'
+        h += '<div class="lp-c"><div class="lp-lothead" style="--lc:' + lc(i) + '"><i>' + esc(lcrop.icon || '🌱') + '</i><div><b>' + esc(lot.name || '') + '</b><small>' + (lot.crop ? esc(String(lot.crop.label).replace(/\s*,.*$/, '') + (lot.method && lot.method.label ? ', ' + String(lot.method.label).toLowerCase() : '') + (lot.variety ? ', ' + lot.variety : '')) + ' · ' : '') + esc(sizeOf(lot)) + ' · ' + esc(word) + ' ' + esc(lot.planting ? fmt(lot.planting, { weekday: 'long', month: 'long', day: 'numeric' }) : '') + (amt ? ' · seed ' + (amt.lo === amt.hi ? amt.lo : amt.lo + ' to ' + amt.hi) + ' kg' : '') + '</small></div></div>'
             + (lot.copiedFrom != null && lots[lot.copiedFrom] ? '<span class="lp-copytag">⧉ ' + (lot.edited ? 'Started from the answers of ' : 'Same answers as ') + esc(lots[lot.copiedFrom].name) + '</span>' : '')
             + (lot.shift ? '<p class="lp-moved">Anee moved this lot ' + lot.shift + (lot.shift === 1 ? ' day' : ' days') + ' later than the ' + esc(day(lot.asked)) + ' you asked, so the crew can finish it in time.</p>' : '')
             + (lot.squeeze ? '<p class="lp-moved">⏳ ' + lot.squeeze.left + ' days left, the full preparation needs ' + lot.squeeze.needed + '. ' + lot.squeeze.count + ' steps were squeezed to fit, each marked below.</p>' : '')
