@@ -1259,8 +1259,10 @@ class CropProtocolController extends Controller
                 $lotOut[$l['i']] = $r['data'];
             }
             $beat('compose');
-            $report = $this->compose($case, $ctx, $farm['data'], $lotOut);
-            $report['webSources'] = $sources;
+            // No government body, institute or public breeder named as our source (the owner, 2026-10-17): a "by" or
+            // "source" naming one is emptied, the rest scrubbed, and their pages left out of the sources list.
+            $report = \App\Support\GovSource::scrubAll($this->compose($case, $ctx, $farm['data'], $lotOut));
+            $report['webSources'] = \App\Support\GovSource::keep($sources);
             $report['searched'] = $usage['searched'];
 
             // The price agreed when the run began.
@@ -1451,7 +1453,7 @@ THE FARM
 THE CROPS
 {$crops}GROUND RULES
 - EASY TO READ: short plain sentences a farmer reads on a phone; a plain word beside any technical one; ranges written with "to", never a dash. Every word limit is a ceiling, not a target.
-- THE VARIETY comes from the notes and the record: name, breeder, maturity, yield potential, the season it is bred for, strengths and weaknesses. Where it could not be found, found false and name the variety you assumed.
+- THE VARIETY comes from the notes and the record: name, maturity, yield potential, the season it is bred for, strengths and weaknesses; by = the seed company that sells it, left empty for a public institute or agency; source left empty unless it is a seed company's own page. Where it could not be found, found false and name the variety you assumed.
 - STAGES: every stage of every crop, in the order given, named exactly as given: signs at most 18 words (what the farmer sees at that stage), observe at most 22 words (what to check, and how often), intervene at most 26 words (only if it is seen: the threshold, then the step). Leave observe and intervene empty at a stage with nothing to watch.
 - PROTECTION, WATCH FIRST, NEVER BY THE CALENDAR: for every crop 5 to 8 threats, the most likely here this season first: the lots' troubles of last season, then what this season's weather (the outlook, ENSO, the twenty year record of these months, the typhoons, floods and droughts they have brought) favours, then the crop's worst; where the variety's trial ratings are given, a threat it is rated susceptible to ranks higher and one it resists lower. For each threat: kind (insect, disease, weed or other); stages = the stage names it strikes; sign at most 16 words; threshold at most 24 words = when the numbers make acting worth it (an economic threshold from the notes or established IPM in plain counts, like "2 egg masses a square meter" or "1 in 10 hills hit"; where none exists, how to judge the spread); cultural at most 30 words = what to do first without a spray (resistant variety, clean seed, water, timing, natural enemies, removing sick plants); ai = the active ingredients to use only once the threshold is reached, CHOSEN ONLY FROM THAT THREAT'S LIST ABOVE and written exactly as listed (an empty list where the list is empty or no spray helps); rotate at most 18 words = the group to switch to for a second spray, never the same group twice in a row; weather at most 16 words = when this season's weather raises the risk ("" when it does not matter). Weeds are one threat per crop with ingredients only from its weed windows. No brand names, no product names, no rates or doses: the farmer decides whether to spray from what the field shows.
 - protection.intro at most 40 words: how to scout this crop this season (how often, where in the field).
@@ -2263,7 +2265,7 @@ PROMPT;
         return $this->json(true, 'Protocol ready.', [
             'status' => 'ready',
             'savedId' => (int) $r->id,
-            'report' => json_decode($r->report, true),
+            'report' => \App\Support\GovSource::scrubAll(json_decode($r->report, true)),
             'params' => json_decode($r->params, true),
             'charged' => (float) $r->credits,
             'balance' => round($this->credits->balance($this->payer()->id), 2),
@@ -2300,7 +2302,7 @@ PROMPT;
             'id' => $r->id,
             'title' => $r->title,
             'params' => json_decode($r->params, true),
-            'report' => json_decode($r->report, true),
+            'report' => \App\Support\GovSource::scrubAll(json_decode($r->report, true)),
             'credits' => (float) $r->credits,
         ]);
     }
@@ -2314,7 +2316,7 @@ PROMPT;
         if (! $r) {
             return null;
         }
-        $report = json_decode($r->report, true) ?: [];
+        $report = \App\Support\GovSource::scrubAll(json_decode($r->report, true) ?: []);
         $params = json_decode($r->params, true) ?: [];
         if ((int) ($report['format'] ?? 0) === 4) {
             return ['title' => $r->title, 'text' => self::contextV4($r->title, $report)];
@@ -2579,7 +2581,7 @@ PROMPT;
                     $r = null;
                 }
 
-                return $r ? '- The variety on record (the NSIC registry, and the figures of its seller where marked): ' . ltrim(\App\Support\VarietyBook::promptLines([$r]), '- ') . "\n" : '';
+                return $r ? '- The variety on record (its registered figures, and the figures of its seller where marked; never say where they come from): ' . ltrim(\App\Support\VarietyBook::promptLines([$r]), '- ') . "\n" : '';
             })(),
         ] + self::needLines((array) ($p['npkNeed'] ?? []), self::yieldUnits()[$p['yieldUnit']] ?? 'tons per hectare', (float) (self::yieldTons()[$p['yieldUnit']] ?? 1));
     }
