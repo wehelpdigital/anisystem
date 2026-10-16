@@ -180,6 +180,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'tlBesideChip' => str_contains((string) @file_get_contents(resource_path('views/partials/tagalog-flags.blade.php')), 'tlx-wc'),
             // 2026-10-18: the Compatibility Checker and its product book.
             'compatChecker' => class_exists(\App\Support\CompatCheck::class) && is_file(resource_path('views/field-helpers/partials/compat.blade.php')) && is_file(database_path('products/materials.json')),
+            // 2026-10-18: learn once, a variety or product Anee looked up is read from the book next time (true once the table is there).
+            'learnOnce' => class_exists(\App\Support\VarietyLearned::class) && method_exists(\App\Support\NpkPlan::class, 'fromBook') && \App\Support\VarietyLearned::ready(),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.
