@@ -106,8 +106,8 @@
    "kind": "abaca cultivar",
    "popular": "One of three abaca varieties PhilFIDA registered in 2017, and the strongest stooler of the three.",
    "facts": {
-    "harvest": "matures in about 20 to 24 months (registry)",
-    "yield": "fiber yield listed as 1,720 to 2,000 per hectare (registry); fiber recovery about 1.7 to 2%",
+    "harvest": "matures in about 20 to 24 months",
+    "yield": "fiber yield listed as 1,720 to 2,000 per hectare; fiber recovery about 1.7 to 2%",
     "fruit": "fiber tensile strength about 41 to 49 kgf/g-m",
     "traits": [
      "good stooling, about 14 suckers",
@@ -229,8 +229,8 @@
    "kind": "abaca cultivar",
    "popular": "PhilFIDA's strong-fiber abaca, singled out for pulp and paper because of high pulp recovery.",
    "facts": {
-    "harvest": "matures in about 23 months (registry)",
-    "yield": "fiber yield listed as about 1,270 per hectare (registry)",
+    "harvest": "matures in about 23 months",
+    "yield": "fiber yield listed as about 1,270 per hectare",
     "fruit": "high fiber tensile strength, about 57 kgf/g-m",
     "traits": [
      "poor stooler",
@@ -354,8 +354,8 @@
    "kind": "abaca cultivar",
    "popular": "Large, vigorous Mindanao abaca that tolerates drought and heavy clay; fiber strips easily.",
    "facts": {
-    "harvest": "matures in about 18 to 21 months (registry)",
-    "yield": "fiber yield listed as 1,590 to 1,700 per hectare (registry)",
+    "harvest": "matures in about 18 to 21 months",
+    "yield": "fiber yield listed as 1,590 to 1,700 per hectare",
     "fruit": "strong, heavy fiber, tensile strength about 49 to 60 kgf/g-m",
     "traits": [
      "poor stooler but large, heavy stalks",
@@ -533,13 +533,13 @@
    "kind": "F1 hybrid",
    "popular": "one of eight varieties in DA Region 02's ampalaya guide, an entry in two DMMMSU La Union trials (2006, 2013), and named in East-West's 2025 story of a Pangasinan grower who prospered with it",
    "facts": {
-    "maturityDays": "first harvest 48 to 52 days after transplanting (DA Region 02 guide)",
+    "maturityDays": "first harvest 48 to 52 days after transplanting",
     "fruit": "long and fat, dark green with a glossy skin",
     "traits": [
-     "resistant to downy mildew and cercospora leaf spot (DA Region 02 guide)",
+     "resistant to downy mildew and cercospora leaf spot",
      "flowered earlier than Jade Star, with similar marketable yield, in a 2013 La Union trial"
     ],
-    "season": "all year (DA Region 02 guide)",
+    "season": "all year",
     "areas": "lowland; listed as adapted to Cagayan Valley"
    },
    "sources": [
@@ -580,11 +580,11 @@
    "kind": "F1 hybrid",
    "popular": "East-West's first hybrid (1986), which the company calls the first commercial vegetable hybrid bred in the Philippines; still in DA Region 02's ampalaya variety table and used as an entry in DMMMSU trials",
    "facts": {
-    "maturityDays": "first harvest 48 to 57 days after transplanting (Jade Star L, DA Region 02 guide)",
+    "maturityDays": "first harvest 48 to 57 days after transplanting (Jade Star L)",
     "fruit": "green, cylindrical with a slightly blunt tip",
     "traits": [
-     "tolerant to fruit cracking (DA Region 02 guide)",
-     "high yielding (DA Region 02 guide)",
+     "tolerant to fruit cracking",
+     "high yielding",
      "bred for downy mildew resistance (East-West history page)",
      "flowered later than Galaxy, Galactica and Bonito in a 2013 La Union trial, with similar marketable yield"
     ],
@@ -720,7 +720,7 @@
     "fruit": "long and shiny green, about 25 cm, 4 to 5 cm across, 120 to 150 g",
     "traits": [
      "tolerant to virus and mildew (Ramgo)",
-     "moderately resistant to downy mildew (DA Region 02 guide)",
+     "moderately resistant to downy mildew",
      "sets fruit well"
     ],
     "season": "all year",
@@ -767,7 +767,7 @@
     "fruit": "long, heavy, cylindrical and thick fleshed, dark green, about 35 to 38 cm and 200 to 250 g",
     "traits": [
      "intermediate resistance to the 'namamarako' virus that turns vines male",
-     "resistant to downy mildew (DA Region 02 guide)",
+     "resistant to downy mildew",
      "vigorous and prolific"
     ],
     "season": "all year",
@@ -2659,7 +2659,7 @@
    "kind": "dessert banana, IPB selection",
    "popular": "IPB's dessert banana bred to resist bunchy top, the first banana with an NSIC number.",
    "facts": {
-    "yield": "about 13 kg per bunch (registry)",
+    "yield": "about 13 kg per bunch",
     "fruit": "fingers about 14 cm, 115 g; yellow to orange skin, yellow-orange firm sweet flesh",
     "traits": [
      "resistant to banana bunchy top virus and its aphid vector",
@@ -2743,7 +2743,7 @@
    "popular": "The most popular dessert banana in the Philippines, priced above Latundan and Cavendish (Wikipedia).",
    "facts": {
     "harvest": "8 to 12 months after planting",
-    "fruit": "fingers about 14 cm, 70 to 100 g; golden yellow skin, yellow-orange firm sweet flesh (registry); more beta-carotene than most bananas",
+    "fruit": "fingers about 14 cm, 70 to 100 g; golden yellow skin, yellow-orange firm sweet flesh; more beta-carotene than most bananas",
     "traits": [
      "registered in 1991 with the Philippine Seed Board",
      "plant 1.5 to 3 m tall",
@@ -4251,7 +4251,7 @@
    "kind": "imported variety (Japan)",
    "popular": "top marketable yield in the Benguet State University organic cabbage trial, which recommends it with Lucky Ball and Scorpio for Benguet; also listed in DA's cabbage production guide",
    "facts": {
-    "maturityDays": "55 to 60 days (DA guide)",
+    "maturityDays": "55 to 60 days",
     "yield": "about 24 t/ha marketable, averaged over three Benguet sites and four seasons under organic growing (BSU trial)",
     "fruit": "head: round, green and compact; the heaviest heads in the BSU trial, about 520 g on average under organic growing",
     "traits": [
@@ -4297,7 +4297,7 @@
    "kind": "F1 hybrid",
    "popular": "check variety in a Benguet State University cabbage trial (2011 to 2013), which calls it the variety Benguet farmers had commonly planted for more than 10 years; also listed in DA's cabbage production guide",
    "facts": {
-    "maturityDays": "55 to 60 days in DA's guide; Allied gives 65 to 70 days after transplanting",
+    "maturityDays": "55 to 60 days in the guide; Allied gives 65 to 70 days after transplanting",
     "yield": "about 21 t/ha marketable, averaged over three Benguet sites and four seasons under organic growing (BSU trial)",
     "fruit": "head: round, compact, small core, purple veins, about 1 to 1.2 kg (Allied)",
     "traits": [
@@ -4544,10 +4544,10 @@
    "kind": "clone",
    "popular": "Highest yield figure in the NSIC cacao list, registered by a private farm.",
    "facts": {
-    "harvest": "first flowers about 24 months, pods about 29 months after planting (registry)",
+    "harvest": "first flowers about 24 months, pods about 29 months after planting",
     "fruit": "red pods with white-striped ridges turning orange-yellow; about 41 beans per pod; 100 dry beans about 166 g",
     "traits": [
-     "tolerant to pod rot; moderately resistant to dieback; susceptible to cacao pod borer (registry)"
+     "tolerant to pod rot; moderately resistant to dieback; susceptible to cacao pod borer"
     ],
     "uses": "cocoa beans, chocolate"
    },
@@ -4696,10 +4696,10 @@
    "kind": "clone",
    "popular": "A cooperative-owned clone with green pods and about 40 beans per pod.",
    "facts": {
-    "harvest": "first flowers about 23 months, pods about 28 months after planting (registry)",
+    "harvest": "first flowers about 23 months, pods about 28 months after planting",
     "fruit": "light green pods; about 40 beans per pod; 100 dry beans about 166 g",
     "traits": [
-     "moderately resistant to dieback and pod rot; moderately susceptible to pod borer (registry)",
+     "moderately resistant to dieback and pod rot; moderately susceptible to pod borer",
      "tall, about 6.3 m"
     ],
     "uses": "cocoa beans, chocolate"
@@ -4849,10 +4849,10 @@
    "kind": "clone",
    "popular": "Registered alongside K9 by the same cooperative; green pods turning yellow.",
    "facts": {
-    "harvest": "first flowers about 25 months, pods about 30 months after planting (registry)",
+    "harvest": "first flowers about 25 months, pods about 30 months after planting",
     "fruit": "green pods turning yellow; about 33 beans per pod; 100 dry beans about 161 g",
     "traits": [
-     "moderately resistant to pod rot; moderately susceptible to dieback and pod borer (registry)"
+     "moderately resistant to pod rot; moderately susceptible to dieback and pod borer"
     ],
     "uses": "cocoa beans, chocolate"
    },
@@ -5125,10 +5125,10 @@
    "kind": "introduced clone",
    "popular": "A Malaysian clone brought in through the University of Southern Mindanao, resistant to dieback.",
    "facts": {
-    "harvest": "first flowers about 24 months, pods about 30 months after planting (registry)",
+    "harvest": "first flowers about 24 months, pods about 30 months after planting",
     "fruit": "red pods turning orange-red; about 39 beans per pod; 100 dry beans about 125 g",
     "traits": [
-     "resistant to dieback; tolerant to pod rot; moderately susceptible to pod borer (registry)"
+     "resistant to dieback; tolerant to pod rot; moderately susceptible to pod borer"
     ],
     "uses": "cocoa beans, chocolate",
     "areas": "Mindanao"
@@ -5269,10 +5269,10 @@
    "kind": "clone",
    "popular": "The first cacao on the NSIC list, with many beans per pod (about 44).",
    "facts": {
-    "harvest": "first flowers about 18 months, pods about 20 months after planting (registry)",
+    "harvest": "first flowers about 18 months, pods about 20 months after planting",
     "fruit": "green pods turning yellow; about 44 beans per pod; 100 dry beans about 141 g",
     "traits": [
-     "moderately resistant to pod borer, dieback and pod rot (registry)"
+     "moderately resistant to pod borer, dieback and pod rot"
     ],
     "uses": "cocoa beans, chocolate"
    },
@@ -5791,10 +5791,10 @@
    "kind": "clone",
    "popular": "A UPLB clone with large beans (100 dry beans about 188 g), among the first cacao registered.",
    "facts": {
-    "harvest": "first flowers about 16 months, pods about 18 months after planting (registry)",
+    "harvest": "first flowers about 16 months, pods about 18 months after planting",
     "fruit": "red-green young pods turning yellow; about 37 beans per pod",
     "traits": [
-     "moderately resistant to pod borer, dieback and pod rot (registry)"
+     "moderately resistant to pod borer, dieback and pod rot"
     ],
     "uses": "cocoa beans, chocolate"
    },
@@ -9036,7 +9036,7 @@
     "yield": "34.4 t/ha in registry trials",
     "fruit": "dry matter about 39.6%; starch about 29.6%; low HCN",
     "traits": [
-     "resistant to brown leaf spot, bacterial blight, spider mite and scale insect (registry)"
+     "resistant to brown leaf spot, bacterial blight, spider mite and scale insect"
     ],
     "uses": "all purposes: food, feed, starch",
     "areas": "all regions"
@@ -10180,7 +10180,7 @@
     "yield": "31.3 t/ha in registry trials; 47.5 t/ha in a 2006 to 2007 Bukidnon trial",
     "fruit": "white flesh, cream skin; dry matter about 38 to 44%; starch about 27%; medium HCN",
     "traits": [
-     "resistant to brown leaf spot, bacterial blight, spider mite and scale insect (registry)"
+     "resistant to brown leaf spot, bacterial blight, spider mite and scale insect"
     ],
     "uses": "starch, ethanol, feed",
     "areas": "all regions"
@@ -13035,7 +13035,7 @@
    "kind": "F1 hybrid",
    "popular": "one of five peppers DA Region 2 (Cagayan Valley) recommends in its pepper production guide; also in Harbest's Seeds of Hope catalogue",
    "facts": {
-    "maturityDays": "first harvest about 40 days after transplanting (DA Region 2); Harbest gives 40 to 45",
+    "maturityDays": "first harvest about 40 days after transplanting; Harbest gives 40 to 45",
     "fruit": "siling haba (sinigang) type: long and tapering, medium green, smooth and very glossy, thick fleshed, moderately hot",
     "traits": [
      "highly productive (Harbest)"
@@ -13617,7 +13617,7 @@
     "yield": "about 60 kg per tree",
     "fruit": "round, about 200 g; yellow peel; juicy yellow flesh; about 12.3 Brix; low acidity",
     "uses": "table, juice",
-    "areas": "Baguio (BPI station)"
+    "areas": "Baguio"
    },
    "sources": [
     "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
@@ -13986,7 +13986,7 @@
     "yield": "about 10 kg per young tree",
     "fruit": "small, flat, about 128 g; green-yellow peel; juicy orange flesh; about 10.5 Brix",
     "uses": "table",
-    "areas": "Baguio (BPI station)"
+    "areas": "Baguio"
    },
    "sources": [
     "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
@@ -14239,7 +14239,7 @@
     "yield": "about 60 kg per tree",
     "fruit": "round, about 284 g; green-yellow peel; juicy yellow-orange flesh; about 11.4 Brix; about 83% edible",
     "uses": "table, juice",
-    "areas": "Baguio (BPI station)"
+    "areas": "Baguio"
    },
    "sources": [
     "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_fruit_crops.xlsx"
@@ -14767,7 +14767,7 @@
    "kind": "makapuno hybrid, propagated by embryo culture",
    "popular": "One of VSU's Philippine makapuno hybrids, a rare type that is hard to spread because each palm gives few nuts for embryo culture.",
    "facts": {
-    "yield": "about 176 nuts per palm a year (registry)",
+    "yield": "about 176 nuts per palm a year",
     "fruit": "medium to large nuts about 1.17 kg; soft makapuno meat about 2 cm thick",
     "traits": [
      "short palm, about 3.6 m at 9 years",
@@ -14864,7 +14864,7 @@
    "kind": "makapuno hybrid, propagated by embryo culture",
    "popular": "VSU's second registered makapuno hybrid, with bigger nuts than VMAC 1.",
    "facts": {
-    "yield": "about 144 nuts per palm a year (registry)",
+    "yield": "about 144 nuts per palm a year",
     "fruit": "nuts about 1.69 kg; makapuno meat about 1.7 cm thick",
     "traits": [
      "palm about 4.7 m at 9 years"
@@ -15086,7 +15086,7 @@
    "kind": "dwarf x tall hybrid",
    "popular": "About 3,000 seedlings handed out in Quezon by PCA Region IV for coconut sugar, VCO and buko.",
    "facts": {
-    "yield": "about 76 nuts per palm a year, 2.75 t copra/ha (registry)",
+    "yield": "about 76 nuts per palm a year, 2.75 t copra/ha",
     "fruit": "nuts about 1.27 kg, about 262 g copra per nut",
     "traits": [
      "robust nuts with thick girth, good vegetative growth"
@@ -15816,7 +15816,7 @@
    "popular": "Produced at PCA's Bohol seed garden and planted in Davao Oriental to replace typhoon-hit palms; on PCA's VCO list.",
    "facts": {
     "harvest": "bears within about five years",
-    "yield": "about 67 nuts per palm a year, 2.78 t copra/ha (registry)",
+    "yield": "about 67 nuts per palm a year, 2.78 t copra/ha",
     "fruit": "big nuts about 1.4 kg, about 303 g copra per nut",
     "uses": "copra, virgin coconut oil",
     "areas": "Bohol, Davao Oriental"
@@ -16042,7 +16042,7 @@
    "popular": "The short, prolific green dwarf PCA uses as mother of PCA 15-9 and 15-10 and plants in Bohol's replanting program.",
    "facts": {
     "harvest": "bears in about four years with proper care",
-    "yield": "about 99 nuts per palm a year, about 4 t copra/ha (registry)",
+    "yield": "about 99 nuts per palm a year, about 4 t copra/ha",
     "fruit": "medium to large nuts about 1.15 kg, about 234 g copra per nut",
     "traits": [
      "palm only about 4.3 m at 19 years",
@@ -16302,7 +16302,7 @@
    "kind": "tall cultivar",
    "popular": "Top copra producer among the registered coconuts (about 4.4 t/ha) and father palm of PCA 15-3.",
    "facts": {
-    "yield": "about 108 nuts per palm a year, 4.4 t copra/ha (registry)",
+    "yield": "about 108 nuts per palm a year, 4.4 t copra/ha",
     "fruit": "about 295 g copra per nut",
     "traits": [
      "palm about 14 m at 18 years",
@@ -16397,7 +16397,7 @@
    "popular": "Mother palm of PCA 15-1 and PCA 15-4, and on PCA's list for coconut sap sugar.",
    "facts": {
     "harvest": "bears in about four years with proper care",
-    "yield": "about 74 nuts per palm a year, 2.6 t copra/ha (registry)",
+    "yield": "about 74 nuts per palm a year, 2.6 t copra/ha",
     "fruit": "about 210 g copra per nut",
     "traits": [
      "palm about 7 m at 18 years",
@@ -16484,9 +16484,9 @@
   "research": {
    "company": "Philippine Coconut Authority (local tall population)",
    "kind": "tall cultivar",
-   "popular": "Father palm of PCA 15-1 and 15-10 and one of five talls PCA recommends for VCO.",
+   "popular": "Father palm of PCA 15-1 and 15-10 and one of five talls recommended for VCO.",
    "facts": {
-    "yield": "about 72 nuts per palm a year, 2.6 t copra/ha (registry)",
+    "yield": "about 72 nuts per palm a year, 2.6 t copra/ha",
     "fruit": "about 253 g copra per nut",
     "traits": [
      "palm about 14 m at 19 years",
@@ -16572,9 +16572,9 @@
   "research": {
    "company": "Philippine Coconut Authority (introduced dwarf)",
    "kind": "dwarf cultivar",
-   "popular": "One of the most prolific registered palms (about 111 nuts a year) and mother of PCA 15-2 and 15-3; PCA lists it for sap sugar.",
+   "popular": "One of the most prolific registered palms (about 111 nuts a year) and mother of PCA 15-2 and 15-3; it is listed for sap sugar.",
    "facts": {
-    "yield": "about 111 nuts per palm a year, 3.6 t copra/ha (registry)",
+    "yield": "about 111 nuts per palm a year, 3.6 t copra/ha",
     "fruit": "small nuts, about 193 g copra per nut",
     "traits": [
      "palm about 8 m at 20 years",
@@ -16660,7 +16660,7 @@
    "kind": "dwarf x tall hybrid",
    "popular": "One of two key PCA hybrids reviewed by PCA scientists; planted in Davao Oriental to replace typhoon-hit palms (2025).",
    "facts": {
-    "yield": "about 87 nuts per palm a year, 2.9 t copra/ha (registry)",
+    "yield": "about 87 nuts per palm a year, 2.9 t copra/ha",
     "fruit": "about 245 g copra per nut",
     "traits": [
      "regular bearer",
@@ -16750,10 +16750,10 @@
   "research": {
    "company": "Philippine Coconut Authority",
    "kind": "dwarf x tall hybrid",
-   "popular": "PCA recommends it for both virgin coconut oil and coconut sap sugar; grown in PCA's Bohol replanting program.",
+   "popular": "It is recommended for both virgin coconut oil and coconut sap sugar; grown in PCA's Bohol replanting program.",
    "facts": {
     "harvest": "PCA hybrids bear within about five years",
-    "yield": "about 71 nuts per palm a year, 2.19 t copra/ha (registry)",
+    "yield": "about 71 nuts per palm a year, 2.19 t copra/ha",
     "fruit": "about 256 g copra per nut",
     "traits": [
      "highly tolerant to bud rot"
@@ -16842,7 +16842,7 @@
    "kind": "dwarf x tall hybrid",
    "popular": "Ranked above PCA 15-1 on productivity and profit in a PCA review; recommended for both VCO and sap sugar.",
    "facts": {
-    "yield": "about 71 nuts per palm a year, 2.76 t copra/ha (registry)",
+    "yield": "about 71 nuts per palm a year, 2.76 t copra/ha",
     "fruit": "about 249 g copra per nut",
     "traits": [
      "palm about 10 m at 14 years",
@@ -17265,7 +17265,7 @@
    "kind": "tall cultivar",
    "popular": "Big-nut tall used as father of PCA 15-2, 15-4 and 15-9; on PCA's VCO list.",
    "facts": {
-    "yield": "about 60 nuts per palm a year, 2.5 t copra/ha (registry)",
+    "yield": "about 60 nuts per palm a year, 2.5 t copra/ha",
     "fruit": "big nuts, about 321 g copra per nut (highest per nut in the registry)",
     "traits": [
      "palm about 14 m at 19 years",
@@ -17810,8 +17810,8 @@
    "kind": "Robusta clone",
    "popular": "One of Nestle Philippines' registered Robusta clones, graded Grade 1 premium in trials.",
    "facts": {
-    "harvest": "first flowers about 9 months and fruit about 18 months after planting (registry)",
-    "yield": "about 1.45 kg per tree in Bukidnon, 0.82 kg in Tagum trials (registry)",
+    "harvest": "first flowers about 9 months and fruit about 18 months after planting",
+    "yield": "about 1.45 kg per tree in Bukidnon, 0.82 kg in Tagum trials",
     "fruit": "red berries; Grade 1, premium cup score 7.2, medium Robusta body",
     "uses": "coffee",
     "areas": "Mindanao (Bukidnon, Tagum trials)"
@@ -19300,11 +19300,11 @@
    "kind": "Arabica selection, compact",
    "popular": "The higher-yielding of BPI Baguio's registered Arabicas, but rust-susceptible.",
    "facts": {
-    "harvest": "first flowers and fruit about 36 months after planting (registry)",
-    "yield": "about 1.85 kg fresh (0.61 kg dry) per tree (registry)",
+    "harvest": "first flowers and fruit about 36 months after planting",
+    "yield": "about 1.85 kg fresh (0.61 kg dry) per tree",
     "fruit": "red oblong berries; Class A, strong flavor and aroma",
     "traits": [
-     "susceptible to coffee rust (registry)",
+     "susceptible to coffee rust",
      "short tree, about 1.1 m at 7 years"
     ],
     "uses": "specialty coffee",
@@ -19523,8 +19523,8 @@
    "kind": "Arabica selection, yellow-fruited",
    "popular": "The yellow-cherry Arabica in BPI Baguio's registered set, valued for cup quality over yield.",
    "facts": {
-    "harvest": "first flowers and fruit about 36 months after planting (registry)",
-    "yield": "about 0.29 kg per tree (registry)",
+    "harvest": "first flowers and fruit about 36 months after planting",
+    "yield": "about 0.29 kg per tree",
     "fruit": "yellow ripe berries; oblong beans; Class A, strong flavor and aroma",
     "uses": "specialty coffee",
     "areas": "selected at the BPI Baguio station"
@@ -19744,11 +19744,11 @@
    "kind": "Arabica selection",
    "popular": "BPI's registered highland Arabica with Class A cup quality and moderate rust resistance.",
    "facts": {
-    "harvest": "first flowers and fruit about 36 months after planting (registry)",
-    "yield": "about 0.71 kg per tree (registry)",
+    "harvest": "first flowers and fruit about 36 months after planting",
+    "yield": "about 0.71 kg per tree",
     "fruit": "red-orange berries; oblong beans; Class A, strong flavor and aroma, moderate body",
     "traits": [
-     "moderately resistant to coffee rust and berry borer (registry)",
+     "moderately resistant to coffee rust and berry borer",
      "short tree, about 1.2 m at 7 years"
     ],
     "uses": "specialty coffee",
@@ -19947,12 +19947,12 @@
    "kind": "Liberica selection",
    "popular": "Kapeng barako is the strong Liberica coffee of Batangas and Cavite, planted since Spanish friars brought it to Lipa in the 1740s; CvSU's selection is the one Liberica in the NSIC list.",
    "facts": {
-    "harvest": "first flowers and fruit about 36 months after planting (registry)",
-    "yield": "about 2.7 kg per tree (registry)",
+    "harvest": "first flowers and fruit about 36 months after planting",
+    "yield": "about 2.7 kg per tree",
     "fruit": "large roundish berries, dark red when ripe; beans about 1.4 cm; Class A grade, strong aroma, heavy body",
     "traits": [
      "wild Liberica trees can reach 20 m and need ladders to harvest",
-     "susceptible to coffee berry borer and coffee rust; resistant to anthracnose (registry)"
+     "susceptible to coffee berry borer and coffee rust; resistant to anthracnose"
     ],
     "uses": "brewed coffee",
     "areas": "Batangas, Cavite"
@@ -20150,11 +20150,11 @@
    "kind": "Robusta selection",
    "popular": "Robusta makes up about 90% of Philippine coffee; this is Cavite State University's registered Robusta selection.",
    "facts": {
-    "harvest": "first flowers and fruit about 36 months after planting (registry)",
-    "yield": "about 3.07 kg per tree (registry)",
+    "harvest": "first flowers and fruit about 36 months after planting",
+    "yield": "about 3.07 kg per tree",
     "fruit": "red berries; oval beans about 0.9 cm; Class B grade, robust flavor, strong aroma",
     "traits": [
-     "resistant to coffee rust; susceptible to anthracnose and berry borer (registry)"
+     "resistant to coffee rust; susceptible to anthracnose and berry borer"
     ],
     "uses": "coffee"
    },
@@ -21914,7 +21914,7 @@
      "good grain quality (company)",
      "acceptable tolerance to rust, leaf blights and bacterial stalk rot"
     ],
-    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; its registered events are MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
     "areas": "Luzon: Cagayan Valley and Quirino",
     "season": "wet and dry (company says it adapts to both)",
     "density": "70,000 plants per ha; furrows 70 cm, hills 20 cm",
@@ -21999,8 +21999,8 @@
    "kind": "yellow GM hybrid",
    "popular": "Pioneer's current highland Mindanao hybrid; second in the GM class (8.39 t/ha) of DA-12's 2025 dry season trial in Senator Ninoy Aquino, Sultan Kudarat.",
    "facts": {
-    "maturityDays": "116 to 120 days after planting (Pioneer); 107 to 109 in NSIC trials",
-    "yield": "potential 13 t/ha (Pioneer); NSIC trials 6.77 t/ha in Mindanao",
+    "maturityDays": "116 to 120 days after planting (Pioneer); 107 to 109 in national trials",
+    "yield": "potential 13 t/ha (Pioneer); national trials 6.77 t/ha in Mindanao",
     "traits": [
      "big ears and kernels",
      "spacing 70 x 20 cm or 60 x 20 cm"
@@ -22214,7 +22214,7 @@
      "good tolerance to Diplodia ear rot",
      "leaf disease package: banded leaf and sheath blight, brown spot, white spot, Diplodia leaf blight and border leaf blight"
     ],
-    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; its registered events are MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
     "areas": "Mindanao: BARMM and Banisilan, Cotabato",
     "density": "70,000 plants per ha; furrows 70 cm, hills 20 cm",
     "positioning": "Bayer's mid priced segment for Mindanao"
@@ -22344,11 +22344,11 @@
    "kind": "yellow hybrid with 'developed resistance' (carries GM traits picked up by cross pollination)",
    "popular": "RJR's yellow entry in DA Northern Mindanao's 2023 corn derbies in Bukidnon.",
    "facts": {
-    "maturityDays": "about 109 in NSIC trials",
-    "yield": "NSIC trials averaged 7.87 t/ha (wet season) and 7.33 (dry season) in Mindanao",
+    "maturityDays": "about 109 in national trials",
+    "yield": "national trials averaged 7.87 t/ha (wet season) and 7.33 (dry season) in Mindanao",
     "traits": [
      "short ear (about 12 cm)",
-     "shelling about 75 to 76% in NSIC trials"
+     "shelling about 75 to 76% in national trials"
     ],
     "gm": "registry says lab tests found the NK603 (glyphosate tolerance) and MON810 (corn borer protection) events, picked up through cross pollination with GM corn",
     "areas": "Mindanao",
@@ -22433,10 +22433,10 @@
    "kind": "yellow GM hybrid",
    "popular": "On Syngenta's current Philippine corn list as the VIP version of NK6130, under its Protek Todo banner.",
    "facts": {
-    "maturityDays": "about 105 days in NSIC trials",
-    "yield": "NSIC trials averaged 10.58 t/ha in Luzon and 7.20 in Mindanao; shelling recovery about 83%",
+    "maturityDays": "about 105 days in national trials",
+    "yield": "national trials averaged 10.58 t/ha in Luzon and 7.20 in Mindanao; shelling recovery about 83%",
     "traits": [
-     "plant about 224 cm tall in NSIC trials",
+     "plant about 224 cm tall in national trials",
      "ear about 16 cm long",
      "registry rates it resistant to corn borer",
      "Protected against fall armyworm and other corn caterpillars, the seller says"
@@ -22517,10 +22517,10 @@
    "kind": "yellow GM hybrid",
    "popular": "On Syngenta's current Philippine corn list as the VIP version of NK6505, under its Protek Todo banner.",
    "facts": {
-    "maturityDays": "about 107 days in NSIC trials",
-    "yield": "NSIC trials averaged 6.58 t/ha in Mindanao; shelling recovery about 83%",
+    "maturityDays": "about 107 days in national trials",
+    "yield": "national trials averaged 6.58 t/ha in Mindanao; shelling recovery about 83%",
     "traits": [
-     "plant about 224 cm tall in NSIC trials",
+     "plant about 224 cm tall in national trials",
      "ear about 16.5 cm long",
      "registry rates it resistant to corn borer",
      "Protected against fall armyworm and other corn caterpillars, the seller says"
@@ -22609,12 +22609,12 @@
    "kind": "yellow GM hybrid",
    "popular": "On Pioneer's current Philippine list and BPI's Jan 2025 list as one of only two PowerCore Ultra hybrids.",
    "facts": {
-    "maturityDays": "116 to 120 days after planting (Pioneer); about 107 in NSIC trials",
-    "yield": "potential 14 t/ha (Pioneer); NSIC trials 8.61 t/ha Luzon, 7.58 Mindanao",
+    "maturityDays": "116 to 120 days after planting (Pioneer); about 107 in national trials",
+    "yield": "potential 14 t/ha (Pioneer); national trials 8.61 t/ha Luzon, 7.58 Mindanao",
     "traits": [
      "big ears and kernels",
      "spacing 70 x 20 cm or 60 x 22 cm",
-     "shelling about 80% in NSIC trials"
+     "shelling about 80% in national trials"
     ],
     "gm": "PowerCore Ultra (MON 89034 x TC1507 x MIR162 x NK603): the three PowerCore Bt proteins plus a fourth insect protein (Vip3Aa20), for stronger protection against fall armyworm and other caterpillars, plus glyphosate (Roundup) tolerance; 95:5 refuge seed blend.",
     "areas": "Luzon, Visayas and low areas of Mindanao"
@@ -22702,13 +22702,13 @@
    "kind": "yellow GM hybrid",
    "popular": "On Pioneer's current Philippine list and BPI's Jan 2025 list as one of only two PowerCore Ultra hybrids; its 2025 brochure carries the number one at harvest slogan.",
    "facts": {
-    "maturityDays": "110 to 115 days after planting (Pioneer); about 107 in NSIC trials",
-    "yield": "shelling recovery up to 85%; potential 14 t/ha (Pioneer); NSIC trials 8.39 t/ha Luzon, 7.23 Mindanao",
+    "maturityDays": "110 to 115 days after planting (Pioneer); about 107 in national trials",
+    "yield": "shelling recovery up to 85%; potential 14 t/ha (Pioneer); national trials 8.39 t/ha Luzon, 7.23 Mindanao",
     "traits": [
      "big ears and kernels",
      "heavy grain",
      "spacing 70 x 20 cm or 60 x 20 cm",
-     "shelling up to 85% (Pioneer) in NSIC trials"
+     "shelling up to 85% (Pioneer) in national trials"
     ],
     "gm": "PowerCore Ultra (MON 89034 x TC1507 x MIR162 x NK603): the three PowerCore Bt proteins plus Vip3Aa20, a fourth insect protein, for stronger caterpillar and fall armyworm protection, plus glyphosate (Roundup) tolerance; 95:5 refuge seed blend.",
     "areas": "all of Luzon and the Visayas"
@@ -22797,13 +22797,13 @@
    "kind": "yellow GM hybrid",
    "popular": "On Pioneer's current Philippine list and BPI's Jan 2025 list.",
    "facts": {
-    "maturityDays": "116 to 120 days after planting (Pioneer); 104 to 105 in NSIC trials",
-    "yield": "potential 13 t/ha (Pioneer); NSIC trials 8.55 t/ha Luzon, 7.08 Mindanao",
+    "maturityDays": "116 to 120 days after planting (Pioneer); 104 to 105 in national trials",
+    "yield": "potential 13 t/ha (Pioneer); national trials 8.55 t/ha Luzon, 7.08 Mindanao",
     "traits": [
      "big ears and kernels",
      "spacing 70 x 20 cm or 60 x 20 cm",
-     "shorter plant (about 195 to 206 cm in NSIC trials)",
-     "shelling about 78% in NSIC trials"
+     "shorter plant (about 195 to 206 cm in national trials)",
+     "shelling about 78% in national trials"
     ],
     "gm": "PowerCore (MON 89034 x TC1507 x NK603): three Bt proteins (Cry1A.105, Cry2Ab2, Cry1F) against corn borer, earworm, fall armyworm and other caterpillars, plus glyphosate (Roundup) tolerance; 95:5 refuge seed blend.",
     "areas": "all of Luzon and the Visayas",
@@ -23126,10 +23126,10 @@
    "kind": "yellow GM hybrid",
    "popular": "On BPI's Jan 2025 list of PowerCore hybrids cleared for sale.",
    "facts": {
-    "maturityDays": "about 104 to 109 in NSIC trials",
-    "yield": "P3530PW: 5.64 t/ha Luzon, 6.48 Mindanao in NSIC trials; older P3530YHR: 7.65 Luzon, 8.36 Mindanao",
+    "maturityDays": "about 104 to 109 in national trials",
+    "yield": "P3530PW: 5.64 t/ha Luzon, 6.48 Mindanao in national trials; older P3530YHR: 7.65 Luzon, 8.36 Mindanao",
     "traits": [
-     "shelling about 79 to 80% in NSIC trials",
+     "shelling about 79 to 80% in national trials",
      "registry rates P3530YHR resistant to lodging, corn borer, rust, stalk rot and earworm"
     ],
     "gm": "PowerCore (MON 89034 x TC1507 x NK603): three Bt proteins (Cry1A.105, Cry2Ab2, Cry1F) against corn borer, earworm, fall armyworm and other caterpillars, plus glyphosate (Roundup) tolerance; 95:5 refuge seed blend.",
@@ -23219,14 +23219,14 @@
    "popular": "Pioneer's 2025 brochures for the 3585 line (PW and PWU) bill it as the number one at harvest, under Pioneer's 50 years in the Philippines banner; on Pioneer's current list and BPI's Jan 2025 list.",
    "facts": {
     "maturityDays": "110 to 115 days after planting (Pioneer)",
-    "yield": "shelling recovery up to 85%; potential 14 t/ha (Pioneer); NSIC trials 6.90 t/ha Luzon, 6.30 Mindanao",
+    "yield": "shelling recovery up to 85%; potential 14 t/ha (Pioneer); national trials 6.90 t/ha Luzon, 6.30 Mindanao",
     "traits": [
      "big ears and kernels",
      "heavy grain",
      "spacing 70 x 20 cm or 60 x 20 cm",
      "big ears and kernels, heavy grain",
-     "shelling up to 85% (Pioneer) in NSIC trials",
-     "no corn borer or fall armyworm leaf feeding seen in NSIC trials"
+     "shelling up to 85% (Pioneer) in national trials",
+     "no corn borer or fall armyworm leaf feeding seen in national trials"
     ],
     "gm": "PowerCore (MON 89034 x TC1507 x NK603): three Bt proteins (Cry1A.105, Cry2Ab2, Cry1F) against corn borer, earworm, fall armyworm and other caterpillars, plus glyphosate (Roundup) tolerance; 95:5 refuge seed blend.",
     "areas": "all of Luzon and the Visayas",
@@ -23496,8 +23496,8 @@
    "kind": "yellow GM hybrid",
    "popular": "Shown at DA-10's Mar and Oct 2022 Bukidnon and Misamis Oriental derbies; on BPI's Jan 2025 list.",
    "facts": {
-    "maturityDays": "107 to 108 in NSIC trials",
-    "yield": "NSIC trials averaged 7.72 t/ha in Mindanao",
+    "maturityDays": "107 to 108 in national trials",
+    "yield": "national trials averaged 7.72 t/ha in Mindanao",
     "traits": [
      "shelling about 78%",
      "registry rates it resistant to corn borer"
@@ -23582,7 +23582,7 @@
    "kind": "white glutinous OPV",
    "popular": "Launched by DA-BAR on 5 December 2023 under CGUARD, with seed handed to farmers in Cagayan Valley and SOCCSKSARGEN (BAR, Inquirer).",
    "facts": {
-    "maturityDays": "about 100 to 108 days to dry grain in NSIC trials",
+    "maturityDays": "about 100 to 108 days to dry grain in national trials",
     "yield": "5.99 t/ha in Luzon and about 4.3 t/ha in Mindanao",
     "traits": [
      "tight, strong husk cover that keeps out many pests and diseases",
@@ -23671,8 +23671,8 @@
    "kind": "yellow conventional hybrid",
    "popular": "One of Cornworld's newest registered conventional hybrids; Cornworld enters DA Bicol derbies (2023).",
    "facts": {
-    "maturityDays": "104 to 110 in NSIC trials",
-    "yield": "NSIC trials averaged 9.14 t/ha in Luzon and 8.66 in Mindanao",
+    "maturityDays": "104 to 110 in national trials",
+    "yield": "national trials averaged 9.14 t/ha in Luzon and 8.66 in Mindanao",
     "traits": [
      "non GM",
      "long, thick ears with good husk cover",
@@ -24095,13 +24095,13 @@
    "kind": "yellow GM hybrid",
    "popular": "On BPI's Jan 2025 list and Pioneer's current Philippine list; topped the GM class of DA-12's 2025 dry season trial in Sarangani (6.42 t/ha).",
    "facts": {
-    "maturityDays": "116 to 120 days after planting (Pioneer); 106 to 108 in NSIC trials",
-    "yield": "potential 14 t/ha (Pioneer); NSIC trials 11.06 t/ha Luzon, 5.45 Mindanao",
+    "maturityDays": "116 to 120 days after planting (Pioneer); 106 to 108 in national trials",
+    "yield": "potential 14 t/ha (Pioneer); national trials 11.06 t/ha Luzon, 5.45 Mindanao",
     "traits": [
      "big ears and kernels, 18 to 20 rows",
      "dense, heavy grain",
      "spacing 70 x 20 cm or 60 x 22 cm",
-     "shelling about 84% in NSIC trials"
+     "shelling about 84% in national trials"
     ],
     "gm": "PowerCore (MON 89034 x TC1507 x NK603): three Bt proteins (Cry1A.105, Cry2Ab2, Cry1F) against corn borer, earworm, fall armyworm and other caterpillars, plus glyphosate (Roundup) tolerance; sold as a 95:5 refuge seed blend.",
     "areas": "all of Luzon and the Visayas, low areas of Mindanao",
@@ -24234,9 +24234,9 @@
   "research": {
    "company": "DA Regional Field Office 12 (SOCCSKSARGEN)",
    "kind": "white OPV (improved native flint)",
-   "popular": "Launched by DA-BAR in December 2023 under the CGUARD program and handed out to Mindanao farmers (DA RFO12, Inquirer).",
+   "popular": "Launched by DA-BAR in December 2023 under the CGUARD program and handed out to Mindanao farmers (Inquirer).",
    "facts": {
-    "maturityDays": "about 104 (dry season) to 108 (wet season) in NSIC trials",
+    "maturityDays": "about 104 (dry season) to 108 (wet season) in national trials",
     "yield": "5.15 t/ha average, above the 4.98 t/ha Mindanao check",
     "traits": [
      "rebuilt from native Tiniguib strains",
@@ -24556,11 +24556,11 @@
    "kind": "yellow GM hybrid",
    "popular": "Best return on cost of the entries in a DA-10 wet season derby at Dangcagan, Bukidnon; fourth at Malaybalay in DA-10's 2022 dry season derby.",
    "facts": {
-    "maturityDays": "108 to 109 in NSIC trials",
-    "yield": "NSIC trials averaged 7.95 t/ha in Mindanao",
+    "maturityDays": "108 to 109 in national trials",
+    "yield": "national trials averaged 7.95 t/ha in Mindanao",
     "traits": [
      "ear about 17 cm",
-     "shelling about 78% in NSIC trials"
+     "shelling about 78% in national trials"
     ],
     "gm": "YHR, sold as Intrasect (MON810 x TC1507 x NK603): two Bt proteins (Cry1Ab and Cry1F) against Asian corn borer and other caterpillars, plus Roundup Ready glyphosate tolerance.",
     "areas": "Mindanao",
@@ -24809,8 +24809,8 @@
    "kind": "yellow conventional hybrid",
    "popular": "Cornworld's newer nationwide-registered conventional hybrid; Cornworld fields entries in DA Bicol's provincial and regional derbies (2023).",
    "facts": {
-    "maturityDays": "103 (wet season) to 110 (dry season) in NSIC trials",
-    "yield": "NSIC trials averaged 8.64 t/ha Luzon, 7.65 Visayas, 7.16 Mindanao",
+    "maturityDays": "103 (wet season) to 110 (dry season) in national trials",
+    "yield": "national trials averaged 8.64 t/ha Luzon, 7.65 Visayas, 7.16 Mindanao",
     "traits": [
      "non GM",
      "shelling about 76 to 78%"
@@ -24951,7 +24951,7 @@
      "low elevation disease package: banded leaf and sheath blight, southern leaf blight and Diplodia ear rot",
      "company claims better grain quality"
     ],
-    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; its registered events are MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
     "areas": "Mindanao, high and low elevation areas",
     "season": "wet and dry (company says yield is steady in both)",
     "density": "70,000 plants per ha; furrows 70 cm, hills 20 cm",
@@ -25043,7 +25043,7 @@
      "copes better with moisture stress (company)",
      "adapts to wet and dry seasons (company)"
     ],
-    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; its registered events are MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
     "areas": "Luzon and Visayas (Bayer's recommended area)",
     "season": "wet and dry",
     "density": "83,000 to 90,000 plants per ha; furrows 60 cm, hills 18 or 20 cm"
@@ -25171,7 +25171,7 @@
    "kind": "yellow GM hybrid",
    "popular": "Top yielder (14.82 t/ha) at DA Northern Mindanao's March 2022 derby at the Claveria hillyland station, and Syngenta's best entry (9.09 t/ha) in DA-10's dry season derby round.",
    "facts": {
-    "yield": "up to 12 t/ha (company); 14.82 t/ha at DA-10's Claveria hillyland station (about 966 m above sea level); NSIC trials averaged 10.82 t/ha in Mindanao",
+    "yield": "up to 12 t/ha (company); 14.82 t/ha at DA-10's Claveria hillyland station (about 966 m above sea level); national trials averaged 10.82 t/ha in Mindanao",
     "traits": [
      "resists lodging",
      "easy to dehusk",
@@ -25179,7 +25179,7 @@
     ],
     "gm": "BGT (built in caterpillar protection plus glyphosate tolerance) per the DA derby names",
     "areas": "DA trials in the Bukidnon and Claveria highlands (600 to 966 m)",
-    "maturityDays": "about 103 (wet season) in NSIC trials"
+    "maturityDays": "about 103 (wet season) in national trials"
    },
    "claims": true,
    "sources": [
@@ -25587,13 +25587,13 @@
    "kind": "yellow GM hybrid",
    "popular": "Still the only Intrasect (YHR) hybrid on BPI's Jan 2025 list; third (7.75 t/ha) in the 2022 Central Luzon corn derby (SunStar).",
    "facts": {
-    "maturityDays": "110 to 115 days; 105 to 107 in NSIC trials",
-    "yield": "potential 14 t/ha; shelling recovery up to 85%; NSIC trials averaged 8.89 t/ha",
+    "maturityDays": "110 to 115 days; 105 to 107 in national trials",
+    "yield": "potential 14 t/ha; shelling recovery up to 85%; national trials averaged 8.89 t/ha",
     "traits": [
      "big ears and kernels",
      "heavy grain",
      "spacing 70 x 20 cm or 60 x 20 cm",
-     "shelling about 79% in NSIC trials",
+     "shelling about 79% in national trials",
      "erect leaves and good standability for high density planting"
     ],
     "gm": "YHR, sold as Intrasect (MON810 x TC1507 x NK603): two Bt proteins, YieldGard Cry1Ab and Herculex Cry1F, against Asian corn borer and other caterpillars (Corteva pitched it against fall armyworm), plus Roundup Ready glyphosate tolerance; refuge seed mixed in the bag (5%), unlike the older YR hybrids that needed a separate 10% refuge.",
@@ -25749,11 +25749,11 @@
    "kind": "yellow GM hybrid",
    "popular": "BPI's Jan 2025 list shows it licensed to Asian Hybrid Seed Technologies and sold as Dekalb 8719S or AH 8719S; placed third and fourth at two Bukidnon stations in DA-10's 2022 derby.",
    "facts": {
-    "maturityDays": "106 to 108 in NSIC trials",
-    "yield": "NSIC trials averaged 10.30 t/ha in Luzon and 8.79 in Mindanao",
+    "maturityDays": "106 to 108 in national trials",
+    "yield": "national trials averaged 10.30 t/ha in Luzon and 8.79 in Mindanao",
     "traits": [
      "good ear length (about 17 cm) and husk cover",
-     "shelling about 80% in NSIC trials",
+     "shelling about 80% in national trials",
      "erect leaves for high density planting"
     ],
     "gm": "VT Double PRO (MON 89034 x NK603): two Bt proteins against Asian corn borer, earworm, cutworm and fall armyworm, plus glyphosate (Roundup) tolerance; 95:5 refuge seed blend.",
@@ -25856,7 +25856,7 @@
      "strong stalk, good standability",
      "high tolerance to leaf diseases; tolerant to ear rots"
     ],
-    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; its registered events are MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
     "areas": "Luzon and Visayas (Bayer's recommended area)",
     "season": "wet and dry",
     "density": "80,000 plants per ha with hills 20 cm; for corn after rice, furrows 55 cm and 90,000 plants per ha",
@@ -25951,8 +25951,8 @@
    "kind": "yellow GM hybrid",
    "popular": "On BPI's Jan 2025 list of GM hybrids cleared for sale; Bayer says it placed second (7.9 t/ha) in the 2021 Asturias, Cebu derby.",
    "facts": {
-    "maturityDays": "105 to 107 in NSIC trials",
-    "yield": "NSIC trials averaged 9.21 t/ha in Luzon and 7.79 in Mindanao",
+    "maturityDays": "105 to 107 in national trials",
+    "yield": "national trials averaged 9.21 t/ha in Luzon and 7.79 in Mindanao",
     "traits": [
      "good ear length (about 17 cm), husk cover and ear fill",
      "erect leaves for high density planting",
@@ -26090,7 +26090,7 @@
    "facts": {
     "yield": "DA-12 trials: 5.66 t/ha Sultan Kudarat highland (2024), 4.84 t/ha Sarangani lowland (2025), 3.23 t/ha Sarangani highland (2024)",
     "gm": "none (conventional)",
-    "areas": "Sarangani and Sultan Kudarat (DA trials)"
+    "areas": "Sarangani and Sultan Kudarat"
    },
    "sources": [
     "https://rfo12.da.gov.ph/?p=9358",
@@ -26281,8 +26281,8 @@
    "kind": "yellow GM hybrid",
    "popular": "Top GM yielder (9.57 t/ha) in DA-12's highland wet season trial in Senator Ninoy Aquino, Sultan Kudarat (Sept 2024); third in Banisilan (8.55 t/ha); a regular DA-10 derby entry.",
    "facts": {
-    "maturityDays": "about 107 in NSIC trials",
-    "yield": "DA-12 trials: 9.57 t/ha Sultan Kudarat highland (2024), 8.55 t/ha Banisilan highland (2024), 8.17 t/ha Sultan Kudarat lowland dry season (2025); NSIC trials averaged 7.27 t/ha in Mindanao; 8.2 to 8.6 t/ha in DA-12 trials",
+    "maturityDays": "about 107 in national trials",
+    "yield": "DA-12 trials: 9.57 t/ha Sultan Kudarat highland (2024), 8.55 t/ha Banisilan highland (2024), 8.17 t/ha Sultan Kudarat lowland dry season (2025); national trials averaged 7.27 t/ha in Mindanao; 8.2 to 8.6 t/ha in DA-12 trials",
     "traits": [
      "ear about 18 cm",
      "registry rates it resistant to lodging, corn borer, rust, stalk rot and earworm"
@@ -26437,8 +26437,8 @@
    "kind": "yellow GM hybrid",
    "popular": "GM version of Bioseed 9899, which was on DA Region 2's recommended list; on BPI's Jan 2025 list.",
    "facts": {
-    "maturityDays": "about 105 in NSIC trials",
-    "yield": "NSIC trials averaged 9.12 t/ha in Luzon and 8.94 in Mindanao",
+    "maturityDays": "about 105 in national trials",
+    "yield": "national trials averaged 9.12 t/ha in Luzon and 8.94 in Mindanao",
     "traits": [
      "shelling about 80%",
      "registry rates it resistant to lodging and corn borer"
@@ -26620,7 +26620,7 @@
      "tolerant to Diplodia ear rot",
      "high tolerance to leaf diseases, given on the page only as PLS, NLS and GLS (PLS is Phaeosphaeria leaf spot on Bayer's other pages)"
     ],
-    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; its registered events are MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
     "areas": "Mindanao, high and low elevation areas",
     "density": "70,000 to 80,000 plants per ha; furrows 60 or 70 cm, hills 20 cm",
     "elevation": "low and high elevation Mindanao; maturity runs about 10 to 15 days longer up high"
@@ -26704,14 +26704,14 @@
    "kind": "yellow GM hybrid",
    "popular": "Bioseed's regular entry in DA Northern Mindanao corn derbies (2021 to 2023); second in the GM class (7.67 t/ha) at DA-12's Maasim, Sarangani highland trial (Oct 2024).",
    "facts": {
-    "maturityDays": "about 104 in NSIC trials",
-    "yield": "11 to 12 t/ha potential (company); 7.67 t/ha in the DA-12 Sarangani highland wet season trial (2024); NSIC trials averaged 10 t/ha in Luzon",
+    "maturityDays": "about 104 in national trials",
+    "yield": "11 to 12 t/ha potential (company); 7.67 t/ha in the DA-12 Sarangani highland wet season trial (2024); national trials averaged 10 t/ha in Luzon",
     "traits": [
      "copes with dry, arid conditions",
      "even ears, filled from base to tip",
      "shelling recovery above 80%",
      "short plant (about 173 cm)",
-     "shelling about 78% in NSIC trials",
+     "shelling about 78% in national trials",
      "registry rates it resistant to lodging and corn borer"
     ],
     "gm": "Bag carries Bayer's VT Double PRO (two caterpillar proteins) and Roundup Ready Corn 2 (glyphosate tolerance) marks, the MON89034 x NK603 stack BPI has approved for planting",
@@ -26796,13 +26796,13 @@
    "kind": "yellow GM hybrid",
    "popular": "Second highest yield (7.99 t/ha) and second highest net income at Central Luzon's first corn derby in Mexico, Pampanga (March 2022).",
    "facts": {
-    "maturityDays": "about 106 in NSIC trials",
-    "yield": "11 to 12 t/ha potential (company); 7.99 t/ha at the 2022 Pampanga derby; NSIC trials averaged 10.7 t/ha in Luzon",
+    "maturityDays": "about 106 in national trials",
+    "yield": "11 to 12 t/ha potential (company); 7.99 t/ha at the 2022 Pampanga derby; national trials averaged 10.7 t/ha in Luzon",
     "traits": [
      "made for dense planting, about 80,000 plants/ha",
      "even ears, filled from base to tip",
      "shelling recovery above 82%",
-     "high shelling (about 82%) in NSIC trials",
+     "high shelling (about 82%) in national trials",
      "registry rates it resistant to lodging and corn borer"
     ],
     "gm": "Bag carries VT Double PRO (caterpillar protection) and Roundup Ready Corn 2 (glyphosate tolerance) marks",
@@ -27428,11 +27428,11 @@
    "kind": "yellow GM hybrid (conventional version also registered)",
    "popular": "Best shelling recovery at DA Bicol's Camarines Norte (2023) and Camarines Sur (Nov 2023) derbies, second in yield at Camarines Norte; third in net income at Central Luzon's 2022 Pampanga derby.",
    "facts": {
-    "maturityDays": "about 106 in NSIC trials (GM); 103 to 107 for the conventional version",
-    "yield": "second highest yield at the Camarines Norte provincial derby (2023); third in net income at the 2022 Pampanga derby; NSIC trials averaged 7.7 t/ha in Luzon (GM); conventional 7.41 Luzon, 6.70 Visayas",
+    "maturityDays": "about 106 in national trials (GM); 103 to 107 for the conventional version",
+    "yield": "second highest yield at the Camarines Norte provincial derby (2023); third in net income at the 2022 Pampanga derby; national trials averaged 7.7 t/ha in Luzon (GM); conventional 7.41 Luzon, 6.70 Visayas",
     "traits": [
      "high shelling recovery (top in two DA Bicol derbies; Advanta, with PAC 339 as its entry, also won shelling recovery at the 2022 Pampanga derby)",
-     "high shelling (about 80 to 82%) in NSIC trials",
+     "high shelling (about 80 to 82%) in national trials",
      "long ear (about 18 cm)",
      "registry rates it resistant to lodging and corn borer"
     ],
@@ -27642,8 +27642,8 @@
    "kind": "yellow GM hybrid (conventional version also registered)",
    "popular": "Listed as 'Super 999' among Advanta's two GM hybrids on BPI's Jan 2025 list of GM corn for sale.",
    "facts": {
-    "maturityDays": "about 105 in NSIC trials (GM); 108 for the conventional version",
-    "yield": "NSIC trials averaged 7.9 t/ha in Luzon (GM); conventional 7.40 Luzon, 6.82 Visayas",
+    "maturityDays": "about 105 in national trials (GM); 108 for the conventional version",
+    "yield": "national trials averaged 7.9 t/ha in Luzon (GM); conventional 7.40 Luzon, 6.82 Visayas",
     "traits": [
      "long ear (about 19 cm)",
      "shelling about 78 to 82%",
@@ -28416,11 +28416,11 @@
    "kind": "yellow GM hybrid (conventional version also registered)",
    "popular": "Named by the City of Ilagan corn center among hybrids popular with its farmers; Asian Hybrid's best entry (7.21 t/ha) in a DA-10 derby round.",
    "facts": {
-    "maturityDays": "about 102 in NSIC trials (GM); 101 to 103 for the conventional version",
-    "yield": "7.21 t/ha in a DA-10 Bukidnon derby; 5.52 t/ha in DA-12's Sarangani lowland dry season trial (2025); NSIC trials averaged 10.05 t/ha Luzon and 8.67 Mindanao (GM); conventional 7.74 to 8.05",
+    "maturityDays": "about 102 in national trials (GM); 101 to 103 for the conventional version",
+    "yield": "7.21 t/ha in a DA-10 Bukidnon derby; 5.52 t/ha in DA-12's Sarangani lowland dry season trial (2025); national trials averaged 10.05 t/ha Luzon and 8.67 Mindanao (GM); conventional 7.74 to 8.05",
     "traits": [
      "tall plant with a long ear (about 19 to 20 cm)",
-     "shelling about 78% in NSIC trials",
+     "shelling about 78% in national trials",
      "registry rates the GM version resistant to lodging, corn borer, rust, stalk rot and earworm",
      "the conventional version was rated highly susceptible to stalk rot"
     ],
@@ -29007,8 +29007,8 @@
    "kind": "yellow GM hybrid",
    "popular": "Pioneer's regular entry in DA-10's 2022 and 2023 Bukidnon and Misamis Oriental derbies.",
    "facts": {
-    "maturityDays": "about 115 in NSIC trials",
-    "yield": "NSIC trials averaged 10.5 t/ha in Mindanao",
+    "maturityDays": "about 115 in national trials",
+    "yield": "national trials averaged 10.5 t/ha in Mindanao",
     "traits": [
      "tall plant (about 294 cm)",
      "long ear (about 19 cm)",
@@ -29893,7 +29893,7 @@
      "drought tolerant (company)",
      "tolerant to leaf diseases"
     ],
-    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; the NSIC registry gives the events as MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
+    "gm": "VT Double PRO RIB Complete (Bayer's trait code VT2PRIB): two Bt proteins with different modes of action against Asian corn borer, fall armyworm, corn earworm and common cutworm; its registered events are MON 89034 x NK603, so the plant also tolerates glyphosate (Roundup). The bag holds 95% traited seed and 5% refuge seed already mixed, so no separate refuge block has to be planted.",
     "areas": "Luzon and Visayas (Bayer's recommended area)",
     "season": "wet and dry",
     "density": "70,000 to 80,000 plants per ha; furrows 60 or 65 cm apart, hills 20 cm"
@@ -30051,8 +30051,8 @@
    "kind": "yellow conventional hybrid",
    "popular": "Top conventional yellow hybrid in DA-12 highland wet season trials in Sultan Kudarat (8.28 t/ha) and Sarangani (5.45 t/ha), Sept to Oct 2024.",
    "facts": {
-    "maturityDays": "101 to 108 in NSIC trials",
-    "yield": "DA-12 trials: 8.28 t/ha Sultan Kudarat highland (2024), 5.45 t/ha Sarangani highland (2024), 7.80 t/ha Sultan Kudarat lowland (2025), 5.31 t/ha Sarangani lowland (2025); NSIC trials averaged 7.12 to 7.48 t/ha",
+    "maturityDays": "101 to 108 in national trials",
+    "yield": "DA-12 trials: 8.28 t/ha Sultan Kudarat highland (2024), 5.45 t/ha Sarangani highland (2024), 7.80 t/ha Sultan Kudarat lowland (2025), 5.31 t/ha Sarangani lowland (2025); national trials averaged 7.12 to 7.48 t/ha",
     "traits": [
      "non GM",
      "very long ear (about 18 to 19 cm)",
@@ -30060,7 +30060,7 @@
     ],
     "areas": "first registered for Luzon and Visayas, later expanded nationwide",
     "season": "wet and dry",
-    "gm": "none (DA lists it as a conventional hybrid)"
+    "gm": "none (it is listed as a conventional hybrid)"
    },
    "sources": [
     "https://rfo12.da.gov.ph/?p=9358",
@@ -30147,8 +30147,8 @@
    "kind": "white glutinous OPV",
    "popular": "Shown with Glut 1 at MMSU's 2018 farmers' field day in Solsona, where farmers praised it as chichacorn.",
    "facts": {
-    "maturityDays": "98 to 99 in NSIC trials",
-    "yield": "5.33 t/ha in NSIC trials; MMSU says up to a quarter more than native glutinous corn",
+    "maturityDays": "98 to 99 in national trials",
+    "yield": "5.33 t/ha in national trials; MMSU says up to a quarter more than native glutinous corn",
     "traits": [
      "selected from Honey Corn and cleaned to a pure white kernel",
      "ear about 17 cm",
@@ -30537,8 +30537,8 @@
    "kind": "yellow GM hybrid",
    "popular": "An older Bioseed hybrid with a loyal following in Isabela for drought hardiness (2008 farmer reports); still entered by Bioseed as B9909G in DA Northern Mindanao derbies in 2023.",
    "facts": {
-    "maturityDays": "about 100 in NSIC trials",
-    "yield": "Isabela farmers reported about 8.5 t/ha in a normal season and still 5 to 7 t/ha in a 45 day drought (2008 report); NSIC trials averaged 8.24 t/ha (GM version); 7.27 t/ha for the conventional Bioseed 9909",
+    "maturityDays": "about 100 in national trials",
+    "yield": "Isabela farmers reported about 8.5 t/ha in a normal season and still 5 to 7 t/ha in a 45 day drought (2008 report); national trials averaged 8.24 t/ha (GM version); 7.27 t/ha for the conventional Bioseed 9909",
     "traits": [
      "known locally for holding yield in drought",
      "upright leaves",
@@ -35191,8 +35191,8 @@
    "kind": "white glutinous OPV",
    "popular": "MMSU's pick for the Ilocos kornik industry: the 2018 push with three state colleges and a 2023 farmer training in Ilocos Norte both centred on it.",
    "facts": {
-    "maturityDays": "about 90 days to harvest (MMSU); 94 to 99 days in NSIC trials",
-    "yield": "up to 6 to 7 t/ha (MMSU); 5.61 t/ha in NSIC trials",
+    "maturityDays": "about 90 days to harvest (MMSU); 94 to 99 days in national trials",
+    "yield": "up to 6 to 7 t/ha (MMSU); 5.61 t/ha in national trials",
     "traits": [
      "plants about 176 cm",
      "ear about 14 cm, shelling about 79%",
@@ -36724,11 +36724,11 @@
    "kind": "yellow GM hybrid (older)",
    "popular": "A long running Pioneer hybrid that was on DA Region 2's recommended list with seed at the Ilagan station (2018 guide).",
    "facts": {
-    "maturityDays": "about 105 (DA Region 2)",
-    "yield": "6.22 t/ha in NSIC trials; 5.05 t/ha listed by DA Region 2",
+    "maturityDays": "about 105",
+    "yield": "6.22 t/ha in national trials; 5.05 t/ha listed by DA Region 2",
     "traits": [
      "single cross hybrid",
-     "rated resistant to corn borer, earworm and leaf diseases (DA Region 2)"
+     "rated resistant to corn borer, earworm and leaf diseases"
     ],
     "areas": "registered nationwide",
     "season": "wet and dry"
@@ -37255,8 +37255,8 @@
    "kind": "white OPV (flint)",
    "popular": "Tied with IPB Var 6 as a top yielder in the 2011 to 2013 farmer trials in Isabela, Quezon, Bohol and North Cotabato, and farmers liked its stand in both seasons (UPLB study).",
    "facts": {
-    "maturityDays": "about 98 (wet season) to 105 (dry season) in NSIC trials",
-    "yield": "5.81 t/ha Luzon and 4.82 t/ha Mindanao in NSIC trials; 4.1 t/ha on farmers' fields over four seasons",
+    "maturityDays": "about 98 (wet season) to 105 (dry season) in national trials",
+    "yield": "5.81 t/ha Luzon and 4.82 t/ha Mindanao in national trials; 4.1 t/ha on farmers' fields over four seasons",
     "traits": [
      "white grain for food",
      "registry rates it resistant to lodging, corn borer, rust, stalk rot and earworm",
@@ -38082,7 +38082,7 @@
    "kind": "white OPV (flint)",
    "popular": "Over 45,000 bags of seed went out through DA field offices, LGUs and NGOs by 2018 (IPB, Philippine Journal of Crop Science); DA paid IPB to multiply it as a rice extender (Inquirer).",
    "facts": {
-    "maturityDays": "about 101 (wet season) to 105 (dry season) in NSIC trials",
+    "maturityDays": "about 101 (wet season) to 105 (dry season) in national trials",
     "yield": "national tests averaged 5.84 t/ha in Luzon, 5.45 in the Visayas and 4.47 in Mindanao; 4.1 t/ha on farmers' fields over four seasons",
     "traits": [
      "white flint grain eaten as corn grits",
@@ -39799,8 +39799,8 @@
    "kind": "yellow conventional hybrid",
    "popular": "First among conventional yellow hybrids at DA-12's Sarangani dry season trial (7.04 t/ha, March 2025), and second in three other DA-12 trials in 2024 to 2025.",
    "facts": {
-    "maturityDays": "about 104 in NSIC trials",
-    "yield": "DA-12 trials: 7.04 t/ha Sarangani lowland (2025), 8.00 t/ha Sultan Kudarat lowland (2025), 7.35 t/ha Sultan Kudarat highland (2024), 5.40 t/ha Sarangani highland (2024); 5.61 t/ha in NSIC trials; 7 to 8 t/ha in DA-12's 2025 trials",
+    "maturityDays": "about 104 in national trials",
+    "yield": "DA-12 trials: 7.04 t/ha Sarangani lowland (2025), 8.00 t/ha Sultan Kudarat lowland (2025), 7.35 t/ha Sultan Kudarat highland (2024), 5.40 t/ha Sarangani highland (2024); 5.61 t/ha in national trials; 7 to 8 t/ha in DA-12's 2025 trials",
     "traits": [
      "non GM",
      "registry rates it resistant to lodging, corn borer and earworm"
@@ -39971,7 +39971,7 @@
    "kind": "white OPV (flint)",
    "popular": "Isabela farmers' first pick among white corns in the 2011 to 2013 farmer trials (UPLB study); on DA Region 2's recommended list with seed sold at CVIARC.",
    "facts": {
-    "maturityDays": "95 to 100 (DA Region 2 guide); 98 to 105 in NSIC trials",
+    "maturityDays": "95 to 100; 98 to 105 in national trials",
     "yield": "about 5.5 t/ha",
     "traits": [
      "white grain for food",
@@ -40067,7 +40067,7 @@
    "kind": "white OPV (flint)",
    "popular": "Among the three white corns Isabela farmers liked best in the 2011 to 2013 farmer trials (UPLB study); on DA Region 2's recommended list.",
    "facts": {
-    "maturityDays": "95 to 100 (DA Region 2 guide); 97 to 105 in NSIC trials",
+    "maturityDays": "95 to 100; 97 to 105 in national trials",
     "yield": "about 5.5 t/ha",
     "traits": [
      "white grain for food",
@@ -42205,8 +42205,8 @@
    "kind": "white conventional hybrid",
    "popular": "Top white hybrid in all four DA-12 regional varietal trials reported for 2024 to 2025 (Sultan Kudarat and Sarangani).",
    "facts": {
-    "maturityDays": "101 to 103 in NSIC trials",
-    "yield": "DA-12 trials: 8.72 t/ha Sultan Kudarat highland (2024), 8.54 t/ha Sultan Kudarat lowland (2025), 6.49 t/ha Sarangani highland (2024), 5.52 t/ha Sarangani lowland (2025); 5.32 t/ha in NSIC trials",
+    "maturityDays": "101 to 103 in national trials",
+    "yield": "DA-12 trials: 8.72 t/ha Sultan Kudarat highland (2024), 8.54 t/ha Sultan Kudarat lowland (2025), 6.49 t/ha Sarangani highland (2024), 5.52 t/ha Sarangani lowland (2025); 5.32 t/ha in national trials",
     "traits": [
      "white grain",
      "registry rates it resistant to corn borer and stalk rot, moderately resistant to lodging, rust and earworm"
@@ -42297,7 +42297,7 @@
     "maturityDays": "about 98",
     "yield": "5.31 t/ha",
     "traits": [
-     "moderately resistant to corn borer and earworm (DA Region 2 guide)",
+     "moderately resistant to corn borer and earworm",
      "registry rates it resistant to lodging, rust and stalk rot"
     ],
     "areas": "registered nationwide",
@@ -43214,8 +43214,8 @@
    "kind": "yellow hybrid (conventional; GM versions also registered)",
    "popular": "An older Dekalb workhorse: on DA Region 2's recommended list (2018) and entered as 9132S in DA Ilocos' 2020 Vigan derby.",
    "facts": {
-    "maturityDays": "101 to 105 in NSIC trials (conventional); DA Region 2 lists the RR/YG version at 120 to 125",
-    "yield": "8.53 t/ha in NSIC trials",
+    "maturityDays": "101 to 105 in national trials (conventional); DA Region 2 lists the RR/YG version at 120 to 125",
+    "yield": "8.53 t/ha in national trials",
     "traits": [
      "short plant (149 to 188 cm)",
      "ear about 17 cm, shelling about 79%",
@@ -51200,9 +51200,9 @@
    "popular": "Tied for second in shelling recovery at DA Bicol's Camarines Norte provincial corn derby (2023).",
    "facts": {
     "traits": [
-     "good shelling recovery (DA derby)"
+     "good shelling recovery"
     ],
-    "areas": "Bicol (DA derby)"
+    "areas": "Bicol"
    },
    "sources": [
     "https://bicol.da.gov.ph/da-bicol-holds-provincial-corn-derby-in-cam-norte/"
@@ -51288,7 +51288,7 @@
     "traits": [
      "shelling recovery 78 to 80%"
     ],
-    "areas": "Bukidnon and Claveria highlands (DA derbies)"
+    "areas": "Bukidnon and Claveria highlands"
    },
    "claims": true,
    "sources": [
@@ -51332,7 +51332,7 @@
      "yellow orange, semi flint grain",
      "shelling recovery 78 to 80%"
     ],
-    "areas": "Bukidnon (DA derbies); company sells in Mindanao, Visayas and North Luzon"
+    "areas": "Bukidnon; company sells in Mindanao, Visayas and North Luzon"
    },
    "claims": true,
    "sources": [
@@ -51376,7 +51376,7 @@
      "yellow orange, semi flint grain",
      "shelling recovery 78 to 80%"
     ],
-    "areas": "Bukidnon uplands (DA derby)"
+    "areas": "Bukidnon uplands"
    },
    "claims": true,
    "sources": [
@@ -51606,8 +51606,8 @@
    "popular": "RJR's white corn entry in DA-10's 2023 Bukidnon derbies and second in the white hybrid class at DA-12's Sultan Kudarat dry season trial (March 2025).",
    "facts": {
     "yield": "6.16 t/ha in DA-12's Sultan Kudarat lowland dry season trial (2025)",
-    "gm": "none (DA lists it as a conventional white hybrid)",
-    "areas": "Mindanao (DA trials)"
+    "gm": "none (it is listed as a conventional white hybrid)",
+    "areas": "Mindanao"
    },
    "sources": [
     "https://rfo12.da.gov.ph/?p=11899",
@@ -53599,10 +53599,10 @@
    "popular": "BPI Cp-1, on the Philippine Seed Board list since 1976 and named with the Filipino word for cowpea; current seed sellers not confirmed",
    "facts": {
     "maturityDays": "about 63 days",
-    "yield": "about 1.3 t/ha (registry)",
+    "yield": "about 1.3 t/ha",
     "fruit": "very dark green pods; mottled purple seeds",
     "traits": [
-     "resistant to fusarium wilt and rust (registry)"
+     "resistant to fusarium wilt and rust"
     ]
    },
    "sources": [
@@ -56329,7 +56329,7 @@
     "yield": "32 to 133% more marketable fruit than the commercial check in national trials, 2011 to 2014; Ramgo claims 30 to 35 t/ha",
     "fruit": "glossy dark purple cylinder with a rounded tip, 15 to 22 cm long, 3.3 to 4.4 cm across, green to purplish-green calyx",
     "traits": [
-     "resistant to bacterial wilt, intermediate resistance to leafhopper (NSIC registry)",
+     "resistant to bacterial wilt, intermediate resistance to leafhopper",
      "heat tolerant (Ramgo)"
     ],
     "season": "wet and dry",
@@ -56785,7 +56785,7 @@
     "fruit": "large, long and slightly tapering, shiny, greenish purple",
     "traits": [
      "tolerates waterlogging and long flooding",
-     "highly tolerant to bacterial wilt (DA Region 2)",
+     "highly tolerant to bacterial wilt",
      "used as a rootstock for grafted rainy-season tomato"
     ],
     "season": "all year; best yields in the cool dry months",
@@ -56943,7 +56943,7 @@
    "kind": "F1 hybrid",
    "popular": "on DA Region 2's list of recommended eggplants; seller not identified",
    "facts": {
-    "maturityDays": "first harvest about 50 days after transplanting (DA Region 2)",
+    "maturityDays": "first harvest about 50 days after transplanting",
     "fruit": "straight, cylindrical, glossy dark purple",
     "traits": [
      "very prolific"
@@ -57025,10 +57025,10 @@
    "kind": "F1 hybrid",
    "popular": "East-West's round eggplant, preferred in Nueva Ecija and parts of Northern Luzon (Agriculture Monthly 2020); on DA Region 2's recommended list",
    "facts": {
-    "maturityDays": "first harvest 45 to 50 days after transplanting (DA Region 2)",
+    "maturityDays": "first harvest 45 to 50 days after transplanting",
     "fruit": "round, purple-green",
     "traits": [
-     "early maturing and high yielding (DA Region 2)"
+     "early maturing and high yielding"
     ],
     "areas": "lowland (Nueva Ecija, Northern Luzon)"
    },
@@ -57070,8 +57070,8 @@
    "facts": {
     "fruit": "purple, cylindrical",
     "traits": [
-     "good fruit quality and long shelf life (DA Region 2)",
-     "high yielding (DA Region 2)"
+     "good fruit quality and long shelf life",
+     "high yielding"
     ]
    },
    "sources": [
@@ -57402,11 +57402,11 @@
    "popular": "registered with NSIC in 2017; the highest raised bed yield among the seven NSIC garlic entries, but the slowest to mature",
    "facts": {
     "maturityDays": "about 150 days after planting",
-    "yield": "8.44 t/ha on raised beds, 6.70 t/ha with minimum tillage (NSIC trials)",
+    "yield": "8.44 t/ha on raised beds, 6.70 t/ha with minimum tillage",
     "fruit": "rhomboid bulb with a prominent base plate; violet cloves and violet outer skin",
     "traits": [
-     "moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot (NSIC)",
-     "only slight thrips, leaf folder and mite damage in the NSIC trials"
+     "moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot",
+     "only slight thrips, leaf folder and mite damage in the national trials"
     ],
     "season": "dry season; needs cool, windy weather during the growing period"
    },
@@ -57536,11 +57536,11 @@
    "popular": "registered with NSIC in 2017; BPI's garlic guide lists Ilocos Pink among the garlic varieties found in the country",
    "facts": {
     "maturityDays": "about 111 days after planting",
-    "yield": "6.45 t/ha on raised beds, 5.02 t/ha with minimum tillage (NSIC trials)",
+    "yield": "6.45 t/ha on raised beds, 5.02 t/ha with minimum tillage",
     "fruit": "globe shaped bulb with several layers of cloves; pink clove skin, white outer skin with brown stripes",
     "traits": [
-     "moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot (NSIC)",
-     "only slight thrips, leaf folder and mite damage in the NSIC trials"
+     "moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot",
+     "only slight thrips, leaf folder and mite damage in the national trials"
     ],
     "season": "dry season; needs cool, windy weather during the growing period",
     "areas": "Ilocos"
@@ -57664,15 +57664,15 @@
   "research": {
    "company": "MMSU (Mariano Marcos State University)",
    "kind": "local selection, grown from cloves",
-   "popular": "MMSU variety registered with NSIC in 2017; BPI's guide notes its cloves are bigger than Ilocos White's",
+   "popular": "MMSU variety registered with NSIC in 2017; the guide notes its cloves are bigger than Ilocos White's",
    "facts": {
-    "maturityDays": "about 110 days after planting (NSIC); BPI gives 105 to 120 days",
+    "maturityDays": "about 110 days after planting; trials give 105 to 120 days",
     "yield": "3.53 t/ha in the NSIC data",
-    "fruit": "globe bulb; brown clove skin, white outer skin with brown stripes; cloves bigger than Ilocos White (BPI)",
+    "fruit": "globe bulb; brown clove skin, white outer skin with brown stripes; cloves bigger than Ilocos White",
     "traits": [
-     "moderately resistant to purple blotch, Cercospora leaf spot, Fusarium bulb rot, thrips, leaf folder and mites (NSIC)",
-     "keeps well (BPI)",
-     "BPI's guide had not yet recommended it officially for commercial planting"
+     "moderately resistant to purple blotch, Cercospora leaf spot, Fusarium bulb rot, thrips, leaf folder and mites",
+     "keeps well",
+     "the guide had not yet recommended it officially for commercial planting"
     ],
     "season": "dry season"
    },
@@ -57803,15 +57803,15 @@
    "kind": "traditional/local, grown from cloves",
    "popular": "BPI's garlic production guide calls it the most common garlic planted commercially in the country; registered with NSIC in 2017",
    "facts": {
-    "maturityDays": "about 103 days after planting (NSIC); BPI gives 90 to 110 days",
-    "yield": "5.55 t/ha on raised beds and 4.33 t/ha with minimum tillage in the NSIC trials; BPI cites 3.5 t/ha potential",
-    "fruit": "flat globe bulb with several layers of cloves; white outer skin, beige clove skin (NSIC); BPI describes purple to white scales",
+    "maturityDays": "about 103 days after planting; trials give 90 to 110 days",
+    "yield": "5.55 t/ha on raised beds and 4.33 t/ha with minimum tillage in the national trials; BPI cites 3.5 t/ha potential",
+    "fruit": "flat globe bulb with several layers of cloves; white outer skin, beige clove skin; also described as purple to white scales",
     "traits": [
-     "moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot (NSIC)",
-     "only slight thrips, leaf folder and mite damage in the NSIC trials",
-     "long shelf life (BPI)"
+     "moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot",
+     "only slight thrips, leaf folder and mite damage in the national trials",
+     "long shelf life"
     ],
-    "season": "dry season; needs cool, windy weather during the growing period; plant October to November in Ilocos (BPI)",
+    "season": "dry season; needs cool, windy weather during the growing period; plant October to November in Ilocos",
     "areas": "Ilocos lowlands"
    },
    "sources": [
@@ -58049,11 +58049,11 @@
    "popular": "registered with NSIC in 2017; second highest raised bed yield among the NSIC garlic entries",
    "facts": {
     "maturityDays": "about 111 days after planting",
-    "yield": "8.05 t/ha on raised beds, 4.98 t/ha with minimum tillage (NSIC trials)",
+    "yield": "8.05 t/ha on raised beds, 4.98 t/ha with minimum tillage",
     "fruit": "globe shaped bulb with several layers of cloves; beige clove skin, cream outer skin",
     "traits": [
-     "moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot (NSIC)",
-     "only slight thrips, leaf folder and mite damage in the NSIC trials"
+     "moderately resistant to purple blotch, Cercospora leaf spot and Fusarium bulb rot",
+     "only slight thrips, leaf folder and mite damage in the national trials"
     ],
     "season": "dry season; needs cool, windy weather during the growing period"
    },
@@ -58091,7 +58091,7 @@
    "popular": "named by BPI as one of the native garlic varieties grown in the Philippines; Lubang Island's garlic industry began with it in 1971 (Agriculture Monthly)",
    "facts": {
     "traits": [
-     "BPI lists it as available but not yet officially recommended for commercial planting"
+     "it is listed as available but not yet officially recommended for commercial planting"
     ],
     "season": "dry season; on Lubang, garlic is planted from October to mid December as the southwest monsoon ends",
     "areas": "first planted on Lubang Island, Occidental Mindoro in 1971"
@@ -61269,7 +61269,7 @@
    "popular": "UPLB bush type lima bean on the Seed Board list (1979); current seed sellers not confirmed",
    "facts": {
     "maturityDays": "about 73 days",
-    "yield": "about 9.4 t/ha (registry)",
+    "yield": "about 9.4 t/ha",
     "fruit": "dark green pods; medium brown seeds",
     "traits": [
      "strongly determinate, erect bush about 46 cm tall (no trellis)",
@@ -61319,7 +61319,7 @@
    "kind": "open pollinated",
    "popular": "one of the first two lima beans on the Philippine Seed Board list (1972); current seed sellers not confirmed (note: habas is also a common word for broad bean)",
    "facts": {
-    "maturityDays": "50 to 60 days (registry)"
+    "maturityDays": "50 to 60 days"
    },
    "sources": [
     "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
@@ -61364,7 +61364,7 @@
    "kind": "open pollinated",
    "popular": "one of the first two lima beans on the Philippine Seed Board list (1972); current seed sellers not confirmed",
    "facts": {
-    "maturityDays": "60 to 70 days (registry)"
+    "maturityDays": "60 to 70 days"
    },
    "sources": [
     "https://nsic.buplant.da.gov.ph/downloadables/nsic-vegetable.xlsx"
@@ -65750,7 +65750,7 @@
    "popular": "The newest munggo in the registry (2025), with the highest registry dry-season yield.",
    "facts": {
     "maturityDays": "56 to 58 days",
-    "yield": "1.75 t/ha dry season, 1.11 t/ha wet season (registry)",
+    "yield": "1.75 t/ha dry season, 1.11 t/ha wet season",
     "fruit": "dull green seed, about 6 g per 100 seeds",
     "traits": [
      "resistant to Cercospora leaf spot and rust"
@@ -65850,7 +65850,7 @@
    "popular": "Highest dry-season yield in the Luntian line, nationally recommended for the dry season.",
    "facts": {
     "maturityDays": "58 to 59 days",
-    "yield": "1.68 t/ha dry season, 1.34 t/ha wet season (registry)",
+    "yield": "1.68 t/ha dry season, 1.34 t/ha wet season",
     "fruit": "glossy green seed, about 6.6 g per 100 seeds; crude protein about 21.9%",
     "traits": [
      "resistant to Cercospora leaf spot and rust"
@@ -65947,7 +65947,7 @@
    "popular": "The yellow-seeded munggo in the registry, a newer version of BPI's original Ginintuan.",
    "facts": {
     "maturityDays": "57 to 59 days",
-    "yield": "1.37 t/ha dry season, 1.42 t/ha wet season (registry)",
+    "yield": "1.37 t/ha dry season, 1.42 t/ha wet season",
     "fruit": "yellow seed, about 6 to 6.6 g per 100 seeds; crude protein about 24.7%",
     "traits": [
      "resistant to Cercospora leaf spot and rust"
@@ -66049,7 +66049,7 @@
    "popular": "First of BPI's Luntian munggo series, approved after nearly seven years of testing and recommended for all regions.",
    "facts": {
     "maturityDays": "60 to 61 days",
-    "yield": "1.38 t/ha dry season, 1.3 t/ha wet season (registry)",
+    "yield": "1.38 t/ha dry season, 1.3 t/ha wet season",
     "fruit": "glossy green seed, about 6.5 g per 100 seeds; crude protein about 21.6%; high stickiness",
     "traits": [
      "resistant to Cercospora leaf spot and rust",
@@ -66403,7 +66403,7 @@
    "popular": "BPI munggo recommended as a national variety for both wet and dry seasons.",
    "facts": {
     "maturityDays": "about 56 to 58 days",
-    "yield": "1.15 t/ha dry season, 1.28 t/ha wet season (registry)",
+    "yield": "1.15 t/ha dry season, 1.28 t/ha wet season",
     "fruit": "glossy green seed, about 6 g per 100 seeds; crude protein about 24%",
     "traits": [
      "resistant to mungbean virus",
@@ -66767,7 +66767,7 @@
    "popular": "A later Pag-asa munggo with resistance to powdery mildew, recommended for both seasons.",
    "facts": {
     "maturityDays": "58 to 60 days",
-    "yield": "1.27 t/ha dry season, 1.21 t/ha wet season (registry)",
+    "yield": "1.27 t/ha dry season, 1.21 t/ha wet season",
     "fruit": "glossy green seed, about 5 to 5.5 g per 100 seeds; crude protein about 22.5%",
     "traits": [
      "resistant to powdery mildew",
@@ -67197,7 +67197,7 @@
    "popular": "One of the commercial Pag-asa varieties IPB released with a second flush of flowers after the first pod picking.",
    "facts": {
     "maturityDays": "57 to 58 days",
-    "yield": "1.07 t/ha dry season, 1.18 t/ha wet season (registry)",
+    "yield": "1.07 t/ha dry season, 1.18 t/ha wet season",
     "fruit": "glossy green seed, about 5 g per 100 seeds; crude protein about 23%",
     "traits": [
      "moderately resistant to Cercospora leaf spot"
@@ -69166,7 +69166,7 @@
    "popular": "The only papaya in the NSIC registry; a short, early-fruiting IPB variety.",
    "facts": {
     "harvest": "fruits 8 to 9 months after transplanting, then all year",
-    "yield": "45 to 50 t/ha (registry)",
+    "yield": "45 to 50 t/ha",
     "fruit": "oblong, about 1.2 kg, 24.5 cm; yellow skin; deep yellow-orange firm flesh, juicy but not soggy; 11.5 Brix",
     "traits": [
      "short, erect plant (about 0.5 m in the registry record)"
@@ -69637,7 +69637,7 @@
    "popular": "The newest peanut in the registry list, bred for dry-season growing in Negros and North Cotabato.",
    "facts": {
     "maturityDays": "about 103 to 104 days",
-    "yield": "1.79 t/ha dry season, 1.74 t/ha wet season (registry)",
+    "yield": "1.79 t/ha dry season, 1.74 t/ha wet season",
     "fruit": "about 55 g per 100 seeds; about 70% shelling",
     "traits": [
      "resistant to rust and Cercospora leaf spot"
@@ -70107,7 +70107,7 @@
    "popular": "Mindanao's regional peanut for both seasons, yielding above 2 t/ha in both seasons in registry trials.",
    "facts": {
     "maturityDays": "about 88 to 89 days",
-    "yield": "2.13 t/ha dry season, 2.09 t/ha wet season (registry)",
+    "yield": "2.13 t/ha dry season, 2.09 t/ha wet season",
     "fruit": "about 56 to 57 g per 100 seeds; about 75% shelling",
     "traits": [
      "moderately resistant to rust and Cercospora leaf spot"
@@ -70214,13 +70214,13 @@
   "research": {
    "company": "ICRISAT (India), registered by DA-CVIARC",
    "kind": "introduced big-seeded variety",
-   "popular": "The only introduced peanut NSIC had released by then, with a record 3,991 kg/ha, double the usual commercial varieties (BPI); pushed to Cagayan Valley corn farmers.",
+   "popular": "The only introduced peanut NSIC had released by then, with a record 3,991 kg/ha, double the usual commercial varieties; pushed to Cagayan Valley corn farmers.",
    "facts": {
     "maturityDays": "about 121 to 122 days",
-    "yield": "2.06 t/ha dry season, 1.26 t/ha wet season (registry); top recorded 3,991 kg/ha",
+    "yield": "2.06 t/ha dry season, 1.26 t/ha wet season; top recorded 3,991 kg/ha",
     "fruit": "big seeds, about 77 to 93 g per 100 seeds; about 72 to 74% shelling",
     "traits": [
-     "resistant to bacterial wilt, Cercospora leaf spot and rust (BPI)",
+     "resistant to bacterial wilt, Cercospora leaf spot and rust",
      "high biomass, also used as livestock forage",
      "introduced from ICRISAT in 2005"
     ],
@@ -70331,7 +70331,7 @@
    "popular": "A big-seeded Cagayan Valley peanut that gave the heaviest seeds in a Nueva Vizcaya trial of four varieties.",
    "facts": {
     "maturityDays": "about 101 to 105 days",
-    "yield": "1.11 t/ha dry season, 1.77 t/ha wet season (registry)",
+    "yield": "1.11 t/ha dry season, 1.77 t/ha wet season",
     "fruit": "big seeds, about 70 to 82 g per 100 seeds; about 69% shelling",
     "traits": [
      "resistant to rust and Cercospora leaf spot"
@@ -70434,7 +70434,7 @@
    "popular": "Used by BPI as the local check against ICRISAT peanut lines; the latest Biyaya in the registry list.",
    "facts": {
     "maturityDays": "about 97 to 98 days",
-    "yield": "1.88 t/ha dry season, 1.67 t/ha wet season (registry)",
+    "yield": "1.88 t/ha dry season, 1.67 t/ha wet season",
     "fruit": "about 52 to 57 g per 100 seeds; about 75% shelling; oil about 48%",
     "traits": [
      "moderately resistant to rust and Cercospora leaf spot"
@@ -70543,7 +70543,7 @@
    "popular": "Ilocos Norte's registered peanut, with the highest protein in the registry list.",
    "facts": {
     "maturityDays": "about 95 to 96 days",
-    "yield": "1.72 t/ha dry season, 1.47 t/ha wet season (registry)",
+    "yield": "1.72 t/ha dry season, 1.47 t/ha wet season",
     "fruit": "about 47 to 57 g per 100 seeds; about 71 to 73% shelling; crude protein about 32.6%",
     "traits": [
      "resistant to rust, moderately susceptible to Cercospora leaf spot"
@@ -70651,7 +70651,7 @@
    "popular": "DA Cagayan Valley's peanut registered for both seasons, resistant to rust and leaf spot.",
    "facts": {
     "maturityDays": "about 98 to 99 days",
-    "yield": "1.64 t/ha dry season, 1.61 t/ha wet season (registry)",
+    "yield": "1.64 t/ha dry season, 1.61 t/ha wet season",
     "fruit": "about 47 to 55 g per 100 seeds; about 68 to 69% shelling; oil about 44.5%",
     "traits": [
      "resistant to rust and Cercospora leaf spot"
@@ -74448,7 +74448,7 @@
     "yield": "23.7 t/ha in registry trials; 21.61 t/ha in BSU chip trials",
     "fruit": "pale yellow flesh, yellow skin, round to round-oval tubers, shallow eyes; dry matter about 18%",
     "traits": [
-     "resistant to late blight and peach scale insect (registry)"
+     "resistant to late blight and peach scale insect"
     ],
     "uses": "french fries, chips, table",
     "areas": "highlands: Benguet, Mountain Province"
@@ -74544,7 +74544,7 @@
     "yield": "24.4 t/ha in registry trials",
     "fruit": "cream flesh, brownish skin, oblong-oval tubers, shallow eyes; dry matter about 18%",
     "traits": [
-     "resistant to late blight and peach scale insect (registry)"
+     "resistant to late blight and peach scale insect"
     ],
     "uses": "french fries, chips, table",
     "areas": "highlands: Benguet, Mountain Province"
@@ -77077,7 +77077,7 @@
    "kind": "clone",
    "popular": "Erect, smooth-barked Prang Besar clone with high dry rubber content (about 38%).",
    "facts": {
-    "yield": "about 1,960 to 2,230 kg/ha/yr on virgin bark, 2,570 on renewed bark (registry)",
+    "yield": "about 1,960 to 2,230 kg/ha/yr on virgin bark, 2,570 on renewed bark",
     "fruit": "pale yellow latex; dry rubber content about 38.3%",
     "traits": [
      "moderate response to stimulation",
@@ -77333,7 +77333,7 @@
    "kind": "clone",
    "popular": "Highest dry rubber content in the NSIC rubber list (about 40.8%).",
    "facts": {
-    "yield": "about 2,380 to 2,780 kg/ha/yr on virgin bark, 2,820 on renewed bark (registry)",
+    "yield": "about 2,380 to 2,780 kg/ha/yr on virgin bark, 2,820 on renewed bark",
     "fruit": "pale yellow latex; dry rubber content about 40.8%",
     "traits": [
      "erect, smooth trunk, strong growth",
@@ -77620,7 +77620,7 @@
    "kind": "clone",
    "popular": "Straight, vigorous Prang Besar clone that self-prunes and forms a closed canopy.",
    "facts": {
-    "yield": "about 2,240 to 2,530 kg/ha/yr on virgin bark (registry)",
+    "yield": "about 2,240 to 2,530 kg/ha/yr on virgin bark",
     "fruit": "pale yellow latex; dry rubber content about 37.7%",
     "traits": [
      "high response to stimulation",
@@ -77781,7 +77781,7 @@
    "kind": "clone",
    "popular": "The first rubber clone on the NSIC list; latex yield climbs with tapping age, to about 3,260 kg/ha/yr on renewed bark.",
    "facts": {
-    "yield": "about 2,100 to 2,360 kg/ha/yr on virgin bark and 2,940 to 3,260 on renewed bark (S2D2 tapping, registry)",
+    "yield": "about 2,100 to 2,360 kg/ha/yr on virgin bark and 2,940 to 3,260 on renewed bark (S2D2 tapping)",
     "fruit": "white latex; dry rubber content about 37.5%",
     "traits": [
      "responds well to stimulation",
@@ -77932,7 +77932,7 @@
    "kind": "clone",
    "popular": "The only Philippine-bred clone in the NSIC rubber list: fast growing with a big trunk.",
    "facts": {
-    "yield": "about 2,490 kg/ha/yr on virgin bark (registry)",
+    "yield": "about 2,490 kg/ha/yr on virgin bark",
     "fruit": "white latex; dry rubber content about 36.2%",
     "traits": [
      "very strong growth",
@@ -80020,11 +80020,11 @@
    "kind": "selection, yellow seed",
    "popular": "Topped IPB's 2019 on-farm soybean trials in Sumilao, Bukidnon.",
    "facts": {
-    "maturityDays": "about 70 days dry season, 89 days wet season (registry)",
-    "yield": "1.96 t/ha dry season, 2.34 t/ha wet season (registry)",
+    "maturityDays": "about 70 days dry season, 89 days wet season",
+    "yield": "1.96 t/ha dry season, 2.34 t/ha wet season",
     "fruit": "yellow seed, about 13 to 14 g per 100 seeds; crude protein about 40.7%",
     "traits": [
-     "immune to rust (registry)"
+     "immune to rust"
     ],
     "uses": "dry beans, edamame",
     "areas": "wet season (March to May planting) in eastern and central Mindanao"
@@ -80104,11 +80104,11 @@
    "kind": "selection, black seed",
    "popular": "The black-seeded soybean in the registry, for wet-season planting in Mindanao.",
    "facts": {
-    "maturityDays": "about 74 days dry season, 94 days wet season (registry)",
-    "yield": "2 t/ha dry season, 2.31 t/ha wet season (registry)",
+    "maturityDays": "about 74 days dry season, 94 days wet season",
+    "yield": "2 t/ha dry season, 2.31 t/ha wet season",
     "fruit": "black seed, about 11 g per 100 seeds",
     "traits": [
-     "immune to rust (registry)",
+     "immune to rust",
      "flowered but set no pods in a 2023 Ilocos edamame trial"
     ],
     "uses": "dry beans",
@@ -80190,7 +80190,7 @@
    "popular": "One of IPB's 2019 Tiwala releases for Negros Occidental and Bukidnon, also tried as edamame in Ilocos.",
    "facts": {
     "maturityDays": "about 83 to 92 days",
-    "yield": "1.97 t/ha dry season, 2.59 t/ha wet season (registry)",
+    "yield": "1.97 t/ha dry season, 2.59 t/ha wet season",
     "fruit": "yellow seed, about 11 to 13 g per 100 seeds",
     "traits": [
      "resistant to rust and bacterial pustule"
@@ -80478,7 +80478,7 @@
    "popular": "BPI's newer soybean bred for year-round planting anywhere in the country.",
    "facts": {
     "maturityDays": "about 87 to 91 days",
-    "yield": "1.83 t/ha dry season, 1.97 t/ha wet season (registry)",
+    "yield": "1.83 t/ha dry season, 1.97 t/ha wet season",
     "fruit": "cream seed, about 13 g per 100 seeds; crude protein about 37%",
     "traits": [
      "resistant to rust and bacterial pustule"
@@ -81699,10 +81699,10 @@
    "kind": "F1 hybrid",
    "popular": "East-West's first squash hybrid bred in the Philippines (released 1987) and still the growers' favourite per Agriculture Monthly (2017); Bukidnon is its biggest growing area; the one squash described in full in DA Region 02's guide",
    "facts": {
-    "maturityDays": "first harvest about 85 days after transplanting (DA Region 02 guide)",
+    "maturityDays": "first harvest about 85 days after transplanting",
     "fruit": "flat round and evenly ribbed, uniform, with thick and very sticky (malagkit) flesh",
     "traits": [
-     "highly tolerant to virus and powdery mildew (DA Region 02 guide)",
+     "highly tolerant to virus and powdery mildew",
      "tolerant to viruses and fungal diseases, wide adaptation (Agriculture Monthly)",
      "buy F1 seed: a Bukidnon grower who saved money on second generation seed got low yields of poor fruit"
     ],
@@ -83906,7 +83906,7 @@
    "kind": "SRA-bred clone",
    "popular": "A 2022 SRA release with the highest average sugar yield in the NSIC sugarcane list.",
    "facts": {
-    "harvest": "matures in about 8 months (registry)",
+    "harvest": "matures in about 8 months",
     "yield": "about 241 LKg/ha (registry average)",
     "fruit": "erect, self-detrashing; stalks about 281 cm, 3.32 cm thick, 2.48 kg",
     "traits": [
@@ -84006,7 +84006,7 @@
    "kind": "university-bred clone",
    "popular": "A UPLB cane registered in 2022, second only to Phil 2009-1969 in listed sugar yield.",
    "facts": {
-    "harvest": "matures in about 8 months (registry)",
+    "harvest": "matures in about 8 months",
     "yield": "about 236 LKg/ha (registry average)",
     "fruit": "green stalks about 269 cm, 1.99 kg",
     "traits": [
@@ -86109,7 +86109,7 @@
    "kind": "improved clone, dark purple skin, white flesh",
    "popular": "Kept by Central Luzon growers after a 24-variety trial and featured in DA Caraga's kamote guide as a flour type.",
    "facts": {
-    "maturityDays": "about 120 days (registry); 105 to 120 days (DA Caraga)",
+    "maturityDays": "about 120 days; 105 to 120 days",
     "yield": "16.3 t/ha",
     "fruit": "dark purple skin, white flesh, obovate roots; dry matter 32.9%, flour 23.8%, protein 1.77%",
     "traits": [
@@ -86775,7 +86775,7 @@
    "kind": "improved clone, purple skin, yellow flesh",
    "popular": "Kept by Central Luzon growers after a participatory trial of 24 varieties, and one of three varieties in DA Caraga's kamote guide.",
    "facts": {
-    "maturityDays": "about 120 days (registry); 105 to 120 days (DA Caraga)",
+    "maturityDays": "about 120 days; 105 to 120 days",
     "yield": "13 t/ha in registry trials; DA Caraga guide cites about 16 t/ha",
     "fruit": "purple skin, yellow flesh, elliptical roots; dry matter 33%, flour 25.9%",
     "traits": [
@@ -87938,15 +87938,15 @@
   "research": {
    "company": "public variety released through the Philippine Seed Board",
    "kind": "improved clone, yellow flesh",
-   "popular": "One of four improved kamote varieties Central Luzon growers kept after a 24-variety trial, and the variety picked for Max's sweetpotato fries (PCAARRD, 2019).",
+   "popular": "One of four improved kamote varieties Central Luzon growers kept after a 24-variety trial, and the variety picked for Max's sweetpotato fries (2019).",
    "facts": {
     "maturityDays": "105 to 120 days",
     "harvest": "start sampling roots at about 90 days; harvest 3.5 to 4 months after planting",
-    "yield": "about 17.4 t/ha (DA Caraga guide)",
+    "yield": "about 17.4 t/ha",
     "fruit": "white skin, yellow flesh; flesh dry matter 30.1%, flour recovery about 21%; light green leaves",
     "traits": [
-     "resistant to scab and weevil (DA Caraga)",
-     "good keeping quality for fries (PCAARRD)"
+     "resistant to scab and weevil",
+     "good keeping quality for fries"
     ],
     "uses": "table, fries, flour",
     "areas": "can be planted anywhere in the Philippines"
@@ -88302,7 +88302,7 @@
     "fruit": "brown skin, white flesh tinged purple, pink cortex; high dry matter (about 38%)",
     "traits": [
      "tall, semi-erect, bears cormels",
-     "resistant to blight (registry)"
+     "resistant to blight"
     ],
     "uses": "food",
     "areas": "all regions of the Philippines"
@@ -88463,7 +88463,7 @@
     "fruit": "brown skin, light purple flesh; dry matter about 34%",
     "traits": [
      "tall, erect, produces rhizomes",
-     "resistant to blight (registry)"
+     "resistant to blight"
     ],
     "uses": "food",
     "areas": "all regions of the Philippines"
@@ -91521,7 +91521,7 @@
   "research": {
    "company": "accession identified by UPLB researchers",
    "kind": "farmer accession, purple yam",
-   "popular": "Top yielder among 10 standout ube picked by UPLB from 188 accessions nationwide (DA, 2026).",
+   "popular": "Top yielder among 10 standout ube picked by UPLB from 188 accessions nationwide (2026).",
    "facts": {
     "yield": "more than 60 t/ha in UPLB evaluation"
    },
@@ -91560,10 +91560,10 @@
    "kind": "F1 hybrid",
    "popular": "first in DA Region 02's upo variety table and sold under East-West's name in online agri stores (Agrify)",
    "facts": {
-    "maturityDays": "about 65 days to maturity (DA Region 02 guide)",
+    "maturityDays": "about 65 days to maturity",
     "traits": [
-     "early, very productive fruit setting (DA Region 02 guide)",
-     "disease tolerant (DA Region 02 guide)"
+     "early, very productive fruit setting",
+     "disease tolerant"
     ],
     "season": "all year"
    },
@@ -91696,10 +91696,10 @@
     "fruit": "stout, heavy, cylindrical and light green, about 26 cm long and 2 to 3 kg",
     "traits": [
      "intermediate resistance to cucumber mosaic virus (Allied)",
-     "resistant to fungal disease (DA Region 02 guide)",
+     "resistant to fungal disease",
      "early and prolific"
     ],
-    "season": "all year (Allied, DA Region 02); Ramgo lists its packet for the dry season",
+    "season": "all year (Allied); Ramgo lists its packet for the dry season",
     "areas": "lowland"
    },
    "claims": true,

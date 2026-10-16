@@ -105,7 +105,7 @@
     },
     {
       "type": "text",
-      "text": "CW 1777 corn takes 103 to 110 days from planting to the harvest of dry grain. That is about the average of the 215 yellow hybrid corn varieties with a day count, 103.6 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 7.82 t/ha beats the average of its group, 7.17. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 103 (wet season) to 110 (dry season) in NSIC trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "CW 1777 corn takes 103 to 110 days from planting to the harvest of dry grain. That is about the average of the 215 yellow hybrid corn varieties with a day count, 103.6 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 7.82 t/ha beats the average of its group, 7.17. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 103 (wet season) to 110 (dry season) in national trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -138,7 +138,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** NSIC trials averaged 8.64 t/ha Luzon, 7.65 Visayas, 7.16 Mindanao.",
+        "**Yield:** National trials averaged 8.64 t/ha Luzon, 7.65 Visayas, 7.16 Mindanao.",
         "**Season:** Wet and dry.",
         "**Where:** Registered nationwide.",
         "Non GM.",

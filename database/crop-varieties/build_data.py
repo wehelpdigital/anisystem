@@ -492,6 +492,9 @@ def main():
         seen.add(slug)
         r['slug'] = slug
     keep.sort(key=lambda r: (r['crop'], -(r['year'] or 0), r['name']))
+    # No agency or institute as the source of a fact (the owner, 2026-10-17): the notes say it as our own.
+    from build_pages import unsource_page  # noqa: E402
+    keep = unsource_page(keep)
     json.dump(keep, open(os.path.join(HERE, 'varieties.json'), 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
     from collections import Counter
     c = Counter(r['crop'] for r in keep)

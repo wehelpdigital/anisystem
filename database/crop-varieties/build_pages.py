@@ -87,15 +87,18 @@ def safe(s):
 # named after one (BPI Cp 4, PCA 15 3, UPLB Gold, Pagasa 7) keeps its name.
 GOVN = (r"(?:the\s+)?(?:DA(?:\s+(?:BAR|RFO\s*\d+|Caraga|CAR|Region\s+\d+))?|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)(?:\s+station)?"
         r"|PCA(?!\s*\d)|PhilRice|PCAARRD|BSWM|IRRI|FAO|NSIC(?:\s+registry)?(?!\s*(?:\d{4}\s*)?(?:[A-Z][a-z]{0,3}\s*-?\s*\d|\d))"
-        r"|the\s+registry)")
+        r"|the\s+registry|registry)")
 GOV_PART = re.compile(GOVN + r"(?:\s+(?:derby|derbies|trials?|data|guide|station|records?|list))?", re.I)
 GOV_SAYS = [
+    (re.compile(r"(^|[.;:]\s+)(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice)\s+recommends\s+it\b"), lambda m: m.group(1) + ('It is recommended' if m.group(1).strip() in ('', '.') else 'it is recommended')),
+    (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice)\s+describes\b"), 'also described as'),
+    (re.compile(r"\bNSIC trials\b"), 'national trials'),
     (re.compile(r"\bthe NSIC registry gives the events as\b"), 'its registered events are'),
     (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA|PhilRice)'s\s+guide\b"), 'the guide'),
     (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice|NSIC)\s+gives\b"), 'trials give'),
     (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice|NSIC)\s+lists it\b"), 'it is listed'),
     (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice|NSIC)\s+lists\b"), 'the list has'),
-    (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice)\s+recommends\b"), 'the usual advice is'),
+    (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice)\s+recommends\b"), 'recommended'),
     (re.compile(r"\bthe (?:NSIC )?registry gives\b"), 'its record gives'),
 ]
 

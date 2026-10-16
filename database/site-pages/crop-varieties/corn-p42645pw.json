@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "P42645PW corn takes 107 to 109 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 6.77 t/ha trails the average of its group, 8.13. It sits in the lower quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 116 to 120 days after planting (Pioneer), 107 to 109 in NSIC trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "P42645PW corn takes 107 to 109 days from planting to the harvest of dry grain. That is about the average of the 89 yellow GM hybrid corn varieties with a day count, 105.4 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 6.77 t/ha trails the average of its group, 8.13. It sits in the lower quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 116 to 120 days after planting (Pioneer), 107 to 109 in national trials.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -157,7 +157,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** Potential 13 t/ha (Pioneer), NSIC trials 6.77 t/ha in Mindanao.",
+        "**Yield:** Potential 13 t/ha (Pioneer), national trials 6.77 t/ha in Mindanao.",
         "**Traits in the seed:** PowerCore (MON 89034 x TC1507 x NK603): three Bt proteins (Cry1A.105, Cry2Ab2, Cry1F) against corn borer, earworm, fall armyworm and other caterpillars, plus glyphosate (Roundup) tolerance, 95:5 refuge seed blend.",
         "**Season:** Wet and dry.",
         "**Where:** High elevation Mindanao.",

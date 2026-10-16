@@ -116,7 +116,7 @@
     },
     {
       "type": "text",
-      "text": "DK 9132 corn takes 101 to 105 days from planting to the harvest of dry grain. That is about the average of the 215 yellow hybrid corn varieties with a day count, 103.6 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8.53 t/ha beats the average of its group, 7.17. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 101 to 105 in NSIC trials (conventional), DA Region 2 lists the RR/YG version at 120 to 125.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "DK 9132 corn takes 101 to 105 days from planting to the harvest of dry grain. That is about the average of the 215 yellow hybrid corn varieties with a day count, 103.6 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8.53 t/ha beats the average of its group, 7.17. It sits in the top quarter of its group. One tonne of shelled corn fills about 20 sacks of 50 kilograms. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing. Its seller gives 101 to 105 in national trials (conventional), DA Region 2 lists the RR/YG version at 120 to 125.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -180,7 +180,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Yield:** 8.53 t/ha in NSIC trials.",
+        "**Yield:** 8.53 t/ha in national trials.",
         "**Season:** Wet and dry.",
         "**Where:** Luzon and Visayas.",
         "Short plant (149 to 188 cm).",
