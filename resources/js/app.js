@@ -1330,26 +1330,32 @@ window.smQuillTouch = function smQuillTouch(quill) {
     window.addEventListener('beforeinstallprompt', (e) => {
         // Chrome's own mini-bar is refused so the offer lives in one place:
         // the account menu, where the rest of "this device" settings are.
+        // Shared with the install card (partials/install-nudge, 2026-10-17):
+        // a prompt can be fired once, so whoever fires it clears it.
         e.preventDefault();
         prompt = e;
+        window.aneeInstallPrompt = e;
         if (!installed()) show(true);
     });
 
     document.addEventListener('click', async (e) => {
         if (!e.target.closest('#pwaInstallBtn')) return;
+        prompt = window.aneeInstallPrompt === undefined ? prompt : window.aneeInstallPrompt;
         if (!prompt) {
             // iOS has no prompt to fire — it installs from the share sheet,
             // so say how rather than doing nothing.
             window.toast?.('On iPhone: tap Share, then "Add to Home Screen".');
             return;
         }
-        prompt.prompt();
-        const { outcome } = await prompt.userChoice;
+        const pr = prompt;
         prompt = null;
+        window.aneeInstallPrompt = null;
+        pr.prompt();
+        const { outcome } = await pr.userChoice;
         if (outcome === 'accepted') show(false);
     });
 
-    window.addEventListener('appinstalled', () => { prompt = null; show(false); });
+    window.addEventListener('appinstalled', () => { prompt = null; window.aneeInstallPrompt = null; show(false); });
 
     // iOS gets the hint row too, but only where it could actually be used.
     document.addEventListener('DOMContentLoaded', () => {

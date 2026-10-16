@@ -1065,6 +1065,10 @@
          have a view, and never again once they answer. --}}
     @unless ($isEmbed)
     @include('partials.review-prompt', ['askForReview' => \App\Http\Controllers\ReviewController::shouldAsk()])
+    {{-- "Get anee.io on your phone": every now and then until the app is installed, or a day of quiet asked for (2026-10-17, the owner). --}}
+    @auth
+    @include('partials.install-nudge')
+    @endauth
     @endunless
 
     {{-- The tutorial card: one for the app, painted with whichever screen's
