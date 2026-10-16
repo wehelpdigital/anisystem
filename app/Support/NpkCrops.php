@@ -13,7 +13,10 @@ namespace App\Support;
  * treesPerHa), and the recovery the crop's own source assumed. A legume
  * fixes most of its own nitrogen; removalOnly marks a figure that counts
  * only what the harvest carries away, not what the plant needs to grow.
- * NPK Plus shows all of it as a general guide, with its sources.
+ * NPK Plus shows all of it as a general guide, with its sources: since
+ * 2026-10-17 only the ones that are not a government body, a state
+ * university or a research institute (the owner; GovSource). A rerun of the
+ * generator must drop those too.
  */
 final class NpkCrops
 {
@@ -29,14 +32,6 @@ final class NpkCrops
                     'label' => 'IFA World Fertilizer Use Manual, Rice chapter (De Datta 1989, IR36 in the Philippines)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
                 ],
-                [
-                    'label' => 'PhilRice, Reinforcing right E-A-T for improved fertilizer application (Table 1, modified general recommendation)',
-                    'url' => 'https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application',
-                ],
-                [
-                    'label' => 'Sta. Cruz (UPLB), Nutrient management in improving the productivity of lowland rice in the Philippines, SEARCA 2011 slides',
-                    'url' => 'https://www.searca.org/~searca/phocadownload/ADSS_2011/adss-Nutrient%20Management%20in%20Improving%20the%20Productivity%20of%20Lowland%20Rice%20in%20the%20Philippines-2011-jun-28.pdf',
-                ],
             ],
         ],
         'corn_yellow' => [
@@ -45,18 +40,6 @@ final class NpkCrops
             'typicalYield' => ['lo' => 3.09, 'hi' => 3.31, 'unit' => 't/ha grain (all maize types)'],
             'about' => 'Uptake: total uptake, grain plus stover, measured on corn yielding 9.8 t/ha in Cagayan, Isabela, Bukidnon and Misamis Oriental (UPLB); P, K, Ca, Mg converted from elemental form. Rate: Range of Philippine results: DK 9051 at Bagumbayan, Sultan Kudarat 130-30-30 (6.76 t/ha, Region 12 study); Enrile, Cagayan site-specific 145-110-67; IRRI SSNM average recommendation 151-83-95 (Indonesia, Philippines, Vietnam). Farmers\' practice in the same SSNM trials was 167-71-77. Yield: FAOSTAT item \'Maize (corn)\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
-                [
-                    'label' => 'Samonte et al. (UPLB), Soil fertility improvement for sustained high corn yields in major corn growing provinces in the Philippines, ASA-CSSA-SSSA 2011 abstract',
-                    'url' => 'https://scisoc.confex.com/crops/2011am/webprogram/Paper66712.html',
-                ],
-                [
-                    'label' => 'Pampolino (IPNI/IRRI), Site-specific nutrient management for tropical maize, IFA Crossroads 2009 slides',
-                    'url' => 'https://www.fertilizer.org/wp-content/uploads/2023/01/2009_crossroads_pampolino_slides.pdf',
-                ],
-                [
-                    'label' => 'AGRIS, Multi-location nutrient management studies on corn in Region 12 (Central Mindanao)',
-                    'url' => 'https://agris.fao.org/search/fr/records/64724af9e17b74d2224fa102',
-                ],
             ],
         ],
         'corn_sweet' => [
@@ -82,10 +65,6 @@ final class NpkCrops
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
                 ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
-                ],
             ],
         ],
         'mungbean' => [
@@ -96,16 +75,8 @@ final class NpkCrops
             'about' => 'Uptake: total plant uptake of 91.9 N, 12.8 P2O5, 83.6 K2O kg/ha at 0.7 t/ha grain (IFA, Kothari 1984, India); divided by 0.7. Rate: DA: without soil analysis, 3 bags (150 kg) of 14-14-14 per ha on heavy soils, 4 bags (200 kg) on light soils, dry season, basal. Guide also says to apply about 30 to 45 kg per ha each of P and K on P- and K-deficient soils. Mungbean fixes its own N. Yield: FAOSTAT item \'Beans, dry\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'DA HVCDP Mungbean Production Guide',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -123,10 +94,6 @@ final class NpkCrops
                     'label' => 'IPNI / Plant Nutrition Canada, 4R Plant Nutrition Manual, Table 4.1 total nutrient uptake and Table 4.5 nutrient removal (metric)',
                     'url' => 'https://plantnutrition.ca/wp-content/uploads/2022/12/Metric-4_1-4_5-0115.pdf',
                 ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
-                ],
             ],
         ],
         'soybean' => [
@@ -136,10 +103,6 @@ final class NpkCrops
             'legume' => true,
             'about' => 'Uptake: total uptake including stover; mean of two IFA \'total\' rows (N 81/77, P2O5 14/14, K2O 33/39) and IPNI Table 4.1 USA (N 82, P2O5 18, K2O 38). Rate: DA RFO 02 Soybean Production Guide: without soil analysis apply 2 bags of 14-14-14 per ha basal (2 x 50 kg x 14 percent = 14 kg each of N, P2O5, K2O). Inoculate the seed. Yield: FAOSTAT item \'Soya beans\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
-                [
-                    'label' => 'DA RFO 02 Cagayan Valley Soybean Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/soybean281111.pdf',
-                ],
                 [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
@@ -159,16 +122,8 @@ final class NpkCrops
             'about' => 'Uptake: total plant uptake at 13 t/ha (129 N, 21 P2O5, 68 K2O, 17 MgO, 50 CaO kg/ha) from IFA \'Beans\' (French bean, Phaseolus vulgaris); divided by 13. Rate: DA RFO V Bicol sitao guide: without soil analysis 4 bags of 14-14-14 plus 10 bags organic fertilizer per ha at planting (4 x 50 kg x 14 percent). Snap beans in the same guide: N 30 to 50, P 70 to 120, K 30 to 50 kg/ha. Yield: FAOSTAT item \'String beans\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -178,10 +133,6 @@ final class NpkCrops
             'typicalYield' => ['lo' => 5.77, 'hi' => 6.74, 'unit' => 't/ha fresh roots'],
             'about' => 'Uptake: total uptake, leaves plus roots; mean of IFA rows Wenkam 1983 (14 t/ha: N 51.6, P2O5 17.2, K2O 71.0) and Tsuno 1972 (20 t/ha: N 83.6, P2O5 17.4, K2O 130.8); MgO and CaO from the first row only. Rate: DA RFO 02: without soil analysis 6 to 8 sacks of 14-14-14 per ha (42 to 56 kg each of N, P2O5, K2O), all at planting or split. VSU/Leyte trial (Asio et al. 2018): optimum 118-38-90 on a high-P, high-K soil; the paper cites about 120 kg N/ha as the Philippine recommendation and used a 40-40-60 reference rate. Yield: FAOSTAT item \'Sweet potatoes\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
-                [
-                    'label' => 'DA RFO 02 Cagayan Valley Sweet Potato Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/sweet_potato.pdf',
-                ],
                 [
                     'label' => 'Asio et al., Response of a traditional sweetpotato variety to fertilization in Leyte, Philippines (Tropentag 2018)',
                     'url' => 'https://www.tropentag.de/2018/abstracts/full/621.pdf',
@@ -199,14 +150,6 @@ final class NpkCrops
             'about' => 'Uptake: whole-plant uptake (roots plus stems and leaves); mean of three IFA rows at 18, 37 and 45 t/ha (Sittibusaya, Howeler 1985, Amarasiri 1975), each divided by its yield. Rate: National fertilizer recommendation 8 bags of 14-14-14 per ha (8 x 50 kg x 14 percent = 56-56-56; DA RFO 03: 4 bags basal plus 4 bags two months after planting). SSNM/4R prototype 180-70-250 gave 21 percent more root yield than the national rate in Philippine trials. Yield: FAOSTAT item \'Cassava, fresh\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'AGRIS, Towards increasing cassava production in the Philippines through site-specific nutrient management',
-                    'url' => 'https://agris.fao.org/search/fr/records/6473b0c413d110e4e7a990e6',
-                ],
-                [
-                    'label' => 'DA RFO 03 Cassava leaflet',
-                    'url' => 'https://rfo3.da.gov.ph/wp-content/uploads/elibrary/km/Cassava.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
                 ],
@@ -221,10 +164,6 @@ final class NpkCrops
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
                 ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
-                ],
             ],
         ],
         'potato' => [
@@ -233,14 +172,6 @@ final class NpkCrops
             'typicalYield' => ['lo' => 15.45, 'hi' => 16.22, 'unit' => 't/ha tubers'],
             'about' => 'Uptake: total uptake including tops; mean of IPNI Table 4.1 Australia (N 4.9, P2O5 2.1, K2O 12) and IFA Wirsing 1990 whole plant at 30 t/ha (N 150, P2O5 25, K2O 200, MgO 20, CaO 60 kg/ha). Rate: DA RFO 02 White Potato guide: general recommendation 120 N, 240 P2O5, 240 K2O per ha (3 bags 14-14-14 basal, remaining N and K at hilling up, plus 20 bags organic). Benguet State University: 140-140-140 plus 5 t/ha organic fertilizer and boron gave the heaviest marketable yield. Yield: FAOSTAT item \'Potatoes\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
-                [
-                    'label' => 'DA RFO 02 Cagayan Valley White Potato Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/White-Potato-Production-Guide.pdf',
-                ],
-                [
-                    'label' => 'Benguet State University, Balanced Fertilization Strategy for semi-temperate vegetables in the highlands (abstract)',
-                    'url' => 'https://journals.bsu.edu.ph/mjsir/article/view/225',
-                ],
                 [
                     'label' => 'IPNI / Plant Nutrition Canada, 4R Plant Nutrition Manual, Table 4.1 total nutrient uptake and Table 4.5 nutrient removal (metric)',
                     'url' => 'https://plantnutrition.ca/wp-content/uploads/2022/12/Metric-4_1-4_5-0115.pdf',
@@ -258,20 +189,8 @@ final class NpkCrops
             'about' => 'Uptake: total uptake at 43 t/ha (N 126, P2O5 71, K2O 175, MgO 20 kg/ha; IFA \'various sources\', India); divided by 43. The CaO figure in that table (224 kg/ha) looks too high and is left out. Rate: Benguet State University: 90-170-90 plus boron gave the heaviest yield. DA RFO V Bicol: 6 bags 14-14-14 basal plus 3 bags 14-14-14 and 3 bags urea as side dressing (63-63-63 from complete fertilizer plus 69 N from urea = 132-63-63), plus 20 bags compost. Yield: FAOSTAT item \'Carrots and turnips\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'Benguet State University, Balanced Fertilization Strategy for semi-temperate vegetables in the highlands (abstract)',
-                    'url' => 'https://journals.bsu.edu.ph/mjsir/article/view/225',
-                ],
-                [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -280,28 +199,12 @@ final class NpkCrops
             'typicalYield' => ['lo' => 5.38, 'hi' => 7.11, 'unit' => 't/ha fresh rhizome'],
             'about' => 'Rate: DA-CAR technoguide: general requirement 180 kg N, 180 kg P2O5, 255 kg K2O per ha. DA RFO V Bicol: general recommendation 250-100-100 kg, all P and K and part of the N at land preparation, rest of the N at 60, 90 and 120 days. Yield: FAOSTAT item \'Ginger, raw\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
-                [
-                    'label' => 'DA-CAR Technoguide in Production and Management of Ginger (DA HVCDP)',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-GINGER.pdf',
-                ],
-                [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
-                ],
             ],
         ],
         'pechay' => [
             'recommendedPerHa' => ['N' => [85, 85], 'P2O5' => [20, 20]],
             'about' => 'Rate: DA RFO V Bicol pechay and mustard: before transplanting 2 bags 16-20-0 and 2 bags 46-0-0 per ha, plus 1 bag 46-0-0 a few days after transplanting (N 16+46+23 = 85, P2O5 20), with 5 to 10 t/ha organic fertilizer. Grade arithmetic is mine, from 50 kg bags.',
             'sources' => [
-                [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
-                ],
             ],
         ],
         'cabbage' => [
@@ -310,14 +213,6 @@ final class NpkCrops
             'typicalYield' => ['lo' => 15.21, 'hi' => 16.32, 'unit' => 't/ha heads'],
             'about' => 'Uptake: total uptake at 29 t/ha (N 121, P2O5 32, K2O 106, MgO 5, CaO 21 kg/ha; IFA \'various sources\'); divided by 29. Rate: DA RFO 02: 3 bags 14-14-14 at 3 to 5 days after transplanting plus 3 bags urea at 30 days (N 21+69 = 90, P2O5 21, K2O 21; the cost sheet adds 3 bags 0-0-60, giving K2O 111). Benguet State University farmers\' rate and best trial rate 250-100-100 plus 7 t/ha chicken manure. Yield: FAOSTAT item \'Cabbages\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
-                [
-                    'label' => 'DA RFO 02 Cagayan Valley Cabbage Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Cabbage.pdf',
-                ],
-                [
-                    'label' => 'Benguet State University, Balanced Fertilization Strategy for semi-temperate vegetables in the highlands (abstract)',
-                    'url' => 'https://journals.bsu.edu.ph/mjsir/article/view/225',
-                ],
                 [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
@@ -331,16 +226,8 @@ final class NpkCrops
             'about' => 'Uptake: total uptake at 18 t/ha (N 68, P2O5 21, K2O 130, MgO 8, CaO 20 kg/ha; IFA \'various sources\'); divided by 18. Rate: DA RFO 02 lettuce cost sheet: 2 bags 14-14-14, 3 bags 46-0-0 and 2 bags 0-0-60 per ha (per hill: 10 g 14-14-14 basal, then 5 g of a 1:1 urea and potash mix at 15 and 30 days). Yield: FAOSTAT item \'Lettuce and chicory\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'DA RFO 02 Cagayan Valley Lettuce Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Lettuce.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -352,16 +239,8 @@ final class NpkCrops
             'about' => 'Uptake: total uptake at 37 t/ha (N 198, P2O5 66, K2O 295, MgO 21, CaO 186 kg/ha; IFA, Anstett 1961) for CAULIFLOWER; divided by 37. Rate: Benguet State University: 240-60-60 plus 5 t/ha compost and boron gave the heaviest yield and biggest curds; cutting the recommended rate by 25 percent with chicken manure and boron gave comparable yields (the low end here is that 75 percent). Yield: FAOSTAT item \'Cauliflowers and broccoli\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'Benguet State University, Balanced Fertilization Strategy for semi-temperate vegetables in the highlands (abstract)',
-                    'url' => 'https://journals.bsu.edu.ph/mjsir/article/view/225',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -371,10 +250,6 @@ final class NpkCrops
             'typicalYield' => ['lo' => 13.39, 'hi' => 14.97, 'unit' => 't/ha fruit'],
             'about' => 'Uptake: total plant uptake. N, P2O5, K2O from IPNI Table 4.1 (India). CaO, MgO and S from Yara (US) per short ton of fruit: Ca 3.4 lb/t, Mg 0.6 to 1.2 lb/t (mid 0.9), S 1.2 lb/t; lb per short ton x 0.5 = kg per tonne, Ca and Mg then converted to CaO (x1.399) and MgO (x1.658). Rate: From a Philippine study of Ilocos tomato farmers: Northern Foods Corporation recommends 116-40-120 kg NPK/ha for processing tomato and PCAARRD\'s blanket recommendation is 165-95-215. The abstract does not say whether P and K are elemental or oxide; treat as N-P2O5-K2O with that caveat. Farmers used 106-21-68 to 123-57-151. Yield: FAOSTAT item \'Tomatoes\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
-                [
-                    'label' => 'AGRIS, Nutrient management practices of processing-type and table-type tomato farmers in Ilocos Provinces',
-                    'url' => 'https://agris.fao.org/search/ar/records/647473a82d3f560f80ab9468',
-                ],
                 [
                     'label' => 'IPNI / Plant Nutrition Canada, 4R Plant Nutrition Manual, Table 4.1 total nutrient uptake and Table 4.5 nutrient removal (metric)',
                     'url' => 'https://plantnutrition.ca/wp-content/uploads/2022/12/Metric-4_1-4_5-0115.pdf',
@@ -396,20 +271,8 @@ final class NpkCrops
             'about' => 'Uptake: total plant uptake at 40 t/ha (N 207, P2O5 46, K2O 340, S 15 kg/ha; IFA, Paterson 1989); divided by 40. IFA says the S value is an estimate from N:S ratios. Rate: DA RFO V Bicol: 10 sacks of 14-14-14 per ha basal (10 x 50 kg x 14 percent), or 25 g per hill, less if compost is applied. DA RFO 02 gives per-bed-length rates (0.4 kg 16-20-0 plus 0.4 kg ammonium sulfate plus 0.1 kg potash per 10 linear m basal, then urea and potash side dressings) that I could not convert without bed spacing. Yield: FAOSTAT item \'Eggplants (aubergines)\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
-                ],
-                [
-                    'label' => 'DA RFO 02 Cagayan Valley Eggplant Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Eggplant.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -417,14 +280,6 @@ final class NpkCrops
             'recommendedPerHa' => ['N' => [44, 89.3], 'P2O5' => [21, 28], 'K2O' => [21, 88]],
             'about' => 'Rate: DA RFO 02 ampalaya cost sheet: 3 bags 14-14-14 plus 1 bag urea per ha with 20 bags organic fertilizer (N 21+23 = 44, P2O5 21, K2O 21), and a per-hill rate of 20 g 14-14-14 basal plus 10 g urea side dressing, repeated. DA RFO V Bicol: 30 g complete fertilizer per plant basal, then 20 g urea and 15 g potash per plant, repeated every 25 days, at 100 x 150 cm spacing (6,667 plants/ha): basal 28-28-28 plus 61 N and 60 K2O per side dressing. The high end shown is basal plus one side dressing; each repeat adds that much again.',
             'sources' => [
-                [
-                    'label' => 'DA RFO 02 Cagayan Valley Ampalaya Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Ampalaya.pdf',
-                ],
-                [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
-                ],
             ],
         ],
         'squash' => [
@@ -438,14 +293,6 @@ final class NpkCrops
                     'label' => 'Gogoi and Mishra 2015, Evaluation of STCR targeted yield approach on pumpkin, Indian J. Tropical Agriculture 33(2)',
                     'url' => 'https://serialsjournals.com/abstract/52081_248.pdf',
                 ],
-                [
-                    'label' => 'DA RFO 02 Cagayan Valley Squash Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf',
-                ],
-                [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
-                ],
             ],
         ],
         'cucumber' => [
@@ -454,14 +301,6 @@ final class NpkCrops
             'typicalYield' => ['lo' => 6.88, 'hi' => 7.62, 'unit' => 't/ha fruit'],
             'about' => 'Uptake: total uptake at 20 t/ha outdoors (N 39, P2O5 27, K2O 70, MgO 10, CaO 35 kg/ha; IFA \'various sources\'); divided by 20. Rate: DA RFO 02 cost sheet: 2 bags 14-14-14 and 2 bags urea per ha (N 60, P2O5 14, K2O 14). DA RFO V Bicol: 4 bags 14-14-14 basal, then 2 bags urea and 1 bag 0-0-60 at the first side dressing (N 74, P2O5 28, K2O 58). Yield: FAOSTAT item \'Cucumbers and gherkins\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
-                [
-                    'label' => 'DA RFO 02 Cagayan Valley Cucumber Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Cucumber-Production-Guide.pdf',
-                ],
-                [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
-                ],
                 [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
@@ -474,14 +313,6 @@ final class NpkCrops
             'typicalYield' => ['lo' => 7.45, 'hi' => 8, 'unit' => 't/ha pods'],
             'about' => 'Uptake: total plant uptake at 20 t/ha pods (N 200, P2O5 73, K2O 156, MgO 45, CaO 38 kg/ha; IFA). IFA says the vegetative part was assumed (pods 45 percent of dry weight), so this is an estimate. Pods alone: N 79, P2O5 32, K2O 89 kg/ha. Rate: DA RFO V Bicol: 6 to 8 bags of 14-14-14 plus 4 to 6 bags of 46-0-0 per ha without soil analysis. DA RFO 02 is lower: 2 to 3 bags of 14-14-14 plus 20 bags organic fertilizer and 10 g urea per hill at 30 days after planting. Yield: FAOSTAT item \'Okra\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
-                [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
-                ],
-                [
-                    'label' => 'DA RFO 02 Cagayan Valley Okra Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Okra.pdf',
-                ],
                 [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
@@ -496,16 +327,8 @@ final class NpkCrops
             'about' => 'Uptake: PROXY: IFA Capsicum annuum var. grossum (bell pepper), total uptake at 21 t/ha (N 70, P2O5 16, K2O 92, MgO 18, CaO 67 kg/ha); divided by 21. Rate: DA RFO 02 Pepper Production Guide, Table 2: basal 4 bags 14-14-14 plus 4 bags 16-20-0; 10 days after transplanting 2 bags ammonium sulfate; 30 days 2 bags urea and 2 bags 0-0-60; 50 days 2 bags urea and 4 bags 0-0-60 (per ha). Totals computed from 50 kg bags: N 173, P2O5 68, K2O 208. Yield: FAOSTAT item \'Chillies and peppers, green (Capsicum spp. and Pimenta spp.)\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'DA RFO 02 Cagayan Valley Pepper Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Pepper.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -515,14 +338,6 @@ final class NpkCrops
             'typicalYield' => ['lo' => 4.49, 'hi' => 5.18, 'unit' => 't/ha green fruit'],
             'about' => 'Uptake: total uptake at 21 t/ha (N 70, P2O5 16, K2O 92, MgO 18, CaO 67 kg/ha; IFA, Capsicum annuum var. grossum, tropical/subtropical); divided by 21. Rate: DA RFO 02 bell pepper cost sheet: 2 bags 14-14-14, 2 bags urea, 2 bags 0-0-60 per ha (N 60, P2O5 14, K2O 74); the text also says 1 tbsp 14-14-14 per hill equals 5 to 7 bags/ha. Benguet State University: 100-200-100 plus boron gave the heaviest yield. The P2O5 range is wide because the two sources differ. Yield: FAOSTAT item \'Chillies and peppers, green (Capsicum spp. and Pimenta spp.)\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
-                [
-                    'label' => 'DA RFO 02 Cagayan Valley Bell Pepper Production Guide',
-                    'url' => 'https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Bellpepper.pdf',
-                ],
-                [
-                    'label' => 'Benguet State University, Balanced Fertilization Strategy for semi-temperate vegetables in the highlands (abstract)',
-                    'url' => 'https://journals.bsu.edu.ph/mjsir/article/view/225',
-                ],
                 [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
@@ -536,16 +351,8 @@ final class NpkCrops
             'about' => 'Uptake: total uptake at 15 t/ha (N 56, P2O5 16, K2O 100, MgO 25, CaO 98 kg/ha; IFA \'various sources\'); divided by 15. Rate: DA (ATI Region 7 Watermelon Production Guide): 100 to 150 kg of complete fertilizer per ha at planting plus 10 to 15 t/ha manure; nitrogen side dressing if plants yellow. The guide does not give the grade; read as 14-14-14 this is 14 to 21 kg of each nutrient, which is low. Yield: FAOSTAT item \'Watermelons\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'DA ATI-7 Watermelon Production Guide',
-                    'url' => 'https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/Watermelon%20Production%20Guide.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -556,16 +363,8 @@ final class NpkCrops
             'about' => 'Uptake: total uptake at 41 t/ha (N 102, P2O5 41, K2O 112, MgO 17, CaO 29 kg/ha; IFA \'various sources\'); divided by 41. Rate: DA RFO V Bicol: 12 bags of 14-14-14 and 6 bags of 46-0-0 per ha (N 84+138 = 222, P2O5 84, K2O 84), with 20 to 25 t/ha compost. Yield: FAOSTAT item \'Onions and shallots, dry (excluding dehydrated)\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -576,16 +375,8 @@ final class NpkCrops
             'about' => 'Uptake: STCR (soil test crop response) nutrient requirement per quintal of bulb yield in two Indian Inceptisol studies (JISSS 2013 and 2023); regression-derived requirement, not measured uptake. Rate: DA RFO V Bicol: without soil analysis a 1:1 mix of 14-14-14 and urea (5 to 7 bags) or a 2:1 mix (7 to 8 bags), 2 to 3 splits, plus 500 to 1,000 kg/ha organic fertilizer. I read the bag counts as the total of the mix; the original wording is ambiguous. Yield: FAOSTAT item \'Green garlic\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'AGRIS, Response of garlic to integrated nutrient management based on targeted yield concept in Inceptisol (JISSS 2013)',
-                    'url' => 'https://agris.fao.org/search/fr/records/6582f7b0de2dcdb4f6750d9e',
-                ],
-                [
                     'label' => 'JISSS 71(3) 2023, soil test based fertilizer prescriptions for garlic in an Inceptisol of eastern Uttar Pradesh',
                     'url' => 'https://epubs.icar.org.in/index.php/JISSS/article/view/145969',
-                ],
-                [
-                    'label' => 'DA RFO V (Bicol) Guiya sa Gulay 2021, vegetable production guide (bags per hectare), hosted by DA HVCDP',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Guiya-sa-Gulay-2021.pdf',
                 ],
             ],
         ],
@@ -602,10 +393,6 @@ final class NpkCrops
                     'label' => 'IPNI / Plant Nutrition Canada, 4R Plant Nutrition Manual, Table 4.1 total nutrient uptake and Table 4.5 nutrient removal (metric)',
                     'url' => 'https://plantnutrition.ca/wp-content/uploads/2022/12/Metric-4_1-4_5-0115.pdf',
                 ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
-                ],
             ],
         ],
         'pineapple' => [
@@ -617,10 +404,6 @@ final class NpkCrops
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
                 ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
-                ],
             ],
         ],
         'banana' => [
@@ -630,16 +413,8 @@ final class NpkCrops
             'about' => 'Uptake: total net uptake for Cavendish at harvest (IFA): N 4 to 7, P2O5 0.9 to 1.6, K2O 18 to 30, MgO 1.2 to 3.6, CaO 3 to 7.5, S 0.4 to 0.8 kg per t of whole bunches; the values shown are midpoints. Other varieties up to N 10, P2O5 3.5, K2O 60. Rate: DA HVCDP Banana Production Manual: without soil or leaf analysis use 90-30-120 NPK (rule of thumb 2:1:3), monthly applications. The manual does not say whether it is per year or whether P and K are oxides. Yield: FAOSTAT item \'Bananas\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures).',
             'sources' => [
                 [
-                    'label' => 'DA HVCDP Banana Production Manual',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -652,10 +427,6 @@ final class NpkCrops
                 [
                     'label' => 'Cunha and Haag 1980, Mineral nutrition of papaya tree IV: fruit development and nutrient exportation by harvesting (UNESP repository)',
                     'url' => 'https://acervodigital.unesp.br/handle/11449/26713',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -674,10 +445,6 @@ final class NpkCrops
                     'label' => 'NT Government (Australia), Mango nutrition part 2 slides (nutrient removal and efficiency)',
                     'url' => 'https://industry.nt.gov.au/__data/assets/pdf_file/0007/267469/Mango_Nutrit_part2.pdf',
                 ],
-                [
-                    'label' => 'DA HVCDP Giya sa Pagpananum ug Manga (per-tree rates)',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Giya-sa-Pagpananum-ug-Manga-with-cover.pdf',
-                ],
             ],
         ],
         'coconut' => [
@@ -692,14 +459,6 @@ final class NpkCrops
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
                 ],
-                [
-                    'label' => 'AGRIS, Response to integrated soil fertility management of hybrid coconut on an inland soil of South Cotabato (PCA)',
-                    'url' => 'https://agris.fao.org/search/en/records/647226ff77fd37171a72f2d5',
-                ],
-                [
-                    'label' => 'AGRIS, Yield of seven dwarf coconut cultivars under four ammonium sulfate plus potassium chloride levels, Leyte',
-                    'url' => 'https://agris.fao.org/search/en/records/64722afe77fd37171a735b82',
-                ],
             ],
         ],
         'calamansi' => [
@@ -713,14 +472,6 @@ final class NpkCrops
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
                 ],
-                [
-                    'label' => 'DA ATI-4B Calamansi production guide',
-                    'url' => 'https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-12/calamansi_final.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
-                ],
             ],
         ],
         'coffee' => [
@@ -732,16 +483,8 @@ final class NpkCrops
             'about' => 'Uptake: nutrients removed in whole fruit equivalent to 1,000 kg green bean (IFA: Arabica Brazil/Kenya/India, Robusta India/Ivory Coast/Indonesia); mean of six rows (MgO and CaO of four rows). Rate: DA HVCDP coffee guide (Filipino and Cebuano editions): trees not yet bearing, equal NPK plus ammonium sulfate or urea at 250 to 300 g per tree per year; bearing trees (7 years and up) 1 kg of 14-14-14 per tree per year plus 300 g urea per tree per year = 0.14 kg each of N, P2O5, K2O plus 0.138 kg N from urea (0.278 kg N total). Trees per ha computed from the guide\'s spacings: Arabica 3x1 to 3x2 m, Robusta 3x1.5 to 3x3 m, Liberica and Excelsa 4x5 to 5x5.5 m. The non-bearing N, P2O5, K2O split is not given, so only the bearing rate is exact. Yield: FAOSTAT item \'Coffee, green\', Philippines national average yield, range of annual values 2018 to 2024 (FAOSTAT carries PSA-reported figures). The rat',
             'sources' => [
                 [
-                    'label' => 'DA HVCDP Coffee Production Guide',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Coffee-Production-guide.pdf',
-                ],
-                [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -754,14 +497,6 @@ final class NpkCrops
                 [
                     'label' => 'IFA World Fertilizer Use Manual (1992), crop chapters (nutrient demand/uptake/removal tables)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'DA HVCDP Cacao Production Guide',
-                    'url' => 'https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/CACAO-Production-Guide.pdf',
-                ],
-                [
-                    'label' => 'FAOSTAT crops and livestock products, bulk file for Asia (Philippines yield element)',
-                    'url' => 'https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Asia.zip',
                 ],
             ],
         ],
@@ -776,14 +511,6 @@ final class NpkCrops
                     'label' => 'IFA World Fertilizer Use Manual, Rice chapter (De Datta 1989, IR36 in the Philippines)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
                 ],
-                [
-                    'label' => 'PhilRice, Reinforcing right E-A-T for improved fertilizer application (Table 1, modified general recommendation)',
-                    'url' => 'https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application',
-                ],
-                [
-                    'label' => 'Sta. Cruz (UPLB), Nutrient management in improving the productivity of lowland rice in the Philippines, SEARCA 2011 slides',
-                    'url' => 'https://www.searca.org/~searca/phocadownload/ADSS_2011/adss-Nutrient%20Management%20in%20Improving%20the%20Productivity%20of%20Lowland%20Rice%20in%20the%20Philippines-2011-jun-28.pdf',
-                ],
             ],
         ],
         'rice_dsr_dry' => [
@@ -796,14 +523,6 @@ final class NpkCrops
                 [
                     'label' => 'IFA World Fertilizer Use Manual, Rice chapter (De Datta 1989, IR36 in the Philippines)',
                     'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf',
-                ],
-                [
-                    'label' => 'PhilRice, Reinforcing right E-A-T for improved fertilizer application (Table 1, modified general recommendation)',
-                    'url' => 'https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application',
-                ],
-                [
-                    'label' => 'Sta. Cruz (UPLB), Nutrient management in improving the productivity of lowland rice in the Philippines, SEARCA 2011 slides',
-                    'url' => 'https://www.searca.org/~searca/phocadownload/ADSS_2011/adss-Nutrient%20Management%20in%20Improving%20the%20Productivity%20of%20Lowland%20Rice%20in%20the%20Philippines-2011-jun-28.pdf',
                 ],
             ],
         ],

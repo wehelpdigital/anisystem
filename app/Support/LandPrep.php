@@ -256,7 +256,7 @@ class LandPrep
     /** Steps a soil trouble adds, keyed as SoilConditions names them: [from, to, what, how, key]. */
     public const SOIL_STEPS = [
         'acidic' => [
-            [-60, -45, 'Test the soil', 'Take a soil sample to the regional soils laboratory (BSWM) early enough for the result to come back before plowing, or check it with a soil test kit.', 'soil_test'],
+            [-60, -45, 'Test the soil', 'Take a soil sample to the regional soils laboratory early enough for the result to come back before plowing, or check it with a soil test kit.', 'soil_test'],
             [-30, -14, 'Apply lime', 'Spread agricultural lime or dolomite at the rate the test gives and plow or harrow it in, at least two weeks before planting. For flooded rice, lime only strongly acidic soil (around pH below 5): flooding itself raises the pH. Avoid ammonium sulfate on strongly acidic soil.', 'lime'],
         ],
         'saline' => [

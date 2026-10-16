@@ -155,7 +155,7 @@ class LandingPage
                 ['n' => 20, 'title' => 'Yield lost to delayed decisions', 'text' => 'Waiting days for someone else\'s answer, the technician\'s next visit or a reply that never comes, while the problem keeps growing.', 'peso' => '₱12,000 to ₱20,000', 'image' => 'farmer-hijab', 'upload' => ''],
                 ['n' => 20, 'title' => 'Yield lost to planting outside the window', 'text' => 'A season started on habit instead of the climate\'s actual calendar pays for it at harvest.', 'peso' => '₱12,000 to ₱20,000', 'image' => 'hero-planting', 'upload' => ''],
             ],
-            'note' => 'Percentage ranges drawn from FAO crop loss and {cropResearch} research estimates{pesoBasis}. Your farm\'s exact numbers vary, which is the point.',
+            'note' => 'Percentage ranges drawn from published {cropResearch} loss estimates{pesoBasis}. Your farm\'s exact numbers vary, which is the point.',
         ],
         // The answer, in the four words precision agriculture is built on.
         'precision' => [
@@ -355,7 +355,7 @@ class LandingPage
             '{signupWays}' => filled(config('services.google.client_id')) ? 'your email or your Google account' : 'just your email',
             '{libreAnee}' => Region::priceTag(Region::tierPrice('libreAnee', 'month')),
             // The losses band's source note, said for the page's own country.
-            '{cropResearch}' => Region::ph() ? 'Philippine rice' : 'published crop',
+            '{cropResearch}' => Region::ph() ? 'Philippine rice' : 'crop',
             '{pesoBasis}' => Region::ph() ? '; peso ranges assume a typical palay hectare grossing ₱60,000 to ₱100,000' : '',
             '{solo}' => Region::priceTag(Region::tierPrice('solo', 'month')),
             '{tools}' => (string) collect(HowItWorks::stages())->sum(fn ($st) => count($st['items'])),
