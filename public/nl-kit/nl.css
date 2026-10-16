@@ -274,6 +274,17 @@
 .nlk .nlk-b.is-open .nlk-b-form { grid-template-rows: 1fr; }
 .nlk .nlk-b-form > div { overflow: hidden; }
 .nlk .nlk-b-form > div > div { padding: 4px 12px 12px; display: grid; gap: 10px; border-top: 1px dashed var(--line); padding-top: 12px; }
+.nlk .nlk-voice { background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+.nlk .nlk-voice summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center; padding: 10px 12px; }
+.nlk .nlk-voice summary::-webkit-details-marker { display: none; }
+.nlk .nlk-voice summary b { font-size: 13.5px; font-weight: 900; color: var(--g); }
+.nlk .nlk-voice summary small { grid-column: 2; font-size: 12px; color: var(--muted); }
+.nlk .nlk-voice-ic { grid-row: span 2; width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--gold-soft); color: var(--note-ink); }
+.nlk .nlk-voice-ic svg { width: 18px; height: 18px; }
+.nlk .nlk-voice ol { margin: 0; padding: 0 14px 12px 32px; display: grid; gap: 8px; font-size: 12.5px; }
+.nlk .nlk-voice li b { display: block; font-weight: 800; color: var(--ink); }
+.nlk .nlk-voice li em { display: block; font-style: italic; color: var(--muted); margin-top: 2px; }
+.nlk.nlk-portal { position: static; }
 .nlk .nlk-head-card { background: linear-gradient(135deg, #1c2712, #2B3A1C 60%, #44632a); border-radius: 14px; padding: 12px; color: #fff; display: grid; gap: 8px; }
 .nlk .nlk-head-card > b { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--gold); }
 .nlk .nlk-head-card .nlk-in { background: var(--input); }

@@ -226,9 +226,7 @@ img{-ms-interpolation-mode:bicubic;border:0;outline:none;text-decoration:none;}
   .nl-head{padding:22px 20px 20px !important;}
   .nl-h1{font-size:23px !important;}
   .nl-face img{width:58px !important;height:58px !important;}
-  .nl-col{display:block !important;width:100% !important;max-width:100% !important;padding:0 0 18px !important;}
   .nl-img-half{width:100% !important;}
-  .nl-col img{max-width:100% !important;}
 }
 @media only screen and (max-width:480px){
   .nl-btn,.nl-btn tbody,.nl-btn tr,.nl-btn td,.nl-btn a{display:block !important;width:100% !important;box-sizing:border-box;text-align:center !important;}
@@ -418,12 +416,13 @@ HTML;
                     . $this->styleRich($b['html'], true) . '</td></tr></table>';
 
             case 'anee':
-                return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:10px 0 20px;"><tr>'
-                    . '<td width="60" valign="top" style="width:60px;padding:0 12px 0 0;"><img src="' . EmailSkin::face($b['face']) . '" width="56" height="56" alt="Anee" style="display:block;width:56px;height:56px;border-radius:16px;"></td>'
-                    . '<td valign="top"><table role="presentation" class="nl-panel" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="' . $t['panel'] . '" style="background:' . $t['panel'] . ';border:1px solid #d6e6c2;border-radius:4px ' . $rad . 'px ' . $rad . 'px ' . $rad . 'px;border-collapse:separate;">'
-                    . '<tr><td style="padding:12px 16px;' . $text . 'font-size:15px;line-height:1.6;">'
-                    . '<div style="margin:0 0 4px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:' . $t['link'] . ';">Anee</div>'
-                    . $this->styleRich($b['html'], true) . '</td></tr></table></td></tr></table>';
+                // One column (2026-10-16, the owner): her face and name on top, her words under them.
+                return '<table role="presentation" class="nl-panel" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="' . $t['panel'] . '" style="background:' . $t['panel'] . ';border:1px solid #d6e6c2;border-radius:' . $rad . 'px;border-collapse:separate;margin:10px 0 20px;">'
+                    . '<tr><td style="padding:14px 16px 4px;">'
+                    . '<img src="' . EmailSkin::face($b['face']) . '" width="40" height="40" alt="" style="display:inline-block;vertical-align:middle;width:40px;height:40px;border-radius:12px;">'
+                    . '<span style="display:inline-block;vertical-align:middle;margin-left:10px;font-family:' . $font . ';font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:' . $t['link'] . ';">Sabi ni Anee</span>'
+                    . '</td></tr><tr><td style="padding:6px 16px 14px;' . $text . 'font-size:15px;line-height:1.6;">'
+                    . $this->styleRich($b['html'], true) . '</td></tr></table>';
 
             case 'story':
                 $href = $b['url'] !== '' ? e($this->link($b['url'])) : '';
@@ -441,19 +440,18 @@ HTML;
                     . '</td></tr></table>';
 
             case 'pair':
-                $cells = '';
-                foreach ($b['items'] as $i => $it) {
-                    $href = $it['url'] !== '' ? e($this->link($it['url'])) : '';
-                    $pad = $i === 0 ? 'padding:0 10px 0 0;' : 'padding:0 0 0 10px;';
-                    $cells .= '<td class="nl-col" width="50%" valign="top" style="width:50%;' . $pad . '">'
-                        . ($it['src'] !== '' ? ($href ? '<a href="' . $href . '" target="_blank">' : '') . '<img src="' . e($it['src']) . '" width="258" alt="' . e($it['title']) . '" style="display:block;width:100%;max-width:258px;height:auto;border-radius:' . $rad . 'px;margin:0 0 10px;">' . ($href ? '</a>' : '') : '')
-                        . ($it['title'] !== '' ? '<div class="nl-ink" style="' . $text . 'font-size:16px;line-height:1.35;font-weight:800;color:' . $t['header'] . ';margin:0 0 4px;">' . e($it['title']) . '</div>' : '')
-                        . ($it['html'] !== '' ? '<div style="' . $text . 'font-size:14px;line-height:1.55;">' . $this->styleRich($it['html'], true) . '</div>' : '')
-                        . ($href && $it['label'] !== '' ? '<div style="margin-top:6px;"><a href="' . $href . '" target="_blank" style="font-family:' . $font . ';font-size:14px;font-weight:800;color:' . $t['link'] . ';text-decoration:none;">' . e($it['label']) . ' &rarr;</a></div>' : '')
-                        . '</td>';
+                // One column (2026-10-16, the owner: "do not do multi columns in
+                // content"): each story is a full width card, a line between them.
+                $out = '';
+                $items = array_values(array_filter($b['items'], fn ($it) => $it['src'] !== '' || $it['title'] !== '' || $it['html'] !== ''));
+                foreach ($items as $i => $it) {
+                    if ($i > 0) {
+                        $out .= '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:4px 0 20px;"><tr><td class="nl-line" style="border-top:1px solid ' . $t['line'] . ';font-size:0;line-height:0;">&nbsp;</td></tr></table>';
+                    }
+                    $out .= $this->block(['type' => 'story', 'src' => $it['src'], 'title' => $it['title'], 'html' => $it['html'], 'source' => '', 'url' => $it['url'], 'label' => $it['label'] ?: 'Tingnan']);
                 }
 
-                return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:8px 0 20px;"><tr>' . $cells . '</tr></table>';
+                return $out !== '' ? $out : $this->placeholder('Two stories');
 
             case 'quote':
                 return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:8px 0 20px;"><tr>'

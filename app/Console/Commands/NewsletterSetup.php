@@ -19,7 +19,7 @@ use Illuminate\Console\Command;
  */
 class NewsletterSetup extends Command
 {
-    protected $signature = 'newsletter:setup {--fields} {--sync} {--pull} {--import} {--dry} {--demo}';
+    protected $signature = 'newsletter:setup {--fields} {--sync} {--pull} {--import} {--dry} {--demo} {--refresh : with --demo, write the samples again}';
 
     protected $description = 'One-off newsletter jobs: list fields, the first sync, the sequence import, the samples';
 
@@ -64,7 +64,7 @@ class NewsletterSetup extends Command
             }
         }
         if ($this->option('demo')) {
-            $made = Demo::run('Demo');
+            $made = Demo::run('Demo', (bool) $this->option('refresh'));
             $this->info($made ? 'Made: ' . implode(', ', $made) : 'The samples are already there.');
         }
 

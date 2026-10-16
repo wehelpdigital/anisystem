@@ -41,7 +41,7 @@ final class Theme
         'logo' => 'https://anee.io/images/logo-white.png',
         'logoWidth' => 143,
         'tagline' => 'your season, planned with Anee',
-        'signature' => '',                     // under every email's last block, e.g. "John, kasama ni Anee"
+        'signature' => Voice::SIGN_OFF,        // under every email's last block: John signs every email (2026-10-16)
         'footer' => 'You get these emails because you joined anee.io or asked Anee on our site.',
         'facebook' => '',
         'youtube' => '',

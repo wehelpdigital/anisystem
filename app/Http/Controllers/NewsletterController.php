@@ -16,6 +16,7 @@ use App\Support\Newsletter\Renderer;
 use App\Support\Newsletter\Seg;
 use App\Support\Newsletter\SequenceImport;
 use App\Support\Newsletter\Theme;
+use App\Support\Newsletter\Voice;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -133,6 +134,7 @@ class NewsletterController extends Controller
             'themeDefaults' => Theme::DEFAULTS,
             'fonts' => array_map(fn ($f) => $f[0], Theme::FONTS),
             'faces' => Renderer::FACES,
+            'voice' => Voice::forKit(),
             'faceBase' => 'https://anee.io/images/anee/emoji/',
             'segments' => $segs,
             'tabs' => $tabs,

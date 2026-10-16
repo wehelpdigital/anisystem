@@ -17,6 +17,12 @@
 
     let C = {};
     let root = null;
+    /* The builder, the sheets, the menus and the toasts open in a box on the
+       page body, not inside the host page (2026-10-16, the owner: "no back
+       button" in the mother app). Inside it, the mother's fixed header and
+       sidebar sat above the full screen builder and covered its top bar. */
+    let portal = null;
+    let openLayers = 0;
     const S = { boot: null, tab: 'high', scope: 'line', q: '', rows: [], loading: false, seq: 0 };
 
     /* ================================================================ utils */
@@ -52,8 +58,8 @@
     }
 
     function toast(msg, bad) {
-        let box = $('.nlk-toasts');
-        if (!box) { box = el('<div class="nlk-toasts" aria-live="polite"></div>'); root.appendChild(box); }
+        let box = portal.querySelector('.nlk-toasts');
+        if (!box) { box = el('<div class="nlk-toasts" aria-live="polite"></div>'); portal.appendChild(box); }
         const t = el('<div class="nlk-toast' + (bad ? ' is-bad' : '') + '"></div>');
         t.textContent = msg;
         box.appendChild(t);
@@ -114,7 +120,7 @@
         callout: '<path d="M12 9v4M12 17h.01"/><rect x="3" y="4" width="18" height="16" rx="3"/>',
         anee: '<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5s1.3 1.8 3.5 1.8 3.5-1.8 3.5-1.8M9 10h.01M15 10h.01" stroke-width="2.4"/>',
         story: '<rect x="3" y="3" width="18" height="10" rx="2"/><path d="M3 17h18M3 21h12"/>',
-        pair: '<rect x="3" y="4" width="8" height="16" rx="2"/><rect x="13" y="4" width="8" height="16" rx="2"/>',
+        pair: '<rect x="4" y="3" width="16" height="7" rx="2"/><path d="M4 12.5h16"/><rect x="4" y="15" width="16" height="6" rx="2"/>',
         quote: '<path d="M7 7h4v6H5v-2a4 4 0 012-4zM15 7h4v6h-6v-2a4 4 0 012-4zM7 13v4M15 13v4"/>',
         list: '<path d="M9 6h11M9 12h11M9 18h11M4.5 6l1 1 2-2M4.5 12l1 1 2-2M4.5 18l1 1 2-2"/>',
         divider: '<path d="M3 12h18"/><path d="M8 7h8M8 17h8" opacity=".4"/>',
@@ -154,6 +160,12 @@
         if (!/\/$/.test(C.api)) C.api += '/';
         root = target;
         root.classList.add('nlk');
+        portal = document.querySelector('.nlk-portal');
+        if (!portal) {
+            portal = document.createElement('div');
+            portal.className = 'nlk nlk-portal';
+            document.body.appendChild(portal);
+        }
         if (C.framed) root.classList.add('nlk-framed');
         root.innerHTML = shell();
         wireShell();
@@ -419,7 +431,7 @@
             b.addEventListener('click', () => { closeMenu(); it.run(); });
             m.appendChild(b);
         });
-        root.appendChild(m);
+        portal.appendChild(m);
         const r = anchor.getBoundingClientRect();
         const w = 240;
         m.style.top = Math.min(r.bottom + 6, window.innerHeight - m.offsetHeight - 10) + 'px';
@@ -476,9 +488,18 @@
 
     function layer(cls, inner) {
         const L = el('<div class="nlk-layer ' + cls + '">' + inner + '</div>');
-        root.appendChild(L);
+        portal.appendChild(L);
+        // The page under a sheet or the builder stays still.
+        if (openLayers++ === 0) { NLK._overflow = document.body.style.overflow; document.body.style.overflow = 'hidden'; }
         requestAnimationFrame(() => requestAnimationFrame(() => L.classList.add('is-open')));
-        L._close = () => { L.classList.remove('is-open'); setTimeout(() => L.remove(), 300); };
+        let closed = false;
+        L._close = () => {
+            if (closed) return;
+            closed = true;
+            L.classList.remove('is-open');
+            if (--openLayers === 0) document.body.style.overflow = NLK._overflow || '';
+            setTimeout(() => L.remove(), 300);
+        };
         return L;
     }
 
@@ -535,7 +556,7 @@
     }
 
     function onKey(e) {
-        const layers = $$('.nlk-layer.is-open');
+        const layers = portal ? $$('.nlk-layer.is-open', portal) : [];
         const top = layers[layers.length - 1];
         if (e.key === 'Escape' && top) {
             e.preventDefault();
@@ -563,7 +584,7 @@
         callout: { name: 'Callout', make: () => ({ title: 'Tip', html: '<p>Isang bagay na dapat tandaan.</p>', tone: 'gold' }), sum: (b) => b.title || strip(b.html) },
         anee: { name: 'Anee says', make: () => ({ face: 'happy', html: '<p>Nandito lang ako, kasama.</p>' }), sum: (b) => strip(b.html) },
         story: { name: 'Story card', make: () => ({ src: '', title: 'Pamagat ng kwento', html: '<p>Maikling kwento.</p>', source: '', url: '', label: 'Basahin' }), sum: (b) => b.title },
-        pair: { name: 'Two cards', make: () => ({ items: [{ src: '', title: 'Una', html: '', url: '', label: '' }, { src: '', title: 'Pangalawa', html: '', url: '', label: '' }] }), sum: (b) => b.items.map((x) => x.title).filter(Boolean).join(' · ') },
+        pair: { name: 'Two stories', make: () => ({ items: [{ src: '', title: 'Unang kwento', html: '', url: '', label: '' }, { src: '', title: 'Pangalawang kwento', html: '', url: '', label: '' }] }), sum: (b) => b.items.map((x) => x.title).filter(Boolean).join(' · ') },
         quote: { name: 'Quote', make: () => ({ html: 'Ang magaling na magsasaka, nagtatanong muna.', by: '' }), sum: (b) => strip(b.html) },
         list: { name: 'Checklist', make: () => ({ style: 'check', items: ['Unang hakbang', 'Pangalawang hakbang'] }), sum: (b) => b.items.length + ' lines' },
         divider: { name: 'Divider', make: () => ({ style: 'line' }), sum: (b) => b.style },
@@ -693,7 +714,12 @@
                 return;
             }
             const c = E.content;
+            const V = S.boot.voice || { rules: [] };
+            let vOpen = false;
+            try { vOpen = localStorage.getItem('nlk.voice') === '1'; } catch (e) { vOpen = false; }
             pane.innerHTML =
+                '<details class="nlk-voice"' + (vOpen ? ' open' : '') + '><summary><span class="nlk-voice-ic">' + ic('anee') + '</span><b>How ' + h(V.name || 'John') + ' writes</b><small>Every email is his voice</small></summary>' +
+                '<ol>' + V.rules.map((r) => '<li><b>' + h(r.rule) + '</b><em>' + h(r.example).replace(/\n/g, '<br>') + '</em></li>').join('') + '</ol></details>' +
                 '<div class="nlk-head-card" data-headcard><b>The top of the email</b>' +
                 '  <label class="nlk-field"><span>Small line above the title</span><input class="nlk-in" data-h="kicker" value="' + h(c.kicker) + '" placeholder="Bago sa anee.io"></label>' +
                 '  <label class="nlk-field"><span>Title</span><input class="nlk-in" data-h="headline" value="' + h(c.headline) + '" placeholder="Ang malaking balita"></label>' +
@@ -705,6 +731,8 @@
                 '</div></div>' +
                 '<div class="nlk-blocks" data-blocks></div>';
             $$('[data-h]', pane).forEach((i) => i.addEventListener('input', () => { c[i.dataset.h] = i.value; mark(); preview(); }));
+            const vd = $('.nlk-voice', pane);
+            if (vd) vd.addEventListener('toggle', () => { try { localStorage.setItem('nlk.voice', vd.open ? '1' : '0'); } catch (e) { /* private window */ } });
             faces($('[data-hface]', pane), c.face, true, (f) => { c.face = f; mark(); preview(); });
             const heroBox = $('[data-hhero]', pane);
             heroBox.appendChild(imgPicker(c.hero.src, (u) => { c.hero.src = u; mark(); preview(); }));
@@ -849,7 +877,7 @@
                     grid.appendChild(itemsEditor(b, changed));
                 } else if (kind === 'pair') {
                     b.items.forEach((it, i) => {
-                        const w = el('<div class="nlk-box" style="padding:10px;gap:8px"><h4>' + (i ? 'Right card' : 'Left card') + '</h4></div>');
+                        const w = el('<div class="nlk-box" style="padding:10px;gap:8px"><h4>' + (i ? 'Second story (under the first, a line between)' : 'First story') + '</h4></div>');
                         w.appendChild(imgPicker(it.src || '', (u) => { it.src = u; changed(); }));
                         const t = el('<input class="nlk-in" placeholder="Title" value="' + h(it.title || '') + '">');
                         t.addEventListener('input', (e) => { it.title = e.target.value; changed(); });

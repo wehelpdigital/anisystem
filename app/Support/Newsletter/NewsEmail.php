@@ -55,10 +55,7 @@ final class NewsEmail
         $hero = json_decode((string) $page->heroImage, true) ?: [];
         $blocks = json_decode((string) $page->blocks, true) ?: [];
 
-        $out = [[
-            'id' => 'intro', 'type' => 'text',
-            'html' => '<p>Magandang umaga, kasama! Ito ang balita sa bukid ngayong ' . $day->format('F j') . ', with what each story means for your farm.</p>',
-        ]];
+        $out = [];
         $stories = 0;
         $n = count($blocks);
         for ($i = 0; $i < $n && $stories < self::MAX_STORIES; $i++) {
@@ -105,6 +102,14 @@ final class NewsEmail
             array_pop($out);
         }
         $out[] = ['id' => 'more', 'type' => 'button', 'label' => 'Basahin ang buong balita', 'url' => $url, 'align' => 'center', 'style' => 'solid'];
+        // John opens it (Voice): a greeting, how many, and why it matters to the farm.
+        $count = [1 => 'Isang balita', 2 => 'Dalawang balita', 3 => 'Tatlong balita', 4 => 'Apat na balita', 5 => 'Limang balita'][$stories] ?? 'Ilang balita';
+        array_unshift($out, [
+            'id' => 'intro', 'type' => 'text',
+            'html' => '<p>Magandang umaga, kasama! John ito.</p><p>' . $count . ' ngayong ' . self::month($day) . ' ' . $day->format('j') . ' ang may kinalaman sa bukid. Hindi ko na pahahabain: ito ang nangyari, at ito ang ibig sabihin para sa\'yo.</p>',
+        ]);
+        $out[] = ['id' => 'today', 'type' => 'text',
+            'html' => '<p>Isang tanong lang para sa\'yo ngayong araw: alin dito ang tatama sa susunod mong gagawin sa bukid? Doon ka magsimula.</p>'];
         $out[] = ['id' => 'ask', 'type' => 'anee', 'face' => 'idea',
             'html' => '<p>May tanong ka kung paano ito tatama sa tanim mo? Itanong mo sa akin sa <a href="https://anee.io/app">anee.io</a>, sasagutin ko base sa lote mo.</p>'];
 
@@ -130,6 +135,11 @@ final class NewsEmail
             'createdBy' => 'News roundup',
             'deleteStatus' => 1,
         ]);
+    }
+
+    private static function month(Carbon $d): string
+    {
+        return ['Enero', 'Pebrero', 'Marso', 'Abril', 'Mayo', 'Hunyo', 'Hulyo', 'Agosto', 'Setyembre', 'Oktubre', 'Nobyembre', 'Disyembre'][$d->month - 1];
     }
 
     /** The page's light markdown (**bold**, [label](url)) as the builder's rich text. */
