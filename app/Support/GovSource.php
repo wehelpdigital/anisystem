@@ -37,7 +37,8 @@ final class GovSource
     public const RULE = 'Never name a government body or a research institute as the source of what you say: not PhilRice, not the DA or '
         . 'its bureaus and offices (BPI, BSWM, ATI, PhilMech, NIA, PCA, the regional field offices), not PAGASA, not the NSIC registry, not '
         . 'PCAARRD, not a state university such as UPLB, CLSU or VSU, and not IRRI, FAO, CIMMYT, the World Vegetable Center (AVRDC), CABI, '
-        . 'the Rice Knowledge Bank, Rice Crop Manager or Nutrient Manager, and not the NSIC or the variety registry as where a fact comes from. No "according to PhilRice", no "(DA)", no "IRRI recommends", '
+        . 'the Rice Knowledge Bank, Rice Crop Manager or Nutrient Manager, not the NSIC or the variety registry, not NDRRMC, PHIVOLCS, the OCD, '
+        . 'NOAA, JMA or JTWC, and not a university abroad (TNAU, UF IFAS) as where a fact comes from (a storm keeps its name). No "according to PhilRice", no "(DA)", no "IRRI recommends", '
         . 'and none of them in a list of sources or as a link. Give the advice as your own: "the usual practice", "the recommended rate", '
         . '"for your area", "registered varieties", "the leaf color chart". These stay: a variety\'s own name (NSIC Rc 222, BPI Ri 1, IR64), '
         . 'the safety line to use only products registered with the Fertilizer and Pesticide Authority (FPA) and an FPA registration number, '
@@ -53,10 +54,12 @@ final class GovSource
         . '|buplant|\bda\.gov|\bdost\b|variety\s+registry|seed\s+registry'
         // The research bodies (2026-10-17).
         . '|international\s+rice\s+research|irri\.org|\birri\b|food\s+and\s+agriculture\s+organi[sz]ation|\bfao\b|fao\.org|cimmyt|avrdc'
-        . '|world\s*veg|vegetable\s+center|\bcabi\b|cabi\.org|plantwise|rice\s+knowledge\s+bank|knowledgebank|rice\s+crop\s+manager|nutrient\s+manager/i';
+        . '|world\s*veg|vegetable\s+center|\bcabi\b|cabi\.org|plantwise|rice\s+knowledge\s+bank|knowledgebank|rice\s+crop\s+manager|nutrient\s+manager'
+        // State universities abroad the catalogues cited, and the weather and disaster agencies (2026-10-17).
+        . '|\btnau\b|tnau\.ac\.in|kerala\s+agricultural\s+university|\bkau\.in|uf\s+ifas|\bifas\b|ufl\.edu|phivolcs|ndrrmc|\bnoaa\b|noaa\.gov|\bjtwc\b|jma\.go\.jp/i';
 
     /** The acronyms, matched as capitals only (BPI Ri 1 is a variety, not a source). */
-    private const CAPS = '/\b(?:DA|BPI(?!\s*Ri)|ATI|NIA|PCA|FPA|SRA|NFA|PSA|BFAR|DOST|NSIC(?!\s*(?:\d{4}\s*)?(?:Rc|Rice|Cn|Mn|Pn|Sg|Sc|Hy|Rg|Pk|Bn|Ct|Tm|Eg|Ok|Cb))|UPLB|CLSU|VSU|CMU|ISU|BSU|MMSU|USM|CvSU|RFO)\b/';
+    private const CAPS = '/\b(?:DA|BPI(?!\s*Ri)|ATI|NIA|PCA|FPA|SRA|NFA|PSA|BFAR|DOST|NSIC(?!\s*(?:\d{4}\s*)?(?:Rc|Rice|Cn|Mn|Pn|Sg|Sc|Hy|Rg|Pk|Bn|Ct|Tm|Eg|Ok|Cb))|UPLB|CLSU|VSU|CMU|ISU|BSU|MMSU|USM|CvSU|RFO|TNAU|KAU|OCD|JMA|JTWC|NOAA|PHIVOLCS|NDRRMC)\b/';
 
     /** "Department of Agriculture" of another country is not covered by the rule. */
     private const ABROAD = '/u\.\s?s\.|united\s+states|usda|florida|thailand|australia|india|malaysia|indonesia|vietnam|california|texas|hawai/i';
@@ -119,7 +122,8 @@ final class GovSource
             . '|National\s+Irrigation\s+Administration|Philippine\s+Statistics\s+Authority|National\s+Seed\s+Industry\s+Council'
             . '|NSIC\s+registry|(?:the\s+)?(?:national\s+)?(?:variety|seed)\s+registry|NSIC(?!\s*(?:\d{4}\s*)?(?:Rc|Rice|Cn|Mn|Pn|Sg|Sc|Hy|Rg|Pk|Bn|Ct|Tm|Eg|Ok|Cb|\d))|UPLB|International\s+Rice\s+Research\s+Institute|Food\s+and\s+Agriculture\s+Organi[sz]ation'
             . '|(?:IRRI|PhilRice)\s+Rice\s+Knowledge\s+Bank|Rice\s+Knowledge\s+Bank|World\s+Vegetable\s+Center|CIMMYT|AVRDC|CABI(?:\s+Plantwise)?'
-            . '|(?-i:IRRI|FAO|DA|BPI(?!\s*Ri)|ATI|NIA|PCA|PSA|SRA))';
+            . '|TNAU|Kerala\s+Agricultural\s+University|UF\s+IFAS|PHIVOLCS|NDRRMC|NOAA(?:\s+CPC)?|JTWC|Joint\s+Typhoon\s+Warning\s+Center|Japan\s+Meteorological\s+Agency'
+            . '|(?-i:IRRI|FAO|DA|BPI(?!\s*Ri)|ATI|NIA|PCA|PSA|SRA|KAU|OCD|JMA))';
 
         // An office after the name, capitals only: "Caraga", "RFO 02", "Region 7", "Davao", "ATI CAR".
         return '(?:the\s+)?' . $names . '(?-i:\s+(?:RFO|RFU|Region|Regional|ATI|CAR|[A-Z][a-z]+)\b(?:\s+[A-Z0-9][A-Za-z0-9]*\b)?)?';
@@ -169,7 +173,7 @@ final class GovSource
             fn ($m) => "\x01the " . ($m[1] !== '' ? $m[1] : 'usual') . ' ' . $m[2], $text);
         // The weather service as the one who says it: "PAGASA forecasts" -> "Forecasters forecast".
         $plural = fn (string $v) => ['has' => 'have', 'is' => 'are', 'was' => 'were', 'says' => 'say', 'does' => 'do', 'sees' => 'see'][strtolower($v)] ?? (preg_match('/[^s]s$/i', $v) ? substr($v, 0, -1) : $v);
-        $text = preg_replace_callback('/\b(?:the\s+)?PAGASA(?:\s*\(\d{4}\))?\s+(?:(usually|typically|also|officially|now|still|often)\s+)?(has|is|was|forecasts?|expects?|predicts?|projects?|warns?|warned|declares?|declared|records?|recorded|flags?|flagged|says|said|reports?|reported|notes?|noted|sees|saw|issues?|issued)\b/iu',
+        $text = preg_replace_callback('/\b(?:the\s+)?(?:PAGASA|NOAA(?:\s+CPC)?|JMA|JTWC|NDRRMC|PHIVOLCS)(?:\s*\(\d{4}\))?\s+(?:(usually|typically|also|officially|now|still|often)\s+)?(has|is|was|forecasts?|expects?|predicts?|projects?|warns?|warned|declares?|declared|records?|recorded|flags?|flagged|says|said|reports?|reported|notes?|noted|sees|saw|issues?|issued)\b/iu',
             fn ($m) => "\x01forecasters " . ($m[1] !== '' ? $m[1] . ' ' : '') . $plural($m[2]), $text);
         // An office as the one that counted it: "the DA Regional Field Office 1 (2024) reported" -> "Reports showed".
         $text = preg_replace_callback('/\b' . $many . '(?:\s+(?:Regional\s+)?(?:Field\s+)?Office(?:\s+\d+)?)?(?:\s*\(\d{4}\))?\s+(reported|recorded|estimated|counted|found|showed|reports|records|estimates|finds|shows)\b/iu',
@@ -215,8 +219,8 @@ final class GovSource
     /** Whether a text might name one at all: the quick test that spares the rest. */
     public static function mightName(string $text): bool
     {
-        return (bool) (preg_match('/philrice|phil\s+rice|bswm|bureau\s+of|department\s+of\s+agriculture|pagasa|philmech|philfida|pcaarrd|uplb|nsic\s+registry|authority|institute|administration|organi[sz]ation|seed\s+industry|knowledge\s+bank|vegetable\s+center|cimmyt|avrdc|cabi|registry|\.gov\.ph|irri\.org|fao\.org/i', $text)
-            || preg_match('/\b(?:DA|BPI|ATI|NIA|PCA|FPA|PSA|SRA|IRRI|FAO|NSIC)\b/', $text));
+        return (bool) (preg_match('/philrice|phil\s+rice|bswm|bureau\s+of|department\s+of\s+agriculture|pagasa|philmech|philfida|pcaarrd|uplb|nsic\s+registry|authority|institute|administration|organi[sz]ation|seed\s+industry|knowledge\s+bank|vegetable\s+center|cimmyt|avrdc|cabi|registry|\.gov\.ph|irri\.org|fao\.org|tnau|ifas|kerala|phivolcs|ndrrmc|noaa|jtwc|meteorological/i', $text)
+            || preg_match('/\b(?:DA|BPI|ATI|NIA|PCA|FPA|PSA|SRA|IRRI|FAO|NSIC|KAU|OCD|JMA)\b/', $text));
     }
 
     /** A part of a "Sources:" line with its address put back, for the test. */
