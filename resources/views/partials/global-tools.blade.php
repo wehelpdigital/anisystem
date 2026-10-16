@@ -606,6 +606,97 @@
     {{-- Quick Record borrows the shared recorder, so the panel needs it. --}}
     @include('community.partials.video-js')
 
+    {{-- Every tool's "Preview" (2026-10-17, the owner: "a play icon that says preview that when
+         clicked shows a modal with a video how to use each ... clickable even if the module is
+         locked"). The video is the tool's tutorial card (config/tutorials.php; the owner sends the
+         clips one by one, a placeholder plays until then), found by the tile's link through the
+         tutorials' route map. --}}
+    @php
+        $qTut = [];
+        foreach ((array) config('tutorials.routes', []) as $qRoute => $qKey) {
+            if (! \Illuminate\Support\Facades\Route::has($qRoute)) {
+                continue;
+            }
+            $qParams = str_contains($qKey, '{tool}') ? array_keys(\App\Http\Controllers\FieldHelperController::TOOLS) : [null];
+            foreach ($qParams as $qP) {
+                try {
+                    $qTut[parse_url($qP === null ? route($qRoute) : route($qRoute, $qP), PHP_URL_PATH)] = str_replace('{tool}', (string) $qP, $qKey);
+                } catch (\Throwable $e) {
+                    // A route that needs more than it is given (one protocol's editor) has no tile.
+                }
+            }
+        }
+        $qTut += ['#quickCaptureBtn' => 'quick.capture', '#quickRecordBtn' => 'quick.record', '#quickVoiceBtn' => 'quick.voice'];
+        $qTutPages = (array) config('tutorials.pages', []);
+        $qTut = array_filter($qTut, fn ($k) => isset($qTutPages[$k]));
+    @endphp
+    @include('partials.tutorial-offer', ['keys' => array_values(array_unique($qTut)), 'auto' => null])
+    <style>
+        .qa-prev { align-self: flex-start; display: inline-flex; align-items: center; gap: .32rem; margin-top: .42rem; padding: .16rem .62rem .16rem .18rem;
+            border-radius: 999px; font-size: .68rem; font-weight: 800; font-style: normal; letter-spacing: .02em; line-height: 1.4; color: #2d5016; background: #eef6e4;
+            border: 1px solid #d3e6bf; cursor: pointer; -webkit-tap-highlight-color: transparent;
+            transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+        .qa-prev i { display: grid; place-items: center; width: 1.3rem; height: 1.3rem; border-radius: 999px; color: #3b2f00; background: #f5c518;
+            box-shadow: 0 4px 10px -6px rgb(180 140 0 / .9); }
+        .qa-prev svg { width: .62rem; height: .62rem; margin-left: 1px; }
+        .qa-prev:hover { background: #e2efd3; border-color: #bcd9a0; }
+        .qa-prev:active { transform: scale(.96); }
+        .qa-prev:focus-visible { outline: 2px solid #4a7c2a; outline-offset: 2px; }
+        html.dark .qa-prev { color: #cfe6b8; background: #1f2b17; border-color: #34481f; }
+        html.dark .qa-prev:hover { background: #26351c; }
+        /* A locked tile stays dim, its Preview does not: it is the one thing that works there. */
+        .qa-tile .qa-txt.tl-dim { opacity: 1 !important; }
+        .qa-tile .qa-txt.tl-dim > :not(.qa-prev) { opacity: .62; }
+        @media (prefers-reduced-motion: reduce) { .qa-prev { transition: none; } }
+    </style>
+    <script>
+    (() => {
+        const MAP = @json($qTut);
+        const PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
+        const items = () => (window.ANEE_TUTORIALS && window.ANEE_TUTORIALS.items) || {};
+        const keyOf = (t) => {
+            if (t.id && MAP['#' + t.id]) return MAP['#' + t.id];
+            const h = t.getAttribute('href');
+            if (!h) return null;
+            try { return MAP[new URL(h, location.href).pathname] || null; } catch (_) { return null; }
+        };
+        function dress() {
+            document.querySelectorAll('#globalTools .qa-tile').forEach((t) => {
+                if (t.querySelector('.qa-prev')) return;
+                const key = keyOf(t);
+                if (!key || !items()[key]) return;
+                const name = (t.querySelector('.qa-txt b') || {}).textContent || 'this tool';
+                const b = document.createElement('span');
+                b.className = 'qa-prev';
+                b.setAttribute('role', 'button');
+                b.tabIndex = 0;
+                b.dataset.tutPreview = key;
+                b.setAttribute('aria-label', 'Preview: a video on how to use ' + name.trim());
+                b.innerHTML = '<i>' + PLAY + '</i>Preview';
+                (t.querySelector('.qa-txt') || t).appendChild(b);
+            });
+        }
+        /* Caught on the window, before the page's own capture handlers (a locked tile's upgrade
+           sheet, the field helpers' offer) and before the tile's link: Preview only plays. */
+        const hit = (e) => e.target.closest && e.target.closest('[data-tut-preview]');
+        window.addEventListener('click', (e) => {
+            const b = hit(e);
+            if (!b) return;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            window.aneeTutorial && window.aneeTutorial.preview(b.dataset.tutPreview);
+        }, true);
+        window.addEventListener('keydown', (e) => {
+            const b = (e.key === 'Enter' || e.key === ' ') && hit(e);
+            if (!b) return;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            window.aneeTutorial && window.aneeTutorial.preview(b.dataset.tutPreview);
+        }, true);
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', dress, { once: true }); else dress();
+    })();
+    </script>
+
     {{-- Whether the tools panel is open. Kept per farm beside the folds this
          page already remembers, so a worker standing in somebody else's farm
          does not inherit the owner's choice. --}}

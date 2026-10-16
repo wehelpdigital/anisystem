@@ -256,6 +256,8 @@
         transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
             border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .tutv-never:hover, .tutv-never:focus-visible { background: #fbe0dc; border-color: #f0b8b0; color: #9a1d13; transform: translateY(-1px); outline: none; }
+    /* Opened by a tile's Preview: asked for, so there is nothing to stop showing. */
+    .tutv-wrap.is-preview .tutv-never { display: none; }
     .tutv-never:active { transform: translateY(0) scale(.985); }
     @media (min-width: 640px) {
         .tutv-acts { flex-direction: row; align-items: center; justify-content: flex-end; }
@@ -603,7 +605,7 @@
             card.removeEventListener('transitionend', onEnd);
             wrap.hidden = true;
             wrap.setAttribute('aria-hidden', 'true');
-            wrap.classList.remove('is-closing');
+            wrap.classList.remove('is-closing', 'is-preview');
             screen.classList.remove('is-swapping');
             card.style.removeProperty('height');
             card.style.removeProperty('transition');
@@ -649,7 +651,20 @@
         if (e.key === 'Escape' && current !== null) { e.stopPropagation(); close(); }
     }, true);
 
-    window.aneeTutorial = { offer, close, showing: () => current };
+    /* A tile's "Preview" (2026-10-17, the owner: a play icon on every module of the dashboard, even a
+       locked one): the card at once, whatever "never again" or an earlier Close said, with no "never
+       again" of its own, and the clip already playing (the tap is the farmer's own). */
+    function preview(key) {
+        const item = data().items[key];
+        if (!item) return false;
+        offerSeq++;                      // an offer still waiting must not replace it
+        wrap.classList.add('is-preview');
+        show(key);
+        if (!pick(item).youtube) video.play().catch(() => {});
+        return true;
+    }
+
+    window.aneeTutorial = { offer, close, preview, showing: () => current };
 
     /* Pages may have asked before this script ran; answer them now, and
        take the queue over so anything pushed later is answered at once.
