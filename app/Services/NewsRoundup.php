@@ -66,6 +66,9 @@ class NewsRoundup
     /** The days of posted stories the check compares the new ones with (news repeats within days; later it is a new turn). */
     public const POSTED_DAYS = 3;
 
+    /** The title over what a story means for the farmer, on the page, in the app and in the email (2026-10-17, the owner; was "What it means for your farm"). */
+    public const SO_WHAT = 'Anong epekto nito sayo';
+
     /** Stories Anee is given to write from, after the repeats are folded in. */
     public const WRITE_MAX = 30;
 
@@ -768,7 +771,7 @@ class NewsRoundup
                 }
                 $blocks[] = ['type' => 'text', 'text' => $c($s['summary'] ?? '')];
                 if (trim((string) ($s['soWhat'] ?? '')) !== '') {
-                    $blocks[] = ['type' => 'callout', 'tone' => 'tip', 'title' => 'What it means for your farm', 'text' => $c($s['soWhat'])];
+                    $blocks[] = ['type' => 'callout', 'tone' => 'tip', 'title' => self::SO_WHAT, 'text' => $c($s['soWhat'])];
                 }
                 // The same news from several newsrooms (2026-10-16, the owner): each one a small icon to pick.
                 $outlets = self::outlets($item, $also, $pool);

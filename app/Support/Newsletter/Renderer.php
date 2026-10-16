@@ -125,7 +125,8 @@ final class Renderer
                 break;
             case 'story':
                 $o += ['src' => self::url($b['src'] ?? ''), 'title' => self::plain($b['title'] ?? '', 200), 'html' => $rich('html'),
-                    'source' => self::plain($b['source'] ?? '', 120), 'url' => self::url($b['url'] ?? ''), 'label' => self::plain($b['label'] ?? '', 60) ?: 'Basahin'];
+                    'source' => self::plain($b['source'] ?? '', 120), 'url' => self::url($b['url'] ?? ''), 'label' => self::plain($b['label'] ?? '', 60) ?: 'Basahin',
+                    'meansTitle' => self::plain($b['meansTitle'] ?? '', 120), 'means' => $rich('means')];
                 break;
             case 'pair':
                 $items = [];
@@ -444,6 +445,12 @@ HTML;
                     . ($b['source'] !== '' ? '<div class="nl-muted" style="font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:' . $t['muted'] . ';margin:0 0 4px;">' . e($b['source']) . '</div>' : '')
                     . '<div class="nl-ink" style="font-size:19px;line-height:1.3;font-weight:800;color:' . $t['header'] . ';margin:0 0 6px;">' . ($href ? '<a href="' . $href . '" target="_blank" style="color:' . $t['header'] . ';text-decoration:none;">' . e($b['title']) . '</a>' : e($b['title'])) . '</div>'
                     . '<div style="font-size:15px;line-height:1.6;">' . $this->styleRich($b['html'], true) . '</div>'
+                    // What the news means for the farmer, in a light green box of its own (2026-10-17, the owner:
+                    // "to separate it from the news itself").
+                    . (($b['means'] ?? '') !== '' ? '<table role="presentation" class="nl-panel" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="' . $t['panel'] . '" style="background:' . $t['panel'] . ';border:1px solid #d6e6c2;border-radius:' . $rad . 'px;border-collapse:separate;margin:12px 0 4px;">'
+                        . '<tr><td style="padding:14px 16px;' . $text . 'font-size:15px;line-height:1.6;">'
+                        . (($b['meansTitle'] ?? '') !== '' ? '<div class="nl-ink" style="margin:0 0 4px;font-weight:800;font-size:15px;color:' . $t['header'] . ';">' . e($b['meansTitle']) . '</div>' : '')
+                        . $this->styleRich($b['means'], true) . '</td></tr></table>' : '')
                     . ($href ? '<div style="margin-top:8px;"><a href="' . $href . '" target="_blank" style="font-size:14px;font-weight:800;color:' . $t['link'] . ';text-decoration:none;">' . e($b['label']) . ' &rarr;</a></div>' : '')
                     . '</td></tr></table>';
 

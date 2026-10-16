@@ -4,6 +4,7 @@ namespace App\Support\Newsletter;
 
 use App\Models\AsNlEmail;
 use App\Models\AsSiteSetting;
+use App\Services\NewsRoundup;
 use App\Support\EmailSkin;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -116,10 +117,9 @@ final class NewsEmail
                 continue;
             }
             $html = '<p>' . self::md(self::clip($text, 260)) . '</p>';
-            if ($means !== '') {
-                $html .= '<p><b>Para sa bukid mo:</b> ' . self::md(self::clip($means, 300)) . '</p>';
-            }
+            // What it means for the farmer rides in the story's own light green box (2026-10-17, the owner).
             $out[] = ['id' => 'story' . $stories, 'type' => 'story', 'src' => '', 'title' => $title, 'html' => $html,
+                'meansTitle' => $means !== '' ? NewsRoundup::SO_WHAT : '', 'means' => $means !== '' ? '<p>' . self::md(self::clip($means, 300)) . '</p>' : '',
                 'source' => $source, 'url' => $url, 'label' => 'Basahin sa anee.io'];
             $stories++;
             if ($stories < self::MAX_STORIES) {

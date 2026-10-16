@@ -172,6 +172,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'realYields' => method_exists(\App\Http\Controllers\WhatToPlantController::class, 'researchPrompt'),
             // 2026-10-17: the Crop Protocol counts the secondary and micro elements the way NPK Plus does.
             'protoMicros' => method_exists(\App\Support\NpkNeed::class, 'check') && method_exists(\App\Http\Controllers\CropProtocolController::class, 'testsFor'),
+            'newsSoWhat' => defined(\App\Services\NewsRoundup::class . '::SO_WHAT'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.

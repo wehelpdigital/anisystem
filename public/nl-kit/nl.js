@@ -709,7 +709,7 @@
         button: [['text', 'label', 'Words on the button'], ['text', 'url', 'Link', 'https://'], ['seg', 'style', 'Look', [['solid', 'Gold'], ['outline', 'Outline']]], ['seg', 'align', 'Align', ALIGN]],
         callout: [['seg', 'tone', 'Color', [['leaf', 'Green'], ['gold', 'Gold'], ['alert', 'Red']]], ['text', 'title', 'Title'], ['rich', 'html', 'Words']],
         anee: [['face', 'face', 'Her face'], ['rich', 'html', 'What she says']],
-        story: [['img', 'src', 'Picture'], ['text', 'source', 'Small label on top', 'A source or a place'], ['text', 'title', 'Title'], ['rich', 'html', 'Words'], ['text', 'url', 'Link', 'https://'], ['text', 'label', 'Link words']],
+        story: [['img', 'src', 'Picture'], ['text', 'source', 'Small label on top', 'A source or a place'], ['text', 'title', 'Title'], ['rich', 'html', 'Words'], ['text', 'meansTitle', 'Green box title', 'Optional, like Anong epekto nito sayo'], ['rich', 'means', 'Green box words (optional, in a light green box under the words)'], ['text', 'url', 'Link', 'https://'], ['text', 'label', 'Link words']],
         pair: [['pair']],
         quote: [['rich1', 'html', 'The quote'], ['text', 'by', 'Who said it']],
         list: [['seg', 'style', 'Marks', [['check', 'Checks'], ['number', 'Numbers'], ['dot', 'Dots']]], ['items', 'items', 'Lines']],
