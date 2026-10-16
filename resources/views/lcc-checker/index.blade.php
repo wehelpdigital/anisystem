@@ -15,8 +15,13 @@
      season read from the planting month (flippable); then the choice of
      Anee reading photos (credits) or the farmer's own chart (free); then the
      reading, and the answer in a full screen view. Every check is saved and
-     listed under "Your checks", to open again, rename or delete. "How the
-     leaf color chart works" is a five step animated explainer in a sheet.
+     listed on the Saved tab ("Your checks"), to open again, rename or delete.
+     "How the leaf color chart works" is a five step animated explainer in a sheet.
+
+     2026-10-17 (the owner): the chart reading is a gradient bar of the
+     chart's colors for each leaf, its thumb dragged (or the bar tapped) to
+     the nearest panel or half; and the checks moved from under the tool to a
+     Saved tab beside "New check".
 
      The page measures each photo's dark green color index (DGCI) itself and
      joins the photos into one numbered picture for Anee; the rule (more than
@@ -221,42 +226,78 @@
     .lc-why { margin-top: .8rem; padding: .7rem .8rem; border-radius: 1rem; font-size: .82rem; line-height: 1.5; color: var(--color-gray-700); background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
     .lc-why button { margin-top: .4rem; display: inline-flex; font-weight: 800; color: #3d6823; text-decoration: underline; text-underline-offset: 3px; }
 
-    /* ---- step 3: the chart ---- */
-    .lc-strip { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: .15rem; margin-top: .9rem; }
-    .lc-sl { display: flex; flex-direction: column; align-items: center; gap: .15rem; padding: .35rem 0 .3rem; border-radius: .75rem;
-        transition: background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
-    .lc-sl svg { width: 1.15rem; height: 2rem; overflow: visible; }
-    @media (min-width: 640px) { .lc-sl svg { width: 1.5rem; height: 2.6rem; } .lc-sl small { font-size: .74rem; } }
-    .lc-sl .lc-sl-blade { fill: var(--c, transparent); stroke: var(--color-gray-300); stroke-width: 1.6; transition: fill .28s cubic-bezier(.22,1,.36,1), stroke .28s cubic-bezier(.22,1,.36,1); }
-    .lc-sl .lc-sl-rib { fill: none; stroke: var(--color-gray-200); stroke-width: 1; transition: stroke .28s cubic-bezier(.22,1,.36,1); }
-    .lc-sl.is-set .lc-sl-blade { stroke: rgb(0 0 0 / .14); }
-    .lc-sl.is-set .lc-sl-rib { stroke: rgb(255 255 255 / .5); }
-    .lc-sl small { font-size: .66rem; font-weight: 800; color: var(--color-gray-500); font-variant-numeric: tabular-nums; }
-    .lc-sl.is-cur { background: #e4efd4; transform: translateY(-2px); }
-    .lc-sl.is-cur small { color: #2d5016; }
-    .lc-sl.is-low small { color: #b45309; }
-    .lc-sl.is-bump svg { animation: lcBump .42s cubic-bezier(.22,1,.36,1); }
-    .lc-now { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; margin-top: .9rem; font-size: .8rem; color: var(--color-gray-500); }
-    .lc-now b { font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-gray-900); }
-    .lc-pal { display: grid; grid-template-columns: 2fr 1fr 2fr 1fr 2fr 1fr 2fr; gap: .3rem; margin-top: 1.5rem; }
-    .lc-sw { position: relative; height: 4.6rem; border-radius: .95rem; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 900; font-size: 1.3rem;
-        box-shadow: inset 0 0 0 1px rgb(0 0 0 / .07); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
-    .lc-sw.is-half { font-size: .78rem; }
-    .lc-sw:hover { transform: translateY(-2px); }
-    .lc-sw:active { transform: scale(.94); }
-    .lc-sw.is-pick { box-shadow: 0 0 0 3px #f5c518, inset 0 0 0 1px rgb(0 0 0 / .07); }
-    .lc-sw.is-crit::before { content: ''; position: absolute; left: -.22rem; top: -.55rem; bottom: -.3rem; border-left: 2.5px dashed #d97706; }
-    .lc-sw.is-crit::after { content: 'line'; position: absolute; left: -.22rem; top: -1.4rem; transform: translateX(-50%); font-family: var(--font-body, inherit); font-size: .6rem; line-height: 1; font-weight: 900;
-        letter-spacing: .08em; text-transform: uppercase; color: #b45309; }
-    .lc-pal-lab { display: flex; justify-content: space-between; margin-top: .4rem; font-size: .72rem; font-weight: 700; color: var(--color-gray-500); }
+    /* ---- step 3: the chart, a gradient bar for each leaf (2026-10-17, the owner) ----
+       Each bar is the chart's own panels in order, pale to deep green. The thumb
+       snaps to a panel or the half between two, the readings the server takes; it
+       shows the panel's number in the panel's color. One gesture a leaf, nothing
+       moves on by itself. Columns: the leaf, its bar, its clear button. */
+    .lc-rows { --th: 2.75rem; --lw: 2rem; --rw: 2.2rem; --cg: .5rem; --ck: .6667; --e: cubic-bezier(.22,1,.36,1); position: relative; display: grid; gap: .3rem; margin-top: .9rem; }
+    .lc-scale, .lc-row { display: grid; grid-template-columns: var(--lw) minmax(0, 1fr) var(--rw); column-gap: var(--cg); align-items: center; }
+    .lc-scale > span { font-size: .6rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; text-align: center; color: var(--color-gray-400); }
+    .lc-ticks { position: relative; height: 1.5rem; }
+    .lc-ticks b, .lc-ticks i { position: absolute; top: 50%; left: calc(var(--th) / 2 + (100% - var(--th)) * var(--k)); transform: translate(-50%, -50%); }
+    .lc-ticks b { min-width: 1.4rem; padding: .05rem .3rem; border-radius: 999px; text-align: center; font-size: .8rem; font-weight: 900; font-variant-numeric: tabular-nums; color: var(--color-gray-600);
+        transition: color .28s var(--e), background-color .28s var(--e); }
+    .lc-ticks b.is-crit { color: #fff; background: #d97706; }
+    .lc-ticks i { width: .3rem; height: .3rem; border-radius: 999px; background: var(--color-gray-300); }
+    /* The critical panel, one dashed line down through every bar. */
+    .lc-critline { position: absolute; z-index: 1; top: 1.6rem; bottom: 0; width: 0; border-left: 2px dashed #d97706; pointer-events: none;
+        left: calc(var(--lw) + var(--cg) + var(--th) / 2 + (100% - var(--lw) - var(--rw) - 2 * var(--cg) - var(--th)) * var(--ck)); transform: translateX(-1px);
+        transition: left .28s var(--e); }
+    .lc-row { min-height: 3rem; }
+    .lc-rn { width: var(--lw); height: var(--lw); border-radius: 999px; display: grid; place-items: center; font-size: .8rem; font-weight: 900; font-variant-numeric: tabular-nums;
+        color: var(--color-gray-600); background: var(--color-gray-100); transition: background-color .28s var(--e), color .28s var(--e); }
+    .lc-row.is-set .lc-rn { background: #4a7c2a; color: #fff; }
+    .lc-track { position: relative; height: var(--th); border-radius: 999px; cursor: pointer; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+    .lc-track:focus { outline: none; }
+    .lc-track:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    .lc-bar { position: absolute; left: 0; right: 0; top: 50%; height: 1.45rem; border-radius: 999px; transform: translateY(-50%); background: var(--grad, #8db544); box-shadow: inset 0 0 0 1px rgb(0 0 0 / .08); }
+    .lc-bar i { position: absolute; top: 50%; left: calc(var(--th) / 2 + (100% - var(--th)) * var(--k)); width: 2px; height: .45rem; border-radius: 2px; background: rgb(255 255 255 / .55); transform: translate(-50%, -50%); }
+    .lc-bar i.is-full { height: .8rem; }
+    .lc-th { position: absolute; z-index: 2; top: 50%; left: calc(var(--th) / 2 + (100% - var(--th)) * var(--k, .5)); width: var(--th); height: var(--th); margin: calc(var(--th) / -2) 0 0 calc(var(--th) / -2);
+        border-radius: 999px; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 900; font-size: .86rem; font-variant-numeric: tabular-nums;
+        color: var(--t, #fff); background: var(--c, #8db544); border: 3px solid #fff; box-shadow: 0 3px 10px -2px rgb(10 18 6 / .5), 0 0 0 1px rgb(0 0 0 / .12);
+        opacity: 0; transform: scale(.6); pointer-events: none;
+        transition: left .28s var(--e), opacity .28s var(--e), transform .28s var(--e), background-color .28s var(--e), color .28s var(--e), border-color .28s var(--e); }
+    .lc-row.is-set .lc-th { opacity: 1; transform: none; }
+    .lc-row.is-low .lc-th { border-color: #f59e0b; }
+    .lc-row.is-drag .lc-th { transform: scale(1.1); }
+    .lc-row.is-drag .lc-track { cursor: grabbing; }
+    /* Under a finger the thumb is hidden, so a dragged one says its panel above it. */
+    .lc-bub { position: absolute; bottom: calc(100% + .5rem); left: 50%; padding: .25rem .6rem; border-radius: .65rem; white-space: nowrap; font-family: var(--font-body, inherit); font-size: .78rem; font-weight: 800;
+        color: #fff; background: #14210c; box-shadow: 0 8px 18px -10px rgb(10 18 6 / .7); opacity: 0; transform: translate(-50%, 5px); transition: opacity .2s var(--e), transform .28s var(--e); }
+    .lc-bub::after { content: ''; position: absolute; left: 50%; top: 100%; margin-left: -5px; border: 5px solid transparent; border-top-color: #14210c; }
+    .lc-row.is-drag .lc-bub { opacity: 1; transform: translate(-50%, 0); }
+    .lc-rx { width: var(--rw); height: var(--rw); border-radius: 999px; display: grid; place-items: center; color: var(--color-gray-400); visibility: hidden; opacity: 0; transform: scale(.7);
+        transition: opacity .28s var(--e), transform .28s var(--e), background-color .28s var(--e), color .28s var(--e), visibility 0s linear .28s; }
+    .lc-rx svg { width: .95rem; height: .95rem; }
+    .lc-row.is-set .lc-rx { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+    .lc-rx:hover { background: #fef2f2; color: #b91c1c; }
+    .lc-rx:focus-visible { outline: 3px solid #f5c518; outline-offset: 1px; }
+    .lc-pal-lab { display: flex; justify-content: space-between; margin-top: .35rem; padding: 0 calc(var(--rw, 2.2rem) + .5rem) 0 calc(var(--lw, 2rem) + .5rem); font-size: .72rem; font-weight: 700; color: var(--color-gray-500); }
     .lc-crit { margin-top: .7rem; font-size: .78rem; line-height: 1.45; color: var(--color-gray-600); }
     .lc-crit b { color: #b45309; }
     .lc-chart-foot { display: flex; align-items: center; justify-content: space-between; margin-top: .9rem; font-size: .8rem; color: var(--color-gray-500); }
     .lc-chart-foot button { font-weight: 800; color: var(--color-gray-500); padding: .35rem .2rem; }
     .lc-chart-foot button:hover { color: #b91c1c; }
 
-    /* ---- your checks ---- */
-    .lc-checks { margin-top: 1.7rem; }
+    /* ---- New check and Saved: the house tab bar (2026-10-17, the owner: the checks live in a Saved tab) ---- */
+    .lc-tabs { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: .3rem; margin-top: 1rem; border-radius: 1rem; background: var(--color-white); border: 1px solid var(--color-gray-200); }
+    .lc-tab-ind { position: absolute; top: .3rem; bottom: .3rem; left: .3rem; width: calc(50% - .3rem); border-radius: .75rem; background: #4a7c2a; box-shadow: 0 6px 14px -8px rgb(45 80 22 / .8);
+        transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .lc-tabs.is-saved .lc-tab-ind { transform: translateX(100%); }
+    .lc-tab { position: relative; z-index: 1; min-height: 2.6rem; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; border-radius: .75rem; font-weight: 800; font-size: .9rem;
+        color: var(--color-gray-500); transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .lc-tab[aria-selected="true"] { color: #fff; }
+    .lc-tab:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    .lc-tab-n { min-width: 1.35rem; padding: .05rem .4rem; border-radius: 999px; font-size: .7rem; font-weight: 900; font-variant-numeric: tabular-nums; color: #2d5016; background: #e4efd4;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .lc-tab[aria-selected="true"] .lc-tab-n { background: #fff; }
+    .lc-tab-n:empty { display: none; }
+    .lc-pane.is-in { animation: lcInF .28s cubic-bezier(.22,1,.36,1) both; }
+
+    /* ---- your checks, on the Saved tab ---- */
+    .lc-checks { margin-top: 1rem; }
     .lc-checks-h { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; padding: 0 .1rem; }
     .lc-checks-h h3 { font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; color: var(--color-gray-900); }
     .lc-checks-h span { font-size: .78rem; font-weight: 700; color: var(--color-gray-500); }
@@ -297,6 +338,7 @@
     .lc-empty svg { flex: none; width: 2.6rem; height: 2.6rem; }
     .lc-empty b { display: block; color: var(--color-gray-800); }
     .lc-more { display: block; margin: .8rem auto 0; padding: .55rem 1.1rem; border-radius: 999px; font-size: .82rem; font-weight: 800; color: #2d5016; background: #e4efd4; }
+    .lc-empty .lc-more { margin: .6rem 0 0; }
 
     /* ---- the answer, full screen ---- */
     .lc-view { position: fixed; inset: 0; z-index: 90; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; background: var(--color-gray-50);
@@ -611,8 +653,17 @@
     html.dark .lc-tips li::before, html.dark .lv-saved { background: rgb(107 159 61 / .2); color: #b9dc98; }
     html.dark .lc-add { border-color: #3d5a28; }
     html.dark .lc-add:hover { background: #1a2414; }
-    html.dark .lc-sl.is-cur { background: #22301a; }
-    html.dark .lc-sl.is-cur small { color: #b9dc98; }
+    /* The bars keep the chart's true colors at night; only what is around them changes. */
+    html.dark .lc-bar { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); }
+    html.dark .lc-th { border-color: #eef3e8; box-shadow: 0 3px 12px -2px rgb(0 0 0 / .8), 0 0 0 1px rgb(0 0 0 / .4); }
+    html.dark .lc-row.is-low .lc-th { border-color: #f59e0b; }
+    html.dark .lc-bub { color: #14210c; background: #e8efe1; }
+    html.dark .lc-bub::after { border-top-color: #e8efe1; }
+    html.dark .lc-rx:hover { background: rgb(185 28 28 / .2); color: #fca5a5; }
+    html.dark .lc-tabs { background: #151b12; border-color: #2b3a1c; }
+    html.dark .lc-tab-n { background: #2b3a1c; color: #d5e3c5; }
+    html.dark .lc-tab[aria-selected="true"] .lc-tab-n { background: #fff; color: #2d5016; }
+    html.dark .lc-empty .lc-more { background: #2b3a1c; color: #d5e3c5; }
     html.dark .lc-pill.is-due { background: rgb(202 138 4 / .2); color: #fcd34d; }
     html.dark .lc-pill.is-ok { background: rgb(107 159 61 / .2); color: #b9dc98; }
     html.dark .lc-pill.is-early { background: rgb(100 116 139 / .28); color: #cbd5e1; }
@@ -661,13 +712,15 @@
 
     @media (prefers-reduced-motion: reduce) {
         .lc-step.is-on, .lc-age, .lc-season, .lc-shot, .lc-ck.is-new, .lc-view.is-on .lv-in, .lv-bar i, .lv-leaf, .lc-days.is-slide-l, .lc-days.is-slide-r, .lc-d.is-sel,
-        .lc-tag.is-bump .lc-tag-ico, .lc-tag.is-shake, .lc-age-n.is-bump, .lc-sl.is-bump svg, .lx-step.is-on,
+        .lc-tag.is-bump .lc-tag-ico, .lc-tag.is-shake, .lc-age-n.is-bump, .lc-pane.is-in, .lx-step.is-on,
         .lc-sbox, .lc-sheet::backdrop, .lc-sheet.is-closing .lc-sbox, .lc-sheet.is-closing::backdrop, .lv-ftag.is-bump { animation: none !important; }
         .lx-step *, .lx-step.is-on * { animation: none !important; }
         .lv-ftag, .lc-fown { transition: none; }
-        .lc-view, .lc-seg button, .lc-tag, .lc-way, .lc-ck, .lc-sl, .lc-sw, .lc-d, .lc-on, .lc-steps > i::after, .lx-dots button { transition: none; }
+        .lc-view, .lc-seg button, .lc-tag, .lc-way, .lc-ck, .lc-d, .lc-on, .lc-steps > i::after, .lx-dots button { transition: none; }
+        .lc-th, .lc-bub, .lc-rx, .lc-rn, .lc-critline, .lc-ticks b, .lc-tab, .lc-tab-ind, .lc-tab-n { transition: none !important; }
     }
-    html.sm-still .lc-step.is-on, html.sm-still .lc-view.is-on .lv-in, html.sm-still .lx-step *, html.sm-still .lv-bar i, html.sm-still .lv-leaf { animation: none !important; }
+    html.sm-still .lc-step.is-on, html.sm-still .lc-view.is-on .lv-in, html.sm-still .lx-step *, html.sm-still .lv-bar i, html.sm-still .lv-leaf, html.sm-still .lc-pane.is-in { animation: none !important; }
+    html.sm-still .lc-th, html.sm-still .lc-bub, html.sm-still .lc-rx, html.sm-still .lc-critline, html.sm-still .lc-tab-ind { transition: none !important; }
 </style>
 @endpush
 
@@ -684,6 +737,14 @@
         </div>
     </section>
 
+    {{-- New check and Saved, as the other tools split them (2026-10-17, the owner). --}}
+    <div class="lc-tabs" id="lcTabs" role="tablist" aria-label="LCC Checker">
+        <span class="lc-tab-ind" aria-hidden="true"></span>
+        <button type="button" class="lc-tab" id="lcTabNew" role="tab" aria-selected="true" aria-controls="lcPaneNew">New check</button>
+        <button type="button" class="lc-tab" id="lcTabSaved" role="tab" aria-selected="false" aria-controls="lcPaneSaved" tabindex="-1">Saved<span class="lc-tab-n" id="lcTabN"></span></button>
+    </div>
+
+    <div class="lc-pane" id="lcPaneNew" role="tabpanel" aria-labelledby="lcTabNew">
     <div class="lc-steps" id="lcSteps" aria-label="Steps">
         <div class="is-on" data-s="1"><b>1</b><span>Your field</span></div><i></i>
         <div data-s="2"><b>2</b><span>How to read</span></div><i></i>
@@ -762,7 +823,7 @@
                 </button>
                 <button type="button" class="lc-way is-chart" id="lcWayChart">
                     <span class="lc-way-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-9 5-15 14-17-1 9-6 15-14 17zM5 19l7-8"/></svg></span>
-                    <span class="lc-way-t"><b>Use my leaf color chart{{ \App\Support\Tagalog::flag('leaf-color-chart') }}</b><small>Hold your chart to each leaf and tap the panel it matches. The checker does the counting.</small><span class="lc-way-p is-free">Free</span></span>
+                    <span class="lc-way-t"><b>Use my leaf color chart{{ \App\Support\Tagalog::flag('leaf-color-chart') }}</b><small>Hold your chart to each leaf and slide to the color it matches. The checker does the counting.</small><span class="lc-way-p is-free">Free</span></span>
                     <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
             </div>
@@ -790,11 +851,10 @@
         {{-- 3b. The farmer's own chart --}}
         <section class="lc-step" data-step="3b" aria-label="Your leaf color chart">
             <div class="lc-card">
-                <div class="lc-card-h"><h3>Tap the panel each leaf matches{{ \App\Support\Tagalog::flag('lcc-panel') }}</h3><span class="lc-rice is-free">Free</span></div>
-                <p class="lc-sub">Hold the chart against the middle of the leaf, in your shade. Between two panels? Tap the half.</p>
-                <div class="lc-strip" id="lcStrip" role="group" aria-label="Your 10 leaves"></div>
-                <div class="lc-now"><b id="lcLeafOf">Leaf 1</b><span id="lcLeafHint">Tap its panel below</span></div>
-                <div class="lc-pal" id="lcPal" role="group" aria-label="Chart panels"></div>
+                <div class="lc-card-h"><h3>Slide to the panel each leaf matches{{ \App\Support\Tagalog::flag('lcc-panel') }}</h3><span class="lc-rice is-free">Free</span></div>
+                <p class="lc-sub">Hold the chart against the middle of the leaf, in your shade. Then drag that leaf's bar to the nearest color, or tap it there. Between two panels? Stop on the half.</p>
+                {{-- One bar a leaf, built by the script: the chart's colors, a thumb that snaps to the panels. --}}
+                <div class="lc-rows" id="lcRows" role="group" aria-label="Your 10 leaves"></div>
                 <div class="lc-pal-lab"><span>Pale</span><span>Deep green</span></div>
                 <p class="lc-crit" id="lcCrit"></p>
                 <div class="lc-chart-foot"><span id="lcCount">0 of 10 read</span><button type="button" id="lcClear">Clear all</button></div>
@@ -803,13 +863,14 @@
             <button type="button" class="lc-back" data-go="2"><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Choose another way</button>
         </section>
     </div>
+    </div>
 
-    <section class="lc-checks" aria-labelledby="lcChecksTitle">
+    <section class="lc-pane lc-checks" id="lcPaneSaved" role="tabpanel" aria-labelledby="lcTabSaved" hidden>
         <div class="lc-checks-h"><h3 id="lcChecksTitle">Your checks</h3><span id="lcChecksN"></span></div>
         <div class="lc-ck-list" id="lcList"></div>
         <div class="lc-empty" id="lcEmpty" hidden>
             <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 40C10 22 20 10 40 6c-2 18-12 30-30 34z" fill="#8db544"/><path d="M10 40l16-18" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/></svg>
-            <div><b>No checks yet</b>Every check you run is saved here, so you can see your field week by week.</div>
+            <div><b>No checks yet</b>Every check you run is saved here, so you can see your field week by week.<button type="button" class="lc-more" id="lcEmptyGo">Start a check</button></div>
         </div>
         <button type="button" class="lc-more" id="lcMore" hidden>Show more</button>
     </section>
@@ -990,7 +1051,7 @@
     // Area units (the Land Prep Planner's): the farmer's number and unit, hectares worked out.
     const UNITS = { ha: ['Hectares', 'ha', 1, '10,000 square meters'], sqm: ['Square meters', 'm²', 0.0001, 'Like 2,500 for a quarter hectare'], acre: ['Acres', 'ac', 0.40468564, 'About 4,047 square meters'] };
     const st = { step: '1', method: 'tpr', date: null, seasonSet: null, variety: '', varSrc: null, maturity: null, maturityDays: null, area: 1, unit: 'ha',
-        shots: [], chart: Array(10).fill(null), cur: 0 };
+        shots: [], chart: Array(10).fill(null) };
     const KEY = 'lcc-field-v2';
     function remember() {
         try { localStorage.setItem(KEY, JSON.stringify({ method: st.method, date: st.date, seasonSet: st.seasonSet, variety: st.variety, varSrc: st.varSrc, maturity: st.maturity, maturityDays: st.maturityDays, area: st.area, unit: st.unit })); } catch (e) { /* private mode */ }
@@ -1396,52 +1457,143 @@
         }
     });
 
-    /* ---------------- 3b. the chart: one leaf at a time, a tap a leaf ---------------- */
+    /* ---------------- 3b. the chart: a gradient bar for each leaf ----------------
+       The owner (2026-10-17): "a gradient bar and just drag which color is the
+       nearest". Each leaf has its own bar of the chart's colors in order, and its
+       thumb snaps to the nearest of PANELS, halves included, so the readings, the
+       rule and the saved check are the same as the panel taps gave. A drag, a tap
+       on the bar or the arrow keys set a leaf; nothing moves on by itself. */
+    const critOf = () => (st.method === 'dsr' ? 3 : 4);
+    const kOf = (p) => (p - PANELS[0]) / (PANELS[PANELS.length - 1] - PANELS[0]);
+    const XS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    function panelWords(p, crit) {
+        if (p === null) return 'Not read yet';
+        const lo = Math.floor(p);
+        return `Panel ${p}${p % 1 ? `, between panels ${lo} and ${lo + 1}` : ''}${p < crit ? ', below the line' : ''}`;
+    }
     function buildChart() {
-        $('lcStrip').innerHTML = st.chart.map((_, i) => `<button type="button" class="lc-sl" data-leaf="${i}"><svg viewBox="0 0 24 40" aria-hidden="true"><path class="lc-sl-blade" d="M12 2C3.5 12 3.5 28 12 38C20.5 28 20.5 12 12 2Z"/><path class="lc-sl-rib" d="M12 7V34"/></svg><small>${i + 1}</small></button>`).join('');
-        $('lcPal').innerHTML = PANELS.map((p) => `<button type="button" class="lc-sw${p % 1 ? ' is-half' : ''}" data-p="${p}" style="background:${panelBg(p)};color:${panelFg(p)}" aria-label="Panel ${p}">${p}</button>`).join('');
+        const n = PANELS.length - 1;
+        // Each panel's color sits right under the thumb's stop for it; the ends hold the first and last panel.
+        const at = (i) => `calc(var(--th) / 2 + (100% - var(--th)) * ${(i / n).toFixed(4)})`;
+        $('lcRows').style.setProperty('--grad', `linear-gradient(90deg, ${PANELS.map((p, i) => `${panelBg(p)} ${at(i)}`).join(', ')})`);
+        const ticks = PANELS.map((p) => (p % 1 ? `<i style="--k:${kOf(p)}"></i>` : `<b data-p="${p}" style="--k:${kOf(p)}">${p}</b>`)).join('');
+        const marks = PANELS.map((p) => `<i${p % 1 ? '' : ' class="is-full"'} style="--k:${kOf(p)}"></i>`).join('');
+        $('lcRows').innerHTML = `<div class="lc-scale" aria-hidden="true"><span>Leaf</span><div class="lc-ticks">${ticks}</div><span></span></div><span class="lc-critline" aria-hidden="true"></span>`
+            + st.chart.map((_, i) => `<div class="lc-row" data-leaf="${i}"><span class="lc-rn" aria-hidden="true">${i + 1}</span>`
+                + `<div class="lc-track" role="slider" tabindex="0" aria-label="Leaf ${i + 1} color" aria-valuemin="${PANELS[0]}" aria-valuemax="${PANELS[n]}" aria-valuetext="Not read yet">`
+                + `<span class="lc-bar">${marks}</span><span class="lc-th" aria-hidden="true"><span class="lc-num"></span><span class="lc-bub"></span></span></div>`
+                + `<button type="button" class="lc-rx" data-rx="${i}" aria-label="Clear leaf ${i + 1}">${XS}</button></div>`).join('');
     }
     function paintPalette() {
-        const crit = st.method === 'dsr' ? 3 : 4;
-        $('lcPal').querySelectorAll('.lc-sw').forEach((b) => b.classList.toggle('is-crit', Number(b.dataset.p) === crit));
+        const crit = critOf();
+        $('lcRows').style.setProperty('--ck', String(kOf(crit)));
+        $('lcRows').querySelectorAll('.lc-ticks b').forEach((b) => b.classList.toggle('is-crit', Number(b.dataset.p) === crit));
         $('lcCrit').innerHTML = `The <b>dashed line</b> is panel ${crit}${tl('critical-panel')}, the line for ${st.method === 'dsr' ? 'direct seeded' : 'transplanted'} rice. Leaves left of it are pale.`;
     }
-    function paintChartState() {
-        const crit = st.method === 'dsr' ? 3 : 4;
-        $('lcStrip').querySelectorAll('.lc-sl').forEach((b, i) => {
-            const p = st.chart[i];
-            b.classList.toggle('is-cur', i === st.cur);
-            b.classList.toggle('is-set', p !== null);
-            b.classList.toggle('is-low', p !== null && p < crit);
-            b.style.setProperty('--c', p !== null ? panelBg(p) : 'transparent');
-            b.querySelector('small').textContent = p !== null ? p : i + 1;
-            b.setAttribute('aria-label', `Leaf ${i + 1}${p !== null ? `, panel ${p}` : ', not read yet'}`);
-            b.setAttribute('aria-pressed', String(i === st.cur));
-        });
-        const cur = st.chart[st.cur];
-        $('lcPal').querySelectorAll('.lc-sw').forEach((b) => b.classList.toggle('is-pick', cur !== null && Number(b.dataset.p) === cur));
+    function paintRow(i) {
+        const row = $('lcRows').querySelector(`.lc-row[data-leaf="${i}"]`);
+        if (!row) return;
+        const p = st.chart[i], crit = critOf(), tr = row.querySelector('.lc-track'), th = row.querySelector('.lc-th');
+        const was = row.classList.contains('is-set');
+        if (p !== null) {
+            // A leaf read for the first time: its thumb appears where it lands, it does not glide from the last spot.
+            if (!was) th.style.transitionProperty = 'opacity, transform';
+            th.style.setProperty('--k', String(kOf(p)));
+            th.style.setProperty('--c', panelBg(p));
+            th.style.setProperty('--t', panelFg(p));
+            th.querySelector('.lc-num').textContent = p;
+            th.querySelector('.lc-bub').textContent = `Panel ${p}`;
+            tr.setAttribute('aria-valuenow', String(p));
+            if (!was) { void th.offsetWidth; requestAnimationFrame(() => { th.style.transitionProperty = ''; }); }
+        } else tr.removeAttribute('aria-valuenow');
+        row.classList.toggle('is-set', p !== null);
+        row.classList.toggle('is-low', p !== null && p < crit);
+        tr.setAttribute('aria-valuetext', panelWords(p, crit));
+    }
+    function paintCount() {
         const filled = st.chart.filter((p) => p !== null).length;
-        $('lcLeafOf').textContent = `Leaf ${st.cur + 1} of 10`;
-        $('lcLeafHint').textContent = cur !== null ? `Panel ${cur}. Tap another to change it.` : 'Tap its panel below';
         $('lcCount').textContent = `${filled} of 10 read`;
         $('lcCheck').disabled = filled < 3;
         $('lcCheck').textContent = filled < 3 ? `Read at least 3 leaves${filled ? `, ${3 - filled} more` : ''}` : `Check my ${filled} readings`;
     }
-    $('lcStrip').addEventListener('click', (e) => { const b = e.target.closest('[data-leaf]'); if (!b) return; st.cur = Number(b.dataset.leaf); paintChartState(); });
-    $('lcPal').addEventListener('click', (e) => {
-        const b = e.target.closest('[data-p]'); if (!b) return;
-        const i = st.cur;
-        st.chart[i] = Number(b.dataset.p);
-        bump($('lcStrip').children[i], 'is-bump');
-        // On to the next leaf still to read; stay put once all ten are in.
-        for (let k = 1; k <= 10; k++) { const j = (i + k) % 10; if (st.chart[j] === null) { st.cur = j; break; } }
-        paintChartState();
+    function paintChartState() { st.chart.forEach((_, i) => paintRow(i)); paintCount(); }
+    function setLeaf(i, p) {
+        if (st.chart[i] === p) return;
+        st.chart[i] = p;
+        paintRow(i); paintCount();
+    }
+    // The panel nearest a point on a bar: the thumb's stops run from half a thumb in at each end.
+    function valAt(tr, x) {
+        const r = tr.getBoundingClientRect(), w = tr.querySelector('.lc-th').offsetWidth || 44;
+        const k = Math.min(1, Math.max(0, (x - r.left - w / 2) / Math.max(1, r.width - w)));
+        return PANELS[Math.round(k * (PANELS.length - 1))];
+    }
+    // A mouse drags at once. A finger waits to see which way it goes: up or down is the page
+    // scrolling (the bar is touch-action pan-y), sideways is a drag, still is a tap on the bar.
+    let DRAG = null;
+    function dragOn(e) {
+        DRAG.on = true;
+        try { DRAG.tr.setPointerCapture(e.pointerId); } catch (err) { /* the pointer already left */ }
+        DRAG.tr.closest('.lc-row').classList.add('is-drag');
+        setLeaf(DRAG.i, valAt(DRAG.tr, e.clientX));
+    }
+    function dragEnd(e, cancelled) {
+        if (!DRAG || e.pointerId !== DRAG.id) return;
+        const d = DRAG;
+        DRAG = null;
+        if (!d.on) {
+            if (!cancelled && Math.abs(e.clientX - d.x0) < 10 && Math.abs(e.clientY - d.y0) < 10) setLeaf(d.i, valAt(d.tr, e.clientX));
+            return;
+        }
+        d.tr.closest('.lc-row').classList.remove('is-drag');
+        try { d.tr.releasePointerCapture(d.id); } catch (err) { /* already released */ }
+    }
+    $('lcRows').addEventListener('pointerdown', (e) => {
+        const tr = e.target.closest('.lc-track');
+        if (!tr || DRAG || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        DRAG = { i: Number(tr.closest('.lc-row').dataset.leaf), tr, id: e.pointerId, x0: e.clientX, y0: e.clientY, on: false };
+        if (e.pointerType === 'mouse') { e.preventDefault(); tr.focus({ preventScroll: true }); dragOn(e); }
     });
-    $('lcClear').addEventListener('click', () => { st.chart = Array(10).fill(null); st.cur = 0; paintChartState(); });
+    window.addEventListener('pointermove', (e) => {
+        if (!DRAG || e.pointerId !== DRAG.id) return;
+        if (!DRAG.on) {
+            const dx = Math.abs(e.clientX - DRAG.x0), dy = Math.abs(e.clientY - DRAG.y0);
+            if (dy > 10 && dy > dx) { DRAG = null; return; }
+            if (dx > 6 && dx >= dy) dragOn(e);
+            return;
+        }
+        setLeaf(DRAG.i, valAt(DRAG.tr, e.clientX));
+    });
+    window.addEventListener('pointerup', (e) => dragEnd(e, false));
+    window.addEventListener('pointercancel', (e) => dragEnd(e, true));
+    $('lcRows').addEventListener('contextmenu', (e) => { if (e.target.closest('.lc-track')) e.preventDefault(); });
+    // The keys of a slider: arrows a half panel, Page Up and Down a whole one, Home and End the ends, Delete clears.
+    $('lcRows').addEventListener('keydown', (e) => {
+        const tr = e.target.closest('.lc-track');
+        if (!tr) return;
+        const i = Number(tr.closest('.lc-row').dataset.leaf), n = PANELS.length - 1, at = st.chart[i] === null ? -1 : PANELS.indexOf(st.chart[i]);
+        const step = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1, PageUp: 2, PageDown: -2 }[e.key];
+        let to;
+        if (step) to = at < 0 ? 0 : Math.min(n, Math.max(0, at + step));
+        else if (e.key === 'Home') to = 0;
+        else if (e.key === 'End') to = n;
+        else if (e.key === 'Delete' || e.key === 'Backspace') to = null;
+        else return;
+        e.preventDefault();
+        setLeaf(i, to === null ? null : PANELS[to]);
+    });
+    $('lcRows').addEventListener('click', (e) => {
+        const x = e.target.closest('[data-rx]');
+        if (!x) return;
+        const i = Number(x.dataset.rx);
+        setLeaf(i, null);
+        $('lcRows').querySelector(`.lc-row[data-leaf="${i}"] .lc-track`).focus({ preventScroll: true });
+    });
+    $('lcClear').addEventListener('click', () => { st.chart = Array(10).fill(null); paintChartState(); });
     $('lcCheck').addEventListener('click', async () => {
         const btn = $('lcCheck');
         const panels = st.chart.filter((p) => p !== null);
-        if (panels.length < 3) { toast('Tap a panel for at least 3 leaves (10 is best).', 'error'); return; }
+        if (panels.length < 3) { toast('Set the color of at least 3 leaves (10 is best).', 'error'); return; }
         btn.disabled = true;
         const was = btn.textContent;
         btn.textContent = 'Counting…';
@@ -1477,7 +1629,7 @@
         let k = 0;
         const K = () => `style="--k:${k++}"`;
         const out = [];
-        out.push(`<div class="lv-saved lv-in" ${K()}>${I.check}${fresh ? 'Saved to Your checks' : esc(`Checked ${r.at || ''}`)}</div>`);
+        out.push(`<div class="lv-saved lv-in" ${K()}>${I.check}${fresh ? 'Saved in the Saved tab' : esc(`Checked ${r.at || ''}`)}</div>`);
         const sorted = panels.slice().sort((x, y) => x - y);
         const meter = (v === 'due' || v === 'ok') && n ? `<div class="lv-meter"><div class="lv-bar">${sorted.map((x, i) => `<i class="${x < crit ? 'is-low' : ''}" style="--i:${i}"></i>`).join('')}<span class="lv-half"><em>half</em></span></div>
             <div class="lv-meter-t"><span data-tl="critical-panel"><b>${below} of ${n}</b> below panel ${crit}</span>${d.average != null ? `<span>Average panel ${d.average}</span>` : ''}</div></div>` : '';
@@ -1591,8 +1743,9 @@
     $('lcFertList').addEventListener('input', (e) => { if (e.target.closest('.lc-fown-in')) ownLine(); });
     $('lcFertList').addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.closest('.lc-fown-in')) { e.preventDefault(); $('lcOwnUse').click(); } });
     function newCheck() {
-        st.chart = Array(10).fill(null); st.cur = 0; st.shots = [];
+        st.chart = Array(10).fill(null); st.shots = [];
         paintChartState(); paintShots();
+        tab('new');
         go('1');
         const top = $('lcSteps').getBoundingClientRect().top + window.scrollY - 76;
         window.scrollTo({ top: Math.max(0, top), behavior: reduce() ? 'auto' : 'smooth' });
@@ -1603,6 +1756,35 @@
         if (data.history) paintList(data.history, data.hasMore, false);
         openView(item, fresh);
     }
+
+    /* ---------------- New check and Saved: the two tabs ----------------
+       The saved checks live on their own tab, as in the other tools (2026-10-17,
+       the owner). The pane that opens fades in; a saved one still opens full screen. */
+    let TAB = 'new';
+    function tab(which, focus) {
+        const saved = which === 'saved';
+        if (focus) (saved ? $('lcTabSaved') : $('lcTabNew')).focus();
+        if (which === TAB) return;
+        TAB = which;
+        $('lcTabs').classList.toggle('is-saved', saved);
+        [[$('lcTabNew'), !saved], [$('lcTabSaved'), saved]].forEach(([b, on]) => { b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+        const show = saved ? $('lcPaneSaved') : $('lcPaneNew'), hide = saved ? $('lcPaneNew') : $('lcPaneSaved');
+        hide.hidden = true;
+        hide.classList.remove('is-in');
+        show.hidden = false;
+        if (!reduce()) { show.classList.remove('is-in'); void show.offsetWidth; show.classList.add('is-in'); }
+        // Scrolled down past the tabs: jump back to them (a jump, never a glide).
+        const top = $('lcTabs').getBoundingClientRect().top + window.scrollY - 76;
+        if (window.scrollY > top) window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+    }
+    $('lcTabNew').addEventListener('click', () => tab('new'));
+    $('lcTabSaved').addEventListener('click', () => tab('saved'));
+    $('lcTabs').addEventListener('keydown', (e) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+        e.preventDefault();
+        tab(e.key === 'Home' ? 'new' : (e.key === 'End' ? 'saved' : (TAB === 'new' ? 'saved' : 'new')), true);
+    });
+    $('lcEmptyGo').addEventListener('click', () => tab('new'));
 
     /* ---------------- your checks ---------------- */
     const LIST = { rows: [], page: 1, hasMore: false, seen: new Set(), busy: false };
@@ -1637,6 +1819,7 @@
         $('lcEmpty').hidden = LIST.rows.length > 0;
         $('lcMore').hidden = !LIST.hasMore;
         $('lcChecksN').textContent = LIST.rows.length ? `${LIST.rows.length}${LIST.hasMore ? '+' : ''} saved` : '';
+        $('lcTabN').textContent = LIST.rows.length ? `${LIST.rows.length}${LIST.hasMore ? '+' : ''}` : '';
     }
     async function openSaved(id, card) {
         const key = String(id);
@@ -1676,7 +1859,7 @@
         const row = LIST.rows.find((r) => String(r.id) === String(id));
         const anee = (row && row.mode === 'anee') || (VIEW && String(VIEW.item.id) === String(id) && (VIEW.item.report || {}).mode === 'anee');
         const ok = window.confirmAction
-            ? await window.confirmAction({ title: 'Delete this check?', message: 'It leaves Your checks for good.' + (anee ? ' The credits it used are not refunded.' : ''), confirmText: 'Delete' })
+            ? await window.confirmAction({ title: 'Delete this check?', message: 'It leaves your saved checks for good.' + (anee ? ' The credits it used are not refunded.' : ''), confirmText: 'Delete' })
             : confirm('Delete this check?');
         if (!ok) return;
         const card = $('lcList').querySelector(`[data-open="${CSS.escape(String(id))}"]`);
@@ -1953,6 +2136,7 @@
     $('lxNext').addEventListener('click', () => {
         if (LXI < LX.length - 1) { lxGo(LXI + 1); return; }
         sheetClose($('lcHowSheet'));
+        tab('new');
         if (st.step !== '1') go('1');
     });
     $('lxDots').addEventListener('click', (e) => { const b = e.target.closest('[data-x]'); if (b) lxGo(Number(b.dataset.x)); });

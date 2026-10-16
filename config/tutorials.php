@@ -304,7 +304,7 @@ return [
 
         'tool.lcc' => [
             'title' => 'LCC Checker',
-            'blurb' => 'Is it time to add nitrogen to your rice? Tap the color of your leaf color chart, or let Anee read a photo of your leaves.',
+            'blurb' => 'Is it time to add nitrogen to your rice? Slide each leaf to the color it matches on your leaf color chart, or let Anee read a photo of your leaves.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
