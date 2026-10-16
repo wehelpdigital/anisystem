@@ -138,6 +138,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'monthPick' => is_file(resource_path('views/partials/month-pick.blade.php')),
             'vaMonth' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'seasonOfMonth'),
             'soilTests' => method_exists(\App\Support\FieldProfile::class, 'cleanTests'),
+            // The newsletter module (2026-10-17): the code, the kit, and whether the migration ran.
+            'newsletter' => class_exists(\App\Support\Newsletter\Planner::class) && is_file(public_path('nl-kit/nl.js'))
+                && Illuminate\Support\Facades\Schema::hasTable('as_nl_emails'),
             'saltMulti' => ! empty(\App\Support\FieldProfile::QUESTIONS['salt']['multi']),
             'grayWater' => isset(\App\Support\FieldProfile::QUESTIONS['waterLook']['o']['gray']),
             'runReview' => is_file(resource_path('views/partials/run-review.blade.php')),
@@ -581,6 +584,10 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
     Route::post('/orders/{id}/reject', [App\Http\Controllers\Admin\AdminOrdersController::class, 'reject'])->whereNumber('id')->name('admin.orders.reject');
     Route::post('/orders/{id}/revoke', [App\Http\Controllers\Admin\AdminOrdersController::class, 'revoke'])->whereNumber('id')->name('admin.orders.revoke');
     Route::post('/orders/{id}/recheck', [App\Http\Controllers\Admin\AdminOrdersController::class, 'recheck'])->whereNumber('id')->name('admin.orders.recheck');
+    // The newsletter (2026-10-17): the same screen as the mother app's AniSystem > Newsletter.
+    Route::get('/newsletter', [App\Http\Controllers\NewsletterController::class, 'page'])->name('admin.newsletter');
+    Route::match(['get', 'post'], '/newsletter/api/{path}', [App\Http\Controllers\NewsletterController::class, 'admin'])
+        ->where('path', '.*')->name('admin.newsletter.api');
 });
 
 // The farm news roundup's cron address (Latest in Agriculture): key-checked
@@ -597,6 +604,9 @@ Route::post('/mother-api/writer', [App\Http\Controllers\MotherWriterController::
     ->withoutMiddleware([Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])->name('mother.writer.start');
 Route::get('/mother-api/writer/{id}', [App\Http\Controllers\MotherWriterController::class, 'state'])->whereNumber('id')->name('mother.writer.state');
 Route::get('/mother-api/keywords', [App\Http\Controllers\MotherWriterController::class, 'keywords'])->name('mother.keywords');
+// The newsletter module as the mother app shows it: its server calls here with the shared token.
+Route::match(['get', 'post'], '/mother-api/newsletter/{path}', [App\Http\Controllers\NewsletterController::class, 'mother'])
+    ->where('path', '.*')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])->name('mother.newsletter');
 Route::post('/mother-api/orders/{id}/{action}', [App\Http\Controllers\MotherOrdersController::class, 'act'])
     ->whereNumber('id')->where('action', 'approve|reject|revoke|recheck')
     ->withoutMiddleware([Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])

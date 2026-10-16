@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 /**
  * A Try and Ask Anee visitor becomes a lead in two places (2026-10-01):
  *
- *   the Acumbamail list   stamped Plan = "lead" (AcumbamailService::addLead)
+ *   the Acumbamail lists  "all" and "not members yet" (Newsletter\Audience::touchLead)
  *   the mother's CRM      a crm_leads row, source "Ask Anee", aimed at the
  *                         AniSystem store, the farm as custom data
  *
@@ -31,14 +31,9 @@ class AskAneeLeads
     {
         [$first, $last] = $this->split((string) $q->name, (string) $q->email);
         try {
-            $f = config('acumbamail.fields');
-            $listed = app(AcumbamailService::class)->addLead((string) $q->email, [
-                (string) $f['first_name'] => $first,
-                (string) $f['last_name'] => $last,
-            ]);
-            if ($listed) {
-                $q->forceFill(['listedAt' => now()])->save();
-            }
+            // The newsletter's "all" and "not members yet" lists (2026-10-17), synced after the response.
+            \App\Support\Newsletter\Audience::touchLead((string) $q->email, trim($first . ' ' . $last));
+            $q->forceFill(['listedAt' => now()])->save();
         } catch (\Throwable $e) {
             report($e);
         }
@@ -71,11 +66,7 @@ class AskAneeLeads
     {
         [$first, $last] = $this->split($name, $email);
         try {
-            $f = config('acumbamail.fields');
-            app(AcumbamailService::class)->addLead($email, [
-                (string) $f['first_name'] => $first,
-                (string) $f['last_name'] => $last,
-            ]);
+            \App\Support\Newsletter\Audience::touchLead($email, trim($first . ' ' . $last));
         } catch (\Throwable $e) {
             report($e);
         }

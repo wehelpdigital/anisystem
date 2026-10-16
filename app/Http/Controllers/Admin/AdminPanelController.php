@@ -279,6 +279,9 @@ class AdminPanelController extends Controller
             }
         }
 
+        // The newsletter lists follow the plan (Libre, Libre + Anee, Solo Farmer, Farm Owner).
+        \App\Support\Newsletter\Audience::touchUser((int) $u->id);
+
         return response()->json(['success' => true,
             'message' => 'Plan set to ' . (config('tiers.' . $data['tier'] . '.name') ?? $data['tier'])
                 . ($granted ? '. ' . $granted . ' credits given.' : '.'),
@@ -303,12 +306,15 @@ class AdminPanelController extends Controller
             return response()->json(['success' => false, 'message' => 'Another account already uses that email.'], 422);
         }
 
+        $oldEmail = (string) $u->email;
         $u->forceFill([
             'firstName' => trim($data['firstName']),
             'lastName' => trim((string) ($data['lastName'] ?? '')),
             'email' => trim($data['email']),
             'phone' => trim((string) ($data['phone'] ?? '')) ?: null,
         ])->save();
+        // The newsletter lists follow a changed address (and the old one leaves them).
+        \App\Support\Newsletter\Audience::touchUser((int) $u->id, strcasecmp($oldEmail, (string) $u->email) !== 0 ? $oldEmail : null);
 
         return response()->json(['success' => true, 'message' => 'Client updated.', 'data' => $this->clientRow($u->fresh())]);
     }
@@ -528,6 +534,8 @@ class AdminPanelController extends Controller
         ])->save();
 
         Log::warning('Admin ' . Auth::id() . ' deleted client ' . $u->id . ' (' . $u->email . ')');
+        // Off the newsletter lists with the account.
+        \App\Support\Newsletter\Audience::touchUser((int) $u->id);
 
         return response()->json([
             'success' => true,

@@ -217,6 +217,8 @@ class OrderService
         });
 
         $this->tellApproved($done);
+        // The newsletter lists follow what was bought (a plan, the paid list, the credits list).
+        \App\Support\Newsletter\Audience::touchUser((int) $done->userId);
 
         return $done;
     }
@@ -275,6 +277,7 @@ class OrderService
         });
 
         $this->tell($done, 'order_revoked', 'Your purchase was revoked', 'Order ' . $done->orderNumber . ' was revoked.');
+        \App\Support\Newsletter\Audience::touchUser((int) $done->userId);
 
         return $done;
     }

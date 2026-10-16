@@ -283,7 +283,8 @@
             : (request()->routeIs('admin.support') ? 'Support'
             : (request()->routeIs('admin.reports') ? 'Reports'
             : (request()->routeIs('admin.sales') ? 'Sales Analysis'
-            : (request()->routeIs('admin.orders') ? 'Orders' : 'Dashboard'))));
+            : (request()->routeIs('admin.orders') ? 'Orders'
+            : (request()->routeIs('admin.newsletter') ? 'Newsletter' : 'Dashboard')))));
     @endphp
     <header class="ad-top">
         <div class="ad-top-in">
@@ -344,6 +345,10 @@
             <a class="ad-nav-row {{ request()->routeIs('admin.sales') ? 'is-on' : '' }}" href="{{ route('admin.sales') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0v5m0-5h-5"/></svg>
                 <span class="min-w-0"><b>Sales Analysis</b><i>What each peso spent on ads brought in</i></span>
+            </a>
+            <a class="ad-nav-row {{ request()->routeIs('admin.newsletter') ? 'is-on' : '' }}" href="{{ route('admin.newsletter') }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                <span class="min-w-0"><b>Newsletter</b><i>The daily email: priorities, segments and the design</i></span>
             </a>
         </div>
     </div>

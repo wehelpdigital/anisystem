@@ -113,6 +113,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('auto:daily')->dailyAt('05:00')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
         // Global Lots (2026-10-16): the bell asks to check a lot whose answers are six months old.
         $schedule->command('lots:remind')->dailyAt('08:30')->timezone('Asia/Manila')->withoutOverlapping(30)->runInBackground();
+        // The newsletter (2026-10-17): lists kept in step, timed emails at their
+        // hour, and the day's campaigns once, after the send time and the
+        // morning's news roundup (App\Support\Newsletter\Planner).
+        $schedule->command('newsletter:tick')->everyTenMinutes()->withoutOverlapping(30)->runInBackground();
         $schedule->command('fertilizers:fpa-sync')->monthlyOn(3, '04:30')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
         $schedule->command('fertilizers:fpa-sync')->dailyAt('04:45')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground()
             ->when(fn () => \Illuminate\Support\Facades\Schema::hasTable('as_ph_fertilizers') && ! \Illuminate\Support\Facades\DB::table('as_ph_fertilizers')->where('curated', 0)->exists());

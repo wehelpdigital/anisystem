@@ -52,12 +52,16 @@ class NewMemberWelcome
          * Everyone arrives free: paying is a later, separate act, and the
          * upgrade is what should move them out of that segment.
          *
+         * Since 2026-10-17 the newsletter's Audience decides the lists (all
+         * subscribers and Libre here, and off "not members yet" if they
+         * asked Anee before joining); it syncs after the response.
+         *
          * Wrapped like its neighbours. A third party being down is not a
          * reason to refuse somebody the account they just confirmed. */
         try {
-            app(\App\Services\AcumbamailService::class)->addMember($user, 'free');
+            \App\Support\Newsletter\Audience::touchUser((int) $user->id);
         } catch (\Throwable $e) {
-            Log::warning('Acumbamail signup push failed for user '.$user->id.': '.$e->getMessage());
+            Log::warning('Newsletter signup sync failed for user '.$user->id.': '.$e->getMessage());
         }
     }
 }

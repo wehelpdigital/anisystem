@@ -24,6 +24,20 @@ class AcumbamailService
     /** Long enough for a slow third party, short enough not to hold a signup. */
     private const TIMEOUT = 12;
 
+    /** What the last refused or failed call said, for the newsletter's screens. */
+    private ?string $lastError = null;
+
+    public function lastError(): ?string
+    {
+        return $this->lastError;
+    }
+
+    /** The account token alone: the newsletter's lists need no ACUMBAMAIL_LIST_ID. */
+    public function tokenSet(): bool
+    {
+        return config('acumbamail.token') !== '';
+    }
+
     public function configured(): bool
     {
         return config('acumbamail.token') !== '' && (int) config('acumbamail.list_id') > 0;
@@ -197,6 +211,197 @@ class AcumbamailService
         return $this->call('searchSubscriber', ['subscriber' => $email]);
     }
 
+    /* ------------------------------------------------------------------
+     * THE NEWSLETTER'S CALLS (2026-10-17). Its eight lists hold the email
+     * and a name; who belongs on which is App\Support\Newsletter\Audience's
+     * to say, and these only carry it out.
+     * ------------------------------------------------------------------ */
+
+    /** One address onto one list, kept up to date if it is there already. */
+    public function listAdd(int $listId, string $email, string $name = ''): bool
+    {
+        $merge = ['email' => $email];
+        if ($name !== '') {
+            $merge['name'] = $name;
+        }
+
+        return $this->call('addSubscriber', [
+            'list_id' => $listId,
+            'merge_fields' => $merge,
+            'double_optin' => 0,
+            'update_subscriber' => 1,
+            'complete_json' => 1,
+        ]) !== null;
+    }
+
+    /**
+     * Up to a thousand addresses onto one list in one call.
+     *
+     * @param  list<array{email: string, name?: string}>  $rows
+     * @return array<string, string>|null  email => '' when added, or what was wrong
+     */
+    public function listBatchAdd(int $listId, array $rows): ?array
+    {
+        $data = [];
+        foreach (array_slice($rows, 0, 1000) as $r) {
+            $one = ['email' => (string) $r['email']];
+            if (($r['name'] ?? '') !== '') {
+                $one['name'] = (string) $r['name'];
+            }
+            $data[] = $one;
+        }
+        if (! $data) {
+            return [];
+        }
+        $res = $this->call('batchAddSubscribers', [
+            'list_id' => $listId,
+            'update_subscriber' => 1,
+            'subscribers_data' => json_encode($data, JSON_UNESCAPED_UNICODE),
+            'complete_json' => 1,
+        ]);
+        if ($res === null) {
+            return null;
+        }
+        // Each answer row is {email: id} or {email, id} or {email: "what was
+        // wrong"}; anything that is not a number is that address refused.
+        $out = [];
+        foreach ($data as $d) {
+            $out[strtolower($d['email'])] = '';
+        }
+        foreach ((isset($res['result']) && is_array($res['result']) ? $res['result'] : $res) as $row) {
+            if (! is_array($row)) {
+                continue;
+            }
+            $email = strtolower((string) ($row['email'] ?? array_key_first($row) ?? ''));
+            $val = array_key_exists('id', $row) ? $row['id'] : ($row[$email] ?? reset($row));
+            if ($email !== '' && isset($out[$email]) && ! is_numeric($val)) {
+                $out[$email] = is_string($val) ? mb_substr($val, 0, 200) : 'refused';
+            }
+        }
+
+        return $out;
+    }
+
+    /** Off one list altogether (they moved to another plan). */
+    public function listRemove(int $listId, string $email): bool
+    {
+        return $this->call('deleteSubscriber', ['list_id' => $listId, 'email' => $email]) !== null;
+    }
+
+    /** Marked unsubscribed on one list (they asked to stop on another). */
+    public function listUnsubscribe(int $listId, string $email): bool
+    {
+        return $this->call('unsubscribeSubscriber', ['list_id' => $listId, 'email' => $email]) !== null;
+    }
+
+    /**
+     * A list's people in one state: 0 active, 2 unsubscribed, 3 hard bounced,
+     * 4 complained. Ten thousand a block. An empty answer is an empty array,
+     * not a failure ("No subscribers for selected parameters").
+     *
+     * @return array<string, mixed>|null  keyed by email
+     */
+    public function listSubscribers(int $listId, int $status = 0, int $block = 0): ?array
+    {
+        $res = $this->call('getSubscribers', ['list_id' => $listId, 'status' => $status, 'block_index' => $block], true);
+        if ($res === null) {
+            return str_contains((string) $this->lastError, 'No subscribers') ? [] : null;
+        }
+
+        return $res;
+    }
+
+    /** A field on a list (the name the newsletter keeps beside each email). */
+    public function addListField(int $listId, string $name, string $type = 'text'): bool
+    {
+        return $this->call('addMergeTag', ['list_id' => $listId, 'field_name' => $name, 'field_type' => $type]) !== null;
+    }
+
+    /** The account's templates, as Acumbamail lists them (id, name, subject). */
+    public function templates(): ?array
+    {
+        return $this->call('getTemplates', ['complete_json' => 1]);
+    }
+
+    /** A new list (the newsletter's test list), its id or null. */
+    public function createList(string $name, string $senderEmail): ?int
+    {
+        $res = $this->call('createList', [
+            'name' => $name, 'sender_email' => $senderEmail, 'company' => 'anee.io',
+            'country' => 'Philippines', 'city' => 'Manila', 'address' => 'anee.io', 'phone' => '',
+        ]);
+        $id = $res['result'] ?? ($res['id'] ?? ($res['list_id'] ?? null));
+
+        return is_numeric($id) ? (int) $id : null;
+    }
+
+    /**
+     * A campaign of our own HTML to these lists: sent at once, or at
+     * $dateSend (Manila time, "Y-m-d H:i"). Proven 2026-10-17 that the lists
+     * travel as lists[0]=id: a made-up id is refused as "not your active
+     * list" and an empty list as "no receivers".
+     *
+     * @param  list<int>  $listIds
+     * @return array{id: int|null, error: string|null}
+     */
+    public function createCampaign(string $name, string $fromName, string $fromEmail, string $subject, string $html, array $listIds, ?string $dateSend = null): array
+    {
+        $p = [
+            'name' => mb_substr($name, 0, 190),
+            'from_name' => $fromName,
+            'from_email' => $fromEmail,
+            'subject' => $subject,
+            'content' => $html,
+            'lists' => array_values(array_map('intval', $listIds)),
+            'tracking_urls' => 1,
+            'complete_json' => 1,
+        ];
+        if ($dateSend) {
+            $p['date_send'] = $dateSend;
+        }
+
+        return $this->campaignAnswer($this->call('createCampaign', $p, false, 40));
+    }
+
+    /**
+     * The same for a template built in Acumbamail (the sequence written there
+     * before this module): its words never leave Acumbamail.
+     *
+     * @param  list<int>  $listIds
+     * @return array{id: int|null, error: string|null}
+     */
+    public function sendTemplateCampaign(string $name, string $fromName, string $fromEmail, string $subject, int $templateId, array $listIds, ?string $dateSend = null): array
+    {
+        $p = [
+            'name' => mb_substr($name, 0, 190),
+            'from_name' => $fromName,
+            'from_email' => $fromEmail,
+            'subject' => $subject,
+            'template_id' => $templateId,
+            'lists' => array_values(array_map('intval', $listIds)),
+        ];
+        if ($dateSend) {
+            $p['date_send'] = $dateSend;
+        }
+
+        return $this->campaignAnswer($this->call('sendTemplateCampaign', $p, false, 40));
+    }
+
+    /** A campaign call answers with its id (bare or in a dict) or with what was wrong. */
+    private function campaignAnswer(?array $res): array
+    {
+        if ($res === null) {
+            return ['id' => null, 'error' => $this->lastError ?: 'Acumbamail could not be reached.'];
+        }
+        $id = $res['result'] ?? ($res['id'] ?? ($res['campaign_id'] ?? null));
+        if (is_numeric($id)) {
+            return ['id' => (int) $id, 'error' => null];
+        }
+        $this->lastError = mb_substr(is_string($id) ? $id : (string) json_encode($res), 0, 500);
+
+        return ['id' => null, 'error' => $this->lastError];
+    }
+
     /**
      * One road out to them.
      *
@@ -207,9 +412,12 @@ class AcumbamailService
      * Returns the decoded body, or null when the call could not be made or
      * came back refused. Null is the caller's cue to carry on regardless.
      */
-    private function call(string $fn, array $params): ?array
+    private function call(string $fn, array $params, bool $quiet = false, int $timeout = self::TIMEOUT): ?array
     {
+        $this->lastError = null;
         if (config('acumbamail.token') === '') {
+            $this->lastError = 'ACUMBAMAIL_TOKEN is not set.';
+
             return null;
         }
 
@@ -220,15 +428,22 @@ class AcumbamailService
         ], $params);
 
         try {
-            $res = Http::timeout(self::TIMEOUT)->asForm()->post($url, $body);
+            $res = Http::timeout($timeout)->asForm()->post($url, $body);
         } catch (\Throwable $e) {
+            $this->lastError = 'Acumbamail could not be reached: '.$e->getMessage();
             Log::warning('Acumbamail '.$fn.' could not be reached: '.$e->getMessage());
 
             return null;
         }
 
         if (! $res->successful()) {
-            Log::warning('Acumbamail '.$fn.' answered '.$res->status().': '.mb_substr($res->body(), 0, 400));
+            // Their refusals come as {"error": ...} or {"status": "error", "message": ...}.
+            $j = $res->json();
+            $why = is_array($j) ? ($j['message'] ?? $j['error'] ?? null) : null;
+            $this->lastError = mb_substr(is_string($why) ? $why : (is_array($why) ? (string) json_encode($why) : trim($res->body())), 0, 500) ?: 'Acumbamail answered '.$res->status().'.';
+            if (! $quiet) {
+                Log::warning('Acumbamail '.$fn.' answered '.$res->status().': '.mb_substr($res->body(), 0, 400));
+            }
 
             return null;
         }
