@@ -34,4 +34,20 @@ class WorkerGrantState
 
         return $state;
     }
+
+    /**
+     * The state plus who it is about: the season card, the roster person,
+     * the address and whether it opens the whole farm. What the login
+     * controls on both worker pages are handed (Global Workers since
+     * 2026-10-18), so a grant they paint is a grant they can act on.
+     */
+    public static function withLinks(WorkerGrant $grant): array
+    {
+        return self::of($grant) + [
+            'scheduleWorkerId' => $grant->scheduleWorkerId ? (int) $grant->scheduleWorkerId : null,
+            'globalWorkerId' => $grant->globalWorkerId ? (int) $grant->globalWorkerId : null,
+            'email' => (string) $grant->invitedEmail,
+            'farmWide' => $grant->isFarmWide(),
+        ];
+    }
 }

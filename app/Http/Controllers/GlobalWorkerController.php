@@ -6,8 +6,10 @@ use App\Models\AsCroppingSchedule;
 use App\Models\AsGlobalWorker;
 use App\Models\AsScheduleWorker;
 use App\Models\AsScheduleWorkerOffDay;
+use App\Models\WorkerGrant;
 use App\Support\Tier;
 use App\Support\WorkerContext;
+use App\Support\WorkerGrantState;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,10 +41,12 @@ class GlobalWorkerController extends Controller
         return view('workers.global', [
             'skills' => AsScheduleWorker::SKILLS,
             'seasons' => AsCroppingSchedule::active()->where('anisystemUserId', Auth::id())->where('deleteStatus', 1)->orderByDesc('id')->get(['id', 'title', 'cropType', 'status']),
+            // Logins (2026-10-18): the same tier gate the season page asks.
+            'canLogins' => Auth::user()->canWorkerAccounts(),
         ]);
     }
 
-    /** Everyone on the roster, with the seasons each is on. */
+    /** Everyone on the roster, with the seasons each is on, and their login. */
     public function list()
     {
         if ($no = $this->ownerOnly()) {
@@ -53,15 +57,26 @@ class GlobalWorkerController extends Controller
         $cards = AsScheduleWorker::active()->whereIn('globalWorkerId', $rows->pluck('id'))
             ->join('as_cropping_schedules as s', 's.id', '=', 'as_schedule_workers.croppingScheduleId')->where('s.deleteStatus', 1)
             ->get(['as_schedule_workers.id', 'as_schedule_workers.globalWorkerId', 's.id as seasonId', 's.title as seasonTitle'])->groupBy('globalWorkerId');
+        // The logins this owner gave, found for each person the way every
+        // season card finds its own (WorkerGrant::findFor), so the roster and
+        // the seasons always show the same one. Only for a plan with logins,
+        // as on the season page.
+        $grants = Auth::user()->canWorkerAccounts() ? WorkerGrant::active()->where('bossUserId', $me)->get() : collect();
 
-        return response()->json(['success' => true, 'data' => $rows->map(fn ($g) => $this->row($g, $cards->get($g->id, collect())))->values()]);
+        return response()->json(['success' => true, 'data' => $rows->map(function ($g) use ($cards, $grants) {
+            $mine = $cards->get($g->id, collect());
+            $grant = $grants->isEmpty() ? null : WorkerGrant::findFor($grants, (int) $g->id, $mine->pluck('id')->all(), $g->email);
+
+            return $this->row($g, $mine, $grant);
+        })->values()]);
     }
 
-    private function row(AsGlobalWorker $g, $cards): array
+    private function row(AsGlobalWorker $g, $cards, ?WorkerGrant $grant = null): array
     {
         return ['id' => (int) $g->id, 'workerName' => $g->workerName, 'email' => $g->email, 'phone' => $g->phone, 'costPerHalfDay' => (float) $g->costPerHalfDay,
             'skills' => $g->skills ?: [], 'offWeekdays' => $g->offWeekdays ?: [], 'notes' => $g->notes,
-            'seasons' => collect($cards)->map(fn ($c) => ['id' => (int) $c->seasonId, 'title' => $c->seasonTitle, 'cardId' => (int) $c->id])->values()->all()];
+            'seasons' => collect($cards)->map(fn ($c) => ['id' => (int) $c->seasonId, 'title' => $c->seasonTitle, 'cardId' => (int) $c->id])->values()->all(),
+            'login' => $grant ? WorkerGrantState::withLinks($grant) : null];
     }
 
     private function validated(Request $request)

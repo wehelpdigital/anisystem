@@ -33,7 +33,7 @@ class WorkerGrant extends BaseModel
     ];
 
     protected $fillable = [
-        'bossUserId', 'workerUserId', 'scheduleWorkerId', 'invitedEmail',
+        'bossUserId', 'workerUserId', 'scheduleWorkerId', 'globalWorkerId', 'invitedEmail',
         'inviteToken', 'scheduleAccess', 'canAddNotes', 'communityAccess', 'status',
         'notesAccess', 'reportsAccess', 'inventoryAccess', 'mapsAccess', 'drawAccess', 'aiAccess',
         'cameraAccess', 'videoAccess', 'voiceAccess',
@@ -64,6 +64,45 @@ class WorkerGrant extends BaseModel
     public function scopeActive($q)
     {
         return $q->where('as_worker_grants.deleteStatus', 1);
+    }
+
+    /**
+     * The one grant that is this person, out of a boss's grants.
+     *
+     * Asked by the farm's roster (Global Workers) and by every season's
+     * Workers page, in the same order, so both pages always point at the
+     * same grant: the roster person it names (globalWorkerId), else one of
+     * their season cards (scheduleWorkerId), else the address it was sent to.
+     * A season card passes its own id and its roster person; the roster
+     * passes the person and all of their cards.
+     *
+     * @param  \Illuminate\Support\Collection<int, self>  $grants
+     * @param  array<int, int>  $cardIds
+     */
+    public static function findFor($grants, ?int $globalWorkerId, array $cardIds, ?string $email): ?self
+    {
+        if ($globalWorkerId) {
+            $g = $grants->first(fn ($x) => (int) $x->globalWorkerId === $globalWorkerId);
+            if ($g) {
+                return $g;
+            }
+        }
+        $cardIds = array_map('intval', array_filter($cardIds));
+        if ($cardIds) {
+            $g = $grants->first(fn ($x) => $x->scheduleWorkerId && in_array((int) $x->scheduleWorkerId, $cardIds, true));
+            if ($g) {
+                return $g;
+            }
+        }
+        $email = mb_strtolower(trim((string) $email));
+
+        return $email === '' ? null : $grants->first(fn ($x) => mb_strtolower((string) $x->invitedEmail) === $email);
+    }
+
+    /** A grant that names neither a season card nor a roster person: it was made farm wide. */
+    public function isFarmWide(): bool
+    {
+        return blank($this->scheduleWorkerId) && blank($this->globalWorkerId);
     }
 
     public function canEditSchedules(): bool

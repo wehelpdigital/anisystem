@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
+use App\Models\AsCroppingSchedule;
+use App\Models\AsGlobalWorker;
 use App\Models\AsScheduleWorker;
 use App\Models\User;
 use App\Models\WorkerGrant;
@@ -18,6 +20,10 @@ use Illuminate\Support\Str;
  * Boss-side management of worker logins (#25). A manager on the Boss/Lifetime
  * tier can give a worker a login, choose whether they get schedule view/edit
  * and community access, and (re)send the emailed set-password invite.
+ *
+ * Two pages call these: a season's Workers page (by the season card) and the
+ * farm's roster, Global Workers (by the roster person, 2026-10-18). One grant
+ * per person either way; see linkFor() and WorkerGrant::findFor().
  */
 class WorkerAccessController extends Controller
 {
@@ -49,6 +55,7 @@ class WorkerAccessController extends Controller
 
         $validator = Validator::make($request->all(), [
             'scheduleWorkerId' => 'nullable|integer',
+            'globalWorkerId'   => 'nullable|integer',
             'email'            => 'required|email|max:191',
             'scheduleAccess'   => 'required|in:view,edit',
             'communityAccess'  => 'nullable|boolean',
@@ -67,6 +74,9 @@ class WorkerAccessController extends Controller
         }
 
         $email = mb_strtolower(trim($request->input('email')));
+        if ($no = $this->refuseOwnEmail($boss, $email)) {
+            return $no;
+        }
 
         // One grant per (boss, email). Reuse an existing row so re-granting just
         // updates the permissions and refreshes the invite.
@@ -75,13 +85,19 @@ class WorkerAccessController extends Controller
             ->where('invitedEmail', $email)
             ->first() ?? new WorkerGrant(['bossUserId' => $boss->id, 'invitedEmail' => $email]);
 
+        $link = $this->linkFor($request, $boss, $grant);
+        if ($link instanceof \Illuminate\Http\JsonResponse) {
+            return $link;
+        }
+
         // Link an existing user if this email already has an account.
         $existing = User::where('deleteStatus', 1)->whereRaw('LOWER(email) = ?', [$email])->first();
 
         $grant->fill([
             'bossUserId'       => $boss->id,
             'invitedEmail'     => $email,
-            'scheduleWorkerId' => $request->input('scheduleWorkerId'),
+            'scheduleWorkerId' => $link[0],
+            'globalWorkerId'   => $link[1],
             'scheduleAccess'   => $request->input('scheduleAccess'),
             'communityAccess'  => $request->boolean('communityAccess'),
             /* The module rights, as the owner set them. canAddNotes is
@@ -108,6 +124,7 @@ class WorkerAccessController extends Controller
             $grant->acceptedAt = now();
             $grant->inviteToken = null;
             $grant->save();
+            $this->audit($request, $grant);
             $this->sendReadyEmail($existing->email, $existing->full_name ?: 'there', $boss);
 
             return response()->json([
@@ -121,6 +138,7 @@ class WorkerAccessController extends Controller
         $grant->status = WorkerGrant::STATUS_PENDING;
         $grant->inviteToken = Str::random(48);
         $grant->save();
+        $this->audit($request, $grant);
 
         $this->sendInviteEmail($grant, $boss);
 
@@ -160,6 +178,7 @@ class WorkerAccessController extends Controller
 
         $validator = Validator::make($request->all(), [
             'scheduleWorkerId' => 'nullable|integer',
+            'globalWorkerId'   => 'nullable|integer',
             'name'             => 'nullable|string|max:191',
             'email'            => 'required|email|max:191',
             'password'         => 'required|string|min:8|max:191',
@@ -180,16 +199,25 @@ class WorkerAccessController extends Controller
         }
 
         $email = mb_strtolower(trim($request->input('email')));
+        if ($no = $this->refuseOwnEmail($boss, $email)) {
+            return $no;
+        }
 
         $grant = WorkerGrant::active()
             ->where('bossUserId', $boss->id)
             ->where('invitedEmail', $email)
             ->first() ?? new WorkerGrant(['bossUserId' => $boss->id, 'invitedEmail' => $email]);
 
+        $link = $this->linkFor($request, $boss, $grant);
+        if ($link instanceof \Illuminate\Http\JsonResponse) {
+            return $link;
+        }
+
         $grant->fill([
             'bossUserId'       => $boss->id,
             'invitedEmail'     => $email,
-            'scheduleWorkerId' => $request->input('scheduleWorkerId'),
+            'scheduleWorkerId' => $link[0],
+            'globalWorkerId'   => $link[1],
             'scheduleAccess'   => $request->input('scheduleAccess'),
             'communityAccess'  => $request->boolean('communityAccess'),
             /* The module rights, as the owner set them. canAddNotes is
@@ -218,6 +246,7 @@ class WorkerAccessController extends Controller
             $grant->acceptedAt = now();
             $grant->inviteToken = null;
             $grant->save();
+            $this->audit($request, $grant);
 
             return response()->json([
                 'success' => true,
@@ -244,6 +273,7 @@ class WorkerAccessController extends Controller
         $grant->acceptedAt = now();
         $grant->inviteToken = null;
         $grant->save();
+        $this->audit($request, $grant);
 
         return response()->json([
             'success' => true,
@@ -267,9 +297,107 @@ class WorkerAccessController extends Controller
     /** Compact grant state for the worker UI. */
     private function grantData(WorkerGrant $grant): array
     {
-        return \App\Support\WorkerGrantState::of($grant) + [
-            'scheduleWorkerId' => $grant->scheduleWorkerId ? (int) $grant->scheduleWorkerId : null,
-        ];
+        return \App\Support\WorkerGrantState::withLinks($grant);
+    }
+
+    /**
+     * Who a grant is about: [season card id, roster person id].
+     *
+     * Two pages give logins now, a season's Workers page (it sends the card)
+     * and the farm's roster, Global Workers (it sends the person), and both
+     * must end at the same grant. A card brings its person along (every card
+     * is linked to the roster); a person brings one of their cards, so the
+     * worker's own ticks and the invite's name keep working: the card the
+     * grant already names when it is theirs, else their newest card on an
+     * open season, else their newest card. A person on no season yet gives
+     * a grant with no card, which opens no season until they are added to
+     * one (WorkerContext::visibleScheduleIdsFor). Neither sent keeps what the
+     * grant already says.
+     *
+     * Both are checked against this owner, so a grant can only point at the
+     * owner's own cards and roster.
+     *
+     * @return array{0: ?int, 1: ?int}|\Illuminate\Http\JsonResponse
+     */
+    private function linkFor(Request $request, User $boss, WorkerGrant $grant)
+    {
+        $card = null;
+        if ($request->filled('scheduleWorkerId')) {
+            $card = AsScheduleWorker::active()->where('id', (int) $request->input('scheduleWorkerId'))
+                ->whereIn('croppingScheduleId', AsCroppingSchedule::where('anisystemUserId', $boss->id)->select('id'))
+                ->first();
+            if (! $card) {
+                return response()->json(['success' => false, 'message' => 'That worker could not be found.'], 422);
+            }
+        }
+        $personId = null;
+        if ($request->filled('globalWorkerId')) {
+            $person = AsGlobalWorker::where('id', (int) $request->input('globalWorkerId'))
+                ->where('userId', $boss->id)->where('deleteStatus', 1)->first();
+            if (! $person) {
+                return response()->json(['success' => false, 'message' => 'That worker could not be found.'], 422);
+            }
+            $personId = (int) $person->id;
+        } elseif ($card && $card->globalWorkerId) {
+            $personId = (int) $card->globalWorkerId;
+        }
+
+        if ($card) {
+            return [(int) $card->id, $personId];
+        }
+        if (! $personId) {
+            return [$grant->scheduleWorkerId ? (int) $grant->scheduleWorkerId : null, $grant->globalWorkerId ? (int) $grant->globalWorkerId : null];
+        }
+
+        $cardIds = AsScheduleWorker::active()
+            ->join('as_cropping_schedules as s', 's.id', '=', 'as_schedule_workers.croppingScheduleId')
+            ->where('as_schedule_workers.globalWorkerId', $personId)
+            ->where('s.anisystemUserId', $boss->id)->where('s.deleteStatus', 1)
+            ->orderByRaw('CASE WHEN s.status IN (?, ?) THEN 1 ELSE 0 END', [AsCroppingSchedule::STATUS_COMPLETED, AsCroppingSchedule::STATUS_ARCHIVED])
+            ->orderByDesc('as_schedule_workers.id')
+            ->pluck('as_schedule_workers.id')->map(fn ($id) => (int) $id);
+        $keep = $grant->scheduleWorkerId && $cardIds->contains((int) $grant->scheduleWorkerId);
+
+        return [$keep ? (int) $grant->scheduleWorkerId : $cardIds->first(), $personId];
+    }
+
+    /** A login is for somebody else: the owner's own address would make them a worker on their own farm. */
+    private function refuseOwnEmail(User $boss, string $email): ?\Illuminate\Http\JsonResponse
+    {
+        if ($email !== mb_strtolower(trim((string) $boss->email))) {
+            return null;
+        }
+
+        return response()->json(['success' => false, 'message' => 'That is your own email. Use the email your worker signs in with.'], 422);
+    }
+
+    /**
+     * The season's Logs diary: a login given, changed or taken away is written
+     * in the book of the season the grant's card is on, from either page
+     * (RecordsScheduleActivity reads auditScheduleId). These routes never
+     * resolve a season themselves, which is why the diary had none of them.
+     */
+    private function audit(Request $request, WorkerGrant $grant): void
+    {
+        if (! $grant->scheduleWorkerId) {
+            return;
+        }
+        $seasonId = AsScheduleWorker::query()->where('as_schedule_workers.id', (int) $grant->scheduleWorkerId)
+            ->join('as_cropping_schedules as s', 's.id', '=', 'as_schedule_workers.croppingScheduleId')
+            ->where('s.anisystemUserId', (int) $grant->bossUserId)
+            ->value('s.id');
+        if ($seasonId) {
+            $request->attributes->set('auditScheduleId', (int) $seasonId);
+        }
+    }
+
+    /** The worker's name for an email: their season card, else their roster card, else what is known. */
+    private function nameFor(WorkerGrant $grant, ?User $worker = null): string
+    {
+        $name = optional($grant->scheduleWorkerId ? AsScheduleWorker::find($grant->scheduleWorkerId) : null)->workerName
+            ?: optional($grant->globalWorkerId ? AsGlobalWorker::find($grant->globalWorkerId) : null)->workerName;
+
+        return (string) ($name ?: ($worker?->full_name ?: Str::before((string) ($worker?->email ?: $grant->invitedEmail), '@')));
     }
 
     /**
@@ -327,6 +455,7 @@ class WorkerAccessController extends Controller
             'voiceAccess'      => $request->boolean('voiceAccess'),
             'canAddNotes'      => $request->input('notesAccess', 'view') === 'edit',
         ])->save();
+        $this->audit($request, $grant);
 
         return response()->json([
             'success' => true,
@@ -362,6 +491,7 @@ class WorkerAccessController extends Controller
         }
 
         $grant->update(['status' => WorkerGrant::STATUS_REVOKED, 'deleteStatus' => 0]);
+        $this->audit($request, $grant);
 
         return response()->json(['success' => true, 'message' => 'Access removed.']);
     }
@@ -412,8 +542,7 @@ class WorkerAccessController extends Controller
             return response()->json(['success' => false, 'message' => 'The link could not be made. Try again in a moment.'], 500);
         }
 
-        $name = optional(\App\Models\AsScheduleWorker::find($grant->scheduleWorkerId))->workerName
-            ?: ($worker->full_name ?: \Illuminate\Support\Str::before((string) $worker->email, '@'));
+        $name = $this->nameFor($grant, $worker);
 
         $this->mail->sendTemplate('worker_password_change', $worker->email, $name, [
             'workerName' => $name,
@@ -423,6 +552,7 @@ class WorkerAccessController extends Controller
             'relatedType' => 'worker_grant',
             'relatedId' => $grant->id,
         ]);
+        $this->audit($request, $grant);
 
         return response()->json([
             'success' => true,
@@ -440,8 +570,7 @@ class WorkerAccessController extends Controller
         // The grant holds an address, not a name — the name is on the worker
         // row it was created from. Failing that, the part before the @ is
         // still better than opening with "Hi ,".
-        $name = optional(\App\Models\AsScheduleWorker::find($grant->scheduleWorkerId))->workerName
-            ?: \Illuminate\Support\Str::before((string) $grant->invitedEmail, '@');
+        $name = $this->nameFor($grant);
 
         $this->mail->sendTemplate('worker_invite', $grant->invitedEmail, $name, [
             'workerName' => $name,

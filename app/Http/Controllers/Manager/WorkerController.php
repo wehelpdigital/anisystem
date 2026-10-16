@@ -57,10 +57,9 @@ class WorkerController extends BaseScheduleController
                 ->where('bossUserId', $schedule->anisystemUserId)
                 ->get();
             foreach ($schedule->workers as $w) {
-                $g = $grants->firstWhere('scheduleWorkerId', $w->id);
-                if (! $g && $w->email) {
-                    $g = $grants->first(fn ($x) => mb_strtolower((string) $x->invitedEmail) === mb_strtolower((string) $w->email));
-                }
+                // The same matcher the farm's roster (Global Workers) uses, so
+                // a login given there shows on this card and the other way round.
+                $g = \App\Models\WorkerGrant::findFor($grants, $w->globalWorkerId ? (int) $w->globalWorkerId : null, [(int) $w->id], $w->email);
                 if ($g) {
                     // Everything the sheet can set, so it opens showing what
                     // is true. It used to carry four of these fields, and the

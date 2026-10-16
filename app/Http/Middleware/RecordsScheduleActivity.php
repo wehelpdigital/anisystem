@@ -44,6 +44,8 @@ class RecordsScheduleActivity
         'sm.workers.access.grant' => 'Sent a worker login invite',
         'sm.workers.access.password' => 'Created a worker login',
         'sm.workers.access.revoke' => 'Revoked a worker login',
+        'sm.workers.access.rights' => 'Changed what a worker login can open',
+        'sm.workers.access.password-link' => 'Sent a worker a password change link',
         'sm.inventory.store' => 'Added an inventory item',
         'sm.inventory.update' => 'Edited an inventory item',
         'sm.inventory.destroy' => 'Deleted an inventory item',

@@ -17,7 +17,9 @@
      A partial with prefixed ids: it was once drawn twice on the page (a
      "Give access" card at the top, since removed — a login is given from
      the worker's own card now) and the prefix costs nothing to keep.
-     Expects: $p, the prefix ('wl').
+     Expects: $p, the prefix ('wl' on a season's Workers page, 'gl' on
+     Global Workers). Its CSS and window.workerRights (read/paint by
+     prefix) live here too, so any page that includes it gets the whole panel.
 
      Every level keeps a hidden input under the segment carrying the same id
      the sheet's JS has always read, so nothing outside this file had to learn
@@ -106,6 +108,143 @@
 
     <p class="wr-foot">Every worker can at least <strong>view Activities</strong>. You choose the rest. Changes save by themselves.</p>
 </div>
+
+@once
+@push('head')
+<style>
+    /* The rights panel's look, kept with the panel (2026-10-18): it was in
+       the season Workers page's own head, so the same panel drawn on Global
+       Workers arrived unstyled. */
+    /* A row per module, the same shape whether the answer
+       is a choice of three or a yes/no. */
+    .wr-block { border:1px solid var(--color-gray-200); border-radius:1rem; background:var(--color-white); overflow:hidden; }
+    .wr-head { padding:.6rem .85rem; font-size:.7rem; font-weight:800; letter-spacing:.04em;
+        text-transform:uppercase; color:var(--color-gray-400); border-bottom:1px solid var(--color-gray-100); }
+    .wr-row { display:flex; align-items:center; gap:.7rem; padding:.6rem .85rem;
+        border-bottom:1px solid var(--color-gray-100); margin:0; }
+    .wr-row:last-of-type { border-bottom:0; }
+    .wr-switch { cursor:pointer; user-select:none; }
+    .wr-mark { flex:none; width:2rem; height:2rem; border-radius:.6rem; display:flex;
+        align-items:center; justify-content:center; font-size:1rem; background:var(--color-brand-50); }
+    .wr-mark img { width:1.25rem; height:1.25rem; object-fit:contain; }
+    /* A face fills its chip edge to edge; icons float inside theirs. */
+    .wr-mark img.wr-face { width:2rem; height:2rem; border-radius:.6rem; object-fit:cover; }
+    .wr-what { min-width:0; flex:1 1 auto; }
+    .wr-what b { display:block; font-size:.82rem; font-weight:700; color:var(--color-gray-900); line-height:1.25; }
+    .wr-what i { display:block; font-style:normal; font-size:.7rem; line-height:1.35; color:var(--color-gray-500); }
+
+    /* --- The answer on the right, in two shapes ---
+       A switch for the things you have or do not, a three-way segment for the
+       things you can read or also write. Both are the same height and sit in
+       the same place, so a column of eight reads as one list rather than as
+       four controls that happen to be stacked. */
+    .wr-seg { flex:none; display:inline-flex; padding:2px; gap:2px; border-radius:.65rem;
+        background:var(--color-gray-100); border:1px solid var(--color-gray-200); }
+    .wr-seg button { min-width:3.1rem; padding:.28rem .45rem; border:0; border-radius:.5rem;
+        font-size:.7rem; font-weight:700; color:var(--color-gray-500); background:transparent;
+        cursor:pointer; transition:background .28s var(--ease-house, cubic-bezier(.22,1,.36,1)), color .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .wr-seg button:hover { color:var(--color-gray-700); }
+    .wr-seg button.is-on { background:var(--color-white); color:var(--color-brand-700);
+        box-shadow:0 1px 3px rgb(0 0 0 / .12); }
+    .wr-seg button[data-wr-val="none"].is-on { color:var(--color-gray-600); }
+    /* Explicit paint in the dark: the token-inverted tints left the chosen
+       answer nearly invisible, and an access level you cannot read is an
+       access level you cannot trust. */
+    html.dark .wr-seg { background:#151b12; border-color:#2b3a1c; }
+    html.dark .wr-seg button { color:#93a48a; }
+    html.dark .wr-seg button:hover { color:#cfe3bd; }
+    html.dark .wr-seg button.is-on { background:#3f5626; color:#e8efe1; box-shadow:0 1px 3px rgb(0 0 0 / .4); }
+    html.dark .wr-seg button[data-wr-val="none"].is-on { background:#3a3f36; color:#e8efe1; }
+
+    /* A row that is switched off says so quietly rather than looking broken. */
+    .wr-row.is-off .wr-mark, .wr-row.is-off .wr-what { opacity:.55; }
+
+    /* The switch: a real checkbox, moved off screen, wearing this. */
+    .wr-check { position:absolute; opacity:0; width:0; height:0; }
+    .wr-toggle { flex:none; position:relative; width:2.6rem; height:1.5rem; border-radius:999px;
+        background:var(--color-gray-200); border:1px solid var(--color-gray-300);
+        transition:background .28s var(--ease-house, cubic-bezier(.22,1,.36,1)), border-color .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .wr-toggle::after { content:''; position:absolute; top:2px; left:2px; width:1.1rem; height:1.1rem;
+        border-radius:999px; background:var(--color-white); box-shadow:0 1px 3px rgb(0 0 0 / .25);
+        transition:transform .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .wr-check:checked + .wr-toggle { background:var(--color-brand-500); border-color:var(--color-brand-500); }
+    .wr-check:checked + .wr-toggle::after { transform:translateX(1.1rem); }
+    .wr-check:focus-visible + .wr-toggle { outline:2px solid var(--color-brand-500); outline-offset:2px; }
+    .wr-switch:has(.wr-check:not(:checked)) .wr-mark,
+    .wr-switch:has(.wr-check:not(:checked)) .wr-what { opacity:.55; }
+    html.dark .wr-toggle { background:rgb(255 255 255 / .12); border-color:rgb(255 255 255 / .16); }
+    @media (prefers-reduced-motion: reduce) {
+        .wr-seg button, .wr-toggle, .wr-toggle::after { transition:none; }
+    }
+    .wr-foot { padding:.6rem .85rem; font-size:.7rem; line-height:1.4; color:var(--color-gray-400);
+        border-top:1px solid var(--color-gray-100); background:var(--color-gray-50); }
+    html.dark .wr-foot { background:rgb(255 255 255 / .03); }
+    /* Whose credits. Amber rather than grey: it is the one line in this
+       panel about money leaving an account, and it is read once. */
+    .wr-credits { display:flex; gap:.5rem; padding:.65rem .85rem; font-size:.72rem;
+        line-height:1.45; color:#92400e; border-top:1px solid #fde68a; background:#fffbeb; }
+    .wr-credits b { color:#78350f; }
+    .wr-credits-ico { flex:none; font-size:.95rem; line-height:1.35; }
+    html.dark .wr-credits { background:rgb(180 83 9 / .14); border-color:rgb(180 83 9 / .35); color:#eec155; }
+    html.dark .wr-credits b { color:#fcd34d; }
+    @media (max-width:480px) {
+        /* The three-way answers drop their select onto its own line; a yes/no
+           does not -- letting those wrap put the box on a line of its own,
+           left-aligned under the words, reading as a tick for nothing. */
+        /* The answer stays on the row on a phone too: wrapping it under the
+           name made a list of eight twice as tall and no clearer. */
+        .wr-row { flex-wrap:nowrap; }
+        .wr-seg button { min-width:2.6rem; padding-left:.3rem; padding-right:.3rem; }
+        .wr-what i { display:none; }
+    }
+</style>
+@endpush
+@push('scripts')
+<script>
+/* Read and paint the module switches, by prefix.
+ *
+ * The prefix outlives the second form that once shared these rights (the
+ * "Give access" card at the top of the page, gone now that a login is given
+ * from the worker's own card): a right that is read by one name and written
+ * by another is how a permission ends up not applying, so the keys are the
+ * grant's own column names either way. */
+window.workerRights = (() => {
+    const LEVELS = ['notesAccess', 'reportsAccess', 'inventoryAccess', 'mapsAccess', 'drawAccess'];
+    const SWITCHES = ['aiAccess', 'cameraAccess', 'videoAccess', 'voiceAccess'];
+    const id = (p, key) => p + key.charAt(0).toUpperCase() + key.slice(1);
+    return {
+        read(p) {
+            const out = {};
+            LEVELS.forEach((k) => { const el = document.getElementById(id(p, k)); if (el) out[k] = el.value; });
+            SWITCHES.forEach((k) => { const el = document.getElementById(id(p, k)); if (el) out[k] = el.checked ? 1 : 0; });
+            return out;
+        },
+        /* No grant yet means a new worker, and a new worker starts where the
+         * app has always put them: able to read the farm, with the owner's
+         * tools closed until the owner opens them. */
+        paint(p, grant) {
+            LEVELS.forEach((k) => {
+                const el = document.getElementById(id(p, k));
+                if (!el) return;
+                // The shed, the maps and the drawing pad start shut for a new
+                // login; the older levels start readable, which is where the
+                // app has always put them.
+                el.value = (grant && grant[k])
+                    || (['inventoryAccess', 'mapsAccess', 'drawAccess'].includes(k) ? 'none' : 'view');
+                // The level is a hidden input under a segmented control; the
+                // buttons learn what it says from this.
+                el.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+            SWITCHES.forEach((k) => {
+                const el = document.getElementById(id(p, k));
+                if (el) el.checked = !!(grant && grant[k]);
+            });
+        },
+    };
+})();
+</script>
+@endpush
+@endonce
 
 @once
 @push('scripts')

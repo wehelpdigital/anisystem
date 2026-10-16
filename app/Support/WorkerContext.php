@@ -150,9 +150,11 @@ class WorkerContext
 
         $mine = self::grants()->where('bossUserId', $ownerId);
 
-        // An invitation with no roster row behind it was never about one
-        // season, so it keeps the whole farm.
-        if ($mine->contains(fn ($g) => blank($g->scheduleWorkerId))) {
+        // An invitation with no roster row behind it, and no person on the
+        // farm's roster either, was never about one season, so it keeps the
+        // whole farm. A login given from Global Workers names the person and
+        // is about the seasons they are on, even before they are on any.
+        if ($mine->contains(fn ($g) => $g->isFarmWide())) {
             return $cache[$key] = null;
         }
 
@@ -160,6 +162,21 @@ class WorkerContext
         $ids = \App\Models\AsScheduleWorker::query()
             ->whereIn('id', $rosterIds ?: [-1])
             ->pluck('croppingScheduleId');
+
+        // The person on the farm's roster the login was given to: every
+        // season card that is them (Global Workers links each card to its
+        // person), so adding them to a season opens that season to them.
+        $people = $mine->pluck('globalWorkerId')->filter()->map(fn ($id) => (int) $id)->all();
+        if ($people) {
+            $ids = $ids->concat(
+                \App\Models\AsScheduleWorker::active()
+                    ->whereIn('globalWorkerId', $people)
+                    ->whereIn('croppingScheduleId', \App\Models\AsCroppingSchedule::active()
+                        ->where('anisystemUserId', $ownerId)
+                        ->select('id'))
+                    ->pluck('croppingScheduleId')
+            );
+        }
 
         // The same person, written onto another season's roster by the same
         // boss. Matched on the address the invitation was sent to, which is

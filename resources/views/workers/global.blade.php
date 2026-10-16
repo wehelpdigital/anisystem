@@ -55,6 +55,74 @@
     html.dark .gw-who b, html.dark .gw-srow b { color: #e5e7eb; }
     html.dark .gw-chip { background: #20242c; color: #cbd5e1; } html.dark .gw-chip.is-season { background: #1c2616; color: #c5e09f; } html.dark .gw-chip.is-off { background: #2a2210; color: #f3d9a4; }
     @media (prefers-reduced-motion: reduce) { .gw-hero img, .gw-card { animation: none; } .gw-card, .gw-pill { transition: none; } }
+
+    /* Login access (2026-10-18, the owner): the same login a season card gives,
+       given here for the person. The strip on each card is a tag: it opens the
+       login sheet, and says where the login stands without opening it. */
+    .gw-login { display: flex; align-items: center; gap: .6rem; width: 100%; margin-top: .7rem; padding: .5rem .65rem; border-radius: .95rem; text-align: left;
+        border: 1px dashed var(--color-gray-300); background: var(--color-gray-50); cursor: pointer;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .gw-login:hover { transform: translateY(-1px); border-color: var(--color-brand-300, #a8cc7e); }
+    .gw-login:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
+    .gw-login-ico { flex: none; width: 2rem; height: 2rem; border-radius: .7rem; display: grid; place-items: center; color: var(--color-gray-500); background: var(--color-gray-100); }
+    .gw-login-ico svg { width: 1.05rem; height: 1.05rem; }
+    .gw-login-t { flex: 1; min-width: 0; }
+    .gw-login-t b { display: block; font-size: .8rem; font-weight: 800; color: var(--color-gray-900); }
+    .gw-login-t small { display: block; font-size: .72rem; color: var(--color-gray-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .gw-login-go { flex: none; font-size: .74rem; font-weight: 800; color: var(--color-brand-700); white-space: nowrap; }
+    .gw-login.is-active { border-style: solid; border-color: #cfe3b4; background: #f3f9ea; }
+    .gw-login.is-active .gw-login-ico { color: #3f6d1f; background: #e1f0cc; }
+    .gw-login.is-pending { border-style: solid; border-color: #f3dc9b; background: #fffaeb; }
+    .gw-login.is-pending .gw-login-ico { color: #8a5a00; background: #fff0c2; }
+    .gw-login.is-locked .gw-login-go { color: var(--color-gray-500); }
+    html.dark .gw-login.is-active { background: #17210f; border-color: #2f4d24; }
+    html.dark .gw-login.is-active .gw-login-ico { background: #26391a; color: #c5e09f; }
+    html.dark .gw-login.is-active .gw-login-t b { color: #e8efe1; }
+    html.dark .gw-login.is-pending { background: #241d0c; border-color: #4a3a12; }
+    html.dark .gw-login.is-pending .gw-login-ico { background: #3a2e10; color: #f3d9a4; }
+    html.dark .gw-login.is-pending .gw-login-t b { color: #f6ead0; }
+    .gw-lock-note { margin-bottom: 1rem; padding: .8rem 1rem; border-radius: 1.1rem; font-size: .85rem; line-height: 1.5; color: var(--color-gray-700); background: var(--color-white); border: 1px solid #f3dc9b; }
+
+    /* The login sheet. */
+    .gl-head { display: flex; align-items: center; gap: .65rem; }
+    .gl-head-ico { flex: none; width: 2.4rem; height: 2.4rem; border-radius: .85rem; display: grid; place-items: center; color: var(--color-brand-700); background: var(--color-brand-50); }
+    .gl-head-ico svg { width: 1.2rem; height: 1.2rem; }
+    .gl-head-t { flex: 1; min-width: 0; }
+    .gl-head-t b { display: block; font-weight: 800; color: var(--color-gray-900); }
+    .gl-head-t small { display: block; font-size: .78rem; color: var(--color-gray-500); }
+    .gl-revoke { flex: none; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 999px; color: #dc2626; transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .gl-revoke:hover { background: rgb(220 38 38 / .1); }
+    .gl-revoke[hidden] { display: none; }
+    .gl-revoke svg { width: 1.2rem; height: 1.2rem; }
+    .gl-reach { padding: .65rem .8rem; border-radius: .9rem; font-size: .78rem; line-height: 1.5; color: var(--color-gray-600); background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .gl-reach b { color: var(--color-gray-900); }
+    .gl-email-fixed { font-size: .82rem; color: var(--color-gray-600); }
+    .gl-email-fixed b { color: var(--color-gray-900); word-break: break-all; }
+    .gl-email-fixed[hidden], #glEmailWrap[hidden] { display: none; }
+    .gl-btns { display: flex; flex-direction: column; gap: .5rem; }
+    @media (min-width: 640px) { .gl-btns { flex-direction: row; flex-wrap: wrap; } }
+    .gl-btns .btn { justify-content: center; animation: glIn .28s cubic-bezier(.22,1,.36,1) both; }
+    .gl-btns .btn[hidden] { display: none; }
+    @keyframes glIn { from { opacity: 0; transform: translateY(4px); } }
+    /* Yellow is the important call to action (the owner, 2026-10-17). */
+    .btn.gl-cta { color: #3b2f00; background: #f5c518; border-color: #f5c518; box-shadow: 0 10px 22px -14px rgb(245 197 24 / .9); }
+    .btn.gl-cta:hover { background: #ffd23f; border-color: #ffd23f; }
+    .btn.gl-cta:disabled { opacity: .6; }
+    /* Folds: the rights panel arrives with the login, the password card on a tap.
+       The rows grow from nothing on the house easing; shut, they are inert. */
+    .gl-fold { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden;
+        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), visibility 0s linear .28s; }
+    .gl-fold.is-open { grid-template-rows: 1fr; opacity: 1; visibility: visible; transition-delay: 0s, 0s, 0s; }
+    .gl-fold-in { overflow: hidden; min-height: 0; }
+    .gl-say { font-size: .78rem; line-height: 1.5; color: var(--color-gray-500); }
+    .gl-say[hidden] { display: none; }
+    .gl-strength { height: .45rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
+    .gl-strength i { display: block; height: 100%; width: 0; border-radius: inherit; background: #ef4444;
+        transition: width .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    @media (prefers-reduced-motion: reduce) {
+        .gw-login, .gl-revoke, .gl-fold, .gl-strength i { transition: none; }
+        .gl-btns .btn { animation: none; }
+    }
 </style>
 @endpush
 
@@ -62,8 +130,12 @@
 <div class="max-w-5xl mx-auto">
     <div class="gw-hero">
         <img src="{{ asset('images/friends.png') }}" alt="">
-        <div><h2>Global Workers</h2><p>Your crew in one list. Add someone once, with their pay, skills and the weekdays they do not work, then put them on any season in a tap. Each season keeps its own record of their work and pay.</p></div>
+        <div><h2>Global Workers</h2><p>Your crew in one list. Add someone once, with their pay, skills and the weekdays they do not work, then put them on any season in a tap. Each season keeps its own record of their work and pay.@if ($canLogins) Give anyone their own login here too.@endif</p></div>
     </div>
+    {{-- The same words the season Workers page says for a plan without logins. --}}
+    @unless ($canLogins)
+        <p class="gw-lock-note mt-4">🔒 <strong>Worker logins</strong> come with <strong>{{ \App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('workerLogins')) }}</strong>. <a href="{{ route('account.subscription') }}" class="text-brand-600 font-semibold">Upgrade</a> to give workers their own login and email notifications.</p>
+    @endunless
     <div class="gw-bar">
         <label class="gw-search"><span class="sr-only">Find a worker</span>
             <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>
@@ -111,6 +183,74 @@
     </div>
     <div class="sheet-body"><div class="gw-seasons" id="gwSeasonList"></div></div>
 </div>
+
+@if ($canLogins)
+{{-- Login access, for the person (2026-10-18, the owner): the season card's
+     login controls, given from the roster. The same endpoints
+     (WorkerAccessController, sm.workers.access.*), the same rights panel and
+     the same words; the grant names the roster person, so every season card
+     that is them shows it too. --}}
+<div class="sheet hidden" id="gwLoginSheet" style="--sheet-width:34rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="glTitle">Login access</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-4">
+        <div class="gl-head">
+            <span class="gl-head-ico" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M11 12l9-9m-3 3l3 3m-6 0l2 2"/></svg></span>
+            <span class="gl-head-t"><b>Login access</b><small id="glStatus">No login yet.</small></span>
+            <button type="button" id="glRevoke" class="gl-revoke" hidden title="Remove login" aria-label="Remove this worker's login">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H9m4 8H7a2 2 0 01-2-2V6a2 2 0 012-2h6"/></svg>
+            </button>
+        </div>
+        <p class="gl-reach" id="glReach"></p>
+
+        <div id="glEmailWrap">
+            <label class="form-label" for="glEmail">Their email</label>
+            <input type="email" id="glEmail" maxlength="191" class="form-input" placeholder="The email they sign in with" autocomplete="off">
+            <p class="form-hint">They sign in with this email. If their card has none, it is saved on their card too.</p>
+        </div>
+        <p class="gl-email-fixed" id="glEmailFixed" hidden>Signs in with <b id="glEmailShown"></b></p>
+
+        {{-- What they can open arrives with the login, as on the season card. --}}
+        <div id="glRightsWrap" class="gl-fold" aria-hidden="true" inert>
+            <div class="gl-fold-in">@include('sm.partials.worker-rights', ['p' => 'gl'])</div>
+        </div>
+        <p id="glNoLoginSay" class="gl-say">Send a registration link or set a password below. Once they can log in, you choose what they can open.</p>
+
+        <div class="gl-btns">
+            {{-- One of these two, never both: a worker who has not registered
+                 needs the way in, and one who has needs the way to a new
+                 password. paintLogin picks. --}}
+            <button type="button" id="glSendLink" class="btn btn-sm gl-cta">✉️ Send registration link</button>
+            <button type="button" id="glSendPwLink" class="btn btn-white btn-sm" hidden>✉️ Send password change link</button>
+            <button type="button" id="glSetPwToggle" class="btn btn-white btn-sm">🔒 Set a password</button>
+        </div>
+
+        <div id="glPwFold" class="gl-fold" aria-hidden="true" inert>
+            <div class="gl-fold-in">
+                <div class="rounded-2xl border border-brand-100 bg-white p-4 space-y-3 mt-1">
+                    <p class="font-bold text-gray-900 text-sm flex items-center gap-2">🔒 Password for this worker</p>
+                    <div>
+                        <label class="form-label" for="glPassword">New password</label>
+                        <input type="password" id="glPassword" class="form-input" placeholder="At least 8 characters" autocomplete="new-password">
+                        <div class="gl-strength mt-2" aria-hidden="true"><i id="glPwBar"></i></div>
+                        <p class="text-xs mt-1 font-semibold text-gray-400" id="glPwSay">At least 8 characters.</p>
+                    </div>
+                    <div>
+                        <label class="form-label" for="glPassword2">Repeat password</label>
+                        <input type="password" id="glPassword2" class="form-input" placeholder="Type it again" autocomplete="new-password">
+                        <p class="form-error hidden" id="glPwMatchSay">Passwords do not match yet.</p>
+                    </div>
+                    <button type="button" id="glCreateLogin" class="btn gl-cta w-full justify-center">Create login</button>
+                    <p class="form-hint">Give them their email and this password to sign in.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 @endsection
 
 @push('scripts')
@@ -128,6 +268,27 @@
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const $ = (id) => document.getElementById(id);
     let ROWS = [], editing = null, seasonFor = null;
+    // Logins: the season card's endpoints, the plan's gate and its words.
+    const CAN_LOGINS = @json($canLogins);
+    const LOGINS_RUNG = @json(\App\Support\Tier::unlocksAt('workerLogins'));
+    const LOGINS_PLAN = @json(\App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('workerLogins')));
+    const A = { grant: @json(route('sm.workers.access.grant')), password: @json(route('sm.workers.access.password')), rights: @json(route('sm.workers.access.rights')),
+        link: @json(route('sm.workers.access.password-link')), revoke: @json(route('sm.workers.access.revoke')) };
+    const KEY_SVG = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M11 12l9-9m-3 3l3 3m-6 0l2 2"/></svg>';
+    const LOCK_SVG = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V7a4 4 0 018 0v4"/></svg>';
+    // The login strip on a card: a tag that opens the login sheet.
+    const loginStrip = (g) => {
+        if (!CAN_LOGINS) {
+            return `<button type="button" class="gw-login is-locked" data-login="${g.id}" data-tier-lock="${esc(LOGINS_RUNG)}" data-lock-say="${esc('Worker logins and access levels come with ' + LOGINS_PLAN + '.')}">
+                <span class="gw-login-ico">${LOCK_SVG}</span><span class="gw-login-t"><b>Login access</b><small>Comes with ${esc(LOGINS_PLAN)}</small></span><span class="gw-login-go">Upgrade</span></button>`;
+        }
+        const l = g.login;
+        const [cls, title, say, go] = !l ? ['', 'No login yet', 'Give them their own login to your farm', 'Give a login']
+            : l.status === 'active' ? ['is-active', 'Can log in', 'Activities: ' + (l.scheduleAccess === 'edit' ? 'can edit' : 'view only'), 'Manage']
+            : ['is-pending', 'Invite sent', 'Waiting for them to set a password', 'Manage'];
+        return `<button type="button" class="gw-login ${cls}" data-login="${g.id}" aria-label="Login access for ${esc(g.workerName)}: ${esc(title)}">
+            <span class="gw-login-ico">${KEY_SVG}</span><span class="gw-login-t"><b>${esc(title)}</b><small>${esc(say)}</small></span><span class="gw-login-go">${esc(go)}</span></button>`;
+    };
 
     const card = (g, i) => `<div class="gw-card" style="--i:${i}">
         <div class="gw-top"><span class="gw-av" style="--h:${(g.id * 137) % 360}">${esc((g.workerName || '?').trim().charAt(0).toUpperCase())}</span>
@@ -135,6 +296,7 @@
             <span class="gw-pay">${g.costPerHalfDay ? esc(MONEY + Number(g.costPerHalfDay).toLocaleString()) : 'No pay set'}<small>a half day</small></span></div>
         <div class="gw-chips">${(g.skills || []).map((k) => `<span class="gw-chip">${esc(SKILLS[k] || k)}</span>`).join('')}${(g.offWeekdays || []).map((d) => `<span class="gw-chip is-off">Off ${DOW[d]}</span>`).join('')}</div>
         <div class="gw-chips">${(g.seasons || []).length ? g.seasons.map((s) => `<a class="gw-chip is-season" href="${U.seasonWorkers(s.id)}">${esc(s.title)}</a>`).join('') : '<span class="gw-chip">Not on a season yet</span>'}</div>
+        ${loginStrip(g)}
         <div class="gw-acts"><button type="button" class="btn btn-primary" data-act="season" data-id="${g.id}">Add to a season</button>
             <button type="button" class="btn btn-white" data-act="edit" data-id="${g.id}">Edit</button>
             <button type="button" class="btn btn-white" data-act="remove" data-id="${g.id}">Remove</button></div></div>`;
@@ -186,6 +348,12 @@
         } catch (err) { window.toast?.(err.message, 'error'); b.disabled = false; }
     });
     $('gwGrid').addEventListener('click', async (e) => {
+        const tag = e.target.closest('[data-login]');
+        if (tag && CAN_LOGINS) {
+            const who = ROWS.find((x) => String(x.id) === tag.dataset.login);
+            if (who) openLogin(who);
+            return;
+        }
         const b = e.target.closest('[data-act]');
         if (!b) return;
         const g = ROWS.find((x) => String(x.id) === b.dataset.id);
@@ -197,6 +365,219 @@
             try { const r = await window.api(U.one(g.id), { method: 'DELETE' }); window.toast?.(r.message, 'success'); await load(); } catch (err) { window.toast?.(err.message, 'error'); }
         }
     });
+    /* ---------------- Login access ----------------
+     *
+     * The season card's login controls, for the person (2026-10-18, the
+     * owner). The grant is the farm's one grant for them (it names this
+     * roster person, WorkerGrant::findFor), so what is set here is what
+     * every season card that is them shows, and the other way round. */
+    let loginFor = null;          // the roster row whose login sheet is open (a live ref in ROWS)
+    let rightsTimer = null;
+    const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const fold = (el, open) => {
+        if (!el) return;
+        el.classList.toggle('is-open', open);
+        el.setAttribute('aria-hidden', open ? 'false' : 'true');
+        if (open) el.removeAttribute('inert'); else el.setAttribute('inert', '');
+    };
+    const repaintStrip = (g) => {
+        const el = document.querySelector('[data-login="' + g.id + '"]');
+        if (el) el.outerHTML = loginStrip(g);
+    };
+    const reachSay = (g) => {
+        const l = g.login;
+        if (l && l.farmWide) return 'This login opens <b>every season</b> on your farm.';
+        const seasons = g.seasons || [];
+        if (!seasons.length) return 'They are not on a season yet. The login opens a season once you add them to it.';
+        return 'The login opens the seasons they are on: ' + seasons.map((s) => '<b>' + esc(s.title) + '</b>').join(', ') + '. Add them to another season and it opens that one too.';
+    };
+    function paintLogin() {
+        const g = loginFor;
+        if (!g) return;
+        const l = g.login || null;
+        $('glTitle').textContent = 'Login for ' + g.workerName;
+        $('glStatus').textContent = l && l.status === 'active' ? 'Active. This worker can log in.'
+            : l && l.status === 'pending' ? 'Invite sent. Waiting for them to set a password.' : 'No login yet.';
+        $('glReach').innerHTML = reachSay(g);
+        // The address is the login's once there is one: changing it would be a second login.
+        $('glEmailWrap').hidden = !!l;
+        $('glEmailFixed').hidden = !l;
+        $('glEmailShown').textContent = l ? (l.email || g.email || '') : '';
+        if (!l) $('glEmail').value = g.email || '';
+        // Activities has no "None": a legacy grant that still says it is read as view.
+        const sched = (l && l.scheduleAccess) || 'view';
+        $('glAccess').value = sched === 'none' ? 'view' : sched;
+        $('glAccess').dispatchEvent(new Event('change', { bubbles: true }));
+        window.workerRights.paint('gl', l);
+        fold($('glRightsWrap'), !!l);
+        $('glNoLoginSay').hidden = !!l;
+        $('glRevoke').hidden = !l;
+        const hasAccount = !!(l && l.workerUserId);
+        $('glSendLink').hidden = hasAccount;
+        $('glSendPwLink').hidden = !hasAccount;
+        // An account's password is never overwritten (the server keeps it), so
+        // once there is one the way to a new password is the link above.
+        $('glSetPwToggle').hidden = hasAccount;
+        fold($('glPwFold'), false);
+        $('glPassword').value = ''; $('glPassword2').value = '';
+        paintPwStrength('');
+        $('glPwMatchSay').classList.add('hidden');
+    }
+    function openLogin(g) {
+        clearTimeout(rightsTimer);
+        loginFor = g;
+        paintLogin();
+        window.openSheet('gwLoginSheet');
+    }
+    function applyGrant(grant) {
+        if (!loginFor) return;
+        loginFor.login = grant || null;
+        paintLogin();
+        repaintStrip(loginFor);
+    }
+    const body = () => ({ scheduleAccess: $('glAccess').value, communityAccess: 1, ...window.workerRights.read('gl') });
+    const loginEmail = () => (loginFor && loginFor.login ? loginFor.login.email : $('glEmail').value.trim());
+    const askEmail = () => {
+        const email = loginEmail();
+        if (EMAIL_RX.test(email)) return email;
+        window.toast?.(email ? 'That email does not look right. Check it and try again.' : 'Add their email first.', 'error');
+        $('glEmail').focus();
+        return null;
+    };
+    // A roster card with no email learns the one the login was given to.
+    async function keepEmail(g, email) {
+        if (g.email || !email) return;
+        try {
+            await window.api(U.one(g.id), { method: 'PUT', body: { workerName: g.workerName, email, phone: g.phone || '', costPerHalfDay: g.costPerHalfDay || 0,
+                notes: g.notes || '', skills: g.skills || [], offWeekdays: g.offWeekdays || [] } });
+            g.email = email;
+            const card = document.querySelector('[data-login="' + g.id + '"]')?.closest('.gw-card');
+            const contact = card?.querySelector('.gw-who small');
+            if (contact) contact.textContent = [g.phone, g.email].filter(Boolean).join(' · ');
+        } catch (e) { /* the login stands either way; the card keeps what it had */ }
+    }
+
+    /* ---- how much of a password this is (the season sheet's own measure) ---- */
+    function pwScore(pw) {
+        if (pw.length < 8) return 0;
+        let s = 1;
+        if (pw.length >= 12) s++;
+        if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) s++;
+        if (/\d/.test(pw)) s++;
+        if (/[^A-Za-z0-9]/.test(pw)) s++;
+        return Math.min(4, s);
+    }
+    function paintPwStrength(pw) {
+        const bar = $('glPwBar'), say = $('glPwSay');
+        if (!bar || !say) return;
+        if (!pw) { bar.style.width = '0'; say.textContent = 'At least 8 characters.'; say.style.color = ''; return; }
+        const looks = [
+            ['12%', '#ef4444', 'Too short. Use at least 8 characters.'],
+            ['30%', '#ef4444', 'Weak. Longer is stronger.'],
+            ['55%', '#f59e0b', 'Okay. Mix in capitals or numbers.'],
+            ['80%', '#84cc16', 'Strong.'],
+            ['100%', '#16a34a', 'Very strong.'],
+        ][pwScore(pw)];
+        bar.style.width = looks[0]; bar.style.background = looks[1]; say.textContent = looks[2]; say.style.color = looks[1];
+    }
+    const checkPwMatch = () => { const b = $('glPassword2').value; $('glPwMatchSay').classList.toggle('hidden', !b || $('glPassword').value === b); };
+
+    if (CAN_LOGINS) {
+        $('glPassword').addEventListener('input', (e) => { paintPwStrength(e.target.value); checkPwMatch(); });
+        $('glPassword2').addEventListener('input', checkPwMatch);
+
+        /* Rights save themselves a breath after a real tap, as on the season
+           card: 'input' on a level comes only from a segment tap (paint uses
+           'change'), and a checkbox counts only when a hand moved it. */
+        const queueRights = () => {
+            if (!loginFor || !loginFor.login || !loginFor.login.id) return;
+            clearTimeout(rightsTimer);
+            rightsTimer = setTimeout(saveRights, 450);
+        };
+        async function saveRights() {
+            const g = loginFor, l = g && g.login;
+            if (!l || !l.id) return;
+            try {
+                const res = await window.api(A.rights, { method: 'POST', body: { id: l.id, ...body() } });
+                g.login = Object.assign({}, l, (res.data && res.data.grant) || {});
+                repaintStrip(g);
+                window.toast?.(res.message || 'Access updated.');
+            } catch (err) {
+                window.toast?.(err.message, 'error');
+                if (loginFor === g) paintLogin();   // repaint the truth the server kept
+            }
+        }
+        $('glRightsWrap').addEventListener('input', (e) => { if (e.target.classList?.contains('wr-level')) queueRights(); });
+        $('glRightsWrap').addEventListener('change', (e) => { if (e.isTrusted && e.target.classList?.contains('wr-check')) queueRights(); });
+
+        $('glSendLink').addEventListener('click', async (e) => {
+            const btn = e.currentTarget, g = loginFor;
+            const email = askEmail();
+            if (!email || !g) return;
+            btn.disabled = true;
+            try {
+                const res = await window.api(A.grant, { method: 'POST', body: { globalWorkerId: g.id, email, ...body() } });
+                window.toast?.(res.message);
+                if (loginFor === g) applyGrant(res.data && res.data.grant); else g.login = (res.data && res.data.grant) || null;
+                keepEmail(g, email);
+            } catch (err) { window.toast?.(err.message, 'error'); } finally { btn.disabled = false; }
+        });
+
+        // Asked first: it lands in somebody's inbox. The button is taken before the await.
+        $('glSendPwLink').addEventListener('click', async (e) => {
+            const btn = e.currentTarget, g = loginFor;
+            const id = g && g.login && g.login.id;
+            if (!id) { window.toast?.('This worker has no login yet.', 'error'); return; }
+            const ok = window.confirmAction ? await window.confirmAction({
+                title: 'Send a password change link?',
+                message: g.workerName + ' gets an email to pick a new password. The old one works until they change it.',
+                confirmText: 'Send the link',
+                confirmClass: 'btn-primary',
+            }) : true;
+            if (!ok) return;
+            btn.disabled = true;
+            try { const res = await window.api(A.link, { method: 'POST', body: { id } }); window.toast?.(res.message); }
+            catch (err) { window.toast?.(err.message, 'error'); } finally { btn.disabled = false; }
+        });
+
+        $('glSetPwToggle').addEventListener('click', () => {
+            const box = $('glPwFold'), opening = !box.classList.contains('is-open');
+            fold(box, opening);
+            if (opening) setTimeout(() => $('glPassword').focus(), 300);
+        });
+
+        $('glCreateLogin').addEventListener('click', async (e) => {
+            const btn = e.currentTarget, g = loginFor;
+            const email = askEmail();
+            if (!email || !g) return;
+            const pw = $('glPassword').value;
+            if (pw.length < 8) { window.toast?.('Password must be at least 8 characters.', 'error'); return; }
+            if (pw !== $('glPassword2').value) { window.toast?.('Passwords do not match. Type the same one again below.', 'error'); $('glPassword2').focus(); return; }
+            btn.disabled = true;
+            try {
+                const res = await window.api(A.password, { method: 'POST', body: { globalWorkerId: g.id, name: g.workerName, email, password: pw, ...body() } });
+                window.toast?.(res.message);
+                if (loginFor === g) applyGrant(res.data && res.data.grant); else g.login = (res.data && res.data.grant) || null;
+                keepEmail(g, email);
+            } catch (err) { window.toast?.(err.message, 'error'); } finally { btn.disabled = false; }
+        });
+
+        $('glRevoke').addEventListener('click', async (e) => {
+            const btn = e.currentTarget, g = loginFor;
+            const id = g && g.login && g.login.id;
+            if (!id) return;
+            const ok = window.confirmAction ? await window.confirmAction({ title: 'Remove login?', message: g.workerName + ' will no longer be able to log in to your farm.', confirmText: 'Remove' })
+                : confirm('Remove ' + g.workerName + "'s login?");
+            if (!ok) return;
+            btn.disabled = true;
+            try {
+                const res = await window.api(A.revoke, { method: 'DELETE', body: { id } });
+                window.toast?.(res.message);
+                if (loginFor === g) applyGrant(null); else g.login = null;
+            } catch (err) { window.toast?.(err.message, 'error'); } finally { btn.disabled = false; }
+        });
+    }
+
     // The page's own script runs before app.js (a module, run after parsing) has made window.api:
     // asked too early, the list call threw and the roster showed empty (2026-10-18, the owner).
     if (window.api) load(); else document.addEventListener('DOMContentLoaded', load, { once: true });
