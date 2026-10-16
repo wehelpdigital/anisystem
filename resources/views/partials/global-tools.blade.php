@@ -338,13 +338,20 @@
             {{-- Satellite Weather (2026-10-07): clouds, rain and typhoon
                  tracks over the farm; a week pass in credits since 2026-10-12
                  (App\Support\SkyPass), Anee's reading priced on its own. --}}
-            <a href="{{ route('sky.page') }}" class="qa-tile qa-wtp">
+            {{-- From Libre + Anee up (2026-10-17, the owner). --}}
+            @php $qSkyLocked = ! \App\Support\Tier::farmCan('skyWeather'); $qSkyRung = \App\Support\Tier::farmUnlocksAt('skyWeather'); @endphp
+            <a href="{{ route('sky.page') }}" class="qa-tile qa-wtp"
+               @if ($qSkyLocked) data-tier-lock="{{ $qSkyRung }}" data-lock-say="Satellite Weather comes with {{ \App\Support\Tier::withPlan($qSkyRung) }}. Watch the clouds, rain and typhoon paths over your farm and ask Anee what they mean for your lot." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/storm.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
-                <span class="qa-txt">
+                <span class="qa-txt {{ $qSkyLocked ? 'tl-dim' : '' }}">
                     <b>Satellite Weather{{ \App\Support\Tagalog::flag('satellite-weather') }}{!! $qPlus !!}</b>
                     <i>Watch clouds, rain and typhoon paths over your farm, see where the rain is headed, and ask Anee what it means for your lot. {{ \App\Support\SkyPass::price() }} credits a week.</i>
                 </span>
-                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @if ($qSkyLocked)
+                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                @else
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @endif
             </a>
             {{-- Compare Reports: two saved reports side by side, any season
                  against any other. Gated as CompareController::gate() gates
@@ -378,13 +385,20 @@
         </a>
         {{-- NPK Plus (2026-10-07): the free fertilizer calculator; Anee's
              reading of a plan is the paid step inside it. --}}
-        <a href="{{ route('npk.page') }}" class="qa-tile qa-build">
+        {{-- From Libre + Anee up (2026-10-17, the owner). --}}
+        @php $qNpkLocked = ! \App\Support\Tier::farmCan('npkPlus'); $qNpkRung = \App\Support\Tier::farmUnlocksAt('npkPlus'); @endphp
+        <a href="{{ route('npk.page') }}" class="qa-tile qa-build"
+           @if ($qNpkLocked) data-tier-lock="{{ $qNpkRung }}" data-lock-say="The NPK Plus calculator comes with {{ \App\Support\Tier::withPlan($qNpkRung) }}. Add up every nutrient in your fertilizer plan and see if it is enough for your crop and the yield you want." @endif>
             <span class="qa-ico"><img src="{{ asset('images/icons/npk.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
-            <span class="qa-txt">
+            <span class="qa-txt {{ $qNpkLocked ? 'tl-dim' : '' }}">
                 <b>NPK Plus Calculator{{ \App\Support\Tagalog::flag('npk-plus') }}{!! $qPlus !!}</b>
                 <i>Add up every nutrient in your fertilizer plan, as the element and the oxide, and see if it is enough for your crop and what yield it can feed.</i>
             </span>
-            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            @if ($qNpkLocked)
+                <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+            @else
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            @endif
         </a>
         {{-- The LCC Checker (2026-10-14): the leaf color chart read free from
              the farmer's own chart, or by Anee from leaf photos for credits. --}}

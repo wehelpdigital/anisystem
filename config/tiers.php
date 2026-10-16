@@ -39,6 +39,8 @@ return [
         'workersPerSchedule' => 0,      // the Workers module is the Solo Farmer plan's (2026-09-19)
         'workers'           => false,
         'fieldHelpers'      => false,   // the field helpers (App\Support\FieldPack): locked on Libre, open from Libre + Anee up; no add-on since 2026-10-18
+        'skyWeather'        => false,   // Satellite Weather and the NPK Plus calculator: from Libre + Anee up (2026-10-17, the owner)
+        'npkPlus'           => false,
         'inventory'         => false,   // and so is the shed
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -74,6 +76,7 @@ return [
         'excludes' => [
             'Anee: AI chat, analyses and credits (Libre + Anee)',
             'Field helpers: the weed, pest, disease, nutrient and variety finders (Libre + Anee)',
+            'Satellite Weather and the NPK Plus calculator (Libre + Anee)',
             'Workers and inventory (Solo Farmer)',
             'Video recording, worker logins, Collab Room',
             'Full weather, all reports, document uploads',
@@ -99,6 +102,8 @@ return [
         'workersPerSchedule' => 0,
         'workers'           => false,
         'fieldHelpers'      => true,
+        'skyWeather'        => true,
+        'npkPlus'           => true,
         'inventory'         => false,
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -127,6 +132,7 @@ return [
             'All AI analyses: What to Plant, When to Plant, Variety Ranking, Crop Protocol',
             'Realign by Anee on your growth stages',
             'Field helpers: the weed, pest, disease, nutrient and variety finders',
+            'Satellite Weather and the NPK Plus calculator',
             'Maps: draw and measure up to 3 fields',
             'Buy AI credit packs whenever you need more',
             'Shows a few ads',
@@ -154,6 +160,8 @@ return [
         'workersPerSchedule' => null,
         'workers'           => true,
         'fieldHelpers'      => true,
+        'skyWeather'        => true,
+        'npkPlus'           => true,
         'inventory'         => true,
         'workerLogins'      => false,   // logins are the Owner tier's story
         'videoRecording'    => true,
@@ -210,6 +218,8 @@ return [
         'workersPerSchedule' => null,
         'workers'           => true,
         'fieldHelpers'      => true,
+        'skyWeather'        => true,
+        'npkPlus'           => true,
         'inventory'         => true,
         'workerLogins'      => true,
         'videoRecording'    => true,
@@ -261,6 +271,8 @@ return [
         'workersPerSchedule' => null,
         'workers'           => true,
         'fieldHelpers'      => true,
+        'skyWeather'        => true,
+        'npkPlus'           => true,
         'inventory'         => true,
         'workerLogins'      => true,
         'videoRecording'    => true,
