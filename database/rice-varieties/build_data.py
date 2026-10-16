@@ -35,8 +35,7 @@ GENERIC_TRADE = {'jackpot', 'hatao', 'mestizo', 'hyvar', 'frontline', 'kimbee', 
 # number for another variety.
 DOUBTFUL_TRADE = {('NSIC Rc 548H', 'arizebiganteplus'), ('NSIC Rc 548H', 'biganteplus'),
                   ('NSIC Rc 410H', 'arizehabilisplus'), ('NSIC Rc 410H', 'habilisplus'),
-                  ('NSIC Rc 176H', 'phb73'), ('NSIC Rc 406H', 'bataraindra01'),
-                  ('NSIC Rc 406H', 'batariindra01'), ('NSIC Rc 692H', 'pompyang2323'),
+                  ('NSIC Rc 176H', 'phb73'), ('NSIC Rc 692H', 'pompyang2323'),
                   ('NSIC Rc 408H', 'sl68'), ('NSIC Rc 408H', 'sl68h')}
 
 TAB_ENV = {'Irrigated': 'irrigated', 'Rainfed_TPR': 'rainfed-tpr', 'Rainfed_DSR': 'rainfed-dsr', 'Upland': 'upland',
@@ -119,8 +118,20 @@ TRADE_FIX = {
                                              'https://www.leadsfarmex.com/products']),
     # Nasiglat is Rc 750H (Mestiso 144, line LP 777): Pro Agri Seed, Long
     # Ping's distributor, sells it under that number. Not LAV 777 (Rc 656H).
+    # Not Batari either (checked 2026-10-17, the owner asked): the NSIC 2023
+    # catalogue gives LP 777 as its commercial name and Long Ping as breeder,
+    # and no source ties Batari or Aljay to this number.
     'NSIC Rc 750H': (['Nasiglat', 'LP 777', 'Longping Nasiglat'], ['https://proagriseed.com/voucher/', 'https://proagriseed.com/about-us-2/',
                                                                  'https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf']),
+    # Batari Indra 01 is Rc 406H (2026-10-17): IRRI's Green Super Rice news
+    # and MMSU name it so, with the registry's own trial figures for Rc 406H
+    # (112 days, 103 cm, 5.9 and 10.9 t/ha, 73.3 milling). The registry gives
+    # Bayer as the breeder (line INH10002); Aljay (Aljay Agro-Industrial Solutions)
+    # of Santiago, Isabela, sells it under its Batari brand (its seller file
+    # is sellers_aljay.json in the trade names folder).
+    'NSIC Rc 406H': (['Batari Indra 01', 'Batari'], ['https://gsr.irri.org/presidents-farm-feature-newly-released-and-high-yielding-rice-varieties/',
+                                                     'https://www.mmsu.edu.ph/news/presidents-farm-highlights-agri-technologies',
+                                                     'https://www.youtube.com/watch?v=6PtyYBclgDc']),
 }
 
 

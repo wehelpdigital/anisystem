@@ -469,7 +469,9 @@ def build(v, allv, stats):
     ]})
     sources = [SRC_PHILRICE]
     sources += [{'label': 'Where %s is named as %s' % (trade, n), 'url': u} for u in (v.get('tradeSources') or [])[:2]] if trade else []
-    sources += [{'label': '%s: %s, product page' % ((v.get('seller') or {}).get('company') or 'Seller', trade or n), 'url': u}
+    # A seller that publishes on its own video channel (Aljay) gets "video", not "product page".
+    sources += [{'label': '%s: %s, %s' % ((v.get('seller') or {}).get('company') or 'Seller', trade or n,
+                                          'video' if re.search(r'youtube\.com|facebook\.com', u) else 'product page'), 'url': u}
                 for u in ((v.get('seller') or {}).get('sources') or [])[:2] if u not in (v.get('tradeSources') or [])[:2]]
     sources += [{'label': ('PhilRice seed database: %s variety characteristics%s' % (n, ', second record' if i else '')) if 'dbmp' in u else 'NSIC registry of rice varieties: %s' % n, 'url': u}
                 for i, u in enumerate([x for x in v['sources'] if 'dbmp' in x][:2] + [x for x in v['sources'] if 'dbmp' not in x][:1])]

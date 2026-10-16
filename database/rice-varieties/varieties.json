@@ -15668,7 +15668,33 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=234"
-  ]
+  ],
+  "tradeNames": [
+   "Batari Indra 01",
+   "Batari"
+  ],
+  "tradeSources": [
+   "https://gsr.irri.org/presidents-farm-feature-newly-released-and-high-yielding-rice-varieties/",
+   "https://www.mmsu.edu.ph/news/presidents-farm-highlights-agri-technologies",
+   "https://www.youtube.com/watch?v=6PtyYBclgDc"
+  ],
+  "seller": {
+   "company": "Aljay",
+   "kind": "hybrid",
+   "facts": {
+    "traits": [
+     "Sold by Aljay, a farm supply company in Santiago, Isabela, under its Batari brand",
+     "Tolerates bacterial leaf blight",
+     "A sturdy plant that stays standing and does not lodge"
+    ]
+   },
+   "claims": true,
+   "sources": [
+    "https://www.youtube.com/watch?v=6PtyYBclgDc",
+    "https://www.facebook.com/aljay.plantingdreams/videos/batari-indra01-hybrid-rice-seeds/188933025746478/",
+    "https://www.youtube.com/watch?v=djU7BI3gzbw"
+   ]
+  }
  },
  {
   "slug": "nsic-rc-408h",
