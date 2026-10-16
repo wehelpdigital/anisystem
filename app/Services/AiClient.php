@@ -202,7 +202,7 @@ class AiClient
      * with the web open -- a reading from memory beats no reading, and the
      * answer says which it got ('searched').
      */
-    public function researchThenJson(AiSetting $settings, string $researchPrompt, string $jsonPrompt, int $maxOut, callable $parse, ?callable $onPhase = null): array
+    public function researchThenJson(AiSetting $settings, string $researchPrompt, string $jsonPrompt, int $maxOut, callable $parse, ?callable $onPhase = null, int $notesMaxOut = 3000): array
     {
         // The notes and the document are both written work, not a chat turn.
         $settings = $settings->forDocument();
@@ -224,7 +224,7 @@ class AiClient
             if ($onPhase) {
                 $onPhase('research', $try + 1);
             }
-            $got = $this->ask($settings, [], $brief, null, 3000, ['search' => true, 'timeout' => self::TIMEOUT_SEARCHED]);
+            $got = $this->ask($settings, [], $brief, null, $notesMaxOut, ['search' => true, 'timeout' => self::TIMEOUT_SEARCHED]);
             $spent['tokensIn'] += (int) ($got['tokensIn'] ?? 0);
             $spent['tokensOut'] += (int) ($got['tokensOut'] ?? 0);
             if (($got['ok'] ?? false) && trim((string) $got['text']) !== '') {

@@ -112,8 +112,10 @@ final class AiPricing
         'kinds' => [
             // A named variety: the research leads with it and the report times by it (measured 2026-10: ₱12 to ₱13 a run without, ₱15 to ₱22 with).
             'wtp' => ['unit' => '', 'baseIn' => 10500, 'baseOut' => 8000, 'search' => 1, 'opts' => ['variety' => ['in' => 4500, 'out' => 10500]]],
-            'what' => ['unit' => 'crop', 'min' => 0, 'free' => 0, 'units' => 3, 'max' => 16, 'baseIn' => 7200, 'baseOut' => 11300, 'unitIn' => 20, 'unitOut' => 230, 'outCap' => 20048],
-            'variety' => ['unit' => 'variety', 'free' => 3, 'units' => 3, 'max' => 8, 'baseIn' => 10700, 'baseOut' => 11000, 'unitIn' => 250, 'unitOut' => 120, 'search' => 1, 'om' => 1],
+            // Twenty crops, and since 2026-10-17 a research step first (real yields and farmgate prices, the web open).
+            'what' => ['unit' => 'crop', 'min' => 0, 'free' => 0, 'units' => 3, 'max' => 16, 'baseIn' => 10500, 'baseOut' => 15300, 'unitIn' => 20, 'unitOut' => 230, 'outCap' => 26048, 'search' => 1],
+            // Ten ranked with the derbies' and farmers' harvests (2026-10-17): longer notes and a longer answer.
+            'variety' => ['unit' => 'variety', 'free' => 3, 'units' => 3, 'max' => 8, 'baseIn' => 12500, 'baseOut' => 16000, 'unitIn' => 250, 'unitOut' => 120, 'search' => 1, 'om' => 1],
             'protocol' => ['unit' => '', 'baseIn' => 16000, 'baseOut' => 16000, 'search' => 1, 'om' => 1],
             'season' => ['unit' => 'lot', 'free' => 1, 'units' => 2, 'max' => 200, 'baseIn' => 9000, 'baseOut' => 6000, 'unitIn' => 250, 'unitOut' => 80, 'outCap' => 10048, 'om' => 10],
             'sofar' => ['unit' => 'lot', 'free' => 1, 'units' => 2, 'max' => 200, 'baseIn' => 11500, 'baseOut' => 5000, 'unitIn' => 250, 'unitOut' => 80, 'outCap' => 10048, 'om' => 10],

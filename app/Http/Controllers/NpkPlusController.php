@@ -485,7 +485,9 @@ class NpkPlusController extends Controller
             . "Find: 1) the DA, BSWM or PhilRice fertilizer recommendation for this crop in this province or region, and its timing by growth stage; "
             . "2) the soils of this area (pH, sodic, saline, acid sulfate, deficiencies such as zinc) from BSWM soil surveys or studies; "
             . "3) the rainfall pattern around the planting date here and what ENSO forecasts mean for it (leaching, flooding, drought, heat); "
-            . "4) for any biofertilizer in the plan, what field trials show it can replace. Cite each source.";
+            . "4) for any biofertilizer in the plan, what field trials show it can replace; "
+            // Real harvests (2026-10-17, the owner: "we need real people data").
+            . "5) REAL HARVESTS: the most recent derbies, techno demos and farmers' reported harvests of this crop (and this variety, when named) in this province or region, newest first: the yield (t/ha, or cavans per hectare with the kilos per cavan), the season, the place and the fertilizer used where reported. Cite each source.";
     }
 
     private function prompt(array $p, object $calc): string
@@ -505,7 +507,7 @@ class NpkPlusController extends Controller
             . '"nutrients":[{"nutrient":"N|P2O5|K2O|S|Zn|...","status":"short|right|over","comment":""}],'
             . '"timing":[{"product":"","when":"growth stage and about which day","how":"","why":""}],'
             . '"changes":[{"change":"","why":""}],"soil":"what this soil does to the plan","weather":"what the season and ENSO mean for losses and timing",'
-            . '"biofertilizers":"what the inoculants can and cannot replace (empty if none)","yield":"the yield this plan can realistically support and why",'
+            . '"biofertilizers":"what the inoculants can and cannot replace (empty if none)","yield":"the yield this plan can realistically support and why, set beside what real farmers and derbies near the field harvested (place, season, yield) when the notes have it",'
             . '"warnings":[""],"confidence":"low|medium|high"}';
     }
 

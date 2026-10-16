@@ -360,6 +360,8 @@ class WhatToPlantController extends Controller
         ]);
 
         $prompt = $this->prompt($p);
+        // Real yields and farmgate prices from the web first (2026-10-17, the owner: "we need real people data").
+        $research = $this->researchPrompt($p);
         // The field in detail is kept for the next analysis, named after the
         // place. A lot already keeps its own answers: saved again here, its
         // six month check would start over without anyone checking it.
@@ -374,18 +376,18 @@ class WhatToPlantController extends Controller
                 'pending' => true, 'id' => $id,
             ]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $prompt, $price, $named);
+            $this->runJob($id, (int) $payer->id, $settings, $prompt, $price, $named, $research);
             exit;
         }
 
-        @set_time_limit(300);
-        $this->runJob($id, (int) $payer->id, $settings, $prompt, $price, $named);
+        @set_time_limit(420);
+        $this->runJob($id, (int) $payer->id, $settings, $prompt, $price, $named, $research);
 
         return $this->jobState($id);
     }
 
     /** The model call and the charge, off the request's clock. */
-    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, int $price, int $named): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, int $price, int $named, string $research = ''): void
     {
         /* The heartbeat: before every call to the model the row says which
          * phase it is in and touches updated_at, so the page can move its
@@ -401,7 +403,10 @@ class WhatToPlantController extends Controller
             // owner; ten before), each with its harvest and six fits, and twelve
             // months of risk. Ten took 5,000 to 8,700 tokens out with the thinking;
             // ten more add about 2,300, and each crop the farmer names about 230.
-            $result = $this->ai->askForJson($settings, $prompt, 18000, fn (string $t) => $this->parseReport($t), ['onPhase' => $beat]);
+            // The research first (the web open, real harvests and farmgate prices), then the ranking with its notes.
+            $result = $research !== ''
+                ? $this->ai->researchThenJson($settings, $research, $prompt, 18000, fn (string $t) => $this->parseReport($t), $beat, 4000)
+                : $this->ai->askForJson($settings, $prompt, 18000, fn (string $t) => $this->parseReport($t), ['onPhase' => $beat]);
             $report = $result['data'];
             if ($report === null) {
                 \Illuminate\Support\Facades\Log::warning('what-to-plant: unparsable answer', [
@@ -899,6 +904,7 @@ GROUND RULES
 - HARVEST DAY. A fine planting window is not enough: the crop must also come off the field safely. For every recommendation give plantMonth (1-12, the month its window opens), daysToHarvest (days from planting to first harvest for this crop in this climate, from its real maturity — for a tree crop, months to first bearing times 30), harvestWindow in words (e.g. "late February – mid March"), harvestMonth (1-12, when most of the harvest lands), and harvestRisk: what the region's climate typically does in that harvest month — floods, typhoons/storms, drought, heat, frost — as score 0-100 (0 = calm, 100 = a harvest very likely lost or delayed), kind (one of "flood", "storm", "drought", "heat", "frost", "none") and a note of at most 20 words. A crop whose harvest lands in the flood or typhoon peak must say so, and that risk must pull down fit.survival and the score.
 - monthRisk: twelve rows, January to December, each 0-100 for storm, flood, drought, heat and frost in the region named, from its climatological normals — the chart under the ranking draws every crop's growing bar and harvest against it. Be consistent: a crop's harvestRisk must agree with monthRisk in its harvestMonth.
 - Reason only from established knowledge: {$climateRule}, the soil-water behaviour implied by the described soil and troubles, each candidate crop's real agronomic needs and calendar, and typical {$countryName} market/home-use patterns for the stated aim. No invented prices, no yield promises.
+- REAL HARVESTS AND PRICES: research notes gathered from the web just now follow at the end of this brief (what farmers in the province really harvest of each main crop, the latest farmgate prices, recent derbies). fit.profit and fit.market rest on them first, over memory: a crop real farmers there harvest well and sell at a fair farmgate price scores higher than one with a better textbook yield. Where a crop's why rests on a real figure, say it briefly with its year (e.g. "farmers here averaged 4.2 t/ha in the 2025 dry season, PSA"). A crop the notes say nothing about is scored from established knowledge, and not flattered.
 - Read the extra signals as an agronomist would, and say in each "why" which ones moved the pick: soil pH sets which crops tolerate the ground (acid-tolerant vs lime-loving); the LOOK of the irrigation water is a clue — muddy/brown carries silt (fine for paddy, clogs drip), grayish carries fine silt, fine sand or volcanic ash as in lahar areas (it leaves a gray crust that seals the seedbed, wears pumps and clogs drip and sprinklers, so let it settle in a pond first; sand itself settles fast, so gray water that stays gray is mostly fine silt or ash), cloudy white or milky suggests suspended lime/minerals or fine clay (check salinity and hardness before drip or sensitive vegetables), greenish means algae and nutrient load (watch clogging and disease), salty taste or a white crust means salinity (favor salt-tolerant crops), a bad smell or oily film means contamination (avoid leafy vegetables eaten raw); the lay and elevation set drainage, cold and cloud; sunlight rules out sun-loving crops in shade; the previous crop sets rotation (do not repeat a family that shares its pests and diseases); labor, budget and the market decide whether a labor-heavy, input-heavy or perishable crop is realistic. A skipped signal is "not stated" — do not guess it; name it in dataGaps if it would have changed the ranking.
 - EXCLUDED FAMILIES. A family the farmer does not want never appears in recommendations, topPick or surprises — not one crop of it. The family-coverage rule below applies only to the families still in play. The crops the farmer named themselves are exempt: they asked, so they are ranked.
 - Cover the families still in play honestly: where root crops and tree crops are in play, at least one strong root crop and one perennial/tree option must be CONSIDERED — recommended if they fit, or placed in avoid with the reason if they do not.
@@ -916,6 +922,42 @@ Rules for the shape:
 - monthRisk: exactly twelve rows, month 1 to 12.
 - avoid: two to four crops a farmer in this region might otherwise try — crops that DO grow in {$countryName} but that this ground, water, season or market argues against — each with the plain reason. Never fill it with crops from another climate that no farmer there would plant anyway.
 - confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words, plain and warm but factual.
+PROMPT;
+    }
+
+    /**
+     * The research brief (2026-10-17, the owner: "we need real people data"):
+     * what real farmers near the field harvest and earn, looked up with the
+     * web open before the ranking is written. Prose, not JSON (asked for
+     * JSON the model does not search, see AiClient::researchThenJson).
+     */
+    private function researchPrompt(array $p): string
+    {
+        $fc = $p['country'] ?? \App\Support\Region::code();
+        $fieldPH = $fc === \App\Support\Region::HOME;
+        $countryName = \App\Support\Region::name($fc);
+        $sources = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('sources'));
+        $stats = $fieldPH
+            ? 'the Philippine Statistics Authority (PSA) crop production and yield statistics and the PSA farmgate price survey for the province, the DA regional field office and price monitoring, the provincial and municipal agriculture offices, PhilRice, and news reports'
+            : 'the national agricultural statistics office (crop yields by region or county, farmgate or producer prices), the agriculture department and extension services, and news reports';
+        $start = \Illuminate\Support\Carbon::parse($p['startMonth'] . '-01')->format('F Y');
+        $asked = trim(implode('; ', array_filter([implode(', ', array_map(fn ($k) => \App\Support\CropCatalog::label((string) $k), (array) ($p['cropsAsked'] ?? []))), (string) ($p['cropsOther'] ?? '')]))) ?: 'none named';
+
+        return <<<PROMPT
+You are a research assistant for agriculture in {$countryName} with web search. SEARCH THE WEB NOW and write research notes for a farmer choosing WHAT to plant. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
+
+THE CASE
+- Place: {$p['location']}, {$countryName}
+- Planting from: {$start}
+- Crops the farmer has in mind: {$asked}
+
+FIND, IN THIS ORDER
+1. REAL YIELDS: what farmers in this province (or region, when the province has no figure) really harvest of the main crops grown there, rice, corn, the main vegetables, root crops, legumes and fruit, in the last two or three years, per hectare, by season where it is given; and of every crop the farmer has in mind. Name the year and the source of each figure.
+2. FARMGATE PRICES: the latest farmgate prices of those crops in the province or region, with the month and year.
+3. REAL HARVESTS: the most recent derbies, techno demos and farmers' reported harvests in or near the province (any crop), with the yield, the season and the source.
+4. Which crops the province's agriculture office and the DA are promoting there now, and any market trouble (a glut, a price crash, an import surge) for a crop in the last year.
+
+Prefer {$stats}, and {$sources}. Where a figure cannot be found, say so plainly. Write plain prose notes under the four headings, at most 1300 words, no JSON, no markdown tables.
 PROMPT;
     }
 

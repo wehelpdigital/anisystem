@@ -167,6 +167,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // The news reads the mother app's RSS; the cheap model finds the repeats; the page becomes a news email.
             'newsSameCheck' => method_exists(\App\Services\NewsRoundup::class, 'sameNews') && method_exists(\App\Support\Newsletter\NewsEmail::class, 'forPage')
                 && Illuminate\Support\Facades\Schema::hasColumn('as_news_items', 'sameAsId'),
+            // 2026-10-17: Variety Ranking ranks ten with the derbies' and farmers' harvests; What to Plant researches real yields first.
+            'vaTen' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'markNewest'),
+            'realYields' => method_exists(\App\Http\Controllers\WhatToPlantController::class, 'researchPrompt'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.

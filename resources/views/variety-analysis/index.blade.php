@@ -303,6 +303,32 @@
     .va-pm .is-minus li { list-style: '✗ '; color: #92400e; }
     .wp-why { font-size: .8rem; color: var(--color-gray-600); line-height: 1.55; margin-top: .45rem; }
     .va-src { font-size: .68rem; color: var(--color-gray-400); margin-top: .3rem; }
+    /* Real harvests (2026-10-17, the owner: "we need real people data"): derbies and farmers. */
+    .va-field { display: grid; gap: .3rem; margin: .1rem 0 .55rem; }
+    .va-field > b { font-size: .7rem; font-weight: 800; letter-spacing: .02em; color: #2d5016; }
+    .va-fr { display: block; padding: .35rem .55rem; border-radius: .6rem; font-size: .74rem; font-weight: 700; line-height: 1.4; color: #1f3510; background: #f1f8e9; border: 1px solid #dcebc9; }
+    .va-fr em { font-style: normal; font-size: .62rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; margin-right: .3rem; padding: .05rem .4rem; border-radius: 999px; color: #fff; background: #6b9f3d; }
+    .va-fr.is-farmer em { background: #b45309; }
+    .va-fr.is-trial em { background: #2563eb; }
+    .va-fr small { display: block; margin-top: .1rem; font-size: .64rem; font-weight: 600; color: var(--color-gray-500); }
+    .va-derby { padding: .7rem .75rem; border-radius: .9rem; background: #fffdf5; border: 1px solid #f5e3a8; }
+    .va-derby + .va-derby { margin-top: .55rem; }
+    .va-derby > b { display: block; font-size: .86rem; font-weight: 800; color: #713f12; }
+    .va-derby > small { display: block; font-size: .7rem; color: #a16207; margin-top: .1rem; }
+    .va-derby ol { margin: .45rem 0 0; padding: 0; list-style: none; counter-reset: dv; display: grid; gap: .2rem; }
+    .va-derby li { counter-increment: dv; display: flex; gap: .5rem; align-items: baseline; font-size: .78rem; color: #422006; }
+    .va-derby li::before { content: counter(dv) '.'; flex: none; width: 1.3rem; font-weight: 800; color: #a16207; }
+    .va-derby li span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+    .va-derby li b { flex: none; font-weight: 800; }
+    .va-in { display: inline-block; margin-left: .3rem; padding: .02rem .45rem; border-radius: 999px; font-size: .62rem; font-weight: 800; vertical-align: middle; color: #166534; background: #dcfce7; }
+    .va-in.is-out { color: #6b7280; background: #f3f4f6; }
+    html.dark .va-field > b { color: #a5c97e; }
+    html.dark .va-fr { color: #dce8cf; background: #1a2414; border-color: #2b3a1c; }
+    html.dark .va-derby { background: #241d10; border-color: #5c4a24; }
+    html.dark .va-derby > b, html.dark .va-derby li { color: #fde68a; }
+    html.dark .va-derby > small, html.dark .va-derby li::before { color: #e0c26a; }
+    html.dark .va-in { color: #bbf7d0; background: #14351f; }
+    html.dark .va-in.is-out { color: #b7c2ad; background: #22301a; }
     /* The variety records (2026-10-14): a ranked variety's own record, the
        by-the-numbers shortlist, and the wizard's picks from the records. */
     .va-onfile { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .45rem; margin-top: .5rem; padding: .45rem .6rem; border-radius: .7rem;
@@ -491,7 +517,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="vaQuoteCost"></div>
-                    <div class="q-card">Anee looks up the newest {{ \App\Support\Region::ph() ? 'Philippine' : \App\Support\Region::name() }} varieties, their trial yields and their resistance. She ranks them for your field and the coming weather, by what matters most to you. Treat it as a guide.</div>
+                    <div class="q-card">Anee looks up the newest {{ \App\Support\Region::ph() ? 'Philippine' : \App\Support\Region::name() }} varieties, their trial yields, the latest derbies and real farmers' harvests, and their resistance. She ranks ten of them for your field and the coming weather, by what matters most to you. Treat it as a guide.</div>
                 </div>
             </div>
         </div>
@@ -1181,7 +1207,7 @@
         if (!stepReady()) return;
         const wiz = $id('vaWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is researching…', lines: ['Reading the newest ' + ((window.ANEE_REGION || {}).ph === false ? (window.ANEE_REGION.name + ' ') : 'Philippine ') + 'varieties and trials…', 'Checking hybrids from top seed companies…', 'Checking resistance and days to harvest…', 'Matching each variety to your soil and weather…', 'Ranking by what matters most to you…'], sub: 'This takes a minute or two.' });
+        window.aneeWait.show({ title: 'Anee is researching…', lines: ['Reading the newest ' + ((window.ANEE_REGION || {}).ph === false ? (window.ANEE_REGION.name + ' ') : 'Philippine ') + 'varieties and trials…', 'Checking hybrids from top seed companies…', 'Looking up the latest derbies and farmers\' harvests…', 'Checking resistance and days to harvest…', 'Matching each variety to your soil and weather…', 'Ranking by what matters most to you…'], sub: 'This takes a minute or two.' });
         $id('vaReport').hidden = true;
         let landed = false;
         try {
@@ -1244,9 +1270,33 @@
         // the wizard back, or the Generate tab stands empty.
         const wasFresh = VIEW_MODE === 'fresh';
         VIEW_MODE = null;
-        setTimeout(() => { view.hidden = true; $id('vaViewReport').innerHTML = ''; if (wasFresh) wizardBack(); }, 300);
+        setTimeout(() => { view.hidden = true; $id('vaViewReport').innerHTML = ''; if (wasFresh) { resetWizard(); wizardBack(); } }, 300);
     }
     $id('vaViewX').addEventListener('click', closeView);
+    /* After a fresh result is closed the wizard starts over, as on a fresh
+       page load (2026-10-17, the owner: "the wizard should be back to 0 or
+       reset"). The options and the lots list stay loaded. */
+    function resetWizard() {
+        Object.assign(state, { location: '', month: null, year: null, season: null, soil: null, elevation: null, crop: '', varieties: [],
+            priorities: ['yield', 'protection', 'survival', 'quickness'], problems: [], notes: '' });
+        LOT.lot = null; LOT.L = {}; LOT.n++;
+        soilByLot = false; cropByLot = false;
+        LOTS?.set(null);
+        BOOK = { crop: '', names: [], picks: [], count: 0, finder: null };
+        $id('vaSearchBtn').hidden = true;
+        const m = $id('vaMonthNow');
+        m.textContent = 'Pick the month and year'; m.classList.add('is-none');
+        $id('vaCropIcon').textContent = '🌱';
+        const c = $id('vaCropNow');
+        c.textContent = 'Choose the crop'; c.classList.add('is-none');
+        document.querySelectorAll('#vaSoils .wtp-choice').forEach((b) => b.classList.remove('is-on'));
+        reveal($id('vaSoilBlk'), true);
+        $id('vaVarietyIn').value = '';
+        $id('vaNotes').value = '';
+        paintChips();
+        paintRank();
+        document.querySelectorAll('#vaDots .wtp-dot').forEach((d) => d.classList.remove('is-skip'));
+    }
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(); });
 
     function wizardBack() {
@@ -1344,6 +1394,11 @@
                                 ${list(x.strengths).length ? `<ul class="is-plus">${list(x.strengths).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
                                 ${list(x.weaknesses).length ? `<ul class="is-minus">${list(x.weaknesses).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
                             </div>` : ''}
+                            ${(() => {
+                                // The derbies' and the farmers' own harvests of it (2026-10-17, the owner).
+                                const fr = (Array.isArray(x.fieldResults) ? x.fieldResults : []).filter((f) => f && String(f.yield || '').trim()).slice(0, 3);
+                                return fr.length ? `<div class="va-field"><b>🌾 Real harvests</b>${fr.map((f) => `<span class="va-fr is-${esc(f.kind || 'derby')}"><em>${esc(({ derby: 'Derby', farmer: 'Farmer', trial: 'Trial' })[f.kind] || 'Harvest')}</em>${esc(f.yield)}${f.where ? ' · ' + esc(f.where) : ''}${f.when ? ' · ' + esc(f.when) : ''}${f.source ? `<small>${esc(f.source)}</small>` : ''}</span>`).join('')}</div>` : '';
+                            })()}
                             ${x.fitNotes ? `<p class="wp-why">${esc(sweep(x.fitNotes))}</p>` : ''}
                             ${x.record ? onFile(x.record) : ''}
                             ${list(x.sources).length ? `<p class="va-src">Sources: ${esc(list(x.sources).join(' · '))}</p>` : ''}
@@ -1363,8 +1418,21 @@
             <div class="wtp-card">
                 <h3>Newest in ${(window.ANEE_REGION || {}).ph === false ? (window.ANEE_REGION.name || 'your country') : 'the Philippines'}</h3>
                 ${(r.newest || []).map((n) => `
-                    <div class="wtp-win-row is-new"><b>🆕 ${esc(n.variety || '')}${n.year ? ' (' + esc(n.year) + ')' : ''}${n.by ? ' · ' + esc(n.by) : ''}:</b><span>${esc(sweep(n.note))}${n.record ? ` <a class="va-file-all" href="${esc(n.record.url)}" target="_blank" rel="noopener">Its record ›</a>` : ''}</span></div>`).join('')}
+                    <div class="wtp-win-row is-new"><b>🆕 ${esc(n.variety || '')}${n.year ? ' (' + esc(n.year) + ')' : ''}${n.by ? ' · ' + esc(n.by) : ''}:${n.inRanking === true ? '<span class="va-in">In the ranking</span>' : (n.inRanking === false ? '<span class="va-in is-out">Not ranked</span>' : '')}</b><span>${esc(sweep(n.note))}${n.record ? ` <a class="va-file-all" href="${esc(n.record.url)}" target="_blank" rel="noopener">Its record ›</a>` : ''}</span></div>`).join('')}
             </div>` : ''}
+
+            ${(() => {
+                // The newest derbies and yield contests found (2026-10-17): the nearest first.
+                const ds = (Array.isArray(r.derbies) ? r.derbies : []).filter((d) => d && (d.results || []).length);
+                return ds.length ? `
+            <div class="wtp-card">
+                <h3>🏆 Derbies and farmers' harvests</h3>
+                <p class="va-group-sub">The newest field results Anee found, the nearest first. Real harvests count most in the yield score.</p>
+                ${ds.map((d) => `<div class="va-derby"><b>${esc(d.name || 'Variety derby')}</b><small>${esc([d.where, d.when, d.by].filter(Boolean).join(' · '))}</small>
+                    <ol>${(d.results || []).slice(0, 8).map((x) => `<li><span>${esc(x.variety || '')}</span><b>${esc(x.yield || '')}</b></li>`).join('')}</ol>
+                    ${d.source ? `<p class="va-src">Source: ${esc(d.source)}</p>` : ''}</div>`).join('')}
+            </div>` : '';
+            })()}
 
             ${r.records && (r.records.shortlist || []).length ? `
             <div class="wtp-card">
@@ -1420,7 +1488,7 @@
 
             <div class="wtp-card">
                 <h3>🧭 A guide, not a promise</h3>
-                <p class="wtp-fine">Trial yields come from trial farms, and your field will differ. This is a shortlist of varieties that match what you told us. Before you decide, ask the nearest DA or PhilRice office which seed you can get near you.</p>
+                <p class="wtp-fine">Trial and derby yields come from well kept plots, and your field will differ. This is a shortlist of varieties that match what you told us. Before you decide, ask the nearest DA or PhilRice office which seed you can get near you.</p>
             </div>
 
             <div class="wtp-acts">
@@ -1442,7 +1510,7 @@
         hostEl.querySelector('[data-va-attach]').addEventListener('click', () => {
             if (item.savedId) window.location.href = U.anee + '?analysis=' + item.savedId;
         });
-        hostEl.querySelector('[data-va-again]')?.addEventListener('click', () => { closeView(); wizardBack(); });
+        hostEl.querySelector('[data-va-again]')?.addEventListener('click', () => { if (VIEW_MODE === 'fresh') { closeView(); return; } closeView(); resetWizard(); wizardBack(); });
         hostEl.querySelector('[data-va-delete]').addEventListener('click', async () => {
             const delId = item.savedId;
             const ok = window.confirmAction
