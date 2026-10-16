@@ -514,6 +514,20 @@
     html.dark .cp2-nut-row .need { background: #e8efe1; }
     html.dark .cp2-nut-row.is-ok .vd { color: #86efac; }
     html.dark .cp2-nut-row.is-short .vd { color: #fcd34d; }
+    /* The secondary and micro elements (2026-10-17, the owner): the same rows, NPK Plus's verdicts. */
+    .cp2-nut-sub { margin-top: .35rem; font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
+    .cp2-nut-row.is-el .l { font-size: .74rem; }
+    .cp2-nut-row.is-right .vd, .cp2-nut-row.is-testok .vd { color: #166534; }
+    .cp2-nut-row.is-spray .vd { color: #1d4ed8; }
+    .cp2-nut-row.is-spray .have { background: #93c5fd; }
+    .cp2-nut-row.is-ben .l::after { content: '*'; color: var(--color-gray-400); }
+    .cp2-nut-quiet { font-size: .7rem; line-height: 1.45; color: var(--color-gray-400); }
+    html.dark .cp2-nut-row.is-right .vd, html.dark .cp2-nut-row.is-testok .vd { color: #86efac; }
+    html.dark .cp2-nut-row.is-spray .vd { color: #93c5fd; }
+    .cp-need-m { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .45rem; }
+    .cp-need-m span { padding: .25rem .55rem; border-radius: 999px; font-size: .74rem; font-weight: 700; color: #1f2a17; background: #fff; border: 1px solid #dfeccf; }
+    .cp-need-m span small { font-weight: 600; color: var(--color-gray-500); }
+    html.dark .cp-need-m span { color: #e8efe1; background: #151b12; border-color: #2b3a1c; }
     .cp2-npk { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .9rem; margin-top: .7rem; font-size: .78rem; color: var(--color-gray-600); }
     .cp2-npk b { color: var(--color-gray-900); font-size: .9rem; }
     .cp2-npk small { flex-basis: 100%; font-size: .68rem; color: var(--color-gray-400); }
@@ -1495,6 +1509,10 @@
     /* ---- the need, before the run: the same count the protocol is held to ---- */
     let needAsk = 0;
     const kg = (v) => Number(v || 0).toLocaleString();
+    // An element's amount: kilos to one place, grams under a kilo.
+    const elAmt = (v) => { const x = Number(v) || 0; return x >= 1 ? (Math.round(x * 10) / 10) + ' kg' : Math.round(x * 1000) + ' g'; };
+    // A product's amount: bags of 50 kg, or kilos for one used by the kilo (under a bag).
+    const bagAmt = (bags) => { const b = Number(bags) || 0; return b >= 1 ? trimN(b) + (b === 1 ? ' bag' : ' bags') : (Math.round(b * 50 * 10) / 10) + ' kg'; };
     async function loadNeed() {
         const box = $id('cpNeed'), ask = ++needAsk;
         if (!state.crop) { box.hidden = true; return; }
@@ -1517,10 +1535,16 @@
         if (n.credit && n.credit.K2O) lines.push(n.credit.K2O + ' kg less potassium for the rice straw plowed back.');
         (n.whys || []).slice(0, 4).forEach((w) => lines.push(w + '.'));
         if (n.pLock) lines.push('This soil locks phosphorus: Anee places it in a band, not spread.');
-        const likely = ((n.micro || {}).likely || []).map((m) => m.name.toLowerCase());
-        if (likely.length) lines.push('Likely short here too: ' + likely.join(', ') + '.');
+        // The secondary and micro elements with their amounts (2026-10-17), NPK Plus's count; a report from before has only names.
+        const mics = Object.entries(n.micros || {}).filter(([, m]) => !m.beneficial);
+        if (!mics.length) {
+            const likely = ((n.micro || {}).likely || []).map((m) => m.name.toLowerCase());
+            if (likely.length) lines.push('Likely short here too: ' + likely.join(', ') + '.');
+        }
+        const lvl = { watch: 'may run short', likely: 'likely short', test: 'low by your soil test' };
         box.innerHTML = '<div class="cp-need-h">The fertilizer need per hectare, counted like NPK Plus</div>'
             + '<div class="cp-need-n"><span><b>' + kg(n.need.N) + '</b><small>kg N</small></span><span><b>' + kg(n.need.P2O5) + '</b><small>kg P₂O₅</small></span><span><b>' + kg(n.need.K2O) + '</b><small>kg K₂O</small></span></div>'
+            + (mics.length ? '<div class="cp-need-m">' + mics.map(([el, m]) => '<span>' + esc(m.name) + ' ' + esc(elAmt(m.need)) + ' <small>' + esc(lvl[m.level] || '') + '</small></span>').join('') + '</div>' : '')
             + (g ? '<p>For <b>' + esc(t(g.eff)) + '</b>' + (Math.abs(g.eff - g.t) > 0.01 ? ' (' + esc(t(g.t)) + ', ' + esc(g.why) + ', less for your field)' : ', ' + esc(g.why)) + '. Anee writes every program to meet this, and the report checks each bag against it.</p>' : '')
             + (lines.length ? '<ul>' + lines.map((l) => '<li>' + esc(l) + '</li>').join('') + '</ul>' : '');
     }
@@ -1995,7 +2019,7 @@
             fertHost.innerHTML = `
             ${stages.length ? `
             <div class="wtp-card" data-cp2-stages data-sel="${SEL}">
-                ${programs.length > 1 ? `<div class="cp3-tabs" role="tablist" aria-label="Fertilizer programs">${programs.map((pg, i) => `<button type="button" class="cp3-tab${i === PROG ? ' is-on' : ''}" role="tab" aria-selected="${i === PROG}" data-cp3-prog="${i}"><b>${esc(pg.name || ('Option ' + (i + 1)))}</b><small>${esc(trimN(pg.totalBags || 0))} bags${verdictWord(pg.check)}</small></button>`).join('')}</div>
+                ${programs.length > 1 ? `<div class="cp3-tabs" role="tablist" aria-label="Fertilizer programs">${programs.map((pg, i) => `<button type="button" class="cp3-tab${i === PROG ? ' is-on' : ''}" role="tab" aria-selected="${i === PROG}" data-cp3-prog="${i}"><b>${esc(pg.name || ('Option ' + (i + 1)))}</b><small>${esc(trimN(pg.totalBags || 0))} bags${verdictWord(pg.check, pg.elements)}</small></button>`).join('')}</div>
                 ${g.for ? `<p class="cp3-for">${i0(PROG) ? '⭐ Recommended: ' : ''}${esc(sweep(g.for))}</p>` : ''}` : ''}
                 <h3>Fertilizer by growth stage <small>50 kg bags for the whole field (${esc(trimN(p.area))} ha), ${esc(trimN(g.totalBags || 0))} bags in all</small></h3>
                 <div class="cp-chart cp2-chart">
@@ -2008,10 +2032,10 @@
                     ${stages.map((st, i) => `
                     <button type="button" class="cp2-row" data-cp2-stage="${i}">
                         <span class="cp2-row-n">${i + 1}</span>
-                        <span class="cp2-row-t"><b>${esc(st.stage || '')}</b><small>${st.days ? `<em class="cp2-days">${esc(st.days)}</em>` : ''}${(byStage[i] || []).length ? (byStage[i] || []).map((x) => esc(trimN(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch only' : 'nothing to apply')}</small></span>
+                        <span class="cp2-row-t"><b>${esc(st.stage || '')}</b><small>${st.days ? `<em class="cp2-days">${esc(st.days)}</em>` : ''}${(byStage[i] || []).length ? (byStage[i] || []).map((x) => esc(bagAmt(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch only' : 'nothing to apply')}</small></span>
                         <span class="cp2-row-b">${Number(stageBags[i]) > 0 ? esc(trimN(stageBags[i])) + ' bags' : ''}</span>
                     </button>`).join('')}
-                    ${(g.orphans || []).length ? `<div class="cp3-orphans"><b>Also in this program</b>${(g.orphans || []).map((x) => `<div>${esc(trimN(x.totalBags))} bags ${esc(x.product || '')} · ${esc(x.stage || '')}${x.purpose ? `. <small>${esc(sweep(x.purpose))}</small>` : ''}</div>`).join('')}</div>` : ''}
+                    ${(g.orphans || []).length ? `<div class="cp3-orphans"><b>Also in this program</b>${(g.orphans || []).map((x) => `<div>${esc(bagAmt(x.totalBags))} ${esc(x.product || '')} · ${esc(x.stage || '')}${x.purpose ? `. <small>${esc(sweep(x.purpose))}</small>` : ''}</div>`).join('')}</div>` : ''}
                 </div>
             </div>` : ''}
 
@@ -2019,7 +2043,7 @@
             <div class="wtp-card">
                 <h3>Totals to use <small>for the whole field, amounts only${programs.length > 1 ? ' · ' + esc(g.name || '') : ''}</small></h3>
                 ${totals.length ? `<div class="cp2-tot">
-                    ${totals.map((t) => `<div class="cp2-tot-row"><span class="n"><i style="background:${colour(t.product)}"></i>${esc(t.product)}</span><div class="tr"><span style="width:${Math.max(2, Math.round((Number(t.bags) / maxTotal) * 100))}%;background:${colour(t.product)}"></span></div><b>${esc(trimN(t.bags))} bags</b><small>${esc(trimN(t.bagsPerHa))}/ha</small></div>`).join('')}
+                    ${totals.map((t) => `<div class="cp2-tot-row"><span class="n"><i style="background:${colour(t.product)}"></i>${esc(t.product)}</span><div class="tr"><span style="width:${Math.max(2, Math.round((Number(t.bags) / maxTotal) * 100))}%;background:${colour(t.product)}"></span></div><b>${esc(bagAmt(t.bags))}</b><small>${esc(Number(t.bagsPerHa) >= 1 ? trimN(t.bagsPerHa) : bagAmt(t.bagsPerHa))}/ha</small></div>`).join('')}
                 </div>` : ''}
                 ${check.length ? `
                 <div class="cp2-nut">
@@ -2031,6 +2055,25 @@
                         <span class="v"><b>${esc(trimN(c.have))}</b>${c.need !== null && c.need !== undefined ? ` / ${esc(trimN(c.need))}` : ''}${Number(p.area) && Number(p.area) !== 1 ? `<small>(${esc(trimN(c.haveField))}${c.needField !== null && c.needField !== undefined ? ' / ' + esc(trimN(c.needField)) : ''})</small>` : ''}</span>
                         <span class="vd">${c.verdict === 'ok' ? '✅ on target' : (c.verdict === 'short' ? `⚠️ short by ${esc(trimN(Math.abs(c.gap)))}` : (c.verdict === 'over' ? `↑ over by ${esc(trimN(c.gap))}` : 'not checked'))}</span>
                     </div>`; }).join('')}
+                    ${(() => {
+                        /* The secondary and micro elements (2026-10-17, the owner), as NPK Plus's Micros tab reads them:
+                           a need where a shortfall is likely, the program's amount from each product's analysis. */
+                        const els = g.elements || [];
+                        const shown = els.filter((e) => e.need !== null || Number(e.plan) > 0);
+                        if (!els.length) return '';
+                        const word = { right: '✅ enough', short: '', over: '↑ too much', extra: 'extra, no need flagged', spray: '', testok: '✅ enough by your soil test' };
+                        const quiet = els.filter((e) => e.need === null && !(Number(e.plan) > 0) && e.state === 'noflag').map((e) => e.name);
+                        const ok = els.filter((e) => e.state === 'testok').map((e) => e.name);
+                        return `<p class="cp2-nut-sub">Secondary and micro elements</p>`
+                            + shown.map((e) => { const top = Math.max(1e-6, Number(e.plan) || 0, Number(e.need) || 0); return `
+                    <div class="cp2-nut-row is-el is-${esc(e.state)}${e.beneficial ? ' is-ben' : ''}">
+                        <span class="l" title="${esc(e.name)}">${esc(e.key)}</span>
+                        <div class="tr"><span class="have" style="width:${Math.max(2, Math.round(((Number(e.plan) || 0) / top) * 100))}%"></span>${e.need !== null ? `<i class="need" style="left:${Math.min(100, Math.round(((Number(e.need) || 0) / top) * 100))}%"></i>` : ''}</div>
+                        <span class="v"><b>${esc(elAmt(e.plan))}</b>${e.need !== null ? ` / ${esc(elAmt(e.need))}` : ''}${Number(p.area) && Number(p.area) !== 1 && e.need !== null ? `<small>(${esc(elAmt(e.planField))} / ${esc(elAmt(e.needField))})</small>` : ''}</span>
+                        <span class="vd">${esc(e.name)}: ${e.state === 'short' ? `⚠️ short by ${esc(elAmt(Math.max(0, Number(e.need) - Number(e.plan))))}${e.fert ? '. Usual source: ' + esc(e.fert) : ''}` : (e.state === 'spray' ? `💧 given by the spray${e.sprayAt ? ' at ' + esc(e.sprayAt) : ''}` : esc(word[e.state] || ''))}${e.beneficial ? ' (beneficial, not required)' : ''}</span>
+                    </div>`; }).join('')
+                            + (quiet.length || ok.length ? `<p class="cp2-nut-quiet">${quiet.length ? 'No shortage flagged: ' + esc(quiet.join(', ')) + '. ' : ''}${ok.length ? 'Enough by your soil test: ' + esc(ok.join(', ')) + '. ' : ''}Counted the way NPK Plus counts them.</p>` : '');
+                    })()}
                     ${(g.unknownProducts || []).length ? `<p class="cp-note">Not counted (nutrient content unknown): ${esc((g.unknownProducts || []).join(', '))}.</p>` : ''}
                 </div>${npk.basis ? `<p class="cp-note">${esc(npk.basis)}</p>` : ''}${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}` : ''}
             </div>` : ''}`;
@@ -2039,8 +2082,8 @@
         };
         const i0 = (i) => i === 0;
         // One word on the tab for the nutrient check: short beats over beats on target.
-        const verdictWord = (check) => {
-            const v = (check || []).map((c) => c.verdict);
+        const verdictWord = (check, els) => {
+            const v = (check || []).map((c) => c.verdict).concat((els || []).filter((e) => !e.beneficial).map((e) => ({ right: 'ok', testok: 'ok', spray: 'ok', short: 'short', over: 'over' })[e.state] || 'unchecked'));
             if (!v.length) return '';
             if (v.includes('short')) return ' · short';
             if (v.includes('over')) return ' · over';
@@ -2065,7 +2108,7 @@
                         <div class="cp2-d-head"><span class="cp2-row-n">${i + 1}</span><span><b>${esc(st.stage || '')}</b>${st.days ? `<small><em class="cp2-days">${esc(st.days)}</em></small>` : (st.hint && st.hint !== 'n/a' ? `<small>${esc(st.hint)}</small>` : '')}</span>
                             <span class="cp2-d-nav"><button type="button" data-cp2-prev ${i === 0 ? 'disabled' : ''} aria-label="Previous stage">‹</button><button type="button" data-cp2-next ${i === stages.length - 1 ? 'disabled' : ''} aria-label="Next stage">›</button></span></div>
                         ${st.signs ? `<p class="cp2-d-signs">👁️ ${esc(sweep(st.signs))}</p>` : ''}
-                        ${(st.fertilizer || []).length ? `<div class="cp2-d-fert">${(st.fertilizer || []).map((x) => `<div class="cp2-d-app"><i style="background:${colour(x.product || 'Fertilizer')}"></i><span><b>${esc(trimN(x.totalBags))} ${Number(x.totalBags) === 1 ? 'bag' : 'bags'} ${esc(x.product || '')}</b> <small>(${esc(trimN(x.bagsPerHa))}/ha)</small>${x.purpose ? `<em>${esc(sweep(x.purpose))}</em>` : ''}</span></div>`).join('')}</div>` : `<p class="cp2-dim">No fertilizer at this stage.</p>`}
+                        ${(st.fertilizer || []).length ? `<div class="cp2-d-fert">${(st.fertilizer || []).map((x) => `<div class="cp2-d-app"><i style="background:${colour(x.product || 'Fertilizer')}"></i><span><b>${esc(bagAmt(x.totalBags))} ${esc(x.product || '')}</b> <small>(${esc(Number(x.bagsPerHa) >= 1 ? trimN(x.bagsPerHa) : bagAmt(x.bagsPerHa))}/ha)</small>${x.purpose ? `<em>${esc(sweep(x.purpose))}</em>` : ''}</span></div>`).join('')}</div>` : `<p class="cp2-dim">No fertilizer at this stage.</p>`}
                         ${st.observe ? `<div class="cp2-d-obs"><span class="is-obs">🔎 Look for</span><p>${esc(sweep(st.observe))}</p></div>` : ''}
                         ${st.intervene ? `<div class="cp2-d-obs"><span class="is-act">🛠️ What to do</span><p>${esc(sweep(st.intervene))}</p></div>` : ''}
                         ${(rec.foliars || []).filter((f) => sameStage(f.stage, st.stage)).map((f) => `<div class="cp2-d-fol"><span>🍃 Foliar spray</span><p><b>${esc(foliarName(f.product))}</b>${f.why ? '. ' + esc(sweep(f.why)) : ''}</p></div>`).join('')}`;

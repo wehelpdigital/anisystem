@@ -170,6 +170,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-17: Variety Ranking ranks ten with the derbies' and farmers' harvests; What to Plant researches real yields first.
             'vaTen' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'markNewest'),
             'realYields' => method_exists(\App\Http\Controllers\WhatToPlantController::class, 'researchPrompt'),
+            // 2026-10-17: the Crop Protocol counts the secondary and micro elements the way NPK Plus does.
+            'protoMicros' => method_exists(\App\Support\NpkNeed::class, 'check') && method_exists(\App\Http\Controllers\CropProtocolController::class, 'testsFor'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.

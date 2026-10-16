@@ -14,21 +14,32 @@ namespace App\Support;
  * cannot carry the goal lower it), the same soil factors, soil test bands
  * and field layer, the same N, P2O5 and K2O arithmetic and the same
  * secondary and micro element scores, all on App\Support\NpkModel's
- * numbers. Change the arithmetic in BOTH places. Only the parts that read
- * the farmer's own fertilizer plan (the acidity it adds, the lockouts a
- * heavy plan makes) are left out: here there is no plan yet, the protocol
- * is what writes it.
+ * numbers. Change the arithmetic in BOTH places.
+ *
+ * Since 2026-10-17 (the owner: "consider the micronutrients and not only
+ * npk ... the results of the # of nutrients needed and calculation" must not
+ * be "far away different from the npk plus calculator") the twin is whole:
+ * the secondary and micro elements carry their need in kg per hectare (the
+ * corrective dose sized to the goal), the soil test reads zinc, boron and
+ * sulfur, and a plan can be given (plan: perHa nutrients and the acidity it
+ * adds, acidEq), so the lockouts a heavy plan makes and the acid that frees
+ * phosphorus and micros on an alkaline soil count as they do on the page.
+ * The Crop Protocol checks every program it writes this way.
  *
  * In: crop (a catalogue key), method (rice: transplanted, direct_wet,
  * direct_dry), potential and target (t/ha), seed {amount, unit, germination}
  * for areaHa, texture (sandy, loam, clay, unsure), conditions (acidic,
  * neutral, alkaline, sodic, saline, acid_sulfate, low_om, peat,
- * waterlogged), ph, tests {N|P2O5|K2O: low|medium|high}, water (irrigated,
- * partial, rainfed), profile (FieldProfile answers), prev (legume, rice_straw).
+ * waterlogged), ph, tests {N|P2O5|K2O: low|medium|high, Zn|B|S: low|ok},
+ * water (irrigated, partial, rainfed), profile (FieldProfile answers), prev
+ * (legume, rice_straw), plan {perHa: {N, P2O5, ..., Zn}, acidEq: kg lime}.
  */
 final class NpkNeed
 {
     public const NPK = ['N', 'P2O5', 'K2O'];
+
+    /** The elements a soil test can say are low or enough by their critical level (NpkModel::ELEMENTS). */
+    public const TESTED_MICROS = ['Zn', 'B', 'S'];
 
     /** The usual germination the seeding rates in the guides assume. */
     public const GERM_USUAL = 85;
@@ -55,7 +66,9 @@ final class NpkNeed
     /** What raised a risk, in words. */
     public const FACTOR = ['sandy' => 'sandy soil', 'clay' => 'clay soil', 'acid' => 'acid soil', 'strongAcid' => 'very acid soil', 'alkaline' => 'alkaline soil',
         'strongAlk' => 'strongly alkaline soil', 'sodic' => 'sodic soil', 'saline' => 'salty soil', 'acid_sulfate' => 'acid sulfate soil', 'low_om' => 'low organic matter',
-        'peat' => 'peat soil', 'waterlogged' => 'waterlogged soil', 'flooded' => 'a flooded paddy', 'calcareous' => 'limy (calcareous) soil'];
+        'peat' => 'peat soil', 'waterlogged' => 'waterlogged soil', 'flooded' => 'a flooded paddy', 'calcareous' => 'limy (calcareous) soil',
+        'high_p' => 'heavy phosphorus in the plan locks it up', 'high_k' => 'heavy potassium in the plan crowds it out',
+        'liming' => 'the lime in the plan locks it up', 'excess_zn' => 'heavy zinc in the plan crowds it out'];
 
     public const NAMES = ['N' => 'Nitrogen', 'P2O5' => 'Phosphorus', 'K2O' => 'Potassium', 'Ca' => 'Calcium', 'Mg' => 'Magnesium', 'S' => 'Sulfur', 'Zn' => 'Zinc',
         'B' => 'Boron', 'Fe' => 'Iron', 'Mn' => 'Manganese', 'Cu' => 'Copper', 'Mo' => 'Molybdenum', 'Si' => 'Silicon', 'Co' => 'Cobalt'];
@@ -110,7 +123,8 @@ final class NpkNeed
         $water = in_array($in['water'] ?? '', ['irrigated', 'partial', 'rainfed'], true) ? $in['water'] : 'irrigated';
         $g = self::goal($c, $in, $fieldOn, $water, (array) ($in['conditions'] ?? []));
         $fl = self::fieldLayer($c, $f, $fieldOn ? FieldProfile::normalize($profile) : [], (array) ($in['prev'] ?? []));
-        $md = self::model($c, $g, $f, $cls, $fl);
+        $plan = (array) ($in['plan'] ?? []);
+        $md = self::model($c, $g, $f, $cls, $fl, (array) ($plan['perHa'] ?? []), (float) ($plan['acidEq'] ?? 0));
 
         return [
             'crop' => $key,
@@ -125,6 +139,9 @@ final class NpkNeed
             'nMult' => $fl['nMult'],
             'pLock' => $md['pLock'],
             'micro' => $md['micro'],
+            'share' => $md['share'],
+            'lockouts' => $md['lockouts'],
+            'acid' => $md['acid'],
         ];
     }
 
@@ -165,7 +182,7 @@ final class NpkNeed
         return array_values(array_unique($f));
     }
 
-    /** Soil test bands, as levels: low, medium or high per nutrient. */
+    /** Soil test bands, as levels: low, medium or high per nutrient; zinc, boron and sulfur low or ok. */
     public static function classes(array $tests): array
     {
         $out = [];
@@ -174,8 +191,77 @@ final class NpkNeed
                 $out[$n] = $tests[$n];
             }
         }
+        foreach (self::TESTED_MICROS as $el) {
+            if (in_array($tests[$el] ?? null, ['low', 'ok'], true)) {
+                $out[$el] = $tests[$el];
+            }
+        }
 
         return $out;
+    }
+
+    /**
+     * A soil test's numbers and kit levels as levels, the way NPK Plus's
+     * soilClass() reads them: P by Olsen or Bray, K in ppm or meq, N from
+     * the organic matter or total N, a kit's level for a nutrient with no
+     * number, and zinc, boron and sulfur against their critical levels.
+     */
+    public static function testClasses(?array $t): array
+    {
+        if (! $t) {
+            return [];
+        }
+        $out = FieldProfile::testLevels($t);
+        // NPK Plus reads a number before a kit's level (testLevels takes the kit's first).
+        $band = fn (float $v, float $lo, float $hi) => $v < $lo ? 'low' : ($v <= $hi ? 'medium' : 'high');
+        if (isset($t['p'])) {
+            $out['P2O5'] = ($t['pMethod'] ?? 'olsen') === 'bray' ? $band((float) $t['p'], 15, 30) : $band((float) $t['p'], 10, 20);
+        }
+        if (isset($t['k'])) {
+            $out['K2O'] = $band(($t['kUnit'] ?? 'ppm') === 'meq' ? (float) $t['k'] : (float) $t['k'] / 391, 0.2, 0.4);
+        }
+        if (isset($t['om'])) {
+            $out['N'] = $band((float) $t['om'], 2, 4);
+        } elseif (isset($t['n'])) {
+            $out['N'] = $band((float) $t['n'], 0.1, 0.2);
+        }
+        foreach (self::TESTED_MICROS as $el) {
+            $v = $t[strtolower($el)] ?? null;
+            $crit = NpkModel::ELEMENTS[$el]['critical'] ?? null;
+            unset($out[$el]);
+            if ($v !== null && $crit) {
+                $out[$el] = (float) $v < $crit ? 'low' : 'ok';
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * What a plan does to the soil's acidity, in kg of lime per hectare
+     * (NpkModel::ACIDITY), as NPK Plus counts it. lines: [[slug, kg per
+     * hectare, pct]]; lime and dolomite take acid away.
+     */
+    public static function acidEq(array $lines): float
+    {
+        $AC = NpkModel::ACIDITY;
+        $sum = 0.0;
+        foreach ($lines as [$slug, $kg, $pct]) {
+            $slug = (string) $slug;
+            $kg = (float) $kg;
+            $pct = (array) $pct;
+            if (isset($AC['perKg'][$slug])) {
+                $sum += $kg * $AC['perKg'][$slug];
+
+                continue;
+            }
+            $n = (float) ($pct['N'] ?? 0);
+            $sp = (float) ($pct['S'] ?? 0);
+            $perN = $AC['perN'][$slug] ?? (($sp >= 20 && $n >= 18) ? 5.35 : $AC['defaultPerN']);
+            $sum += $kg * $n / 100 * $perN + ((isset($AC['perS'][$slug]) || ($sp >= 80 && ! ($n > 0))) ? $kg * $sp / 100 * ($AC['perS'][$slug] ?? 3.1) : 0);
+        }
+
+        return $sum;
     }
 
     /** How much is planted per hectare against the usual, and what that does to the goal. */
@@ -311,11 +397,22 @@ final class NpkNeed
         return $out;
     }
 
-    /** NPK Plus's needModel(): the need per hectare, how it was counted, and the secondary and micro scores. */
-    public static function model(?array $c, array $g, array $f, array $cls, array $fl): array
+    /**
+     * NPK Plus's needModel(): the need per hectare, how it was counted, and the
+     * secondary and micro elements with their need. perHa and acidEq are the
+     * plan's (none: the need before any plan).
+     */
+    public static function model(?array $c, array $g, array $f, array $cls, array $fl, array $perHa = [], float $acidEq = 0.0): array
     {
-        $out = ['need' => [], 'raw' => [], 'how' => [], 'adj' => [], 'share' => [], 'whys' => [], 'credit' => [], 'micro' => [], 'pLock' => false];
+        $out = ['need' => [], 'raw' => [], 'how' => [], 'adj' => [], 'share' => [], 'whys' => [], 'credit' => [], 'micro' => [], 'pLock' => false, 'lockouts' => [], 'acid' => null];
         $has = fn (string $k) => in_array($k, $f, true);
+        // The plan's own acidity (kg of lime per hectare): how far it goes toward its full effect.
+        $alk = (bool) array_intersect(['alkaline', 'strongAlk', 'calcareous', 'sodic'], $f);
+        $sour = (bool) array_intersect(['strongAcid', 'acid', 'acid_sulfate'], $f);
+        $au = $acidEq > 0 ? max(0, min(1, $acidEq / (NpkModel::ACID_AT ?: 400))) : 0;
+        if (abs($acidEq) >= 50) {
+            $out['acid'] = ['eq' => $acidEq, 'u' => $au, 'alk' => $alk, 'sour' => $sour];
+        }
         $base = NpkModel::SOIL_SHARE + [];
         if ($c && isset(NpkModel::SOIL_SHARE_CROP[$c['key']])) {
             $base = NpkModel::SOIL_SHARE_CROP[$c['key']] + $base;
@@ -359,7 +456,18 @@ final class NpkNeed
             }
         }
         foreach ($same as $key => $v) {
-            $m[explode(':', $key)[0]] *= $v;
+            $n = explode(':', $key)[0];
+            // An acidifying plan on alkaline soil frees part of the phosphorus lock; on acid soil it adds to it.
+            if ($n === 'P2O5' && str_ends_with($key, ':pfix') && $au > 0) {
+                if ($alk && $v > 1) {
+                    $v = 1 + ($v - 1) * (1 - $au * NpkModel::ACID_UNLOCK);
+                    $out['whys'][] = 'the acid fertilizers in your plan free some of the locked phosphorus';
+                } elseif ($sour) {
+                    $v = $v + 0.1 * $au;
+                    $out['whys'][] = 'the acid fertilizers in your plan make the acid soil sourer';
+                }
+            }
+            $m[$n] *= $v;
         }
         foreach (self::NPK as $n) {
             $b = ($cls[$n] ?? null) === 'low' ? 'testLow' : (($cls[$n] ?? null) === 'high' ? 'testHigh' : null);
@@ -393,6 +501,7 @@ final class NpkNeed
                 $out['how']['N'] = 'legume';
                 $out['raw']['N'] = is_array($R['N'] ?? null) ? (float) $R['N'][0] : 20.0;
                 $out['need']['N'] = $out['raw']['N'];
+                $out['share']['N'] = 0.95;
 
                 continue;
             }
@@ -423,24 +532,53 @@ final class NpkNeed
                 $out['credit'][$n] = $cut;
             }
         }
+        // Lockouts the plan itself makes: too much phosphorus ties up zinc and
+        // iron, too much potassium crowds out magnesium and calcium, lime ties
+        // up zinc, boron, manganese, copper and iron, too much zinc crowds out copper.
+        $pf = [];
+        if ((float) ($perHa['P2O5'] ?? 0) > (! empty($out['need']['P2O5']) ? $out['need']['P2O5'] * 1.5 : 100)) {
+            $pf[] = 'high_p';
+        }
+        if ((float) ($perHa['K2O'] ?? 0) > (! empty($out['need']['K2O']) ? $out['need']['K2O'] * 1.5 : 150)) {
+            $pf[] = 'high_k';
+        }
+        if ((float) ($perHa['Ca'] ?? 0) >= 150) {
+            $pf[] = 'liming';
+        }
+        if ((float) ($perHa['Zn'] ?? 0) > 10) {
+            $pf[] = 'excess_zn';
+        }
+        $out['lockouts'] = $pf;
+        $ff = array_values(array_unique(array_merge($f, $pf)));
         // Secondary, micro and beneficial elements: from a bag only where a shortfall is likely.
+        $ys = ! empty($c['typicalYield']['hi']) && ! empty($g['Yeff']) ? max(0.8, min(1.4, $g['Yeff'] / $c['typicalYield']['hi'])) : 1;
         $L = NpkModel::MICRO_LEVELS;
         foreach (NpkModel::ELEMENTS as $el => $e) {
             $why = [];
+            $down = [];
             $score = 0;
             foreach ($e['weights'] ?? [] as $k => $w) {
-                if (! $has($k)) {
+                if (! in_array($k, $ff, true)) {
                     continue;
                 }
                 $score += $w;
                 if ($w > 0) {
                     $why[] = self::FACTOR[$k] ?? $k;
+                } elseif (! empty($e['down'][$k]) && ! in_array($e['down'][$k], $down, true)) {
+                    $down[] = $e['down'][$k];
                 }
             }
             $sens = in_array($c['key'], $e['sensitive'] ?? [], true);
             if ($sens) {
                 $score += $e['sensitiveWeight'] ?? 1;
-                $why[] = strtolower(explode(',', $c['label'])[0]) . ' needs more of it';
+                // The crop's short name, as the page says it (cropName, cropShort): "Rice, transplanted (Palay)" is "rice".
+                $why[] = strtolower(explode(',', explode(' (', str_replace(' — ', ', ', (string) $c['label']))[0])[0]) . ' needs more of it';
+            }
+            // Acid around the roots on a high pH soil: zinc, iron, manganese and copper come
+            // free again, and on sodic soil the soil's own lime turns to calcium.
+            if ($au > 0 && $alk && (in_array($el, ['Zn', 'Fe', 'Mn', 'Cu'], true) || ($el === 'Ca' && $has('sodic')))) {
+                $score -= $au;
+                $down[] = $el === 'Ca' ? 'the acid fertilizers in your plan turn the soil\'s own lime into calcium' : 'the acid fertilizers in your plan free some of it around the roots';
             }
             $level = $score >= $L['likely']['at'] ? 'likely' : ($score >= $L['watch']['at'] ? 'watch' : 'none');
             if ($fl['zinc'] && $el === 'Zn' && $level !== 'likely') {
@@ -450,10 +588,75 @@ final class NpkNeed
             if (! empty($e['beneficial']) && ! $sens) {
                 $level = 'notneeded';
             }
-            $out['micro'][$el] = ['level' => $level, 'why' => $why];
+            // A soil test settles it.
+            if (($cls[$el] ?? null) === 'low') {
+                $level = 'test';
+                array_unshift($why, 'your soil test reads low');
+            } elseif (($cls[$el] ?? null) === 'ok') {
+                $level = 'testok';
+            }
+            $lv = $L[$level] ?? ['dose' => 0, 'share' => 1];
+            $out['micro'][$el] = ['level' => $level, 'why' => $why, 'down' => $down, 'need' => (float) $e['base'] * (float) $lv['dose'] * $ys, 'share' => (float) $lv['share']];
         }
 
         return $out;
+    }
+
+    /**
+     * The plan against the need, the way NPK Plus's NPK and Micros tabs read
+     * it, so a program checked here reads as it would there: N, P2O5 and K2O
+     * short under 90 percent of the need and too much past 130 percent; an
+     * element short under 90 percent and too much past its own limit (over
+     * times the need); an element with no need is extra when the plan has
+     * it, else not flagged, not needed, or enough by the soil test.
+     *
+     * @return list<array{key: string, name: string, need: ?float, plan: float, state: string, level?: string, why?: list<string>, fert?: string}>
+     */
+    public static function check(array $run, array $perHa): array
+    {
+        $rows = [];
+        foreach (self::NPK as $n) {
+            $need = $run['need'][$n] ?? null;
+            $plan = (float) ($perHa[$n] ?? 0);
+            $state = 'noneed';
+            if ($need !== null) {
+                $r = $need > 0 ? $plan / $need : ($plan > 0 ? 9 : 1);
+                $state = $r < 0.9 ? 'short' : ($r > 1.3 ? 'over' : 'right');
+            }
+            $rows[] = ['key' => $n, 'name' => self::NAMES[$n], 'need' => $need, 'plan' => round($plan, 1), 'state' => $state];
+        }
+        foreach ((array) ($run['micro'] ?? []) as $el => $mm) {
+            $e = NpkModel::ELEMENTS[$el] ?? [];
+            $need = (float) ($mm['need'] ?? 0);
+            $plan = (float) ($perHa[$el] ?? 0);
+            if ($need > 0) {
+                $r = $plan / $need;
+                $state = $r < 0.9 ? 'short' : ($r > ($e['over'] ?? 5) ? 'over' : 'right');
+            } else {
+                $state = $plan > 0 ? 'extra' : (in_array($mm['level'], ['notneeded', 'testok'], true) ? $mm['level'] : 'noflag');
+            }
+            $rows[] = ['key' => $el, 'name' => self::NAMES[$el] ?? $el, 'need' => $need > 0 ? round($need, 3) : null, 'plan' => round($plan, 3), 'state' => $state,
+                'level' => $mm['level'], 'why' => array_slice((array) ($mm['why'] ?? []), 0, 3), 'fert' => (string) ($e['fert'] ?? ''), 'beneficial' => ! empty($e['beneficial'])];
+        }
+
+        return $rows;
+    }
+
+    /** The secondary and micro elements a field needs from a bag, in words: "Zinc 5 kg Zn (likely short: ...)". */
+    public static function microWords(array $micro): string
+    {
+        $bits = [];
+        foreach ($micro as $el => $mm) {
+            if ((float) ($mm['need'] ?? 0) <= 0) {
+                continue;
+            }
+            $kg = (float) $mm['need'];
+            $bits[] = (self::NAMES[$el] ?? $el) . ' ' . ($kg >= 1 ? rtrim(rtrim(number_format($kg, 1, '.', ''), '0'), '.') . ' kg' : round($kg * 1000) . ' g') . ' ' . $el
+                . ' (' . (['watch' => 'may run short', 'likely' => 'likely short', 'test' => 'short by the soil test'][$mm['level']] ?? $mm['level'])
+                . ($mm['why'] ? ': ' . implode(', ', array_slice($mm['why'], 0, 3)) : '') . ')';
+        }
+
+        return implode('; ', $bits);
     }
 
     /** The need in a line: "N 120, P2O5 45, K2O 60 kg per hectare". */
