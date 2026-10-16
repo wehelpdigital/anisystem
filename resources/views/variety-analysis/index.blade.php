@@ -704,6 +704,13 @@
 (() => {
     const $id = (x) => document.getElementById(x);
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    /* No government body, state university or research institute is named to
+     * the farmer (the owner, 2026-10-18): a public breeder (PhilRice, IRRI,
+     * UPLB, the BPI) or a derby's public host is left out, saved reports too;
+     * a seed company stays. The twin of App\Support\GovSource::isGov. */
+    const GOV_W = /philrice|phil\s+rice|bswm|bureau\s+of|department\s+of\s+agriculture|pagasa|philmech|philfida|pcaarrd|uplb|state\s+university|university\s+of\s+the\s+philippines|international\s+rice|irri|fao|cimmyt|world\s*veg|avrdc|tnau|nsic\s+registry|variety\s+registry/i;
+    const GOV_C = /(?:DA|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)|ATI|NIA|PCA|PSA|SRA|DOST|UPLB|CLSU|VSU|CMU|ISU|BSU|MMSU|USM|CvSU|IPB)/;
+    const notGov = (s) => { const t = String(s ?? '').trim(); return t && !GOV_W.test(t) && !GOV_C.test(t) ? t : ''; };
     const U = {
         options: '{{ route('vary.options') }}',
         generate: '{{ route('vary.generate') }}',
@@ -1339,7 +1346,7 @@
             <div class="wtp-hero">
                 <h2>${esc(crop.icon || '🌱')} ${esc(r.headline || ('Best ' + (crop.label || 'variety') + ' for your field'))}</h2>
                 <p class="h-win">${esc(top.variety || '')}</p>
-                ${top.by ? `<p class="h-by">${esc(top.by)}</p>` : ''}
+                ${notGov(top.by) ? `<p class="h-by">${esc(notGov(top.by))}</p>` : ''}
                 <p class="h-why">${esc(sweep(top.why))}</p>
                 ${(r.bestHybrid && r.bestInbred) ? `<p class="h-best"><span>Best hybrid: <b>${esc(r.bestHybrid)}</b></span><span>Best inbred: <b>${esc(r.bestInbred)}</b></span></p>` : ''}
                 <div class="wtp-chips">
@@ -1379,7 +1386,7 @@
                         <div class="va-rec" style="transition-delay:${d * 70}ms">
                             <div class="va-rec-top">
                                 <span class="wp-rank">${esc(String(x.rank || i + 1))}</span>
-                                <span class="v-name"><b>${esc(x.variety || '')}${x.type === 'hybrid' ? ' <span class="va-type">hybrid</span>' : ''}</b>${x.by ? `<small>${esc(x.by)}${x.released && x.released !== 'n/a' ? ' · released ' + esc(x.released) : ''}</small>` : ''}</span>
+                                <span class="v-name"><b>${esc(x.variety || '')}${x.type === 'hybrid' ? ' <span class="va-type">hybrid</span>' : ''}</b>${notGov(x.by) ? `<small>${esc(notGov(x.by))}${x.released && x.released !== 'n/a' ? ' · released ' + esc(x.released) : ''}</small>` : (x.released && x.released !== 'n/a' ? `<small>released ${esc(x.released)}</small>` : '')}</span>
                                 <span class="va-overall"><b>${esc(String(x.overall ?? ''))}</b><small>overall</small></span>
                             </div>
                             <div class="va-facts">
@@ -1417,7 +1424,7 @@
             <div class="wtp-card">
                 <h3>Newest in ${(window.ANEE_REGION || {}).ph === false ? (window.ANEE_REGION.name || 'your country') : 'the Philippines'}</h3>
                 ${(r.newest || []).map((n) => `
-                    <div class="wtp-win-row is-new"><b>🆕 ${esc(n.variety || '')}${n.year ? ' (' + esc(n.year) + ')' : ''}${n.by ? ' · ' + esc(n.by) : ''}:${n.inRanking === true ? '<span class="va-in">In the ranking</span>' : (n.inRanking === false ? '<span class="va-in is-out">Not ranked</span>' : '')}</b><span>${esc(sweep(n.note))}${n.record ? ` <a class="va-file-all" href="${esc(n.record.url)}" target="_blank" rel="noopener">Its record ›</a>` : ''}</span></div>`).join('')}
+                    <div class="wtp-win-row is-new"><b>🆕 ${esc(n.variety || '')}${n.year ? ' (' + esc(n.year) + ')' : ''}${notGov(n.by) ? ' · ' + esc(notGov(n.by)) : ''}:${n.inRanking === true ? '<span class="va-in">In the ranking</span>' : (n.inRanking === false ? '<span class="va-in is-out">Not ranked</span>' : '')}</b><span>${esc(sweep(n.note))}${n.record ? ` <a class="va-file-all" href="${esc(n.record.url)}" target="_blank" rel="noopener">Its record ›</a>` : ''}</span></div>`).join('')}
             </div>` : ''}
 
             ${(() => {
@@ -1427,7 +1434,7 @@
             <div class="wtp-card">
                 <h3>🏆 Derbies and farmers' harvests</h3>
                 <p class="va-group-sub">The newest field results Anee found, the nearest first. Real harvests count most in the yield score.</p>
-                ${ds.map((d) => `<div class="va-derby"><b>${esc(d.name || 'Variety derby')}</b><small>${esc([d.where, d.when, d.by].filter(Boolean).join(' · '))}</small>
+                ${ds.map((d) => `<div class="va-derby"><b>${esc(d.name || 'Variety derby')}</b><small>${esc([d.where, d.when, notGov(d.by)].filter(Boolean).join(' · '))}</small>
                     <ol>${(d.results || []).slice(0, 8).map((x) => `<li><span>${esc(x.variety || '')}</span><b>${esc(x.yield || '')}</b></li>`).join('')}</ol>
                     </div>`).join('')}
             </div>` : '';

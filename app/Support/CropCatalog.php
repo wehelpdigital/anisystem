@@ -128,7 +128,7 @@ class CropCatalog
     public const CROPS = [
         /* ---------------- Cereals & grains ---------------- */
         'rice' => [
-            'label' => 'Rice — transplanted (Palay)', 'icon' => '🌾', 'group' => 'Cereals & grains',
+            'label' => 'Rice, transplanted (Palay)', 'icon' => '🌾', 'group' => 'Cereals & grains',
             'kind' => self::ANNUAL, 'counter' => 'DAT', 'maturity' => 110,
         ],
         /* Direct-seeded rice (DSR) is two crops of its own, not "upland"
@@ -138,23 +138,23 @@ class CropCatalog
          * transplant or a planting to count from: DAS, from sowing, only.
          * Their calendars are CropStages::TABLES, not a stretched pattern. */
         'rice_dsr_wet' => [
-            'label' => 'Rice — Direct Seeded Wet (Palay)', 'icon' => '🌾', 'group' => 'Cereals & grains',
+            'label' => 'Rice, Direct Seeded Wet (Palay)', 'icon' => '🌾', 'group' => 'Cereals & grains',
             'kind' => self::ANNUAL, 'counter' => 'DAS', 'counters' => ['DAS'], 'maturity' => 110,
         ],
         'rice_dsr_dry' => [
-            'label' => 'Rice — Direct Seeded Dry (Palay)', 'icon' => '🌾', 'group' => 'Cereals & grains',
+            'label' => 'Rice, Direct Seeded Dry (Palay)', 'icon' => '🌾', 'group' => 'Cereals & grains',
             'kind' => self::ANNUAL, 'counter' => 'DAS', 'counters' => ['DAS'], 'maturity' => 115,
         ],
         'corn_yellow' => [
-            'label' => 'Corn — yellow / field (Mais)', 'icon' => '🌽', 'group' => 'Cereals & grains',
+            'label' => 'Corn, yellow / field (Mais)', 'icon' => '🌽', 'group' => 'Cereals & grains',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 110,
         ],
         'corn_sweet' => [
-            'label' => 'Corn — sweet (Mais na matamis)', 'icon' => '🌽', 'group' => 'Cereals & grains',
+            'label' => 'Corn, sweet (Mais na matamis)', 'icon' => '🌽', 'group' => 'Cereals & grains',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 75,
         ],
         'corn_glutinous' => [
-            'label' => 'Corn — white / glutinous (Mais na malagkit)', 'icon' => '🌽', 'group' => 'Cereals & grains',
+            'label' => 'Corn, white / glutinous (Mais na malagkit)', 'icon' => '🌽', 'group' => 'Cereals & grains',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 95, 'pattern' => 'cereal',
         ],
         'sorghum' => [
@@ -340,7 +340,7 @@ class CropCatalog
 
         /* ---------------- Onions & garlic ---------------- */
         'onion' => [
-            'label' => 'Onion — bulb (Sibuyas)', 'icon' => '🧅', 'group' => 'Onions & garlic',
+            'label' => 'Onion, bulb (Sibuyas)', 'icon' => '🧅', 'group' => 'Onions & garlic',
             'kind' => self::ANNUAL, 'counter' => 'DAT', 'maturity' => 115, 'pattern' => 'bulb',
             'counters' => ['DAT', 'DAS', 'DAP'],
         ],
@@ -418,7 +418,7 @@ class CropCatalog
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 30,
         ],
         'citrus' => [
-            'label' => 'Citrus — dalandan / ponkan', 'icon' => '🍊', 'group' => 'Fruit trees',
+            'label' => 'Citrus, dalandan / ponkan', 'icon' => '🍊', 'group' => 'Fruit trees',
             'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 42,
         ],
         'pomelo' => [
@@ -500,7 +500,7 @@ class CropCatalog
 
         /* ---------------- The catch-all ---------------- */
         'vegetables' => [
-            'label' => 'Vegetables — mixed (Gulay)', 'icon' => '🥗', 'group' => 'Other',
+            'label' => 'Vegetables, mixed (Gulay)', 'icon' => '🥗', 'group' => 'Other',
             'kind' => self::ANNUAL, 'counter' => 'DAP', 'maturity' => 70, 'pattern' => 'fruiting',
         ],
         'strawberry' => [
