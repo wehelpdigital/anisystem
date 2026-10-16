@@ -28,7 +28,7 @@
     $hybrids = $all->filter(fn ($v) => str_contains(strtolower((string) ($v['kind'] ?? '')), 'hybrid'))->count();
     $title = $name . ' Varieties in the Philippines';
     // The members' gate (2026-10-14): a guest sees the finder's first rows.
-    $hg = \App\Support\ContentGate::guestView();
+    $hg = \App\Support\ContentGate::finderApplies('crop-varieties');
     $member = auth()->check() && ! $hg;
     $metaTitle = collect([$title . ': Every Registered Variety', $title . ': Yield and Maturity', $title])->first(fn ($t) => mb_strlen($t) <= 60);
     $desc = collect([
@@ -112,7 +112,7 @@
                         <a href="#finder"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a variety</a>
                         <a href="#choose"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2m0-13c1.5-1.5 4-2 8-2v13c-4 0-6.5.5-8 2m0-13v13"/></svg>How to choose</a>
                         @if ($hg)
-                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Register for free to see them all</a>
+                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>See them all with Libre + Anee</a>
                         @elseif ($member)
                             <a href="?guest=1#spGateCard" class="hg-chip is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>Open for you · <u>See it as a guest</u></a>
                         @endif
@@ -149,7 +149,7 @@
             @include('public.site.partials.crop-variety-finder', ['varieties' => $varieties, 'crop' => $crop, 'hubGate' => $hg ? [
                 'here' => '/crop-varieties/' . $crop['slug'],
                 'title' => 'See all ' . $all->count() . ' ' . $lname . ' varieties, and the ones that fit your farm',
-                'lead' => 'Register for free to compare every variety side by side: its yield, its strengths and weaknesses, and how it will do on your farm, in your season and your soil.',
+                'lead' => 'Compare every variety side by side with Libre + Anee: its yield, its strengths and weaknesses, and how it will do on your farm, in your season and your soil.',
             ] : null])
         </div>
     </section>

@@ -128,7 +128,7 @@
                         <a href="#finder"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a variety</a>
                         <a href="#read"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2m0-13c1.5-1.5 4-2 8-2v13c-4 0-6.5.5-8 2m0-13v13"/></svg>How to read the numbers</a>
                         @if ($hg)
-                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Register for free to see them all</a>
+                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>See them all with Libre + Anee</a>
                         @elseif ($member)
                             <a href="?guest=1#spGateCard" class="hg-chip is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>Open for you · <u>See it as a guest</u></a>
                         @endif
@@ -166,7 +166,7 @@
             @include('public.site.partials.variety-finder', ['varieties' => $varieties, 'hubGate' => $hg ? [
                 'here' => '/' . $section,
                 'title' => 'See all ' . $all->count() . ' rice varieties, and the ones that fit your farm',
-                'lead' => 'Register for free to compare every variety side by side: its yield, its strengths and weaknesses, and how it will do on your farm, in your season and your soil.',
+                'lead' => 'Compare every variety side by side with Libre + Anee: its yield, its strengths and weaknesses, and how it will do on your farm, in your season and your soil.',
             ] : null])
 
             @if ($popular->count())
@@ -190,7 +190,7 @@
                             <a href="{{ $S::url('rice-varieties', $v['slug']) }}">{{ $tradeName($v['tradeNames'][0]) }} <small>{{ $v['name'] }}</small></a>
                         @endforeach
                     </div>
-                    @if ($hg)<p class="mt-3"><a href="#spGateCard" class="hg-chip">Register for free to see the variety behind every brand ›</a></p>@endif
+                    @if ($hg)<p class="mt-3"><a href="#spGateCard" class="hg-chip">See the variety behind every brand with Libre + Anee ›</a></p>@endif
                 </div>
             @endif
         </div>

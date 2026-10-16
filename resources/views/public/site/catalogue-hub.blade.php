@@ -79,7 +79,7 @@
                     <div class="wk-jump mt-6">
                         <a href="#catalogue"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a {{ $words['noun'] }}</a>
                         @if ($hg)
-                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Register for free to see them all</a>
+                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>See them all with Libre + Anee</a>
                         @elseif ($member)
                             <a href="?guest=1#spGateCard" class="hg-chip is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>Open for you · <u>See it as a guest</u></a>
                         @endif
@@ -199,8 +199,8 @@
                     'here' => '/' . $section,
                     'title' => 'See all ' . $items->count() . ' crop ' . $words['nouns'] . ($isPests ? ' and how to stop each one' : ' and how to manage each one'),
                     'lead' => $isPests
-                        ? 'Register for free to open every pest: how to be sure which one you have, the damage it does, when it pays to act and what to spray.'
-                        : 'Register for free to open every disease: how to tell it from look alikes, what makes it spread, and what to spray and when.',
+                        ? 'Every pest is open with Libre + Anee: how to be sure which one you have, the damage it does, when it pays to act and what to spray.'
+                        : 'Every disease is open with Libre + Anee: how to tell it from look alikes, what makes it spread, and what to spray and when.',
                 ])
             </div>
             @endif

@@ -102,7 +102,7 @@
                         <a href="#catalogue"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a deficiency</a>
                         <a href="#nutrients"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20c0-7 4-13 13-15-1 9-6 14-13 15zm0 0c2-4 5-7 9-10"/></svg>The 12 nutrients</a>
                         @if ($hg)
-                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>Register for free to see them all</a>
+                            <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>See them all with Libre + Anee</a>
                         @elseif ($member)
                             <a href="?guest=1#spGateCard" class="hg-chip is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>Open for you · <u>See it as a guest</u></a>
                         @endif
@@ -240,7 +240,7 @@
                 @include('public.site.partials.content-gate-card', [
                     'here' => '/' . $section,
                     'title' => 'See all ' . $items->count() . ' nutrient deficiencies and the fertilizer for each',
-                    'lead' => 'Register for free to open every deficiency of every crop: the photo, how to tell it from look alikes, how to be sure, what to apply and the fertilizers sold here that supply it.',
+                    'lead' => 'Every deficiency of every crop is open with Libre + Anee: the photo, how to tell it from look alikes, how to be sure, what to apply and the fertilizers sold here that supply it.',
                 ])
             </div>
             @endif

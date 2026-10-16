@@ -34,6 +34,17 @@ class ContentGate
      */
     public const HUBS = ['pests', 'diseases', 'weeds', 'rice-varieties', 'nutrient-deficiencies'];
 
+    /**
+     * The sections whose full pages come with Libre + Anee and up (2026-10-17, the owner:
+     * "registering does not give them those details because the feature is only available
+     * for libre plus"): the guides behind the field helpers. A free account reads them as a
+     * guest does and is invited to upgrade. Land preparation stays open on a free account.
+     */
+    public const PLUS_SECTIONS = ['crop-varieties', 'rice-varieties', 'pests', 'diseases', 'weeds', 'nutrient-deficiencies'];
+
+    /** The plan that opens them, and its checkout item. */
+    public const PLUS_PLAN = 'libreAnee';
+
     /** The class the gated part wears; the structured data names it. */
     public const SELECTOR = '.sp-gated';
 
@@ -49,13 +60,37 @@ class ContentGate
      */
     public static function applies(?string $section): bool
     {
-        return self::gatedSection($section) && (! Auth::check() || self::previewing());
+        return self::gatedSection($section) && (! Auth::check() || self::previewing() || self::upgradeView($section));
+    }
+
+    /** Whether the section's full pages come with Libre + Anee (not with a free account). */
+    public static function needsPlus(?string $section): bool
+    {
+        return in_array((string) $section, self::PLUS_SECTIONS, true);
+    }
+
+    /** Whether the signed in visitor's farm has Libre + Anee or above (the field helpers' plan). */
+    public static function hasPlus(): bool
+    {
+        return Auth::check() && Tier::farmCan('fieldHelpers');
+    }
+
+    /** A signed in member whose plan does not open this section: invited to upgrade, not to register. */
+    public static function upgradeView(?string $section): bool
+    {
+        return Auth::check() && ! self::previewing() && self::needsPlus($section) && ! self::hasPlus();
+    }
+
+    /** Whether this visitor meets the gate on a finder that is not a section front (a crop's variety finder). */
+    public static function finderApplies(string $section): bool
+    {
+        return self::guestView() || self::upgradeView($section);
     }
 
     /** Whether this visitor meets the gate on a section's front page. */
     public static function hubApplies(?string $section): bool
     {
-        return in_array((string) $section, self::HUBS, true) && self::guestView();
+        return in_array((string) $section, self::HUBS, true) && (self::guestView() || self::upgradeView($section));
     }
 
     /**
@@ -77,7 +112,7 @@ class ContentGate
     /** A signed in member reading a gated page in full: the marker shows where guests stop. */
     public static function opensFor(?string $section): bool
     {
-        return self::gatedSection($section) && Auth::check() && ! self::previewing();
+        return self::gatedSection($section) && Auth::check() && ! self::previewing() && ! self::upgradeView($section);
     }
 
     /**
