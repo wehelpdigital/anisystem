@@ -15,7 +15,11 @@
   "urea fertilizer"
  ],
  "excerpt": "Nitrogen deficiency in plants starts on the old, lower leaves. Nitrogen is part of chlorophyll, the green color that lets leaves turn sunlight into food. It is also part of every amino acid and protein, so it drives leaf growth, tillers and the size of the harvest. In rice it adds tillers, panicles and filled grains, and it raises the protein in the grain. Here are the signs in each crop, what brings it, how to be sure and the fertilizer that fixes it.",
- "heroImage": null,
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-n.webp",
+  "alt": "Chili plants with pale yellow green leaves, older ones yellowing first, from nitrogen shortage",
+  "credit": "Maja Dumat, CC BY 2.0, via Flickr"
+ },
  "blocks": [
   {
    "type": "text",

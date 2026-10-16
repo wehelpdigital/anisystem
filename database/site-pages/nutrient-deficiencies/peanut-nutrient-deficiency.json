@@ -19,9 +19,9 @@
  ],
  "excerpt": "Peanut nutrient deficiency is one of the first things to check when the leaves of your mani (peanut) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are calcium, nitrogen, potassium, boron, sulfur, iron, zinc and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-ca.webp",
-  "alt": "Calcium deficiency on a leaf, shown on another crop as a stand in for peanut",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/peanut-nitrogen-deficiency.webp",
+  "alt": "Peanut leaf from a nutrient trial turned pale yellow green (right) beside a dark green leaf from a fully fed plant (left), from nitrogen shortage",
+  "credit": "Lobo et al., Bioscience Journal 2012, CC BY 4.0, via seer.ufu.br"
  },
  "blocks": [
   {
@@ -183,6 +183,12 @@
    "level": 2,
    "text": "Nitrogen deficiency in peanut",
    "id": "nitrogen"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/peanut-nitrogen-deficiency.webp",
+   "alt": "Peanut leaf from a nutrient trial turned pale yellow green (right) beside a dark green leaf from a fully fed plant (left), from nitrogen shortage",
+   "caption": "Photo: Lobo et al., Bioscience Journal 2012, CC BY 4.0, via seer.ufu.br"
   },
   {
    "type": "text",
@@ -393,6 +399,12 @@
    "level": 2,
    "text": "Iron deficiency in peanut",
    "id": "iron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/peanut-iron-deficiency.webp",
+   "alt": "Peanut plant whose young leaves have turned pale yellow green while older leaves stay dark green from iron shortage",
+   "caption": "Photo: Chen et al., Current Issues in Molecular Biology (MDPI) 2026, CC BY 4.0, via the publisher"
   },
   {
    "type": "text",

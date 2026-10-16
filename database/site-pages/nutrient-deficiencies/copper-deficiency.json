@@ -15,7 +15,11 @@
   "foliar fertilizer"
  ],
  "excerpt": "Copper deficiency in plants starts on the young leaves and the growing tip. Copper is part of the enzymes that run photosynthesis and respiration. It helps form chlorophyll and lignin, the stiff material in cell walls. It keeps pollen alive, so a crop short of copper sets empty grain. Legumes also need it to form nodules and fix nitrogen. Here are the signs in each crop, what brings it, how to be sure and the fertilizer that fixes it.",
- "heroImage": null,
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-cu.webp",
+  "alt": "Young shoot of an ornamental tree with drooping, cupped, twisted new leaves from copper shortage",
+  "credit": "Florida Division of Plant Industry, Florida Department of Agriculture, CC BY 3.0 US, via ipmimages.org"
+ },
  "blocks": [
   {
    "type": "text",

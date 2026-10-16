@@ -20,9 +20,9 @@
  ],
  "excerpt": "Coffee nutrient deficiency is one of the first things to check when the leaves of your kape (coffee) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, boron, zinc, magnesium, calcium, sulfur and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/coffee-iron-deficiency.webp",
-  "alt": "Coffee leaf turned yellow between a net of green veins, an iron shortage sign on young leaves",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/coffee-nitrogen-deficiency.webp",
+  "alt": "Coffee leaf turned pale yellow green all over, with only the veins a little greener, from nitrogen shortage",
+  "credit": "Tuesta Monteza et al., CoLeaf dataset, CC BY 4.0, via Mendeley Data"
  },
  "blocks": [
   {
@@ -138,6 +138,12 @@
    "id": "nitrogen"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/coffee-nitrogen-deficiency.webp",
+   "alt": "Coffee leaf turned pale yellow green all over, with only the veins a little greener, from nitrogen shortage",
+   "caption": "Photo: Tuesta Monteza et al., CoLeaf dataset, CC BY 4.0, via Mendeley Data"
+  },
+  {
    "type": "text",
    "text": "Leaves turn an even pale green, then yellow green, until the whole tree looks pale. In the Hawaii trial the young leaves paled first in full sun and the old leaves followed. Indian guides say the older, lower leaves go first. Leaves lose their normal glossy shine, old leaves may show whitish veins and drop early. Shoot growth falls by half or more. Flowering comes late and beans fill poorly. You see it most at this stage: any age, worst during new leaf growth and flowering, when uptake peaks, and on heavy bearing trees."
   },
@@ -190,6 +196,12 @@
    "level": 2,
    "text": "Phosphorus deficiency in coffee",
    "id": "phosphorus"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/coffee-phosphorus-deficiency.webp",
+   "alt": "Older coffee leaf mottled yellow with an orange red tint between the veins from phosphorus shortage",
+   "caption": "Photo: Tuesta Monteza et al., CoLeaf dataset, CC BY 4.0, via Mendeley Data"
   },
   {
    "type": "text",
@@ -248,6 +260,12 @@
    "id": "potassium"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/coffee-potassium-deficiency.webp",
+   "alt": "Coffee leaf whose tip and edge have died back dark brown while the rest stays pale green, from potassium shortage",
+   "caption": "Photo: Tuesta Monteza et al., CoLeaf dataset, CC BY 4.0, via Mendeley Data"
+  },
+  {
    "type": "text",
    "text": "Only the older leaves show it. A yellow band forms along the leaf edge, then dark brown dead spots appear on the edge and grow until the whole edge is dark brown while the area along the midrib stays green. Young leaves stay normal. Badly hit leaves fall early and branches can die back. You see it most at this stage: bearing trees, most of all while the berries grow and fill, when potash demand peaks."
   },
@@ -300,6 +318,12 @@
    "level": 2,
    "text": "Boron deficiency in coffee",
    "id": "boron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/coffee-boron-deficiency.webp",
+   "alt": "Thick, leathery young coffee leaf with a notched, dead tip and uneven edges from boron shortage",
+   "caption": "Photo: Tuesta Monteza et al., CoLeaf dataset, CC BY 4.0, via Mendeley Data"
   },
   {
    "type": "text",
@@ -406,6 +430,12 @@
    "level": 2,
    "text": "Magnesium deficiency in coffee",
    "id": "magnesium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/coffee-magnesium-deficiency.webp",
+   "alt": "Coffee leaf yellow between a net of green veins from magnesium shortage",
+   "caption": "Photo: Tuesta Monteza et al., CoLeaf dataset, CC BY 4.0, via Mendeley Data"
   },
   {
    "type": "text",

@@ -19,9 +19,9 @@
  ],
  "excerpt": "Watermelon nutrient deficiency is one of the first things to check when the leaves of your pakwan (watermelon) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, magnesium, calcium, boron, phosphorus and zinc. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for watermelon",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/watermelon-calcium-deficiency.webp",
+  "alt": "Watermelon fruit with a dark, rotting blossom end from calcium shortage",
+  "credit": "Clemson University USDA Cooperative Extension Slide Series, Bugwood.or, CC BY 3.0 US, via ipmimages.org"
  },
  "blocks": [
   {
@@ -285,6 +285,12 @@
    "level": 2,
    "text": "Calcium deficiency in watermelon",
    "id": "calcium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/watermelon-calcium-deficiency.webp",
+   "alt": "Watermelon fruit with a dark, rotting blossom end from calcium shortage",
+   "caption": "Photo: Clemson University USDA Cooperative Extension Slide Series, Bugwood.or, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",

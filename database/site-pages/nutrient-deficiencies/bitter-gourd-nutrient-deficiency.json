@@ -19,9 +19,9 @@
  ],
  "excerpt": "Bitter gourd nutrient deficiency is one of the first things to check when the leaves of your ampalaya (bitter gourd) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, magnesium, phosphorus, calcium, boron and zinc. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for bitter gourd",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/ampalaya-nitrogen-deficiency.webp",
+  "alt": "Bitter gourd leaf that has turned evenly pale yellow green, from nitrogen shortage",
+  "credit": "Orka et al., Nutrispace dataset, CC BY 4.0, via Mendeley Data"
  },
  "blocks": [
   {
@@ -125,6 +125,12 @@
    "id": "nitrogen"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/ampalaya-nitrogen-deficiency.webp",
+   "alt": "Bitter gourd leaf that has turned evenly pale yellow green, from nitrogen shortage",
+   "caption": "Photo: Orka et al., Nutrispace dataset, CC BY 4.0, via Mendeley Data"
+  },
+  {
    "type": "text",
    "text": "Older leaves turn pale green to yellow and may die and drop. Vines are stunted, and fruits are pale, small and thick. You see it most at this stage: vine growth and the long harvest period."
   },
@@ -178,6 +184,12 @@
    "level": 2,
    "text": "Potassium deficiency in bitter gourd",
    "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/ampalaya-potassium-deficiency.webp",
+   "alt": "Bitter gourd leaf yellowing along the edges with a scorched brown dead margin on one lobe, from potassium shortage",
+   "caption": "Photo: Reyes et al., Ampalaya Leaf Dataset, Lipa City, CC BY 4.0, via figshare"
   },
   {
    "type": "text",

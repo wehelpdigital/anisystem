@@ -18,9 +18,9 @@
  ],
  "excerpt": "Bottle gourd nutrient deficiency is one of the first things to check when the leaves of your upo (bottle gourd) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, phosphorus, magnesium, calcium and boron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for bottle gourd",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/upo-nitrogen-deficiency.webp",
+  "alt": "Bottle gourd leaf turned pale yellow green from nitrogen shortage",
+  "credit": "Orka, Uddin, Toushique and Hossain, OLID I dataset, CC BY 4.0, via Zenodo"
  },
  "blocks": [
   {
@@ -116,6 +116,12 @@
    "level": 2,
    "text": "Nitrogen deficiency in bottle gourd",
    "id": "nitrogen"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/upo-nitrogen-deficiency.webp",
+   "alt": "Bottle gourd leaf turned pale yellow green from nitrogen shortage",
+   "caption": "Photo: Orka, Uddin, Toushique and Hossain, OLID I dataset, CC BY 4.0, via Zenodo"
   },
   {
    "type": "text",

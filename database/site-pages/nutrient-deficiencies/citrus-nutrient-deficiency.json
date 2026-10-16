@@ -19,9 +19,9 @@
  ],
  "excerpt": "Citrus nutrient deficiency is one of the first things to check when the leaves of your citrus, dalandan or ponkan (citrus) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, zinc, magnesium, boron, manganese, iron, phosphorus and copper. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/citrus-zinc-deficiency.webp",
-  "alt": "Citrus leaves with yellow blotches between green veins, a zinc shortage pattern",
-  "credit": "Scot Nelson (photo by Erika Magarifuji Location), CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/citrus-nitrogen-deficiency.webp",
+  "alt": "Orange leaf turned evenly pale yellow all over, from nitrogen shortage",
+  "credit": "Gómez Flores et al., CitrusUAT dataset, CC BY 4.0, via Zenodo"
  },
  "blocks": [
   {
@@ -135,6 +135,12 @@
    "level": 2,
    "text": "Nitrogen deficiency in citrus",
    "id": "nitrogen"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/citrus-nitrogen-deficiency.webp",
+   "alt": "Orange leaf turned evenly pale yellow all over, from nitrogen shortage",
+   "caption": "Photo: Gómez Flores et al., CitrusUAT dataset, CC BY 4.0, via Zenodo"
   },
   {
    "type": "text",
@@ -306,6 +312,12 @@
    "id": "magnesium"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/citrus-magnesium-deficiency.webp",
+   "alt": "Citrus branch with yellow older leaves, green at the base, from magnesium shortage",
+   "caption": "Photo: Florida Division of Plant Industry, Florida Department of Agriculture, CC BY 3.0 US, via ipmimages.org"
+  },
+  {
    "type": "text",
    "text": "Leaves look normal on the new flush, then mature leaves close to the growing fruit show yellow blotches near the base on each side of the midrib. The blotches join until only the tip and a V shaped area at the base, pointing up the midrib, stay green. In acute cases the whole leaf turns yellow or bronze and drops. Heavily fruited limbs can lose nearly all their leaves while lightly loaded limbs stay green. Fruit are lower in sugar, acid and vitamin C, and seedy kinds swing into alternate bearing. You see it most at this stage: fruit growth and maturing, on heavily bearing limbs."
   },
@@ -360,6 +372,12 @@
    "id": "boron"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/citrus-boron-deficiency.webp",
+   "alt": "Ponkan fruits that stayed small, hard and lumpy with greenish patches from boron shortage",
+   "caption": "Photo: Yang et al., Plants (MDPI) 2021, CC BY 4.0, via the publisher"
+  },
+  {
    "type": "text",
    "text": "Fruit show it most: small, hard and misshapen with a lumpy surface, with gum pockets and dark spots in the white inner peel (albedo) near the rind and sometimes in the core, and gum on the skin. Many fruit drop, peel can crease, and fruit rot more after harvest. The growing tip dies and the shoot sends out many side shoots. Young leaves wilt early, show water soaked spots, curl, and the veins split and turn corky. You see it most at this stage: flowering to fruit growth, often after a long dry spell."
   },
@@ -411,6 +429,12 @@
    "level": 2,
    "text": "Manganese deficiency in citrus",
    "id": "manganese"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/citrus-manganese-deficiency.webp",
+   "alt": "Orange leaf with pale yellow patches between broad green vein bands, from manganese shortage",
+   "caption": "Photo: Gómez Flores et al., CitrusUAT dataset, CC BY 4.0, via Zenodo"
   },
   {
    "type": "text",
@@ -468,8 +492,8 @@
   {
    "type": "image",
    "src": "/images/site/deficiencies/citrus-iron-deficiency.webp",
-   "alt": "Potted Meyer lemon with pale, yellowing leaves from a shortage of iron, zinc and other minor nutrients",
-   "caption": "Photo: Scot Nelson, CC0 1.0, via Flickr"
+   "alt": "Citrus leaves: yellow leaves with green veins from iron shortage, compared with healthy dark green leaves",
+   "caption": "Photo: Florida Division of Plant Industry, Florida Department of Agriculture, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",

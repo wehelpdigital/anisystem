@@ -19,9 +19,9 @@
  ],
  "excerpt": "Tobacco nutrient deficiency is one of the first things to check when the leaves of your tabako (tobacco) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, magnesium, sulfur, boron, calcium and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for tobacco",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/tobacco-nitrogen-deficiency.webp",
+  "alt": "Tobacco plants whose lower leaves have turned pale yellow from nitrogen shortage",
+  "credit": "R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org"
  },
  "blocks": [
   {
@@ -125,6 +125,12 @@
    "id": "nitrogen"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/tobacco-nitrogen-deficiency.webp",
+   "alt": "Tobacco plants whose lower leaves have turned pale yellow from nitrogen shortage",
+   "caption": "Photo: R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org"
+  },
+  {
    "type": "text",
    "text": "The lower leaves turn paler than the upper ones and then yellow and dry up early, which growers call burning up. The yellowing moves up the stalk as nitrogen moves from old leaves to the new growth. Plants stay short with small, thin leaves, and the cured leaf comes out pale and slick, so both yield and grade drop. You see it most at this stage: from two to five weeks after transplanting, when the crop grows fastest, up to topping."
   },
@@ -179,6 +185,12 @@
    "id": "potassium"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/tobacco-potassium-deficiency.webp",
+   "alt": "Two tobacco leaves mottled yellow with brown specks between the veins from potassium shortage",
+   "caption": "Photo: R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org"
+  },
+  {
    "type": "text",
    "text": "Leaf tips and edges yellow first on leaves in the middle of the stalk. If not corrected, the yellowing spreads to the upper leaves, and in bad cases the yellow tissue turns black and falls away. Leaf yield, quality and price all drop, and leaf low in potash burns poorly. You see it most at this stage: mid season to ripening, often during weather extremes: drought, long wet spells or very hot weather."
   },
@@ -230,6 +242,12 @@
    "level": 2,
    "text": "Magnesium deficiency in tobacco",
    "id": "magnesium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/tobacco-magnesium-deficiency.webp",
+   "alt": "Lower tobacco leaf turned pale between green veins from magnesium shortage",
+   "caption": "Photo: R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",
@@ -286,6 +304,12 @@
    "id": "sulfur"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/tobacco-sulfur-deficiency.webp",
+   "alt": "Young tobacco plant pale yellow green all over, upper leaves included, from sulfur shortage",
+   "caption": "Photo: R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org"
+  },
+  {
    "type": "text",
    "text": "Yellowing starts in the bud and the youngest leaves, and the leaves slowly pale from the top down. Unlike nitrogen shortage, the lower leaves do not dry up early unless nitrogen is also short. Adding nitrogen does not green the plant and can lower leaf quality. You see it most at this stage: early to mid season, after heavy rain."
   },
@@ -338,6 +362,12 @@
    "level": 2,
    "text": "Boron deficiency in tobacco",
    "id": "boron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/tobacco-boron-deficiency.webp",
+   "alt": "Tobacco plant whose bud and youngest leaves are deformed and dying from boron shortage",
+   "caption": "Photo: R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",
@@ -393,6 +423,12 @@
    "id": "calcium"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/tobacco-calcium-deficiency.webp",
+   "alt": "Tobacco plants whose upper leaves are cupped and hooked at the tips from calcium shortage",
+   "caption": "Photo: R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org"
+  },
+  {
    "type": "text",
    "text": "The edges of the newest leaves turn yellow, and those edge cells die. Because the dead edges cannot grow, the new leaf bends down at the tip like a shepherd's crook. The edges then tear and brown, and in bad cases the growing tip dies with a dark, spongy bud, the plant stops growing and suckers take over. You see it most at this stage: fast growth before topping, mostly during drought or waterlogging."
   },
@@ -446,6 +482,12 @@
    "level": 2,
    "text": "Manganese deficiency in tobacco",
    "id": "manganese"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/tobacco-manganese-deficiency.webp",
+   "alt": "Tobacco leaf with pale, speckled areas between the veins from manganese shortage",
+   "caption": "Photo: R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",

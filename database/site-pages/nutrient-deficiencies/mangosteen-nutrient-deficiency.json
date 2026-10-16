@@ -18,9 +18,9 @@
  ],
  "excerpt": "Mangosteen nutrient deficiency is one of the first things to check when the leaves of your mangostan (mangosteen) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, calcium and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-p.webp",
-  "alt": "Phosphorus deficiency on a leaf, shown on another crop as a stand in for mangosteen",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/mangosteen-phosphorus-deficiency.webp",
+  "alt": "Small stunted mangosteen seedling grown without phosphorus beside a taller fully fed seedling, from phosphorus shortage",
+  "credit": "Viégas et al., American Journal of Plant Sciences 2018, CC BY 4.0, via SCIRP"
  },
  "blocks": [
   {
@@ -167,6 +167,12 @@
    "id": "phosphorus"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/mangosteen-phosphorus-deficiency.webp",
+   "alt": "Small stunted mangosteen seedling grown without phosphorus beside a taller fully fed seedling, from phosphorus shortage",
+   "caption": "Photo: Viégas et al., American Journal of Plant Sciences 2018, CC BY 4.0, via SCIRP"
+  },
+  {
    "type": "text",
    "text": "No mangosteen particular leaf description was found, so this follows general fruit tree signs. The tree grows slowly and older leaves turn dull with a purple or bronze tint, mostly underneath. In an Indonesian study, more phosphorus raised flower and fruit set and cut flower and fruit drop. So a shortage shows as poor set and heavy drop. You see it most at this stage: flowering and fruit set, and young trees."
   },
@@ -220,6 +226,12 @@
    "level": 2,
    "text": "Potassium deficiency in mangosteen",
    "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/mangosteen-potassium-deficiency.webp",
+   "alt": "Mangosteen leaf with yellow blotches between the side veins toward the edges from potassium shortage",
+   "caption": "Photo: Viégas et al., American Journal of Plant Sciences 2018, CC BY 4.0, via SCIRP"
   },
   {
    "type": "text",
@@ -330,6 +342,12 @@
    "level": 2,
    "text": "Iron deficiency in mangosteen",
    "id": "iron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/mangosteen-iron-deficiency.webp",
+   "alt": "Mangosteen seedling leaf turned yellow between a fine net of green veins, with a dead brown tip, from iron shortage",
+   "caption": "Photo: Viégas et al., American Journal of Plant Sciences 2018, CC BY 4.0, via SCIRP"
   },
   {
    "type": "text",

@@ -21,9 +21,9 @@
  ],
  "excerpt": "Rice nutrient deficiency is one of the first things to check when the leaves of your palay (rice) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, phosphorus, zinc, sulfur, iron, magnesium, manganese, boron, copper and calcium. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for rice",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/rice-nitrogen-deficiency.webp",
+  "alt": "Young rice plants pale yellow green with yellowing, drying lower leaves from nitrogen shortage",
+  "credit": "Chen et al., International Journal of Molecular Sciences 2024, CC BY 4.0, via the publisher"
  },
  "blocks": [
   {
@@ -151,6 +151,12 @@
    "id": "nitrogen"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/rice-nitrogen-deficiency.webp",
+   "alt": "Young rice plants pale yellow green with yellowing, drying lower leaves from nitrogen shortage",
+   "caption": "Photo: Chen et al., International Journal of Molecular Sciences 2024, CC BY 4.0, via the publisher"
+  },
+  {
    "type": "text",
    "text": "The oldest leaves turn yellowish green first, starting at the tip, while the young leaves stay greener. Leaves become narrow, short and stand very upright. Plants stay short with few tillers, and in a bad case the whole field looks yellow. Fewer grains form and the harvest drops. You see it most at this stage: tillering up to panicle initiation, when the crop takes up the most nitrogen."
   },
@@ -203,6 +209,12 @@
    "level": 2,
    "text": "Potassium deficiency in rice",
    "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/rice-potassium-deficiency.webp",
+   "alt": "Rice leaf whose tip and edges have dried yellow brown while the rest stays dark green from potassium shortage",
+   "caption": "Photo: Chen et al., PLOS ONE 2014, CC BY 4.0, via PLOS"
   },
   {
    "type": "text",
@@ -259,6 +271,12 @@
    "id": "phosphorus"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/rice-phosphorus-deficiency.webp",
+   "alt": "Rice plot in a phosphorus trial in Thailand: thin, very upright, dark green plants with few tillers from phosphorus shortage (old slide)",
+   "caption": "Photo: Koyama, JIRCAS Photo Archive, CC BY 2.0, via Flickr"
+  },
+  {
    "type": "text",
    "text": "Plants stay short with thin stems and very few tillers. Leaves are narrow, short, very upright and dirty dark green. The older leaves turn brown and die while the young ones look healthy. Some varieties turn red or purple. Panicles and grains are fewer, and the crop can mature a week or more late. You see it most at this stage: early growth and tillering. Mild cases are hard to see in the field."
   },
@@ -312,6 +330,12 @@
    "level": 2,
    "text": "Zinc deficiency in rice",
    "id": "zinc"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/rice-zinc-deficiency.webp",
+   "alt": "Rice leaf with rusty brown spots and streaks (bronzing) from zinc shortage",
+   "caption": "Photo: Donald Groth, Louisiana State University AgCenter, Bugwood.org, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",
@@ -473,6 +497,12 @@
    "level": 2,
    "text": "Magnesium deficiency in rice",
    "id": "magnesium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/rice-magnesium-deficiency.webp",
+   "alt": "Close view of a rice leaf blade with yellow green blotches and stripes between the veins from magnesium shortage",
+   "caption": "Photo: Tanoi and Kobayashi, Plants (MDPI) 2015, CC BY 4.0, via MDPI"
   },
   {
    "type": "text",

@@ -21,9 +21,9 @@
  ],
  "excerpt": "Tomato nutrient deficiency is one of the first things to check when the leaves of your kamatis (tomato) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, calcium, phosphorus, magnesium, boron, zinc, sulfur, iron and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/tomato-potassium-deficiency.webp",
-  "alt": "Tomato leaf yellow and brown along the edges from potassium shortage",
-  "credit": "Goldlocki, CC BY SA 3.0, via Wikimedia Commons"
+  "src": "/images/site/deficiencies/tomato-nitrogen-deficiency.webp",
+  "alt": "Older tomato leaflet turned yellow from the edges inward, green only near the midrib, from nitrogen shortage",
+  "credit": "Orka, Uddin, Toushique and Hossain, OLID I dataset, CC BY 4.0, via Zenodo"
  },
  "blocks": [
   {
@@ -143,6 +143,12 @@
    "level": 2,
    "text": "Nitrogen deficiency in tomato",
    "id": "nitrogen"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/tomato-nitrogen-deficiency.webp",
+   "alt": "Older tomato leaflet turned yellow from the edges inward, green only near the midrib, from nitrogen shortage",
+   "caption": "Photo: Orka, Uddin, Toushique and Hossain, OLID I dataset, CC BY 4.0, via Zenodo"
   },
   {
    "type": "text",

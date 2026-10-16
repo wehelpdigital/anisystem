@@ -21,8 +21,8 @@
  "excerpt": "Soybean nutrient deficiency is one of the first things to check when the leaves of your utaw (soybean) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, sulfur, molybdenum, iron, manganese, zinc and magnesium. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
   "src": "/images/site/deficiencies/soybean-potassium-deficiency.webp",
-  "alt": "Soybean plants whose leaves turn yellow along the edges, potassium shortage in the upper canopy",
-  "credit": "Ark. Agricultural Experiment Station, CC BY SA 2.0, via Flickr"
+  "alt": "Soybean leaf yellow and brown along the edges from potassium shortage",
+  "credit": "Daren Mueller, Iowa State University, Bugwood.org, CC BY 3.0 US, via ipmimages.org"
  },
  "blocks": [
   {
@@ -247,8 +247,8 @@
   {
    "type": "image",
    "src": "/images/site/deficiencies/soybean-potassium-deficiency.webp",
-   "alt": "Soybean plants whose leaves turn yellow along the edges, potassium shortage in the upper canopy",
-   "caption": "Photo: Ark. Agricultural Experiment Station, CC BY SA 2.0, via Flickr"
+   "alt": "Soybean leaf yellow and brown along the edges from potassium shortage",
+   "caption": "Photo: Daren Mueller, Iowa State University, Bugwood.org, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",
@@ -410,6 +410,12 @@
    "id": "iron"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/soybean-iron-deficiency.webp",
+   "alt": "Young soybean plants whose newest leaves are yellow between green veins from iron shortage",
+   "caption": "Photo: Daren Mueller, Iowa State University, Bugwood.org, CC BY 3.0 US, via ipmimages.org"
+  },
+  {
    "type": "text",
    "text": "Young upper leaves turn yellow between the veins first, then the veins yellow too. In severe cases the leaves become almost white. Older leaves stay green, and the patches follow spots of limey soil. You see it most at this stage: seedling and early growth."
   },
@@ -564,6 +570,12 @@
    "level": 2,
    "text": "Magnesium deficiency in soybean",
    "id": "magnesium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/soybean-magnesium-deficiency.webp",
+   "alt": "Soybean leaves yellow between the green veins from magnesium shortage",
+   "caption": "Photo: Keino et al., PLOS ONE 2015, CC BY 4.0, via PLOS"
   },
   {
    "type": "text",

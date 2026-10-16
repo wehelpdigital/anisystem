@@ -19,9 +19,9 @@
  ],
  "excerpt": "Squash nutrient deficiency is one of the first things to check when the leaves of your kalabasa (squash) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, magnesium, phosphorus, calcium, boron and zinc. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for squash",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/squash-calcium-deficiency.webp",
+  "alt": "Young squash fruit with a black, rotted blossom end from calcium shortage",
+  "credit": "Mary Ann Hansen, Virginia Polytechnic Institute and State University, CC BY 3.0 US, via ipmimages.org"
  },
  "blocks": [
   {
@@ -338,6 +338,12 @@
    "level": 2,
    "text": "Calcium deficiency in squash",
    "id": "calcium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/squash-calcium-deficiency.webp",
+   "alt": "Young squash fruit with a black, rotted blossom end from calcium shortage",
+   "caption": "Photo: Mary Ann Hansen, Virginia Polytechnic Institute and State University, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",

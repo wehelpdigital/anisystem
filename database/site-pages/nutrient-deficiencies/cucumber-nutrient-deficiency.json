@@ -18,9 +18,9 @@
  ],
  "excerpt": "Cucumber nutrient deficiency is one of the first things to check when the leaves of your pipino (cucumber) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, magnesium, phosphorus, calcium, boron and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for cucumber",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/cucumber-nitrogen-deficiency.webp",
+  "alt": "Cucumber leaf gone pale yellow green all over from nitrogen shortage",
+  "credit": "Orka, Uddin, Toushique and Hossain, OLID I dataset, CC BY 4.0, via Zenodo"
  },
  "blocks": [
   {
@@ -122,6 +122,12 @@
    "level": 2,
    "text": "Nitrogen deficiency in cucumber",
    "id": "nitrogen"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/cucumber-nitrogen-deficiency.webp",
+   "alt": "Cucumber leaf gone pale yellow green all over from nitrogen shortage",
+   "caption": "Photo: Orka, Uddin, Toushique and Hossain, OLID I dataset, CC BY 4.0, via Zenodo"
   },
   {
    "type": "text",
@@ -231,6 +237,12 @@
    "level": 2,
    "text": "Magnesium deficiency in cucumber",
    "id": "magnesium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/cucumber-magnesium-deficiency.webp",
+   "alt": "Cucumber vine whose older leaves have turned pale between green veins, from magnesium shortage",
+   "caption": "Photo: Meng et al., Frontiers in Plant Science 2023, CC BY 4.0, via Frontiers"
   },
   {
    "type": "text",

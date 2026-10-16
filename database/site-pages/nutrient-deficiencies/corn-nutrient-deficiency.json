@@ -20,9 +20,9 @@
  ],
  "excerpt": "Corn nutrient deficiency is one of the first things to check when the leaves of your mais (corn) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, zinc, sulfur, magnesium, calcium, boron, copper and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/corn-yellow-phosphorus-deficiency.webp",
-  "alt": "Young corn plants with purple red leaves among green ones, a phosphorus shortage sign",
-  "credit": "Agronom, CC BY SA 3.0, via Wikimedia Commons"
+  "src": "/images/site/deficiencies/corn-yellow-nitrogen-deficiency.webp",
+  "alt": "Maize leaf yellowing in a broad band along the midrib while the edges stay green, from nitrogen shortage",
+  "credit": "Vishnu Khade, Maize Nutrient Deficiency Dataset, CC BY 4.0, via Mendeley Data"
  },
  "blocks": [
   {
@@ -144,6 +144,12 @@
    "id": "nitrogen"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/corn-yellow-nitrogen-deficiency.webp",
+   "alt": "Maize leaf yellowing in a broad band along the midrib while the edges stay green, from nitrogen shortage",
+   "caption": "Photo: Vishnu Khade, Maize Nutrient Deficiency Dataset, CC BY 4.0, via Mendeley Data"
+  },
+  {
    "type": "text",
    "text": "The lowest leaves turn pale, then yellow in a V shape that starts at the leaf tip and runs down the midrib. The yellowing climbs the plant if nothing is done, and the old leaves dry from the tip. Stalks stay thin and plants short, and ears come out small with poorly filled tips. You see it most at this stage: knee high to silking. The crop takes up the most nitrogen in the month before tasseling."
   },
@@ -208,8 +214,8 @@
   {
    "type": "image",
    "src": "/images/site/deficiencies/corn-yellow-phosphorus-deficiency.webp",
-   "alt": "Young corn plants with purple red leaves among green ones, a phosphorus shortage sign",
-   "caption": "Photo: Agronom, CC BY SA 3.0, via Wikimedia Commons"
+   "alt": "Young corn seedling with deep purple leaves from phosphorus shortage",
+   "caption": "Photo: Mary Ann Hansen, Virginia Polytechnic Institute and State University, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",
@@ -408,6 +414,12 @@
    "id": "sulfur"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/corn-yellow-sulfur-deficiency.webp",
+   "alt": "Young corn plant with pale yellow leaves all over, newest leaves palest, from sulfur shortage (small credit line in corner)",
+   "caption": "Photo: Soil Science, CC BY 2.0, via Flickr"
+  },
+  {
    "type": "text",
    "text": "The whole plant looks pale like nitrogen deficiency. But the young upper leaves are the palest, and up close they show faint yellow stripes between the veins. Plants stay short and upright, and maturity comes late. You see it most at this stage: early growth. It may fade as roots go deeper and the soil warms."
   },
@@ -534,6 +546,12 @@
    "level": 2,
    "text": "Calcium deficiency in corn",
    "id": "calcium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/corn-yellow-calcium-deficiency.webp",
+   "alt": "Maize whorl whose newest leaves have torn, ragged brown edges and cling together from calcium shortage",
+   "caption": "Photo: Devechio et al., Journal of Agricultural Science 2022, CC BY 4.0, via CCSE"
   },
   {
    "type": "text",
@@ -704,6 +722,12 @@
    "level": 2,
    "text": "Iron deficiency in corn",
    "id": "iron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/corn-yellow-iron-deficiency.webp",
+   "alt": "Young maize leaves striped pale yellow between green veins along their whole length from iron shortage",
+   "caption": "Photo: Alves et al., Plants (MDPI) 2026, CC BY 4.0, via the publisher"
   },
   {
    "type": "text",

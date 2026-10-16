@@ -198,6 +198,12 @@
    "id": "potassium"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/chili-potassium-deficiency.webp",
+   "alt": "Chili pepper leaf seen from below with brown scorched patches along the tip and edges, from potassium shortage",
+   "caption": "Photo: Çetindağ et al., Pepper Nutrient Deficiency Dataset, CC BY 4.0, via Mendeley Data"
+  },
+  {
    "type": "text",
    "text": "Leaf tips burn and dead patches appear between the veins, starting on older leaves. Leaves crinkle and curl, become fewer and smaller, and the plant is stunted. Yellowing from potassium shortage does not recover even after feeding, so act early. You see it most at this stage: fruiting, when fruits draw potassium from the leaves."
   },
@@ -250,6 +256,12 @@
    "level": 2,
    "text": "Calcium deficiency in chili",
    "id": "calcium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/chili-calcium-deficiency.webp",
+   "alt": "Long pepper fruit with a brown, shrunken, rotting tip from calcium shortage (blossom end rot)",
+   "caption": "Photo: Metin GULESCI, Leaf Tobacco, Bugwood.org, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",
@@ -360,6 +372,12 @@
    "level": 2,
    "text": "Magnesium deficiency in chili",
    "id": "magnesium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/chili-magnesium-deficiency.webp",
+   "alt": "Chili pepper leaf on white paper turning yellow between the veins while the main veins stay green, from magnesium shortage",
+   "caption": "Photo: Çetindağ et al., Pepper Nutrient Deficiency Dataset, CC BY 4.0, via Mendeley Data"
   },
   {
    "type": "text",

@@ -18,9 +18,9 @@
  ],
  "excerpt": "Oil palm nutrient deficiency is one of the first things to check when the leaves of your palma (oil palm) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are potassium, nitrogen, boron, magnesium and phosphorus. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for oil palm",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/oilpalm-nitrogen-deficiency.webp",
+  "alt": "Oil palm frond whose leaflets have turned evenly pale yellow green from nitrogen shortage, Sabah (old slide)",
+  "credit": "JIRCAS Photo Archive, CC BY 2.0, via Flickr"
  },
  "blocks": [
   {
@@ -165,6 +165,12 @@
    "id": "nitrogen"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/oilpalm-nitrogen-deficiency.webp",
+   "alt": "Oil palm frond whose leaflets have turned evenly pale yellow green from nitrogen shortage, Sabah (old slide)",
+   "caption": "Photo: JIRCAS Photo Archive, CC BY 2.0, via Flickr"
+  },
+  {
    "type": "text",
    "text": "The older, lower fronds turn pale yellow green first while new fronds stay greener. Midribs can turn bright yellow. Growth slows, fronds stay short, and yields drop. You see it most at this stage: young palms after planting, and palms on wet or weedy sites."
   },
@@ -270,6 +276,12 @@
    "level": 2,
    "text": "Magnesium deficiency in oil palm",
    "id": "magnesium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/oilpalm-magnesium-deficiency.webp",
+   "alt": "Older oil palm frond with leaflets yellowing in the sun from magnesium shortage, Sabah (old slide)",
+   "caption": "Photo: JIRCAS Photo Archive, CC BY 2.0, via Flickr"
   },
   {
    "type": "text",

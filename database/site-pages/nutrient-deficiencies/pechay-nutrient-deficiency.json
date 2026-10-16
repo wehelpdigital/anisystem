@@ -19,9 +19,9 @@
  ],
  "excerpt": "Pechay nutrient deficiency is one of the first things to check when the leaves of your petsay (pechay) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, calcium, potassium, phosphorus, magnesium, boron and sulfur. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-ca.webp",
-  "alt": "Calcium deficiency on a leaf, shown on another crop as a stand in for pechay",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/pechay-nitrogen-deficiency.webp",
+  "alt": "Young pechay (bok choy) plant with pale yellow green leaves all over from nitrogen shortage",
+  "credit": "Veazie et al., Agriculture (MDPI) 2020, CC BY 4.0, via the publisher"
  },
  "blocks": [
   {
@@ -125,6 +125,12 @@
    "id": "nitrogen"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/pechay-nitrogen-deficiency.webp",
+   "alt": "Young pechay (bok choy) plant with pale yellow green leaves all over from nitrogen shortage",
+   "caption": "Photo: Veazie et al., Agriculture (MDPI) 2020, CC BY 4.0, via the publisher"
+  },
+  {
    "type": "text",
    "text": "The outer, older leaves turn pale green and then yellow, and the yellowing spreads to the whole plant. Leaves stay small and growth slows, so plants are light at harvest. Old leaves may get reddish tints and die early. You see it most at this stage: from transplanting to harvest. Pechay is harvested only three to four weeks after transplanting, so any shortage shows fast."
   },
@@ -180,6 +186,12 @@
    "id": "calcium"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/pechay-calcium-deficiency.webp",
+   "alt": "Pechay heart with the youngest leaves crumpled, browned and dying from calcium shortage",
+   "caption": "Photo: Veazie et al., Agriculture (MDPI) 2020, CC BY 4.0, via the publisher"
+  },
+  {
    "type": "text",
    "text": "The tips and edges of young, fast growing leaves die and turn brown, and the damage spreads inward. Young leaves can be cupped or claw shaped. Soft rot bacteria often enter the burnt tissue, so the heart of the plant turns slimy. You see it most at this stage: fast growth in hot, dry weather, close to harvest."
   },
@@ -233,6 +245,12 @@
    "level": 2,
    "text": "Potassium deficiency in pechay",
    "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/pechay-potassium-deficiency.webp",
+   "alt": "Older pechay leaf yellowing between the veins and along the edges from potassium shortage",
+   "caption": "Photo: Veazie et al., Agriculture (MDPI) 2020, CC BY 4.0, via the publisher"
   },
   {
    "type": "text",
@@ -343,6 +361,12 @@
    "id": "magnesium"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/pechay-magnesium-deficiency.webp",
+   "alt": "Pechay leaf (a red leaved bok choy) yellow between dark green veins from magnesium shortage",
+   "caption": "Photo: Veazie et al., Agriculture (MDPI) 2020, CC BY 4.0, via the publisher"
+  },
+  {
    "type": "text",
    "text": "Older leaves turn yellow between the veins, starting at the edges, while the veins stay green. Later the yellow areas can turn orange or die. Michigan State extension notes Chinese cabbage, a close relative of pechay, is especially prone to it. You see it most at this stage: mid growth to harvest."
   },
@@ -394,6 +418,12 @@
    "level": 2,
    "text": "Boron deficiency in pechay",
    "id": "boron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/pechay-boron-deficiency.webp",
+   "alt": "Young pechay leaf thick, crinkled and cupped from boron shortage",
+   "caption": "Photo: Veazie et al., Agriculture (MDPI) 2020, CC BY 4.0, via the publisher"
   },
   {
    "type": "text",

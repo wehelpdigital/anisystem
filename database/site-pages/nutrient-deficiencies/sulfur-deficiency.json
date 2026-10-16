@@ -15,7 +15,11 @@
   "ammonium sulfate fertilizer"
  ],
  "excerpt": "Sulfur deficiency in plants starts on the young leaves and the growing tip. Sulfur is part of the amino acids cysteine and methionine, so plants need it to build proteins. It helps make chlorophyll and helps legumes form their root nodules. It is also part of the enzyme that turns nitrate into protein. So a crop short of sulfur cannot use its nitrogen well. Here are the signs in each crop, what brings it, how to be sure and the fertilizer that fixes it.",
- "heroImage": null,
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-s.webp",
+  "alt": "Young tobacco plant pale yellow green all over, upper leaves included: a sulfur shortage sign",
+  "credit": "R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org"
+ },
  "blocks": [
   {
    "type": "text",

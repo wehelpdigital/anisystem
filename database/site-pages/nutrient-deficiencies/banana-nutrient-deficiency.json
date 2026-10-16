@@ -20,9 +20,9 @@
  ],
  "excerpt": "Banana nutrient deficiency is one of the first things to check when the leaves of your saging (banana) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are potassium, nitrogen, magnesium, zinc, boron, calcium, phosphorus, sulfur, manganese and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/banana-nitrogen-deficiency.webp",
-  "alt": "Row of young banana plants with pale, yellow green leaves from a mild nitrogen shortage",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/banana-potassium-deficiency.webp",
+  "alt": "Young banana plants whose older leaves have turned yellow with brown dead edges from potassium shortage",
+  "credit": "Zhang et al., PLOS Pathogens 2025, CC BY 4.0, via the publisher"
  },
  "blocks": [
   {
@@ -142,6 +142,12 @@
    "level": 2,
    "text": "Potassium deficiency in banana",
    "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/banana-potassium-deficiency.webp",
+   "alt": "Young banana plants whose older leaves have turned yellow with brown dead edges from potassium shortage",
+   "caption": "Photo: Zhang et al., PLOS Pathogens 2025, CC BY 4.0, via the publisher"
   },
   {
    "type": "text",
@@ -311,6 +317,12 @@
    "level": 2,
    "text": "Zinc deficiency in banana",
    "id": "zinc"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/banana-zinc-deficiency.webp",
+   "alt": "Banana leaf with pale yellow stripes between the green veins from zinc shortage",
+   "caption": "Photo: Sunitha et al., Data in Brief 2023, CC BY 4.0, via the publisher"
   },
   {
    "type": "text",
@@ -540,6 +552,12 @@
    "id": "sulfur"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/banana-sulfur-deficiency.webp",
+   "alt": "Young banana leaf evenly pale yellow, veins included, from sulphur shortage",
+   "caption": "Photo: Sunitha et al., Data in Brief 2023, CC BY 4.0, via the publisher"
+  },
+  {
    "type": "text",
    "text": "Young leaves turn light green to yellowish white, evenly over the whole leaf, veins included. New leaves are small and the side veins can look thick, and in bad cases the edges die. The plant grows slowly and bunches stay small or get stuck in the throat. You see it most at this stage: during fast vegetative growth."
   },
@@ -594,6 +612,12 @@
    "id": "manganese"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/banana-manganese-deficiency.webp",
+   "alt": "Banana leaf with yellow and green streaks running from the midrib out to the edge, like comb teeth, from manganese shortage",
+   "caption": "Photo: Sunitha et al., Data in Brief 2023, CC BY 4.0, via the publisher"
+  },
+  {
    "type": "text",
    "text": "It shows first on the second or third youngest leaf. Mild cases are just light green. Then yellow starts at the leaf edge and runs in along the veins toward the midrib, giving a comb tooth pattern. In bad cases the yellow areas die and the edges curl down. You see it most at this stage: during fast growth, more often in cool wet months."
   },
@@ -644,6 +668,12 @@
    "level": 2,
    "text": "Iron deficiency in banana",
    "id": "iron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/banana-iron-deficiency.webp",
+   "alt": "Banana leaf turned almost wholly yellow with a pale midrib from iron shortage",
+   "caption": "Photo: Sunitha et al., Data in Brief 2023, CC BY 4.0, via the publisher"
   },
   {
    "type": "text",

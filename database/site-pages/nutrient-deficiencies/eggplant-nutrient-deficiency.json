@@ -20,9 +20,9 @@
  ],
  "excerpt": "Eggplant nutrient deficiency is one of the first things to check when the leaves of your talong (eggplant) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, phosphorus, magnesium, calcium, boron, zinc and sulfur. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for eggplant",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/eggplant-nitrogen-deficiency.webp",
+  "alt": "Eggplant leaf gone pale yellow green all over from nitrogen shortage",
+  "credit": "Orka, Uddin, Toushique and Hossain, OLID I dataset, CC BY 4.0, via Zenodo"
  },
  "blocks": [
   {
@@ -132,6 +132,12 @@
    "id": "nitrogen"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/eggplant-nitrogen-deficiency.webp",
+   "alt": "Eggplant leaf gone pale yellow green all over from nitrogen shortage",
+   "caption": "Photo: Orka, Uddin, Toushique and Hossain, OLID I dataset, CC BY 4.0, via Zenodo"
+  },
+  {
    "type": "text",
    "text": "Yellowing starts on the older, lower leaves and moves up the plant. Plants are stunted and spindly with small leaves. Fewer flowers open and fewer fruits set, and the fruits that form are small and pale. You see it most at this stage: from early growth through the long harvest period, when the plant keeps flowering and fruiting."
   },
@@ -184,6 +190,12 @@
    "level": 2,
    "text": "Potassium deficiency in eggplant",
    "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/eggplant-potassium-deficiency.webp",
+   "alt": "Underside of a pale eggplant leaf with thin brown dead edges from potassium shortage",
+   "caption": "Photo: Orka, Uddin, Toushique and Hossain, OLID I dataset, CC BY 4.0, via Zenodo"
   },
   {
    "type": "text",

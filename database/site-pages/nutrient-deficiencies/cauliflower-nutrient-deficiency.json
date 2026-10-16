@@ -299,6 +299,12 @@
    "id": "calcium"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/cauliflower-calcium-deficiency.webp",
+   "alt": "Cauliflower head whose wrapper leaves have crinkled, dead brown edges, from calcium shortage",
+   "caption": "Photo: Bianco et al., PLOS ONE 2015, CC BY 4.0, via figshare"
+  },
+  {
    "type": "text",
    "text": "Dead lesions form on the tips and edges of young leaves and spread inward with a yellow border (tip burn). The youngest leaves become claw shaped, cupped and brittle, and the leaf edges can look glassy. Curd segments can turn brown and glassy and parts of the curd die. You see it most at this stage: rapid leaf growth and curd development."
   },
@@ -352,6 +358,12 @@
    "level": 2,
    "text": "Potassium deficiency in cauliflower",
    "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/cauliflower-potassium-deficiency.webp",
+   "alt": "Cauliflower leaf dried brown and crinkled all over, from potassium shortage",
+   "caption": "Photo: Bianco et al., PLOS ONE 2015, CC BY 4.0, via figshare"
   },
   {
    "type": "text",
@@ -460,6 +472,12 @@
    "level": 2,
    "text": "Magnesium deficiency in cauliflower",
    "id": "magnesium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/cauliflower-magnesium-deficiency.webp",
+   "alt": "Older cauliflower leaf yellow between the veins from the edges toward the midrib while the veins stay green from magnesium shortage",
+   "caption": "Photo: Bianco et al., PLOS ONE 2015, CC BY 4.0, via PLOS"
   },
   {
    "type": "text",

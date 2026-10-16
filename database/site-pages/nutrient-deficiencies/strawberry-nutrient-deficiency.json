@@ -18,9 +18,9 @@
  ],
  "excerpt": "Strawberry nutrient deficiency is one of the first things to check when the leaves of your presa (strawberry) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, calcium, boron, phosphorus, magnesium and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/strawberry-iron-deficiency.webp",
-  "alt": "Strawberry leaves yellow between dark green veins, iron shortage on the youngest leaves",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/strawberry-calcium-deficiency.webp",
+  "alt": "Strawberry leaves with brown, dried tips on the young leaflets (tip burn) from calcium shortage",
+  "credit": "Jonas Janner Hamann, Universidade Federal de Santa Maria (UFSM), Bugwo, CC BY 3.0 US, via ipmimages.org"
  },
  "blocks": [
   {
@@ -231,6 +231,12 @@
    "level": 2,
    "text": "Calcium deficiency in strawberry",
    "id": "calcium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/strawberry-calcium-deficiency.webp",
+   "alt": "Strawberry leaves with brown, dried tips on the young leaflets (tip burn) from calcium shortage",
+   "caption": "Photo: Jonas Janner Hamann, Universidade Federal de Santa Maria (UFSM), Bugwo, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",

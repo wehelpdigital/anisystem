@@ -20,9 +20,9 @@
  ],
  "excerpt": "Sweet potato nutrient deficiency is one of the first things to check when the leaves of your kamote (sweet potato) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are potassium, nitrogen, phosphorus, magnesium, boron, calcium, sulfur and zinc. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for sweet potato",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/sweetpotato-boron-deficiency.webp",
+  "alt": "Sweet potato plant with curled, yellowing and dying leaves from severe boron shortage",
+  "credit": "Makokha et al., Gates Open Research 2018, CC BY 4.0, via the publisher"
  },
  "blocks": [
   {
@@ -348,6 +348,12 @@
    "id": "boron"
   },
   {
+   "type": "image",
+   "src": "/images/site/deficiencies/sweetpotato-boron-deficiency.webp",
+   "alt": "Sweet potato plant with curled, yellowing and dying leaves from severe boron shortage",
+   "caption": "Photo: Makokha et al., Gates Open Research 2018, CC BY 4.0, via the publisher"
+  },
+  {
    "type": "text",
    "text": "Young leaves become distorted and pale, stems are brittle, and leaf tips and edges yellow and die in spots. Storage roots develop poorly and can have hollow areas in the flesh, which ruins their sale. You see it most at this stage: root bulking."
   },
@@ -452,6 +458,12 @@
    "level": 2,
    "text": "Sulfur deficiency in sweet potato",
    "id": "sulfur"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/sweetpotato-sulfur-deficiency.webp",
+   "alt": "Sweet potato vines with leaves turned evenly yellow, veins included, from sulphur shortage",
+   "caption": "Photo: Makokha et al., Gates Open Research 2018, CC BY 4.0, via the publisher"
   },
   {
    "type": "text",

@@ -18,9 +18,9 @@
  ],
  "excerpt": "Radish nutrient deficiency is one of the first things to check when the leaves of your labanos (radish) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, boron, potassium, phosphorus, manganese, magnesium and calcium. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-b.webp",
-  "alt": "Boron deficiency on a leaf, shown on another crop as a stand in for radish",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  "src": "/images/site/deficiencies/radish-boron-deficiency.webp",
+  "alt": "Radish with a cracked, brown root and distorted leaves from boron shortage",
+  "credit": "Mary Ann Hansen, Virginia Polytechnic Institute and State University, CC BY 3.0 US, via ipmimages.org"
  },
  "blocks": [
   {
@@ -176,6 +176,12 @@
    "level": 2,
    "text": "Boron deficiency in radish",
    "id": "boron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/radish-boron-deficiency.webp",
+   "alt": "Radish with a cracked, brown root and distorted leaves from boron shortage",
+   "caption": "Photo: Mary Ann Hansen, Virginia Polytechnic Institute and State University, CC BY 3.0 US, via ipmimages.org"
   },
   {
    "type": "text",
