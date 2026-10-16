@@ -153,7 +153,7 @@
   },
   {
    "type": "text",
-   "text": "Side dress or drench with urea or ammonium sulfate in small weekly doses based on the soil test. KAU gives a urea leaf spray at 10 grams per liter of water for cole crops."
+   "text": "Side dress or drench with urea or ammonium sulfate in small weekly doses based on the soil test. Give a urea leaf spray at 10 grams per liter of water for cole crops."
   },
   {
    "type": "list",
@@ -261,7 +261,7 @@
   },
   {
    "type": "text",
-   "text": "Apply complete fertilizer or muriate of potash based on the soil test. For a quick fix, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water for cabbage, a close relative."
+   "text": "Apply complete fertilizer or muriate of potash based on the soil test. For a quick fix, give a morning spray of sulfate of potash at 10 grams per liter of water for cabbage, a close relative."
   },
   {
    "type": "list",
@@ -315,7 +315,7 @@
   },
   {
    "type": "text",
-   "text": "Apply complete 14 14 14 or 16 20 0 at planting based on the soil test. KAU lists single superphosphate for a quick correction in cole crops."
+   "text": "Apply complete 14 14 14 or 16 20 0 at planting based on the soil test. Use single superphosphate for a quick correction in cole crops."
   },
   {
    "type": "list",
@@ -369,7 +369,7 @@
   },
   {
    "type": "text",
-   "text": "For cole crops, KAU gives borax at about 10 kg per hectare in the soil or a spray at 1 gram per liter of water. Do not repeat without a test."
+   "text": "For cole crops, give borax at about 10 kg per hectare in the soil or a spray at 1 gram per liter of water. Do not repeat without a test."
   },
   {
    "type": "list",
@@ -422,7 +422,7 @@
   },
   {
    "type": "text",
-   "text": "Spray magnesium sulfate for quick relief. For cole crops KAU gives magnesium sulfate in a band at about 80 kg per hectare (32 kg per acre). Do not apply it together with potash."
+   "text": "Spray magnesium sulfate for quick relief. For cole crops give magnesium sulfate in a band at about 80 kg per hectare (32 kg per acre). Do not apply it together with potash."
   },
   {
    "type": "list",
@@ -475,7 +475,7 @@
   },
   {
    "type": "text",
-   "text": "Water evenly. On acid soil, KAU suggests lime at about 250 kg per hectare when pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid."
+   "text": "Water evenly. On acid soil, try lime at about 250 kg per hectare when pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid."
   },
   {
    "type": "list",
@@ -498,7 +498,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any mustard nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your mustasa needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any mustard nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your mustasa needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -521,7 +521,7 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in mustard?",
-     "a": "Side dress or drench with urea or ammonium sulfate in small weekly doses based on the soil test. KAU gives a urea leaf spray at 10 grams per liter of water for cole crops."
+     "a": "Side dress or drench with urea or ammonium sulfate in small weekly doses based on the soil test. Give a urea leaf spray at 10 grams per liter of water for cole crops."
     },
     {
      "q": "What fertilizer fixes sulfur deficiency in mustard?",
@@ -529,7 +529,7 @@
     },
     {
      "q": "What fertilizer fixes potassium deficiency in mustard?",
-     "a": "Apply complete fertilizer or muriate of potash based on the soil test. For a quick fix, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water for cabbage, a close relative."
+     "a": "Apply complete fertilizer or muriate of potash based on the soil test. For a quick fix, give a morning spray of sulfate of potash at 10 grams per liter of water for cabbage, a close relative."
     },
     {
      "q": "How do I know which nutrient my mustasa lacks?",
@@ -573,10 +573,6 @@
     {
      "label": "Yara UK: Nitrogen deficiency in cabbage",
      "url": "https://www.yara.co.uk/crop-nutrition/cabbage/nutrient-deficiencies-cabbage/nitrogen-deficiency-cabbage/"
-    },
-    {
-     "label": "KAU Agri Infotech Portal: Cabbage nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/cabbage/deficiency.php"
     },
     {
      "label": "Teagasc: Sulphur requirements of brassica crops (technical note 2020)",

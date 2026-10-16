@@ -140,7 +140,7 @@
   },
   {
    "type": "text",
-   "text": "UF IFAS gives young plants about 118 grams of a complete fertilizer every two months in the first year, 136 to 182 grams every two months in the second and third years. 227 to 341 grams three to four times a year after that, with manure or compost around the base. In the Philippines, Wikifarmer reports growers giving about 2 kg of organic fertilizer plus 25 grams of Urea 46 0 0 and 75 grams of Complete 14 14 14 per plant every three to six months."
+   "text": "Give young plants about 118 grams of a complete fertilizer every two months in the first year, 136 to 182 grams every two months in the second and third years. 227 to 341 grams three to four times a year after that, with manure or compost around the base. In the Philippines, Wikifarmer reports growers giving about 2 kg of organic fertilizer plus 25 grams of Urea 46 0 0 and 75 grams of Complete 14 14 14 per plant every three to six months."
   },
   {
    "type": "list",
@@ -157,7 +157,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, feed in small, regular doses with plenty of compost or manure, kept a little away from the stem base, as UF IFAS advises."
+   "text": "To keep it away, feed in small, regular doses with plenty of compost or manure, kept a little away from the stem base."
   },
   {
    "type": "heading",
@@ -285,7 +285,7 @@
   },
   {
    "type": "text",
-   "text": "Acid, sandy soils that have lost magnesium to rain, and heavy potash use, which competes with magnesium. UF IFAS recommends a fertilizer that carries 2 to 3 percent magnesium."
+   "text": "Acid, sandy soils that have lost magnesium to rain, and heavy potash use, which competes with magnesium. Use a fertilizer that carries 2 to 3 percent magnesium."
   },
   {
    "type": "heading",
@@ -303,7 +303,7 @@
   },
   {
    "type": "text",
-   "text": "UF IFAS uses a complete fertilizer with 2 to 3 percent magnesium at every feeding. Magnesium sulfate (Epsom salt) can be added to the soil or sprayed. Follow the label. On acid soils, use Dolomite, which supplies magnesium and raises pH."
+   "text": "Use a complete fertilizer with 2 to 3 percent magnesium at every feeding. Magnesium sulfate (Epsom salt) can be added to the soil or sprayed. Follow the label. On acid soils, use Dolomite, which supplies magnesium and raises pH."
   },
   {
    "type": "list",
@@ -330,7 +330,7 @@
   },
   {
    "type": "text",
-   "text": "No dragon fruit particular description of this shortage was found in an extension source. So this follows general plant signs, read on the green stems that do the work of leaves. New shoots and young segments come out pale yellow, while older stems stay green. Growth of new shoots slows. UF IFAS notes that pitaya shows minor element shortages on poor, high pH soils. You see it most at this stage: new growth flushes, in the warm rainy season."
+   "text": "No dragon fruit particular description of this shortage was found in an extension source. So this follows general plant signs, read on the green stems that do the work of leaves. New shoots and young segments come out pale yellow, while older stems stay green. Growth of new shoots slows. Pitaya shows minor element shortages on poor, high pH soils. You see it most at this stage: new growth flushes, in the warm rainy season."
   },
   {
    "type": "heading",
@@ -357,7 +357,7 @@
   },
   {
    "type": "text",
-   "text": "On high pH soil, UF IFAS drenches each plant with 7 to 15 grams of chelated iron in the first year, rising to 22 to 29 grams per plant in later years. On neutral or acid soil, apply small amounts of Ferrous sulfate at the base. UF IFAS also gives four to six minor element sprays through the warm, rainy season."
+   "text": "On high pH soil, drench each plant with 7 to 15 grams of chelated iron in the first year, rising to 22 to 29 grams per plant in later years. On neutral or acid soil, apply small amounts of Ferrous sulfate at the base. You can also give four to six minor element sprays through the warm, rainy season."
   },
   {
    "type": "list",
@@ -378,7 +378,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any dragon fruit nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your saniata needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any dragon fruit nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your saniata needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -401,7 +401,7 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in dragon fruit?",
-     "a": "UF IFAS gives young plants about 118 grams of a complete fertilizer every two months in the first year, 136 to 182 grams every two months in the second and third years. 227 to 341 grams three to four times a year after that, with manure or compost around the base."
+     "a": "Give young plants about 118 grams of a complete fertilizer every two months in the first year, 136 to 182 grams every two months in the second and third years. 227 to 341 grams three to four times a year after that, with manure or compost around the base."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in dragon fruit?",
@@ -451,10 +451,6 @@
    "type": "sources",
    "items": [
     {
-     "label": "UF IFAS EDIS HS1068: Pitaya (dragon fruit) growing in the Florida home garden (Crane and Balerdi)",
-     "url": "https://ask.ifas.ufl.edu/publication/HS303"
-    },
-    {
      "label": "Wikifarmer: Dragon fruit fertilization (includes Philippine grower practice)",
      "url": "https://wikifarmer.com/library/en/article/dragon-fruit-fertilization"
     },
@@ -465,14 +461,6 @@
     {
      "label": "University of Delaware Cooperative Extension: Identifying nutrient deficiencies in ornamental plants (general signs)",
      "url": "https://www.udel.edu/udel/en/academics/colleges/canr/cooperative-extension/fact-sheets/identifying-nutrient-deficiencies-in-ornamental-plants/"
-    },
-    {
-     "label": "Gonzaga and others 2016, Productivity of red fleshed dragon fruit under Jasaan series soil, Claveria, Misamis Oriental (AGRIS record)",
-     "url": "https://agris.fao.org/search/ar/records/6473aa5e96fdec8b71b495b0"
-    },
-    {
-     "label": "Gonzaga and others 2019, Productivity of red fleshed dragon fruit as influenced by levels of phosphorus, Claveria, Northern Mindanao (AGRIS record)",
-     "url": "https://agris.fao.org/search/en/records/647473a82d3f560f80ab9473"
     }
    ]
   }

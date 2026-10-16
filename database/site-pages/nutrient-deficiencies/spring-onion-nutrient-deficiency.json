@@ -147,7 +147,7 @@
   },
   {
    "type": "text",
-   "text": "Oregon State broadcasts about 55 to 80 kg N per hectare (50 to 70 pounds per acre) before planting and adds about 85 to 110 kg (75 to 100 pounds) as a sidedress as needed to keep tops green. For quick help TNAU gives a 1 percent urea spray (10 g per liter) twice, a week apart, for onion."
+   "text": "Oregon State broadcasts about 55 to 80 kg N per hectare (50 to 70 pounds per acre) before planting and adds about 85 to 110 kg (75 to 100 pounds) as a sidedress as needed to keep tops green. For quick help give a 1 percent urea spray (10 g per liter) twice, a week apart, for onion."
   },
   {
    "type": "list",
@@ -201,7 +201,7 @@
   },
   {
    "type": "text",
-   "text": "Oregon State broadcasts about 170 to 190 kg K2O per hectare (150 to 170 pounds per acre) before planting, following the soil test. TNAU gives a 1 percent potassium sulfate spray (10 g per liter) twice, a week apart, for onion."
+   "text": "Oregon State broadcasts about 170 to 190 kg K2O per hectare (150 to 170 pounds per acre) before planting, following the soil test. Give a 1 percent potassium sulfate spray (10 g per liter) twice, a week apart, for onion."
   },
   {
    "type": "list",
@@ -255,7 +255,7 @@
   },
   {
    "type": "text",
-   "text": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, or add Gypsum or single superphosphate, following the soil test. KAU gives about 25 kg sulfur dust per hectare on sulfur poor soil for onion."
+   "text": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, or add Gypsum or single superphosphate, following the soil test. Give about 25 kg sulfur dust per hectare on sulfur poor soil for onion."
   },
   {
    "type": "list",
@@ -363,7 +363,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 percent zinc sulfate spray (5 g per liter) twice, 15 days apart, for onion. Add zinc sulfate to the soil only after a test confirms the need."
+   "text": "Give a 0.5 percent zinc sulfate spray (5 g per liter) twice, 15 days apart, for onion. Add zinc sulfate to the soil only after a test confirms the need."
   },
   {
    "type": "list",
@@ -415,7 +415,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 percent magnesium sulfate spray (5 g Epsom salt per liter) twice, a week apart, for onion. Use Dolomite on acid soils as the soil test advises."
+   "text": "Give a 0.5 percent magnesium sulfate spray (5 g Epsom salt per liter) twice, a week apart, for onion. Use Dolomite on acid soils as the soil test advises."
   },
   {
    "type": "list",
@@ -437,7 +437,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any spring onion nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your sibuyas na mura needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any spring onion nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your sibuyas na mura needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -460,15 +460,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in spring onion?",
-     "a": "Oregon State broadcasts about 55 to 80 kg N per hectare (50 to 70 pounds per acre) before planting and adds about 85 to 110 kg (75 to 100 pounds) as a sidedress as needed to keep tops green. For quick help TNAU gives a 1 percent urea spray (10 g per liter) twice, a week apart, for onion."
+     "a": "Oregon State broadcasts about 55 to 80 kg N per hectare (50 to 70 pounds per acre) before planting and adds about 85 to 110 kg (75 to 100 pounds) as a sidedress as needed to keep tops green. For quick help give a 1 percent urea spray (10 g per liter) twice, a week apart, for onion."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in spring onion?",
-     "a": "Oregon State broadcasts about 170 to 190 kg K2O per hectare (150 to 170 pounds per acre) before planting, following the soil test. TNAU gives a 1 percent potassium sulfate spray (10 g per liter) twice, a week apart, for onion."
+     "a": "Oregon State broadcasts about 170 to 190 kg K2O per hectare (150 to 170 pounds per acre) before planting, following the soil test. Give a 1 percent potassium sulfate spray (10 g per liter) twice, a week apart, for onion."
     },
     {
      "q": "What fertilizer fixes sulfur deficiency in spring onion?",
-     "a": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, or add Gypsum or single superphosphate, following the soil test. KAU gives about 25 kg sulfur dust per hectare on sulfur poor soil for onion."
+     "a": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, or add Gypsum or single superphosphate, following the soil test. Give about 25 kg sulfur dust per hectare on sulfur poor soil for onion."
     },
     {
      "q": "How do I know which nutrient my sibuyas na mura lacks?",
@@ -510,36 +510,12 @@
    "type": "sources",
    "items": [
     {
-     "label": "Oregon State University: Onions, green bunching",
-     "url": "https://horticulture.oregonstate.edu/oregon-vegetables/onions-green-bunching"
-    },
-    {
-     "label": "TNAU Agritech Portal: Onion, nitrogen deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/onion_nitrogen.html"
-    },
-    {
      "label": "Haifa: Crop guide, onion nutrient requirements",
      "url": "https://www.haifa-group.com/crop-guide-onion-nutrient-requirements"
     },
     {
-     "label": "TNAU Agritech Portal: Onion, potassium deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/onion_potassium.html"
-    },
-    {
-     "label": "Kerala Agricultural University Agri Infotech Portal: Onion nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/onion/deficiency.php"
-    },
-    {
      "label": "Starke Ayres: Bunching onion production guideline",
      "url": "https://www.starkeayres.com/uploads/files/Bunching-Onion-Production-Guideline-2019.pdf"
-    },
-    {
-     "label": "TNAU Agritech Portal: Onion, zinc deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/onion_zinc.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Onion, magnesium deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/onion_magnesium.html"
     }
    ]
   }

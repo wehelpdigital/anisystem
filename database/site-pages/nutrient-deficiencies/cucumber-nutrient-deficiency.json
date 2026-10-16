@@ -158,7 +158,7 @@
   },
   {
    "type": "text",
-   "text": "Side dress urea or ammonium sulfate based on the soil test, in split doses. For a quick fix, KAU gives a urea leaf spray at 10 grams per liter of water every 15 days. The University of Kentucky advises putting part of the season's nitrogen in before planting and the rest in one or two side dressings before fruit forms, or through drip lines."
+   "text": "Side dress urea or ammonium sulfate based on the soil test, in split doses. For a quick fix, give a urea leaf spray at 10 grams per liter of water every 15 days. The University of Kentucky advises putting part of the season's nitrogen in before planting and the rest in one or two side dressings before fruit forms, or through drip lines."
   },
   {
    "type": "list",
@@ -213,7 +213,7 @@
   },
   {
    "type": "text",
-   "text": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, KAU suggests a morning spray of sulfate of potash at 10 grams per liter of water with a sticker. Keep soil pH above 6."
+   "text": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, try a morning spray of sulfate of potash at 10 grams per liter of water with a sticker. Keep soil pH above 6."
   },
   {
    "type": "list",
@@ -273,7 +273,7 @@
   },
   {
    "type": "text",
-   "text": "The University of Kentucky advises keeping pH near 6.5 and feeding Epsom salt (magnesium sulfate) through drip lines. It notes leaf sprays usually do not fix a serious shortage. KAU suggests magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply it with potash."
+   "text": "The University of Kentucky advises keeping pH near 6.5 and feeding Epsom salt (magnesium sulfate) through drip lines. It notes leaf sprays usually do not fix a serious shortage. Try magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply it with potash."
   },
   {
    "type": "list",
@@ -327,7 +327,7 @@
   },
   {
    "type": "text",
-   "text": "Apply phosphorus near the roots based on the soil test. KAU lists single superphosphate for a quick fix and rock phosphate or bone meal for the long term, with best uptake near pH 6.2 to 7.0."
+   "text": "Apply phosphorus near the roots based on the soil test. Use single superphosphate for a quick fix and rock phosphate or bone meal for the long term. Uptake is best near pH 6.2 to 7.0."
   },
   {
    "type": "list",
@@ -381,7 +381,7 @@
   },
   {
    "type": "text",
-   "text": "Water evenly and mulch. On acid soil, KAU suggests lime at about 250 kg per hectare when pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid."
+   "text": "Water evenly and mulch. On acid soil, try lime at about 250 kg per hectare when pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid."
   },
   {
    "type": "list",
@@ -436,7 +436,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Delaware lists cucumber among crops with a medium boron need, about 2 pounds of boron per acre before planting. Do not mix borax with calcium or ammonium fertilizers."
+   "text": "Try borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Delaware lists cucumber among crops with a medium boron need, about 2 pounds of boron per acre before planting. Do not mix borax with calcium or ammonium fertilizers."
   },
   {
    "type": "list",
@@ -489,7 +489,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests a manganese sulfate spray at 2 grams per liter of water after a soil test."
+   "text": "Try a manganese sulfate spray at 2 grams per liter of water after a soil test."
   },
   {
    "type": "list",
@@ -510,7 +510,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any cucumber nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your pipino needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any cucumber nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your pipino needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -533,11 +533,11 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in cucumber?",
-     "a": "Side dress urea or ammonium sulfate based on the soil test, in split doses. For a quick fix, KAU gives a urea leaf spray at 10 grams per liter of water every 15 days."
+     "a": "Side dress urea or ammonium sulfate based on the soil test, in split doses. For a quick fix, give a urea leaf spray at 10 grams per liter of water every 15 days."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in cucumber?",
-     "a": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, KAU suggests a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+     "a": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, try a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
     },
     {
      "q": "What fertilizer fixes magnesium deficiency in cucumber?",
@@ -585,10 +585,6 @@
     {
      "label": "Haifa: Crop guide, nutrients for cucumber",
      "url": "https://www.haifa-group.com/cucumber-0/crop-guide-nutrients-cucumber"
-    },
-    {
-     "label": "KAU Agri Infotech Portal: Cucumber nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/cucumber/deficiency.php"
     },
     {
      "label": "University of Kentucky Vegetable Scouting: Nitrogen deficiency of cucurbits",

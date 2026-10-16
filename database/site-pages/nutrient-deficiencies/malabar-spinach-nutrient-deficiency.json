@@ -131,7 +131,7 @@
   },
   {
    "type": "text",
-   "text": "Root knot nematodes, which alugbati is weak against, also stunt and yellow plants. Check the roots for galls. To be sure, soil test for organic matter and nitrogen. The PCARRD and BPI guides both recommend a soil test for N, P and K."
+   "text": "Root knot nematodes, which alugbati is weak against, also stunt and yellow plants. Check the roots for galls. To be sure, soil test for organic matter and nitrogen. Get a soil test for N, P and K."
   },
   {
    "type": "heading",
@@ -140,7 +140,7 @@
   },
   {
    "type": "text",
-   "text": "The PCARRD guide top dresses urea at half to one bag (25 to 50 kg) per hectare after each harvest. Both guides also side dress manure or compost once a month at 20 to 30 bags per hectare, or drench diluted manure tea (1 part to 20 parts water)."
+   "text": "Top dress urea at half to one bag (25 to 50 kg) per hectare after each harvest. Both guides also side dress manure or compost once a month at 20 to 30 bags per hectare, or drench diluted manure tea (1 part to 20 parts water)."
   },
   {
    "type": "list",
@@ -176,7 +176,7 @@
   },
   {
    "type": "text",
-   "text": "Sandy soils, heavy watering that leaches nutrients (the BPI guide warns against over irrigation for this reason), and feeding with urea only."
+   "text": "Sandy soils, heavy watering that leaches nutrients (so do not over irrigate), and feeding with urea only."
   },
   {
    "type": "heading",
@@ -194,7 +194,7 @@
   },
   {
    "type": "text",
-   "text": "Use complete 14 14 14 or muriate of potash based on the soil test. The PCARRD cost table budgets 6 bags of 14 14 14 per hectare. Follow the soil test for the rate."
+   "text": "Use complete 14 14 14 or muriate of potash based on the soil test. A usual budget is 6 bags of 14 14 14 per hectare. Follow the soil test for the rate."
   },
   {
    "type": "list",
@@ -265,7 +265,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, apply compost or manure at 3 to 5 tonnes per hectare during plot preparation, as the PCARRD guide advises."
+   "text": "To keep it away, apply compost or manure at 3 to 5 tonnes per hectare during plot preparation."
   },
   {
    "type": "heading",
@@ -378,7 +378,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any malabar spinach nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your alugbati needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any malabar spinach nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your alugbati needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -401,11 +401,11 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in malabar spinach?",
-     "a": "The PCARRD guide top dresses urea at half to one bag (25 to 50 kg) per hectare after each harvest. Both guides also side dress manure or compost once a month at 20 to 30 bags per hectare, or drench diluted manure tea (1 part to 20 parts water)."
+     "a": "Top dress urea at half to one bag (25 to 50 kg) per hectare after each harvest. Both guides also side dress manure or compost once a month at 20 to 30 bags per hectare, or drench diluted manure tea (1 part to 20 parts water)."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in malabar spinach?",
-     "a": "Use complete 14 14 14 or muriate of potash based on the soil test. The PCARRD cost table budgets 6 bags of 14 14 14 per hectare."
+     "a": "Use complete 14 14 14 or muriate of potash based on the soil test. A usual budget is 6 bags of 14 14 14 per hectare."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in malabar spinach?",
@@ -450,14 +450,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "PCARRD (UPLB IPB): Alugbati production guide, Information Bulletin 269/2009",
-     "url": "https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/alugbati_prod.pdf"
-    },
-    {
-     "label": "Bureau of Plant Industry: Alugbati production guide",
-     "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Alugbati-Production-Guide.pdf"
-    },
     {
      "label": "PNW Plant Disease Management Handbook: Key nutrient deficiencies in vegetable crops",
      "url": "https://pnwhandbooks.org/plantdisease/pathogen-articles/nonpathogenic-phenomena/key-nutrient-deficiencies-vegetable-crops"

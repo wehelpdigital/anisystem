@@ -96,7 +96,8 @@ final class DeficiencyCatalogue
             $e['where'] = array_values(array_intersect((array) ($e['where'] ?? []), array_keys(self::WHERE)));
             $e['signs'] = array_values(array_intersect((array) ($e['signs'] ?? []), array_keys(self::SIGNS)));
             $e['materials'] = array_values(array_filter(array_map('strval', (array) ($e['materials'] ?? []))));
-            $e['sources'] = array_values(array_filter((array) ($e['sources'] ?? []), fn ($s) => ! empty($s['url'])));
+            // Never an agency, a state university or a research institute (GovSource, the owner 2026-10-17).
+            $e['sources'] = GovSource::keep(array_values(array_filter((array) ($e['sources'] ?? []), fn ($s) => ! empty($s['url']))));
             $e['rank'] = (int) ($e['rank'] ?? 50);
             $e['group'] = FieldCatalogue::shelfOf($c);
             $e['nutrientName'] = self::NUTRIENTS[$n][0];

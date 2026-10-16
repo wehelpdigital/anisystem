@@ -153,7 +153,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 beside the rows following the soil test. TNAU gives a 1 percent urea spray (10 g per liter). KAU repeats it every 15 days."
+   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 beside the rows following the soil test. Give a 1 percent urea spray (10 g per liter). Repeat it every 15 days."
   },
   {
    "type": "list",
@@ -207,7 +207,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 following the soil test, split in parts (KAU). TNAU gives a 1 percent potassium chloride spray (10 g per liter). KAU uses potassium sulfate at 10 g per liter."
+   "text": "Apply Muriate of potash 0 0 60 following the soil test, split in parts. Give a 1 percent potassium chloride spray (10 g per liter). Use potassium sulfate at 10 g per liter."
   },
   {
    "type": "list",
@@ -261,7 +261,7 @@
   },
   {
    "type": "text",
-   "text": "Apply the recommended phosphorus dose to the soil (TNAU), such as single superphosphate for a quick fix or rock phosphate for the long term (KAU), following the soil test. Uptake is best at pH 6.2 to 7.0."
+   "text": "Apply the recommended phosphorus dose to the soil, such as single superphosphate for a quick fix or rock phosphate for the long term, following the soil test. Uptake is best at pH 6.2 to 7.0."
   },
   {
    "type": "list",
@@ -315,7 +315,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 percent borax spray (5 g per liter). For the soil, KAU gives about 10 kg Borax per hectare. The University of Wisconsin treats carrot as a medium boron crop and gives about 1 to 2 kg of boron per hectare (about 10 to 20 kg borax) on soils testing low."
+   "text": "Give a 0.5 percent borax spray (5 g per liter). For the soil, give about 10 kg Borax per hectare. The University of Wisconsin treats carrot as a medium boron crop and gives about 1 to 2 kg of boron per hectare (about 10 to 20 kg borax) on soils testing low."
   },
   {
    "type": "list",
@@ -367,7 +367,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 to 1 percent calcium chloride spray (5 to 10 g per liter). On acid soils, KAU limes about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils use Gypsum."
+   "text": "Give a 0.5 to 1 percent calcium chloride spray (5 to 10 g per liter). On acid soils, lime about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils use Gypsum."
   },
   {
    "type": "list",
@@ -421,7 +421,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 to 1 percent magnesium sulfate spray (5 to 10 g Epsom salt per liter). KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Apply it apart from potash."
+   "text": "Give a 0.5 to 1 percent magnesium sulfate spray (5 to 10 g Epsom salt per liter). Give about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Apply it apart from potash."
   },
   {
    "type": "list",
@@ -474,7 +474,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 percent zinc sulfate spray (5 g per liter)."
+   "text": "Give a 0.5 percent zinc sulfate spray (5 g per liter)."
   },
   {
    "type": "list",
@@ -495,7 +495,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any carrot nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your karot needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any carrot nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your karot needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -518,15 +518,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in carrot?",
-     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 beside the rows following the soil test. TNAU gives a 1 percent urea spray (10 g per liter)."
+     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 beside the rows following the soil test. Give a 1 percent urea spray (10 g per liter)."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in carrot?",
-     "a": "Apply Muriate of potash 0 0 60 following the soil test, split in parts (KAU). TNAU gives a 1 percent potassium chloride spray (10 g per liter)."
+     "a": "Apply Muriate of potash 0 0 60 following the soil test, split in parts. Give a 1 percent potassium chloride spray (10 g per liter)."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in carrot?",
-     "a": "Apply the recommended phosphorus dose to the soil (TNAU), such as single superphosphate for a quick fix or rock phosphate for the long term (KAU), following the soil test. Uptake is best at pH 6.2 to 7.0."
+     "a": "Apply the recommended phosphorus dose to the soil, such as single superphosphate for a quick fix or rock phosphate for the long term, following the soil test. Uptake is best at pH 6.2 to 7.0."
     },
     {
      "q": "How do I know which nutrient my karot lacks?",
@@ -568,48 +568,16 @@
    "type": "sources",
    "items": [
     {
-     "label": "TNAU Agritech Portal: Carrot, nitrogen deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/carrot_nitrogen.html"
-    },
-    {
-     "label": "Kerala Agricultural University Agri Infotech Portal: Carrot nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/carrot/deficiency.php"
-    },
-    {
-     "label": "TNAU Agritech Portal: Carrot, potassium deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/carrot_potassium.html"
-    },
-    {
      "label": "University of Wisconsin Extension A2521: Soil and applied potassium",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2521.pdf"
-    },
-    {
-     "label": "TNAU Agritech Portal: Carrot, phosphorus deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/carrot_phosphorus.html"
     },
     {
      "label": "University of Wisconsin Extension A2520: Soil and applied phosphorus",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2520.pdf"
     },
     {
-     "label": "TNAU Agritech Portal: Carrot, boron deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/carrot_boron.html"
-    },
-    {
      "label": "University of Wisconsin Extension A2522: Soil and applied boron",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2522.pdf"
-    },
-    {
-     "label": "TNAU Agritech Portal: Carrot, calcium deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/carrot_calcium.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Carrot, magnesium deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/carrot_magnesium.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Carrot, zinc deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/carrot_zinc.html"
     }
    ]
   }

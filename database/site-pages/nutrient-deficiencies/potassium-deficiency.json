@@ -583,7 +583,7 @@
   },
   {
    "type": "text",
-   "text": "Sandy soils and old, highly weathered acid soils hold little potassium, and heavy rain or typhoon floods wash it out. Heavy use of urea or 16 20 0 with little or no potash drains the soil. So does hauling away or burning straw. Every harvest carries potassium away, and PCA surveys found it short in some coconut areas. Poorly drained, waterlogged soils and soils very rich in magnesium also keep roots from taking it up."
+   "text": "Sandy soils and old, highly weathered acid soils hold little potassium, and heavy rain or typhoon floods wash it out. Heavy use of urea or 16 20 0 with little or no potash drains the soil. So does hauling away or burning straw. Every harvest carries potassium away, and surveys found it short in some coconut areas. Poorly drained, waterlogged soils and soils very rich in magnesium also keep roots from taking it up."
   },
   {
    "type": "heading",
@@ -592,7 +592,7 @@
   },
   {
    "type": "text",
-   "text": "Magnesium shortage also starts on old leaves, but it yellows the leaf between the veins instead of burning the edges. In banana, manganese shortage looks alike but starts on the young leaves. Salt damage from too much fertilizer also scorches leaf edges. A soil test for exchangeable potassium, from the BSWM Soil Test Kit or a DA Regional Soils Laboratory, shows if the soil is short. A leaf tissue test confirms it. In lowland rice, the PhilRice MOET pots show missing potassium as short, poorly growing plants."
+   "text": "Magnesium shortage also starts on old leaves, but it yellows the leaf between the veins instead of burning the edges. In banana, manganese shortage looks alike but starts on the young leaves. Salt damage from too much fertilizer also scorches leaf edges. A soil test for exchangeable potassium, from a soil test kit or a DA Regional Soils Laboratory, shows if the soil is short. A leaf tissue test confirms it. In lowland rice, the MOET pots show missing potassium as short, poorly growing plants."
   },
   {
    "type": "heading",
@@ -601,7 +601,7 @@
   },
   {
    "type": "text",
-   "text": "Apply muriate of potash (0 0 60), sulfate of potash (0 0 50) or 14 14 14. Return straw, ash and compost. For coconut palms 5 years and older, a typical PCA rate is 1.5 to 2 kg of muriate of potash per palm a year. Let the soil test set the rate. On saline soils split the dose or use sulfate of potash, which adds less salt."
+   "text": "Apply muriate of potash (0 0 60), sulfate of potash (0 0 50) or 14 14 14. Return straw, ash and compost. For coconut palms 5 years and older, a typical rate is 1.5 to 2 kg of muriate of potash per palm a year. Let the soil test set the rate. On saline soils split the dose or use sulfate of potash, which adds less salt."
   },
   {
    "type": "text",
@@ -716,7 +716,7 @@
     },
     {
      "q": "Can I use salt instead of potash for coconut?",
-     "a": "Salt supplies chlorine, which coconut needs, but it has no potassium. The PCA guide says to use muriate of potash, not salt, where the soil lacks potassium."
+     "a": "Salt supplies chlorine, which coconut needs, but it has no potassium. Use muriate of potash, not salt, where the soil lacks potassium."
     },
     {
      "q": "Why are my banana leaves turning yellow and drying from the tips?",
@@ -762,10 +762,6 @@
    "type": "sources",
    "items": [
     {
-     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Potassium deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Potassium_deficiency.htm"
-    },
-    {
      "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
      "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
     },
@@ -774,16 +770,8 @@
      "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/potassium-deficiency-banana/"
     },
     {
-     "label": "Philippine Coconut Authority and DA ATI Region 2, Fertilization Guide on Coconuts",
-     "url": "https://ati2.da.gov.ph/ati-2/content/sites/default/files/2023-07/Fertlization%20Guide%20on%20Coconuts%20FINAL.pdf"
-    },
-    {
      "label": "University of Wisconsin Extension, Soil and Applied Potassium (A2521)",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2521.pdf"
-    },
-    {
-     "label": "Rice Today, Diagnosis by deduction (the MOET kit)",
-     "url": "https://ricetoday.irri.org/diagnosis-by-deduction/"
     }
    ]
   }

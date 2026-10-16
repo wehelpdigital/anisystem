@@ -166,7 +166,7 @@
   },
   {
    "type": "text",
-   "text": "Haifa gives 200 to 300 kg N per hectare for dry bulbs: a quarter or so before planting and the rest in splits every 10 to 14 days for 2 to 2.5 months. For quick help TNAU gives a 1 percent urea (10 g per liter) or 2 percent DAP spray twice, a week apart. A UPLB survey found most Nueva Ecija farmers already use more than 120 kg N per hectare. So check your rate before adding more."
+   "text": "Haifa gives 200 to 300 kg N per hectare for dry bulbs: a quarter or so before planting and the rest in splits every 10 to 14 days for 2 to 2.5 months. For quick help give a 1 percent urea (10 g per liter) or 2 percent DAP spray twice, a week apart. A survey found most Nueva Ecija farmers already use more than 120 kg N per hectare. So check your rate before adding more."
   },
   {
    "type": "list",
@@ -221,7 +221,7 @@
   },
   {
    "type": "text",
-   "text": "Haifa gives 45 to 70 kg of sulfur per hectare, half at planting or transplanting and half before bulbing. On sulfur poor soil, 40 kg of sulfur per hectare as Ammonium sulfate 21 0 0 or single superphosphate with the usual NPK raised aggregatum onion yield by about a quarter (TNAU trial). KAU also uses sulfur dust, about 25 kg per hectare."
+   "text": "Haifa gives 45 to 70 kg of sulfur per hectare, half at planting or transplanting and half before bulbing. On sulfur poor soil, 40 kg of sulfur per hectare as Ammonium sulfate 21 0 0 or single superphosphate with the usual NPK raised aggregatum onion yield by about a quarter. You can also use sulfur dust, about 25 kg per hectare."
   },
   {
    "type": "list",
@@ -275,7 +275,7 @@
   },
   {
    "type": "text",
-   "text": "Haifa advises putting 30 to 50 percent of the potash in before planting and the rest during bulb development, which increases bulb size. TNAU gives a 1 percent potassium sulfate spray (10 g per liter) twice, a week apart."
+   "text": "Haifa advises putting 30 to 50 percent of the potash in before planting and the rest during bulb development, which increases bulb size. Give a 1 percent potassium sulfate spray (10 g per liter) twice, a week apart."
   },
   {
    "type": "list",
@@ -329,7 +329,7 @@
   },
   {
    "type": "text",
-   "text": "Haifa adds 1 kg of phosphorus per hectare for every 1 ppm the soil test is below 25 ppm. For a standing crop TNAU gives a 2 percent DAP 18 46 0 spray (20 g per liter) twice, 15 days apart."
+   "text": "Haifa adds 1 kg of phosphorus per hectare for every 1 ppm the soil test is below 25 ppm. For a standing crop give a 2 percent DAP 18 46 0 spray (20 g per liter) twice, 15 days apart."
   },
   {
    "type": "list",
@@ -384,7 +384,7 @@
   },
   {
    "type": "text",
-   "text": "Haifa gives 6 kg of zinc per hectare in the basal fertilizer only when a soil test confirms the shortage, since too much is toxic. For a standing crop TNAU gives a 0.5 percent zinc sulfate spray (5 g per liter) twice, 15 days apart."
+   "text": "Haifa gives 6 kg of zinc per hectare in the basal fertilizer only when a soil test confirms the shortage, since too much is toxic. For a standing crop give a 0.5 percent zinc sulfate spray (5 g per liter) twice, 15 days apart."
   },
   {
    "type": "list",
@@ -436,7 +436,7 @@
   },
   {
    "type": "text",
-   "text": "Haifa gives 1 kg of boron per hectare (about 9 kg Borax) mixed in before transplanting or sowing when the soil test is low. Warns not to exceed it. KAU gives about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter."
+   "text": "Haifa gives 1 kg of boron per hectare (about 9 kg Borax) mixed in before transplanting or sowing when the soil test is low. Warns not to exceed it. Give about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter."
   },
   {
    "type": "list",
@@ -488,7 +488,7 @@
   },
   {
    "type": "text",
-   "text": "Haifa gives 30 kg of magnesium per hectare before planting when the soil is low. TNAU gives a 0.5 percent magnesium sulfate spray (5 g Epsom salt per liter) twice, a week apart. KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants."
+   "text": "Haifa gives 30 kg of magnesium per hectare before planting when the soil is low. Give a 0.5 percent magnesium sulfate spray (5 g Epsom salt per liter) twice, a week apart. Give about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants."
   },
   {
    "type": "list",
@@ -541,7 +541,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.3 percent copper sulfate spray (3 g per liter) twice, a week apart. For the soil, the University of Wisconsin bands about 2 to 4.5 kg of copper per hectare for onion. Says to stop once about 34 kg per hectare in total has gone on, to avoid toxicity."
+   "text": "Give a 0.3 percent copper sulfate spray (3 g per liter) twice, a week apart. For the soil, the University of Wisconsin bands about 2 to 4.5 kg of copper per hectare for onion. Says to stop once about 34 kg per hectare in total has gone on, to avoid toxicity."
   },
   {
    "type": "list",
@@ -593,7 +593,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.3 percent manganese sulfate spray (3 g per liter) twice, 15 days apart. The University of Wisconsin gives about 5.6 kg of manganese per hectare to the soil or 1.1 kg as a spray."
+   "text": "Give a 0.3 percent manganese sulfate spray (3 g per liter) twice, 15 days apart. The University of Wisconsin gives about 5.6 kg of manganese per hectare to the soil or 1.1 kg as a spray."
   },
   {
    "type": "list",
@@ -614,7 +614,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any onion nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your sibuyas needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any onion nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your sibuyas needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -637,15 +637,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in onion?",
-     "a": "Haifa gives 200 to 300 kg N per hectare for dry bulbs: a quarter or so before planting and the rest in splits every 10 to 14 days for 2 to 2.5 months. For quick help TNAU gives a 1 percent urea (10 g per liter) or 2 percent DAP spray twice, a week apart."
+     "a": "Haifa gives 200 to 300 kg N per hectare for dry bulbs: a quarter or so before planting and the rest in splits every 10 to 14 days for 2 to 2.5 months. For quick help give a 1 percent urea (10 g per liter) or 2 percent DAP spray twice, a week apart."
     },
     {
      "q": "What fertilizer fixes sulfur deficiency in onion?",
-     "a": "Haifa gives 45 to 70 kg of sulfur per hectare, half at planting or transplanting and half before bulbing. On sulfur poor soil, 40 kg of sulfur per hectare as Ammonium sulfate 21 0 0 or single superphosphate with the usual NPK raised aggregatum onion yield by about a quarter (TNAU trial)."
+     "a": "Haifa gives 45 to 70 kg of sulfur per hectare, half at planting or transplanting and half before bulbing. On sulfur poor soil, 40 kg of sulfur per hectare as Ammonium sulfate 21 0 0 or single superphosphate with the usual NPK raised aggregatum onion yield by about a quarter."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in onion?",
-     "a": "Haifa advises putting 30 to 50 percent of the potash in before planting and the rest during bulb development, which increases bulb size. TNAU gives a 1 percent potassium sulfate spray (10 g per liter) twice, a week apart."
+     "a": "Haifa advises putting 30 to 50 percent of the potash in before planting and the rest during bulb development, which increases bulb size. Give a 1 percent potassium sulfate spray (10 g per liter) twice, a week apart."
     },
     {
      "q": "How do I know which nutrient my sibuyas lacks?",
@@ -695,44 +695,20 @@
      "url": "https://www.haifa-group.com/croprecommendations/onion-ferilizer-crop-guide-nutrition-onion-crop"
     },
     {
-     "label": "TNAU Agritech Portal: Onion, nitrogen deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/onion_nitrogen.html"
-    },
-    {
-     "label": "Brown and others, UPLB IPM CRSP report (2008): Management of soil borne diseases of onions in rice and vegetable systems using mycorrhizae",
-     "url": "https://agris.fao.org/search/ru/records/64724b05e17b74d2224fa466"
-    },
-    {
-     "label": "Kerala Agricultural University Agri Infotech Portal: Onion nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/onion/deficiency.php"
-    },
-    {
      "label": "Nivetha and others, Journal of Pharmacognosy and Phytochemistry (2020): Sulphur nutrition for yield and quality of aggregatum onion in sulphur deficient soil",
      "url": "https://phytojournal.com/archives/2020.v9.i1.10773/evaluating-sulphur-nutrition-to-improve-the-yield-and-quality-of-aggregatum-onion-allium-cepa-var-aggregatum-grown-in-sulphur-deficient-soil"
-    },
-    {
-     "label": "TNAU Agritech Portal: Onion, sulphur deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/onion_sulphur.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Onion, potassium deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/onion_potassium.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Onion, phosphorus deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/onion_phosphorus.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Onion, zinc deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/onion_zinc.html"
     },
     {
      "label": "University of Wisconsin Extension A2528: Soil and applied zinc",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2528.pdf"
     },
     {
-     "label": "TNAU Agritech Portal: Onion, magnesium deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/onion_magnesium.html"
+     "label": "University of Wisconsin Extension A2527: Soil and applied copper",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2527.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension A2526: Soil and applied manganese",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2526.pdf"
     }
    ]
   }

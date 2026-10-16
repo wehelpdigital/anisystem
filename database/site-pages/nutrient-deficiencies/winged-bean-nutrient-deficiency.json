@@ -377,7 +377,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any winged bean nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your sigarilyas needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any winged bean nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your sigarilyas needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -450,10 +450,6 @@
    "type": "sources",
    "items": [
     {
-     "label": "Kitou and others, University of the Ryukyus: Growth of winged bean in three soil types in Okinawa and the effect of phosphorus nutrition",
-     "url": "https://agris.fao.org/search/en/providers/122558/records/67655b6d6a5a95f3405ab60f"
-    },
-    {
      "label": "Purcino and others, Pesquisa Agropecuaria Brasileira: Soil fertility effects on growth and nodules of two winged bean cultivars",
      "url": "https://apct.sede.embrapa.br/pab/en/article/view/17042"
     },
@@ -476,10 +472,6 @@
     {
      "label": "University of Wisconsin Extension A3555: Soil and applied molybdenum",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a3555.pdf"
-    },
-    {
-     "label": "Iowa State University Extension IPM42: Nutrient deficiencies and application injuries in field crops",
-     "url": "https://www.agronext.iastate.edu/soilfertility/info/IPM42.pdf"
     }
    ]
   }

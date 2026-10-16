@@ -40,7 +40,7 @@ final class FieldCatalogue
         'Onions & garlic' => 'onions', 'Industrial crops' => 'industrial', 'Fruit trees' => 'fruits', 'Other' => 'vegetables',
     ];
 
-    private const CACHE = 'field-catalogue:v1:';
+    private const CACHE = 'field-catalogue:v2:';
 
     private const TTL = 21600;
 
@@ -278,12 +278,15 @@ final class FieldCatalogue
         return $mine;
     }
 
+    /* A source naming an agency, a state university or a research institute
+     * never shows (the owner, 2026-10-17): the shapes keep only the others,
+     * so the hubs, fact sheets and field helpers all read the same. */
     private static function problemShape(array $e): array
     {
         return ['name' => (string) $e['name'], 'sci' => (string) ($e['sci'] ?? ''), 'group' => (string) ($e['shelf'] ?? 'fruits'), 'kind' => (string) ($e['kind'] ?? 'Insect'),
             'crops' => array_values((array) ($e['crops'] ?? [])), 'parts' => array_values((array) ($e['parts'] ?? [])), 'signs' => array_values((array) ($e['signs'] ?? [])),
             'local' => (string) ($e['local'] ?? ''), 'hint' => (string) ($e['hint'] ?? ''), 'ai' => array_values((array) ($e['ai'] ?? [])),
-            'no' => (string) ($e['no'] ?? ''), 'sources' => array_values((array) ($e['sources'] ?? [])),
+            'no' => (string) ($e['no'] ?? ''), 'sources' => GovSource::keep((array) ($e['sources'] ?? [])),
             // crop => its place in that crop's own order of importance
             'ranks' => array_map('intval', (array) ($e['ranks'] ?? []))];
     }
@@ -292,7 +295,7 @@ final class FieldCatalogue
     {
         return ['name' => (string) $e['name'], 'sci' => (string) ($e['sci'] ?? ''), 'group' => (string) $e['group'], 'life' => (string) ($e['life'] ?? ''),
             'local' => (string) ($e['local'] ?? ''), 'hint' => (string) ($e['hint'] ?? ''), 'crops' => array_values((array) ($e['crops'] ?? [])),
-            'sources' => array_values((array) ($e['sources'] ?? []))];
+            'sources' => GovSource::keep((array) ($e['sources'] ?? []))];
     }
 
     private static function planShape(array $p): array
@@ -308,7 +311,7 @@ final class FieldCatalogue
 
         return ['label' => (string) $p['label'], 'local' => (string) ($p['local'] ?? ''), 'crops' => array_values((array) ($p['crops'] ?? [])),
             'after' => (string) ($p['after'] ?? 'after planting'), 'windows' => $windows, 'ingredients' => (array) ($p['ingredients'] ?? []),
-            'sources' => array_values((array) ($p['sources'] ?? []))];
+            'sources' => GovSource::keep((array) ($p['sources'] ?? []))];
     }
 
     /* ---------------------------------------------------------------- */

@@ -129,7 +129,7 @@
   },
   {
    "type": "text",
-   "text": "Many Philippine avocado trees are grown with no fertilizer at all, which a UPLB review links to the fall in yield and quality after a few years of bearing. Heavy rain on sandy or eroded soils washes nitrogen away."
+   "text": "Many Philippine avocado trees are grown with no fertilizer at all, which a review links to the fall in yield and quality after a few years of bearing. Heavy rain on sandy or eroded soils washes nitrogen away."
   },
   {
    "type": "heading",
@@ -449,7 +449,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any avocado nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your abukado needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any avocado nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your abukado needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -522,10 +522,6 @@
    "type": "sources",
    "items": [
     {
-     "label": "Sotto, Avocado production in the Philippines (UPLB Institute of Plant Breeding, FAO)",
-     "url": "https://www.fao.org/4/x6902E/x6902e09.htm"
-    },
-    {
      "label": "Barnard, Cillie and Kotze 1991, Deficiency symptoms in avocados (South African Avocado Growers' Association Yearbook)",
      "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_67-71.pdf"
     },
@@ -540,10 +536,6 @@
     {
      "label": "UC IPM: Phytophthora root rot of avocado",
      "url": "https://ipm.ucanr.edu/agriculture/avocado/phytophthora-root-rot/"
-    },
-    {
-     "label": "UF IFAS EDIS MG213: Avocado growing in the Florida home garden",
-     "url": "https://ask.ifas.ufl.edu/publication/MG213"
     },
     {
      "label": "Ruehle 1940, Zinc deficiency of the avocado (Proceedings of the Florida State Horticultural Society)",

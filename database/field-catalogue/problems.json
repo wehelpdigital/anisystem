@@ -229,7 +229,7 @@
    "local": "",
    "hint": "Leaf tips are cut at right angles, as if with scissors.",
    "ai": [],
-   "no": "Drain the field first. If you must spray, IRRI advises a carbamate, never a pyrethroid.",
+   "no": "Drain the field first. If you must spray, use a carbamate, never a pyrethroid.",
    "sources": [],
    "ranks": {}
   },
@@ -249,7 +249,7 @@
    "local": "",
    "hint": "White streaks run along the leaf, parallel to the midrib.",
    "ai": [],
-   "no": "No insecticide is named for it here. Ask a PhilRice or DA technician first.",
+   "no": "No insecticide is named for it here. Ask your municipal agriculturist first.",
    "sources": [],
    "ranks": {}
   },
@@ -354,7 +354,7 @@
    "local": "",
    "hint": "Seedlings are cut at the base and bare patches show in the seedbed or field.",
    "ai": [],
-   "no": "Only a bait on the bunds, as the last resort. Ask the DA for a registered product.",
+   "no": "Only a bait on the bunds, as the last resort. Ask your municipal agriculturist for a registered product.",
    "sources": [],
    "ranks": {}
   },
@@ -676,7 +676,7 @@
    "local": "",
    "hint": "Leaves turn orange yellow, and plants wilt and stunt in patches.",
    "ai": [],
-   "no": "A soil insecticide only as the last resort, timed for young grubs. Ask the DA.",
+   "no": "A soil insecticide only as the last resort, timed for young grubs. Ask your municipal agriculturist.",
    "sources": [],
    "ranks": {
     "peanut": 5,
@@ -2150,7 +2150,7 @@
    "local": "",
    "hint": "Green shield shaped bugs that smell when touched suck the young pods, which turn warty, bent or fall.",
    "ai": [],
-   "no": "DA okra guides name no spray for it. Hand pick the bugs in the cool morning, keep weeds down and rotate crops.",
+   "no": "No spray is advised for it. Hand pick the bugs in the cool morning, keep weeds down and rotate crops.",
    "sources": [
     {
      "label": "DA RFO 02, Okra Production Guide",
@@ -2850,7 +2850,7 @@
    "local": "",
    "hint": "Young fruits show dark spots where the bugs fed, unripe fruits fall, and in bad cases the vines wilt.",
    "ai": [],
-   "no": "DA guides advise no spray for it. Collect the bugs, remove infested vines after harvest, rotate crops and dust wood ash on the leaves.",
+   "no": "No spray is advised for it. Collect the bugs, remove infested vines after harvest, rotate crops and dust wood ash on the leaves.",
    "sources": [
     {
      "label": "DA RFO 02, Upo Production Guide",
@@ -4259,7 +4259,7 @@
   {
    "slug": "lanzones-bark-borer",
    "name": "Lanzones bark borer",
-   "sci": "Species not named in the BPI guide",
+   "sci": "Species not named",
    "shelf": "fruits",
    "kind": "Insect",
    "crops": [
@@ -4335,7 +4335,7 @@
   {
    "slug": "durian-psyllid",
    "name": "Durian psyllids (including bao bao)",
-   "sci": "Allocaridara malayensis (written Allocarsidara incognita in the BPI guide), Haplaphalara sp.",
+   "sci": "Allocaridara malayensis (also written Allocarsidara incognita), Haplaphalara sp.",
    "shelf": "fruits",
    "kind": "Insect",
    "crops": [

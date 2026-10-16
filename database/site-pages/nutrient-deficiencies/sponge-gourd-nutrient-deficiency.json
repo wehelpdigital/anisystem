@@ -146,7 +146,7 @@
   },
   {
    "type": "text",
-   "text": "Side dress urea or ammonium sulfate in one or two doses before fruits form, based on the soil test, as the University of Kentucky advises for cucurbits. For bottle gourd, a related gourd, KAU gives a urea leaf spray at 10 grams per liter of water every 15 days."
+   "text": "Side dress urea or ammonium sulfate in one or two doses before fruits form, based on the soil test, as the University of Kentucky advises for cucurbits. For bottle gourd, a related gourd, give a urea leaf spray at 10 grams per liter of water every 15 days."
   },
   {
    "type": "list",
@@ -200,7 +200,7 @@
   },
   {
    "type": "text",
-   "text": "Apply muriate of potash based on the soil test, in split doses. For bottle gourd, a related gourd, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+   "text": "Apply muriate of potash based on the soil test, in split doses. For bottle gourd, a related gourd, give a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
   },
   {
    "type": "list",
@@ -254,7 +254,7 @@
   },
   {
    "type": "text",
-   "text": "The University of Kentucky advises keeping soil pH near 6.5 and feeding Epsom salt through drip lines if needed. Leaf sprays rarely fix a serious shortage. For bottle gourd, KAU gives magnesium sulfate in a band at about 80 kg per hectare (32 kg per acre)."
+   "text": "The University of Kentucky advises keeping soil pH near 6.5 and feeding Epsom salt through drip lines if needed. Leaf sprays rarely fix a serious shortage. For bottle gourd, give magnesium sulfate in a band at about 80 kg per hectare (32 kg per acre)."
   },
   {
    "type": "list",
@@ -360,7 +360,7 @@
   },
   {
    "type": "text",
-   "text": "For bottle gourd, a related gourd, KAU gives borax at about 10 kg per hectare (4 kg per acre) in the soil, or a borax spray at 1 gram per liter of water. Do not repeat doses without a test."
+   "text": "For bottle gourd, a related gourd, give borax at about 10 kg per hectare (4 kg per acre) in the soil, or a borax spray at 1 gram per liter of water. Do not repeat doses without a test."
   },
   {
    "type": "list",
@@ -382,7 +382,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any sponge gourd nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your patola needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any sponge gourd nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your patola needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -405,11 +405,11 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in sponge gourd?",
-     "a": "Side dress urea or ammonium sulfate in one or two doses before fruits form, based on the soil test, as the University of Kentucky advises for cucurbits. For bottle gourd, a related gourd, KAU gives a urea leaf spray at 10 grams per liter of water every 15 days."
+     "a": "Side dress urea or ammonium sulfate in one or two doses before fruits form, based on the soil test, as the University of Kentucky advises for cucurbits. For bottle gourd, a related gourd, give a urea leaf spray at 10 grams per liter of water every 15 days."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in sponge gourd?",
-     "a": "Apply muriate of potash based on the soil test, in split doses. For bottle gourd, a related gourd, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+     "a": "Apply muriate of potash based on the soil test, in split doses. For bottle gourd, a related gourd, give a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
     },
     {
      "q": "What fertilizer fixes magnesium deficiency in sponge gourd?",
@@ -457,10 +457,6 @@
     {
      "label": "University of Kentucky Vegetable Scouting: Nitrogen deficiency of cucurbits",
      "url": "https://veggiescout.mgcafe.uky.edu/node/60"
-    },
-    {
-     "label": "KAU Agri Infotech Portal: Bottle gourd nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/bottle%20gourd/deficiency.php"
     },
     {
      "label": "PNW Plant Disease Management Handbook: Key nutrient deficiencies in vegetable crops",

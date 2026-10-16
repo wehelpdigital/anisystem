@@ -140,7 +140,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 in two splits a year, spread in a 2 meter circle and forked in. TNAU lists 2.7 kg of potash (K2O) per palm per year from the third year, which is about 4.5 kg of Muriate of potash. Follow your soil and leaf test."
+   "text": "Apply Muriate of potash 0 0 60 in two splits a year, spread in a 2 meter circle and forked in. Give 2.7 kg of potash (K2O) per palm per year from the third year, which is about 4.5 kg of Muriate of potash. Follow your soil and leaf test."
   },
   {
    "type": "list",
@@ -199,7 +199,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 in the weeded circle in two splits a year. TNAU lists 1.2 kg of nitrogen per palm per year from the third year (about 2.6 kg Urea). Fix drainage on wet sites."
+   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 in the weeded circle in two splits a year. Give 1.2 kg of nitrogen per palm per year from the third year (about 2.6 kg Urea). Fix drainage on wet sites."
   },
   {
    "type": "list",
@@ -253,7 +253,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Borax to the soil around the palm. TNAU gives 50 to 200 grams of Borax per palm depending on age and severity. 100 grams per palm per year as routine. U.S. Borax gives about 50 grams of its Fertibor product per young palm per year, rising to 100 to 200 grams."
+   "text": "Apply Borax to the soil around the palm. Give 50 to 200 grams of Borax per palm depending on age and severity. 100 grams per palm per year as routine. U.S. Borax gives about 50 grams of its Fertibor product per young palm per year, rising to 100 to 200 grams."
   },
   {
    "type": "list",
@@ -312,7 +312,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Magnesium sulfate or Kieserite in the circle. TNAU gives 500 grams of Magnesium sulfate per palm per year. On acid soils Dolomite also works. Do not apply magnesium and potash on the same day."
+   "text": "Apply Magnesium sulfate or Kieserite in the circle. Give 500 grams of Magnesium sulfate per palm per year. On acid soils Dolomite also works. Do not apply magnesium and potash on the same day."
   },
   {
    "type": "list",
@@ -366,7 +366,7 @@
   },
   {
    "type": "text",
-   "text": "Apply a phosphorus fertilizer in the circle in two splits a year. TNAU names rock phosphate as the best source and lists 0.6 kg of phosphate (P2O5) per palm per year from the third year. Superphosphate acts faster. Follow the soil test."
+   "text": "Apply a phosphorus fertilizer in the circle in two splits a year. Rock phosphate is the best source: give 0.6 kg of phosphate (P2O5) per palm per year from the third year. Superphosphate acts faster. Follow the soil test."
   },
   {
    "type": "list",
@@ -390,7 +390,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any oil palm nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your palma needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any oil palm nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your palma needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -413,15 +413,15 @@
     },
     {
      "q": "What fertilizer fixes potassium deficiency in oil palm?",
-     "a": "Apply Muriate of potash 0 0 60 in two splits a year, spread in a 2 meter circle and forked in. TNAU lists 2.7 kg of potash (K2O) per palm per year from the third year, which is about 4.5 kg of Muriate of potash."
+     "a": "Apply Muriate of potash 0 0 60 in two splits a year, spread in a 2 meter circle and forked in. Give 2.7 kg of potash (K2O) per palm per year from the third year, which is about 4.5 kg of Muriate of potash."
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in oil palm?",
-     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 in the weeded circle in two splits a year. TNAU lists 1.2 kg of nitrogen per palm per year from the third year (about 2.6 kg Urea)."
+     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 in the weeded circle in two splits a year. Give 1.2 kg of nitrogen per palm per year from the third year (about 2.6 kg Urea)."
     },
     {
      "q": "What fertilizer fixes boron deficiency in oil palm?",
-     "a": "Apply Borax to the soil around the palm. TNAU gives 50 to 200 grams of Borax per palm depending on age and severity."
+     "a": "Apply Borax to the soil around the palm. Give 50 to 200 grams of Borax per palm depending on age and severity."
     },
     {
      "q": "How do I know which nutrient my palma lacks?",
@@ -463,20 +463,8 @@
    "type": "sources",
    "items": [
     {
-     "label": "TNAU Agritech Portal: Nutrient management in oil palm",
-     "url": "https://agritech.tnau.ac.in/agriculture/agri_nutrientmgt_oilpalm.html"
-    },
-    {
-     "label": "Kerala Agricultural University Agri Infotech: Oil palm nutrient deficiencies",
-     "url": "https://www.celkau.in/crops/plantation/oilpalm/deficiency.php"
-    },
-    {
      "label": "Wageningen University poster: Yield gaps in Indonesian smallholder oil palm plantations",
      "url": "https://perennialcrops.wur.nl/system/files/Poster%20LS%20Woittiez%20V3%20150922.pdf"
-    },
-    {
-     "label": "UF IFAS EDIS: Nutrient deficiencies of garden and field grown palms in Florida (Broschat)",
-     "url": "https://ask.ifas.ufl.edu/publication/EP273"
     },
     {
      "label": "Setiaji 2026, Leaf nutrient levels in oil palm by the leaf sampling unit method (IPB University. Frond 17 as the standard sample)",

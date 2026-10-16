@@ -141,7 +141,7 @@
   },
   {
    "type": "text",
-   "text": "For young trees in the third and fourth year, the DA Cagayan Valley guide gives 1 to 2 kg of complete fertilizer per tree with 300 grams of Muriate of potash. For bearing trees it gives 25 kg of organic fertilizer per tree after ring weeding, then 2 to 3 kg of Complete 14 14 14 or 16 20 0 one to two months later. The ICRAF tree database gives about 200 grams of nitrogen per tree for each year of age, up to 12 years, with half of the yearly amount right after harvest. Too much nitrogen can delay flowering and make fruit drop."
+   "text": "For young trees in the third and fourth year, give 1 to 2 kg of complete fertilizer per tree with 300 grams of Muriate of potash. For bearing trees it gives 25 kg of organic fertilizer per tree after ring weeding, then 2 to 3 kg of Complete 14 14 14 or 16 20 0 one to two months later. The ICRAF tree database gives about 200 grams of nitrogen per tree for each year of age, up to 12 years, with half of the yearly amount right after harvest. Too much nitrogen can delay flowering and make fruit drop."
   },
   {
    "type": "list",
@@ -196,7 +196,7 @@
   },
   {
    "type": "text",
-   "text": "The DA Cagayan Valley guide gives 300 grams of Muriate of potash with the complete fertilizer before flowering. A second potash dose in water during fruit growth for bigger, sweeter fruit. Because rambutan dislikes chloride, Queensland researchers advise Sulfate of potash or potassium nitrate instead. Switch to those where leaf edges burn. The ICRAF tree database gives about 130 grams of potash per tree for each year of age for fruiting trees, up to 12 years."
+   "text": "The give 300 grams of Muriate of potash with the complete fertilizer before flowering. A second potash dose in water during fruit growth for bigger, sweeter fruit. Because rambutan dislikes chloride, Queensland researchers advise Sulfate of potash or potassium nitrate instead. Switch to those where leaf edges burn. The ICRAF tree database gives about 130 grams of potash per tree for each year of age for fruiting trees, up to 12 years."
   },
   {
    "type": "list",
@@ -250,7 +250,7 @@
   },
   {
    "type": "text",
-   "text": "The DA Cagayan Valley guide uses Complete 14 14 14 or 16 20 0 before flowering, which supply phosphorus. In a Thai trial, a leaf spray of monopotassium phosphate at 5 grams per liter, three times a week apart once the last flush matured, followed by a 7 13 34 foliar feed with zinc, gave the most flowering, about 10 days earlier than unsprayed trees. Follow the soil test and lime very acid soils."
+   "text": "The use Complete 14 14 14 or 16 20 0 before flowering, which supply phosphorus. In a Thai trial, a leaf spray of monopotassium phosphate at 5 grams per liter, three times a week apart once the last flush matured, followed by a 7 13 34 foliar feed with zinc, gave the most flowering, about 10 days earlier than unsprayed trees. Follow the soil test and lime very acid soils."
   },
   {
    "type": "list",
@@ -305,7 +305,7 @@
   },
   {
    "type": "text",
-   "text": "Spray zinc on the mature last flush before flowering. In the Thai trial, a 7 13 34 foliar fertilizer containing zinc, at 1.5 grams of product per liter and sprayed three times a week apart, gave the biggest panicles. Zinc sulfate also works. TNAU sprays for other fruit trees use 3 to 5 grams Zinc sulfate per liter. Follow the label."
+   "text": "Spray zinc on the mature last flush before flowering. In the Thai trial, a 7 13 34 foliar fertilizer containing zinc, at 1.5 grams of product per liter and sprayed three times a week apart, gave the biggest panicles. Zinc sulfate also works. Sprays for other fruit trees use 3 to 5 grams Zinc sulfate per liter. Follow the label."
   },
   {
    "type": "list",
@@ -380,7 +380,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any rambutan nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your rambutan needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any rambutan nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your rambutan needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -403,15 +403,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in rambutan?",
-     "a": "For young trees in the third and fourth year, the DA Cagayan Valley guide gives 1 to 2 kg of complete fertilizer per tree with 300 grams of Muriate of potash. For bearing trees it gives 25 kg of organic fertilizer per tree after ring weeding, then 2 to 3 kg of Complete 14 14 14 or 16 20 0 one to two months later."
+     "a": "For young trees in the third and fourth year, give 1 to 2 kg of complete fertilizer per tree with 300 grams of Muriate of potash. For bearing trees it gives 25 kg of organic fertilizer per tree after ring weeding, then 2 to 3 kg of Complete 14 14 14 or 16 20 0 one to two months later."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in rambutan?",
-     "a": "The DA Cagayan Valley guide gives 300 grams of Muriate of potash with the complete fertilizer before flowering. A second potash dose in water during fruit growth for bigger, sweeter fruit."
+     "a": "The give 300 grams of Muriate of potash with the complete fertilizer before flowering. A second potash dose in water during fruit growth for bigger, sweeter fruit."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in rambutan?",
-     "a": "The DA Cagayan Valley guide uses Complete 14 14 14 or 16 20 0 before flowering, which supply phosphorus. In a Thai trial, a leaf spray of monopotassium phosphate at 5 grams per liter, three times a week apart once the last flush matured, followed by a 7 13 34 foliar feed with zinc, gave the most flowering, about 10 days earlier than unsprayed trees."
+     "a": "The use Complete 14 14 14 or 16 20 0 before flowering, which supply phosphorus. In a Thai trial, a leaf spray of monopotassium phosphate at 5 grams per liter, three times a week apart once the last flush matured, followed by a 7 13 34 foliar feed with zinc, gave the most flowering, about 10 days earlier than unsprayed trees."
     },
     {
      "q": "How do I know which nutrient my rambutan lacks?",
@@ -453,10 +453,6 @@
    "type": "sources",
    "items": [
     {
-     "label": "DA Regional Field Office 02 (HVCDP): Rambutan production guide",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/rambutan_final2012.pdf"
-    },
-    {
      "label": "ICRAF Agroforestree database: Nephelium lappaceum (rambutan)",
      "url": "https://apps.worldagroforestry.org/treedb2/speciesprofile.php?Spid=1202"
     },
@@ -465,20 +461,8 @@
      "url": "https://rfcarchives.org.au/Next/Fruits/Rambutan/RambutanLeafAnalysis1-92.htm"
     },
     {
-     "label": "TNAU (Jeyakumar and Balamohan): Diagnosis of nutritional disorders",
-     "url": "https://agritech.tnau.ac.in/agriculture/pdf/Diagnosis%20of%20nutritional%20disorders.pdf"
-    },
-    {
      "label": "NParks Singapore (Jiang Qiuyun): Identifying nutrient deficiency in plants",
      "url": "https://www.nparks.gov.sg/publications-resources/articles/identifying-nutrient-deficiency-in-plants"
-    },
-    {
-     "label": "Pongchareon 1995, Effect of foliar fertilizers on leaf nutrients, flowering and fruit set of rambutan cv. Rong Rian (Kasetsart University, AGRIS record)",
-     "url": "https://agris.fao.org/search/ar/records/6472310953aa8c896301e061"
-    },
-    {
-     "label": "TNAU (Jeyakumar and Balamohan): Micronutrients for horticultural crops",
-     "url": "https://agritech.tnau.ac.in/agriculture/pdf/Micronutrients%20for%20horticultural%20crops.pdf"
     }
    ]
   }

@@ -140,7 +140,7 @@
   },
   {
    "type": "text",
-   "text": "The DA guide from ATI Region 7 drenches urea dissolved in 16 liters of water at 150 ml per hill, using 75 grams of urea in the first week, 150 in the second, 225 in the third and 300 in the fourth. Repeat a light feeding after each cutting."
+   "text": "The drench urea dissolved in 16 liters of water at 150 ml per hill, using 75 grams of urea in the first week, 150 in the second, 225 in the third and 300 in the fourth. Repeat a light feeding after each cutting."
   },
   {
    "type": "list",
@@ -177,7 +177,7 @@
   },
   {
    "type": "text",
-   "text": "Acid soils (the DA guide gives pH 5.5 to 6.5 as best), iron rich soils, low organic matter, and feeding urea only."
+   "text": "Acid soils (pH 5.5 to 6.5 is best), iron rich soils, low organic matter, and feeding urea only."
   },
   {
    "type": "heading",
@@ -195,7 +195,7 @@
   },
   {
    "type": "text",
-   "text": "Use complete 14 14 14 in the beds as the DA guide does, adjusted to the soil test, and lime very acid soil. Follow the soil test for the rate."
+   "text": "Use complete 14 14 14 in the beds, adjusted to the soil test, and lime very acid soil. Follow the soil test for the rate."
   },
   {
    "type": "list",
@@ -377,7 +377,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any water spinach nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kangkong needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any water spinach nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your kangkong needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -400,11 +400,11 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in water spinach?",
-     "a": "The DA guide from ATI Region 7 drenches urea dissolved in 16 liters of water at 150 ml per hill, using 75 grams of urea in the first week, 150 in the second, 225 in the third and 300 in the fourth. Repeat a light feeding after each cutting."
+     "a": "The drench urea dissolved in 16 liters of water at 150 ml per hill, using 75 grams of urea in the first week, 150 in the second, 225 in the third and 300 in the fourth. Repeat a light feeding after each cutting."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in water spinach?",
-     "a": "Use complete 14 14 14 in the beds as the DA guide does, adjusted to the soil test, and lime very acid soil. Follow the soil test for the rate."
+     "a": "Use complete 14 14 14 in the beds, adjusted to the soil test, and lime very acid soil. Follow the soil test for the rate."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in water spinach?",
@@ -449,10 +449,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "ATI Region 7 (DA): Kangkong production guide",
-     "url": "https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/kangkong_final%202020.pdf"
-    },
     {
      "label": "Jurnal Biologi Tropis: Chlorophyll levels of water kale (kangkong) under nutrient deficiencies",
      "url": "https://jurnalfkip.unram.ac.id/index.php/JBT/article/download/4478/2832/18621"

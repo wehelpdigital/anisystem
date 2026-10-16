@@ -152,7 +152,7 @@
   },
   {
    "type": "text",
-   "text": "Side dress urea based on the soil test. For a quick fix, KAU gives a urea leaf spray at 10 grams per liter of water every 15 days."
+   "text": "Side dress urea based on the soil test. For a quick fix, give a urea leaf spray at 10 grams per liter of water every 15 days."
   },
   {
    "type": "list",
@@ -206,7 +206,7 @@
   },
   {
    "type": "text",
-   "text": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water with a sticker. Keep pH above 6 with lime or dolomite."
+   "text": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, give a morning spray of sulfate of potash at 10 grams per liter of water with a sticker. Keep pH above 6 with lime or dolomite."
   },
   {
    "type": "list",
@@ -260,7 +260,7 @@
   },
   {
    "type": "text",
-   "text": "Apply phosphorus in the hill based on the soil test. KAU lists single superphosphate for a quick fix and notes best uptake near pH 6.2 to 7.0."
+   "text": "Apply phosphorus in the hill based on the soil test. Use single superphosphate for a quick fix. Uptake is best near pH 6.2 to 7.0."
   },
   {
    "type": "list",
@@ -314,7 +314,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply it with potash. The University of Kentucky notes leaf sprays alone rarely fix a serious shortage in cucurbits."
+   "text": "Try magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply it with potash. The University of Kentucky notes leaf sprays alone rarely fix a serious shortage in cucurbits."
   },
   {
    "type": "list",
@@ -367,7 +367,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests lime at about 250 kg per hectare when soil pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid. Water evenly."
+   "text": "Try lime at about 250 kg per hectare when soil pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid. Water evenly."
   },
   {
    "type": "list",
@@ -421,7 +421,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Do not mix borax with calcium or ammonium fertilizers."
+   "text": "Try borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Do not mix borax with calcium or ammonium fertilizers."
   },
   {
    "type": "list",
@@ -443,7 +443,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any bottle gourd nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your upo needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any bottle gourd nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your upo needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -466,15 +466,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in bottle gourd?",
-     "a": "Side dress urea based on the soil test. For a quick fix, KAU gives a urea leaf spray at 10 grams per liter of water every 15 days."
+     "a": "Side dress urea based on the soil test. For a quick fix, give a urea leaf spray at 10 grams per liter of water every 15 days."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in bottle gourd?",
-     "a": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+     "a": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, give a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in bottle gourd?",
-     "a": "Apply phosphorus in the hill based on the soil test. KAU lists single superphosphate for a quick fix and notes best uptake near pH 6.2 to 7.0."
+     "a": "Apply phosphorus in the hill based on the soil test. Use single superphosphate for a quick fix."
     },
     {
      "q": "How do I know which nutrient my upo lacks?",
@@ -515,10 +515,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "KAU Agri Infotech Portal: Bottle gourd nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/bottle%20gourd/deficiency.php"
-    },
     {
      "label": "University of Kentucky Vegetable Scouting: Nitrogen deficiency of cucurbits",
      "url": "https://veggiescout.mgcafe.uky.edu/node/60"

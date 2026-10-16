@@ -141,7 +141,7 @@
   },
   {
    "type": "text",
-   "text": "Sandy soils, heavy rain, low organic matter, and missed side dressings. BPI advises side dressing every two weeks in the rainy season because nitrogen washes out faster."
+   "text": "Sandy soils, heavy rain, low organic matter, and missed side dressings. Side dress every two weeks in the rainy season, because nitrogen washes out faster."
   },
   {
    "type": "heading",
@@ -159,7 +159,7 @@
   },
   {
    "type": "text",
-   "text": "BPI side dresses ampalaya with 10 to 15 grams of urea plus 10 to 15 grams of muriate of potash per hill once a month in the dry season. Every two weeks in the wet season. KAU gives a urea leaf spray at 10 grams per liter of water every 15 days for a quick green up."
+   "text": "Side dress ampalaya with 10 to 15 grams of urea plus 10 to 15 grams of muriate of potash per hill once a month in the dry season. Every two weeks in the wet season. Give a urea leaf spray at 10 grams per liter of water every 15 days for a quick green up."
   },
   {
    "type": "list",
@@ -177,7 +177,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, BPI applies 2 tonnes of processed chicken manure or vermicompost per hectare two weeks before planting and 10 to 15 grams of complete 14 14 14 per hill at planting."
+   "text": "To keep it away, apply 2 tonnes of processed chicken manure or vermicompost per hectare two weeks before planting and 10 to 15 grams of complete 14 14 14 per hill at planting."
   },
   {
    "type": "heading",
@@ -220,7 +220,7 @@
   },
   {
    "type": "text",
-   "text": "BPI side dresses 10 to 15 grams of muriate of potash per hill together with urea, monthly in the dry season and every two weeks in the wet season. For immediate relief, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+   "text": "Side dress 10 to 15 grams of muriate of potash per hill together with urea, monthly in the dry season and every two weeks in the wet season. For immediate relief, give a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
   },
   {
    "type": "list",
@@ -274,7 +274,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply it together with potash. On acid soil, use dolomite."
+   "text": "Try magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply it together with potash. On acid soil, use dolomite."
   },
   {
    "type": "list",
@@ -290,7 +290,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, BPI applies 4 bags of dolomite per hectare after the first plowing or two weeks before planting, which supplies magnesium and corrects acidity."
+   "text": "To keep it away, apply 4 bags of dolomite per hectare after the first plowing or two weeks before planting, which supplies magnesium and corrects acidity."
   },
   {
    "type": "heading",
@@ -327,7 +327,7 @@
   },
   {
    "type": "text",
-   "text": "BPI applies complete 14 14 14 at 10 to 15 grams per hill at planting. KAU lists single superphosphate for a quick correction. Lime very acid soil so phosphorus stays available."
+   "text": "Apply complete 14 14 14 at 10 to 15 grams per hill at planting. Use single superphosphate for a quick correction. Lime very acid soil so phosphorus stays available."
   },
   {
    "type": "list",
@@ -381,7 +381,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests lime at about 250 kg per hectare when soil pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid. Keep watering steady."
+   "text": "Try lime at about 250 kg per hectare when soil pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid. Keep watering steady."
   },
   {
    "type": "list",
@@ -399,7 +399,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, apply dolomite before planting as BPI advises and water evenly."
+   "text": "To keep it away, apply dolomite before planting and water evenly."
   },
   {
    "type": "heading",
@@ -436,7 +436,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Do not mix borax with calcium or ammonium fertilizer."
+   "text": "Try borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Do not mix borax with calcium or ammonium fertilizer."
   },
   {
    "type": "list",
@@ -489,7 +489,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests zinc sulfate in the soil at about 20 kg per hectare (8 kg per acre). In severe cases a morning spray of zinc sulfate at 2 grams plus calcium carbonate at 2.5 grams per liter of water. Do not apply zinc together with phosphate."
+   "text": "Try zinc sulfate in the soil at about 20 kg per hectare (8 kg per acre). In severe cases a morning spray of zinc sulfate at 2 grams plus calcium carbonate at 2.5 grams per liter of water. Do not apply zinc together with phosphate."
   },
   {
    "type": "list",
@@ -510,7 +510,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any bitter gourd nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your ampalaya needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any bitter gourd nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your ampalaya needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -533,15 +533,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in bitter gourd?",
-     "a": "BPI side dresses ampalaya with 10 to 15 grams of urea plus 10 to 15 grams of muriate of potash per hill once a month in the dry season. Every two weeks in the wet season."
+     "a": "Side dress ampalaya with 10 to 15 grams of urea plus 10 to 15 grams of muriate of potash per hill once a month in the dry season. Every two weeks in the wet season."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in bitter gourd?",
-     "a": "BPI side dresses 10 to 15 grams of muriate of potash per hill together with urea, monthly in the dry season and every two weeks in the wet season. For immediate relief, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+     "a": "Side dress 10 to 15 grams of muriate of potash per hill together with urea, monthly in the dry season and every two weeks in the wet season. For immediate relief, give a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
     },
     {
      "q": "What fertilizer fixes magnesium deficiency in bitter gourd?",
-     "a": "KAU suggests magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply it together with potash."
+     "a": "Try magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply it together with potash."
     },
     {
      "q": "How do I know which nutrient my ampalaya lacks?",
@@ -582,14 +582,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "Bureau of Plant Industry: Ampalaya production guide",
-     "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
-    },
-    {
-     "label": "KAU Agri Infotech Portal: Bitter gourd nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/bitter%20gourd/deficiency.php"
-    },
     {
      "label": "University of Kentucky Vegetable Scouting: Magnesium deficiency of cucurbit crops",
      "url": "https://veggiescout.mgcafe.uky.edu/magnesium-deficiency-cucurbit-crops"

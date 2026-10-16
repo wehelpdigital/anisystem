@@ -495,7 +495,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any purple yam nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your ubi needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any purple yam nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your ubi needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -570,10 +570,6 @@
     {
      "label": "O'Sullivan, ACIAR Monograph 144 (2010): Yam nutrition, nutrient disorders and soil fertility management",
      "url": "https://aciar.gov.au/sites/default/files/legacy/node_export/yam_nutrition_nutrient_disorders_and_soil_fertili_57537.pdf"
-    },
-    {
-     "label": "Kerala Agricultural University Agri Infotech Portal: Greater yam nutrient deficiencies",
-     "url": "https://celkau.in/crops/tuber/greateryam/deficiency.php"
     }
    ]
   }

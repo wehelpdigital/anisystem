@@ -438,7 +438,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any celery nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kintsay needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any celery nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your kintsay needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -521,10 +521,6 @@
     {
      "label": "PNW Plant Disease Management Handbook: Key nutrient deficiencies in vegetable crops",
      "url": "https://pnwhandbooks.org/plantdisease/pathogen-articles/nonpathogenic-phenomena/key-nutrient-deficiencies-vegetable-crops"
-    },
-    {
-     "label": "TNAU Agritech Portal: Celery nutrient deficiency photos",
-     "url": "https://agritech.tnau.ac.in/horticulture/horti_min_nutri_veg_celery.html"
     }
    ]
   }

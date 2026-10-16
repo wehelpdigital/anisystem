@@ -163,7 +163,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, UF IFAS notes Rhizobium inoculation improves nodules and cuts nitrogen needs."
+   "text": "To keep it away, rhizobium inoculation improves nodules and cuts nitrogen needs."
   },
   {
    "type": "heading",
@@ -182,7 +182,7 @@
   },
   {
    "type": "text",
-   "text": "Acid soils and soils low in phosphorus. UF IFAS gives pH 5.5 to 6.5 as best for long bean."
+   "text": "Acid soils and soils low in phosphorus. A pH of 5.5 to 6.5 is best for long bean."
   },
   {
    "type": "heading",
@@ -200,7 +200,7 @@
   },
   {
    "type": "text",
-   "text": "Apply 16 20 0 or Complete 14 14 14 at planting, following the soil test. For a standing crop TNAU gives a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days for pulses."
+   "text": "Apply 16 20 0 or Complete 14 14 14 at planting, following the soil test. For a standing crop give a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days for pulses."
   },
   {
    "type": "list",
@@ -254,7 +254,7 @@
   },
   {
    "type": "text",
-   "text": "Sidedress Muriate of potash 0 0 60 or Complete 14 14 14 following the soil test. TNAU gives a 1 percent potassium chloride spray (10 g per liter) for cowpea type beans."
+   "text": "Sidedress Muriate of potash 0 0 60 or Complete 14 14 14 following the soil test. Give a 1 percent potassium chloride spray (10 g per liter) for cowpea type beans."
   },
   {
    "type": "list",
@@ -307,7 +307,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 1 percent magnesium sulfate spray (10 g Epsom salt per liter) every 15 days for cowpea. Use Dolomite on acid soils as the soil test advises."
+   "text": "Give a 1 percent magnesium sulfate spray (10 g Epsom salt per liter) every 15 days for cowpea. Use Dolomite on acid soils as the soil test advises."
   },
   {
    "type": "list",
@@ -360,7 +360,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.2 percent borax spray (2 g per liter) for cowpea. Keep boron out of the seed row (UW)."
+   "text": "Give a 0.2 percent borax spray (2 g per liter) for cowpea. Keep boron out of the seed row (UW)."
   },
   {
    "type": "list",
@@ -412,7 +412,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives 5 kg manganese sulfate per hectare to the soil or two sprays 10 days apart for cowpea. The University of Wisconsin gives about 1.1 kg of manganese per hectare as a spray for beans."
+   "text": "Give 5 kg manganese sulfate per hectare to the soil or two sprays 10 days apart for cowpea. The University of Wisconsin gives about 1.1 kg of manganese per hectare as a spray for beans."
   },
   {
    "type": "list",
@@ -433,7 +433,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any string bean nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your sitaw needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any string bean nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your sitaw needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -460,11 +460,11 @@
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in string bean?",
-     "a": "Apply 16 20 0 or Complete 14 14 14 at planting, following the soil test. For a standing crop TNAU gives a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days for pulses."
+     "a": "Apply 16 20 0 or Complete 14 14 14 at planting, following the soil test. For a standing crop give a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days for pulses."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in string bean?",
-     "a": "Sidedress Muriate of potash 0 0 60 or Complete 14 14 14 following the soil test. TNAU gives a 1 percent potassium chloride spray (10 g per liter) for cowpea type beans."
+     "a": "Sidedress Muriate of potash 0 0 60 or Complete 14 14 14 following the soil test. Give a 1 percent potassium chloride spray (10 g per liter) for cowpea type beans."
     },
     {
      "q": "How do I know which nutrient my sitaw lacks?",
@@ -506,10 +506,6 @@
    "type": "sources",
    "items": [
     {
-     "label": "UF IFAS HS1268: Long bean, an Asian vegetable emerging in Florida",
-     "url": "https://edis.ifas.ufl.edu/publication/HS1268/pdf"
-    },
-    {
      "label": "Texas AandM AgriLife: Mid season assessment of Rhizobium nodulation in Texas peanuts and other legumes",
      "url": "https://agrilife.org/texasrowcrops/?p=1736"
     },
@@ -518,32 +514,12 @@
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2520.pdf"
     },
     {
-     "label": "TNAU Agritech Portal: Redgram (pigeon pea), phosphorus deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/redgram_phos.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Cowpea, potassium deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/cow_pota.html"
-    },
-    {
      "label": "University of Wisconsin Extension A2521: Soil and applied potassium",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2521.pdf"
     },
     {
-     "label": "TNAU Agritech Portal: Cowpea, magnesium deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/cow_magnes.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Cowpea, boron deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/cow_boron.html"
-    },
-    {
      "label": "University of Wisconsin Extension A2522: Soil and applied boron",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2522.pdf"
-    },
-    {
-     "label": "TNAU Agritech Portal: Cowpea, manganese deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/cow_mangan.html"
     },
     {
      "label": "University of Wisconsin Extension A2526: Soil and applied manganese",

@@ -152,7 +152,7 @@
   },
   {
    "type": "text",
-   "text": "Side dress urea or ammonium sulfate based on the soil test, before the fruits form. For a quick fix, KAU gives a urea leaf spray at 10 grams per liter of water every 15 days for Cucumis melo."
+   "text": "Side dress urea or ammonium sulfate based on the soil test, before the fruits form. For a quick fix, give a urea leaf spray at 10 grams per liter of water every 15 days for Cucumis melo."
   },
   {
    "type": "list",
@@ -207,7 +207,7 @@
   },
   {
    "type": "text",
-   "text": "Apply muriate of potash or sulfate of potash based on the soil test, in split doses. For immediate relief, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+   "text": "Apply muriate of potash or sulfate of potash based on the soil test, in split doses. For immediate relief, give a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
   },
   {
    "type": "list",
@@ -261,7 +261,7 @@
   },
   {
    "type": "text",
-   "text": "The University of Kentucky advises keeping pH near 6.5 and feeding Epsom salt through drip lines if needed. Leaf sprays rarely fix a serious shortage. KAU gives magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre) for Cucumis melo. Do not apply magnesium with potash."
+   "text": "The University of Kentucky advises keeping pH near 6.5 and feeding Epsom salt through drip lines if needed. Leaf sprays rarely fix a serious shortage. Give magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre) for Cucumis melo. Do not apply magnesium with potash."
   },
   {
    "type": "list",
@@ -369,7 +369,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests lime at about 250 kg per hectare when soil pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid. Water evenly."
+   "text": "Try lime at about 250 kg per hectare when soil pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid. Water evenly."
   },
   {
    "type": "list",
@@ -424,7 +424,7 @@
   },
   {
    "type": "text",
-   "text": "KAU suggests borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Delaware lists muskmelon among crops with a medium boron need, about 2 pounds of boron per acre before planting. Do not mix borax with calcium or ammonium fertilizer."
+   "text": "Try borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Delaware lists muskmelon among crops with a medium boron need, about 2 pounds of boron per acre before planting. Do not mix borax with calcium or ammonium fertilizer."
   },
   {
    "type": "list",
@@ -477,7 +477,7 @@
   },
   {
    "type": "text",
-   "text": "Apply phosphorus in the hill based on the soil test. KAU lists single superphosphate for a quick fix, with best uptake near pH 6.2 to 7.0."
+   "text": "Apply phosphorus in the hill based on the soil test. Use single superphosphate for a quick fix. Uptake is best near pH 6.2 to 7.0."
   },
   {
    "type": "list",
@@ -500,7 +500,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any melon nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your milon needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any melon nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your milon needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -523,11 +523,11 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in melon?",
-     "a": "Side dress urea or ammonium sulfate based on the soil test, before the fruits form. For a quick fix, KAU gives a urea leaf spray at 10 grams per liter of water every 15 days for Cucumis melo."
+     "a": "Side dress urea or ammonium sulfate based on the soil test, before the fruits form. For a quick fix, give a urea leaf spray at 10 grams per liter of water every 15 days for Cucumis melo."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in melon?",
-     "a": "Apply muriate of potash or sulfate of potash based on the soil test, in split doses. For immediate relief, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+     "a": "Apply muriate of potash or sulfate of potash based on the soil test, in split doses. For immediate relief, give a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
     },
     {
      "q": "What fertilizer fixes magnesium deficiency in melon?",
@@ -572,10 +572,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "KAU Agri Infotech Portal: Oriental pickling melon nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/Orientalpicklingmelon/deficiency.php"
-    },
     {
      "label": "Yara: Melon nutritional summary",
      "url": "https://english-master.yara.co.uk/crop-nutrition-master/melon/nutritional-summary/"

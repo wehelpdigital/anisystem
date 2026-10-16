@@ -338,7 +338,7 @@
   },
   {
    "type": "text",
-   "text": "Sulfate washes out of sandy soils low in organic matter, the more so with heavy rain soon after planting. Highly weathered red soils rich in iron oxides, allophane volcanic soils and fields where straw is burned or hauled away also run short. Fields fed only urea and muriate of potash get no sulfur at all, because neither fertilizer contains it. PCA surveys also found sulfur short in some coconut areas."
+   "text": "Sulfate washes out of sandy soils low in organic matter, the more so with heavy rain soon after planting. Highly weathered red soils rich in iron oxides, allophane volcanic soils and fields where straw is burned or hauled away also run short. Fields fed only urea and muriate of potash get no sulfur at all, because neither fertilizer contains it. Surveys also found sulfur short in some coconut areas."
   },
   {
    "type": "heading",
@@ -347,7 +347,7 @@
   },
   {
    "type": "text",
-   "text": "Sulfur shortage looks almost the same as nitrogen shortage. The clue is where it starts: sulfur paleness shows on the young leaves first, while nitrogen yellows the old leaves first. Soil tests for sulfur help but are less exact than tests for phosphorus or potassium. So a leaf tissue test is the surer check. In lowland rice, the PhilRice MOET pots show if sulfur is the missing nutrient."
+   "text": "Sulfur shortage looks almost the same as nitrogen shortage. The clue is where it starts: sulfur paleness shows on the young leaves first, while nitrogen yellows the old leaves first. Soil tests for sulfur help but are less exact than tests for phosphorus or potassium. So a leaf tissue test is the surer check. In lowland rice, the MOET pots show if sulfur is the missing nutrient."
   },
   {
    "type": "heading",
@@ -471,7 +471,7 @@
     },
     {
      "q": "How much ammonium sulfate should I give a coconut tree?",
-     "a": "The PCA guide gives a typical rate that rises with age, up to 1.5 kg per palm a year for palms 5 years and older. Spread it in a ring around the trunk, or in holes on sloping land. Let a soil or leaf test fine tune it."
+     "a": "A typical rate rises with age, up to 1.5 kg per palm a year for palms 5 years and older. Spread it in a ring around the trunk, or in holes on sloping land. Let a soil or leaf test fine tune it."
     }
    ]
   },
@@ -513,28 +513,12 @@
    "type": "sources",
    "items": [
     {
-     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Sulfur deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Sulfur_deficiency.htm"
-    },
-    {
      "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
      "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
     },
     {
      "label": "University of Wisconsin Extension, Soil and Applied Sulfur (A2525)",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2525.pdf"
-    },
-    {
-     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Sulfide toxicity",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Sulfide_toxicity.htm"
-    },
-    {
-     "label": "Philippine Coconut Authority and DA ATI Region 2, Fertilization Guide on Coconuts",
-     "url": "https://ati2.da.gov.ph/ati-2/content/sites/default/files/2023-07/Fertlization%20Guide%20on%20Coconuts%20FINAL.pdf"
-    },
-    {
-     "label": "DA Caraga Corn Program, Mga Timailhan sa Kakulangon sa Nutrina sa Mais (Technoguide 29)",
-     "url": "https://caraga.da.gov.ph/wp-content/uploads/Publication/CornProgram/cy2022/Mga-Timailhan-sa-Kakulangon-sa-Nutrina-sa-Mais.pdf"
     }
    ]
   }

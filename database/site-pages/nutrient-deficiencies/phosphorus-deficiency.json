@@ -582,7 +582,7 @@
   },
   {
    "type": "text",
-   "text": "Because the leaves stay dark green, a plant short of phosphorus often passes for healthy but small. Purple corn seedlings can also come from cool weather or the hybrid itself. So compare plants of one hybrid and test the soil. A soil test for available phosphorus and pH is the best check, from the BSWM Soil Test Kit or a DA Regional Soils Laboratory. A leaf tissue test confirms it. In lowland rice, the PhilRice Minus One Element Technique (MOET) pots also show if phosphorus is the missing nutrient."
+   "text": "Because the leaves stay dark green, a plant short of phosphorus often passes for healthy but small. Purple corn seedlings can also come from cool weather or the hybrid itself. So compare plants of one hybrid and test the soil. A soil test for available phosphorus and pH is the best check, from a soil test kit or a DA Regional Soils Laboratory. A leaf tissue test confirms it. In lowland rice, the Minus One Element Technique (MOET) pots also show if phosphorus is the missing nutrient."
   },
   {
    "type": "heading",
@@ -748,24 +748,8 @@
    "type": "sources",
    "items": [
     {
-     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Phosphorus deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Phosphorus_deficiency.htm"
-    },
-    {
      "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
      "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
-    },
-    {
-     "label": "DA Agricultural Training Institute Cordillera, Major Fertilizers and their Roles in Rice Production",
-     "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/major_fertilizers-their_roles_in_rice_production.pdf"
-    },
-    {
-     "label": "Calubaquib, Edaphological characteristics of selected Philippine acid upland soils, UPLB (FAO AGRIS record)",
-     "url": "https://agris.fao.org/search/ru/records/6473b0bf542a3f9f03b3186e"
-    },
-    {
-     "label": "DA Caraga Corn Program, Mga Timailhan sa Kakulangon sa Nutrina sa Mais (Technoguide 29)",
-     "url": "https://caraga.da.gov.ph/wp-content/uploads/Publication/CornProgram/cy2022/Mga-Timailhan-sa-Kakulangon-sa-Nutrina-sa-Mais.pdf"
     },
     {
      "label": "University of Wisconsin Extension, Soil and Applied Zinc (A2528)",

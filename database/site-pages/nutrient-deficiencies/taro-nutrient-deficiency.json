@@ -160,7 +160,7 @@
   },
   {
    "type": "text",
-   "text": "Apply nitrogen following the soil test, for example Urea 46 0 0 or Complete 14 14 14 in split doses. KAU also gives a urea spray of 10 g per liter every 15 days. Do not overdo it: too much nitrogen promotes taro leaf blight (CTAHR)."
+   "text": "Apply nitrogen following the soil test, for example Urea 46 0 0 or Complete 14 14 14 in split doses. You can also give a urea spray of 10 g per liter every 15 days. Do not overdo it: too much nitrogen promotes taro leaf blight (CTAHR)."
   },
   {
    "type": "list",
@@ -220,7 +220,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 following the soil test, split in parts (KAU). KAU gives a potassium sulfate spray of 10 g per liter as a quick fix."
+   "text": "Apply Muriate of potash 0 0 60 following the soil test, split in parts. Give a potassium sulfate spray of 10 g per liter as a quick fix."
   },
   {
    "type": "list",
@@ -274,7 +274,7 @@
   },
   {
    "type": "text",
-   "text": "Use single superphosphate for a quick fix and rock phosphate for the long term, following the soil test (KAU)."
+   "text": "Use single superphosphate for a quick fix and rock phosphate for the long term, following the soil test."
   },
   {
    "type": "list",
@@ -328,7 +328,7 @@
   },
   {
    "type": "text",
-   "text": "On acid soils, KAU limes about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. CTAHR found dolomite protected taro roots on aluminum toxic soil."
+   "text": "On acid soils, lime about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. CTAHR found dolomite protected taro roots on aluminum toxic soil."
   },
   {
    "type": "list",
@@ -382,7 +382,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Do not apply it together with potash. Use Dolomite on acid soils."
+   "text": "Give about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Do not apply it together with potash. Use Dolomite on acid soils."
   },
   {
    "type": "list",
@@ -435,7 +435,7 @@
   },
   {
    "type": "text",
-   "text": "Use Ammonium sulfate 21 0 0 or single superphosphate. KAU gives about 25 kg sulfur dust per hectare on sulfur poor soils, or Gypsum on alkaline soils."
+   "text": "Use Ammonium sulfate 21 0 0 or single superphosphate. Give about 25 kg sulfur dust per hectare on sulfur poor soils, or Gypsum on alkaline soils."
   },
   {
    "type": "list",
@@ -488,7 +488,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 15 kg ferrous sulfate per hectare (6 kg per acre) to the soil, following a soil test."
+   "text": "Give about 15 kg ferrous sulfate per hectare (6 kg per acre) to the soil, following a soil test."
   },
   {
    "type": "list",
@@ -513,7 +513,7 @@
   },
   {
    "type": "text",
-   "text": "Taro short of zinc is stunted in roots and shoots, but CTAHR saw no other clear signs. KAU notes smaller, distorted young leaves in a rosette and slow leaf growth. You see it most at this stage: early growth."
+   "text": "Taro short of zinc is stunted in roots and shoots, but CTAHR saw no other clear signs. Smaller, distorted young leaves in a rosette and slow leaf growth. You see it most at this stage: early growth."
   },
   {
    "type": "heading",
@@ -540,7 +540,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil, or a spray of 2 g zinc sulfate with 2.5 g lime per liter in severe cases. Keep zinc and phosphate applications apart."
+   "text": "Give about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil, or a spray of 2 g zinc sulfate with 2.5 g lime per liter in severe cases. Keep zinc and phosphate applications apart."
   },
   {
    "type": "list",
@@ -561,7 +561,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any taro nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your gabi needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any taro nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your gabi needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -584,15 +584,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in taro?",
-     "a": "Apply nitrogen following the soil test, for example Urea 46 0 0 or Complete 14 14 14 in split doses. KAU also gives a urea spray of 10 g per liter every 15 days."
+     "a": "Apply nitrogen following the soil test, for example Urea 46 0 0 or Complete 14 14 14 in split doses. You can also give a urea spray of 10 g per liter every 15 days."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in taro?",
-     "a": "Apply Muriate of potash 0 0 60 following the soil test, split in parts (KAU). KAU gives a potassium sulfate spray of 10 g per liter as a quick fix."
+     "a": "Apply Muriate of potash 0 0 60 following the soil test, split in parts. Give a potassium sulfate spray of 10 g per liter as a quick fix."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in taro?",
-     "a": "Use single superphosphate for a quick fix and rock phosphate for the long term, following the soil test (KAU)."
+     "a": "Use single superphosphate for a quick fix and rock phosphate for the long term, following the soil test."
     },
     {
      "q": "How do I know which nutrient my gabi lacks?",
@@ -636,10 +636,6 @@
     {
      "label": "University of Hawaii CTAHR SCM 4: Nutrient deficiencies and excesses in taro",
      "url": "https://www.ctahr.hawaii.edu/oc/freepubs/pdf/SCM-4.pdf"
-    },
-    {
-     "label": "Kerala Agricultural University Agri Infotech Portal: Colocasia (taro) nutrient deficiencies",
-     "url": "https://celkau.in/crops/tuber/colocasia/deficiency.php"
     }
    ]
   }

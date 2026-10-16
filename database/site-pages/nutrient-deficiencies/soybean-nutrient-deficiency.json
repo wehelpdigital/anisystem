@@ -139,7 +139,7 @@
   },
   {
    "type": "text",
-   "text": "Plants are stunted with very pale green leaves, starting on the older leaves. TNAU notes this happens because the roots did not nodulate or the nodules do not work, from poor soil fertility or too little molybdenum. Yellow strips in the field often mark where the inoculant was missed. You see it most at this stage: two to six weeks after emergence."
+   "text": "Plants are stunted with very pale green leaves, starting on the older leaves. This happens because the roots did not nodulate or the nodules do not work, from poor soil fertility or too little molybdenum. Yellow strips in the field often mark where the inoculant was missed. You see it most at this stage: two to six weeks after emergence."
   },
   {
    "type": "heading",
@@ -166,7 +166,7 @@
   },
   {
    "type": "text",
-   "text": "If nodules are poor and plants are yellow, Penn State advises up to about 56 kg of nitrogen per hectare (50 pounds per acre) before full bloom. TNAU also gives a 1 percent urea spray (10 g per liter) every 15 days."
+   "text": "If nodules are poor and plants are yellow, Penn State advises up to about 56 kg of nitrogen per hectare (50 pounds per acre) before full bloom. You can also give a 1 percent urea spray (10 g per liter) every 15 days."
   },
   {
    "type": "list",
@@ -183,7 +183,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, before planting, coat 10 kg of seed with a 100 g pack of soybean inoculant after wetting the seed with a glass of water, keep it in the shade and sow at once (DA)."
+   "text": "To keep it away, before planting, coat 10 kg of seed with a 100 g pack of soybean inoculant after wetting the seed with a glass of water, keep it in the shade and sow at once."
   },
   {
    "type": "heading",
@@ -220,7 +220,7 @@
   },
   {
    "type": "text",
-   "text": "DA Region 2 advises 2 bags of Complete 14 14 14 per hectare along the furrows before sowing when there is no soil test. Soybean also uses phosphorus left by the corn or rice before it, so feeding that crop well helps."
+   "text": "Use 2 bags of Complete 14 14 14 per hectare along the furrows before sowing when there is no soil test. Soybean also uses phosphorus left by the corn or rice before it, so feeding that crop well helps."
   },
   {
    "type": "list",
@@ -279,7 +279,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 following the soil test. TNAU gives a 1 percent potassium chloride spray (10 g per liter) every 15 days."
+   "text": "Apply Muriate of potash 0 0 60 following the soil test. Give a 1 percent potassium chloride spray (10 g per liter) every 15 days."
   },
   {
    "type": "list",
@@ -332,7 +332,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 to 1 percent calcium sulfate spray (5 to 10 g per liter). For the soil, Gypsum adds sulfur without nitrogen. The University of Wisconsin finds about 11 kg of sulfur per hectare enough for row crops."
+   "text": "Give a 0.5 to 1 percent calcium sulfate spray (5 to 10 g per liter). For the soil, Gypsum adds sulfur without nitrogen. The University of Wisconsin finds about 11 kg of sulfur per hectare enough for row crops."
   },
   {
    "type": "list",
@@ -444,7 +444,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 1 percent ferrous sulfate spray (10 g per liter) every 15 days, or 5 to 10 kg ferrous sulfate per hectare to the soil."
+   "text": "Give a 1 percent ferrous sulfate spray (10 g per liter) every 15 days, or 5 to 10 kg ferrous sulfate per hectare to the soil."
   },
   {
    "type": "list",
@@ -496,7 +496,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 percent manganese sulfate spray (5 g per liter) every 15 days, or 20 to 25 kg manganese sulfate per hectare to the soil. The University of Wisconsin uses about 5.6 kg of manganese per hectare to the soil or 1.1 kg as a spray. Warns that chelated manganese in the soil can make it worse."
+   "text": "Give a 0.5 percent manganese sulfate spray (5 g per liter) every 15 days, or 20 to 25 kg manganese sulfate per hectare to the soil. The University of Wisconsin uses about 5.6 kg of manganese per hectare to the soil or 1.1 kg as a spray. Warns that chelated manganese in the soil can make it worse."
   },
   {
    "type": "list",
@@ -548,7 +548,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 1 percent zinc sulfate spray (10 g per liter) every 15 days, or 20 to 25 kg zinc sulfate per hectare to the soil."
+   "text": "Give a 1 percent zinc sulfate spray (10 g per liter) every 15 days, or 20 to 25 kg zinc sulfate per hectare to the soil."
   },
   {
    "type": "list",
@@ -606,7 +606,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 2 percent magnesium sulfate spray (20 g Epsom salt per liter) every 15 days. Lime acid soils with Dolomite as the soil test advises."
+   "text": "Give a 2 percent magnesium sulfate spray (20 g Epsom salt per liter) every 15 days. Lime acid soils with Dolomite as the soil test advises."
   },
   {
    "type": "list",
@@ -628,7 +628,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any soybean nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your utaw needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any soybean nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your utaw needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -651,15 +651,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in soybean?",
-     "a": "If nodules are poor and plants are yellow, Penn State advises up to about 56 kg of nitrogen per hectare (50 pounds per acre) before full bloom. TNAU also gives a 1 percent urea spray (10 g per liter) every 15 days."
+     "a": "If nodules are poor and plants are yellow, Penn State advises up to about 56 kg of nitrogen per hectare (50 pounds per acre) before full bloom. You can also give a 1 percent urea spray (10 g per liter) every 15 days."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in soybean?",
-     "a": "DA Region 2 advises 2 bags of Complete 14 14 14 per hectare along the furrows before sowing when there is no soil test. Soybean also uses phosphorus left by the corn or rice before it, so feeding that crop well helps."
+     "a": "Use 2 bags of Complete 14 14 14 per hectare along the furrows before sowing when there is no soil test. Soybean also uses phosphorus left by the corn or rice before it, so feeding that crop well helps."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in soybean?",
-     "a": "Apply Muriate of potash 0 0 60 following the soil test. TNAU gives a 1 percent potassium chloride spray (10 g per liter) every 15 days."
+     "a": "Apply Muriate of potash 0 0 60 following the soil test. Give a 1 percent potassium chloride spray (10 g per liter) every 15 days."
     },
     {
      "q": "How do I know which nutrient my utaw lacks?",
@@ -701,16 +701,8 @@
    "type": "sources",
    "items": [
     {
-     "label": "TNAU Agritech Portal: Soybean, nitrogen deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/soy_nitro.html"
-    },
-    {
      "label": "Penn State Extension: Evaluating nodulation in soybeans",
      "url": "https://extension.psu.edu/evaluating-nodulation-in-soybeans"
-    },
-    {
-     "label": "DA Regional Field Office 02: Soybean production handbook",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/soybean281111.pdf"
     },
     {
      "label": "Texas AandM AgriLife: Mid season assessment of Rhizobium nodulation in Texas peanuts and other legumes",
@@ -721,18 +713,6 @@
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2520.pdf"
     },
     {
-     "label": "Iowa State University Extension IPM42: Nutrient deficiencies and application injuries in field crops",
-     "url": "https://www.agronext.iastate.edu/soilfertility/info/IPM42.pdf"
-    },
-    {
-     "label": "TNAU Agritech Portal: Soybean, potassium deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/soy_pota.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Soybean, sulphur deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/soy_sul.html"
-    },
-    {
      "label": "University of Wisconsin Extension A2525: Soil and applied sulfur",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2525.pdf"
     },
@@ -741,12 +721,12 @@
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a3555.pdf"
     },
     {
-     "label": "TNAU Agritech Portal: Soybean, iron deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/soy_iron.html"
+     "label": "University of Wisconsin Extension A2526: Soil and applied manganese",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2526.pdf"
     },
     {
-     "label": "TNAU Agritech Portal: Soybean, manganese deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/soy_mangan.html"
+     "label": "University of Wisconsin Extension A2524: Soil and applied magnesium",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2524.pdf"
     }
    ]
   }

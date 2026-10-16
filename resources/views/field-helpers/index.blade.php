@@ -46,7 +46,7 @@
 <div class="max-w-6xl mx-auto">
     <div class="fh-hero">
         <img src="{{ asset('images/icons/' . $fhIcon . '.svg') }}" alt="">
-        <div><h2>{{ $fhName }}</h2><p>{{ $fhLead }}. {{ $tool === 'varieties' ? 'From PhilRice and the NSIC registry.' : ($tool === 'landprep' ? 'Following PhilRice and DA practice.' : ($tool === 'nutrients' ? 'From PhilRice, IRRI, the DA and extension practice, with fertilizers registered here.' : ($tool === 'compat' ? 'Checked against every registered spray and fertilizer sold here, and the rules of safe mixing.' : 'Active ingredients, their groups and products sold here.'))) }}</p></div>
+        <div><h2>{{ $fhName }}</h2><p>{{ $fhLead }}. {{ $tool === 'varieties' ? 'Every registered variety, with its trial days and yield.' : ($tool === 'landprep' ? 'Following standard practice.' : ($tool === 'nutrients' ? 'Signs, causes and fixes by crop, with fertilizers registered here.' : ($tool === 'compat' ? 'Checked against every registered spray and fertilizer sold here, and the rules of safe mixing.' : 'Active ingredients, their groups and products sold here.'))) }}</p></div>
     </div>
     <div class="fh-body">
         @if ($tool === 'weeds')

@@ -140,7 +140,7 @@
   },
   {
    "type": "text",
-   "text": "The DA guide, based on BPI practice, gives 200 to 250 grams of complete fertilizer per tree at planting. Young trees get 300 to 500 grams of Complete 14 14 14 or 12 24 12 plus 200 to 300 grams of urea per tree per year, in two equal doses at the start and end of the rainy season, in four to six holes around the canopy edge. An Indonesian study found nitrogen raised both growth and yield."
+   "text": "Give 200 to 250 grams of complete fertilizer per tree at planting. Young trees get 300 to 500 grams of Complete 14 14 14 or 12 24 12 plus 200 to 300 grams of urea per tree per year, in two equal doses at the start and end of the rainy season, in four to six holes around the canopy edge. An Indonesian study found nitrogen raised both growth and yield."
   },
   {
    "type": "list",
@@ -201,7 +201,7 @@
   },
   {
    "type": "text",
-   "text": "Use a high phosphorus complete fertilizer such as 12 24 12, as the DA guide lists: 1.5 to 3.0 kg per bearing tree per year with potash, in two equal doses at the start and end of the rainy season. On very acid soils add lime, following the soil test, so the phosphorus stays available."
+   "text": "Use a high phosphorus complete fertilizer such as 12 24 12: 1.5 to 3.0 kg per bearing tree per year with potash, in two equal doses at the start and end of the rainy season. On very acid soils add lime, following the soil test, so the phosphorus stays available."
   },
   {
    "type": "list",
@@ -262,7 +262,7 @@
   },
   {
    "type": "text",
-   "text": "The DA guide gives bearing trees 1.5 to 3.0 kg of Complete 14 14 14 or 12 24 12 plus 200 to 300 grams of Muriate of potash 0 0 60 per tree per year, in two equal doses at the start and end of the rainy season, in holes around the canopy edge. Increase it each year as the crop grows."
+   "text": "The give bearing trees 1.5 to 3.0 kg of Complete 14 14 14 or 12 24 12 plus 200 to 300 grams of Muriate of potash 0 0 60 per tree per year, in two equal doses at the start and end of the rainy season, in holes around the canopy edge. Increase it each year as the crop grows."
   },
   {
    "type": "list",
@@ -400,7 +400,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any mangosteen nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your mangostan needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any mangosteen nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your mangostan needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -423,15 +423,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in mangosteen?",
-     "a": "The DA guide, based on BPI practice, gives 200 to 250 grams of complete fertilizer per tree at planting. Young trees get 300 to 500 grams of Complete 14 14 14 or 12 24 12 plus 200 to 300 grams of urea per tree per year, in two equal doses at the start and end of the rainy season, in four to six holes around the canopy edge."
+     "a": "Give 200 to 250 grams of complete fertilizer per tree at planting. Young trees get 300 to 500 grams of Complete 14 14 14 or 12 24 12 plus 200 to 300 grams of urea per tree per year, in two equal doses at the start and end of the rainy season, in four to six holes around the canopy edge."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in mangosteen?",
-     "a": "Use a high phosphorus complete fertilizer such as 12 24 12, as the DA guide lists: 1.5 to 3.0 kg per bearing tree per year with potash, in two equal doses at the start and end of the rainy season. On very acid soils add lime, following the soil test, so the phosphorus stays available."
+     "a": "Use a high phosphorus complete fertilizer such as 12 24 12: 1.5 to 3.0 kg per bearing tree per year with potash, in two equal doses at the start and end of the rainy season. On very acid soils add lime, following the soil test, so the phosphorus stays available."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in mangosteen?",
-     "a": "The DA guide gives bearing trees 1.5 to 3.0 kg of Complete 14 14 14 or 12 24 12 plus 200 to 300 grams of Muriate of potash 0 0 60 per tree per year, in two equal doses at the start and end of the rainy season, in holes around the canopy edge. Increase it each year as the crop grows."
+     "a": "The give bearing trees 1.5 to 3.0 kg of Complete 14 14 14 or 12 24 12 plus 200 to 300 grams of Muriate of potash 0 0 60 per tree per year, in two equal doses at the start and end of the rainy season, in holes around the canopy edge. Increase it each year as the crop grows."
     },
     {
      "q": "How do I know which nutrient my mangostan lacks?",
@@ -473,16 +473,8 @@
    "type": "sources",
    "items": [
     {
-     "label": "DA High Value Crops Development Program: Mangosteen production guide",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "Kurniadinata, Poerwanto and Susila 2009, NPK status for fertilizer recommendation and yield prediction of mangosteen (IPB University)",
      "url": "https://repository.ipb.ac.id/handle/123456789/33191?show=full"
-    },
-    {
-     "label": "TNAU (Jeyakumar and Balamohan): Diagnosis of nutritional disorders",
-     "url": "https://agritech.tnau.ac.in/agriculture/pdf/Diagnosis%20of%20nutritional%20disorders.pdf"
     },
     {
      "label": "NParks Singapore (Jiang Qiuyun): Identifying nutrient deficiency in plants",
@@ -499,10 +491,6 @@
     {
      "label": "Moraes, Garcia and Moreira 2006, Nutritional limitations of mangosteen seedlings (Pesquisa Agropecuaria Brasileira)",
      "url": "https://apct.sede.embrapa.br/pab/article/view/7266"
-    },
-    {
-     "label": "TNAU (Jeyakumar and Balamohan): Micronutrients for horticultural crops",
-     "url": "https://agritech.tnau.ac.in/agriculture/pdf/Micronutrients%20for%20horticultural%20crops.pdf"
     }
    ]
   }

@@ -198,7 +198,7 @@
     const render = (swap) => {
         const rank = (i) => (i.ranks && i.ranks[st.crop] !== undefined ? i.ranks[st.crop] : 99);
         const forCrop = D.entries.map((i, n) => [i, n]).filter(([i]) => i.crops.includes(st.crop)).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map((x) => x[0]);
-        // IRRI and PhilRice: no insecticide on young palay unless a pest is at outbreak level.
+        // The usual rule: no insecticide on young palay unless a pest is at outbreak level.
         const early = D.pests && st.crop === 'rice'
             ? '<p class="wc-note">Palay younger than 30 to 40 days after transplanting: hold the insecticide unless a pest is at outbreak level. Early sprays kill the spiders and wasps that protect your crop.</p>' : '';
         // How many of this crop's show each answer: one none shows is greyed out in the sheet, and let go.

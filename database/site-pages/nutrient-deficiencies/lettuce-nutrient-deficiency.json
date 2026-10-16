@@ -152,7 +152,7 @@
   },
   {
    "type": "text",
-   "text": "Side dress or fertigate with urea based on the soil test. The BPI lettuce guide uses 1 tablespoon of urea in 1 gallon of water, given every two weeks, when urea is applied through the water."
+   "text": "Side dress or fertigate with urea based on the soil test. The use 1 tablespoon of urea in 1 gallon of water, given every two weeks, when urea is applied through the water."
   },
   {
    "type": "list",
@@ -170,7 +170,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, BPI advises 3 to 10 tonnes of organic fertilizer per hectare mixed into the plots before planting, plus basal and side dress fertilizer based on soil analysis."
+   "text": "To keep it away, use 3 to 10 tonnes of organic fertilizer per hectare mixed into the plots before planting, plus basal and side dress fertilizer based on soil analysis."
   },
   {
    "type": "heading",
@@ -186,7 +186,7 @@
   },
   {
    "type": "text",
-   "text": "Brown or grey dead lesions appear first on the edges and tips of young leaves (tip burn). The leaves can look wavy and darker green. The damage spreads inward and later to older leaves, and brown veins may show near the burnt areas. Early, severe shortage stunts plants so they do not head. Roots are short, bushy and brown, with blackened tips. You see it most at this stage: rapid growth and heading, especially in hot weather. BPI notes tip burn occurs at high temperatures."
+   "text": "Brown or grey dead lesions appear first on the edges and tips of young leaves (tip burn). The leaves can look wavy and darker green. The damage spreads inward and later to older leaves, and brown veins may show near the burnt areas. Early, severe shortage stunts plants so they do not head. Roots are short, bushy and brown, with blackened tips. You see it most at this stage: rapid growth and heading, especially in hot weather. Tip burn occurs at high temperatures."
   },
   {
    "type": "heading",
@@ -213,7 +213,7 @@
   },
   {
    "type": "text",
-   "text": "BPI advises enough irrigation and enough calcium in the soil. Water evenly, shade or plant in cooler months in the lowlands, lime acid soil based on the test, and use tolerant varieties."
+   "text": "Give enough water and keep enough calcium in the soil. Water evenly, shade or plant in cooler months in the lowlands, lime acid soil based on the test, and use tolerant varieties."
   },
   {
    "type": "list",
@@ -231,7 +231,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, grow head lettuce in cool months or highlands, lime acid soil to the pH 6 to 6.8 that BPI recommends, and avoid heavy nitrogen."
+   "text": "To keep it away, grow head lettuce in cool months or highlands, lime acid soil to pH 6 to 6.8, and avoid heavy nitrogen."
   },
   {
    "type": "heading",
@@ -517,7 +517,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any lettuce nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your litsugas needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any lettuce nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your litsugas needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -540,11 +540,11 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in lettuce?",
-     "a": "Side dress or fertigate with urea based on the soil test. The BPI lettuce guide uses 1 tablespoon of urea in 1 gallon of water, given every two weeks, when urea is applied through the water."
+     "a": "Side dress or fertigate with urea based on the soil test. The use 1 tablespoon of urea in 1 gallon of water, given every two weeks, when urea is applied through the water."
     },
     {
      "q": "What fertilizer fixes calcium deficiency in lettuce?",
-     "a": "BPI advises enough irrigation and enough calcium in the soil. Water evenly, shade or plant in cooler months in the lowlands, lime acid soil based on the test, and use tolerant varieties."
+     "a": "Give enough water and keep enough calcium in the soil. Water evenly, shade or plant in cooler months in the lowlands, lime acid soil based on the test, and use tolerant varieties."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in lettuce?",
@@ -592,10 +592,6 @@
     {
      "label": "Yara UK: Nitrogen deficiency in lettuce",
      "url": "https://www.yara.co.uk/crop-nutrition/lettuce/nutrient-deficiencies-lettuce/nitrogen-deficiency-lettuce/"
-    },
-    {
-     "label": "Bureau of Plant Industry: Lettuce production guide",
-     "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Lettuce-Production-Guide.pdf"
     },
     {
      "label": "Yara UK: Calcium and boron deficiency in lettuce",

@@ -539,7 +539,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any tobacco nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your tabako needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any tobacco nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your tabako needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -611,10 +611,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "National Tobacco Administration (DA): Tobacco Production Manual 2025 (Virginia, Burley, Native)",
-     "url": "https://www.nta.da.gov.ph/wp-content/uploads/2025/06/tobaccoprodmanual2025.pdf"
-    },
     {
      "label": "NC State Extension Tobacco Growers Information: Fertility, nutrients (Vann)",
      "url": "https://tobacco.ces.ncsu.edu/tobacco-fertility-nutrients/"

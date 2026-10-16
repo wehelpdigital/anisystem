@@ -309,7 +309,7 @@
   },
   {
    "type": "text",
-   "text": "On acid soils apply Agricultural lime or Dolomite under the canopy to raise the pH toward 5 to 6.5, the range CTAHR gives for guyabano. Take the amount from the soil test. Where the pH is already fine, Gypsum supplies calcium without changing the pH. TNAU gives Gypsum at 50 kg per hectare for custard apple, a close cousin. A Calcium nitrate spray on young flushes helps while the soil dose works. Follow the label."
+   "text": "On acid soils apply Agricultural lime or Dolomite under the canopy to raise the pH toward 5 to 6.5, the range CTAHR gives for guyabano. Take the amount from the soil test. Where the pH is already fine, Gypsum supplies calcium without changing the pH. Give Gypsum at 50 kg per hectare for custard apple, a close cousin. A Calcium nitrate spray on young flushes helps while the soil dose works. Follow the label."
   },
   {
    "type": "list",
@@ -440,7 +440,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any soursop nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your guyabano needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any soursop nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your guyabano needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -539,18 +539,6 @@
     {
      "label": "Garcia Paredes and others 2024, Nutritional diagnosis of soursop according to the Kenworthy balance index and deviation from optimum percentage, Nayarit, Mexico (Agroindustrial Science)",
      "url": "https://revistas.unitru.edu.pe/index.php/agroindscience/article/view/5921"
-    },
-    {
-     "label": "TNAU Agritech Portal: Calcium deficiency in custard apple (atis)",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/custard_calcium.html"
-    },
-    {
-     "label": "TNAU (Jeyakumar and Balamohan): Micronutrients for horticultural crops",
-     "url": "https://agritech.tnau.ac.in/agriculture/pdf/Micronutrients%20for%20horticultural%20crops.pdf"
-    },
-    {
-     "label": "TNAU Agritech Portal: Mineral nutrition, deficiency and excess symptoms",
-     "url": "https://agritech.tnau.ac.in/agriculture/agri_min_nutri_def_symptoms.html"
     }
    ]
   }

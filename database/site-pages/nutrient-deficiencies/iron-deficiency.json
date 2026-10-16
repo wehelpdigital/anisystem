@@ -506,20 +506,8 @@
    "type": "sources",
    "items": [
     {
-     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Iron deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Iron_deficiency.htm"
-    },
-    {
-     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Iron toxicity",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Iron_toxicity.htm"
-    },
-    {
      "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
      "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
-    },
-    {
-     "label": "Utah State University Extension, Preventing and Treating Iron Chlorosis in Trees and Shrubs",
-     "url": "https://extension.usu.edu/forestry/trees-cities-towns/tree-care/preventing-iron-chlorosis"
     },
     {
      "label": "Haifa Group, Crop Guide: Nutrients for Cucumber",

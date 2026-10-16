@@ -140,7 +140,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 in a ring under the canopy and water it in, following the soil test. Kerala Agricultural University gives a full yearly dose of 750 grams of nitrogen per tree from the fifth year, with one fifth of that in the first year and one fifth more each year after. For a quick lift it gives a foliar spray of Urea at 10 grams per liter every 15 days."
+   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 in a ring under the canopy and water it in, following the soil test. Give a full yearly dose of 750 grams of nitrogen per tree from the fifth year, with one fifth of that in the first year and one fifth more each year after. For a quick lift it gives a foliar spray of Urea at 10 grams per liter every 15 days."
   },
   {
    "type": "list",
@@ -194,7 +194,7 @@
   },
   {
    "type": "text",
-   "text": "Kerala Agricultural University advises Superphosphate for a quick fix and rock phosphate or bone meal for the long term, applied after a soil test. Its full yearly dose for trees from the fifth year is 325 grams of P2O5 per tree. Phosphorus is taken up best near pH 6.5 to 7.5, so lime very acid soils."
+   "text": "Use Superphosphate for a quick fix and rock phosphate or bone meal for the long term, applied after a soil test. Its full yearly dose for trees from the fifth year is 325 grams of P2O5 per tree. Phosphorus is taken up best near pH 6.5 to 7.5, so lime very acid soils."
   },
   {
    "type": "list",
@@ -249,7 +249,7 @@
   },
   {
    "type": "text",
-   "text": "Kerala Agricultural University advises Muriate of potash 0 0 60 in split doses following the soil test. Lime or dolomite to keep pH up. Its full yearly dose for trees from the fifth year is 750 grams of K2O per tree. For a quick fix spray Sulfate of potash at 10 grams per liter in the morning. TNAU gives a 1 percent potassium chloride spray."
+   "text": "Use Muriate of potash 0 0 60 in split doses following the soil test. Lime or dolomite to keep pH up. Its full yearly dose for trees from the fifth year is 750 grams of K2O per tree. For a quick fix spray Sulfate of potash at 10 grams per liter in the morning. Give a 1 percent potassium chloride spray."
   },
   {
    "type": "list",
@@ -304,7 +304,7 @@
   },
   {
    "type": "text",
-   "text": "In bad cases Kerala Agricultural University gives a morning spray of Zinc sulfate at 2 grams per liter mixed with 2.5 grams per liter of lime (calcium carbonate). TNAU gives Zinc sulfate at 0.5 percent (5 grams per liter). Do not apply zinc and phosphate fertilizer at the same time."
+   "text": "In bad cases give a morning spray of Zinc sulfate at 2 grams per liter mixed with 2.5 grams per liter of lime (calcium carbonate). Give Zinc sulfate at 0.5 percent (5 grams per liter). Do not apply zinc and phosphate fertilizer at the same time."
   },
   {
    "type": "list",
@@ -357,7 +357,7 @@
   },
   {
    "type": "text",
-   "text": "After a soil test, Kerala Agricultural University gives Borax to the soil at 50 grams per tree, or a foliar spray of Borax at 1 gram per liter. Do not mix borax with calcium or ammonium fertilizers. Too much boron is toxic, so do not repeat high doses without a test."
+   "text": "After a soil test, give Borax to the soil at 50 grams per tree, or a foliar spray of Borax at 1 gram per liter. Do not mix borax with calcium or ammonium fertilizers. Too much boron is toxic, so do not repeat high doses without a test."
   },
   {
    "type": "list",
@@ -379,7 +379,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any cashew nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kasoy needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any cashew nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your kasoy needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -402,15 +402,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in cashew?",
-     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 in a ring under the canopy and water it in, following the soil test. Kerala Agricultural University gives a full yearly dose of 750 grams of nitrogen per tree from the fifth year, with one fifth of that in the first year and one fifth more each year after."
+     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 in a ring under the canopy and water it in, following the soil test. Give a full yearly dose of 750 grams of nitrogen per tree from the fifth year, with one fifth of that in the first year and one fifth more each year after."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in cashew?",
-     "a": "Kerala Agricultural University advises Superphosphate for a quick fix and rock phosphate or bone meal for the long term, applied after a soil test. Its full yearly dose for trees from the fifth year is 325 grams of P2O5 per tree."
+     "a": "Use Superphosphate for a quick fix and rock phosphate or bone meal for the long term, applied after a soil test. Its full yearly dose for trees from the fifth year is 325 grams of P2O5 per tree."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in cashew?",
-     "a": "Kerala Agricultural University advises Muriate of potash 0 0 60 in split doses following the soil test. Lime or dolomite to keep pH up."
+     "a": "Use Muriate of potash 0 0 60 in split doses following the soil test. Lime or dolomite to keep pH up."
     },
     {
      "q": "How do I know which nutrient my kasoy lacks?",
@@ -452,40 +452,12 @@
    "type": "sources",
    "items": [
     {
-     "label": "Kerala Agricultural University Agri Infotech: Cashew nutrient deficiencies",
-     "url": "https://www.celkau.in/crops/cashcrops/cashew/deficiency.php"
-    },
-    {
-     "label": "Kerala Agricultural University Agri Infotech: Cashew manuring",
-     "url": "https://celkau.in/crops/cashcrops/cashew/manuring.php"
-    },
-    {
-     "label": "Magboo, Integrated production practices of cashew in the Philippines (FAO)",
-     "url": "https://www.fao.org/4/ac451e/ac451e07.htm"
-    },
-    {
      "label": "Martins and others 2025, Diagnostic leaves for evaluating dwarf cashew nutritional status (Embrapa)",
      "url": "https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/1177375/1/ART-2025.032-Diagnostic-leaves-for-evaluating-dwarf-cashew-nutritional-status.pdf"
     },
     {
-     "label": "Kerala Agricultural University Agri Infotech: Tea mosquito bug in cashew",
-     "url": "https://celkau.in/crops/cashcrops/cashew/teamosquito.php"
-    },
-    {
      "label": "Srinivasan and others, Distribution of available macro and micronutrients in cashew growing soils of Dakshina Kannada, coastal Karnataka (Madras Agricultural Journal)",
      "url": "https://masujournal.org/view_archive_journal.php?id=605"
-    },
-    {
-     "label": "TNAU Agritech: Potassium deficiency in cashew",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/cashew_potassium.html"
-    },
-    {
-     "label": "TNAU Agritech: Zinc deficiency in cashew",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/cashew_zinc.html"
-    },
-    {
-     "label": "TNAU Agritech: Iron deficiency in cashew",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/cashew_iron.html"
     },
     {
      "label": "U.S. Borax: Boron and coffee plant nutrition (causes in a related tree crop)",

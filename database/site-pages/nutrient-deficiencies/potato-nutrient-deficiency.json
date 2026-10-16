@@ -160,7 +160,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 following the soil test, hilled in beside the rows. KAU gives a urea spray of 10 g per liter every 15 days for quick help."
+   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 following the soil test, hilled in beside the rows. Give a urea spray of 10 g per liter every 15 days for quick help."
   },
   {
    "type": "list",
@@ -220,7 +220,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 following the soil test, split between planting and hilling (KAU). For quick help spray potassium sulfate at 10 g per liter in the morning (KAU)."
+   "text": "Apply Muriate of potash 0 0 60 following the soil test, split between planting and hilling. For quick help spray potassium sulfate at 10 g per liter in the morning."
   },
   {
    "type": "list",
@@ -274,7 +274,7 @@
   },
   {
    "type": "text",
-   "text": "KAU uses single superphosphate for a quick fix and bone meal or rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.2 to 7.0. Band it near the seed pieces at planting."
+   "text": "Use single superphosphate for a quick fix and bone meal or rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.2 to 7.0. Band it near the seed pieces at planting."
   },
   {
    "type": "list",
@@ -334,7 +334,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Apply it apart from potash. Use Dolomite on acid soils over the long run."
+   "text": "Give about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Apply it apart from potash. Use Dolomite on acid soils over the long run."
   },
   {
    "type": "list",
@@ -387,7 +387,7 @@
   },
   {
    "type": "text",
-   "text": "On acid soils, KAU limes about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils, or to add calcium without raising pH, use Gypsum."
+   "text": "On acid soils, lime about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils, or to add calcium without raising pH, use Gypsum."
   },
   {
    "type": "list",
@@ -442,7 +442,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Keep boron apart from calcium and ammonium fertilizers."
+   "text": "Give about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Keep boron apart from calcium and ammonium fertilizers."
   },
   {
    "type": "list",
@@ -494,7 +494,7 @@
   },
   {
    "type": "text",
-   "text": "Use a sulfur bearing fertilizer such as Ammonium sulfate 21 0 0 or single superphosphate. KAU gives about 25 kg sulfur dust per hectare (10 kg per acre) on sulfur poor soils, or Gypsum on alkaline soils."
+   "text": "Use a sulfur bearing fertilizer such as Ammonium sulfate 21 0 0 or single superphosphate. Give about 25 kg sulfur dust per hectare (10 kg per acre) on sulfur poor soils, or Gypsum on alkaline soils."
   },
   {
    "type": "list",
@@ -548,7 +548,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil, or in severe cases a morning spray of 2 g zinc sulfate with 2.5 g lime per liter. Keep zinc and phosphate applications apart."
+   "text": "Give about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil, or in severe cases a morning spray of 2 g zinc sulfate with 2.5 g lime per liter. Keep zinc and phosphate applications apart."
   },
   {
    "type": "list",
@@ -570,7 +570,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any potato nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your patatas needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any potato nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your patatas needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -593,15 +593,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in potato?",
-     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 following the soil test, hilled in beside the rows. KAU gives a urea spray of 10 g per liter every 15 days for quick help."
+     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 following the soil test, hilled in beside the rows. Give a urea spray of 10 g per liter every 15 days for quick help."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in potato?",
-     "a": "Apply Muriate of potash 0 0 60 following the soil test, split between planting and hilling (KAU). For quick help spray potassium sulfate at 10 g per liter in the morning (KAU)."
+     "a": "Apply Muriate of potash 0 0 60 following the soil test, split between planting and hilling. For quick help spray potassium sulfate at 10 g per liter in the morning."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in potato?",
-     "a": "KAU uses single superphosphate for a quick fix and bone meal or rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.2 to 7.0."
+     "a": "Use single superphosphate for a quick fix and bone meal or rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.2 to 7.0."
     },
     {
      "q": "How do I know which nutrient my patatas lacks?",
@@ -642,10 +642,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "Kerala Agricultural University Agri Infotech Portal: Potato nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/potato/deficiency.php"
-    },
     {
      "label": "University of Wisconsin Extension A2521: Soil and applied potassium",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2521.pdf"

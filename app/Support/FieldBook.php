@@ -343,7 +343,8 @@ final class FieldBook
     /** The sources an entry names, with a web address each (or none). */
     private static function sources(array $list): array
     {
-        return collect($list)->filter(fn ($s) => is_array($s) && ! empty($s['label']))
+        // Never an agency, a state university or a research institute (GovSource, the owner 2026-10-17).
+        return collect(GovSource::keep($list))->filter(fn ($s) => is_array($s) && ! empty($s['label']))
             ->map(fn ($s) => ['label' => (string) $s['label'], 'url' => preg_match('#^https?://#', (string) ($s['url'] ?? '')) ? $s['url'] : null])->values()->all();
     }
 

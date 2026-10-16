@@ -12,7 +12,6 @@
   "durian nutrient deficiency",
   "durian deficiency",
   "nutrient deficiency in plants",
-  "fertilizer for durian",
   "potash fertilizer",
   "foliar fertilizer",
   "complete fertilizer"
@@ -147,7 +146,7 @@
   },
   {
    "type": "text",
-   "text": "Where no soil test is done, the DA guide gives fertilizer with an NPK ratio of 12 4 7 at 100 grams per tree for the first five years, raised step by step to 4 kg per tree by the twelfth year. A Southern Mindanao trial on pre bearing trees found 400 grams Urea and 445 grams superphosphate per tree, with a small dose of Muriate of potash, enough to speed growth. Haifa puts the yearly need of bearing trees over six years old at about 1.0 to 1.8 kg nitrogen per tree, split through the season."
+   "text": "Where no soil test is done, give fertilizer with an NPK ratio of 12 4 7 at 100 grams per tree for the first five years, raised step by step to 4 kg per tree by the twelfth year. A Southern Mindanao trial on pre bearing trees found 400 grams Urea and 445 grams superphosphate per tree, with a small dose of Muriate of potash, enough to speed growth. Haifa puts the yearly need of bearing trees over six years old at about 1.0 to 1.8 kg nitrogen per tree, split through the season."
   },
   {
    "type": "list",
@@ -174,7 +173,7 @@
   },
   {
    "type": "text",
-   "text": "No durian particular leaf description was found, so this follows general fruit tree signs. Edges and tips of older leaves yellow and then dry brown, and the scorch moves inward. Fruit set and fruit quality fall. In a BPI Davao trial, trees that got only soil fertilizer dropped about twice as many young fruits as trees also sprayed with a high potash foliar feed. You see it most at this stage: fruit growth up to harvest, when the fruit takes the most potash."
+   "text": "No durian particular leaf description was found, so this follows general fruit tree signs. Edges and tips of older leaves yellow and then dry brown, and the scorch moves inward. Fruit set and fruit quality fall. In a trial in Davao, trees that got only soil fertilizer dropped about twice as many young fruits as trees also sprayed with a high potash foliar feed. You see it most at this stage: fruit growth up to harvest, when the fruit takes the most potash."
   },
   {
    "type": "heading",
@@ -201,7 +200,7 @@
   },
   {
    "type": "text",
-   "text": "In a BPI Davao trial, trees given 5 kg Complete 14 14 14 per tree before flowering plus a 20 5 30 foliar feed from flower emergence to fruit growth bore 158 fruits per tree against 41 with soil fertilizer alone. A 4 0 48 foliar feed gave the sweetest flesh. A Thai orchard program used 1 kg Sulfate of potash 0 0 50 per tree during fruit growth and another 1 kg before ripening. Haifa puts the yearly need of bearing trees at about 2.1 to 4.0 kg potash per tree. Follow the soil test."
+   "text": "In a trial in Davao, trees given 5 kg Complete 14 14 14 per tree before flowering plus a 20 5 30 foliar feed from flower emergence to fruit growth bore 158 fruits per tree against 41 with soil fertilizer alone. A 4 0 48 foliar feed gave the sweetest flesh. A Thai orchard program used 1 kg Sulfate of potash 0 0 50 per tree during fruit growth and another 1 kg before ripening. Haifa puts the yearly need of bearing trees at about 2.1 to 4.0 kg potash per tree. Follow the soil test."
   },
   {
    "type": "list",
@@ -441,7 +440,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any durian nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your duryan needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any durian nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your duryan needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -464,11 +463,11 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in durian?",
-     "a": "Where no soil test is done, the DA guide gives fertilizer with an NPK ratio of 12 4 7 at 100 grams per tree for the first five years, raised step by step to 4 kg per tree by the twelfth year. A Southern Mindanao trial on pre bearing trees found 400 grams Urea and 445 grams superphosphate per tree, with a small dose of Muriate of potash, enough to speed growth."
+     "a": "Where no soil test is done, give fertilizer with an NPK ratio of 12 4 7 at 100 grams per tree for the first five years, raised step by step to 4 kg per tree by the twelfth year. A Southern Mindanao trial on pre bearing trees found 400 grams Urea and 445 grams superphosphate per tree, with a small dose of Muriate of potash, enough to speed growth."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in durian?",
-     "a": "In a BPI Davao trial, trees given 5 kg Complete 14 14 14 per tree before flowering plus a 20 5 30 foliar feed from flower emergence to fruit growth bore 158 fruits per tree against 41 with soil fertilizer alone. A 4 0 48 foliar feed gave the sweetest flesh."
+     "a": "In a trial in Davao, trees given 5 kg Complete 14 14 14 per tree before flowering plus a 20 5 30 foliar feed from flower emergence to fruit growth bore 158 fruits per tree against 41 with soil fertilizer alone. A 4 0 48 foliar feed gave the sweetest flesh."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in durian?",
@@ -514,36 +513,12 @@
    "type": "sources",
    "items": [
     {
-     "label": "DA High Value Crops Development Program: Durian production guide (Koronadal)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Durian-Production-Guide-koronadal-new.pdf"
-    },
-    {
-     "label": "Pinduma and Angeles 2009, Relationship between leaf nitrogen concentration and fruit yield of durian (Philippine Journal of Crop Science, AGRIS record)",
-     "url": "https://agris.fao.org/search/ru/records/647364d92c1d629bc97fea1a"
-    },
-    {
-     "label": "Oria 2007, Mineral nutrition on durian: nitrogen, phosphorus and potassium on pre bearing trees (USM, AGRIS record)",
-     "url": "https://agris.fao.org/search/en/records/6472489c2c1d629bc979a731"
-    },
-    {
      "label": "Haifa: Durian trees, fertigation and foliar feeding recommendation",
      "url": "https://www.haifa-group.com/durian-trees-fertigation-foliar-feeding-recommendation"
     },
     {
-     "label": "TNAU (Jeyakumar and Balamohan): Diagnosis of nutritional disorders",
-     "url": "https://agritech.tnau.ac.in/agriculture/pdf/Diagnosis%20of%20nutritional%20disorders.pdf"
-    },
-    {
-     "label": "Loquias, Pascual and Cantila 1997, Supplemental foliar fertilizer for durian (BPI Davao, AGRIS record)",
-     "url": "https://agris.fao.org/search/ar/records/64722b0c77fd37171a735fb9"
-    },
-    {
      "label": "Kasetsart University e book: durian orchard study in Surat Thani, fertilizer program and leaf analysis (page 157)",
      "url": "https://ebook.lib.ku.ac.th/ebook27/ebook/20200042/files/basic-html/page165.html"
-    },
-    {
-     "label": "Ngoc and others 2024, DRIS for the nutritional balance of durian in the Vietnamese Mekong Delta (Horticulturae, AGRIS record)",
-     "url": "https://agris.fao.org/search/en/records/675ac59a0ce2cede71d0fed2"
     },
     {
      "label": "NParks Singapore (Jiang Qiuyun): Identifying nutrient deficiency in plants",
@@ -556,10 +531,6 @@
     {
      "label": "Gonzaga, Gonzaga and Cabahug 2018, Improving productivity and fruit quality of durian by enhanced fertilization in Southern Philippines (Acta Horticulturae 1213)",
      "url": "https://ishs.org/ishs-article/1213_65/"
-    },
-    {
-     "label": "TNAU (Jeyakumar and Balamohan): Micronutrients for horticultural crops",
-     "url": "https://agritech.tnau.ac.in/agriculture/pdf/Micronutrients%20for%20horticultural%20crops.pdf"
     }
    ]
   }

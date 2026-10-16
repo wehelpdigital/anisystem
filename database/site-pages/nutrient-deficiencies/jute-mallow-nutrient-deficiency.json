@@ -131,7 +131,7 @@
   },
   {
    "type": "text",
-   "text": "Root knot nematodes, which stunt saluyot, also yellow plants. Check the roots. To be sure, lower leaves yellow first. The DA guide recommends a soil test for N, P and K."
+   "text": "Root knot nematodes, which stunt saluyot, also yellow plants. Check the roots. To be sure, lower leaves yellow first. The use a soil test for N, P and K."
   },
   {
    "type": "heading",
@@ -140,7 +140,7 @@
   },
   {
    "type": "text",
-   "text": "The DA guide notes saluyot responds well to organic fertilizer, with rates set by soil fertility and a soil test. A light side dressing of urea or ammonium sulfate after picking speeds regrowth. Follow the soil test for the rate."
+   "text": "Saluyot responds well to organic fertilizer, with rates set by soil fertility and a soil test. A light side dressing of urea or ammonium sulfate after picking speeds regrowth. Follow the soil test for the rate."
   },
   {
    "type": "list",
@@ -212,7 +212,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, prepare the soil well with organic matter before sowing, as the DA guide advises."
+   "text": "To keep it away, prepare the soil well with organic matter before sowing."
   },
   {
    "type": "heading",
@@ -284,7 +284,7 @@
   },
   {
    "type": "text",
-   "text": "The DA guide says saluyot tolerates pH 4.5 to 8.0 and that going beyond that range reduces iron in the soil for the plant. Overliming and waterlogging add to it."
+   "text": "Saluyot tolerates pH 4.5 to 8.0, and going beyond that range leaves less iron in the soil for the plant. Overliming and waterlogging add to it."
   },
   {
    "type": "heading",
@@ -319,7 +319,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, keep soil pH within the 4.5 to 8.0 range the DA guide gives, and add compost."
+   "text": "To keep it away, keep soil pH within 4.5 to 8.0, and add compost."
   },
   {
    "type": "heading",
@@ -378,7 +378,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any jute mallow nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your saluyot needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any jute mallow nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your saluyot needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -401,7 +401,7 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in jute mallow?",
-     "a": "The DA guide notes saluyot responds well to organic fertilizer, with rates set by soil fertility and a soil test. A light side dressing of urea or ammonium sulfate after picking speeds regrowth."
+     "a": "Saluyot responds well to organic fertilizer, with rates set by soil fertility and a soil test. A light side dressing of urea or ammonium sulfate after picking speeds regrowth."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in jute mallow?",
@@ -450,10 +450,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "Department of Agriculture: Mga Katutubong Gulay (Indigenous Vegetables) guide",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Indigenous-Vegetables-Guide.pdf"
-    },
     {
      "label": "PNW Plant Disease Management Handbook: Key nutrient deficiencies in vegetable crops",
      "url": "https://pnwhandbooks.org/plantdisease/pathogen-articles/nonpathogenic-phenomena/key-nutrient-deficiencies-vegetable-crops"

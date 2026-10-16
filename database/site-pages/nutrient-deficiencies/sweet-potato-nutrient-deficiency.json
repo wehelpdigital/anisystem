@@ -160,7 +160,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 following the soil test, best split between planting and early vine growth (KAU). For quick help spray potassium sulfate at 10 g per liter in the morning (KAU), or 1 percent potassium chloride every 15 days (TNAU)."
+   "text": "Apply Muriate of potash 0 0 60 following the soil test, best split between planting and early vine growth. For quick help spray potassium sulfate at 10 g per liter in the morning, or 1 percent potassium chloride every 15 days."
   },
   {
    "type": "list",
@@ -215,7 +215,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Urea 46 0 0 following the soil test. KAU also gives a urea spray of 10 g per liter every 15 days. Do not overdo nitrogen. It grows vines at the cost of roots."
+   "text": "Apply Urea 46 0 0 following the soil test. You can also give a urea spray of 10 g per liter every 15 days. Do not overdo nitrogen. It grows vines at the cost of roots."
   },
   {
    "type": "list",
@@ -269,7 +269,7 @@
   },
   {
    "type": "text",
-   "text": "KAU advises single superphosphate for a quick fix, or bone meal and rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.5 to 7.5."
+   "text": "Use single superphosphate for a quick fix, or bone meal and rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.5 to 7.5."
   },
   {
    "type": "list",
@@ -323,7 +323,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Apply magnesium and potash at different times."
+   "text": "Give about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Apply magnesium and potash at different times."
   },
   {
    "type": "list",
@@ -382,7 +382,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Do not apply boron together with calcium or ammonium fertilizers."
+   "text": "Give about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Do not apply boron together with calcium or ammonium fertilizers."
   },
   {
    "type": "list",
@@ -434,7 +434,7 @@
   },
   {
    "type": "text",
-   "text": "On acid soils, KAU limes about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils use Gypsum instead."
+   "text": "On acid soils, lime about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils use Gypsum instead."
   },
   {
    "type": "list",
@@ -494,7 +494,7 @@
   },
   {
    "type": "text",
-   "text": "Use a sulfur bearing fertilizer such as Ammonium sulfate 21 0 0 or single superphosphate. KAU gives about 25 kg sulfur dust per hectare (10 kg per acre) on sulfur poor soils, or Gypsum on alkaline soils."
+   "text": "Use a sulfur bearing fertilizer such as Ammonium sulfate 21 0 0 or single superphosphate. Give about 25 kg sulfur dust per hectare (10 kg per acre) on sulfur poor soils, or Gypsum on alkaline soils."
   },
   {
    "type": "list",
@@ -548,7 +548,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil. In severe cases spray 2 g zinc sulfate with 2.5 g lime (calcium carbonate) per liter in the morning. Do not apply zinc and phosphate together."
+   "text": "Give about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil. In severe cases spray 2 g zinc sulfate with 2.5 g lime (calcium carbonate) per liter in the morning. Do not apply zinc and phosphate together."
   },
   {
    "type": "list",
@@ -570,7 +570,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any sweet potato nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kamote needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any sweet potato nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your kamote needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -593,15 +593,15 @@
     },
     {
      "q": "What fertilizer fixes potassium deficiency in sweet potato?",
-     "a": "Apply Muriate of potash 0 0 60 following the soil test, best split between planting and early vine growth (KAU). For quick help spray potassium sulfate at 10 g per liter in the morning (KAU), or 1 percent potassium chloride every 15 days (TNAU)."
+     "a": "Apply Muriate of potash 0 0 60 following the soil test, best split between planting and early vine growth. For quick help spray potassium sulfate at 10 g per liter in the morning, or 1 percent potassium chloride every 15 days."
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in sweet potato?",
-     "a": "Apply Urea 46 0 0 following the soil test. KAU also gives a urea spray of 10 g per liter every 15 days."
+     "a": "Apply Urea 46 0 0 following the soil test. You can also give a urea spray of 10 g per liter every 15 days."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in sweet potato?",
-     "a": "KAU advises single superphosphate for a quick fix, or bone meal and rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.5 to 7.5."
+     "a": "Use single superphosphate for a quick fix, or bone meal and rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.5 to 7.5."
     },
     {
      "q": "How do I know which nutrient my kamote lacks?",
@@ -642,14 +642,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "Kerala Agricultural University Agri Infotech Portal: Sweet potato nutrient deficiencies",
-     "url": "https://celkau.in/crops/tuber/sweetpotato/deficiency.php"
-    },
-    {
-     "label": "TNAU Agritech Portal: Sweet potato, potassium deficiency",
-     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/sweetpotato_potassium.html"
-    },
     {
      "label": "Tulin and others, Annals of Tropical Research (2004): Characterization of nutrient deficiency symptoms in sweetpotato through a farmer and scientist participatory approach",
      "url": "https://ejournals.ph/article.php?id=29672"

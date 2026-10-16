@@ -726,7 +726,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any banana nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your saging needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any banana nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your saging needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -815,10 +815,6 @@
      "url": "https://www.nhb.gov.in/pdf/fruits/banana/ban007.pdf"
     },
     {
-     "label": "Kerala Agricultural University Agri Infotech: Banana nutrient deficiencies",
-     "url": "https://celkau.in/crops/fruits/banana/deficiency.php"
-    },
-    {
      "label": "Salibay and Salomez 2009, Banana fertilization at the plantation: soil and leaf analysis results (Davao del Norte)",
      "url": "https://ejournals.ph/article.php?id=9061"
     },
@@ -849,6 +845,10 @@
     {
      "label": "Yara Philippines: Sulfur deficiency in banana",
      "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/sulphur-deficiency-banana/"
+    },
+    {
+     "label": "Yara Philippines: Manganese deficiency in banana",
+     "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/manganese-deficiency-banana/"
     }
    ]
   }

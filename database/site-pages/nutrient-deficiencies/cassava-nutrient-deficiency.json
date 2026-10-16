@@ -160,7 +160,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 following the soil test, split in parts (KAU). In Philippine trials, one third of the N and K went in at planting and the rest at 2.5 and 5 months. KAU gives a potassium sulfate spray of 10 g per liter in the morning for quick help."
+   "text": "Apply Muriate of potash 0 0 60 following the soil test, split in parts. In Philippine trials, one third of the N and K went in at planting and the rest at 2.5 and 5 months. Give a potassium sulfate spray of 10 g per liter in the morning for quick help."
   },
   {
    "type": "list",
@@ -214,7 +214,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Urea 46 0 0 following the soil test, split with the potash. KAU also gives a urea spray of 10 g per liter every 15 days."
+   "text": "Apply Urea 46 0 0 following the soil test, split with the potash. You can also give a urea spray of 10 g per liter every 15 days."
   },
   {
    "type": "list",
@@ -267,7 +267,7 @@
   },
   {
    "type": "text",
-   "text": "Apply all the phosphorus at planting, as in the Philippine trials, using Superphosphate, 16 20 0 or 14 14 14 following the soil test. KAU uses single superphosphate for a quick fix and rock phosphate for the long term."
+   "text": "Apply all the phosphorus at planting, as in the Philippine trials, using Superphosphate, 16 20 0 or 14 14 14 following the soil test. Use single superphosphate for a quick fix and rock phosphate for the long term."
   },
   {
    "type": "list",
@@ -321,7 +321,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil, or in severe cases a spray of 2 g zinc sulfate with 2.5 g lime per liter in the morning. A Thai field trial got the best yield and return from 18.75 kg zinc sulfate per hectare worked into the soil with the NPK."
+   "text": "Give about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil, or in severe cases a spray of 2 g zinc sulfate with 2.5 g lime per liter in the morning. A Thai field trial got the best yield and return from 18.75 kg zinc sulfate per hectare worked into the soil with the NPK."
   },
   {
    "type": "list",
@@ -374,7 +374,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Do not apply magnesium and potash at the same time."
+   "text": "Give about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Do not apply magnesium and potash at the same time."
   },
   {
    "type": "list",
@@ -427,7 +427,7 @@
   },
   {
    "type": "text",
-   "text": "On acid soils, KAU limes about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils use Gypsum."
+   "text": "On acid soils, lime about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils use Gypsum."
   },
   {
    "type": "list",
@@ -481,7 +481,7 @@
   },
   {
    "type": "text",
-   "text": "Use Ammonium sulfate 21 0 0 or single superphosphate in the program. KAU gives about 25 kg sulfur dust per hectare on sulfur poor soils, or Gypsum on alkaline soils."
+   "text": "Use Ammonium sulfate 21 0 0 or single superphosphate in the program. Give about 25 kg sulfur dust per hectare on sulfur poor soils, or Gypsum on alkaline soils."
   },
   {
    "type": "list",
@@ -535,7 +535,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Keep boron and calcium applications apart."
+   "text": "Give about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Keep boron and calcium applications apart."
   },
   {
    "type": "list",
@@ -556,7 +556,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any cassava nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kamoteng kahoy needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any cassava nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your kamoteng kahoy needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -579,15 +579,15 @@
     },
     {
      "q": "What fertilizer fixes potassium deficiency in cassava?",
-     "a": "Apply Muriate of potash 0 0 60 following the soil test, split in parts (KAU). In Philippine trials, one third of the N and K went in at planting and the rest at 2.5 and 5 months."
+     "a": "Apply Muriate of potash 0 0 60 following the soil test, split in parts. In Philippine trials, one third of the N and K went in at planting and the rest at 2.5 and 5 months."
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in cassava?",
-     "a": "Apply Urea 46 0 0 following the soil test, split with the potash. KAU also gives a urea spray of 10 g per liter every 15 days."
+     "a": "Apply Urea 46 0 0 following the soil test, split with the potash. You can also give a urea spray of 10 g per liter every 15 days."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in cassava?",
-     "a": "Apply all the phosphorus at planting, as in the Philippine trials, using Superphosphate, 16 20 0 or 14 14 14 following the soil test. KAU uses single superphosphate for a quick fix and rock phosphate for the long term."
+     "a": "Apply all the phosphorus at planting, as in the Philippine trials, using Superphosphate, 16 20 0 or 14 14 14 following the soil test. Use single superphosphate for a quick fix and rock phosphate for the long term."
     },
     {
      "q": "How do I know which nutrient my kamoteng kahoy lacks?",
@@ -628,14 +628,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "Kerala Agricultural University Agri Infotech Portal: Tapioca (cassava) nutrient deficiencies",
-     "url": "https://celkau.in/crops/tuber/tapioca/deficiency.php"
-    },
-    {
-     "label": "Ocampo and others, Philippine Journal of Crop Science (2017): Towards increasing cassava production in the Philippines through site particular nutrient management",
-     "url": "https://agris.fao.org/search/fr/records/6473b0c413d110e4e7a990e6"
-    },
     {
      "label": "Kunlanit and others, Asia Pacific Journal of Science and Technology (2022): Zinc promotes growth, yield and economic return of cassava",
      "url": "https://so01.tci-thaijo.org/index.php/APST/article/view/261613"

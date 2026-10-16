@@ -160,7 +160,7 @@
   },
   {
    "type": "text",
-   "text": "In California trials, about 112 kg N per hectare (100 pounds per acre) raised yields in nine of ten fields. More helped in only four. Split the nitrogen through early growth (ICL). For quick help a 1 percent urea spray (10 g per liter) can be used (KAU)."
+   "text": "In California trials, about 112 kg N per hectare (100 pounds per acre) raised yields in nine of ten fields. More helped in only four. Split the nitrogen through early growth (ICL). For quick help a 1 percent urea spray (10 g per liter) can be used."
   },
   {
    "type": "list",
@@ -214,7 +214,7 @@
   },
   {
    "type": "text",
-   "text": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, or add Gypsum or single superphosphate, following the soil test. KAU gives about 25 kg sulfur dust per hectare on sulfur poor soils."
+   "text": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, or add Gypsum or single superphosphate, following the soil test. Give about 25 kg sulfur dust per hectare on sulfur poor soils."
   },
   {
    "type": "list",
@@ -268,7 +268,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 before planting and, where needed, again during bulbing (ICL), following the soil test. KAU gives a potassium sulfate spray of 10 g per liter for quick help."
+   "text": "Apply Muriate of potash 0 0 60 before planting and, where needed, again during bulbing (ICL), following the soil test. Give a potassium sulfate spray of 10 g per liter for quick help."
   },
   {
    "type": "list",
@@ -375,7 +375,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Do not exceed it. Boron is toxic in excess."
+   "text": "Give about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Do not exceed it. Boron is toxic in excess."
   },
   {
    "type": "list",
@@ -427,7 +427,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 20 kg Zinc sulfate per hectare (8 kg per acre), or a morning spray of 2 g zinc sulfate with 2.5 g lime per liter in severe cases. Keep zinc and phosphate apart."
+   "text": "Give about 20 kg Zinc sulfate per hectare (8 kg per acre), or a morning spray of 2 g zinc sulfate with 2.5 g lime per liter in severe cases. Keep zinc and phosphate apart."
   },
   {
    "type": "list",
@@ -480,7 +480,7 @@
   },
   {
    "type": "text",
-   "text": "KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Use Dolomite on acid soils."
+   "text": "Give about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Use Dolomite on acid soils."
   },
   {
    "type": "list",
@@ -533,7 +533,7 @@
   },
   {
    "type": "text",
-   "text": "On acid soils KAU limes about 250 kg per hectare where the pH is 5.5 to 6. On alkaline soils use Gypsum."
+   "text": "On acid soils, lime about 250 kg per hectare where the pH is 5.5 to 6. On alkaline soils use Gypsum."
   },
   {
    "type": "list",
@@ -556,7 +556,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any garlic nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your bawang needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any garlic nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your bawang needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -583,11 +583,11 @@
     },
     {
      "q": "What fertilizer fixes sulfur deficiency in garlic?",
-     "a": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, or add Gypsum or single superphosphate, following the soil test. KAU gives about 25 kg sulfur dust per hectare on sulfur poor soils."
+     "a": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, or add Gypsum or single superphosphate, following the soil test. Give about 25 kg sulfur dust per hectare on sulfur poor soils."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in garlic?",
-     "a": "Apply Muriate of potash 0 0 60 before planting and, where needed, again during bulbing (ICL), following the soil test. KAU gives a potassium sulfate spray of 10 g per liter for quick help."
+     "a": "Apply Muriate of potash 0 0 60 before planting and, where needed, again during bulbing (ICL), following the soil test. Give a potassium sulfate spray of 10 g per liter for quick help."
     },
     {
      "q": "How do I know which nutrient my bawang lacks?",
@@ -635,10 +635,6 @@
     {
      "label": "ICL Growing: Growing garlic",
      "url": "https://icl-growingsolutions.com/agriculture/crops/garlic/"
-    },
-    {
-     "label": "Kerala Agricultural University Agri Infotech Portal: Garlic nutrient deficiencies",
-     "url": "https://celkau.in/crops/vegetables/garlic/deficiency.php"
     }
    ]
   }

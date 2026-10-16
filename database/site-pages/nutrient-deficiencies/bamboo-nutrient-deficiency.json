@@ -113,7 +113,7 @@
   },
   {
    "type": "text",
-   "text": "No bamboo particular description of this shortage was found, so this follows general plant signs for grasses and leafy plants. Older leaves turn pale green to yellow first, then the whole clump looks light green. Few new shoots come up, and the culms that form are thin and short. Bamboo needs nitrogen in larger amounts than phosphorus or potash, as the VSU study notes. You see it most at this stage: young plantings and old clumps that are cut every year without feeding."
+   "text": "No bamboo particular description of this shortage was found, so this follows general plant signs for grasses and leafy plants. Older leaves turn pale green to yellow first, then the whole clump looks light green. Few new shoots come up, and the culms that form are thin and short. Bamboo needs nitrogen in larger amounts than phosphorus or potash. You see it most at this stage: young plantings and old clumps that are cut every year without feeding."
   },
   {
    "type": "heading",
@@ -140,7 +140,7 @@
   },
   {
    "type": "text",
-   "text": "For old kawayan tinik clumps, an MMSU study in Batac found that 2 kg of Complete 14 14 14 per clump per year, together with sanitation cutting, gave more and bigger shoots and culms. For nursery plantlets, a VSU study found 0.25 grams of nitrogen per plant was enough. Ammonium sulfate worked better than calcium nitrate. 0.25 grams of nitrogen is about 1.2 grams of Ammonium sulfate 21 0 0."
+   "text": "For old kawayan tinik clumps, a study in Batac found that 2 kg of Complete 14 14 14 per clump per year, together with sanitation cutting, gave more and bigger shoots and culms. For nursery plantlets, a study found 0.25 grams of nitrogen per plant was enough. Ammonium sulfate worked better than calcium nitrate. 0.25 grams of nitrogen is about 1.2 grams of Ammonium sulfate 21 0 0."
   },
   {
    "type": "list",
@@ -194,7 +194,7 @@
   },
   {
    "type": "text",
-   "text": "Use a complete fertilizer such as Complete 14 14 14, as in the MMSU study, or add Muriate of potash 0 0 60 where a soil test shows potash is low. No bamboo potash rate from a Philippine source was found, so follow the soil test."
+   "text": "Use a complete fertilizer such as Complete 14 14 14, or add Muriate of potash 0 0 60 where a soil test shows potash is low. No bamboo potash rate from a Philippine source was found, so follow the soil test."
   },
   {
    "type": "list",
@@ -377,7 +377,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any bamboo nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kawayan needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any bamboo nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your kawayan needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -400,11 +400,11 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in bamboo?",
-     "a": "For old kawayan tinik clumps, an MMSU study in Batac found that 2 kg of Complete 14 14 14 per clump per year, together with sanitation cutting, gave more and bigger shoots and culms. For nursery plantlets, a VSU study found 0.25 grams of nitrogen per plant was enough."
+     "a": "For old kawayan tinik clumps, a study in Batac found that 2 kg of Complete 14 14 14 per clump per year, together with sanitation cutting, gave more and bigger shoots and culms. For nursery plantlets, a study found 0.25 grams of nitrogen per plant was enough."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in bamboo?",
-     "a": "Use a complete fertilizer such as Complete 14 14 14, as in the MMSU study, or add Muriate of potash 0 0 60 where a soil test shows potash is low. No bamboo potash rate from a Philippine source was found, so follow the soil test."
+     "a": "Use a complete fertilizer such as Complete 14 14 14, or add Muriate of potash 0 0 60 where a soil test shows potash is low. No bamboo potash rate from a Philippine source was found, so follow the soil test."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in bamboo?",
@@ -449,22 +449,6 @@
   {
    "type": "sources",
    "items": [
-    {
-     "label": "MMSU Batac: Effects of sanitation cutting and fertilizer application on the rejuvenation of old kawayan tinik stands (Philippine E Journals)",
-     "url": "https://ejournals.ph/article.php?id=22526"
-    },
-    {
-     "label": "ERDB 2000: Effects of harvesting intensities, felling cycle and NPK fertilizer on bamboo species in Pampanga (AGRIS record)",
-     "url": "https://agris.fao.org/search/en/records/647239f1e17b74d2224eef96"
-    },
-    {
-     "label": "Arradaza and others 2024, Growth response of tissue culture bamboo (Bambusa tulda) plantlets to sources and levels of nitrogen (VSU, Annals of Tropical Research)",
-     "url": "https://atr.vsu.edu.ph/article/download/15/10/17"
-    },
-    {
-     "label": "UPLB: Site quality preferences of kawayan tinik at the Dumanjug bamboo production project, Cebu (AGRIS record)",
-     "url": "https://agris.fao.org/search/en/records/647226ff77fd37171a72f2e4"
-    },
     {
      "label": "University of Delaware Cooperative Extension: Identifying nutrient deficiencies in ornamental plants (general signs)",
      "url": "https://www.udel.edu/udel/en/academics/colleges/canr/cooperative-extension/fact-sheets/identifying-nutrient-deficiencies-in-ornamental-plants/"

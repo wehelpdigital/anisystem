@@ -154,7 +154,7 @@
   },
   {
    "type": "text",
-   "text": "Sidedress Urea 46 0 0 or Ammonium sulfate 21 0 0 beside the rows, following the soil test. Work it in or water it. For quick help, TNAU gives a 1 percent urea spray (10 g per liter) or a 2 percent DAP 18 46 0 spray (20 g per liter)."
+   "text": "Sidedress Urea 46 0 0 or Ammonium sulfate 21 0 0 beside the rows, following the soil test. Work it in or water it. For quick help, give a 1 percent urea spray (10 g per liter) or a 2 percent DAP 18 46 0 spray (20 g per liter)."
   },
   {
    "type": "list",
@@ -208,7 +208,7 @@
   },
   {
    "type": "text",
-   "text": "For the standing crop, TNAU gives 2 to 3 sprays of 2 percent DAP 18 46 0 (20 g per liter). For the next crop, place 16 20 0, Complete 14 14 14 or DAP in the furrow at planting, following the soil test."
+   "text": "For the standing crop, give 2 to 3 sprays of 2 percent DAP 18 46 0 (20 g per liter). For the next crop, place 16 20 0, Complete 14 14 14 or DAP in the furrow at planting, following the soil test."
   },
   {
    "type": "list",
@@ -262,7 +262,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 1 percent potassium chloride spray (10 g Muriate of potash per liter). For the soil, sidedress Muriate of potash 0 0 60 following the soil test."
+   "text": "Give a 1 percent potassium chloride spray (10 g Muriate of potash per liter). For the soil, sidedress Muriate of potash 0 0 60 following the soil test."
   },
   {
    "type": "list",
@@ -315,7 +315,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives 20 to 25 kg Zinc sulfate per hectare to the soil, or a 0.5 percent zinc sulfate spray (5 g per liter)."
+   "text": "Give 20 to 25 kg Zinc sulfate per hectare to the soil, or a 0.5 percent zinc sulfate spray (5 g per liter)."
   },
   {
    "type": "list",
@@ -367,7 +367,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 1 percent ferrous sulfate spray (10 g per liter) every week until new leaves are green, or 20 to 25 kg ferrous sulfate per hectare to the soil. In Kansas trials a chelated iron product (Fe EDDHA) placed in the furrow at about 3.4 kg product per hectare (3 pounds per acre), or split at planting and 2 weeks later, cut the yellowing and raised yield."
+   "text": "Give a 1 percent ferrous sulfate spray (10 g per liter) every week until new leaves are green, or 20 to 25 kg ferrous sulfate per hectare to the soil. In Kansas trials a chelated iron product (Fe EDDHA) placed in the furrow at about 3.4 kg product per hectare (3 pounds per acre), or split at planting and 2 weeks later, cut the yellowing and raised yield."
   },
   {
    "type": "list",
@@ -473,7 +473,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 2 percent magnesium sulfate spray (20 g Epsom salt per liter). On acid soils apply Dolomite following the soil test."
+   "text": "Give a 2 percent magnesium sulfate spray (20 g Epsom salt per liter). On acid soils apply Dolomite following the soil test."
   },
   {
    "type": "list",
@@ -495,7 +495,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any sorghum nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your batad needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any sorghum nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your batad needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -522,11 +522,11 @@
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in sorghum?",
-     "a": "For the standing crop, TNAU gives 2 to 3 sprays of 2 percent DAP 18 46 0 (20 g per liter). For the next crop, place 16 20 0, Complete 14 14 14 or DAP in the furrow at planting, following the soil test."
+     "a": "For the standing crop, give 2 to 3 sprays of 2 percent DAP 18 46 0 (20 g per liter). For the next crop, place 16 20 0, Complete 14 14 14 or DAP in the furrow at planting, following the soil test."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in sorghum?",
-     "a": "TNAU gives a 1 percent potassium chloride spray (10 g Muriate of potash per liter). For the soil, sidedress Muriate of potash 0 0 60 following the soil test."
+     "a": "Give a 1 percent potassium chloride spray (10 g Muriate of potash per liter). For the soil, sidedress Muriate of potash 0 0 60 following the soil test."
     },
     {
      "q": "How do I know which nutrient my batad lacks?",
@@ -568,40 +568,12 @@
    "type": "sources",
    "items": [
     {
-     "label": "TNAU Agritech Portal: Sorghum, nitrogen deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_nitro.html"
-    },
-    {
      "label": "University of Nebraska CropWatch: Key to nutrient deficiencies of corn and sorghum",
      "url": "https://cropwatch.unl.edu/key-nutrient-deficiencies-corn-and-sorghum/"
     },
     {
-     "label": "TNAU Agritech Portal: Sorghum, phosphorus deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_phos.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Sorghum, potassium deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_pota.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Sorghum, zinc deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_zin.html"
-    },
-    {
      "label": "Obour and others, Kansas State: Evaluating the effectiveness of iron chelates in managing iron deficiency chlorosis in grain sorghum",
      "url": "https://journals.newprairiepress.org/kaesrr/article/7094/galley/7029/download/"
-    },
-    {
-     "label": "TNAU Agritech Portal: Sorghum, iron deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_iro.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Sorghum, sulphur deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_sul.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Sorghum, magnesium deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_magnes.html"
     }
    ]
   }

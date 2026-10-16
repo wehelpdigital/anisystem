@@ -185,7 +185,7 @@
   },
   {
    "type": "text",
-   "text": "When the leaf color chart reads below 4, PhilRice advises 1.5 bags of Urea 46 0 0 per hectare in the dry season or 1 bag in the wet season. If the crop also shows sulfur deficiency, use Ammonium sulfate 21 0 0 instead: 3.5 bags in the dry season or 2 bags in the wet season. Keep water in the field after applying, but do not let it spill over the bunds right away."
+   "text": "When the leaf color chart reads below 4, use 1.5 bags of Urea 46 0 0 per hectare in the dry season or 1 bag in the wet season. If the crop also shows sulfur deficiency, use Ammonium sulfate 21 0 0 instead: 3.5 bags in the dry season or 2 bags in the wet season. Keep water in the field after applying, but do not let it spill over the bunds right away."
   },
   {
    "type": "list",
@@ -236,7 +236,7 @@
   },
   {
    "type": "text",
-   "text": "PhilRice notes the color looks like tungro, but potassium deficiency covers the field evenly while tungro shows in patches. Phosphorus deficiency also gives dark green plants, but without the brown leaf edges. To be sure, soil test for exchangeable potassium or a MOET kit test. A small strip given potash next to the rest of the field also shows the difference within a few weeks."
+   "text": "The color looks like tungro, but potassium deficiency covers the field evenly while tungro shows in patches. Phosphorus deficiency also gives dark green plants, but without the brown leaf edges. To be sure, soil test for exchangeable potassium or a MOET kit test. A small strip given potash next to the rest of the field also shows the difference within a few weeks."
   },
   {
    "type": "heading",
@@ -245,7 +245,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 to the soil following the soil test. For quick help, TNAU advises a 1 percent potassium chloride or potassium sulfate spray (10 g per liter) every 15 days until the symptoms stop."
+   "text": "Apply Muriate of potash 0 0 60 to the soil following the soil test. For quick help, use a 1 percent potassium chloride or potassium sulfate spray (10 g per liter) every 15 days until the symptoms stop."
   },
   {
    "type": "list",
@@ -305,7 +305,7 @@
   },
   {
    "type": "text",
-   "text": "Apply a phosphorus fertilizer such as 16 20 0, Complete 14 14 14 or Superphosphate 0 18 0 early, following the soil test. TNAU gives 15 to 30 kg of phosphorus (P) per hectare to the soil. For a quick boost, spray 2 percent DAP 18 46 0 (20 g per liter, soaked overnight and filtered) twice, 15 days apart."
+   "text": "Apply a phosphorus fertilizer such as 16 20 0, Complete 14 14 14 or Superphosphate 0 18 0 early, following the soil test. Give 15 to 30 kg of phosphorus (P) per hectare to the soil. For a quick boost, spray 2 percent DAP 18 46 0 (20 g per liter, soaked overnight and filtered) twice, 15 days apart."
   },
   {
    "type": "list",
@@ -348,7 +348,7 @@
   },
   {
    "type": "text",
-   "text": "Neutral to alkaline and calcareous soils, fields that stay flooded all year (three crops a year), sodic, saline and peat soils, and soils high in phosphorus. PhilRice calls it the most widespread micronutrient problem of rice."
+   "text": "Neutral to alkaline and calcareous soils, fields that stay flooded all year (three crops a year), sodic, saline and peat soils, and soils high in phosphorus. It is the most widespread micronutrient problem of rice."
   },
   {
    "type": "heading",
@@ -366,7 +366,7 @@
   },
   {
    "type": "text",
-   "text": "Broadcast 25 kg Zinc sulfate per hectare 10 to 14 days after transplanting. In the seedbed, apply 0.5 kg zinc sulfate per 400 square meters (2 kg if severe) 7 to 10 days after sowing, or dip seedlings in a 2 percent zinc oxide mix for 15 to 30 minutes. For direct seeding, add 1 kg zinc sulfate per 40 kg seed to the last soaking water. TNAU also gives a 0.5 percent zinc sulfate spray (5 g per liter) twice, 15 days apart."
+   "text": "Broadcast 25 kg Zinc sulfate per hectare 10 to 14 days after transplanting. In the seedbed, apply 0.5 kg zinc sulfate per 400 square meters (2 kg if severe) 7 to 10 days after sowing, or dip seedlings in a 2 percent zinc oxide mix for 15 to 30 minutes. For direct seeding, add 1 kg zinc sulfate per 40 kg seed to the last soaking water. You can also give a 0.5 percent zinc sulfate spray (5 g per liter) twice, 15 days apart."
   },
   {
    "type": "list",
@@ -383,7 +383,7 @@
   },
   {
    "type": "text",
-   "text": "To keep it away, PhilRice advises 25 kg zinc sulfate per hectare at 14 days after transplanting once a year, in the dry season."
+   "text": "To keep it away, use 25 kg zinc sulfate per hectare at 14 days after transplanting once a year, in the dry season."
   },
   {
    "type": "heading",
@@ -420,7 +420,7 @@
   },
   {
    "type": "text",
-   "text": "Use Ammonium sulfate 21 0 0 (24 percent sulfur) instead of urea for the next nitrogen doses: PhilRice gives 3.5 bags per hectare in the dry season or 2 bags in the wet season when the leaf color chart reads below 4. The sulfur in 14 14 14 12S at the PalayCheck rate is enough for the usual shortage. TNAU also gives a 0.5 percent wettable sulfur spray (5 g per liter) twice, 15 days apart."
+   "text": "Use Ammonium sulfate 21 0 0 (24 percent sulfur) instead of urea for the next nitrogen doses: give 3.5 bags per hectare in the dry season or 2 bags in the wet season when the leaf color chart reads below 4. The sulfur in 14 14 14 12S at the usual rate is enough for the usual shortage. You can also give a 0.5 percent wettable sulfur spray (5 g per liter) twice, 15 days apart."
   },
   {
    "type": "list",
@@ -533,7 +533,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU advises a 0.5 percent magnesium sulfate spray (5 g Epsom salt per liter) twice, 15 days apart. For the soil, a soluble source such as kieserite corrects it fast. Follow the soil test for the rate."
+   "text": "Use a 0.5 percent magnesium sulfate spray (5 g Epsom salt per liter) twice, 15 days apart. For the soil, a soluble source such as kieserite corrects it fast. Follow the soil test for the rate."
   },
   {
    "type": "list",
@@ -587,7 +587,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU advises a 0.2 percent manganese sulfate spray (2 g per liter) twice, 15 days apart. For the soil, manganese sulfate can be banded along the rows at 5 to 20 kg of manganese per hectare. Use ammonium sulfate instead of urea and add manure or straw."
+   "text": "Use a 0.2 percent manganese sulfate spray (2 g per liter) twice, 15 days apart. For the soil, manganese sulfate can be banded along the rows at 5 to 20 kg of manganese per hectare. Use ammonium sulfate instead of urea and add manure or straw."
   },
   {
    "type": "list",
@@ -640,7 +640,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU advises a 0.3 percent boric acid spray (3 g per liter) twice, 15 days apart. Borax can also go to the soil, but follow the soil test, because a little too much boron burns rice."
+   "text": "Use a 0.3 percent boric acid spray (3 g per liter) twice, 15 days apart. Borax can also go to the soil, but follow the soil test, because a little too much boron burns rice."
   },
   {
    "type": "list",
@@ -693,7 +693,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU advises a 0.2 percent copper sulfate spray (2 g per liter) twice, 15 days apart. Soil copper sulfate (TNAU gives 1 to 5 kg of copper per hectare) should only follow a soil test, since copper builds up in the soil."
+   "text": "Use a 0.2 percent copper sulfate spray (2 g per liter) twice, 15 days apart. Soil copper sulfate (1 to 5 kg of copper per hectare) should only follow a soil test, since copper builds up in the soil."
   },
   {
    "type": "list",
@@ -745,7 +745,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU advises a 1 percent calcium chloride spray (10 g per liter) for quick relief. About 500 kg Gypsum per hectare on calcium poor high pH soils. Superphosphate also carries calcium. On acid soils use Agricultural lime as the soil test advises."
+   "text": "Use a 1 percent calcium chloride spray (10 g per liter) for quick relief. About 500 kg Gypsum per hectare on calcium poor high pH soils. Superphosphate also carries calcium. On acid soils use Agricultural lime as the soil test advises."
   },
   {
    "type": "list",
@@ -769,7 +769,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any rice nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your palay needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any rice nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your palay needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -792,15 +792,15 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in rice?",
-     "a": "When the leaf color chart reads below 4, PhilRice advises 1.5 bags of Urea 46 0 0 per hectare in the dry season or 1 bag in the wet season. If the crop also shows sulfur deficiency, use Ammonium sulfate 21 0 0 instead: 3.5 bags in the dry season or 2 bags in the wet season."
+     "a": "When the leaf color chart reads below 4, use 1.5 bags of Urea 46 0 0 per hectare in the dry season or 1 bag in the wet season. If the crop also shows sulfur deficiency, use Ammonium sulfate 21 0 0 instead: 3.5 bags in the dry season or 2 bags in the wet season."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in rice?",
-     "a": "Apply Muriate of potash 0 0 60 to the soil following the soil test. For quick help, TNAU advises a 1 percent potassium chloride or potassium sulfate spray (10 g per liter) every 15 days until the symptoms stop."
+     "a": "Apply Muriate of potash 0 0 60 to the soil following the soil test. For quick help, use a 1 percent potassium chloride or potassium sulfate spray (10 g per liter) every 15 days until the symptoms stop."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in rice?",
-     "a": "Apply a phosphorus fertilizer such as 16 20 0, Complete 14 14 14 or Superphosphate 0 18 0 early, following the soil test. TNAU gives 15 to 30 kg of phosphorus (P) per hectare to the soil."
+     "a": "Apply a phosphorus fertilizer such as 16 20 0, Complete 14 14 14 or Superphosphate 0 18 0 early, following the soil test. Give 15 to 30 kg of phosphorus (P) per hectare to the soil."
     },
     {
      "q": "How do I know which nutrient my palay lacks?",
@@ -843,59 +843,6 @@
     {
      "label": "Every nutrient deficiency by crop",
      "url": "/nutrient-deficiencies"
-    }
-   ]
-  },
-  {
-   "type": "sources",
-   "items": [
-    {
-     "label": "PhilRice PalayCheck System, Key Check 5: nutrient management",
-     "url": "https://www.pinoyrice.com/wp-content/uploads/boxes/check5_reco.html"
-    },
-    {
-     "label": "IRRI Rice Doctor fact sheet: Nitrogen deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Nitrogen_deficiency.htm"
-    },
-    {
-     "label": "DA ATI CAR: Major fertilizers and their roles in rice production",
-     "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/major_fertilizers-their_roles_in_rice_production.pdf"
-    },
-    {
-     "label": "IRRI Rice Doctor fact sheet: Potassium deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Potassium_deficiency.htm"
-    },
-    {
-     "label": "TNAU Agritech Portal: Rice, potassium deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/rice_potassium.html"
-    },
-    {
-     "label": "IRRI Rice Doctor fact sheet: Phosphorus deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Phosphorus_deficiency.htm"
-    },
-    {
-     "label": "TNAU Agritech Portal: Rice, phosphorus deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/Rice_Phosphorus.html"
-    },
-    {
-     "label": "PhilRice: RCEF helps solve zinc deficient Pangasinan farms",
-     "url": "https://www.philrice.gov.ph/rcef-helps-solve-zinc-deficient-pangasinan-farms/"
-    },
-    {
-     "label": "IRRI Rice Doctor fact sheet: Zinc deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Zinc_deficiency.htm"
-    },
-    {
-     "label": "TNAU Agritech Portal: Rice, zinc deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/rice_zin.html"
-    },
-    {
-     "label": "IRRI Rice Doctor fact sheet: Sulfur deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Sulfur_deficiency.htm"
-    },
-    {
-     "label": "TNAU Agritech Portal: Rice, sulphur deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/rice_sulphur.html"
     }
    ]
   }

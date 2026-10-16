@@ -187,7 +187,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU notes there are no clear signs on the leaves: plants are just small and stunted with dark green leaves. Because nothing marks the leaves, the shortage is often missed until the soil is tested. You see it most at this stage: early growth."
+   "text": "There are no clear signs on the leaves: plants are just small and stunted with dark green leaves. Because nothing marks the leaves, the shortage is often missed until the soil is tested. You see it most at this stage: early growth."
   },
   {
    "type": "heading",
@@ -214,7 +214,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days. For the next crop apply 16 20 0 or Complete 14 14 14 at planting, following the soil test."
+   "text": "Give a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days. For the next crop apply 16 20 0 or Complete 14 14 14 at planting, following the soil test."
   },
   {
    "type": "list",
@@ -268,7 +268,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 1 percent potassium chloride spray (10 g Muriate of potash per liter) every week. For the soil, apply Muriate of potash 0 0 60 following the soil test."
+   "text": "Give a 1 percent potassium chloride spray (10 g Muriate of potash per liter) every week. For the soil, apply Muriate of potash 0 0 60 following the soil test."
   },
   {
    "type": "list",
@@ -321,7 +321,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 percent calcium sulfate spray (5 g per liter). Gypsum to the soil adds sulfur without nitrogen. Follow the soil test."
+   "text": "Give a 0.5 percent calcium sulfate spray (5 g per liter). Gypsum to the soil adds sulfur without nitrogen. Follow the soil test."
   },
   {
    "type": "list",
@@ -373,7 +373,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 percent zinc sulfate spray (5 g per liter) every 15 days, or 10 to 15 kg zinc sulfate per hectare to the soil."
+   "text": "Give a 0.5 percent zinc sulfate spray (5 g per liter) every 15 days, or 10 to 15 kg zinc sulfate per hectare to the soil."
   },
   {
    "type": "list",
@@ -425,7 +425,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.5 percent ferrous sulfate spray (5 g per liter) every week."
+   "text": "Give a 0.5 percent ferrous sulfate spray (5 g per liter) every week."
   },
   {
    "type": "list",
@@ -477,7 +477,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a spray of 2 percent magnesium sulfate (20 g Epsom salt per liter) with 1 percent urea (10 g per liter). Use Dolomite on acid soils as the soil test advises."
+   "text": "Give a spray of 2 percent magnesium sulfate (20 g Epsom salt per liter) with 1 percent urea (10 g per liter). Use Dolomite on acid soils as the soil test advises."
   },
   {
    "type": "list",
@@ -531,7 +531,7 @@
   },
   {
    "type": "text",
-   "text": "TNAU gives a 0.2 percent boron spray (2 g borax per liter) every two weeks."
+   "text": "Give a 0.2 percent boron spray (2 g borax per liter) every two weeks."
   },
   {
    "type": "list",
@@ -552,7 +552,7 @@
    "type": "callout",
    "tone": "tip",
    "title": "Let a soil test decide the rate",
-   "text": "A soil test is the surest check for any pigeon pea nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kadyos needs. That saves money, because extra fertilizer is money lost."
+   "text": "A soil test is the surest check for any pigeon pea nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories test soil, and the result says how much of each fertilizer your kadyos needs. That saves money, because extra fertilizer is money lost."
   },
   {
    "type": "cta",
@@ -579,11 +579,11 @@
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in pigeon pea?",
-     "a": "TNAU gives a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days. For the next crop apply 16 20 0 or Complete 14 14 14 at planting, following the soil test."
+     "a": "Give a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days. For the next crop apply 16 20 0 or Complete 14 14 14 at planting, following the soil test."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in pigeon pea?",
-     "a": "TNAU gives a 1 percent potassium chloride spray (10 g Muriate of potash per liter) every week. For the soil, apply Muriate of potash 0 0 60 following the soil test."
+     "a": "Give a 1 percent potassium chloride spray (10 g Muriate of potash per liter) every week. For the soil, apply Muriate of potash 0 0 60 following the soil test."
     },
     {
      "q": "How do I know which nutrient my kadyos lacks?",
@@ -633,40 +633,12 @@
      "url": "https://extension.psu.edu/evaluating-nodulation-in-soybeans"
     },
     {
-     "label": "TNAU Agritech Portal: Redgram (pigeon pea), phosphorus deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/redgram_phos.html"
-    },
-    {
      "label": "University of Wisconsin Extension A2520: Soil and applied phosphorus",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2520.pdf"
     },
     {
-     "label": "TNAU Agritech Portal: Redgram (pigeon pea), potassium deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/redgram_pota.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Redgram (pigeon pea), sulphur deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/redgram_sul.html"
-    },
-    {
      "label": "University of Wisconsin Extension A2525: Soil and applied sulfur",
      "url": "https://corn.aae.wisc.edu/Management/pdfs/a2525.pdf"
-    },
-    {
-     "label": "TNAU Agritech Portal: Redgram (pigeon pea), zinc deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/redgram_zinc.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Redgram (pigeon pea), iron deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/redgram_iron.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Redgram (pigeon pea), magnesium deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/redgram_magnes.html"
-    },
-    {
-     "label": "TNAU Agritech Portal: Redgram (pigeon pea), boron deficiency",
-     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/redgram_boron.html"
     }
    ]
   }

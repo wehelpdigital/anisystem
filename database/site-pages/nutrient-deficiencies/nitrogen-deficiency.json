@@ -592,7 +592,7 @@
   },
   {
    "type": "text",
-   "text": "Sulfur shortage gives the same pale color, but it starts on the young leaves while nitrogen starts on the old ones. A mild iron shortage can also look like it, but iron shows first on the newest leaf as it comes out. In rice, read the top fully opened leaf of 10 plants on the PhilRice leaf color chart every week, from 14 days after transplanting. A BSWM Soil Test Kit or a DA Regional Soils Laboratory measures soil nitrogen. A leaf tissue test shows what the plant took up. Vegetable growers can also test the sap of leaf stems with nitrate test strips."
+   "text": "Sulfur shortage gives the same pale color, but it starts on the young leaves while nitrogen starts on the old ones. A mild iron shortage can also look like it, but iron shows first on the newest leaf as it comes out. In rice, read the top fully opened leaf of 10 plants on the leaf color chart every week, from 14 days after transplanting. A soil test kit or a DA Regional Soils Laboratory measures soil nitrogen. A leaf tissue test shows what the plant took up. Vegetable growers can also test the sap of leaf stems with nitrate test strips."
   },
   {
    "type": "heading",
@@ -601,7 +601,7 @@
   },
   {
    "type": "text",
-   "text": "Topdress urea (46 0 0) or ammonium sulfate (21 0 0), or use 14 14 14. Add compost or manure for the long run. In rice, a typical PhilRice rate is 1 bag of urea per hectare in the wet season and 1.5 bags in the dry season. Apply it when more than 5 of 10 leaves read below 4 on the leaf color chart (below 3 in wet seeded rice)."
+   "text": "Topdress urea (46 0 0) or ammonium sulfate (21 0 0), or use 14 14 14. Add compost or manure for the long run. In rice, a typical rate is 1 bag of urea per hectare in the wet season and 1.5 bags in the dry season. Apply it when more than 5 of 10 leaves read below 4 on the leaf color chart (below 3 in wet seeded rice)."
   },
   {
    "type": "text",
@@ -720,7 +720,7 @@
     },
     {
      "q": "How do I know when my rice needs more urea?",
-     "a": "Use the PhilRice leaf color chart on the top fully opened leaf of 10 plants, every week from 14 days after transplanting. If more than 5 of the 10 leaves read below 4, it is time to topdress."
+     "a": "Use the leaf color chart on the top fully opened leaf of 10 plants, every week from 14 days after transplanting. If more than 5 of the 10 leaves read below 4, it is time to topdress."
     }
    ]
   },
@@ -762,24 +762,8 @@
    "type": "sources",
    "items": [
     {
-     "label": "PhilRice, Using the Leaf Color Chart (LCC), Pinoy Rice Knowledge Bank handout",
-     "url": "https://www.pinoyrice.com/wp-content/uploads/using-the-leaf-color-chart-or-lcc.pdf"
-    },
-    {
-     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Nitrogen deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Nitrogen_deficiency.htm"
-    },
-    {
      "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
      "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
-    },
-    {
-     "label": "DA Agricultural Training Institute Cordillera, Major Fertilizers and their Roles in Rice Production",
-     "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/major_fertilizers-their_roles_in_rice_production.pdf"
-    },
-    {
-     "label": "UF IFAS Extension, Plant Petiole Sap Testing for Vegetable Crops",
-     "url": "https://ask.ifas.ufl.edu/publication/CV004"
     },
     {
      "label": "Haifa Group, Crop Guide: Nutrients for Cucumber",

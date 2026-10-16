@@ -169,7 +169,7 @@
   },
   {
    "type": "text",
-   "text": "Mild copper shortage has no clear signs, and the wilting, rolled young leaves look like drought even when the soil is moist. Look for bushy dieback in trees and white, twisted tips in onion, and confirm with a tissue test. A leaf tissue test is the best check, because soil tests for copper are less reliable. A DA Regional Soils Laboratory tests copper in soil and plant tissue. In lowland rice, the PhilRice MOET pots also show if copper is the missing nutrient."
+   "text": "Mild copper shortage has no clear signs, and the wilting, rolled young leaves look like drought even when the soil is moist. Look for bushy dieback in trees and white, twisted tips in onion, and confirm with a tissue test. A leaf tissue test is the best check, because soil tests for copper are less reliable. A DA Regional Soils Laboratory tests copper in soil and plant tissue. In lowland rice, the MOET pots also show if copper is the missing nutrient."
   },
   {
    "type": "heading",
@@ -339,10 +339,6 @@
    "type": "sources",
    "items": [
     {
-     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Copper deficiency",
-     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Copper_deficiency.htm"
-    },
-    {
      "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
      "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
     },
@@ -357,10 +353,6 @@
     {
      "label": "Haifa Group, Crop Guide: Nutrients for Cucumber",
      "url": "https://www.haifa-group.com/cucumber-0/crop-guide-nutrients-cucumber"
-    },
-    {
-     "label": "Rice Today, Diagnosis by deduction (the MOET kit)",
-     "url": "https://ricetoday.irri.org/diagnosis-by-deduction/"
     }
    ]
   }
