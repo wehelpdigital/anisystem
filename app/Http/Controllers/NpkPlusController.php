@@ -118,7 +118,7 @@ class NpkPlusController extends Controller
 
     /**
      * The season the crop will grow through (2026-10-08): the field found
-     * from its town and province, the same weeks in each of the last ten
+     * from its town and province, the same weeks in each of the last twenty
      * years from the Open-Meteo weather history (rain, sunshine, the water
      * the air pulls from a crop, heat), and the ENSO state now. The page
      * turns them into the sun, water and temperature planks of the barrel.
@@ -405,7 +405,10 @@ class NpkPlusController extends Controller
         };
         try {
             $settings = $settings->forField('PH');
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p, $calc), $this->prompt($p, $calc), 7000, fn (string $t) => $this->parse($t), $beat);
+            // The brief is the case's, not the field's: kept for the next reading of the same case (2026-10-18).
+            $shelf = ['kind' => 'npk', 'scope' => implode(' · ', array_filter([$calc->crop ? CropCatalog::label($calc->crop) : null, $p['variety'] ?: null,
+                \App\Support\ClimateRecord::placeKey((string) $p['location'], 'PH')['place'], $p['plantingDate'] ? substr((string) $p['plantingDate'], 0, 7) : null]))];
+            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p, $calc), $this->prompt($p, $calc), 7000, fn (string $t) => $this->parse($t), $beat, 3000, $shelf);
             $anee = $result['data'];
             if ($anee === null) {
                 Log::warning('npk: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
@@ -473,21 +476,39 @@ class NpkPlusController extends Controller
             . (! empty($res['needs']) ? 'The calculator\'s need model, kg per ha for that goal on this soil (the official guide rate sized to the goal and adjusted for the soil; plan is what the plan gives): ' . json_encode($res['needs']) . "\n" : '')
             . (! empty($res['micros']) ? 'The calculator\'s secondary, micro and beneficial element needs, kg of element per ha (level none, watch, likely, or test from a soil test): ' . json_encode($res['micros']) . "\n" : '')
             . (isset($res['reach']) && $res['reach'] !== null ? 'Liebig reading: the shortest plank (a nutrient, or the season\'s sun, water or heat) lets the crop reach about ' . (int) $res['reach'] . "% of the goal by the calculator's count.\n" : '')
-            . (! empty($res['season']['carriesTPerHa']) ? 'What the season lets the variety carry, t/ha (from ten years of weather at the field and the ENSO state; potential ' . json_encode($res['season']['potential'] ?? null) . '): ' . json_encode($res['season']['carriesTPerHa']) . "\n" : '')
+            . (! empty($res['season']['carriesTPerHa']) ? 'What the season lets the variety carry, t/ha (from the years of weather at the field and the ENSO state; potential ' . json_encode($res['season']['potential'] ?? null) . '): ' . json_encode($res['season']['carriesTPerHa']) . "\n" : '')
             . (! empty($res['support']) ? 'The calculator\'s estimate of the yield the fertilizer alone can feed, t/ha per nutrient (soil supply not counted): ' . json_encode($res['support']) . "\n" : '');
     }
 
+    /**
+     * The research brief (2026-10-18): written from the crop, the variety,
+     * the province, the planting month and the plan's biofertilizers only,
+     * so its notes are kept (App\Support\ResearchShelf) for the next reading
+     * of the same case. It no longer asks for the guide's kilograms when the
+     * calculation carries NPK Plus's own need, nor for the rain around the
+     * planting date: the field's twenty year weather record is the app's own
+     * (App\Support\ClimateStore) and goes to the document.
+     */
     private function researchPrompt(array $p, object $calc): string
     {
+        $res = json_decode((string) $calc->result, true) ?: [];
+        $bio = collect(json_decode((string) $calc->lines, true) ?: [])->filter(fn ($l) => ! empty($l['estimate']))->pluck('name')->filter()->unique()->sort()->values()->all();
+        $month = $p['plantingDate'] ? \Illuminate\Support\Carbon::parse($p['plantingDate'])->format('F Y') : 'not given';
+        $province = \App\Support\ClimateRecord::placeKey((string) $p['location'], 'PH')['place'];
+        $n = 1;
+
         return "Research for a fertilizer plan check in the Philippines. Use web search and write plain notes (not JSON).\n"
-            . 'Place: ' . $p['location'] . "\nCrop: " . ($calc->crop ? CropCatalog::label($calc->crop) : 'not set') . ($p['variety'] ? ' (' . $p['variety'] . ')' : '') . "\n"
-            . 'Planting date: ' . ($p['plantingDate'] ?: 'not given') . "\n\n"
-            . "Find: 1) the DA, BSWM or PhilRice fertilizer recommendation for this crop in this province or region, and its timing by growth stage; "
-            . "2) the soils of this area (pH, sodic, saline, acid sulfate, deficiencies such as zinc) from BSWM soil surveys or studies; "
-            . "3) the rainfall pattern around the planting date here and what ENSO forecasts mean for it (leaching, flooding, drought, heat); "
-            . "4) for any biofertilizer in the plan, what field trials show it can replace; "
+            . 'Province: ' . $province . "\nCrop: " . ($calc->crop ? CropCatalog::label($calc->crop) : 'not set') . ($p['variety'] ? ' (' . $p['variety'] . ')' : '') . "\n"
+            . 'Planting: ' . $month . "\n\n"
+            . 'Find: '
+            . (! empty($res['needs'])
+                ? ($n++) . ') the DA, BSWM or PhilRice guide\'s timing of this crop\'s fertilizer by growth stage in this province or region (which stage gets which share); the kilograms per hectare are already counted by the app, do not look them up; '
+                : ($n++) . ') the DA, BSWM or PhilRice fertilizer recommendation for this crop in this province or region, and its timing by growth stage; ')
+            . ($n++) . ') the soils of this area (pH, sodic, saline, acid sulfate, deficiencies such as zinc) from BSWM soil surveys or studies; '
+            . ($bio ? ($n++) . ') for these biofertilizers (' . implode(', ', $bio) . '), what field trials show they can replace; ' : '')
             // Real harvests (2026-10-17, the owner: "we need real people data").
-            . "5) REAL HARVESTS: the most recent derbies, techno demos and farmers' reported harvests of this crop (and this variety, when named) in this province or region, newest first: the yield (t/ha, or cavans per hectare with the kilos per cavan), the season, the place and the fertilizer used where reported. Cite each source.";
+            . ($n++) . ") REAL HARVESTS: the most recent derbies, techno demos and farmers' reported harvests of this crop (and this variety, when named) in this province or region, newest first: the yield (t/ha, or cavans per hectare with the kilos per cavan), the season, the place and the fertilizer used where reported. Cite each source. "
+            . 'The app keeps the field\'s weather history and the ENSO state: do not look those up. At most 900 words.';
     }
 
     private function prompt(array $p, object $calc): string
@@ -501,14 +522,27 @@ class NpkPlusController extends Controller
             . FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $calc->crop ?: null, '')
             . 'Planting date: ' . ($p['plantingDate'] ?: 'not given') . '; how the farmer means to apply it: ' . (self::TIMING[$p['timing']] ?? $p['timing']) . "\n"
             . ($p['variety'] ? 'Variety: ' . $p['variety'] . "\n" : '') . ($p['notes'] ? 'Notes: ' . $p['notes'] . "\n" : '')
-            . 'ENSO: ' . (EnsoOutlook::forPrompt() ?: 'not available') . "\n\n"
-            . "RULES: Weigh the plan against the crop's need and the soil, the water, the weather of that season and ENSO. Say if it is enough, short or too much for each nutrient, which product to cut, add or split, and WHEN each product should go on by growth stage. Name products by their grade or active nutrient, never a brand. Never invent a number that is not in the plan or the research notes; say what you cannot know. Remember: the yield still depends on the weather, the variety and the soil.\n\n"
+            . 'ENSO: ' . (EnsoOutlook::forPrompt() ?: 'not available') . "\n"
+            . self::historyFor($p) . "\n"
+            . "RULES: Weigh the plan against the crop's need and the soil, the water, the weather of that season and ENSO. The need is the calculator's (NPK Plus's need model): judge the plan against it and do not recount it. The field's weather record is measured history kept by the app: use it, with its El Niño and La Niña shares, for what the season does to losses and timing. Say if it is enough, short or too much for each nutrient, which product to cut, add or split, and WHEN each product should go on by growth stage. Name products by their grade or active nutrient, never a brand. Never invent a number that is not in the plan or the research notes; say what you cannot know. Remember: the yield still depends on the weather, the variety and the soil.\n\n"
             . 'Return exactly: {"verdict":"good|close|needs changes|unbalanced","headline":"one line","summary":"3 plain sentences",'
             . '"nutrients":[{"nutrient":"N|P2O5|K2O|S|Zn|...","status":"short|right|over","comment":""}],'
             . '"timing":[{"product":"","when":"growth stage and about which day","how":"","why":""}],'
             . '"changes":[{"change":"","why":""}],"soil":"what this soil does to the plan","weather":"what the season and ENSO mean for losses and timing",'
             . '"biofertilizers":"what the inoculants can and cannot replace (empty if none)","yield":"the yield this plan can realistically support and why, set beside what real farmers and derbies near the field harvested (place, season, yield) when the notes have it",'
             . '"warnings":[""],"confidence":"low|medium|high"}';
+    }
+
+    /** The field's weather record for the months the crop stands in the field (the climate shelf, 2026-10-18). */
+    private static function historyFor(array $p): string
+    {
+        $from = $p['plantingDate'] ? \Illuminate\Support\Carbon::parse($p['plantingDate']) : now('Asia/Manila')->addDays(14);
+        $focus = [];
+        for ($i = 0; $i <= 4; $i++) {
+            $focus[] = (int) $from->copy()->startOfMonth()->addMonths($i)->month;
+        }
+
+        return \App\Support\ClimateStore::wordsFor((string) $p['location'], null, null, $focus, true);
     }
 
     private function parse(string $text): ?array

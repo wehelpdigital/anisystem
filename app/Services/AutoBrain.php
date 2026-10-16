@@ -141,7 +141,8 @@ class AutoBrain
         $f = $this->facts($auto);
         $f['climate'] = null;
         if ($first = collect($f['lots'])->firstWhere('pin')) {
-            $f['climate'] = FieldContext::climate($first['pin'][0], $first['pin'][1]);
+            // Twenty years of the same weeks from the climate shelf, said in a few lines (2026-10-18).
+            $f['climate'] = \App\Support\ClimateStore::sameDaysWords(FieldContext::climate($first['pin'][0], $first['pin'][1]));
         }
         $book = collect($f['lots'])->pluck('cropKey')->filter()->unique()->mapWithKeys(fn ($k) => [CropCatalog::label($k) => AutoBook::forPrompt($k)])->all();
         $json = json_encode($f, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
@@ -149,7 +150,7 @@ class AutoBrain
 
         $research = "You are Anee, a smart farm technician for Filipino farmers, researching before planning a whole season for a farmer. Use the web search tool. Write research NOTES (prose, not JSON) with the pages you read.\n\n"
             . "1. THE VARIETIES FIRST: {$varieties}. For each named variety find: who bred or released it (NSIC, PhilRice, IRRI, a seed company), its maturity in days, yield potential and average yield in t/ha, the season it was bred for, its tolerances and weaknesses (lodging, blast, tungro, BLB, drought, submergence, salinity, heat), and anything a grower is warned about. Where no variety is named, say what the common hybrids and inbreds for that crop in the Philippines are.\n"
-            . "2. THE SEASON: the ENSO outlook for the months the crops will be in the field, and what PAGASA expects for rain and typhoons in those months for the provinces named.\n"
+            . "2. THE SEASON: what PAGASA's seasonal outlook expects for rain and typhoons in the months the crops will be in the field, for the provinces named (the farm's twenty year weather record and the ENSO state are in THE FARM below: do not look those up).\n"
             . "3. THE SOIL: what the farmer's soil signs and the place point to, and how that soil locks up or frees nutrients (for example: sodic and alkaline soils lock phosphorus, zinc and iron; ammonium sulfate and elemental sulfur acidify around the roots and free some; gypsum brings calcium that pushes sodium out).\n"
             . "4. Each crop's critical moments for nutrients and water in Philippine guides (PhilRice PalayCheck, DA production guides).\n\n"
             . "THE FARM:\n" . $json;

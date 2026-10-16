@@ -36,7 +36,8 @@ final class AiUsage
                 'model' => mb_substr((string) $settings->effectiveModel(), 0, 80),
                 'tokensIn' => $in,
                 'tokensOut' => $out,
-                'searched' => (bool) ($result['searched'] ?? false),
+                // A search paid for by this run (a kept brief's notes cost nothing again: ResearchShelf).
+                'searched' => (bool) ($result['paidSearch'] ?? ($result['searched'] ?? false)),
                 'credits' => $credits,
                 'meteredCredits' => $metered,
                 'created_at' => now('Asia/Manila'),
@@ -47,7 +48,7 @@ final class AiUsage
         }
 
         return ' · ' . self::k($in) . ' in / ' . self::k($out) . ' out ≈ ' . number_format($metered) . ' metered'
-            . (! empty($result['searched']) ? ' + web search' : '');
+            . (! empty($result['paidSearch'] ?? $result['searched'] ?? false) ? ' + web search' : (! empty($result['shelf']) ? ' + kept research' : ''));
     }
 
     private static function k(int $n): string

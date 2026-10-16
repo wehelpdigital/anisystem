@@ -102,6 +102,10 @@ return Application::configure(basePath: dirname(__DIR__))
         // ones), so NPK Plus reads the season from its own tables.
         $schedule->command('climate:collect --enso')->dailyAt('08:15')->timezone('Asia/Manila')->withoutOverlapping(30)->runInBackground();
         $schedule->command('climate:collect --limit=6')->hourlyAt(23)->withoutOverlapping(50)->runInBackground();
+        // The nutrient book (2026-10-18): written again only when NPK Plus's
+        // need model changed (a one row check otherwise), and the kept
+        // research past its time removed.
+        $schedule->command('nutrients:build --if-stale')->hourlyAt(41)->withoutOverlapping(30)->runInBackground();
         // NPK Plus's Philippine products (2026-10-12): the FPA's registered
         // fertilizer list once a month, and at first while only the hand
         // checked products are in.

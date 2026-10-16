@@ -299,7 +299,9 @@ class VarietyAnalysisController extends Controller
         };
         try {
             // Ten ranked, each with the derbies' and the farmers' own harvests (2026-10-17, the owner): a longer answer, longer notes.
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 12000, fn (string $t) => $this->parseReport($t), $beat, 4500);
+            // The brief is the case's (crop, place, season, soil, troubles, the varieties named): kept for the next farmer of the same case (2026-10-18).
+            $shelf = ['kind' => 'variety', 'scope' => mb_substr(implode(' · ', array_filter([CropCatalog::label($p['crop']), $p['location'], $p['season'], implode(', ', $p['varieties'])])), 0, 250)];
+            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 12000, fn (string $t) => $this->parseReport($t), $beat, 4500, $shelf);
             $report = $result['data'];
             if ($report === null) {
                 \Illuminate\Support\Facades\Log::warning('variety-analysis: unparsable answer', [
@@ -895,6 +897,17 @@ PROMPT;
             : 'The farmer has not named any. Choose them yourself: about five top-yielding released INBRED / open-pollinated varieties AND about five HYBRID varieties from the top seed companies selling in ' . \App\Support\Region::name($p['country'] ?? null) . ', for these conditions, the newest releases among them — TEN in all, every one with its type filled in.';
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
+        // The field's measured weather for the months the crop will stand (the climate shelf, 2026-10-18).
+        $focus = [];
+        if (! empty($p['month'])) {
+            for ($i = 0; $i < 5; $i++) {
+                $focus[] = ((int) substr($p['month'], 5, 2) - 1 + $i) % 12 + 1;
+            }
+        } else {
+            $focus = ['wet' => [6, 7, 8, 9, 10], 'dry' => [12, 1, 2, 3, 4], 'third' => [3, 4, 5, 6]][$p['season'] ?? ''] ?? [];
+        }
+        // Built while the farmer's request waits: what the shelf keeps, no lookup.
+        $ensoBlock .= \App\Support\ClimateStore::wordsFor((string) $p['location'], null, null, $focus, $focus !== [], false);
         $forecast = $this->forecastLines($p['location']);
         $year = now('Asia/Manila')->year;
         // anee.io's own variety records that best fit this field (2026-10-14).

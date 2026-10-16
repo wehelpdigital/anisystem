@@ -9,6 +9,8 @@ use App\Services\AiCreditService;
 use App\Services\FieldHealth;
 use App\Support\AiPricing;
 use App\Support\AiUsage;
+use App\Support\ClimateRecord;
+use App\Support\ClimateStore;
 use App\Support\CropCatalog;
 use App\Support\EnsoOutlook;
 use App\Support\FieldContext;
@@ -37,7 +39,7 @@ use Illuminate\Support\Facades\Validator;
  *      Sentinel-1 radar pass (VV and VH, which see through typhoon cloud),
  *      with tile URLs for both heatmaps and 90 days of history;
  *   2. gathers the place's context: the last 30 and next 16 days of weather,
- *      the same weeks in the last five years, ENSO, the modelled soil;
+ *      the same weeks in the last twenty years (the climate shelf), ENSO, the modelled soil;
  *   3. has Anee read the web for soil studies and hazards of the area, then
  *      write the analysis: health, stand and spacing, disease risk, threats,
  *      soil, and what to do.
@@ -297,8 +299,24 @@ class SatelliteController extends Controller
             ];
 
             $settings = $settings->forField('PH');
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p, $lat, $lng), $this->prompt($p, $s, $ctx), 9000,
-                fn (string $t) => $this->parse($t), $beat);
+            /* The province's risk years are kept as they arrive and the
+             * document reads the whole kept record; the rest of the notes,
+             * written from the case and not the field, are kept for the next
+             * field of the same case (2026-10-18). */
+            $rk = ClimateRecord::placeKey((string) $p['location'], 'PH');
+            $doc = function (string $notes, array $meta = []) use ($p, $s, $ctx, $rk): string {
+                $rest = $notes;
+                if ($notes !== '') {
+                    $rest = ClimateRecord::harvest($rk['key'], $rk['place'], 'PH', $notes, (bool) ($meta['searched'] ?? false), (array) ($meta['sources'] ?? []))['rest'];
+                }
+                $kept = ClimateRecord::words($rk['key'], $rk['place']);
+
+                return $this->prompt($p, $s, $ctx + ['record' => $kept !== '' ? $kept . "\n" : ''])
+                    . ($rest !== '' ? "\n\nRESEARCH NOTES, found on the web by a search step. Rely on these FIRST, over memory; where they and memory disagree, the notes win:\n" . $rest : '');
+            };
+            $shelf = ['kind' => 'satellite', 'scope' => implode(' · ', array_filter([CropCatalog::label($p['crop']), $p['variety'] ?: null, $p['location']]))];
+            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p, $lat, $lng), $doc, 9000,
+                fn (string $t) => $this->parse($t), $beat, 3000, $shelf);
             $anee = $result['data'];
             if ($anee === null) {
                 Log::warning('satellite: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
@@ -563,17 +581,31 @@ class SatelliteController extends Controller
             . ($p['notes'] ? 'Farmer\'s notes: ' . $p['notes'] . "\n" : '');
     }
 
-    private function researchPrompt(array $p, float $lat, float $lng): string
+    /**
+     * The research brief (2026-10-18): the town, the crop at its age in
+     * weeks, and the province's risk years the app does not keep yet, never
+     * the farmer's own answers, so its notes are kept for the next field of
+     * the same case (App\Support\ResearchShelf), and the province's twenty
+     * years are read once and kept year by year (App\Support\ClimateRecord).
+     */
+    private function researchPrompt(array $p, float $lat = 0, float $lng = 0): string
     {
+        $rk = ClimateRecord::placeKey((string) $p['location'], 'PH');
+        $missing = ClimateRecord::missing($rk['key']);
+        $age = ! empty($p['plantedOn']) ? (int) \Illuminate\Support\Carbon::parse($p['plantedOn'])->startOfDay()->diffInDays(now('Asia/Manila')->startOfDay()) : null;
+        $weeks = $age !== null ? max(0, (int) round($age / 7)) : null;
+        $n = 3;
+
         return "You are researching for a satellite field analysis in the Philippines. Use web search. Write plain research notes (not JSON).\n\n"
-            . $this->facts($p)
-            . 'Field center: ' . round($lat, 4) . ', ' . round($lng, 4) . "\n\n"
+            . 'Crop: ' . CropCatalog::label($p['crop']) . (! empty($p['variety']) ? ' (variety ' . $p['variety'] . ')' : '') . "\n"
+            . 'Place: ' . $p['location'] . ", Philippines\n"
+            . 'Age: ' . ($weeks !== null ? 'about ' . $weeks . ' weeks from planting' : 'not stated') . '; way in: ' . (self::METHODS[$p['method']] ?? $p['method']) . "\n\n"
             . "Find and summarize, citing the sources you read:\n"
             . "1. SOIL OF THIS AREA: any soil survey, BSWM soil series, or published study of the soils in or near this town or province (pH, sodic, alkaline, saline, acid sulfate, texture, drainage, known deficiencies). Name the study and what it found. If none exists for this exact place, say so and give the province's general soil picture.\n"
-            . "2. HAZARDS OF THIS PLACE: the area's record of typhoons (which months, how often), floods, drought and heat in the last 20 years; what PAGASA or the DA say about this season.\n"
-            . "3. THE CROP: for this crop (and variety if named) at about this age, the typical Sentinel-2 NDVI range of a healthy field in the tropics, typical Sentinel-1 VH backscatter behaviour as the canopy grows, and the main pests and diseases that strike at this stage in the Philippines and the weather that favours them.\n"
-            . ($p['crop'] === 'corn' || str_contains(strtolower(CropCatalog::label($p['crop'])), 'corn') ? "4. HIGH DENSITY HYBRID CORN: how 90,000 or more seeds per hectare behaves in NDVI and radar, lodging and nutrient risks at that density, and how sodic or alkaline soil limits it.\n" : '')
-            . "\nBe factual. Keep numbers with their source.";
+            . "2. THE CROP: for this crop (and variety if named) at about this age, the typical Sentinel-2 NDVI range of a healthy field in the tropics, typical Sentinel-1 VH backscatter behaviour as the canopy grows, and the main pests and diseases that strike at this stage in the Philippines and the weather that favours them.\n"
+            . ($p['crop'] === 'corn' || str_contains(strtolower(CropCatalog::label($p['crop'])), 'corn') ? ($n++) . ". HIGH DENSITY HYBRID CORN: how 90,000 or more seeds per hectare behaves in NDVI and radar, lodging and nutrient risks at that density, and how sodic or alkaline soil limits it.\n" : '')
+            . ($missing ? $n . '. HAZARDS OF THIS PLACE in ' . ClimateRecord::yearsWords($missing) . ': the typhoons, floods, drought and heat that hit ' . $rk['place'] . "'s farms.\n" . ClimateRecord::ask($rk['place'], $missing, true) : '')
+            . "\nThe app keeps the field's weather history, its forecast and the ENSO state: do not look those up. Be factual. Keep numbers with their source.";
     }
 
     private function prompt(array $p, array $s, array $ctx): string
@@ -606,7 +638,8 @@ class SatelliteController extends Controller
             . json_encode($sat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n\n"
             . "WEATHER: last 30 days rain " . ($w['past30Rain'] ?? '?') . " mm, evapotranspiration " . ($w['past30Et0'] ?? '?') . " mm. Next 10 days:\n" . $nextDays . "\n"
             . 'Next 16 days rain total ' . ($w['next16Rain'] ?? '?') . " mm.\n\n"
-            . "THE SAME WEEKS IN EARLIER YEARS (this month and next):\n" . json_encode($ctx['climate'] ?? []) . "\n\n"
+            . "THE SAME WEEKS IN EARLIER YEARS (this month and next, the app's stored weather history):\n" . ClimateStore::sameDaysWords((array) ($ctx['climate'] ?? [])) . "\n\n"
+            . ($ctx['record'] ?? '')
             . 'ENSO: ' . ($ctx['enso'] ?: 'not available') . "\n\n"
             . "MODELLED SOIL AT THE SPOT (ISRIC SoilGrids 250 m, top 30 cm; a map estimate, not a test of this field):\n" . json_encode($ctx['soil'] ?? []) . "\n\n"
             . "HOW TO READ IT\n"

@@ -627,7 +627,10 @@ class CropProtocolController extends Controller
             ]);
         };
         try {
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 10000, fn (string $t) => $this->parseReport($t), $beat);
+            // The brief is the case's, not the field's: its notes are kept for the next protocol of the same case (2026-10-18).
+            $shelf = ['kind' => 'protocol', 'scope' => implode(' · ', array_filter([CropCatalog::label($p['crop']), $p['variety'] ?: null, $p['method'],
+                \App\Support\ClimateRecord::placeKey((string) $p['location'])['place'], $p['month']]))];
+            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 10000, fn (string $t) => $this->parseReport($t), $beat, 3000, $shelf);
             $report = $result['data'];
             if ($report === null) {
                 \Illuminate\Support\Facades\Log::warning('crop-protocol: unparsable answer', [
@@ -1406,36 +1409,54 @@ class CropProtocolController extends Controller
      * The research brief: what to look up, with the web open, before the
      * protocol is written. Prose, not JSON -- asked for JSON the model
      * does not search (see AiClient::researchThenJson).
+     *
+     * Since 2026-10-18 it is written from what is not the farmer's own (the
+     * crop, the variety, the way in, the province, the month), so the notes
+     * are kept (App\Support\ResearchShelf, 30 days) and the next protocol with
+     * the same case reads them instead of searching again; the field's soil,
+     * water, troubles and aim are the document's. It no longer asks for
+     * what the app already holds: the kilograms per hectare (NPK Plus's need
+     * model counts them), a variety on record (its facts are given), the
+     * place's weather history and the ENSO state (the climate shelf).
      */
     private function researchPrompt(array $p): string
     {
         $f = $this->facts($p);
-        $year = now('Asia/Manila')->year;
-
         $rCountry = \App\Support\Region::name();
         $rNutrient = \App\Support\Region::agency('nutrient');
         $rMet = \App\Support\Region::agency('met');
         $rSources = \App\Support\Region::agency('sources');
         $rRegion = \App\Support\Region::promptBlock();
+        $province = \App\Support\ClimateRecord::placeKey((string) $p['location'])['place'];
+        $known = ! empty($p['npkNeed']['known']);
+        try {
+            $rec = ($p['variety'] ?? '') !== '' ? \App\Support\VarietyBook::match($p['crop'], $p['variety']) : null;
+        } catch (\Throwable) {
+            $rec = null;
+        }
+        $variety = $rec
+            ? '1. THE VARIETY IS ON RECORD: ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') . ' Take these as known and do not search for them again. Search only for what adds to them: regional trial results near the farmer, its known weaknesses in the field, and any warning about it.'
+            : '1. THE VARIETY FIRST: its published specifications — days to maturity, yield potential and typical farm yields, plant height and lodging, the season and method it is bred for, resistance and tolerance ratings (pests, diseases, drought, flooding, salinity, heat), known weaknesses, who released it and when. Prefer the registry, the breeder\'s or seed company\'s own page, and extension notes. If the variety cannot be found, say so plainly and describe the widely grown variety you would assume instead.';
+        $nutrients = $known
+            ? "2. The official guide in {$rCountry} for this crop's fertilizer by growth stage in this region and season ({$rNutrient}): the SPLIT TIMING (which stage gets which share) and the inorganic products sold there (urea 46-0-0, 14-14-14, 16-20-0, 0-0-60, ammonium sulfate and the like). The kilograms of N, P2O5 and K2O per hectare are already counted by the app from the official guide: do not look them up."
+            : "2. The official recommendations in {$rCountry} for this crop's nutrient management by growth stage in this region and season ({$rNutrient}): kg N-P-K per hectare, split timing by stage, and the common inorganic products (urea 46-0-0, 14-14-14, 16-20-0, 0-0-60, muriate of potash).";
 
         return <<<PROMPT
 You are a research assistant for agronomy in {$rCountry} with web search. {$rRegion} SEARCH THE WEB NOW and write research notes for a season protocol. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
 
 THE CASE
 - Crop: {$f['cropLabel']}; variety: {$f['variety']}
-- Planting: {$f['when']}, {$f['method']}, at {$p['location']}
-- Field: {$f['area']} ha; soil {$f['soil']}; water: {$f['water']}; troubles: {$f['problems']}
-- The farmer's aim: {$f['priority']}; target yield: {$f['target']}
+- Planting: {$f['when']}, {$f['method']}, in the province of {$province}
 
 FIND, IN THIS ORDER
-1. THE VARIETY FIRST: its published specifications — days to maturity, yield potential and typical farm yields, plant height and lodging, the season and method it is bred for, its fertilizer response and any published fertilizer recommendation for it, resistance and tolerance ratings (pests, diseases, drought, flooding, salinity, heat), known weaknesses, who released it and when. Prefer the registry, the breeder's or seed company's own page, and extension notes. If the variety cannot be found, say so plainly and describe the widely grown variety you would assume instead.
-2. The official recommendations in {$rCountry} for this crop's nutrient management by growth stage in this region and season ({$rNutrient}): kg N-P-K per hectare, split timing by stage, common inorganic products (urea 46-0-0, 14-14-14, 16-20-0, 0-0-60, muriate of potash), and the soil-specific adjustments for {$f['soil']} and for these troubles.
+{$variety}
+{$nutrients}
 3. Integrated pest management for this crop in the region: the insects, diseases and weeds that matter by growth stage, their economic thresholds, the recommended controls (cultural, biological, chemical with active ingredients), and any current outbreak advisories.
 4. Irrigation and water management by growth stage for this crop and method (e.g. alternate wetting and drying for rice), and what to change under drought or flooding.
-5. The seasonal climate outlook from {$rMet} for the region for the months from planting to harvest (rainfall, temperature, severe-weather expectations) and the current ENSO advisory.
-6. REAL HARVESTS (2026-10-17, the owner: "we need real people data"): the most recent derbies, techno demo farms and yield contests with this variety, or this crop when the variety has none, in or near the farmer's province first, then anywhere in {$rCountry}: the event, the place, the season and year, the yield harvested (t/ha, or cavans per hectare with the kilos per cavan) and the fertilizer program used where reported. Then real farmers' own reported harvests with it in the last two seasons (news, agriculture office and cooperative reports, farmer field schools), each with the yield, the place, the season and the source.
+5. The seasonal climate OUTLOOK from {$rMet} for the region for the months from planting to harvest (rainfall, temperature, severe weather expected). Only the outlook: the app keeps the field's twenty year weather record and reads the ENSO state itself.
+6. REAL HARVESTS (2026-10-17, the owner: "we need real people data"): the most recent derbies, techno demo farms and yield contests with this variety, or this crop when the variety has none, in or near this province first, then anywhere in {$rCountry}: the event, the place, the season and year, the yield harvested (t/ha, or cavans per hectare with the kilos per cavan) and the fertilizer program used where reported. Then real farmers' own reported harvests with it in the last two seasons (news, agriculture office and cooperative reports, farmer field schools), each with the yield, the place, the season and the source.
 
-Prefer {$rSources}. Note the year of each finding. Where something cannot be found online, say so plainly. Write plain prose notes under the six headings, at most 1,300 words, no JSON, no markdown tables.
+Prefer {$rSources}. Note the year of each finding. Where something cannot be found online, say so plainly. Write plain prose notes under the six headings, at most 1,100 words, no JSON, no markdown tables.
 PROMPT;
     }
 
@@ -1446,6 +1467,14 @@ PROMPT;
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ENSO: ' . $enso . "\n" : '';
         $forecast = $this->forecastLines($p['location']);
+        // The field's measured weather history for the months the crop stands in the field (the climate shelf, 2026-10-18).
+        $start = (int) substr((string) $p['month'], 5, 2);
+        $focus = [];
+        for ($i = 0; $start > 0 && $i <= min(11, (int) ceil(((int) CropCatalog::maturity($p['crop'])) / 30)); $i++) {
+            $focus[] = ($start - 1 + $i) % 12 + 1;
+        }
+        // Built while the farmer's request waits: what the shelf keeps, no lookup.
+        $history = \App\Support\ClimateStore::wordsFor((string) $p['location'], null, null, $focus, true, false);
         $unitWord = self::yieldUnits()[$p['yieldUnit']] ?? array_values(self::yieldUnits())[0];
         $countryName = \App\Support\Region::name();
         $regionBlock = \App\Support\Region::promptBlock();
@@ -1484,9 +1513,9 @@ FACTS GIVEN
 - Target yield: {$f['target']}
 {$f['seed']}{$f['goal']}{$f['need']}- The farmer's own notes: {$f['notes']}
 - Weather now: {$forecast}
-{$ensoBlock}
+{$ensoBlock}{$history}
 WHAT TO READ FROM
-Research notes gathered from the web just now follow at the end of this brief (the variety's published specifications first, then the official nutrient and pest recommendations for this crop and region, water management, the seasonal outlook). Rely on them first, over memory; where they and memory disagree, the notes win; where a thing is neither in the notes nor established agronomy, say so in dataGaps rather than inventing it.
+Research notes gathered from the web follow at the end of this brief (the variety, the official guide's split timing and products, the pest recommendations for this crop and region, water management, the seasonal outlook, real harvests). Rely on them first, over memory; where they and memory disagree, the notes win; where a thing is neither in the notes nor established agronomy, say so in dataGaps rather than inventing it. The field's weather record above is measured history kept by the app: weigh it for weather.risks and the water plan, and its El Niño and La Niña shares against the ENSO state.
 
 GROUND RULES
 - EASY TO READ. Short plain sentences a farmer reads easily; no jargon without a plain word beside it; nothing repeated between the two parts. Every word limit below is a ceiling, not a target.

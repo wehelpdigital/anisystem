@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Support\AiPrices;
 use App\Support\AiPricing;
 use App\Support\AiUsage;
+use App\Support\ClimateRecord;
+use App\Support\ClimateStore;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Support\CropCatalog;
@@ -303,8 +305,16 @@ class WhenToPlantController extends Controller
              * the document is written with those notes appended. A
              * document-sized answer lane: the chat cap (1200) cut the JSON
              * mid-object on longer runs, which read as "unreadable". */
+            /* Since 2026-10-18 the place's record is kept year by year
+             * (App\Support\ClimateRecord): the research reads only the years
+             * it lacks, its year lines are kept the moment they arrive, and
+             * the document reads the whole kept record with the field's
+             * measured weather record beside it. A place whose twenty years
+             * are kept, with a variety on record or none, is not searched. */
+            $rk = ClimateRecord::placeKey((string) $p['location'], $p['country'] ?? null);
+            $keptYears = [];
             // Room for the week-by-week ranking as well as the rest.
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 6500, fn (string $t) => $this->parseReport($t), $beat);
+            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $this->docFor($prompt, $p, $keptYears), 6500, fn (string $t) => $this->parseReport($t), $beat);
             $report = $result['data'];
             if ($report === null) {
                 // The head of what came back, kept where a debugger can read
@@ -318,6 +328,8 @@ class WhenToPlantController extends Controller
             $report['webSources'] = (array) ($result['sources'] ?? []);
             $report['searched'] = (bool) ($result['searched'] ?? false);
             $report['researchNotes'] = mb_substr((string) ($result['researchText'] ?? ''), 0, 6000);
+            // What the record held and what this run added to it.
+            $report['recordKept'] = ['place' => $rk['place'], 'years' => count(ClimateRecord::stored($rk['key'])), 'added' => $keptYears];
 
             // The charge lands through the same ledger every question uses,
             // so the subscription page's credit log shows it.
@@ -643,67 +655,111 @@ class WhenToPlantController extends Controller
     }
 
     /**
-     * The research brief: the region's twenty-year record of the things
-     * that ruin a planting, read from the web before the document is
-     * written. Prose, not JSON -- asked for JSON the model does not search.
+     * The research brief: only what the app does not keep (2026-10-18, the
+     * owner: history "does not really change at all", so it is read once).
+     * A province's twenty years are kept year by year (App\Support\
+     * ClimateRecord) and its weather numbers on the climate shelf (App\
+     * Support\ClimateStore), so the web is read for the years the record
+     * still lacks (all of them the first time a province is asked about,
+     * then only the year still running, every forty five days) and for a
+     * named variety that is not on record. With nothing left to read the
+     * brief is empty and the document is written without a search.
+     * Prose, not JSON -- asked for JSON the model does not search.
      */
     private function researchPrompt(array $p): string
     {
         $fc = $p['country'] ?? \App\Support\Region::code();
         $fieldPH = $fc === \App\Support\Region::HOME;
         $country = \App\Support\Region::name($fc);
-        $met = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('met'));
         $sources = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('sources'));
         $storms = $fieldPH
             ? 'tropical cyclones (typhoons and tropical storms) that made landfall in or passed close enough to damage crops in the province or region'
             : 'severe storms that damaged crops in the region (hurricanes or tropical storms where they occur, plus severe thunderstorms, hail, tornadoes and damaging wind events)';
-        $frost = $fieldPH ? '' : "\n6. Frost: the average first and last frost dates for the area and the years a late spring or early autumn frost damaged crops.";
-        $to = (int) now('Asia/Manila')->year;
-        $from = $to - 20;
+        $frost = $fieldPH ? '' : "\n5. Frost: the years a late spring or early autumn frost damaged crops, with the months.";
         $cropLabel = CropCatalog::label($p['crop']);
-        // The variety, when the farmer named one: its published traits are
-        // looked up in the same search pass, so the document can time the
-        // crop by what this variety actually does rather than the crop's
-        // typical figures.
         $variety = trim((string) ($p['variety'] ?? ''));
         $registry = $fieldPH
             ? 'the NSIC / PhilRice / IRRI registration and seed catalogues, the seed company\'s own page, DA and university extension notes'
             : 'the breeder\'s or seed company\'s own page, the national variety registry, university extension notes';
         $rec = (array) ($p['varietyRecord'] ?? []);
-        // A variety picked from the records: its facts are given, only what adds to them is searched (2026-10-15).
-        $varietyAsk = $rec ? "\n0. THE VARIETY IS ON RECORD: " . self::recordWords($rec) . ". Take these as known facts and do not search for them again. Search only for what adds to them for this place: regional trial results near the farmer, how it did in recent seasons (the most recent derbies and real farmers' harvests with it near the farmer, with the season, the yield and the source), any warning about it.\n"
-            : ($variety !== '' ? "\n0. THE VARIETY FIRST: \"{$variety}\" of {$cropLabel}. Search for its published characteristics: days to maturity (or harvest), yield potential, plant height and lodging, the season it is bred for (wet / dry, early / late), its tolerance to drought, flooding or submergence, heat, salinity and cold where they apply, its pest and disease resistance (for rice: blast, bacterial leaf blight, tungro, brown planthopper, stem borer; for other crops the ones that matter), and who released it and when, and its REAL HARVESTS: the most recent derbies, techno demos and farmers' reported harvests with it near the farmer, by season (wet or dry, the month it was planted), with the yield and the source. Prefer {$registry}. Give the figures with their source. If nothing reliable turns up, say plainly that the variety could not be found — never guess its traits.\n" : '');
-        $varietyHead = $variety !== '' ? ' and on the variety the farmer named' : '';
-        // The typhoon chance chart is counted from this tally, not guessed.
+        $rk = ClimateRecord::placeKey((string) $p['location'], $fc);
+        $missing = ClimateRecord::missing($rk['key']);
+        // A variety on record is known (its facts reach the document); one named and not on record is looked up.
+        $varietyAsk = ! $rec && $variety !== ''
+            ? "0. THE VARIETY FIRST: \"{$variety}\" of {$cropLabel}. Search for its published characteristics: days to maturity (or harvest), yield potential, plant height and lodging, the season it is bred for (wet / dry, early / late), its tolerance to drought, flooding or submergence, heat, salinity and cold where they apply, its pest and disease resistance (for rice: blast, bacterial leaf blight, tungro, brown planthopper, stem borer; for other crops the ones that matter), and who released it and when. Prefer {$registry}. Give the figures with their source. If nothing reliable turns up, say plainly that the variety could not be found; never guess its traits.\n"
+            : '';
+        if (! $missing && $varietyAsk === '') {
+            return '';
+        }
+        $years = ClimateRecord::yearsWords($missing);
         $cycloneAsk = $fieldPH
-            ? 'count every typhoon and tropical storm that affected the province — a landfall, a close pass, or a PAGASA Tropical Cyclone Wind Signal raised over it — from PAGASA\'s tropical cyclone archive, NDRRMC reports and news archives.'
-            : 'count every hurricane, typhoon or tropical storm that affected the region — a landfall, a close pass, or an official warning over it — from the national weather service\'s storm archive; where the region lies outside the tropical cyclone belt, say so plainly.';
-        // The calendar has moved: the farmer picked months, not a season,
-        // because the rains no longer keep the textbook dates.
-        $shiftAsk = $fieldPH
-            ? '6. How the rainy season has actually behaved there in recent years: the dates PAGASA declared its onset and its end each year, the years it came early or late, and any break or "monsoon break" that hurt crops. The farmer is weighing ' . self::whenWords($p) . '; note what the record says about those months in particular.'
-            : '7. How the growing season has actually behaved there in recent years (early or late onset of the rains or of spring, shifted frost dates, unusual heat), especially in ' . self::whenWords($p) . ', the months the farmer is weighing.';
+            ? 'every typhoon and tropical storm that affected the province (a landfall, a close pass, or a PAGASA Tropical Cyclone Wind Signal raised over it), from PAGASA\'s tropical cyclone archive, NDRRMC reports and news archives'
+            : 'every hurricane, typhoon or tropical storm that affected the region (a landfall, a close pass, or an official warning over it), from the national weather service\'s storm archive; where the region lies outside the tropical cyclone belt, say so plainly';
+        $record = $missing ? <<<ASK
+1. Storms: the {$storms}: {$cycloneAsk}, with the damage to agriculture where reported.
+2. Drought and dry spells that hurt crops there (El Niño years and others), with the months.
+3. Floods that damaged crops there (from storms, monsoon rains or rivers), with the months.
+4. Heat waves or hot dry spells that damaged crops or stressed them at flowering, with the months.{$frost}
+
+ASK . ClimateRecord::ask($rk['place'], $missing, $fieldPH) : '';
+        $about = trim(($varietyAsk !== '' ? 'the variety the farmer named' : '') . ($varietyAsk !== '' && $missing ? ' and ' : '') . ($missing ? 'the climate RISK RECORD of one province in ' . $years : ''));
 
         return <<<PROMPT
-You are a research assistant for agronomy in {$country} with web search. SEARCH THE WEB NOW and write research notes on the climate RISK RECORD of one place over the past twenty years ({$from}–{$to}){$varietyHead}. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
+You are a research assistant for agronomy in {$country} with web search. SEARCH THE WEB NOW and write research notes on {$about}. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it. The app already keeps this place's weather numbers (rain, heat, gusts) and the years of its record not listed here: do not look those up.
 
 THE PLACE
-- {$p['location']}, {$country}. The farmer will plant {$cropLabel} there and needs to know, month by month, what has historically gone wrong.
+- {$p['location']}, {$country} (province: {$rk['place']}). The farmer will plant {$cropLabel} there.
 
-FIND, IN THIS ORDER{$varietyAsk}
-1. Storms: the {$storms}, {$from}–{$to}: for each, the year, the month, the name where it has one, and the damage to agriculture where reported (hectares, pesos or dollars, or a plain word like severe / moderate).
-2. Drought and dry spells: the El Niño years and other drought years that hurt crops in this region in the same span, with the months affected and the damage reported.
-3. Floods: flooding events (from storms, monsoon rains or river overflow) that damaged crops there, with year, month and damage.
-4. Heat: heat waves or hot dry spells that damaged crops or stressed them at flowering, with year and months.
-5. The region's monthly rainfall and temperature normals, and its usual wet and dry (or growing and dormant) months, from {$met}.{$frost}
-{$shiftAsk}
-
-THEN TALLY: for each of the twelve months, how many of the twenty years had a damaging event of each kind in that month, and how bad they tended to be. List the five worst years for this place and what happened. Where the record is thin or you could not find it, say so plainly.
-
-TROPICAL CYCLONES, MONTH BY MONTH ({$from}–{$to}): {$cycloneAsk} For each calendar month give (a) how many of those years had at least one cyclone affect the place in that month and (b) how many cyclones in all, and name the strongest of them with its year.
-
-Prefer {$sources}, disaster databases (EM-DAT, ReliefWeb, NDRRMC / national disaster agencies), the national statistics office's crop-damage reports, and reputable news archives. Write plain prose notes under the headings, at most 1100 words, no JSON, no markdown tables.
+FIND
+{$varietyAsk}{$record}
+Prefer {$sources}, disaster databases (EM-DAT, ReliefWeb, NDRRMC / national disaster agencies), the national statistics office's crop damage reports, and reputable news archives. Keep any prose short (at most 400 words); the year lines carry the record. No JSON, no markdown tables.
 PROMPT;
+    }
+
+    /**
+     * The document's brief, written once the research is in: the year lines
+     * of the notes are kept for the province first (searched notes only),
+     * then the whole kept record and the field's weather record go in, and
+     * the rest of the notes after them. $kept gets the years this run added.
+     */
+    private function docFor(string $prompt, array $p, array &$kept): \Closure
+    {
+        $rk = ClimateRecord::placeKey((string) $p['location'], $p['country'] ?? null);
+
+        return function (string $notes, array $meta = []) use ($prompt, $p, $rk, &$kept): string {
+            $rest = $notes;
+            if ($notes !== '') {
+                $h = ClimateRecord::harvest($rk['key'], $rk['place'], (string) ($p['country'] ?? 'PH'), $notes, (bool) ($meta['searched'] ?? false), (array) ($meta['sources'] ?? []));
+                $rest = $h['rest'];
+                $kept = $h['years'];
+            }
+
+            return $prompt . "\n\n" . $this->recordBlock($p)
+                . ($rest !== '' ? "\nRESEARCH NOTES, found on the web just now by a search step. Rely on these FIRST, over memory; where they and memory disagree, the notes win; where the notes are silent, say so in dataGaps:\n" . $rest : '');
+        };
+    }
+
+    /**
+     * What the app keeps about the place, for the document: the province's
+     * risk record year by year with its month tally, and the field's own
+     * weather record (twenty years, measured), the farmer's months marked.
+     */
+    private function recordBlock(array $p): string
+    {
+        $fc = $p['country'] ?? \App\Support\Region::code();
+        $rk = ClimateRecord::placeKey((string) $p['location'], $fc);
+        $kept = ClimateRecord::words($rk['key'], $rk['place']);
+        $focus = [];
+        $m = (int) ($p['fromMonth'] ?? 0);
+        $span = (((int) ($p['toYear'] ?? 0) - (int) ($p['fromYear'] ?? 0)) * 12 + (int) ($p['toMonth'] ?? 0) - $m)
+            + (int) ceil(((int) CropCatalog::maturity($p['crop'])) / 30);
+        for ($i = 0; $m > 0 && $i <= min(11, max(0, $span)); $i++) {
+            $focus[] = ($m - 1 + $i) % 12 + 1;
+        }
+        $weather = ClimateStore::wordsFor((string) $p['location'], null, null, $focus);
+
+        return ($kept !== '' ? $kept : "THE PLACE'S RISK RECORD: none kept for " . $rk['place'] . " yet; rely on the research notes below, and say so in dataGaps where they are thin.\n")
+            . ($weather !== '' ? "\n" . $weather : '');
     }
 
     /**
@@ -775,7 +831,7 @@ FACTS GIVEN
 - Soil condition as the farmer knows it: {$soil}
 {$soilBlock}{$ensoBlock}
 GROUND RULES
-- Research notes gathered from the web just now follow at the end of this brief: the place's twenty-year record of storms, droughts, floods and heat, month by month, with its worst years. Rely on them first for riskHistory and for the avoid windows; where they and memory disagree, the notes win; where they are silent, say so in dataGaps.
+- At the end of this brief: THE PLACE'S RISK RECORD (its storms, floods, droughts and heat year by year over the last twenty years, kept by the app from earlier web research, with a month tally counted from it), THE FIELD'S WEATHER RECORD (twenty years of measured rain, heavy rain days, storm gust years and heat, month by month, with what El Niño and La Niña months did there), and any research notes gathered just now (the variety, the newest year). Rely on them first for riskHistory, typhoonOdds and the avoid windows; where they and memory disagree, they win; where they are silent, say so in dataGaps. Weigh the ENSO rows of the weather record against the ENSO outlook above: they say what this phase has done to THIS field's rain before.
 - Reason only from established knowledge: {$climateRule}, {$ensoRule}, soil-water behaviour implied by the reported problems, the soil condition given, and the crop calendar arithmetic above.
 - The soil condition moves the window too: a correction that must go on before planting (lime for acidic soil, gypsum and leaching for sodic, a salt flush for saline) pushes the earliest good week back by its lead time, and weather that worsens the condition at emergence (salts peaking in the driest weeks, a sodic soil crusting under heavy rain, an acid sulfate soil flushing acid with the first rains after a dry spell) lowers those weeks' scores. Say this in the week reasons and the threats where it applies. If the soil condition is not known, add a soil test to dataGaps.
 - Weigh the WHOLE crop cycle, not just the planting day: a planting month is only as good as the weather the crop meets at its sensitive stages (flowering, grain fill, harvest) in the months after it.
@@ -791,8 +847,8 @@ Rules for the shape:
 - bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates INSIDE the farmer's months ({$whenShort}), and its label must spell the dates out WITH THE YEAR (e.g. "Dec 10, 2026 – Jan 5, 2027") — NEVER a season name or a whole month range. fromYear/toYear carry the calendar year of each end. If none of the farmer's months is sound, still give the least risky weeks inside them, lower the confidence, and say plainly in the why, the threats and the summary which nearby months would be safer.
 - avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week and year (e.g. "Late July – mid October 2026") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
 - monthScores carries TWELVE consecutive months, each with its year, starting with {$firstMonth} (the first of the farmer's months): the farmer's own months first, the rest for comparison, so a better month just outside their range shows; score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words. Differentiate months even inside the farmer's range — a flat run of equal scores is an unfinished answer.
-- typhoonOdds: the place's TROPICAL CYCLONE record, counted from the research notes' month-by-month cyclone tally — never guessed. years = the span read. months = ALL twelve calendar months (1–12, calendar order); chance = the percentage (0–100, whole number) of the years read in which at least one typhoon or tropical storm (a hurricane where that is the local word) affected the place in that month — e.g. 7 of 20 years = 35; storms = how many cyclones in all struck that month over the record; note ≤ 12 words (the strongest one, with its year, where there was one). peak ≤ 20 words naming the riskiest stretch. note ≤ 40 words on how it was counted and how thin the record is. Where the place lies outside the cyclone belt, every chance is 0 and the note says so. Use these odds when you rank the weeks: a crop that flowers or is harvested in a high-chance month carries that risk.
-- riskHistory: the place's twenty-year record from the research notes. years = the span read (e.g. "2006–2025"). months = ALL twelve calendar months (month 1–12, calendar order); for each kind — storm (typhoons/hurricanes/severe storms), flood, drought, heat, frost — a 0–100 DAMAGE INDEX for that month: how often a damaging event of that kind struck in that month over the twenty years, weighted by how bad it was (0 = never, 100 = most years and severe); frost is 0 where it does not occur; note ≤ 12 words on the month. events = the four to eight worst events found, each with year, month, kind, what (≤ 14 words, name the storm where it has one) and impact "high"/"moderate". note ≤ 40 words on how the record was read and how thin it is. Never invent an event; a month with no record scores 0 and says so.
+- typhoonOdds: the place's TROPICAL CYCLONE record, counted from the risk record's month tally ("Tropical cyclones" row: the years with at least one, and in brackets how many in all), with the year lines of any new research added to it — never guessed. years = the span read. months = ALL twelve calendar months (1–12, calendar order); chance = the percentage (0–100, whole number) of the years read in which at least one typhoon or tropical storm (a hurricane where that is the local word) affected the place in that month — e.g. 7 of 20 years = 35; storms = how many cyclones in all struck that month over the record; note ≤ 12 words (the strongest one, with its year, where there was one). peak ≤ 20 words naming the riskiest stretch. note ≤ 40 words on how it was counted and how thin the record is. Where the place lies outside the cyclone belt, every chance is 0 and the note says so. Use these odds when you rank the weeks: a crop that flowers or is harvested in a high-chance month carries that risk.
+- riskHistory: the place's twenty-year record from the risk record and the weather record (the measured heavy rain and gust years back the flood and storm scores; the dry months and the El Niño shares back the drought scores). years = the span read (e.g. "2006–2025"). months = ALL twelve calendar months (month 1–12, calendar order); for each kind — storm (typhoons/hurricanes/severe storms), flood, drought, heat, frost — a 0–100 DAMAGE INDEX for that month: how often a damaging event of that kind struck in that month over the twenty years, weighted by how bad it was (0 = never, 100 = most years and severe); frost is 0 where it does not occur; note ≤ 12 words on the month. events = the four to eight worst events found, each with year, month, kind, what (≤ 14 words, name the storm where it has one) and impact "high"/"moderate". note ≤ 40 words on how the record was read and how thin it is. Never invent an event; a month with no record scores 0 and says so.
 - threats: at most three, what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity "low"/"moderate"/"high"; confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words. Keep the whole answer tight.
 PROMPT;
     }

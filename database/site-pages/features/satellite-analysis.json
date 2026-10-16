@@ -75,7 +75,7 @@
     },
     {
       "type": "text",
-      "text": "A satellite number alone does not tell you what to do. So before Anee writes, the app gathers the rain of the last 30 days and the forecast for the next 16. It adds the same weeks of the last five years and the El Niño or La Niña outlook. Then comes the modelled soil at the spot from ISRIC SoilGrids. Finally, Anee searches the web for soil studies of your area and its record of typhoons, floods and drought.\n\nThe report opens in tabs:"
+      "text": "A satellite number alone does not tell you what to do. So before Anee writes, the app gathers the rain of the last 30 days and the forecast for the next 16. It adds the same weeks of each of the last twenty years and the El Niño or La Niña outlook. Then comes the modelled soil at the spot from ISRIC SoilGrids. Finally, Anee searches the web for soil studies of your area and its record of typhoons, floods and drought.\n\nThe report opens in tabs:"
     },
     {
       "type": "list",

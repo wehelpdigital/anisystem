@@ -532,7 +532,7 @@ final class AiPricing
         $s = self::settings();
         [$pin, $pout, $fee] = self::modelRates($settings);
         $usd = ((int) ($usage['tokensIn'] ?? 0) * $pin + (int) ($usage['tokensOut'] ?? 0) * $pout) / 1e6
-            + (! empty($usage['searched']) ? (float) ($usage['searchCalls'] ?? 1) * (float) $s['prices']['queriesPerSearch'] * $fee : 0.0);
+            + (! empty($usage['paidSearch'] ?? $usage['searched'] ?? false) ? (float) ($usage['searchCalls'] ?? 1) * (float) $s['prices']['queriesPerSearch'] * $fee : 0.0);
 
         return round($usd * (float) $s['usdRate'] + $thirdPhp, 2);
     }

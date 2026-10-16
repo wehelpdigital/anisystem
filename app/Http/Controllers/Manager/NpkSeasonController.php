@@ -96,6 +96,7 @@ class NpkSeasonController extends BaseScheduleController
                 'place' => trim(implode(', ', array_filter([$l->locBarangay, $l->locTown, $l->locProvince]))),
                 'lat' => $l->pinLat ? (float) $l->pinLat : null, 'lng' => $l->pinLng ? (float) $l->pinLng : null,
                 'usual' => $cropRow['recommendedPerHa'] ?? null, 'trees' => $cropRow['treesPerHa'] ?? null,
+                'cropKey' => (string) ($l->crop ?: $schedule->cropType), 'counter' => $age['counter'] ?? null,
                 'applied' => [], 'planned' => [], 'lines' => [], 'unread' => [],
             ];
         }
@@ -241,6 +242,8 @@ class NpkSeasonController extends BaseScheduleController
         };
         try {
             $beat('weather');
+            // NPK Plus's need for every lot (2026-10-18): the reading explains it, the app's verdicts stand.
+            $lots = self::withNeeds($schedule, $lots);
             $prompt = $this->prompt($schedule, $lots, $notes);
             $beat('thinking');
             $result = app(AiClient::class)->askForJson($settings->forField('PH'), $prompt, 7000, fn (string $t) => $this->parse($t));
@@ -248,6 +251,20 @@ class NpkSeasonController extends BaseScheduleController
                 Log::warning('npkplan: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
                 throw new \RuntimeException($result['error'] ?? 'The reading could not be read. Nothing was charged. Please try again.');
             }
+            $byName = collect($lots)->keyBy('name');
+            foreach ($result['data']['lots'] as &$al) {
+                $l = is_array($al) ? $byName->get((string) ($al['lot'] ?? '')) : null;
+                if ($l && ! empty($l['needRun'])) {
+                    $al['nutrients'] = \App\Support\NutrientBook::overlay((array) ($al['nutrients'] ?? []), $l['needRun'], (array) $l['total']);
+                }
+            }
+            unset($al);
+            $lots = array_map(function ($l) {
+                $r = $l['needRun'] ?? null;
+                unset($l['needRun']);
+
+                return $l + ['need' => $r ? ['need' => $r['need'], 'goal' => $r['goal']['Y'] ?? null, 'version' => $r['version'] ?? null] : null];
+            }, $lots);
             // The price agreed when the run began.
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
@@ -273,7 +290,9 @@ class NpkSeasonController extends BaseScheduleController
                 . '; size ' . ($l['size'] ?: 'not set') . ($l['areaHa'] ? ' (' . round($l['areaHa'], 4) . ' ha)' : '')
                 . '; ' . ($l['age'] ?: 'no day zero yet') . ($l['stage'] ? ', stage ' . $l['stage'] : '') . ($l['dayZero'] ? '; day zero ' . $l['dayZero'] : '')
                 . '; place: ' . ($l['place'] ?: 'not set') . ".\n";
-            $b .= 'Usual recommended rate for this crop, kg per ha: ' . ($l['usual'] ? json_encode($l['usual']) : 'not in our table') . ($l['trees'] ? ' (counted at ' . $l['trees'] . ' trees per ha)' : '') . "\n";
+            $b .= ! empty($l['needRun']) ? \App\Support\NutrientBook::promptLines($l['needRun'], (array) $l['total'])
+                : 'Usual recommended rate for this crop, kg per ha: ' . ($l['usual'] ? json_encode($l['usual']) : 'not in our table') . "\n";
+            $b .= $l['trees'] ? 'Counted at ' . $l['trees'] . " trees per ha.\n" : '';
             $b .= 'Already applied (ticked done), per ha: ' . NpkPlan::words($l['applied']) . "\n";
             $b .= 'Still planned (not done yet), per ha: ' . NpkPlan::words($l['planned']) . "\n";
             $b .= 'Season total if all is applied, per ha: ' . NpkPlan::words($l['total']) . "\n";
@@ -297,7 +316,7 @@ class NpkSeasonController extends BaseScheduleController
             . $today->format('M j, Y') . ".\n\n" . implode("\n", $blocks)
             . 'ENSO: ' . (EnsoOutlook::forPrompt() ?: 'not available') . "\n"
             . ($notes !== '' ? 'The farmer adds: ' . $notes . "\n" : '')
-            . "\nRULES: Judge each lot on its own. Compare applied plus planned against the usual rate and the stage: a lot early in the season should not have had everything yet. Say what is short, right or too much for N, P2O5, K2O and any secondary or micronutrient that matters for this crop (zinc for rice, boron for vegetables and so on). Say what to apply NEXT and WHEN, by date or by the lot's day count, and what to change in the planned tasks (cut, add, move, split). Use the weather: heavy rain ahead means split or delay urea; dry spells mean water first. Name products by grade or nutrient, never a brand. Never invent numbers that are not given; say what you cannot know (no soil test, unread products). Remember the yield still depends on the weather, the variety and the soil. "
+            . "\nRULES: Judge each lot on its own. THE NEED and THE APP'S VERDICT of each lot are the app's own count (the same NPK Plus and the Crop Protocol use, on the season total if all is applied): do not recount them, give each nutrient the status the verdict gives it, and explain it. Then weigh what is applied and planned against the stage: a lot early in the season should not have had everything yet. Say what is short, right or too much for N, P2O5, K2O and any secondary or micronutrient that matters for this crop (zinc for rice, boron for vegetables and so on). Say what to apply NEXT and WHEN, by date or by the lot's day count, and what to change in the planned tasks (cut, add, move, split). Use the weather: heavy rain ahead means split or delay urea; dry spells mean water first. Name products by grade or nutrient, never a brand. Never invent numbers that are not given; say what you cannot know (no soil test, unread products). Remember the yield still depends on the weather, the variety and the soil. "
             . $region . " No emoji.\n\n"
             . 'Return ONE JSON object only: {"headline":"one line for the whole season","summary":"2 to 3 plain sentences",'
             . '"lots":[{"lot":"<the lot name exactly>","verdict":"on track|short|too much|unbalanced|too early to tell","summary":"2 sentences",'
@@ -305,6 +324,39 @@ class NpkSeasonController extends BaseScheduleController
             . '"next":[{"when":"date or day count","what":"what to apply and how much per ha","why":"short"}],'
             . '"changes":[{"change":"what to change in the planned tasks","why":"short"}],"weather":"what the weather and ENSO mean for this lot\'s fertilizer"}],'
             . '"warnings":["short"],"confidence":"low|medium|high"}';
+    }
+
+    /**
+     * Each lot with NPK Plus's need (needRun): its crop and way in, its
+     * variety's potential on record, and the field's own answers when the
+     * season's lot has them (App\Support\FieldProfile, keyed by the lot).
+     */
+    public static function withNeeds(AsCroppingSchedule $schedule, array $lots): array
+    {
+        $answers = [];
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('as_field_profiles')) {
+                foreach (DB::table('as_field_profiles')->where('scheduleId', $schedule->id)->whereIn('lotId', array_column($lots, 'id'))->where('deleteStatus', 1)
+                    ->orderByDesc('updated_at')->get(['lotId', 'answers']) as $r) {
+                    $answers[(int) $r->lotId] ??= \App\Support\FieldProfile::normalize((array) (json_decode((string) $r->answers, true) ?: []));
+                }
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+        foreach ($lots as &$l) {
+            try {
+                $rice = str_starts_with((string) (\App\Support\CropStages::normalize($l['cropKey'] ?? '') ?? ''), 'rice');
+                $l['needRun'] = \App\Support\NutrientBook::forLot($l['cropKey'] ?? null, $rice && ($l['counter'] ?? '') === 'DAS' ? 'direct_wet' : null,
+                    $l['variety'] ?: null, $answers[$l['id']] ?? [], null, $l['areaHa'] ?: 1);
+            } catch (\Throwable $e) {
+                report($e);
+                $l['needRun'] = null;
+            }
+        }
+        unset($l);
+
+        return $lots;
     }
 
     /** The lot's last month and next two weeks of weather, in a few lines. */

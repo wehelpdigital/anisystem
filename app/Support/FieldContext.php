@@ -63,8 +63,29 @@ final class FieldContext
         });
     }
 
-    /** The same 60 days (this month and next) in each of the last five years. */
+    /**
+     * The same 60 days (this month and next) in each of the last twenty
+     * years, from the climate shelf (App\Support\ClimateStore, 2026-10-18).
+     * It read five years from the archive before, five calls a place a month;
+     * the shelf keeps them, so a place is read once. The archive is still
+     * asked, as before, only where the shelf has nothing.
+     */
     public static function climate(float $lat, float $lng): array
+    {
+        try {
+            $kept = ClimateStore::sameDays($lat, $lng, now('Asia/Manila')->startOfMonth(), 60);
+            if ($kept) {
+                return $kept;
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
+        return self::climateFromArchive($lat, $lng);
+    }
+
+    /** The old way: five years, read from the archive, one call a year. */
+    private static function climateFromArchive(float $lat, float $lng): array
     {
         $key = sprintf('fc:clim:%.2f,%.2f:%s', $lat, $lng, now('Asia/Manila')->format('Y-m'));
 

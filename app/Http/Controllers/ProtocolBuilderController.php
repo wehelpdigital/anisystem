@@ -979,6 +979,15 @@ Version: {$versionName} (one of several versions of this protocol)" : '';
         $stageText = $this->joined($stages, 'No table for this crop.');
         $variety = $this->orNot($p->variety);
         $description = $this->orNot($p->description);
+        // NPK Plus's need for this crop and variety per hectare (2026-10-18): the fertilizer is judged against the app's own count, as in NPK Plus and the Crop Protocol.
+        try {
+            $need = \App\Support\NutrientBook::forLot($p->crop, $p->dayType === 'DAS' ? 'direct_wet' : null, $p->variety);
+            $needText = ! empty($need['known']) && $need['need']
+                ? "\n" . \App\Support\NutrientBook::promptLines($need, []) . "(Per hectare, before a soil test. Judge the protocol's fertilizer against it for the area the protocol is written for; do not count a different need.)\n"
+                : '';
+        } catch (\Throwable $e) {
+            $needText = '';
+        }
 
         return <<<PROMPT
 You are reviewing a crop protocol a farmer wrote for themselves in the Protocol Builder. Read it as an experienced agronomist in {$region} would, and judge it honestly: is it complete, is the timing right, is anything missing, is anything risky or wasteful.
@@ -998,11 +1007,11 @@ THE FARMER'S MATERIALS (what is on hand for the whole protocol, and what the tas
 
 THE APP'S OWN GROWTH STAGE TABLE for this crop ({$stageHead})
 {$stageText}
-
+{$needText}
 WHAT TO JUDGE
 - Coverage: land preparation, planting/transplanting, water, nutrition by stage, weed / pest / disease control, monitoring, harvest — what is there and what is missing for this crop.
 - Timing: is each task on a sensible day of the count for its stage? Point out anything too early, too late, or out of order.{$treeTiming}
-- Products and rates: are the items sensible for the stated purpose? Flag a wrong product for the job, a tank mix that must not be made (e.g. copper with a herbicide), and any obvious over- or under-application. Do not invent brand prices.
+- Products and rates: are the items sensible for the stated purpose? Judge the fertilizer against THE NEED above when it is given. Flag a wrong product for the job, a tank mix that must not be made (e.g. copper with a herbicide), and any obvious over- or under-application. Do not invent brand prices.
 - Safety and sequence: pre-harvest intervals, re-entry, and anything that endangers the crop or the worker.
 - Be concrete and specific to THIS crop and count; never generic praise. When something is fine, say so briefly. Keep every string short and plain — this is a report, not a chat.
 

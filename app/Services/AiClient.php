@@ -201,11 +201,45 @@ class AiClient
      * Should the research fail twice, the document is asked on its own
      * with the web open -- a reading from memory beats no reading, and the
      * answer says which it got ('searched').
+     *
+     * Since 2026-10-18 (the owner: fewer tokens "in the long run"):
+     *  - $shelf = ['kind' => ..., 'scope' => ...] keeps searched notes in
+     *    App\Support\ResearchShelf under the brief's fingerprint, and a later
+     *    run with the very same brief reads them instead of searching. Only a
+     *    brief written from what is not the farmer's own (the crop, the
+     *    variety, the province, the month) should ask for it.
+     *  - An empty research brief means there is nothing left to look up (the
+     *    place's record is kept, the variety is on record): the document is
+     *    asked alone, without the web.
+     *  - $jsonPrompt may be a closure that takes the notes and returns the
+     *    whole document brief, for a caller that keeps part of the notes
+     *    (App\Support\ClimateRecord) before the document is written.
+     * 'searched' still says the notes came from the web; 'paidSearch' says
+     * whether this run paid for a search (false on a kept brief).
      */
-    public function researchThenJson(AiSetting $settings, string $researchPrompt, string $jsonPrompt, int $maxOut, callable $parse, ?callable $onPhase = null, int $notesMaxOut = 3000): array
+    public function researchThenJson(AiSetting $settings, string $researchPrompt, string|\Closure $jsonPrompt, int $maxOut, callable $parse, ?callable $onPhase = null, int $notesMaxOut = 3000, array $shelf = []): array
     {
         // The notes and the document are both written work, not a chat turn.
         $settings = $settings->forDocument();
+        $docOf = fn (string $notes, array $meta = []) => $jsonPrompt instanceof \Closure ? (string) $jsonPrompt($notes, $meta)
+            : $jsonPrompt . ($notes !== '' ? "\n\nRESEARCH NOTES — found on the web just now by a search step. Rely on these FIRST, over memory; where they and memory disagree, the notes win; where the notes are silent, say so in dataGaps:\n" . $notes : '');
+        if (trim($researchPrompt) === '') {
+            $doc = $this->askForJson($settings, $docOf(''), $maxOut, $parse, ['onPhase' => $onPhase]);
+
+            return $doc + ['paidSearch' => false, 'shelf' => false, 'researchText' => ''];
+        }
+        $kept = ! empty($shelf['kind']) ? \App\Support\ResearchShelf::get((string) $shelf['kind'], $researchPrompt) : null;
+        if ($kept) {
+            if ($onPhase) {
+                $onPhase('research', 1);
+            }
+            $doc = $this->askForJson($settings, $docOf(trim($kept['notes']), ['searched' => true, 'sources' => (array) $kept['sources'], 'shelf' => true]), $maxOut, $parse, ['onPhase' => $onPhase]);
+            $doc['searched'] = true;
+            $doc['sources'] = (array) $kept['sources'];
+            $doc['researchText'] = (string) $kept['notes'];
+
+            return $doc + ['paidSearch' => false, 'shelf' => true, 'shelfId' => $kept['id']];
+        }
         /* Whether the model searches is its own call, made per request; the
          * same brief is searched one time and answered from memory the next.
          * So an unsearched research is asked again, told plainly, and only
@@ -243,15 +277,20 @@ class AiClient
             logger()->warning('AI research step: no web search was made', ['tries' => $try + 1, 'ok' => (bool) ($research['ok'] ?? false)]);
         }
         if (! ($research['ok'] ?? false) || trim((string) $research['text']) === '') {
-            return $this->askForJson($settings, $jsonPrompt, $maxOut, $parse, ['search' => true, 'onPhase' => $onPhase]);
+            $doc = $this->askForJson($settings, $docOf(''), $maxOut, $parse, ['search' => true, 'onPhase' => $onPhase]);
+
+            return $doc + ['paidSearch' => (bool) ($doc['searched'] ?? false) || $spent['tokensIn'] > 0, 'shelf' => false, 'researchText' => ''];
+        }
+        if (! empty($shelf['kind']) && ($research['searched'] ?? false)) {
+            \App\Support\ResearchShelf::put((string) $shelf['kind'], $researchPrompt, (string) ($shelf['scope'] ?? $shelf['kind']), array_merge($research, $spent));
         }
 
-        $notes = "\n\nRESEARCH NOTES — found on the web just now by a search step. Rely on these FIRST, over memory; where they and memory disagree, the notes win; where the notes are silent, say so in dataGaps:\n"
-            . trim((string) $research['text']);
-        $doc = $this->askForJson($settings, $jsonPrompt . $notes, $maxOut, $parse, ['onPhase' => $onPhase]);
+        $doc = $this->askForJson($settings, $docOf(trim((string) $research['text']), ['searched' => (bool) ($research['searched'] ?? false), 'sources' => (array) ($research['sources'] ?? [])]), $maxOut, $parse, ['onPhase' => $onPhase]);
         $doc['tokensIn'] += $spent['tokensIn'];
         $doc['tokensOut'] += $spent['tokensOut'];
         $doc['searched'] = (bool) ($research['searched'] ?? false);
+        $doc['paidSearch'] = true;
+        $doc['shelf'] = false;
         $doc['sources'] = (array) ($research['sources'] ?? []);
         $doc['researchText'] = (string) $research['text'];
 

@@ -128,7 +128,7 @@
     .np-psearch { position: relative; margin-bottom: .6rem; }
     .np-psearch svg { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); width: 1.05rem; height: 1.05rem; color: var(--color-gray-400); pointer-events: none; }
     .np-psearch .form-input { padding-left: 2.4rem; }
-    /* The season, read from ten years of weather at the field. */
+    /* The season, read from twenty years of weather at the field. */
     .np-season { margin-top: .9rem; padding: .75rem .85rem; border-radius: .95rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
     html.dark .np-season { background: #121a0d; border-color: #2b3a1c; }
     .np-season b { color: var(--color-gray-900); }
@@ -649,7 +649,7 @@
                         </section>
                         <section class="np-wstep" data-s="3" hidden>
                             <p class="np-wq" id="npSeasonQ">Where, when and the water</p>
-                            <p class="np-sub">The sun, the rain and the heat of your season come from ten years of weather at your field, tilted by ENSO now.</p>
+                            <p class="np-sub">The sun, the rain and the heat of your season come from twenty years of weather at your field, tilted by ENSO now.</p>
                             <div class="np-lotsay" data-lotsay="season" hidden></div>
                             <div class="np-lq" data-lq="place"><div>
                             @if (\App\Support\Region::ph())
@@ -1365,7 +1365,7 @@
         const [town, prov] = placeWords();
         if (!prov || (!town && !$('npTownIn'))) { st.season = null; paintSeason(); calc(); return; }
         const c = cropOf(st.crop), ask = ++seasonAsk;
-        $('npSeason').innerHTML = 'Reading ten years of weather at ' + esc(town ? town + ', ' + prov : prov) + '…';
+        $('npSeason').innerHTML = 'Reading twenty years of weather at ' + esc(town ? town + ', ' + prov : prov) + '…';
         try {
             const r = await window.api(U.season + '?' + new URLSearchParams({ town, province: prov, from: $('npPlanted').value || '', days: seasonDays(c) }).toString());
             if (ask !== seasonAsk) return;
@@ -2264,7 +2264,7 @@
             rows.push({ state, ratio, px, pct: ratio === null ? '?' : Math.round(Math.min(ratio, 1) * 100) + '%', note });
         });
         const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null && r.state !== 'dull');
-        // The season's sky and water, from ten years of weather.
+        // The season's sky and water, from twenty years of weather.
         $('lbSky').hidden = !SP;
         if (SP) {
             const S = st.season, yrs = S.years, maxR = Math.max(1, ...yrs.map((y) => y.rain), SP.rain), yu0 = Y_U[st.yUnit];
@@ -2276,7 +2276,7 @@
                 + '<div class="lb-skyrow"><i>☀️</i><span><b>Sun</b><small>' + fmt(SP.rad, 1) + ' MJ a day expected, against about ' + SP.K.rad + ' for a full harvest of ' + esc(cropShort(c).toLowerCase()) + (SP.t.sun !== 1 ? ', with ENSO' : '') + '.' + carry('sun') + '</small></span><em>' + pctOf('sun') + '</em></div>'
                 + '<div class="lb-skyrow is-water"><i>💧</i><span><b>Water</b><small>' + Math.round(SP.rain) + ' mm of rain expected' + (SP.t.rain !== 1 ? ' (ENSO tilted)' : '') + '; the crop drinks about ' + Math.round(SP.need) + ' mm. ' + esc(WATER_U[st.water][0]) + '.' + (st.water !== 'irrigated' ? ' In the driest of the ' + yrs.length + ' years: ' + Math.round(SP.wrDry * 100) + '%.' : (SP.t.e && SP.t.e.phase === 'el_nino' && SP.t.rain < 0.8 ? ' In a strong El Niño, check that the canal will run all season.' : '')) + carry('water') + '</small></span><em>' + pctOf('water') + '</em></div>'
                 + '<div class="lb-skyrow is-temp"><i>🌡️</i><span><b>Temperature</b><small>' + fmt(SP.tmean, 1) + '°C on average against ' + SP.K.opt[0] + ' to ' + SP.K.opt[1] + '°C best for it; about ' + Math.round(SP.hotN) + ' days at ' + SP.K.hot + '°C or more.' + carry('temp') + '</small></span><em>' + pctOf('temp') + '</em></div>'
-                + '<div class="lb-rainyears" aria-label="Rain in the same weeks of each year">' + yrs.map((y) => '<span style="height:' + Math.max(4, y.rain / maxR * 100) + '%" title="' + y.year + ': ' + y.rain + ' mm"><b>' + String(y.year).slice(2) + '</b></span>').join('')
+                + '<div class="lb-rainyears" aria-label="Rain in the same weeks of each year">' + yrs.map((y) => '<span style="height:' + Math.max(4, y.rain / maxR * 100) + '%" title="' + y.year + ': ' + y.rain + ' mm">' + (yrs.length <= 12 || y.year % 2 === 0 ? '<b>' + String(y.year).slice(2) + '</b>' : '') + '</span>').join('')
                 + '<span class="is-now" style="height:' + Math.max(4, SP.rain / maxR * 100) + '%" title="Expected this season: ' + Math.round(SP.rain) + ' mm"><b>Now</b></span></div>'
                 + '<p class="lb-rainkey">Rain in the same weeks of each of the last ' + yrs.length + ' years, and the striped bar for this season, tilted by ' + esc(SP.t.e ? SP.t.e.label.toLowerCase() : 'nothing') + '. Weather history: Open-Meteo. ENSO: NOAA.</p>';
         }
@@ -2312,8 +2312,8 @@
             const unk = STAVES.filter((s, i) => rows[i].state === 'unknown').map((s) => s.t);
             if (unk.length) say += ' Not measured: ' + esc(unk.join(', ')) + '. Nothing you told NPK Plus points to a shortage of them; a soil test would measure them.';
         }
-        say += SP ? ' Sun, water and temperature are read from ten years of weather at your field and the ENSO state now: a rough guide to the season, not a forecast of it.'
-            : ' The grey planks, sun, water and temperature, can be the shortest too: pick the place and the planting date in step 4 and NPK Plus reads them from ten years of weather at your field.';
+        say += SP ? ' Sun, water and temperature are read from twenty years of weather at your field and the ENSO state now: a rough guide to the season, not a forecast of it.'
+            : ' The grey planks, sun, water and temperature, can be the shortest too: pick the place and the planting date in step 4 and NPK Plus reads them from twenty years of weather at your field.';
         $('lbSay').innerHTML = '<div class="np-say">' + say + '</div>';
         return reach;
     };

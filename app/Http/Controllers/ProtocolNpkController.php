@@ -230,11 +230,15 @@ class ProtocolNpkController extends Controller
         };
         try {
             $beat('thinking');
+            // NPK Plus's need for this protocol's crop, variety and field (2026-10-18): the reading explains it, the app's verdicts stand.
+            $ask['need'] = self::needOf($plan, $ask);
             $result = app(AiClient::class)->askForJson($settings->forField('PH'), $this->prompt($plan, $ask), 6000, fn (string $t) => $this->parse($t));
             if ($result['data'] === null) {
                 Log::warning('npkproto: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
                 throw new \RuntimeException($result['error'] ?? 'The reading could not be read. Nothing was charged. Please try again.');
             }
+            $result['data']['nutrients'] = \App\Support\NutrientBook::overlay((array) ($result['data']['nutrients'] ?? []), $ask['need'], (array) $plan['total']);
+            $plan['need'] = ['need' => $ask['need']['need'], 'goal' => $ask['need']['goal']['Y'] ?? null, 'version' => $ask['need']['version'] ?? null];
             // The price agreed when the run began.
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
@@ -261,7 +265,8 @@ class ProtocolNpkController extends Controller
             . '; amounts written for ' . $plan['areaHa'] . " ha.\n"
             . "Fertilizer tasks in order:\n" . $tasks . "\n"
             . 'Whole plan, per ha: ' . NpkPlan::words($plan['total']) . "\n"
-            . 'Usual recommended rate for this crop, kg per ha: ' . ($plan['usual'] ? json_encode($plan['usual']) : 'not in our table') . ($plan['trees'] ? ' (counted at ' . $plan['trees'] . ' trees per ha)' : '') . "\n"
+            . \App\Support\NutrientBook::promptLines($ask['need'] ?? self::needOf($plan, $ask), (array) $plan['total'])
+            . ($plan['trees'] ? 'Counted at ' . $plan['trees'] . " trees per ha.\n" : '')
             . ($plan['unread'] ? 'Not counted (could not be read): ' . implode('; ', array_column($plan['unread'], 'name')) . "\n" : '')
             . ($ask['location'] !== '' ? 'Where it will be used: ' . $ask['location'] . "\n" : 'Place not given.' . "\n")
             . 'Soil: ' . (SoilConditions::words($ask['soilConditions'], $ask['phValue']) ?: 'not stated') . "\n"
@@ -269,13 +274,22 @@ class ProtocolNpkController extends Controller
             . 'Water: ' . (NpkPlusController::WATER[$ask['water']] ?? 'not stated') . "\n"
             . 'ENSO: ' . (EnsoOutlook::forPrompt() ?: 'not available') . "\n"
             . ($ask['notes'] !== '' ? 'The farmer adds: ' . $ask['notes'] . "\n" : '')
-            . "\nRULES: Judge the totals against the usual rate and the crop's need; then the timing: is each nutrient there when the crop needs it (for rice: phosphorus and potassium early, nitrogen split to tillering and panicle initiation; adapt to this crop). Say what is short, right or too much, which application to move, cut, add or split, by the protocol's own day count. Name products by grade or nutrient, never a brand. Never invent numbers that are not given; say what you cannot know. Remember the yield still depends on the weather, the variety and the soil. "
+            . "\nRULES: THE NEED and THE APP'S VERDICT above are the app's own count (the same NPK Plus and the Crop Protocol use): do not recount them, and give each nutrient the status the verdict gives it; explain why and what to change. Then the timing: is each nutrient there when the crop needs it (for rice: phosphorus and potassium early, nitrogen split to tillering and panicle initiation; adapt to this crop). Say what is short, right or too much, which application to move, cut, add or split, by the protocol's own day count. Name products by grade or nutrient, never a brand. Never invent numbers that are not given; say what you cannot know. Remember the yield still depends on the weather, the variety and the soil. "
             . $region . " No emoji.\n\n"
             . 'Return ONE JSON object only: {"verdict":"good|close|needs changes|unbalanced","headline":"one line","summary":"3 plain sentences",'
             . '"nutrients":[{"nutrient":"N|P2O5|K2O|Zn|...","status":"short|right|over","comment":"short"}],'
             . '"timing":[{"when":"day count","what":"what to apply and how much per ha","why":"short"}],'
             . '"changes":[{"change":"what to change in the protocol","why":"short"}],"soil":"what the soil means for this plan (empty if not given)",'
             . '"weather":"what the season and ENSO mean for losses and timing","warnings":["short"],"confidence":"low|medium|high"}';
+    }
+
+    /** The need of the protocol's crop and variety, on the soil, pH and water the farmer gave (NPK Plus's count). */
+    private static function needOf(array $plan, array $ask): array
+    {
+        $pr = $plan['protocol'];
+
+        return \App\Support\NutrientBook::forLot($pr['crop'], ($pr['dayType'] ?? '') === 'DAS' ? 'direct_wet' : null, $pr['variety'] ?? null, [], null, (float) ($plan['areaHa'] ?? 1),
+            ['soilConditions' => (array) ($ask['soilConditions'] ?? []), 'ph' => $ask['phValue'] ?? null, 'water' => ($ask['water'] ?? '') ?: 'irrigated']);
     }
 
     private function parse(string $text): ?array

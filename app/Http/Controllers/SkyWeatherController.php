@@ -532,7 +532,7 @@ class SkyWeatherController extends Controller
             . "THE LOT TO CHECK AGAINST: " . $lot . "\n\n"
             . "ACTIVE TROPICAL CYCLONES (GDACS; distances are from the farm, by the Haversine formula; times are Philippine time):\n" . json_encode($storms, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n\n"
             . "FORECAST FOR THE FARM, DAY BY DAY (Open-Meteo):\n" . $days . "\n\n"
-            . "THE SAME WEEKS IN THE LAST FIVE YEARS:\n" . json_encode($ctx['climate']) . "\n\n"
+            . "THE SAME WEEKS IN EARLIER YEARS (the app's stored weather history):\n" . \App\Support\ClimateStore::sameDaysWords((array) $ctx['climate']) . "\n\n"
             . 'ENSO: ' . ($ctx['enso'] ?: 'not available') . "\n\n"
             . "RULES: Within 300 km a storm is a direct threat; say when its closest approach is, how strong, and the wind and rain to expect. If no storm is near, say so plainly and focus on rain, wind and heat. Tie every action to the lot's crop and stage (for example: harvest early if the grain is mature enough, drain or open the canals, delay fertilizer before heavy rain, prop or hill up tall corn, secure seedlings, protect the harvest in storage). Use PAGASA wind signal language only as a guide, never claim PAGASA issued a signal. Never invent a number not given above. Say what you cannot know.\n\n"
             . 'Return exactly: {"headline":"one line","risk":"low|moderate|high|severe","riskWhy":"",'

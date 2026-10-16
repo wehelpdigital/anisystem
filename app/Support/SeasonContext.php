@@ -46,7 +46,7 @@ class SeasonContext
      * keyed on the DATA it was built from and would otherwise survive a fix
      * to the code that built it.
      */
-    private const BUILD = 2;
+    private const BUILD = 3;
 
     /** Activities are capped: a season with three hundred is not a preamble. */
     private const MAX_ACTIVITIES = 90;
@@ -138,6 +138,7 @@ class SeasonContext
                     . (! empty($l['variety']) ? ' ' . $l['variety'] : '')
                     . (! empty($l['age']) ? ', ' . $l['age'] : '')
                     . (! empty($l['stage']) ? ', ' . $l['stage'] : '')
+                    . (! empty($l['need']) ? '; ' . $l['need'] : '')
                     . '.';
             }
         }
@@ -297,6 +298,8 @@ class SeasonContext
                 'variety' => (string) ($l->variety ?: ''),
                 'age' => $age ? LotCalendar::says($age) : '',
                 'stage' => (string) ($stage['label'] ?? ''),
+                // NPK Plus's count for the lot (2026-10-18): a chat answer about fertilizer says the same numbers as the tools.
+                'need' => NutrientBook::lotLine($l->crop, $l->variety, $age && ($age['counter'] ?? '') === 'DAS' && str_starts_with((string) $crop, 'rice') ? 'direct_wet' : null),
             ], fn ($v) => $v !== '');
         }
 

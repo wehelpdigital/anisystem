@@ -394,7 +394,7 @@
     <section class="sk-tp" data-tp="anee" hidden>
         <div class="sk-card sk-ask">
             <h3><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Ask Anee what it means for your crop</h3>
-            <p class="sk-sub">Anee reads the storms, the forecast, ENSO{{ \App\Support\Tagalog::flag('enso') }} and the past five years, then checks them against one of your lots: its crop, age and stage.</p>
+            <p class="sk-sub">Anee reads the storms, the forecast, ENSO{{ \App\Support\Tagalog::flag('enso') }} and the past twenty years, then checks them against one of your lots: its crop, age and stage.</p>
             <button type="button" class="crop-tag sk-lottag" id="skLotBtn">
                 <span class="crop-tag-e" id="skLotIcon">🗺️</span>
                 <span class="crop-tag-t" id="skLotNow">No lot, my farm in general</span>
