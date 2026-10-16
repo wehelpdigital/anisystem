@@ -129,12 +129,16 @@ final class GovSource
             . '|Agricultural\s+Training\s+Institute|Philippine\s+Coconut\s+Authority'
             . '|National\s+Irrigation\s+Administration|Philippine\s+Statistics\s+Authority|National\s+Seed\s+Industry\s+Council'
             . '|NSIC\s+registry|(?:the\s+)?(?:national\s+)?(?:variety|seed)\s+registry|NSIC(?!\s*(?:\d{4}\s*)?(?:[A-Z][a-z]{0,3}\s*-?\s*\d|Rice|\d))|UPLB|International\s+Rice\s+Research\s+Institute|Food\s+and\s+Agriculture\s+Organi[sz]ation'
-            . '|(?:IRRI|PhilRice)\s+Rice\s+Knowledge\s+Bank|Rice\s+Knowledge\s+Bank|World\s+Vegetable\s+Center|CIMMYT|AVRDC|CABI(?:\s+Plantwise)?'
+            . '|(?:IRRI|PhilRice|Pinoy)\s+Rice\s+Knowledge\s+Bank|PhilRice\s+Knowledge\s+Bank|Rice\s+Knowledge\s+Bank|World\s+Vegetable\s+Center|CIMMYT|AVRDC|CABI(?:\s+Plantwise)?'
             . '|TNAU|Kerala\s+Agricultural\s+University|UF\s+IFAS|PHIVOLCS|NDRRMC|NOAA(?:\s+CPC)?|JTWC|Joint\s+Typhoon\s+Warning\s+Center|Japan\s+Meteorological\s+Agency'
             . '|(?-i:IRRI|FAO|DA|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)|ATI|NIA|PCA|PSA|SRA|KAU|OCD|JMA))';
 
-        // An office after the name, capitals only: "Caraga", "RFO 02", "Region 7", "Davao", "ATI CAR".
-        return '(?:the\s+)?' . $names . '(?-i:\s+(?:RFO|RFU|Region|Regional|ATI|CAR|[A-Z][a-z]+)\b(?:\s+[A-Z0-9][A-Za-z0-9]*\b)?)?';
+        // An office after the name: "Caraga", "RFO 02", "Region 7", "Davao", "ATI CAR" (a region or a code,
+        // never any capitalized word: "BSWM Soil Data" keeps its "Soil Data").
+        $office = 'RFO|RFU|Region|Regional|ATI|CAR|NCR|Caraga|Bicol|Bikol|Davao|Cagayan(?:\s+Valley)?|Ilocos|Cordillera|Calabarzon|Mimaropa'
+            . '|Western\s+Visayas|Central\s+Visayas|Eastern\s+Visayas|Visayas|Northern\s+Mindanao|Mindanao|Zamboanga|Soccsksargen|SOCCSKSARGEN|BARMM|Baguio|Davao|Los\s+Ba\S+os';
+
+        return '(?:the\s+)?' . $names . '(?-i:\s+(?:' . $office . ')\b(?:\s+(?:[IVX]+|\d+[A-Z]?|[A-Z]{2,})\b)?)?';
     }
 
     /**
@@ -161,7 +165,9 @@ final class GovSource
         }, $text);
 
         $one = self::item();
-        $many = '(?:' . $one . ')(?:\s*(?:,|and|or|\/|&)\s*(?:' . $one . '))*';
+        $many = '(?:' . $one . ')(?:\s*(?:\(\s*[A-Z]{2,8}\s*\))?(?:,\s*(?:and|or)?|\band\b|\bor\b|\/|&)\s*(?:' . $one . ')(?:\s*\(\s*[A-Z]{2,8}\s*\))?)*';
+        // A typographic apostrophe counts as one ("PAGASA’s").
+        $text = str_replace("\u{2019}s ", "'s ", $text);
 
         // "(PhilRice)", "(DA Caraga)", "(source: BSWM)", "(PhilRice and IRRI, 2019)".
         $text = preg_replace('/\s?\((?:(?:source|sources|from|per|based\s+on|see|ayon\s+sa)\s*:?\s+)?' . $many . '(?:,?\s*\d{4})?\)/iu', '', $text);
@@ -175,7 +181,11 @@ final class GovSource
             return "\x01agriculturists" . $m[1] . ' ' . ($plural[$verb] ?? $verb);
         }, $text);
         // "as recommended by the DA" -> "as recommended".
-        $text = preg_replace('/\b(recommended|advised|suggested|set|given|developed|published)\s+by\s+' . $many . '/iu', '$1', $text);
+        $text = preg_replace('/\b(recommended|advised|suggested|set|given|developed|published|released|bred)\s+by\s+' . $many . '/iu', '$1', $text);
+        // ", declared by PAGASA," -> "".
+        $text = preg_replace('/,?\s+(?:as\s+)?(?:declared|issued|announced|reported)\s+by\s+' . $many . '\s*,?(?=\s)/iu', '', $text);
+        // "PAGASA and climate models project" -> "Climate models project".
+        $text = preg_replace('/\b(?:the\s+)?(?:PAGASA|NOAA|JMA)\s+and\s+(?=(?:climate|global|international)\s+models)/iu', "\x01", $text);
         // "PhilRice's recommendation", "the general PhilRice practice" -> "the usual recommendation", "the general practice".
         $text = preg_replace_callback('/\b(?:the\s+(general|usual|standard)\s+)?' . $one . '(?:\'s)?\s+(recommendations?|advice|practice|guidelines?|rates?)\b/iu',
             fn ($m) => "\x01the " . ($m[1] !== '' ? $m[1] : 'usual') . ' ' . $m[2], $text);
@@ -207,6 +217,10 @@ final class GovSource
 
             return $left ? ' (' . implode('; ', $left) . ')' : '';
         }, $text);
+        // A short title that opens with one of them ("BSWM Soil Suitability for Munoz") keeps the rest.
+        if (mb_strlen($text) < 100 && ! preg_match('/[.!?](?:\s|$)/u', $text)) {
+            $text = preg_replace('/^(?:the\s+)?' . $one . '[\s,:]+(?=\p{Lu})/u', '', $text);
+        }
         // A "Sources:" line keeps only the other sources.
         $text = preg_replace_callback('/^([ \t>*_-]*(?:\*\*)?(?:Sources?|Mga\s+pinagkunan|Pinagkunan)(?:\*\*)?\s*:(?:\*\*)?)[ \t]*(.+)$/imu', function ($m) {
             $parts = preg_split('/\s*(?:;|,(?![^()]*\))|·|\|)\s*/u', $m[2]);
@@ -275,6 +289,10 @@ final class GovSource
     public static function scrubAll(mixed $v, ?string $key = null): mixed
     {
         if (is_string($v)) {
+            // A public breeder ("by": "DA-PhilRice", "IRRI", "UPLB-IPB") is not named; a seed company stays.
+            if ($key !== null && preg_match('/^(?:by|breeder|bredBy|developer|owner)$/i', $key) && self::isGov($v)) {
+                return '';
+            }
             // A "source" line ("PhilRice / IRRI", "NSIC, PhilRice, IRRI") keeps only the others.
             if ($key !== null && preg_match('/^(?:source|sources|basis|from)$/i', $key) && self::isGov($v)) {
                 $parts = preg_split('/\s*(?:\/|,|;|and|&|\+)\s*/iu', $v);
