@@ -209,8 +209,7 @@ final class ProtocolCare
                     $other[] = (string) $name;
                     continue;
                 }
-                $products = array_map(fn ($p) => ['brand' => $p['brand'], 'company' => $p['company'], 'form' => $p['form'], 'kind' => $p['kind']],
-                    ProductBook::forIngredient($hit['name'], $fc, null, 2));
+                $products = array_map(fn ($p) => ['brand' => $p['brand'], 'company' => $p['company'], 'form' => $p['form'], 'kind' => $p['kind']], self::productsFor($hit['name'], $fc));
                 $ai[$hit['name']] = ['name' => $hit['name'], 'group' => $hit['group'], 'products' => $products];
             }
             // A product the label names for this very pest, when no ingredient brought one.
@@ -243,6 +242,18 @@ final class ProtocolCare
         return ['intro' => trim((string) ($plan['intro'] ?? '')), 'threats' => $out, 'disclaimer' => self::DISCLAIMER];
     }
 
+    /** Up to two registered products for an ingredient on the crop's label; a name with a note ("Nicosulfuron (yellow corn only)") is tried bare too. */
+    private static function productsFor(string $ai, string $crop): array
+    {
+        $got = ProductBook::forIngredient($ai, $crop, null, 2);
+        $bare = trim((string) preg_replace('/\s*\([^)]*\)/', '', $ai));
+        if (! $got && $bare !== $ai && $bare !== '') {
+            $got = ProductBook::forIngredient($bare, $crop, null, 2);
+        }
+
+        return $got;
+    }
+
     /** The weed windows for the report, each ingredient with up to two registered products on the crop's label. */
     public static function weedsForReport(?array $weeds, string $crop): ?array
     {
@@ -252,7 +263,7 @@ final class ProtocolCare
         $fc = FieldCatalogue::cropKey($crop) ?? $crop;
         foreach ($weeds['windows'] as &$w) {
             foreach ($w['ingredients'] as &$i) {
-                $i['products'] = array_map(fn ($p) => ['brand' => $p['brand'], 'company' => $p['company'], 'form' => $p['form']], ProductBook::forIngredient($i['name'], $fc, null, 2));
+                $i['products'] = array_map(fn ($p) => ['brand' => $p['brand'], 'company' => $p['company'], 'form' => $p['form']], self::productsFor($i['name'], $fc));
             }
             unset($i);
             $w['ingredients'] = array_slice($w['ingredients'], 0, 8);
@@ -310,14 +321,42 @@ final class ProtocolCare
      * @param  list<array>  $elements  the program's element rows (CropProtocolController::tidy, NpkNeed::check)
      * @param  list<string>  $conds    the soil conditions (acidic, alkaline, sodic, saline...)
      */
+    /** Everything a shelf product carries, percent by element (the NPK Plus shelf), else the usual figures. */
+    private static function pcts(string $slug): array
+    {
+        $fallback = ['gypsum' => ['Ca' => 23, 'S' => 18], 'lime' => ['Ca' => 36], 'kieserite' => ['Mg' => 15, 'S' => 20], 'dolomite' => ['Ca' => 21, 'Mg' => 12],
+            'zinc-sulfate' => ['Zn' => 35, 'S' => 17], 'borax' => ['B' => 11], 'ferrous-sulfate' => ['Fe' => 20, 'S' => 11], 'manganese-sulfate' => ['Mn' => 31, 'S' => 18],
+            'copper-sulfate' => ['Cu' => 25, 'S' => 12], 'sodium-molybdate' => ['Mo' => 39]][$slug] ?? [];
+        try {
+            foreach (NpkPlan::shelf() as $p) {
+                if (($p['slug'] ?? null) === $slug && ! empty($p['pct'])) {
+                    return array_map('floatval', array_intersect_key($p['pct'], array_flip(['Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo'])));
+                }
+            }
+        } catch (\Throwable) {
+        }
+
+        return $fallback;
+    }
+
     public static function micro(array $elements, array $frame, array $conds, float $area): array
     {
         $acid = in_array('acidic', $conds, true) || in_array('acid_sulfate', $conds, true);
         $alk = in_array('alkaline', $conds, true) || in_array('sodic', $conds, true);
         $rows = [];
+        $byEl = [];
         foreach ($elements as $e) {
-            $el = (string) ($e['key'] ?? '');
-            if (! isset(self::SOURCES[$el]) || ! empty($e['beneficial'])) {
+            $byEl[(string) ($e['key'] ?? '')] = $e;
+        }
+        /* One product often brings two elements (dolomite calcium and
+           magnesium, kieserite magnesium and sulfur, gypsum calcium and
+           sulfur), so each top up counts toward the elements after it:
+           magnesium first, then sulfur, then calcium, then the traces. */
+        $added = [];
+        $by = [];
+        foreach (['Mg', 'S', 'Ca', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo'] as $el) {
+            $e = $byEl[$el] ?? null;
+            if (! $e || ! empty($e['beneficial'])) {
                 continue;
             }
             $need = $e['need'] !== null ? (float) $e['need'] : 0.0;
@@ -326,10 +365,20 @@ final class ProtocolCare
             if ($need <= 0 || ! in_array($state, ['short', 'spray'], true)) {
                 continue;
             }
-            $gap = max(0, $need - $plan);
+            $before = $added[$el] ?? 0.0;
+            $gap = max(0, $need - $plan - $before);
             [$slug, $product, $fb] = self::SOURCES[$el][$el === 'Ca' && $acid ? 1 : ($el === 'Mg' && $acid ? 1 : 0)];
-            $pct = self::pct($slug, $el, (float) $fb);
+            $carries = self::pcts($slug) ?: [$el => (float) $fb];
+            $pct = (float) ($carries[$el] ?? $fb);
             $kg = $pct > 0 ? $gap * 100 / $pct : 0;
+            // What an earlier top up already brings is enough: said, not bought twice.
+            if ($state === 'short' && $before > 0 && $gap <= 0.1 * $need) {
+                $rows[] = ['el' => $el, 'name' => (string) ($e['name'] ?? $el), 'need' => round($need, 3), 'plan' => round($plan, 3), 'gap' => 0.0,
+                    'level' => (string) ($e['level'] ?? ''), 'why' => array_values((array) ($e['why'] ?? [])), 'state' => $state, 'sprayAt' => null,
+                    'soil' => null, 'spray' => null, 'pick' => 'covered',
+                    'note' => 'The ' . implode(' and ', array_map('mb_strtolower', array_unique($by[$el] ?? []))) . ' above bring' . (count(array_unique($by[$el] ?? [])) === 1 ? 's' : '') . ' ' . self::amount($before) . ' of it, enough.'];
+                continue;
+            }
             $sprayable = in_array($el, self::SPRAYABLE, true);
             // A spray where the soil would lock it up, or where the dose is a few grams.
             $spray = $sprayable && ($el === 'Fe' || $el === 'Mo' || ($alk && in_array($el, ['Zn', 'Mn', 'Cu'], true)) || $kg < 0.5);
@@ -350,9 +399,19 @@ final class ProtocolCare
                     $el === 'Fe' => 'Iron spread on the soil is locked up fast, so a spray works better.',
                     $el === 'Mo' => 'A few grams: as a spray, or mixed with the seed.',
                     $spray && $alk => 'This soil locks it up, so a spray works better than the soil dose.',
+                    $before > 0 => 'Less than the full gap: the products above bring ' . self::amount($before) . ' of it.',
                     default => '',
                 },
             ];
+            // A soil dose counts toward every element it carries (dolomite's calcium, kieserite's sulfur).
+            if ($state !== 'spray' && ! $spray && $kg > 0) {
+                foreach ($carries as $e2 => $v) {
+                    if ($e2 !== $el && $v > 0) {
+                        $added[$e2] = ($added[$e2] ?? 0) + $kg * $v / 100;
+                        $by[$e2][] = preg_replace('/\s*\(.*$/', '', $product);
+                    }
+                }
+            }
         }
 
         return $rows;

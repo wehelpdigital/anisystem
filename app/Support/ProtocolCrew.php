@@ -538,8 +538,8 @@ final class ProtocolCrew
             $best = null;
             $plantOwn = ! in_array('plant', $hiredKinds, true);
             for ($d = $from; $d <= $to; $d++) {
-                // The planting day is a day the crew works, when the crew plants.
-                if ($plantOwn && $cap[self::wd($d)] <= 0 && $d < $to) {
+                // The planting day is a day the crew works when the crew plants; a hired crew is not asked for a Sunday.
+                if ($d < $to && ($plantOwn ? $cap[self::wd($d)] <= 0 : self::wd($d) === 0)) {
                     continue;
                 }
                 [$pl, $short] = $place($l, $d, false);

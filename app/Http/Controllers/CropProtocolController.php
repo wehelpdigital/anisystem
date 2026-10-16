@@ -982,6 +982,21 @@ class CropProtocolController extends Controller
                 $ctx['weeds'][$c['key']] = null;
             }
         }
+        // The work calendar from the usual fertilizer days, so Anee's work tips agree with the one the report draws.
+        try {
+            $pre = [];
+            foreach ($case['lots'] as $l) {
+                $f = $ctx['frames'][$l['i']];
+                $pre[] = ['i' => $l['i'], 'name' => $l['name'], 'month' => $l['month'], 'asked' => $l['day'],
+                    'tasks' => ProtocolCrew::tasks($f, ProtocolCrew::skeleton($f), [], ['weedy' => self::weedy($l['profile'])])];
+            }
+            $s = ProtocolCrew::schedule($pre, $case['crew'], $case['mode'], null, false);
+            $ctx['planWords'] = implode(' ', ProtocolCrew::words($s, array_map(fn ($l) => $l['name'], $case['lots'])))
+                . ($s['peak'] ? ' The busiest day has ' . $s['peak']['workers'] . ' of the ' . $s['peak']['cap'] . ' workers busy.' : '');
+        } catch (\Throwable $e) {
+            report($e);
+            $ctx['planWords'] = '';
+        }
         $ctx['forecast'] = $this->forecastLines($case['location']);
         $ctx['enso'] = \App\Support\EnsoOutlook::forPrompt();
         // Twenty years of each place (up to three), for the months its lots stand in the field.
@@ -1398,13 +1413,19 @@ PROMPT;
         }
         $shape = '{"headline":"","background":{"place":"","weather":{"outlook":"","enso":"","risks":[""]},"history":""},"crops":[{"key":"c1","variety":{"found":false,"name":"","by":"","released":"","maturityDays":0,"yieldPotential":"","season":"","traits":"","caution":"","source":""},"stages":[{"stage":"","signs":"","observe":"","intervene":""}],"protection":{"intro":"","threats":[{"name":"","kind":"insect","stages":[""],"sign":"","threshold":"","cultural":"","ai":[""],"rotate":"","weather":""}]}}],"workTips":[""],"summary":"","confidence":"moderate","dataGaps":[""]}';
         $enso = $ctx['enso'] !== '' ? '- ENSO: ' . $ctx['enso'] . "\n" : '';
+        $crew = $case['crew'];
+        $plan = ($ctx['planWords'] ?? '') !== ''
+            ? '- The work calendar the app laid out for ' . count($crew['workers']) . (count($crew['workers']) === 1 ? ' worker' : ' workers') . ' and ' . $crew['sprayers'] . ($crew['sprayers'] === 1 ? ' sprayer' : ' sprayers')
+                . ($crew['plantBy'] === 'hired' ? ', a hired crew planting and harvesting' : ', the farm\'s own workers planting and harvesting')
+                . ($case['mode'] === 'auto' ? ', jobs moved inside their safe days when they collide' : ', the farmer\'s dates kept') . ': ' . $ctx['planWords'] . "\n"
+            : '';
 
         return <<<PROMPT
 You are an agronomic decision-support analyst for farming in {$country}. A farmer is planting the lots below this season. Write the FARM PART of their crop protocol: the background, then for every crop its growth stages and its protection plan. Each lot's fertilizer plan is written separately: no fertilizer amounts here.
 
 THE FARM
 - {$region}
-{$lots}- Weather now: {$ctx['forecast']}
+{$lots}{$plan}- Weather now: {$ctx['forecast']}
 {$enso}{$hist}
 THE CROPS
 {$crops}GROUND RULES
@@ -1414,7 +1435,7 @@ THE CROPS
 - PROTECTION, WATCH FIRST, NEVER BY THE CALENDAR: for every crop 5 to 8 threats, the most likely here this season first: the lots' troubles of last season, then what this season's weather (the outlook, ENSO, the twenty year record of these months) favours, then the crop's worst. For each threat: kind (insect, disease, weed or other); stages = the stage names it strikes; sign at most 16 words; threshold at most 24 words = when the numbers make acting worth it (an economic threshold from the notes or established IPM in plain counts, like "2 egg masses a square meter" or "1 in 10 hills hit"; where none exists, how to judge the spread); cultural at most 30 words = what to do first without a spray (resistant variety, clean seed, water, timing, natural enemies, removing sick plants); ai = the active ingredients to use only once the threshold is reached, CHOSEN ONLY FROM THAT THREAT'S LIST ABOVE and written exactly as listed (an empty list where the list is empty or no spray helps); rotate at most 18 words = the group to switch to for a second spray, never the same group twice in a row; weather at most 16 words = when this season's weather raises the risk ("" when it does not matter). Weeds are one threat per crop with ingredients only from its weed windows. No brand names, no product names, no rates or doses: the farmer decides whether to spray from what the field shows.
 - protection.intro at most 40 words: how to scout this crop this season (how often, where in the field).
 - background.place at most 40 words; weather.outlook at most 55 words for the months the crops stand; enso at most 30 words; risks 2 to 4 items of at most 12 words; history at most 45 words = what the area's twenty years say about these months (the wettest weeks, the typhoon months, the dry spells, and how El Nino or La Nina years differed).
-- workTips: 2 to 4 lines of at most 22 words on running the work across the lots (when the busy weeks fall, staggering, hiring a crew), from the lots' sizes and planting months.
+- workTips: 2 to 4 lines of at most 22 words on running the work across the lots (the busy weeks, the hands each needs, hiring help), agreeing with the work calendar above: never ask to move a planting day the calendar has already set, and where the calendar says the crew falls short, say what helps.
 - headline at most 14 words. summary at most 70 words, plain and warm but factual, ending with the reminder that the crop's stage is the clock, not the calendar. confidence low, moderate or high. dataGaps at most four.
 - Plain text only: no markdown, no emoji shortcodes.
 
@@ -2335,7 +2356,8 @@ PROMPT;
             $fert = collect($rec['stages'] ?? [])->filter(fn ($st) => ! empty($st['fertilizer']))->map(fn ($st) => ($st['stage'] ?? '') . ': '
                 . collect($st['fertilizer'])->map(fn ($x) => ($x['totalBags'] ?? '') . ' bags ' . ($x['product'] ?? ''))->implode(', '))->implode(' | ');
             $check = collect($rec['npk']['check'] ?? [])->map(fn ($c) => $c['label'] . ' ' . $c['have'] . ($c['need'] !== null ? ' of ' . $c['need'] . ' kg (' . $c['verdict'] . ')' : ''))->implode('; ');
-            $micro = collect($l['micro'] ?? [])->map(fn ($m) => $m['name'] . ': ' . ($m['pick'] === 'soil' && $m['soil'] ? $m['soil']['say'] : ($m['spray']['name'] ?? '') . ' at ' . ($m['spray']['stage'] ?? '')))->implode('; ');
+            $micro = collect($l['micro'] ?? [])->filter(fn ($m) => $m['pick'] !== 'covered')
+                ->map(fn ($m) => $m['name'] . ': ' . ($m['pick'] === 'soil' && $m['soil'] ? $m['soil']['say'] : ($m['spray']['name'] ?? '') . ' at ' . ($m['spray']['stage'] ?? '')))->implode('; ');
             $t .= '- ' . $l['name'] . ' (' . $l['place'] . ', ' . $l['areaHa'] . ' ha): ' . $l['cropLabel'] . ($l['variety'] ? ' ' . $l['variety'] : '') . ', planted ' . ($l['planting']['planting'] ?? $l['month'])
                 . (! empty($l['harvest']['usual']) ? ', harvest about ' . $l['harvest']['usual'] : '') . ".\n"
                 . '  Fertilizer by stage: ' . $fert . "\n"

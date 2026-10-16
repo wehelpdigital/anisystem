@@ -119,8 +119,9 @@ final class AiPricing
             // Several lots since 2026-10-18: one research ask a crop or variety (`cases` beyond the first), the farm ask, one ask a lot.
             // The flat list price is protocol for the first lot, plus protocolLot a lot and protocolCase a crop or variety beyond it.
             'protocol' => ['unit' => 'lot', 'free' => 1, 'units' => 2, 'max' => 8, 'unitPrice' => 'protocolLot', 'optPrices' => ['cases' => 'protocolCase'],
-                'baseIn' => 22000, 'baseOut' => 18000, 'unitIn' => 9000, 'unitOut' => 7500, 'search' => 1, 'om' => 2,
-                'opts' => ['cases' => ['in' => 6000, 'out' => 6000, 'search' => 1]]],
+                // Measured 2026-10-18, two lots and two crops: 35.2K in, 34.4K out, two searches, 334 s.
+                'baseIn' => 22000, 'baseOut' => 20000, 'unitIn' => 9000, 'unitOut' => 8000, 'search' => 1, 'om' => 2,
+                'opts' => ['cases' => ['in' => 6000, 'out' => 6500, 'search' => 1]]],
             'season' => ['unit' => 'lot', 'free' => 1, 'units' => 2, 'max' => 200, 'baseIn' => 9000, 'baseOut' => 6000, 'unitIn' => 250, 'unitOut' => 80, 'outCap' => 10048, 'om' => 10],
             'sofar' => ['unit' => 'lot', 'free' => 1, 'units' => 2, 'max' => 200, 'baseIn' => 11500, 'baseOut' => 5000, 'unitIn' => 250, 'unitOut' => 80, 'outCap' => 10048, 'om' => 10],
             'compare' => ['unit' => '', 'baseIn' => 7000, 'baseOut' => 3200],
