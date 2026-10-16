@@ -343,7 +343,8 @@ HTML;
             . ($social ? implode(' &nbsp;&middot;&nbsp; ', $social) . '<br>' : '')
             . '<a href="' . $site . '" ' . $a . '>anee.io</a> &nbsp;&middot;&nbsp; Questions? <a href="mailto:support@anee.io" ' . $a . '>support@anee.io</a><br>'
             . ($t['footer'] !== '' ? '<span style="display:inline-block;margin-top:6px;">' . e($t['footer']) . '</span><br>' : '')
-            . '<a href="' . $web . '" ' . $a . '>View in your browser</a> &nbsp;&middot;&nbsp; <a href="' . $unsub . '" ' . $a . '>Unsubscribe</a>'
+            . '<a href="' . $web . '" ' . $a . '>Buksan sa browser</a> &nbsp;&middot;&nbsp; <a href="' . $unsub . '" ' . $a . '>Unsubscribe</a>'
+            . ' &nbsp;&middot;&nbsp; <a href="https://anee.io/legal/privacy" ' . $a . '>Privacy</a>'
             . '</td></tr>';
     }
 
@@ -420,7 +421,7 @@ HTML;
                 return '<table role="presentation" class="nl-panel" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="' . $t['panel'] . '" style="background:' . $t['panel'] . ';border:1px solid #d6e6c2;border-radius:' . $rad . 'px;border-collapse:separate;margin:10px 0 20px;">'
                     . '<tr><td style="padding:14px 16px 4px;">'
                     . '<img src="' . EmailSkin::face($b['face']) . '" width="40" height="40" alt="" style="display:inline-block;vertical-align:middle;width:40px;height:40px;border-radius:12px;">'
-                    . '<span style="display:inline-block;vertical-align:middle;margin-left:10px;font-family:' . $font . ';font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:' . $t['link'] . ';">Sabi ni Anee</span>'
+                    . '<span style="display:inline-block;vertical-align:middle;margin-left:10px;font-family:' . $font . ';font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:' . $t['link'] . ';">Tip ni Anee</span>'
                     . '</td></tr><tr><td style="padding:6px 16px 14px;' . $text . 'font-size:15px;line-height:1.6;">'
                     . $this->styleRich($b['html'], true) . '</td></tr></table>';
 

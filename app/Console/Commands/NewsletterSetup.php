@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Services\AcumbamailService;
+use App\Support\Newsletter\ArchiveImport;
 use App\Support\Newsletter\Audience;
 use App\Support\Newsletter\Demo;
 use App\Support\Newsletter\SequenceImport;
@@ -16,10 +17,11 @@ use Illuminate\Console\Command;
  *   --pull      read every list's unsubscribes (ten reads a minute, so slow)
  *   --import    bring the Acumbamail sequence into the regular line (--dry to only look)
  *   --demo      the sample emails, as drafts
+ *   --archive=  the owner's archive of the sequence into our own library (ArchiveImport), --dry to only look
  */
 class NewsletterSetup extends Command
 {
-    protected $signature = 'newsletter:setup {--fields} {--sync} {--pull} {--import} {--dry} {--demo} {--refresh : with --demo, write the samples again}';
+    protected $signature = 'newsletter:setup {--fields} {--sync} {--pull} {--import} {--dry} {--demo} {--refresh : with --demo, write the samples again} {--archive= : the owner archive folder (emails.json and content), into our own library}';
 
     protected $description = 'One-off newsletter jobs: list fields, the first sync, the sequence import, the samples';
 
@@ -61,6 +63,18 @@ class NewsletterSetup extends Command
                 if ($row['status'] === 'draft' || $row['sendOn'] || $row['audience'] !== [Seg::ALL]) {
                     $this->line(str_pad(substr($row['name'], 5, 9), 10) . str_pad($row['status'], 7) . str_pad((string) $row['sendOn'], 11) . mb_substr((string) $row['note'], 0, 110));
                 }
+            }
+        }
+        if ($this->option('archive')) {
+            $r = ArchiveImport::run((string) $this->option('archive'), (bool) $this->option('dry'), 'Archive import');
+            if ($r['error']) {
+                $this->error($r['error']);
+
+                return self::FAILURE;
+            }
+            $this->info("found {$r['found']}, updated {$r['updated']}, new {$r['created']}" . ($this->option('dry') ? ' (dry run)' : ''));
+            foreach ($r['rows'] as $line) {
+                $this->line($line);
             }
         }
         if ($this->option('demo')) {

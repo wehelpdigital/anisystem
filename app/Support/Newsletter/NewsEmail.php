@@ -102,16 +102,17 @@ final class NewsEmail
             array_pop($out);
         }
         $out[] = ['id' => 'more', 'type' => 'button', 'label' => 'Basahin ang buong balita', 'url' => $url, 'align' => 'center', 'style' => 'solid'];
-        // John opens it (Voice): a greeting, how many, and why it matters to the farm.
+        // Anee opens it (Voice): a greeting, how many, and why it matters to the farm.
         $count = [1 => 'Isang balita', 2 => 'Dalawang balita', 3 => 'Tatlong balita', 4 => 'Apat na balita', 5 => 'Limang balita'][$stories] ?? 'Ilang balita';
         array_unshift($out, [
             'id' => 'intro', 'type' => 'text',
-            'html' => '<p>Magandang umaga, kasama! John ito.</p><p>' . $count . ' ngayong ' . self::month($day) . ' ' . $day->format('j') . ' ang may kinalaman sa bukid. Hindi ko na pahahabain: ito ang nangyari, at ito ang ibig sabihin para sa\'yo.</p>',
+            'html' => '<p>Hey there, Anee here... may balita sa bukid ngayong araw.</p><p>' . $count . ' ngayong ' . self::month($day) . ' ' . $day->format('j') . ' ang may kinalaman sa bukid. Hindi ko na pahahabain: ito ang nangyari, at ito ang ibig sabihin para sa\'yo.</p>',
         ]);
         $out[] = ['id' => 'today', 'type' => 'text',
             'html' => '<p>Isang tanong lang para sa\'yo ngayong araw: alin dito ang tatama sa susunod mong gagawin sa bukid? Doon ka magsimula.</p>'];
-        $out[] = ['id' => 'ask', 'type' => 'anee', 'face' => 'idea',
-            'html' => '<p>May tanong ka kung paano ito tatama sa tanim mo? Itanong mo sa akin sa <a href="https://anee.io/app">anee.io</a>, sasagutin ko base sa lote mo.</p>'];
+        $out[] = ['id' => 'signoff', 'type' => 'text', 'html' => '<p>' . Voice::signOffHtml('balita muna bago kape') . '</p>'];
+        $out[] = ['id' => 'ps', 'type' => 'text', 'size' => 'sm',
+            'html' => '<p><b>P.S.</b> May tanong ka kung paano ito tatama sa tanim mo? I-reply mo lang ito, o itanong mo sa akin sa <a href="https://anee.io/">anee.io</a>.</p>'];
 
         $content = [
             'kicker' => 'Balita sa bukid · ' . $day->format('M j'),

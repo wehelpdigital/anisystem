@@ -9,7 +9,7 @@ use App\Models\AsSiteSetting;
  * newsletter.*), written by either app's module page:
  *   newsletter.enabled     the switch: off, the day is planned and shown but no campaign is made
  *   newsletter.send_time   when the day's email goes, Manila time (HH:MM)
- *   newsletter.from_name   the sender's name
+ *   newsletter.from_name   the sender's name (Anee writes the newsletter, Voice)
  *   newsletter.from_email  the sender's address (one Acumbamail accepts)
  *   newsletter.theme       the one design every email wears (Theme)
  *   newsletter.lists       segment => Acumbamail list id, over Seg::DEFAULT_LISTS
@@ -32,7 +32,7 @@ final class NlSettings
 
     public static function fromName(): string
     {
-        return trim((string) AsSiteSetting::get('newsletter.from_name', '')) ?: 'John of anee.io';
+        return trim((string) AsSiteSetting::get('newsletter.from_name', '')) ?: 'Anee of anee.io';
     }
 
     public static function fromEmail(): string

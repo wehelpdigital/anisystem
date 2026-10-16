@@ -321,7 +321,7 @@
                 : S.q ? ['No email matches', 'Try other words.']
                 : { high: ['No high priority email', 'An important email for the next send, for everyone or for some groups only.'],
                     news: ['No news email yet', 'Each morning\'s farm news page becomes an email here by itself.'],
-                    regular: ['The regular line is empty', 'Bring in the Acumbamail sequence from the menu, or write a new one.'] }[S.tab];
+                    regular: ['The regular line is empty', 'Write a new one, or add the samples from the menu.'] }[S.tab];
             list.innerHTML = '<div class="nlk-empty nlk-rise"><b>' + h(say[0]) + '</b>' + h(say[1]) + (S.scope === 'line' && !S.q ? '<br><button type="button" class="nlk-btn is-gold" data-new2>' + ic('plus') + 'New email</button>' : '') + '</div>';
             const b = $('[data-new2]', list);
             if (b) b.addEventListener('click', () => openBuilder(null, S.tab));
@@ -459,7 +459,6 @@
 
     function moreMenu(anchor) {
         menu(anchor, [
-            { text: 'Bring in the Acumbamail sequence', icon: 'upload', run: () => runAction('import', 'Bring the anee.io sequence from Acumbamail into the regular line? Emails already here are left as they are.') },
             { text: 'Make today\'s news email', icon: 'news', run: () => runAction('news-now') },
             { text: 'Add the sample emails', icon: 'plus', run: () => runAction('demo') },
         ]);
@@ -582,7 +581,7 @@
         video: { name: 'Video', make: () => ({ url: '', thumb: '', caption: '', label: 'Panoorin ang video' }), sum: (b) => b.url || 'No link yet' },
         button: { name: 'Button', make: () => ({ label: 'Buksan ang anee.io', url: 'https://anee.io/app', align: 'left', style: 'solid' }), sum: (b) => b.label },
         callout: { name: 'Callout', make: () => ({ title: 'Tip', html: '<p>Isang bagay na dapat tandaan.</p>', tone: 'gold' }), sum: (b) => b.title || strip(b.html) },
-        anee: { name: 'Anee says', make: () => ({ face: 'happy', html: '<p>Nandito lang ako, kasama.</p>' }), sum: (b) => strip(b.html) },
+        anee: { name: 'Tip ni Anee', make: () => ({ face: 'idea', html: '<p>Isang maliit na tip na pwede mong gawin ngayong araw.</p>' }), sum: (b) => strip(b.html) },
         story: { name: 'Story card', make: () => ({ src: '', title: 'Pamagat ng kwento', html: '<p>Maikling kwento.</p>', source: '', url: '', label: 'Basahin' }), sum: (b) => b.title },
         pair: { name: 'Two stories', make: () => ({ items: [{ src: '', title: 'Unang kwento', html: '', url: '', label: '' }, { src: '', title: 'Pangalawang kwento', html: '', url: '', label: '' }] }), sum: (b) => b.items.map((x) => x.title).filter(Boolean).join(' · ') },
         quote: { name: 'Quote', make: () => ({ html: 'Ang magaling na magsasaka, nagtatanong muna.', by: '' }), sum: (b) => strip(b.html) },
@@ -718,7 +717,7 @@
             let vOpen = false;
             try { vOpen = localStorage.getItem('nlk.voice') === '1'; } catch (e) { vOpen = false; }
             pane.innerHTML =
-                '<details class="nlk-voice"' + (vOpen ? ' open' : '') + '><summary><span class="nlk-voice-ic">' + ic('anee') + '</span><b>How ' + h(V.name || 'John') + ' writes</b><small>Every email is in ' + h(V.name || 'John') + '’s voice</small></summary>' +
+                '<details class="nlk-voice"' + (vOpen ? ' open' : '') + '><summary><span class="nlk-voice-ic">' + ic('anee') + '</span><b>How ' + h(V.name || 'John') + ' writes</b><small>' + h(V.style || 'Every email is in this voice') + '</small></summary>' +
                 '<ol>' + V.rules.map((r) => '<li><b>' + h(r.rule) + '</b><em>' + h(r.example).replace(/\n/g, '<br>') + '</em></li>').join('') + '</ol></details>' +
                 '<div class="nlk-head-card" data-headcard><b>The top of the email</b>' +
                 '  <label class="nlk-field"><span>Small line above the title</span><input class="nlk-in" data-h="kicker" value="' + h(c.kicker) + '" placeholder="Bago sa anee.io"></label>' +

@@ -3,36 +3,47 @@
 namespace App\Support\Newsletter;
 
 /**
- * HOW JOHN WRITES (2026-10-16, the owner: "we want the persona of John
- * Pagulayan on how he writes"). The newsletter is written as John of anee.io:
- * a farmer writing to a fellow farmer, not a company writing to a customer.
- * Read off the 356 emails of John's sequence (their subjects: "Ang pinakamurang
- * farm tool: ballpen", "Kailan ka huling nag-abono? Sigurado ka?", "Si Juan
- * Tamad at ang bayabas", "Bakit lumalaki ang ani pag gabi na? (lol)").
- *
- * The rules are shown in the builder beside every email, and the samples
- * (Demo) and the daily news email (NewsEmail) follow them.
+ * HOW THE NEWSLETTER IS WRITTEN (2026-10-16, the owner: "we want the persona
+ * of John Pagulayan on how he writes"). The writer is ANEE, the voice of
+ * anee.io, and the style is John Pagulayan's newsletters, adapted for
+ * farmers: that is how the owner's 356 email sequence was briefed and
+ * written (the archive's docs/writer_brief.md, with John Pagulayan's own
+ * emails as the style samples). These rules are the short form of that
+ * brief; the builder shows them beside every email, and the samples (Demo)
+ * and the daily news email (NewsEmail) follow them.
  */
 final class Voice
 {
-    public const NAME = 'John';
+    public const NAME = 'Anee';
 
-    public const SIGN_OFF = "Kasama mo sa bukid,\nJohn";
+    public const STYLE = 'John Pagulayan\'s newsletter style, for farmers';
 
-    /** [the rule, an example in John's words] */
+    public const SIGN_OFF = "Rooting for you,\nAnee";
+
+    /** [the rule, an example in the sequence's own words] */
     public const RULES = [
-        ['Taglish, Tagalog first. English only for the words farmers already say in English.', 'Ang LCC mo, nasa level 3 na. Oras na ng abono.'],
-        ['A fellow farmer talking. Call the reader kasama. Say ako, ko, tayo, never "we at anee.io".', 'Kasama, may aaminin ako.'],
-        ['Open with a small story: a kumpare, Mang Tonyo, Aling Nena, a fable, a saying.', 'Si Pareng Ben, bumili ng sampung sako ng abono. Ang ani? Pareho lang.'],
-        ['One idea per email. Short paragraphs, one to three sentences.', 'Hindi kulang ang abono niya. Kulang ang tanong.'],
-        ['Ask the reader straight, and answer honestly. Talk money in pesos, per kilo, per kaban.', 'Magkano talaga ang isang kaban mo? Kwentahin natin.'],
-        ['A little humor in parentheses, never at the farmer.', '(Oo, literal.) (Seryosong tanong.) (Spoiler: marami.)'],
-        ['End with one small thing to do today, then point to Anee or anee.io gently. No hard selling.', 'Ngayong araw, isulat mo lang ang petsa ng huling abono mo.'],
-        ['Sign off as John. No dashes in the words.', "Kasama mo sa bukid,\nJohn"],
+        ['Anee writes, as the voice of anee.io. She is not a person: no lolo, no farm of her own. "Kami sa anee.io" is fine for the team.', 'Ako si Anee, pero hindi ako tao. Wala akong sariling bukid.'],
+        ['Taglish leaning Tagalog: the everyday words of a farmer in Nueva Ecija or Bukidnon, English for punch lines and common terms.', 'Hindi na babalik sa dati ang gastos. Kaya ang ani ang kailangang tumaas.'],
+        ['Story or scene first, the lesson second: the tindahan, the palengke, a kapitbahay, a parable. Characters are framed as examples.', 'Isipin natin si Mang Ben... (halimbawa lang ito)'],
+        ['Very short paragraphs, one or two sentences, long but easy on a phone (about 550 to 850 words).', 'Ganun din sa bukid.'],
+        ['Talk like a real Filipino: eh, naman, kasi, pala, diba, haha, lol, a side comment in parentheses. At most two or three bold lines.', 'Hindi ko na itatanong ang eksaktong presyo, baka malungkot lang tayo pareho. (haha)'],
+        ['Every email delivers what its subject promises: a real lesson, example or step. Numbers only as labeled examples, no doses, no brands.', 'Halimbawa lang ito, gawa gawang numero para madaling kwentahin.'],
+        ['Nothing the farmer cannot control (no irrigation schedules). A soft CTA in about one email in three, usually in the P.S.', 'Kung hindi mo pa nata-try ang anee.io, libre lang mag-umpisa: anee.io/signup'],
+        ['End on a real thought, a question to reply to, or a teaser for the next email. No dashes, no AI words, no tidy wrap up.', 'Sa susunod na email, titingnan natin kung saan madalas tumatagas ang ani.'],
+        ['Sign off: Rooting for you, Anee, then a short witty tagline only this email has, then anee.io.', "Rooting for you,\nAnee\n\"sardinas economics\""],
     ];
 
     public static function forKit(): array
     {
-        return ['name' => self::NAME, 'signOff' => self::SIGN_OFF, 'rules' => array_map(fn ($r) => ['rule' => $r[0], 'example' => $r[1]], self::RULES)];
+        return ['name' => self::NAME, 'style' => self::STYLE, 'signOff' => self::SIGN_OFF,
+            'rules' => array_map(fn ($r) => ['rule' => $r[0], 'example' => $r[1]], self::RULES)];
+    }
+
+    /** The sequence's own closing: "Rooting for you, / Anee / "tagline" / anee.io". */
+    public static function signOffHtml(string $tag = ''): string
+    {
+        return 'Rooting for you,<br><b>Anee</b>'
+            . ($tag !== '' ? '<br><i>"' . e($tag) . '"</i>' : '')
+            . '<br><a href="https://anee.io/">anee.io</a>';
     }
 }

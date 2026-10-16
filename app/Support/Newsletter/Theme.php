@@ -40,9 +40,10 @@ final class Theme
         'buttonRadius' => 999,
         'logo' => 'https://anee.io/images/logo-white.png',
         'logoWidth' => 143,
-        'tagline' => 'your season, planned with Anee',
-        'signature' => Voice::SIGN_OFF,        // under every email's last block: John signs every email (2026-10-16)
-        'footer' => 'You get these emails because you joined anee.io or asked Anee on our site.',
+        'tagline' => 'Farm app para sa magsasakang Pilipino',
+        // Under every email's last block. Empty: each email carries its own sign off (Voice::signOffHtml, the sequence's "Rooting for you, Anee").
+        'signature' => '',
+        'footer' => 'Natanggap mo ito dahil nag-subscribe ka sa anee.io newsletter. Pwede kang mag-reply anytime.',
         'facebook' => '',
         'youtube' => '',
         'tiktok' => '',
